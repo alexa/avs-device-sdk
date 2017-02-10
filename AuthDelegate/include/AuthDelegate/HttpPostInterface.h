@@ -1,0 +1,63 @@
+/*
+ * HttpPostInterface.h
+ *
+ * Copyright 2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+#ifndef ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_HTTP_POST_INTERFACE_H_
+#define ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_HTTP_POST_INTERFACE_H_
+
+#include <string>
+
+namespace alexaClientSDK {
+namespace authDelegate {
+
+/// Minimal interface for making Http POST requests.
+class HttpPostInterface {
+public:
+
+    /// Status code values returned by doPost()
+    enum class ResponseCode {
+        /// Disposition of Post request is undefined, assume failure.
+        UNDEFINED = 0,
+        /// Post request succeeded.
+        SUCCESS_OK = 200,
+        /// Post request failed because it was malformed.
+        CLIENT_ERROR_BAD_REQUEST = 400
+    };
+
+    /// Virtual destructor to assure proper cleanup of derived types.
+    virtual ~HttpPostInterface() = default;
+
+    /**
+     * Perform an HTTP Post request returning the response body as a string. This method blocks for the duration
+     * of the request.
+     *
+     * @param url The URL to send the POST to.
+     * @param data The POST data to send in the request.
+     * @param timeout The maximum amount of time (in seconds) to wait for the request to complete.
+     * @param[out] body A string to receive the body of the request if there is one.
+     * @return A HttpStatus indicating the disposition of the Post request.
+     */
+    virtual ResponseCode doPost(
+            const std::string& url,
+            const std::string& data,
+            std::chrono::seconds timeout,
+            std::string& body) = 0;
+};
+
+} // namespace authDelegate
+} // namespace alexaClientSDK
+
+#endif // ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_HTTP_POST_INTERFACE_H_
