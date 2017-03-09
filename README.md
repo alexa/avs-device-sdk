@@ -127,9 +127,9 @@ To recompile cURL, follow these instructions:
 
 To create an out-of-source build for macOS:
 
-1. Extract the tarball.
-2. Create a build directory.
-3. Create a build directory out-of-source. **Important**: The directory cannot be a subdirectory of the source folder.
+1. Extract the tarball.  
+2. Create a build directory out-of-source. **Important**: The directory cannot be a subdirectory of the source folder.  
+3. `cd` into your build directory.
 4. From your build directory, run `cmake` on the source directory to generate make files for the SDK: `cmake <path-to-source-code>`.
 5. From the build directory, run `make` to build the SDK.  
 
