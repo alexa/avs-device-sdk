@@ -271,5 +271,5 @@ v0.2 of the Alexa Client SDK includes components for authentication, communicati
 
 | Version | Release Date | Notes |
 |---------|--------------|-------|
-| v0.2 | 3/8/2017 | Alexa Client SDK v0.2 released: Architecture diagram has been updated to include the ADSL and AMFL. CMake build types and options have been updated. New documentation for libcurl optimization included. |  
+| v0.2 | 3/9/2017 | Alexa Client SDK v0.2 released: Architecture diagram has been updated to include the ADSL and AMFL. CMake build types and options have been updated. New documentation for libcurl optimization included. |  
 | v0.1 | 2/10/2017 | Alexa Client SDK v0.1 released. |
