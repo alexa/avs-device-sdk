@@ -18,15 +18,23 @@
 #ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_TRANSPORT_H_
 #define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_TRANSPORT_H_
 
+#include <atomic>
+#include <condition_variable>
+#include <map>
+#include <memory>
+#include <mutex>
+#include <queue>
+#include <string>
+#include <thread>
+#include <utility>
+
 #include "ACL/AuthDelegateInterface.h"
 #include "ACL/Transport/TransportInterface.h"
 #include "ACL/Transport/TransportObserverInterface.h"
 #include "ACL/Transport/HTTP2Stream.h"
 #include "ACL/Transport/HTTP2StreamPool.h"
-#include <condition_variable>
-#include <map>
-#include <queue>
-#include <thread>
+#include "ACL/Transport/MessageConsumerInterface.h"
+#include "ACL/AttachmentManagerInterface.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -41,11 +49,14 @@ public:
      *
      * @param authDelegate The AuthDelegate implementation.
      * @param avsEndpoint The URL for the AVS endpoint of this object.
+     * @param messageConsumer The MessageConsumerInterface to pass messages to.
+     * @param attachmentManager The attachment manager that manages the attachments.
      * @param observer The optional observer to this class.
      */
-    HTTP2Transport(std::shared_ptr<AuthDelegateInterface> authDelegate,
-                   const std::string& avsEndpoint,
-                   TransportObserverInterface *observer = nullptr);
+    HTTP2Transport(std::shared_ptr<AuthDelegateInterface> authDelegate, const std::string& avsEndpoint,
+        MessageConsumerInterface* messageConsumerInterface,
+        std::shared_ptr<AttachmentManagerInterface> attachmentManager,
+        TransportObserverInterface* observer = nullptr);
 
     /**
      * Destructor.
@@ -64,8 +75,6 @@ public:
     bool isConnected() override;
 
     void send(std::shared_ptr<MessageRequest> request) override;
-
-    void onMessageReceived(std::shared_ptr<Message> message) override;
 
 private:
     /**
@@ -125,12 +134,15 @@ private:
     /**
      * Sets up the downchannel stream. If a downchannel stream already exists, it is torn down and reset.
      *
-     * @returns Whether the downchannel stream was successfully set up.
+     * @return Whether the downchannel stream was successfully set up.
      */
     bool setupDownchannelStream();
 
-    /// Observer of this class, to be notified on changes in connection and received messages.
+    /// Observer of this class, to be notified on changes in connection and received attachments.
     TransportObserverInterface *m_observer;
+
+    /// Observer of this class, to be passed received messages from AVS.
+    MessageConsumerInterface *m_messageConsumer;
 
     /// Auth delegate implementation.
     std::shared_ptr<AuthDelegateInterface> m_authDelegate;

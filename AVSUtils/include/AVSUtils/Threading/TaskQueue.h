@@ -18,10 +18,14 @@
 #ifndef ALEXA_CLIENT_SDK_AVSUTILS_INCLUDE_AVSUTILS_THREADING_TASK_QUEUE_H_
 #define ALEXA_CLIENT_SDK_AVSUTILS_INCLUDE_AVSUTILS_THREADING_TASK_QUEUE_H_
 
+#include <atomic>
 #include <condition_variable>
 #include <deque>
+#include <functional>
 #include <future>
+#include <memory>
 #include <mutex>
+#include <utility>
 
 namespace alexaClientSDK {
 namespace avsUtils {
@@ -48,6 +52,18 @@ public:
      */
     template<typename Task, typename... Args>
     auto push(Task task, Args &&... args) -> std::future<decltype(task(args...))>;
+
+    /**
+     * Pushes a task on the front of the queue. If the queue is shutdown, the task will be a dropped, and an invalid
+     * future will be returned.
+     *
+     * @param task A task to push to the back of the queue.
+     * @param args The arguments to call the task with.
+     * @returns A @c std::future to access the return value of the task. If the queue is shutdown, the task will be a
+     *     dropped, and an invalid future will be returned.
+     */
+    template<typename Task, typename... Args>
+    auto pushToFront(Task task, Args &&... args) -> std::future<decltype(task(args...))>;
 
     /**
      * Returns and removes the task at the front of the queue. If there are no tasks, this call will block until there
@@ -105,6 +121,36 @@ auto TaskQueue::push(Task task, Args &&... args) -> std::future<decltype(task(ar
         std::lock_guard<std::mutex> queueLock{m_queueMutex};
         if (!m_shutdown) {
             m_queue.emplace_back(new std::function<void()>(translated_task));
+        } else {
+            using FutureType = decltype(task(args...));
+            return std::future<FutureType>();
+        }
+    }
+
+    m_queueChanged.notify_all();
+    return packaged_task->get_future();
+}
+
+template<typename Task, typename... Args>
+auto TaskQueue::pushToFront(Task task, Args &&... args) -> std::future<decltype(task(args...))> {
+    // Remove arguments from the tasks type by binding the arguments to the task.
+    auto boundTask = std::bind(std::forward<Task>(task), std::forward<Args>(args)...);
+
+    /*
+     * Create a std::packaged_task with the correct return type. The decltype only returns the return value of the
+     * boundTask. The following parentheses make it a function call with the boundTask return type. The package task
+     * will then return a future of the correct type.
+     */
+    using PackagedTaskType = std::packaged_task<decltype(boundTask())()>;
+    auto packaged_task = std::make_shared<PackagedTaskType>(boundTask);
+
+    // Remove the return type from the task by wrapping it in a lambda with no return value.
+    auto translated_task = [packaged_task]() { packaged_task->operator()(); };
+
+    {
+        std::lock_guard<std::mutex> queueLock{m_queueMutex};
+        if (!m_shutdown) {
+            m_queue.emplace_front(new std::function<void()>(translated_task));
         } else {
             using FutureType = decltype(task(args...));
             return std::future<FutureType>();

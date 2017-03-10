@@ -19,13 +19,14 @@
 #include "ACL/Transport/HTTP2Transport.h"
 
 #include <sstream>
+#include <cstdint>
 
 namespace alexaClientSDK {
 namespace acl {
 
 using namespace alexaClientSDK::avsUtils;
 
-/// MIME boundary string prefix in HTTP header
+/// MIME boundary string prefix in HTTP header.
 static const std::string BOUNDARY_PREFIX = "boundary=";
 /// Size in chars of the MIME boundary string prefix
 static const int BOUNDARY_PREFIX_SIZE = BOUNDARY_PREFIX.size();
@@ -38,8 +39,9 @@ static const std::string ATTACHMENT_FIELD_NAME = "audio";
 /// The POST field name for message metadata
 static const std::string METADATA_FIELD_NAME = "metadata";
 
-HTTP2Stream::HTTP2Stream()
-    : m_parser{this} {
+HTTP2Stream::HTTP2Stream(MessageConsumerInterface* messageConsumer,
+        std::shared_ptr<AttachmentManagerInterface> attachmentManager)
+    : m_parser{messageConsumer, attachmentManager} {
 }
 
 bool HTTP2Stream::reset() {
@@ -158,9 +160,9 @@ size_t HTTP2Stream::writeCallback(char *data, size_t size, size_t nmemb, void *u
     if (HTTP2Stream::HTTPResponseCodes::SUCCESS_OK == stream->getResponseCode()) {
         stream->m_parser.feed(data, numChars);
     } else {
-        std::string JSONContent = std::string(data, numChars);
-        std::shared_ptr<Message> response = std::make_shared<Message>(JSONContent);
-        stream->onMessage(response);
+        auto JSONContent = std::string(data, numChars);
+        auto avsException = std::make_shared<Message>(JSONContent);
+        stream->m_currentRequest->onExceptionReceived(avsException);
     }
     return numChars;
 }
@@ -213,11 +215,6 @@ CURL* HTTP2Stream::getCurlHandle() {
     return m_transfer.getCurlHandle();
 }
 
-void HTTP2Stream::setHTTP2Transport(HTTP2Transport *transport) {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    m_transport = transport;
-}
-
 void HTTP2Stream::notifyRequestObserver() {
     long responseCode = getResponseCode();
 
@@ -232,11 +229,6 @@ void HTTP2Stream::notifyRequestObserver() {
         default:
             m_currentRequest->onSendCompleted(SendMessageStatus::SERVER_INTERNAL_ERROR);
     }
-}
-
-void HTTP2Stream::onMessage(std::shared_ptr<Message> message) {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    m_transport->onMessageReceived(message);
 }
 
 bool HTTP2Stream::setStreamTimeout(const long timeoutSeconds) {

@@ -18,8 +18,11 @@
 #ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_MESSAGE_H_
 #define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_MESSAGE_H_
 
-#include <string>
+#include <istream>
 #include <memory>
+#include <string>
+
+#include "ACL/AttachmentManager.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -31,8 +34,22 @@ class Message {
 public:
     /**
      * Constructor.
+     * Construct a message with the JSON content and the binary attachment. This constructor is used in order to
+     * send an event to the AVS. The @c binaryContent is not required. When sending the "Recognize" event for example,
+     * the @c binaryContent should be the recorded audio data.
+     *
+     * @param json The JSON content of the message.
+     * @param binaryContent The binary attachment of the message.
      */
-    Message(const std::string & JSON, std::shared_ptr<std::istream> binaryContent = nullptr);
+    Message(const std::string& json, std::shared_ptr<std::istream> binaryContent = nullptr);
+
+    /**
+     * Constuctor.
+     *
+     * @param json the JSON content of message.
+     * @param attachmentManager attachment manager.
+     */
+    Message(const std::string& json, std::shared_ptr<AttachmentManagerInterface> attachmentManager);
 
     /**
      * Retrieve the JSON content.
@@ -53,13 +70,22 @@ public:
      */
     std::shared_ptr<std::istream> getAttachment();
 
-private:
+    /**
+     * Retrieves the attachment manager.
+     *
+     * @return instance that implements the attachment manager interface.
+     */
+    std::shared_ptr<AttachmentManagerInterface> getAttachmentManager() const;
 
+private:
     /// The JSON content.
-    std::string m_JSONContent;
+    std::string m_jsonContent;
 
     /// The stream object representing the binary content.
     std::shared_ptr<std::istream> m_binaryContent;
+
+    /// The attachment manager that creates attachment reader and attachment writer.
+    std::shared_ptr<AttachmentManagerInterface> m_attachmentManager;
 };
 
 } // namespace acl

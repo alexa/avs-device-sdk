@@ -18,10 +18,14 @@
 #ifndef ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_MIME_PARSER_H_
 #define ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_MIME_PARSER_H_
 
-#include "ACL/Transport/MimeParserObserverInterface.h"
-#include "MultipartParser/MultipartReader.h"
 #include <cstddef>
+#include <memory>
+#include <iostream>
 #include <string>
+#include <MultipartParser/MultipartReader.h>
+
+#include "ACL/AttachmentManager.h"
+#include "ACL/Transport/MessageConsumerInterface.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -31,9 +35,11 @@ public:
     /**
      * Constructor.
      *
-     * @param observer The class to transfer MIME multiparts to (should be an owner of this class)
+     * @param messageConsumer The MessageConsumerInterface which should receive messages from AVS.
+     * @param attachmentManager The attachment manager that manages the attachment.
      */
-    MimeParser(MimeParserObserverInterface *observer);
+    MimeParser(MessageConsumerInterface *messageConsumer,
+        std::shared_ptr<AttachmentManagerInterface> attachmentManager);
 
     /**
      * Resets class for use in another transfer.
@@ -53,10 +59,23 @@ public:
      * @param boundaryString The MIME multipart boundary string
      */
     void setBoundaryString(const std::string& boundaryString);
+
+    /**
+     * Utility function to get the MessageConsumer object that the MimeParser is using.
+     * The returned parameter's lifetime is guaranteed to be valid for the lifetime of the MimeParser object.
+     * @return The MessageConsumer object being used by the MimeParser.
+     */
+    MessageConsumerInterface* getMessageConsumer();
+
 private:
     enum ContentType {
+        /// The default value, indicating no data.
         NONE,
+
+        /// The content represents a JSON formatted string.
         JSON,
+
+        /// The content represents binary data.
         ATTACHMENT
     };
 
@@ -91,8 +110,10 @@ private:
     std::shared_ptr<std::iostream> m_attachment;
     /// Instance of a multipart MIME parser
     MultipartReader m_multipartReader;
-    /// The object to report back to when MIME parts are received
-    MimeParserObserverInterface *m_observer;
+    /// The object to report back to when JSON MIME parts are received.
+    MessageConsumerInterface *m_messageConsumer;
+    /// The attachment manager.
+    std::shared_ptr<AttachmentManagerInterface> m_attachmentManager;
 };
 
 } // acl

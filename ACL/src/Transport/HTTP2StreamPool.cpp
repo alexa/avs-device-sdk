@@ -22,14 +22,15 @@ namespace acl {
 
 using namespace avsUtils;
 
-HTTP2StreamPool::HTTP2StreamPool(const int maxStreams)
+HTTP2StreamPool::HTTP2StreamPool(const int maxStreams, std::shared_ptr<AttachmentManagerInterface> attachmentManager)
         : m_numRemovedStreams{0},
-          m_maxStreams{maxStreams} {
+          m_maxStreams{maxStreams},
+          m_attachmentManager{attachmentManager} {
 }
 
-std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createGetStream(HTTP2Transport *transport, const std::string& url,
-                                                    const std::string& authToken) {
-    std::shared_ptr<HTTP2Stream> stream = getStream();
+std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createGetStream(const std::string& url, const std::string& authToken,
+        MessageConsumerInterface *messageConsumer) {
+    std::shared_ptr<HTTP2Stream> stream = getStream(messageConsumer);
     if (!stream) {
         Logger::log("Could not get stream from stream pool");
         releaseStream(stream);
@@ -40,13 +41,12 @@ std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createGetStream(HTTP2Transport *tr
         releaseStream(stream);
         return nullptr;
     }
-    stream->setHTTP2Transport(transport);
     return stream;
 }
 
-std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createPostStream(HTTP2Transport *transport, const std::string& url,
-                                                const std::string& authToken, std::shared_ptr<MessageRequest> request) {
-    std::shared_ptr<HTTP2Stream> stream = getStream();
+std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createPostStream(const std::string& url, const std::string& authToken,
+        std::shared_ptr<MessageRequest> request, MessageConsumerInterface *messageConsumer) {
+    std::shared_ptr<HTTP2Stream> stream = getStream(messageConsumer);
     if (!stream) {
         Logger::log("Could not get stream from stream pool");
         request->onSendCompleted(SendMessageStatus::INTERNAL_ERROR);
@@ -58,18 +58,17 @@ std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createPostStream(HTTP2Transport *t
         releaseStream(stream);
         return nullptr;
     }
-    stream->setHTTP2Transport(transport);
     return stream;
 }
 
-std::shared_ptr<HTTP2Stream> HTTP2StreamPool::getStream() {
+std::shared_ptr<HTTP2Stream> HTTP2StreamPool::getStream(MessageConsumerInterface *messageConsumer) {
     std::lock_guard<std::mutex> lock(m_mutex);
     if (m_numRemovedStreams >= m_maxStreams) {
         return nullptr;
     }
     m_numRemovedStreams++;
     if (m_pool.empty()) {
-        return std::make_shared<HTTP2Stream>();
+        return std::make_shared<HTTP2Stream>(messageConsumer, m_attachmentManager);
     }
 
     std::shared_ptr<HTTP2Stream> ret = m_pool.back();

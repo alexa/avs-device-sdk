@@ -50,8 +50,7 @@ HttpPost::~HttpPost() {
     }
 }
 
-HttpPost::ResponseCode HttpPost::doPost(
-        const std::string& url,
+long HttpPost::doPost(const std::string& url,
         const std::string& data,
         std::chrono::seconds timeout,
         std::string& body) {
@@ -63,12 +62,12 @@ HttpPost::ResponseCode HttpPost::doPost(
             !setopt(CURLOPT_URL, url.c_str()) ||
             !setopt(CURLOPT_POSTFIELDS, data.c_str()) ||
             !setopt(CURLOPT_WRITEDATA, &body)) {
-        return ResponseCode::UNDEFINED;
+        return HTTP_RESPONSE_CODE_UNDEFINED;
     }
 
     if (!m_curl) {
         std::cerr << "HttpPost::perform() m_curl == nullptr" << std::endl;
-        return ResponseCode::UNDEFINED;
+        return HTTP_RESPONSE_CODE_UNDEFINED;
     }
 
     auto result = curl_easy_perform(m_curl);
@@ -76,7 +75,7 @@ HttpPost::ResponseCode HttpPost::doPost(
     if (result != CURLE_OK) {
         std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(result) << std::endl;
         body.clear();
-        return ResponseCode::UNDEFINED;
+        return HTTP_RESPONSE_CODE_UNDEFINED;
     }
 
     long responseCode = 0;
@@ -84,28 +83,12 @@ HttpPost::ResponseCode HttpPost::doPost(
     if (result != CURLE_OK) {
         std::cerr << "curl_easy_getinfo(CURLINFO_RESPONSE_CODE) failed: " << curl_easy_strerror(result) << std::endl;
         body.clear();
-        return ResponseCode::UNDEFINED;
+        return HTTP_RESPONSE_CODE_UNDEFINED;
+    } else {
+        std::cout << "curl_easy_getinfo(CURLINFO_RESPONSE_CODE) successfully returned the HTTP code: "
+            << responseCode << std::endl;
+        return responseCode;
     }
-
-    if (static_cast<int>(ResponseCode::SUCCESS_OK) == responseCode) {
-        std::cout << "HttpPost::perform() success (OK)" << std::endl;
-        return ResponseCode::SUCCESS_OK;
-    } else if (static_cast<int>(ResponseCode::CLIENT_ERROR_BAD_REQUEST) == responseCode) {
-        std::cout << "HttpPost::perform() client error (BAD_REQUEST)" << std::endl;
-        return ResponseCode::CLIENT_ERROR_BAD_REQUEST;
-    }
-
-    std::cerr << "curl_easy_getinfo(CURLINFO_RESPONSE_CODE) returned: " << responseCode << std::endl;
-#ifdef DEBUG
-    // TODO Integrate with Logging library: ACSDK-57
-    // This may be private information so any logging of values must be at debug level
-    if (!body.empty()) {
-        std::cerr << "body: '" << body << "'" << std::endl;
-    }
-#endif
-
-    body.clear();
-    return ResponseCode::UNDEFINED;
 }
 
 template<typename ParamType>

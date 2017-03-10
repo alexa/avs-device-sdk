@@ -19,14 +19,17 @@
 #define ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_MESSAGE_ROUTER_H_
 
 #include <memory>
+#include <string>
 
 #include "ACL/Transport/MessageRouter.h"
+#include "ACL/Transport/MessageConsumerInterface.h"
+#include "ACL/AttachmentManagerInterface.h"
 
 namespace alexaClientSDK {
 namespace acl {
 
 /**
- * An HTTP2MessageRouter routes request messages to the Alexa Voice Service, and resposnse messages to the client. It
+ * An HTTP2MessageRouter routes request messages to the Alexa Voice Service, and response messages to the client. It
  * uses an HTTP2 connection with AVS.
  */
 class HTTP2MessageRouter: public MessageRouter {
@@ -49,7 +52,11 @@ private:
     std::shared_ptr<TransportInterface> createTransport(
             std::shared_ptr<AuthDelegateInterface> authDelegate,
             const std::string& avsEndpoint,
+            MessageConsumerInterface* messageConsumerInterface,
             TransportObserverInterface* transportObserverInterface) override;
+
+    /// The attachment manager.
+    std::shared_ptr<AttachmentManagerInterface> m_attachmentManager;
 };
 
 } // acl

@@ -1,6 +1,6 @@
-## Alexa Client SDK v0.1
+## Alexa Client SDK v0.2
 
-This release of the Alexa Client SDK for C++ provides components for authentication and communications with the Alexa Voice Service (AVS), specifically AuthDelegate, the Alexa Communications Library (ACL), and associated APIs. This release does not include design documentation or support for message orchestration.  
+This release of the Alexa Client SDK for C++ provides components for authentication and communications with the Alexa Voice Service (AVS), specifically AuthDelegate, the Alexa Communications Library (ACL), and associated APIs.
 
 ## Overview
 
@@ -28,14 +28,22 @@ This architecture diagram illustrates the data flows between components that com
 
 **Audio Input Processor (AIP)** - Manages the captured audio streamed to AVS. Input sources may include: on-product microphones, remote microphones, etc. The Alexa Client SDK expects a single audio input from the AIP.
 
-**Alexa Interaction Manager (AIM)** - Comprised of two components, the Alexa Communications Library (ACL) and the Alexa Orchestration Library (AOL), it handles communications with AVS and message routing to capability agents.
+**Alexa Interaction Manager (AIM)** - Comprised of three components, the Alexa Communications Library (ACL), the Alexa Directive Sequencer Library (ADSL), and Activity Focus Manager Library (AFML), it handles communications with AVS and message routing to capability agents.
 
 **Alexa Communications Library (ACL)** - Serves as the main communications channel between a client and AVS. The Performs two key functions:
 
 * Establishes and maintains long-lived persistent connections with AVS. ACL adheres to the messaging specification detailed in [Managing an HTTP/2 Conncetion with AVS](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/docs/managing-an-http-2-connection).
 * Provides message sending and receiving capabilities, which includes support JSON-formatted text, and binary audio content. For additional information, see [Structuring an HTTP/2 Request to AVS](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/docs/avs-http2-requests).
 
-**Alexa Orchestrator Library (AOL)**: Manages the sequencing of messages from AVS and routing messages to the appropriate capability agent. Additionally, the AOL operates as the central synchronization point for all capability agents. Each capability agent must inform the orchestrator when a message is acted on, which allows the orchestrator to process and route any queued messages.
+**Alexa Directive Sequencer Library (ADSL)**: Manages the order and sequence of directives from AVS, as detailed in the [AVS Interaction Model](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/interaction-model#channels). This component manages the lifecycle of each directive, and informs the Directive Handler (which may or may not be a Capability Agent) to handle the message.  
+
+See [**Appendix C**](#appendix-c-directive-lifecycle-diagram) for a diagram of the directive lifecycle.
+
+**Activity Focus Manager Library (AFML)**: Provides centralized management of audiovisual focus for the device. Focus is based on channels, as detailed in the [AVS Interaction Model](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/interaction-model#channels), which are used to govern the prioritization of audiovisual inputs and outputs.
+
+Channels can either be in the foreground or background. At any given time, only one channel can be in the foreground and have focus. If multiple channels are active, you need to respect the following priority order: Dialog > Alerts > Content. When a channel that is in the foreground becomes inactive, the next active channel in the priority order moves into the foreground.
+
+Focus management is not specific to Capability Agents or Directive Handlers, and can be used by non-Alexa related agents as well. This allows all agents using the AFML to have a consistent focus across a device.
 
 **Capability Agents**: Handle Alexa-driven interactions; specifically directives and events. Each capability agent corresponds to a specific interface exposed by the AVS API. These interfaces include:
 
@@ -89,17 +97,9 @@ After adjusting the configuration, follow the instructions for your OS to create
 
 ## Create an Out-of-Source Build
 
-The following instructions assume that all requirements and dependencies are met and that the tarball is saved locally.
+The following instructions assume that all requirements and dependencies are met and that you have cloned the repository (or saved the tarball locally).  
 
-### Build for Generic Linux
-
-To create an out-of-source build for Linux:
-
-1. Extract the tarball.
-2. Create a build directory out-of-source. **Important**: The directory cannot be a subdirectory of the source folder.
-3. `cd` into your build directory.
-4. From your build directory, run `cmake` on the source directory to generate make files for the SDK: `cmake <path-to-source-code>`.
-5. From the build directory, run `make` to build the SDK.  
+### CMake Build Types and Options  
 
 The following build types are supported:
 
@@ -107,8 +107,20 @@ The following build types are supported:
 * `RELEASE` - Adds `-O2` flag and removes `-g` flag.
 * `MINSIZEREL` - Compiles with `RELEASE` flags and optimizations (`-O`s) for a smaller build size.
 
-To specify a build type, use this command in place of step 4:
-`cmake <path-to-source> -DCMAKE_BUILD_TYPE=<build-type>`
+To specify a build type, use this command in place of step 4 below (see [Build for Generic Linux](#generic-linux) or [Build for macOS](#build-for-macosß)):
+`cmake <path-to-source> -DCMAKE_BUILD_TYPE=<build-type>`  
+
+**Note**: To list all available CMake options, use the following command: `-LH`.
+
+### Build for Generic Linux
+
+To create an out-of-source build for Linux:
+
+1. Clone the repository (or download and extract the tarball).
+2. Create a build directory out-of-source. **Important**: The directory cannot be a subdirectory of the source folder.
+3. `cd` into your build directory.
+4. From your build directory, run `cmake` on the source directory to generate make files for the SDK: `cmake <path-to-source-code>`.
+5. From the build directory, run `make` to build the SDK.  
 
 ### Build for macOS
 
@@ -127,20 +139,11 @@ To recompile cURL, follow these instructions:
 
 To create an out-of-source build for macOS:
 
-1. Extract the tarball.  
-2. Create a build directory out-of-source. **Important**: The directory cannot be a subdirectory of the source folder.  
-3. `cd` into your build directory.
+1. Clone the repository (or download and extract the tarball).
+2. Create a build directory.
+3. Create a build directory out-of-source. **Important**: The directory cannot be a subdirectory of the source folder.
 4. From your build directory, run `cmake` on the source directory to generate make files for the SDK: `cmake <path-to-source-code>`.
 5. From the build directory, run `make` to build the SDK.  
-
-The following build types are supported:
-
-* `DEBUG` - Shows debug logs with `-g` compiler flag.
-* `RELEASE` - Adds `-O2` flag and removes `-g` flag.
-* `MINSIZEREL` - Compiles with `RELEASE` flags and optimizations (`-O`s) for a smaller build size.
-
-To specify a build type, use this command in place of step 4:
-`cmake <path-to-source> -DCMAKE_BUILD_TYPE=<build-type>`
 
 ## Run Unit Tests
 
@@ -153,7 +156,7 @@ Ensure that all tests are passed before you begin integration testing.
 
 Integration tests ensure that your build can make a request and receive a response from AVS. **All requests to AVS require auth credentials.**
 
-**Important**: Integration tests for v0.1 **do not** use AuthDelegate. Instead, the tests reference an `AuthDelegate.config` file, which you must create.
+**Important**: Integration tests for v0.2 **do not** use AuthDelegate. Instead, the tests reference an `AuthDelegate.config` file, which you must create.
 
 ### Create the AuthDelegate.config file
 
@@ -170,6 +173,11 @@ To create `AuthDelegate.config`:
 
 After you've entered your credentials, save the file and run this command:
 `make all integration`
+
+## Resources and Guides
+
+* [Step-by-step instructions to optimize libcurl for size in `*nix` systems](https://github.com/alexa/alexa-client-sdk/wiki/optimize-libcurl).
+* [Step-by-step instructions to build libcurl with mbed TLS and nghttp2 for `*nix` systems](https://github.com/alexa/alexa-client-sdk/wiki/build-libcurl-with-mbed-TLS-and-nghttp2).
 
 ## Appendix A: Obtain Test Credentials
 
@@ -252,11 +260,16 @@ This appendix provides ACL memory usage for a machine running Ubuntu 14.04.
 | Max Stack | 50 KB | Resident set size (RSS) was in the range of 22 KB to 30 KB using Smem and top. Stack memory usage was in the range of 30 KB to 50 KB using Valgrind. |  
 
 
+## Appendix C: Directive Lifecycle Diagram
+
+![Directive Lifecycle](https://images-na.ssl-images-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-voice-service/docs/avs-directive-lifecycle.png)
+
 ## Release Notes
 
-v0.1 of the Alexa Client SDK includes components for authentication and communications with the AVS, specifically AuthDelegate, the ACL, and associated APIs.
+v0.2 of the Alexa Client SDK includes components for authentication, communications, message orchestration, and focus management. These include AuthDelegate, ACL, ADSL, AFML, and associated APIs.
 
 
 | Version | Release Date | Notes |
 |---------|--------------|-------|
+| v0.2 | 3/8/2017 | Alexa Client SDK v0.2 released: Architecture diagram has been updated to include the ADSL and AMFL. CMake build types and options have been updated. New documentation for libcurl optimization included. |  
 | v0.1 | 2/10/2017 | Alexa Client SDK v0.1 released. |

@@ -36,5 +36,9 @@ void MessageRequest::onSendCompleted(SendMessageStatus status) {
     // default no-op
 }
 
+void MessageRequest::onExceptionReceived(std::shared_ptr<acl::Message> exceptionMessage) {
+    // default no-op
+}
+
 } // namespace acl
 } // namespace alexaClientSDK

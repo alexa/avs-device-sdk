@@ -1,7 +1,7 @@
 /*
  * HttpPost.h
  *
- * Copyright 2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,10 +18,13 @@
 #ifndef ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_HTTP_POST_H_
 #define ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_HTTP_POST_H_
 
+#include <chrono>
+#include <curl/curl.h>
 #include <iostream>
+#include <memory>
 #include <mutex>
 #include <string>
-#include <curl/curl.h>
+
 #include "AuthDelegate/HttpPostInterface.h"
 
 namespace alexaClientSDK {
@@ -56,8 +59,7 @@ public:
      */
     static std::unique_ptr<HttpPost> create();
 
-    ResponseCode doPost(
-            const std::string& m_url,
+    long doPost(const std::string& m_url,
             const std::string& data,
             std::chrono::seconds timeout,
             std::string& body) override;

@@ -19,7 +19,7 @@
 #define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_ROUTER_INTERFACE_H_
 
 #include <memory>
-#include <vector>
+#include <string>
 
 #include "AVSUtils/Threading/Executor.h"
 #include "ACL/AuthDelegateInterface.h"

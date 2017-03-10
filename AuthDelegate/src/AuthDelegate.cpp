@@ -20,6 +20,9 @@
 #include <random>
 #include <stdexcept>
 #include <sstream>
+#include <rapidjson/document.h>
+#include <rapidjson/error/en.h>
+#include <unordered_map>
 #include "curl/curl.h"
 #include "AuthDelegate/AuthDelegate.h"
 #include "AuthDelegate/HttpPost.h"
@@ -33,26 +36,95 @@ namespace authDelegate {
 
 /// POST data before 'client_id' that is sent to LWA to refresh the auth token.
 static const std::string POST_DATA_UP_TO_CLIENT_ID = "grant_type=refresh_token&client_id=";
+
 /// POST data between 'client_id' and 'refresh_token' that is sent to LWA to refresh the auth token.
 static const std::string POST_DATA_BETWEEN_CLIENT_ID_AND_REFRESH_TOKEN = "&refresh_token=";
+
 /// POST data between 'refresh_token' and 'client_secret' that is sent to LWA to refresh the auth token.
 static const std::string POST_DATA_BETWEEN_REFRESH_TOKEN_AND_CLIENT_SECRET = "&client_secret=";
 
+/// This is the property name in the JSON which refers to the access token. 
+static const std::string JSON_KEY_ACCESS_TOKEN = "access_token";
+
+/// This is the property name in the JSON which refers to the refresh token.
+static const std::string JSON_KEY_REFRESH_TOKEN = "refresh_token";
+
+/// This is the property name in the JSON which refers to the expiration time.
+static const std::string JSON_KEY_EXPIRES_IN = "expires_in";
+
+/// This is the property name in the JSON which refers to the error.
+static const std::string JSON_KEY_ERROR = "error";
+
 /**
- * 'invalid_request' Error Code from LWA (@see https://images-na.ssl-images-amazon.com/images/G/01/lwa/dev/
- * docs/website-developer-guide._TTH_.pdf)
+ * Lookup table for recoverable errors from LWA error codes
+ * (@see https://images-na.ssl-images-amazon.com/images/G/01/lwa/dev/docs/website-developer-guide._TTH_.pdf)
+ * to AuthObserverInterface::Error codes.
  */
-static const std::string ERROR_CODE_INVALID_REQUEST = "invalid_request";
+static const std::unordered_map<std::string, AuthObserverInterface::Error> g_recoverableErrorCodeMap = {
+    {"invalid_client", AuthObserverInterface::Error::AUTHORIZATION_FAILED},
+    {"unauthorized_client", AuthObserverInterface::Error::UNAUTHORIZED_CLIENT},
+    {"servererror", AuthObserverInterface::Error::SERVER_ERROR},
+};
+
 /**
- * 'unsupported_grant_type' Error Code from LWA (@see https://images-na.ssl-images-amazon.com/images/G/01/lwa/dev/
- * docs/website-developer-guide._TTH_.pdf)
+ * Lookup table for unrecoverable errors from LWA error codes
+ * (@see https://images-na.ssl-images-amazon.com/images/G/01/lwa/dev/docs/website-developer-guide._TTH_.pdf)
+ * to AuthObserverInterface::Error codes.
  */
-static const std::string ERROR_CODE_UNSUPPORTED_GRANT_TYPE = "unsupported_grant_type";
+static const std::unordered_map<std::string, AuthObserverInterface::Error> g_unrecoverableErrorCodeMap = {
+    {"invalid_request", AuthObserverInterface::Error::INVALID_REQUEST},
+    {"unsupported_grant_type", AuthObserverInterface::Error::UNSUPPORTED_GRANT_TYPE},
+    {"invalid_grant", AuthObserverInterface::Error::AUTHORIZATION_EXPIRED},
+};
+
 /**
- * 'invalid_grant' Error Code from LWA (@see https://images-na.ssl-images-amazon.com/images/G/01/lwa/dev/
- * docs/website-developer-guide._TTH_.pdf)
+ * Helper function that decides if the HTTP error code is unrecoverable.
+ *
+ * @param error The HTTP error code.
+ * @return @c true if @c error is unrecoverable, @c false otherwise.
  */
-static const std::string ERROR_CODE_INVALID_GRANT = "invalid_grant";
+static bool isUnrecoverable(const std::string & error) {
+    return g_unrecoverableErrorCodeMap.end() != g_unrecoverableErrorCodeMap.find(error);
+}
+
+/**
+ * Helper function that decides if the Enum error code is unrecoverable.
+ *
+ * @param error The Enum error code.
+ * @return @c true if @c error is unrecoverable, @c false otherwise.
+ */
+static bool isUnrecoverable(AuthObserverInterface::Error error) {
+    for (auto errorCodeMapElement : g_unrecoverableErrorCodeMap) {
+        if(errorCodeMapElement.second == error) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Helper function that retrieves the Error enum value.
+ *
+ * @param error The string in the @c error field of packet body.
+ * @return the Error enum code corresponding to @c error. If error is "", returns NO_ERROR. If it is an unknown error,
+ * returns UNKNOWN_ERROR.
+ */
+static AuthObserverInterface::Error getErrorCode(const std::string & error) {
+    if (error.empty()) {
+        return AuthObserverInterface::Error::NO_ERROR;
+    } else {
+        auto errorIterator = g_recoverableErrorCodeMap.find(error);
+        if(g_recoverableErrorCodeMap.end() != errorIterator) {
+            return errorIterator->second;
+        } else {
+            errorIterator = g_unrecoverableErrorCodeMap.find(error);
+            if(g_unrecoverableErrorCodeMap.end() != errorIterator) {
+                return errorIterator->second;
+            }
+        }
+        return AuthObserverInterface::Error::UNKNOWN_ERROR;
+    }
+}
 
 /**
  * Function to convert the number of times we have already retried to the time to perform the next retry.
@@ -123,6 +195,7 @@ std::unique_ptr<AuthDelegate> AuthDelegate::create(std::shared_ptr<Config> confi
 AuthDelegate::AuthDelegate(std::shared_ptr<Config> config, std::unique_ptr<HttpPostInterface> httpPost):
     m_config{config},
     m_authState{AuthObserverInterface::State::UNINITIALIZED},
+    m_authError{AuthObserverInterface::Error::NO_ERROR},
     m_isStopping{false},
     m_expirationTime{std::chrono::time_point<std::chrono::steady_clock>::max()},
     m_retryCount{0},
@@ -146,7 +219,7 @@ void AuthDelegate::setAuthObserver(std::shared_ptr<AuthObserverInterface> observ
     if (observer != m_observer) {
         m_observer = observer;
         if (m_observer) {
-            m_observer->onAuthStateChange(m_authState);
+            m_observer->onAuthStateChange(m_authState, m_authError);
         }
     }
 }
@@ -190,32 +263,36 @@ bool AuthDelegate::init() {
 }
 
 void AuthDelegate::refreshAndNotifyThreadFunction() {
-    // TODO: Revisit this logic: ACSDK-71
-
     std::function<bool()> isStopping = [this] {
         return m_isStopping;
     };
 
     while (true) {
         std::unique_lock<std::mutex> lock(m_mutex);
-        if (AuthObserverInterface::State::REFRESHED == m_authState && m_expirationTime < m_timeToRefresh) {
-            if (m_wakeThreadCond.wait_until(lock, m_expirationTime, isStopping)) {
-                break;
-            }
-            m_authToken.clear();
-            lock.unlock();
-            setState(AuthObserverInterface::State::EXPIRED);
-        } else {
-            if (m_wakeThreadCond.wait_until(lock, m_timeToRefresh, isStopping)) {
-                break;
-            }
-            lock.unlock();
-            refreshAuthToken();
+        bool isAboutToExpire = (AuthObserverInterface::State::REFRESHED == m_authState &&
+                m_expirationTime < m_timeToRefresh);
+        auto nextActionTime = (isAboutToExpire ? m_expirationTime : m_timeToRefresh);
+        auto nextState = m_authState;
+
+        // Wait for an appropriate amount of time.
+        if (m_wakeThreadCond.wait_until(lock, nextActionTime, isStopping)) {
+            break;
         }
+        if (isAboutToExpire) {
+            m_authToken.clear();
+            nextState = AuthObserverInterface::State::EXPIRED;
+            lock.unlock();
+        } else {
+            lock.unlock();
+            if (AuthObserverInterface::Error::NO_ERROR == refreshAuthToken()) {
+                nextState = AuthObserverInterface::State::REFRESHED;
+            }
+        }
+        setState(nextState);
     }
 }
 
-void AuthDelegate::refreshAuthToken() {
+AuthObserverInterface::Error AuthDelegate::refreshAuthToken() {
     // Don't wait for this request so long that we would be late to notify our observer if the token expires.
     m_requestTime = std::chrono::steady_clock::now();
     auto timeout = m_config->getRequestTimeout();
@@ -234,32 +311,51 @@ void AuthDelegate::refreshAuthToken() {
 
     std::string body;
     auto code = m_HttpPost->doPost(m_config->getLwaUrl(), postData.str(), timeout, body);
+    auto newError = handleLwaResponse(code, body);
 
-    if (handleLwaResponse(code, body)) {
+    if (AuthObserverInterface::Error::NO_ERROR == newError) {
         m_retryCount = 0;
-        setState(AuthObserverInterface::State::REFRESHED);
     } else {
         m_timeToRefresh = calculateTimeToRetry(m_retryCount++);
     }
+    {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_authError = newError;
+    }
+    return newError;
 }
 
-bool AuthDelegate::handleLwaResponse(HttpPostInterface::ResponseCode code, const std::string& body) {
+AuthObserverInterface::Error AuthDelegate::handleLwaResponse(long code, const std::string& body) {
+    rapidjson::Document document;
+    if (document.Parse(body.c_str()).HasParseError()) {
+        std::cerr << "Error in JSON at position " 
+            << document.GetErrorOffset() 
+            << ": " 
+            << GetParseError_En(document.GetParseError()) << std::endl;
+        return AuthObserverInterface::Error::UNKNOWN_ERROR;
+    }
 
-    if (HttpPostInterface::ResponseCode::SUCCESS_OK == code) {
-        // TODO replace with a real JSON parser once we pick one: ACSDK-58
-        auto authToken = parseResponseValue(body, "access_token\":\"", "\"");
-        auto refreshToken = parseResponseValue(body, "refresh_token\":\"", "\"");
-        auto expiresInStr = parseResponseValue(body, "expires_in\":", "}");
+    if (HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK == code) {
+        std::string authToken;
+        std::string refreshToken;
+        uint64_t expiresIn = 0;
 
-        long expiresIn = 0;
-        try {
-            expiresIn = std::stol(expiresInStr);
-        } catch (std::logic_error error) {
-            std::cerr << "strtol('" << expiresInStr << "') failed: " << error.what() << std::endl;
-            return false;
+        auto authTokenIterator = document.FindMember(JSON_KEY_ACCESS_TOKEN.c_str());
+        if (authTokenIterator != document.MemberEnd() && authTokenIterator->value.IsString()) {
+            authToken = authTokenIterator->value.GetString();
         }
 
-        if (authToken.empty() || refreshToken.empty() || expiresIn <= 0) {
+        auto refreshTokenIterator = document.FindMember(JSON_KEY_REFRESH_TOKEN.c_str());
+        if (refreshTokenIterator != document.MemberEnd() && refreshTokenIterator->value.IsString()) {
+            refreshToken = refreshTokenIterator->value.GetString();
+        }
+
+        auto expiresInIterator = document.FindMember(JSON_KEY_EXPIRES_IN.c_str());
+        if (expiresInIterator != document.MemberEnd() && expiresInIterator->value.IsUint64()) {
+            expiresIn = expiresInIterator->value.GetUint64();
+        }
+
+        if (authToken.empty() || refreshToken.empty() || expiresIn == 0) {
             std::cerr
                     << "handleResponse() failed: authToken.empty()='"
                     << authToken.empty()
@@ -274,7 +370,7 @@ bool AuthDelegate::handleLwaResponse(HttpPostInterface::ResponseCode code, const
             std::cerr << "response='" << body << "'" << std::endl;
 #endif
 
-            return false;
+            return AuthObserverInterface::Error::UNKNOWN_ERROR;
         }
 
 #ifdef DEBUG
@@ -291,45 +387,31 @@ bool AuthDelegate::handleLwaResponse(HttpPostInterface::ResponseCode code, const
             std::lock_guard<std::mutex> lock(m_mutex);
             m_authToken = authToken;
         }
-        setState(acl::AuthObserverInterface::State::REFRESHED);
-        return true;
-    }
+        return AuthObserverInterface::Error::NO_ERROR;
 
-    if (HttpPostInterface::ResponseCode::CLIENT_ERROR_BAD_REQUEST == code) {
-        // TODO replace with a real JSON parser once we pick one: ACSDK-58
-        auto error = parseResponseValue(body, "\"error\":\"", "\"");
-        if (ERROR_CODE_INVALID_REQUEST == error || ERROR_CODE_UNSUPPORTED_GRANT_TYPE == error||
-                ERROR_CODE_INVALID_GRANT == error) {
-            std::cerr << "The LWA response body indicated an unrecoverable error: " << error << std::endl;
-            // TODO: ACSDK-90 Improve AuthObserverInterface to specify an error when reporting UNRECOVERABLE_ERROR.
-            setState(acl::AuthObserverInterface::State::UNRECOVERABLE_ERROR);
-            // No need to continue retrying, so stop this thread.
-            {
-                std::lock_guard<std::mutex> lock(m_mutex);
-                m_isStopping = true;
+    } else {
+        std::string error;
+        auto errorIterator = document.FindMember(JSON_KEY_ERROR.c_str());
+        if (errorIterator != document.MemberEnd() && errorIterator->value.IsString()) {
+            error = errorIterator->value.GetString();
+        }
+        if (!error.empty()) {
+            // If `error` field is non-empty in the body, it means that we encountered an error.
+            if (isUnrecoverable(error)) {
+                std::cerr << "The LWA response body indicated an unrecoverable error: " << error << std::endl;
+            } else {
+                std::cerr << "The LWA response body indicated a recoverable or unknown error: " << error << std::endl;
             }
+            return getErrorCode(error);
+        } else {
+            std::cerr << "The LWA response encountered an unknown response body." << std::endl;
+#ifdef DEBUG
+            // TODO: Private data and must be logged at or below DEBUG level when we integrate the logging lib ACSDK-57.
+            std::cerr << "Message body: " << body << std::endl;
+#endif
+            return AuthObserverInterface::Error::UNKNOWN_ERROR;
         }
     }
-
-    return false;
-}
-
-// TODO: Ditch this once we have integated a JSON parser: ACSDK-58
-std::string AuthDelegate::parseResponseValue(
-        const std::string& response,
-        const std::string& prefix,
-        const std::string& suffix) const {
-
-    auto valueStart = response.find(prefix);
-    if (response.npos == valueStart) {
-        return "";
-    }
-    valueStart += prefix.length();
-    auto valueEnd = response.find(suffix, valueStart);
-    if (response.npos == valueEnd) {
-        return "";
-    }
-    return response.substr(valueStart, valueEnd - valueStart);
 }
 
 bool AuthDelegate::hasAuthTokenExpired() {
@@ -337,13 +419,18 @@ bool AuthDelegate::hasAuthTokenExpired() {
 }
 
 void AuthDelegate::setState(AuthObserverInterface::State newState) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    
+    if (isUnrecoverable(m_authError)) {
+        std::cerr << "The thread is stopping due to the unrecoverable error." << std::endl;
+        newState = AuthObserverInterface::State::UNRECOVERABLE_ERROR;
+        m_isStopping = true;
+    }
+
     if (m_authState != newState) {
         m_authState = newState;
-        {
-            std::lock_guard<std::mutex> lock(m_mutex);
-            if (m_observer) {
-                m_observer->onAuthStateChange(m_authState);
-            }
+        if (m_observer) {
+            m_observer->onAuthStateChange(m_authState, m_authError);
         }
     }
 }

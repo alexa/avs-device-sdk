@@ -27,7 +27,7 @@ namespace acl {
 /// Mock AuthObserverInterface class
 class MockAuthObserver : public AuthObserverInterface {
 public:
-    MOCK_METHOD1(onAuthStateChange, void(State newState));
+    MOCK_METHOD2(onAuthStateChange, void(State newState, Error error));
 };
 
 }  // namespace acl

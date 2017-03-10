@@ -19,6 +19,8 @@
 #define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_ROUTER_H_
 
 #include <memory>
+#include <mutex>
+#include <string>
 #include <vector>
 
 #include "AVSUtils/Threading/Executor.h"
@@ -29,6 +31,7 @@
 #include "ACL/Transport/MessageRouterObserverInterface.h"
 #include "ACL/Transport/TransportInterface.h"
 #include "ACL/Transport/TransportObserverInterface.h"
+#include "ACL/Transport/MessageConsumerInterface.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -38,7 +41,7 @@ namespace acl {
  *
  * Implementations of this class are required to be thread-safe.
  */
-class MessageRouter: public MessageRouterInterface, public TransportObserverInterface {
+class MessageRouter: public MessageRouterInterface, public TransportObserverInterface, public MessageConsumerInterface {
 
 public:
     /**
@@ -79,21 +82,24 @@ public:
 
     void onServerSideDisconnect() override;
 
-    void onMessageReceived(std::shared_ptr<Message> message) override;
+    void consumeMessage(std::shared_ptr<Message> message) override;
 
 private:
     /**
-     * Creates a new transport
+     * Creates a new MessageRouter.
      *
-     * @param authDelegate The AuthDelegateInterface to use for authentication and authorization with AVS
-     * @param transportObserverInterface A pointer to the transport observer the new transport should notify
-     * @returns a new transport
+     * @param authDelegate The AuthDelegateInterface to use for authentication and authorization with AVS.
+     * @param avsEndpoint The URL for the AVS server we will connect to.
+     * @param messageConsumerInterface The object which should be notified on messages which arrive from AVS.
+     * @param transportObserverInterface A pointer to the transport observer the new transport should notify.
+     * @return A new MessageRouter object.
      *
      * TODO: ACSDK-99 Replace this with an injected transport factory.
      */
     virtual std::shared_ptr<TransportInterface> createTransport(
             std::shared_ptr<AuthDelegateInterface> authDelegate,
             const std::string& avsEndpoint,
+            MessageConsumerInterface* messageConsumerInterface,
             TransportObserverInterface* transportObserverInterface) = 0;
 
     /**

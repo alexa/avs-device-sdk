@@ -8,3 +8,9 @@ include(DisallowOutOfSourceBuilds)
 
 # Setup default build options, like compiler flags and build type.
 include(BuildOptions)
+
+# Setup code coverage environment. This must be called after BuildOptions since it uses the variables defined there.
+include(CodeCoverage/CodeCoverage)
+
+# Setup package requirement variables.
+include(PackageConfigs)

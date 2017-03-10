@@ -18,13 +18,16 @@
 #ifndef ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_STREAM_H_
 #define ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_STREAM_H_
 
-#include "ACL/Transport/MimeParserObserverInterface.h"
-#include "ACL/Transport/CurlEasyHandleWrapper.h"
-#include "ACL/Transport/MimeParser.h"
-#include "ACL/MessageRequest.h"
+#include <chrono>
 #include <memory>
 #include <mutex>
-#include <chrono>
+#include <string>
+
+#include "ACL/AttachmentManager.h"
+#include "ACL/Transport/CurlEasyHandleWrapper.h"
+#include "ACL/Transport/MimeParser.h"
+#include "ACL/Transport/MessageConsumerInterface.h"
+#include "ACL/MessageRequest.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -35,7 +38,7 @@ class HTTP2Transport;
 /**
  * Class that represents an HTTP/2 stream.
  */
-class HTTP2Stream: public MimeParserObserverInterface {
+class HTTP2Stream {
 public:
     enum HTTPResponseCodes{
         /// No HTTP response received.
@@ -48,8 +51,12 @@ public:
 
     /**
      * Constructor.
+     *
+     * @param messageConsumer The MessageConsumerInterface which should receive messages from AVS.
+     * @param attachmentManager The attachment manager.
      */
-    HTTP2Stream();
+    HTTP2Stream(MessageConsumerInterface *messageConsumer,
+        std::shared_ptr<AttachmentManagerInterface> attachmentManager);
 
     /**
      * Initializes streams that are supposed to POST the given request.
@@ -125,14 +132,6 @@ public:
      */
     static size_t readCallback(char *data, size_t size, size_t nmemb, void *userData);
 
-    void onMessage(std::shared_ptr<Message> message) override;
-
-    /**
-     * Sets the HTTP2Connection that this stream is associated with
-     * @param connection The HTTP2Connection to report to
-     */
-    void setHTTP2Transport(HTTP2Transport *transport);
-
     /**
      * Sets the max amount of time in seconds the stream can take. If not set explicitly there is no timeout.
      *
@@ -164,8 +163,6 @@ private:
     MimeParser m_parser;
     /// The current request being sent on this HTTP/2 stream.
     std::shared_ptr<MessageRequest> m_currentRequest;
-    /// The HTTP/2 transport.
-    HTTP2Transport *m_transport;
     // Locks the HTTP2 transport
     std::mutex m_mutex;
 };

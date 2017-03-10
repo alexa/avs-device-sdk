@@ -19,6 +19,8 @@
 #define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_AVS_CONNECTION_MANAGER_H_
 
 #include <atomic>
+#include <memory>
+#include <string>
 
 #include "ACL/Values.h"
 #include "ACL/AuthDelegateInterface.h"

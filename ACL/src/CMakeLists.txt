@@ -1,9 +1,6 @@
-cmake_minimum_required(VERSION 3.0)
+find_package(CURL ${CURL_PACKAGE_CONFIG})
+find_package(Threads ${THREADS_PACKAGE_CONFIG})
 
-find_package(CURL 7.43.0 REQUIRED)
-find_package(Threads)
-
-message("${ACL_SOURCE_DIR}")
 file(GLOB_RECURSE ACL_SRC "${ACL_SOURCE_DIR}/src/*.cpp")
 add_library(ACL SHARED ${ACL_SRC})
 target_include_directories(ACL PUBLIC "${CMAKE_SOURCE_DIR}/ThirdParty/MultipartParser")

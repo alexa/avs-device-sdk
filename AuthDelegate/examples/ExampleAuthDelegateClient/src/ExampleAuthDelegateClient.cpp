@@ -32,10 +32,14 @@ public:
     Observer() : m_state(AuthObserverInterface::State::UNINITIALIZED) {
     }
 
-    void onAuthStateChange(AuthObserverInterface::State newState) override {
-        std::cout << "onAuthTokenDelegateStateChange: " << static_cast<int>(newState) << std::endl;
+    void onAuthStateChange(
+            AuthObserverInterface::State newState,
+            AuthObserverInterface::Error error = AuthObserverInterface::Error::NO_ERROR) override {
+        std::cout << "onAuthTokenStateChange: (newState=" << static_cast<int>(newState) 
+            << ", newError=" << static_cast<int>(error) << std::endl;
         std::lock_guard<std::mutex> lock(m_mutex);
         m_state = newState;
+        m_error = error;
         m_wakeTrigger.notify_all();
     }
 
@@ -56,6 +60,9 @@ private:
 
     /// Last state from authDelegate
     AuthObserverInterface::State m_state;
+
+    /// Last error from authDelegate
+    AuthObserverInterface::Error m_error;
 
     /// mutex for waiting
     std::mutex m_mutex;

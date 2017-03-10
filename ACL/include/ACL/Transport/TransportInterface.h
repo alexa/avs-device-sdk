@@ -66,12 +66,6 @@ public:
      */
     virtual void send(std::shared_ptr<MessageRequest> request) = 0;
 
-    /**
-     * This function should be called by the underlying implementation when a message has arrived from AVS.
-     *
-     * @param message The message.
-     */
-    virtual void onMessageReceived(std::shared_ptr<Message> message) = 0;
 };
 
 } // alexaClientSDK

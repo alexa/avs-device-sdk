@@ -18,11 +18,13 @@
 #ifndef ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_AUTH_DELEGATE_H_
 #define ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_AUTH_DELEGATE_H_
 
+#include <chrono>
 #include <condition_variable>
 #include <memory>
 #include <mutex>
-#include <string>
 #include <thread>
+#include <string>
+
 #include "ACL/AuthDelegateInterface.h"
 #include "ACL/AuthObserverInterface.h"
 #include "AuthDelegate/Config.h"
@@ -110,17 +112,22 @@ private:
     /// Method run in its own thread to refresh the auth token and notify for auth state changes.
     void refreshAndNotifyThreadFunction();
 
-    /// Attempt to refresh the auth token.
-    void refreshAuthToken();
+    /**
+     * Attempt to refresh the auth token.
+     *
+     * @return @c NO_ERROR if the authorization token is successfully refreshed. Otherwise, return the error encountered
+     * in the process.
+     */
+    acl::AuthObserverInterface::Error refreshAuthToken();
 
     /**
      * Process a successful response from a token refresh request to LWA.
      *
      * @param code The response code returned from the LWA request
      * @param body The response body (if any) returned from the LWA request.
-     * @return @c true if the auth token was refreshed.
+     * @return @c NO_ERROR if the auth token was refreshed, otherwise the error encountered in the process.
      */
-    bool handleLwaResponse(HttpPostInterface::ResponseCode code, const std::string& body);
+    acl::AuthObserverInterface::Error handleLwaResponse(long code, const std::string& body);
 
     /**
      * Parse a value out of an LWA response.
@@ -145,8 +152,8 @@ private:
 
     /**
      * Set the authorization state to be reported to our client.  If the state has changed, notify the client.
-     *
-     * @param newState Our new state.
+     * 
+     * @param newState The new state.
      */
     void setState(acl::AuthObserverInterface::State newState);
 
@@ -159,8 +166,11 @@ private:
     /// Authorization state change observer. Access is synchronized with @c m_mutex.
     std::shared_ptr<acl::AuthObserverInterface> m_observer;
 
-    /// Current state authorization.  Access is synchronized with @c m_mutex.
+    /// Current state authorization. Access is synchronized with @c m_mutex.
     acl::AuthObserverInterface::State m_authState;
+
+    /// Current authorization error. Access is synchronized with @c m_mutex.
+    acl::AuthObserverInterface::Error m_authError;
 
     /**
      * LWA token is used to refresh the auth token.

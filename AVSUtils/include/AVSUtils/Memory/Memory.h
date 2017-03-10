@@ -24,6 +24,7 @@
 #define ALEXA_CLIENT_SDK_AVSUTILS_INCLUDE_AVSUTILS_MEMORY_MEMORY_H_
 
 #include <memory>
+#include <utility>
 
 namespace alexaClientSDK {
 namespace avsUtils {

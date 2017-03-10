@@ -33,7 +33,6 @@
 
 using namespace alexaClientSDK::authDelegate;
 using namespace alexaClientSDK::acl;
-using ResponseCode = HttpPostInterface::ResponseCode;
 
 using namespace ::testing;
 
@@ -47,11 +46,13 @@ static const std::string DEFAULT_LWA_URL = "https://api.amazon.com/auth/o2/token
 static const auto TIME_OUT_IN_SECONDS = std::chrono::seconds(60);
 
 /**
- * 'invalid_request' Error Code from LWA (@see https://images-na.ssl-images-amazon.com/images/G/01/lwa/dev/
- * docs/website-developer-guide._TTH_.pdf).
+ * 'invalid_request' Error Code from LWA
+ * @see https://images-na.ssl-images-amazon.com/images/G/01/lwa/dev/docs/website-developer-guide._TTH_.pdf
  */
 static const std::string ERROR_CODE_INVALID_REQUEST = "invalid_request";
 
+/// The HTTP response code for a bad request.
+static const long HTTP_RESPONSE_CODE_BAD_REQUEST = 400;
 
 /// Define test fixture for testing AuthDelegate.
 class AuthDelegateTest : public ::testing::Test {
@@ -69,7 +70,8 @@ protected:
 
         ASSERT_TRUE(alexaClientSDK::avsUtils::initialization::AlexaClientSDKInit::initialize());
 
-        ON_CALL(*m_mockHttpPost, doPost(_, _, _, _)).WillByDefault(Return(ResponseCode::UNDEFINED));
+        ON_CALL(*m_mockHttpPost, doPost(_, _, _, _))
+                .WillByDefault(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED));
         ON_CALL(*m_mockConfig, getClientId()).WillByDefault(Return("testClientId (invalid)"));
         ON_CALL(*m_mockConfig, getClientSecret()).WillByDefault(Return("testClientSecret (invalid)"));
         ON_CALL(*m_mockConfig, getRefreshToken()).WillByDefault(Return("testRefreshToken (invalid)"));
@@ -122,7 +124,7 @@ protected:
         response += errorCode;
         response += R"(",
                     "error_description":"invalid request",
-                    "request_id":"test_ID")";
+                    "request_id":"test_ID"})";
         return response;
     }
 
@@ -207,7 +209,17 @@ TEST_F(AuthDelegateTest, setAuthObserver) {
     auto authDelegate = AuthDelegate::create(m_mockConfig, std::move(m_mockHttpPost));
     ASSERT_TRUE(authDelegate);
 
-    EXPECT_CALL(*m_mockAuthObserver, onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED));
+    EXPECT_CALL(
+            *m_mockAuthObserver,
+            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR));
+
+    EXPECT_CALL(
+            *m_mockAuthObserver,
+            onAuthStateChange(
+                    AuthObserverInterface::State::EXPIRED,
+                    AuthObserverInterface::Error::AUTHORIZATION_FAILED))
+            .Times(AtMost(1));
+
     authDelegate->setAuthObserver(m_mockAuthObserver);
 }
 
@@ -221,14 +233,18 @@ TEST_F(AuthDelegateTest, retry) {
     bool tokenRefreshed = false;
     const auto& validResponse = generateValidLwaResponseWithExpiration(std::chrono::seconds(60));
     EXPECT_CALL(*m_mockHttpPost, doPost(_, _, _, _))
-            .WillOnce(Return(ResponseCode::UNDEFINED))
-            .WillOnce(Return(ResponseCode::UNDEFINED))
-            .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(ResponseCode::SUCCESS_OK)));
+            .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
+            .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
+            .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)));
 
-    EXPECT_CALL(*m_mockAuthObserver, onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED))
+    EXPECT_CALL(
+            *m_mockAuthObserver,
+            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
             .Times(AtMost(1));
 
-    EXPECT_CALL(*m_mockAuthObserver, onAuthStateChange(AuthObserverInterface::State::REFRESHED))
+    EXPECT_CALL(
+            *m_mockAuthObserver,
+            onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
             .WillOnce(InvokeWithoutArgs([this, &tokenRefreshed]() {
                 tokenRefreshed = true;
                 m_cv.notify_all();
@@ -250,17 +266,23 @@ TEST_F(AuthDelegateTest, expirationNotification) {
     const auto& validResponse = generateValidLwaResponseWithExpiration(std::chrono::seconds(1));
 
     EXPECT_CALL(*m_mockHttpPost, doPost(_, _, _, _))
-            .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(ResponseCode::SUCCESS_OK)))
-            .WillRepeatedly(Return(ResponseCode::UNDEFINED));
+            .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)))
+            .WillRepeatedly(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED));
 
     ::testing::InSequence s;
-    EXPECT_CALL(*m_mockAuthObserver, onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED))
+    EXPECT_CALL(
+            *m_mockAuthObserver,
+            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
             .Times(AtMost(1));
 
-    EXPECT_CALL(*m_mockAuthObserver, onAuthStateChange(AuthObserverInterface::State::REFRESHED))
+    EXPECT_CALL(
+            *m_mockAuthObserver,
+            onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
             .Times(1);
 
-    EXPECT_CALL(*m_mockAuthObserver, onAuthStateChange(AuthObserverInterface::State::EXPIRED))
+    EXPECT_CALL(
+            *m_mockAuthObserver,
+            onAuthStateChange(AuthObserverInterface::State::EXPIRED, AuthObserverInterface::Error::UNKNOWN_ERROR))
             .WillOnce(InvokeWithoutArgs([this, &tokenExpired]() {
                 tokenExpired = true;
                 m_cv.notify_all();
@@ -282,22 +304,30 @@ TEST_F(AuthDelegateTest, recoverAfterExpiration) {
     const auto& validResponse = generateValidLwaResponseWithExpiration(std::chrono::seconds(1));
 
     EXPECT_CALL(*m_mockHttpPost, doPost(_, _, _, _))
-            .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(ResponseCode::SUCCESS_OK)))
-            .WillOnce(Return(ResponseCode::UNDEFINED))
-            .WillOnce(Return(ResponseCode::UNDEFINED))
-            .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(ResponseCode::SUCCESS_OK)));
+            .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)))
+            .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
+            .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
+            .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)));
 
     ::testing::InSequence s;
-    EXPECT_CALL(*m_mockAuthObserver, onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED))
+    EXPECT_CALL(
+            *m_mockAuthObserver,
+            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
             .Times(AtMost(1));
 
-    EXPECT_CALL(*m_mockAuthObserver, onAuthStateChange(AuthObserverInterface::State::REFRESHED))
+    EXPECT_CALL(
+            *m_mockAuthObserver,
+            onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
             .Times(1);
 
-    EXPECT_CALL(*m_mockAuthObserver, onAuthStateChange(AuthObserverInterface::State::EXPIRED))
+    EXPECT_CALL(
+            *m_mockAuthObserver,
+            onAuthStateChange(AuthObserverInterface::State::EXPIRED, AuthObserverInterface::Error::UNKNOWN_ERROR))
             .Times(1);
 
-    EXPECT_CALL(*m_mockAuthObserver, onAuthStateChange(AuthObserverInterface::State::REFRESHED))
+    EXPECT_CALL(
+            *m_mockAuthObserver,
+            onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
             .WillOnce(InvokeWithoutArgs([this, &tokenRefreshed]() {
                 tokenRefreshed = true;
                 m_cv.notify_all();
@@ -319,12 +349,19 @@ TEST_F(AuthDelegateTest, unrecoverableErrorNotification) {
     const auto& invalidRequestResponse = generateErrorLwaResponseWithErrorCode(ERROR_CODE_INVALID_REQUEST);
 
     EXPECT_CALL(*m_mockHttpPost, doPost(_, _, _, _))
-            .WillOnce(DoAll(SetArgReferee<3>(invalidRequestResponse), Return(ResponseCode::CLIENT_ERROR_BAD_REQUEST)));
+            .WillOnce(DoAll(SetArgReferee<3>(invalidRequestResponse), Return(HTTP_RESPONSE_CODE_BAD_REQUEST)))
+            .WillRepeatedly(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED));
 
-    EXPECT_CALL(*m_mockAuthObserver, onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED))
+    EXPECT_CALL(
+            *m_mockAuthObserver,
+            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
             .Times(AtMost(1));
 
-    EXPECT_CALL(*m_mockAuthObserver, onAuthStateChange(AuthObserverInterface::State::UNRECOVERABLE_ERROR))
+    EXPECT_CALL(
+            *m_mockAuthObserver,
+            onAuthStateChange(
+                AuthObserverInterface::State::UNRECOVERABLE_ERROR,
+                AuthObserverInterface::Error::INVALID_REQUEST))
             .WillOnce(InvokeWithoutArgs([this, &errorReceived]() {
                 errorReceived = true;
                 m_cv.notify_all();
@@ -334,3 +371,4 @@ TEST_F(AuthDelegateTest, unrecoverableErrorNotification) {
     authDelegate->setAuthObserver(m_mockAuthObserver);
     waitFor(TIME_OUT_IN_SECONDS, [&errorReceived]() {return errorReceived;});
 }
+

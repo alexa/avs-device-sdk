@@ -1,7 +1,7 @@
 /*
  * HttpPostInterface.h
  *
- * Copyright 2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 #ifndef ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_HTTP_POST_INTERFACE_H_
 #define ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_HTTP_POST_INTERFACE_H_
 
+#include <chrono>
 #include <string>
 
 namespace alexaClientSDK {
@@ -26,16 +27,11 @@ namespace authDelegate {
 /// Minimal interface for making Http POST requests.
 class HttpPostInterface {
 public:
+    /// The HTTP response code to use when the disposition of Post request is undefined.
+    static const long HTTP_RESPONSE_CODE_UNDEFINED = 0;
 
-    /// Status code values returned by doPost()
-    enum class ResponseCode {
-        /// Disposition of Post request is undefined, assume failure.
-        UNDEFINED = 0,
-        /// Post request succeeded.
-        SUCCESS_OK = 200,
-        /// Post request failed because it was malformed.
-        CLIENT_ERROR_BAD_REQUEST = 400
-    };
+    /// The HTTP response code for successful response.
+    static const long HTTP_RESPONSE_CODE_SUCCESS_OK = 200;
 
     /// Virtual destructor to assure proper cleanup of derived types.
     virtual ~HttpPostInterface() = default;
@@ -50,11 +46,11 @@ public:
      * @param[out] body A string to receive the body of the request if there is one.
      * @return A HttpStatus indicating the disposition of the Post request.
      */
-    virtual ResponseCode doPost(
-            const std::string& url,
+    virtual long doPost(const std::string& url,
             const std::string& data,
             std::chrono::seconds timeout,
             std::string& body) = 0;
+
 };
 
 } // namespace authDelegate

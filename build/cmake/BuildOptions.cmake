@@ -37,7 +37,7 @@ if (buildTypeFound EQUAL -1)
 
     message(FATAL_ERROR "Unknown build type ${buildType}. Please select from DEBUG, RELEASE, or MINSIZEREL. Quitting!")
 else()
-    message("Creating the build directory for the AlexaClientSDK with build type: ${buildType}")
+    message("Creating the build directory for the ${PROJECT_NAME} with build type: ${buildType}")
 endif()
 
 # Set up the compiler flags.
@@ -47,11 +47,11 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Determine the platform and compiler dependent flags.
 if (UNIX)
-    set(CXX_PLATFORM_DEPENDENT_FLAGS_DEBUG      "-DDEBUG -Wall -g")
+    set(CXX_PLATFORM_DEPENDENT_FLAGS_DEBUG      "-DDEBUG -DACSDK_DEBUG_LOG_ENABLED -Wall -g")
     set(CXX_PLATFORM_DEPENDENT_FLAGS_RELEASE    "-DNDEBUG -Wall -O2")
     set(CXX_PLATFORM_DEPENDENT_FLAGS_MINSIZEREL "-DNDEBUG -Wall -Os")
 elseif(MSVC)
-    set(CXX_PLATFORM_DEPENDENT_FLAGS_DEBUG      "/DDEBUG /W4 /Zi")
+    set(CXX_PLATFORM_DEPENDENT_FLAGS_DEBUG      "/DDEBUG i-DACSDK_DEBUG_LOG_ENABLED /W4 /Zi")
     set(CXX_PLATFORM_DEPENDENT_FLAGS_RELEASE    "/DNDEBUG /W4 /O2")
     set(CXX_PLATFORM_DEPENDENT_FLAGS_MINSIZEREL "/DNDEBUG /W4 /O1")
 endif()

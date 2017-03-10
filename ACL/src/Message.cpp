@@ -20,16 +20,24 @@
 namespace alexaClientSDK {
 namespace acl {
 
-Message::Message(const std::string & JSON, std::shared_ptr<std::istream> binaryContent)
-        : m_JSONContent(JSON), m_binaryContent(binaryContent) {
+Message::Message(const std::string& json, std::shared_ptr<std::istream> binaryContent)
+        : m_jsonContent{json}, m_binaryContent{binaryContent} {
+}
+
+Message::Message(const std::string& json, std::shared_ptr<AttachmentManagerInterface> attachmentManager)
+        : m_jsonContent{json}, m_attachmentManager{attachmentManager} {
 }
 
 std::string Message::getJSONContent() const {
-    return m_JSONContent;
+    return m_jsonContent;
 }
 
 std::shared_ptr<std::istream> Message::getAttachment() {
     return m_binaryContent;
+}
+
+std::shared_ptr<AttachmentManagerInterface> Message::getAttachmentManager() const {
+    return m_attachmentManager;
 }
 
 } // namespace acl

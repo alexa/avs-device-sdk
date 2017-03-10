@@ -18,8 +18,10 @@
 #ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_ROUTER_OBSERVER_INTERFACE_H_
 #define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_ROUTER_OBSERVER_INTERFACE_H_
 
-#include "ACL/Values.h"
+#include <memory>
+
 #include "ACL/Message.h"
+#include "ACL/Values.h"
 
 namespace alexaClientSDK {
 namespace acl {

@@ -32,26 +32,17 @@ static const std::string MIME_JSON_CONTENT_TYPE = "application/json";
 /// MIME type for binary streams
 static const std::string MIME_OCTET_STREAM_CONTENT_TYPE = "application/octet-stream";
 
-/// TODO: ACSDK-58 replace these constants with JSON generated from RapidJSON
-/// Field name for encoding Content-ID into JSON
-static const std::string CONTENT_ID_KEY_NAME = "cid";
-/// Prefix to a JSON encoded string
-static const std::string JSON_PREFIX = "{'";
-/// Separates a JSON field name from its value
-static const std::string JSON_KEY_VALUE_SEPARATOR = "':'";
-/// Suffix to a JSON encoded string
-static const std::string JSON_SUFFIX = "'}";
-
-MimeParser::MimeParser(MimeParserObserverInterface *observer)
+MimeParser::MimeParser(MessageConsumerInterface *messageConsumer,
+        std::shared_ptr<AttachmentManagerInterface> attachmentManager)
         : m_receivedFirstChunk{false},
           m_currDataType{ContentType::NONE},
-          m_observer{observer} {
+          m_messageConsumer{messageConsumer},
+          m_attachmentManager{attachmentManager} {
       m_multipartReader.onPartBegin = MimeParser::partBeginCallback;
       m_multipartReader.onPartData = MimeParser::partDataCallback;
       m_multipartReader.onPartEnd = MimeParser::partEndCallback;
       m_multipartReader.userData = this;
 }
-
 
 void MimeParser::partBeginCallback(const MultipartHeaders &headers, void *userData) {
     MimeParser *parser = static_cast<MimeParser*>(userData);
@@ -84,21 +75,22 @@ void MimeParser::partDataCallback(const char *buffer, size_t size, void *userDat
 void MimeParser::partEndCallback(void *userData) {
     MimeParser *parser = static_cast<MimeParser*>(userData);
     std::shared_ptr<Message> message;
-    std::string JSONContent;
     switch (parser->m_currDataType) {
         case MimeParser::ContentType::JSON:
-            message = std::make_shared<Message>(parser->m_message);
+            message = std::make_shared<Message>(parser->m_message, parser->m_attachmentManager);
+            if(!parser->m_messageConsumer) {
+                Logger::log("Message Consumer has not been set. Message from ACL cannot be processed.");
+                break;
+            }
+            parser->m_messageConsumer->consumeMessage(message);
             break;
         case MimeParser::ContentType::ATTACHMENT:
-            //TODO: ACSDK-58 use RapidJSON to generate this string instead
-            JSONContent = JSON_PREFIX + CONTENT_ID_KEY_NAME + JSON_KEY_VALUE_SEPARATOR +
-                    parser->m_message + JSON_SUFFIX;
-            message = std::make_shared<Message>(JSONContent, parser->m_attachment);
+            parser->m_attachmentManager->createAttachment(parser->m_message, parser->m_attachment);
             break;
         default:
             Logger::log("Ended part for usupported part type");
     }
-    parser->m_observer->onMessage(message);
+
     parser->m_message = "";
 }
 
@@ -134,6 +126,10 @@ void MimeParser::feed(char *data, size_t length) {
         }
     }
     m_multipartReader.feed(data, length);
+}
+
+MessageConsumerInterface* MimeParser::getMessageConsumer() {
+    return m_messageConsumer;
 }
 
 }// acl

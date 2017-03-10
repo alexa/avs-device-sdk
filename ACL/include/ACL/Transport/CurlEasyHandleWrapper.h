@@ -18,9 +18,9 @@
 #ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_CURL_EASY_HANDLE_WRAPPER_H_
 #define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_CURL_EASY_HANDLE_WRAPPER_H_
 
+#include <chrono>
 #include <curl/curl.h>
 #include <string>
-#include <chrono>
 
 namespace alexaClientSDK {
 namespace acl {

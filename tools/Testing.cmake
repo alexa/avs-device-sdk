@@ -4,7 +4,7 @@ include(ThirdParty/googletest.cmake)
 
 macro(discover_unit_tests includes libraries)
     # This will result in some errors not finding GTest when running cmake, but allows us to better integrate with CTest
-    find_package(GTest)
+    find_package(GTest ${GTEST_PACKAGE_CONFIG})
     if(BUILD_TESTING)
         file(GLOB_RECURSE tests RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/*Test.cpp")
         foreach (testsourcefile IN LISTS tests)

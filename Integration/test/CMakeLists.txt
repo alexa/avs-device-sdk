@@ -1,12 +1,10 @@
-cmake_minimum_required(VERSION 3.0)
-
-find_package(GTest)
+find_package(GTest ${GTEST_PACKAGE_CONFIG})
 
 set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${AuthDelegate_SOURCE_DIR}/test/"
      "${GTEST_INCLUDE_DIRS}")
 
-set(LINK_PATH ACL AuthDelegate Integration gtest gmock)
+set(LINK_PATH ACL AuthDelegate ADSL Integration gtest gmock)
 
 if(BUILD_TESTING)
     file(GLOB_RECURSE testSourceFiles RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*Test.cpp")
@@ -17,7 +15,15 @@ if(BUILD_TESTING)
         target_link_libraries(${testName} "${LINK_PATH}")
     endforeach()
 
-    add_custom_target(integration COMMAND AlexaAuthorizationDelegateTest "${Integration_SOURCE_DIR}/AuthDelegate.config"
-                                  COMMAND AlexaCommunicationsLibraryTest "${Integration_SOURCE_DIR}/AuthDelegate.config"
-        "${Integration_SOURCE_DIR}/inputs")
+    include(${Integration_BINARY_DIR}/CTestCustom.cmake OPTIONAL)
+    separate_arguments(CTEST_CUSTOM_PRE_TEST UNIX_COMMAND "${CTEST_CUSTOM_PRE_TEST}")
+    separate_arguments(CTEST_CUSTOM_POST_TEST UNIX_COMMAND "${CTEST_CUSTOM_POST_TEST}")
+    add_custom_target(integration
+        COMMAND ${CTEST_CUSTOM_PRE_TEST}
+        COMMAND AlexaAuthorizationDelegateTest "${Integration_SOURCE_DIR}/AuthDelegate.config"
+        COMMAND AlexaCommunicationsLibraryTest "${Integration_SOURCE_DIR}/AuthDelegate.config"
+            "${Integration_SOURCE_DIR}/inputs"
+        COMMAND AlexaDirectiveSequencerLibraryTest "${Integration_SOURCE_DIR}/AuthDelegate.config"
+            "${Integration_SOURCE_DIR}/inputs"
+        COMMAND ${CTEST_CUSTOM_POST_TEST})
 endif()

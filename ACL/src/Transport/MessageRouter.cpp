@@ -129,7 +129,7 @@ void MessageRouter::onServerSideDisconnect() {
     }
 }
 
-void MessageRouter::onMessageReceived(std::shared_ptr<Message> message) {
+void MessageRouter::consumeMessage(std::shared_ptr<Message> message) {
     notifyObserverOnReceive(message);
 }
 
@@ -160,7 +160,7 @@ void MessageRouter::notifyObserverOnReceive(std::shared_ptr<Message> msg) {
 }
 
 void MessageRouter::createActiveTransportLocked() {
-    auto transport = createTransport(m_authDelegate, m_avsEndpoint, this);
+    auto transport = createTransport(m_authDelegate, m_avsEndpoint, this, this);
     if (transport->connect()) {
         m_transports.push_back(transport);
         m_activeTransport = transport;

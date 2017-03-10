@@ -18,7 +18,10 @@
 #ifndef ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_AUTHDELEGATE_MOCK_CONFIG_H_
 #define ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_AUTHDELEGATE_MOCK_CONFIG_H_
 
+#include <chrono>
 #include <gmock/gmock.h>
+#include <string>
+
 #include "AuthDelegate/Config.h"
 
 namespace alexaClientSDK {

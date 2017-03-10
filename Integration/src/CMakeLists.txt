@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.0)
-
 file(GLOB_RECURSE INTEGRATION_SRC "*.cpp" "${CMAKE_SOURCE_DIR}/Utils/src/*.cpp")
 add_library(Integration SHARED "${INTEGRATION_SRC}")
 target_include_directories(Integration PUBLIC "${ACL_SOURCE_DIR}/include")

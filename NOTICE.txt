@@ -5,10 +5,15 @@ Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 ALEXA CLIENT SDK COMPONENTS
 ***************************
 
-Alexa Communications Library (ACL):
-Licensed under the Apache License, Version 2.0 (the "License"). You may not
-use this file except in compliance with the License. A copy of the License
-is located at
+The following Alexa Client SDK components are licensed under the Apache
+License, Version 2.0 (the "License"):
+
+- Alexa Communications Library (ACL)
+- Alexa Directive Sequencer Library (ADSL)
+- Activity Focus Manager Library (AFML)
+
+You may not use this file except in compliance with the License. A copy of
+the License is located at
 
     http://aws.amazon.com/apache2.0/
 
@@ -17,12 +22,17 @@ an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 or implied. See the License for the specific language governing permissions and
 limitations under the License.
 
+
+
 **********************
 THIRD PARTY COMPONENTS
 **********************
 
 This software includes third party software subject to the following
 copyrights:
+
+- JSON parsing for C++ from RapidJSON - Copyright (C) 2015 THL A29 Limited,
+a Tencent company, and Milo Yip.
 
 - Multipart parsing for MIME messages from multipart-parser -
 Copyright (c) 2010 Hongli Lai

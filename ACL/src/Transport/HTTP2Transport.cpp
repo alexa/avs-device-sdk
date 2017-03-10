@@ -15,11 +15,12 @@
  * permissions and limitations under the License.
  */
 
+#include "ACL/Transport/HTTP2Transport.h"
+
 #include <chrono>
 #include <random>
 
 #include "AVSUtils/Logging/Logger.h"
-#include "ACL/Transport/HTTP2Transport.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -104,13 +105,15 @@ static void printCurlDiagnostics() {
 #endif
 }
 
-HTTP2Transport::HTTP2Transport(std::shared_ptr<AuthDelegateInterface> authDelegate,
-                               const std::string& avsEndpoint,
-                               TransportObserverInterface *observer)
+HTTP2Transport::HTTP2Transport(std::shared_ptr<AuthDelegateInterface> authDelegate, const std::string& avsEndpoint,
+        MessageConsumerInterface* messageConsumerInterface,
+        std::shared_ptr<AttachmentManagerInterface> attachmentManager,
+        TransportObserverInterface* observer)
     : m_observer{observer},
+      m_messageConsumer{messageConsumerInterface},
       m_authDelegate{authDelegate},
       m_avsEndpoint{avsEndpoint},
-      m_streamPool{MAX_STREAMS},
+      m_streamPool{MAX_STREAMS, attachmentManager},
       m_isNetworkThreadRunning{false},
       m_isConnected{false},
       m_readyToSendMessage{false} {
@@ -382,7 +385,7 @@ void HTTP2Transport::send(std::shared_ptr<MessageRequest> request) {
         auto authToken = m_authDelegate->getAuthToken();
 
         if (!authToken.empty()) {
-            std::shared_ptr<HTTP2Stream> stream = m_streamPool.createPostStream(this, url, authToken, request);
+            std::shared_ptr<HTTP2Stream> stream = m_streamPool.createPostStream(url, authToken, request, m_messageConsumer);
 
             std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -414,10 +417,6 @@ void HTTP2Transport::disconnect() {
     }
 }
 
-void HTTP2Transport::onMessageReceived(std::shared_ptr<Message> message) {
-    m_observer->onMessageReceived(message);
-}
-
 bool HTTP2Transport::isConnected() {
     return m_isConnected;
 }
@@ -435,7 +434,7 @@ bool HTTP2Transport::sendPing() {
 
     std::string url = m_avsEndpoint + AVS_PING_URL_PATH_EXTENSION;
 
-    m_pingStream = m_streamPool.createGetStream(this, url, authToken);
+    m_pingStream = m_streamPool.createGetStream(url, authToken, m_messageConsumer);
     if (!m_pingStream) {
         Logger::log("Could not create ping stream");
         return false;
@@ -472,7 +471,7 @@ bool HTTP2Transport::setupDownchannelStream() {
     }
 
     std::string url = m_avsEndpoint + AVS_DOWNCHANNEL_URL_PATH_EXTENSION;
-    m_downchannelStream = m_streamPool.createGetStream(this, url, authToken);
+    m_downchannelStream = m_streamPool.createGetStream(url, authToken, m_messageConsumer);
     if (!m_downchannelStream) {
         Logger::log("Could not setup downchannel stream");
         return false;

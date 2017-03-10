@@ -19,8 +19,8 @@
 #define ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_CONFIG_H_
 
 #include <chrono>
-#include <memory>
 #include <string>
+
 #include "AuthDelegate/HttpPostInterface.h"
 
 namespace alexaClientSDK {

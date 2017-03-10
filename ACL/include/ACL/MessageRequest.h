@@ -18,6 +18,8 @@
 #ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_MESSAGE_REQUEST_H_
 #define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_MESSAGE_REQUEST_H_
 
+#include <memory>
+
 #include "ACL/Message.h"
 #include "ACL/Values.h"
 
@@ -52,6 +54,13 @@ public:
      * @param status Whether the send request succeeded or failed.
      */
     virtual void onSendCompleted(SendMessageStatus status);
+
+    /**
+     * This function will be called if AVS responds with an exception message to this message request being sent.
+     *
+     * @param exceptionMessage The exception message.
+     */
+    virtual void onExceptionReceived(std::shared_ptr<acl::Message> exceptionMessage);
 
 private:
 

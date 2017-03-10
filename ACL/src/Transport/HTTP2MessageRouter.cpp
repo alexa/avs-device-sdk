@@ -31,17 +31,19 @@ HTTP2MessageRouter::HTTP2MessageRouter(std::shared_ptr<AuthDelegateInterface> au
                             avsEndpoint,
                             std::make_shared<threading::Executor>(),
                             std::make_shared<threading::Executor>()) {
+    m_attachmentManager = std::make_shared<AttachmentManager>();
 }
 
 HTTP2MessageRouter::~HTTP2MessageRouter() {
 }
 
-
 std::shared_ptr<TransportInterface> HTTP2MessageRouter::createTransport(
         std::shared_ptr<AuthDelegateInterface> authDelegate,
         const std::string& avsEndpoint,
+        MessageConsumerInterface* messageConsumerInterface,
         TransportObserverInterface* transportObserverInterface) {
-    return std::make_shared<HTTP2Transport>(authDelegate, avsEndpoint, transportObserverInterface);
+    return std::make_shared<HTTP2Transport>(authDelegate, avsEndpoint, messageConsumerInterface, m_attachmentManager,
+            transportObserverInterface);
 }
 
 } // namespace acl

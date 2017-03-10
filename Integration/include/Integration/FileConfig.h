@@ -18,6 +18,8 @@
 #ifndef ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_FILE_CONFIG_H_
 #define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_FILE_CONFIG_H_
 
+#include <string>
+
 #include "AuthDelegate/Config.h"
 
 namespace alexaClientSDK {

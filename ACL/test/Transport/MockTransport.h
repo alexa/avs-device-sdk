@@ -25,7 +25,6 @@
 #include <gmock/gmock.h>
 
 #include <memory>
-#include <string>
 
 namespace alexaClientSDK {
 namespace acl {
@@ -42,7 +41,7 @@ public:
     MOCK_METHOD0(isConnected, bool());
     MOCK_METHOD0(isPendingDisconnected, bool());
     MOCK_METHOD1(send, void(std::shared_ptr<MessageRequest>));
-    MOCK_METHOD1(onMessageReceived, void(std::shared_ptr<Message>));
+    MOCK_METHOD1(onAttachmentReceived, void(std::shared_ptr<Message>));
 
     const int m_id;
 

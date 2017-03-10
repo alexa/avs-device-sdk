@@ -15,6 +15,8 @@
  * permissions and limitations under the License.
  */
 
+/// @file AlexaCommunicationsLibraryTest.cpp
+
 #include "ACL/AVSConnectionManager.h"
 #include "ACL/Message.h"
 #include "ACL/Transport/HTTP2MessageRouter.h"
@@ -393,7 +395,7 @@ int main(int argc, char **argv) {
     if (argc < 3) {
         std::cerr << "USAGE: AlexaCommunicationsLibraryTest <path_to_auth_delgate_config> <path_to_inputs_folder>"
                 << std::endl;
-
+        return 1;
     } else {
         alexaClientSDK::integration::configPath = std::string(argv[1]);
         alexaClientSDK::integration::inputPath = std::string(argv[2]);

@@ -38,6 +38,26 @@ public:
         UNRECOVERABLE_ERROR
     };
 
+    /// The enum Error encodes possible errors which may occur when changing state.
+    enum class Error {
+        /// No error.
+        NO_ERROR,
+        /// An unknown body containing no error field has been encountered.
+        UNKNOWN_ERROR,
+        /// The client authorization failed.
+        AUTHORIZATION_FAILED,
+        /// The client is not authorized to use authorization codes.
+        UNAUTHORIZED_CLIENT,
+        /// The server encountered a runtime error.
+        SERVER_ERROR,
+        /// The request is missing a required parameter, has an invalid value, or is otherwise improperly formed.
+        INVALID_REQUEST,
+        /// The authorization code is invalid, expired, revoked, or was issued to a different client.
+        AUTHORIZATION_EXPIRED,
+        /// The client specified the wrong token type.
+        UNSUPPORTED_GRANT_TYPE
+    };
+
     /**
      * Virtual destructor to assure proper cleanup of derived types.
      */
@@ -47,13 +67,12 @@ public:
      * Notification that an authorization state has changed.
      *
      * @param newState The new state of the authorization token.
+     * @param error The error associated to the state change.
      */
-    virtual void onAuthStateChange(State newState) = 0;
+    virtual void onAuthStateChange(State newState, Error error) = 0;
 };
 
 } // namespace acl
 } // namespace alexaClientSDK
 
 #endif // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_AUTH_OBSERVER_INTERFACE_H_
-
-

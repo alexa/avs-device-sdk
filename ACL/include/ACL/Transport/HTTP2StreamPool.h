@@ -18,10 +18,14 @@
 #ifndef ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_STREAM_POOL_H_
 #define ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_STREAM_POOL_H_
 
-#include "ACL/Transport/HTTP2Stream.h"
-#include <vector>
-#include <mutex>
 #include <atomic>
+#include <memory>
+#include <mutex>
+#include <vector>
+
+#include "ACL/AttachmentManager.h"
+#include "ACL/Transport/HTTP2Stream.h"
+#include "ACL/Transport/MessageConsumerInterface.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -32,32 +36,32 @@ public:
      * Default constructor
      *
      * @params maxStreams The maximum number of streams that can be active
+     * @params attachmentManager The attachment manager.
      */
-    HTTP2StreamPool(const int maxStreams);
+    HTTP2StreamPool(const int maxStreams, std::shared_ptr<AttachmentManagerInterface> attachmentManager);
 
     /**
      * Grabs an HTTP2Stream from the pool and configures it to be an HTTP GET.
      *
-     * @param transport The HTTP2Transport this stream reports back to. The HTTP2Transport will own the
-     * underlying object and be responsible for cleaning it up.
      * @param url The request URL.
      * @param authToken The LWA token to supply.
+     * @param messageConsumer The MessageConsumerInterface to pass messages to.
      * @return An HTTP2Stream from the stream pool, or @c nullptr if there was an error.
      */
-    std::shared_ptr<HTTP2Stream> createGetStream(HTTP2Transport *transport, const std::string& url,
-                                        const std::string& authToken);
+    std::shared_ptr<HTTP2Stream> createGetStream(const std::string& url, const std::string& authToken,
+            MessageConsumerInterface *messageConsumer);
 
     /**
      * Grabs an HTTP2Stream from the pool and configures it to be an HTTP POST.
      *
-     * @param transport The HTTP2Transport this stream reports back to.
      * @param url The request URL.
      * @param authToken The LWA token to supply.
      * @param request The message request.
+     * @param messageConsumer The MessageConsumerInterface to pass messages to.
      * @return An HTTP2Stream from the stream pool, or @c nullptr if there was an error.
      */
-    std::shared_ptr<HTTP2Stream> createPostStream(HTTP2Transport *transport, const std::string& url,
-                                        const std::string& authToken, std::shared_ptr<MessageRequest> request);
+    std::shared_ptr<HTTP2Stream> createPostStream(const std::string& url, const std::string& authToken,
+            std::shared_ptr<MessageRequest> request, MessageConsumerInterface *messageConsumer);
 
     /**
      * Returns an HTTP2Stream back into the pool.
@@ -67,9 +71,11 @@ public:
 private:
     /**
      * Gets a stream from the stream pool  If the pool is empty, returns a new HTTP2Stream.
-     * @returns an HTTP2Stream from the pool, a new stream, or @c nullptr if there are too many active streams.
+     *
+     * @param messageConsumer The MessageConsumerInterface which should receive messages from AVS.
+     * @return an HTTP2Stream from the pool, a new stream, or @c nullptr if there are too many active streams.
      */
-    std::shared_ptr<HTTP2Stream> getStream();
+    std::shared_ptr<HTTP2Stream> getStream(MessageConsumerInterface *messageConsumer);
 
     /// A growing pool of EventStreams.
     std::vector<std::shared_ptr<HTTP2Stream>> m_pool;
@@ -79,6 +85,8 @@ private:
     std::atomic<int> m_numRemovedStreams;
     /// The maximum number of streams that can be active in the pool.
     const int m_maxStreams;
+    /// The attachment manager.
+    std::shared_ptr<AttachmentManagerInterface> m_attachmentManager;
 };
 
 } // acl

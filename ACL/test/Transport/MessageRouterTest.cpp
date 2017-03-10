@@ -87,26 +87,6 @@ TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfRouterDiscon
               ConnectionChangedReason::ACL_CLIENT_REQUEST);
 }
 
-TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfReceivedMessages) {
-    auto message = createMessage();
-
-    // receive it
-    m_router.onMessageReceived(message);
-
-    // wait for the result to propogate by scheduling a task on the client executor
-    waitOnExecutor(m_receiveExecutor, SHORT_TIMEOUT_MS);
-
-    // verify the observer received the same message
-    auto receivedMessage = m_mockMessageRouterObserver->getLatestMessage();
-    ASSERT_EQ(receivedMessage->getJSONContent(), MESSAGE);
-
-    // unsure if this is the best way to verify this, but it works
-    char line[MESSAGE_LENGTH];
-    receivedMessage->getAttachment()->getline(line, MESSAGE_LENGTH);
-    std::string receivedAttachmentString(line);
-    ASSERT_EQ(receivedAttachmentString, MESSAGE);
-}
-
 TEST_F(MessageRouterTest, sendIsSuccessfulWhenConnected) {
     setupStateToConnected();
 
@@ -139,7 +119,7 @@ TEST_F(MessageRouterTest, sendFailsWhenPending) {
 
     auto messageRequest = createMessageRequest();
 
-    // Expect to have the message sent to the transport
+    // Expect to have the message sent to the transport.
     EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(0);
 
     m_router.send(messageRequest);

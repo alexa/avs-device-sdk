@@ -18,6 +18,9 @@
 #define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_ABSTRACT_MESSAGE_ROUTER_TEST_H_
 
 #include <gtest/gtest.h>
+#include <memory>
+#include <sstream>
+#include <string>
 
 #include "AVSUtils/Threading/Executor.h"
 #include "AVSUtils/Memory/Memory.h"
@@ -26,6 +29,7 @@
 #include "MockAuthDelegate.h"
 #include "MockTransport.h"
 #include "ACL/Transport/MessageRouter.h"
+#include "ACL/Transport/MessageConsumerInterface.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -57,6 +61,7 @@ private:
     std::shared_ptr<TransportInterface> createTransport(
             std::shared_ptr<AuthDelegateInterface> authDelegate,
             const std::string& avsEndpoint,
+            MessageConsumerInterface* messageConsumerInterface,
             TransportObserverInterface* transportObserverInterface) override {
         return m_mockTransport;
     }

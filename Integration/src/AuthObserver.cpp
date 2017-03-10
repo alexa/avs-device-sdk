@@ -23,11 +23,16 @@ namespace integration {
 
 using acl::AuthObserverInterface;
 
-AuthObserver::AuthObserver(): m_authState(AuthObserverInterface::State::UNINITIALIZED) {
+AuthObserver::AuthObserver():
+    m_authState(AuthObserverInterface::State::UNINITIALIZED),
+    m_authError(AuthObserverInterface::Error::NO_ERROR) {
 }
 
-void AuthObserver::onAuthStateChange(const AuthObserverInterface::State authState) {
+void AuthObserver::onAuthStateChange(
+        const AuthObserverInterface::State authState,
+        const AuthObserverInterface::Error authError) {
     m_authState = authState;
+    m_authError = authError;
     m_wakeTrigger.notify_all();
 }
 

@@ -18,8 +18,9 @@
 #ifndef ALEXA_CLIENT_SDK_AVSUTILS_INCLUDE_AVSUTILS_THREADING_TASK_THREAD_H_
 #define ALEXA_CLIENT_SDK_AVSUTILS_INCLUDE_AVSUTILS_THREADING_TASK_THREAD_H_
 
-#include <future>
-#include <mutex>
+#include <atomic>
+#include <memory>
+#include <thread>
 
 #include "AVSUtils/Threading/TaskQueue.h"
 

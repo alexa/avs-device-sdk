@@ -18,7 +18,10 @@
 #ifndef ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_AUTHDELEGATE_MOCK_HTTP_POST_H_
 #define ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_AUTHDELEGATE_MOCK_HTTP_POST_H_
 
+#include <chrono>
 #include <gmock/gmock.h>
+#include <string>
+
 #include "AuthDelegate/HttpPostInterface.h"
 
 namespace alexaClientSDK {
@@ -27,7 +30,7 @@ namespace authDelegate {
 /// Mock HttpPostInterface class
 class MockHttpPost : public HttpPostInterface {
 public:
-    MOCK_METHOD4(doPost, ResponseCode(const std::string& url, const std::string& data, std::chrono::seconds timeout,
+    MOCK_METHOD4(doPost, long(const std::string& url, const std::string& data, std::chrono::seconds timeout,
         std::string& body));
 };
 

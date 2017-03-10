@@ -52,11 +52,6 @@ class TransportObserverInterface {
      */
     virtual void onServerSideDisconnect() = 0;
 
-    /**
-     * Called when a message is sent from AVS.
-     * @param message The message.
-     */
-    virtual void onMessageReceived(std::shared_ptr<Message> message) = 0;
 };
 
 } // acl

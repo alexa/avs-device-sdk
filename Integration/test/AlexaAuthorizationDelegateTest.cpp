@@ -116,6 +116,7 @@ int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     if (argc < 2) {
         std::cerr << "USAGE: AlexaAuthorizationDelegateTest <path_to_auth_delgate_config>" << std::endl;
+        return 1;
     } else {
         g_configPath = std::string(argv[1]);
     }

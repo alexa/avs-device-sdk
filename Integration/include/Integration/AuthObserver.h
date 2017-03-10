@@ -30,13 +30,17 @@ namespace integration {
 class AuthObserver : public alexaClientSDK::acl::AuthObserverInterface {
 public:
     AuthObserver();
-    void onAuthStateChange(const alexaClientSDK::acl::AuthObserverInterface::State) override;
+    void onAuthStateChange(
+        const alexaClientSDK::acl::AuthObserverInterface::State,
+        const alexaClientSDK::acl::AuthObserverInterface::Error =
+            alexaClientSDK::acl::AuthObserverInterface::Error::NO_ERROR) override;
     AuthObserverInterface::State getAuthState() const;
     bool waitFor(
             const alexaClientSDK::acl::AuthObserverInterface::State,
             const std::chrono::seconds = std::chrono::seconds(20));
 private:
     alexaClientSDK::acl::AuthObserverInterface::State m_authState;
+    alexaClientSDK::acl::AuthObserverInterface::Error m_authError;
     std::mutex m_mutex;
     std::condition_variable m_wakeTrigger;
 };

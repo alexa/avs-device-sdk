@@ -26,7 +26,6 @@
 #include <gmock/gmock.h>
 
 #include <memory>
-#include <string>
 
 namespace alexaClientSDK {
 namespace acl {
