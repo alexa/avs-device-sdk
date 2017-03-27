@@ -1,6 +1,6 @@
 ## Alexa Client SDK v0.2
 
-This release of the Alexa Client SDK for C++ provides components for authentication and communications with the Alexa Voice Service (AVS), specifically AuthDelegate, the Alexa Communications Library (ACL), and associated APIs.
+This release of the Alexa Client SDK for C++ provides components for authentication and communications with the Alexa Voice Service (AVS), specifically AuthDelegate, Alexa Communications Library (ACL), Alexa Directive Sequencer Library (ADSL), Activity Focus Manager Library (AFML), and associated APIs.
 
 ## Overview
 
@@ -139,9 +139,9 @@ To recompile cURL, follow these instructions:
 
 To create an out-of-source build for macOS:
 
-1. Clone the repository (or download and extract the tarball).  
-2. Create a build directory out-of-source. **Important**: The directory cannot be a subdirectory of the source folder.  
-3. `cd` into your build directory.
+1. Clone the repository (or download and extract the tarball).
+2. Create a build directory out-of-source. **Important**: The directory cannot be a subdirectory of the source folder.
+3. `cd` into your build directory.  
 4. From your build directory, run `cmake` on the source directory to generate make files for the SDK: `cmake <path-to-source-code>`.
 5. From the build directory, run `make` to build the SDK.  
 
@@ -172,7 +172,10 @@ To create `AuthDelegate.config`:
    ```
 
 After you've entered your credentials, save the file and run this command:
-`make all integration`
+`make all integration`  
+
+## Alexa Client SDK API Documentation  
+To build the Alexa Client SDK API documentation, run this command from your build directory: `make doc`.  
 
 ## Resources and Guides
 
@@ -243,22 +246,29 @@ static const std::string DEFAULT_REFRESH_TOKEN = "INSERT_YOUR_REFRESH_TOKEN";
 static const std::string DEFAULT_CLIENT_SECRET = "INSERT_YOUR_CLIENT_SECRET";
 ```  
 
-## Appendix B: ACL Memory Usage  
+## Appendix B: Memory Profile  
 
-This appendix provides ACL memory usage for a machine running Ubuntu 14.04.  
+This appendix provides the memory profiles for various modules of the Alexa Client SDK. The numbers were observed running integration tests on a machine running Ubuntu 16.04.2 LTS.    
 
-| ACL | Size | Notes |  
-|-----|------|-------|
-| Source | 9.8 MB | N/A |  
-| Build | 96 MB | N/A |  
+| Module | Source Code Size (Bytes) | Library Size RELEASE Build (libxxx.so) (Bytes) | Library Size MINSIZEREL Build (libxxx.so) (Bytes) |   
+|--------|--------------------------|------------------------------------------------|---------------------------------------------------|  
+| ACL | 300 KB | 245 KB | 227 KB |  
+| ADSL | 188 KB | 180 KB | 169 KB |    
+| AFML | 100 KB | 114 KB | 109 KB |  
 
-&nbsp;
+**Runtime Memory**
 
-| Runtime | Size | Notes |
-|---------|------|-------|
-| Max Total Heap | 14 MB | Valgrind Massif was used to measure how much heap memory the ACL uses. |
-| Max Stack | 50 KB | Resident set size (RSS) was in the range of 22 KB to 30 KB using Smem and top. Stack memory usage was in the range of 30 KB to 50 KB using Valgrind. |  
+Unique size set (USS) and proportional size set (PSS) were measured by SMEM while integration tests were run.
 
+| Runtime Memory | Max USS (Bytes) | Max PSS (Bytes) |  
+|----------------|-----------------|-----------------|  
+| ACL | 22 MB | 23 MB |  
+| ADSL + ACL | 26 MB | 27 MB |  
+
+**Definitions**
+
+* **USS**: The amount of memory that is private to the process and not shared with any other processes.   
+* **PSS**:  The amount of memory shared with other processes; divided by the number of processes sharing each page.    
 
 ## Appendix C: Directive Lifecycle Diagram
 
@@ -269,7 +279,8 @@ This appendix provides ACL memory usage for a machine running Ubuntu 14.04.
 v0.2 of the Alexa Client SDK includes components for authentication, communications, message orchestration, and focus management. These include AuthDelegate, ACL, ADSL, AFML, and associated APIs.
 
 
-| Version | Release Date | Notes |
-|---------|--------------|-------|
+| Version | Release Date | Notes |  
+|---------|--------------|-------|  
+| v0.2 | 3/27/2017 | Added memory profiling for ACL and ADSL; added command to build API documentation. |  
 | v0.2 | 3/9/2017 | Alexa Client SDK v0.2 released: Architecture diagram has been updated to include the ADSL and AMFL. CMake build types and options have been updated. New documentation for libcurl optimization included. |  
 | v0.1 | 2/10/2017 | Alexa Client SDK v0.1 released. |
