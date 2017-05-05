@@ -27,6 +27,7 @@
 #include <string>
 #include <thread>
 #include <utility>
+#include <AVSCommon/AttachmentManagerInterface.h>
 
 #include "ACL/AuthDelegateInterface.h"
 #include "ACL/Transport/TransportInterface.h"
@@ -34,7 +35,7 @@
 #include "ACL/Transport/HTTP2Stream.h"
 #include "ACL/Transport/HTTP2StreamPool.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
-#include "ACL/AttachmentManagerInterface.h"
+
 
 namespace alexaClientSDK {
 namespace acl {
@@ -55,7 +56,7 @@ public:
      */
     HTTP2Transport(std::shared_ptr<AuthDelegateInterface> authDelegate, const std::string& avsEndpoint,
         MessageConsumerInterface* messageConsumerInterface,
-        std::shared_ptr<AttachmentManagerInterface> attachmentManager,
+        std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager,
         TransportObserverInterface* observer = nullptr);
 
     /**

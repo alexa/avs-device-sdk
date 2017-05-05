@@ -89,10 +89,17 @@ public:
      * Notifies the Channel's observer to stop if the @c activityId matches the Channel's activity id.
      *
      * @param activityId The activity id to compare.
-     *
-     * @return Returns @c true if the activity on the Channel was stopped and @c false otherwise.
+     * @return @c true if the activity on the Channel was stopped and @c false otherwise.
      */
     bool stopActivity(const std::string& activityId);
+
+    /**
+     * Checks whether the observer passed in currently owns the Channel.
+     *
+     * @param observer The observer to check.
+     * @return @c true if the observer currently owns the Channel and @c false otherwise.
+     */
+    bool doesObserverOwnChannel(std::shared_ptr<ChannelObserverInterface> observer) const;
 
 private:
     /// The priority of the Channel.

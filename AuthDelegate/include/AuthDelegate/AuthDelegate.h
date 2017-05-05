@@ -25,9 +25,9 @@
 #include <thread>
 #include <string>
 
-#include "ACL/AuthDelegateInterface.h"
-#include "ACL/AuthObserverInterface.h"
-#include "AuthDelegate/Config.h"
+#include <ACL/AuthDelegateInterface.h>
+#include <ACL/AuthObserverInterface.h>
+
 #include "AuthDelegate/HttpPostInterface.h"
 
 namespace alexaClientSDK {
@@ -49,10 +49,9 @@ public:
      * <li>After AlexaClientSDKInit::uninitialize has been called.</li>
      * </ul>
      *
-     * @param config AuthDelegate configuration parameters.  Must not be @c nullptr.
-     * @return If successful, returns a new AuthDelegate, othewise @c nullptr.
+     * @return If successful, returns a new AuthDelegate, otherwise @c nullptr.
      */
-    static std::unique_ptr<AuthDelegate> create(std::shared_ptr<Config> config);
+    static std::unique_ptr<AuthDelegate> create();
 
     /**
      * Create an AuthDelegate.
@@ -62,13 +61,11 @@ public:
      * <li>After AlexaClientSDKInit::uninitialize has been called.</li>
      * </ul>
      *
-     * @param config AuthDelegate configuration parameters.  Must not be @c nullptr.
      * @param httpPost Instance that implement HttpPostInterface. Must not be @c nullptr. The behavior for passing in
      *     @c nullptr is undefined.
-     * @return If successful, returns a new AuthDelegate, othewise @c nullptr.
+     * @return If successful, returns a new AuthDelegate, otherwise @c nullptr.
      */
-    static std::unique_ptr<AuthDelegate> create(std::shared_ptr<Config> config,
-        std::unique_ptr<HttpPostInterface> httpPost);
+    static std::unique_ptr<AuthDelegate> create(std::unique_ptr<HttpPostInterface> httpPost);
 
     /**
      * Deleted copy constructor
@@ -96,13 +93,12 @@ private:
     /**
      * AuthDelegate constructor.
      *
-     * @param config AuthDelegate configuration parameters.  Must not be @c nullptr, or the behavior is undefined.
      * @param httpPost Instance that implement HttpPostInterface. Must not be @c nullptr, or the behavior is undefined.
      */
-    AuthDelegate(std::shared_ptr<Config> config, std::unique_ptr<HttpPostInterface> httpPost);
+    AuthDelegate(std::unique_ptr<HttpPostInterface> httpPost);
 
     /**
-     * init() is used by create() to perform initialization after constructio but before returning the
+     * init() is used by create() to perform initialization after construction but before returning the
      * AuthDelegate instance so that clients only get access to fully formed instances.
      *
      * @return @c true if initialization is successful.
@@ -157,12 +153,6 @@ private:
      */
     void setState(acl::AuthObserverInterface::State newState);
 
-    /**
-     * AuthDelegate configuration parameters.
-     * Access is not synchronized because it is only accessed by @c m_refreshAndNotifyThread.
-     */
-    std::shared_ptr<Config> m_config;
-
     /// Authorization state change observer. Access is synchronized with @c m_mutex.
     std::shared_ptr<acl::AuthObserverInterface> m_observer;
 
@@ -171,6 +161,21 @@ private:
 
     /// Current authorization error. Access is synchronized with @c m_mutex.
     acl::AuthObserverInterface::Error m_authError;
+
+    /// Client ID to pass in @c LWA requests.
+    std::string m_clientId;
+
+    /// Client secret to pass in @c LWA requests.
+    std::string m_clientSecret;
+
+    /// URL with which to connect to @c LWA.
+    std::string m_lwaUrl;
+
+    /// How long to wait for a response from @c LWA.
+    std::chrono::seconds m_requestTimeout;
+
+    /// How far ahead of auth token expiration to start making requests to refresh the auth token.
+    std::chrono::seconds m_authTokenRefreshHeadStart;
 
     /**
      * LWA token is used to refresh the auth token.
@@ -185,7 +190,7 @@ private:
     std::condition_variable m_wakeThreadCond;
 
     /**
-     * The most recently received LWA authoriation token.
+     * The most recently received LWA authorization token.
      * Access is not synchronized because it is only accessed by @c m_refreshAndNotifyThread.
      */
     std::string m_authToken;
@@ -221,7 +226,7 @@ private:
     int m_retryCount;
 
     /**
-     * HTTP/POST client with which to make LWA requests.
+     * HTTP/POST client with which to make @c LWA requests.
      * Access is not synchronized because it is only accessed by @c m_refreshAndNotifyThread.
      */
     std::unique_ptr<HttpPostInterface> m_HttpPost;

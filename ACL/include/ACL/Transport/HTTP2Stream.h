@@ -22,8 +22,8 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <AVSCommon/AttachmentManagerInterface.h>
 
-#include "ACL/AttachmentManager.h"
 #include "ACL/Transport/CurlEasyHandleWrapper.h"
 #include "ACL/Transport/MimeParser.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
@@ -56,7 +56,7 @@ public:
      * @param attachmentManager The attachment manager.
      */
     HTTP2Stream(MessageConsumerInterface *messageConsumer,
-        std::shared_ptr<AttachmentManagerInterface> attachmentManager);
+        std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager);
 
     /**
      * Initializes streams that are supposed to POST the given request.

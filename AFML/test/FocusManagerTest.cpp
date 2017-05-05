@@ -15,8 +15,6 @@
  * permissions and limitations under the License.
  */
 
-#include <atomic>
-#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "AFML/FocusManager.h"
@@ -25,8 +23,11 @@
 namespace alexaClientSDK {
 namespace afml {
 
-/// Time out for the Channel observer to wait for the focus change callback.
-static const auto TIME_OUT_IN_SECONDS = std::chrono::seconds(30);
+/// Short time out for when callbacks are expected not to occur.
+static const auto SHORT_TIMEOUT = std::chrono::milliseconds(50);
+
+/// Long time out for the Channel observer to wait for the focus change callback (we should not reach this).
+static const auto DEFAULT_TIMEOUT = std::chrono::seconds(15);
 
 /// The dialog Channel name used in intializing the FocusManager.
 static const std::string DIALOG_CHANNEL_NAME = "DialogChannel";
@@ -64,11 +65,92 @@ static const std::string DIFFERENT_DIALOG_ACTIVITY_ID = "different dialog";
 /// A test observer that mocks out the ChannelObserverInterface##onFocusChanged() call.
 class TestClient : public ChannelObserverInterface {
 public:
-    MOCK_METHOD1(onFocusChanged, void(FocusState focusState));
+    /**
+     * Constructor.
+     */
+    TestClient() :
+        m_focusState(FocusState::NONE), m_focusChangeOccurred(false) {
+    }
+
+    /**
+     * Implementation of the ChannelObserverInterface##onFocusChanged() callback.
+     *
+     * @param focusState The new focus state of the Channel observer.
+     */
+    void onFocusChanged(FocusState focusState) override {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        m_focusState = focusState;
+        m_focusChangeOccurred = true;
+        m_focusChanged.notify_one();
+    }
+
+    /**
+     * Waits for the ChannelObserverInterface##onFocusChanged() callback.
+     *
+     * @param timeout The amount of time to wait for the callback.
+     * @param focusChanged An output parameter that notifies the caller whether a callback occurred.
+     * @return Returns @c true if the callback occured within the timeout period and @c false otherwise.
+     */
+    FocusState waitForFocusChange(std::chrono::milliseconds timeout, bool* focusChanged) {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        bool success = m_focusChanged.wait_for(lock, timeout, [this] () {
+            return m_focusChangeOccurred;
+        });
+
+        if (!success) {
+            *focusChanged = false;
+        } else {
+            m_focusChangeOccurred = false;
+            *focusChanged = true;
+        }
+        return m_focusState;
+    }
+
+private:
+    /// The focus state of the observer.
+    FocusState m_focusState;
+
+    /// A lock to guard against focus state changes.
+    std::mutex m_mutex;
+
+    /// A condition variable to wait for focus changes.
+    std::condition_variable m_focusChanged;
+
+    /// A boolean flag so that we can re-use the observer even after a callback has occurred.
+    bool m_focusChangeOccurred;
+};
+
+/// Manages testing focus changes
+class FocusChangeManager {
+public:
+    /**
+     * Checks that a focus change occurred and that the focus state received is the same as the expected focus state.
+     *
+     * @param client The Channel observer.
+     * @param expectedFocusState The expected focus state.
+     */
+    void assertFocusChange(std::shared_ptr<TestClient> client, FocusState expectedFocusState) {
+        bool focusChanged = false;
+        FocusState focusStateReceived = client->waitForFocusChange(DEFAULT_TIMEOUT, &focusChanged);
+        ASSERT_TRUE(focusChanged);
+        ASSERT_EQ(expectedFocusState, focusStateReceived);
+    }
+
+    /**
+     * Checks that a focus change does not occur by waiting for the timeout duration.
+     *
+     * @param client The Channel observer.
+     */
+    void assertNoFocusChange(std::shared_ptr<TestClient> client) {
+        bool focusChanged = false;
+        // Will wait for the short timeout duration before succeeding
+        client->waitForFocusChange(SHORT_TIMEOUT, &focusChanged);
+        ASSERT_FALSE(focusChanged);
+    }
 };
 
 /// Test fixture for testing FocusManager.
-class FocusManagerTest : public ::testing::Test {
+class FocusManagerTest : public ::testing::Test, public FocusChangeManager {
 protected:
     /// The FocusManager.
     std::shared_ptr<FocusManager> m_focusManager;
@@ -84,12 +166,6 @@ protected:
 
     /// A client that acquires the content Channel.
     std::shared_ptr<TestClient> contentClient;
-
-    /// A condition variable used to wait for all the onFocusChanged() calls.
-    std::condition_variable m_cv;
-
-    /// A lock used used to wait for all the onFocusChanged() calls.
-    std::mutex m_mutex;
 
     virtual void SetUp() {
         FocusManager::ChannelConfiguration dialogChannelConfig{DIALOG_CHANNEL_NAME, DIALOG_CHANNEL_PRIORITY};
@@ -118,98 +194,32 @@ TEST_F(FocusManagerTest, acquireInvalidChannelName) {
 
 /// Tests acquireChannel, expecting to get Foreground status since no other Channels are active.
 TEST_F(FocusManagerTest, acquireChannelWithNoOtherChannelsActive) {
-    std::atomic<int> numCalls(0);
-    const int expectedNumCalls = 1;
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID);
-    m_cv.wait_for(lock, TIME_OUT_IN_SECONDS, [&numCalls, expectedNumCalls]() {
-        return numCalls.load() == expectedNumCalls;
-    });
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
 }
 
 /**
- * Tests acquireChannel with a two Channel. The lower priority Channel should get Background focus and the higher
+ * Tests acquireChannel with two Channels. The lower priority Channel should get Background focus and the higher
  * priority Channel should get Foreground focus.
  */
 TEST_F(FocusManagerTest, acquireLowerPriorityChannelWithOneHigherPriorityChannelTaken) {
-    std::atomic<int> numCalls(0);
-    const int expectedNumCalls = 2;
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*alertsClient, onFocusChanged(FocusState::BACKGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID);
-    m_focusManager->acquireChannel(ALERTS_CHANNEL_NAME, alertsClient, ALERTS_ACTIVITY_ID);
-    m_cv.wait_for(lock, TIME_OUT_IN_SECONDS, [&numCalls, expectedNumCalls]() {
-        return numCalls.load() == expectedNumCalls;
-    });
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    ASSERT_TRUE(m_focusManager->acquireChannel(ALERTS_CHANNEL_NAME, alertsClient, ALERTS_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+    assertFocusChange(alertsClient, FocusState::BACKGROUND);
 }
 
 /**
  * Tests acquireChannel with three Channels. The two lowest priority Channels should get Background focus while the 
  * highest priority Channel should be Foreground focused.
  */
-TEST_F(FocusManagerTest, acquireLowerPriorityChannelWithTwoHigherPriorityChannelsTaken) {
-    std::atomic<int> numCalls(0);
-    const int expectedNumCalls = 3;
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*alertsClient, onFocusChanged(FocusState::BACKGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*contentClient, onFocusChanged(FocusState::BACKGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID);
-    m_focusManager->acquireChannel(ALERTS_CHANNEL_NAME, alertsClient, ALERTS_ACTIVITY_ID);
-    m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID);
-    m_cv.wait_for(lock, TIME_OUT_IN_SECONDS, [&numCalls, expectedNumCalls]() {
-        return numCalls.load() == expectedNumCalls;
-    });
+TEST_F(FocusManagerTest, aquireLowerPriorityChannelWithTwoHigherPriorityChannelsTaken) {
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    ASSERT_TRUE(m_focusManager->acquireChannel(ALERTS_CHANNEL_NAME, alertsClient, ALERTS_ACTIVITY_ID));
+    ASSERT_TRUE(m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+    assertFocusChange(alertsClient, FocusState::BACKGROUND);
+    assertFocusChange(contentClient, FocusState::BACKGROUND);
 }
 
 /**
@@ -218,41 +228,12 @@ TEST_F(FocusManagerTest, acquireLowerPriorityChannelWithTwoHigherPriorityChannel
  * should be Foreground focused. 
  */
 TEST_F(FocusManagerTest, acquireHigherPriorityChannelWithOneLowerPriorityChannelTaken) {
-    std::atomic<int> numCalls(0);
-    const int expectedNumCalls = 3;
-    EXPECT_CALL(*contentClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*contentClient, onFocusChanged(FocusState::BACKGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID);
-    m_cv.wait_for(lock, TIME_OUT_IN_SECONDS, [&numCalls, expectedNumCalls]() {
-        return numCalls.load() == expectedNumCalls;
-    });
+    ASSERT_TRUE(m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID));
+    assertFocusChange(contentClient, FocusState::FOREGROUND);
+
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    assertFocusChange(contentClient, FocusState::BACKGROUND);
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
 }
 
 /**
@@ -260,73 +241,37 @@ TEST_F(FocusManagerTest, acquireHigherPriorityChannelWithOneLowerPriorityChannel
  * should obtain Foreground focus.
  */
 TEST_F(FocusManagerTest, kickOutActivityOnSameChannel) {
-    std::atomic<int> numCalls(0);
-    const int expectedNumCalls = 3;
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::NONE))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*anotherDialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, anotherDialogClient, DIFFERENT_DIALOG_ACTIVITY_ID);
-    m_cv.wait_for(lock, TIME_OUT_IN_SECONDS, [&numCalls, expectedNumCalls]() {
-        return numCalls.load() == expectedNumCalls;
-    });
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, anotherDialogClient, DIFFERENT_DIALOG_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::NONE);
+    assertFocusChange(anotherDialogClient, FocusState::FOREGROUND);
 }
 
 /**
  * Tests releaseChannel with a single Channel. The observer should be notified to stop.
  */
 TEST_F(FocusManagerTest, simpleReleaseChannel) {
-    std::atomic<int> numCalls(0);
-    const int expectedNumCalls = 2;
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::NONE))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    ); 
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID);
-    m_focusManager->releaseChannel(DIALOG_CHANNEL_NAME);
-    m_cv.wait_for(lock, TIME_OUT_IN_SECONDS, [&numCalls, expectedNumCalls]() {
-        return numCalls.load() == expectedNumCalls;
-    });
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+
+    ASSERT_TRUE(m_focusManager->releaseChannel(DIALOG_CHANNEL_NAME, dialogClient).get());
+    assertFocusChange(dialogClient, FocusState::NONE);
+}
+
+/**
+ * Tests releaseChannel on a Channel with an incorrect observer. The client should not receive any callback.
+ */
+TEST_F(FocusManagerTest, simpleReleaseChannelWithIncorrectObserver) {
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+
+    ASSERT_FALSE(m_focusManager->releaseChannel(CONTENT_CHANNEL_NAME, dialogClient).get());
+    ASSERT_FALSE(m_focusManager->releaseChannel(DIALOG_CHANNEL_NAME, contentClient).get());
+
+    assertNoFocusChange(dialogClient);
+    assertNoFocusChange(contentClient);
 }
 
 /**
@@ -335,84 +280,26 @@ TEST_F(FocusManagerTest, simpleReleaseChannel) {
  * be notified to stop.
  */
 TEST_F(FocusManagerTest, releaseForegroundChannelWhileBackgroundChannelTaken) {
-    std::atomic<int> numCalls(0);
-    const int expectedNumCalls = 4;
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*contentClient, onFocusChanged(FocusState::BACKGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::NONE))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    ); 
-    EXPECT_CALL(*contentClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    ); 
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID);
-    m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID);
-    m_focusManager->releaseChannel(DIALOG_CHANNEL_NAME);
-    m_cv.wait_for(lock, TIME_OUT_IN_SECONDS, [&numCalls, expectedNumCalls]() {
-        return numCalls.load() == expectedNumCalls;
-    });
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+
+    ASSERT_TRUE(m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID));
+    assertFocusChange(contentClient, FocusState::BACKGROUND);
+
+    ASSERT_TRUE(m_focusManager->releaseChannel(DIALOG_CHANNEL_NAME, dialogClient).get());
+    assertFocusChange(dialogClient, FocusState::NONE);
+    assertFocusChange(contentClient, FocusState::FOREGROUND);
  }
 
 /**
  * Tests stopForegroundActivity with a single Channel. The observer should be notified to stop.
  */
 TEST_F(FocusManagerTest, simpleNonTargetedStop) {
-    std::atomic<int> numCalls(0);
-    const int expectedNumCalls = 2;
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-                lock.unlock();
-                m_focusManager->stopForegroundActivity();
-            }
-        )
-    ); 
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::NONE))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    ); 
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID);
-    m_cv.wait_for(lock, TIME_OUT_IN_SECONDS, [&numCalls, expectedNumCalls]() {
-        return numCalls.load() == expectedNumCalls;
-    });
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+
+    m_focusManager->stopForegroundActivity();
+    assertFocusChange(dialogClient, FocusState::NONE);
 }
 
 /**
@@ -420,93 +307,25 @@ TEST_F(FocusManagerTest, simpleNonTargetedStop) {
  * stop each time and the next highest priority background Channel should be brought to the foreground each time.
  */
 TEST_F(FocusManagerTest, threeNonTargetedStopsWithThreeActivitiesHappening) {
-    std::atomic<int> numCalls(0);
-    const int expectedNumCalls = 8;
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*alertsClient, onFocusChanged(FocusState::BACKGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*contentClient, onFocusChanged(FocusState::BACKGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-                lock.unlock();
-                m_focusManager->stopForegroundActivity();
-            }
-        )
-    );
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::NONE))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*alertsClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-                lock.unlock();
-                m_focusManager->stopForegroundActivity();
-            }
-        )
-    );
-    EXPECT_CALL(*alertsClient, onFocusChanged(FocusState::NONE))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*contentClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-                lock.unlock();
-                m_focusManager->stopForegroundActivity();
-            }
-        )
-    );
-    EXPECT_CALL(*contentClient, onFocusChanged(FocusState::NONE))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID);
-    m_focusManager->acquireChannel(ALERTS_CHANNEL_NAME, alertsClient, ALERTS_ACTIVITY_ID);
-    m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID);
-    m_cv.wait_for(lock, TIME_OUT_IN_SECONDS, [&numCalls, expectedNumCalls]() {
-        return numCalls.load() == expectedNumCalls;
-    });
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+
+    ASSERT_TRUE(m_focusManager->acquireChannel(ALERTS_CHANNEL_NAME, alertsClient, ALERTS_ACTIVITY_ID));
+    assertFocusChange(alertsClient, FocusState::BACKGROUND);
+
+    ASSERT_TRUE(m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID));
+    assertFocusChange(contentClient, FocusState::BACKGROUND);
+
+    m_focusManager->stopForegroundActivity();
+    assertFocusChange(dialogClient, FocusState::NONE);
+    assertFocusChange(alertsClient, FocusState::FOREGROUND);
+
+    m_focusManager->stopForegroundActivity();
+    assertFocusChange(alertsClient, FocusState::NONE);
+    assertFocusChange(contentClient, FocusState::FOREGROUND);
+
+    m_focusManager->stopForegroundActivity();
+    assertFocusChange(contentClient, FocusState::NONE);
 }
 
 /**
@@ -514,43 +333,14 @@ TEST_F(FocusManagerTest, threeNonTargetedStopsWithThreeActivitiesHappening) {
  * foreground focus.
  */
 TEST_F(FocusManagerTest, stopForegroundActivityAndAcquireDifferentChannel) {
-    std::atomic<int> numCalls(0);
-    const int expectedNumCalls = 3;
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-                lock.unlock();
-                m_focusManager->stopForegroundActivity();
-            }
-        )
-    ); 
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::NONE))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*contentClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    ); 
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID);
-    m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID);
-    m_cv.wait_for(lock, TIME_OUT_IN_SECONDS, [&numCalls, expectedNumCalls]() {
-        return numCalls.load() == expectedNumCalls;
-    });
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+
+    m_focusManager->stopForegroundActivity();
+    assertFocusChange(dialogClient, FocusState::NONE);
+
+    ASSERT_TRUE(m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID));
+    assertFocusChange(contentClient, FocusState::FOREGROUND);
 }
 
 /**
@@ -558,42 +348,14 @@ TEST_F(FocusManagerTest, stopForegroundActivityAndAcquireDifferentChannel) {
  * foreground focus.
  */
 TEST_F(FocusManagerTest, stopForegroundActivityAndAcquireSameChannel) {
-    std::atomic<int> numCalls(0);
-    const int expectedNumCalls = 3;
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-                lock.unlock();
-                m_focusManager->stopForegroundActivity();
-            }
-        )
-    )
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    ); 
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::NONE))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID);
-    m_cv.wait_for(lock, TIME_OUT_IN_SECONDS, [&numCalls, expectedNumCalls]() {
-        return numCalls.load() == expectedNumCalls;
-    });
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+
+    m_focusManager->stopForegroundActivity();
+    assertFocusChange(dialogClient, FocusState::NONE);
+
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
 }
 
 /**
@@ -601,42 +363,16 @@ TEST_F(FocusManagerTest, stopForegroundActivityAndAcquireSameChannel) {
  * should remain foregrounded while the background Channel's observer should be notified to stop.
  */
 TEST_F(FocusManagerTest, releaseBackgroundChannelWhileTwoChannelsTaken) {
-    std::atomic<int> numCalls(0);
-    const int expectedNumCalls = 3;
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*contentClient, onFocusChanged(FocusState::BACKGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*contentClient, onFocusChanged(FocusState::NONE))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID);
-    m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID);
-    m_focusManager->releaseChannel(CONTENT_CHANNEL_NAME);
-    m_cv.wait_for(lock, TIME_OUT_IN_SECONDS, [&numCalls, expectedNumCalls]() {
-        return numCalls.load() == expectedNumCalls;
-    }); 
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+
+    ASSERT_TRUE(m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID));
+    assertFocusChange(contentClient, FocusState::BACKGROUND);
+
+    ASSERT_TRUE(m_focusManager->releaseChannel(CONTENT_CHANNEL_NAME, contentClient).get());
+    assertFocusChange(contentClient, FocusState::NONE);
+
+    assertNoFocusChange(dialogClient);
 }
 
 /**
@@ -645,55 +381,21 @@ TEST_F(FocusManagerTest, releaseBackgroundChannelWhileTwoChannelsTaken) {
  * Foreground focus. The originally backgrounded Channel should not change focus.
  */
 TEST_F(FocusManagerTest, kickOutActivityOnSameChannelWhileOtherChannelsActive) {
-    std::atomic<int> numCalls(0);
-    const int expectedNumCalls = 4;
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*contentClient, onFocusChanged(FocusState::BACKGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*dialogClient, onFocusChanged(FocusState::NONE))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    );
-    EXPECT_CALL(*anotherDialogClient, onFocusChanged(FocusState::FOREGROUND))
-        .WillOnce(testing::InvokeWithoutArgs(
-            [this, &numCalls] () {
-                std::unique_lock<std::mutex> lock(m_mutex);
-                ++numCalls;
-                m_cv.notify_one();
-            }
-        )
-    ); 
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID);
-    m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID);
-    m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, anotherDialogClient, DIFFERENT_DIALOG_ACTIVITY_ID);
-    m_cv.wait_for(lock, TIME_OUT_IN_SECONDS, [&numCalls, expectedNumCalls]() {
-        return numCalls.load() == expectedNumCalls;
-    }); 
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+
+    ASSERT_TRUE(m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID));
+    assertFocusChange(contentClient, FocusState::BACKGROUND);
+
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, anotherDialogClient, DIFFERENT_DIALOG_ACTIVITY_ID));
+    assertFocusChange(dialogClient, FocusState::NONE);
+    assertFocusChange(anotherDialogClient, FocusState::FOREGROUND);
+
+    assertNoFocusChange(contentClient);
 }
 
 /// Test fixture for testing Channel.
-class ChannelTest : public ::testing::Test {
+class ChannelTest : public ::testing::Test, public FocusChangeManager {
 protected:
     /// A test client that used to observe Channels.
     std::shared_ptr<TestClient> clientA;
@@ -714,56 +416,57 @@ protected:
 
 /// Tests the that the getPriority method of Channel works properly.
 TEST_F(ChannelTest, getPriority) {
-    EXPECT_EQ(testChannel->getPriority(), DIALOG_CHANNEL_PRIORITY);
+    ASSERT_EQ(testChannel->getPriority(), DIALOG_CHANNEL_PRIORITY);
 }
 
 /// Tests that an old observer is kicked out on a Channel when a new observer is set.
 TEST_F(ChannelTest, kickoutOldObserver) {
-    EXPECT_CALL(*clientA, onFocusChanged(FocusState::FOREGROUND));
-    EXPECT_CALL(*clientA, onFocusChanged(FocusState::NONE));
     testChannel->setObserver(clientA);
+
     testChannel->setFocus(FocusState::FOREGROUND);
+    assertFocusChange(clientA, FocusState::FOREGROUND);
+
     testChannel->setObserver(clientB);
+    assertFocusChange(clientA, FocusState::NONE);
 }
 
 /// Tests that the observer properly gets notified of focus changes.
 TEST_F(ChannelTest, setObserverThenSetFocus) {
-    EXPECT_CALL(*clientA, onFocusChanged(FocusState::FOREGROUND));
-    EXPECT_CALL(*clientA, onFocusChanged(FocusState::BACKGROUND));
-    EXPECT_CALL(*clientA, onFocusChanged(FocusState::NONE));
     testChannel->setObserver(clientA);
+
     testChannel->setFocus(FocusState::FOREGROUND);
+    assertFocusChange(clientA, FocusState::FOREGROUND);
+
     testChannel->setFocus(FocusState::BACKGROUND);
+    assertFocusChange(clientA, FocusState::BACKGROUND);
+
     testChannel->setFocus(FocusState::NONE);
+    assertFocusChange(clientA, FocusState::NONE);
 }
 
 /// Tests that Channels are compared properly
 TEST_F(ChannelTest, priorityComparison) {
     std::shared_ptr<Channel> lowerPriorityChannel = std::make_shared<Channel>(CONTENT_CHANNEL_PRIORITY);
-    EXPECT_TRUE(*testChannel > *lowerPriorityChannel);
-    EXPECT_FALSE(*lowerPriorityChannel > *testChannel);
+    ASSERT_TRUE(*testChannel > *lowerPriorityChannel);
+    ASSERT_FALSE(*lowerPriorityChannel > *testChannel);
 }
 
 /**
- *Tests that the stopActivity method on Channel works properly and that observers are stopped if the activity id 
+ * Tests that the stopActivity method on Channel works properly and that observers are stopped if the activity id 
  * matches the the Channel's activity and doesn't get stopped if the ids don't match.
  */
-TEST_F(ChannelTest, testStopActivityWithSameId) {
-    EXPECT_CALL(*clientA, onFocusChanged(FocusState::FOREGROUND));
-    EXPECT_CALL(*clientA, onFocusChanged(FocusState::NONE));
+TEST_F(ChannelTest, testStopActivity) {
     testChannel->setActivityId(DIALOG_ACTIVITY_ID);
     testChannel->setObserver(clientA);
-    testChannel->setFocus(FocusState::FOREGROUND);
-    testChannel->stopActivity(DIALOG_ACTIVITY_ID);
-}
 
-TEST_F(ChannelTest, testStopActivityWithDifferentId) {
-    EXPECT_CALL(*clientA, onFocusChanged(FocusState::FOREGROUND));
-    EXPECT_CALL(*clientA, onFocusChanged(FocusState::NONE)).Times(0);
-    testChannel->setActivityId(DIALOG_ACTIVITY_ID);
-    testChannel->setObserver(clientA);
     testChannel->setFocus(FocusState::FOREGROUND);
-    testChannel->stopActivity(CONTENT_ACTIVITY_ID);
+    assertFocusChange(clientA, FocusState::FOREGROUND);
+
+    ASSERT_FALSE(testChannel->stopActivity(CONTENT_ACTIVITY_ID));
+    assertNoFocusChange(clientA);
+
+    ASSERT_TRUE(testChannel->stopActivity(DIALOG_ACTIVITY_ID));
+    assertFocusChange(clientA, FocusState::NONE);
 }
 
 } // namespace afml

@@ -21,24 +21,27 @@
 #include <memory>
 
 #include <AVSCommon/AVSDirective.h>
+
 #include "ADSL/DirectiveHandlerResultInterface.h"
+#include "ADSL/NamespaceAndName.h"
 
 namespace alexaClientSDK {
 namespace adsl {
 
 /**
- * Interface for handling @c AVSDirectives.  Implementations of this interface should expect either a single
- * handleDirectiveImmediately() all or a call to preHandleDirective() followed by a call to handleDirective()
- * unless cancelDirective() is called first.  cancelDirective() may also be called after handleDirective().
+ * Interface for handling @c AVSDirectives.  For each @c AVSDirective received, implementations of this interface
+ * should expect either a single call to @c handleDirectiveImmediately() or a call to @c preHandleDirective()
+ * followed by a call to @c handleDirective() unless @c cancelDirective() is called first.  @c cancelDirective()
+ * may also be called after handleDirective().
  *
- * NOTE: The implementation of the methods of this interface MUST be thread-safe.
- * NOTE: The implementation of the methods of this interface MUST return quickly.  Failure to do so blocks
+ * @note The implementation of the methods of this interface MUST be thread-safe.
+ * @note The implementation of the methods of this interface MUST return quickly.  Failure to do so blocks
  * the processing of subsequent @c AVSDirectives.
  */
 class DirectiveHandlerInterface {
 public:
     /**
-     * Virtual destructor to ensure proper cleanup by derived types.
+     * Destructor.
      */
     virtual ~DirectiveHandlerInterface() = default;
 
@@ -46,9 +49,10 @@ public:
      * Handle the action specified @c AVSDirective. Once this has been called the @c DirectiveHandler should not
      * expect to receive further calls regarding this directive.
      *
-     * NOTE: The implementation of this method MUST be thread-safe.
-     * NOTE: The implementation of this method MUST return quickly. Failure to do so blocks the processing
+     * @note The implementation of this method MUST be thread-safe.
+     * @note The implementation of this method MUST return quickly. Failure to do so blocks the processing
      * of subsequent @c AVSDirectives.
+     * @note If this operation fails, an @c ExceptionEncountered message should be sent to AVS.
      *
      * @param directive The directive to handle.
      */
@@ -63,8 +67,9 @@ public:
      * should cancel the handling of subsequent @c AVSDirectives with the same @c DialogRequestId, the
      * @c DirectiveHandler should call the setFailed() method on the @c result instance passed in to this call.
      *
-     * NOTE: The implementation of this method MUST be thread-safe.
-     * NOTE: The implementation of this method MUST return quickly. Failure to do so blocks the processing
+     * @note If this operation fails, an @c ExceptionEncountered message should be sent to AVS.
+     * @note The implementation of this method MUST be thread-safe.
+     * @note The implementation of this method MUST return quickly. Failure to do so blocks the processing
      * of subsequent @c AVSDirectives.
      *
      * @param directive The directive to pre-handle.
@@ -72,30 +77,34 @@ public:
      */
     virtual void preHandleDirective(
             std::shared_ptr<avsCommon::AVSDirective> directive,
-            std::shared_ptr<DirectiveHandlerResultInterface> result) = 0;
+            std::unique_ptr<DirectiveHandlerResultInterface> result) = 0;
 
     /**
      * Handle the action specified by the directive identified by @c messageId. The handling of subsequent directives
      * with the same @c DialogRequestId may be blocked until the @c DirectiveHandler calls the @c setSucceeded()
-     * method of the @c DirectiveHandlingResult instance passed in to the preHandleDirective() call for the directive
-     * specified by @c messageId.  If handling of this directive fails such that subsequent directives with the same
-     * @c DialogRequestId should be cancelled, this @c DirectiveHandler should instead call setFailed() to indicate
-     * a failure.
+     * method of the @c DirectiveHandlingResult instance passed in to the @c preHandleDirective() call for the
+     * directive specified by @c messageId.  If handling of this directive fails such that subsequent directives with
+     * the same @c DialogRequestId should be cancelled, this @c DirectiveHandler should instead call setFailed() to
+     * indicate a failure.
      *
-     * NOTE: The implementation of this method MUST be thread-safe.
-     * NOTE: The implementation of this method MUST return quickly. Failure to do so blocks the processing
+     * @note If this operation fails, an @c ExceptionEncountered message should be sent to AVS.
+     * @note The implementation of this method MUST be thread-safe.
+     * @note The implementation of this method MUST return quickly. Failure to do so blocks the processing
      * of subsequent @c AVSDirectives.
      *
-     * @param messageId The message ID of a directive previously passed to preHandleDirective().
+     * @param messageId The message ID of a directive previously passed to @c preHandleDirective().
+     * @return @c false when @c messageId is not recognized, else @c true.  Any errors related to handling of a valid
+     * messageId should be reported using @c DirectiveHandlerResultInterface::setFailed().
      */
-    virtual void handleDirective(const std::string& messageId) = 0;
+    virtual bool handleDirective(const std::string& messageId) = 0;
 
     /**
-     * Cancel an ongoing preHandleDirective() or handleDirective() operation for the specified @c AVSDirective. Once
-     * this has been called the @c DirectiveHandler should not expect to receive further calls regarding this directive.
+     * Cancel an ongoing @c preHandleDirective() or @c handleDirective() operation for the specified @c AVSDirective.
+     * Once this has been called the @c DirectiveHandler should not expect to receive further calls regarding this
+     * directive.
      *
-     * NOTE: The implementation of this method MUST be thread-safe.
-     * NOTE: The implementation of this method MUST return quickly. Failure to do so blocks the processing
+     * @note The implementation of this method MUST be thread-safe.
+     * @note The implementation of this method MUST return quickly. Failure to do so blocks the processing
      * of subsequent @c AVSDirectives.
      *
      * @param messageId The message ID of a directive previously passed to preHandleDirective().
@@ -103,10 +112,9 @@ public:
     virtual void cancelDirective(const std::string& messageId) = 0;
 
     /**
-     * Shut down this @c DirectiveHandler. This handler will not receive any more calls. All references from this
-     * handler to @c DirectiveHandlerResultInterface instances MUST be released before this method returns.
+     * Notification that this handler has been de-registered and will not receive any more calls.
      */
-    virtual void shutdown() = 0;
+    virtual void onDeregistered() = 0;
 };
 
 } // namespace adsl

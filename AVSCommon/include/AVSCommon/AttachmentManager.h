@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_ATTACHMENT_MANAGER_H_
-#define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_ATTACHMENT_MANAGER_H_
+#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_INCLUDE_AVS_COMMON_ATTACHMENT_MANAGER_H_
+#define ALEXA_CLIENT_SDK_AVS_COMMON_INCLUDE_AVS_COMMON_ATTACHMENT_MANAGER_H_
 
 #include <chrono>
 #include <future>
@@ -28,7 +28,7 @@
 #include "AttachmentManagerInterface.h"
 
 namespace alexaClientSDK {
-namespace acl {
+namespace avsCommon {
 
 /**
  * Class that manages how attachment is stored and retrieved.
@@ -84,7 +84,7 @@ private:
     std::chrono::minutes m_timeout;
 };
 
-} // namespace acl
+} // namespace avsCommon
 } // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_ATTACHMENT_MANAGER_H_
+#endif //ALEXA_CLIENT_SDK_AVS_COMMON_INCLUDE_AVS_COMMON_ATTACHMENT_MANAGER_H_

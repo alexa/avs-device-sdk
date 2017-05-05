@@ -26,7 +26,6 @@
 #include <gtest/gtest.h>
 
 #include "AuthDelegate/AuthDelegate.h"
-#include "AuthDelegate/MockConfig.h"
 #include "AuthDelegate/MockHttpPost.h"
 #include "AVSUtils/Initialization/AlexaClientSDKInit.h"
 #include "MockAuthObserver.h"
@@ -35,6 +34,7 @@ using namespace alexaClientSDK::authDelegate;
 using namespace alexaClientSDK::acl;
 
 using namespace ::testing;
+using namespace alexaClientSDK::avsUtils::initialization;
 
 /// URL to which the refresh token and access token request should be sent.
 static const std::string DEFAULT_LWA_URL = "https://api.amazon.com/auth/o2/token";
@@ -54,6 +54,16 @@ static const std::string ERROR_CODE_INVALID_REQUEST = "invalid_request";
 /// The HTTP response code for a bad request.
 static const long HTTP_RESPONSE_CODE_BAD_REQUEST = 400;
 
+/// Default SDK configuration.
+static const std::string DEFAULT_SDK_CONFIGURATION = R"({
+    "authDelegate" : {
+        "clientId" : "invalid clientId",
+        "refreshToken" : "invalid refreshToken",
+        "clientSecret" : "invalid clientSecret",
+        "authTokenRefreshHeadStart" : 1
+    }
+})";
+
 /// Define test fixture for testing AuthDelegate.
 class AuthDelegateTest : public ::testing::Test {
 protected:
@@ -61,25 +71,20 @@ protected:
     /// Initialize the objects for testing
     AuthDelegateTest() {
         m_mockHttpPost = std::unique_ptr<MockHttpPost>(new MockHttpPost());
-        m_mockConfig = std::make_shared<NiceMock<MockConfig>>();
         m_mockAuthObserver = std::make_shared<NiceMock<MockAuthObserver>>();
     }
 
     /// Stub certain mock objects with default actions
     virtual void SetUp() override {
-
-        ASSERT_TRUE(alexaClientSDK::avsUtils::initialization::AlexaClientSDKInit::initialize());
-
         ON_CALL(*m_mockHttpPost, doPost(_, _, _, _))
                 .WillByDefault(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED));
-        ON_CALL(*m_mockConfig, getClientId()).WillByDefault(Return("testClientId (invalid)"));
-        ON_CALL(*m_mockConfig, getClientSecret()).WillByDefault(Return("testClientSecret (invalid)"));
-        ON_CALL(*m_mockConfig, getRefreshToken()).WillByDefault(Return("testRefreshToken (invalid)"));
-        ON_CALL(*m_mockConfig, getLwaUrl()).WillByDefault(Return(DEFAULT_LWA_URL));
+        std::stringstream configuration;
+        configuration << DEFAULT_SDK_CONFIGURATION;
+        ASSERT_TRUE(AlexaClientSDKInit::initialize({&configuration}));
     }
 
     virtual void TearDown() override {
-        alexaClientSDK::avsUtils::initialization::AlexaClientSDKInit::uninitialize();
+        AlexaClientSDKInit::uninitialize();
     }
 
     /**
@@ -106,8 +111,8 @@ protected:
                     "expires_in":)";
         response += std::to_string(seconds.count());
         response += R"(,
-                     "refresh_token":"Atzr|IQEBLzAtAhUAibmh-1N0EVztZJofMx",
-                     "token_type":"bearer"
+                    "refresh_token":"Atzr|IQEBLzAtAhUAibmh-1N0EVztZJofMx",
+                    "token_type":"bearer"
                 })";
         return response;
     }
@@ -131,9 +136,6 @@ protected:
     /// Mock object of @c HttpPostInterface through which refresh token request is sent in AuthDelegate.
     std::unique_ptr<MockHttpPost> m_mockHttpPost;
 
-    /// Mock object of @c Config which provides the AuthDelegate required information to get access tokens from LWA.
-    std::shared_ptr<NiceMock<MockConfig>> m_mockConfig;
-
     /// Mock object of @c AuthObserverInterface which will be notified on current AuthDelegate status.
     std::shared_ptr<NiceMock<MockAuthObserver>> m_mockAuthObserver;
 
@@ -148,51 +150,74 @@ protected:
  * Test create() with a @c nullptr Config, expecting @c nullptr to be returned.
  */
 TEST_F(AuthDelegateTest, createNullConfig) {
-    ASSERT_FALSE(AuthDelegate::create(nullptr, std::move(m_mockHttpPost)));
+    AlexaClientSDKInit::uninitialize();
+    ASSERT_TRUE(AlexaClientSDKInit::initialize({}));
+    ASSERT_FALSE(AuthDelegate::create(std::move(m_mockHttpPost)));
 }
 
 /**
  * Test create() without a clientId set, expecting a @c nullptr to be returned.
  */
 TEST_F(AuthDelegateTest, createMissingClientId) {
-
-    EXPECT_CALL(*m_mockConfig, getClientId()).WillRepeatedly(Return(""));
-
-    ASSERT_FALSE(AuthDelegate::create(m_mockConfig, std::move(m_mockHttpPost)));
+    AlexaClientSDKInit::uninitialize();
+    std::stringstream configuration;
+    configuration << DEFAULT_SDK_CONFIGURATION;
+    std::stringstream overlay;
+    overlay << R"X({
+            "authDelegate" : {
+                "clientId" : ""
+            }
+        })X";
+    ASSERT_TRUE(AlexaClientSDKInit::initialize({&configuration, &overlay}));
+    ASSERT_FALSE(AuthDelegate::create(std::move(m_mockHttpPost)));
 }
 
 /**
  * Test create() without a clientSecret set, expecting a @c nullptr to be returned.
  */
 TEST_F(AuthDelegateTest, createMissingClientSecret) {
-
-    EXPECT_CALL(*m_mockConfig, getClientSecret()).WillRepeatedly(Return(""));
-
-    ASSERT_FALSE(AuthDelegate::create(m_mockConfig, std::move(m_mockHttpPost)));
+    AlexaClientSDKInit::uninitialize();
+    std::stringstream configuration;
+    configuration << DEFAULT_SDK_CONFIGURATION;
+    std::stringstream overlay;
+    overlay << R"X({
+            "authDelegate" : {
+                "clientSecret" : ""
+            }
+        })X";
+    ASSERT_TRUE(AlexaClientSDKInit::initialize({&configuration, &overlay}));
+    ASSERT_FALSE(AuthDelegate::create(std::move(m_mockHttpPost)));
 }
 
 /**
  * Test create() without a refresh token set, expecting a @c nullptr to be returned.
  */
 TEST_F(AuthDelegateTest, createMissingRefreshToken) {
-
-    EXPECT_CALL(*m_mockConfig, getRefreshToken()).WillRepeatedly(Return(""));
-
-    ASSERT_FALSE(AuthDelegate::create(m_mockConfig, std::move(m_mockHttpPost)));
+    AlexaClientSDKInit::uninitialize();
+    std::stringstream configuration;
+    configuration << DEFAULT_SDK_CONFIGURATION;
+    std::stringstream overlay;
+    overlay << R"X({
+            "authDelegate" : {
+                "refreshToken" : ""
+            }
+        })X";
+    ASSERT_TRUE(AlexaClientSDKInit::initialize({&configuration, &overlay}));
+    ASSERT_FALSE(AuthDelegate::create(std::move(m_mockHttpPost)));
 }
 
 /**
  * Test create() with a valid Config, expecting a valid AuthDelegate to be returned.
  */
 TEST_F(AuthDelegateTest, create) {
-    ASSERT_TRUE(AuthDelegate::create(m_mockConfig, std::move(m_mockHttpPost)));
+    ASSERT_TRUE(AuthDelegate::create(std::move(m_mockHttpPost)));
 }
 
 /**
  * Test setAuthObserver() with a @c nullptr, expecting no exceptions or crashes.
  */
 TEST_F(AuthDelegateTest, setAuthObserverNull) {
-    auto authDelegate = AuthDelegate::create(m_mockConfig, std::move(m_mockHttpPost));
+    auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     ASSERT_TRUE(authDelegate);
 
     authDelegate->setAuthObserver(nullptr);
@@ -206,19 +231,18 @@ TEST_F(AuthDelegateTest, setAuthObserverNull) {
  */
 TEST_F(AuthDelegateTest, setAuthObserver) {
 
-    auto authDelegate = AuthDelegate::create(m_mockConfig, std::move(m_mockHttpPost));
+    auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     ASSERT_TRUE(authDelegate);
 
     EXPECT_CALL(
             *m_mockAuthObserver,
-            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR));
+            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, _))
+                    .Times(AtMost(1));
 
     EXPECT_CALL(
             *m_mockAuthObserver,
-            onAuthStateChange(
-                    AuthObserverInterface::State::EXPIRED,
-                    AuthObserverInterface::Error::AUTHORIZATION_FAILED))
-            .Times(AtMost(1));
+            onAuthStateChange(AuthObserverInterface::State::EXPIRED, _))
+                    .Times(AtMost(1));
 
     authDelegate->setAuthObserver(m_mockAuthObserver);
 }
@@ -250,7 +274,7 @@ TEST_F(AuthDelegateTest, retry) {
                 m_cv.notify_all();
             }));
 
-    auto authDelegate = AuthDelegate::create(m_mockConfig, std::move(m_mockHttpPost));
+    auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     authDelegate->setAuthObserver(m_mockAuthObserver);
     waitFor(TIME_OUT_IN_SECONDS, [&tokenRefreshed]() { return tokenRefreshed;});
 }
@@ -288,7 +312,7 @@ TEST_F(AuthDelegateTest, expirationNotification) {
                 m_cv.notify_all();
             }));
 
-    auto authDelegate = AuthDelegate::create(m_mockConfig, std::move(m_mockHttpPost));
+    auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     authDelegate->setAuthObserver(m_mockAuthObserver);
     waitFor(TIME_OUT_IN_SECONDS, [&tokenExpired]() {return tokenExpired;});
 }
@@ -301,10 +325,11 @@ TEST_F(AuthDelegateTest, expirationNotification) {
  */
 TEST_F(AuthDelegateTest, recoverAfterExpiration) {
     bool tokenRefreshed = false;
-    const auto& validResponse = generateValidLwaResponseWithExpiration(std::chrono::seconds(1));
+    const auto& validResponse = generateValidLwaResponseWithExpiration(std::chrono::seconds(3));
 
     EXPECT_CALL(*m_mockHttpPost, doPost(_, _, _, _))
             .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)))
+            .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
             .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
             .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
             .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)));
@@ -333,7 +358,7 @@ TEST_F(AuthDelegateTest, recoverAfterExpiration) {
                 m_cv.notify_all();
             }));
 
-    auto authDelegate = AuthDelegate::create(m_mockConfig, std::move(m_mockHttpPost));
+    auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     authDelegate->setAuthObserver(m_mockAuthObserver);
     waitFor(TIME_OUT_IN_SECONDS, [&tokenRefreshed]() {return tokenRefreshed;});
 }
@@ -367,7 +392,7 @@ TEST_F(AuthDelegateTest, unrecoverableErrorNotification) {
                 m_cv.notify_all();
             }));
 
-    auto authDelegate = AuthDelegate::create(m_mockConfig, std::move(m_mockHttpPost));
+    auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     authDelegate->setAuthObserver(m_mockAuthObserver);
     waitFor(TIME_OUT_IN_SECONDS, [&errorReceived]() {return errorReceived;});
 }

@@ -21,10 +21,8 @@
 #include <memory>
 #include <string>
 
-#include <ACL/Message.h>
-#include <ACL/AttachmentManagerInterface.h>
-
-#include "AVSCommon/AVSMessage.h"
+#include "AttachmentManagerInterface.h"
+#include "AVSMessage.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -46,7 +44,7 @@ public:
     static std::unique_ptr<AVSDirective> create(const std::string& unparsedDirective,
         std::shared_ptr<AVSMessageHeader> avsMessageHeader,
         const std::string& payload,
-        std::shared_ptr<acl::AttachmentManagerInterface> attachmentManager);
+        std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager);
 
     /**
      * Returns a reader for the attachment associated with this directive.
@@ -73,12 +71,12 @@ private:
     AVSDirective(const std::string& unparsedDirective,
         std::shared_ptr<AVSMessageHeader> avsMessageHeader,
         const std::string& payload,
-        std::shared_ptr<acl::AttachmentManagerInterface> attachmentManager);
+        std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager);
 
     /// The unparsed directive JSON string from AVS.
     const std::string m_unparsedDirective;
     /// Object knows how to find the attachment based on the attachmentId.
-    std::shared_ptr<acl::AttachmentManagerInterface> m_attachmentManager;
+    std::shared_ptr<avsCommon::AttachmentManagerInterface> m_attachmentManager;
 };
 
 } // namespace avsCommon

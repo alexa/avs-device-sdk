@@ -62,7 +62,7 @@ static void sendExceptionEncounteredHelper(
 }
 
 MessageInterpreter::MessageInterpreter(std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-        std::shared_ptr<DirectiveSequencer> directiveSequencer):
+        std::shared_ptr<DirectiveSequencerInterface> directiveSequencer):
         m_exceptionEncounteredSender{exceptionEncounteredSender},
         m_directiveSequencer{directiveSequencer} {
 }

@@ -18,7 +18,7 @@
 #ifndef ALEXA_CLIENT_SDK_AVS_COMMON_INCLUDE_AVS_COMMON_EXCEPTION_ENCOUNTERED_SENDER_INTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVS_COMMON_INCLUDE_AVS_COMMON_EXCEPTION_ENCOUNTERED_SENDER_INTERFACE_H_
 
-#include "AVSCommon/ExceptionEncountered.h"
+#include "ExceptionEncountered.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {

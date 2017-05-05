@@ -77,6 +77,17 @@ public:
     inline LogEntry& d(const char* key, const ValueType& value);
 
     /**
+     * Add sensitive data in the form of a @c key, @c value pair to the metadata of this log entry.
+     * Because the data is 'sensitive' it will only be emitted in DEBUG builds.
+     *
+     * @param key The key identifying the value to add to this LogEntry.
+     * @param value The value to add to this LogEntry.
+     * @return This instance to facilitate adding more information to this log entry.
+     */
+    template<typename ValueType>
+    inline LogEntry& sensitive(const char* key, const ValueType& value);
+
+    /**
      * Add an arbitrary message to the end of the text of this LogEntry.  Once this has been called no other
      * additions should be made to this LogEntry.
      * @param message The message to add to the end of the text of this LogEntry.
@@ -131,6 +142,23 @@ LogEntry& LogEntry::d(const char *key, const ValueType& value) {
     m_stream << key << KEY_VALUE_SEPARATOR << value;
     return *this;
 }
+
+// TODO: ACSDK-246 - we should use a specific flag, not just DEBUG for this.
+#ifdef DEBUG
+
+template<typename ValueType>
+LogEntry& LogEntry::sensitive(const char *key, const ValueType& value) {
+    return d(key, value);
+}
+
+#else
+
+template<typename ValueType>
+LogEntry& LogEntry::sensitive(const char *key, const ValueType& value) {
+    return *this;
+}
+
+#endif
 
 } // namespace logger
 } // namespace avsUtils

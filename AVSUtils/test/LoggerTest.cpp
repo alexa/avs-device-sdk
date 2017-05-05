@@ -473,6 +473,21 @@ TEST_F(LoggerTest, verifyMessage) {
     ASSERT_NE(m_log->m_lastText.find(TEST_MESSAGE_STRING), std::string::npos);
 }
 
+/**
+ * Test passing sensitive data to the logging system.  It should only be emitted in DEBUG builds.
+ */
+TEST_F(LoggerTest, testSensitiveDataSuppressed) {
+    m_log = MockLogger::create(Level::INFO);
+    EXPECT_CALL(*(m_log.get()), emit(Level::INFO, _, _, _)).Times(1);
+    ACSDK_INFO(m_log, LX("testing metadata").sensitive(METADATA_KEY, UNESCAPED_METADATA_VALUE));
+    auto result = m_log->m_lastText.find(METADATA_KEY KEY_VALUE_SEPARATOR ESCAPED_METADATA_VALUE) != std::string::npos;
+#ifdef DEBUG
+    ASSERT_TRUE(result);
+#else
+    ASSERT_FALSE(result);
+#endif
+}
+
 } // namespace test
 } // namespace logger
 } // namespace avsUtils

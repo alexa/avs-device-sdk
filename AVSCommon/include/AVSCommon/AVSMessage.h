@@ -81,6 +81,13 @@ public:
      */
      std::string getPayload() const;
 
+    /**
+     * Return a string representation of this @c AVSMessage's header.
+     *
+     * @return A string representation of this @c AVSMessage's header.
+     */
+    std::string getHeaderAsString() const;
+
 private:
     /// The fields that represent the common items in the header of an AVS message.
     std::shared_ptr<AVSMessageHeader> m_header;

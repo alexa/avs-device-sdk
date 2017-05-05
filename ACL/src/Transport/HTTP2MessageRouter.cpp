@@ -15,8 +15,10 @@
  * permissions and limitations under the License.
  */
 
-#include "AVSUtils/Logging/Logger.h"
-#include "AVSUtils/Threading/Executor.h"
+#include <AVSCommon/AttachmentManager.h>
+#include <AVSUtils/Logging/Logger.h>
+#include <AVSUtils/Threading/Executor.h>
+
 #include "ACL/Transport/HTTP2MessageRouter.h"
 #include "ACL/Transport/HTTP2Transport.h"
 
@@ -31,7 +33,7 @@ HTTP2MessageRouter::HTTP2MessageRouter(std::shared_ptr<AuthDelegateInterface> au
                             avsEndpoint,
                             std::make_shared<threading::Executor>(),
                             std::make_shared<threading::Executor>()) {
-    m_attachmentManager = std::make_shared<AttachmentManager>();
+    m_attachmentManager = std::make_shared<avsCommon::AttachmentManager>();
 }
 
 HTTP2MessageRouter::~HTTP2MessageRouter() {

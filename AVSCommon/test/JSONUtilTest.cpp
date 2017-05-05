@@ -22,7 +22,6 @@
 
 #include "AVSCommon/AVSDirective.h"
 #include "AVSCommon/JSON/JSONUtils.h"
-#include "ACL/Message.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {

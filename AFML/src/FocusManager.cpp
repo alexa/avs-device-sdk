@@ -54,18 +54,25 @@ bool FocusManager::acquireChannel(
     return true;
 }
 
-bool FocusManager::releaseChannel(const std::string& channelName) {
+std::future<bool> FocusManager::releaseChannel(
+        const std::string& channelName, std::shared_ptr<ChannelObserverInterface> channelObserver) {
+    // Using a shared_ptr here so that the promise stays in scope by the time the Executor picks up the task.
+    auto releaseChannelSuccess = std::make_shared<std::promise<bool>>();
+    std::future<bool> returnValue = releaseChannelSuccess->get_future();
     std::shared_ptr<Channel> channelToRelease = getChannel(channelName);
     if (!channelToRelease) {
         Logger::log("Unable to release Channel: '" + channelName + "'.");
-        return false;
+        releaseChannelSuccess->set_value(false);
+        return returnValue;
     }
+
     m_executor.submit(
-        [this, channelToRelease] () {
-            releaseChannelHelper(channelToRelease);
+        [this, channelToRelease, channelObserver, releaseChannelSuccess, channelName] () {
+            releaseChannelHelper(channelToRelease, channelObserver, releaseChannelSuccess, channelName);
         }
     );
-    return true;
+
+    return returnValue;
 }
 
 void FocusManager::stopForegroundActivity() {
@@ -111,7 +118,18 @@ void FocusManager::acquireChannelHelper(
     }
 }
 
-void FocusManager::releaseChannelHelper(std::shared_ptr<Channel> channelToRelease) {
+void FocusManager::releaseChannelHelper(
+        std::shared_ptr<Channel> channelToRelease, 
+        std::shared_ptr<ChannelObserverInterface> channelObserver, 
+        std::shared_ptr<std::promise<bool>> releaseChannelSuccess,
+        const std::string& name) {
+    if (!channelToRelease->doesObserverOwnChannel(channelObserver)) {
+        Logger::log("Unable to release Channel " + name + " because caller does not own Channel");
+        releaseChannelSuccess->set_value(false);
+        return;
+    }
+
+    releaseChannelSuccess->set_value(true);
     // Lock here to update internal state which stopForegroundActivity may concurrently access.
     std::unique_lock<std::mutex> lock(m_mutex);
     bool wasForegrounded = isChannelForegroundedLocked(channelToRelease);

@@ -73,5 +73,9 @@ bool Channel::stopActivity(const std::string& activityId) {
     return true;
 }
 
+bool Channel::doesObserverOwnChannel(std::shared_ptr<ChannelObserverInterface> observer) const {
+    return observer == m_observer;
+}
+
 } // namespace afml
 } // namespace alexaClientSDK

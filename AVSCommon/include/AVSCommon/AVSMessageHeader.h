@@ -74,6 +74,13 @@ public:
      */
     std::string getDialogRequestId() const;
 
+    /**
+     * Return a string representation of this @c AVSMessage's header.
+     *
+     * @return A string representation of this @c AVSMessage's header.
+     */
+     std::string getAsString() const;
+
 private:
     /// Namespace of the AVSMessage header.
     const std::string m_namespace;

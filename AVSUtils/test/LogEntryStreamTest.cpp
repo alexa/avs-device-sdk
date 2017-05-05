@@ -39,7 +39,7 @@ protected:
 /// Test that a new LogEntryStream instance's c_str() returns an empty string.
 TEST_F(LogEntryStreamTest, emptyStream) {
     ASSERT_NE(m_stream.c_str(), nullptr);
-    ASSERT_EQ(strlen(m_stream.c_str()), 0);
+    ASSERT_EQ(strlen(m_stream.c_str()), 0u);
 }
 
 /// Send a character to an empty LogEntryStream.  Expect that c_str() returns a string with just that character.
@@ -47,7 +47,7 @@ TEST_F(LogEntryStreamTest, shortString) {
     const char SOME_CHAR = 'x';
     m_stream << SOME_CHAR;
     ASSERT_EQ(SOME_CHAR, m_stream.c_str()[0]);
-    ASSERT_EQ(strlen(m_stream.c_str()), 1);
+    ASSERT_EQ(strlen(m_stream.c_str()), 1u);
 }
 
 /// Send a medium sized string test to an empty LogEntryStream.  Expect that c_str() returns a matching string.

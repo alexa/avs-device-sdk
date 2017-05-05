@@ -14,12 +14,27 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#include <iostream>
-#include "AuthDelegate/Config.h"
+
+#include <AVSUtils/LibcurlUtils/LibcurlUtils.h>
+#include <AVSUtils/Logger/LogEntry.h>
+#include <AVSUtils/Logging/Logger.h>
+
 #include "AuthDelegate/HttpPost.h"
 
 namespace alexaClientSDK {
 namespace authDelegate {
+
+using namespace alexaClientSDK::avsUtils;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("HttpPost");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
 
 std::unique_ptr<HttpPost> HttpPost::create() {
     std::unique_ptr<HttpPost> httpPost(new HttpPost());
@@ -35,7 +50,10 @@ HttpPost::HttpPost() : m_curl{nullptr} {
 bool HttpPost::init() {
     m_curl = curl_easy_init();
     if (!m_curl) {
-        std::cerr << "curl_easy_init() failed." << std::endl;
+        ACSDK_ERROR(LX("initFailed").d("reason", "curl_easy_initFailed"));
+        return false;
+    }
+    if (!libcurlUtils::prepareForTLS(m_curl)) {
         return false;
     }
     if (!setopt(CURLOPT_WRITEFUNCTION, staticWriteCallbackLocked)) {
@@ -65,15 +83,13 @@ long HttpPost::doPost(const std::string& url,
         return HTTP_RESPONSE_CODE_UNDEFINED;
     }
 
-    if (!m_curl) {
-        std::cerr << "HttpPost::perform() m_curl == nullptr" << std::endl;
-        return HTTP_RESPONSE_CODE_UNDEFINED;
-    }
-
     auto result = curl_easy_perform(m_curl);
 
     if (result != CURLE_OK) {
-        std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(result) << std::endl;
+        ACSDK_ERROR(LX("doPostFailed")
+                .d("reason", "curl_easy_performFailed")
+                .d("result", result)
+                .d("error", curl_easy_strerror(result)));
         body.clear();
         return HTTP_RESPONSE_CODE_UNDEFINED;
     }
@@ -81,31 +97,29 @@ long HttpPost::doPost(const std::string& url,
     long responseCode = 0;
     result = curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, &responseCode);
     if (result != CURLE_OK) {
-        std::cerr << "curl_easy_getinfo(CURLINFO_RESPONSE_CODE) failed: " << curl_easy_strerror(result) << std::endl;
+        ACSDK_ERROR(LX("doPostFailed")
+                .d("reason", "curl_easy_getinfoFailed")
+                .d("property", "CURLINFO_RESPONSE_CODE")
+                .d("result", result)
+                .d("error", curl_easy_strerror(result)));
         body.clear();
         return HTTP_RESPONSE_CODE_UNDEFINED;
     } else {
-        std::cout << "curl_easy_getinfo(CURLINFO_RESPONSE_CODE) successfully returned the HTTP code: "
-            << responseCode << std::endl;
+        ACSDK_DEBUG(LX("doPostSucceeded").d("code", responseCode));
         return responseCode;
     }
 }
 
 template<typename ParamType>
-bool HttpPost::setopt(CURLoption option, ParamType param) {
-    if (!m_curl) {
-
-#ifdef DEBUG
-        // TODO Integrate with Logging library: ACSDK-57
-        // This may be private information so any logging of values must be at debug level
-        std::cerr << "!m_curl in HttpPost::setopt(option=" << option << ")" << std::endl;
-#endif
-
-        return false;
-    }
-    auto result = curl_easy_setopt(m_curl, option, param);
+bool HttpPost::setopt(CURLoption option, ParamType value) {
+    auto result = curl_easy_setopt(m_curl, option, value);
     if (result != CURLE_OK) {
-        std::cerr << "curl_easy_setopt() failed: " << curl_easy_strerror(result) << std::endl;
+        ACSDK_ERROR(LX("setoptFailed")
+                .d("reason", "nullCurlHandle")
+                .d("option", option)
+                .sensitive("value", value)
+                .d("result", result)
+                .d("error", curl_easy_strerror(result)));
         return false;
     }
     return true;
@@ -113,7 +127,7 @@ bool HttpPost::setopt(CURLoption option, ParamType param) {
 
 size_t HttpPost::staticWriteCallbackLocked(char* ptr, size_t size, size_t nmemb, void* userdata) {
     if (!userdata) {
-        std::cerr << "staticWriteCallback() userdata == nullptr." << std::endl;
+        ACSDK_ERROR(LX("staticWriteCallbackFailed").d("reason", "nullUserData"));
         return 0;
     }
 

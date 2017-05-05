@@ -1,4 +1,4 @@
-## Alexa Client SDK v0.2
+## Alexa Client SDK v0.2.1
 
 This release of the Alexa Client SDK for C++ provides components for authentication and communications with the Alexa Voice Service (AVS), specifically AuthDelegate, Alexa Communications Library (ACL), Alexa Directive Sequencer Library (ADSL), Activity Focus Manager Library (AFML), and associated APIs.
 
@@ -58,7 +58,7 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 ## Minimum Requirements and Dependencies
 
 * C++ 11 or later
-* [GNU Compiler Collection (GCC) 4.8x](https://gcc.gnu.org/) or later **OR** [Clang 3.3](http://clang.llvm.org/get_started.html) or later
+* [GNU Compiler Collection (GCC) 4.8.5](https://gcc.gnu.org/) or later **OR** [Clang 3.3](http://clang.llvm.org/get_started.html) or later
 * [CMake 3.0](https://cmake.org/download/) or later
 * [libcurl 7.50.2](https://curl.haxx.se/download.html) or later
 * [nghttp2 1.0](https://github.com/nghttp2/nghttp2) or later
@@ -66,7 +66,7 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 
 ## Obtain LWA Credentials
 
-To access AVS, your product needs to obtain Login with Amazon (LWA) credentials to establish a connection and make requests on behald of the user. Instructions are available for **Remote Authorization** and **Local Authorization**.
+To access AVS, your product needs to obtain Login with Amazon (LWA) credentials to establish a connection and make requests on behalf of the user. Instructions are available for **Remote Authorization** and **Local Authorization**.
 
 **Remote Authorization**
 
@@ -79,19 +79,24 @@ To access AVS, your product needs to obtain Login with Amazon (LWA) credentials 
 
 ### Test Credentials
 
-For initial testing, instructions are available to quickly obtain a `clientId`, `clientSecret`, and `refreshToken`. This method should not be used as a replacement for **Remote Authorization** or **Local Authorization**. For additional information, see **Appendix A**.
+For initial testing, instructions are available to quickly obtain a `clientId`, `clientSecret`, and `refreshToken`. This method should not be used as a replacement for **Remote Authorization** or **Local Authorization**. For additional information, see [**Appendix A**](#appendix-a-obtain-test-credentials).
 
-## Setup Your AuthDelegate
+### Create the AlexaClientSDKConfig.json file
 
-The role of AuthDelegate is to exchange LWA credentials for an access token, and pass the access token to the ACL when `getToken()` is called.
+After you've obtained LWA credentials, you need to create `AlexaClientSDKConfig.json`:
 
-After you've obtained LWA credentials, you need to edit your AuthDelegate configuration (`/AuthDelegate/src/Config.cpp`). Replace all values prefixed with `INSERT_YOUR`:
-
-```cpp
-static const std::string DEFAULT_CLIENT_ID = "INSERT_YOUR_CLIENT_ID";
-static const std::string DEFAULT_REFRESH_TOKEN = "INSERT_YOUR_REFRESH_TOKEN";
-static const std::string DEFAULT_CLIENT_SECRET = "INSERT_YOUR_CLIENT_SECRET";
-```
+1. Navigate to the `Integration` folder.
+2. Create a file named `AlexaClientSDKConfig.json`.
+3. Populate the file with the following key/value pairs.  Replace all values prefixed with `INSERT_YOUR_`:
+   ```
+   {
+       "authDelegate" : {
+           "clientId" : "INSERT_YOUR_CLIENT_ID_HERE",
+           "refreshToken" : "INSERT_YOUR_REFRESH_TOKEN_HERE",
+           "clientSecret" : "INSERT_YOUR_CLIENT_SECRET_HERE"
+       }
+   }
+   ```
 
 After adjusting the configuration, follow the instructions for your OS to create an out-of-source build.
 
@@ -156,23 +161,11 @@ Ensure that all tests are passed before you begin integration testing.
 
 Integration tests ensure that your build can make a request and receive a response from AVS. **All requests to AVS require auth credentials.**
 
-**Important**: Integration tests for v0.2 **do not** use AuthDelegate. Instead, the tests reference an `AuthDelegate.config` file, which you must create.
+**Important**: Integration tests for v0.2.1 reference an `AlexaClientSDKConfig.json` file, which you must create.
+See the `Create the AlexaClientSDKConfig.json file` section (above), if you have not already done this.
 
-### Create the AuthDelegate.config file
-
-To create `AuthDelegate.config`:
-
-1. Navigate to the `Integration` folder.
-2. Create a file named `AuthDelegate.config`.
-3. Populate the file with the following key/value pairs.
-   ```
-   clientId=YOUR_CLIENT_ID_HERE
-   refreshToken=YOUR_REFRESH_TOKEN_HERE
-   clientSecret=YOUR_CLIENT_SECRET_HERE
-   ```
-
-After you've entered your credentials, save the file and run this command:
-`make all integration`  
+To exercise the integration tests run this command:
+`make all integration`
 
 ## Alexa Client SDK API Documentation  
 To build the Alexa Client SDK API documentation, run this command from your build directory: `make doc`.  
@@ -236,16 +229,6 @@ In this step we'll make a `POST` request to obtain a **Refresh Token**. Ensure t
    **Note**: Some of these values may need to be URL encoded. If you don't have a tool, you can use a tool like [http://www.urlencoder.org](http://www.urlencoder.org).
 3. If successful, a JSON string will print to your console. Locate `refresh_token` and record the value.
 
-### Step 4: Update AuthDelegate
-
-Now that you've obtained your **Client ID**, **Client Secret**, and **Refresh Token**, you need to edit your AuthDelegate configuration (`/AuthDelegate/src/Config.cpp`). Replace all values prefixed with `INSERT_YOUR`:
-
-```cpp
-static const std::string DEFAULT_CLIENT_ID = "INSERT_YOUR_CLIENT_ID";
-static const std::string DEFAULT_REFRESH_TOKEN = "INSERT_YOUR_REFRESH_TOKEN";
-static const std::string DEFAULT_CLIENT_SECRET = "INSERT_YOUR_CLIENT_SECRET";
-```  
-
 ## Appendix B: Memory Profile  
 
 This appendix provides the memory profiles for various modules of the Alexa Client SDK. The numbers were observed running integration tests on a machine running Ubuntu 16.04.2 LTS.    
@@ -274,13 +257,51 @@ Unique size set (USS) and proportional size set (PSS) were measured by SMEM whil
 
 ![Directive Lifecycle](https://images-na.ssl-images-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-voice-service/docs/avs-directive-lifecycle.png)
 
+## Appendix D: Runtime Configuration of path to CA Certificates
+
+By default libcurl is built with paths to a CA bundle and a directory containing CA certificates.  You can direct the Alexa Client SDK to configure libcurl to use an additional path to directories containing CA certificates via the [CURLOPT_CAPATH](https://curl.haxx.se/libcurl/c/CURLOPT_CAPATH.html) setting.  This is done by adding a `"libcurlUtils/CURLOPT_CAPATH"` entry to the `AlexaClientSDKConfig.json` file.  Here is an example:  
+
+```
+{
+    "authDelegate" : {
+        "clientId" : "INSERT_YOUR_CLIENT_ID_HERE",
+        "refreshToken" : "INSERT_YOUR_REFRESH_TOKEN_HERE",
+        "clientSecret" : "INSERT_YOUR_CLIENT_SECRET_HERE"
+    },
+    "libcurlUtils" : {
+        "CURLOPT_CAPATH" : "INSERT_YOUR_CA_CERTIFICATE_PATH_HERE"
+    }
+}
+```
+**Note** If you want to assure that libcurl is *only* using CA certificates from this path you may need to reconfigure libcurl with the `--without-ca-bundle` and `--without-ca-path` options and rebuild it to suppress the default paths.  See [The libcurl documention](https://curl.haxx.se/docs/sslcerts.html) for more information.
+
 ## Release Notes
 
-v0.2 of the Alexa Client SDK includes components for authentication, communications, message orchestration, and focus management. These include AuthDelegate, ACL, ADSL, AFML, and associated APIs.
+v0.2.1 of the Alexa Client SDK includes components for authentication, communications, message orchestration, and focus management. These include AuthDelegate, ACL, ADSL, AFML, and associated APIs.
 
+Version v0.2.1 released 5/3/2017:
+* Replaced the configuration file `AuthDelegate.config` with `AlexaClientSDKConfig.json`.
+* Add the ability to specify a `CURLOPT_CAPATH` value to be used when libcurl is used by ACL and AuthDelegate.  See [**Appendix D**](#appendix-d-runtime-configuration-of-path-to-ca-certificates) for details.
+* Changes to ADSL interfaces:
+The v0.2 interface for registering directive handlers (`DirectiveSequencer::setDirectiveHandlers()`) was problematic because it canceled the ongoing processing of directives and dropped further directives until it completed. The revised API makes the operation immediate without canceling or dropping any handling.  However, it does create the possibility that `DirectiveHandlerInterface` methods `preHandleDirective()` and `handleDirective()` may be called on different handlers for the same directive.
+  * `DirectiveSequencerInterface::setDirectiveHandlers()` was replaced by `addDirectiveHandlers()` and `removeDirectiveHandlers()`.
+  * `DirectiveHandlerInterface::shutdown()` was replaced with `onDeregistered()`.
+  * `DirectiveHandlerInterface::preHandleDirective()` now takes a `std::unique_ptr` instead of a `std::shared_ptr` to `DirectiveHandlerResultInterface`.
+  * `DirectiveHandlerInterface::handleDirective()` now returns a bool indicating if the handler recognizes the `messageId`.  
+* Bug fixes:
+  * ACL and AuthDelegate now require TLSv1.2.
+  * `onDirective()` now sends `ExceptionEncountered` for unhandled directives.
+  * `DirectiveSequencer::shutdown()` no longer sends `ExceptionEncountered()` for queued directives.
 
-| Version | Release Date | Notes |  
-|---------|--------------|-------|  
-| v0.2 | 3/27/2017 | Added memory profiling for ACL and ADSL; added command to build API documentation. |  
-| v0.2 | 3/9/2017 | Alexa Client SDK v0.2 released: Architecture diagram has been updated to include the ADSL and AMFL. CMake build types and options have been updated. New documentation for libcurl optimization included. |  
-| v0.1 | 2/10/2017 | Alexa Client SDK v0.1 released. |
+Version v0.2 updated 3/27/2017:
+* Added memory profiling for ACL and ADSL.  See [**Appendix B**](#appendix-b-mempry-profile).
+* Added command to build API documentation.  
+
+Version v0.2 released 3/9/2017:
+* Alexa Client SDK v0.2 released.
+* Architecture diagram has been updated to include the ADSL and AMFL.
+* CMake build types and options have been updated.
+* New documentation for libcurl optimization included.  
+
+Version v0.1 released 2/10/2017:
+* Alexa Client SDK v0.1 released.

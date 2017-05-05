@@ -18,6 +18,8 @@
 #define ALEXA_CLIENT_SDK_AVSUTILS_INCLUDE_AVSUTILS_INITIALIZATION_ALEXA_CLIENT_SDK_INIT_H_
 
 #include <atomic>
+#include <iostream>
+#include <vector>
 
 namespace alexaClientSDK {
 namespace avsUtils {
@@ -40,9 +42,17 @@ public:
      * calls functions of other libraries that have the same requirements and thread safety.
      * terminate() must be called for each initialize() called.
      *
+     * @param jsonConfigurationStreams Vector of @c istreams containing JSON documents from which
+     * to parse configuration parameters. Streams are processed in the order they appear in the vector. When a
+     * value appears in more than one JSON stream the last processed stream's value overwrites the previous value
+     * (and a debug log entry will be created). This allows for specifying default settings (by providing them
+     * first) and specifying the configuration from multiple sources (e.g. a separate stream for each component).
+     * Documentation of the JSON configuration format and methods to access the resulting global configuration
+     * can be found here: avsUtils::configuration::ConfigurationNode.
+     *
      * @return Whether the initialization was successful.
      */
-    static bool initialize();
+    static bool initialize(const std::vector<std::istream *> &jsonStreams);
 
     /**
      * Uninitialize the Alexa Client SDK.

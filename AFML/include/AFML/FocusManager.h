@@ -18,6 +18,7 @@
 #ifndef ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_FOCUS_MANAGER_H_
 #define ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_FOCUS_MANAGER_H_
 
+#include <future>
 #include <memory>
 #include <mutex>
 #include <set>
@@ -41,8 +42,8 @@ namespace afml {
  * acquire Channel - clients should call the acquireChannel() method, passing in the name of the Channel they wish to 
  * acquire, a pointer to the observer that they want to be notified once they get focus, and a unique activity id. 
  *
- * release Channel - clients should call the releaseChannel() method, passing in the name of the Channel they wish to 
- * release. 
+ * release Channel - clients should call the releaseChannel() method, passing in the name of the Channel and the
+ * observer of the Channel they wish to release.
  *
  * stop foreground Channel - clients should call the stopForegroundActivitiy() method.
  *
@@ -112,16 +113,17 @@ public:
             const std::string& activityId);
 
     /**
-     * This method will release the Channel by notifying the observer of the Channel to stop via 
-     * ChannelObserverInterface##onFocusChanged(). If the Channel to release is the current foreground focused Channel,
-     * it will also notify the next highest priority Channel via an ChannelObserverInterface##onFocusChanged() callback
-     * that it has gained foreground focus.
+     * This method will release the Channel and notify the observer of the Channel, if the observer is the same as the 
+     * observer passed in the acquireChannel call, to stop via ChannelObserverInterface##onFocusChanged(). If the
+     * Channel to release is the current foreground focused Channel, it will also notify the next highest priority
+     * Channel via an ChannelObserverInterface##onFocusChanged() callback that it has gained foreground focus.
      *
      * @param channelName The name of the Channel to release.
-     *
-     * @return Returns @c true if the Channel can be released and @c false otherwise.
+     * @param channelObserver The observer to be released from the Channel.
+     * @return @c std::future<bool> which will contain @c true if the Channel can be released and @c false otherwise.
      */
-    bool releaseChannel(const std::string& channelName);
+    std::future<bool> releaseChannel(
+        const std::string& channelName, std::shared_ptr<ChannelObserverInterface> channelObserver);
 
     /**
      * This method will request that the currently foregrounded Channel activity be stopped, if there is one. This will
@@ -167,8 +169,15 @@ private:
      * implementation which the public method will call.
      *
      * @param channelToRelease The Channel to release.
+     * @param channelObserver The observer of the Channel to release.
+     * @param releaseChannelSuccess The promise to satisfy.
+     * @param channelName The name of the Channel.
      */
-    void releaseChannelHelper(std::shared_ptr<Channel> channelToRelease);
+    void releaseChannelHelper(
+            std::shared_ptr<Channel> channelToRelease, 
+            std::shared_ptr<ChannelObserverInterface> channelObserver, 
+            std::shared_ptr<std::promise<bool>> releaseChannelSuccess,
+            const std::string& channelName);
 
     /**
      * Stops the Channel specified and updates other Channels as needed if the activity id passed in matches the

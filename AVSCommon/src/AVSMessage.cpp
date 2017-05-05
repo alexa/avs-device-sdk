@@ -15,7 +15,6 @@
  * permissions and limitations under the License.
  */
 
-#include <ACL/Message.h>
 #include <AVSUtils/Logging/Logger.h>
 
 #include "AVSCommon/AVSMessage.h"
@@ -47,6 +46,10 @@ std::string AVSMessage::getDialogRequestId() const {
 
 std::string AVSMessage::getPayload() const {
     return m_payload;
+}
+
+std::string AVSMessage::getHeaderAsString() const {
+    return m_header->getAsString();
 }
 
 } // namespace avsCommon

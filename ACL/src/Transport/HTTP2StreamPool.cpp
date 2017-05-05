@@ -22,7 +22,9 @@ namespace acl {
 
 using namespace avsUtils;
 
-HTTP2StreamPool::HTTP2StreamPool(const int maxStreams, std::shared_ptr<AttachmentManagerInterface> attachmentManager)
+    HTTP2StreamPool::HTTP2StreamPool(
+        const int maxStreams,
+        std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager)
         : m_numRemovedStreams{0},
           m_maxStreams{maxStreams},
           m_attachmentManager{attachmentManager} {

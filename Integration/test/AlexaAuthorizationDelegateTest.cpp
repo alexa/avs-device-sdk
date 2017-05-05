@@ -16,15 +16,16 @@
  */
 
 #include <chrono>
+#include <fstream>
+#include <sstream>
+
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "AuthDelegate/AuthDelegate.h"
-#include "AuthDelegate/MockConfig.h"
-#include "AVSUtils/Initialization/AlexaClientSDKInit.h"
-#include "Integration/FileConfig.h"
-#include "Integration/AuthObserver.h"
+#include <AuthDelegate/AuthDelegate.h>
+#include <AVSUtils/Initialization/AlexaClientSDKInit.h>
 
+#include "Integration/AuthObserver.h"
 
 using namespace alexaClientSDK::avsUtils::initialization;
 using namespace alexaClientSDK::authDelegate;
@@ -32,7 +33,7 @@ using namespace ::testing;
 
 namespace {
 
-/// Path to the AuthDelegate.config file
+/// Path to the AlexaClientSDKConfig.json file
 std::string g_configPath;
 
 /// Timeout in seconds for AuthDelegate to wait for LWA response.
@@ -50,30 +51,19 @@ protected:
     /// Initialize test dependencies
     AlexaAuthorizationDelegateTest() {
         m_authObserver = std::make_shared<AuthObserver>();
-        m_config = std::make_shared<FileConfig>(g_configPath);
-        m_mockConfig = std::make_shared<NiceMock<MockConfig>>();
     }
 
     /// Stub certain mock objects with default actions
     virtual void SetUp() {
-        ASSERT_TRUE(AlexaClientSDKInit::initialize());
-
-        ON_CALL(*m_mockConfig, getClientId()).WillByDefault(Return(m_config->getClientId()));
-        ON_CALL(*m_mockConfig, getClientSecret()).WillByDefault(Return(m_config->getClientSecret()));
-        ON_CALL(*m_mockConfig, getRefreshToken()).WillByDefault(Return(m_config->getRefreshToken()));
-        ON_CALL(*m_mockConfig, getLwaUrl()).WillByDefault(Return(m_config->getLwaUrl()));
+        std::ifstream infile(g_configPath);
+        ASSERT_TRUE(infile.good());
+        ASSERT_TRUE(AlexaClientSDKInit::initialize({&infile}));
     }
 
     /// Release resources
     virtual void TearDown() {
         AlexaClientSDKInit::uninitialize();
     }
-
-    /// Config object that contains valid information needed by LWA for authorization
-    std::shared_ptr<Config> m_config;
-
-    /// Mock object of @c Config which could be stubbed with desired behaviors
-    std::shared_ptr<NiceMock<MockConfig>> m_mockConfig;
 
     /// AuthObserver that implements AuthObserverInterface
     std::shared_ptr<AuthObserver> m_authObserver;
@@ -86,7 +76,7 @@ protected:
  * be able to retrieve the valid refresh token (get authorized).
  */
 TEST_F(AlexaAuthorizationDelegateTest, refreshAuthToken) {
-    auto authDelegate = AuthDelegate::create(m_mockConfig);
+    auto authDelegate = AuthDelegate::create();
     authDelegate->setAuthObserver(m_authObserver);
     bool tokenRefreshed = m_authObserver->waitFor(AuthObserver::State::REFRESHED,
         std::chrono::seconds(TIME_OUT_IN_SECONDS));
@@ -100,9 +90,17 @@ TEST_F(AlexaAuthorizationDelegateTest, refreshAuthToken) {
  * notify the observer of the error.
  */
 TEST_F(AlexaAuthorizationDelegateTest, invalidRefreshTokenWithUnrecoverableError) {
-    ON_CALL(*m_mockConfig, getRefreshToken())
-            .WillByDefault(Return("InvalidRefreshToken"));
-    auto authDelegate = AuthDelegate::create(m_mockConfig);
+    AlexaClientSDKInit::uninitialize();
+    std::ifstream infile(g_configPath);
+    ASSERT_TRUE(infile.good());
+    std::stringstream override;
+    override << R"({
+            "authDelegate" : {
+                "refreshToken" : "InvalidRefreshToken"
+            }
+        })";
+    ASSERT_TRUE(AlexaClientSDKInit::initialize({&infile, &override}));
+    auto authDelegate = AuthDelegate::create();
     authDelegate->setAuthObserver(m_authObserver);
     bool gotUnrecoverableError = m_authObserver->waitFor(AuthObserver::State::UNRECOVERABLE_ERROR,
          std::chrono::seconds(TIME_OUT_IN_SECONDS));
@@ -115,7 +113,7 @@ TEST_F(AlexaAuthorizationDelegateTest, invalidRefreshTokenWithUnrecoverableError
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     if (argc < 2) {
-        std::cerr << "USAGE: AlexaAuthorizationDelegateTest <path_to_auth_delgate_config>" << std::endl;
+        std::cerr << "USAGE: AlexaAuthorizationDelegateTest <path to AlexaClientSDKConfig.json>" << std::endl;
         return 1;
     } else {
         g_configPath = std::string(argv[1]);

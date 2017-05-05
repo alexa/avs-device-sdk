@@ -32,8 +32,31 @@ static const std::string MIME_JSON_CONTENT_TYPE = "application/json";
 /// MIME type for binary streams
 static const std::string MIME_OCTET_STREAM_CONTENT_TYPE = "application/octet-stream";
 
+/**
+ *  Sanitize the Content-ID field in MIME header.
+ *
+ *  This function is necessary per RFC-2392: A "cid" URL is converted to the corresponding Content-ID message header
+ *  MIME by removing the "cid:" prefix, and enclosing the remaining parts with an angle bracket pair, "<" and ">".
+ *  For example, "cid:foo4%25foo1@bar.net" corresponds to Content-ID: <foo4%25foo1@bar.net>
+ *
+ * @param mimeContentId The raw content ID value in MIME header.
+ * @return The sanitized content ID.
+ */
+std::string sanitizeContentId(const std::string& mimeContentId) {
+    std::string sanitizedContentId;
+    if (mimeContentId.empty()) {
+        avsUtils::Logger::log("The mimeContentId is empty, can't be sanitized");
+    } else if ( ('<' == mimeContentId.front()) && ('>' == mimeContentId.back()) ) {
+        // Getting attachment ID within angle bracket <>.
+        sanitizedContentId = mimeContentId.substr(1, mimeContentId.size() - 2);
+    } else {
+        sanitizedContentId = mimeContentId;
+    }
+    return sanitizedContentId;
+}
+
 MimeParser::MimeParser(MessageConsumerInterface *messageConsumer,
-        std::shared_ptr<AttachmentManagerInterface> attachmentManager)
+        std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager)
         : m_receivedFirstChunk{false},
           m_currDataType{ContentType::NONE},
           m_messageConsumer{messageConsumer},
@@ -51,7 +74,7 @@ void MimeParser::partBeginCallback(const MultipartHeaders &headers, void *userDa
         parser->m_currDataType = MimeParser::ContentType::JSON;
     } else if (contentType.find(MIME_OCTET_STREAM_CONTENT_TYPE) != std::string::npos) {
         if (headers.count(MIME_CONTENT_ID_FIELD_NAME) == 1) {
-            parser->m_message.append(headers[MIME_CONTENT_ID_FIELD_NAME]);
+            parser->m_message = sanitizeContentId(headers[MIME_CONTENT_ID_FIELD_NAME]);
         }
         parser->m_currDataType = MimeParser::ContentType::ATTACHMENT;
         parser->m_attachment = std::make_shared<std::stringstream>();
@@ -74,21 +97,25 @@ void MimeParser::partDataCallback(const char *buffer, size_t size, void *userDat
 
 void MimeParser::partEndCallback(void *userData) {
     MimeParser *parser = static_cast<MimeParser*>(userData);
-    std::shared_ptr<Message> message;
     switch (parser->m_currDataType) {
         case MimeParser::ContentType::JSON:
-            message = std::make_shared<Message>(parser->m_message, parser->m_attachmentManager);
+        {
+            auto message = std::make_shared<Message>(parser->m_message,
+                    parser->m_attachmentManager);
             if(!parser->m_messageConsumer) {
                 Logger::log("Message Consumer has not been set. Message from ACL cannot be processed.");
                 break;
             }
             parser->m_messageConsumer->consumeMessage(message);
             break;
+        }
         case MimeParser::ContentType::ATTACHMENT:
+        {
             parser->m_attachmentManager->createAttachment(parser->m_message, parser->m_attachment);
             break;
+        }
         default:
-            Logger::log("Ended part for usupported part type");
+            Logger::log("Ended part for unsupported part type");
     }
 
     parser->m_message = "";

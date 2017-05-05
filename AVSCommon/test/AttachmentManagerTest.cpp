@@ -22,10 +22,10 @@
 #include <sstream>
 #include <thread>
 
-#include "ACL/AttachmentManager.h"
+#include "AVSCommon/AttachmentManager.h"
 
 namespace alexaClientSDK {
-namespace acl {
+namespace avsCommon {
 
 /// Time out to wait for an attachment.
 static const std::chrono::milliseconds TIME_OUT_IN_MILLISECONDS(50);
@@ -165,5 +165,5 @@ TEST_F(AttachmentManagerTest, readAttachmentAfterReleasing) {
     ASSERT_EQ(status, std::future_status::timeout);
 }
 
-} // namespace acl
+} // namespace avsCommon
 } // namespace alexaClientSDK

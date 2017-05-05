@@ -17,23 +17,25 @@
 
 /// @file AlexaCommunicationsLibraryTest.cpp
 
-#include "ACL/AVSConnectionManager.h"
-#include "ACL/Message.h"
-#include "ACL/Transport/HTTP2MessageRouter.h"
-#include "ACL/Values.h"
-#include "AuthDelegate/AuthDelegate.h"
-#include "AuthDelegate/Config.h"
-#include "AVSUtils/Initialization/AlexaClientSDKInit.h"
-#include "Integration/AuthObserver.h"
-#include "Integration/ClientMessageHandler.h"
-#include "Integration/ConnectionStatusObserver.h"
-#include "Integration/FileConfig.h"
-#include "Integration/ObservableMessageRequest.h"
-
-#include <gtest/gtest.h>
 #include <future>
 #include <fstream>
 #include <chrono>
+
+#include <gtest/gtest.h>
+
+#include <ACL/AVSConnectionManager.h>
+#include <ACL/Message.h>
+#include <ACL/Transport/HTTP2MessageRouter.h>
+#include <ACL/Values.h>
+#include <AuthDelegate/AuthDelegate.h>
+#include <AVSUtils/Initialization/AlexaClientSDKInit.h>
+#include <AVSUtils/Logger/LogEntry.h>
+#include <AVSUtils/Logging/Logger.h>
+
+#include "Integration/AuthObserver.h"
+#include "Integration/ClientMessageHandler.h"
+#include "Integration/ConnectionStatusObserver.h"
+#include "Integration/ObservableMessageRequest.h"
 
 namespace alexaClientSDK {
 namespace integration {
@@ -171,10 +173,11 @@ std::string inputPath;
 class AlexaCommunicationsLibraryTest : public ::testing::Test {
 protected:
     virtual void SetUp() {
-        ASSERT_TRUE(AlexaClientSDKInit::initialize());
-        m_config = std::make_shared<FileConfig>(configPath);
+        std::ifstream infile(configPath);
+        ASSERT_TRUE(infile.good());
+        ASSERT_TRUE(AlexaClientSDKInit::initialize({&infile}));
         m_authObserver = std::make_shared<AuthObserver>();
-        m_authDelegate = AuthDelegate::create(m_config);
+        ASSERT_TRUE(m_authDelegate = AuthDelegate::create());
         m_authDelegate->setAuthObserver(m_authObserver);
         m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
         m_clientMessageHandler = std::make_shared<ClientMessageHandler>();
@@ -202,9 +205,10 @@ protected:
     }
 
     virtual void disconnect() {
-        m_avsConnectionManager->disable();
-        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatus::DISCONNECTED))
-                << "Connecting timed out.";
+        if (m_avsConnectionManager) {
+            m_avsConnectionManager->disable();
+            ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatus::DISCONNECTED)) << "Connecting timed out.";
+        }
     }
 
     /*
@@ -255,7 +259,6 @@ protected:
         }
     }
 
-    std::shared_ptr<Config> m_config;
     std::shared_ptr<AuthObserver> m_authObserver;
     std::shared_ptr<AuthDelegate> m_authDelegate;
     std::shared_ptr<ConnectionStatusObserver> m_connectionStatusObserver;

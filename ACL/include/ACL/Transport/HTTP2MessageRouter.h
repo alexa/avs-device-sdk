@@ -20,10 +20,11 @@
 
 #include <memory>
 #include <string>
+#include <AVSCommon/AttachmentManagerInterface.h>
 
 #include "ACL/Transport/MessageRouter.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
-#include "ACL/AttachmentManagerInterface.h"
+
 
 namespace alexaClientSDK {
 namespace acl {
@@ -56,7 +57,7 @@ private:
             TransportObserverInterface* transportObserverInterface) override;
 
     /// The attachment manager.
-    std::shared_ptr<AttachmentManagerInterface> m_attachmentManager;
+    std::shared_ptr<avsCommon::AttachmentManagerInterface> m_attachmentManager;
 };
 
 } // acl

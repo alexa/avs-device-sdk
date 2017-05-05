@@ -20,10 +20,11 @@ if(BUILD_TESTING)
     separate_arguments(CTEST_CUSTOM_POST_TEST UNIX_COMMAND "${CTEST_CUSTOM_POST_TEST}")
     add_custom_target(integration
         COMMAND ${CTEST_CUSTOM_PRE_TEST}
-        COMMAND AlexaAuthorizationDelegateTest "${Integration_SOURCE_DIR}/AuthDelegate.config"
-        COMMAND AlexaCommunicationsLibraryTest "${Integration_SOURCE_DIR}/AuthDelegate.config"
-            "${Integration_SOURCE_DIR}/inputs"
-        COMMAND AlexaDirectiveSequencerLibraryTest "${Integration_SOURCE_DIR}/AuthDelegate.config"
-            "${Integration_SOURCE_DIR}/inputs"
+        COMMAND AlexaAuthorizationDelegateTest
+            "${Integration_SOURCE_DIR}/AlexaClientSDKConfig.json"
+        COMMAND AlexaCommunicationsLibraryTest
+            "${Integration_SOURCE_DIR}/AlexaClientSDKConfig.json" "${Integration_SOURCE_DIR}/inputs"
+        COMMAND AlexaDirectiveSequencerLibraryTest
+            "${Integration_SOURCE_DIR}/AlexaClientSDKConfig.json" "${Integration_SOURCE_DIR}/inputs"
         COMMAND ${CTEST_CUSTOM_POST_TEST})
 endif()

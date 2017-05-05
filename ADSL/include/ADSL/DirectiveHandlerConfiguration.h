@@ -18,25 +18,21 @@
 #ifndef ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_HANDLER_CONFIGURATION_H_
 #define ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_HANDLER_CONFIGURATION_H_
 
-#include <map>
 #include <memory>
-#include <utility>
+#include <unordered_map>
 
-#include <AVSCommon/AVSMessage.h>
-#include "ADSL/BlockingPolicy.h"
 #include "ADSL/DirectiveHandlerInterface.h"
+#include "ADSL/HandlerAndPolicy.h"
+#include "ADSL/NamespaceAndName.h"
 
 namespace alexaClientSDK {
 namespace adsl {
 
-/// @c AVSMessage namespace and name pair for associating types of directives with a handler and blocking policy.
-using NamespaceAndNamePair = std::pair<std::string, std::string>;
-
-/// Pair combining A DirectiveHandler and a BlockingPolicy in that order.
-using DirectiveHandlerAndBlockingPolicyPair = std::pair<std::shared_ptr<DirectiveHandlerInterface>, BlockingPolicy>;
-
-/// Mapping from (namespace,name) pairs to (handler,policy) pairs.
-using DirectiveHandlerConfiguration = std::map<NamespaceAndNamePair, DirectiveHandlerAndBlockingPolicyPair>;
+/**
+ * Map of @c NamespaceAndName values to @c HandlerAndPolicy values with which to register @c DirectiveHandlers with a
+ * @c DirectiveSequencer.
+ */
+using DirectiveHandlerConfiguration = std::unordered_map<NamespaceAndName, HandlerAndPolicy>;
 
 } // namespace adsl
 } // namespace alexaClientSDK

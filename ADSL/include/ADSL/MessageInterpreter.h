@@ -20,19 +20,19 @@
 
 #include <memory>
 
-#include <AVSCommon/ExceptionEncounteredSenderInterface.h>
 #include <ACL/AVSConnectionManager.h>
-#include <ACL/MessageObserverInterface.h>
 #include <ACL/Message.h>
 #include <ACL/MessageObserverInterface.h>
+#include <AVSCommon/ExceptionEncounteredSenderInterface.h>
 
-#include "ADSL/DirectiveSequencer.h"
+#include "ADSL/DirectiveSequencerInterface.h"
 
 namespace alexaClientSDK {
 namespace adsl {
 
 /**
- * Class that converts @c acl::Message to @c AVSDirective, and passes those directives to a @c DirectiveSequencer.
+ * Class that converts @c acl::Message to @c AVSDirective, and passes those directives to a
+ * @c DirectiveSequencerInterface.
  */
 class MessageInterpreter : public acl::MessageObserverInterface {
 public:
@@ -41,10 +41,11 @@ public:
     *
     * @param exceptionEncounteredSender The exceptions encountered messages sender, which will allow us to send
     *        exception encountered back to AVS.
-    * @param directiveSequencer The DirectiveSequencerInterface implementation, which will receive @c AVSDirectives.
+    * @param directiveSequencerInterface The DirectiveSequencerInterface implementation, which will receive
+    *        @c AVSDirectives.
     */
     MessageInterpreter(std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-        std::shared_ptr<DirectiveSequencer> directiveSequencer);
+        std::shared_ptr<DirectiveSequencerInterface> directiveSequencer);
 
     void receive(std::shared_ptr<acl::Message> message) override;
 
@@ -69,7 +70,7 @@ private:
     /// Object that manages sending exceptions encountered messages to AVS.
     std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> m_exceptionEncounteredSender;
     /// Object to which we will send @c AVSDirectives once translated from @c acl::Messages.
-    std::shared_ptr<DirectiveSequencer> m_directiveSequencer;
+    std::shared_ptr<DirectiveSequencerInterface> m_directiveSequencer;
 };
 
 } // namespace directiveSequencer

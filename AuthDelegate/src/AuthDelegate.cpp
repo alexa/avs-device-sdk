@@ -15,24 +15,65 @@
  * permissions and limitations under the License.
  */
 
-#include <chrono>
 #include <iostream>
 #include <random>
-#include <stdexcept>
 #include <sstream>
 #include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
 #include <unordered_map>
-#include "curl/curl.h"
+
+#include <AVSUtils/Configuration/ConfigurationNode.h>
+#include <AVSUtils/Initialization/AlexaClientSDKInit.h>
+#include <AVSUtils/Logger/LogEntry.h>
+#include <AVSUtils/Logging/Logger.h>
+
 #include "AuthDelegate/AuthDelegate.h"
 #include "AuthDelegate/HttpPost.h"
-#include "AVSUtils/Initialization/AlexaClientSDKInit.h"
 
 namespace alexaClientSDK {
+namespace authDelegate {
 
 using acl::AuthObserverInterface;
 
-namespace authDelegate {
+/// String to identify log entries originating from this file.
+static const std::string TAG("AuthDelegate");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
+
+/// Name of @c ConfigurationNode for AuthDelegate
+const std::string CONFIG_KEY_AUTH_DELEGATE = "authDelegate";
+
+/// Name of clientId value in AuthDelegate's @c ConfigurationNode.
+const char* CONFIG_KEY_CLIENT_ID = "clientId";
+
+/// Name of clientSecret value in AuthDelegate's @c ConfigurationNode.
+const char* CONFIG_KEY_CLIENT_SECRET = "clientSecret";
+
+/// Name of refreshToken value in AuthDelegate's @c ConfigurationNode.
+const char* CONFIG_KEY_REFRESH_TOKEN = "refreshToken";
+
+/// Name of lwaURL value in AuthDelegate's @c ConfigurationNode.
+const char* CONFIG_KEY_LWA_URL = "lwaUrl";
+
+/// Name of requestTimeout value in AuthDelegate's @c ConfigurationNode.
+const char* CONFIG_KEY_REQUEST_TIMEOUT = "requestTimeout";
+
+/// Name of authTokenRefreshHeadStart value in AuthDelegate's @c ConfigurationNode.
+const char* CONFIG_KEY_AUTH_TOKEN_REFRESH_HEAD_START = "authTokenRefreshHeadStart";
+
+/// Default value for lwaURL.
+static const std::string DEFAULT_LWA_URL = "https://api.amazon.com/auth/o2/token";
+
+/// Default value for requestTimeout.
+static const std::chrono::minutes DEFAULT_REQUEST_TIMEOUT = std::chrono::minutes(5);
+
+/// Default value for authTokenRefreshHeadStart.
+static const std::chrono::minutes DEFAULT_AUTH_TOKEN_REFRESH_HEAD_START = std::chrono::minutes(10);
 
 /// POST data before 'client_id' that is sent to LWA to refresh the auth token.
 static const std::string POST_DATA_UP_TO_CLIENT_ID = "grant_type=refresh_token&client_id=";
@@ -169,31 +210,28 @@ static std::chrono::steady_clock::time_point calculateTimeToRetry(int retryCount
         static_cast<int>(retryBackoffTimes[retryCount] * RETRY_DECREASE_FACTOR),
         static_cast<int>(retryBackoffTimes[retryCount] * RETRY_INCREASE_FACTOR));
     auto delayMs = std::chrono::milliseconds(distribution(generator));
-    // TODO: convert to debug log: ACSDK-57
-    std::cerr << "calculateTimeToRetry() delayMs=" << delayMs.count() << std::endl;
+    ACSDK_DEBUG(LX("calculatedTimeToRetry").d("delayMs", delayMs.count()));
 
     return std::chrono::steady_clock::now() + delayMs;
 }
 
-std::unique_ptr<AuthDelegate> AuthDelegate::create(std::shared_ptr<Config> config) {
-    return AuthDelegate::create(config, HttpPost::create());
+std::unique_ptr<AuthDelegate> AuthDelegate::create() {
+    return AuthDelegate::create(HttpPost::create());
 }
 
-std::unique_ptr<AuthDelegate> AuthDelegate::create(std::shared_ptr<Config> config,
-        std::unique_ptr<HttpPostInterface> httpPost) {
+std::unique_ptr<AuthDelegate> AuthDelegate::create(std::unique_ptr<HttpPostInterface> httpPost) {
     if (!avsUtils::initialization::AlexaClientSDKInit::isInitialized()) {
-        std::cerr<<"Alexa Client SDK not initialized, aborting";
+        ACSDK_ERROR(LX("createFailed").d("reason", "sdkNotInitialized"));
         return nullptr;
     }
-    std::unique_ptr<AuthDelegate> instance(new AuthDelegate(config, std::move(httpPost)));
+    std::unique_ptr<AuthDelegate> instance(new AuthDelegate(std::move(httpPost)));
     if (instance->init()) {
         return instance;
     }
     return nullptr;
 }
 
-AuthDelegate::AuthDelegate(std::shared_ptr<Config> config, std::unique_ptr<HttpPostInterface> httpPost):
-    m_config{config},
+AuthDelegate::AuthDelegate(std::unique_ptr<HttpPostInterface> httpPost):
     m_authState{AuthObserverInterface::State::UNINITIALIZED},
     m_authError{AuthObserverInterface::Error::NO_ERROR},
     m_isStopping{false},
@@ -230,34 +268,42 @@ std::string AuthDelegate::getAuthToken() {
 }
 
 bool AuthDelegate::init() {
-    if (!m_config) {
-        std::cerr << "ERROR: AuthDelegate::create() provided nullptr config." << std::endl;
+    auto configuration = avsUtils::configuration::ConfigurationNode::getRoot()[CONFIG_KEY_AUTH_DELEGATE];
+    if (!configuration) {
+        ACSDK_ERROR(LX("initFailed").d("reason", "missingConfigurationValue").d("key", CONFIG_KEY_AUTH_DELEGATE));
         return false;
     }
 
-    if (m_config->getClientId().empty()) {
-        std::cerr << "ERROR: Config with empty clientID." << std::endl;
-        return false;
-    }
-    if (m_config->getClientSecret().empty()) {
-        std::cerr << "ERROR: Config with empty clientSecret." << std::endl;
+    if (!configuration.getString(CONFIG_KEY_CLIENT_ID, &m_clientId) || m_clientId.empty()) {
+        ACSDK_ERROR(LX("initFailed").d("reason", "missingConfigurationValue").d("key", CONFIG_KEY_CLIENT_ID));
         return false;
     }
 
-    if (m_config->getRefreshToken().empty()) {
-        std::cerr << "ERROR: Config with empty refreshToken." << std::endl;
+    if (!configuration.getString(CONFIG_KEY_CLIENT_SECRET, &m_clientSecret) || m_clientSecret.empty()) {
+        ACSDK_ERROR(LX("initFailed").d("reason", "missingConfigurationValue").d("key", CONFIG_KEY_CLIENT_SECRET));
         return false;
     }
-    m_refreshToken = m_config->getRefreshToken();
 
-    if (m_config->getLwaUrl().empty()) {
-        std::cerr << "ERROR: Config with empty lwaUrl." << std::endl;
+    if (!configuration.getString(CONFIG_KEY_REFRESH_TOKEN, &m_refreshToken) || m_refreshToken.empty()) {
+        ACSDK_ERROR(LX("initFailed").d("reason", "missingConfigurationValue").d("key", CONFIG_KEY_REFRESH_TOKEN));
         return false;
     }
+
+    configuration.getString(CONFIG_KEY_LWA_URL, &m_lwaUrl, DEFAULT_LWA_URL);
+
+    configuration.getDuration<std::chrono::seconds>(
+            CONFIG_KEY_REQUEST_TIMEOUT, &m_requestTimeout, DEFAULT_REQUEST_TIMEOUT);
+
+    configuration.getDuration<std::chrono::seconds>(
+            CONFIG_KEY_AUTH_TOKEN_REFRESH_HEAD_START,
+            &m_authTokenRefreshHeadStart,
+            DEFAULT_AUTH_TOKEN_REFRESH_HEAD_START);
+
     if (!m_HttpPost) {
-        std::cerr << "ERROR: m_HttpPost can't be nullptr." << std::endl;
+        ACSDK_ERROR(LX("initFailed").d("reason", "nullptrHttPost"));
         return false;
     }
+
     m_refreshAndNotifyThread = std::thread(&AuthDelegate::refreshAndNotifyThreadFunction, this);
     return true;
 }
@@ -295,7 +341,7 @@ void AuthDelegate::refreshAndNotifyThreadFunction() {
 AuthObserverInterface::Error AuthDelegate::refreshAuthToken() {
     // Don't wait for this request so long that we would be late to notify our observer if the token expires.
     m_requestTime = std::chrono::steady_clock::now();
-    auto timeout = m_config->getRequestTimeout();
+    auto timeout = m_requestTimeout;
     if (AuthObserverInterface::State::REFRESHED == m_authState) {
         auto timeUntilExpired = std::chrono::duration_cast<std::chrono::seconds>(m_expirationTime - m_requestTime);
         if (timeout > timeUntilExpired) {
@@ -305,12 +351,12 @@ AuthObserverInterface::Error AuthDelegate::refreshAuthToken() {
 
     std::ostringstream postData;
     postData
-        << POST_DATA_UP_TO_CLIENT_ID << m_config->getClientId()
+        << POST_DATA_UP_TO_CLIENT_ID << m_clientId
         << POST_DATA_BETWEEN_CLIENT_ID_AND_REFRESH_TOKEN << m_refreshToken
-        << POST_DATA_BETWEEN_REFRESH_TOKEN_AND_CLIENT_SECRET << m_config->getClientSecret();
+        << POST_DATA_BETWEEN_REFRESH_TOKEN_AND_CLIENT_SECRET << m_clientSecret;
 
     std::string body;
-    auto code = m_HttpPost->doPost(m_config->getLwaUrl(), postData.str(), timeout, body);
+    auto code = m_HttpPost->doPost(m_lwaUrl, postData.str(), timeout, body);
     auto newError = handleLwaResponse(code, body);
 
     if (AuthObserverInterface::Error::NO_ERROR == newError) {
@@ -328,17 +374,17 @@ AuthObserverInterface::Error AuthDelegate::refreshAuthToken() {
 AuthObserverInterface::Error AuthDelegate::handleLwaResponse(long code, const std::string& body) {
     rapidjson::Document document;
     if (document.Parse(body.c_str()).HasParseError()) {
-        std::cerr << "Error in JSON at position " 
-            << document.GetErrorOffset() 
-            << ": " 
-            << GetParseError_En(document.GetParseError()) << std::endl;
+        ACSDK_ERROR(LX("handleLwaResponseFailed")
+                .d("reason", "parseJsonFailed")
+                .d("position", document.GetErrorOffset())
+                .d("error", GetParseError_En(document.GetParseError())));
         return AuthObserverInterface::Error::UNKNOWN_ERROR;
     }
 
     if (HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK == code) {
         std::string authToken;
         std::string refreshToken;
-        uint64_t expiresIn = 0;
+        uint64_t expiresInSeconds = 0;
 
         auto authTokenIterator = document.FindMember(JSON_KEY_ACCESS_TOKEN.c_str());
         if (authTokenIterator != document.MemberEnd() && authTokenIterator->value.IsString()) {
@@ -352,37 +398,24 @@ AuthObserverInterface::Error AuthDelegate::handleLwaResponse(long code, const st
 
         auto expiresInIterator = document.FindMember(JSON_KEY_EXPIRES_IN.c_str());
         if (expiresInIterator != document.MemberEnd() && expiresInIterator->value.IsUint64()) {
-            expiresIn = expiresInIterator->value.GetUint64();
+            expiresInSeconds = expiresInIterator->value.GetUint64();
         }
 
-        if (authToken.empty() || refreshToken.empty() || expiresIn == 0) {
-            std::cerr
-                    << "handleResponse() failed: authToken.empty()='"
-                    << authToken.empty()
-                    << "' refreshToken.empty()='"
-                    << refreshToken.empty()
-                    << "' (expiresIn<=0)="
-                    << (expiresIn <= 0)
-                    << std::endl;
-
-#ifdef DEBUG
-            // TODO: Private data and must be logged at or below DEBUG level when we integrate the logging lib ACSDK-57.
-            std::cerr << "response='" << body << "'" << std::endl;
-#endif
-
+        if (authToken.empty() || refreshToken.empty() || expiresInSeconds == 0) {
+            ACSDK_ERROR(LX("handleLwaResponseFailed")
+                    .d("authTokenEmpty", authToken.empty())
+                    .d("refreshTokenEmpty", refreshToken.empty())
+                    .d("expiresInSeconds", expiresInSeconds));
+            ACSDK_DEBUG(LX("handleLwaresponseFailed").d("body", body));
             return AuthObserverInterface::Error::UNKNOWN_ERROR;
         }
 
-#ifdef DEBUG
-        // TODO: Private data and must be logged at or below DEBUG level when we integrate the logging lib ACSDK-57.
-        if (m_refreshToken != refreshToken) {
-            std::cout << "RefreshToken updated to: '" << refreshToken << "'" << std::endl;
-        }
-#endif
+        ACSDK_DEBUG(LX("handleLwaResponseSucceeded")
+                .d("refreshToken", refreshToken).d("authToken", authToken).d("expiresInSeconds", expiresInSeconds));
 
         m_refreshToken = refreshToken;
-        m_expirationTime = m_requestTime + std::chrono::seconds(expiresIn);
-        m_timeToRefresh = m_expirationTime - m_config->getAuthTokenRefreshHeadStart();
+        m_expirationTime = m_requestTime + std::chrono::seconds(expiresInSeconds);
+        m_timeToRefresh = m_expirationTime - m_authTokenRefreshHeadStart;
         {
             std::lock_guard<std::mutex> lock(m_mutex);
             m_authToken = authToken;
@@ -397,18 +430,10 @@ AuthObserverInterface::Error AuthDelegate::handleLwaResponse(long code, const st
         }
         if (!error.empty()) {
             // If `error` field is non-empty in the body, it means that we encountered an error.
-            if (isUnrecoverable(error)) {
-                std::cerr << "The LWA response body indicated an unrecoverable error: " << error << std::endl;
-            } else {
-                std::cerr << "The LWA response body indicated a recoverable or unknown error: " << error << std::endl;
-            }
+            ACSDK_ERROR(LX("handleLwaResponseFailed").d("error", error).d("isUnrecoverable", isUnrecoverable(error)));
             return getErrorCode(error);
         } else {
-            std::cerr << "The LWA response encountered an unknown response body." << std::endl;
-#ifdef DEBUG
-            // TODO: Private data and must be logged at or below DEBUG level when we integrate the logging lib ACSDK-57.
-            std::cerr << "Message body: " << body << std::endl;
-#endif
+            ACSDK_ERROR(LX("handleLwaResponseFailed").d("error", "errorNotFoundInResponseBody"));
             return AuthObserverInterface::Error::UNKNOWN_ERROR;
         }
     }
@@ -422,7 +447,7 @@ void AuthDelegate::setState(AuthObserverInterface::State newState) {
     std::lock_guard<std::mutex> lock(m_mutex);
     
     if (isUnrecoverable(m_authError)) {
-        std::cerr << "The thread is stopping due to the unrecoverable error." << std::endl;
+        ACSDK_ERROR(LX("threadStopping").d("reason", "encounteredUnrecoverableError"));
         newState = AuthObserverInterface::State::UNRECOVERABLE_ERROR;
         m_isStopping = true;
     }
@@ -430,6 +455,7 @@ void AuthDelegate::setState(AuthObserverInterface::State newState) {
     if (m_authState != newState) {
         m_authState = newState;
         if (m_observer) {
+            ACSDK_DEBUG(LX("onAuthStateChangeCalled").d("state", (int)m_authState).d("error", (int)m_authError));
             m_observer->onAuthStateChange(m_authState, m_authError);
         }
     }

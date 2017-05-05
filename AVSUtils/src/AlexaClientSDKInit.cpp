@@ -15,14 +15,27 @@
  * permissions and limitations under the License.
  */
 
-#include "AVSUtils/Initialization/AlexaClientSDKInit.h"
-#include "AVSUtils/Logging/Logger.h"
-
 #include <curl/curl.h>
+
+#include "AVSUtils/Configuration/ConfigurationNode.h"
+#include "AVSUtils/Initialization/AlexaClientSDKInit.h"
+#include "AVSUtils/Logger/LogEntry.h"
+#include "AVSUtils/Logging/Logger.h"
 
 namespace alexaClientSDK {
 namespace avsUtils {
 namespace initialization {
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("AlexaClientSdkInit");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
+
 /// Tracks whether we've initialized the Alexa Client SDK or not
 std::atomic_int AlexaClientSDKInit::g_isInitialized{0};
 
@@ -30,9 +43,14 @@ bool AlexaClientSDKInit::isInitialized() {
     return g_isInitialized > 0;
 }
 
-bool AlexaClientSDKInit::initialize() {
+bool AlexaClientSDKInit::initialize(const std::vector<std::istream *> &jsonStreams) {
+    if (!configuration::ConfigurationNode::initialize(jsonStreams)) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "ConfigurationNode::initializeFailed"));
+        return false;
+    }
     if (CURLE_OK != curl_global_init(CURL_GLOBAL_ALL)) {
-        Logger::log("Could not initialize libcurl");
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "curl_global_initFailed"));
+        configuration::ConfigurationNode::uninitialize();
         return false;
     }
     g_isInitialized++;
@@ -41,11 +59,12 @@ bool AlexaClientSDKInit::initialize() {
 
 void AlexaClientSDKInit::uninitialize() {
     if (0 == g_isInitialized) {
-        Logger::log("AlexaClientSDKInit::terminate called without corresponding AlexaClientSDKInit::initialize");
+        ACSDK_ERROR(LX("initializeError").d("reason", "notInitialized"));
         return;
     }
     g_isInitialized--;
     curl_global_cleanup();
+    configuration::ConfigurationNode::uninitialize();
 }
 
 } // namespace initialization

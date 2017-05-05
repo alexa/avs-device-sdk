@@ -18,6 +18,8 @@
 #ifndef ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_BLOCKING_POLICY_H_
 #define ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_BLOCKING_POLICY_H_
 
+#include <iostream>
+
 namespace alexaClientSDK {
 namespace adsl {
 

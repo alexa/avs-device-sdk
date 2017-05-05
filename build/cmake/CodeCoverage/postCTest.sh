@@ -27,18 +27,18 @@ TOP_REPORT=$7
 # The list of excluded libraries.
 EXCLUDED_LIBRARIES=( '"ThirdParty*"' '"/usr*"' )
 # Collect the coverage data relative base directory.
-lcov -b $CURRENT_BINARY_DIR -d $CURRENT_BINARY_DIR -c -o $CURRENT_DATA_FILE
+lcov -b $CURRENT_BINARY_DIR -d $CURRENT_BINARY_DIR -c --derive-func-data -o $CURRENT_DATA_FILE
 # Discard non-SDK libraries out of the coverage data.
 echo ${EXCLUDED_LIBRARIES[@]} | xargs lcov -o $CURRENT_DATA_FILE -r $CURRENT_DATA_FILE
 # Generate/update coverage report HTML files for the current project.
-genhtml -o $CURRENT_REPORT_FOLDER -t "${CURRENT_PROJECT_NAME} Coverage" --num-spaces 4 $CURRENT_DATA_FILE
+genhtml --demangle-cpp -o $CURRENT_REPORT_FOLDER -t "${CURRENT_PROJECT_NAME} Coverage" --num-spaces 4 $CURRENT_DATA_FILE
 if [ "$CURRENT_PROJECT_NAME" != "$TOP_PROJECT_NAME" ]; then
     # Collect the coverage data relative base directory.
-    lcov -b $TOP_BINARY_DIR -d $TOP_BINARY_DIR -c -o $TOP_DATA_FILE
+    lcov -b $TOP_BINARY_DIR -d $TOP_BINARY_DIR -c --derive-func-data -o $TOP_DATA_FILE
     # Discard non-SDK libraries out of the coverage data.
     echo ${EXCLUDED_LIBRARIES[@]} | xargs lcov -o $TOP_DATA_FILE -r $TOP_DATA_FILE
     # Generate/update coverage report HTML files for the top-level project.
-    genhtml -o $TOP_REPORT_FOLDER -t "${TOP_PROJECT_NAME} Coverage" --num-spaces 4 $TOP_DATA_FILE
+    genhtml --demangle-cpp -o $TOP_REPORT_FOLDER -t "${TOP_PROJECT_NAME} Coverage" --num-spaces 4 $TOP_DATA_FILE
 fi
 # Create a redirect HTML for the coverage report of the top-level project.
 echo "<meta http-equiv=\"refresh\" content=\"0; url=file://$TOP_REPORT_FOLDER/index.html\" />" > $TOP_REPORT

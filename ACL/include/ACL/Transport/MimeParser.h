@@ -22,9 +22,9 @@
 #include <memory>
 #include <iostream>
 #include <string>
+#include <AVSCommon/AttachmentManagerInterface.h>
 #include <MultipartParser/MultipartReader.h>
 
-#include "ACL/AttachmentManager.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
 
 namespace alexaClientSDK {
@@ -39,7 +39,7 @@ public:
      * @param attachmentManager The attachment manager that manages the attachment.
      */
     MimeParser(MessageConsumerInterface *messageConsumer,
-        std::shared_ptr<AttachmentManagerInterface> attachmentManager);
+               std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager);
 
     /**
      * Resets class for use in another transfer.
@@ -113,7 +113,7 @@ private:
     /// The object to report back to when JSON MIME parts are received.
     MessageConsumerInterface *m_messageConsumer;
     /// The attachment manager.
-    std::shared_ptr<AttachmentManagerInterface> m_attachmentManager;
+    std::shared_ptr<avsCommon::AttachmentManagerInterface> m_attachmentManager;
 };
 
 } // acl

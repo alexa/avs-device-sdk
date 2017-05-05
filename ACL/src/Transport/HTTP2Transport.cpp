@@ -107,7 +107,7 @@ static void printCurlDiagnostics() {
 
 HTTP2Transport::HTTP2Transport(std::shared_ptr<AuthDelegateInterface> authDelegate, const std::string& avsEndpoint,
         MessageConsumerInterface* messageConsumerInterface,
-        std::shared_ptr<AttachmentManagerInterface> attachmentManager,
+        std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager,
         TransportObserverInterface* observer)
     : m_observer{observer},
       m_messageConsumer{messageConsumerInterface},

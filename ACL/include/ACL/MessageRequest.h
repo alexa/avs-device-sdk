@@ -60,7 +60,7 @@ public:
      *
      * @param exceptionMessage The exception message.
      */
-    virtual void onExceptionReceived(std::shared_ptr<acl::Message> exceptionMessage);
+    virtual void onExceptionReceived(std::shared_ptr<Message> exceptionMessage);
 
 private:
 

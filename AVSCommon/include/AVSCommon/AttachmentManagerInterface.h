@@ -14,8 +14,8 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_ATTACHMENT_MANAGER_INTERFACE_H_
-#define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_ATTACHMENT_MANAGER_INTERFACE_H_
+#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_INCLUDE_AVS_COMMON_ATTACHMENT_MANAGER_INTERFACE_H_
+#define ALEXA_CLIENT_SDK_AVS_COMMON_INCLUDE_AVS_COMMON_ATTACHMENT_MANAGER_INTERFACE_H_
 
 #include <future>
 #include <iostream>
@@ -23,7 +23,7 @@
 #include <string>
 
 namespace alexaClientSDK {
-namespace acl {
+namespace avsCommon {
 
 /// Interface class that manages how attachments are stored and retrieved.
 class AttachmentManagerInterface {
@@ -58,7 +58,7 @@ public:
     virtual void releaseAttachment(const std::string& attachmentId) = 0;
 };
 
-} // namespace acl
+} // namespace avsCommon
 } // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_ATTACHMENT_MANAGER_INTERFACE_H_
+#endif //ALEXA_CLIENT_SDK_AVS_COMMON_INCLUDE_AVS_COMMON_ATTACHMENT_MANAGER_INTERFACE_H_

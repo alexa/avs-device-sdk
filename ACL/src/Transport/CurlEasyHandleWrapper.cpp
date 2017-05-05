@@ -14,10 +14,13 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#include "AVSUtils/Logging/Logger.h"
-#include "ACL/Transport/CurlEasyHandleWrapper.h"
+
 #include <iostream>
 
+#include <AVSUtils/LibcurlUtils/LibcurlUtils.h>
+#include <AVSUtils/Logging/Logger.h>
+
+#include "ACL/Transport/CurlEasyHandleWrapper.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -236,16 +239,7 @@ void CurlEasyHandleWrapper::cleanupResources() {
 }
 
 bool CurlEasyHandleWrapper::setDefaultOptions() {
-    if (curl_easy_setopt(m_handle, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2) != CURLE_OK) {
-        Logger::log("Cannot set SSL version to TLS v1.2");
-        return false;
-    }
-    if (curl_easy_setopt(m_handle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0) != CURLE_OK) {
-        Logger::log("Cannot set HTTP version to HTTP/2");
-        return false;
-    }
-
-    return true;
+    return libcurlUtils::prepareForTLS(m_handle);
 }
 
 } // acl

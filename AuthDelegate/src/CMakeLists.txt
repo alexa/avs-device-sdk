@@ -3,7 +3,6 @@ find_package(Threads ${THREADS_PACKAGE_CONFIG})
 
 add_library(AuthDelegate SHARED
     AuthDelegate.cpp
-    Config.cpp
     HttpPost.cpp)
 target_include_directories(AuthDelegate PUBLIC
     "${AuthDelegate_SOURCE_DIR}/include")

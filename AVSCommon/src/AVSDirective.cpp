@@ -28,7 +28,7 @@ std::unique_ptr<AVSDirective> AVSDirective::create(
         const std::string& unparsedDirective,
         std::shared_ptr<AVSMessageHeader> avsMessageHeader,
         const std::string& payload,
-        std::shared_ptr<acl::AttachmentManagerInterface> attachmentManager) {
+        std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager) {
     if (!avsMessageHeader) {
         Logger::log("AVSDirective::create - message header was nullptr.");
         return nullptr;
@@ -47,7 +47,7 @@ std::future<std::shared_ptr<std::iostream>> AVSDirective::getAttachmentReader(co
 }
 
 AVSDirective::AVSDirective(const std::string& unparsedDirective, std::shared_ptr<AVSMessageHeader> avsMessageHeader,
-        const std::string& payload, std::shared_ptr<acl::AttachmentManagerInterface> attachmentManager) :
+        const std::string& payload, std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager) :
             AVSMessage{avsMessageHeader, payload},
             m_unparsedDirective{unparsedDirective},
             m_attachmentManager{attachmentManager} {
@@ -57,5 +57,5 @@ std::string AVSDirective::getUnparsedDirective() const {
     return m_unparsedDirective;
 }
 
-} // namespace alexaClientSDK
 } // namespace avsCommon
+} // namespace alexaClientSDK

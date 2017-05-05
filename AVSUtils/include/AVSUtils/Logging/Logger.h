@@ -21,6 +21,58 @@
 #include <string>
 #include <mutex>
 
+// TODO:  ACSDK-179 Remove this file and migrate to new Logger
+
+#ifdef DEBUG
+
+/**
+ * Emit a debug level log line.
+ *
+ * @param expression An expression that results in some object with a c_str() method that returns the string to log.
+ */
+#define ACSDK_DEBUG(expression)                                         \
+    do {                                                                \
+        ::alexaClientSDK::avsUtils::Logger::log(expression.c_str());    \
+    } while (false)
+
+#else
+
+/**
+ * Stifle a debug level log line.
+ *
+ * @param expression An expression that results in some object with a c_str() method that returns the string to log.
+ */
+#define ACSDK_DEBUG(expression)                                         \
+    do {                                                                \
+    } while (false)
+
+#endif
+
+/**
+ * Emit an info level log line.
+ *
+ * @param expression An expression that results in some object with a c_str() method that returns the string to log.
+ */
+#define ACSDK_INFO(expression)                                          \
+    do {                                                                \
+        ::alexaClientSDK::avsUtils::Logger::log(expression.c_str());    \
+    } while (false)
+
+/**
+ * Emit an warning level log line.
+ *
+ * @param expression An expression that results in some object with a c_str() method that returns the string to log.
+ */
+#define ACSDK_WARN(expression) ACSDK_INFO(expression)
+
+/**
+ * Emit an error level log line.
+ *
+ * @param expression An expression that results in some object with a c_str() method that returns the string to log.
+ */
+#define ACSDK_ERROR(expression) ACSDK_INFO(expression)
+
+
 namespace alexaClientSDK {
 namespace avsUtils {
 

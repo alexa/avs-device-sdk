@@ -15,12 +15,13 @@
  * permissions and limitations under the License.
  */
 
+#include "AVSCommon/AttachmentManager.h"
+
 #include <AVSUtils/Logging/Logger.h>
-#include "ACL/AttachmentManager.h"
 #include "AVSUtils/Memory/Memory.h"
 
 namespace alexaClientSDK {
-namespace acl {
+namespace avsCommon {
 
 using namespace avsUtils;
 
@@ -81,5 +82,5 @@ void AttachmentManager::createAttachmentPromiseHelperLocked(const std::string& a
     }
 }
 
-} // namespace acl
+} // namespace avsCommon
 } // namespace alexaClientSDK

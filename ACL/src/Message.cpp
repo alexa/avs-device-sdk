@@ -24,7 +24,7 @@ Message::Message(const std::string& json, std::shared_ptr<std::istream> binaryCo
         : m_jsonContent{json}, m_binaryContent{binaryContent} {
 }
 
-Message::Message(const std::string& json, std::shared_ptr<AttachmentManagerInterface> attachmentManager)
+Message::Message(const std::string& json, std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager)
         : m_jsonContent{json}, m_attachmentManager{attachmentManager} {
 }
 
@@ -36,7 +36,7 @@ std::shared_ptr<std::istream> Message::getAttachment() {
     return m_binaryContent;
 }
 
-std::shared_ptr<AttachmentManagerInterface> Message::getAttachmentManager() const {
+std::shared_ptr<avsCommon::AttachmentManagerInterface> Message::getAttachmentManager() const {
     return m_attachmentManager;
 }
 

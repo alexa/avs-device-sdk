@@ -16,13 +16,28 @@
  */
 
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
+
+#include <AVSUtils/Initialization/AlexaClientSDKInit.h>
+#include <AVSUtils/Logger/LogEntry.h>
+#include <AVSUtils/Logging/Logger.h>
+
 #include "AuthDelegate/AuthDelegate.h"
-#include "AVSUtils/Initialization/AlexaClientSDKInit.h"
 
 using namespace alexaClientSDK;
 using acl::AuthObserverInterface;
 using authDelegate::AuthDelegate;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("AlexAuthDelegateClient");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
 
 /// Simple implementation of the AuthDelegateObserverInterface.
 class Observer : public AuthObserverInterface {
@@ -73,8 +88,7 @@ private:
 
 /// Instantiate an AuthDelegate and fetch an authToken every couple of seconds.
 int exerciseAuthDelegate() {
-    auto config = std::make_shared<authDelegate::Config>();
-    auto authDelegate = AuthDelegate::create(config);
+    auto authDelegate = AuthDelegate::create();
 
     if (!authDelegate) {
         std::cerr << "AuthDelegate::Create() failed." << std::endl;
@@ -102,8 +116,21 @@ int exerciseAuthDelegate() {
 }
 
 int main(int argc, const char* argv[]) {
-    if (!avsUtils::initialization::AlexaClientSDKInit::initialize()){
-        std::cerr << "AlexaClientSDKInit::initialize() failed!" << std::endl;
+    if (argc < 2) {
+        ACSDK_ERROR(LX("ExampleAuthDelegateClientFailed")
+                .d("reason", "missingConfigurationFilePath")
+                .d("usage", "ExampleAuthDelegateClient <path-to-SDK-config-file>"));
+        return EXIT_FAILURE;
+    }
+    std::ifstream infile(argv[1]);
+    if (!infile.good()) {
+        ACSDK_ERROR(LX("ExampleAuthDelegateClientFailed")
+                .d("reason", "openConfigurationFileFailed")
+                .d("path", argv[1]));
+        return EXIT_FAILURE;
+    }
+    if (!avsUtils::initialization::AlexaClientSDKInit::initialize({&infile})) {
+        ACSDK_ERROR(LX("ExampleAuthDelegateClientFailed").d("reason", "alexaClientSDKInitFailed"));
         return EXIT_FAILURE;
     }
     auto result = exerciseAuthDelegate();

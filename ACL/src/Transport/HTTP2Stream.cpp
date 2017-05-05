@@ -40,7 +40,7 @@ static const std::string ATTACHMENT_FIELD_NAME = "audio";
 static const std::string METADATA_FIELD_NAME = "metadata";
 
 HTTP2Stream::HTTP2Stream(MessageConsumerInterface* messageConsumer,
-        std::shared_ptr<AttachmentManagerInterface> attachmentManager)
+        std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager)
     : m_parser{messageConsumer, attachmentManager} {
 }
 

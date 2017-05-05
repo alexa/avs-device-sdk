@@ -21,8 +21,7 @@
 #include <istream>
 #include <memory>
 #include <string>
-
-#include "ACL/AttachmentManager.h"
+#include <AVSCommon/AttachmentManager.h>
 
 namespace alexaClientSDK {
 namespace acl {
@@ -49,7 +48,7 @@ public:
      * @param json the JSON content of message.
      * @param attachmentManager attachment manager.
      */
-    Message(const std::string& json, std::shared_ptr<AttachmentManagerInterface> attachmentManager);
+    Message(const std::string& json, std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager);
 
     /**
      * Retrieve the JSON content.
@@ -75,7 +74,7 @@ public:
      *
      * @return instance that implements the attachment manager interface.
      */
-    std::shared_ptr<AttachmentManagerInterface> getAttachmentManager() const;
+    std::shared_ptr<avsCommon::AttachmentManagerInterface> getAttachmentManager() const;
 
 private:
     /// The JSON content.
@@ -85,7 +84,7 @@ private:
     std::shared_ptr<std::istream> m_binaryContent;
 
     /// The attachment manager that creates attachment reader and attachment writer.
-    std::shared_ptr<AttachmentManagerInterface> m_attachmentManager;
+    std::shared_ptr<avsCommon::AttachmentManagerInterface> m_attachmentManager;
 };
 
 } // namespace acl

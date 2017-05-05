@@ -36,5 +36,14 @@ std::string AVSMessageHeader::getDialogRequestId() const {
     return m_dialogRequestId;
 }
 
+std::string AVSMessageHeader::getAsString() const {
+    return std::string() +
+           "{\"namespace:\"" + m_namespace +
+           "\",name:\"" + m_name +
+           "\",messageId:\"" + m_messageId +
+           "\",dialogRequestId:\"" + m_dialogRequestId +
+           "\"}";
+}
+
 } // namespace avsCommon
 } // namespace alexaClientSDK
