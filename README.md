@@ -170,7 +170,7 @@ To create an out-of-source build for macOS:
 
 **Note**: In order to run unit tests for the KITT.ai wake word detector, the following files must be downloaded from [GitHub](https://github.com/Kitt-AI/snowboy/tree/master/resources) and placed in `KWD/inputs/KittAiModels`:
 * [`common.res`](https://github.com/Kitt-AI/snowboy/tree/master/resources)  
-* [`alexa.umdl`](https://github.com/Kitt-AI/snowboy/tree/master/resources/alexa/alexa-avs-sample-app) - It's important that you download the `alexa.umdl` in `[resources/alexa/alexa-avs-sample-app](https://github.com/Kitt-AI/snowboy/tree/master/resources/alexa/alexa-avs-sample-app)` for the KITT.ai unit tests to run properly.   
+* [`alexa.umdl`](https://github.com/Kitt-AI/snowboy/tree/master/resources/alexa/alexa-avs-sample-app) - It's important that you download the `alexa.umdl` in `resources/alexa/alexa-avs-sample-app` for the KITT.ai unit tests to run properly.   
 
 Unit tests for the Alexa Client SDK use the [Google Test](https://github.com/google/googletest) framework. Ensure that the [Google Test](https://github.com/google/googletest) is installed, then run the following command:
 `make all test`
@@ -186,7 +186,7 @@ See the `Create the AlexaClientSDKConfig.json file` section (above), if you have
 
 **Note**: If the project was built with the KITT.ai wake word detector, the following files must be downloaded from [GitHub](https://github.com/Kitt-AI/snowboy/tree/master/resources) and placed in `Integration/inputs/KittAiModels` for the integration tests to run properly:
 * [`common.res`](https://github.com/Kitt-AI/snowboy/tree/master/resources)  
-* [`alexa.umdl`](https://github.com/Kitt-AI/snowboy/tree/master/resources/alexa/alexa-avs-sample-app) - It's important that you download the `alexa.umdl` in `[resources/alexa/alexa-avs-sample-app](https://github.com/Kitt-AI/snowboy/tree/master/resources/alexa/alexa-avs-sample-app)` for the KITT.ai integration tests to run properly.  
+* [`alexa.umdl`](https://github.com/Kitt-AI/snowboy/tree/master/resources/alexa/alexa-avs-sample-app) - It's important that you download the `alexa.umdl` in `resources/alexa/alexa-avs-sample-app` for the KITT.ai integration tests to run properly.  
 
 To exercise the integration tests run this command:
 `make all integration`
