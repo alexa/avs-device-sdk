@@ -18,8 +18,9 @@
 #ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_TRANSPORT_H_
 #define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_TRANSPORT_H_
 
-#include "ACL/MessageRequest.h"
-#include "ACL/Message.h"
+#include <AVSCommon/AVS/Message.h>
+#include <AVSCommon/AVS/MessageRequest.h>
+
 #include "ACL/Transport/TransportInterface.h"
 
 #include <gmock/gmock.h>
@@ -40,8 +41,8 @@ public:
     MOCK_METHOD0(disconnect, void());
     MOCK_METHOD0(isConnected, bool());
     MOCK_METHOD0(isPendingDisconnected, bool());
-    MOCK_METHOD1(send, void(std::shared_ptr<MessageRequest>));
-    MOCK_METHOD1(onAttachmentReceived, void(std::shared_ptr<Message>));
+    MOCK_METHOD1(send, void(std::shared_ptr<avsCommon::avs::MessageRequest>));
+    MOCK_METHOD1(onAttachmentReceived, void(std::shared_ptr<avsCommon::avs::Message>));
 
     const int m_id;
 

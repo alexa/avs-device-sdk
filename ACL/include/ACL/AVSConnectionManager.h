@@ -22,11 +22,13 @@
 #include <memory>
 #include <string>
 
+#include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/AVS/MessageRequest.h>
+
 #include "ACL/Values.h"
 #include "ACL/AuthDelegateInterface.h"
 #include "ACL/ConnectionStatusObserverInterface.h"
 #include "ACL/MessageObserverInterface.h"
-#include "ACL/MessageRequest.h"
 #include "ACL/Transport/MessageRouterInterface.h"
 #include "ACL/Transport/MessageRouterObserverInterface.h"
 
@@ -63,7 +65,9 @@ namespace acl {
  * This SDK also provides observer interfaces for classes that may be notified when the connection status
  * changes, and when messages are received from AVS.  These observer objects are optional.
  */
-class AVSConnectionManager : public MessageRouterObserverInterface {
+class AVSConnectionManager :
+    public avsCommon::sdkInterfaces::MessageSenderInterface,
+    public MessageRouterObserverInterface {
 public:
     /**
      * A factory function that creates an AVSConnectionManager object.
@@ -110,22 +114,13 @@ public:
     void reconnect();
 
     /**
-     * Send a message to AVS.  This function will operate asynchronously, internally storing the message to be sent
-     * when the connection is able to process it.
-     * The onSendCompleted callback method of the MessageRequest object is invoked as follows:
-     *
-     *  - If the AVSConnectionManager object is not connected to AVS, the callback value is NOT_CONNECTED.
-     *  - Otherwise, the object attempts to send the message to AVS, and once this has either succeeded or failed,
-     *    the callback value is set appropriately.
-     */
-    void send(std::shared_ptr<MessageRequest> request);
-
-    /**
      * Set the URL endpoint for the AVS connection.  Calling this function with a new value will cause the
      * current active connection to be closed, and a new one opened to the new endpoint.
      * @param avsEndpoint The URL for the new AVS endpoint.
      */
     void setAVSEndpoint(const std::string& avsEndpoint);
+
+    void sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
 
 private:
 
@@ -143,7 +138,7 @@ private:
     void onConnectionStatusChanged(const ConnectionStatus status,
                                    const ConnectionChangedReason reason) override;
 
-    void receive(std::shared_ptr<Message> msg) override;
+    void receive(std::shared_ptr<avsCommon::avs::Message> msg) override;
 
     /// Internal state to indicate if the Connection object is enabled for making an AVS connection.
     std::atomic<bool> m_isEnabled;

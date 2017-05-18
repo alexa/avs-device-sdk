@@ -36,6 +36,7 @@ namespace adsl {
 namespace test {
 
 using namespace avsCommon;
+using namespace avsCommon::avs;
 
 /// Generic messageId used for tests.
 static const std::string MESSAGE_ID_0_0("Message_0_0");

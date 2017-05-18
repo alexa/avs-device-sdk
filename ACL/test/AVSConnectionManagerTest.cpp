@@ -36,7 +36,7 @@ public:
     MOCK_METHOD0(enable, void());
     MOCK_METHOD0(disable, void());
     MOCK_METHOD0(getConnectionStatus, ConnectionStatus());
-    MOCK_METHOD1(send, void(std::shared_ptr<MessageRequest> request));
+    MOCK_METHOD1(send, void(std::shared_ptr<avsCommon::avs::MessageRequest> request));
     MOCK_METHOD1(setAVSEndpoint, void(const std::string& avsEndpoint));
     MOCK_METHOD1(setObserver, void(std::shared_ptr<MessageRouterObserverInterface> observer));
 

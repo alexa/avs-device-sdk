@@ -276,7 +276,7 @@ TEST_F(AuthDelegateTest, retry) {
 
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     authDelegate->setAuthObserver(m_mockAuthObserver);
-    waitFor(TIME_OUT_IN_SECONDS, [&tokenRefreshed]() { return tokenRefreshed;});
+    ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&tokenRefreshed]() { return tokenRefreshed;}));
 }
 
 /**
@@ -314,7 +314,7 @@ TEST_F(AuthDelegateTest, expirationNotification) {
 
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     authDelegate->setAuthObserver(m_mockAuthObserver);
-    waitFor(TIME_OUT_IN_SECONDS, [&tokenExpired]() {return tokenExpired;});
+    ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&tokenExpired]() {return tokenExpired;}));
 }
 
 /**
@@ -360,7 +360,7 @@ TEST_F(AuthDelegateTest, recoverAfterExpiration) {
 
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     authDelegate->setAuthObserver(m_mockAuthObserver);
-    waitFor(TIME_OUT_IN_SECONDS, [&tokenRefreshed]() {return tokenRefreshed;});
+    ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&tokenRefreshed]() {return tokenRefreshed;}));
 }
 
 /**
@@ -394,6 +394,6 @@ TEST_F(AuthDelegateTest, unrecoverableErrorNotification) {
 
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     authDelegate->setAuthObserver(m_mockAuthObserver);
-    waitFor(TIME_OUT_IN_SECONDS, [&errorReceived]() {return errorReceived;});
+    ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&errorReceived]() {return errorReceived;}));
 }
 

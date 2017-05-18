@@ -24,9 +24,11 @@
 #include <gtest/gtest.h>
 
 #include <ACL/AVSConnectionManager.h>
-#include <ACL/Message.h>
+#include <AVSCommon/AVS/Message.h>
 #include <ACL/Transport/HTTP2MessageRouter.h>
 #include <ACL/Values.h>
+#include "AVSCommon/AVS/Attachment/InProcessAttachment.h"
+#include "AVSCommon/Utils/SDS/InProcessSDS.h"
 #include <AuthDelegate/AuthDelegate.h>
 #include <AVSUtils/Initialization/AlexaClientSDKInit.h>
 #include <AVSUtils/Logger/LogEntry.h>
@@ -43,6 +45,8 @@ namespace integration {
 using namespace alexaClientSDK::acl;
 using namespace alexaClientSDK::authDelegate;
 using namespace alexaClientSDK::avsUtils::initialization;
+using namespace alexaClientSDK::avsCommon::avs::attachment;
+using namespace alexaClientSDK::avsCommon::utils::sds;
 
 static const std::string SYNCHRONIZE_STATE_JSON =
     "{"
@@ -214,20 +218,22 @@ protected:
     /*
      * Function to send a message.
      */
-    virtual void sendEvent(std::shared_ptr<Message> message, SendMessageStatus expectedStatus,
+    virtual void sendEvent(
+            const std::string & jsonContent,
+            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+            avsCommon::avs::MessageRequest::Status expectedStatus,
             std::chrono::seconds timeout) {
-        auto messageRequest = std::make_shared<ObservableMessageRequest>(message);
-        m_avsConnectionManager->send(messageRequest);
+        auto messageRequest = std::make_shared<ObservableMessageRequest>(jsonContent, attachmentReader);
+        m_avsConnectionManager->sendMessage(messageRequest);
         ASSERT_TRUE(messageRequest->waitFor(expectedStatus, timeout));
     }
 
     /**
      * Function to setup a message and send it.
      */
-    virtual void setupMessageAndSend(const std::string& json, SendMessageStatus expectedStatus,
+    virtual void setupMessageAndSend(const std::string& json, avsCommon::avs::MessageRequest::Status expectedStatus,
             std::chrono::seconds timeout) {
-        auto message = std::make_shared<Message>(json);
-        sendEvent(message, expectedStatus, timeout);
+        sendEvent(json, nullptr, expectedStatus, timeout);
     }
 
     /**
@@ -236,12 +242,39 @@ protected:
      */
 
     virtual void setupMessageWithAttachmentAndSend(const std::string& json, std::string& file,
-            SendMessageStatus expectedStatus, std::chrono::seconds timeout) {
-        auto attachmentStream = std::make_shared<std::ifstream>(file, std::ios::binary);
-        ASSERT_TRUE(attachmentStream->is_open());
+            avsCommon::avs::MessageRequest::Status expectedStatus, std::chrono::seconds timeout) {
+        auto is = std::make_shared<std::ifstream>(file, std::ios::binary);
+        ASSERT_TRUE(is->is_open());
 
-        auto message = std::make_shared<Message>(json, attachmentStream);
-        sendEvent(message, expectedStatus, std::chrono::seconds(timeout));
+        const int mbBytes = 1024 * 1024;
+
+        std::vector<char> localBuffer(mbBytes);
+
+        auto bufferSize = InProcessSDS::calculateBufferSize(localBuffer.size());
+        auto buffer = std::make_shared<InProcessSDSTraits::Buffer>(bufferSize);
+        std::shared_ptr<InProcessSDS> sds = InProcessSDS::create(buffer);
+
+        auto attachmentWriter = InProcessAttachmentWriter::create(sds);
+
+        while (*is) {
+            is->read(localBuffer.data(), mbBytes);
+            size_t numBytesRead = is->gcount();
+            AttachmentWriter::WriteStatus writeStatus = AttachmentWriter::WriteStatus::OK;
+            attachmentWriter->write(localBuffer.data(), numBytesRead, &writeStatus);
+
+            // write status should be either OK or CLOSED
+            bool writeStatusOk = (AttachmentWriter::WriteStatus::OK == writeStatus ||
+                    AttachmentWriter::WriteStatus::CLOSED == writeStatus);
+            ASSERT_TRUE(writeStatusOk);
+        }
+
+        attachmentWriter->close();
+
+        std::shared_ptr<InProcessAttachmentReader> attachmentReader =
+                InProcessAttachmentReader::create(AttachmentReader::Policy::NON_BLOCKING, sds);
+        ASSERT_NE(attachmentReader, nullptr);
+
+        sendEvent(json, attachmentReader, expectedStatus, std::chrono::seconds(timeout));
     }
 
     /**
@@ -251,11 +284,17 @@ protected:
         int i = rand() % 100;
 
         if (i % 2) {
-            setupMessageAndSend(SYNCHRONIZE_STATE_JSON, SendMessageStatus::SUCCESS, std::chrono::seconds(40));
+            setupMessageAndSend(
+                SYNCHRONIZE_STATE_JSON,
+                avsCommon::avs::MessageRequest::Status::SUCCESS,
+                std::chrono::seconds(40));
         } else {
             std::string file = inputPath + RECOGNIZE_AUDIO_FILE_NAME;
-            setupMessageWithAttachmentAndSend(CT_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS,
-                    std::chrono::seconds(40));
+            setupMessageWithAttachmentAndSend(
+                CT_RECOGNIZE_EVENT_JSON,
+                file,
+                avsCommon::avs::MessageRequest::Status::SUCCESS,
+                std::chrono::seconds(40));
         }
     }
 
@@ -283,7 +322,10 @@ TEST_F(AlexaCommunicationsLibraryTest, connectAndDisconnect) {
  * @see https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system#synchronizestate
  */
 TEST_F(AlexaCommunicationsLibraryTest, sendEvent) {
-    setupMessageAndSend(SYNCHRONIZE_STATE_JSON, SendMessageStatus::SUCCESS, std::chrono::seconds(10));
+    setupMessageAndSend(
+        SYNCHRONIZE_STATE_JSON,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        std::chrono::seconds(10));
 }
 
 /**
@@ -296,8 +338,10 @@ TEST_F(AlexaCommunicationsLibraryTest, sendEvent) {
  */
 TEST_F(AlexaCommunicationsLibraryTest, sendEventWithAttachments) {
     std::string file = inputPath + RECOGNIZE_AUDIO_FILE_NAME;
-    setupMessageWithAttachmentAndSend(CT_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS,
-            std::chrono::seconds(10));
+    setupMessageWithAttachmentAndSend(
+        CT_RECOGNIZE_EVENT_JSON,
+        file, avsCommon::avs::MessageRequest::Status::SUCCESS,
+        std::chrono::seconds(10));
 }
 
 /**
@@ -305,7 +349,7 @@ TEST_F(AlexaCommunicationsLibraryTest, sendEventWithAttachments) {
  * to return an internal error
  */
 TEST_F(AlexaCommunicationsLibraryTest, sendEventThatWillFail) {
-    setupMessageAndSend(BAD_SYNCHRONIZE_STATE_JSON, SendMessageStatus::SERVER_INTERNAL_ERROR,
+    setupMessageAndSend(BAD_SYNCHRONIZE_STATE_JSON, avsCommon::avs::MessageRequest::Status::SERVER_INTERNAL_ERROR,
             std::chrono::seconds(10));
 }
 
@@ -315,11 +359,11 @@ TEST_F(AlexaCommunicationsLibraryTest, sendEventThatWillFail) {
  */
 TEST_F(AlexaCommunicationsLibraryTest, testPersistentConnection) {
     std::string file = inputPath + RECOGNIZE_AUDIO_FILE_NAME;
-    setupMessageWithAttachmentAndSend(CT_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS,
+    setupMessageWithAttachmentAndSend(CT_RECOGNIZE_EVENT_JSON, file, avsCommon::avs::MessageRequest::Status::SUCCESS,
             std::chrono::seconds(10));
     ASSERT_FALSE(m_connectionStatusObserver->waitFor(ConnectionStatus::DISCONNECTED, std::chrono::seconds(20)))
         << "Connection changed after a response was received";
-    setupMessageWithAttachmentAndSend(CT_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS,
+    setupMessageWithAttachmentAndSend(CT_RECOGNIZE_EVENT_JSON, file, avsCommon::avs::MessageRequest::Status::SUCCESS,
             std::chrono::seconds(10));
 }
 
@@ -330,8 +374,11 @@ TEST_F(AlexaCommunicationsLibraryTest, sendEventsInSuccession) {
     const int NUMBER_OF_SUCCESSIVE_SENDS = 10;
     for (int i = 0; i < NUMBER_OF_SUCCESSIVE_SENDS; ++i) {
         std::string file = inputPath + RECOGNIZE_AUDIO_FILE_NAME;
-        setupMessageWithAttachmentAndSend(CT_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS,
-                std::chrono::seconds(10));
+        setupMessageWithAttachmentAndSend(
+            CT_RECOGNIZE_EVENT_JSON,
+            file,
+            avsCommon::avs::MessageRequest::Status::SUCCESS,
+            std::chrono::seconds(10));
     }
 }
 
@@ -364,7 +411,7 @@ TEST_F(AlexaCommunicationsLibraryTest, sendConcurrentEvents) {
  */
 TEST_F(AlexaCommunicationsLibraryTest, sendEventWithDirective) {
     std::string file = inputPath + RECOGNIZE_AUDIO_FILE_NAME;
-    setupMessageWithAttachmentAndSend(CT_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS,
+    setupMessageWithAttachmentAndSend(CT_RECOGNIZE_EVENT_JSON, file, avsCommon::avs::MessageRequest::Status::SUCCESS,
             std::chrono::seconds(10));
 
     //expecting to receive directives in response to the recognize event we sent; wait for the first one
@@ -383,7 +430,7 @@ TEST_F(AlexaCommunicationsLibraryTest, sendEventWithDirective) {
  */
 TEST_F(AlexaCommunicationsLibraryTest, directiveFromDownchannel) {
     std::string file = inputPath + SILENCE_AUDIO_FILE_NAME;
-    setupMessageWithAttachmentAndSend(NF_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS,
+    setupMessageWithAttachmentAndSend(NF_RECOGNIZE_EVENT_JSON, file, avsCommon::avs::MessageRequest::Status::SUCCESS,
             std::chrono::seconds(10));
 
     //we sent silence, so there is no event, but due to the near-field profile, we expect a stop-capture directive;

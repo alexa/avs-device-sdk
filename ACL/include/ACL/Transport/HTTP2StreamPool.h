@@ -61,7 +61,7 @@ public:
      * @return An HTTP2Stream from the stream pool, or @c nullptr if there was an error.
      */
     std::shared_ptr<HTTP2Stream> createPostStream(const std::string& url, const std::string& authToken,
-            std::shared_ptr<MessageRequest> request, MessageConsumerInterface *messageConsumer);
+            std::shared_ptr<avsCommon::avs::MessageRequest> request, MessageConsumerInterface *messageConsumer);
 
     /**
      * Returns an HTTP2Stream back into the pool.

@@ -25,10 +25,10 @@
 #include <thread>
 
 #include <AVSCommon/ExceptionEncounteredSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 
 #include "ADSL/DirectiveProcessor.h"
 #include "ADSL/DirectiveRouter.h"
-#include "ADSL/DirectiveSequencerInterface.h"
 
 namespace alexaClientSDK {
 namespace adsl {
@@ -36,7 +36,7 @@ namespace adsl {
 /**
  * Class for sequencing and handling a stream of @c AVSDirective instances.
  */
-class DirectiveSequencer : public DirectiveSequencerInterface {
+class DirectiveSequencer : public avsCommon::sdkInterfaces::DirectiveSequencerInterface {
 public:
     /**
      * Create a DirectiveSequencer.
@@ -50,9 +50,9 @@ public:
 
     ~DirectiveSequencer() override;
 
-    bool addDirectiveHandlers(const DirectiveHandlerConfiguration& configuration) override;
+    bool addDirectiveHandlers(const avsCommon::avs::DirectiveHandlerConfiguration& configuration) override;
 
-    bool removeDirectiveHandlers(const DirectiveHandlerConfiguration& configuration) override;
+    bool removeDirectiveHandlers(const avsCommon::avs::DirectiveHandlerConfiguration& configuration) override;
 
     void setDialogRequestId(const std::string& dialogRequestId) override;
 

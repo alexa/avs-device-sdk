@@ -27,6 +27,7 @@ namespace alexaClientSDK {
 namespace adsl {
 
 using namespace avsCommon;
+using namespace avsCommon::sdkInterfaces;
 using namespace avsUtils;
 using namespace acl;
 
@@ -67,7 +68,7 @@ MessageInterpreter::MessageInterpreter(std::shared_ptr<ExceptionEncounteredSende
         m_directiveSequencer{directiveSequencer} {
 }
 
-void MessageInterpreter::receive(std::shared_ptr<acl::Message> message) {
+void MessageInterpreter::receive(std::shared_ptr<avsCommon::avs::Message> message) {
 
     std::string directiveBody;
 
@@ -117,7 +118,7 @@ void MessageInterpreter::receive(std::shared_ptr<acl::Message> message) {
     m_directiveSequencer->onDirective(avsDirective);
 }
 
-bool MessageInterpreter::lookupJsonValueHelper(std::shared_ptr<acl::Message> aclMessage,
+bool MessageInterpreter::lookupJsonValueHelper(std::shared_ptr<avsCommon::avs::Message> aclMessage,
         const std::string& jsonMessageHeader,
         const std::string& lookupKey,
         std::string* outputValue) {

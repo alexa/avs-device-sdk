@@ -5,9 +5,7 @@ add_library(ADSL SHARED
     DirectiveProcessor.cpp
     DirectiveRouter.cpp
     DirectiveSequencer.cpp
-    HandlerAndPolicy.cpp
-    MessageInterpreter.cpp
-    NamespaceAndName.cpp)
+    MessageInterpreter.cpp)
 target_include_directories(ADSL PUBLIC
     "${ACL_SOURCE_DIR}/include"
     "${ADSL_SOURCE_DIR}/include"

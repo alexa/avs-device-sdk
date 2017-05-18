@@ -47,16 +47,16 @@ std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createGetStream(const std::string&
 }
 
 std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createPostStream(const std::string& url, const std::string& authToken,
-        std::shared_ptr<MessageRequest> request, MessageConsumerInterface *messageConsumer) {
+        std::shared_ptr<avsCommon::avs::MessageRequest> request, MessageConsumerInterface *messageConsumer) {
     std::shared_ptr<HTTP2Stream> stream = getStream(messageConsumer);
     if (!stream) {
         Logger::log("Could not get stream from stream pool");
-        request->onSendCompleted(SendMessageStatus::INTERNAL_ERROR);
+        request->onSendCompleted(avsCommon::avs::MessageRequest::Status::INTERNAL_ERROR);
         return nullptr;
     }
     if (!stream->initPost(url, authToken, request)) {
         Logger::log("Could not setup stream for post request");
-        request->onSendCompleted(SendMessageStatus::INTERNAL_ERROR);
+        request->onSendCompleted(avsCommon::avs::MessageRequest::Status::INTERNAL_ERROR);
         releaseStream(stream);
         return nullptr;
     }

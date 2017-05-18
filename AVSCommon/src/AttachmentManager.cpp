@@ -37,22 +37,9 @@ std::future<std::shared_ptr<std::iostream>> AttachmentManager::createAttachmentR
 void AttachmentManager::createAttachment(const std::string& attachmentId, std::shared_ptr<std::iostream> attachment) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    // TODO: [ACSDK-210] Move the clean AttachmentId logic into acl::MimeParser;
-    // If the attachmentId is empty, then we'll get "<>" with length of 2. So to be a valid attachmentId, it needs have
-    // length larger than 2.
-    if (attachmentId.size() <= 2) {
-        avsUtils::Logger::log("The attachmentId is not valid, attachment can't be created.");
-        return;
-    }
-
-    std::string cleanAttachmentId = attachmentId;
-    if ( ('<' == attachmentId[0]) && ('>' == attachmentId[attachmentId.size() - 1]) ) {
-        cleanAttachmentId = attachmentId.substr(1, attachmentId.size() - 2);
-    }
-
-    createAttachmentPromiseHelperLocked(cleanAttachmentId);
+    createAttachmentPromiseHelperLocked(attachmentId);
     auto currentTime = std::chrono::steady_clock::now();
-    m_timeStamps.insert(std::make_pair(currentTime, cleanAttachmentId));
+    m_timeStamps.insert(std::make_pair(currentTime, attachmentId));
 
     for (auto iter = m_timeStamps.begin(); iter != m_timeStamps.end();) {
         auto timeGap = std::chrono::duration_cast<std::chrono::minutes>(currentTime - iter->first);
@@ -66,8 +53,8 @@ void AttachmentManager::createAttachment(const std::string& attachmentId, std::s
         }
     }
     // Add this check in case the m_timeout value is 0.
-    if (m_attachments.find(cleanAttachmentId) != m_attachments.end()) {
-        m_attachments[cleanAttachmentId].set_value(attachment);
+    if (m_attachments.find(attachmentId) != m_attachments.end()) {
+        m_attachments[attachmentId].set_value(attachment);
     }
 }
 

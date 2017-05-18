@@ -72,7 +72,7 @@ void MessageRouter::disable() {
     disconnectAllTransportsLocked(ConnectionChangedReason::ACL_CLIENT_REQUEST);
 }
 
-void MessageRouter::send(std::shared_ptr<MessageRequest> request) {
+void MessageRouter::send(std::shared_ptr<avsCommon::avs::MessageRequest> request) {
     auto task = [this, request]() {
         if (m_activeTransport && m_activeTransport->isConnected()) {
             m_activeTransport->send(request);
@@ -129,7 +129,7 @@ void MessageRouter::onServerSideDisconnect() {
     }
 }
 
-void MessageRouter::consumeMessage(std::shared_ptr<Message> message) {
+void MessageRouter::consumeMessage(std::shared_ptr<avsCommon::avs::Message> message) {
     notifyObserverOnReceive(message);
 }
 
@@ -149,7 +149,7 @@ void MessageRouter::notifyObserverOnConnectionStatusChanged(
     m_receiveExecutor->submit(task);
 }
 
-void MessageRouter::notifyObserverOnReceive(std::shared_ptr<Message> msg) {
+void MessageRouter::notifyObserverOnReceive(std::shared_ptr<avsCommon::avs::Message> msg) {
     auto task = [this, msg]() {
         if (m_observer) {
             m_observer->receive(msg);

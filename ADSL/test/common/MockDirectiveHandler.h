@@ -23,7 +23,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "ADSL/DirectiveHandlerInterface.h"
+#include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
 
 namespace alexaClientSDK {
 namespace adsl {
@@ -33,10 +33,11 @@ namespace test {
  * gmock does not fully support C++11's move only semantics.  Replaces the use of unique_ptr in
  * DirectiveHandlerInterface with shared_ptr so that methods using unique_ptr can be mocked.
  */
-class DirectiveHandlerMockAdapter : public DirectiveHandlerInterface {
+class DirectiveHandlerMockAdapter : public avsCommon::sdkInterfaces::DirectiveHandlerInterface {
 public:
     void preHandleDirective(
-            std::shared_ptr<avsCommon::AVSDirective> directive, std::unique_ptr<DirectiveHandlerResultInterface> result) override;
+            std::shared_ptr<avsCommon::AVSDirective> directive,
+            std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) override;
 
     /**
      * Variant of preHandleDirective taking a shared_ptr instead of a unique_ptr.
@@ -45,7 +46,8 @@ public:
      * @param result The object to receive completion/failure notifications.
      */
     virtual void preHandleDirective(
-            std::shared_ptr<avsCommon::AVSDirective> directive, std::shared_ptr<DirectiveHandlerResultInterface> result) = 0;
+            std::shared_ptr<avsCommon::AVSDirective> directive,
+            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) = 0;
 };
 
 /**
@@ -93,8 +95,8 @@ public:
      * @param result The result object to
      */
     void mockPreHandleDirective(
-        std::shared_ptr<avsCommon::AVSDirective> directive,
-        std::shared_ptr<DirectiveHandlerResultInterface> result);
+            std::shared_ptr<avsCommon::AVSDirective> directive,
+            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result);
 
     /**
      * The functional part of mocking handleDirective().
@@ -132,7 +134,7 @@ public:
      */
     void doPreHandlingFailed(
             std::shared_ptr<avsCommon::AVSDirective> directive,
-            std::shared_ptr<DirectiveHandlerResultInterface> result);
+            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result);
 
     /**
      * Trigger completion of handling.
@@ -184,7 +186,7 @@ public:
     std::chrono::milliseconds m_handlingTimeMs;
 
     /// Object used to specify the result of handling a directive.
-    std::shared_ptr<DirectiveHandlerResultInterface> m_result;
+    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> m_result;
 
     /// The @c AVSDirective (if any) being handled.
     std::shared_ptr<avsCommon::AVSDirective> m_directive;
@@ -229,9 +231,8 @@ public:
     std::future<void> m_completedFuture;
 
     MOCK_METHOD1(handleDirectiveImmediately, void(std::shared_ptr<avsCommon::AVSDirective>));
-    MOCK_METHOD2(
-            preHandleDirective,
-            void(std::shared_ptr<avsCommon::AVSDirective>, std::shared_ptr<DirectiveHandlerResultInterface>));
+    MOCK_METHOD2(preHandleDirective, void(std::shared_ptr<avsCommon::AVSDirective>,
+            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface>));
     MOCK_METHOD1(handleDirective, bool(const std::string&));
     MOCK_METHOD1(cancelDirective, void(const std::string&));
     MOCK_METHOD0(onDeregistered, void());

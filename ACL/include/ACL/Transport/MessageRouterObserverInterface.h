@@ -20,7 +20,8 @@
 
 #include <memory>
 
-#include "ACL/Message.h"
+#include <AVSCommon/AVS/Message.h>
+
 #include "ACL/Values.h"
 
 namespace alexaClientSDK {
@@ -46,7 +47,7 @@ private:
      * This function will be called when a Message arrives from AVS.
      * @param msg The message that was received from AVS.
      */
-    virtual void receive(std::shared_ptr<Message> msg) = 0;
+    virtual void receive(std::shared_ptr<avsCommon::avs::Message> msg) = 0;
 
     /// The friend declaration.
     friend class MessageRouter;

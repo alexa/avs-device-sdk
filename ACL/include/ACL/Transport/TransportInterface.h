@@ -20,8 +20,7 @@
 
 #include <memory>
 
-#include "ACL/MessageRequest.h"
-#include "ACL/Message.h"
+#include <AVSCommon/AVS/MessageRequest.h>
 
 namespace alexaClientSDK {
 namespace acl {
@@ -64,7 +63,7 @@ public:
      *
      * @param request The requested message.
      */
-    virtual void send(std::shared_ptr<MessageRequest> request) = 0;
+    virtual void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) = 0;
 
 };
 

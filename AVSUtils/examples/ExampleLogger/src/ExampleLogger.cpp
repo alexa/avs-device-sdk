@@ -15,6 +15,8 @@
  * permissions and limitations under the License.
  */
 
+#include <cstdio>
+
 #include "ExampleLogger/ExampleLogger.h"
 
 namespace alexaClientSDK {

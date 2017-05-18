@@ -36,6 +36,9 @@ public:
     /**
      * Send a @c System::ExceptionEncountered message to AVS.
      *
+     * @note The implementation of this method MUST return quickly. Failure to do so blocks the processing
+     * of subsequent @c AVSDirectives.
+     *
      * @param unparsedDirective The unparsed JSON of the directive.
      * @param error The type of error encountered.
      * @param errorDescription Additional error details for logging and troubleshooting.

@@ -80,7 +80,7 @@ void AVSConnectionManager::reconnect() {
     }
 }
 
-void AVSConnectionManager::send(std::shared_ptr<MessageRequest> request) {
+void AVSConnectionManager::sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) {
     m_messageRouter->send(request);
 }
 
@@ -95,7 +95,7 @@ void AVSConnectionManager::onConnectionStatusChanged(const ConnectionStatus stat
     }
 }
 
-void AVSConnectionManager::receive(std::shared_ptr<Message> msg) {
+void AVSConnectionManager::receive(std::shared_ptr<avsCommon::avs::Message> msg) {
     if(m_messageObserver) {
         m_messageObserver->receive(msg);
     }

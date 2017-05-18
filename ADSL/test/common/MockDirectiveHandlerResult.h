@@ -21,7 +21,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "ADSL/DirectiveHandlerResultInterface.h"
+#include <AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h>
 
 namespace alexaClientSDK {
 namespace adsl {
@@ -30,7 +30,7 @@ namespace test {
 /**
  * MockDirectiveHandlerResult
  */
-class MockDirectiveHandlerResult : public DirectiveHandlerResultInterface {
+class MockDirectiveHandlerResult : public avsCommon::sdkInterfaces::DirectiveHandlerResultInterface {
     MOCK_METHOD0(setCompleted, void());
     MOCK_METHOD1(setFailed, void(const std::string&));
 };

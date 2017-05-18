@@ -59,8 +59,7 @@ bool CurlEasyHandleWrapper::reset() {
             Logger::log("could not create new curl handle");
             return false;
         }
-        setDefaultOptions();
-        return false;
+        return setDefaultOptions();
     }
 
     /*
@@ -239,7 +238,12 @@ void CurlEasyHandleWrapper::cleanupResources() {
 }
 
 bool CurlEasyHandleWrapper::setDefaultOptions() {
-    return libcurlUtils::prepareForTLS(m_handle);
+    if (libcurlUtils::prepareForTLS(m_handle)) {
+        return true;
+    }
+    curl_easy_cleanup(m_handle);
+    m_handle = nullptr;
+    return false;
 }
 
 } // acl

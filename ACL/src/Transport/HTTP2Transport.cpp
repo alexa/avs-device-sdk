@@ -40,6 +40,8 @@ const static std::string AVS_EVENT_URL_PATH_EXTENSION = "/v20160207/events";
 const static std::string AVS_PING_URL_PATH_EXTENSION = "/ping";
 /// Timeout for curl_multi_wait
 const static int WAIT_FOR_ACTIVITY_TIMEOUT_MS = 100;
+/// Timeout for curl_multi_wait when there's a paused HTTP/2 stream.
+const static int WAIT_FOR_ACTIVITY_WHILE_PAUSED_STREAM_TIMEOUT_MS = 10;
 /// 1 minute in milliseconds
 const static int MS_PER_MIN = 60000;
 /// Timeout before we send a ping
@@ -266,13 +268,53 @@ void HTTP2Transport::networkLoop() {
             }
         }
         if (m_isNetworkThreadRunning) {
+            int multiWaitTimeoutMs = WAIT_FOR_ACTIVITY_TIMEOUT_MS;
+
+            int numberPausedStreams = 0;
+            for (auto stream : m_activeStreams) {
+                if (stream.second->isPaused()) {
+                    numberPausedStreams++;
+                    multiWaitTimeoutMs = WAIT_FOR_ACTIVITY_WHILE_PAUSED_STREAM_TIMEOUT_MS;
+                }
+            }
+
+            auto msBefore = std::chrono::milliseconds::max();
+            if (numberPausedStreams > 0) {
+                msBefore = std::chrono::duration_cast<std::chrono::milliseconds>(
+                        std::chrono::steady_clock::now().time_since_epoch());
+            }
+
             //TODO: ACSDK-69 replace timeout with signal fd
-            ret = curl_multi_wait(m_multi->handle, NULL, 0, WAIT_FOR_ACTIVITY_TIMEOUT_MS, &numTransfersUpdated);
+            //TODO: ACSDK-281 - investigate the timeout values and performance consequences for curl_multi_wait.
+            ret = curl_multi_wait(m_multi->handle, NULL, 0, multiWaitTimeoutMs, &numTransfersUpdated);
             if (ret != CURLM_OK) {
                 std::string error("CURL multi wait failed: ");
                 error.append(curl_multi_strerror(ret));
                 Logger::log(error);
                 break;
+            }
+
+            // @note - curl_multi_wait will return immediately even if all streams are paused, because HTTP/2 streams
+            // are full-duplex - so activity may have occurred on the other side.  Therefore, if our intent is
+            // to pause ACL to give attachment readers time to catch up with written data, we must perform a local
+            // sleep of our own.
+            if ((numberPausedStreams > 0) && (m_activeStreams.size() == numberPausedStreams)) {
+                std::chrono::milliseconds msAfter = std::chrono::duration_cast<std::chrono::milliseconds>(
+                        std::chrono::steady_clock::now().time_since_epoch());
+                auto elapsedMs = (msAfter - msBefore).count();
+                auto remainingMs = multiWaitTimeoutMs - elapsedMs;
+
+                // sanity check that remainingMs is valid before performing a sleep.
+                if (remainingMs > 0 && remainingMs < WAIT_FOR_ACTIVITY_WHILE_PAUSED_STREAM_TIMEOUT_MS) {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(remainingMs));
+                }
+
+                // un-pause the streams so that in the next invocation of curl_multi_perform progress may be made.
+                for (auto stream : m_activeStreams) {
+                    if (stream.second->isPaused()) {
+                        stream.second->setPaused(false);
+                    }
+                }
             }
         }
 
@@ -366,7 +408,7 @@ bool HTTP2Transport::canProcessOutgoingMessage() {
     return true;
 }
 
-void HTTP2Transport::send(std::shared_ptr<MessageRequest> request) {
+void HTTP2Transport::send(std::shared_ptr<avsCommon::avs::MessageRequest> request) {
     {
         /*
          * This must block to enforce that only one message is sent to the service at a time. This is currently a
@@ -395,10 +437,10 @@ void HTTP2Transport::send(std::shared_ptr<MessageRequest> request) {
 
             m_activeStreams.insert(ActiveTransferEntry(stream->getCurlHandle(), stream));
         } else {
-            request->onSendCompleted(SendMessageStatus::INVALID_AUTH);
+            request->onSendCompleted(avsCommon::avs::MessageRequest::Status::INVALID_AUTH);
         }
     } else {
-        request->onSendCompleted(SendMessageStatus::NOT_CONNECTED);
+        request->onSendCompleted(avsCommon::avs::MessageRequest::Status::NOT_CONNECTED);
     }
 }
 

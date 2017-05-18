@@ -21,8 +21,8 @@
 #include <memory>
 #include <string>
 
-#include "AFML/ChannelObserverInterface.h"
-#include "AFML/FocusState.h"
+#include <AVSCommon/SDKInterfaces/ChannelObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/FocusState.h>
 
 namespace alexaClientSDK {
 namespace afml {
@@ -54,14 +54,14 @@ public:
      *
      * @param focus The focus of the Channel.
      */
-    void setFocus(FocusState focus);
+    void setFocus(avsCommon::sdkInterfaces::FocusState focus);
 
     /**
      * Sets a new observer and notifies the old observer, if there is one, that it lost focus.
      *
      * @param observer The observer of the Channel.
      */
-    void setObserver(std::shared_ptr<ChannelObserverInterface> observer);
+    void setObserver(std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> observer);
 
     /**
      * Compares this Channel and another Channel and checks which is higher priority. A Channel is considered higher
@@ -99,17 +99,17 @@ public:
      * @param observer The observer to check.
      * @return @c true if the observer currently owns the Channel and @c false otherwise.
      */
-    bool doesObserverOwnChannel(std::shared_ptr<ChannelObserverInterface> observer) const;
+    bool doesObserverOwnChannel(std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> observer) const;
 
 private:
     /// The priority of the Channel.
     const unsigned int m_priority;
 
     /// The current Focus of the Channel.
-    FocusState m_focusState;
+    avsCommon::sdkInterfaces::FocusState m_focusState;
 
     /// The current observer of the Channel.
-    std::shared_ptr<ChannelObserverInterface> m_observer;
+    std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> m_observer;
 
     /// An identifier which should be unique to any activity that can occur on any Channel.
     std::string m_currentActivityId;

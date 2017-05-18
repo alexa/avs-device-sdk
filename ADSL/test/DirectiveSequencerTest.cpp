@@ -35,6 +35,8 @@ namespace adsl {
 namespace test {
 
 using namespace avsCommon;
+using namespace avsCommon::avs;
+using namespace avsCommon::sdkInterfaces;
 
 /// Long amount of time for handling a directive to allow other things to happen (we should not reach this).
 static const std::chrono::milliseconds LONG_HANDLING_TIME_MS(30000);

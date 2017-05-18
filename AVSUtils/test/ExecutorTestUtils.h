@@ -24,7 +24,7 @@ namespace threading {
 static const int VALUE = 1234;
 
 /// Timeout to use for waiting on calls within testss
-static const std::chrono::milliseconds SHORT_TIMEOUT_MS = std::chrono::milliseconds(1000);
+static const std::chrono::milliseconds SHORT_TIMEOUT_MS = std::chrono::milliseconds(50);
 
 /// A simple task which takes an integer argument and returns the argument when executed
 static auto TASK = [](int arg) { return arg; };

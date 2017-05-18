@@ -72,34 +72,5 @@ std::string connectionChangedReasonToString(ConnectionChangedReason reason) {
     return "connectionChangedReasonToString_UNHANDLED_ERROR";
 }
 
-std::string sendMessageStatusToString(SendMessageStatus status) {
-    switch(status) {
-        case SendMessageStatus::PENDING:
-            return "PENDING";
-        case SendMessageStatus::SUCCESS:
-            return "SUCCESS";
-        case SendMessageStatus::NOT_CONNECTED:
-            return "NOT_CONNECTED";
-        case SendMessageStatus::TIMEDOUT:
-            return "TIMEDOUT";
-        case SendMessageStatus::PROTOCOL_ERROR:
-            return "PROTOCOL_ERROR";
-        case SendMessageStatus::INTERNAL_ERROR:
-            return "INTERNAL_ERROR";
-        case SendMessageStatus::SERVER_INTERNAL_ERROR:
-            return "SERVER_INTERNAL_ERROR";
-        case SendMessageStatus::REFUSED:
-            return "REFUSED";
-        case SendMessageStatus::CANCELED:
-            return "CANCELED";
-        case SendMessageStatus::THROTTLED:
-            return "THROTTLED";
-        default:
-            return "SEND_MESSAGE_STATUS_TO_STRING_ERROR";
-    }
-
-    return "sendMessageStatusToString_UNHANDLED_ERROR";
-}
-
 } // namespace acl
 } // namespace alexaClientSDK

@@ -94,15 +94,8 @@ public:
         waitOnExecutor(m_receiveExecutor, SHORT_TIMEOUT_MS);
     }
 
-    std::shared_ptr<MessageRequest> createMessageRequest() {
-        auto message = createMessage();
-        return std::make_shared<MessageRequest>(message);
-    }
-
-    std::shared_ptr<Message> createMessage() {
-        auto attachment = std::make_shared<std::istringstream>(MESSAGE);
-        auto message = std::make_shared<Message>(MESSAGE, attachment);
-        return message;
+    std::shared_ptr<avsCommon::avs::MessageRequest> createMessageRequest() {
+        return std::make_shared<avsCommon::avs::MessageRequest>(MESSAGE, nullptr);
     }
 
     void waitOnExecutor(std::shared_ptr<Executor> executor, std::chrono::milliseconds millisecondsToWait) {

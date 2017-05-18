@@ -22,9 +22,9 @@
 #include <string>
 
 #include "AVSUtils/Threading/Executor.h"
+#include "AVSCommon/AVS/MessageRequest.h"
 #include "ACL/AuthDelegateInterface.h"
 
-#include "ACL/MessageRequest.h"
 #include "ACL/Transport/MessageRouterObserverInterface.h"
 #include "ACL/Transport/TransportInterface.h"
 #include "ACL/Transport/TransportObserverInterface.h"
@@ -68,7 +68,7 @@ public:
      * @param request The message to be sent to AVS.
      * @return Whether the underlying implementation successfully enqueued the message to be sent.
      */
-    virtual void send(std::shared_ptr<MessageRequest> request) = 0;
+    virtual void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) = 0;
 
     /**
      * Set the URL endpoint for the AVS connection.  Calling this function with a new value will cause the

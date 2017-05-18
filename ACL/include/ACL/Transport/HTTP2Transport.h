@@ -75,7 +75,7 @@ public:
 
     bool isConnected() override;
 
-    void send(std::shared_ptr<MessageRequest> request) override;
+    void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
 
 private:
     /**

@@ -18,17 +18,15 @@
 #ifndef ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_FOCUS_MANAGER_H_
 #define ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_FOCUS_MANAGER_H_
 
-#include <future>
-#include <memory>
 #include <mutex>
 #include <set>
-#include <string>
 #include <unordered_map>
 #include <vector>
 
+#include <AVSCommon/SDKInterfaces/ChannelObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
+
 #include "AFML/Channel.h"
-#include "AFML/ChannelObserverInterface.h"
-#include "AFML/FocusState.h"
 #include "AVSUtils/Threading/Executor.h"
 
 namespace alexaClientSDK {
@@ -51,7 +49,7 @@ namespace afml {
  * ChannelObserverInterface##onFocusChanged() method, at which point the client should make a user observable change
  * based on the focus it receives.
  */
-class FocusManager {
+class FocusManager : public avsCommon::sdkInterfaces::FocusManagerInterface {
 public:
     /**
      * The configuration used by the FocusManager to create Channel objects. Each configuration object has a 
@@ -94,44 +92,16 @@ public:
      */
     FocusManager(const std::vector<ChannelConfiguration>& channelConfigurations);
 
-    /**
-     * This method will acquire the channel and grant the appropriate focus to it and other channels if needed. The
-     * caller will be notified via an ChannelObserverInterface##onFocusChanged() call to the @c channelObserver when
-     * it can start the activity. If the Channel was already held by a different observer, the observer will be 
-     * notified via ChannelObserverInterface##onFocusChanged() to stop before letting the new observer start.
-     *
-     * @param channelName The name of the Channel to acquire.
-     * @param channelObserver The observer that will be acquiring the Channel and be notified of focus changes.
-     * @param activityId The id of the new activity on the Channel. This should be unique and represents the activity
-     * using the Channel.
-     *
-     * @return Returns @c true if the Channel can be acquired and @c false otherwise.
-     */
     bool acquireChannel(
             const std::string& channelName, 
-            std::shared_ptr<ChannelObserverInterface> channelObserver,
-            const std::string& activityId);
+            std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver,
+            const std::string& activityId) override;
 
-    /**
-     * This method will release the Channel and notify the observer of the Channel, if the observer is the same as the 
-     * observer passed in the acquireChannel call, to stop via ChannelObserverInterface##onFocusChanged(). If the
-     * Channel to release is the current foreground focused Channel, it will also notify the next highest priority
-     * Channel via an ChannelObserverInterface##onFocusChanged() callback that it has gained foreground focus.
-     *
-     * @param channelName The name of the Channel to release.
-     * @param channelObserver The observer to be released from the Channel.
-     * @return @c std::future<bool> which will contain @c true if the Channel can be released and @c false otherwise.
-     */
     std::future<bool> releaseChannel(
-        const std::string& channelName, std::shared_ptr<ChannelObserverInterface> channelObserver);
+        const std::string& channelName,
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver) override;
 
-    /**
-     * This method will request that the currently foregrounded Channel activity be stopped, if there is one. This will
-     * be performed asynchronously, and so, if at the time of processing, the activity has stopped for any reason, then
-     * no stop will be performed. If something was stopped, the next highest priority active Channel will be brought
-     * to the foreground.
-     */
-    void stopForegroundActivity();
+    void stopForegroundActivity() override;
 
 private:
     /**
@@ -161,7 +131,7 @@ private:
      */
     void acquireChannelHelper(
             std::shared_ptr<Channel> channelToAcquire, 
-            std::shared_ptr<ChannelObserverInterface> channelObserver,
+            std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver,
             const std::string& activityId);
 
     /**
@@ -175,7 +145,7 @@ private:
      */
     void releaseChannelHelper(
             std::shared_ptr<Channel> channelToRelease, 
-            std::shared_ptr<ChannelObserverInterface> channelObserver, 
+            std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver,
             std::shared_ptr<std::promise<bool>> releaseChannelSuccess,
             const std::string& channelName);
 

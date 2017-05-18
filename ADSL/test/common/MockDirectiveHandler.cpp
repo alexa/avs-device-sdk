@@ -24,6 +24,7 @@ namespace adsl {
 namespace test {
 
 using namespace avsCommon;
+using namespace avsCommon::sdkInterfaces;
 
 /// Default amount of time taken to handle a directive.
 const std::chrono::milliseconds MockDirectiveHandler::DEFAULT_HANDLING_TIME_MS(0);

@@ -111,6 +111,24 @@ static bool getValueAsString(const rapidjson::Value& documentNode, std::string* 
     return true;
 }
 
+/**
+ * Converts a given rapidjson value node to a 64-bit signed integer.  The node must be Int64 type.
+ *
+ * @param documentNode A logical node within a parsed JSON document which rapidjson understands.
+ * @param[out] value The output parameter which will be assigned the int64_t value.
+ * @return @c true If the node was converted to an int64 ok, @c false otherwise.
+ */
+static bool getValueAsInt64(const rapidjson::Value& valueNode, int64_t* value) {
+    if(!valueNode.IsInt64()) {
+        Logger::log("rapidjson document node cannot be converted to an int64.");
+        return false;
+    }
+
+    *value = valueNode.GetInt64();
+
+    return true;
+}
+
 bool lookupStringValue(const std::string& jsonContent, const std::string& key, std::string* value) {
     if (!value) {
         Logger::log("The output parameter value is nullptr.");
@@ -134,6 +152,35 @@ bool lookupStringValue(const std::string& jsonContent, const std::string& key, s
 
     if (!getValueAsString(document[key.c_str()], value)) {
         Logger::log("Could not convert the rapidjson document node to a string.");
+        return false;
+    }
+
+    return true;
+}
+
+bool lookupInt64Value(const std::string& jsonContent, const std::string& key, int64_t* value) {
+    if (!value) {
+        Logger::log("The output parameter value is nullptr.");
+        return false;
+    }
+
+    rapidjson::Document document;
+    if (!parseJSON(jsonContent, &document)) {
+        Logger::log("The json content could not be parsed.");
+        return false;
+    }
+
+    // To traverse the logical JSON tree, rapidjson works with value types, from which document derives.
+    // Let's make a local reference of this type to clarify what's going on.
+    const rapidjson::Value& documentRootNode = document;
+
+    if (!documentNodeContainsKey(documentRootNode, key)) {
+        Logger::log("The parsed JSON document does not contain a direct child node with the key:'" + key + "'.");
+        return false;
+    }
+
+    if (!getValueAsInt64(document[key.c_str()], value)) {
+        Logger::log("Could not convert the rapidjson document node to an int64.");
         return false;
     }
 

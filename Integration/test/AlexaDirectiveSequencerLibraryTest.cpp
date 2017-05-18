@@ -27,18 +27,20 @@
 #include <unordered_map>
 
 #include "ACL/AVSConnectionManager.h"
-#include "ACL/Message.h"
+#include "AVSCommon/AVS/Message.h"
 #include "ACL/Transport/HTTP2MessageRouter.h"
 #include "ACL/Values.h"
-#include "ADSL/BlockingPolicy.h"
-#include "ADSL/DirectiveHandlerInterface.h"
-#include "ADSL/DirectiveHandlerResultInterface.h"
+#include "AVSCommon/AVS/BlockingPolicy.h"
 #include "ADSL/DirectiveSequencer.h"
 #include "ADSL/MessageInterpreter.h"
 #include "AuthDelegate/AuthDelegate.h"
 #include "AVSCommon/AttachmentManager.h"
 #include "AVSCommon/AttachmentManagerInterface.h"
+#include "AVSCommon/AVS/Attachment/InProcessAttachment.h"
 #include "AVSCommon/ExceptionEncounteredSenderInterface.h"
+#include "AVSCommon/Utils/SDS/InProcessSDS.h"
+#include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
+#include "AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h"
 #include "AVSCommon/JSON/JSONUtils.h"
 #include "AVSUtils/Initialization/AlexaClientSDKInit.h"
 #include "AVSUtils/Logger/LogEntry.h"
@@ -55,7 +57,11 @@ using namespace alexaClientSDK::acl;
 using namespace alexaClientSDK::adsl;
 using namespace alexaClientSDK::authDelegate;
 using namespace alexaClientSDK::avsCommon;
+using namespace alexaClientSDK::avsCommon::avs;
+using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 using namespace alexaClientSDK::avsUtils::initialization;
+using namespace alexaClientSDK::avsCommon::avs::attachment;
+using namespace alexaClientSDK::avsCommon::utils::sds;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AlexaDirectiveSequencerLibraryTest");
@@ -459,9 +465,12 @@ protected:
      * @param expectStatus The status to expect from the call to send the message.
      * @param timeout How long to wait for a result from delivering the message.
      */
-    void sendEvent(std::shared_ptr<Message> message, SendMessageStatus expectedStatus, std::chrono::seconds timeout) {
-        auto messageRequest = std::make_shared<ObservableMessageRequest>(message);
-        m_avsConnectionManager->send(messageRequest);
+    void sendEvent(const std::string & jsonContent,
+                   std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+                   MessageRequest::Status expectedStatus,
+                   std::chrono::seconds timeout) {
+        auto messageRequest = std::make_shared<ObservableMessageRequest>(jsonContent, attachmentReader);
+        m_avsConnectionManager->sendMessage(messageRequest);
         ASSERT_TRUE(messageRequest->waitFor(expectedStatus, timeout));
     }
 
@@ -472,9 +481,11 @@ protected:
      * @param expectStatus The status to expect from the call to send the message.
      * @param timeout How long to wait for a result from delivering the message.
      */
-    void setupMessageAndSend(const std::string& json, SendMessageStatus expectedStatus, std::chrono::seconds timeout) {
-        auto message = std::make_shared<Message>(json);
-        sendEvent(message, expectedStatus, timeout);
+    void setupMessageAndSend(
+            const std::string& json,
+            avsCommon::avs::MessageRequest::Status expectedStatus,
+            std::chrono::seconds timeout) {
+        sendEvent(json, nullptr, expectedStatus, timeout);
     }
 
     /**
@@ -488,13 +499,41 @@ protected:
     void setupMessageWithAttachmentAndSend(
             const std::string& json,
             std::string& file,
-            SendMessageStatus expectedStatus,
+            avsCommon::avs::MessageRequest::Status expectedStatus,
             std::chrono::seconds timeout) {
-        auto attachmentStream = std::make_shared<std::ifstream>(file, std::ios::binary);
-        ASSERT_TRUE(attachmentStream->is_open());
 
-        auto message = std::make_shared<Message>(json, attachmentStream);
-        sendEvent(message, expectedStatus, std::chrono::seconds(timeout));
+        auto is = std::make_shared<std::ifstream>(file, std::ios::binary);
+        ASSERT_TRUE(is->is_open());
+
+        const int mbBytes = 1024 * 1024;
+
+        std::vector<char> localBuffer(mbBytes);
+
+        auto bufferSize = InProcessSDS::calculateBufferSize(localBuffer.size());
+        auto buffer = std::make_shared<InProcessSDSTraits::Buffer>(bufferSize);
+        std::shared_ptr<InProcessSDS> sds = InProcessSDS::create(buffer);
+
+        auto attachmentWriter = InProcessAttachmentWriter::create(sds);
+
+        while (*is) {
+            is->read(localBuffer.data(), mbBytes);
+            size_t numBytesRead = is->gcount();
+            AttachmentWriter::WriteStatus writeStatus = AttachmentWriter::WriteStatus::OK;
+            attachmentWriter->write(localBuffer.data(), numBytesRead, &writeStatus);
+
+            // write status should be either OK or CLOSED
+            bool writeStatusOk = (AttachmentWriter::WriteStatus::OK == writeStatus ||
+                    AttachmentWriter::WriteStatus::CLOSED == writeStatus);
+            ASSERT_TRUE(writeStatusOk);
+        }
+
+        attachmentWriter->close();
+
+        std::shared_ptr<InProcessAttachmentReader> attachmentReader =
+                InProcessAttachmentReader::create(AttachmentReader::Policy::NON_BLOCKING, sds);
+        ASSERT_NE(attachmentReader, nullptr);
+
+        sendEvent(json, attachmentReader, expectedStatus, std::chrono::seconds(timeout));
     }
 
     /**
@@ -692,7 +731,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendEventWithDirective) {
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+        CT_FIRST_RECOGNIZE_EVENT_JSON,
+        file,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     // Wait for the first directive to route through to our handler.
     auto params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -715,7 +757,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveGroupWithoutBlocking) {
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+        CT_FIRST_RECOGNIZE_EVENT_JSON,
+        file,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     // Look for SetMute and Speak without completing the handling of any directives.
     TestDirectiveHandler::DirectiveParams params;
@@ -752,7 +797,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithDifferentDialogReque
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+        CT_FIRST_RECOGNIZE_EVENT_JSON,
+        file,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     // Drain the directive results until we get a timeout. There should be no cancels or exceptions.
     TestDirectiveHandler::DirectiveParams params;
@@ -765,7 +813,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithDifferentDialogReque
     // Send an event that has a different dialogRequestID, without calling setDialogRequestId().
     file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_SECOND_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+        CT_SECOND_RECOGNIZE_EVENT_JSON,
+        file,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     // Directives from the second event do not reach the directive handler because they do no have
     // the current dialogRequestId.
@@ -791,7 +842,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, dropQueueAfterBargeIn) {
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
     std::string file = inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+        CT_FIRST_RECOGNIZE_EVENT_JSON,
+        file,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     TestDirectiveHandler::DirectiveParams params;
 
@@ -808,7 +862,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, dropQueueAfterBargeIn) {
     setupMessageWithAttachmentAndSend(
             CT_SECOND_RECOGNIZE_EVENT_JSON,
             differentFile,
-            SendMessageStatus::SUCCESS,
+            avsCommon::avs::MessageRequest::Status::SUCCESS,
             SEND_EVENT_TIMEOUT_DURATION);
 
     // Consume cancellations and the new directives.
@@ -846,7 +900,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithoutADialogRequestID)
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON_NEAR, file, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+        CT_FIRST_RECOGNIZE_EVENT_JSON_NEAR,
+        file,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     TestDirectiveHandler::DirectiveParams params;
 
@@ -881,7 +938,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectivesForPreHandling) {
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
     std::string file = inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+        CT_FIRST_RECOGNIZE_EVENT_JSON,
+        file,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     // Count each preHandle and handle that arrives. 
     TestDirectiveHandler::DirectiveParams params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -917,7 +977,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, cancelDirectivesWhileInQueue) {
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
     std::string file = inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+        CT_FIRST_RECOGNIZE_EVENT_JSON,
+        file,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     TestDirectiveHandler::DirectiveParams params;
 
@@ -954,7 +1017,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveAtTheFront) {
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+        CT_FIRST_RECOGNIZE_EVENT_JSON,
+        file,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     // Expect set-mute which is blocking and no other handles after that (timeout reached because SetMute blocks).
     TestDirectiveHandler::DirectiveParams params;
@@ -1008,7 +1074,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveInTheMiddle) {
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
     std::string file = inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+        CT_FIRST_RECOGNIZE_EVENT_JSON,
+        file,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     TestDirectiveHandler::DirectiveParams params;
 
@@ -1055,7 +1124,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, noDirectiveHandlerRegisteredForADirec
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+        CT_FIRST_RECOGNIZE_EVENT_JSON,
+        file,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     // Make sure no SetMute directives are given to the handler, and that they result in exception encountered.
     assertExceptionWithName(m_directiveHandler, NAME_SET_MUTE);
@@ -1077,7 +1149,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, noDirectiveHandlerRegisteredForADirec
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
-        SendMessageStatus::SUCCESS,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     // Make sure no Speak directives are given to the handler, and that they result in exception encountered.
@@ -1104,7 +1176,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, twoDirectiveHandlersRegisteredForADir
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+        CT_FIRST_RECOGNIZE_EVENT_JSON,
+        file,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     // A received the SetMute directive.
     TestDirectiveHandler::DirectiveParams paramsA;
@@ -1135,7 +1210,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, multiturnScenario) {
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
     std::string file = inputPath + RECOGNIZE_WIKI_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+        CT_FIRST_RECOGNIZE_EVENT_JSON,
+        file,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     TestDirectiveHandler::DirectiveParams params;
 
@@ -1154,7 +1232,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, multiturnScenario) {
     m_directiveSequencer->setDialogRequestId(SECOND_DIALOG_REQUEST_ID);  
     std::string differentFile = inputPath + RECOGNIZE_LIONS_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_SECOND_RECOGNIZE_EVENT_JSON, differentFile, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+        CT_SECOND_RECOGNIZE_EVENT_JSON,
+        differentFile,
+        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     // Just the wikipedia directive group in response.
     do {
@@ -1176,7 +1257,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, getAttachmentWithContentId) {
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-            CT_FIRST_RECOGNIZE_EVENT_JSON, file, SendMessageStatus::SUCCESS, SEND_EVENT_TIMEOUT_DURATION);
+            CT_FIRST_RECOGNIZE_EVENT_JSON,
+            file,
+            avsCommon::avs::MessageRequest::Status::SUCCESS,
+            SEND_EVENT_TIMEOUT_DURATION);
 
     // Wait for the directive to route through to our handler.
     TestDirectiveHandler::DirectiveParams params;

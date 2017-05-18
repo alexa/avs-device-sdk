@@ -91,44 +91,6 @@ enum class ConnectionChangedReason {
 };
 
 /**
- * This enum expresses the various end-states that a send request could arrive at.
- */
-enum class SendMessageStatus {
-    /// The message has not yet been processed for sending.
-    PENDING,
-
-    /// The message was successfully sent.
-    SUCCESS,
-
-    /// The send failed because AVS was not connected.
-    NOT_CONNECTED,
-
-    /// The send failed because of timeout waiting for AVS response.
-    TIMEDOUT,
-
-    /// The send failed due to an underlying protocol error.
-    PROTOCOL_ERROR,
-
-    /// The send failed due to an internal error within ACL.
-    INTERNAL_ERROR,
-
-    /// The send failed due to an internal error on the server.
-    SERVER_INTERNAL_ERROR,
-
-    /// The send failed due to server refusing the request.
-    REFUSED,
-
-    /// The send failed due to server canceling it before the transmission completed.
-    CANCELED,
-
-    /// The send failed due to excessive load on the server.
-    THROTTLED,
-
-    /// The access credentials provided to ACL were invalid.
-    INVALID_AUTH
-};
-
-/**
  * Utility function to convert a modern enum class to a string.
  * @param status The enum value
  * @return The string representation of the incoming value.
@@ -141,13 +103,6 @@ std::string connectionStatusToString(ConnectionStatus status);
  * @return The string representation of the incoming value.
  */
 std::string connectionChangedReasonToString(ConnectionChangedReason reason);
-
-/**
- * Utility function to convert a modern enum class to a string.
- * @param status The enum value
- * @return The string representation of the incoming value.
- */
-std::string sendMessageStatusToString(SendMessageStatus status);
 
 } // namespace acl
 } // namespace alexaClientSDK

@@ -20,24 +20,28 @@
 namespace alexaClientSDK {
 namespace integration {
 
-ObservableMessageRequest::ObservableMessageRequest(std::shared_ptr<Message> message):
-        MessageRequest(message),
-        m_sendMessageStatus(SendMessageStatus::PENDING) {
+ObservableMessageRequest::ObservableMessageRequest(
+        const std::string & jsonContent,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader):
+        MessageRequest(jsonContent, attachmentReader),
+        m_status(Status::PENDING) {
 }
 
-void ObservableMessageRequest::onSendCompleted(SendMessageStatus sendMessageStatus) {
-    m_sendMessageStatus = sendMessageStatus;
+void ObservableMessageRequest::onSendCompleted(Status status) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_status = status;
     m_wakeTrigger.notify_all();
 }
 
-SendMessageStatus ObservableMessageRequest::getSendMessageStatus() const {
-    return m_sendMessageStatus;
+ObservableMessageRequest::Status ObservableMessageRequest::getStatus() const {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return m_status;
 }
 
-bool ObservableMessageRequest::waitFor(const SendMessageStatus sendMessageStatus, const std::chrono::seconds duration) {
+bool ObservableMessageRequest::waitFor(const Status status, const std::chrono::seconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
-    return m_wakeTrigger.wait_for(lock, duration, [this, sendMessageStatus]() {
-        return m_sendMessageStatus == sendMessageStatus;
+    return m_wakeTrigger.wait_for(lock, duration, [this, status]() {
+        return m_status == status;
     });
 }
 

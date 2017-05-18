@@ -25,6 +25,7 @@ namespace alexaClientSDK {
 namespace acl {
 
 using namespace alexaClientSDK::avsUtils;
+using namespace alexaClientSDK::avsCommon::avs::attachment;
 
 /// MIME boundary string prefix in HTTP header.
 static const std::string BOUNDARY_PREFIX = "boundary=";
@@ -113,9 +114,9 @@ bool HTTP2Stream::initGet(const std::string& url ,const std::string& authToken) 
 }
 
 bool HTTP2Stream::initPost(const std::string& url, const std::string& authToken,
-                        std::shared_ptr<MessageRequest> request) {
+                        std::shared_ptr<avsCommon::avs::MessageRequest> request) {
     reset();
-    std::string requestPayload = request->getMessage()->getJSONContent();
+    std::string requestPayload = request->getJsonContent();
 
     if (!m_transfer.getCurlHandle()) {
         Logger::log("Stream curl easy handle not initialised");
@@ -130,7 +131,7 @@ bool HTTP2Stream::initPost(const std::string& url, const std::string& authToken,
         return false;
     }
 
-    if (request->getMessage()->getAttachment()) {
+    if (request->getAttachmentReader()) {
         if (!m_transfer.setPostStream(ATTACHMENT_FIELD_NAME, this)) {
             return false;
         }
@@ -160,9 +161,8 @@ size_t HTTP2Stream::writeCallback(char *data, size_t size, size_t nmemb, void *u
     if (HTTP2Stream::HTTPResponseCodes::SUCCESS_OK == stream->getResponseCode()) {
         stream->m_parser.feed(data, numChars);
     } else {
-        auto JSONContent = std::string(data, numChars);
-        auto avsException = std::make_shared<Message>(JSONContent);
-        stream->m_currentRequest->onExceptionReceived(avsException);
+        auto jsonContent = std::string(data, numChars);
+        stream->m_currentRequest->onExceptionReceived(jsonContent);
     }
     return numChars;
 }
@@ -185,22 +185,46 @@ size_t HTTP2Stream::headerCallback(char *data, size_t size, size_t nmemb, void *
 
 size_t HTTP2Stream::readCallback(char *data, size_t size, size_t nmemb, void *userData) {
     HTTP2Stream *stream = static_cast<HTTP2Stream*>(userData);
-    std::shared_ptr<std::istream> dataStream = stream->m_currentRequest->getMessage()->getAttachment();
 
-    if (dataStream->eof()) {
+    auto attachmentReader = stream->m_currentRequest->getAttachmentReader();
+
+    // This is ok - it means there's no attachment to send.  Return 0 so libcurl can complete the stream to AVS.
+    if (!attachmentReader) {
         return 0;
     }
+
+    // Pass the data to libcurl.
     const size_t maxBytesToRead = size * nmemb;
-    dataStream->read(data, maxBytesToRead);
-    if (dataStream->bad()) {
-        Logger::log("Failed to read attachment");
-        return CURL_READFUNC_ABORT;
+    auto readStatus = AttachmentReader::ReadStatus::OK;
+    auto bytesRead = attachmentReader->read(data, maxBytesToRead, &readStatus);
+
+    switch (readStatus) {
+
+        // The good cases.
+        case AttachmentReader::ReadStatus::OK:
+        case AttachmentReader::ReadStatus::OK_WOULDBLOCK:
+        case AttachmentReader::ReadStatus::OK_TIMEDOUT:
+            break;
+
+        // No more data to send - close the stream.
+        case AttachmentReader::ReadStatus::CLOSED:
+            return 0;
+
+        // Handle any attachment read errors.
+        case AttachmentReader::ReadStatus::ERROR_OVERRUN:
+        case AttachmentReader::ReadStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:
+        case AttachmentReader::ReadStatus::ERROR_INTERNAL:
+            return CURL_READFUNC_ABORT;
     }
-    std::streamsize bytesRead = dataStream->gcount();
-    //TODO: ACSDK-78 Handle when the stream has no bytes to read (async sources)
+
+    // The attachment has no more data right now, but is still readable.
+    if (0 == bytesRead) {
+        stream->setPaused(true);
+        return CURL_READFUNC_PAUSE;
+    }
+
     return bytesRead;
 }
-
 
 long HTTP2Stream::getResponseCode() {
     long responseCode = 0;
@@ -220,14 +244,14 @@ void HTTP2Stream::notifyRequestObserver() {
 
     switch (responseCode) {
         case HTTP2Stream::HTTPResponseCodes::NO_RESPONSE_RECEIVED:
-            m_currentRequest->onSendCompleted(SendMessageStatus::INTERNAL_ERROR);
+            m_currentRequest->onSendCompleted(avsCommon::avs::MessageRequest::Status::INTERNAL_ERROR);
             break;
         case HTTP2Stream::HTTPResponseCodes::SUCCESS_OK:
         case HTTP2Stream::HTTPResponseCodes::SUCCESS_NO_CONTENT:
-            m_currentRequest->onSendCompleted(SendMessageStatus::SUCCESS);
+            m_currentRequest->onSendCompleted(avsCommon::avs::MessageRequest::Status::SUCCESS);
             break;
         default:
-            m_currentRequest->onSendCompleted(SendMessageStatus::SERVER_INTERNAL_ERROR);
+            m_currentRequest->onSendCompleted(avsCommon::avs::MessageRequest::Status::SERVER_INTERNAL_ERROR);
     }
 }
 
@@ -240,6 +264,17 @@ bool HTTP2Stream::setStreamTimeout(const long timeoutSeconds) {
 
 bool HTTP2Stream::setConnectionTimeout(const std::chrono::seconds timeoutSeconds) {
     return m_transfer.setConnectionTimeout(timeoutSeconds);
+}
+
+void HTTP2Stream::setPaused(bool isPaused) {
+    if (m_isPaused && !isPaused) {
+        curl_easy_pause(getCurlHandle(), CURLPAUSE_CONT);
+    }
+    m_isPaused = isPaused;
+}
+
+bool HTTP2Stream::isPaused() const {
+    return m_isPaused;
 }
 
 } // namespace acl

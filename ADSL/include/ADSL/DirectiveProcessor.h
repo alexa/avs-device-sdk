@@ -27,8 +27,8 @@
 #include <unordered_map>
 
 #include <AVSCommon/AVSDirective.h>
+#include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
 
-#include "ADSL/DirectiveHandlerInterface.h"
 #include "ADSL/DirectiveRouter.h"
 
 namespace alexaClientSDK {
@@ -113,7 +113,7 @@ private:
      * Implementation of @c DirectiveHandlerResultInterface that forwards the completion / failure status
      * to the @c DirectiveProcessor from which it originated.
      */
-    class DirectiveHandlerResult : public DirectiveHandlerResultInterface {
+    class DirectiveHandlerResult : public avsCommon::sdkInterfaces::DirectiveHandlerResultInterface {
     public:
         /**
          * Constructor.

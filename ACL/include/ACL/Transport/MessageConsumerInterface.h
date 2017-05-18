@@ -20,7 +20,7 @@
 
 #include <memory>
 
-#include "ACL/Message.h"
+#include <AVSCommon/AVS/Message.h>
 
 namespace alexaClientSDK {
 namespace acl {
@@ -39,7 +39,7 @@ public:
      * Called when a message has been received from AVS.
      * @param message The message.
      */
-    virtual void consumeMessage(std::shared_ptr<Message> message) = 0;
+    virtual void consumeMessage(std::shared_ptr<avsCommon::avs::Message> message) = 0;
 };
 
 } // acl

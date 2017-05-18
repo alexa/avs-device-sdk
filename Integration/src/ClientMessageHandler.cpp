@@ -24,7 +24,7 @@ namespace integration {
 ClientMessageHandler::ClientMessageHandler() : m_count(0) {
 }
 
-void ClientMessageHandler::receive(std::shared_ptr<Message> msg) {
+void ClientMessageHandler::receive(std::shared_ptr<avsCommon::avs::Message> msg) {
     std::cout << "ClientMessageHandler::receive: message:" << msg->getJSONContent() << std::endl;
     std::unique_lock<std::mutex> lock(m_mutex);
     ++m_count;

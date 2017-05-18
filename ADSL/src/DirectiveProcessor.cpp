@@ -41,6 +41,8 @@ namespace alexaClientSDK {
 namespace adsl {
 
 using namespace avsCommon;
+using namespace avsCommon::avs;
+using namespace avsCommon::sdkInterfaces;
 
 std::mutex DirectiveProcessor::m_handleMapMutex;
 DirectiveProcessor::ProcessorHandle DirectiveProcessor::m_nextProcessorHandle = 0;

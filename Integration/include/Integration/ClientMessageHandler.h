@@ -41,7 +41,7 @@ public:
      * 
      * For the purposes of these integration tests, this function simply logs and counts messages.
      */
-    void receive(std::shared_ptr<Message> msg) override;
+    void receive(std::shared_ptr<avsCommon::avs::Message> msg) override;
 
     /**
      * Wait for a message to be received.

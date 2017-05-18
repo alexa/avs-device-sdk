@@ -21,11 +21,10 @@
 #include <memory>
 
 #include <ACL/AVSConnectionManager.h>
-#include <ACL/Message.h>
+#include <AVSCommon/AVS/Message.h>
 #include <ACL/MessageObserverInterface.h>
 #include <AVSCommon/ExceptionEncounteredSenderInterface.h>
-
-#include "ADSL/DirectiveSequencerInterface.h"
+#include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 
 namespace alexaClientSDK {
 namespace adsl {
@@ -45,9 +44,9 @@ public:
     *        @c AVSDirectives.
     */
     MessageInterpreter(std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-        std::shared_ptr<DirectiveSequencerInterface> directiveSequencer);
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer);
 
-    void receive(std::shared_ptr<acl::Message> message) override;
+    void receive(std::shared_ptr<avsCommon::avs::Message> message) override;
 
 private:
     /**
@@ -64,13 +63,13 @@ private:
      * @param[out] outputValue The value of the key that we are looking for.
      * @return @c true if the value was found, @false otherwise, in which case an Exception has also been sent to AVS.
      */
-    bool lookupJsonValueHelper(std::shared_ptr<acl::Message> aclMessage, const std::string& jsonMessageHeader,
+    bool lookupJsonValueHelper(std::shared_ptr<avsCommon::avs::Message> aclMessage, const std::string& jsonMessageHeader,
         const std::string& lookupKey, std::string* outputValue);
 
     /// Object that manages sending exceptions encountered messages to AVS.
     std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> m_exceptionEncounteredSender;
-    /// Object to which we will send @c AVSDirectives once translated from @c acl::Messages.
-    std::shared_ptr<DirectiveSequencerInterface> m_directiveSequencer;
+    /// Object to which we will send @c AVSDirectives once translated from @c avsCommon::avs::Messages.
+    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> m_directiveSequencer;
 };
 
 } // namespace directiveSequencer

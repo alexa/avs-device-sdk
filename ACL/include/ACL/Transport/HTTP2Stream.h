@@ -23,11 +23,11 @@
 #include <mutex>
 #include <string>
 #include <AVSCommon/AttachmentManagerInterface.h>
+#include <AVSCommon/AVS/MessageRequest.h>
 
 #include "ACL/Transport/CurlEasyHandleWrapper.h"
 #include "ACL/Transport/MimeParser.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
-#include "ACL/MessageRequest.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -68,7 +68,7 @@ public:
      * @param request The MessageRequest to post
      * @returns true if setup was successful
      */
-    bool initPost(const std::string& url, const std::string& authToken, std::shared_ptr<MessageRequest> request);
+    bool initPost(const std::string& url, const std::string& authToken, std::shared_ptr<avsCommon::avs::MessageRequest> request);
 
     /**
      * Initializes streams that are supposed to perform an HTTP GET
@@ -149,6 +149,21 @@ public:
      */
     bool setConnectionTimeout(const std::chrono::seconds timeoutSeconds);
 
+    /**
+     * Update the paused status of the stream.  This will take actual effect at the next point of usage with respect
+     * to the underlying network library implementation.
+     *
+     * @param isPaused The new value to set the paused state.
+     */
+    void setPaused(bool isPaused);
+
+    /**
+     * Queries whether this stream is paused.
+     *
+     * @return Whether the stream is paused or not.
+     */
+    bool isPaused() const;
+
 private:
     /**
      * Configure the associated curl easy handle with options common to GET and POST
@@ -162,9 +177,9 @@ private:
     /// An DirectiveParser instance used to parse multipart MIME messages.
     MimeParser m_parser;
     /// The current request being sent on this HTTP/2 stream.
-    std::shared_ptr<MessageRequest> m_currentRequest;
-    // Locks the HTTP2 transport
-    std::mutex m_mutex;
+    std::shared_ptr<avsCommon::avs::MessageRequest> m_currentRequest;
+    /// A local variable to track if this stream is paused with respect to libcurl management.
+    bool m_isPaused;
 };
 
 } // acl

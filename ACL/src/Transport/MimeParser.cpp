@@ -100,7 +100,7 @@ void MimeParser::partEndCallback(void *userData) {
     switch (parser->m_currDataType) {
         case MimeParser::ContentType::JSON:
         {
-            auto message = std::make_shared<Message>(parser->m_message,
+            auto message = std::make_shared<avsCommon::avs::Message>(parser->m_message,
                     parser->m_attachmentManager);
             if(!parser->m_messageConsumer) {
                 Logger::log("Message Consumer has not been set. Message from ACL cannot be processed.");

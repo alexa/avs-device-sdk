@@ -21,6 +21,7 @@
 namespace alexaClientSDK {
 namespace afml {
 
+using namespace avsCommon::sdkInterfaces;
 using namespace avsUtils;
 
 FocusManager::FocusManager(const std::vector<ChannelConfiguration>& channelConfigurations) {

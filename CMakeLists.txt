@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
 # Set project information
-project(AlexaClientSDK VERSION 0.0.0 LANGUAGES CXX)
+project(AlexaClientSDK VERSION 0.3.0 LANGUAGES CXX)
 set(PROJECT_BRIEF "A cross-platform, modular SDK for interacting with the Alexa Voice Service")
 
 include(build/BuildDefaults.cmake)
@@ -14,6 +14,9 @@ add_subdirectory("AVSCommon")
 add_subdirectory("ACL")
 add_subdirectory("AuthDelegate")
 add_subdirectory("ADSL")
-add_subdirectory("Integration")
 add_subdirectory("AFML")
+add_subdirectory("ContextManager")
+add_subdirectory("KWD")
+add_subdirectory("CapabilityAgents")
+add_subdirectory("Integration")
 add_subdirectory("doc")

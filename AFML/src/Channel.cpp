@@ -20,6 +20,8 @@
 namespace alexaClientSDK {
 namespace afml {
 
+using namespace avsCommon::sdkInterfaces;
+
 Channel::Channel(const unsigned int priority) :
     m_priority{priority},
     m_focusState{FocusState::NONE},

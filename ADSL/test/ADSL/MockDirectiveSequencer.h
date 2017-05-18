@@ -19,11 +19,11 @@
 #define ALEXA_CLIENT_SDK_ADSL_TEST_ADSL_MOCK_DIRECTIVE_SEQUENCER_H_
 
 #include <AVSCommon/AVSDirective.h>
+#include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <gmock/gmock.h>
 #include <memory>
 #include <string>
 
-#include "ADSL/DirectiveSequencerInterface.h"
 
 namespace alexaClientSDK {
 namespace adsl {
@@ -31,13 +31,13 @@ namespace adsl {
 /**
  * The mock class that implements the DirectiveSequencerInterface.
  */
-class MockDirectiveSequencer : public DirectiveSequencerInterface {
+class MockDirectiveSequencer : public avsCommon::sdkInterfaces::DirectiveSequencerInterface {
 public:
     MOCK_METHOD0(shutdown,void());
 
-    MOCK_METHOD1(addDirectiveHandlers, bool(const DirectiveHandlerConfiguration& configuration));
+    MOCK_METHOD1(addDirectiveHandlers, bool(const avsCommon::avs::DirectiveHandlerConfiguration& configuration));
 
-    MOCK_METHOD1(removeDirectiveHandlers, bool(const DirectiveHandlerConfiguration& configuration));
+    MOCK_METHOD1(removeDirectiveHandlers, bool(const avsCommon::avs::DirectiveHandlerConfiguration& configuration));
 
     MOCK_METHOD1(setDialogRequestId, void(const std::string& dialogRequestId));
 

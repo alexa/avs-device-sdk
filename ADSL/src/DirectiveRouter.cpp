@@ -38,6 +38,9 @@ static const std::string TAG("DirectiveRouter");
 namespace alexaClientSDK {
 namespace adsl {
 
+using namespace avsCommon::avs;
+using namespace avsCommon::sdkInterfaces;
+
 DirectiveRouter::~DirectiveRouter() {
     std::lock_guard<std::mutex> lock(m_mutex);
 

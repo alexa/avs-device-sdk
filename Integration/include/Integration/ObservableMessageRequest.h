@@ -22,22 +22,21 @@
 #include <condition_variable>
 #include <mutex>
 
-#include "ACL/MessageRequest.h"
+#include <AVSCommon/AVS/MessageRequest.h>
 
 namespace alexaClientSDK {
 namespace integration {
 
-using namespace alexaClientSDK::acl;
-
-class ObservableMessageRequest : public MessageRequest {
+class ObservableMessageRequest : public avsCommon::avs::MessageRequest {
 public:
-    ObservableMessageRequest(std::shared_ptr<Message>);
-    void onSendCompleted(SendMessageStatus) override;
-    SendMessageStatus getSendMessageStatus() const;
-    bool waitFor(const SendMessageStatus, const std::chrono::seconds = std::chrono::seconds(10));
+    ObservableMessageRequest(const std::string & jsonContent,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader);
+    void onSendCompleted(Status) override;
+    Status getStatus() const;
+    bool waitFor(const Status, const std::chrono::seconds = std::chrono::seconds(10));
 private:
-    SendMessageStatus m_sendMessageStatus;
-    std::mutex m_mutex;
+    Status m_status;
+    mutable std::mutex m_mutex;
     std::condition_variable m_wakeTrigger;
 };
 

@@ -20,7 +20,6 @@
 
 #include <memory>
 
-#include "ACL/Message.h"
 #include "ACL/Values.h"
 
 namespace alexaClientSDK {

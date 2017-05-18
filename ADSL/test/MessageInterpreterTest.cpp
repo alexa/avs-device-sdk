@@ -192,7 +192,7 @@ TEST_F(MessageIntepreterTest, messageWithoutAttachmentManager) {
             .Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
             .Times(0);
-    std::shared_ptr<Message> message = std::make_shared<Message>(SPEAK_DIRECTIVE);
+    std::shared_ptr<avsCommon::avs::Message> message = std::make_shared<avsCommon::avs::Message>(SPEAK_DIRECTIVE);
     m_messageInterpreter->receive(message);
 }
 
@@ -205,7 +205,7 @@ TEST_F(MessageIntepreterTest, messageIsInValidJSON) {
             .Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
             .Times(0);
-    std::shared_ptr<Message> message = std::make_shared<Message>(INVALID_JSON, m_attachmentManager);
+    auto message = std::make_shared<avsCommon::avs::Message>(INVALID_JSON, m_attachmentManager);
     m_messageInterpreter->receive(message);
 }
 
@@ -218,7 +218,7 @@ TEST_F(MessageIntepreterTest, messageHasInvalidDirectiveKey) {
             .Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
             .Times(0);
-    std::shared_ptr<Message> message = std::make_shared<Message>(DIRECTIVE_INVALID_DIRECTIVE_KEY, m_attachmentManager);
+    auto message = std::make_shared<avsCommon::avs::Message>(DIRECTIVE_INVALID_DIRECTIVE_KEY, m_attachmentManager);
     m_messageInterpreter->receive(message);
 }
 
@@ -231,7 +231,7 @@ TEST_F(MessageIntepreterTest, messageHasInvalidHeaderKey) {
             .Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
             .Times(0);
-    std::shared_ptr<Message> message = std::make_shared<Message>(DIRECTIVE_INVALID_HEADER_KEY, m_attachmentManager);
+    auto message = std::make_shared<avsCommon::avs::Message>(DIRECTIVE_INVALID_HEADER_KEY, m_attachmentManager);
     m_messageInterpreter->receive(message);
 }
 
@@ -244,7 +244,7 @@ TEST_F(MessageIntepreterTest, messageHasInvalidNamespaceKey) {
             .Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
             .Times(0);
-    std::shared_ptr<Message> message = std::make_shared<Message>(DIRECTIVE_INVALID_NAMESPACE_KEY, m_attachmentManager);
+    auto message = std::make_shared<avsCommon::avs::Message>(DIRECTIVE_INVALID_NAMESPACE_KEY, m_attachmentManager);
     m_messageInterpreter->receive(message);
 }
 
@@ -257,7 +257,7 @@ TEST_F(MessageIntepreterTest, messageHasInvalidNameKey) {
             .Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
             .Times(0);
-    std::shared_ptr<Message> message = std::make_shared<Message>(DIRECTIVE_INVALID_NAME_KEY, m_attachmentManager);
+    auto message = std::make_shared<avsCommon::avs::Message>(DIRECTIVE_INVALID_NAME_KEY, m_attachmentManager);
     m_messageInterpreter->receive(message);
 }
 
@@ -270,7 +270,7 @@ TEST_F(MessageIntepreterTest, messageHasInvalidMessageIdKey) {
             .Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
             .Times(0);
-    std::shared_ptr<Message> message = std::make_shared<Message>(DIRECTIVE_INVALID_MESSAGEID_KEY, m_attachmentManager);
+    auto message = std::make_shared<avsCommon::avs::Message>(DIRECTIVE_INVALID_MESSAGEID_KEY, m_attachmentManager);
     m_messageInterpreter->receive(message);
 }
 
@@ -281,8 +281,7 @@ TEST_F(MessageIntepreterTest, messageHasInvalidMessageIdKey) {
 TEST_F(MessageIntepreterTest, messageHasNoDialogRequestIdKey) {
     EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _))
             .Times(0);
-    std::shared_ptr<Message> message = std::make_shared<Message>(DIRECTIVE_NO_DIALOG_REQUEST_ID_KEY,
-                                                                 m_attachmentManager);
+    auto message = std::make_shared<avsCommon::avs::Message>(DIRECTIVE_NO_DIALOG_REQUEST_ID_KEY, m_attachmentManager);
     m_messageInterpreter->receive(message);
 }
 
@@ -295,8 +294,7 @@ TEST_F(MessageIntepreterTest, messageHasNoPayloadKey) {
             .Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
             .Times(0);
-    std::shared_ptr<Message> message = std::make_shared<Message>(DIRECTIVE_NO_PAYLOAD,
-                                                                 m_attachmentManager);
+    auto message = std::make_shared<avsCommon::avs::Message>(DIRECTIVE_NO_PAYLOAD, m_attachmentManager);
     m_messageInterpreter->receive(message);
 }
 
@@ -309,8 +307,7 @@ TEST_F(MessageIntepreterTest, messageHasInvalidPayloadKey) {
             .Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
             .Times(0);
-    std::shared_ptr<Message> message = std::make_shared<Message>(DIRECTIVE_INVALID_PAYLOAD_KEY,
-                                                                 m_attachmentManager);
+    auto message = std::make_shared<avsCommon::avs::Message>(DIRECTIVE_INVALID_PAYLOAD_KEY, m_attachmentManager);
     m_messageInterpreter->receive(message);
 }
 
@@ -334,7 +331,7 @@ TEST_F(MessageIntepreterTest, messageIsValidDirective) {
                 verifyArguments(avsDirective);
                 return true;
             }));
-    std::shared_ptr<Message> message = std::make_shared<Message>(SPEAK_DIRECTIVE, m_attachmentManager);
+    auto message = std::make_shared<avsCommon::avs::Message>(SPEAK_DIRECTIVE, m_attachmentManager);
     m_messageInterpreter->receive(message);
 }
 

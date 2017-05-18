@@ -24,9 +24,9 @@
 #include <vector>
 
 #include "AVSUtils/Threading/Executor.h"
+#include "AVSCommon/AVS/MessageRequest.h"
 #include "ACL/AuthDelegateInterface.h"
 
-#include "ACL/MessageRequest.h"
 #include "ACL/Transport/MessageRouterInterface.h"
 #include "ACL/Transport/MessageRouterObserverInterface.h"
 #include "ACL/Transport/TransportInterface.h"
@@ -70,7 +70,7 @@ public:
 
     ConnectionStatus getConnectionStatus() override;
 
-    void send(std::shared_ptr<MessageRequest> request) override;
+    void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
 
     void setAVSEndpoint(const std::string& avsEndpoint) override;
 
@@ -82,7 +82,7 @@ public:
 
     void onServerSideDisconnect() override;
 
-    void consumeMessage(std::shared_ptr<Message> message) override;
+    void consumeMessage(std::shared_ptr<avsCommon::avs::Message> message) override;
 
 private:
     /**
@@ -123,7 +123,7 @@ private:
      *
      * @param message The message that was received from AVS.
      */
-    void notifyObserverOnReceive(std::shared_ptr<Message> message);
+    void notifyObserverOnReceive(std::shared_ptr<avsCommon::avs::Message> message);
 
     /**
      * Creates a new transport, and begins the connection process. The new transport immediately becomes the active

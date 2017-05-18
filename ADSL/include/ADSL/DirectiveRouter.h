@@ -21,9 +21,9 @@
 #include <set>
 #include <unordered_map>
 
-#include "ADSL/DirectiveHandlerConfiguration.h"
-#include "ADSL/HandlerAndPolicy.h"
-#include "ADSL/NamespaceAndName.h"
+#include <AVSCommon/AVS/NamespaceAndName.h>
+#include <AVSCommon/AVS/DirectiveHandlerConfiguration.h>
+#include <AVSCommon/AVS/HandlerAndPolicy.h>
 
 namespace alexaClientSDK {
 namespace adsl {
@@ -45,7 +45,7 @@ public:
      * @param configuration The mappings to add.
      * @return Whether the configuration was added.
      */
-    bool addDirectiveHandlers(const DirectiveHandlerConfiguration& configuration);
+    bool addDirectiveHandlers(const avsCommon::avs::DirectiveHandlerConfiguration& configuration);
 
     /**
      * Remove the specified mappings from @c NamespaceAndName values to @c HandlerAndPolicy values. If any of
@@ -54,7 +54,7 @@ public:
      * @param configuration The mappings to remove.
      * @return Whether the configuration was removed.
      */
-    bool removeDirectiveHandlers(const DirectiveHandlerConfiguration& configuration);
+    bool removeDirectiveHandlers(const avsCommon::avs::DirectiveHandlerConfiguration& configuration);
 
     /**
      * Invoke @c handleDirectiveImmediately() on the handler registered for the given @c AVSDirective.
@@ -74,7 +74,7 @@ public:
      */
     bool preHandleDirective(
             std::shared_ptr<avsCommon::AVSDirective> directive,
-            std::unique_ptr<DirectiveHandlerResultInterface> result);
+            std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result);
 
     /**
      * Invoke @c handleDirective() on the handler registered for the given @c AVSDirective.
@@ -85,7 +85,9 @@ public:
      * @return @c true if the the registered handler returned @c true.  @c false if there was no registered handler
      * or the registered handler returned @c false (indicating that the directive was not recognized.
      */
-    bool handleDirective(std::shared_ptr<avsCommon::AVSDirective> directive, BlockingPolicy* policyOut);
+    bool handleDirective(
+        std::shared_ptr<avsCommon::AVSDirective> directive,
+        avsCommon::avs::BlockingPolicy* policyOut);
 
     /**
      * Invoke cancelDirective() on the handler registered for the given @c AVSDirective.
@@ -117,7 +119,7 @@ private:
         HandlerCallScope(
                 std::unique_lock<std::mutex>& lock,
                 DirectiveRouter* router,
-                std::shared_ptr<DirectiveHandlerInterface> handler);
+                std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
 
         /**
          * Destructor.
@@ -134,7 +136,7 @@ private:
         DirectiveRouter* m_router;
 
         /// The @c DirectiveHandlerInterface instance to call.
-        std::shared_ptr<DirectiveHandlerInterface> m_handler;
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> m_handler;
     };
 
     /**
@@ -144,14 +146,15 @@ private:
      * @param directive The directive to look up a value for.
      * @return The corresponding @c HandlerAndPolicy value for the specified directive.
      */
-    HandlerAndPolicy getHandlerAndPolicyLocked(std::shared_ptr<avsCommon::AVSDirective> directive);
+    avsCommon::avs::HandlerAndPolicy getHandlerAndPolicyLocked(std::shared_ptr<avsCommon::AVSDirective> directive);
 
     /**
      * Increment the reference count for the specified handler.
      *
      * @param handler The handler for which the reference count should be incremented.
      */
-    void incrementHandlerReferenceCountLocked(std::shared_ptr<DirectiveHandlerInterface> handler);
+    void incrementHandlerReferenceCountLocked(
+            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
 
     /**
      * Decrement the reference count for the specified handler.  If the reference count goes to zero, call
@@ -161,13 +164,14 @@ private:
      * @param handler The @c DirectiveHandlerInterface instance whose reference count is to be decremented.
      */
     void decrementHandlerReferenceCountLocked(
-            std::unique_lock<std::mutex>& lock, std::shared_ptr<DirectiveHandlerInterface> handler);
+            std::unique_lock<std::mutex>& lock,
+            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
 
     /// A mutex used to serialize access to @c m_configuration and @c m_handlerReferenceCounts.
     std::mutex m_mutex;
 
     /// Mapping from @c NamespaceAndName to @c PolicyAndHandler.
-    std::unordered_map<NamespaceAndName, HandlerAndPolicy> m_configuration;
+    std::unordered_map<avsCommon::avs::NamespaceAndName, avsCommon::avs::HandlerAndPolicy> m_configuration;
 
     /**
      * Instances of DirectiveHandlerInterface may receive calls after @c removeDirectiveHandlers() because
@@ -178,7 +182,8 @@ private:
      * a handler returns.  When these count goes to zero the handler's @c onDeRegistered() method is invoked,
      * indicating that the handler will no longer be called (unless, of course, it is re-registered).
      */
-    std::unordered_map<std::shared_ptr<DirectiveHandlerInterface>, int> m_handlerReferenceCounts;
+    std::unordered_map<std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface>, int>
+            m_handlerReferenceCounts;
 };
 
 } // namespace adsl

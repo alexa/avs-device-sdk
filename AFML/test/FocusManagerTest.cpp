@@ -17,11 +17,14 @@
 
 #include <gtest/gtest.h>
 
+#include <AVSCommon/SDKInterfaces/FocusState.h>
+
 #include "AFML/FocusManager.h"
-#include "AFML/FocusState.h"
 
 namespace alexaClientSDK {
 namespace afml {
+
+using namespace avsCommon::sdkInterfaces;
 
 /// Short time out for when callbacks are expected not to occur.
 static const auto SHORT_TIMEOUT = std::chrono::milliseconds(50);

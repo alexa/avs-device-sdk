@@ -15,6 +15,8 @@
  * permissions and limitations under the License.
  */
 
+/// @file AVSMessageTest.cpp
+
 #include <memory>
 #include <map>
 #include <gmock/gmock.h>
@@ -76,6 +78,19 @@ static const std::string SPEAK_DIRECTIVE = R"({
     }
 })";
 
+/// The JSON key used in @c int64Json().
+static const std::string INT64_KEY = "anInt64";
+
+/// A JSON key *not* used in @c int64Json().
+static const std::string INT64_MISSING_KEY = "missingKey";
+
+// A JSON value which does not convert to an int64.
+static const std::string NOT_AN_INT64 = R"("not a number")";
+
+/// A function to generate JSON containing the key @c INT64_KEY with the provided @c value.
+static const std::string int64Json(const std::string& value) {
+  return R"({")" + INT64_KEY + R"(": )" + value + R"(})";
+}
 
 /// Define test fixture for testing AVSMessage.
 class JSONUtilTest : public ::testing::Test {
@@ -144,6 +159,46 @@ TEST_F(JSONUtilTest, extractPayloadFromValidDirective) {
     ASSERT_EQ(payload, PAYLOAD_TEST);
 }
 
+
+/**
+ * Test failure to extract an int64.
+ */
+TEST_F(JSONUtilTest, extractValidInt64Failures) {
+    int64_t expected = 0;
+    int64_t value;
+
+    // Verify lookup fails with a null value pointer.
+    EXPECT_FALSE(jsonUtils::lookupInt64Value(int64Json(std::to_string(expected)), INT64_KEY, nullptr));
+
+    // Verify lookup fails with invalid json.
+    EXPECT_FALSE(jsonUtils::lookupInt64Value(INVALID_JSON, INT64_KEY, &value));
+
+    // Verify lookup fails with incorrect key.
+    EXPECT_FALSE(jsonUtils::lookupInt64Value(int64Json(std::to_string(expected)), INT64_MISSING_KEY, &value));
+
+    // Verify lookup fails with non-numeric value.
+    EXPECT_FALSE(jsonUtils::lookupInt64Value(int64Json(NOT_AN_INT64), INT64_KEY, &value));
+}
+
+/**
+ * Test extracting min int64.
+ */
+TEST_F(JSONUtilTest, extractMinInt64) {
+    int64_t expected = std::numeric_limits<int64_t>::min();
+    int64_t value;
+    ASSERT_TRUE(jsonUtils::lookupInt64Value(int64Json(std::to_string(expected)), INT64_KEY, &value));
+    ASSERT_EQ(value, expected);
+}
+
+/**
+ * Test extracting max int64.
+ */
+TEST_F(JSONUtilTest, extractMaxInt64) {
+    int64_t expected = std::numeric_limits<int64_t>::max();
+    int64_t value;
+    ASSERT_TRUE(jsonUtils::lookupInt64Value(int64Json(std::to_string(expected)), INT64_KEY, &value));
+    ASSERT_EQ(value, expected);
+}
 
 } // namespace avsCommon
 } // namespace alexaClientSDK

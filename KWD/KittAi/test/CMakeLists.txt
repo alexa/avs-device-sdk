@@ -1,0 +1,5 @@
+set(INCLUDES "${KITTAI_SOURCE_DIR}/include" "${KWD_SOURCE_DIR}/include" "${KITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR}")
+
+set(INPUTFOLDER "${KWD_SOURCE_DIR}/inputs")
+
+discover_unit_tests("${INCLUDES}" KITTAI "${INPUTFOLDER}")

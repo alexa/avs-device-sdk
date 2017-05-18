@@ -20,7 +20,7 @@
 
 #include <memory>
 
-#include "ACL/Message.h"
+#include <AVSCommon/AVS/Message.h>
 
 namespace alexaClientSDK {
 namespace acl {
@@ -39,7 +39,7 @@ public:
      * A function that a client must implement to receive Messages from AVS.
      * @param msg A message that has been received from AVS.
      */
-    virtual void receive(std::shared_ptr<Message> msg) = 0;
+    virtual void receive(std::shared_ptr<avsCommon::avs::Message> msg) = 0;
 };
 
 } // namespace acl

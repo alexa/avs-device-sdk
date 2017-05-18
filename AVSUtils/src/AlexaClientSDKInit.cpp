@@ -44,15 +44,22 @@ bool AlexaClientSDKInit::isInitialized() {
 }
 
 bool AlexaClientSDKInit::initialize(const std::vector<std::istream *> &jsonStreams) {
+    if (!(curl_version_info(CURLVERSION_NOW)->features & CURL_VERSION_HTTP2)) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "curlDoesNotSupportHTTP2"));
+        return false;
+    }
+
     if (!configuration::ConfigurationNode::initialize(jsonStreams)) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "ConfigurationNode::initializeFailed"));
         return false;
     }
+
     if (CURLE_OK != curl_global_init(CURL_GLOBAL_ALL)) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "curl_global_initFailed"));
         configuration::ConfigurationNode::uninitialize();
         return false;
     }
+
     g_isInitialized++;
     return true;
 }

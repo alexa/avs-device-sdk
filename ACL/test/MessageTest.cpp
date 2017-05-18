@@ -15,7 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#include "ACL/Message.h"
+#include <AVSCommon/AVS/Message.h>
+
 #include <gtest/gtest.h>
 
 namespace alexaClientSDK {
@@ -27,7 +28,7 @@ class MessageTest : public ::testing::Test {
 
 TEST_F(MessageTest, default_message_json_content_is_empty) {
     const std::string expected = "";
-    Message message(expected);
+    avsCommon::avs::Message message(expected);
     std::string actual = message.getJSONContent();
 
     ASSERT_EQ(expected, actual);
@@ -35,7 +36,7 @@ TEST_F(MessageTest, default_message_json_content_is_empty) {
 
 TEST_F(MessageTest, message_maintains_json_content) {
     const std::string expected = "{\"foo\":\"bar\"}";
-    Message message(expected);
+    avsCommon::avs::Message message(expected);
     std::string actual = message.getJSONContent();
 
     ASSERT_EQ(expected, actual);

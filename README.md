@@ -1,4 +1,4 @@
-## Alexa Client SDK v0.2.1
+## Alexa Client SDK v0.3
 
 This release of the Alexa Client SDK for C++ provides components for authentication and communications with the Alexa Voice Service (AVS), specifically AuthDelegate, Alexa Communications Library (ACL), Alexa Directive Sequencer Library (ADSL), Activity Focus Manager Library (AFML), and associated APIs.
 
@@ -115,6 +115,22 @@ The following build types are supported:
 To specify a build type, use this command in place of step 4 below (see [Build for Generic Linux](#generic-linux) or [Build for macOS](#build-for-macosß)):
 `cmake <path-to-source> -DCMAKE_BUILD_TYPE=<build-type>`  
 
+Include these options to build with the [KITT.ai](https://github.com/Kitt-AI/snowboy) wake word detector:
+
+* `-DKITTAI_KEY_WORD_DETECTOR=<ON or OFF>` - Specifies whether to build and enable the KITT.ai wake word detector.  
+* `-DKITTAI_KEY_WORD_DETECTOR_LIB_PATH=<path-to-kittai-lib>` - The path to the KITT.ai library.  
+* `-DKITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR=<path-to-kittai-include-dir>` - The path to the KITT.ai include directory.  
+
+This is an example `cmake` command:
+
+```
+cmake <path-to-source> -DKITTAI_KEY_WORD_DETECTOR=ON -DKITTAI_KEY_WORD_DETECTOR_LIB_PATH=.../snowboy-1.2.0/lib/libsnowboy-detect.a -DKITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR=.../snowboy-1.2.0/include  
+```
+
+**NOTE**: A matrix calculation library, known as BLAS, is required to use KITT.ai. The following are sample commands to install this library:
+* Generic Linux - `apt-get install libatlas-base-dev`  
+* macOS -  `brew install homebrew/science/openblas`
+
 **Note**: To list all available CMake options, use the following command: `-LH`.
 
 ### Build for Generic Linux
@@ -152,17 +168,25 @@ To create an out-of-source build for macOS:
 
 ## Run Unit Tests
 
+**Note**: In order to run unit tests for the KITT.ai wake word detector, the following files must be downloaded from [GitHub](https://github.com/Kitt-AI/snowboy/tree/master/resources) and placed in `KWD/inputs/KittAiModels`:
+* [`common.res`](https://github.com/Kitt-AI/snowboy/tree/master/resources)  
+* [`alexa.umdl`](https://github.com/Kitt-AI/snowboy/tree/master/resources)  
+
 Unit tests for the Alexa Client SDK use the [Google Test](https://github.com/google/googletest) framework. Ensure that the [Google Test](https://github.com/google/googletest) is installed, then run the following command:
 `make all test`
 
 Ensure that all tests are passed before you begin integration testing.
 
-## Run Integration Tests
+## Run Integration Tests  
 
-Integration tests ensure that your build can make a request and receive a response from AVS. **All requests to AVS require auth credentials.**
+Integration tests ensure that your build can make a request and receive a response from AVS. **All requests to AVS require auth credentials.**  
 
-**Important**: Integration tests for v0.2.1 reference an `AlexaClientSDKConfig.json` file, which you must create.
+**Important**: Integration tests for v0.3 reference an `AlexaClientSDKConfig.json` file, which you must create.
 See the `Create the AlexaClientSDKConfig.json file` section (above), if you have not already done this.
+
+**Note**: If the project was built with the KITT.ai wake word detector, the following files must be downloaded from [GitHub](https://github.com/Kitt-AI/snowboy/tree/master/resources) and placed in `Integration/inputs/KittAiModels` for the integration tests to run properly:
+* [`common.res`](https://github.com/Kitt-AI/snowboy/tree/master/resources)  
+* [`alexa.umdl`](https://github.com/Kitt-AI/snowboy/tree/master/resources)  
 
 To exercise the integration tests run this command:
 `make all integration`
@@ -277,11 +301,28 @@ By default libcurl is built with paths to a CA bundle and a directory containing
 
 ## Release Notes
 
-v0.2.1 of the Alexa Client SDK includes components for authentication, communications, message orchestration, and focus management. These include AuthDelegate, ACL, ADSL, AFML, and associated APIs.
+v0.3 of the Alexa Client SDK includes components for authentication, communications, message orchestration, and focus management. These include AuthDelegate, ACL, ADSL, AFML, AIP, SDS, and associated APIs.
 
-Version v0.2.1 released 5/3/2017:
+v0.3 released 5/17/2017:
+
+* Added the `CapabilityAgent` base class that is used to build capability agent implementations.  
+* Added the `ContextManager` class that allows multiple Capability Agents to store and access state. These events include `context`, which is used to communicate the state of each capability agent to AVS:
+  * [`Recognize`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechrecognizer#recognize)
+  * [`PlayCommandIssued`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/playbackcontroller#playcommandissued)  
+  * [`PauseCommandIssued`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/playbackcontroller#pausecommandissued)  
+  * [`NextCommandIssued`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/playbackcontroller#nextcommandissued)  
+  * [`PreviousCommandIssued`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/playbackcontroller#previouscommandissued)  
+  * [`SynchronizeState`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system#synchronizestate)
+  * [`ExceptionEncountered`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system#exceptionencountered)  
+* Implemented the `SharedDataStream` (SDS) to asynchronously communicate data between a local reader and writer.  
+* Added `AudioInputProcessor` (AIP), an implementation of a `SpeechRecognizer` capability agent.  
+* Added the WakeWord Detector (WWD), which recognizes keywords in audio streams. v0.3 implements a wrapper for KITT.ai.  
+* Added a new implementation of `AttachmentManager` and associated classes for use with SDS.
+* Updated the `ACL` to support asynchronously sending audio to AVS.
+
+v0.2.1 released 5/3/2017:
 * Replaced the configuration file `AuthDelegate.config` with `AlexaClientSDKConfig.json`.
-* Add the ability to specify a `CURLOPT_CAPATH` value to be used when libcurl is used by ACL and AuthDelegate.  See [**Appendix D**](#appendix-d-runtime-configuration-of-path-to-ca-certificates) for details.
+* Added the ability to specify a `CURLOPT_CAPATH` value to be used when libcurl is used by ACL and AuthDelegate.  See [**Appendix D**](#appendix-d-runtime-configuration-of-path-to-ca-certificates) for details.
 * Changes to ADSL interfaces:
 The v0.2 interface for registering directive handlers (`DirectiveSequencer::setDirectiveHandlers()`) was problematic because it canceled the ongoing processing of directives and dropped further directives until it completed. The revised API makes the operation immediate without canceling or dropping any handling.  However, it does create the possibility that `DirectiveHandlerInterface` methods `preHandleDirective()` and `handleDirective()` may be called on different handlers for the same directive.
   * `DirectiveSequencerInterface::setDirectiveHandlers()` was replaced by `addDirectiveHandlers()` and `removeDirectiveHandlers()`.
@@ -293,15 +334,15 @@ The v0.2 interface for registering directive handlers (`DirectiveSequencer::setD
   * `onDirective()` now sends `ExceptionEncountered` for unhandled directives.
   * `DirectiveSequencer::shutdown()` no longer sends `ExceptionEncountered()` for queued directives.
 
-Version v0.2 updated 3/27/2017:
+v0.2 updated 3/27/2017:
 * Added memory profiling for ACL and ADSL.  See [**Appendix B**](#appendix-b-mempry-profile).
 * Added command to build API documentation.  
 
-Version v0.2 released 3/9/2017:
+v0.2 released 3/9/2017:
 * Alexa Client SDK v0.2 released.
 * Architecture diagram has been updated to include the ADSL and AMFL.
 * CMake build types and options have been updated.
 * New documentation for libcurl optimization included.  
 
-Version v0.1 released 2/10/2017:
+v0.1 released 2/10/2017:
 * Alexa Client SDK v0.1 released.

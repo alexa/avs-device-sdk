@@ -40,6 +40,18 @@ namespace jsonUtils {
  */
 bool lookupStringValue(const std::string& jsonContent, const std::string& key, std::string* value);
 
+/**
+ * This function is similar to lookupStringValue(), but converts the value to an int64_t
+ *
+ * TODO: [ACSDK-177] This function needs to be reconsidered in the future because it is of limited utility.
+ *
+ * @param jsonContent The JSON string content.
+ * @param key The key of the underlying JSON content we wish to acquire the value of.
+ * @param[out] value The output parameter which will be assigned the int64_t value.
+ * @return @c true if the lookup is successful, @c false otherwise.
+ */
+bool lookupInt64Value(const std::string& jsonContent, const std::string& key, int64_t* value);
+
 } // namespace jsonUtils
 } // namespace avsCommon
 } // namespace alexaClientSDK

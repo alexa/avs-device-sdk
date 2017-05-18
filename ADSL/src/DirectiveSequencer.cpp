@@ -40,6 +40,8 @@ namespace alexaClientSDK {
 namespace adsl {
 
 using namespace avsCommon;
+using namespace avsCommon::avs;
+using namespace avsCommon::sdkInterfaces;
 
 std::unique_ptr<DirectiveSequencerInterface> DirectiveSequencer::create(
         std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionSender) {
