@@ -27,18 +27,16 @@
 #include <unordered_map>
 
 #include "ACL/AVSConnectionManager.h"
-#include "AVSCommon/AVS/Message.h"
 #include "ACL/Transport/HTTP2MessageRouter.h"
 #include "ACL/Values.h"
 #include "AVSCommon/AVS/BlockingPolicy.h"
 #include "ADSL/DirectiveSequencer.h"
 #include "ADSL/MessageInterpreter.h"
 #include "AuthDelegate/AuthDelegate.h"
-#include "AVSCommon/AttachmentManager.h"
-#include "AVSCommon/AttachmentManagerInterface.h"
-#include "AVSCommon/AVS/Attachment/InProcessAttachment.h"
+#include "AVSCommon/AVS/Attachment/AttachmentManager.h"
+#include "AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h"
+#include "AVSCommon/AVS/Attachment/InProcessAttachmentReader.h"
 #include "AVSCommon/ExceptionEncounteredSenderInterface.h"
-#include "AVSCommon/Utils/SDS/InProcessSDS.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h"
 #include "AVSCommon/JSON/JSONUtils.h"
@@ -183,7 +181,6 @@ static const std::string NAMESPACE_SPEECH_SYNTHESIZER = "SpeechSynthesizer";
 // This string to be used for StopCapture Directives which use the NAMESPACE_SPEECH_RECOGNIZER namespace.
 static const std::string NAME_STOP_CAPTURE = "StopCapture";
 
-
 // This pair connects a ExpectSpeech name and SpeechRecognizer namespace for use in DirectiveHandler registration.
 static const NamespaceAndName EXPECT_SPEECH_PAIR(NAMESPACE_SPEECH_RECOGNIZER, NAME_EXPECT_SPEECH);
 // This pair connects a SetMute name and Speaker namespace for use in DirectiveHandler registration.
@@ -226,7 +223,7 @@ std::string inputPath;
  * @return A new @c AVSDirective, or nullptr if parsing the JSON fails.
  */
 static std::shared_ptr<AVSDirective> parseDirective(
-        const std::string& rawJSON, std::shared_ptr<AttachmentManagerInterface> attachmentManager) {
+        const std::string& rawJSON, std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager) {
 
     std::string directiveJSON;
     std::string headerJSON;
@@ -249,7 +246,7 @@ static std::shared_ptr<AVSDirective> parseDirective(
     jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_NAMESPACE_KEY, &dialogRequestId);
 
     auto header = std::make_shared<AVSMessageHeader>(nameSpace, name, messageId, dialogRequestId);
-    return AVSDirective::create(rawJSON, header, payloadJSON, attachmentManager);
+    return AVSDirective::create(rawJSON, header, payloadJSON, attachmentManager, "");
 }
 
 /**
@@ -411,15 +408,18 @@ protected:
         m_authObserver = std::make_shared<AuthObserver>();
         m_authDelegate = AuthDelegate::create();
         m_authDelegate->setAuthObserver(m_authObserver);
+        m_attachmentManager = std::make_shared<avsCommon::avs::attachment::AttachmentManager>(
+                 AttachmentManager::AttachmentType::IN_PROCESS);
         m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
-        m_clientMessageHandler = std::make_shared<ClientMessageHandler>();
+        m_clientMessageHandler = std::make_shared<ClientMessageHandler>(m_attachmentManager);
         bool isEnabled = false;
-        m_messageRouter = std::make_shared<HTTP2MessageRouter>(m_authDelegate);
+        m_messageRouter = std::make_shared<HTTP2MessageRouter>(m_authDelegate, m_attachmentManager);
         m_directiveHandler = std::make_shared<TestDirectiveHandler>();
         m_directiveSequencer = DirectiveSequencer::create(m_directiveHandler);
         m_messageInterpreter = std::make_shared<MessageInterpreter>(
             m_directiveHandler,
-            m_directiveSequencer);
+            m_directiveSequencer,
+            m_attachmentManager);
 
         // note: No DirectiveHandlers have been registered with the DirectiveSequencer yet. Registration of
         // handlers is deferred to individual test implementations.
@@ -571,6 +571,9 @@ protected:
     /// Object to acquire authorization to communicate with @c AVS.
     std::shared_ptr<AuthDelegate> m_authDelegate;
 
+    /// The Attachment Manager.
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
+
     /// Object to monitor the status of the connection with @c AVS.
     std::shared_ptr<ConnectionStatusObserver> m_connectionStatusObserver;
 
@@ -672,7 +675,7 @@ void TestDirectiveHandler::sendExceptionEncountered(
     dp.type = TestDirectiveHandler::DirectiveParams::Type::EXCEPTION;
     dp.directive = parseDirective(
             unparsedDirective,
-            std::make_shared<AttachmentManager>(std::chrono::minutes(0)));
+            std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS));
     dp.exceptionUnparsedDirective = unparsedDirective;
     dp.exceptionError = error;
     dp.exceptionMessage = message;
@@ -703,9 +706,9 @@ TestDirectiveHandler::DirectiveParams::DirectiveParams() : type{Type::UNSET} {
  */
 void assertExceptionWithName(std::shared_ptr<TestDirectiveHandler> directiveHandler, const std::string name){
     TestDirectiveHandler::DirectiveParams params;
-    params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION); 
+    params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
 
-    while (!params.isTimeout()) {     
+    while (!params.isTimeout()) {
         if (params.directive->getName() == name) {
             ASSERT_TRUE(params.isException());
         }
@@ -1012,7 +1015,6 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveAtTheFront) {
     ASSERT_TRUE(registerHandler(SET_MUTE_PAIR, BlockingPolicy::BLOCKING));
     ASSERT_TRUE(registerHandler(SPEAK_PAIR, BlockingPolicy::NON_BLOCKING));
 
-
     // Send audio of "Joke" that will prompt a stream of directives including SetMute.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
@@ -1121,7 +1123,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, noDirectiveHandlerRegisteredForADirec
     ASSERT_TRUE(registerHandler(SPEAK_PAIR, BlockingPolicy::NON_BLOCKING));
 
     // Send audio of "Joke" that will trigger SetMute and possibly others.
-    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
+    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
@@ -1144,7 +1146,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, noDirectiveHandlerRegisteredForADirec
     // Don't Register a DirectiveHandler for Speak.
 
     // Send audio of "Joke" that will trigger SetMute and speak.
-    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
+    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
@@ -1279,10 +1281,9 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, getAttachmentWithContentId) {
     ASSERT_TRUE(stringIndex != payloadUrl.size() - 1);
 
     auto contentId = payloadUrl.substr(payloadUrl.find(':') + 1);
-    auto attachmentReader = directive->getAttachmentReader(contentId);
-    auto status = attachmentReader.wait_for(WAIT_FOR_TIMEOUT_DURATION);
+    auto attachmentReader = directive->getAttachmentReader(contentId, AttachmentReader::Policy::BLOCKING);
 
-    ASSERT_EQ(status, std::future_status::ready);
+    ASSERT_NE(attachmentReader, nullptr);
 }
 
 } // namespace integration

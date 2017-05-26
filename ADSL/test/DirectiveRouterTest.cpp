@@ -23,10 +23,11 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
+
 #include "ADSL/DirectiveRouter.h"
-#include "MockAttachmentManager.h"
 #include "MockDirectiveHandler.h"
-#include "MockDirectiveHandlerResult.h"
 
 using namespace ::testing;
 
@@ -36,6 +37,7 @@ namespace test {
 
 using namespace avsCommon;
 using namespace avsCommon::avs;
+using namespace avsCommon::avs::attachment;
 
 /// Generic messageId used for tests.
 static const std::string MESSAGE_ID_0_0("Message_0_0");
@@ -67,6 +69,8 @@ static const std::string NAME_0("name_0");
 /// A generic name string for tests.
 static const std::string NAME_1("name_1");
 
+static const std::string TEST_ATTACHMENT_CONTEXT_ID("TEST_ATTACHMENT_CONTEXT_ID");
+
 /// Namespace and name combination for tests.
 #define NAMESPACE_AND_NAME_0_0 NAMESPACE_0, NAME_0
 
@@ -89,8 +93,8 @@ public:
     /// A DirectiveRouter instance to test with.
     DirectiveRouter m_router;
 
-    /// Mock AttachmentManager with which to create directives.
-    std::shared_ptr<AttachmentManagerInterface> m_attachmentManager;
+    /// AttachmentManager with which to create directives.
+    std::shared_ptr<AttachmentManager> m_attachmentManager;
 
     /// Generic mock @c DirectiveHandler for tests.
     std::shared_ptr<MockDirectiveHandler> m_handler0;
@@ -112,7 +116,7 @@ public:
 };
 
 void DirectiveRouterTest::SetUp() {
-    m_attachmentManager = std::make_shared<NiceMock<MockAttachmentManager>>();
+    m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
 
     m_handler0 = MockDirectiveHandler::create();
     m_handler1 = MockDirectiveHandler::create();
@@ -121,15 +125,15 @@ void DirectiveRouterTest::SetUp() {
     auto avsMessageHeader_0_0 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_AND_NAME_0_0, MESSAGE_ID_0_0, DIALOG_REQUEST_ID_0);
     m_directive_0_0 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader_0_0, PAYLOAD_TEST, m_attachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader_0_0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     auto avsMessageHeader_0_1 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_AND_NAME_0_1, MESSAGE_ID_0_1, DIALOG_REQUEST_ID_0);
     m_directive_0_1 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader_0_1, PAYLOAD_TEST, m_attachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader_0_1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     auto avsMessageHeader_1_0 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_AND_NAME_1_0, MESSAGE_ID_1_0, DIALOG_REQUEST_ID_0);
     m_directive_1_0 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader_1_0, PAYLOAD_TEST, m_attachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader_1_0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 }
 
 /**

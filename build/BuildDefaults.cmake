@@ -15,5 +15,5 @@ include(CodeCoverage/CodeCoverage)
 # Setup package requirement variables.
 include(PackageConfigs)
 
-# Setup keyword requirement variables
+# Setup keyword requirement variables.
 include(KeywordDetector)

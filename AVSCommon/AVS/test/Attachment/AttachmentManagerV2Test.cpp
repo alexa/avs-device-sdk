@@ -121,23 +121,23 @@ void AttachmentManagerTest::testReaders(const ReaderVec & readers, bool expected
  */
 TEST_F(AttachmentManagerTest, testAttachmentManagerGenerateAttachmentId) {
     // Normal use cases.
-    auto id1 = AttachmentManager::generateAttachmentId(TEST_CONTEXT_ID_STRING, TEST_CONTENT_ID_STRING);
-    auto id2 = AttachmentManager::generateAttachmentId(TEST_CONTEXT_ID_STRING, TEST_CONTENT_ID_STRING);
-    auto id3 = AttachmentManager::generateAttachmentId(TEST_CONTEXT_ID_STRING, TEST_CONTENT_ID_ALTERNATE_STRING);
+    auto id1 = m_manager.generateAttachmentId(TEST_CONTEXT_ID_STRING, TEST_CONTENT_ID_STRING);
+    auto id2 = m_manager.generateAttachmentId(TEST_CONTEXT_ID_STRING, TEST_CONTENT_ID_STRING);
+    auto id3 = m_manager.generateAttachmentId(TEST_CONTEXT_ID_STRING, TEST_CONTENT_ID_ALTERNATE_STRING);
     ASSERT_EQ(id1, id2);
     ASSERT_NE(id1, id3);
     ASSERT_NE(id2, id3);
 
     // Both strings empty.
-    auto id4 = AttachmentManager::generateAttachmentId(TEST_EMPTY_STRING, TEST_EMPTY_STRING);
+    auto id4 = m_manager.generateAttachmentId(TEST_EMPTY_STRING, TEST_EMPTY_STRING);
     ASSERT_TRUE(id4.empty());
 
     // ContentId string is empty.
-    auto id5 = AttachmentManager::generateAttachmentId(TEST_CONTEXT_ID_STRING, TEST_EMPTY_STRING);
+    auto id5 = m_manager.generateAttachmentId(TEST_CONTEXT_ID_STRING, TEST_EMPTY_STRING);
     ASSERT_EQ(id5, TEST_CONTEXT_ID_STRING);
 
     // ContextId string is empty.
-    auto id6 = AttachmentManager::generateAttachmentId(TEST_EMPTY_STRING, TEST_CONTENT_ID_STRING);
+    auto id6 = m_manager.generateAttachmentId(TEST_EMPTY_STRING, TEST_CONTENT_ID_STRING);
     ASSERT_EQ(id6, TEST_CONTENT_ID_STRING);
 }
 

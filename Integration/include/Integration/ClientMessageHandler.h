@@ -23,25 +23,27 @@
 #include <memory>
 #include <mutex>
 
-#include "ACL/MessageObserverInterface.h"
+#include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+
+#include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace integration {
 
-using namespace alexaClientSDK::acl;
+using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 
 /// Minimal implementation of a message observer for integration tests.
 class ClientMessageHandler : public MessageObserverInterface {
 public:
     /// Constructor.
-    ClientMessageHandler();
+    ClientMessageHandler(std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager);
 
     /**
      * Implementation of the interface's receive function.
      * 
      * For the purposes of these integration tests, this function simply logs and counts messages.
      */
-    void receive(std::shared_ptr<avsCommon::avs::Message> msg) override;
+    void receive(const std::string & contextId, const std::string & message) override;
 
     /**
      * Wait for a message to be received.
@@ -59,6 +61,8 @@ private:
     std::condition_variable m_wakeTrigger;
     /// Count of received messages that have not been waited on.
     unsigned int m_count;
+
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
 };
 
 } // namespace integration

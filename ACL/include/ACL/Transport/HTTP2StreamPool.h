@@ -22,7 +22,9 @@
 #include <memory>
 #include <mutex>
 #include <vector>
-#include <AVSCommon/AttachmentManagerInterface.h>
+
+#include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/AVS/MessageRequest.h>
 
 #include "ACL/Transport/HTTP2Stream.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
@@ -38,7 +40,8 @@ public:
      * @params maxStreams The maximum number of streams that can be active
      * @params attachmentManager The attachment manager.
      */
-    HTTP2StreamPool(const int maxStreams, std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager);
+    HTTP2StreamPool(
+        const int maxStreams, std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager);
 
     /**
      * Grabs an HTTP2Stream from the pool and configures it to be an HTTP GET.
@@ -86,7 +89,7 @@ private:
     /// The maximum number of streams that can be active in the pool.
     const int m_maxStreams;
     /// The attachment manager.
-    std::shared_ptr<avsCommon::AttachmentManagerInterface> m_attachmentManager;
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
 };
 
 } // acl

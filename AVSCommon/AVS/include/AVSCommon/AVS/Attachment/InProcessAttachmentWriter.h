@@ -56,7 +56,7 @@ public:
 
     void close() override;
 
-private:
+protected:
     /**
      * Constructor.
      *

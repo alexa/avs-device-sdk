@@ -24,7 +24,7 @@
 #include <mutex>
 
 #include "AVSCommon/SDKInterfaces/MessageSenderInterface.h"
- #include "ACL/Transport/MessageRouterObserverInterface.h"
+#include "AVSCommon/SDKInterfaces/MessageObserverInterface.h"
 
 namespace alexaClientSDK {
 namespace integration {
@@ -39,18 +39,14 @@ public:
     TestMessageSender (std::shared_ptr<acl::MessageRouterInterface> messageRouter,
                    bool isEnabled,
                    std::shared_ptr<acl::ConnectionStatusObserverInterface> connectionStatusObserver,
-                   std::shared_ptr<acl::MessageObserverInterface> messageObserver);
+                   std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> messageObserver);
 
-    // Utility struct to pass directive parameters to the test.
     class SendParams {
     public:
-        // Enum for the way the directive was passed to DirectiveHandler.
         enum class Type {
-            // Set when handleDirectiveImediately is called.
             SEND,
             TIMEOUT
         };
-        // Type of how the directive was passed to DirectiveHandler.
         Type type;
         std::shared_ptr<avsCommon::avs::MessageRequest> request;
     };

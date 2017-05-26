@@ -18,10 +18,10 @@
 #include "ACL/AVSConnectionManager.h"
 #include "Integration/TestMessageSender.h"
 
-
 using namespace alexaClientSDK;
 using namespace acl;
 using namespace avsCommon::avs;
+using namespace avsCommon::sdkInterfaces;
 
 namespace alexaClientSDK {
 namespace integration {
@@ -29,7 +29,7 @@ namespace integration {
 TestMessageSender::TestMessageSender (std::shared_ptr<acl::MessageRouterInterface> messageRouter,
                    bool isEnabled,
                    std::shared_ptr<acl::ConnectionStatusObserverInterface> connectionStatusObserver,
-                   std::shared_ptr<acl::MessageObserverInterface> messageObserver) {
+                   std::shared_ptr<MessageObserverInterface> messageObserver) {
                 m_connectionManager = acl::AVSConnectionManager::create(messageRouter, isEnabled, connectionStatusObserver, messageObserver);
             }
 

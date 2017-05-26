@@ -23,10 +23,11 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
+
 #include "ADSL/DirectiveSequencer.h"
-#include "MockAttachmentManager.h"
 #include "MockDirectiveHandler.h"
-#include "MockDirectiveHandlerResult.h"
 
 using namespace ::testing;
 
@@ -36,6 +37,7 @@ namespace test {
 
 using namespace avsCommon;
 using namespace avsCommon::avs;
+using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
 
 /// Long amount of time for handling a directive to allow other things to happen (we should not reach this).
@@ -101,6 +103,8 @@ static const std::string PAYLOAD_TEST("payloadForTest");
 /// Generic DialogRequestId used for tests.
 static const std::string DIALOG_REQUEST_ID_2("DialogRequestId_2");
 
+static const std::string TEST_ATTACHMENT_CONTEXT_ID("TEST_ATTACHMENT_CONTEXT_ID");
+
 /**
  * Mock ExceptionEncounteredSenderInterface implementation.
  */
@@ -140,13 +144,13 @@ public:
     /// The DirectiveSequencer to test.
     std::unique_ptr<DirectiveSequencerInterface> m_sequencer;
 
-    /// Mock object of AttachmentManagerInterface
-    std::shared_ptr<AttachmentManagerInterface> m_mockAttachmentManager;
+    /// AttachmentManager with which to create directives.
+    std::shared_ptr<AttachmentManager> m_attachmentManager;
 };
 
 void DirectiveSequencerTest::SetUp() {
     m_doneHandler = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
-    m_mockAttachmentManager = std::make_shared<MockAttachmentManager>();
+    m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
     m_exceptionEncounteredSender = std::make_shared<NiceMock<MockExceptionEncounteredSender>>();
     m_sequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);
     ASSERT_TRUE(m_sequencer);
@@ -159,7 +163,7 @@ void DirectiveSequencerTest::TearDown() {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
             NAMESPACE_TEST, NAME_DONE, MESSAGE_ID_DONE, DIALOG_REQUEST_ID_DONE);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     EXPECT_CALL(*(m_doneHandler.get()), handleDirectiveImmediately(_)).Times(0);
     EXPECT_CALL(*(m_doneHandler.get()), preHandleDirective(directive, _)).Times(1);
@@ -207,7 +211,7 @@ TEST_F(DirectiveSequencerTest, testNullptrDirective) {
 TEST_F(DirectiveSequencerTest, testUnhandledDirective) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_SPEAKER, NAME_SET_VOLUME, MESSAGE_ID_0);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     EXPECT_CALL(*(m_exceptionEncounteredSender.get()), sendExceptionEncountered(_, _, _)).Times(1);
     m_sequencer->onDirective(directive);
 }
@@ -219,7 +223,7 @@ TEST_F(DirectiveSequencerTest, testUnhandledDirective) {
 TEST_F(DirectiveSequencerTest, testEmptyDialogRequestId) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_SPEAKER, NAME_SET_VOLUME, MESSAGE_ID_0);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     auto handler = MockDirectiveHandler::create();
     EXPECT_CALL(*(handler.get()), handleDirectiveImmediately(directive)).Times(1);
     EXPECT_CALL(*(handler.get()), preHandleDirective(_, _)).Times(0);
@@ -240,10 +244,10 @@ TEST_F(DirectiveSequencerTest, testEmptyDialogRequestId) {
 TEST_F(DirectiveSequencerTest, testRemovingAndChangingHandlers) {
     auto avsMessageHeader0 = std::make_shared<AVSMessageHeader>(NAMESPACE_SPEAKER, NAME_SET_VOLUME, MESSAGE_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     auto avsMessageHeader1 = std::make_shared<AVSMessageHeader>(NAMESPACE_TEST, NAME_NON_BLOCKING, MESSAGE_ID_1);
     std::shared_ptr<AVSDirective> directive1 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     auto handler0 = MockDirectiveHandler::create();
     auto handler1 = MockDirectiveHandler::create();
@@ -284,7 +288,7 @@ TEST_F(DirectiveSequencerTest, testBlockingDirective) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
             NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     auto handler = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
 
@@ -310,11 +314,11 @@ TEST_F(DirectiveSequencerTest, testBlockingThenNonDialogDirective) {
     auto avsMessageHeader0 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     auto avsMessageHeader1 = std::make_shared<AVSMessageHeader>(NAMESPACE_SPEAKER, NAME_SET_VOLUME, MESSAGE_ID_1);
     std::shared_ptr<AVSDirective> directive1 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     auto handler0 = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
     auto handler1 = MockDirectiveHandler::create();
@@ -353,7 +357,7 @@ TEST_F(DirectiveSequencerTest, testBargeIn) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
             NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     auto handler = MockDirectiveHandler::create(std::chrono::milliseconds(LONG_HANDLING_TIME_MS));
 
@@ -383,15 +387,15 @@ TEST_F(DirectiveSequencerTest, testBlockingThenNonBockingOnSameDialogId) {
     auto avsMessageHeader0 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     auto avsMessageHeader1 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_1, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive1 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     auto avsMessageHeader2 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_TEST, NAME_NON_BLOCKING, MESSAGE_ID_2, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive2 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader2, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader2, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     auto handler0 = MockDirectiveHandler::create();
     auto handler1 = MockDirectiveHandler::create();
@@ -439,15 +443,15 @@ TEST_F(DirectiveSequencerTest, testThatBargeInDropsSubsequentDirectives) {
     auto avsMessageHeader0 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     auto avsMessageHeader1 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_1, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive1 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     auto avsMessageHeader2 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_TEST, NAME_BLOCKING, MESSAGE_ID_2, DIALOG_REQUEST_ID_1);
     std::shared_ptr<AVSDirective> directive2 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader2, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader2, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     auto handler0 = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
     auto handler1 = MockDirectiveHandler::create();
@@ -496,11 +500,11 @@ TEST_F(DirectiveSequencerTest, testPreHandleDirectiveError) {
     auto avsMessageHeader0 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     auto avsMessageHeader1 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_1, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive1 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     auto handler0 = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
     auto handler1 = MockDirectiveHandler::create();
@@ -537,11 +541,11 @@ TEST_F(DirectiveSequencerTest, testHandleDirectiveError) {
     auto avsMessageHeader0 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     auto avsMessageHeader1 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_1, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive1 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     auto handler0 = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
     auto handler1 = MockDirectiveHandler::create();
@@ -585,15 +589,15 @@ TEST_F(DirectiveSequencerTest, testAddDirectiveHandlersWhileHandlingDirectives) 
     auto avsMessageHeader0 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     auto avsMessageHeader1 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_1, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive1 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     auto avsMessageHeader2 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_TEST, NAME_NON_BLOCKING, MESSAGE_ID_2, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive2 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader2, PAYLOAD_TEST, m_mockAttachmentManager);
+            UNPARSED_DIRECTIVE, avsMessageHeader2, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     auto handler0 = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
     auto handler1 = MockDirectiveHandler::create();

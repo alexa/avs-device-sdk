@@ -35,6 +35,7 @@ namespace alexaClientSDK {
 namespace acl {
 
 using namespace transport;
+using namespace avsCommon::avs::attachment;
 using namespace avsUtils::threading;
 using namespace avsUtils::memory;
 
@@ -44,13 +45,13 @@ class TestableMessageRouter : public MessageRouter {
 public:
     TestableMessageRouter(
             std::shared_ptr<AuthDelegateInterface> authDelegate,
+            std::shared_ptr<AttachmentManager> attachmentManager,
             std::shared_ptr<MockTransport> transport,
             const std::string& avsEndpoint,
             std::shared_ptr<avsUtils::threading::Executor> sendExecutor,
             std::shared_ptr<avsUtils::threading::Executor> receiveExecutor)
-            : MessageRouter(authDelegate, avsEndpoint, sendExecutor, receiveExecutor),
+            : MessageRouter(authDelegate, attachmentManager, avsEndpoint, sendExecutor, receiveExecutor),
               m_mockTransport{transport} {
-
     }
 
     void setMockTransport(std::shared_ptr<MockTransport> transport) {
@@ -60,6 +61,7 @@ public:
 private:
     std::shared_ptr<TransportInterface> createTransport(
             std::shared_ptr<AuthDelegateInterface> authDelegate,
+            std::shared_ptr<AttachmentManager> attachmentManager,
             const std::string& avsEndpoint,
             MessageConsumerInterface* messageConsumerInterface,
             TransportObserverInterface* transportObserverInterface) override {
@@ -77,10 +79,12 @@ public:
             :
             m_mockMessageRouterObserver{std::make_shared<MockMessageRouterObserver>()},
             m_mockAuthDelegate{std::make_shared<MockAuthDelegate>()},
+            m_attachmentManager{std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS)},
             m_mockTransport{std::make_shared<NiceMock<MockTransport>>()},
             m_sendExecutor{std::make_shared<Executor>()},
             m_receiveExecutor{std::make_shared<Executor>()},
             m_router{m_mockAuthDelegate,
+                     m_attachmentManager,
                      m_mockTransport,
                      AVS_ENDPOINT,
                      m_sendExecutor,
@@ -97,7 +101,6 @@ public:
     std::shared_ptr<avsCommon::avs::MessageRequest> createMessageRequest() {
         return std::make_shared<avsCommon::avs::MessageRequest>(MESSAGE, nullptr);
     }
-
     void waitOnExecutor(std::shared_ptr<Executor> executor, std::chrono::milliseconds millisecondsToWait) {
         auto future = executor->submit([](){;});
         auto status = future.wait_for(millisecondsToWait);
@@ -123,6 +126,7 @@ public:
 
     std::shared_ptr<MockMessageRouterObserver> m_mockMessageRouterObserver;
     std::shared_ptr<MockAuthDelegate> m_mockAuthDelegate;
+    std::shared_ptr<AttachmentManager> m_attachmentManager;
     std::shared_ptr<NiceMock<MockTransport>> m_mockTransport;
     std::shared_ptr<avsUtils::threading::Executor> m_sendExecutor;
     std::shared_ptr<avsUtils::threading::Executor> m_receiveExecutor;

@@ -213,9 +213,10 @@ std::future<size_t> Source::run(
         size_t maxWords) {
     m_counter = 0;
     size_t wordSize = writer->getWordSize();
+    std::chrono::nanoseconds period(frequencyHz ? ((1000000000 / frequencyHz) * blockSizeWords) : 0);
     bool started = m_timer.start(
-        std::chrono::nanoseconds(1000000000 / frequencyHz) * blockSizeWords,
-        timing::Timer::PeriodType::ABSOLUTE,
+        period,
+        timing::Timer::PeriodType::RELATIVE,
         timing::Timer::FOREVER,
         [this, writer, frequencyHz, blockSizeWords, maxWords, wordSize] {
             uint8_t block[blockSizeWords * writer->getWordSize()];
@@ -239,13 +240,12 @@ std::future<size_t> Source::run(
                 nWords =
                     writer->write(block, wordsToWrite);
             } while (nWords == Sds::Writer::Error::WOULDBLOCK);
-            ASSERT_EQ(nWords, static_cast<ssize_t>(sizeof(block) / wordSize));
-            if (maxWords > 0) {
-                if (m_counter == maxWords) {
-                    m_timer.stop();
-                    writer->close();
-                    m_promise.set_value(m_counter);
-                }
+            bool unexpectedWriteReturn = nWords != static_cast<ssize_t>(sizeof(block) / wordSize);
+            EXPECT_FALSE(unexpectedWriteReturn) << "write returned " << nWords;
+            if (unexpectedWriteReturn || (maxWords > 0 && m_counter == maxWords)) {
+                m_timer.stop();
+                writer->close();
+                m_promise.set_value(m_counter);
             }
         });
     if (!started) {
@@ -294,9 +294,10 @@ std::future<size_t> Sink::run(
         size_t maxWords) {
     m_counter = 0;
     size_t wordSize = reader->getWordSize();
+    std::chrono::nanoseconds period(frequencyHz ? ((1000000000 / frequencyHz) * blockSizeWords) : 0);
     bool started = m_timer.start(
-        std::chrono::nanoseconds(1000000000 / frequencyHz) * blockSizeWords,
-        timing::Timer::PeriodType::ABSOLUTE,
+        period,
+        timing::Timer::PeriodType::RELATIVE,
         timing::Timer::FOREVER,
         [this, reader, frequencyHz, blockSizeWords, maxWords, wordSize] {
             uint8_t block[blockSizeWords * wordSize];
@@ -308,8 +309,12 @@ std::future<size_t> Sink::run(
                 m_promise.set_value(m_counter);
                 return;
             }
-            ASSERT_GT(nWords, 0);
-            ASSERT_LE(nWords, static_cast<ssize_t>(sizeof(block) / wordSize));
+            bool unexpectedReadReturn = nWords <= 0 || nWords > static_cast<ssize_t>(sizeof(block) / wordSize);
+            EXPECT_FALSE(unexpectedReadReturn) << "read returned " << nWords;
+            if (unexpectedReadReturn) {
+                    m_timer.stop();
+                    m_promise.set_value(m_counter);
+            }
             for (ssize_t word = 0; word < nWords; ++word) {
                 for (size_t byte = 0; byte < wordSize; ++byte) {
                     size_t byteIndex = word * wordSize + byte;
@@ -317,11 +322,9 @@ std::future<size_t> Sink::run(
                     ASSERT_EQ(block[byteIndex], byteValue);
                 }
                 ++m_counter;
-                if (maxWords > 0) {
-                    if (m_counter == maxWords) {
-                        m_timer.stop();
-                        m_promise.set_value(m_counter);
-                    }
+                if (maxWords > 0 && m_counter == maxWords) {
+                    m_timer.stop();
+                    m_promise.set_value(m_counter);
                 }
             }
         });
@@ -1045,14 +1048,14 @@ TEST_F(SharedDataStreamTest, writerGetWordSize) {
 /// This tests a nonblockable, slow @c Writer streaming concurrently to two fast @c Readers (one of each type).
 TEST_F(SharedDataStreamTest, concurrencyNonblockableWriterDualReader) {
     static const size_t WORDSIZE = 2;
-    static const size_t WRITE_FREQUENCY_HZ = 160000;
-    static const size_t READ_FREQUENCY_HZ = 320000;
+    static const size_t WRITE_FREQUENCY_HZ = 1000;
+    static const size_t READ_FREQUENCY_HZ = 0;
     static const size_t BUFFER_MILLISECONDS = 100;
     static const size_t WORDCOUNT = WRITE_FREQUENCY_HZ * BUFFER_MILLISECONDS / 1000;
     static const size_t MAXREADERS = 2;
     static const size_t TEST_SIZE_WORDS = WORDCOUNT * 3;
     static const size_t WRITE_BLOCK_SIZE_WORDS = WRITE_FREQUENCY_HZ / 10;
-    static const size_t READ_BLOCK_SIZE_WORDS = READ_FREQUENCY_HZ / 10;
+    static const size_t READ_BLOCK_SIZE_WORDS = 1;
 
     size_t bufferSize = Sds::calculateBufferSize(WORDCOUNT, WORDSIZE, MAXREADERS);
     auto buffer = std::make_shared<Sds::Buffer>(bufferSize);

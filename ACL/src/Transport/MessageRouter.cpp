@@ -31,6 +31,7 @@ using namespace alexaClientSDK::avsUtils;
 
 MessageRouter::MessageRouter(
         std::shared_ptr<AuthDelegateInterface> authDelegate,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
         const std::string& avsEndpoint,
         std::shared_ptr<avsUtils::threading::Executor> sendExecutor,
         std::shared_ptr<avsUtils::threading::Executor> receiveExecutor):
@@ -39,7 +40,8 @@ MessageRouter::MessageRouter(
     m_connectionStatus{ConnectionStatus::DISCONNECTED},
     m_isEnabled{false},
     m_sendExecutor{sendExecutor},
-    m_receiveExecutor{receiveExecutor} {
+    m_receiveExecutor{receiveExecutor},
+    m_attachmentManager{attachmentManager} {
 }
 
 MessageRouter::~MessageRouter() {
@@ -129,8 +131,8 @@ void MessageRouter::onServerSideDisconnect() {
     }
 }
 
-void MessageRouter::consumeMessage(std::shared_ptr<avsCommon::avs::Message> message) {
-    notifyObserverOnReceive(message);
+void MessageRouter::consumeMessage(const std::string & contextId, const std::string & message) {
+    notifyObserverOnReceive(contextId, message);
 }
 
 void MessageRouter::setObserver(std::shared_ptr<MessageRouterObserverInterface> observer) {
@@ -149,10 +151,10 @@ void MessageRouter::notifyObserverOnConnectionStatusChanged(
     m_receiveExecutor->submit(task);
 }
 
-void MessageRouter::notifyObserverOnReceive(std::shared_ptr<avsCommon::avs::Message> msg) {
-    auto task = [this, msg]() {
+void MessageRouter::notifyObserverOnReceive(const std::string & contextId, const std::string & message) {
+    auto task = [this, contextId, message]() {
         if (m_observer) {
-            m_observer->receive(msg);
+            m_observer->receive(contextId, message);
         }
     };
 
@@ -160,7 +162,7 @@ void MessageRouter::notifyObserverOnReceive(std::shared_ptr<avsCommon::avs::Mess
 }
 
 void MessageRouter::createActiveTransportLocked() {
-    auto transport = createTransport(m_authDelegate, m_avsEndpoint, this, this);
+    auto transport = createTransport(m_authDelegate, m_attachmentManager, m_avsEndpoint, this, this);
     if (transport->connect()) {
         m_transports.push_back(transport);
         m_activeTransport = transport;

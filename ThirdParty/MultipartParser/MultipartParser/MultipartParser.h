@@ -5,6 +5,7 @@
 #include <string>
 #include <stdexcept>
 #include <cstring>
+#include <vector>
 
 class MultipartParser {
 public:
@@ -40,11 +41,8 @@ private:
 	};
 	
 	std::string boundary;
-	const char *boundaryData;
-	size_t boundarySize;
 	bool boundaryIndex[256];
-	char *lookbehind;
-	size_t lookbehindSize;
+	std::vector<char> lookbehind;
 	State state;
 	int flags;
 	size_t index;
@@ -67,11 +65,11 @@ private:
 	
 	void indexBoundary() {
 		const char *current;
-		const char *end = boundaryData + boundarySize;
+		const char *end = boundary.c_str() + boundary.size();
 		
 		memset(boundaryIndex, 0, sizeof(boundaryIndex));
 		
-		for (current = boundaryData; current < end; current++) {
+		for (current = boundary.c_str(); current < end; current++) {
 			boundaryIndex[(unsigned char) *current] = true;
 		}
 	}
@@ -129,12 +127,12 @@ private:
 		
 		if (index == 0) {
 			// boyer-moore derived algorithm to safely skip non-boundary data
-			while (i + boundarySize <= len) {
+			while (i + boundary.size() <= len) {
 				if (isBoundaryChar(buffer[i + boundaryEnd])) {
 					break;
 				}
 				
-				i += boundarySize;
+				i += boundary.size();
 			}
 			if (i == len) {
 				return;
@@ -142,7 +140,7 @@ private:
 			c = buffer[i];
 		}
 		
-		if (index < boundarySize) {
+		if (index < boundary.size()) {
 			if (boundary[index] == c) {
 				if (index == 0) {
 					dataCallback(onPartData, partDataMark, buffer, i, len, true);
@@ -151,7 +149,7 @@ private:
 			} else {
 				index = 0;
 			}
-		} else if (index == boundarySize) {
+		} else if (index == boundary.size()) {
 			index++;
 			if (c == CR) {
 				// CR = part boundary
@@ -162,7 +160,7 @@ private:
 			} else {
 				index = 0;
 			}
-		} else if (index - 1 == boundarySize) {
+		} else if (index - 1 == boundary.size()) {
 			if (flags & PART_BOUNDARY) {
 				index = 0;
 				if (c == LF) {
@@ -184,13 +182,13 @@ private:
 			} else {
 				index = 0;
 			}
-		} else if (index - 2 == boundarySize) {
+		} else if (index - 2 == boundary.size()) {
 			if (c == CR) {
 				index++;
 			} else {
 				index = 0;
 			}
-		} else if (index - boundarySize == 3) {
+		} else if (index - boundary.size() == 3) {
 			index = 0;
 			if (c == LF) {
 				callback(onPartEnd);
@@ -203,11 +201,11 @@ private:
 		if (index > 0) {
 			// when matching a possible boundary, keep a lookbehind reference
 			// in case it turns out to be a false lead
-			if (index - 1 >= lookbehindSize) {
+			if (index - 1 >= lookbehind.size()) {
 				setError("Parser bug: index overflows lookbehind buffer. "
 					"Please send bug report with input file attached.");
 				throw std::out_of_range("index overflows lookbehind buffer");
-			} else if (index - 1 < 0) {
+			} else if (index < 1) {
 				setError("Parser bug: index underflows lookbehind buffer. "
 					"Please send bug report with input file attached.");
 				throw std::out_of_range("index underflows lookbehind buffer");
@@ -216,7 +214,7 @@ private:
 		} else if (prevIndex > 0) {
 			// if our boundary turned out to be rubbish, the captured lookbehind
 			// belongs to partData
-			callback(onPartData, lookbehind, 0, prevIndex);
+			callback(onPartData, lookbehind.data(), 0, prevIndex);
 			prevIndex = 0;
 			partDataMark = i;
 			
@@ -238,29 +236,19 @@ public:
 	void *userData;
 	
 	MultipartParser() {
-		lookbehind = NULL;
 		resetCallbacks();
 		reset();
 	}
 	
 	MultipartParser(const std::string &boundary) {
-		lookbehind = NULL;
 		resetCallbacks();
 		setBoundary(boundary);
 	}
 	
-	~MultipartParser() {
-		delete[] lookbehind;
-	}
-	
 	void reset() {
-		delete[] lookbehind;
+		lookbehind.clear();
 		state = ERROR;
 		boundary.clear();
-		boundaryData = boundary.c_str();
-		boundarySize = 0;
-		lookbehind = NULL;
-		lookbehindSize = 0;
 		flags = 0;
 		index = 0;
 		headerFieldMark = UNMARKED;
@@ -272,11 +260,8 @@ public:
 	void setBoundary(const std::string &boundary) {
 		reset();
 		this->boundary = "\r\n--" + boundary;
-		boundaryData = this->boundary.c_str();
-		boundarySize = this->boundary.size();
 		indexBoundary();
-		lookbehind = new char[boundarySize + 8];
-		lookbehindSize = boundarySize + 8;
+		lookbehind.resize(boundary.size() + 8);
 		state = START;
 		errorReason = "No error.";
 	}
@@ -290,7 +275,7 @@ public:
 		int flags           = this->flags;
 		size_t prevIndex    = this->index;
 		size_t index        = this->index;
-		size_t boundaryEnd  = boundarySize - 1;
+		size_t boundaryEnd  = boundary.size() - 1;
 		size_t i;
 		char c, cl;
 		
@@ -304,14 +289,14 @@ public:
 				index = 0;
 				state = START_BOUNDARY;
 			case START_BOUNDARY:
-				if (index == boundarySize - 2) {
+				if (index == boundary.size() - 2) {
 					if (c != CR) {
 						setError("Malformed. Expected CR after boundary.");
 						return i;
 					}
 					index++;
 					break;
-				} else if (index - 1 == boundarySize - 2) {
+				} else if (index - 1 == boundary.size() - 2) {
 					if (c != LF) {
 						setError("Malformed. Expected LF after boundary CR.");
 						return i;

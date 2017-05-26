@@ -16,13 +16,14 @@
  */
 
 #include <string>
+#include <array>
 #include <tuple>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "AVSCommon/AVS/CapabilityAgent.h"
-#include "AVSCommon/AttachmentManagerInterface.h"
+#include "AVSCommon/AVS/Attachment/AttachmentManager.h"
 
 using namespace testing;
 
@@ -32,6 +33,7 @@ namespace test{
 
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs;
+using namespace avsCommon::avs::attachment;
 
 /// Namespace for SpeechRecognizer.
 static const std::string NAMESPACE_SPEECH_RECOGNIZER("SpeechRecognizer");
@@ -185,29 +187,6 @@ static const std::tuple<std::string, std::string, std::string> testEventWithCont
             "}"
         "}", "", CONTEXT_TEST)};
 
-/// MockAttachmentManager implementation.
-class MockAttachmentManager : public AttachmentManagerInterface {
-public:
-    std::future<std::shared_ptr<std::iostream>> createAttachmentReader(const std::string& attachmentId) override;
-    void createAttachment(const std::string& attachmentId, std::shared_ptr<std::iostream> attachment) override;
-    void releaseAttachment(const std::string& attachmentId) override;
-};
-
-std::future<std::shared_ptr<std::iostream>> MockAttachmentManager::createAttachmentReader
-        (const std::string& attachmentId) {
-    std::promise<std::shared_ptr<std::iostream>> attachment;
-    return attachment.get_future();
-}
-
-void MockAttachmentManager::createAttachment(const std::string& attachmentId,
-        std::shared_ptr<std::iostream> attachment) {
-    // default no-op
-}
-
-void MockAttachmentManager::releaseAttachment(const std::string& attachmentId) {
-    // default no-op
-}
-
 /// Mock @c DirectiveHandlerResultInterface implementation.
 class MockResult : public DirectiveHandlerResultInterface {
 public:
@@ -224,8 +203,13 @@ void MockResult::setFailed(const std::string& description) {
     // default no-op
 }
 
-class MockCapabilityAgent: public CapabilityAgent {
+class MockCapabilityAgent : public CapabilityAgent {
 public:
+    // Expand polymorphic matching in this scope to include these inherited methods.
+    using DirectiveHandlerInterface::preHandleDirective;
+    using DirectiveHandlerInterface::handleDirective;
+    using DirectiveHandlerInterface::cancelDirective;
+
     /**
      * Creates an instance of the @c MockCapabilityAgent.
      *
@@ -250,13 +234,13 @@ public:
         CANCEL_DIRECTIVE
     };
 
-    void handleDirectiveImmediately(const DirectiveAndResultInterface& directiveAndResultInterface) override;
+    void handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) override;
 
-    void preHandleDirective(const DirectiveAndResultInterface& directiveAndResultInterface) override;
+    void preHandleDirective(std::shared_ptr<DirectiveInfo> info) override;
 
-    void handleDirective(const DirectiveAndResultInterface& directiveAndResultInterface) override;
+    void handleDirective(std::shared_ptr<DirectiveInfo> info) override;
 
-    void cancelDirective(const DirectiveAndResultInterface& directiveAndResultInterface) override;
+    void cancelDirective(std::shared_ptr<DirectiveInfo> info) override;
 
     FunctionCalled waitForFunctionCalls(const std::chrono::milliseconds duration = std::chrono::milliseconds(400));
 
@@ -272,7 +256,6 @@ private:
 
     /// mutex to protect @c m_contextAvailable.
     std::mutex m_mutex;
-
 };
 
 std::shared_ptr<MockCapabilityAgent> MockCapabilityAgent::create(const std::string nameSpace) {
@@ -280,7 +263,7 @@ std::shared_ptr<MockCapabilityAgent> MockCapabilityAgent::create(const std::stri
 }
 
 MockCapabilityAgent::MockCapabilityAgent(const std::string& nameSpace) :
-        CapabilityAgent(nameSpace),
+        CapabilityAgent(nameSpace, nullptr),
         m_functionCalled{FunctionCalled::NONE} {
 }
 
@@ -288,25 +271,25 @@ MockCapabilityAgent::~MockCapabilityAgent() {
 
 }
 
-void MockCapabilityAgent::handleDirectiveImmediately(const DirectiveAndResultInterface& directiveAndResultInterface) {
+void MockCapabilityAgent::handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_functionCalled = FunctionCalled::HANDLE_DIRECTIVE_IMMEDIATELY;
     m_wakeTrigger.notify_one();
 }
 
-void MockCapabilityAgent::preHandleDirective(const DirectiveAndResultInterface& directiveAndResultInterface){
+void MockCapabilityAgent::preHandleDirective(std::shared_ptr<DirectiveInfo>){
     std::lock_guard<std::mutex> lock(m_mutex);
     m_functionCalled = FunctionCalled::PREHANDLE_DIRECTIVE;
     m_wakeTrigger.notify_one();
 }
 
-void MockCapabilityAgent::handleDirective(const DirectiveAndResultInterface& directiveAndResultInterface) {
+void MockCapabilityAgent::handleDirective(std::shared_ptr<DirectiveInfo>) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_functionCalled = FunctionCalled::HANDLE_DIRECTIVE;
     m_wakeTrigger.notify_one();
 }
 
-void MockCapabilityAgent::cancelDirective(const DirectiveAndResultInterface& directiveAndResultInterface) {
+void MockCapabilityAgent::cancelDirective(std::shared_ptr<DirectiveInfo>) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_functionCalled = FunctionCalled::CANCEL_DIRECTIVE;
     m_wakeTrigger.notify_one();
@@ -367,13 +350,12 @@ public:
 
     std::shared_ptr<MockCapabilityAgent> m_capabilityAgent;
 
-    /// Mock object of AttachmentManagerInterface
-    std::shared_ptr<AttachmentManagerInterface> m_mockAttachmentManager;
+    std::shared_ptr<AttachmentManager> m_attachmentManager;
 };
 
 void CapabilityAgentTest::SetUp() {
     m_capabilityAgent = MockCapabilityAgent::create(NAMESPACE_SPEECH_RECOGNIZER);
-    m_mockAttachmentManager = std::make_shared<MockAttachmentManager>();
+    m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
 }
 
 std::string CapabilityAgentTest::findStringFromStart(std::string pattern, std::string searchString) {
@@ -417,8 +399,8 @@ TEST_F(CapabilityAgentTest, testCallToHandleImmediately) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE,
             MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create("", avsMessageHeader, PAYLOAD_TEST,
-            m_mockAttachmentManager);
-    m_capabilityAgent->CapabilityAgent::handleDirectiveImmediately(directive);
+            m_attachmentManager, "");
+    m_capabilityAgent->handleDirectiveImmediately(directive);
     ASSERT_EQ(MockCapabilityAgent::FunctionCalled::HANDLE_DIRECTIVE_IMMEDIATELY,
             m_capabilityAgent->waitForFunctionCalls());
 }
@@ -431,9 +413,9 @@ TEST_F(CapabilityAgentTest, testCallToPrehandleDirective) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE,
             MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create("", avsMessageHeader, PAYLOAD_TEST,
-            m_mockAttachmentManager);
+            m_attachmentManager, "");
     std::unique_ptr<MockResult> dirHandlerResult(new MockResult );
-    m_capabilityAgent->CapabilityAgent::preHandleDirective(directive, std::move(dirHandlerResult));
+    m_capabilityAgent->preHandleDirective(directive, std::move(dirHandlerResult));
     ASSERT_EQ(MockCapabilityAgent::FunctionCalled::PREHANDLE_DIRECTIVE, m_capabilityAgent->waitForFunctionCalls());
 }
 
@@ -446,11 +428,11 @@ TEST_F(CapabilityAgentTest, testCallToHandleDirective) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE,
             MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create("", avsMessageHeader, PAYLOAD_TEST,
-            m_mockAttachmentManager);
+            m_attachmentManager, "");
     std::unique_ptr<MockResult> dirHandlerResult(new MockResult );
-    m_capabilityAgent->CapabilityAgent::preHandleDirective(directive, std::move(dirHandlerResult));
+    m_capabilityAgent->preHandleDirective(directive, std::move(dirHandlerResult));
     ASSERT_EQ(MockCapabilityAgent::FunctionCalled::PREHANDLE_DIRECTIVE, m_capabilityAgent->waitForFunctionCalls());
-    m_capabilityAgent->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
+    m_capabilityAgent->handleDirective(MESSAGE_ID_TEST);
     ASSERT_EQ(MockCapabilityAgent::FunctionCalled::HANDLE_DIRECTIVE, m_capabilityAgent->waitForFunctionCalls());
 }
 
@@ -462,7 +444,7 @@ TEST_F(CapabilityAgentTest, testCallToHandleDirectiveWithNoPrehandle) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE,
             MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create("", avsMessageHeader, PAYLOAD_TEST,
-            m_mockAttachmentManager);
+            m_attachmentManager, "");
     ASSERT_FALSE(m_capabilityAgent->CapabilityAgent::handleDirective(MESSAGE_ID_TEST));
 }
 
@@ -474,11 +456,11 @@ TEST_F(CapabilityAgentTest, testCallToCancelDirective) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE,
             MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create("", avsMessageHeader, PAYLOAD_TEST,
-            m_mockAttachmentManager);
+            m_attachmentManager, "");
     std::unique_ptr<MockResult> dirHandlerResult(new MockResult );
-    m_capabilityAgent->CapabilityAgent::preHandleDirective(directive, std::move(dirHandlerResult));
+    m_capabilityAgent->preHandleDirective(directive, std::move(dirHandlerResult));
     ASSERT_EQ(MockCapabilityAgent::FunctionCalled::PREHANDLE_DIRECTIVE, m_capabilityAgent->waitForFunctionCalls());
-    m_capabilityAgent->CapabilityAgent::cancelDirective(MESSAGE_ID_TEST);
+    m_capabilityAgent->cancelDirective(MESSAGE_ID_TEST);
     ASSERT_EQ(MockCapabilityAgent::FunctionCalled::CANCEL_DIRECTIVE, m_capabilityAgent->waitForFunctionCalls());
 }
 
@@ -491,7 +473,7 @@ TEST_F(CapabilityAgentTest, testCallToCancelDirectiveWithNoPrehandle) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE,
             MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create("", avsMessageHeader, PAYLOAD_TEST,
-            m_mockAttachmentManager);
+            m_attachmentManager, "");
     m_capabilityAgent->CapabilityAgent::cancelDirective(MESSAGE_ID_TEST);
     ASSERT_EQ(MockCapabilityAgent::FunctionCalled::NONE, m_capabilityAgent->waitForFunctionCalls());
 }

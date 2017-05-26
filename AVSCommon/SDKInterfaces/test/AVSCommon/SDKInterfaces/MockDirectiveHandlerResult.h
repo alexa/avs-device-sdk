@@ -15,28 +15,29 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ADSL_TEST_COMMON_MOCK_DIRECTIVE_HANDLER_RESULT_H_
-#define ALEXA_CLIENT_SDK_ADSL_TEST_COMMON_MOCK_DIRECTIVE_HANDLER_RESULT_H_
+#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_TEST_AVS_COMMON_SDK_INTERFACES_MOCK_DIRECTIVE_HANDLER_RESULT_H_
+#define ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_TEST_AVS_COMMON_SDK_INTERFACES_MOCK_DIRECTIVE_HANDLER_RESULT_H_
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h>
+#include "AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h"
 
 namespace alexaClientSDK {
-namespace adsl {
+namespace avsCommon {
+namespace sdkInterfaces {
 namespace test {
 
-/**
- * MockDirectiveHandlerResult
- */
-class MockDirectiveHandlerResult : public avsCommon::sdkInterfaces::DirectiveHandlerResultInterface {
-    MOCK_METHOD0(setCompleted, void());
-    MOCK_METHOD1(setFailed, void(const std::string&));
+/// Mock @c DirectiveHandlerResultInterface implementation.
+class MockDirectiveHandlerResult : public DirectiveHandlerResultInterface {
+public:
+     MOCK_METHOD0(setCompleted, void());
+     MOCK_METHOD1(setFailed, void(const std::string& description));
 };
 
 } // namespace test
-} // namespace adsl
+} // namespace sdkInterfaces
+} // namespace avsCommon
 } // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ADSL_TEST_COMMON_MOCK_DIRECTIVE_HANDLER_RESULT_H_
+#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_TEST_AVS_COMMON_SDK_INTERFACES_MOCK_DIRECTIVE_HANDLER_RESULT_H_

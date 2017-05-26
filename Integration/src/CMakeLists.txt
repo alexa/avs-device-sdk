@@ -5,6 +5,7 @@ target_include_directories(Integration PUBLIC "${AuthDelegate_SOURCE_DIR}/includ
 target_include_directories(Integration PUBLIC "${Integration_SOURCE_DIR}/include")
 target_include_directories(Integration PUBLIC "${CapabilityAgents_SOURCE_DIR}/include")
 target_include_directories(Integration PUBLIC "${AIP_SOURCE_DIR}/include")
+target_include_directories(Integration PUBLIC "${SpeechSynthesizer_SOURCE_DIR}/include")
 target_include_directories(Integration PUBLIC "${KITTAI_SOURCE_DIR}/include")
 
 target_include_directories(Integration PUBLIC "${CMAKE_SOURCE_DIR}/Utils/include")

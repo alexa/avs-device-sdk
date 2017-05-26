@@ -15,15 +15,12 @@
 * permissions and limitations under the License.
 */
 
-#ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_MESSAGE_OBSERVER_INTERFACE_H_
-#define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_MESSAGE_OBSERVER_INTERFACE_H_
-
-#include <memory>
-
-#include <AVSCommon/AVS/Message.h>
+#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_MESSAGE_OBSERVER_INTERFACE_H_
+#define ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_MESSAGE_OBSERVER_INTERFACE_H_
 
 namespace alexaClientSDK {
-namespace acl {
+namespace avsCommon {
+namespace sdkInterfaces {
 
 /**
  * This class allows a client to receive messages from AVS.
@@ -37,12 +34,16 @@ public:
 
     /**
      * A function that a client must implement to receive Messages from AVS.
-     * @param msg A message that has been received from AVS.
+     *
+     * @param contextId The context for the message, which in this case reflects the logical HTTP/2 stream the
+     * message arrived on.
+     * @param message The AVS message that has been received.
      */
-    virtual void receive(std::shared_ptr<avsCommon::avs::Message> msg) = 0;
+    virtual void receive(const std::string & contextId, const std::string & message) = 0;
 };
 
-} // namespace acl
+} // namespace sdkInterfaces
+} // namespace avsCommon
 } // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_MESSAGE_OBSERVER_INTERFACE_H_
+#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_MESSAGE_OBSERVER_INTERFACE_H_

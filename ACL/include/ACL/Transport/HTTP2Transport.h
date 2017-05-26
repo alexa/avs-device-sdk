@@ -27,7 +27,8 @@
 #include <string>
 #include <thread>
 #include <utility>
-#include <AVSCommon/AttachmentManagerInterface.h>
+
+#include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 
 #include "ACL/AuthDelegateInterface.h"
 #include "ACL/Transport/TransportInterface.h"
@@ -56,7 +57,7 @@ public:
      */
     HTTP2Transport(std::shared_ptr<AuthDelegateInterface> authDelegate, const std::string& avsEndpoint,
         MessageConsumerInterface* messageConsumerInterface,
-        std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
         TransportObserverInterface* observer = nullptr);
 
     /**

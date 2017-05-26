@@ -23,34 +23,43 @@ namespace alexaClientSDK {
 namespace avsCommon {
 
 using namespace avsUtils;
+using namespace avsCommon::avs::attachment;
 
 std::unique_ptr<AVSDirective> AVSDirective::create(
         const std::string& unparsedDirective,
         std::shared_ptr<AVSMessageHeader> avsMessageHeader,
         const std::string& payload,
-        std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager) {
+        std::shared_ptr<AttachmentManagerInterface> attachmentManager,
+        const std::string & attachmentContextId) {
     if (!avsMessageHeader) {
         Logger::log("AVSDirective::create - message header was nullptr.");
         return nullptr;
     }
-
     if (!attachmentManager) {
         Logger::log("AVSDirective::create - attachmentManager was nullptr.");
         return nullptr;
     }
     return std::unique_ptr<AVSDirective>(new AVSDirective(unparsedDirective, avsMessageHeader, payload,
-        attachmentManager));
+        attachmentManager, attachmentContextId));
 }
 
-std::future<std::shared_ptr<std::iostream>> AVSDirective::getAttachmentReader(const std::string& contentId) const {
-    return m_attachmentManager->createAttachmentReader(contentId);
+std::unique_ptr<AttachmentReader> AVSDirective::getAttachmentReader(
+        const std::string& contentId, AttachmentReader::Policy readerPolicy) const {
+    auto attachmentId = m_attachmentManager->generateAttachmentId(m_attachmentContextId, contentId);
+    return m_attachmentManager->createReader(attachmentId, readerPolicy);
 }
 
-AVSDirective::AVSDirective(const std::string& unparsedDirective, std::shared_ptr<AVSMessageHeader> avsMessageHeader,
-        const std::string& payload, std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager) :
-            AVSMessage{avsMessageHeader, payload},
-            m_unparsedDirective{unparsedDirective},
-            m_attachmentManager{attachmentManager} {
+AVSDirective::AVSDirective(
+        const std::string& unparsedDirective,
+        std::shared_ptr<AVSMessageHeader> avsMessageHeader,
+        const std::string& payload,
+        std::shared_ptr<AttachmentManagerInterface> attachmentManager,
+        const std::string & attachmentContextId)
+        :
+        AVSMessage{avsMessageHeader, payload},
+        m_unparsedDirective{unparsedDirective},
+        m_attachmentManager{attachmentManager},
+        m_attachmentContextId{attachmentContextId} {
 }
 
 std::string AVSDirective::getUnparsedDirective() const {

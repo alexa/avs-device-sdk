@@ -19,6 +19,7 @@
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
+#include <AVSUtils/Logger/LogEntry.h>
 #include <AVSUtils/Logging/Logger.h>
 
 #include "AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h"
@@ -31,6 +32,16 @@ namespace avs {
 using namespace rapidjson;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsUtils;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("CapabilityAgent");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
 
 /**
 * Builds a JSON header object. The header includes the namespace, name, message Id and an optional
@@ -84,41 +95,68 @@ static const std::string CONTEXT_KEY_STRING = "context";
 /// The event key.
 static const std::string EVENT_KEY_STRING = "event";
 
-CapabilityAgent::~CapabilityAgent() {
+std::shared_ptr<CapabilityAgent::DirectiveInfo> CapabilityAgent::createDirectiveInfo(
+        std::shared_ptr<AVSDirective> directive,
+        std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> result) {
+    return std::make_shared<DirectiveInfo>(directive, std::move(result));
 }
 
-void CapabilityAgent::handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) {
-    DirectiveAndResultInterface dirAndResInterface{directive, nullptr};
-    handleDirectiveImmediately(dirAndResInterface);
+CapabilityAgent::CapabilityAgent(
+        const std::string &nameSpace,
+        std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionEncounteredSender)
+        :
+        m_namespace{nameSpace},
+        m_exceptionEncounteredSender{exceptionEncounteredSender} {
 }
 
-void CapabilityAgent::preHandleDirective(std::shared_ptr<avsCommon::AVSDirective> directive,
-                                         std::unique_ptr<DirectiveHandlerResultInterface> result) {
-    auto messageId = directive->getMessageId();
-    Logger::log("Calling preHandleDirective for messageId:" + messageId);
-    auto directiveAndResult = getDirectiveAndResult(messageId, directive, std::move(result));
-    if (directiveAndResult) {
-        preHandleDirective(directiveAndResult);
+CapabilityAgent::DirectiveInfo::DirectiveInfo(
+        std::shared_ptr<AVSDirective> directiveIn,
+        std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> resultIn)
+        :
+        directive{directiveIn}, result{std::move(resultIn)} {
+}
+
+void CapabilityAgent::preHandleDirective(
+        std::shared_ptr <avsCommon::AVSDirective> directive,
+        std::unique_ptr <DirectiveHandlerResultInterface> result) {
+    std::string messageId = directive->getMessageId();
+    auto info = getDirectiveInfo(messageId);
+    if (info) {
+        static const std::string error{"messageIdIsAlreadyInUse"};
+        ACSDK_ERROR(LX("preHandleDirectiveFailed").d("reason", error).d("messageId", messageId));
+        result->setFailed(error);
+        if (m_exceptionEncounteredSender) {
+            m_exceptionEncounteredSender->sendExceptionEncountered(
+                    directive->getUnparsedDirective(), ExceptionErrorType::INTERNAL_ERROR, error);
+        }
+        return;
     }
+    ACSDK_DEBUG(LX("addingMessageIdToMap").d("messageId", messageId));
+    info = createDirectiveInfo(directive, std::move(result));
+    {
+        std::lock_guard <std::mutex> lock(m_mutex);
+        m_directiveInfoMap[messageId] = info;
+    }
+    preHandleDirective(info);
 }
 
 bool CapabilityAgent::handleDirective(const std::string &messageId) {
-    auto directiveAndResult = getDirectiveAndResult(messageId);
-    if (!directiveAndResult) {
+    auto info = getDirectiveInfo(messageId);
+    if (!info) {
+        ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "messageIdNotFound").d("messageId", messageId));
         return false;
     }
-    Logger::log("Calling handleDirective for messageId:" + messageId);
-    handleDirective(directiveAndResult);
+    handleDirective(info);
     return true;
 }
 
 void CapabilityAgent::cancelDirective(const std::string &messageId) {
-    auto directiveAndResult = getDirectiveAndResult(messageId);
-    if (!directiveAndResult) {
+    auto info = getDirectiveInfo(messageId);
+    if (!info) {
+        ACSDK_ERROR(LX("cancelDirectiveFailed").d("reason", "messageIdNotFound").d("messageId", messageId));
         return;
     }
-    Logger::log("Calling cancelDirective for messageId:" + messageId);
-    cancelDirective(directiveAndResult);
+    cancelDirective(info);
 }
 
 void CapabilityAgent::onDeregistered() {
@@ -126,9 +164,9 @@ void CapabilityAgent::onDeregistered() {
 }
 
 void CapabilityAgent::removeDirective(const std::string &messageId) {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    Logger::log("Removing messageId:" + messageId);
-    m_directiveAndResultInterfaceMap.erase(messageId);
+    std::lock_guard <std::mutex> lock(m_mutex);
+    ACSDK_DEBUG(LX("removingMessageIdFromMap").d("messageId", messageId));
+    m_directiveInfoMap.erase(messageId);
 }
 
 void CapabilityAgent::onFocusChanged(FocusState) {
@@ -147,16 +185,11 @@ void CapabilityAgent::onContextFailure(const sdkInterfaces::ContextRequestError)
     // default no-op
 }
 
-CapabilityAgent::DirectiveAndResultInterface::operator bool() const {
-    return directive != nullptr && resultInterface != nullptr;
-}
-
-CapabilityAgent::CapabilityAgent(const std::string &nameSpace) :
-        m_namespace{nameSpace} {
-}
-
-const std::string CapabilityAgent::buildJsonEventString(const std::string &eventName,
-        const std::string &dialogRequestIdValue, const std::string &jsonPayloadValue, const std::string &jsonContext) {
+const std::string CapabilityAgent::buildJsonEventString(
+        const std::string &eventName,
+        const std::string &dialogRequestIdValue,
+        const std::string &jsonPayloadValue,
+        const std::string &jsonContext) {
     Document eventAndContext(kObjectType);
     Document::AllocatorType &allocator = eventAndContext.GetAllocator();
 
@@ -164,9 +197,9 @@ const std::string CapabilityAgent::buildJsonEventString(const std::string &event
         Document context(kObjectType);
         // The context needs to be parsed to convert to a JSON object.
         if (context.Parse(jsonContext).HasParseError()) {
-#ifdef DEBUG
-            Logger::log("Error parsing context:" + jsonContext);
-#endif
+            ACSDK_DEBUG(LX("buildJsonEventStringFailed")
+                    .d("reason", "parseContextFailed")
+                    .sensitive("context", jsonContext));
             return "";
         }
         eventAndContext.CopyFrom(context, allocator);
@@ -175,7 +208,7 @@ const std::string CapabilityAgent::buildJsonEventString(const std::string &event
     Document event = buildEvent(m_namespace, eventName, dialogRequestIdValue, jsonPayloadValue, allocator);
 
     if (event.ObjectEmpty()) {
-        Logger::log("Error building event string: Empty Event");
+        ACSDK_ERROR(LX("buildJsonEventStringFailed").d("reason", "buildEventFailed"));
         return "";
     }
     eventAndContext.AddMember(StringRef(EVENT_KEY_STRING), event, allocator);
@@ -183,31 +216,20 @@ const std::string CapabilityAgent::buildJsonEventString(const std::string &event
     StringBuffer eventAndContextBuf;
     Writer<StringBuffer> writer(eventAndContextBuf);
     if (!eventAndContext.Accept(writer)) {
-        Logger::log("Error building event string: Accept failed");
+        ACSDK_ERROR(LX("buildJsonEventStringFailed").d("reason", "StringBufferAcceptFailed"));
         return "";
     }
 
     return eventAndContextBuf.GetString();
 }
 
-CapabilityAgent::DirectiveAndResultInterface CapabilityAgent::getDirectiveAndResult(
-        const std::string& messageId,
-        std::shared_ptr<avsCommon::AVSDirective> directive,
-        std::unique_ptr<DirectiveHandlerResultInterface> result) {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    auto it = m_directiveAndResultInterfaceMap.find(messageId);
-    if (m_directiveAndResultInterfaceMap.end() == it) {
-        if (!directive || !result) {
-            Logger::log("getDirectiveAndResult failed: Cannot find messageId:" + messageId);
-            return DirectiveAndResultInterface{};
-        }
-        DirectiveAndResultInterface dirAndResInterface{directive, std::move(result)};
-        it = m_directiveAndResultInterfaceMap.insert({messageId, dirAndResInterface}).first;
-    } else if (directive || result) {
-        Logger::log("getDirectiveAndResult failed: messageId " + messageId + " already exists.");
-        return DirectiveAndResultInterface{};
+std::shared_ptr<CapabilityAgent::DirectiveInfo> CapabilityAgent::getDirectiveInfo(const std::string& messageId) {
+    std::lock_guard <std::mutex> lock(m_mutex);
+    auto it = m_directiveInfoMap.find(messageId);
+    if (it != m_directiveInfoMap.end()) {
+        return it->second;
     }
-    return it->second;
+    return nullptr;
 }
 
 Document buildHeader(const std::string &nameSpace, const std::string &eventName, const std::string &dialogRequestIdValue,
@@ -234,12 +256,12 @@ Document buildEvent(const std::string &nameSpace, const std::string &eventName, 
 
     // If the header is empty object or during parsing the payload, an error occurs, return an empty event value.
     if (header.ObjectEmpty()) {
-        Logger::log("Error building event string: header is empty");
+        ACSDK_ERROR(LX("buildEventFailed").d("reason", "headerIsEmpty"));
         return event;
     }
     // Parse the payload to convert to a JSON object.
     if (!jsonPayloadValue.empty() && payload.Parse(jsonPayloadValue).HasParseError()) {
-        Logger::log("Error building event string: Error parsing payload:" + jsonPayloadValue);
+        ACSDK_ERROR(LX("buildEventFailed").d("reason", "errorParsingPayload").sensitive("payload", jsonPayloadValue));
         return event;
     }
 

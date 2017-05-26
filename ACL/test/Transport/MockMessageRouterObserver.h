@@ -17,8 +17,6 @@
 #ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_MESSAGE_ROUTER_OBSERVER_H_
 #define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_MESSAGE_ROUTER_OBSERVER_H_
 
-#include <AVSCommon/AVS/Message.h>
-
 #include "ACL/Transport/MessageRouterObserverInterface.h"
 
 #include <gmock/gmock.h>
@@ -53,7 +51,7 @@ public:
         return m_reason;
     }
 
-    std::shared_ptr<avsCommon::avs::Message> getLatestMessage() {
+    std::string getLatestMessage() {
         return m_message;
     }
 
@@ -64,14 +62,16 @@ private:
         m_status = status;
         m_reason = reason;
     }
-    virtual void receive(std::shared_ptr<avsCommon::avs::Message> msg) override {
+    virtual void receive(const std::string & contextId, const std::string & message) override {
         notifiedOfReceive = true;
-        m_message = msg;
+        m_attachmentContextId = contextId;
+        m_message = message;
     }
 
     ConnectionStatus m_status;
     ConnectionChangedReason m_reason;
-    std::shared_ptr<avsCommon::avs::Message> m_message;
+    std::string m_attachmentContextId;
+    std::string m_message;
     bool notifiedOfStatusChanged;
     bool notifiedOfReceive;
 };

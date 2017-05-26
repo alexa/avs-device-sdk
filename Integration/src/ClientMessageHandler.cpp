@@ -21,11 +21,14 @@
 namespace alexaClientSDK {
 namespace integration {
 
-ClientMessageHandler::ClientMessageHandler() : m_count(0) {
+using namespace avsCommon::avs::attachment;
+
+ClientMessageHandler::ClientMessageHandler(std::shared_ptr<AttachmentManager> attachmentManager) :
+        m_count{0}, m_attachmentManager{attachmentManager} {
 }
 
-void ClientMessageHandler::receive(std::shared_ptr<avsCommon::avs::Message> msg) {
-    std::cout << "ClientMessageHandler::receive: message:" << msg->getJSONContent() << std::endl;
+void ClientMessageHandler::receive(const std::string & contextId, const std::string & message) {
+    std::cout << "ClientMessageHandler::receive: message:" << message << std::endl;
     std::unique_lock<std::mutex> lock(m_mutex);
     ++m_count;
     m_wakeTrigger.notify_all();

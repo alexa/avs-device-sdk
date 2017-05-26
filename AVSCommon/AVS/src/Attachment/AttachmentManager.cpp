@@ -58,7 +58,8 @@ AttachmentManager::AttachmentManager(AttachmentType attachmentType) :
     m_attachmentType{attachmentType}, m_attachmentExpirationMinutes{ATTACHMENT_MANAGER_TIMOUT_MINUTES_DEFAULT} {
 }
 
-std::string AttachmentManager::generateAttachmentId(const std::string & contextId, const std::string & contentId) {
+std::string AttachmentManager::generateAttachmentId(
+        const std::string & contextId, const std::string & contentId) const {
     if (contextId.empty() && contentId.empty()) {
         ACSDK_ERROR(LX("generateAttachmentIdFailed")
                 .d("reason", "contextId and contentId are empty")

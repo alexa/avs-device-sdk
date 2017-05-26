@@ -15,7 +15,7 @@
  * permissions and limitations under the License.
  */
 
-#include <AVSCommon/AVS/Message.h>
+#include <AVSCommon/AVS/MessageRequest.h>
 
 #include "AIP/AudioInputProcessor.h"
 

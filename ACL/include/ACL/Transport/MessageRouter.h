@@ -24,9 +24,11 @@
 #include <vector>
 
 #include "AVSUtils/Threading/Executor.h"
-#include "AVSCommon/AVS/MessageRequest.h"
-#include "ACL/AuthDelegateInterface.h"
 
+#include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/AVS/MessageRequest.h>
+
+#include "ACL/AuthDelegateInterface.h"
 #include "ACL/Transport/MessageRouterInterface.h"
 #include "ACL/Transport/MessageRouterObserverInterface.h"
 #include "ACL/Transport/TransportInterface.h"
@@ -48,6 +50,7 @@ public:
      * Constructor.
      * @param authDelegate An implementation of an AuthDelegate, which will provide valid access tokens with which
      * the MessageRouter can authorize the client to AVS.
+     * @param attachmentManager The AttachmentManager, which allows ACL to write attachments received from AVS.
      * @param avsEndpoint The endpoint to connect to AVS.
      * @param sendExecutor An Executor on which all incoming requests will be submitted to be sent to the server.
      * @param receiveExecutor An Executor on which all outgoing responses will be submitted to be sent to client
@@ -55,6 +58,7 @@ public:
      */
     MessageRouter(
             std::shared_ptr<AuthDelegateInterface> authDelegate,
+            std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
             const std::string& avsEndpoint,
             std::shared_ptr<avsUtils::threading::Executor> sendExecutor,
             std::shared_ptr<avsUtils::threading::Executor> receiveExecutor);
@@ -82,7 +86,7 @@ public:
 
     void onServerSideDisconnect() override;
 
-    void consumeMessage(std::shared_ptr<avsCommon::avs::Message> message) override;
+    void consumeMessage(const std::string & contextId, const std::string & message) override;
 
 private:
     /**
@@ -98,6 +102,7 @@ private:
      */
     virtual std::shared_ptr<TransportInterface> createTransport(
             std::shared_ptr<AuthDelegateInterface> authDelegate,
+            std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
             const std::string& avsEndpoint,
             MessageConsumerInterface* messageConsumerInterface,
             TransportObserverInterface* transportObserverInterface) = 0;
@@ -105,7 +110,7 @@ private:
     /**
      * Notify the connection observer when the status has changed.
      * Architectural note:
-     *  * A derived class cannot access the required observer method directly due a friend relationship at the base
+     *  @li A derived class cannot access the required observer method directly due a friend relationship at the base
      *    class level.  However this method bridges the gap, and allows the observer's public interface to remain
      *    unchanged.
      *
@@ -117,13 +122,14 @@ private:
     /**
      * Notify the message observer of an incoming message from AVS.
      * Architectural note:
-     *  * A derived class cannot access the required observer method directly due a friend relationship at the base
+     *  @li A derived class cannot access the required observer method directly due a friend relationship at the base
      *    class level.  However this method bridges the gap, and allows the observer's public interface to remain
      *    unchanged.
      *
-     * @param message The message that was received from AVS.
+     * @param contextId The context id for the current message.
+     * @param message The AVS message in string representation.
      */
-    void notifyObserverOnReceive(std::shared_ptr<avsCommon::avs::Message> message);
+    void notifyObserverOnReceive(const std::string & contextId, const std::string & message);
 
     /**
      * Creates a new transport, and begins the connection process. The new transport immediately becomes the active
@@ -171,6 +177,9 @@ private:
 
     /// Executor to execute sending any callbacks to the client.
     std::shared_ptr<avsUtils::threading::Executor> m_receiveExecutor;
+
+    /// The attachment manager.
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
 };
 
 } // namespace acl

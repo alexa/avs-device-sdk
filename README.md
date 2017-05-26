@@ -1,6 +1,8 @@
-## Alexa Client SDK v0.3
+## Alexa Client SDK v0.4
 
-This release of the Alexa Client SDK for C++ provides components for authentication and communications with the Alexa Voice Service (AVS), specifically AuthDelegate, Alexa Communications Library (ACL), Alexa Directive Sequencer Library (ADSL), Activity Focus Manager Library (AFML), and associated APIs.
+This release of the Alexa Client SDK for C++ provides components for authentication and communications with the Alexa Voice Service (AVS), specifically AuthDelegate, Alexa Communications Library (ACL), Alexa Directive Sequencer Library (ADSL), Activity Focus Manager Library (AFML), Audio Input Manager (AIP), Wake Word Detector (WWD), and associated APIs.
+
+Additionally, this release includes `SpeechSynthesizer`, an implementation of the `SpeechRecognizer` capability agent, and implements a reference `MediaPlayer` based on [GStreamer](https://gstreamer.freedesktop.org/) for audio playback.
 
 ## Overview
 
@@ -62,7 +64,13 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 * [CMake 3.0](https://cmake.org/download/) or later
 * [libcurl 7.50.2](https://curl.haxx.se/download.html) or later
 * [nghttp2 1.0](https://github.com/nghttp2/nghttp2) or later
-* [OpenSSL 1.0.2](https://www.openssl.org/source/) or later **OR** [LibreSSL 2.5.0](https://www.libressl.org/) or later  
+* [OpenSSL 1.0.2](https://www.openssl.org/source/) or later
+
+Building the reference implementation of the `MediaPlayerInterface` (the class `MediaPlayer`) is optional, but requires:
+* [GStreamer 1.8](https://gstreamer.freedesktop.org/documentation/installing/index.html) or later and the following GStreamer plug-ins:  
+  * [GStreamer Base Plugins 1.8](https://gstreamer.freedesktop.org/releases/gst-plugins-base/1.8.0.html) or later.
+  * [GStreamer Good Plugins 1.8](https://gstreamer.freedesktop.org/releases/gst-plugins-good/1.8.0.html) or later.
+* Installation of PulseAudio, including development libraries (except on MacOS where `osxaudiosink` is used, instead).
 
 ## Obtain LWA Credentials
 
@@ -102,7 +110,7 @@ After adjusting the configuration, follow the instructions for your OS to create
 
 ## Create an Out-of-Source Build
 
-The following instructions assume that all requirements and dependencies are met and that you have cloned the repository (or saved the tarball locally).  
+The following instructions assume that all requirements and dependencies are met and that you have cloned the repository (or saved the tarball locally).
 
 ### CMake Build Types and Options  
 
@@ -115,7 +123,9 @@ The following build types are supported:
 To specify a build type, use this command in place of step 4 below (see [Build for Generic Linux](#generic-linux) or [Build for macOS](#build-for-macosß)):
 `cmake <path-to-source> -DCMAKE_BUILD_TYPE=<build-type>`  
 
-Include these options to build with the [KITT.ai](https://github.com/Kitt-AI/snowboy) wake word detector:
+### Build with the KITT.ai Wake Word Detector
+
+These options are required to build with the [KITT.ai](https://github.com/Kitt-AI/snowboy) wake word detector:
 
 * `-DKITTAI_KEY_WORD_DETECTOR=<ON or OFF>` - Specifies whether to build and enable the KITT.ai wake word detector.  
 * `-DKITTAI_KEY_WORD_DETECTOR_LIB_PATH=<path-to-kittai-lib>` - The path to the KITT.ai library.  
@@ -132,6 +142,17 @@ cmake <path-to-source> -DKITTAI_KEY_WORD_DETECTOR=ON -DKITTAI_KEY_WORD_DETECTOR_
 * macOS -  `brew install homebrew/science/openblas`
 
 **Note**: To list all available CMake options, use the following command: `-LH`.
+
+### Building with `MediaPlayer`
+
+`MediaPlayer` (the reference implementation of the `MediaPlayerInterface`) is based upon [GStreamer](https://gstreamer.freedesktop.org/), and is not built by default.  To build 'MediaPlayer' the `-DGSTREAMER_MEDIA_PLAYER=ON` option must be specified to CMake.  Here is an example cmake command:
+
+```
+cmake <path-to-source> -DGSTREAMER_MEDIA_PLAYER=ON.
+```
+
+**NOTE**: If [GStreamer](https://gstreamer.freedesktop.org/) is not installed and detected by CMake, the `MediaPlayer` build is skipped even if the   
+`-DGSTREAMER_MEDIA_PLAYER=ON` option is specified.  see [**Minimum Requirements and Dependencies **](#minimum-requirements-and-dependencies) for details.
 
 ### Build for Generic Linux
 
@@ -181,7 +202,7 @@ Ensure that all tests are passed before you begin integration testing.
 
 Integration tests ensure that your build can make a request and receive a response from AVS. **All requests to AVS require auth credentials.**  
 
-**Important**: Integration tests for v0.3 reference an `AlexaClientSDKConfig.json` file, which you must create.
+**Important**: Integration tests reference an `AlexaClientSDKConfig.json` file, which you must create.
 See the `Create the AlexaClientSDKConfig.json file` section (above), if you have not already done this.
 
 **Note**: If the project was built with the KITT.ai wake word detector, the following files must be downloaded from [GitHub](https://github.com/Kitt-AI/snowboy/tree/master/resources) and placed in `Integration/inputs/KittAiModels` for the integration tests to run properly:
@@ -301,7 +322,17 @@ By default libcurl is built with paths to a CA bundle and a directory containing
 
 ## Release Notes
 
-v0.3 of the Alexa Client SDK includes components for authentication, communications, message orchestration, and focus management. These include AuthDelegate, ACL, ADSL, AFML, AIP, SDS, and associated APIs.
+v0.4 release 5/24/2017:
+
+* Added the `SpeechSynthesizer`, an implementation of the `SpeechRecognizer` capability agent.  
+* Implemented a reference `MediaPlayer` based on [GStreamer](https://gstreamer.freedesktop.org/) for audio playback.
+  * Added the `MediaPlayerInterface` that allows you to implement your own media player.  
+* Updated `ACL` to support asynchronous receipt of audio attachments from AVS.  
+* Bug Fixes:  
+  * Some intermittent unit test failures were fixed.  
+* Known Issues:  
+  * `ACL`'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed.
+  * When an `AttachmentReader` does not deliver data for prolonged periods `MediaPlayer` may not resume playing the delayed audio.
 
 v0.3 released 5/17/2017:
 

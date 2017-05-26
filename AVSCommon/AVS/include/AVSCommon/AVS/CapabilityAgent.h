@@ -23,6 +23,7 @@
 #include <memory>
 
 #include "AVSCommon/AVS/NamespaceAndName.h"
+#include "AVSCommon/ExceptionEncounteredSenderInterface.h"
 #include "AVSCommon/SDKInterfaces/ChannelObserverInterface.h"
 #include "AVSCommon/SDKInterfaces/ContextRequesterInterface.h"
 #include "AVSCommon/SDKInterfaces/StateProviderInterface.h"
@@ -44,14 +45,16 @@ namespace avs {
 * @li @c ContextRequesterInterface: To request context from the @c ContextManager,
 * as necessary.
 */
-class CapabilityAgent
-        : public sdkInterfaces::DirectiveHandlerInterface, public sdkInterfaces::ChannelObserverInterface,
-          public sdkInterfaces::StateProviderInterface, public sdkInterfaces::ContextRequesterInterface {
+class CapabilityAgent :
+        public sdkInterfaces::DirectiveHandlerInterface,
+        public sdkInterfaces::ChannelObserverInterface,
+        public sdkInterfaces::StateProviderInterface,
+        public sdkInterfaces::ContextRequesterInterface {
 public:
     /**
      * Destructor.
      */
-    virtual ~CapabilityAgent();
+    virtual ~CapabilityAgent() = default;
 
     /*
      * DirectiveHandlerInterface functions.
@@ -62,10 +65,9 @@ public:
      * @c DirectiveHandlerInterface functions call the functions of the same name with the
      * @c DirectiveAndResultInterface as the argument.
      */
-    void handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) override final;
-
-    void preHandleDirective(std::shared_ptr<AVSDirective> directive,
-                            std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> result) override final;
+    void preHandleDirective(
+            std::shared_ptr<AVSDirective> directive,
+            std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> result) override final;
 
     bool handleDirective(const std::string &messageId) override final;
 
@@ -86,46 +88,56 @@ protected:
      * Constructor for a Capability Agent.
      *
      * @param nameSpace The namespace of the capability agent.
+     * @param exceptionEncounteredSender Object to use to send ExceptionEncountered messages.
      */
-    CapabilityAgent(const std::string &nameSpace);
+    CapabilityAgent(
+            const std::string &nameSpace,
+            std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
 
     /**
-     *  Contains a directive and handling result for use in mapping to a message id.
+     * CapabilityAgent maintains a map from messageId to instances of DirectiveInfo so that CapabilityAgents
+     * can track the processing of an @c AVSDirective.
      */
-    struct DirectiveAndResultInterface {
+    class DirectiveInfo {
+    public:
         /**
-         * This function checks whether this is a valid @c DirectiveAndResultInterface.  A
-         * @c DirectiveAndResultInterface is valid if it has a valid @c directive and a valid @c resultInterface.
+         * Constructor.
          *
-         * @return @c true if @c directive is not @c nullptr and @c resultInterface is not @c nullptr, else @c false.
+         * @param directiveIn The @c AVSDirective with which to populate this DirectiveInfo.
+         * @param resultIn The @c DirectiveHandlerResultInterface instance with which to populate this DirectiveInfo.
          */
-        operator bool() const;
+        DirectiveInfo(
+                std::shared_ptr <AVSDirective> directiveIn,
+                std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> resultIn);
+
+        /**
+         * Destructor.
+         */
+        virtual ~DirectiveInfo() = default;
 
         /// @c AVSDirective that is passed during preHandle.
         std::shared_ptr<AVSDirective> directive;
 
         /// @c DirectiveHandlerResultInterface.
-        std::shared_ptr<sdkInterfaces::DirectiveHandlerResultInterface> resultInterface;
+        std::shared_ptr<sdkInterfaces::DirectiveHandlerResultInterface> result;
     };
 
     /**
-      * Handle the action specified in @c AVSDirective. Once this has been called the @c DirectiveHandler should not
-      * expect to receive further calls regarding this directive.
-      *
-      * @note The implementation of this method MUST be thread-safe.
-      * @note The implementation of this method MUST return quickly. Failure to do so blocks the processing
-      * of subsequent @c AVSDirectives.
-      * @note The @c DirectiveHandlerResultInterface @c resultInterface of the @c directiveAndResultInterface
-      * will be set to @c nullptr
-      *
-      * @param directiveAndResultInterface The @c DirectiveAndResultInterface containing the @c AVSDirective to
-      *     process.
-      */
-    virtual void handleDirectiveImmediately(const DirectiveAndResultInterface &directiveAndResultInterface) = 0;
+     * Create a DirectiveInfo instance with which to track the handling of an @c AVSDirective.
+     * @note This method is virtual to allow derived CapabilityAgent's to extend DirectiveInfo
+     * with additional information.
+     *
+     * @param directive The @c AVSDirective to be processed.
+     * @param result The object with which to communicate the outcome of processing the @c AVSDirective.
+     * @return A DirectiveInfo instance with which to track the processing of @c directive.
+     */
+    virtual std::shared_ptr<DirectiveInfo> createDirectiveInfo(
+            std::shared_ptr <AVSDirective> directive,
+            std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> result);
 
     /**
      * Notification that a directive has arrived.  This notification gives the DirectiveHandler a chance to
-     * prepare for handling the @c AVSDirective present in the @c DirectiveAndResultInterface.
+     * prepare for handling of an @c AVSDirective.
      * If an error occurs during the pre-Handling phase and that error should cancel the handling of subsequent
      * @c AVSDirectives with the same @c DialogRequestId, the @c DirectiveHandler should call the @c setFailed method
      * on the @c result instance passed in to this call.
@@ -134,47 +146,43 @@ protected:
      * @note The implementation of this method MUST return quickly. Failure to do so blocks the processing
      * of subsequent @c AVSDirectives.
      *
-     * @param directiveAndResultInterface The @c DirectiveAndResultInterface containing the @c AVSDirective and the
-     * @c DirectiveHandlerResultInterface.
+     * @param info The @c DirectiveInfo instance for the @c AVSDirective to process.
      */
-    virtual void preHandleDirective(const DirectiveAndResultInterface &directiveAndResultInterface) = 0;
+    virtual void preHandleDirective(std::shared_ptr<DirectiveInfo> info) = 0;
 
     /**
-     * Handle the action specified by the directive in @c DirectiveAndResultInterface. The handling of subsequent
-     * directives with the same @c DialogRequestId may be blocked until the @c DirectiveHandler calls the
-     * @c setSucceeded() method of the @c DirectiveHandlingResult present in the @c DirectiveAndResultInterface.
-     * If handling of this directive fails @c setFailed should be called to indicate a failure.
+     * Handle the action specified by the @c AVSDirective in @c info. The handling of subsequent directives with
+     * the same @c DialogRequestId may be blocked until the @c DirectiveHandler calls the @c setSucceeded() method
+     * of the @c DirectiveHandlingResult present in @c info. If handling of this directive fails @c setFailed()
+     * should be called to indicate a failure.
      *
      * @note The implementation of this method MUST be thread-safe.
      * @note The implementation of this method MUST return quickly. Failure to do so blocks the processing
      * of subsequent @c AVSDirectives.
      *
-     * @param directiveAndResultInterface The @c DirectiveAndResultInterface containing the @c AVSDirective and the
-     * @c DirectiveHandlerResultInterface.
+     * @param info The @c DirectiveInfo instance for the @c AVSDirective to process.
      */
-    virtual void handleDirective(const DirectiveAndResultInterface &directiveAndResultInterface) = 0;
+    virtual void handleDirective(std::shared_ptr<DirectiveInfo> info) = 0;
 
     /**
-     * Cancel an ongoing @c preHandleDirective or @c handleDirective operation for the specified @c AVSDirective. Once
-     * this has been called the @c DirectiveHandler should not expect to receive further calls regarding this
-     * directive.
+     * Cancel an ongoing @c preHandleDirective() or @c handleDirective() operation for the @c AVSDirective in
+     * @info. Once this has been called the @c CapabilityAgent should not expect to receive further calls
+     * regarding this directive.
      *
      * @note The implementation of this method MUST be thread-safe.
      * @note The implementation of this method MUST return quickly. Failure to do so blocks the processing
      * of subsequent @c AVSDirectives.
      *
-     * @param directiveAndResultInterface The @c DirectiveAndResultInterface containing the @c AVSDirective and the
-     * @c DirectiveHandlerResultInterface.
+     * @param info The @c DirectiveInfo instance for the @c AVSDirective to process.
      */
-    virtual void cancelDirective(const DirectiveAndResultInterface &directiveAndResultInterface) = 0;
+    virtual void cancelDirective(std::shared_ptr<DirectiveInfo> info) = 0;
 
     /**
      * This function releases resources associated with the @c AVSDirective which is no longer in use by a
      * @c CapabilityAgent.
      *
-     * @note This function should be called at from @c handleDirective() and @c cancelDirective()
-     * implementations after the status of @c handleDirective or @c cancelDirective() has been reported to the
-     * directive sequencer.
+     * @note This function should be called from @c handleDirective() and @c cancelDirective()
+     * implementations after the outcome of @c handleDirective() or @c cancelDirective() has been reported.
      *
      * @param messageId The message Id of the @c AVSDirective.
      */
@@ -199,33 +207,20 @@ protected:
     /// The namespace of the capability agent.
     const std::string m_namespace;
 
+    /// Object to use to send exceptionEncountered messages
+    std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> m_exceptionEncounteredSender;
+
 private:
     /**
-     * Returns a @c DirectiveAndResultInterface object for the provided @c messageId.
+     * Find the DirectiveInfo instance (if any) for the specified messsageId.
      *
-     * If @c directive and @c result are provided (both @c != @c nullptr), this function tries to add a new entry for
-     * @c messageId to the map and returns it.  If an entry already exists, an error is logged and and an invalid
-     * @c DirectiveAndResultInterface is returned.
-     *
-     * If @c directive and @c result are not provided (both @c == @c nullptr), this function looks for an existing
-     * entry for @c messageId in the map.  If an entry exists, it is returned.  If an entry does not exist, an error
-     * is logged and an invalid @c DirectiveAndResultInterface is returned.
-     *
-     * @param messageId The message id of a @c AVSDirective.
-     * @param directive @c AVSDirective that is passed during @c preHandle().  This parameter is optional and defaults
-     *     @c nullptr.
-     * @param result @c DirectiveHandlerResultInterface that is passed during @c preHandle().  This parameter is
-     *     optional and defaults to @c nullptr.
-     * @return the @c the DirectiveAndResultInterface if a associated with the messageId else an invalid
-     *     @c DirectiveAndResultInterface.
+     * @param messageId The messageId value to find DirectiveInfo for.
+     * @return The DirectiveInfo instance for @c messageId.
      */
-    DirectiveAndResultInterface getDirectiveAndResult(
-        const std::string& messageId,
-        std::shared_ptr<avsCommon::AVSDirective> directive = nullptr,
-        std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> result = nullptr);
+    std::shared_ptr<DirectiveInfo> getDirectiveInfo(const std::string& messageId);
 
     /// Map of message Id to @c DirectiveAndResultInterface.
-    std::unordered_map <std::string, DirectiveAndResultInterface> m_directiveAndResultInterfaceMap;
+    std::unordered_map <std::string, std::shared_ptr<DirectiveInfo>> m_directiveInfoMap;
 
     /// Mutex to protect message Id to @c DirectiveAndResultInterface mapping.
     std::mutex m_mutex;

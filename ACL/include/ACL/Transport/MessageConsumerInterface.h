@@ -20,8 +20,6 @@
 
 #include <memory>
 
-#include <AVSCommon/AVS/Message.h>
-
 namespace alexaClientSDK {
 namespace acl {
 
@@ -37,9 +35,11 @@ public:
 
     /**
      * Called when a message has been received from AVS.
-     * @param message The message.
+     *
+     * @param contextId The context id for the current message.
+     * @param message The AVS message in string representation.
      */
-    virtual void consumeMessage(std::shared_ptr<avsCommon::avs::Message> message) = 0;
+    virtual void consumeMessage(const std::string & contextId, const std::string & message) = 0;
 };
 
 } // acl

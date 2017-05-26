@@ -1,0 +1,70 @@
+/*
+ * MediaPlayerObserverInterface.h
+ *
+ * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+#include <string>
+
+#ifndef ALEXA_CLIENT_SDK_AVSCCOMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_OBSERVER_INTERFACE_H_
+#define ALEXA_CLIENT_SDK_AVSCCOMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_OBSERVER_INTERFACE_H_
+
+namespace alexaClientSDK {
+namespace avsCommon {
+namespace utils {
+namespace mediaPlayer {
+
+/**
+ * A player observer will receive notifications when the player starts playing or when it stops playing a stream.
+ * A pointer to the @c MediaPlayerObserverInterface needs to be provided to a @c MediaPlayer for it to notify the observer.
+ */
+class MediaPlayerObserverInterface {
+public:
+    /**
+    * Destructor.
+    */
+    virtual ~MediaPlayerObserverInterface() = default;
+
+    /**
+    * This is an indication to the observer that the @c MediaPlayer has starting playing the audio data.
+    *
+    * @note The observer has to return soon. Otherwise this could block the @c MediaPlayer from processing other signals
+    * or playback.
+    */
+    virtual void onPlaybackStarted() = 0;
+
+    /**
+    * This is an indication to the observer that the @c MediaPlayer has starting finished the audio data.
+    *
+    * @note The observer has to return soon. Otherwise this could block the @c MediaPlayer from processing other signals
+    * or playback.
+    */
+    virtual void onPlaybackFinished() = 0;
+
+    /**
+    * This is an indication to the observer that the @c MediaPlayer encountered an error. Errors can occur during
+    * playback.
+    *
+    * @note The observer has to return soon. Otherwise this could block the @c MediaPlayer from processing other signals
+    * or playback.
+    */
+    virtual void onPlaybackError(std::string error) = 0;
+};
+
+} // namespace mediaPlayer
+} // namespace utils
+} // namespace avsCommon
+} // namespace alexaClientSDK
+
+#endif // ALEXA_CLIENT_SDK_AVSCCOMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_OBSERVER_INTERFACE_H_

@@ -215,10 +215,10 @@ public:
 
     /// @name CapabilityAgent/DirectiveHandlerInterface Functions
     /// @{
-    void handleDirectiveImmediately(const DirectiveAndResultInterface& directive) override;
-    void preHandleDirective(const DirectiveAndResultInterface& directive) override;
-    void handleDirective(const DirectiveAndResultInterface& directive) override;
-    void cancelDirective(const DirectiveAndResultInterface& directive) override;
+    void handleDirectiveImmediately(std::shared_ptr<avsCommon::AVSDirective> directive) override;
+    void preHandleDirective(std::shared_ptr<DirectiveInfo> info) override;
+    void handleDirective(std::shared_ptr<DirectiveInfo> info) override;
+    void cancelDirective(std::shared_ptr<DirectiveInfo> info) override;
     void onDeregistered() override;
     /// @}
 
@@ -235,7 +235,7 @@ private:
      * @param messageSender The object to use for sending events.
      * @param contextManager The AVS Context manager used to generate system context for events.
      * @param focusManager The channel focus manager used to manage usage of the dialog channel.
-     * @param exceptionSender The object to use for sending exceptions.
+     * @param exceptionEncounteredSender The object to use for sending ExceptionEncountered messages.
      * @param defaultAudioProvider A default @c avsCommon::AudioProvider to use for ExpectSpeech if the previous
      *     provider is not readable (@c AudioProvider::alwaysReadable).  This parameter is optional, and ignored if set
      *     to @c AudioProvider::null().
@@ -249,7 +249,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
-        std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionSender,
+        std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         AudioProvider defaultAudioProvider);
 
     /**
@@ -264,18 +264,16 @@ private:
     /**
      * This function handles a STOP_CAPTURE directive.
      *
-     * @param directiveAndResult The @c DirectiveAndResultInterface containing the @c AVSDirective and the
-     *     @c DirectiveHandlerResultInterface.
+     * @param info The @c DirectiveInfo containing the @c AVSDirective and the @c DirectiveHandlerResultInterface.
      */
-    void handleStopCaptureDirective(const DirectiveAndResultInterface& directiveAndResult);
+    void handleStopCaptureDirective(std::shared_ptr<DirectiveInfo> info);
 
     /**
      * This function handles a EXPECT_SPEECH directive.
      *
-     * @param directiveAndResult The @c DirectiveAndResultInterface containing the @c AVSDirective and the
-     *     @c DirectiveHandlerResultInterface.
+     * @param info The @c DirectiveInfo containing the @c AVSDirective and the @c DirectiveHandlerResultInterface.
      */
-    void handleExpectSpeechDirective(const DirectiveAndResultInterface& directiveAndResult);
+    void handleExpectSpeechDirective(std::shared_ptr<DirectiveInfo> info);
 
     /**
      * @name Executor Thread Functions
@@ -339,17 +337,12 @@ private:
      *     (the default), streaming will continue until any existing data in the buffer has been streamed.  If this
      *     flag is set to @c true, existing data in the buffer which has not already been streamed will be discarded,
      *     and streaming will stop immediately.
-     * @param directive The @c AVSDirective for this call.  This parameter can be @c nullptr, meaning the call did not
+     * @param info The @c DirectiveInfo for this call.  This parameter can be @c nullptr, meaning the call did not
      *     come from a directive, and no cleanup is needed.
-     * @param result The object to use for reporting the result of handling this directive.  This parameter can be
-     *     @c nullptr, meaning the call did not come from a directive, and no reporting is needed.
      * @return @c true if called in the correct state and a Recognize Event's audio streaming was stopped successfully,
      *     else @c false.
      */
-    bool executeStopCapture(
-        bool stopImmediately = false,
-        std::shared_ptr<avsCommon::AVSDirective> directive = nullptr,
-        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> resultInterface = nullptr);
+    bool executeStopCapture(bool stopImmediately = false, std::shared_ptr<DirectiveInfo> info = nullptr);
 
     /**
      * This function forces the @c AudioInputProcessor back to the @c IDLE state.  This function can be called in any
@@ -367,17 +360,12 @@ private:
      *
      * @param timeout The number of milliseconds to wait for a Recognize event.
      * @param initiator The initiator json string from the ExpectSpeech directive.
-     * @param directive The @c AVSDirective for this call.
-     * @param result The object to use for reporting the result of handling this directive.  This parameter can be
-     *     @c nullptr, meaning the call did not come from a directive, and no reporting is needed.
+     * @param info The @c DirectiveInfo for this call.
      * @return @c true if called in the correct state and the state had changed to @c EXPECTING_SPEECH or
      *     @c RECOGNIZING, else @c false.
      */
     bool executeExpectSpeech(
-        std::chrono::milliseconds timeout,
-        std::string initiator,
-        std::shared_ptr<avsCommon::AVSDirective> directive,
-        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result = nullptr);
+            std::chrono::milliseconds timeout, std::string initiator, std::shared_ptr<DirectiveInfo> info);
 
     /**
      * This function is called when @c m_expectingSpeechTimer expires.  It will send an ExpectSpeechTimedOut event.
@@ -405,6 +393,13 @@ private:
      */
     void setState(State state);
 
+    /**
+     * Remove a directive from the map of message IDs to DirectiveInfo instances.
+     *
+     * @param info The @c DirectiveInfo containing the @c AVSDirective whose message ID is to be removed.
+     */
+    void removeDirective(std::shared_ptr<DirectiveInfo> info);
+
     /// @}
 
     /// The Directive Sequencer to register with for receiving directives.
@@ -418,9 +413,6 @@ private:
 
     /// The @c FocusManager used to manage usage of the dialog channel.
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_focusManager;
-
-    /// An object to use for sending AVS Exception messages.
-    std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> m_exceptionSender;
 
     /// Timer which runs in the @c EXPECTING_SPEECH state.
     avsCommon::utils::timing::Timer m_expectingSpeechTimer;

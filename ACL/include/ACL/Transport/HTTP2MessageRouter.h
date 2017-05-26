@@ -20,7 +20,8 @@
 
 #include <memory>
 #include <string>
-#include <AVSCommon/AttachmentManagerInterface.h>
+
+#include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 
 #include "ACL/Transport/MessageRouter.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
@@ -42,6 +43,7 @@ public:
      * @param avsEndpoint The URL for the AVS endpoint of this object.
      */
     HTTP2MessageRouter(std::shared_ptr<AuthDelegateInterface> authDelegate,
+                       std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
                        const std::string& avsEndpoint = "https://avs-alexa-na.amazon.com");
 
     /**
@@ -52,12 +54,10 @@ public:
 private:
     std::shared_ptr<TransportInterface> createTransport(
             std::shared_ptr<AuthDelegateInterface> authDelegate,
+            std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
             const std::string& avsEndpoint,
             MessageConsumerInterface* messageConsumerInterface,
             TransportObserverInterface* transportObserverInterface) override;
-
-    /// The attachment manager.
-    std::shared_ptr<avsCommon::AttachmentManagerInterface> m_attachmentManager;
 };
 
 } // acl

@@ -28,23 +28,23 @@ namespace utils {
 namespace timing {
 namespace test {
 
+/// Specifies the expected timing accuracy (timestamps must be within +/- ACCURACY of expected values).
+static const auto ACCURACY = std::chrono::milliseconds(15);
+
 /// Used for cases where the task should return immediately, without delay.
 static const auto NO_DELAY = std::chrono::milliseconds(0);
 
 /// Used for cases where the task duration or timer period should be shorter than MEDIUM_DELAY and LONG_DELAY.
-static const auto SHORT_DELAY = std::chrono::milliseconds(20);
+static const auto SHORT_DELAY = ACCURACY * 2;
 
 /// Used for cases where the task duration or timer period should be greater than SHORT_DELAY and less than LONG_DELAY.
-static const auto MEDIUM_DELAY = std::chrono::milliseconds(30);
+static const auto MEDIUM_DELAY = SHORT_DELAY + ACCURACY;
 
 /**
  * Used for cases where the task duration or timer period should be greater than MEDIUM_DELAY, and greater than two
  * SHORT_DELAYs.
  */
-static const auto LONG_DELAY = std::chrono::milliseconds(45);
-
-/// Specifies the expected timing accuracy (timestamps must be within +/- ACCURACY of expected values).
-static const auto ACCURACY = std::chrono::milliseconds(10);
+static const auto LONG_DELAY = SHORT_DELAY * 2 + ACCURACY;
 
 /**
  * Used to limit the amount of time tests will wait for an operation to finish.  This timeout will only be hit if a

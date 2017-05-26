@@ -36,7 +36,6 @@
 #include "AIP/AudioInputProcessor.h"
 #include "AIP/AudioProvider.h"
 #include "AIP/Initiator.h"
-#include "AVSCommon/AttachmentManager.h"
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h"
 #include "AVSCommon/AVS/BlockingPolicy.h"
 #include "AVSCommon/AVS/MessageRequest.h"
@@ -68,6 +67,7 @@ using namespace alexaClientSDK::adsl;
 using namespace alexaClientSDK::authDelegate;
 using namespace alexaClientSDK::avsCommon;
 using namespace alexaClientSDK::avsCommon::avs;
+using namespace alexaClientSDK::avsCommon::avs::attachment;
 using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 using namespace alexaClientSDK::avsUtils::initialization;
 using namespace capabilityAgent::aip;
@@ -522,14 +522,16 @@ protected:
         m_authDelegate->setAuthObserver(m_authObserver);
         m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
 
+        auto attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
         bool isEnabled = false;
-        m_messageRouter = std::make_shared<HTTP2MessageRouter>(m_authDelegate);
+        m_messageRouter = std::make_shared<HTTP2MessageRouter>(m_authDelegate, attachmentManager);
         m_directiveHandler = std::make_shared<TestDirectiveHandler>();
         m_directiveSequencer = DirectiveSequencer::create(m_directiveHandler);
         ASSERT_NE(nullptr, m_directiveSequencer);
         m_messageInterpreter = std::make_shared<MessageInterpreter>(
             m_directiveHandler,
-            m_directiveSequencer
+            m_directiveSequencer,
+            attachmentManager
             );
 
         m_compatibleAudioFormat.sampleRateHz = COMPATIBLE_SAMPLE_RATE;
@@ -744,7 +746,7 @@ protected:
  * @return A new @c AVSDirective, or nullptr if parsing the JSON fails.
  */
 static std::shared_ptr<AVSDirective> parseDirective(
-        const std::string& rawJSON, std::shared_ptr<AttachmentManagerInterface> attachmentManager) {
+        const std::string& rawJSON, std::shared_ptr<AttachmentManager> attachmentManager) {
 
     std::string directiveJSON;
     std::string headerJSON;
@@ -767,7 +769,7 @@ static std::shared_ptr<AVSDirective> parseDirective(
     jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_NAMESPACE_KEY, &dialogRequestId);
 
     auto header = std::make_shared<AVSMessageHeader>(nameSpace, name, messageId, dialogRequestId);
-    return AVSDirective::create(rawJSON, header, payloadJSON, attachmentManager);
+    return AVSDirective::create(rawJSON, header, payloadJSON, attachmentManager, "");
 }
 
 
@@ -849,7 +851,7 @@ void TestDirectiveHandler::sendExceptionEncountered(
     dp.type = TestDirectiveHandler::DirectiveParams::Type::EXCEPTION;
     dp.directive = parseDirective(
             unparsedDirective,
-            std::make_shared<AttachmentManager>(std::chrono::minutes(0)));
+            std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS));
     dp.exceptionUnparsedDirective = unparsedDirective;
     dp.exceptionError = error;
     dp.exceptionMessage = message;
@@ -2038,10 +2040,6 @@ TEST_F(AudioInputProcessorTest, holdToTalkMultiturnWithTimeOut) {
 
     // Check that ExpectSpeechTimeOut event has been sent.
     ASSERT_TRUE(checkSentEventName(m_avsConnectionManager, NAME_EXPECT_SPEECH_TIMED_OUT));
-
-    // Check that no prehandle and handle for setMute and Speak has reached the test SS. 
-    params = m_directiveHandler->waitForNext(DIRECTIVE_TIMEOUT_DURATION);
-    ASSERT_EQ(params.type, TestDirectiveHandler::DirectiveParams::Type::TIMEOUT);
 }
 
 /**

@@ -18,14 +18,10 @@
 #ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_MANAGER_H_
 #define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_MANAGER_H_
 
-#include <memory>
 #include <mutex>
-#include <string>
 #include <unordered_map>
 
-#include "AVSCommon/AVS/Attachment/Attachment.h"
-#include "AVSCommon/AVS/Attachment/AttachmentReader.h"
-#include "AVSCommon/AVS/Attachment/AttachmentWriter.h"
+#include "AVSCommon/AVS/Attachment/AttachmentManagerInterface.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -53,7 +49,7 @@ namespace attachment {
  *    the oldest Attachment to make space for the new one.  For a system reading and writing a small set of attachments
  *    at any given time, the AttachmentManager should not need to step in and take such action.
  */
-class AttachmentManager {
+class AttachmentManager : public AttachmentManagerInterface {
 public:
     /**
      * This is the default timeout value for attachments.  Any attachment which is inspected in the
@@ -84,64 +80,14 @@ public:
      */
     AttachmentManager(AttachmentType attachmentType);
 
-    /**
-     * Creates an attachmentId given two particular @c strings - the contextId and the contentId.
-     * Generally, contextId allows disambiguation when two attachment contentIds are not guaranteed to be unique.
-     * This function provides a consistent way for different parts of application code to combine contextId and
-     * contentId into a single string.  Clearly, both the reader and writer of a given attachment need to call this
-     * function with the same two strings.
-     *
-     * As an example of usage, if an application has several sources of attachments, for example two audio providers,
-     * then one pair of contextId / contentId strings might be: { "AudioProvider1", "Attachment1" }.  If the other
-     * audio provider creates an attachment, then the pair: { "AudioProvider2", "Attachment1" } allows the
-     * contextId to disambiguate what happens to be identical contentIds.
-     *
-     * If this function is called with one or both strings being empty, then the combine will not be performed.
-     * In the case of both strings being empty, an empty string will be returned.  If only one string is non-empty,
-     * then that string will be returned.
-     *
-     * @param contextId The contextId, which generally reflects the source of the @c Attachment.
-     * @param contentId The contentId, which is considered unique when paired with a particular contextId.
-     * @return The combined strings, which may be then used as a single attachmentId, per the logic outlined above.
-     */
-    static std::string generateAttachmentId(const std::string & contextId, const std::string & contentId);
+    std::string generateAttachmentId(const std::string & contextId, const std::string & contentId) const override;
 
-    /**
-     * Sets the timeout parameter which is used to ensure unused attachments are eventually cleaned up.  This
-     * time is specified in minutes.  An unused attachment is defined as an attachment for which only a reader or
-     * writer was created.  Such an Attachment is waiting to be either produced or consumed.
-     *
-     * If this function is not called, then the timeout is set to the default value
-     * @c ATTACHMENT_MANAGER_TIMOUT_MINUTES_DEFAULT.
-     *
-     * The timeout cannot be set lower than ATTACHMENT_MANAGER_TIMOUT_MINUTES_MINIMUM minutes, since too low a timeout
-     * could cause attachments to be removed before both reader and writer have had time to request it.
-     *
-     * @param timeoutMinutes The timeout, expressed in minutes.  If this is less than the value
-     * @c ATTACHMENT_MANAGER_TIMOUT_MINUTES_MINIMUM, then the setting will not be updated, and the function will return
-     * false.
-     * @return Whether the timeout was set ok.
-     */
-    bool setAttachmentTimeoutMinutes(std::chrono::minutes timeoutMinutes);
+    bool setAttachmentTimeoutMinutes(std::chrono::minutes timeoutMinutes) override;
 
-    /**
-     * Returns a pointer to an @c AttachmentWriter.
-     * @note Calls to @c createReader and @c createWriter may occur in any order.
-     *
-     * @param attachmentId The id of the @c Attachment.
-     * @return An @c AttachmentWriter.
-     */
-    std::unique_ptr<AttachmentWriter> createWriter(const std::string & attachmentId);
+    std::unique_ptr<AttachmentWriter> createWriter(const std::string & attachmentId) override;
 
-    /**
-     * Returns a pointer to an @c AttachmentReader.
-     * @note Calls to @c createReader and @c createWriter may occur in any order.
-     *
-     * @param attachmentId The id of the @c Attachment.
-     * @param policy The @c AttachmentReader policy, which determines the semantics of the @c AttachmentReader.read().
-     * @return An @c AttachmentReader.
-     */
-    std::unique_ptr<AttachmentReader> createReader(const std::string & attachmentId, AttachmentReader::Policy policy);
+    std::unique_ptr<AttachmentReader> createReader(
+            const std::string & attachmentId, AttachmentReader::Policy policy) override;
 
 private:
     /**

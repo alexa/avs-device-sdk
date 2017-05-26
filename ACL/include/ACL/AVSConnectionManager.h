@@ -22,13 +22,13 @@
 #include <memory>
 #include <string>
 
-#include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/AVS/MessageRequest.h>
+#include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 
 #include "ACL/Values.h"
 #include "ACL/AuthDelegateInterface.h"
 #include "ACL/ConnectionStatusObserverInterface.h"
-#include "ACL/MessageObserverInterface.h"
 #include "ACL/Transport/MessageRouterInterface.h"
 #include "ACL/Transport/MessageRouterObserverInterface.h"
 
@@ -82,7 +82,7 @@ public:
             create(std::shared_ptr<MessageRouterInterface> messageRouter,
                    bool isEnabled = true,
                    std::shared_ptr<ConnectionStatusObserverInterface> connectionStatusObserver = nullptr,
-                   std::shared_ptr<MessageObserverInterface> messageObserver = nullptr);
+                   std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> messageObserver = nullptr);
 
     /**
      * Enable the AVSConnectionManager object to make connections to AVS.  Once enabled, the object will attempt to
@@ -133,12 +133,12 @@ private:
      */
     AVSConnectionManager(std::shared_ptr<MessageRouterInterface> messageRouter,
                          std::shared_ptr<ConnectionStatusObserverInterface> connectionStatusObserver = nullptr,
-                         std::shared_ptr<MessageObserverInterface> messageObserver = nullptr);
+                         std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> messageObserver = nullptr);
 
     void onConnectionStatusChanged(const ConnectionStatus status,
                                    const ConnectionChangedReason reason) override;
 
-    void receive(std::shared_ptr<avsCommon::avs::Message> msg) override;
+    void receive(const std::string & contextId, const std::string & message) override;
 
     /// Internal state to indicate if the Connection object is enabled for making an AVS connection.
     std::atomic<bool> m_isEnabled;
@@ -147,7 +147,7 @@ private:
     std::shared_ptr<ConnectionStatusObserverInterface> m_connectionStatusObserver;
 
     /// Client-provided message listener, which will receive all messages sent from AVS.
-    std::shared_ptr<MessageObserverInterface> m_messageObserver;
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> m_messageObserver;
 
     /// Internal object that manages the actual connection to AVS.
     std::shared_ptr<MessageRouterInterface> m_messageRouter;

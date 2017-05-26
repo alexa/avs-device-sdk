@@ -18,7 +18,6 @@
 #ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_TRANSPORT_H_
 #define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_TRANSPORT_H_
 
-#include <AVSCommon/AVS/Message.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 
 #include "ACL/Transport/TransportInterface.h"
@@ -42,7 +41,7 @@ public:
     MOCK_METHOD0(isConnected, bool());
     MOCK_METHOD0(isPendingDisconnected, bool());
     MOCK_METHOD1(send, void(std::shared_ptr<avsCommon::avs::MessageRequest>));
-    MOCK_METHOD1(onAttachmentReceived, void(std::shared_ptr<avsCommon::avs::Message>));
+    MOCK_METHOD2(onAttachmentReceived, void(const std::string & contextId, const std::string & message));
 
     const int m_id;
 

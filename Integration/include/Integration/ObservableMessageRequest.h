@@ -29,14 +29,32 @@ namespace integration {
 
 class ObservableMessageRequest : public avsCommon::avs::MessageRequest {
 public:
+    /**
+     * Constructor.
+     */
     ObservableMessageRequest(const std::string & jsonContent,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader);
-    void onSendCompleted(Status) override;
-    Status getStatus() const;
-    bool waitFor(const Status, const std::chrono::seconds = std::chrono::seconds(10));
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader = nullptr);
+
+    void onSendCompleted(avsCommon::avs::MessageRequest::Status) override;
+
+    void onExceptionReceived(const std::string & exceptionMessage) override;
+
+    /**
+     * Utility function to get the status once the message has been sent.
+     */
+    avsCommon::avs::MessageRequest::Status getSendMessageStatus() const;
+
+    /**
+     * Function to allow waiting for a particular status back from the component sending the message to AVS.
+     */
+    bool waitFor(const avsCommon::avs::MessageRequest::Status, const std::chrono::seconds = std::chrono::seconds(10));
+
 private:
-    Status m_status;
+    /// The status of whether the message was sent to AVS ok.
+    avsCommon::avs::MessageRequest::Status m_sendMessageStatus;
+    /// Mutex used internally to enforce thread safety.
     mutable std::mutex m_mutex;
+    /// The cv used when waiting for a particular status of a message being sent.
     std::condition_variable m_wakeTrigger;
 };
 

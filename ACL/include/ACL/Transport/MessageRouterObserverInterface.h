@@ -20,8 +20,6 @@
 
 #include <memory>
 
-#include <AVSCommon/AVS/Message.h>
-
 #include "ACL/Values.h"
 
 namespace alexaClientSDK {
@@ -37,6 +35,7 @@ class MessageRouterObserverInterface {
 private:
     /**
      * This function will be called when the connection status changes.
+     *
      * @param status The current status of the connection.
      * @param reason The reason the connection status changed.
      */
@@ -45,9 +44,11 @@ private:
 
     /**
      * This function will be called when a Message arrives from AVS.
-     * @param msg The message that was received from AVS.
+     *
+     * @param contextId The contextId of the AVS message, which is used when acquiring attachments.
+     * @param message The AVS message that has been received.
      */
-    virtual void receive(std::shared_ptr<avsCommon::avs::Message> msg) = 0;
+    virtual void receive(const std::string & contextId, const std::string & message) = 0;
 
     /// The friend declaration.
     friend class MessageRouter;

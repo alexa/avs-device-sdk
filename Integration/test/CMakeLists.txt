@@ -7,14 +7,29 @@ set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${KITTAI_SOURCE_DIR}/include"
      "${KITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR}"
      "${AIP_SOURCE_DIR}/include"
+     "${SpeechSynthesizer_SOURCE_DIR}/include"
+     "${GST_INCLUDE_DIRS}"
+     "${AVSCommon_SOURCE_DIR}/Utils/include"
+     "${MediaPlayer_SOURCE_DIR}/include"
      "${CONTEXTMANAGER_SOURCE_DIR}/include")
 
-if(KITTAI_KEY_WORD_DETECTOR)
-    set(LINK_PATH ACL AuthDelegate AFML ADSL AIP KWD KITTAI ContextManager Integration gtest gmock)
-elseif(SENSORY_KEY_WORD_DETECTOR)
-    set(LINK_PATH ACL AuthDelegate AFML ADSL AIP KWD SENSORY ContextManager Integration gtest gmock)  
+if(GSTREAMER_MEDIA_PLAYER)
+    if(KITTAI_KEY_WORD_DETECTOR)
+        set(LINK_PATH ACL AuthDelegate AFML ADSL AIP KWD KITTAI ContextManager MediaPlayer SpeechSynthesizer Integration gtest gmock)
+    elseif(SENSORY_KEY_WORD_DETECTOR)
+        set(LINK_PATH ACL AuthDelegate AFML ADSL AIP KWD SENSORY ContextManager MediaPlayer SpeechSynthesizer Integration gtest gmock)  
+    else()
+        set(LINK_PATH ACL AuthDelegate AFML ADSL AIP ContextManager MediaPlayer SpeechSynthesizer Integration gtest gmock)
+    endif()
+    add_definitions(-DGSTREAMER_MEDIA_PLAYER)
 else()
-    set(LINK_PATH ACL AuthDelegate AFML ADSL AIP ContextManager Integration gtest gmock)
+    if(KITTAI_KEY_WORD_DETECTOR)
+        set(LINK_PATH ACL AuthDelegate AFML ADSL AIP KWD KITTAI ContextManager SpeechSynthesizer Integration gtest gmock)
+    elseif(SENSORY_KEY_WORD_DETECTOR)
+        set(LINK_PATH ACL AuthDelegate AFML ADSL AIP KWD SENSORY ContextManager SpeechSynthesizer Integration gtest gmock)  
+    else()
+        set(LINK_PATH ACL AuthDelegate AFML ADSL AIP ContextManager SpeechSynthesizer Integration gtest gmock)
+    endif()
 endif()
 
 
@@ -53,6 +68,7 @@ if(BUILD_TESTING)
             COMMAND AlexaCommunicationsLibraryTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
             COMMAND AlexaDirectiveSequencerLibraryTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
             COMMAND AudioInputProcessorIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
+            COMMAND SpeechSynthesizerIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
             COMMAND ${CTEST_CUSTOM_POST_TEST})
     message(STATUS "Please fill ${SDK_CONFIG_FILE_TARGET} before you execute integration tests.")
 endif()

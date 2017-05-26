@@ -109,7 +109,7 @@ static void printCurlDiagnostics() {
 
 HTTP2Transport::HTTP2Transport(std::shared_ptr<AuthDelegateInterface> authDelegate, const std::string& avsEndpoint,
         MessageConsumerInterface* messageConsumerInterface,
-        std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
         TransportObserverInterface* observer)
     : m_observer{observer},
       m_messageConsumer{messageConsumerInterface},
@@ -270,7 +270,7 @@ void HTTP2Transport::networkLoop() {
         if (m_isNetworkThreadRunning) {
             int multiWaitTimeoutMs = WAIT_FOR_ACTIVITY_TIMEOUT_MS;
 
-            int numberPausedStreams = 0;
+            size_t numberPausedStreams = 0;
             for (auto stream : m_activeStreams) {
                 if (stream.second->isPaused()) {
                     numberPausedStreams++;
@@ -388,9 +388,9 @@ void HTTP2Transport::cleanupFinishedStreams() {
             } else {
                 std::shared_ptr<HTTP2Stream> stream = m_activeStreams[message->easy_handle];
                 stream->notifyRequestObserver();
+                curl_multi_remove_handle(m_multi->handle, message->easy_handle);
                 m_activeStreams.erase(message->easy_handle);
                 m_streamPool.releaseStream(stream);
-                curl_multi_remove_handle(m_multi->handle, message->easy_handle);
             }
         }
     } while (message);

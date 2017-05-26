@@ -27,6 +27,7 @@ namespace alexaClientSDK {
 namespace adsl {
 
 using namespace avsCommon;
+using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsUtils;
 using namespace acl;
@@ -62,17 +63,19 @@ static void sendExceptionEncounteredHelper(
         errorDescription);
 }
 
-MessageInterpreter::MessageInterpreter(std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-        std::shared_ptr<DirectiveSequencerInterface> directiveSequencer):
+MessageInterpreter::MessageInterpreter(
+        std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        std::shared_ptr<DirectiveSequencerInterface> directiveSequencer,
+        std::shared_ptr<AttachmentManagerInterface> attachmentManager):
         m_exceptionEncounteredSender{exceptionEncounteredSender},
-        m_directiveSequencer{directiveSequencer} {
+        m_directiveSequencer{directiveSequencer}, m_attachmentManager{attachmentManager} {
 }
 
-void MessageInterpreter::receive(std::shared_ptr<avsCommon::avs::Message> message) {
+void MessageInterpreter::receive(const std::string & contextId, const std::string & message) {
 
     std::string directiveBody;
 
-    if (!lookupJsonValueHelper(message, message->getJSONContent(), JSON_MESSAGE_DIRECTIVE_KEY, &directiveBody)) {
+    if (!lookupJsonValueHelper(message, message, JSON_MESSAGE_DIRECTIVE_KEY, &directiveBody)) {
         return;
     }
 
@@ -107,25 +110,25 @@ void MessageInterpreter::receive(std::shared_ptr<avsCommon::avs::Message> messag
 
     auto avsMessageHeader =
             std::make_shared<AVSMessageHeader>(avsNamespace, avsName, avsMessageId, avsDialogRequestId);
-    std::shared_ptr<AVSDirective> avsDirective = AVSDirective::create(message->getJSONContent(), avsMessageHeader,
-                                                         payload, message->getAttachmentManager());
+    std::shared_ptr<AVSDirective> avsDirective = AVSDirective::create(message, avsMessageHeader,
+                                                         payload, m_attachmentManager, contextId);
     if (!avsDirective) {
         const std::string errorDescription = "AVSDirective is nullptr, failed to send to DirectiveSequencer";
         Logger::log(errorDescription);
-        sendExceptionEncounteredHelper(m_exceptionEncounteredSender, message->getJSONContent(), errorDescription);
+        sendExceptionEncounteredHelper(m_exceptionEncounteredSender, message, errorDescription);
         return;
     }
     m_directiveSequencer->onDirective(avsDirective);
 }
 
-bool MessageInterpreter::lookupJsonValueHelper(std::shared_ptr<avsCommon::avs::Message> aclMessage,
+bool MessageInterpreter::lookupJsonValueHelper(const std::string & avsMessage,
         const std::string& jsonMessageHeader,
         const std::string& lookupKey,
         std::string* outputValue) {
     if (!jsonUtils::lookupStringValue(jsonMessageHeader, lookupKey, outputValue)) {
         const std::string errorDescription = "Could not look up key from AVS JSON directive string: " + lookupKey;
         Logger::log(errorDescription);
-        sendExceptionEncounteredHelper(m_exceptionEncounteredSender, aclMessage->getJSONContent(), errorDescription);
+        sendExceptionEncounteredHelper(m_exceptionEncounteredSender, avsMessage, errorDescription);
         return false;
     }
     return true;

@@ -25,7 +25,8 @@ namespace alexaClientSDK {
 namespace acl {
 
 using namespace alexaClientSDK::avsUtils;
-using namespace alexaClientSDK::avsCommon::avs::attachment;
+using namespace avsCommon::avs;
+using namespace avsCommon::avs::attachment;
 
 /// MIME boundary string prefix in HTTP header.
 static const std::string BOUNDARY_PREFIX = "boundary=";
@@ -39,10 +40,26 @@ static const std::string AUTHORIZATION_HEADER = "Authorization: Bearer ";
 static const std::string ATTACHMENT_FIELD_NAME = "audio";
 /// The POST field name for message metadata
 static const std::string METADATA_FIELD_NAME = "metadata";
+/// The prefix for a stream contextId.
+static const std::string STREAM_CONTEXT_ID_PREFIX_STRING = "ACL_LOGICAL_HTTP2_STREAM_ID_";
+
+// Definition for the class static member variable.
+unsigned int HTTP2Stream::m_streamIdCounter = 1;
+
+/**
+ * A local function to help us emulate HTTP/2 stream ids increasing by two when incrementing.
+ * Invoking this function within an initialization section is more readable than writing something like {++(++id)}.
+ */
+static unsigned int incrementCounterByTwo(unsigned int* id) {
+    *id += 2;
+    return *id;
+}
 
 HTTP2Stream::HTTP2Stream(MessageConsumerInterface* messageConsumer,
-        std::shared_ptr<avsCommon::AttachmentManagerInterface> attachmentManager)
-    : m_parser{messageConsumer, attachmentManager} {
+         std::shared_ptr<AttachmentManager> attachmentManager)
+    : m_logicalStreamId{incrementCounterByTwo(&m_streamIdCounter)},
+      m_parser{messageConsumer, attachmentManager, STREAM_CONTEXT_ID_PREFIX_STRING + std::to_string(m_logicalStreamId)},
+      m_isPaused{false} {
 }
 
 bool HTTP2Stream::reset() {
@@ -159,10 +176,18 @@ size_t HTTP2Stream::writeCallback(char *data, size_t size, size_t nmemb, void *u
      * multipart headers.
      */
     if (HTTP2Stream::HTTPResponseCodes::SUCCESS_OK == stream->getResponseCode()) {
-        stream->m_parser.feed(data, numChars);
+        MimeParser::DataParsedStatus status = stream->m_parser.feed(data, numChars);
+
+        if (MimeParser::DataParsedStatus::OK == status) {
+            return numChars;
+        } else if (MimeParser::DataParsedStatus::INCOMPLETE == status) {
+            stream->m_isPaused = true;
+            return CURL_READFUNC_PAUSE;
+        } else if (MimeParser::DataParsedStatus::ERROR == status) {
+            return CURL_READFUNC_ABORT;
+        }
     } else {
-        auto jsonContent = std::string(data, numChars);
-        stream->m_currentRequest->onExceptionReceived(jsonContent);
+        stream->m_exceptionBeingProcessed.append(data, numChars);
     }
     return numChars;
 }
@@ -240,6 +265,11 @@ CURL* HTTP2Stream::getCurlHandle() {
 }
 
 void HTTP2Stream::notifyRequestObserver() {
+    if(m_exceptionBeingProcessed.length() > 0) {
+        m_currentRequest->onExceptionReceived(m_exceptionBeingProcessed);
+        m_exceptionBeingProcessed = "";
+    }
+
     long responseCode = getResponseCode();
 
     switch (responseCode) {

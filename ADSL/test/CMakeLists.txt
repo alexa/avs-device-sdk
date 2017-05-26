@@ -2,5 +2,7 @@ cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
 add_subdirectory("common")
 
+set(INCLUDE_PATH "${AVSCommon_SOURCE_DIR}/test" "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test")
+
 set(ADSL_TEST_LIBS ADSL ADSLTestCommon)
-discover_unit_tests("${AVSCommon_SOURCE_DIR}/test" "${ADSL_TEST_LIBS}")
+discover_unit_tests("${INCLUDE_PATH}" "${ADSL_TEST_LIBS}")

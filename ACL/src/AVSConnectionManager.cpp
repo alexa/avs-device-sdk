@@ -25,8 +25,9 @@
 namespace alexaClientSDK {
 namespace acl {
 
-std::shared_ptr<AVSConnectionManager>
+using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 
+std::shared_ptr<AVSConnectionManager>
 AVSConnectionManager::create(std::shared_ptr<MessageRouterInterface> messageRouter,
                              bool isEnabled,
                              std::shared_ptr<ConnectionStatusObserverInterface> connectionStatusObserver,
@@ -95,9 +96,9 @@ void AVSConnectionManager::onConnectionStatusChanged(const ConnectionStatus stat
     }
 }
 
-void AVSConnectionManager::receive(std::shared_ptr<avsCommon::avs::Message> msg) {
+void AVSConnectionManager::receive(const std::string & contextId, const std::string & message) {
     if(m_messageObserver) {
-        m_messageObserver->receive(msg);
+        m_messageObserver->receive(contextId, message);
     }
 }
 

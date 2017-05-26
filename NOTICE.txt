@@ -11,6 +11,10 @@ License, Version 2.0 (the "License"):
 - Alexa Communications Library (ACL)
 - Alexa Directive Sequencer Library (ADSL)
 - Activity Focus Manager Library (AFML)
+- Audio Input Processor (AIP)
+- Speech Synthesizer Capability Agent
+- Media Player
+- Key Word Detector (KWD)
 
 You may not use this file except in compliance with the License. A copy of
 the License is located at
