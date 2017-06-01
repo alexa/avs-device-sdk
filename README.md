@@ -250,7 +250,8 @@ In this step, we'll build a URL to exchange your **Client ID**, **Device Type ID
 
 1. Use this URL as your template:
    ```
-   https://www.amazon.com/ap/oa?client_id=<<Client_ID>>&scope=alexa%3Aall&scope_data=%7B%22alexa%3Aall%22%3A%7B%22productID%22%3A%22<<Device_Type_ID>>%22,%22productInstanceAttributes%22%3A%7B%22deviceSerialNumber%22%3A%22<<Device_Serial_Number>>%22%7D%7D%7D&response_type=code&redirect_uri=<<Allowed_Return_URL>>
+   https://www.amazon.com/ap/oa?client_id=<<Client_ID
+   &scope=alexa%3Aall&scope_data=%7B%22alexa%3Aall%22%3A%7B%22productID%22%3A%22<<Device_Type_ID>>%22,%22productInstanceAttributes%22%3A%7B%22deviceSerialNumber%22%3A%22<<Device_Serial_Number>>%22%7D%7D%7D&response_type=code&redirect_uri=<<Allowed_Return_URL>>
    ```
 2. Replace `<<Client_ID>>`, `<<Device_Type_ID>>`, and `<<Allowed_Return_URL>>` with the values you recorded in **Step 1**.
    **Note**: Some of these values may need to be URL encoded. If you don't have a tool, you can use a tool like [http://www.urlencoder.org](http://www.urlencoder.org).
@@ -259,7 +260,7 @@ In this step, we'll build a URL to exchange your **Client ID**, **Device Type ID
 5. When prompted, login with your Amazon Developer Account.
    **Note**: You may be taken to a confirmation page. If you are, click **Confirm**.
 6. This will redirect you to your **Allowed Return URL** with a query parameter specifying a `code` value.
-   **Note**: The URL should look like this `<<Allowed_Return_URL>>?code=<<code>>&scope=alexa%3Aall>>`
+   **Note**: The URL should look like this `<<Allowed_Return_URL>>?code=<<code>>&scope=alexa%3Aall`
 7. Copy the `code` value. You'll need this to obtain a refresh token.
 
 ### Step 3: Obtain a Refresh Token
