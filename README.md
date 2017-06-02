@@ -2,7 +2,9 @@
 
 This release of the Alexa Client SDK for C++ provides components for authentication and communications with the Alexa Voice Service (AVS), specifically AuthDelegate, Alexa Communications Library (ACL), Alexa Directive Sequencer Library (ADSL), Activity Focus Manager Library (AFML), Audio Input Manager (AIP), Wake Word Detector (WWD), and associated APIs.
 
-Additionally, this release includes `SpeechSynthesizer`, an implementation of the `SpeechRecognizer` capability agent, and implements a reference `MediaPlayer` based on [GStreamer](https://gstreamer.freedesktop.org/) for audio playback.
+Additionally, this release includes `SpeechSynthesizer`, an implementation of the `SpeechRecognizer` capability agent, and a reference implementation of `MediaPlayer` based on [GStreamer](https://gstreamer.freedesktop.org/) for audio playback.
+
+Native components for the following capability agents are **not** included in this release and will be added in future releases: `Alerts`, `AudioPlayer`, `PlaybackController`, `Speaker`, `Settings`, and `System`. However, it's important to note, this release does support directives from the referenced interfaces.
 
 ## Overview
 
@@ -13,24 +15,26 @@ The Alexa Client SDK provides a modern C++ (11 or later) interface for AVS that 
 * **Interface** - A collection of logically grouped messages called **directives** and **events**, which correspond to client functionality, such speech recognition, audio playback, and volume control.
 * **Directives** - Messages sent from AVS that instruct your product to take action.
 * **Events** - Messages sent from your product to AVS notifying AVS something has occurred.
-* **Downchannel** - A stream you create in your HTTP/2 connection, which is used to deliver directives from AVS to your product. The downchannel remains open in a half-closed state from the device and open from AVS for the life of the connection. The downchannel is primarily used to send cloud-initiated directives and audio attachments to your product.
+* **Downchannel** - A stream you create in your HTTP/2 connection, which is used to deliver directives from AVS to your product. The downchannel remains open in a half-closed state from the device and open from AVS for the life of the connection. The downchannel is primarily used to send cloud-initiated directives to your product.
 * **Cloud-initiated Directives** - Directives sent from AVS to your product. For example, when a user adjusts device volume from the Amazon Alexa App, a directive is sent to your product without a corresponding voice request.
 
-## SDK Architecture
+## SDK Components
 
 This architecture diagram illustrates the data flows between components that comprise the Alexa Client SDK.
 
-![SDK Architecture Diagram](https://images-na.ssl-images-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-voice-service/docs/avs-cpp-sdk-architecture.png)
+![SDK Architecture Diagram](https://images-na.ssl-images-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-voice-service/docs/avs-cpp-sdk-architecture-20170601.png)
 
-**Audio Signal Processor (ASP)** - Applies signal processing algorithms to both input and output audio channels. The applied algorithms are designed to produce clean audio data and include, but are not limited to: acoustic echo cancellation (AEC), beam forming (fixed or adaptive), voice activity detection (VAD), dynamic range compression (DRC), and noise reduction (NR). If a multi-microphone array is present, the ASP constructs and outputs a single data stream for the array.
+**Audio Signal Processor (ASP)** - Applies signal processing algorithms to both input and output audio channels. The applied algorithms are designed to produce clean audio data and include, but are not limited to: acoustic echo cancellation (AEC), beam forming (fixed or adaptive), voice activity detection (VAD), and dynamic range compression (DRC). If a multi-microphone array is present, the ASP constructs and outputs a single audio stream for the array.  
+
+**Shared Data Stream (SDS)** - A single producer, multi-consumer buffer that allows for the transport of any type of data between a single writer and one or more readers. SDS performs two key tasks: 1) it passes audio data between the audio front end (or Audio Signal Processor), the wake word engine, and the Alexa Communications Library (ACL) before sending to AVS; 2) it passes data attachments sent by AVS to specific capability agents via the ACL.
+
+SDS is implemented atop a ring buffer on a product-specific memory segment (or user-specified), which allows it to be used for in-process or interprocess communication. Keep in mind, the writer and reader(s) may be in different threads or processes.  
 
 **Wake Word Engine (WWE)** - Spots wake words in an input stream. It is comprised of two binary interfaces. The first handles wake word spotting (or detection), and the second handles specific wake word models (in this case "Alexa"). Depending on your implementation, the WWE may run on the system on a chip (SOC) or dedicated chip, like a digital signal processor (DSP).
 
-**Shared Audio Data** - Allows audio to be shared and proxied between the WWE and the AIP. It is a single writer, multiple reader interface, where each reader may be at different locations behind the writer.
+**Audio Input Processor (AIP)** - Handles audio input that is sent to AVS via the ACL. These include on-device microphones, remote microphones, an other audio input sources.  
 
-**Audio Input Processor (AIP)** - Manages the captured audio streamed to AVS. Input sources may include: on-product microphones, remote microphones, etc. The Alexa Client SDK expects a single audio input from the AIP.
-
-**Alexa Interaction Manager (AIM)** - Comprised of three components, the Alexa Communications Library (ACL), the Alexa Directive Sequencer Library (ADSL), and Activity Focus Manager Library (AFML), it handles communications with AVS and message routing to capability agents.
+The AIP also includes the logic to switch between different audio input sources. Only one audio input source can be sent to AVS at a given time.
 
 **Alexa Communications Library (ACL)** - Serves as the main communications channel between a client and AVS. The Performs two key functions:
 
@@ -39,7 +43,7 @@ This architecture diagram illustrates the data flows between components that com
 
 **Alexa Directive Sequencer Library (ADSL)**: Manages the order and sequence of directives from AVS, as detailed in the [AVS Interaction Model](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/interaction-model#channels). This component manages the lifecycle of each directive, and informs the Directive Handler (which may or may not be a Capability Agent) to handle the message.  
 
-See [**Appendix C**](#appendix-c-directive-lifecycle-diagram) for a diagram of the directive lifecycle.
+See [**Appendix B**](#appendix-b-directive-lifecycle-diagram) for a diagram of the directive lifecycle.
 
 **Activity Focus Manager Library (AFML)**: Provides centralized management of audiovisual focus for the device. Focus is based on channels, as detailed in the [AVS Interaction Model](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/interaction-model#channels), which are used to govern the prioritization of audiovisual inputs and outputs.
 
@@ -65,48 +69,51 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 * [libcurl 7.50.2](https://curl.haxx.se/download.html) or later
 * [nghttp2 1.0](https://github.com/nghttp2/nghttp2) or later
 * [OpenSSL 1.0.2](https://www.openssl.org/source/) or later
+* [Doxygen 1.8.13](http://www.stack.nl/~dimitri/doxygen/download.html) or later (required to build API documentation)
 
 Building the reference implementation of the `MediaPlayerInterface` (the class `MediaPlayer`) is optional, but requires:
 * [GStreamer 1.8](https://gstreamer.freedesktop.org/documentation/installing/index.html) or later and the following GStreamer plug-ins:  
   * [GStreamer Base Plugins 1.8](https://gstreamer.freedesktop.org/releases/gst-plugins-base/1.8.0.html) or later.
   * [GStreamer Good Plugins 1.8](https://gstreamer.freedesktop.org/releases/gst-plugins-good/1.8.0.html) or later.
-* Installation of PulseAudio, including development libraries (except on MacOS where `osxaudiosink` is used, instead).
+* Installation of PulseAudio, including development libraries (except on MacOS where `osxaudiosink` is used, instead).  
 
-## Obtain LWA Credentials
+## Prerequisites
 
-To access AVS, your product needs to obtain Login with Amazon (LWA) credentials to establish a connection and make requests on behalf of the user. Instructions are available for **Remote Authorization** and **Local Authorization**.
+Before you create your build, you'll need to install some software that is required to run `AuthServer`. `AuthServer` is a minimal authorization server built in Python using Flask. It provides an easy way to obtain your first refresh token, which will be used for integration tests and obtaining access token that are required for all interactions with AVS.
 
-**Remote Authorization**
+**IMPORTANT NOTE**: `AuthServer` is for testing purposed only. A commercial product is expected to obtain Login with Amazon (LWA) credentials using the instructions provided on the Amazon Developer Portal for **Remote Authorization** and **Local Authorization**. For additional information, see [AVS Authorization](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/content/avs-api-overview#authorization).   
 
-* [Authorizing from a Companion Site](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/docs/authorizing-your-alexa-enabled-product-from-a-website)
-* [Authorizing from a Companion App](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/docs/authorizing-your-alexa-enabled-product-from-an-android-or-ios-mobile-app)
+### Step 1: Install `pip`  
 
-**Local Authorization**
+If `pip` isn't installed on your system, follow the detailed install instructions [here](https://packaging.python.org/installing/#install-pip-setuptools-and-wheel).  
 
-* [Authorizing from an AVS Product](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/docs/authorizing-your-alexa-enabled-mobile-app)
+### Step 2: Install `flask` and `requests`
 
-### Test Credentials
+For Windows run this command:  
 
-For initial testing, instructions are available to quickly obtain a `clientId`, `clientSecret`, and `refreshToken`. This method should not be used as a replacement for **Remote Authorization** or **Local Authorization**. For additional information, see [**Appendix A**](#appendix-a-obtain-test-credentials).
+```
+pip install flask requests  
+```  
 
-### Create the AlexaClientSDKConfig.json file
+For Unix/Mac run this command:  
 
-After you've obtained LWA credentials, you need to create `AlexaClientSDKConfig.json`:
+```
+pip install --user flask requests
+```  
 
-1. Navigate to the `Integration` folder.
-2. Create a file named `AlexaClientSDKConfig.json`.
-3. Populate the file with the following key/value pairs.  Replace all values prefixed with `INSERT_YOUR_`:
-   ```
-   {
-       "authDelegate" : {
-           "clientId" : "INSERT_YOUR_CLIENT_ID_HERE",
-           "refreshToken" : "INSERT_YOUR_REFRESH_TOKEN_HERE",
-           "clientSecret" : "INSERT_YOUR_CLIENT_SECRET_HERE"
-       }
-   }
-   ```
+### Step 3: Obtain Your Device Type ID, Cliend ID, and Client Secret  
 
-After adjusting the configuration, follow the instructions for your OS to create an out-of-source build.
+If you haven't already, follow these instructions to [register a product and create a security profile](https://github.com/alexa/alexa-avs-sample-app/wiki/Create-Security-Profile).
+
+Make sure you note the following, you'll need these later when you configure `AuthServer`:  
+
+* Device Type ID   
+* Client ID  
+* Client Secret
+
+**IMPORTANT NOTE**: Make sure that you've set your **Allowed Origins** and **Allowed Return URLs** in the **Web Settings Tab**:  
+* Allowed Origins: http://localhost:3000  
+* Allowed Return URLs: http://localhost:3000/authresponse  
 
 ## Create an Out-of-Source Build
 
@@ -143,7 +150,7 @@ cmake <path-to-source> -DKITTAI_KEY_WORD_DETECTOR=ON -DKITTAI_KEY_WORD_DETECTOR_
 
 **Note**: To list all available CMake options, use the following command: `-LH`.
 
-### Building with `MediaPlayer`
+### Build with an implementation of `MediaPlayer`
 
 `MediaPlayer` (the reference implementation of the `MediaPlayerInterface`) is based upon [GStreamer](https://gstreamer.freedesktop.org/), and is not built by default.  To build 'MediaPlayer' the `-DGSTREAMER_MEDIA_PLAYER=ON` option must be specified to CMake.  Here is an example cmake command:
 
@@ -161,8 +168,20 @@ To create an out-of-source build for Linux:
 1. Clone the repository (or download and extract the tarball).
 2. Create a build directory out-of-source. **Important**: The directory cannot be a subdirectory of the source folder.
 3. `cd` into your build directory.
-4. From your build directory, run `cmake` on the source directory to generate make files for the SDK: `cmake <path-to-source-code>`.
-5. From the build directory, run `make` to build the SDK.  
+4. From your build directory, run `cmake` on the source directory to generate make files for the SDK: `cmake <path-to-source-code>`.  
+5. After you've successfully run `cmake`, you should see the following message: `-- Please fill <path-to-build-directory>/Integration/AlexaClientSDKConfig.json before you execute integration tests.`. Open `Integration/AlexaClientSDKConfig.json` with your favorite text editor and fill in your product information (which you got from the developer portal when registering a product and creating a security profile). It should look like this:  
+   ```json
+   {
+     "authDelegate":{
+       "deviceTypeId":"<Device Type ID for your device on the Developer portal>",
+       "clientId":"<ClientID for the security profile of the device>",
+       "clientSecret":"<ClientSecret for the security profile of the device>",
+       "deviceSerialNumber":"<a unique number for your device>"
+     }
+   }
+   ```  
+   **NOTE**: The `deviceSerialNumber` is a unique identifier that you create. It is **not** provided by Amazon.     
+6. From the build directory, run `make` to build the SDK.  
 
 ### Build for macOS
 
@@ -184,19 +203,45 @@ To create an out-of-source build for macOS:
 1. Clone the repository (or download and extract the tarball).
 2. Create a build directory out-of-source. **Important**: The directory cannot be a subdirectory of the source folder.
 3. `cd` into your build directory.  
-4. From your build directory, run `cmake` on the source directory to generate make files for the SDK: `cmake <path-to-source-code>`.
-5. From the build directory, run `make` to build the SDK.  
+4. From your build directory, run `cmake` on the source directory to generate make files for the SDK: `cmake <path-to-source-code>`.  
+5. After you've successfully run `cmake`, you should see the following message: `-- Please fill <path-to-build-directory>/Integration/AlexaClientSDKConfig.json before you execute integration tests.`. Open `Integration/AlexaClientSDKConfig.json` with your favorite text editor and fill in your product information (which you got from the developer portal when registering a product and creating a security profile). It should look like this:  
+   ```json
+   {
+    "authDelegate":{
+        "deviceTypeId":"<Device Type ID for your device on the Developer portal>",
+        "clientId":"<ClientID for the security profile of the device>",
+        "clientSecret":"<ClientSecret for the security profile of the device>",
+        "deviceSerialNumber":"<a unique number for your device>"
+    }
+   }
+   ```  
+   **NOTE**: The `deviceSerialNumber` is a unique identifier that you create. It is **not** provided by Amazon.   
+6. From the build directory, run `make` to build the SDK.  
+
+## Run `AuthServer`  
+
+After you've created your out-of-source build, the next step is to run `AuthServer` to retrieve a valid refresh token from LWA.
+
+* Run this command to start `AuthServer`:  
+  ```
+  python AuthServer/AuthServer.py  
+  ```  
+  You should see a message that indicates the server is running.  
+* Open your favorite browser and navigate to: `http://localhost:3000`  
+* Follow the on-screen instructions.  
+* After you've entered your credentials, the server should terminate itself, and `Integration/AlexaClientSDKConfig.json` will be populated with your refresh token.  
+* Before you proceed, it's important that you make sure the refresh token is in `Integration/AlexaClientSDKConfig.json`.  
 
 ## Run Unit Tests
-
-**Note**: In order to run unit tests for the KITT.ai wake word detector, the following files must be downloaded from [GitHub](https://github.com/Kitt-AI/snowboy/tree/master/resources) and placed in `KWD/inputs/KittAiModels`:
-* [`common.res`](https://github.com/Kitt-AI/snowboy/tree/master/resources)  
-* [`alexa.umdl`](https://github.com/Kitt-AI/snowboy/tree/master/resources/alexa/alexa-avs-sample-app) - It's important that you download the `alexa.umdl` in `resources/alexa/alexa-avs-sample-app` for the KITT.ai unit tests to run properly.   
 
 Unit tests for the Alexa Client SDK use the [Google Test](https://github.com/google/googletest) framework. Ensure that the [Google Test](https://github.com/google/googletest) is installed, then run the following command:
 `make all test`
 
-Ensure that all tests are passed before you begin integration testing.
+Ensure that all tests are passed before you begin integration testing.  
+
+**Note**: In order to run unit tests for the KITT.ai wake word detector, the following files must be downloaded from [GitHub](https://github.com/Kitt-AI/snowboy/tree/master/resources) and placed in `KWD/inputs/KittAiModels`:
+* [`common.res`](https://github.com/Kitt-AI/snowboy/tree/master/resources)  
+* [`alexa.umdl`](https://github.com/Kitt-AI/snowboy/tree/master/resources/alexa/alexa-avs-sample-app) - It's important that you download the `alexa.umdl` in `resources/alexa/alexa-avs-sample-app` for the KITT.ai unit tests to run properly.   
 
 ## Run Integration Tests  
 
@@ -205,14 +250,15 @@ Integration tests ensure that your build can make a request and receive a respon
 **Important**: Integration tests reference an `AlexaClientSDKConfig.json` file, which you must create.
 See the `Create the AlexaClientSDKConfig.json file` section (above), if you have not already done this.
 
+To exercise the integration tests run this command:
+`make all integration`
+
 **Note**: If the project was built with the KITT.ai wake word detector, the following files must be downloaded from [GitHub](https://github.com/Kitt-AI/snowboy/tree/master/resources) and placed in `Integration/inputs/KittAiModels` for the integration tests to run properly:
 * [`common.res`](https://github.com/Kitt-AI/snowboy/tree/master/resources)  
 * [`alexa.umdl`](https://github.com/Kitt-AI/snowboy/tree/master/resources/alexa/alexa-avs-sample-app) - It's important that you download the `alexa.umdl` in `resources/alexa/alexa-avs-sample-app` for the KITT.ai integration tests to run properly.  
 
-To exercise the integration tests run this command:
-`make all integration`
-
 ## Alexa Client SDK API Documentation  
+
 To build the Alexa Client SDK API documentation, run this command from your build directory: `make doc`.  
 
 ## Resources and Guides
@@ -220,62 +266,7 @@ To build the Alexa Client SDK API documentation, run this command from your buil
 * [Step-by-step instructions to optimize libcurl for size in `*nix` systems](https://github.com/alexa/alexa-client-sdk/wiki/optimize-libcurl).
 * [Step-by-step instructions to build libcurl with mbed TLS and nghttp2 for `*nix` systems](https://github.com/alexa/alexa-client-sdk/wiki/build-libcurl-with-mbed-TLS-and-nghttp2).
 
-## Appendix A: Obtain Test Credentials
-
-The output of these steps are a **Client ID**, **Client Secret**, and **Refresh Token**, which are required to use the AuthDelegate.
-
-### Step 1: Register a Product
-
-These instructions walk through registering a product. If you've already registerd a product, you can skip ahead to **Step 2**.
-
-1. Login to the [Amazon Developer Portal](https://developer.amazon.com/login.html). If you don't have an account, create one now.
-2. Navigate to the [Alexa Dashboard](https://developer.amazon.com/edw/home.html#/avs). Select **Get Started** under **Alexa Voice Service**. Then click **Register a Product Type** and select **Device**.
-3. Follow the instructions provided by the registration wizard.
-
-Make note of the following values. You'll need these later:
-
-* Device Type ID (also called `ProductID`)
-* Client ID, and
-* Client Secret
-* Allowed Return URL
-
-**Important**: Make sure your **Allowed Origins** and **Allowed Return URLs** are set under **Security Profile** > **Web Settings**. For example:
-
-* **Allowed Origins**: https://localhost:3000
-* **Allowed Return URLs**: https://localhost:3000/authresponse
-
-### Step 2: Make an Authorization Code Grant Request
-
-In this step, we'll build a URL to exchange your **Client ID**, **Device Type ID** and **Allowed Return URL** for an **Authorization Code**.
-
-1. Use this URL as your template:
-   ```
-   https://www.amazon.com/ap/oa?client_id=<<Client_ID
-   &scope=alexa%3Aall&scope_data=%7B%22alexa%3Aall%22%3A%7B%22productID%22%3A%22<<Device_Type_ID>>%22,%22productInstanceAttributes%22%3A%7B%22deviceSerialNumber%22%3A%22<<Device_Serial_Number>>%22%7D%7D%7D&response_type=code&redirect_uri=<<Allowed_Return_URL>>
-   ```
-2. Replace `<<Client_ID>>`, `<<Device_Type_ID>>`, and `<<Allowed_Return_URL>>` with the values you recorded in **Step 1**.
-   **Note**: Some of these values may need to be URL encoded. If you don't have a tool, you can use a tool like [http://www.urlencoder.org](http://www.urlencoder.org).
-3. Replace `<<Device_Serial_Number>>` with any alphanumeric combination (or an actual product serial number).
-4. Paste the URL you've created into your favorite browser.
-5. When prompted, login with your Amazon Developer Account.
-   **Note**: You may be taken to a confirmation page. If you are, click **Confirm**.
-6. This will redirect you to your **Allowed Return URL** with a query parameter specifying a `code` value.
-   **Note**: The URL should look like this `<<Allowed_Return_URL>>?code=<<code>>&scope=alexa%3Aall`
-7. Copy the `code` value. You'll need this to obtain a refresh token.
-
-### Step 3: Obtain a Refresh Token
-
-In this step we'll make a `POST` request to obtain a **Refresh Token**. Ensure that you have cURL installed (or an alternative, such as wget).
-
-1. Use this curl request as your template:
-   ```
-   curl -X POST --data "grant_type=authorization_code&code=<<code>>&client_id=<<Client_id>>&client_secret=<<Client_secret>>&redirect_uri=<<Allowed_Return_URL>>" https://api.amazon.com/auth/o2/token
-   ```
-2. Replace `<<code>>`, `<<Client_ID>>`, `<<Client_Secret>>`, and `<<Allowed_Return_URL>>` with the values you recorded earlier.
-   **Note**: Some of these values may need to be URL encoded. If you don't have a tool, you can use a tool like [http://www.urlencoder.org](http://www.urlencoder.org).
-3. If successful, a JSON string will print to your console. Locate `refresh_token` and record the value.
-
-## Appendix B: Memory Profile  
+## Appendix A: Memory Profile  
 
 This appendix provides the memory profiles for various modules of the Alexa Client SDK. The numbers were observed running integration tests on a machine running Ubuntu 16.04.2 LTS.    
 
@@ -299,11 +290,11 @@ Unique size set (USS) and proportional size set (PSS) were measured by SMEM whil
 * **USS**: The amount of memory that is private to the process and not shared with any other processes.   
 * **PSS**:  The amount of memory shared with other processes; divided by the number of processes sharing each page.    
 
-## Appendix C: Directive Lifecycle Diagram
+## Appendix B: Directive Lifecycle Diagram
 
 ![Directive Lifecycle](https://images-na.ssl-images-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-voice-service/docs/avs-directive-lifecycle.png)
 
-## Appendix D: Runtime Configuration of path to CA Certificates
+## Appendix C: Runtime Configuration of path to CA Certificates
 
 By default libcurl is built with paths to a CA bundle and a directory containing CA certificates.  You can direct the Alexa Client SDK to configure libcurl to use an additional path to directories containing CA certificates via the [CURLOPT_CAPATH](https://curl.haxx.se/libcurl/c/CURLOPT_CAPATH.html) setting.  This is done by adding a `"libcurlUtils/CURLOPT_CAPATH"` entry to the `AlexaClientSDKConfig.json` file.  Here is an example:  
 
@@ -321,7 +312,11 @@ By default libcurl is built with paths to a CA bundle and a directory containing
 ```
 **Note** If you want to assure that libcurl is *only* using CA certificates from this path you may need to reconfigure libcurl with the `--without-ca-bundle` and `--without-ca-path` options and rebuild it to suppress the default paths.  See [The libcurl documention](https://curl.haxx.se/docs/sslcerts.html) for more information.
 
-## Release Notes
+## Release Notes  
+
+v0.4 updated 5/31/2017:  
+
+* Added `AuthServer`, an authorization server implementation used to retrieve refresh tokens from LWA.  
 
 v0.4 release 5/24/2017:
 
@@ -354,7 +349,7 @@ v0.3 released 5/17/2017:
 
 v0.2.1 released 5/3/2017:
 * Replaced the configuration file `AuthDelegate.config` with `AlexaClientSDKConfig.json`.
-* Added the ability to specify a `CURLOPT_CAPATH` value to be used when libcurl is used by ACL and AuthDelegate.  See [**Appendix D**](#appendix-d-runtime-configuration-of-path-to-ca-certificates) for details.
+* Added the ability to specify a `CURLOPT_CAPATH` value to be used when libcurl is used by ACL and AuthDelegate.  See [**Appendix C**](#appendix-c-runtime-configuration-of-path-to-ca-certificates) for details.
 * Changes to ADSL interfaces:
 The v0.2 interface for registering directive handlers (`DirectiveSequencer::setDirectiveHandlers()`) was problematic because it canceled the ongoing processing of directives and dropped further directives until it completed. The revised API makes the operation immediate without canceling or dropping any handling.  However, it does create the possibility that `DirectiveHandlerInterface` methods `preHandleDirective()` and `handleDirective()` may be called on different handlers for the same directive.
   * `DirectiveSequencerInterface::setDirectiveHandlers()` was replaced by `addDirectiveHandlers()` and `removeDirectiveHandlers()`.
@@ -367,7 +362,7 @@ The v0.2 interface for registering directive handlers (`DirectiveSequencer::setD
   * `DirectiveSequencer::shutdown()` no longer sends `ExceptionEncountered()` for queued directives.
 
 v0.2 updated 3/27/2017:
-* Added memory profiling for ACL and ADSL.  See [**Appendix B**](#appendix-b-mempry-profile).
+* Added memory profiling for ACL and ADSL.  See [**Appendix A**](#appendix-a-mempry-profile).
 * Added command to build API documentation.  
 
 v0.2 released 3/9/2017:
