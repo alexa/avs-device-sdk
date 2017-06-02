@@ -851,6 +851,8 @@ TEST_F(SpeechSynthesizerTest, handleOneSpeech) {
 
     // Wait for the directive to route through to our handler.
     TestDirectiveHandler::DirectiveParams params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    ASSERT_EQ(params.type, TestDirectiveHandler::DirectiveParams::Type::EXCEPTION);
+    params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_EQ(params.type, TestDirectiveHandler::DirectiveParams::Type::PREHANDLE);
     params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_EQ(params.type, TestDirectiveHandler::DirectiveParams::Type::HANDLE);
