@@ -196,14 +196,10 @@ MediaPlayerStatus MediaPlayer::initPlayer() {
         return MediaPlayerStatus::FAILURE;
     }
 
-    m_audioPipeline.audioSink = gst_element_factory_make("pulsesink", "audio_sink");
+    m_audioPipeline.audioSink = gst_element_factory_make("autoaudiosink", "audio_sink");
     if (!m_audioPipeline.audioSink) {
-        // Try creating an osxaudiosink if the pulsesink failed.
-        m_audioPipeline.audioSink = gst_element_factory_make("osxaudiosink", "audio_sink");
-        if (!m_audioPipeline.audioSink) {
-            ACSDK_ERROR(LX("initPlayerFailed").d("reason", "createAudioSinkElementFailed"));
-            return MediaPlayerStatus::FAILURE;
-        }
+        ACSDK_ERROR(LX("initPlayerFailed").d("reason", "createAudioSinkElementFailed"));
+        return MediaPlayerStatus::FAILURE;
     }
 
     m_audioPipeline.pipeline = gst_pipeline_new("audio-pipeline");

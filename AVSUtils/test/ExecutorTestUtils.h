@@ -19,6 +19,7 @@
 namespace alexaClientSDK {
 namespace avsUtils {
 namespace threading {
+namespace test {
 
 /// Simple integer value to be reused in tests
 static const int VALUE = 1234;
@@ -62,6 +63,7 @@ private:
     int m_value;
 };
 
+} // namespace test
 } // namespace threading
 } // namespace avsUtils
 } // namespace alexaClientSDK

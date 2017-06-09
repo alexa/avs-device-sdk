@@ -27,11 +27,11 @@
 #include "AIP/ObserverInterface.h"
 
 namespace alexaClientSDK {
-namespace capabilityAgent {
+namespace capabilityAgents {
 namespace aip {
 
 /// The name of the @c FocusManager channel used by @c AudioInputProvider.
-static const std::string CHANNEL_NAME = "Dialog";
+static const std::string CHANNEL_NAME = avsCommon::sdkInterfaces::FocusManagerInterface::DIALOG_CHANNEL_NAME;
 
 /// The activityId string used with @c FocusManager by @c AudioInputProvider.
 static const std::string ACTIVITY_ID = "SpeechRecognizer.Recognize";
@@ -462,10 +462,12 @@ void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContex
     }
 
     // Start acquiring the channel right away; we'll service the callback after assembling our Recognize event.
-    if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), ACTIVITY_ID)) {
-        avsUtils::Logger::log("onContextAvailable failed: Unable to acquire channel.");
-        executeResetState();
-        return;
+    if (m_focusState != avsCommon::sdkInterfaces::FocusState::FOREGROUND) {
+        if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), ACTIVITY_ID)) {
+            avsUtils::Logger::log("onContextAvailable failed: Unable to acquire channel.");
+            executeResetState();
+            return;
+        }
     }
 
     // Assemble the MessageRequest.  It will be sent by executeOnFocusChanged when we acquire the channel.
@@ -477,6 +479,12 @@ void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContex
             m_payload,
             jsonContext);
     m_request = std::make_shared<MessageRequest>(shared_from_this(), json, m_reader);
+
+    // If we already have focus, there won't be a callback to send the message, so send it now.
+    if (avsCommon::sdkInterfaces::FocusState::FOREGROUND == m_focusState) {
+        m_messageSender->sendMessage(m_request);
+        m_request.reset();
+    }
 }
 
 void AudioInputProcessor::executeOnContextFailure(const avsCommon::sdkInterfaces::ContextRequestError error) {
@@ -626,6 +634,9 @@ void AudioInputProcessor::executeProvideState(bool sendToken, unsigned int state
 }
 
 void AudioInputProcessor::setState(State state) {
+    if (m_state == state) {
+        return;
+    }
     m_state = state;
     for (auto observer: m_observers) {
         observer->onStateChanged(m_state);
@@ -641,5 +652,5 @@ void AudioInputProcessor::removeDirective(std::shared_ptr<DirectiveInfo> info) {
 }
 
 } // namespace aip
-} // namespace capabilityagent
+} // namespace capabilityAgents
 } // namespace alexaClientSDK

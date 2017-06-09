@@ -29,6 +29,16 @@ Executor::~Executor() {
     m_taskQueue->shutdown();
 }
 
+void Executor::waitForSubmittedTasks() {
+    std::promise<void> flushedPromise;
+    auto flushedFuture = flushedPromise.get_future();
+    auto task = [this, &flushedPromise]() {
+        flushedPromise.set_value();
+    };
+    submit(task);
+    flushedFuture.get();
+}
+
 } // namespace threading
 } // namespace acl
 } // namespace alexaClientSDK

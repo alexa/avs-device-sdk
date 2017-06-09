@@ -52,7 +52,7 @@ public:
      */
     ~InProcessAttachmentWriter();
 
-    std::size_t write(void* buf, std::size_t numBytes, WriteStatus* writeStatus) override;
+    std::size_t write(const void* buf, std::size_t numBytes, WriteStatus* writeStatus) override;
 
     void close() override;
 

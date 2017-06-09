@@ -20,6 +20,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 using namespace avsCommon::sdkInterfaces;
 
@@ -42,5 +43,6 @@ bool TestableMessageObserver::waitForDirective(
     });
 }
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK

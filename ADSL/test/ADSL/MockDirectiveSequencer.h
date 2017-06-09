@@ -27,6 +27,7 @@
 
 namespace alexaClientSDK {
 namespace adsl {
+namespace test {
 
 /**
  * The mock class that implements the DirectiveSequencerInterface.
@@ -44,6 +45,7 @@ public:
     MOCK_METHOD1(onDirective, bool(std::shared_ptr<avsCommon::AVSDirective> directive));
 };
 
+}  // namespace test
 }  // namespace adsl
 }  // namespace alexaClientSDK
 

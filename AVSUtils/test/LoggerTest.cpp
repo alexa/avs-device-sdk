@@ -481,7 +481,7 @@ TEST_F(LoggerTest, testSensitiveDataSuppressed) {
     EXPECT_CALL(*(m_log.get()), emit(Level::INFO, _, _, _)).Times(1);
     ACSDK_INFO(m_log, LX("testing metadata").sensitive(METADATA_KEY, UNESCAPED_METADATA_VALUE));
     auto result = m_log->m_lastText.find(METADATA_KEY KEY_VALUE_SEPARATOR ESCAPED_METADATA_VALUE) != std::string::npos;
-#ifdef DEBUG
+#ifdef ACSDK_EMIT_SENSITIVE_LOGS
     ASSERT_TRUE(result);
 #else
     ASSERT_FALSE(result);

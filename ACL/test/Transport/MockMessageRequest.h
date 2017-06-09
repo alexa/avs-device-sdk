@@ -26,6 +26,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 /**
  * A simple mock object to help us test Exceptions being received.
@@ -39,6 +40,7 @@ public:
     MOCK_METHOD1(onExceptionReceived, void(const std::string & exceptionMessage));
 };
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK
 

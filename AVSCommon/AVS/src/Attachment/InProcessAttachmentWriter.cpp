@@ -62,7 +62,7 @@ InProcessAttachmentWriter::~InProcessAttachmentWriter() {
     close();
 }
 
-std::size_t InProcessAttachmentWriter::write(void* buff, std::size_t numBytes, WriteStatus* writeStatus) {
+std::size_t InProcessAttachmentWriter::write(const void* buff, std::size_t numBytes, WriteStatus* writeStatus) {
     if (!writeStatus) {
         ACSDK_ERROR(LX("writeFailed").d("reason", "writeStatus is nullptr"));
         return 0;

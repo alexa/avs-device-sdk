@@ -51,9 +51,10 @@ AVSConnectionManager::create(std::shared_ptr<MessageRouterInterface> messageRout
     return connectionManager;
 }
 
-AVSConnectionManager::AVSConnectionManager(std::shared_ptr<MessageRouterInterface> messageRouter,
-                                           std::shared_ptr<ConnectionStatusObserverInterface> connectionStatusObserver,
-                                           std::shared_ptr<MessageObserverInterface> messageObserver)
+AVSConnectionManager::AVSConnectionManager(
+        std::shared_ptr<MessageRouterInterface> messageRouter,
+        std::shared_ptr<ConnectionStatusObserverInterface> connectionStatusObserver,
+        std::shared_ptr<MessageObserverInterface> messageObserver)
         : m_isEnabled{false},
           m_connectionStatusObserver{connectionStatusObserver},
           m_messageObserver{messageObserver},
@@ -89,8 +90,9 @@ void AVSConnectionManager::setAVSEndpoint(const std::string& avsEndpoint) {
     m_messageRouter->setAVSEndpoint(avsEndpoint);
 }
 
-void AVSConnectionManager::onConnectionStatusChanged(const ConnectionStatus status,
-                                                     const ConnectionChangedReason reason) {
+void AVSConnectionManager::onConnectionStatusChanged(
+        const ConnectionStatusObserverInterface::Status status,
+        const ConnectionStatusObserverInterface::ChangedReason reason) {
     if(m_connectionStatusObserver) {
         m_connectionStatusObserver->onConnectionStatusChanged(status, reason);
     }

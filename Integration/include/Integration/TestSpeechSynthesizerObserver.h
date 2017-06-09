@@ -26,10 +26,11 @@
 #include "SpeechSynthesizer/SpeechSynthesizerObserver.h"
 #include "SpeechSynthesizer/SpeechSynthesizerState.h"
 
-using namespace alexaClientSDK::capabilityAgent::speechSynthesizer;
+using namespace alexaClientSDK::capabilityAgents::speechSynthesizer;
 
 namespace alexaClientSDK {
 namespace integration {
+namespace test {
 
 /**
  * Interface for observing a SpeechSynthesizer.
@@ -55,6 +56,7 @@ private:
     std::deque<SpeechSynthesizerState> m_queue;
 };
 
+} // namespace test
 } // namespace integration
 } // namespace alexaClientSDK
 

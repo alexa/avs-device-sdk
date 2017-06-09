@@ -429,13 +429,16 @@ void HTTP2Transport::send(std::shared_ptr<avsCommon::avs::MessageRequest> reques
         if (!authToken.empty()) {
             std::shared_ptr<HTTP2Stream> stream = m_streamPool.createPostStream(url, authToken, request, m_messageConsumer);
 
-            std::lock_guard<std::mutex> lock(m_mutex);
+            // note : if the stream is nullptr, the streampool already called onSendCompleted on the MessageRequest.
+            if (stream) {
+                std::lock_guard<std::mutex> lock(m_mutex);
 
-            if (curl_multi_add_handle(m_multi->handle, stream->getCurlHandle()) != CURLM_OK) {
-                stream->notifyRequestObserver();
+                if (curl_multi_add_handle(m_multi->handle, stream->getCurlHandle()) != CURLM_OK) {
+                    stream->notifyRequestObserver();
+                }
+
+                m_activeStreams.insert(ActiveTransferEntry(stream->getCurlHandle(), stream));
             }
-
-            m_activeStreams.insert(ActiveTransferEntry(stream->getCurlHandle(), stream));
         } else {
             request->onSendCompleted(avsCommon::avs::MessageRequest::Status::INVALID_AUTH);
         }
@@ -455,7 +458,7 @@ void HTTP2Transport::disconnect() {
             m_networkThread.join();
         }
 
-        m_observer->onDisconnected(ConnectionChangedReason::ACL_CLIENT_REQUEST);
+        m_observer->onDisconnected(ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
     }
 }
 

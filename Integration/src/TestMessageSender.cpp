@@ -25,6 +25,7 @@ using namespace avsCommon::sdkInterfaces;
 
 namespace alexaClientSDK {
 namespace integration {
+namespace test {
 
 TestMessageSender::TestMessageSender (std::shared_ptr<acl::MessageRouterInterface> messageRouter,
                    bool isEnabled,
@@ -78,5 +79,6 @@ TestMessageSender::TestMessageSender (std::shared_ptr<acl::MessageRouterInterfac
         m_connectionManager->setAVSEndpoint(avsEndpoint);
     }
 
+} // namespace test
 } // namespace integration
 } // namespace alexaClientSDK

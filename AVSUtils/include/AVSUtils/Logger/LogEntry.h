@@ -137,27 +137,24 @@ private:
 };
 
 template<typename ValueType>
-LogEntry& LogEntry::d(const char *key, const ValueType& value) {
+LogEntry& LogEntry::d(const char* key, const ValueType& value) {
     prefixKeyValuePair();
     m_stream << key << KEY_VALUE_SEPARATOR << value;
     return *this;
 }
 
-// TODO: ACSDK-246 - we should use a specific flag, not just DEBUG for this.
-#ifdef DEBUG
+// Define ACSDK_EMIT_SENSITIVE_LOGS if you want to include sensitive data in log output.
+#ifdef ACSDK_EMIT_SENSITIVE_LOGS
 
 template<typename ValueType>
-LogEntry& LogEntry::sensitive(const char *key, const ValueType& value) {
+LogEntry& LogEntry::sensitive(const char* key, const ValueType& value) {
     return d(key, value);
 }
-
 #else
-
 template<typename ValueType>
-LogEntry& LogEntry::sensitive(const char *key, const ValueType& value) {
+LogEntry& LogEntry::sensitive(const char* key, const ValueType& value) {
     return *this;
 }
-
 #endif
 
 } // namespace logger

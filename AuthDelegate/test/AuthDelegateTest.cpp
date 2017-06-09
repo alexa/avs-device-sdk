@@ -31,7 +31,9 @@
 #include "MockAuthObserver.h"
 
 using namespace alexaClientSDK::authDelegate;
+using namespace alexaClientSDK::authDelegate::test;
 using namespace alexaClientSDK::acl;
+using namespace alexaClientSDK::acl::test;
 
 using namespace ::testing;
 using namespace alexaClientSDK::avsUtils::initialization;

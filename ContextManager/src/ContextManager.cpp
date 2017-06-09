@@ -234,7 +234,7 @@ Value ContextManager::buildHeader(const NamespaceAndName& namespaceAndName,
 
 Value ContextManager::buildState(const NamespaceAndName& namespaceAndName, const std::string jsonPayloadValue,
         Document::AllocatorType& allocator) {
-    Document payload;
+    Document payload(&allocator);
     Value state(kObjectType);
     Value header = buildHeader(namespaceAndName, allocator);
 

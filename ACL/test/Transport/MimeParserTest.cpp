@@ -37,6 +37,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs::attachment;
@@ -211,6 +212,7 @@ TEST_F(MimeParserTest, testDirectiveAndAttachmentReceivedMultiWrite) {
     validateMimePartsParsedOk();
 }
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK
 

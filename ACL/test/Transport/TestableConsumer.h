@@ -25,6 +25,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 /**
  * Simple implementation of the ACL MessageConsumerInterface, which we can use to satisfy other ACL constructors.
@@ -51,6 +52,7 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> m_messageObserver;
 };
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK
 

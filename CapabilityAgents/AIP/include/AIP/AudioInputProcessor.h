@@ -36,7 +36,7 @@
 #include "Initiator.h"
 
 namespace alexaClientSDK {
-namespace capabilityAgent {
+namespace capabilityAgents {
 namespace aip {
 
 /// Forward-declare @c aip::ObserverInterface class.
@@ -172,7 +172,9 @@ public:
      * @param keywordEnd The @c Index in @c audioProvider.stream where the wakeword ends.  This parameter is optional,
      *     and defaults to @c INVALID_INDEX.  This parameter is ignored if initiator is not @c WAKEWORD.
      * @param keyword The text of the keyword which was recognized.  This parameter is optional, and defaults to an
-     *     empty string.  This parameter is ignored if initiator is not @c WAKEWORD.
+     *     empty string.  This parameter is ignored if initiator is not @c WAKEWORD.  The only value currently
+     *     accepted by AVS for keyword is "ALEXA".  See
+     *     https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/context#recognizerstate
      * @return A future which is @c true if the Recognize Event was started successfully, else @c false.
      */
     std::future<bool> recognize(
@@ -486,7 +488,7 @@ private:
 };
 
 } // namespace aip
-} // namespace capabilityagent
+} // namespace capabilityAgents
 } // namespace alexaClientSDK
 
 #endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AIP_INCLUDE_AIP_AUDIO_INPUT_PROCESSOR_H_

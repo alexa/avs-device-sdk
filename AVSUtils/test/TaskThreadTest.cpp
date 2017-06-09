@@ -23,6 +23,7 @@
 namespace alexaClientSDK {
 namespace avsUtils {
 namespace threading {
+namespace test {
 
 class TaskThreadTest: public ::testing::Test {
 public:
@@ -104,6 +105,7 @@ TEST_F(TaskThreadTest, theTaskThreadIsNotStartedUntilStartIsCalled) {
     queue->shutdown();
 }
 
+} // namespace test
 } // namespace threading
 } // namespace avsUtils
 } // namespace alexaClientSDK

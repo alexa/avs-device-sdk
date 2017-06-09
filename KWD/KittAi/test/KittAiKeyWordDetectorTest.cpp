@@ -16,6 +16,7 @@
 
 namespace alexaClientSDK {
 namespace kwd {
+namespace test {
 
 using namespace avsCommon;
 using namespace avsCommon::sdkInterfaces;
@@ -75,7 +76,7 @@ static const unsigned int COMPATIBLE_SAMPLE_SIZE_IN_BITS = 16;
 static const unsigned int COMPATIBLE_NUM_CHANNELS = 1;
 
 /// Timeout for expected callbacks.
-static const auto DEFAULT_TIMEOUT = std::chrono::milliseconds(1000);
+static const auto DEFAULT_TIMEOUT = std::chrono::milliseconds(4000);
 
 /// The audio gain to apply to the detectors so that the expected detections occur.
 static const double KITTAI_AUDIO_GAIN = 2.0;
@@ -567,6 +568,7 @@ TEST_F(KittAiKeyWordTest, getStreamClosedState) {
     ASSERT_EQ(stateReceived, KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED);
 }
 
+} // namespace test
 } // namespace kwd
 } // namespace alexaClientSDK
 
@@ -576,7 +578,7 @@ int main(int argc, char **argv) {
         std::cerr << "USAGE: KittAiKeyWordDetectorTest <path_to_inputs_folder>" << std::endl;
         return 1;
     } else {
-        alexaClientSDK::kwd::inputsDirPath = std::string(argv[1]);
+        alexaClientSDK::kwd::test::inputsDirPath = std::string(argv[1]);
         return RUN_ALL_TESTS();
     }
 }

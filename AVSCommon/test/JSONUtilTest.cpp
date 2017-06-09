@@ -27,6 +27,7 @@
 
 namespace alexaClientSDK {
 namespace avsCommon {
+namespace test {
 
 using namespace ::testing;
 using namespace alexaClientSDK::avsCommon;
@@ -200,5 +201,6 @@ TEST_F(JSONUtilTest, extractMaxInt64) {
     ASSERT_EQ(value, expected);
 }
 
+} // namespace test
 } // namespace avsCommon
 } // namespace alexaClientSDK

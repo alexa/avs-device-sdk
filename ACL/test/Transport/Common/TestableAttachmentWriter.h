@@ -22,6 +22,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 /**
  * A version of the Decorator Pattern, this class allows us to simulate pausing writes without requiring
@@ -40,7 +41,7 @@ public:
     TestableAttachmentWriter(std::shared_ptr<avsCommon::utils::sds::InProcessSDS> dummySDS,
                              std::unique_ptr<avsCommon::avs::attachment::AttachmentWriter> writer);
 
-    std::size_t write(void* buf, std::size_t numBytes, WriteStatus* writeStatus) override;
+    std::size_t write(const void* buf, std::size_t numBytes, WriteStatus* writeStatus) override;
 
     void close() override;
 
@@ -51,6 +52,7 @@ private:
     bool m_hasWriteBeenInvoked;
 };
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK
 

@@ -27,6 +27,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 class MockAuthDelegate: public AuthDelegateInterface {
 public:
@@ -34,6 +35,7 @@ public:
     MOCK_METHOD0(getAuthToken, std::string());
 };
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK
 

@@ -48,13 +48,18 @@
 #include "Integration/TestSpeechSynthesizerObserver.h"
 #include "AVSUtils/Logger/LogEntry.h"
 #include "SpeechSynthesizer/SpeechSynthesizer.h"
+#include "Integration/TestDirectiveHandler.h"
+#include "Integration/TestExceptionEncounteredSender.h"
 
 #ifdef GSTREAMER_MEDIA_PLAYER
 #include "MediaPlayer/MediaPlayer.h"
+#else
+#include "Integration/TestMediaPlayer.h"
 #endif
 
 namespace alexaClientSDK {
 namespace integration {
+namespace test {
 
 using namespace alexaClientSDK::acl;
 using namespace alexaClientSDK::adsl;
@@ -66,7 +71,7 @@ using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 using namespace alexaClientSDK::avsUtils::initialization;
 using namespace alexaClientSDK::avsCommon::utils::mediaPlayer;
 using namespace alexaClientSDK::contextManager;
-using namespace capabilityAgent::speechSynthesizer;
+using namespace capabilityAgents::speechSynthesizer;
 using namespace sdkInterfaces;
 using namespace avsCommon::utils::sds;
 using namespace afml;
@@ -190,14 +195,6 @@ static const NamespaceAndName EXPECT_SPEECH_PAIR = {NAMESPACE_SPEECH_RECOGNIZER,
 static const NamespaceAndName SET_MUTE_PAIR = {NAMESPACE_SPEAKER, NAME_SET_MUTE};
 // This pair connects a SetMute name and Speaker namespace for use in DirectiveHandler registration.
 static const NamespaceAndName ADJUST_VOLUME_PAIR = {NAMESPACE_SPEAKER, NAME_ADJUST_VOLUME};
-// The dialog Channel name used in intializing the FocusManager.
-static const std::string DIALOG_CHANNEL_NAME = "Dialog";
-/// The alerts Channel name used in intializing the FocusManager.
-static const std::string ALERTS_CHANNEL_NAME = "Alerts";
-// The priority of the dialog Channel used in intializing the FocusManager.
-static const unsigned int DIALOG_CHANNEL_PRIORITY = 10;
-/// The priority of the alerts Channel used in intializing the FocusManager.
-static const unsigned int ALERTS_CHANNEL_PRIORITY = 20;
 // Sample dialog activity id.
 static const std::string DIALOG_ACTIVITY_ID = "Dialog";
 /// Sample alerts activity id.
@@ -299,190 +296,6 @@ private:
     std::deque<FocusState> m_queue;
 };
 
-/**
- * Parse an @c AVSDirective from a JSON string.
- *
- * @param rawJSON The JSON to parse.
- * @param attachmentManager The @c AttachmentManager to initialize the new @c AVSDirective with.
- * @return A new @c AVSDirective, or nullptr if parsing the JSON fails.
- */
-static std::shared_ptr<AVSDirective> parseDirective(
-        const std::string& rawJSON, std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager) {
-
-    std::string directiveJSON;
-    std::string headerJSON;
-    std::string payloadJSON;
-    std::string nameSpace;
-    std::string name;
-    std::string messageId;
-    std::string dialogRequestId;
-
-    if (!jsonUtils::lookupStringValue(rawJSON, JSON_MESSAGE_DIRECTIVE_KEY, &directiveJSON) ||
-            !jsonUtils::lookupStringValue(directiveJSON, JSON_MESSAGE_HEADER_KEY, &headerJSON) ||
-            !jsonUtils::lookupStringValue(directiveJSON, JSON_MESSAGE_PAYLOAD_KEY, &payloadJSON) ||
-            !jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_NAMESPACE_KEY, &nameSpace) ||
-            !jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_NAME_KEY, &name) ||
-            !jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_MESSAGE_ID_KEY, &messageId)) {
-        ACSDK_ERROR(LX("parseDirectiveFailed").d("rawJSON", rawJSON));
-        return nullptr;
-    }
-
-    jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_NAMESPACE_KEY, &dialogRequestId);
-
-    auto header = std::make_shared<AVSMessageHeader>(nameSpace, name, messageId, dialogRequestId);
-    return AVSDirective::create(rawJSON, header, payloadJSON, attachmentManager, "");
-}
-
-/**
- * TestDirectiveHandler is a mock of the @c DirectiveHandlerInterface and
- * @c ExceptionEncounteredSenderInterface allows tests to wait for invocations upon those interfaces and
- * inspect the parameters of those invocations.
- */
-class TestDirectiveHandler : public DirectiveHandlerInterface, public ExceptionEncounteredSenderInterface {
-public:
-    void handleDirectiveImmediately(std::shared_ptr<avsCommon::AVSDirective> directive) override;
-
-    void preHandleDirective(
-            std::shared_ptr<avsCommon::AVSDirective> directive,
-            std::unique_ptr<DirectiveHandlerResultInterface> result) override;
-
-    bool handleDirective(const std::string& messageId) override;
-
-    void cancelDirective(const std::string& messageId) override;
-
-    void onDeregistered() override;
-    
-    void sendExceptionEncountered(
-        const std::string& unparsedDirective,
-        ExceptionErrorType error,
-        const std::string& message) override;
-
-    /**
-     * Class defining the parameters to calls to the mocked interfaces.
-     */
-    class DirectiveParams {
-    public:
-        /**
-         * Constructor.
-         */
-        DirectiveParams();
-
-        /**
-         * Return whether this DirectiveParams is of type 'UNSET'.
-         *
-         * @return Whether this DirectiveParams is of type 'UNSET'.
-         */
-        bool isUnset() const {
-            return Type::UNSET == type;
-        }
-
-        /**
-         * Return whether this DirectiveParams is of type 'HANDLE_IMMEDIATELY'.
-         *
-         * @return Whether this DirectiveParams is of type 'HANDLE_IMMEDIATELY'.
-         */
-        bool isHandleImmediately() const {
-            return Type::HANDLE_IMMEDIATELY == type;
-        }
-
-        /**
-         * Return whether this DirectiveParams is of type 'PREHANDLE'.
-         *
-         * @return Whether this DirectiveParams is of type 'PREHANDLE'.
-         */
-        bool isPreHandle() const {
-            return Type::PREHANDLE == type;
-        }
-
-        /**
-         * Return whether this DirectiveParams is of type 'HANDLE'.
-         *
-         * @return Whether this DirectiveParams is of type 'HANDLE'.
-         */
-        bool isHandle() const {
-            return Type::HANDLE == type;
-        }
-
-        /**
-         * Return whether this DirectiveParams is of type 'CANCEL'.
-         *
-         * @return Whether this DirectiveParams is of type 'CANCEL'.
-         */
-        bool isCancel() const {
-            return Type::CANCEL == type;
-        }
-
-
-        /**
-         * Return whether this DirectiveParams is of type 'EXCEPTION'.
-         *
-         * @return Whether this DirectiveParams is of type 'EXCEPTION'.
-         */
-        bool isException() const {
-            return Type::EXCEPTION == type;
-        }
-
-        /**
-         * Return whether this DirectiveParams is of type 'TIMEOUT'.
-         *
-         * @return Whether this DirectiveParams is of type 'TIMEOUT'.
-         */
-        bool isTimeout() const {
-            return Type::TIMEOUT == type;
-        }
-
-        // Enum for the way the directive was passed to DirectiveHandler.
-        enum class Type {
-            // Not yet set.
-            UNSET,
-            // Set when handleDirectiveImmediately is called.
-            HANDLE_IMMEDIATELY,
-            // Set when preHandleDirective is called.
-            PREHANDLE,
-            // Set when handleDirective is called.
-            HANDLE,
-            //Set when cancelDirective is called.
-            CANCEL,
-            // Set when sendExceptionEncountered is called.
-            EXCEPTION,
-            // Set when waitForNext times out waiting for a directive.
-            TIMEOUT
-        };
-
-        // Type of how the directive was passed to DirectiveHandler.
-        Type type;
-        // AVSDirective passed from the Directive Sequencer to the DirectiveHandler. 
-        std::shared_ptr<avsCommon::AVSDirective> directive;
-        // DirectiveHandlerResult to inform the Directive Sequencer a directive has either successfully or
-        // unsuccessfully handled.
-        std::shared_ptr<DirectiveHandlerResultInterface> result;
-        // Unparsed directive string passed to sendExceptionEncountered.
-        std::string exceptionUnparsedDirective;
-        // Error type passed to sendExceptionEncountered.
-        ExceptionErrorType exceptionError;
-        // Additional information passed to sendExceptionEncountered.
-        std::string exceptionMessage;
-    };
-
-    /**
-     * Function to retrieve the next DirectiveParams in the test queue or time out if the queue is empty. Takes a duration in seconds 
-     * to wait before timing out.
-     */
-    DirectiveParams waitForNext(const std::chrono::seconds duration);
-
-private:
-    /// Mutex to protect m_queue.
-    std::mutex m_mutex;
-    /// Trigger to wake up waitForNext calls.
-    std::condition_variable m_wakeTrigger;
-    /// Queue of received directives that have not been waited on.
-    std::deque<DirectiveParams> m_queue;
-    /// map of message IDs to result handlers.
-    std::unordered_map<std::string, std::shared_ptr<DirectiveHandlerResultInterface>> results;
-    /// map of message IDs to result handlers.
-    std::unordered_map<std::string, std::shared_ptr<avsCommon::AVSDirective>> directives;
-};
-
 class SpeechSynthesizerTest : public ::testing::Test {
 protected:
 
@@ -500,10 +313,11 @@ protected:
         m_clientMessageHandler = std::make_shared<ClientMessageHandler>(m_attachmentManager);
         bool isEnabled = false;
         m_messageRouter = std::make_shared<HTTP2MessageRouter>(m_authDelegate, m_attachmentManager);
+        m_exceptionEncounteredSender = std::make_shared<TestExceptionEncounteredSender>();
         m_directiveHandler = std::make_shared<TestDirectiveHandler>();
-        m_directiveSequencer = DirectiveSequencer::create(m_directiveHandler);
+        m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);
         m_messageInterpreter = std::make_shared<MessageInterpreter>(
-            m_directiveHandler,
+            m_exceptionEncounteredSender,
             m_directiveSequencer,
             m_attachmentManager);
 
@@ -516,15 +330,9 @@ protected:
         ASSERT_NE (nullptr, m_avsConnectionManager);
         connect();
 
-        // Set up Focus Manager 
-        FocusManager::ChannelConfiguration dialogChannelConfig{DIALOG_CHANNEL_NAME, DIALOG_CHANNEL_PRIORITY};
-        FocusManager::ChannelConfiguration alertsChannelConfig{ALERTS_CHANNEL_NAME, ALERTS_CHANNEL_PRIORITY};
-        std::vector<FocusManager::ChannelConfiguration> channelConfigurations {
-            dialogChannelConfig, alertsChannelConfig
-        };
-        m_focusManager = std::make_shared<FocusManager>(channelConfigurations);
+        m_focusManager = std::make_shared<FocusManager>();
         m_testClient = std::make_shared<TestClient>();
-        ASSERT_TRUE(m_focusManager->acquireChannel(ALERTS_CHANNEL_NAME, m_testClient, ALERTS_ACTIVITY_ID));
+        ASSERT_TRUE(m_focusManager->acquireChannel(FocusManager::ALERTS_CHANNEL_NAME, m_testClient, ALERTS_ACTIVITY_ID));
         ASSERT_EQ(m_testClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION), FocusState::FOREGROUND);
 
         m_contextManager = ContextManager::create();
@@ -532,10 +340,12 @@ protected:
         
 #ifdef GSTREAMER_MEDIA_PLAYER
         m_mediaPlayer = MediaPlayer::create();
+#else
+        m_mediaPlayer = std::make_shared<TestMediaPlayer>();
 #endif
 
         // Create and register the SpeechSynthesizer.
-        m_speechSynthesizer = SpeechSynthesizer::create(m_mediaPlayer, m_avsConnectionManager, m_focusManager, m_contextManager, m_attachmentManager, m_directiveHandler);
+        m_speechSynthesizer = SpeechSynthesizer::create(m_mediaPlayer, m_avsConnectionManager, m_focusManager, m_contextManager, m_attachmentManager, m_exceptionEncounteredSender);
         registerHandler(SPEAK_PAIR, BlockingPolicy::BLOCKING, m_speechSynthesizer);
         m_speechSynthesizerObserver = std::make_shared<TestSpeechSynthesizerObserver>(); 
         m_speechSynthesizer->addObserver(m_speechSynthesizerObserver);
@@ -653,7 +463,7 @@ protected:
         ASSERT_TRUE(m_authObserver->waitFor(AuthObserver::State::REFRESHED))
             << "Retrieving the auth token timed out.";
         m_avsConnectionManager->enable();
-        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatus::CONNECTED))
+        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::CONNECTED))
             << "Connecting timed out.";
     }
 
@@ -662,7 +472,7 @@ protected:
      */
     void disconnect() {
         m_avsConnectionManager->disable();
-        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatus::DISCONNECTED)) 
+        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::DISCONNECTED)) 
             << "Connecting timed out.";
     }
 
@@ -702,6 +512,7 @@ protected:
     std::shared_ptr<ConnectionStatusObserver> m_connectionStatusObserver;
     std::shared_ptr<MessageRouter> m_messageRouter;
     std::shared_ptr<TestMessageSender> m_avsConnectionManager;
+    std::shared_ptr<TestExceptionEncounteredSender> m_exceptionEncounteredSender;
     std::shared_ptr<TestDirectiveHandler> m_directiveHandler;
     std::shared_ptr<DirectiveSequencerInterface> m_directiveSequencer;
     std::shared_ptr<MessageInterpreter> m_messageInterpreter;
@@ -720,111 +531,12 @@ protected:
 #ifdef GSTREAMER_MEDIA_PLAYER
     std::shared_ptr<MediaPlayer> m_mediaPlayer;
 #else
-    std::shared_ptr<MediaPlayerInterface> m_mediaPlayer;
+    std::shared_ptr<TestMediaPlayer> m_mediaPlayer;
 #endif
 
 };
 
-void TestDirectiveHandler::handleDirectiveImmediately(std::shared_ptr<avsCommon::AVSDirective> directive) {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    TestDirectiveHandler::DirectiveParams dp;
-    dp.type = DirectiveParams::Type::HANDLE_IMMEDIATELY;
-    dp.directive = directive;
-    m_queue.push_back(dp);
-    m_wakeTrigger.notify_all();
-}
 
-void TestDirectiveHandler::preHandleDirective(
-            std::shared_ptr<avsCommon::AVSDirective> directive,
-            std::unique_ptr<DirectiveHandlerResultInterface> result)
-{
-    std::unique_lock<std::mutex> lock(m_mutex);
-    TestDirectiveHandler::DirectiveParams dp;
-    dp.type = TestDirectiveHandler::DirectiveParams::Type::PREHANDLE;
-    dp.directive = directive;
-    dp.result = std::move(result);
-    ASSERT_EQ(results.find(directive->getMessageId()), results.end());
-    results[directive->getMessageId()] = dp.result;
-    ASSERT_EQ(directives.find(directive->getMessageId()), directives.end());
-    directives[directive->getMessageId()] = directive;
-    m_queue.push_back(dp);
-    m_wakeTrigger.notify_all();
-}
-
-bool TestDirectiveHandler::handleDirective(const std::string& messageId) {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    TestDirectiveHandler::DirectiveParams dp;
-    dp.type = DirectiveParams::Type::HANDLE;
-    auto result = results.find(messageId);
-    if (results.end() == result) {
-        EXPECT_NE(result, results.end());
-        return false;
-    }
-    dp.result = result->second;
-    auto directive = directives.find(messageId);
-    if (directives.end() == directive) {
-        EXPECT_NE(directive, directives.end());
-        return false;
-    }
-    dp.directive = directive->second;
-    m_queue.push_back(dp);
-    m_wakeTrigger.notify_all();
-    return true;
-}
-
-void TestDirectiveHandler::cancelDirective(const std::string& messageId) {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    TestDirectiveHandler::DirectiveParams dp;
-    dp.type = DirectiveParams::Type::CANCEL;
-    auto result = results.find(messageId);
-    ASSERT_NE(result, results.end());
-    dp.result = result->second;
-    results.erase(result);
-    auto directive = directives.find(messageId);
-    ASSERT_NE(directive, directives.end());
-    dp.directive = directive->second;
-    directives.erase(directive);
-    m_queue.push_back(dp);
-    m_wakeTrigger.notify_all();
-}
-
-void TestDirectiveHandler::onDeregistered() {
-}
-
-void TestDirectiveHandler::sendExceptionEncountered(
-    const std::string& unparsedDirective,
-    ExceptionErrorType error,
-    const std::string& message) {
-
-    ACSDK_INFO(LX("sendExceptionEncountered").d("unparsed", unparsedDirective).d("error", error).d("message", message));
-
-    std::unique_lock<std::mutex> lock(m_mutex);
-    TestDirectiveHandler::DirectiveParams dp;
-    dp.type = TestDirectiveHandler::DirectiveParams::Type::EXCEPTION;
-    dp.directive = parseDirective(
-            unparsedDirective,
-            std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS));
-    dp.exceptionUnparsedDirective = unparsedDirective;
-    dp.exceptionError = error;
-    dp.exceptionMessage = message;
-    m_queue.push_back(dp);
-    m_wakeTrigger.notify_all();
-}
-
-TestDirectiveHandler::DirectiveParams TestDirectiveHandler::waitForNext(const std::chrono::seconds duration) {
-    DirectiveParams ret;
-    std::unique_lock<std::mutex> lock(m_mutex);
-    if (!m_wakeTrigger.wait_for(lock, duration, [this]() { return !m_queue.empty(); })) {
-        ret.type = DirectiveParams::Type::TIMEOUT;
-        return ret;
-    }
-    ret = m_queue.front();
-    m_queue.pop_front();
-    return ret;
-}
-
-TestDirectiveHandler::DirectiveParams::DirectiveParams() : type{Type::UNSET} {
-}
 
 /**
  * Test ability for the SpeechSynthesizer to handle one Speak directive.
@@ -1345,26 +1057,21 @@ TEST_F(SpeechSynthesizerTest, handleNoDirectives) {
     ASSERT_EQ(m_testClient->waitForFocusChange(WANTING_TIMEOUT_DURATION), FocusState::FOREGROUND);
 }
 
+} // namespace test
 } // namespace integration
 } // namespace alexaClientSDK
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     if (argc < 3) {
-        std::cerr << "USAGE: SpeechSynthesizerIntegrationTest <path_to_auth_delgate_config> <path_to_inputs_folder>"
+        std::cerr << "USAGE: SpeechSynthesizerIntegration <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder>"
                 << std::endl;
         return 1;
 
     } else {
-        alexaClientSDK::integration::configPath = std::string(argv[1]);
-        alexaClientSDK::integration::inputPath = std::string(argv[2]);
-#ifdef GSTREAMER_MEDIA_PLAYER
+        alexaClientSDK::integration::test::configPath = std::string(argv[1]);
+        alexaClientSDK::integration::test::inputPath = std::string(argv[2]);
         return RUN_ALL_TESTS();
-#else
-        std::cout << "SpeechSynthesizer Integration tests require Gstreamer" << std::endl;
-        return 1;
-#endif
-        
     }
 }
 

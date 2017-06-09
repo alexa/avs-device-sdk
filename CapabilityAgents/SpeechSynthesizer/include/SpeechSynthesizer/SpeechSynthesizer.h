@@ -38,7 +38,7 @@
 #include "SpeechSynthesizer/SpeechSynthesizerObserver.h"
 
 namespace alexaClientSDK {
-namespace capabilityAgent {
+namespace capabilityAgents {
 namespace speechSynthesizer {
 
 /**
@@ -133,6 +133,9 @@ private:
 
         /// The @c AttachmentReader from which to read speech audio.
         std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader;
+
+        /// A flag to indicate if an event needs to be sent to AVS on playback finished.
+        bool sendPlaybackFinishedMessage;
     };
 
     /**
@@ -167,7 +170,35 @@ private:
             std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) override;
 
     /**
-     * Pre-handle a SpeechSynthesizer.Speak directive (on the @c m_executor thread).  Starts any caching of
+     * Handle a SpeechSynthesizer.Speak directive (on the @c m_executor thread) immediately. Starts playing the speech
+     * associated with a directive.
+     *
+     * @param info The directive to handle immediately. The result object is a @c nullptr.
+     */
+    void executeHandleImmediately(std::shared_ptr<DirectiveInfo> info);
+
+    /**
+     * Pre-handle a SpeechSynthesizer.Speak directive (on the @c m_executor thread). Starts any caching of
+     * attachment data for playing the speech associated with the directive. This needs to be called after
+     * @c DirectiveInfo, the @c AVSDirective and @c DirectiveHandlerResultInterface have been checked to be valid.
+     * @c DirectiveHandlerResultInterface is not needed for @c executeHandleImmediately.
+     *
+     * @param speakInfo The directive to pre-handle and the associated data.
+     */
+    void executePreHandleAfterValidation(std::shared_ptr<SpeakDirectiveInfo> speakInfo);
+
+    /**
+     * Handle a SpeechSynthesizer.Speak directive (on the @c m_executor thread).  This starts a request for
+     * the foreground focus. This needs to be called after @c DirectiveInfo, the @c AVSDirective and
+     * @c DirectiveHandlerResultInterface have been checked to be valid. @c DirectiveHandlerResultInterface is not
+     * needed for @c executeHandleImmediately.
+     *
+     * @param speakInfo The directive to handle and the associated data.
+     */
+    void executeHandleAfterValidation(std::shared_ptr<SpeakDirectiveInfo> speakInfo);
+
+    /**
+     * Pre-handle a SpeechSynthesizer.Speak directive (on the @c m_executor thread). Starts any caching of
      * attachment data for playing the speech associated with the directive.
      *
      * @param info The directive to preHandle and the result object with which to communicate the result.
@@ -317,9 +348,13 @@ private:
      *
      * @param caller Name of the method making the call, for logging.
      * @param info The @c DirectiveInfo to test.
+     * @param checkResult Check if the @c DirectiveHandlerResultInterface is not a @c nullptr in the @c DirectiveInfo.
      * @return A @c SpeakDirectiveInfo if it is well formed, otherwise @c nullptr.
      */
-    std::shared_ptr<SpeakDirectiveInfo> validateInfo(const std::string& caller, std::shared_ptr<DirectiveInfo> info);
+    std::shared_ptr<SpeakDirectiveInfo> validateInfo(
+            const std::string& caller,
+            std::shared_ptr<DirectiveInfo> info,
+            bool checkResult = true);
 
     /// MediaPlayerInterface instance to send audio attachments to
     std::shared_ptr <avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_speechPlayer;
@@ -374,13 +409,10 @@ private:
 
     /// Condition variable to wake @c onFocusChanged() once the state transition to desired state is complete.
     std::condition_variable m_waitOnStateChange;
-
-    /// A flag to indicate if an event needs to be sent to AVS on playback finished.
-    bool m_sendPlaybackFinishedMessage;
 };
 
 } // namespace speechSynthesizer
-} // namespace capabilityAgent
+} // namespace capabilityAgents
 } // namespace alexaClientSDK
 
 #endif // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_SPEECH_SYNTHESIZER_INCLUDE_SPEECH_SYNTHESIZER_SPEECH_SYNTHESIZER_H_

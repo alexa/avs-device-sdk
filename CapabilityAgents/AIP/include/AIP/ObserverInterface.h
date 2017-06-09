@@ -21,7 +21,7 @@
 #include "AudioInputProcessor.h"
 
 namespace alexaClientSDK {
-namespace capabilityAgent {
+namespace capabilityAgents {
 namespace aip {
 
 /// A state observer for an @c AudioInputProcessor.
@@ -40,7 +40,7 @@ public:
 };
 
 } // namespace aip
-} // namespace capabilityagent
+} // namespace capabilityAgents
 } // namespace alexaClientSDK
 
 #endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AIP_INCLUDE_AIP_OBSERVER_INTERFACE_H_

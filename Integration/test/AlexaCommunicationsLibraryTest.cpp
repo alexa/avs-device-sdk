@@ -25,7 +25,6 @@
 
 #include <ACL/AVSConnectionManager.h>
 #include <ACL/Transport/HTTP2MessageRouter.h>
-#include <ACL/Values.h>
 #include <AuthDelegate/AuthDelegate.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachment.h>
@@ -41,6 +40,7 @@
 
 namespace alexaClientSDK {
 namespace integration {
+namespace test {
 
 using namespace acl;
 using namespace authDelegate;
@@ -210,12 +210,14 @@ public:
     void connect() {
         ASSERT_TRUE(m_authObserver->waitFor(AuthObserver::State::REFRESHED)) << "Retrieving the auth token timed out.";
         m_avsConnectionManager->enable();
-        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatus::CONNECTED)) << "Connecting timed out.";
+        ASSERT_TRUE(m_connectionStatusObserver->waitFor(
+                ConnectionStatusObserverInterface::Status::CONNECTED)) << "Connecting timed out.";
     }
 
     void disconnect() {
         m_avsConnectionManager->disable();
-        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatus::DISCONNECTED)) << "Disconnecting timed out.";
+        ASSERT_TRUE(m_connectionStatusObserver->waitFor(
+                ConnectionStatusObserverInterface::Status::DISCONNECTED)) << "Disconnecting timed out.";
     }
 
     /*
@@ -411,12 +413,14 @@ TEST_F(AlexaCommunicationsLibraryTest, testPersistentConnection) {
     auto attachmentReader = createAttachmentReader(g_inputPath + "/" + RECOGNIZE_AUDIO_FILE_NAME);
     sendEvent(CT_RECOGNIZE_EVENT_JSON, MessageRequest::Status::SUCCESS, std::chrono::seconds(10),
             attachmentReader);
-    ASSERT_FALSE(m_connectionStatusObserver->waitFor(ConnectionStatus::DISCONNECTED, std::chrono::seconds(20)))
+    ASSERT_FALSE(m_connectionStatusObserver->waitFor(
+            ConnectionStatusObserverInterface::Status::DISCONNECTED, std::chrono::seconds(20)))
                                 << "Connection changed after a response was received";
     sendEvent(CT_RECOGNIZE_EVENT_JSON, MessageRequest::Status::SUCCESS, std::chrono::seconds(10),
             attachmentReader);
 }
 
+} // namespace test
 } // namespace integration
 } // namespace alexaClientSDK
 
@@ -427,8 +431,8 @@ int main(int argc, char **argv) {
                 << std::endl;
         return 1;
     } else {
-        alexaClientSDK::integration::g_configPath = std::string(argv[1]);
-        alexaClientSDK::integration::g_inputPath = std::string(argv[2]);
+        alexaClientSDK::integration::test::g_configPath = std::string(argv[1]);
+        alexaClientSDK::integration::test::g_inputPath = std::string(argv[2]);
         return RUN_ALL_TESTS();
     }
 }

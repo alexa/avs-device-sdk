@@ -23,6 +23,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 /// Mock AuthObserverInterface class
 class MockAuthObserver : public AuthObserverInterface {
@@ -30,6 +31,7 @@ public:
     MOCK_METHOD2(onAuthStateChange, void(State newState, Error error));
 };
 
+}  // namespace test
 }  // namespace acl
 }  // namespace alexaClientSDK
 

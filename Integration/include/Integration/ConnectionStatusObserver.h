@@ -32,13 +32,13 @@ using namespace alexaClientSDK::acl;
 class ConnectionStatusObserver : public ConnectionStatusObserverInterface {
 public:
     ConnectionStatusObserver();
-    void onConnectionStatusChanged(const ConnectionStatus connectionStatus,
-                                   const ConnectionChangedReason reason) override;
-    ConnectionStatus getConnectionStatus() const;
-    bool waitFor(const ConnectionStatus connectionStatus,
+    void onConnectionStatusChanged(const ConnectionStatusObserverInterface::Status connectionStatus,
+                                   const ConnectionStatusObserverInterface::ChangedReason reason) override;
+    ConnectionStatusObserverInterface::Status getConnectionStatus() const;
+    bool waitFor(const ConnectionStatusObserverInterface::Status connectionStatus,
                  const std::chrono::seconds duration = std::chrono::seconds(10));
 private:
-    ConnectionStatus m_connectionStatus;
+    ConnectionStatusObserverInterface::Status m_connectionStatus;
     std::mutex m_mutex;
     std::condition_variable m_wakeTrigger;
 };

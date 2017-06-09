@@ -6,6 +6,8 @@ set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${KWD_SOURCE_DIR}/include"
      "${KITTAI_SOURCE_DIR}/include"
      "${KITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR}"
+     "${SENSORY_SOURCE_DIR}/include"
+     "${SENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR}"
      "${AIP_SOURCE_DIR}/include"
      "${SpeechSynthesizer_SOURCE_DIR}/include"
      "${GST_INCLUDE_DIRS}"
@@ -13,24 +15,19 @@ set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${MediaPlayer_SOURCE_DIR}/include"
      "${CONTEXTMANAGER_SOURCE_DIR}/include")
 
-if(GSTREAMER_MEDIA_PLAYER)
+
+    set(LINK_PATH ACL AuthDelegate AFML ADSL AIP ContextManager KWD SpeechSynthesizer Integration gtest gmock)
+
     if(KITTAI_KEY_WORD_DETECTOR)
-        set(LINK_PATH ACL AuthDelegate AFML ADSL AIP KWD KITTAI ContextManager MediaPlayer SpeechSynthesizer Integration gtest gmock)
-    elseif(SENSORY_KEY_WORD_DETECTOR)
-        set(LINK_PATH ACL AuthDelegate AFML ADSL AIP KWD SENSORY ContextManager MediaPlayer SpeechSynthesizer Integration gtest gmock)  
-    else()
-        set(LINK_PATH ACL AuthDelegate AFML ADSL AIP ContextManager MediaPlayer SpeechSynthesizer Integration gtest gmock)
+        SET(LINK_PATH ${LINK_PATH} KITTAI)
     endif()
-    add_definitions(-DGSTREAMER_MEDIA_PLAYER)
-else()
-    if(KITTAI_KEY_WORD_DETECTOR)
-        set(LINK_PATH ACL AuthDelegate AFML ADSL AIP KWD KITTAI ContextManager SpeechSynthesizer Integration gtest gmock)
-    elseif(SENSORY_KEY_WORD_DETECTOR)
-        set(LINK_PATH ACL AuthDelegate AFML ADSL AIP KWD SENSORY ContextManager SpeechSynthesizer Integration gtest gmock)  
-    else()
-        set(LINK_PATH ACL AuthDelegate AFML ADSL AIP ContextManager SpeechSynthesizer Integration gtest gmock)
+    if(SENSORY_KEY_WORD_DETECTOR)
+        SET(LINK_PATH ${LINK_PATH} SENSORY)
     endif()
-endif()
+    if(GSTREAMER_MEDIA_PLAYER)
+        SET(LINK_PATH ${LINK_PATH} MediaPlayer)
+        add_definitions(-DGSTREAMER_MEDIA_PLAYER)
+    endif()
 
 
 # Define a variable for the audio inputs.

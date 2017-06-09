@@ -22,7 +22,7 @@
 #include <gmock/gmock.h>
 
 namespace alexaClientSDK {
-namespace capabilityAgent {
+namespace capabilityAgents {
 namespace aip {
 namespace test {
 
@@ -34,7 +34,7 @@ public:
 
 } // namespace test
 } // namespace aip
-} // namespace capabilityAgent
+} // namespace capabilityAgents
 } // namespace alexaClientSDK
 
 #endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AIP_INCLUDE_AIP_TEST_MOCK_OBSERVER_H_

@@ -29,6 +29,7 @@
 
 namespace alexaClientSDK {
 namespace kwd {
+namespace test {
 
 using ::testing::_;
 
@@ -189,5 +190,6 @@ TEST_F(AbstractKeyWordDetectorTest, testObserversDontGetNotifiedOfSameStateTwice
         avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface::KeyWordDetectorState::ACTIVE);
 }
 
+} // namespace test
 } // namespace kwd
 } // namespace alexaClientSDK

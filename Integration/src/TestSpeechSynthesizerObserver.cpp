@@ -19,6 +19,7 @@
 
 namespace alexaClientSDK {
 namespace integration {
+namespace test {
 
 TestSpeechSynthesizerObserver::TestSpeechSynthesizerObserver(): m_state(SpeechSynthesizerState::FINISHED) {
 }
@@ -51,5 +52,6 @@ SpeechSynthesizerState TestSpeechSynthesizerObserver::getCurrentState() {
     return m_state;
 }
 
+} // namespace test
 } // namespace integration
 } // namespace alexaClientSDK

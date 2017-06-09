@@ -42,6 +42,10 @@ static const std::string ATTACHMENT_FIELD_NAME = "audio";
 static const std::string METADATA_FIELD_NAME = "metadata";
 /// The prefix for a stream contextId.
 static const std::string STREAM_CONTEXT_ID_PREFIX_STRING = "ACL_LOGICAL_HTTP2_STREAM_ID_";
+/// The prefix of request IDs passed back in the header of AVS replies.
+static const std::string X_AMZN_REQUESTID_PREFIX = "x-amzn-requestid:";
+/// Carriage return
+static const char CR = 0x0D;
 
 // Definition for the class static member variable.
 unsigned int HTTP2Stream::m_streamIdCounter = 1;
@@ -95,7 +99,7 @@ bool HTTP2Stream::setCommonOptions(const std::string& url, const std::string& au
         Logger::log("Could not set header callback");
         return false;
     }
-#ifdef DEBUG
+#ifdef ACSDK_EMIT_SENSITIVE_LOGS
     if (curl_easy_setopt(m_transfer.getCurlHandle(), CURLOPT_VERBOSE, 1L) != CURLE_OK) {
         Logger::log("Could not set verbose logging");
         return false;
@@ -195,6 +199,12 @@ size_t HTTP2Stream::writeCallback(char *data, size_t size, size_t nmemb, void *u
 size_t HTTP2Stream::headerCallback(char *data, size_t size, size_t nmemb, void *user) {
     size_t headerLength = size * nmemb;
     std::string header(data, headerLength);
+#ifdef DEBUG
+    if (0 == header.find(X_AMZN_REQUESTID_PREFIX)) {
+        auto end = header.find(CR);
+        Logger::log(header.substr(0, end));
+    }
+#endif
     std::string boundary;
     HTTP2Stream *stream = static_cast<HTTP2Stream*>(user);
     if (HTTP2Stream::HTTPResponseCodes::SUCCESS_OK == stream->getResponseCode()) {

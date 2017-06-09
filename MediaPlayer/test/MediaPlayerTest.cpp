@@ -33,6 +33,7 @@
 
 namespace alexaClientSDK {
 namespace mediaPlayer {
+namespace test {
 
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::avs::attachment;
@@ -457,6 +458,7 @@ TEST_F(MediaPlayerTest, testRecoveryFromPausedReads) {
 
 #endif
 
+} // namespace test
 } // namespace mediaPlayer
 } // namespace alexaClientSDK
 
@@ -466,7 +468,7 @@ int main (int argc, char** argv) {
     if (argc < 2) {
         std::cerr << "Usage: MediaPlayerTest <path to test inputs folder>" << std::endl;
     } else {
-        alexaClientSDK::mediaPlayer::inputsDirPath = std::string(argv[1]);
+        alexaClientSDK::mediaPlayer::test::inputsDirPath = std::string(argv[1]);
         return RUN_ALL_TESTS();
     }
 }

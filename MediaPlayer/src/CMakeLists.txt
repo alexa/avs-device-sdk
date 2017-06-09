@@ -6,4 +6,4 @@ target_include_directories(MediaPlayer PUBLIC
     "${MediaPlayer_SOURCE_DIR}/include"
     "${GST_INCLUDE_DIRS}")
     
-target_link_libraries(MediaPlayer "${GST_LIBRARIES}" AVSCommon AVSUtils)
+target_link_libraries(MediaPlayer "${GST_LDFLAGS}" AVSCommon AVSUtils)

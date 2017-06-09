@@ -29,6 +29,7 @@
 namespace alexaClientSDK {
 namespace acl {
 namespace transport {
+namespace test {
 
 using ::testing::Return;
 
@@ -74,6 +75,7 @@ void disconnectMockTransport(MockTransport* transport) {
     ON_CALL(*transport, isConnected()).WillByDefault(Return(false));
 }
 
+} // namespace test
 } // namespace transport
 } // namespace acl
 } // namespace alexaClientSDK

@@ -19,7 +19,7 @@
 #define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_SPEECH_SYNTHESIZER_INCLUDE_SPEECH_SYNTHESIZER_SPEECH_SYNTHESIZER_STATE_H_
 
 namespace alexaClientSDK {
-namespace capabilityAgent {
+namespace capabilityAgents {
 namespace speechSynthesizer {
 
 /**
@@ -34,7 +34,7 @@ enum class SpeechSynthesizerState {
 };
 
 } // namespace speechSynthesizer
-} // namespace capabilityAgent
+} // namespace capabilityAgents
 } // namespace alexaClientSDK
 
 #endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_SPEECH_SYNTHESIZER_INCLUDE_SPEECH_SYNTHESIZER_SPEECH_SYNTHESIZER_STATE_H_

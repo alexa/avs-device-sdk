@@ -1,4 +1,4 @@
-## Alexa Client SDK v0.4
+## Alexa Client SDK v0.4.1
 
 This release of the Alexa Client SDK for C++ provides components for authentication and communications with the Alexa Voice Service (AVS), specifically AuthDelegate, Alexa Communications Library (ACL), Alexa Directive Sequencer Library (ADSL), Activity Focus Manager Library (AFML), Audio Input Manager (AIP), Wake Word Detector (WWD), and associated APIs.
 
@@ -75,7 +75,10 @@ Building the reference implementation of the `MediaPlayerInterface` (the class `
 * [GStreamer 1.8](https://gstreamer.freedesktop.org/documentation/installing/index.html) or later and the following GStreamer plug-ins:  
   * [GStreamer Base Plugins 1.8](https://gstreamer.freedesktop.org/releases/gst-plugins-base/1.8.0.html) or later.
   * [GStreamer Good Plugins 1.8](https://gstreamer.freedesktop.org/releases/gst-plugins-good/1.8.0.html) or later.
-* Installation of PulseAudio, including development libraries (except on MacOS where `osxaudiosink` is used, instead).  
+  * [GStreamer Libav Plugin 1.8](https://gstreamer.freedesktop.org/releases/gst-libav/1.8.0.html) or later **OR**
+    [GStreamer Ugly Plugins 1.8](https://gstreamer.freedesktop.org/releases/gst-plugins-ugly/1.8.0.html) or later, for decoding MP3 data.
+    
+**NOTE**: The plugins may depend on libraries which need to be installed as well for the GStreamer based `MediaPlayer` to work correctly. 
 
 ## Prerequisites
 
@@ -130,36 +133,49 @@ The following build types are supported:
 To specify a build type, use this command in place of step 4 below (see [Build for Generic Linux](#generic-linux) or [Build for macOS](#build-for-macosß)):
 `cmake <path-to-source> -DCMAKE_BUILD_TYPE=<build-type>`  
 
-### Build with the KITT.ai Wake Word Detector
+### Build with a Wake Word Detector  
 
-These options are required to build with the [KITT.ai](https://github.com/Kitt-AI/snowboy) wake word detector:
+The Alexa Client SDK supports wake word detectors from [Sensory](https://github.com/Sensory/alexa-rpi) and [KITT.ai](https://github.com/Kitt-AI/snowboy/). The following options are required to build with a wake word detector, please replace `<wake-word-name>` with `SENSORY` for Sensory, and `KITTAI` for KITT.ai:  
 
-* `-DKITTAI_KEY_WORD_DETECTOR=<ON or OFF>` - Specifies whether to build and enable the KITT.ai wake word detector.  
-* `-DKITTAI_KEY_WORD_DETECTOR_LIB_PATH=<path-to-kittai-lib>` - The path to the KITT.ai library.  
-* `-DKITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR=<path-to-kittai-include-dir>` - The path to the KITT.ai include directory.  
+* `-D<wake-word-name>_KEY_WORD_DETECTOR=<ON or OFF>` - Specifies if the wake word detector is enabled or disabled during build.  
+* `-D<wake-word-name>_KEY_WORD_DETECTOR_LIB_PATH=<path-to-lib>` - The path to the wake word detector library.  
+* `-D<wake-word-name>_KEY_WORD_DETECTOR_INCLUDE_DIR=<path-to-include-dir>` - The path to the wake word detector include directory.  
 
-This is an example `cmake` command:
+**Note**: To list all available CMake options, use the following command: `-LH`.  
+
+#### Sensory  
+
+If using the Sensory wake word detector, version [5.0.0-beta.10.2](https://github.com/Sensory/alexa-rpi) or later is required.
+
+This is an example `cmake` command to build with Sensory:
 
 ```
-cmake <path-to-source> -DKITTAI_KEY_WORD_DETECTOR=ON -DKITTAI_KEY_WORD_DETECTOR_LIB_PATH=.../snowboy-1.2.0/lib/libsnowboy-detect.a -DKITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR=.../snowboy-1.2.0/include  
+cmake <path-to-source> -DSENSORY_KEY_WORD_DETECTOR=ON -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH=.../alexa-rpi/lib/libsnsr.a -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR=.../alexa-rpi/include
 ```
 
-**NOTE**: A matrix calculation library, known as BLAS, is required to use KITT.ai. The following are sample commands to install this library:
+Note that you may need to license the Sensory library for use prior to running cmake and building it into the SDK. A script to license the Sensory library can be found on the Sensory [Github](https://github.com/Sensory/alexa-rpi) page under `bin/license.sh`.
+
+#### KITT.ai  
+
+A matrix calculation library, known as BLAS, is required to use KITT.ai. The following are sample commands to install this library:  
 * Generic Linux - `apt-get install libatlas-base-dev`  
-* macOS -  `brew install homebrew/science/openblas`
+* macOS -  `brew install homebrew/science/openblas`  
 
-**Note**: To list all available CMake options, use the following command: `-LH`.
+This is an example `cmake` command to build with KITT.ai:
+
+```
+cmake <path-to-source> -DKITTAI_KEY_WORD_DETECTOR=ON -DKITTAI_KEY_WORD_DETECTOR_LIB_PATH=.../snowboy-1.2.0/lib/libsnowboy-detect.a -DKITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR=.../snowboy-1.2.0/include
+```  
 
 ### Build with an implementation of `MediaPlayer`
 
-`MediaPlayer` (the reference implementation of the `MediaPlayerInterface`) is based upon [GStreamer](https://gstreamer.freedesktop.org/), and is not built by default.  To build 'MediaPlayer' the `-DGSTREAMER_MEDIA_PLAYER=ON` option must be specified to CMake.  Here is an example cmake command:
+`MediaPlayer` (the reference implementation of the `MediaPlayerInterface`) is based upon [GStreamer](https://gstreamer.freedesktop.org/) and is not built by default. To build 'MediaPlayer' the `-DGSTREAMER_MEDIA_PLAYER=ON` option must be specified to CMake.  
+
+If GStreamer was [installed from source](https://gstreamer.freedesktop.org/documentation/frequently-asked-questions/getting.html) the prefix path provided when building must be specified to CMake with the `DCMAKE_PREFIX_PATH` option. This is an example CMake command:  
 
 ```
-cmake <path-to-source> -DGSTREAMER_MEDIA_PLAYER=ON.
+cmake <path-to-source> -DGSTREAMER_MEDIA_PLAYER=ON -DCMAKE_PREFIX_PATH=<path-to-GStreamer-build>
 ```
-
-**NOTE**: If [GStreamer](https://gstreamer.freedesktop.org/) is not installed and detected by CMake, the `MediaPlayer` build is skipped even if the   
-`-DGSTREAMER_MEDIA_PLAYER=ON` option is specified.  see [**Minimum Requirements and Dependencies **](#minimum-requirements-and-dependencies) for details.
 
 ### Build for Generic Linux
 
@@ -239,7 +255,15 @@ Unit tests for the Alexa Client SDK use the [Google Test](https://github.com/goo
 
 Ensure that all tests are passed before you begin integration testing.  
 
-**Note**: In order to run unit tests for the KITT.ai wake word detector, the following files must be downloaded from [GitHub](https://github.com/Kitt-AI/snowboy/tree/master/resources) and placed in `KWD/inputs/KittAiModels`:
+### Run Unit Tests with Sensory Enabled  
+
+In order to run unit tests for the Sensory wake word detector, the following files must be downloaded from [GitHub](https://github.com/Sensory/alexa-rpi) and placed in `KWD/inputs/SensoryModels` for the integration tests to run properly:  
+
+* [`spot-alexa-rpi-31000.snsr`](https://github.com/Sensory/alexa-rpi/blob/master/models/spot-alexa-rpi-31000.snsr)   
+
+### Run Unit Tests with KITT.ai Enabled  
+
+In order to run unit tests for the KITT.ai wake word detector, the following files must be downloaded from [GitHub](https://github.com/Kitt-AI/snowboy/tree/master/resources) and placed in `KWD/inputs/KittAiModels`:
 * [`common.res`](https://github.com/Kitt-AI/snowboy/tree/master/resources)  
 * [`alexa.umdl`](https://github.com/Kitt-AI/snowboy/tree/master/resources/alexa/alexa-avs-sample-app) - It's important that you download the `alexa.umdl` in `resources/alexa/alexa-avs-sample-app` for the KITT.ai unit tests to run properly.   
 
@@ -253,7 +277,15 @@ See the `Create the AlexaClientSDKConfig.json file` section (above), if you have
 To exercise the integration tests run this command:
 `make all integration`
 
-**Note**: If the project was built with the KITT.ai wake word detector, the following files must be downloaded from [GitHub](https://github.com/Kitt-AI/snowboy/tree/master/resources) and placed in `Integration/inputs/KittAiModels` for the integration tests to run properly:
+### Run Integration Tests with Sensory Enabled
+
+If the project was built with the Sensory wake word detector, the following files must be downloaded from [GitHub](https://github.com/Sensory/alexa-rpi) and placed in `Integration/inputs/SensoryModels` for the integration tests to run properly:  
+
+* [`spot-alexa-rpi-31000.snsr`](https://github.com/Sensory/alexa-rpi/blob/master/models/spot-alexa-rpi-31000.snsr)    
+
+### Run Integration Tests with KITT.ai Enabled
+
+If the project was built with the KITT.ai wake word detector, the following files must be downloaded from [GitHub](https://github.com/Kitt-AI/snowboy/tree/master/resources) and placed in `Integration/inputs/KittAiModels` for the integration tests to run properly:
 * [`common.res`](https://github.com/Kitt-AI/snowboy/tree/master/resources)  
 * [`alexa.umdl`](https://github.com/Kitt-AI/snowboy/tree/master/resources/alexa/alexa-avs-sample-app) - It's important that you download the `alexa.umdl` in `resources/alexa/alexa-avs-sample-app` for the KITT.ai integration tests to run properly.  
 
@@ -263,7 +295,7 @@ To build the Alexa Client SDK API documentation, run this command from your buil
 
 ## Resources and Guides
 
-* [Step-by-step instructions to optimize libcurl for size in `*nix` systems](https://github.com/alexa/alexa-client-sdk/wiki/optimize-libcurl).
+* [Step-by-step instructions to optimize libcurl for size in `*nix` systems](https://github.com/alexa/alexa-client-sdk/wiki/optimize-libcurl).
 * [Step-by-step instructions to build libcurl with mbed TLS and nghttp2 for `*nix` systems](https://github.com/alexa/alexa-client-sdk/wiki/build-libcurl-with-mbed-TLS-and-nghttp2).
 
 ## Appendix A: Memory Profile  
@@ -272,18 +304,28 @@ This appendix provides the memory profiles for various modules of the Alexa Clie
 
 | Module | Source Code Size (Bytes) | Library Size RELEASE Build (libxxx.so) (Bytes) | Library Size MINSIZEREL Build (libxxx.so) (Bytes) |   
 |--------|--------------------------|------------------------------------------------|---------------------------------------------------|  
-| ACL | 300 KB | 245 KB | 227 KB |  
-| ADSL | 188 KB | 180 KB | 169 KB |    
-| AFML | 100 KB | 114 KB | 109 KB |  
+| ACL | 356 KB | 250 KB | 239 KB |  
+| ADSL | 224 KB | 175 KB | 159 KB |    
+| AFML | 80 KB | 133 KB | 126 KB |  
+| ContextManager | 84 KB | 122 KB | 116 KB |  
+| AIP | 184 KB | 340 KB | 348 KB |  
+| SpeechSynthesizer | 120 KB | 311 KB | 321 KB |  
+| AVSCommon | 772 KB | 252 KB | 228 KB |  
+| AVSUtils | 332 KB | 167 KB | 133 KB |  
+| Total | 2152 KB | 1750 KB | 1670 KB |  
 
 **Runtime Memory**
 
 Unique size set (USS) and proportional size set (PSS) were measured by SMEM while integration tests were run.
 
-| Runtime Memory | Max USS (Bytes) | Max PSS (Bytes) |  
-|----------------|-----------------|-----------------|  
-| ACL | 22 MB | 23 MB |  
-| ADSL + ACL | 26 MB | 27 MB |  
+| Runtime Memory | Average USS | Max USS (Bytes) | Average PSS | Max PSS (Bytes) |  
+|----------------|-------------|-----------------|-------------|-----------------|  
+| ACL | 8 MB | 15 MB | 8 MB | 16 MB |  
+| ADSL + ACL | 8 MB MB | 20 MB | 9 MB | 21 MB |  
+| AIP | 9 MB | 12 MB | 9 MB | 13 MB |  
+| ** SpeechSynthesizer | 11 MB | 18 MB | 12 MB | 20 MB |
+
+** This test was run using the GStreamer-based MediaPlayer for audio playback.  
 
 **Definitions**
 
@@ -313,6 +355,31 @@ By default libcurl is built with paths to a CA bundle and a directory containing
 **Note** If you want to assure that libcurl is *only* using CA certificates from this path you may need to reconfigure libcurl with the `--without-ca-bundle` and `--without-ca-path` options and rebuild it to suppress the default paths.  See [The libcurl documention](https://curl.haxx.se/docs/sslcerts.html) for more information.
 
 ## Release Notes  
+
+v0.4.1 released 6/9/2017:  
+
+* Implemented Sensory wake word detector functionality
+* Removed the need for a `std::recursive_mutex` in `MessageRouter`  
+* Added AIP unit test
+* Added `handleDirectiveImmediately` functionality to `SpeechSynthesizer`
+* Added memory profiles for:
+  * AIP  
+  * SpeechSynthesizer  
+  * ContextManager  
+  * AVSUtils  
+  * AVSCommon  
+* Bug fix for `MultipartParser.h` compiler warning
+* Suppression of sensitive log data even in debug builds. Use cmake parameter -DACSDK_EMIT_SENSITIVE_LOGS=ON to allow logging of sensitive information in DEBUG builds
+* Fix crash in ACL when attempting to use more than 10 streams
+* Updated MediaPlayer to use `autoaudiosink` instead of requiring `pulseaudio`
+* Updated MediaPlayer build to suppport local builds of GStreamer
+* Fixes for the following Github issues
+  * [https://github.com/alexa/alexa-client-sdk/issues/5](MessageRouter::send() does not take the m_connectionMutex)
+  * [https://github.com/alexa/alexa-client-sdk/issues/8](MessageRouter::disconnectAllTransportsLocked flow leads to erase while iterating transports vector)
+  * [https://github.com/alexa/alexa-client-sdk/issues/9](Build errors when building with KittAi enabled)
+  * [https://github.com/alexa/alexa-client-sdk/issues/10](HTTP2Transport race may lead to deadlock)
+  * [https://github.com/alexa/alexa-client-sdk/issues/17](Crash in HTTP2Transport::cleanupFinishedStreams())
+  * [https://github.com/alexa/alexa-client-sdk/issues/24](The attachment writer interface should take a `const void*` instead of `void*`)
 
 v0.4 updated 5/31/2017:  
 

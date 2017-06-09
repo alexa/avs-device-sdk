@@ -411,7 +411,9 @@ AuthObserverInterface::Error AuthDelegate::handleLwaResponse(long code, const st
         }
 
         ACSDK_DEBUG(LX("handleLwaResponseSucceeded")
-                .d("refreshToken", refreshToken).d("authToken", authToken).d("expiresInSeconds", expiresInSeconds));
+                .sensitive("refreshToken", refreshToken)
+                .sensitive("authToken", authToken)
+                .d("expiresInSeconds", expiresInSeconds));
 
         m_refreshToken = refreshToken;
         m_expirationTime = m_requestTime + std::chrono::seconds(expiresInSeconds);

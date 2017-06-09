@@ -60,6 +60,11 @@ public:
      */
     void removeKeyWordDetectorStateObserver(
         std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface> keyWordDetectorStateObserver);
+
+    /**
+     * Destructor.
+     */
+    virtual ~AbstractKeywordDetector() = default;
 protected:
     /**
      * Constructor.

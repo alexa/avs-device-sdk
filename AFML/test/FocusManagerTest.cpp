@@ -23,6 +23,7 @@
 
 namespace alexaClientSDK {
 namespace afml {
+namespace test {
 
 using namespace avsCommon::sdkInterfaces;
 
@@ -472,5 +473,6 @@ TEST_F(ChannelTest, testStopActivity) {
     assertFocusChange(clientA, FocusState::NONE);
 }
 
+} // namespace test
 } // namespace afml
 } // namespace alexaClientSDK

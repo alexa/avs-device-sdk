@@ -28,6 +28,7 @@
 
 namespace alexaClientSDK {
 namespace integration {
+namespace test {
 
 class TestMessageSender : public avsCommon::sdkInterfaces::MessageSenderInterface {
 public:
@@ -100,6 +101,7 @@ private:
     std::shared_ptr<acl::AVSConnectionManager> m_connectionManager;
 };
 
+} // test
 } // namespace avsCommon
 } // namespace alexaClientSDK
 

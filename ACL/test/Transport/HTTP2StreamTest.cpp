@@ -31,6 +31,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 /// A test url with which to initialize our test stream object.
 static const std::string LIBCURL_TEST_URL = "http://example.com";
@@ -124,6 +125,7 @@ TEST_F(HTTP2StreamTest, testExceptionReceivedMultiWrite) {
     m_testableStream->notifyRequestObserver();
 }
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK
 

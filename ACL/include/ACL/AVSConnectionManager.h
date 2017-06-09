@@ -26,7 +26,6 @@
 #include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 
-#include "ACL/Values.h"
 #include "ACL/AuthDelegateInterface.h"
 #include "ACL/ConnectionStatusObserverInterface.h"
 #include "ACL/Transport/MessageRouterInterface.h"
@@ -135,8 +134,8 @@ private:
                          std::shared_ptr<ConnectionStatusObserverInterface> connectionStatusObserver = nullptr,
                          std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> messageObserver = nullptr);
 
-    void onConnectionStatusChanged(const ConnectionStatus status,
-                                   const ConnectionChangedReason reason) override;
+    void onConnectionStatusChanged(const ConnectionStatusObserverInterface::Status status,
+                                   const ConnectionStatusObserverInterface::ChangedReason reason) override;
 
     void receive(const std::string & contextId, const std::string & message) override;
 

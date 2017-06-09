@@ -23,6 +23,7 @@
 namespace alexaClientSDK {
 namespace avsUtils {
 namespace threading {
+namespace test {
 
 class ExecutorTest: public ::testing::Test {
 public:
@@ -127,6 +128,7 @@ TEST_F(ExecutorTest, submitFunctionWithObjectReturnTypeObjectArgsAndVerifyExecut
     ASSERT_EQ(future.get().getValue(), value.getValue());
 }
 
+} // namespace test
 } // namespace threading
 } // namespace avsUtils
 } // namespace alexaClientSDK

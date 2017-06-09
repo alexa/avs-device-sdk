@@ -15,5 +15,11 @@ include(CodeCoverage/CodeCoverage)
 # Setup package requirement variables.
 include(PackageConfigs)
 
+# Setup logging variables.
+include(Logger)
+
 # Setup keyword requirement variables.
 include(KeywordDetector)
+
+# Setup media player variables.
+include(MediaPlayer)

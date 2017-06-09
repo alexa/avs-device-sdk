@@ -20,7 +20,7 @@
 #include "AIP/AudioInputProcessor.h"
 
 namespace alexaClientSDK {
-namespace capabilityAgent {
+namespace capabilityAgents {
 namespace aip {
 
 class MessageRequest : public avsCommon::avs::MessageRequest {
@@ -43,5 +43,5 @@ private:
 };
 
 } // namespace aip
-} // namespace capabilityagent
+} // namespace capabilityAgents
 } // namespace alexaClientSDK

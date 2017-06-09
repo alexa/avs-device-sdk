@@ -20,26 +20,26 @@
 namespace alexaClientSDK {
 namespace integration {
 
-AipStateObserver::AipStateObserver(): m_state(capabilityAgent::aip::AudioInputProcessor::State::IDLE) {
+AipStateObserver::AipStateObserver(): m_state(capabilityAgents::aip::AudioInputProcessor::State::IDLE) {
 }
 
-void AipStateObserver::onStateChanged(capabilityAgent::aip::AudioInputProcessor::State newState) {
+void AipStateObserver::onStateChanged(capabilityAgents::aip::AudioInputProcessor::State newState) {
 	    std::unique_lock<std::mutex> lock(m_mutex);
         m_queue.push_back(newState);
         m_state = newState;
         m_wakeTrigger.notify_all();
 }
 
-bool AipStateObserver::checkState(const capabilityAgent::aip::AudioInputProcessor::State expectedState, const std::chrono::seconds duration) {
-	capabilityAgent::aip::AudioInputProcessor::State hold = waitForNext(duration);
+bool AipStateObserver::checkState(const capabilityAgents::aip::AudioInputProcessor::State expectedState, const std::chrono::seconds duration) {
+	capabilityAgents::aip::AudioInputProcessor::State hold = waitForNext(duration);
 	return hold == expectedState;
 }
 
-capabilityAgent::aip::AudioInputProcessor::State AipStateObserver::waitForNext (const std::chrono::seconds duration) {
-   capabilityAgent::aip::AudioInputProcessor::State ret;
+capabilityAgents::aip::AudioInputProcessor::State AipStateObserver::waitForNext (const std::chrono::seconds duration) {
+   capabilityAgents::aip::AudioInputProcessor::State ret;
     std::unique_lock<std::mutex> lock(m_mutex);
     if (!m_wakeTrigger.wait_for(lock, duration, [this]() { return !m_queue.empty(); })) {
-        ret = capabilityAgent::aip::AudioInputProcessor::State::IDLE;
+        ret = capabilityAgents::aip::AudioInputProcessor::State::IDLE;
         return ret;
     }
     ret = m_queue.front();

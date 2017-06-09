@@ -19,8 +19,7 @@
 #define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_ROUTER_OBSERVER_INTERFACE_H_
 
 #include <memory>
-
-#include "ACL/Values.h"
+#include "ACL/ConnectionStatusObserverInterface.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -39,8 +38,8 @@ private:
      * @param status The current status of the connection.
      * @param reason The reason the connection status changed.
      */
-    virtual void onConnectionStatusChanged(const ConnectionStatus status,
-                                           const ConnectionChangedReason reason) = 0;
+    virtual void onConnectionStatusChanged(const ConnectionStatusObserverInterface::Status status,
+                                           const ConnectionStatusObserverInterface::ChangedReason reason) = 0;
 
     /**
      * This function will be called when a Message arrives from AVS.

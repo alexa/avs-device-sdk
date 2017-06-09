@@ -27,6 +27,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 /**
  * A useful class that allows us to test a Directive being received.
@@ -53,6 +54,7 @@ private:
     std::vector<std::string> m_receivedDirectives;
 };
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK
 

@@ -34,7 +34,7 @@
 #include "SpeechSynthesizer/SpeechSynthesizer.h"
 
 namespace alexaClientSDK {
-namespace capabilityAgent {
+namespace capabilityAgents {
 namespace speechSynthesizer {
 namespace test {
 
@@ -44,6 +44,7 @@ using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::test;
+using namespace avsCommon::test;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace ::testing;
 
@@ -521,6 +522,36 @@ void SpeechSynthesizerTest::wakeOnSendMessage() {
 }
 
 /*
+ * Test call to handleDirectiveImmediately.
+ * Expected result is that @c acquireChannel is called with the correct channel. On focus changed @c FOREGROUND, audio
+ * should play. Expect the @c ContextManager @c setState is called when state changes to @c PLAYING.
+ */
+TEST_F(SpeechSynthesizerTest, testCallingHandleImmediately) {
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
+            NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
+    std::shared_ptr<AVSDirective> directive = AVSDirective::create(
+            "", avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, CONTEXT_ID_TEST);
+
+    EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _, FOCUS_MANAGER_ACTIVITY_ID)).Times(1).
+            WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), setSource(_)).Times(AtLeast(1));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), play()).Times(AtLeast(1));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffsetInMilliseconds()).Times(1).WillOnce(Return(100));
+    EXPECT_CALL(*(m_mockContextManager.get()), setState(
+            NAMESPACE_AND_NAME_SPEECH_STATE, PLAYING_STATE_TEST, StateRefreshPolicy::ALWAYS, 0)).Times(AtLeast(1)).
+            WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnSetState));
+    EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(_)).Times(AtLeast(1)).WillRepeatedly(
+            InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnSendMessage));
+
+    m_speechSynthesizer->handleDirectiveImmediately(directive);
+    ASSERT_TRUE(std::future_status::ready == m_wakeAcquireChannelFuture.wait_for(WAIT_TIMEOUT));
+    m_speechSynthesizer->onFocusChanged(FocusState::FOREGROUND);
+    ASSERT_TRUE(m_mockSpeechPlayer->waitUntilPlaybackStarted());
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    ASSERT_TRUE(std::future_status::ready == m_wakeSendMessageFuture.wait_for(WAIT_TIMEOUT));
+}
+
+/*
  * Tests preHandleDirective and HandleDirective
  * Call preHandle with a valid SPEAK directive. Then call handleDirective. Expected result is that @c acquireChannel
  * is called with the correct channel. On focus changed @c FOREGROUND, audio should play. Expect the @c ContextManager
@@ -686,5 +717,5 @@ TEST_F(SpeechSynthesizerTest, testCallingProvideStateWhenPlaying) {
 
 } // namespace test
 } // namespace speechSynthesizer
-} // namespace capabilityAgent
+} // namespace capabilityAgents
 } // namespace alexaClientSDK

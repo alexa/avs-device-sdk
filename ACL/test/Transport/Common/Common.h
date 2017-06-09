@@ -22,6 +22,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 /**
  * Utility function to generate a random string of characters between 'a' - 'z'.
@@ -40,6 +41,7 @@ std::string createRandomAlphabetString(int stringSize);
  */
 int generateRandomNumber(int min, int max);
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK
 

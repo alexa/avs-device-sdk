@@ -84,13 +84,18 @@ public:
     };
 
     /**
-     * This constructor creates Channels based on the provided configurations.
+     * This constructor creates Channels based on the provided configurations. This is defaulted to the default
+     * AVS Channel configuration names and priorities if no input parameter is provided.
      *
      * @param channelConfigurations A vector of @c channelConfiguration objects that will be used to create the 
      * Channels. No two Channels should have the same name or priority. If there are multiple configurations with the
      * same name or priority, the latter Channels with that name or priority will not be created.
      */
-    FocusManager(const std::vector<ChannelConfiguration>& channelConfigurations);
+    FocusManager(const std::vector<ChannelConfiguration>& channelConfigurations = {
+            {DIALOG_CHANNEL_NAME, DIALOG_CHANNEL_PRIORITY}, 
+            {ALERTS_CHANNEL_NAME, ALERTS_CHANNEL_PRIORITY}, 
+            {CONTENT_CHANNEL_NAME, CONTENT_CHANNEL_PRIORITY}
+        });
 
     bool acquireChannel(
             const std::string& channelName, 

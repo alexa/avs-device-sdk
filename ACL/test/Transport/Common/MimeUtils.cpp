@@ -26,6 +26,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
@@ -107,5 +108,6 @@ std::string constructTestMimeString(
     return mimeString;
 }
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK

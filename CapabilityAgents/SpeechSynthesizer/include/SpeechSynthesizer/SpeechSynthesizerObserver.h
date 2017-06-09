@@ -21,7 +21,7 @@
 #include "SpeechSynthesizer/SpeechSynthesizerState.h"
 
 namespace alexaClientSDK {
-namespace capabilityAgent {
+namespace capabilityAgents {
 namespace speechSynthesizer {
 
 /**
@@ -42,7 +42,7 @@ public:
 };
 
 } // namespace speechSynthesizer
-} // namespace capabilityAgent
+} // namespace capabilityAgents
 } // namespace alexaClientSDK
 
 #endif // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_SPEECH_SYNTHESIZER_INCLUDE_SPEECH_SYNTHESIZER_SPEECH_SYNTHESIZER_OBSERVER_H_

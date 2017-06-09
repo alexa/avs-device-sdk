@@ -27,6 +27,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 std::string createRandomAlphabetString(int stringSize) {
     // First, let's efficiently generate random numbers of the appropriate size.
@@ -60,5 +61,6 @@ int generateRandomNumber(int min, int max) {
     return dist(rng);
 }
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK

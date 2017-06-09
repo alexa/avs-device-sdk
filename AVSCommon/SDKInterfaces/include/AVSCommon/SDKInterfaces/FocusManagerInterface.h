@@ -47,6 +47,24 @@ namespace sdkInterfaces {
  */
 class FocusManagerInterface {
 public:
+    /// The default Dialog Channel name.
+    static constexpr const char* DIALOG_CHANNEL_NAME = "Dialog";
+
+    /// The default dialog Channel priority.
+    static constexpr unsigned int DIALOG_CHANNEL_PRIORITY = 100;
+
+    /// The default Alerts Channel name.
+    static constexpr const char* ALERTS_CHANNEL_NAME = "Alerts";
+
+    /// The default Alerts Channel priority.
+    static constexpr unsigned int ALERTS_CHANNEL_PRIORITY = 200;
+
+    /// The default Content Channel name.
+    static constexpr const char* CONTENT_CHANNEL_NAME = "Content";
+
+    /// The default Content Channel priority.
+    static constexpr unsigned int CONTENT_CHANNEL_PRIORITY = 300;
+
     /// Destructor.
     virtual ~FocusManagerInterface() = default;
 

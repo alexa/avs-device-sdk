@@ -23,6 +23,7 @@
 
 namespace alexaClientSDK {
 namespace avsCommon {
+namespace test {
 
 /**
  * Mock class that implements the ExceptionEncounteredSenderInterface.
@@ -33,6 +34,7 @@ public:
         const std::string& errorDescription));
 };
 
+}  // namespace test
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 

@@ -72,7 +72,7 @@ public:
 
     void disable() override;
 
-    ConnectionStatus getConnectionStatus() override;
+    ConnectionStatusObserverInterface::Status getConnectionStatus() override;
 
     void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
 
@@ -82,7 +82,7 @@ public:
 
     void onConnected() override;
 
-    void onDisconnected(ConnectionChangedReason reason) override;
+    void onDisconnected(ConnectionStatusObserverInterface::ChangedReason reason) override;
 
     void onServerSideDisconnect() override;
 
@@ -108,6 +108,17 @@ private:
             TransportObserverInterface* transportObserverInterface) = 0;
 
     /**
+     * Set the connection state.  If it changes, notify our observer.
+     * @c m_connectionMutex must be locked to call this method.
+     *
+     * @param status The current status of the connection.
+     * @param reason The reason the connection status changed.
+     */
+    void setConnectionStatusLocked(
+            const ConnectionStatusObserverInterface::Status status, 
+            const ConnectionStatusObserverInterface::ChangedReason reason);
+
+    /**
      * Notify the connection observer when the status has changed.
      * Architectural note:
      *  @li A derived class cannot access the required observer method directly due a friend relationship at the base
@@ -117,7 +128,9 @@ private:
      * @param status The current status of the connection.
      * @param reason The reason the connection status changed.
      */
-    void notifyObserverOnConnectionStatusChanged(const ConnectionStatus status, const ConnectionChangedReason reason);
+    void notifyObserverOnConnectionStatusChanged(
+            const ConnectionStatusObserverInterface::Status status,
+            const ConnectionStatusObserverInterface::ChangedReason reason);
 
     /**
      * Notify the message observer of an incoming message from AVS.
@@ -133,43 +146,53 @@ private:
 
     /**
      * Creates a new transport, and begins the connection process. The new transport immediately becomes the active
-     * transport. The connection mutex must be locked to call this method.
+     * transport. @c m_connectionMutex must be locked to call this method.
      */
     void createActiveTransportLocked();
 
     /**
-     * Disconnects all transports. The connection mutex must be locked to call this method.
+     * Disconnects all transports. @c m_connectionMutex must be locked to call this method.
      *
      * @param reason The reason the last transport was disconnected
+     * @param lock Reference to the @c unique_lock that must be held when this method is called.  The lock may be
+     * released during the execution of this method, but will be locked when this method exits.
      */
-    void disconnectAllTransportsLocked(const ConnectionChangedReason reason);
+    void disconnectAllTransportsLocked(
+            std::unique_lock<std::mutex>& lock, 
+            const ConnectionStatusObserverInterface::ChangedReason reason);
 
-    /// The observer object.
+    /**
+     * Get the observer.
+     *
+     * @return The observer.
+     */
+    std::shared_ptr<MessageRouterObserverInterface> getObserver();
+
+    /// The observer object. Access serialized with @c m_connectionMutex.
     std::shared_ptr<MessageRouterObserverInterface> m_observer;
 
-    /// The current AVS endpoint
+    /// The current AVS endpoint. Access serialized with @c m_connectionMutex.
     std::string m_avsEndpoint;
 
     /// The AuthDelegateInterface which provides a valid access token.
     std::shared_ptr<AuthDelegateInterface> m_authDelegate;
 
-    /*
-     * This mutex guards access to all connection related state, specifically the status and all transport interaction.
-     *
-     * TODO: ACSDK-98 Remove the requirement for this to be a recursive mutex.
+    /// This mutex guards access to all connection related state, specifically the status and all transport interaction.
+    std::mutex m_connectionMutex;
+
+    /// The current connection status.  Access serialized with @c m_connectionMutex.
+    ConnectionStatusObserverInterface::Status m_connectionStatus;
+
+    /**
+     * When the MessageRouter is enabled, any disconnect should automatically trigger a reconnect with AVS.
+     * Access serialized with @c m_connectionMutex.
      */
-    std::recursive_mutex m_connectionMutex;
-
-    /// The current connection status.
-    ConnectionStatus m_connectionStatus;
-
-    /// When the MessageRouter is enabled, any disconnect should automatically trigger a reconnect with AVS.
     bool m_isEnabled;
 
-    /// A list of all transports which are not disconnected.
+    /// A vector of all transports which are not disconnected. Access serialized with @c m_connectionMutex.
     std::vector<std::shared_ptr<TransportInterface>> m_transports;
 
-    /// The current active transport to send messages on.
+    /// The current active transport to send messages on. Access serialized with @c m_connectionMutex.
     std::shared_ptr<TransportInterface> m_activeTransport;
 
     /// Executor to execute sending any messages to AVS.

@@ -22,6 +22,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 using namespace ::testing;
 
@@ -35,7 +36,7 @@ public:
 
     MOCK_METHOD0(enable, void());
     MOCK_METHOD0(disable, void());
-    MOCK_METHOD0(getConnectionStatus, ConnectionStatus());
+    MOCK_METHOD0(getConnectionStatus, ConnectionStatusObserverInterface::Status());
     MOCK_METHOD1(send, void(std::shared_ptr<avsCommon::avs::MessageRequest> request));
     MOCK_METHOD1(setAVSEndpoint, void(const std::string& avsEndpoint));
     MOCK_METHOD1(setObserver, void(std::shared_ptr<MessageRouterObserverInterface> observer));
@@ -57,5 +58,6 @@ protected:
     std::shared_ptr<MockMessageRouter> m_messageRouter;
 };
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK

@@ -19,7 +19,7 @@
 #define ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_INITIATOR_H_
 
 namespace alexaClientSDK {
-namespace capabilityAgent {
+namespace capabilityAgents {
 namespace aip {
 
 /**
@@ -57,7 +57,7 @@ inline std::string initiatorToString(Initiator initiator) {
 
 
 } // namespace aip
-} // namespace capabilityAgent
+} // namespace capabilityAgents
 } // namespace alexaClientSDK
 
 #endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_INITIATOR_H_

@@ -33,8 +33,10 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 using namespace transport;
+using namespace transport::test;
 using namespace avsCommon::avs::attachment;
 using namespace avsUtils::threading;
 using namespace avsUtils::memory;
@@ -137,6 +139,7 @@ const std::string MessageRouterTest::MESSAGE = "123456789";
 const int MessageRouterTest::MESSAGE_LENGTH = 10;
 const std::chrono::milliseconds MessageRouterTest::SHORT_TIMEOUT_MS = std::chrono::milliseconds(1000);
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK
 

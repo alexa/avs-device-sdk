@@ -22,6 +22,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 /**
  * A version of the Decorator Pattern, this class allows us to return a special AttachmentWriter class to
@@ -49,6 +50,7 @@ private:
     std::unique_ptr<avsCommon::avs::attachment::AttachmentManager> m_manager;
 };
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK
 

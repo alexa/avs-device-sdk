@@ -58,7 +58,7 @@ public:
      * Queries the status of the connection.
      * @return Returns the connection status of the underlying implementation.
      */
-    virtual ConnectionStatus getConnectionStatus() = 0;
+    virtual ConnectionStatusObserverInterface::Status getConnectionStatus() = 0;
 
     /**
      * Send a message to AVS.

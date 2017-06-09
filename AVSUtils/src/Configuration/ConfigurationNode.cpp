@@ -80,8 +80,8 @@ static void mergeDocument(const std::string& path, Value& out, Value& in, Docume
                 ACSDK_DEBUG(LX("mergeDocument")
                         .d("reason", "valueReplaced")
                         .d("path", memberPath)
-                        .d("old", valueToString(outIt->value))
-                        .d("new", valueToString(inIt->value)));
+                        .sensitive("old", valueToString(outIt->value))
+                        .sensitive("new", valueToString(inIt->value)));
                 outIt->value = inIt->value;
             }
         } else {
@@ -116,7 +116,7 @@ bool ConfigurationNode::initialize(const std::vector<std::istream *> &jsonStream
         mergeDocument("root", m_document, overlay, m_document.GetAllocator());
     }
     m_root = ConfigurationNode(&m_document);
-    ACSDK_INFO(LX("initializeSuccess").d("configuration", valueToString(m_document)));
+    ACSDK_INFO(LX("initializeSuccess").sensitive("configuration", valueToString(m_document)));
     return true;
 }
 

@@ -28,19 +28,19 @@
 namespace alexaClientSDK {
 namespace integration {
 
-class AipStateObserver : public capabilityAgent::aip::ObserverInterface {
+class AipStateObserver : public capabilityAgents::aip::ObserverInterface {
 public:
 	AipStateObserver();
-	void onStateChanged(capabilityAgent::aip::AudioInputProcessor::State newState) override;
-	bool checkState(const capabilityAgent::aip::AudioInputProcessor::State expectedState, 
+	void onStateChanged(capabilityAgents::aip::AudioInputProcessor::State newState) override;
+	bool checkState(const capabilityAgents::aip::AudioInputProcessor::State expectedState, 
     	const std::chrono::seconds duration = std::chrono::seconds(10));
-	capabilityAgent::aip::AudioInputProcessor::State waitForNext (const std::chrono::seconds duration);
+	capabilityAgents::aip::AudioInputProcessor::State waitForNext (const std::chrono::seconds duration);
 
 private:
-    capabilityAgent::aip::AudioInputProcessor::State m_state;
+    capabilityAgents::aip::AudioInputProcessor::State m_state;
     std::mutex m_mutex;
     std::condition_variable m_wakeTrigger;
-    std::deque<capabilityAgent::aip::AudioInputProcessor::State> m_queue;
+    std::deque<capabilityAgents::aip::AudioInputProcessor::State> m_queue;
 };
 
 } // namespace integration

@@ -22,6 +22,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 /// A small value so we can create objects with a valid SDS (even if unused).
 static const int DUMMY_SDS_BUFFER_SIZE = 100;
@@ -69,5 +70,6 @@ std::unique_ptr<AttachmentReader> TestableAttachmentManager::createReader(
     return m_manager->createReader(attachmentId, policy);
 }
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK

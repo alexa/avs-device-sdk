@@ -26,6 +26,7 @@
 
 namespace alexaClientSDK {
 namespace authDelegate {
+namespace test {
 
 /// Mock HttpPostInterface class
 class MockHttpPost : public HttpPostInterface {
@@ -34,6 +35,7 @@ public:
         std::string& body));
 };
 
+}  // namespace test
 }  // namespace authDelegate
 }  // namespace alexaClientSDK
 

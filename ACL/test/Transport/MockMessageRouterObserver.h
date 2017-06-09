@@ -26,6 +26,7 @@
 namespace alexaClientSDK {
 namespace acl {
 namespace transport {
+namespace test {
 
 // Cannot actually mock this class, since it is used exclusively through friend relationship
 class MockMessageRouterObserver: public MessageRouterObserverInterface {
@@ -43,11 +44,11 @@ public:
         return notifiedOfReceive;
     }
 
-    ConnectionStatus getLatestConnectionStatus() {
+    ConnectionStatusObserverInterface::Status getLatestConnectionStatus() {
         return m_status;
     }
 
-    ConnectionChangedReason getLatestConnectionChangedReason() {
+    ConnectionStatusObserverInterface::ChangedReason getLatestConnectionChangedReason() {
         return m_reason;
     }
 
@@ -56,8 +57,8 @@ public:
     }
 
 private:
-    virtual void onConnectionStatusChanged(const ConnectionStatus status,
-                                           const ConnectionChangedReason reason) override {
+    virtual void onConnectionStatusChanged(const ConnectionStatusObserverInterface::Status status,
+                                           const ConnectionStatusObserverInterface::ChangedReason reason) override {
         notifiedOfStatusChanged = true;
         m_status = status;
         m_reason = reason;
@@ -68,14 +69,15 @@ private:
         m_message = message;
     }
 
-    ConnectionStatus m_status;
-    ConnectionChangedReason m_reason;
+    ConnectionStatusObserverInterface::Status m_status;
+    ConnectionStatusObserverInterface::ChangedReason m_reason;
     std::string m_attachmentContextId;
     std::string m_message;
     bool notifiedOfStatusChanged;
     bool notifiedOfReceive;
 };
 
+} // namespace test
 } // namespace transport
 } // namespace acl
 } // namespace alexaClientSDK

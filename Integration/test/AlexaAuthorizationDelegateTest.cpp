@@ -43,6 +43,7 @@ const int TIME_OUT_IN_SECONDS = 60;
 
 namespace alexaClientSDK {
 namespace integration {
+namespace test {
 
 /// Define test fixture for AuthDelegate integration test.
 class AlexaAuthorizationDelegateTest : public ::testing::Test {
@@ -107,6 +108,7 @@ TEST_F(AlexaAuthorizationDelegateTest, invalidRefreshTokenWithUnrecoverableError
     ASSERT_TRUE(gotUnrecoverableError) << "Waiting for UNRECOVERABLE_ERROR timed out";
 }
 
+}   // namespace test
 }   // namespace integration
 }   // namespace alexaClientSDK
 

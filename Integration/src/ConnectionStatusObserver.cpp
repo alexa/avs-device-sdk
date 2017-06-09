@@ -22,23 +22,26 @@
 namespace alexaClientSDK {
 namespace integration {
 
-ConnectionStatusObserver::ConnectionStatusObserver(): m_connectionStatus(ConnectionStatus::DISCONNECTED) {
+ConnectionStatusObserver::ConnectionStatusObserver(): 
+        m_connectionStatus(ConnectionStatusObserverInterface::Status::DISCONNECTED) {
 }
 
-void ConnectionStatusObserver::onConnectionStatusChanged(const ConnectionStatus connectionStatus,
-        const ConnectionChangedReason reason) {
-    m_connectionStatus = connectionStatus;
-    m_wakeTrigger.notify_all();
+void ConnectionStatusObserver::onConnectionStatusChanged(
+        const ConnectionStatusObserverInterface::Status connectionStatus,
+        const ConnectionStatusObserverInterface::ChangedReason reason) {
+            m_connectionStatus = connectionStatus;
+            m_wakeTrigger.notify_all();
 }
-
-ConnectionStatus ConnectionStatusObserver::getConnectionStatus() const {
+	
+ConnectionStatusObserverInterface::Status ConnectionStatusObserver::getConnectionStatus() const {
     return m_connectionStatus;
 }
 
-bool ConnectionStatusObserver::waitFor(const ConnectionStatus connectionStatus, const std::chrono::seconds duration) {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    return m_wakeTrigger.wait_for(lock, duration, [this, connectionStatus]() {
-        return m_connectionStatus == connectionStatus;
+bool ConnectionStatusObserver::waitFor(
+        const ConnectionStatusObserverInterface::Status connectionStatus, const std::chrono::seconds duration) {
+            std::unique_lock<std::mutex> lock(m_mutex);
+            return m_wakeTrigger.wait_for(lock, duration, [this, connectionStatus]() {
+                return m_connectionStatus == connectionStatus;
     });
 }
 

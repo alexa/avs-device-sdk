@@ -29,11 +29,13 @@
 
 namespace alexaClientSDK {
 namespace adsl {
+namespace test {
 
 using namespace ::testing;
 using namespace alexaClientSDK::acl;
 using namespace alexaClientSDK::avsCommon;
 using namespace alexaClientSDK::avsCommon::avs::attachment;
+using namespace alexaClientSDK::avsCommon::test;
 
 /// The namespace in AVS message.
 static const std::string NAMESPACE_TEST = "SpeechSynthesizer";
@@ -316,5 +318,6 @@ TEST_F(MessageIntepreterTest, messageIsValidDirective) {
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, SPEAK_DIRECTIVE);
 }
 
+} // namespace test
 } // namespace adsl
 } // namespace alexaClientSDK

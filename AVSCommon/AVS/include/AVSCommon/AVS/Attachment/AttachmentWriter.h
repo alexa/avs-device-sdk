@@ -59,7 +59,7 @@ public:
      * @param[out] writeStatus The out-parameter where the resulting state of the write will be expressed.
      * @return The number of bytes written as a result of this call.
      */
-    virtual std::size_t write(void* buf, std::size_t numBytes, WriteStatus* writeStatus) = 0;
+    virtual std::size_t write(const void* buf, std::size_t numBytes, WriteStatus* writeStatus) = 0;
 
     /**
      * The close function.  An implementation will take care of any resource management when a writer no longer

@@ -18,7 +18,7 @@
 #include "AIP/MessageRequest.h"
 
 namespace alexaClientSDK {
-namespace capabilityAgent {
+namespace capabilityAgents {
 namespace aip {
 
 MessageRequest::MessageRequest(
@@ -35,5 +35,5 @@ void MessageRequest::onExceptionReceived(const std::string& exceptionMessage) {
 
 
 } // namespace aip
-} // namespace capabilityagent
+} // namespace capabilityAgents
 } // namespace alexaClientSDK

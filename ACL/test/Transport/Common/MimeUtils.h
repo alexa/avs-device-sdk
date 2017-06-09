@@ -29,6 +29,7 @@
 
 namespace alexaClientSDK {
 namespace acl {
+namespace test {
 
 /**
  * Utility class to abstract the notion of testing a MIME part.
@@ -116,6 +117,7 @@ private:
 std::string constructTestMimeString(
         const std::vector<std::shared_ptr<TestMimePart>> & mimeParts, const std::string & boundaryString);
 
+} // namespace test
 } // namespace acl
 } // namespace alexaClientSDK
 

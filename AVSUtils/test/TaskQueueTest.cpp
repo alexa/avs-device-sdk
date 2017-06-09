@@ -24,6 +24,7 @@
 namespace alexaClientSDK {
 namespace avsUtils {
 namespace threading {
+namespace test {
 
 class TaskQueueTest: public ::testing::Test {
 public:
@@ -278,6 +279,7 @@ TEST_F(TaskQueueTest, pushFailsToEnqueueANewTaskOnAShutdownQueue) {
     ASSERT_EQ(retrievedTask, nullptr);
 }
 
+} // namespace test
 } // namespace threading
 } // namespace avsUtils
 } // namespace alexaClientSDK

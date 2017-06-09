@@ -18,16 +18,28 @@
 #include <algorithm>
 #include <curl/curl.h>
 
-#include "ACL/Values.h"
+#include <AVSUtils/Logger/LogEntry.h>
+#include <AVSUtils/Logging/Logger.h>
+#include <AVSUtils/Memory/Memory.h>
+#include <AVSUtils/Threading/Executor.h>
+
+#include "ACL/EnumUtils.h"
 #include "ACL/Transport/MessageRouter.h"
-#include "AVSUtils/Logging/Logger.h"
-#include "AVSUtils/Memory/Memory.h"
-#include "AVSUtils/Threading/Executor.h"
 
 namespace alexaClientSDK {
 namespace acl {
 
 using namespace alexaClientSDK::avsUtils;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("MessageRouter");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
 
 MessageRouter::MessageRouter(
         std::shared_ptr<AuthDelegateInterface> authDelegate,
@@ -37,7 +49,7 @@ MessageRouter::MessageRouter(
         std::shared_ptr<avsUtils::threading::Executor> receiveExecutor):
     m_avsEndpoint{avsEndpoint},
     m_authDelegate{authDelegate},
-    m_connectionStatus{ConnectionStatus::DISCONNECTED},
+    m_connectionStatus{ConnectionStatusObserverInterface::Status::DISCONNECTED},
     m_isEnabled{false},
     m_sendExecutor{sendExecutor},
     m_receiveExecutor{receiveExecutor},
@@ -46,87 +58,93 @@ MessageRouter::MessageRouter(
 
 MessageRouter::~MessageRouter() {
     disable();
+    m_receiveExecutor->waitForSubmittedTasks();
+    m_sendExecutor->waitForSubmittedTasks();
 }
 
-ConnectionStatus MessageRouter::getConnectionStatus() {
-    std::lock_guard<std::recursive_mutex> lock{m_connectionMutex};
+ConnectionStatusObserverInterface::Status MessageRouter::getConnectionStatus() {
+    std::lock_guard<std::mutex> lock{m_connectionMutex};
     return m_connectionStatus;
 }
 
 void MessageRouter::enable() {
-    std::lock_guard<std::recursive_mutex> lock{m_connectionMutex};
-
+    std::lock_guard<std::mutex> lock{m_connectionMutex};
     m_isEnabled = true;
-
-    if (m_activeTransport && m_activeTransport->isConnected()) {
-        return;
-    } else {
-        m_connectionStatus = ConnectionStatus::PENDING;
-        notifyObserverOnConnectionStatusChanged(ConnectionStatus::PENDING, ConnectionChangedReason::ACL_CLIENT_REQUEST);
+    if (!m_activeTransport || !m_activeTransport->isConnected()) {
+        setConnectionStatusLocked(ConnectionStatusObserverInterface::Status::PENDING, 
+                                  ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
         createActiveTransportLocked();
     }
 }
 
 void MessageRouter::disable() {
-    std::lock_guard<std::recursive_mutex> lock{m_connectionMutex};
+    std::unique_lock<std::mutex> lock{m_connectionMutex};
     m_isEnabled = false;
-
-    disconnectAllTransportsLocked(ConnectionChangedReason::ACL_CLIENT_REQUEST);
+    disconnectAllTransportsLocked(lock, ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
 }
 
 void MessageRouter::send(std::shared_ptr<avsCommon::avs::MessageRequest> request) {
     auto task = [this, request]() {
-        if (m_activeTransport && m_activeTransport->isConnected()) {
-            m_activeTransport->send(request);
+        std::shared_ptr<TransportInterface> transport;
+        {
+            std::lock_guard<std::mutex> lock{m_connectionMutex};
+            transport = m_activeTransport;
+        }
+        if (transport && transport->isConnected()) {
+            transport->send(request);
+        } else {
+            request->onSendCompleted(avsCommon::avs::MessageRequest::Status::NOT_CONNECTED);
         }
     };
     m_sendExecutor->submit(task);
 }
 
 void MessageRouter::setAVSEndpoint(const std::string &avsEndpoint) {
-    std::lock_guard<std::recursive_mutex> lock{m_connectionMutex};
+    std::unique_lock<std::mutex> lock{m_connectionMutex};
     if (avsEndpoint != m_avsEndpoint) {
         m_avsEndpoint = avsEndpoint;
-
-        if(m_isEnabled) {
-            disconnectAllTransportsLocked(ConnectionChangedReason::SERVER_ENDPOINT_CHANGED);
-
+        if (m_isEnabled) {
+            disconnectAllTransportsLocked(lock, 
+                ConnectionStatusObserverInterface::ChangedReason::SERVER_ENDPOINT_CHANGED);
+        }
+        // disconnectAllTransportLocked releases the lock temporarily, so re-check m_isEnabled.
+        if (m_isEnabled) {
             createActiveTransportLocked();
         }
     }
 }
 
 void MessageRouter::onConnected() {
-    std::lock_guard<std::recursive_mutex> lock{m_connectionMutex};
-    if (ConnectionStatus::CONNECTED != m_connectionStatus) {
-        m_connectionStatus = ConnectionStatus::CONNECTED;
-        notifyObserverOnConnectionStatusChanged(m_connectionStatus, ConnectionChangedReason::ACL_CLIENT_REQUEST);
+    std::unique_lock<std::mutex> lock{m_connectionMutex};
+    if (m_isEnabled) {
+        setConnectionStatusLocked(ConnectionStatusObserverInterface::Status::CONNECTED, 
+                                  ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
     }
 }
 
-void MessageRouter::onDisconnected(ConnectionChangedReason reason) {
-    std::lock_guard<std::recursive_mutex> lock{m_connectionMutex};
-    if (ConnectionStatus::CONNECTED == m_connectionStatus) {
+void MessageRouter::onDisconnected(ConnectionStatusObserverInterface::ChangedReason reason) {
+    std::lock_guard<std::mutex> lock{m_connectionMutex};
+    if (ConnectionStatusObserverInterface::Status::CONNECTED == m_connectionStatus) {
+        if (m_activeTransport && !m_activeTransport->isConnected()) {
+            m_activeTransport.reset();
+        }
         auto isDisconnected = [](std::shared_ptr<TransportInterface> transport) { return !transport->isConnected(); };
-
         m_transports.erase(
                 std::remove_if(m_transports.begin(), m_transports.end(), isDisconnected), m_transports.end());
-
         if (m_transports.empty()) {
-            disconnectAllTransportsLocked(reason);
+            setConnectionStatusLocked(ConnectionStatusObserverInterface::Status::DISCONNECTED, reason);
         }
     }
 }
 
 void MessageRouter::onServerSideDisconnect() {
-    std::lock_guard<std::recursive_mutex> lock{m_connectionMutex};
+    std::unique_lock<std::mutex> lock{m_connectionMutex};
     if (m_isEnabled) {
-        m_connectionStatus = ConnectionStatus::PENDING;
-        notifyObserverOnConnectionStatusChanged(
-                m_connectionStatus,
-                ConnectionChangedReason::SERVER_SIDE_DISCONNECT);
-        // TODO: ACSDK-100 There is a race condition to fix with sending a message on the new transport when the old one
-        // is still waiting for responses for sent events.
+        setConnectionStatusLocked(ConnectionStatusObserverInterface::Status::PENDING, 
+                                  ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT);
+        // For server side disconnects leave the old transport alive to receive any further data, but send
+        // new messages through a new transport.
+        // @see: https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/docs/managing-an-http-2-connection#disconnects
         createActiveTransportLocked();
     }
 }
@@ -136,52 +154,74 @@ void MessageRouter::consumeMessage(const std::string & contextId, const std::str
 }
 
 void MessageRouter::setObserver(std::shared_ptr<MessageRouterObserverInterface> observer) {
+    std::lock_guard<std::mutex> lock{m_connectionMutex};
     m_observer = observer;
 }
 
+void MessageRouter::setConnectionStatusLocked(const ConnectionStatusObserverInterface::Status status, 
+                                              const ConnectionStatusObserverInterface::ChangedReason reason) {
+    if (status != m_connectionStatus) {
+        m_connectionStatus = status;
+        ACSDK_DEBUG(LX("connectionStatusChanged").d("reason", reason).d("newStatus", m_connectionStatus));
+        notifyObserverOnConnectionStatusChanged(m_connectionStatus, reason);
+    }
+}
+
 void MessageRouter::notifyObserverOnConnectionStatusChanged(
-        const ConnectionStatus status,
-        const ConnectionChangedReason reason) {
+        const ConnectionStatusObserverInterface::Status status,
+        const ConnectionStatusObserverInterface::ChangedReason reason) {
     auto task = [this, status, reason]() {
-        if (m_observer) {
-            m_observer->onConnectionStatusChanged(status, reason);
+        auto observer = getObserver();
+        if (observer) {
+            observer->onConnectionStatusChanged(status, reason);
         }
     };
-
     m_receiveExecutor->submit(task);
 }
 
 void MessageRouter::notifyObserverOnReceive(const std::string & contextId, const std::string & message) {
     auto task = [this, contextId, message]() {
-        if (m_observer) {
-            m_observer->receive(contextId, message);
+        auto temp = getObserver();
+        if (temp) {
+            temp->receive(contextId, message);
         }
     };
-
     m_receiveExecutor->submit(task);
 }
 
 void MessageRouter::createActiveTransportLocked() {
     auto transport = createTransport(m_authDelegate, m_attachmentManager, m_avsEndpoint, this, this);
-    if (transport->connect()) {
+    if (transport && transport->connect()) {
         m_transports.push_back(transport);
         m_activeTransport = transport;
     } else {
-        Logger::log("Could not create connection to AVS backend");
+        m_activeTransport.reset();
+        setConnectionStatusLocked(ConnectionStatusObserverInterface::Status::DISCONNECTED, 
+                                  ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
+        ACSDK_ERROR(LX("createActiveTransportLockedFailed")
+                .d("reason", transport ? "internalError" : "createTransportFailed"));
     }
 }
 
-void MessageRouter::disconnectAllTransportsLocked(const ConnectionChangedReason reason) {
-    for (auto transport : m_transports) {
+void MessageRouter::disconnectAllTransportsLocked(
+        std::unique_lock<std::mutex>& lock, const ConnectionStatusObserverInterface::ChangedReason reason) {
+
+    // Use std::move() to optimize copy. Use clear() otherwise contents of m_transports becomes undefined.
+    auto movedTransports = std::move(m_transports);
+    m_transports.clear();
+    m_activeTransport.reset();
+    setConnectionStatusLocked(ConnectionStatusObserverInterface::Status::DISCONNECTED, reason);
+
+    lock.unlock();
+    for (auto transport : movedTransports) {
         transport->disconnect();
     }
+    lock.lock();
+}
 
-    m_activeTransport.reset();
-
-    m_transports.clear();
-
-    m_connectionStatus = ConnectionStatus::DISCONNECTED;
-    notifyObserverOnConnectionStatusChanged(m_connectionStatus, reason);
+std::shared_ptr<MessageRouterObserverInterface> MessageRouter::getObserver() {
+    std::lock_guard<std::mutex> lock{m_connectionMutex};
+    return m_observer;
 }
 
 } // acl

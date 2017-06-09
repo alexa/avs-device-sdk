@@ -66,6 +66,11 @@ public:
     template<typename Task, typename... Args>
     auto submitToFront(Task task, Args &&... args) -> std::future<decltype(task(args...))>;
 
+    /**
+     * Wait for any previously submitted tasks to complete.
+     */
+    void waitForSubmittedTasks();
+
 private:
     /// The queue of tasks to execute.
     std::shared_ptr<TaskQueue> m_taskQueue;

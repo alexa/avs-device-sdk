@@ -30,6 +30,7 @@
 namespace alexaClientSDK {
 namespace acl {
 namespace transport {
+namespace test {
 
 using ::testing::Return;
 
@@ -41,6 +42,7 @@ public:
     MOCK_METHOD1(onMessageReceived, void(std::shared_ptr<Message>));
 };
 
+} // namespace test
 } // namespace transport
 } // namespace acl
 } // namespace alexaClientSDK
