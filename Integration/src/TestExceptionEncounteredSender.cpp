@@ -21,6 +21,8 @@ namespace alexaClientSDK {
 namespace integration {
 namespace test {
 
+using namespace avsCommon::utils::json;
+
 /// JSON key to get the event object of a message.
 static const std::string JSON_MESSAGE_EVENT_KEY = "event";
 /// JSON key to get the directive object of a message.
@@ -41,7 +43,7 @@ static const std::string JSON_MESSAGE_PAYLOAD_KEY = "payload";
 
 void TestExceptionEncounteredSender::sendExceptionEncountered(
         const std::string& unparsedDirective,
-        ExceptionErrorType error,
+        avs::ExceptionErrorType error,
         const std::string& message) {
 
     std::unique_lock<std::mutex> lock(m_mutex);
@@ -58,7 +60,7 @@ void TestExceptionEncounteredSender::sendExceptionEncountered(
 }
 
 
- std::shared_ptr<AVSDirective> TestExceptionEncounteredSender::parseDirective(
+std::shared_ptr<avsCommon::avs::AVSDirective> TestExceptionEncounteredSender::parseDirective(
         const std::string& rawJSON, std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager) {
 
     std::string directiveJSON;
@@ -80,8 +82,8 @@ void TestExceptionEncounteredSender::sendExceptionEncountered(
 
     jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_NAMESPACE_KEY, &dialogRequestId);
 
-    auto header = std::make_shared<AVSMessageHeader>(nameSpace, name, messageId, dialogRequestId);
-    return AVSDirective::create(rawJSON, header, payloadJSON, attachmentManager, "");
+    auto header = std::make_shared<avsCommon::avs::AVSMessageHeader>(nameSpace, name, messageId, dialogRequestId);
+    return avsCommon::avs::AVSDirective::create(rawJSON, header, payloadJSON, attachmentManager, "");
 }
 
 TestExceptionEncounteredSender::ExceptionParams TestExceptionEncounteredSender::waitForNext(const std::chrono::seconds duration) {
@@ -98,6 +100,7 @@ TestExceptionEncounteredSender::ExceptionParams TestExceptionEncounteredSender::
 
 TestExceptionEncounteredSender::ExceptionParams::ExceptionParams() : type{Type::UNSET} {
 }
+
 } // namespace test
 } // namespace integration
 } // namespace alexaClientSDK

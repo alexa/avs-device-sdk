@@ -1,4 +1,4 @@
-/**
+/*
  * AbstractKeywordDetecorTest.cpp
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -20,8 +20,8 @@
 
 #include <unordered_set>
 
-#include <AVSCommon/AudioFormat.h>
-#include <AVSCommon/SDKInterfaces/AudioInputStream.h>
+#include <AVSCommon/Utils/AudioFormat.h>
+#include <AVSCommon/AVS/AudioInputStream.h>
 #include <AVSCommon/SDKInterfaces/KeyWordObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/KeyWordDetectorStateObserverInterface.h>
 
@@ -39,10 +39,10 @@ public:
     MOCK_METHOD4(
         onKeyWordDetected, 
         void(
-            std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream> stream,
+            std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
             std::string keyword,
-            avsCommon::sdkInterfaces::AudioInputStream::Index beginIndex,
-            avsCommon::sdkInterfaces::AudioInputStream::Index endIndex)
+            avsCommon::avs::AudioInputStream::Index beginIndex,
+            avsCommon::avs::AudioInputStream::Index endIndex)
         );
 };
 

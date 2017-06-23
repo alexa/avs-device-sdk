@@ -17,20 +17,31 @@
 
 #include "ADSL/MessageInterpreter.h"
 
-#include <AVSCommon/JSON/JSONUtils.h>
-#include <AVSCommon/AVSMessageHeader.h>
-#include <AVSCommon/AVSDirective.h>
+#include <AVSCommon/Utils/JSON/JSONUtils.h>
+#include <AVSCommon/AVS/AVSMessageHeader.h>
+#include <AVSCommon/AVS/AVSDirective.h>
 
-#include <AVSUtils/Logging/Logger.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
 
 namespace alexaClientSDK {
 namespace adsl {
 
 using namespace avsCommon;
+using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
-using namespace avsUtils;
+using namespace avsCommon::utils::json;
 using namespace acl;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("MessageInterpreter");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// JSON key to get the directive object of a message.
 static const std::string JSON_MESSAGE_DIRECTIVE_KEY = "directive";
@@ -59,7 +70,7 @@ static void sendExceptionEncounteredHelper(
         const std::string& unparsedMessage,
         const std::string& errorDescription) {
     exceptionEncounteredSender->sendExceptionEncountered(unparsedMessage,
-        avsCommon::ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED,
+        ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED,
         errorDescription);
 }
 
@@ -114,20 +125,24 @@ void MessageInterpreter::receive(const std::string & contextId, const std::strin
                                                          payload, m_attachmentManager, contextId);
     if (!avsDirective) {
         const std::string errorDescription = "AVSDirective is nullptr, failed to send to DirectiveSequencer";
-        Logger::log(errorDescription);
+        ACSDK_ERROR(LX("receiveFailed").d("reason", "createAvsDirectiveFailed"));
         sendExceptionEncounteredHelper(m_exceptionEncounteredSender, message, errorDescription);
         return;
     }
     m_directiveSequencer->onDirective(avsDirective);
 }
 
-bool MessageInterpreter::lookupJsonValueHelper(const std::string & avsMessage,
+bool MessageInterpreter::lookupJsonValueHelper(
+        const std::string & avsMessage,
         const std::string& jsonMessageHeader,
         const std::string& lookupKey,
         std::string* outputValue) {
     if (!jsonUtils::lookupStringValue(jsonMessageHeader, lookupKey, outputValue)) {
         const std::string errorDescription = "Could not look up key from AVS JSON directive string: " + lookupKey;
-        Logger::log(errorDescription);
+        ACSDK_ERROR(LX("lookupJsonValueHelperFailed")
+                .d("reason", "valueRetrievalFailed")
+                .d("key", lookupKey)
+                .d("payload", jsonMessageHeader));
         sendExceptionEncounteredHelper(m_exceptionEncounteredSender, avsMessage, errorDescription);
         return false;
     }

@@ -1,7 +1,7 @@
 /*
  * KeyWordObserverInterface.h
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 
 #include <limits>
 
-#include "AudioInputStream.h"
+#include "AVSCommon/AVS/AudioInputStream.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -32,7 +32,8 @@ namespace sdkInterfaces {
 class KeyWordObserverInterface {
 public:
     /// This represents when an index passed into the onKeyWordDetected() call should be ignored.
-    static constexpr AudioInputStream::Index UNSPECIFIED_INDEX = std::numeric_limits<AudioInputStream::Index>::max();
+    static constexpr avs::AudioInputStream::Index UNSPECIFIED_INDEX =
+        std::numeric_limits<avs::AudioInputStream::Index>::max();
     
     /**
      * Destructor.
@@ -53,10 +54,10 @@ public:
      * stream. If this is set to UNSPECIFIED_INDEX, then it should be ignored.
      */
     virtual void onKeyWordDetected(
-            std::shared_ptr<AudioInputStream> stream,
+            std::shared_ptr<avs::AudioInputStream> stream,
             std::string keyword,
-            AudioInputStream::Index beginIndex = UNSPECIFIED_INDEX,
-            AudioInputStream::Index endIndex = UNSPECIFIED_INDEX) = 0;
+            avs::AudioInputStream::Index beginIndex = UNSPECIFIED_INDEX,
+            avs::AudioInputStream::Index endIndex = UNSPECIFIED_INDEX) = 0;
 };
 
 } // namespace sdkInterfaces

@@ -162,13 +162,13 @@ SharedDataStream<T>::Writer::~Writer() {
 template <typename T>
 ssize_t SharedDataStream<T>::Writer::write(const void* buf, size_t nWords) {
     if (nullptr == buf || 0 == nWords) {
-        avsUtils::Logger::log("Writer::write failed: Invalid parameter passed to write().");
+        utils::logger::deprecated::Logger::log("Writer::write failed: Invalid parameter passed to write().");
         return Error::INVALID;
     }
 
     auto header = m_bufferLayout->getHeader();
     if (!header->isWriterEnabled) {
-        avsUtils::Logger::log("Writer::write failed: Can't write with a disabled writer.");
+        utils::logger::deprecated::Logger::log("Writer::write failed: Can't write with a disabled writer.");
         return Error::CLOSED;
     }
 

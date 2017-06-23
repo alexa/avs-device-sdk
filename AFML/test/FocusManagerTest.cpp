@@ -1,4 +1,4 @@
-/**
+/*
  * FocusManagerTest.cpp
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -17,7 +17,7 @@
 
 #include <gtest/gtest.h>
 
-#include <AVSCommon/SDKInterfaces/FocusState.h>
+#include <AVSCommon/AVS/FocusState.h>
 
 #include "AFML/FocusManager.h"
 
@@ -26,6 +26,7 @@ namespace afml {
 namespace test {
 
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::avs;
 
 /// Short time out for when callbacks are expected not to occur.
 static const auto SHORT_TIMEOUT = std::chrono::milliseconds(50);

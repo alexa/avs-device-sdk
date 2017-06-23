@@ -17,7 +17,7 @@
 
 #include <tuple>
 
-#include "AVSCommon/functional/hash.h"
+#include "AVSCommon/Utils/functional/hash.h"
 #include "AVSCommon/AVS/NamespaceAndName.h"
 
 namespace alexaClientSDK {
@@ -41,8 +41,8 @@ namespace std {
 size_t hash<alexaClientSDK::avsCommon::avs::NamespaceAndName>::operator()(
         const alexaClientSDK::avsCommon::avs::NamespaceAndName& in) const {
     std::size_t seed = 0;
-    alexaClientSDK::avsCommon::functional::hashCombine(seed, in.nameSpace);
-    alexaClientSDK::avsCommon::functional::hashCombine(seed, in.name);
+    alexaClientSDK::avsCommon::utils::functional::hashCombine(seed, in.nameSpace);
+    alexaClientSDK::avsCommon::utils::functional::hashCombine(seed, in.name);
     return seed;
 };
 

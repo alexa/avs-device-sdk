@@ -1,7 +1,7 @@
 /*
  * ChannelObserverInterface.h
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 #ifndef ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_CHANNEL_OBSERVER_INTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_CHANNEL_OBSERVER_INTERFACE_H_
 
-#include "AVSCommon/SDKInterfaces/FocusState.h"
+#include "AVSCommon/AVS/FocusState.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -27,26 +27,26 @@ namespace sdkInterfaces {
 /**
  * A ChannelObserverInterface is an interface class that clients can extend to register for focus changes.
  */
-    class ChannelObserverInterface {
-    public:
-        /**
-         * Destructor.
-         */
-        virtual ~ChannelObserverInterface() = default;
+class ChannelObserverInterface {
+public:
+    /**
+     * Destructor.
+     */
+    virtual ~ChannelObserverInterface() = default;
 
-        /**
-         * Used to notify the observer of the Channel of focus changes. Once called, the client should make a user
-         * observable change only and return immediately. Any additional work that needs to be done should be done on a
-         * separate thread or after returning. "User observable change" here refers to events that the end user of the
-         * product can visibly see or hear. For example, Alexa speech or music playing would be examples of user
-         * observable changes. Other work, such as database storing, logging, or communicating via network should be 
-         * done on a different thread. Not doing so could result in delays for other clients trying to access the 
-         * Channel.
-         *
-         * @param newFocus The new Focus of the channel.
-         */
-        virtual void onFocusChanged(FocusState newFocus) = 0;
-    };
+    /**
+     * Used to notify the observer of the Channel of focus changes. Once called, the client should make a user
+     * observable change only and return immediately. Any additional work that needs to be done should be done on a
+     * separate thread or after returning. "User observable change" here refers to events that the end user of the
+     * product can visibly see or hear. For example, Alexa speech or music playing would be examples of user
+     * observable changes. Other work, such as database storing, logging, or communicating via network should be
+     * done on a different thread. Not doing so could result in delays for other clients trying to access the
+     * Channel.
+     *
+     * @param newFocus The new Focus of the channel.
+     */
+    virtual void onFocusChanged(avs::FocusState newFocus) = 0;
+};
 
 } // namespace sdkInterfaces
 } // namespace avsCommon

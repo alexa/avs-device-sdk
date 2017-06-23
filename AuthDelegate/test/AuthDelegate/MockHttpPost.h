@@ -35,8 +35,8 @@ public:
         std::string& body));
 };
 
-}  // namespace test
-}  // namespace authDelegate
-}  // namespace alexaClientSDK
+} // namespace test
+} // namespace authDelegate
+} // namespace alexaClientSDK
 
 #endif  // ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_AUTHDELEGATE_MOCK_HTTP_POST_H_

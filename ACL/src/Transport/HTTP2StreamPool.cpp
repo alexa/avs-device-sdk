@@ -14,13 +14,13 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#include "AVSUtils/Logging/Logger.h"
+#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
 #include "ACL/Transport/HTTP2StreamPool.h"
 
 namespace alexaClientSDK {
 namespace acl {
 
-using namespace avsUtils;
+using namespace avsCommon::utils;
 
     HTTP2StreamPool::HTTP2StreamPool(
         const int maxStreams,
@@ -34,12 +34,12 @@ std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createGetStream(const std::string&
         MessageConsumerInterface *messageConsumer) {
     std::shared_ptr<HTTP2Stream> stream = getStream(messageConsumer);
     if (!stream) {
-        Logger::log("Could not get stream from stream pool");
+        logger::deprecated::Logger::log("Could not get stream from stream pool");
         releaseStream(stream);
         return nullptr;
     }
     if (!stream->initGet(url, authToken)) {
-        Logger::log("Could not setup stream for get request");
+        logger::deprecated::Logger::log("Could not setup stream for get request");
         releaseStream(stream);
         return nullptr;
     }
@@ -50,12 +50,12 @@ std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createPostStream(const std::string
         std::shared_ptr<avsCommon::avs::MessageRequest> request, MessageConsumerInterface *messageConsumer) {
     std::shared_ptr<HTTP2Stream> stream = getStream(messageConsumer);
     if (!stream) {
-        Logger::log("Could not get stream from stream pool");
+        logger::deprecated::Logger::log("Could not get stream from stream pool");
         request->onSendCompleted(avsCommon::avs::MessageRequest::Status::INTERNAL_ERROR);
         return nullptr;
     }
     if (!stream->initPost(url, authToken, request)) {
-        Logger::log("Could not setup stream for post request");
+        logger::deprecated::Logger::log("Could not setup stream for post request");
         request->onSendCompleted(avsCommon::avs::MessageRequest::Status::INTERNAL_ERROR);
         releaseStream(stream);
         return nullptr;

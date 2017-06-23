@@ -1,7 +1,7 @@
 /*
  * Channel.h
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
 #include <string>
 
 #include <AVSCommon/SDKInterfaces/ChannelObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/FocusState.h>
+#include <AVSCommon/AVS/FocusState.h>
 
 namespace alexaClientSDK {
 namespace afml {
@@ -54,7 +54,7 @@ public:
      *
      * @param focus The focus of the Channel.
      */
-    void setFocus(avsCommon::sdkInterfaces::FocusState focus);
+    void setFocus(avsCommon::avs::FocusState focus);
 
     /**
      * Sets a new observer and notifies the old observer, if there is one, that it lost focus.
@@ -106,7 +106,7 @@ private:
     const unsigned int m_priority;
 
     /// The current Focus of the Channel.
-    avsCommon::sdkInterfaces::FocusState m_focusState;
+    avsCommon::avs::FocusState m_focusState;
 
     /// The current observer of the Channel.
     std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> m_observer;

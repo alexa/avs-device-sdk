@@ -26,7 +26,7 @@
 #include <string>
 
 #include <ACL/AuthDelegateInterface.h>
-#include <ACL/AuthObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 
 #include "AuthDelegate/HttpPostInterface.h"
 
@@ -84,7 +84,7 @@ public:
      */
     AuthDelegate& operator=(const AuthDelegate& rhs) = delete;
 
-    void setAuthObserver(std::shared_ptr<acl::AuthObserverInterface> observer) override;
+    void setAuthObserver(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> observer) override;
 
     std::string getAuthToken() override;
 
@@ -114,7 +114,7 @@ private:
      * @return @c NO_ERROR if the authorization token is successfully refreshed. Otherwise, return the error encountered
      * in the process.
      */
-    acl::AuthObserverInterface::Error refreshAuthToken();
+    avsCommon::sdkInterfaces::AuthObserverInterface::Error refreshAuthToken();
 
     /**
      * Process a successful response from a token refresh request to LWA.
@@ -123,7 +123,7 @@ private:
      * @param body The response body (if any) returned from the LWA request.
      * @return @c NO_ERROR if the auth token was refreshed, otherwise the error encountered in the process.
      */
-    acl::AuthObserverInterface::Error handleLwaResponse(long code, const std::string& body);
+    avsCommon::sdkInterfaces::AuthObserverInterface::Error handleLwaResponse(long code, const std::string& body);
 
     /**
      * Parse a value out of an LWA response.
@@ -151,16 +151,16 @@ private:
      * 
      * @param newState The new state.
      */
-    void setState(acl::AuthObserverInterface::State newState);
+    void setState(avsCommon::sdkInterfaces::AuthObserverInterface::State newState);
 
     /// Authorization state change observer. Access is synchronized with @c m_mutex.
-    std::shared_ptr<acl::AuthObserverInterface> m_observer;
+    std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> m_observer;
 
     /// Current state authorization. Access is synchronized with @c m_mutex.
-    acl::AuthObserverInterface::State m_authState;
+    avsCommon::sdkInterfaces::AuthObserverInterface::State m_authState;
 
     /// Current authorization error. Access is synchronized with @c m_mutex.
-    acl::AuthObserverInterface::Error m_authError;
+    avsCommon::sdkInterfaces::AuthObserverInterface::Error m_authError;
 
     /// Client ID to pass in @c LWA requests.
     std::string m_clientId;

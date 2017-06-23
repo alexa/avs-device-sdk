@@ -21,7 +21,11 @@ namespace alexaClientSDK {
 namespace integration {
 namespace test {
 
-void TestDirectiveHandler::handleDirectiveImmediately(std::shared_ptr<avsCommon::AVSDirective> directive) {
+TestDirectiveHandler::TestDirectiveHandler(avsCommon::avs::DirectiveHandlerConfiguration config) : 
+        m_configuration{config} {
+}
+
+void TestDirectiveHandler::handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive) {
     std::unique_lock<std::mutex> lock(m_mutex);
     TestDirectiveHandler::DirectiveParams dp;
     dp.type = DirectiveParams::Type::HANDLE_IMMEDIATELY;
@@ -31,7 +35,7 @@ void TestDirectiveHandler::handleDirectiveImmediately(std::shared_ptr<avsCommon:
 }
 
 void TestDirectiveHandler::preHandleDirective(
-        std::shared_ptr<avsCommon::AVSDirective> directive,
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive,
         std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result)
 {
     std::unique_lock<std::mutex> lock(m_mutex);
@@ -76,6 +80,10 @@ void TestDirectiveHandler::cancelDirective(const std::string& messageId) {
     m_directives.erase(directive);
     m_queue.push_back(dp);
     m_wakeTrigger.notify_all();
+}
+
+avsCommon::avs::DirectiveHandlerConfiguration TestDirectiveHandler::getConfiguration() const {
+    return m_configuration;
 }
 
 void TestDirectiveHandler::onDeregistered() {

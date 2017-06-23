@@ -1,4 +1,4 @@
-/**
+/*
  * AudioInputProcessor.cpp
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -17,9 +17,21 @@
 
 #include "AIP/MessageRequest.h"
 
+#include <AVSCommon/Utils/Logger/Logger.h>
+
 namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace aip {
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("MessageRequest");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 MessageRequest::MessageRequest(
         std::shared_ptr<AudioInputProcessor> audioInputProcessor,
@@ -29,7 +41,8 @@ MessageRequest::MessageRequest(
 }
 
 void MessageRequest::onExceptionReceived(const std::string& exceptionMessage) {
-    avsUtils::Logger::log("Error: exception received: " + exceptionMessage);
+
+    ACSDK_ERROR(LX("onExceptionReceived").d("exception", exceptionMessage));
     m_audioInputProcessor->resetState();
 }
 

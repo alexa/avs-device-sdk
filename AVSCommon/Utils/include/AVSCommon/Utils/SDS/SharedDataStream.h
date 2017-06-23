@@ -15,14 +15,14 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_INCLUDE_AVSCOMMON_UTILS_SDS_SHARED_DATA_STREAM_H_
-#define ALEXA_CLIENT_SDK_AVSCOMMON_INCLUDE_AVSCOMMON_UTILS_SDS_SHARED_DATA_STREAM_H_
+#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_SHARED_DATA_STREAM_H_
+#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_SHARED_DATA_STREAM_H_
 
 #include <cstdint>
 #include <cstddef>
 #include <memory>
 
-#include <AVSUtils/Logging/Logger.h>
+#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -304,10 +304,10 @@ private:
 template <typename T>
 size_t SharedDataStream<T>::calculateBufferSize(size_t nWords, size_t wordSize, size_t maxReaders) {
     if (0 == nWords) {
-        avsUtils::Logger::log("SharedDataStream::calculateBufferSize failed: nWords must be greater than 0.");
+        utils::logger::deprecated::Logger::log("SharedDataStream::calculateBufferSize failed: nWords must be greater than 0.");
         return 0;
     } else if (0 == wordSize) {
-        avsUtils::Logger::log("SharedDataStream::calcluateBufferSize failed: wordSize must be greater than 0.");
+        utils::logger::deprecated::Logger::log("SharedDataStream::calcluateBufferSize failed: wordSize must be greater than 0.");
         return 0;
     }
     size_t overhead = BufferLayout::calculateDataOffset(wordSize, maxReaders);
@@ -324,13 +324,11 @@ std::unique_ptr<SharedDataStream<T>> SharedDataStream<T>::create(
     if (0 == expectedSize) {
         // Logged in calcutlateBuffersize().
         return nullptr;
-    }
-    else if (nullptr == buffer) {
-        avsUtils::Logger::log("SharedDataStream::create failed: Buffer can not be nullptr.");
+    } else if (nullptr == buffer) {
+        utils::logger::deprecated::Logger::log("SharedDataStream::create failed: Buffer can not be nullptr.");
         return nullptr;
-    }
-    else if (expectedSize > buffer->size()) {
-        avsUtils::Logger::log("SharedDataStream::create failed: Buffer is not large enough to hold any data.");
+    } else if (expectedSize > buffer->size()) {
+        utils::logger::deprecated::Logger::log("SharedDataStream::create failed: Buffer is not large enough to hold any data.");
         return nullptr;
     }
 
@@ -374,7 +372,7 @@ SharedDataStream<T>::createWriter(typename Writer::Policy policy, bool forceRepl
     auto header = m_bufferLayout->getHeader();
     std::lock_guard<Mutex> lock(header->writerEnableMutex);
     if (header->isWriterEnabled && !forceReplacement) {
-        avsUtils::Logger::log(
+        utils::logger::deprecated::Logger::log(
                 "SharedDataStream::createWriter failed: A writer is already attached and this call did not specify "
                 "forceReplacement=true.");
         return nullptr;
@@ -392,7 +390,7 @@ SharedDataStream<T>::createReader(typename Reader::Policy policy, bool startWith
             return createReaderLocked(id, policy, startWithNewData, false, &lock);
         }
     }
-    avsUtils::Logger::log("SharedDataStream::createReader failed: all readers are already in use.");
+    utils::logger::deprecated::Logger::log("SharedDataStream::createReader failed: all readers are already in use.");
     return nullptr;
 }
 
@@ -421,7 +419,7 @@ SharedDataStream<T>::createReaderLocked(
         bool forceReplacement,
         std::unique_lock<Mutex> * lock) {
     if (m_bufferLayout->isReaderEnabled(id) && !forceReplacement) {
-        avsUtils::Logger::log(
+        utils::logger::deprecated::Logger::log(
                 "SharedDataStream::createReaderLocked failed: The requested reader id already attached and this "
                 "call did not specify forceReplacement=true.");
         return nullptr;
@@ -459,4 +457,4 @@ SharedDataStream<T>::createReaderLocked(
 #include "Reader.h"
 #include "Writer.h"
 
-#endif // ALEXA_CLIENT_SDK_AVSCOMMON_INCLUDE_AVSCOMMON_UTILS_SDS_SHARED_DATA_STREAM_H_
+#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_SHARED_DATA_STREAM_H_

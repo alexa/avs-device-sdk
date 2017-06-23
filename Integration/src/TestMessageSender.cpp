@@ -27,57 +27,56 @@ namespace alexaClientSDK {
 namespace integration {
 namespace test {
 
-TestMessageSender::TestMessageSender (std::shared_ptr<acl::MessageRouterInterface> messageRouter,
-                   bool isEnabled,
-                   std::shared_ptr<acl::ConnectionStatusObserverInterface> connectionStatusObserver,
-                   std::shared_ptr<MessageObserverInterface> messageObserver) {
-                m_connectionManager = acl::AVSConnectionManager::create(messageRouter, isEnabled, connectionStatusObserver, messageObserver);
-            }
+TestMessageSender::TestMessageSender(
+        std::shared_ptr<acl::MessageRouterInterface> messageRouter,
+        bool isEnabled,
+        std::shared_ptr<ConnectionStatusObserverInterface> connectionStatusObserver,
+        std::shared_ptr<MessageObserverInterface> messageObserver) {
+    m_connectionManager = acl::AVSConnectionManager::create(messageRouter, isEnabled, { connectionStatusObserver },
+            messageObserver);
+}
 
-    void TestMessageSender::sendMessage(std::shared_ptr<MessageRequest> request){
-        m_connectionManager->sendMessage(request);
-        SendParams sendState;
-        std::unique_lock<std::mutex> lock(m_mutex);
-        sendState.type = SendParams::Type::SEND;
-        sendState.request = request;
-        m_queue.push_back(sendState);
-        m_wakeTrigger.notify_all();
-    }
+void TestMessageSender::sendMessage(std::shared_ptr<MessageRequest> request) {
+    m_connectionManager->sendMessage(request);
+    SendParams sendState;
+    std::unique_lock<std::mutex> lock(m_mutex);
+    sendState.type = SendParams::Type::SEND;
+    sendState.request = request;
+    m_queue.push_back(sendState);
+    m_wakeTrigger.notify_all();
+}
 
-    TestMessageSender::SendParams TestMessageSender::waitForNext(const std::chrono::seconds duration) {
-        SendParams ret;
-        std::unique_lock<std::mutex> lock(m_mutex);
-        if (!m_wakeTrigger.wait_for(lock, duration, [this]() { return !m_queue.empty(); })) {
-            ret.type = SendParams::Type::TIMEOUT;
-            return ret;
-        }
-        ret = m_queue.front();
-        m_queue.pop_front();
+TestMessageSender::SendParams TestMessageSender::waitForNext(const std::chrono::seconds duration) {
+    SendParams ret;
+    std::unique_lock<std::mutex> lock(m_mutex);
+    if (!m_wakeTrigger.wait_for(lock, duration, [this]() { return !m_queue.empty(); })) {
+        ret.type = SendParams::Type::TIMEOUT;
         return ret;
     }
+    ret = m_queue.front();
+    m_queue.pop_front();
+    return ret;
+}
 
-    void TestMessageSender::enable(){
-        m_connectionManager->enable();
-    }
+void TestMessageSender::enable() {
+    m_connectionManager->enable();
+}
 
+void TestMessageSender::disable() {
+    m_connectionManager->disable();
+}
 
-    void TestMessageSender::disable(){
-        m_connectionManager->disable();
-    }
+bool TestMessageSender::isEnabled() {
+    return m_connectionManager->isEnabled();
+}
 
-    
-    bool TestMessageSender::isEnabled() {
-        return m_connectionManager->isEnabled();
-    }
+void TestMessageSender::reconnect() {
+    m_connectionManager->reconnect();
+}
 
-
-    void TestMessageSender::reconnect() {
-        m_connectionManager->reconnect();
-    }
-
-    void TestMessageSender::setAVSEndpoint(const std::string& avsEndpoint) {
-        m_connectionManager->setAVSEndpoint(avsEndpoint);
-    }
+void TestMessageSender::setAVSEndpoint(const std::string& avsEndpoint) {
+    m_connectionManager->setAVSEndpoint(avsEndpoint);
+}
 
 } // namespace test
 } // namespace integration

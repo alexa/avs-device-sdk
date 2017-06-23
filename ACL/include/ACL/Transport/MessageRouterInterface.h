@@ -1,4 +1,4 @@
-/**
+/*
  * MessageRouterInterface.h
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -20,8 +20,9 @@
 
 #include <memory>
 #include <string>
+#include <utility>
 
-#include "AVSUtils/Threading/Executor.h"
+#include "AVSCommon/Utils/Threading/Executor.h"
 #include "AVSCommon/AVS/MessageRequest.h"
 #include "ACL/AuthDelegateInterface.h"
 
@@ -38,8 +39,10 @@ namespace acl {
  * Implementations of this class are required to be thread-safe.
  */
 class MessageRouterInterface {
-
 public:
+    /// Alias to a connection status and changed reason pair.
+    using ConnectionStatus = std::pair<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status,
+            avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason>;
     /**
      * Begin the process of establishing an AVS connection.
      * If the underlying implementation is already connected, or is in the process of changing its connection state,
@@ -56,9 +59,10 @@ public:
 
     /**
      * Queries the status of the connection.
-     * @return Returns the connection status of the underlying implementation.
+     *
+     * @return Returns the connection status and changed reason pair of the underlying implementation.
      */
-    virtual ConnectionStatusObserverInterface::Status getConnectionStatus() = 0;
+    virtual ConnectionStatus getConnectionStatus() = 0;
 
     /**
      * Send a message to AVS.

@@ -100,15 +100,6 @@ public:
     /// AttachmentManager with which to create directives.
     std::shared_ptr<AttachmentManager> m_attachmentManager;
 
-    /// Generic mock @c DirectiveHandler for tests.
-    std::shared_ptr<MockDirectiveHandler> m_handler0;
-
-    /// Generic mock @c DirectiveHandler for tests.
-    std::shared_ptr<MockDirectiveHandler> m_handler1;
-
-    /// Generic mock @c DirectiveHandler for tests.
-    std::shared_ptr<MockDirectiveHandler> m_handler2;
-
     /// Generic @c AVSDirective for tests.
     std::shared_ptr<AVSDirective> m_directive_0_0;
 
@@ -123,10 +114,6 @@ void DirectiveProcessorTest::SetUp() {
     m_router = std::make_shared<DirectiveRouter>();
     m_processor = std::make_shared<DirectiveProcessor>(m_router.get());
     m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
-
-    m_handler0 = MockDirectiveHandler::create();
-    m_handler1 = MockDirectiveHandler::create();
-    m_handler2 = MockDirectiveHandler::create();
 
     auto avsMessageHeader_0_0 = std::make_shared<AVSMessageHeader>(
             NAMESPACE_AND_NAME_0_0, MESSAGE_ID_0_0, DIALOG_REQUEST_ID_0);
@@ -156,14 +143,16 @@ TEST_F(DirectiveProcessorTest, testNullptrDirective) {
  * (because directives with the wrong @c dialogRequestID are dropped).
  */
 TEST_F(DirectiveProcessorTest, testWrongDialogRequestId) {
-    ASSERT_TRUE(m_router->addDirectiveHandlers({
-            {{NAMESPACE_AND_NAME_0_0}, {m_handler0, BlockingPolicy::NON_BLOCKING}}
-    }));
+    DirectiveHandlerConfiguration handler0Config;
+    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::NON_BLOCKING;
+    std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
 
-    EXPECT_CALL(*(m_handler0.get()), handleDirectiveImmediately(_)).Times(0);
-    EXPECT_CALL(*(m_handler0.get()), preHandleDirective(m_directive_0_0, _)).Times(0);
-    EXPECT_CALL(*(m_handler0.get()), handleDirective(MESSAGE_ID_0_0)).Times(0);
-    EXPECT_CALL(*(m_handler0.get()), cancelDirective(_)).Times(0);
+    ASSERT_TRUE(m_router->addDirectiveHandler(handler0));
+
+    EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(_)).Times(0);
+    EXPECT_CALL(*(handler0.get()), preHandleDirective(m_directive_0_0, _)).Times(0);
+    EXPECT_CALL(*(handler0.get()), handleDirective(MESSAGE_ID_0_0)).Times(0);
+    EXPECT_CALL(*(handler0.get()), cancelDirective(_)).Times(0);
 
     m_processor->setDialogRequestId(DIALOG_REQUEST_ID_1);
     ASSERT_TRUE(m_processor->onDirective(m_directive_0_0));
@@ -174,19 +163,21 @@ TEST_F(DirectiveProcessorTest, testWrongDialogRequestId) {
  * Expect that @c preHandleDirective() and @c handleDirective() are called.
  */
 TEST_F(DirectiveProcessorTest, testSendNonBlocking) {
-    ASSERT_TRUE(m_router->addDirectiveHandlers({
-            {{NAMESPACE_AND_NAME_0_0}, {m_handler0, BlockingPolicy::NON_BLOCKING}}
-    }));
+    DirectiveHandlerConfiguration handler0Config;
+    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::NON_BLOCKING;
+    std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
 
-    EXPECT_CALL(*(m_handler0.get()), handleDirectiveImmediately(_)).Times(0);
-    EXPECT_CALL(*(m_handler0.get()), preHandleDirective(m_directive_0_0, _)).Times(1);
-    EXPECT_CALL(*(m_handler0.get()), handleDirective(MESSAGE_ID_0_0)).Times(1);
-    EXPECT_CALL(*(m_handler0.get()), cancelDirective(_)).Times(0);
+    ASSERT_TRUE(m_router->addDirectiveHandler(handler0));
+
+    EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(_)).Times(0);
+    EXPECT_CALL(*(handler0.get()), preHandleDirective(m_directive_0_0, _)).Times(1);
+    EXPECT_CALL(*(handler0.get()), handleDirective(MESSAGE_ID_0_0)).Times(1);
+    EXPECT_CALL(*(handler0.get()), cancelDirective(_)).Times(0);
 
     m_processor->setDialogRequestId(DIALOG_REQUEST_ID_0);
     ASSERT_TRUE(m_processor->onDirective(m_directive_0_0));
 
-    ASSERT_TRUE(m_handler0->waitUntilCompleted());
+    ASSERT_TRUE(handler0->waitUntilCompleted());
 }
 
 /**
@@ -194,26 +185,32 @@ TEST_F(DirectiveProcessorTest, testSendNonBlocking) {
  * @c handleDirective() is called for each.
  */
 TEST_F(DirectiveProcessorTest, testSendBlockingThenNonBlocking) {
-    ASSERT_TRUE(m_router->addDirectiveHandlers({
-            {{NAMESPACE_AND_NAME_0_0}, {m_handler0, BlockingPolicy::BLOCKING}},
-            {{NAMESPACE_AND_NAME_0_1}, {m_handler1, BlockingPolicy::NON_BLOCKING}}
-    }));
+    DirectiveHandlerConfiguration handler0Config;
+    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::BLOCKING;
+    std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
 
-    EXPECT_CALL(*(m_handler0.get()), handleDirectiveImmediately(_)).Times(0);
-    EXPECT_CALL(*(m_handler0.get()), preHandleDirective(m_directive_0_0, _)).Times(1);
-    EXPECT_CALL(*(m_handler0.get()), handleDirective(MESSAGE_ID_0_0)).Times(1);
-    EXPECT_CALL(*(m_handler0.get()), cancelDirective(_)).Times(0);
+    DirectiveHandlerConfiguration handler1Config;
+    handler1Config[{NAMESPACE_AND_NAME_0_1}] = BlockingPolicy::NON_BLOCKING;
+    std::shared_ptr<MockDirectiveHandler> handler1 = MockDirectiveHandler::create(handler1Config);
 
-    EXPECT_CALL(*(m_handler1.get()), handleDirectiveImmediately(_)).Times(0);
-    EXPECT_CALL(*(m_handler1.get()), preHandleDirective(m_directive_0_1, _)).Times(1);
-    EXPECT_CALL(*(m_handler1.get()), handleDirective(MESSAGE_ID_0_1)).Times(1);
-    EXPECT_CALL(*(m_handler1.get()), cancelDirective(_)).Times(0);
+    ASSERT_TRUE(m_router->addDirectiveHandler(handler0));
+    ASSERT_TRUE(m_router->addDirectiveHandler(handler1));
+
+    EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(_)).Times(0);
+    EXPECT_CALL(*(handler0.get()), preHandleDirective(m_directive_0_0, _)).Times(1);
+    EXPECT_CALL(*(handler0.get()), handleDirective(MESSAGE_ID_0_0)).Times(1);
+    EXPECT_CALL(*(handler0.get()), cancelDirective(_)).Times(0);
+
+    EXPECT_CALL(*(handler1.get()), handleDirectiveImmediately(_)).Times(0);
+    EXPECT_CALL(*(handler1.get()), preHandleDirective(m_directive_0_1, _)).Times(1);
+    EXPECT_CALL(*(handler1.get()), handleDirective(MESSAGE_ID_0_1)).Times(1);
+    EXPECT_CALL(*(handler1.get()), cancelDirective(_)).Times(0);
 
     m_processor->setDialogRequestId(DIALOG_REQUEST_ID_0);
     ASSERT_TRUE(m_processor->onDirective(m_directive_0_0));
     ASSERT_TRUE(m_processor->onDirective(m_directive_0_1));
 
-    ASSERT_TRUE(m_handler1->waitUntilCompleted());
+    ASSERT_TRUE(handler1->waitUntilCompleted());
 }
 
 /**
@@ -225,30 +222,37 @@ TEST_F(DirectiveProcessorTest, testSendBlockingThenNonBlocking) {
  * registered. Expect that the last directive is handled as well.
  */
 TEST_F(DirectiveProcessorTest, testOnUnregisteredDirective) {
-    ASSERT_TRUE(m_router->addDirectiveHandlers({
-            {{NAMESPACE_AND_NAME_0_1}, {m_handler1, BlockingPolicy::NON_BLOCKING}},
-            {{NAMESPACE_AND_NAME_1_0}, {m_handler2, BlockingPolicy::NON_BLOCKING}}
-    }));
+    DirectiveHandlerConfiguration handler1Config;
+    handler1Config[{NAMESPACE_AND_NAME_0_1}] = BlockingPolicy::NON_BLOCKING;
+    std::shared_ptr<MockDirectiveHandler> handler1 = MockDirectiveHandler::create(handler1Config);
 
-    EXPECT_CALL(*(m_handler1.get()), handleDirectiveImmediately(_)).Times(0);
-    EXPECT_CALL(*(m_handler1.get()), preHandleDirective(m_directive_0_1, _)).Times(1);
-    EXPECT_CALL(*(m_handler1.get()), handleDirective(MESSAGE_ID_0_1)).Times(1);
-    EXPECT_CALL(*(m_handler1.get()), cancelDirective(_)).Times(0);
+    DirectiveHandlerConfiguration handler2Config;
+    handler2Config[{NAMESPACE_AND_NAME_1_0}] = BlockingPolicy::NON_BLOCKING;
+    std::shared_ptr<MockDirectiveHandler> handler2 = MockDirectiveHandler::create(handler2Config);    
 
-    EXPECT_CALL(*(m_handler2.get()), handleDirectiveImmediately(_)).Times(0);
-    EXPECT_CALL(*(m_handler2.get()), preHandleDirective(m_directive_1_0, _)).Times(1);
-    EXPECT_CALL(*(m_handler2.get()), handleDirective(MESSAGE_ID_1_0)).Times(1);
-    EXPECT_CALL(*(m_handler2.get()), cancelDirective(_)).Times(0);
+
+    ASSERT_TRUE(m_router->addDirectiveHandler(handler1));
+    ASSERT_TRUE(m_router->addDirectiveHandler(handler2));
+
+    EXPECT_CALL(*(handler1.get()), handleDirectiveImmediately(_)).Times(0);
+    EXPECT_CALL(*(handler1.get()), preHandleDirective(m_directive_0_1, _)).Times(1);
+    EXPECT_CALL(*(handler1.get()), handleDirective(MESSAGE_ID_0_1)).Times(1);
+    EXPECT_CALL(*(handler1.get()), cancelDirective(_)).Times(0);
+
+    EXPECT_CALL(*(handler2.get()), handleDirectiveImmediately(_)).Times(0);
+    EXPECT_CALL(*(handler2.get()), preHandleDirective(m_directive_1_0, _)).Times(1);
+    EXPECT_CALL(*(handler2.get()), handleDirective(MESSAGE_ID_1_0)).Times(1);
+    EXPECT_CALL(*(handler2.get()), cancelDirective(_)).Times(0);
 
     m_processor->setDialogRequestId(DIALOG_REQUEST_ID_0);
     ASSERT_FALSE(m_processor->onDirective(m_directive_0_0));
     ASSERT_TRUE(m_processor->onDirective(m_directive_0_1));
-    ASSERT_TRUE(m_handler1->waitUntilCompleted());
+    ASSERT_TRUE(handler1->waitUntilCompleted());
 
     m_processor->setDialogRequestId(DIALOG_REQUEST_ID_1);
     ASSERT_TRUE(m_processor->onDirective(m_directive_1_0));
 
-    ASSERT_TRUE(m_handler2->waitUntilCompleted());
+    ASSERT_TRUE(handler2->waitUntilCompleted());
 }
 
 /**
@@ -261,38 +265,46 @@ TEST_F(DirectiveProcessorTest, testOnUnregisteredDirective) {
  * final @c AVSDirective to be processed normally.
  */
 TEST_F(DirectiveProcessorTest, testSetDialogRequestIdCancelsOutstandingDirectives) {
+    DirectiveHandlerConfiguration longRunningHandlerConfig;
+    longRunningHandlerConfig[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::BLOCKING;
+    auto longRunningHandler = MockDirectiveHandler::create(
+            longRunningHandlerConfig, MockDirectiveHandler::DEFAULT_DONE_TIMEOUT_MS);
 
-    auto longRunningHandler = MockDirectiveHandler::create(MockDirectiveHandler::DEFAULT_DONE_TIMEOUT_MS);
+    DirectiveHandlerConfiguration handler1Config;
+    handler1Config[{NAMESPACE_AND_NAME_0_1}] = BlockingPolicy::NON_BLOCKING;
+    auto handler1 = MockDirectiveHandler::create(handler1Config);
 
-    ASSERT_TRUE(m_router->addDirectiveHandlers({
-            {{NAMESPACE_AND_NAME_0_0}, {longRunningHandler, BlockingPolicy::BLOCKING}},
-            {{NAMESPACE_AND_NAME_0_1}, {m_handler1, BlockingPolicy::NON_BLOCKING}},
-            {{NAMESPACE_AND_NAME_1_0}, {m_handler2, BlockingPolicy::NON_BLOCKING}}
-    }));
+    DirectiveHandlerConfiguration handler2Config;
+    handler2Config[{NAMESPACE_AND_NAME_1_0}] = BlockingPolicy::NON_BLOCKING;
+    auto handler2 = MockDirectiveHandler::create(handler2Config);    
+
+    ASSERT_TRUE(m_router->addDirectiveHandler(longRunningHandler));
+    ASSERT_TRUE(m_router->addDirectiveHandler(handler1));
+    ASSERT_TRUE(m_router->addDirectiveHandler(handler2));
 
     EXPECT_CALL(*(longRunningHandler.get()), handleDirectiveImmediately(_)).Times(0);
     EXPECT_CALL(*(longRunningHandler.get()), preHandleDirective(_, _)).Times(1);
     EXPECT_CALL(*(longRunningHandler.get()), handleDirective(_)).Times(1);
     EXPECT_CALL(*(longRunningHandler.get()), cancelDirective(_)).Times(1);
 
-    EXPECT_CALL(*(m_handler1.get()), handleDirectiveImmediately(_)).Times(0);
-    EXPECT_CALL(*(m_handler1.get()), preHandleDirective(m_directive_0_1, _)).Times(1);
-    EXPECT_CALL(*(m_handler1.get()), handleDirective(MESSAGE_ID_0_1)).Times(0);
-    EXPECT_CALL(*(m_handler1.get()), cancelDirective(_)).Times(1);
+    EXPECT_CALL(*(handler1.get()), handleDirectiveImmediately(_)).Times(0);
+    EXPECT_CALL(*(handler1.get()), preHandleDirective(m_directive_0_1, _)).Times(1);
+    EXPECT_CALL(*(handler1.get()), handleDirective(MESSAGE_ID_0_1)).Times(0);
+    EXPECT_CALL(*(handler1.get()), cancelDirective(_)).Times(1);
 
-    EXPECT_CALL(*(m_handler2.get()), handleDirectiveImmediately(_)).Times(0);
-    EXPECT_CALL(*(m_handler2.get()), preHandleDirective(m_directive_1_0, _)).Times(1);
-    EXPECT_CALL(*(m_handler2.get()), handleDirective(MESSAGE_ID_1_0)).Times(1);
-    EXPECT_CALL(*(m_handler2.get()), cancelDirective(_)).Times(0);
+    EXPECT_CALL(*(handler2.get()), handleDirectiveImmediately(_)).Times(0);
+    EXPECT_CALL(*(handler2.get()), preHandleDirective(m_directive_1_0, _)).Times(1);
+    EXPECT_CALL(*(handler2.get()), handleDirective(MESSAGE_ID_1_0)).Times(1);
+    EXPECT_CALL(*(handler2.get()), cancelDirective(_)).Times(0);
 
     m_processor->setDialogRequestId(DIALOG_REQUEST_ID_0);
     ASSERT_TRUE(m_processor->onDirective(m_directive_0_0));
     ASSERT_TRUE(m_processor->onDirective(m_directive_0_1));
     ASSERT_TRUE(longRunningHandler->waitUntilHandling());
-    ASSERT_TRUE(m_handler1->waitUntilPreHandling());
+    ASSERT_TRUE(handler1->waitUntilPreHandling());
     m_processor->setDialogRequestId(DIALOG_REQUEST_ID_1);
     ASSERT_TRUE(m_processor->onDirective(m_directive_1_0));
-    ASSERT_TRUE(m_handler2->waitUntilCompleted());
+    ASSERT_TRUE(handler2->waitUntilCompleted());
 }
 
 } // namespace test

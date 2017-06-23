@@ -21,24 +21,22 @@
 #include <chrono>
 #include <condition_variable>
 #include <mutex>
-
-#include "ACL/ConnectionStatusObserverInterface.h"
+#include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace integration {
 
-using namespace alexaClientSDK::acl;
-
-class ConnectionStatusObserver : public ConnectionStatusObserverInterface {
+class ConnectionStatusObserver : public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface {
 public:
     ConnectionStatusObserver();
-    void onConnectionStatusChanged(const ConnectionStatusObserverInterface::Status connectionStatus,
-                                   const ConnectionStatusObserverInterface::ChangedReason reason) override;
-    ConnectionStatusObserverInterface::Status getConnectionStatus() const;
-    bool waitFor(const ConnectionStatusObserverInterface::Status connectionStatus,
+    void onConnectionStatusChanged(
+    		const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status connectionStatus,
+            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
+    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status getConnectionStatus() const;
+    bool waitFor(const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status connectionStatus,
                  const std::chrono::seconds duration = std::chrono::seconds(10));
 private:
-    ConnectionStatusObserverInterface::Status m_connectionStatus;
+    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status m_connectionStatus;
     std::mutex m_mutex;
     std::condition_variable m_wakeTrigger;
 };

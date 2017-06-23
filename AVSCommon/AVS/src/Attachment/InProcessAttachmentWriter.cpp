@@ -16,9 +16,8 @@
  */
 
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h"
-
-#include <AVSUtils/Logger/LogEntry.h>
-#include <AVSUtils/Logging/Logger.h>
+#include "AVSCommon/Utils/Logger/LogEntry.h"
+#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
 
 #include <iostream>
 
@@ -27,7 +26,7 @@ namespace avsCommon {
 namespace avs {
 namespace attachment {
 
-using namespace alexaClientSDK::avsUtils;
+using namespace alexaClientSDK::avsCommon::utils;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("InProcessAttachmentWriter");
@@ -37,7 +36,7 @@ static const std::string TAG("InProcessAttachmentWriter");
  *
  * @param The event string for this @c LogEntry.
  */
-#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::unique_ptr<InProcessAttachmentWriter> InProcessAttachmentWriter::create(std::shared_ptr<SDSType> sds) {
     auto writer = std::unique_ptr<InProcessAttachmentWriter>(new InProcessAttachmentWriter(sds));

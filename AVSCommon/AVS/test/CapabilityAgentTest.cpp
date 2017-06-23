@@ -29,7 +29,7 @@ using namespace testing;
 
 namespace alexaClientSDK {
 namespace avsCommon {
-namespace test{
+namespace test {
 
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs;
@@ -242,9 +242,11 @@ public:
 
     void cancelDirective(std::shared_ptr<DirectiveInfo> info) override;
 
+    avs::DirectiveHandlerConfiguration getConfiguration() const override;
+
     FunctionCalled waitForFunctionCalls(const std::chrono::milliseconds duration = std::chrono::milliseconds(400));
 
-    const std::string callBuildJsonEventString(const std::string& eventName,
+    const std::pair<std::string, std::string> callBuildJsonEventString(const std::string& eventName,
         const std::string& dialogRequestIdValue, const std::string& jsonPayloadValue, const std::string& jsonContext);
 
 private:
@@ -277,7 +279,7 @@ void MockCapabilityAgent::handleDirectiveImmediately(std::shared_ptr<AVSDirectiv
     m_wakeTrigger.notify_one();
 }
 
-void MockCapabilityAgent::preHandleDirective(std::shared_ptr<DirectiveInfo>){
+void MockCapabilityAgent::preHandleDirective(std::shared_ptr<DirectiveInfo>) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_functionCalled = FunctionCalled::PREHANDLE_DIRECTIVE;
     m_wakeTrigger.notify_one();
@@ -295,6 +297,11 @@ void MockCapabilityAgent::cancelDirective(std::shared_ptr<DirectiveInfo>) {
     m_wakeTrigger.notify_one();
 }
 
+avs::DirectiveHandlerConfiguration MockCapabilityAgent::getConfiguration() const {
+    // Not using an empty initializer list here to account for a GCC 4.9.2 regression
+    return avs::DirectiveHandlerConfiguration();
+}
+
 MockCapabilityAgent::FunctionCalled MockCapabilityAgent::waitForFunctionCalls
             (const std::chrono::milliseconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
@@ -305,7 +312,7 @@ MockCapabilityAgent::FunctionCalled MockCapabilityAgent::waitForFunctionCalls
     return m_functionCalled;
 }
 
-const std::string MockCapabilityAgent::callBuildJsonEventString(const std::string& eventName,
+const std::pair<std::string, std::string> MockCapabilityAgent::callBuildJsonEventString(const std::string& eventName,
         const std::string& dialogRequestIdValue, const std::string& jsonPayloadValue, const std::string& jsonContext) {
     return CapabilityAgent::buildJsonEventString(eventName, dialogRequestIdValue, jsonPayloadValue, jsonContext);
 }
@@ -377,9 +384,11 @@ std::string CapabilityAgentTest::findStringTillEnd(std::string pattern, std::str
 void CapabilityAgentTest::testBuildJsonEventString(std::tuple<std::string, std::string, std::string> testTuple,
             bool dialogRequestIdPresent) {
     std::string testString = std::get<0>(testTuple);
-    std::string jsonEventString = m_capabilityAgent->callBuildJsonEventString(NAME_RECOGNIZE,
+    std::pair<std::string, std::string> msgIdAndJsonEvent = m_capabilityAgent->callBuildJsonEventString(NAME_RECOGNIZE,
             std::get<1>(testTuple), PAYLOAD_SPEECH_RECOGNIZER, std::get<2>(testTuple));
+    std::string& jsonEventString = msgIdAndJsonEvent.second;
 
+    ASSERT_NE(std::string::npos, jsonEventString.find(msgIdAndJsonEvent.first));
     ASSERT_EQ(findStringFromStart(MESSAGE_ID, testString), findStringFromStart(MESSAGE_ID, jsonEventString));
 
     if (dialogRequestIdPresent) {

@@ -29,7 +29,7 @@
 
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
 #include "AVSCommon/AVS/Attachment/AttachmentManager.h"
-#include "AVSCommon/JSON/JSONUtils.h"
+#include "AVSCommon/Utils/JSON/JSONUtils.h"
 
 using namespace alexaClientSDK::avsCommon;
 
@@ -43,15 +43,25 @@ namespace test {
  */
 class TestDirectiveHandler : public avsCommon::sdkInterfaces::DirectiveHandlerInterface {
 public:
-    void handleDirectiveImmediately(std::shared_ptr<avsCommon::AVSDirective> directive) override;
+    /**
+     * Constructor.
+     *
+     * @param config The @c avsCommon::avs::DirectiveHandlerConfiguration for the directive handler for registering
+     * with a directive sequencer.
+     */
+    TestDirectiveHandler(avsCommon::avs::DirectiveHandlerConfiguration config);
+
+    void handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive) override;
 
     void preHandleDirective(
-            std::shared_ptr<avsCommon::AVSDirective> directive,
+            std::shared_ptr<avsCommon::avs::AVSDirective> directive,
             std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) override;
 
     bool handleDirective(const std::string& messageId) override;
 
     void cancelDirective(const std::string& messageId) override;
+
+    avsCommon::avs::DirectiveHandlerConfiguration getConfiguration() const override;
 
     void onDeregistered() override;
 
@@ -138,7 +148,7 @@ public:
         // Type of how the directive was passed to DirectiveHandler.
         Type type;
         // AVSDirective passed from the Directive Sequencer to the DirectiveHandler. 
-        std::shared_ptr<avsCommon::AVSDirective> directive;
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive;
         // DirectiveHandlerResult to inform the Directive Sequencer a directive has either successfully or
         // unsuccessfully handled.
         std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result;
@@ -161,7 +171,9 @@ private:
     /// map of message IDs to result handlers.
     std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface>> m_results;
     /// map of message IDs to result handlers.
-    std::unordered_map<std::string, std::shared_ptr<avsCommon::AVSDirective>> m_directives;
+    std::unordered_map<std::string, std::shared_ptr<avsCommon::avs::AVSDirective>> m_directives;
+    /// The @c avsCommon::avs::DirectiveHandlerConfiguration of the handler.
+    avsCommon::avs::DirectiveHandlerConfiguration m_configuration;
 };
 } // namespace test
 } // namespace integration

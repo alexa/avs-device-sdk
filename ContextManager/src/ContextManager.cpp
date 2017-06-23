@@ -16,7 +16,9 @@
  */
 
 #include <string>
-#include <AVSUtils/Logging/Logger.h>
+
+#include <AVSCommon/Utils/Logger/Logger.h>
+
 #include "ContextManager/ContextManager.h"
 
 /// A state provider is expected to respond to a @c provideState request within this timeout period.
@@ -29,7 +31,17 @@ using namespace rapidjson;
 using namespace avsCommon;
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
-using namespace avsUtils;
+using namespace avsCommon::utils;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("ContextManager");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// The namespace json key in the header of the state.
 static const std::string NAMESPACE_JSON_KEY = "namespace";
@@ -68,8 +80,10 @@ void ContextManager::setStateProvider(const NamespaceAndName& stateProviderName,
     std::lock_guard<std::mutex> stateProviderLock(m_stateProviderMutex);
     if (!stateProvider) {
         m_namespaceNameToStateInfo.erase(stateProviderName);
-        Logger::log("Removed the stateProvider of namespace:"+ stateProviderName.nameSpace + " and name:" +
-                stateProviderName.name + " from the ContextManager");
+        ACSDK_DEBUG(LX("setStateProvider")
+                .d("action", "removedStateProvider")
+                .d("namespace", stateProviderName.nameSpace)
+                .d("name", stateProviderName.name));
         return;
     }
     auto stateInfoMappingIt = m_namespaceNameToStateInfo.find(stateProviderName);
@@ -87,8 +101,13 @@ SetStateResult ContextManager::setState(const NamespaceAndName& stateProviderNam
         return updateStateLocked(stateProviderName, jsonState, refreshPolicy);
     }
     if (stateRequestToken != m_stateRequestToken) {
-        Logger::log("State token outdated for the stateProvider of namespace:"+ stateProviderName.nameSpace
-                + " and name:" + stateProviderName.name);
+        ACSDK_ERROR(LX("setStateFailed")
+                .d("reason", "outdatedStateToken")
+                .d("namespace", stateProviderName.nameSpace)
+                .d("name", stateProviderName.name)
+                .sensitive("suppliedToken", stateRequestToken)
+                .sensitive("expectedToken", m_stateRequestToken));
+
         return SetStateResult::STATE_TOKEN_OUTDATED;
     }
     SetStateResult status = updateStateLocked(stateProviderName, jsonState, refreshPolicy);
@@ -123,7 +142,7 @@ void ContextManager::getContext(std::shared_ptr<ContextRequesterInterface> conte
 
 ContextManager::StateInfo::StateInfo(
         std::shared_ptr<avsCommon::sdkInterfaces::StateProviderInterface> initStateProvider,
-        std::string initJsonState, avsCommon::sdkInterfaces::StateRefreshPolicy initRefreshPolicy):
+        std::string initJsonState, avsCommon::avs::StateRefreshPolicy initRefreshPolicy):
                 stateProvider{initStateProvider}, jsonState{initJsonState}, refreshPolicy{initRefreshPolicy} {
 
 }
@@ -141,17 +160,22 @@ SetStateResult ContextManager::updateStateLocked(const NamespaceAndName& statePr
         const std::string& jsonState, const StateRefreshPolicy& refreshPolicy) {
     auto stateInfoMappingIt = m_namespaceNameToStateInfo.find(stateProviderName);
     if (m_namespaceNameToStateInfo.end() == stateInfoMappingIt) {
-        if (StateRefreshPolicy::ALWAYS == refreshPolicy) {
-            Logger::log("State provider of namespace:"+ stateProviderName.nameSpace + " and name:" +
-                stateProviderName.name + " not registered with the Context Manager");
+       if (StateRefreshPolicy::ALWAYS == refreshPolicy) {
+            ACSDK_ERROR(LX("updateStateLockedFailed")
+                .d("reason", "unregisteredStateProvider")
+                .d("namespace", stateProviderName.nameSpace)
+                .d("name", stateProviderName.name));
             return SetStateResult::STATE_PROVIDER_NOT_REGISTERED;
         }
         m_namespaceNameToStateInfo[stateProviderName] = std::make_shared<StateInfo>(nullptr, jsonState, refreshPolicy);
     } else {
         stateInfoMappingIt->second->jsonState = jsonState;
         stateInfoMappingIt->second->refreshPolicy = refreshPolicy;
-        Logger::log("Updated state for state provider of namespace:"+ stateProviderName.nameSpace + " and name:" +
-                stateProviderName.name + " to " + jsonState);
+        ACSDK_DEBUG(LX("updateStateLocked")
+            .d("action", "updatedState")
+            .d("state", jsonState)
+            .d("namespace", stateProviderName.nameSpace)
+            .d("name", stateProviderName.name));
     }
     return SetStateResult::SUCCESS;
 }
@@ -207,11 +231,11 @@ void ContextManager::updateStatesLoop() {
         std::unique_lock<std::mutex> stateProviderLock(m_stateProviderMutex);
         requestStatesLocked(stateProviderLock);
 
-        if (!m_pendingOnStateProviders.empty()){
+        if (!m_pendingOnStateProviders.empty()) {
             if (!m_setStateCompleteNotifier.wait_for(stateProviderLock, PROVIDE_STATE_DEFAULT_TIMEOUT,
                     [this]() { return m_pendingOnStateProviders.empty(); })) {
                 stateProviderLock.unlock();
-                Logger::log("State Update Failed: State Provider timed out");
+                ACSDK_ERROR(LX("updateStatesLoopFailed").d("reason", "stateProviderTimedOut"));
                 sendContextAndClearQueue("", ContextRequestError::STATE_PROVIDER_TIMEDOUT);
                 continue;
             }
@@ -234,18 +258,20 @@ Value ContextManager::buildHeader(const NamespaceAndName& namespaceAndName,
 
 Value ContextManager::buildState(const NamespaceAndName& namespaceAndName, const std::string jsonPayloadValue,
         Document::AllocatorType& allocator) {
-    Document payload(&allocator);
+    Document payload;
     Value state(kObjectType);
     Value header = buildHeader(namespaceAndName, allocator);
 
     // If the header is an empty object or during parsing the payload, an error occurs, return an empty event value.
     if (header.ObjectEmpty()){
-        Logger::log("BuildStateFailed: Empty header");
+        ACSDK_ERROR(LX("buildStateFailed").d("reason", "emptyHeader"));
         return state;
     }
 
     if (payload.Parse(jsonPayloadValue).HasParseError()) {
-        Logger::log("BuildStateFailed: Unable to parse payload:" + jsonPayloadValue);
+        ACSDK_ERROR(LX("buildStateFailed")
+                .d("reason", "parseError")
+                .d("payload", jsonPayloadValue));
         return state;
     }
 
@@ -269,7 +295,7 @@ void ContextManager::sendContextToRequesters() {
         auto& stateInfo = it->second;
         Value jsonState = buildState(it->first, stateInfo->jsonState, allocator);
         if (jsonState.ObjectEmpty()){
-            Logger::log("Build Context Failed: Empty jsonState");
+            ACSDK_ERROR(LX("buildContextFailed").d("reason", "buildStateFailed"));
             errorBuildingContext = true;
             break;
         }
@@ -281,7 +307,7 @@ void ContextManager::sendContextToRequesters() {
         jsonContext.AddMember(StringRef(CONTEXT_JSON_KEY), statesArray, allocator);
         Writer<StringBuffer> writer(jsonContextBuf);
         if (!jsonContext.Accept(writer)) {
-            Logger::log("Build Context Failed: Accept writer failed");
+            ACSDK_ERROR(LX("buildContextFailed").d("reason", "convertingJsonToStringFailed"));
             errorBuildingContext = true;
         }
     }
@@ -289,7 +315,7 @@ void ContextManager::sendContextToRequesters() {
     if (errorBuildingContext) {
         sendContextAndClearQueue("", ContextRequestError::BUILD_CONTEXT_ERROR);
     } else {
-        Logger::log("Context built successfully:" + std::string(jsonContextBuf.GetString()));
+        ACSDK_DEBUG(LX("buildContextSuccessful").d("context", jsonContextBuf.GetString()));
         sendContextAndClearQueue(jsonContextBuf.GetString());
     }
 }

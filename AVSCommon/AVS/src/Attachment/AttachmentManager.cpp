@@ -19,9 +19,9 @@
 
 #include <vector>
 
-#include <AVSUtils/Logger/LogEntry.h>
-#include <AVSUtils/Logging/Logger.h>
-#include <AVSUtils/Memory/Memory.h>
+#include "AVSCommon/Utils/Logger/LogEntry.h"
+#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
+#include "AVSCommon/Utils/Memory/Memory.h"
 
 #include "AVSCommon/AVS/Attachment/InProcessAttachment.h"
 
@@ -30,8 +30,8 @@ namespace avsCommon {
 namespace avs {
 namespace attachment {
 
-using namespace alexaClientSDK::avsUtils;
-using namespace alexaClientSDK::avsUtils::memory;
+using namespace alexaClientSDK::avsCommon::utils;
+using namespace alexaClientSDK::avsCommon::utils::memory;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AttachmentManager");
@@ -41,7 +41,7 @@ static const std::string TAG("AttachmentManager");
  *
  * @param The event string for this @c LogEntry.
  */
-#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 // The definition for these two static class members.
 constexpr std::chrono::minutes AttachmentManager::ATTACHMENT_MANAGER_TIMOUT_MINUTES_DEFAULT;

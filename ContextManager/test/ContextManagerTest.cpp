@@ -23,7 +23,7 @@ using namespace testing;
 
 namespace alexaClientSDK {
 namespace contextManager {
-namespace test{
+namespace test {
 
 using namespace avsCommon;
 using namespace avsCommon::avs;
@@ -375,12 +375,12 @@ MockStateProvider::~MockStateProvider() {
     m_stateProviderShutdown = true;
     m_providerWakeTrigger.notify_one();
     lock.unlock();
-    if (m_doProvideThread.joinable()){
+    if (m_doProvideThread.joinable()) {
         m_doProvideThread.join();
     }
 }
 
-void MockStateProvider::provideState(unsigned int stateRequestToken){
+void MockStateProvider::provideState(unsigned int stateRequestToken) {
     m_stateRequestToken = stateRequestToken;
     std::lock_guard<std::mutex> lock(m_providerMutex);
     m_provideState = true;

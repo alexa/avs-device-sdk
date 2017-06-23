@@ -19,28 +19,29 @@
 #define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AIP_STATE_OBSERVER_H_
 
 #include <chrono>
+#include <deque>
 #include <condition_variable>
 #include <mutex>
 
-#include "AIP/AudioInputProcessor.h"
-#include "AIP/ObserverInterface.h"
+#include <AVSCommon/SDKInterfaces/AudioInputProcessorObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace integration {
 
-class AipStateObserver : public capabilityAgents::aip::ObserverInterface {
+class AipStateObserver : public avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface {
 public:
 	AipStateObserver();
-	void onStateChanged(capabilityAgents::aip::AudioInputProcessor::State newState) override;
-	bool checkState(const capabilityAgents::aip::AudioInputProcessor::State expectedState, 
+	void onStateChanged(avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State newState) override;
+	bool checkState(const avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State expectedState, 
     	const std::chrono::seconds duration = std::chrono::seconds(10));
-	capabilityAgents::aip::AudioInputProcessor::State waitForNext (const std::chrono::seconds duration);
+	avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State waitForNext (
+			const std::chrono::seconds duration);
 
 private:
-    capabilityAgents::aip::AudioInputProcessor::State m_state;
+    avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State m_state;
     std::mutex m_mutex;
     std::condition_variable m_wakeTrigger;
-    std::deque<capabilityAgents::aip::AudioInputProcessor::State> m_queue;
+    std::deque<avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State> m_queue;
 };
 
 } // namespace integration

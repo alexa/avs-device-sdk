@@ -22,6 +22,8 @@
 namespace alexaClientSDK {
 namespace integration {
 
+using alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface;
+
 ConnectionStatusObserver::ConnectionStatusObserver(): 
         m_connectionStatus(ConnectionStatusObserverInterface::Status::DISCONNECTED) {
 }
@@ -29,19 +31,19 @@ ConnectionStatusObserver::ConnectionStatusObserver():
 void ConnectionStatusObserver::onConnectionStatusChanged(
         const ConnectionStatusObserverInterface::Status connectionStatus,
         const ConnectionStatusObserverInterface::ChangedReason reason) {
-            m_connectionStatus = connectionStatus;
-            m_wakeTrigger.notify_all();
+    m_connectionStatus = connectionStatus;
+    m_wakeTrigger.notify_all();
 }
-	
+
 ConnectionStatusObserverInterface::Status ConnectionStatusObserver::getConnectionStatus() const {
     return m_connectionStatus;
 }
 
 bool ConnectionStatusObserver::waitFor(
         const ConnectionStatusObserverInterface::Status connectionStatus, const std::chrono::seconds duration) {
-            std::unique_lock<std::mutex> lock(m_mutex);
-            return m_wakeTrigger.wait_for(lock, duration, [this, connectionStatus]() {
-                return m_connectionStatus == connectionStatus;
+    std::unique_lock<std::mutex> lock(m_mutex);
+    return m_wakeTrigger.wait_for(lock, duration, [this, connectionStatus]() {
+        return m_connectionStatus == connectionStatus;
     });
 }
 

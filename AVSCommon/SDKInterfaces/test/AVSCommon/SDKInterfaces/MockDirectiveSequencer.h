@@ -29,10 +29,10 @@ namespace test {
 /// Mock class that implements the DirectiveSequencer.
 class MockDirectiveSequencer : public DirectiveSequencerInterface {
 public:
-    MOCK_METHOD1(addDirectiveHandlers, bool (const avs::DirectiveHandlerConfiguration& configuration));
-    MOCK_METHOD1(removeDirectiveHandlers, bool (const avs::DirectiveHandlerConfiguration& configuration));
+    MOCK_METHOD1(addDirectiveHandler, bool (std::shared_ptr<DirectiveHandlerInterface> handler));
+    MOCK_METHOD1(removeDirectiveHandler, bool (std::shared_ptr<DirectiveHandlerInterface> handler));
     MOCK_METHOD1(setDialogRequestId, void (const std::string& dialogRequestId));
-    MOCK_METHOD1(onDirective, bool (std::shared_ptr<avsCommon::AVSDirective> directive));
+    MOCK_METHOD1(onDirective, bool (std::shared_ptr<avsCommon::avs::AVSDirective> directive));
     MOCK_METHOD0(shutdown, void ());
 };
 

@@ -18,6 +18,7 @@
 #ifndef ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_STREAM_H_
 #define ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_STREAM_H_
 
+#include <atomic>
 #include <chrono>
 #include <memory>
 #include <mutex>
@@ -106,9 +107,17 @@ public:
 
     /**
      * Notify the current request observer that the transfer is complete with
-     * the appropriate SendCompleteStatus code
+     * the appropriate SendCompleteStatus code.
      */
     void notifyRequestObserver();
+
+    /**
+     * Notify the current request observer that the transfer is complete with
+     * the specified status code.
+     *
+     * @param status The completion status.
+     */
+    void notifyRequestObserver(avsCommon::avs::MessageRequest::Status status);
 
     /**
      * Callback that gets executed when data is received from the server
@@ -166,6 +175,30 @@ public:
      */
     bool isPaused() const;
 
+    /**
+     * Get the logical ID of this stream.
+     *
+     * @return The logical ID of this stream.
+     */
+    unsigned int getLogicalStreamId() const;
+
+    /**
+     * Set the timeout for this stream to make progress sending or receiving.
+     *
+     * @tparam TickType Type to represent tick count.
+     * @tparam TickPeriod @c std::ratio specifying ticks per second.
+     * @param duration Max time the stream may make no progress before @c getHasProgressTimedOut() returns true.
+     */
+    template<class TickType, class TickPeriod = std::ratio<1>>
+    void setProgressTimeout(std::chrono::duration<TickType, TickPeriod> duration);
+
+    /**
+     * Return whether or not the progress timeout has been reached.
+     *
+     * @return Whether or not the progress timeout has been reached.
+     */
+    bool hasProgressTimedOut() const;
+
 private:
     /**
      * Configure the associated curl easy handle with options common to GET and POST
@@ -197,9 +230,18 @@ private:
     bool m_isPaused;
     /**
      * The exception message being received from AVS by this stream.  It may be built up over several calls if either
-     * the write quantums are small, or if the message is long.
+     * the write quanta are small, or if the message is long.
      */
     std::string m_exceptionBeingProcessed;
+    /// Max time the stream may make no progress before @c hasProgressTimedOut() returns true.
+    std::atomic<std::chrono::steady_clock::rep> m_progressTimeout;
+    /// Last time something was transferred.
+    std::atomic<std::chrono::steady_clock::rep> m_timeOfLastTransfer;
+};
+
+template<class TickType, class TickPeriod>
+void HTTP2Stream::setProgressTimeout(std::chrono::duration<TickType, TickPeriod> duration) {
+    m_progressTimeout = std::chrono::duration_cast<std::chrono::steady_clock::duration>(duration).count();
 };
 
 } // acl

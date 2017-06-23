@@ -26,7 +26,7 @@
 #include <thread>
 #include <unordered_map>
 
-#include <AVSCommon/AVSDirective.h>
+#include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
 
 #include "ADSL/DirectiveRouter.h"
@@ -85,7 +85,7 @@ public:
      * @param directive The @c AVADirective to process.
      * @return Whether the directive was consumed.
      */
-    bool onDirective(std::shared_ptr<avsCommon::AVSDirective> directive);
+    bool onDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
     /**
      * Shut down the DirectiveProcessor.  This queues all outstanding @c AVSDirectives for cancellation and
@@ -121,7 +121,7 @@ private:
          * @param processorHandle handle of the @c DirectiveProcessor to forward to the result to.
          * @param directive The @c AVSDirective whose handling result will be specified by this instance.
          */
-        DirectiveHandlerResult(ProcessorHandle processorHandle, std::shared_ptr<avsCommon::AVSDirective> directive);
+        DirectiveHandlerResult(ProcessorHandle processorHandle, std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
         void setCompleted() override;
 
@@ -175,9 +175,9 @@ private:
      * @param queue The queue to search for the @c AVSDirective.
      * @return An iterator positioned at the matching directive (or @c queue::end(), if not found).
      */
-    static std::deque<std::shared_ptr<avsCommon::AVSDirective>>::iterator findDirectiveInQueueLocked(
+    static std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>>::iterator findDirectiveInQueueLocked(
             const std::string& messageId,
-            std::deque<std::shared_ptr<avsCommon::AVSDirective>>& queue);
+            std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>>& queue);
 
     /**
      * Remove the specified @c AVSDirective from the specified queue.  If the queue is not empty after the
@@ -187,8 +187,8 @@ private:
      * @param queue The queue to remove the @c AVSDirective from.
      */
     void removeDirectiveFromQueueLocked(
-            std::deque<std::shared_ptr<avsCommon::AVSDirective>>::iterator it,
-            std::deque<std::shared_ptr<avsCommon::AVSDirective>>& queue);
+            std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>>::iterator it,
+            std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>>& queue);
 
     /**
      * Thread method for m_processingThread.
@@ -237,13 +237,13 @@ private:
     std::string m_dialogRequestId;
 
     /// Queue of @c AVSDirectives waiting to be canceled.
-    std::deque<std::shared_ptr<avsCommon::AVSDirective>> m_cancelingQueue;
+    std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>> m_cancelingQueue;
 
     /// The directive (if any) for which a preHandleDirective() call is in progress.
-    std::shared_ptr<avsCommon::AVSDirective> m_directiveBeingPreHandled;
+    std::shared_ptr<avsCommon::avs::AVSDirective> m_directiveBeingPreHandled;
 
     /// Queue of @c AVSDirectives waiting to be handled.
-    std::deque<std::shared_ptr<avsCommon::AVSDirective>> m_handlingQueue;
+    std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>> m_handlingQueue;
 
     /// Whether @c handleDirective() has been called for the directive at the @c front() of @c m_handlingQueue.
     bool m_isHandlingDirective;

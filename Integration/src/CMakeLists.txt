@@ -1,4 +1,4 @@
-file(GLOB_RECURSE INTEGRATION_SRC "*.cpp" "${CMAKE_SOURCE_DIR}/Utils/src/*.cpp")
+file(GLOB_RECURSE INTEGRATION_SRC "*.cpp")
 add_library(Integration SHARED "${INTEGRATION_SRC}")
 target_include_directories(Integration PUBLIC "${ACL_SOURCE_DIR}/include")
 target_include_directories(Integration PUBLIC "${AuthDelegate_SOURCE_DIR}/include")
@@ -8,5 +8,4 @@ target_include_directories(Integration PUBLIC "${AIP_SOURCE_DIR}/include")
 target_include_directories(Integration PUBLIC "${SpeechSynthesizer_SOURCE_DIR}/include")
 target_include_directories(Integration PUBLIC "${KITTAI_SOURCE_DIR}/include")
 
-target_include_directories(Integration PUBLIC "${CMAKE_SOURCE_DIR}/Utils/include")
 target_link_libraries(Integration ACL AuthDelegate)

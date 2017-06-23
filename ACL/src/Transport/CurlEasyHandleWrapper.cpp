@@ -17,15 +17,15 @@
 
 #include <iostream>
 
-#include <AVSUtils/LibcurlUtils/LibcurlUtils.h>
-#include <AVSUtils/Logging/Logger.h>
+#include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
+#include <AVSCommon/Utils/Logger/DeprecatedLogger.h>
 
 #include "ACL/Transport/CurlEasyHandleWrapper.h"
 
 namespace alexaClientSDK {
 namespace acl {
 
-using namespace alexaClientSDK::avsUtils;
+using namespace alexaClientSDK::avsCommon::utils;
 
 /// MIME Content-Type for JSON data
 static std::string JSON_MIME_TYPE = "text/json";
@@ -51,12 +51,12 @@ bool CurlEasyHandleWrapper::reset() {
     cleanupResources();
     long responseCode = 0;
     if (curl_easy_getinfo(m_handle, CURLINFO_RESPONSE_CODE, &responseCode) != CURLE_OK) {
-        Logger::log("could not get transfer response code");
+        logger::deprecated::Logger::log("could not get transfer response code");
         curl_easy_cleanup(m_handle);
         m_handle = curl_easy_init();
         //If we can't create a new handle don't try to set options
         if (!m_handle) {
-            Logger::log("could not create new curl handle");
+            logger::deprecated::Logger::log("could not create new curl handle");
             return false;
         }
         return setDefaultOptions();
@@ -73,7 +73,7 @@ bool CurlEasyHandleWrapper::reset() {
         curl_easy_cleanup(m_handle);
         m_handle = curl_easy_init();
         if (!m_handle) {
-            Logger::log("could not create new curl handle");
+            logger::deprecated::Logger::log("could not create new curl handle");
             return false;
         }
     } else {
@@ -89,12 +89,12 @@ CURL* CurlEasyHandleWrapper::getCurlHandle() {
 bool CurlEasyHandleWrapper::addHTTPHeader(const std::string& header) {
     m_requestHeaders = curl_slist_append(m_requestHeaders, header.c_str());
     if (!m_requestHeaders) {
-        Logger::log("Could not add header to HTTPheaders");
+        logger::deprecated::Logger::log("Could not add header to HTTPheaders");
         // TODO: log headers in debug mode
         return false;
     }
     if (curl_easy_setopt(m_handle, CURLOPT_HTTPHEADER, m_requestHeaders) != CURLE_OK) {
-        Logger::log("Could not add HTTPheaders to easy handle");
+        logger::deprecated::Logger::log("Could not add HTTPheaders to easy handle");
         // TODO: log headers in debug mode
         return false;
     }
@@ -104,7 +104,7 @@ bool CurlEasyHandleWrapper::addHTTPHeader(const std::string& header) {
 bool CurlEasyHandleWrapper::addPostHeader(const std::string& header) {
     m_postHeaders = curl_slist_append(m_postHeaders, header.c_str());
     if (!m_requestHeaders) {
-        Logger::log("Could not add header to POST headers");
+        logger::deprecated::Logger::log("Could not add header to POST headers");
         // TODO: log headers in debug mode
         return false;
     }
@@ -113,7 +113,7 @@ bool CurlEasyHandleWrapper::addPostHeader(const std::string& header) {
 
 bool CurlEasyHandleWrapper::setURL(const std::string& url) {
     if (curl_easy_setopt(m_handle, CURLOPT_URL, url.c_str()) != CURLE_OK) {
-        Logger::log("Cannot set URL");
+        logger::deprecated::Logger::log("Cannot set URL");
         return false;
     }
     return true;
@@ -123,13 +123,13 @@ bool CurlEasyHandleWrapper::setTransferType(TransferType type) {
     switch (type) {
         case TransferType::kGET:
             if (curl_easy_setopt(m_handle, CURLOPT_HTTPGET, 1L) != CURLE_OK) {
-                Logger::log("Cannot set transfer to GET");
+                logger::deprecated::Logger::log("Cannot set transfer to GET");
                 return false;
             }
             break;
         case TransferType::kPOST:
             if (!m_post || curl_easy_setopt(m_handle, CURLOPT_HTTPPOST, m_post) != CURLE_OK) {
-                Logger::log("Cannot set transfer to POST");
+                logger::deprecated::Logger::log("Cannot set transfer to POST");
                 return false;
             }
             break;
@@ -142,7 +142,7 @@ bool CurlEasyHandleWrapper::setPostContent(const std::string& fieldName, const s
     CURLFORMcode ret = curl_formadd(&m_post, &last, CURLFORM_COPYNAME, fieldName.c_str(), CURLFORM_COPYCONTENTS, payload.c_str(),
                 CURLFORM_CONTENTTYPE, JSON_MIME_TYPE.c_str(), CURLFORM_CONTENTHEADER, m_postHeaders, CURLFORM_END);
     if (ret) {
-        Logger::log("Could not set string post content: " + fieldName);
+        logger::deprecated::Logger::log("Could not set string post content: " + fieldName);
         return false;
     }
     return true;
@@ -151,7 +151,7 @@ bool CurlEasyHandleWrapper::setPostContent(const std::string& fieldName, const s
 bool CurlEasyHandleWrapper::setTransferTimeout(const long timeoutSeconds) {
     CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_TIMEOUT, timeoutSeconds);
     if (ret != CURLE_OK) {
-        Logger::log("Could not set transfer timeout returned: " + std::string(curl_easy_strerror(ret)));
+        logger::deprecated::Logger::log("Could not set transfer timeout returned: " + std::string(curl_easy_strerror(ret)));
         return false;
     }
     return true;
@@ -162,7 +162,7 @@ bool CurlEasyHandleWrapper::setPostStream(const std::string& fieldName, void *us
     CURLFORMcode ret = curl_formadd(&m_post, &last, CURLFORM_COPYNAME, fieldName.c_str(), CURLFORM_STREAM, userData,
                 CURLFORM_CONTENTTYPE, OCTET_MIME_TYPE.c_str(), CURLFORM_END);
     if (ret) {
-        Logger::log("Could not set string post content: " + fieldName +", errror code: " +std::to_string(ret));
+        logger::deprecated::Logger::log("Could not set string post content: " + fieldName +", errror code: " +std::to_string(ret));
         return false;
     }
     return true;
@@ -171,7 +171,7 @@ bool CurlEasyHandleWrapper::setPostStream(const std::string& fieldName, void *us
 bool CurlEasyHandleWrapper::setConnectionTimeout(const std::chrono::seconds timeoutSeconds) {
     CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_CONNECTTIMEOUT, timeoutSeconds.count());
     if (ret != CURLE_OK) {
-        Logger::log("Could not set connection timeout returned: " + std::string(curl_easy_strerror(ret)));
+        logger::deprecated::Logger::log("Could not set connection timeout returned: " + std::string(curl_easy_strerror(ret)));
         return false;
     }
 
@@ -180,12 +180,12 @@ bool CurlEasyHandleWrapper::setConnectionTimeout(const std::chrono::seconds time
 
 bool CurlEasyHandleWrapper::setWriteCallback(CurlCallback callback, void* userData) {
     if (curl_easy_setopt(m_handle, CURLOPT_WRITEFUNCTION, callback) != CURLE_OK) {
-        Logger::log("Cannot set write callback");
+        logger::deprecated::Logger::log("Cannot set write callback");
         return false;
     }
     if (userData) {
         if (curl_easy_setopt(m_handle, CURLOPT_WRITEDATA, userData) != CURLE_OK) {
-            Logger::log("Cannot set user data for write callback");
+            logger::deprecated::Logger::log("Cannot set user data for write callback");
             return false;
         }
     }
@@ -194,12 +194,12 @@ bool CurlEasyHandleWrapper::setWriteCallback(CurlCallback callback, void* userDa
 
 bool CurlEasyHandleWrapper::setHeaderCallback(CurlCallback callback, void* userData) {
     if (curl_easy_setopt(m_handle, CURLOPT_HEADERFUNCTION, callback) != CURLE_OK) {
-        Logger::log("Cannot set header callback");
+        logger::deprecated::Logger::log("Cannot set header callback");
         return false;
     }
     if (userData) {
         if (curl_easy_setopt(m_handle, CURLOPT_HEADERDATA, userData) != CURLE_OK) {
-            Logger::log("Cannot set user data for header callback");
+            logger::deprecated::Logger::log("Cannot set user data for header callback");
             return false;
         }
     }
@@ -208,12 +208,12 @@ bool CurlEasyHandleWrapper::setHeaderCallback(CurlCallback callback, void* userD
 
 bool CurlEasyHandleWrapper::setReadCallback(CurlCallback callback, void* userData) {
     if (curl_easy_setopt(m_handle, CURLOPT_READFUNCTION, callback) != CURLE_OK) {
-        Logger::log("Cannot set read callback");
+        logger::deprecated::Logger::log("Cannot set read callback");
         return false;
     }
     if (userData) {
         if (curl_easy_setopt(m_handle, CURLOPT_READDATA, userData) != CURLE_OK) {
-            Logger::log("Cannot set user data for read callback");
+            logger::deprecated::Logger::log("Cannot set user data for read callback");
             return false;
         }
     }

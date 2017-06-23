@@ -38,6 +38,10 @@ public:
     bool handleDirective(const std::string&) override { return false; }
     void cancelDirective(const std::string&) override {}
     void onDeregistered() override {}
+    avs::DirectiveHandlerConfiguration getConfiguration() const override {
+        // Not using an empty initializer list here to account for a GCC 4.9.2 regression
+        return avs::DirectiveHandlerConfiguration();
+    }
 };
 
 /**

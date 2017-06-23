@@ -21,7 +21,7 @@
 #include <memory>
 
 #include <ACL/AVSConnectionManager.h>
-#include <AVSCommon/ExceptionEncounteredSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
 
@@ -44,7 +44,7 @@ public:
     * @param attachmentManager The @c AttachmentManager which created @c AVSDirectives will use to acquire Attachments.
     */
     MessageInterpreter(
-            std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
             std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
             std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager);
 
@@ -69,7 +69,7 @@ private:
         const std::string& lookupKey, std::string* outputValue);
 
     /// Object that manages sending exceptions encountered messages to AVS.
-    std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> m_exceptionEncounteredSender;
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> m_exceptionEncounteredSender;
     /// Object to which we will send @c AVSDirectives.
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> m_directiveSequencer;
 

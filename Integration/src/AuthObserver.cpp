@@ -21,7 +21,7 @@
 namespace alexaClientSDK {
 namespace integration {
 
-using acl::AuthObserverInterface;
+using avsCommon::sdkInterfaces::AuthObserverInterface;
 
 AuthObserver::AuthObserver():
     m_authState(AuthObserverInterface::State::UNINITIALIZED),

@@ -39,22 +39,24 @@ public:
     ~DirectiveRouter();
 
     /**
-     * Add mappings from from @c NamespaceAndName values to @c HandlerAndPolicy values. If a mapping for any of
-     * the specified @c NamespaceAndName values already exists the entire call is refused.
+     * Add mappings from from handler's @c NamespaceAndName values to @c BlockingPolicy values, gotten through the
+     * handler's getConfiguration() method. If a mapping for any of the specified @c NamespaceAndName values already 
+     * exists the entire call is refused.
      *
-     * @param configuration The mappings to add.
-     * @return Whether the configuration was added.
+     * @param handler The handler to add.
+     * @return Whether the handler was added.
      */
-    bool addDirectiveHandlers(const avsCommon::avs::DirectiveHandlerConfiguration& configuration);
+    bool addDirectiveHandler(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
 
     /**
-     * Remove the specified mappings from @c NamespaceAndName values to @c HandlerAndPolicy values. If any of
-     * the specified mappings do not match an existing mapping, the entire operation is refused.
+     * Remove the specified mappings from @c NamespaceAndName values to @c BlockingPolicy values, gotten through the
+     * handler's getConfiguration() method. If any of the specified mappings do not match an existing mapping, the 
+     * entire operation is refused.
      *
-     * @param configuration The mappings to remove.
+     * @param handler The handler to remove.
      * @return Whether the configuration was removed.
      */
-    bool removeDirectiveHandlers(const avsCommon::avs::DirectiveHandlerConfiguration& configuration);
+    bool removeDirectiveHandler(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
 
     /**
      * Invoke @c handleDirectiveImmediately() on the handler registered for the given @c AVSDirective.
@@ -62,7 +64,7 @@ public:
      * @param directive The directive to be handled immediately.
      * @return Whether or not the handler was invoked.
      */
-    bool handleDirectiveImmediately(std::shared_ptr<avsCommon::AVSDirective> directive);
+    bool handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
     /**
      * Invoke @c preHandleDirective() on the handler registered for the given @c AVSDirective.
@@ -73,7 +75,7 @@ public:
      * @return Whether or not the handler was invoked.
      */
     bool preHandleDirective(
-            std::shared_ptr<avsCommon::AVSDirective> directive,
+            std::shared_ptr<avsCommon::avs::AVSDirective> directive,
             std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result);
 
     /**
@@ -86,7 +88,7 @@ public:
      * or the registered handler returned @c false (indicating that the directive was not recognized.
      */
     bool handleDirective(
-        std::shared_ptr<avsCommon::AVSDirective> directive,
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive,
         avsCommon::avs::BlockingPolicy* policyOut);
 
     /**
@@ -95,7 +97,7 @@ public:
      * @param directive The directive to be handled.
      * @return Whether or not the handler was invoked.
      */
-    bool cancelDirective(std::shared_ptr<avsCommon::AVSDirective> directive);
+    bool cancelDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
 private:
     /**
@@ -146,7 +148,7 @@ private:
      * @param directive The directive to look up a value for.
      * @return The corresponding @c HandlerAndPolicy value for the specified directive.
      */
-    avsCommon::avs::HandlerAndPolicy getHandlerAndPolicyLocked(std::shared_ptr<avsCommon::AVSDirective> directive);
+    avsCommon::avs::HandlerAndPolicy getHandlerAndPolicyLocked(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
     /**
      * Increment the reference count for the specified handler.

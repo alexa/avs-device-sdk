@@ -21,7 +21,8 @@
 #include <memory>
 #include <string>
 
-#include "AVSCommon/AVS/DirectiveHandlerConfiguration.h"
+#include "AVSCommon/AVS/AVSDirective.h"
+#include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -51,22 +52,28 @@ public:
     virtual ~DirectiveSequencerInterface() = default;
 
     /**
-     * Add mappings from from @c NamespaceAndName values to @c HandlerAndPolicy values. If a mapping for any of
-     * the specified @c NamespaceAndName values already exists the entire call is refused.
+     * Add the specified handler as a handler for its specified namespace, name, and policy. Note that implmentations
+     * of this should call the handler's getConfiguration() method to get the namespace(s), name(s), and policy(ies) of 
+     * the handler. If any of the mappings fail, the entire call is refused.
      *
-     * @param configuration The mappings to add.
-     * @return Whether the mappings were added.
+     * @param handler The handler to add.
+     * @return Whether the handler was added.
      */
-    virtual bool addDirectiveHandlers(const avs::DirectiveHandlerConfiguration& configuration) = 0;
+    virtual bool addDirectiveHandler(std::shared_ptr<DirectiveHandlerInterface> handler) = 0;
 
     /**
-     * Remove the specified mappings from @c NamespaceAndName values to @c HandlerAndPolicy values. If any of
+     * Remove the specified handler's mapping of @c NamespaceAndName to @c BlockingPolicy values. Note that 
+     * implementations of this should call the handler's getConfiguration() method to get the namespace(s), name(s), and 
+     * policy(ies) of the handler. If the handler's configurations are unable to be removed, the entire operation is 
+     * refused.
+
+     specified mappings from @c NamespaceAndName values to @c HandlerAndPolicy values. If any of
      * the specified mappings do not match an existing mapping, the entire operation is refused.
      *
-     * @param configuration the mappings to remove.
-     * @return Whether the mappings were removed.
+     * @param handler The handler to remove.
+     * @return Whether the handler was removed.
      */
-    virtual bool removeDirectiveHandlers(const avs::DirectiveHandlerConfiguration& configuration) = 0;
+    virtual bool removeDirectiveHandler(std::shared_ptr<DirectiveHandlerInterface> handler) = 0;
 
     /**
      * Set the current @c DialogRequestId. This value can be set at any time. Setting this value causes a
@@ -85,7 +92,7 @@ public:
      * @param directive The @c AVSDirective to handle.
      * @return Whether or not the directive was accepted.
      */
-    virtual bool onDirective(std::shared_ptr<avsCommon::AVSDirective> directive) = 0;
+    virtual bool onDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive) = 0;
 
     /**
      * Shut down the DirectiveSequencer.  This method blocks until all processing of directives has stopped.

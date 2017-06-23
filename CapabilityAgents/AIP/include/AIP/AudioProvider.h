@@ -1,4 +1,4 @@
-/**
+/*
  * AudioProvider.h
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -18,8 +18,8 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_AUDIO_PROVIDER_H_
 #define ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_AUDIO_PROVIDER_H_
 
-#include <AVSCommon/SDKInterfaces/AudioInputStream.h>
-#include <AVSCommon/AudioFormat.h>
+#include <AVSCommon/AVS/AudioInputStream.h>
+#include <AVSCommon/Utils/AudioFormat.h>
 #include "ASRProfile.h"
 
 namespace alexaClientSDK {
@@ -44,8 +44,8 @@ struct AudioProvider {
      * @param canBeOverridden Whether this @c AudioProvider allows another @c AudioProvider to interrupt it.
      */
     AudioProvider(
-        std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream> stream,
-        const avsCommon::AudioFormat& format,
+        std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+        const avsCommon::utils::AudioFormat& format,
         ASRProfile profile,
         bool alwaysReadable,
         bool canOverride,
@@ -67,10 +67,10 @@ struct AudioProvider {
     operator bool() const;
 
     /// The @c ByteStream to use for audio input.
-    std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream> stream;
+    std::shared_ptr<avsCommon::avs::AudioInputStream> stream;
 
     /// The @c AudioFormat of the data in @c byteStream.
-    avsCommon::AudioFormat format;
+    avsCommon::utils::AudioFormat format;
 
     /// The @c ASRProfile describing the acoustic environment for the audio input.
     ASRProfile profile;
@@ -86,8 +86,8 @@ struct AudioProvider {
 };
 
 inline AudioProvider::AudioProvider(
-    std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream> stream,
-    const avsCommon::AudioFormat& format,
+    std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+    const avsCommon::utils::AudioFormat& format,
     ASRProfile profile,
     bool alwaysReadable,
     bool canOverride,
@@ -101,7 +101,7 @@ inline AudioProvider::AudioProvider(
 inline const AudioProvider& AudioProvider::null() {
     static AudioProvider nullAudioProvider{
         nullptr,
-        {avsCommon::AudioFormat::Encoding::LPCM, avsCommon::AudioFormat::Endianness::LITTLE, 0, 0, 0},
+        {avsCommon::utils::AudioFormat::Encoding::LPCM, avsCommon::utils::AudioFormat::Endianness::LITTLE, 0, 0, 0},
         ASRProfile::CLOSE_TALK,
         false,
         false,

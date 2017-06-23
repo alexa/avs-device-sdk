@@ -1,7 +1,7 @@
 /*
  * KittAiWakeWordDetector.h
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include <AVSCommon/AudioFormat.h>
-#include <AVSCommon/SDKInterfaces/AudioInputStream.h>
+#include <AVSCommon/Utils/AudioFormat.h>
+#include <AVSCommon/AVS/AudioInputStream.h>
 #include <AVSCommon/SDKInterfaces/KeyWordObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/KeyWordDetectorStateObserverInterface.h>
 
@@ -76,8 +76,8 @@ public:
      * @see https://github.com/Kitt-AI/snowboy for more information regarding @c audioGain and @c applyFrontEnd.
      */
     static std::unique_ptr<KittAiKeyWordDetector> create(
-            std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream> stream, 
-            avsCommon::AudioFormat audioFormat, 
+            std::shared_ptr<avsCommon::avs::AudioInputStream> stream, 
+            avsCommon::utils::AudioFormat audioFormat, 
             std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>> keyWordObservers, 
             std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>> 
                 keyWordDetectorStateObservers,
@@ -113,8 +113,8 @@ private:
      * @see https://github.com/Kitt-AI/snowboy for more information regarding @c audioGain and @c applyFrontEnd.
      */
     KittAiKeyWordDetector(
-            std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream> stream, 
-            avsCommon::AudioFormat audioFormat,  
+            std::shared_ptr<avsCommon::avs::AudioInputStream> stream, 
+            avsCommon::utils::AudioFormat audioFormat,  
             std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>> keyWordObservers, 
             std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>> 
                 keyWordDetectorStateObservers,
@@ -131,15 +131,15 @@ private:
      * @param audioFormat The format of the audio data located within the stream.
      * @return @c true if the engine was initialized properly and @c false otherwise.
      */
-    bool init(avsCommon::AudioFormat audioFormat);
+    bool init(avsCommon::utils::AudioFormat audioFormat);
 
     /**
-     * Checks to see if an @c avsCommon::AudioFormat is compatible with Kitt.ai.
+     * Checks to see if an @c avsCommon::utils::AudioFormat is compatible with Kitt.ai.
      *
      * @param audioFormat The audio format to check. 
      * @return @c true if the audio format is compatible and @c false otherwise.
      */
-    bool isAudioFormatCompatibleWithKittAi(avsCommon::AudioFormat audioFormat);
+    bool isAudioFormatCompatibleWithKittAi(avsCommon::utils::AudioFormat audioFormat);
 
     /// The main function that reads data and feeds it into the engine.
     void detectionLoop();
@@ -155,10 +155,10 @@ private:
     std::unordered_map<unsigned int, std::string> m_detectionResultsToKeyWords;
 
     /// The stream of audio data.
-    const std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream> m_stream;
+    const std::shared_ptr<avsCommon::avs::AudioInputStream> m_stream;
 
     /// The reader that will be used to read audio data from the stream.
-    std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream::Reader> m_streamReader;
+    std::shared_ptr<avsCommon::avs::AudioInputStream::Reader> m_streamReader;
 
     /// Internal thread that reads audio from the buffer and feeds it to the Kitt.ai engine.
     std::thread m_detectionThread;

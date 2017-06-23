@@ -24,6 +24,7 @@ namespace adsl {
 namespace test {
 
 using namespace avsCommon;
+using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 
 /// Default amount of time taken to handle a directive.
@@ -38,8 +39,10 @@ void DirectiveHandlerMockAdapter::preHandleDirective(
     preHandleDirective(directive, temp);
 }
 
-std::shared_ptr<NiceMock<MockDirectiveHandler>> MockDirectiveHandler::create(std::chrono::milliseconds handlingTimeMs) {
-    auto result = std::make_shared<NiceMock<MockDirectiveHandler>>(handlingTimeMs);
+std::shared_ptr<NiceMock<MockDirectiveHandler>> MockDirectiveHandler::create(
+            DirectiveHandlerConfiguration config,
+            std::chrono::milliseconds handlingTimeMs) {
+    auto result = std::make_shared<NiceMock<MockDirectiveHandler>>(config, handlingTimeMs);
     ON_CALL(*result.get(), handleDirectiveImmediately(_)).WillByDefault(
             Invoke(result.get(), &MockDirectiveHandler::mockHandleDirectiveImmediately));
     ON_CALL(*result.get(), preHandleDirective(_, _)).WillByDefault(
@@ -50,10 +53,13 @@ std::shared_ptr<NiceMock<MockDirectiveHandler>> MockDirectiveHandler::create(std
             Invoke(result.get(), &MockDirectiveHandler::mockCancelDirective));
     ON_CALL(*result.get(), onDeregistered()).WillByDefault(
             Invoke(result.get(), &MockDirectiveHandler::mockOnDeregistered));
+    ON_CALL(*result.get(), getConfiguration()).WillByDefault(Return (config));
     return result;
 }
 
-MockDirectiveHandler::MockDirectiveHandler(std::chrono::milliseconds handlingTimeMs) :
+MockDirectiveHandler::MockDirectiveHandler(
+        DirectiveHandlerConfiguration config,
+        std::chrono::milliseconds handlingTimeMs) :
         m_handlingTimeMs{handlingTimeMs},
         m_isCompleted{false},
         m_isShuttingDown{false},

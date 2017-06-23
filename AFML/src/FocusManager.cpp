@@ -1,7 +1,7 @@
 /*
  * FocusManager.cpp
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,19 +16,37 @@
  */
 
 #include "AFML/FocusManager.h"
-#include "AVSUtils/Logging/Logger.h"
+#include <AVSCommon/Utils/Logger/Logger.h>
 
 namespace alexaClientSDK {
 namespace afml {
 
 using namespace avsCommon::sdkInterfaces;
-using namespace avsUtils;
+using namespace avsCommon::utils;
+using namespace avsCommon::avs;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("FocusManager");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 FocusManager::FocusManager(const std::vector<ChannelConfiguration>& channelConfigurations) {
     for (auto config : channelConfigurations) {
-        if (doesChannelNameExist(config.name) || 
-            doesChannelPriorityExist(config.priority)) {
-            Logger::log("Unable to create Channel - " + config.toString() + " - duplicated name or priority");
+        if (doesChannelNameExist(config.name)) {
+            ACSDK_ERROR(LX("createChannelFailed")
+                    .d("reason", "channelNameExists")
+                    .d("config", config.toString()));
+            continue;
+        }
+        if (doesChannelPriorityExist(config.priority)) {
+            ACSDK_ERROR(LX("createChannelFailed")
+                    .d("reason", "channelPriorityExists")
+                    .d("config", config.toString()));
             continue;
         }
 
@@ -38,12 +56,14 @@ FocusManager::FocusManager(const std::vector<ChannelConfiguration>& channelConfi
 }
 
 bool FocusManager::acquireChannel(
-        const std::string& channelName, 
+        const std::string& channelName,
         std::shared_ptr<ChannelObserverInterface> channelObserver,
         const std::string& activityId) {
     std::shared_ptr<Channel> channelToAcquire = getChannel(channelName);
     if (!channelToAcquire) {
-        Logger::log("Unable to acquire Channel: '" + channelName + "'.");
+        ACSDK_ERROR(LX("acquireChannelFailed")
+                .d("reason", "channelNotFound")
+                .d("channelName", channelName));
         return false;
     }
 
@@ -62,7 +82,9 @@ std::future<bool> FocusManager::releaseChannel(
     std::future<bool> returnValue = releaseChannelSuccess->get_future();
     std::shared_ptr<Channel> channelToRelease = getChannel(channelName);
     if (!channelToRelease) {
-        Logger::log("Unable to release Channel: '" + channelName + "'.");
+        ACSDK_ERROR(LX("releaseChannelFailed")
+                .d("reason", "channelNotFound")
+                .d("channelName", channelName));
         releaseChannelSuccess->set_value(false);
         return returnValue;
     }
@@ -81,7 +103,7 @@ void FocusManager::stopForegroundActivity() {
     std::unique_lock<std::mutex> lock(m_mutex);
     std::shared_ptr<Channel> foregroundChannel = getHighestPriorityActiveChannelLocked();
     if (!foregroundChannel) {
-        Logger::log("No foreground activity found.");
+        ACSDK_DEBUG(LX("stopForegroundActivityFailed").d("reason", "noForegroundActivity"));
         return;
     }
 
@@ -96,7 +118,7 @@ void FocusManager::stopForegroundActivity() {
 }
 
 void FocusManager::acquireChannelHelper(
-        std::shared_ptr<Channel> channelToAcquire, 
+        std::shared_ptr<Channel> channelToAcquire,
         std::shared_ptr<ChannelObserverInterface> channelObserver,
         const std::string& activityId) {
     // Lock here to update internal state which stopForegroundActivity may concurrently access.
@@ -107,7 +129,7 @@ void FocusManager::acquireChannelHelper(
     lock.unlock();
 
     channelToAcquire->setObserver(channelObserver);
-    if(!foregroundChannel) {
+    if (!foregroundChannel) {
         channelToAcquire->setFocus(FocusState::FOREGROUND);
     } else if (foregroundChannel == channelToAcquire) {
         channelToAcquire->setFocus(FocusState::FOREGROUND);
@@ -120,12 +142,12 @@ void FocusManager::acquireChannelHelper(
 }
 
 void FocusManager::releaseChannelHelper(
-        std::shared_ptr<Channel> channelToRelease, 
-        std::shared_ptr<ChannelObserverInterface> channelObserver, 
+        std::shared_ptr<Channel> channelToRelease,
+        std::shared_ptr<ChannelObserverInterface> channelObserver,
         std::shared_ptr<std::promise<bool>> releaseChannelSuccess,
         const std::string& name) {
     if (!channelToRelease->doesObserverOwnChannel(channelObserver)) {
-        Logger::log("Unable to release Channel " + name + " because caller does not own Channel");
+        ACSDK_ERROR(LX("releaseChannelHelperFailed").d("reason", "observerDoesNotOwnChannel").d("channel", name));
         releaseChannelSuccess->set_value(false);
         return;
     }
@@ -145,7 +167,7 @@ void FocusManager::releaseChannelHelper(
 
 void FocusManager::stopForegroundActivityHelper(
         std::shared_ptr<Channel> foregroundChannel, std::string foregroundChannelActivityId) {
-    if(!foregroundChannel->stopActivity(foregroundChannelActivityId)) {
+    if (!foregroundChannel->stopActivity(foregroundChannelActivityId)) {
         return;
     }
 
@@ -195,7 +217,7 @@ void FocusManager::foregroundHighestPriorityActiveChannel() {
     std::shared_ptr<Channel> channelToForeground = getHighestPriorityActiveChannelLocked();
     lock.unlock();
 
-    if(channelToForeground) {
+    if (channelToForeground) {
         channelToForeground->setFocus(FocusState::FOREGROUND);
     }
 }

@@ -1,7 +1,7 @@
 /*
  * MediaPlayerInterface.h
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,15 +15,14 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVSCCOMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_INTERFACE_H_
-#define ALEXA_CLIENT_SDK_AVSCCOMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_INTERFACE_H_
+#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_INTERFACE_H_
+#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_INTERFACE_H_
 
 #include <cstdint>
 #include <memory>
 
-#include <AVSCommon/AVS/Attachment/AttachmentReader.h>
-
-#include "AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h"
+#include "AVSCommon/AVS/Attachment/AttachmentReader.h"
+#include "MediaPlayerObserverInterface.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -114,4 +113,4 @@ public:
 } // namespace avsCommon
 } // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVSCCOMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_INTERFACE_H_
+#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_INTERFACE_H_

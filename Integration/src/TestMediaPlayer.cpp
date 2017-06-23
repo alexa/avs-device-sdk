@@ -39,15 +39,14 @@ avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::play() {
         m_timer->start(
                 std::chrono::milliseconds(600), 
                 [this] {
-                    if(m_playbackFinished) {
+                    if (m_playbackFinished) {
                         m_observer->onPlaybackFinished();
                         m_playbackFinished = false;
                     }
                 }
             );
         return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
-    }
-    else {
+    } else {
         return avsCommon::utils::mediaPlayer::MediaPlayerStatus::FAILURE;
     }
 }
@@ -57,8 +56,7 @@ avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::stop() {
         m_observer->onPlaybackFinished();
         m_playbackFinished = false;
         return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
-    }
-    else {
+    } else {
         return avsCommon::utils::mediaPlayer::MediaPlayerStatus::FAILURE;
     }      
 }

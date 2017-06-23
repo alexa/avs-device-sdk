@@ -19,21 +19,21 @@
 #define ALEXA_CLIENT_SDK_ACL_TEST_MOCK_AUTH_OBSERVER_H_
 
 #include <gmock/gmock.h>
-#include "ACL/AuthObserverInterface.h"
+#include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace acl {
 namespace test {
 
 /// Mock AuthObserverInterface class
-class MockAuthObserver : public AuthObserverInterface {
+class MockAuthObserver : public avsCommon::sdkInterfaces::AuthObserverInterface {
 public:
     MOCK_METHOD2(onAuthStateChange, void(State newState, Error error));
 };
 
-}  // namespace test
-}  // namespace acl
-}  // namespace alexaClientSDK
+} // namespace test
+} // namespace acl
+} // namespace alexaClientSDK
 
 
 #endif  // ALEXA_CLIENT_SDK_ACL_TEST_MOCK_AUTH_OBSERVER_H_

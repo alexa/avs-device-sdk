@@ -108,7 +108,7 @@ static const std::string TEST_ATTACHMENT_CONTEXT_ID("TEST_ATTACHMENT_CONTEXT_ID"
 /**
  * Mock ExceptionEncounteredSenderInterface implementation.
  */
-class MockExceptionEncounteredSender : public avsCommon::ExceptionEncounteredSenderInterface {
+class MockExceptionEncounteredSender : public avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface {
 public:
     MOCK_METHOD3(sendExceptionEncountered, void(const std::string&, ExceptionErrorType, const std::string&));
 };
@@ -149,14 +149,14 @@ public:
 };
 
 void DirectiveSequencerTest::SetUp() {
-    m_doneHandler = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
+    DirectiveHandlerConfiguration config;
+    config[{NAMESPACE_TEST, NAME_DONE}] = BlockingPolicy::BLOCKING;
+    m_doneHandler = MockDirectiveHandler::create(config, LONG_HANDLING_TIME_MS);
     m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
     m_exceptionEncounteredSender = std::make_shared<NiceMock<MockExceptionEncounteredSender>>();
     m_sequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);
     ASSERT_TRUE(m_sequencer);
-    ASSERT_TRUE(m_sequencer->addDirectiveHandlers({
-            {{NAMESPACE_TEST, NAME_DONE}, {m_doneHandler, BlockingPolicy::BLOCKING}}
-    }));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(m_doneHandler));
 }
 
 void DirectiveSequencerTest::TearDown() {
@@ -173,9 +173,7 @@ void DirectiveSequencerTest::TearDown() {
     m_sequencer->setDialogRequestId(DIALOG_REQUEST_ID_DONE);
     m_sequencer->onDirective(directive);
     m_doneHandler->waitUntilHandling();
-    ASSERT_TRUE(m_sequencer->removeDirectiveHandlers({
-          {{NAMESPACE_TEST, NAME_DONE}, {m_doneHandler, BlockingPolicy::BLOCKING}}
-    }));
+    ASSERT_TRUE(m_sequencer->removeDirectiveHandler(m_doneHandler));
     m_sequencer->shutdown();
     m_sequencer.reset();
     m_doneHandler->doHandlingCompleted();
@@ -224,14 +222,14 @@ TEST_F(DirectiveSequencerTest, testEmptyDialogRequestId) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_SPEAKER, NAME_SET_VOLUME, MESSAGE_ID_0);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
             UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
-    auto handler = MockDirectiveHandler::create();
+    DirectiveHandlerConfiguration config;
+    config[{NAMESPACE_SPEAKER, NAME_SET_VOLUME}] = BlockingPolicy::NON_BLOCKING;
+    auto handler = MockDirectiveHandler::create(config);
     EXPECT_CALL(*(handler.get()), handleDirectiveImmediately(directive)).Times(1);
     EXPECT_CALL(*(handler.get()), preHandleDirective(_, _)).Times(0);
     EXPECT_CALL(*(handler.get()), handleDirective(_)).Times(0);
     EXPECT_CALL(*(handler.get()), cancelDirective(_)).Times(0);
-    ASSERT_TRUE(m_sequencer->addDirectiveHandlers({
-            {{NAMESPACE_SPEAKER, NAME_SET_VOLUME}, {handler, BlockingPolicy::NON_BLOCKING}}
-    }));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler));
     m_sequencer->onDirective(directive);
     ASSERT_TRUE(handler->waitUntilHandling());
 }
@@ -249,10 +247,19 @@ TEST_F(DirectiveSequencerTest, testRemovingAndChangingHandlers) {
     std::shared_ptr<AVSDirective> directive1 = AVSDirective::create(
             UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
-    auto handler0 = MockDirectiveHandler::create();
-    auto handler1 = MockDirectiveHandler::create();
+    DirectiveHandlerConfiguration handler0Config;
+    handler0Config[{NAMESPACE_SPEAKER, NAME_SET_VOLUME}] = BlockingPolicy::NON_BLOCKING;
+    auto handler0 = MockDirectiveHandler::create(handler0Config);
 
-    EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(directive1)).Times(1);
+    DirectiveHandlerConfiguration handler1Config;
+    handler1Config[{NAMESPACE_TEST, NAME_NON_BLOCKING}] = BlockingPolicy::NON_BLOCKING;
+    auto handler1 = MockDirectiveHandler::create(handler1Config);
+
+    DirectiveHandlerConfiguration handler2Config;
+    handler2Config[{NAMESPACE_TEST, NAME_NON_BLOCKING}] = BlockingPolicy::NON_BLOCKING;
+    auto handler2 = MockDirectiveHandler::create(handler2Config);
+
+    EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(directive1)).Times(0);
     EXPECT_CALL(*(handler0.get()), preHandleDirective(_, _)).Times(0);
     EXPECT_CALL(*(handler0.get()), handleDirective(_)).Times(0);
     EXPECT_CALL(*(handler0.get()), cancelDirective(_)).Times(0);
@@ -262,21 +269,19 @@ TEST_F(DirectiveSequencerTest, testRemovingAndChangingHandlers) {
     EXPECT_CALL(*(handler1.get()), handleDirective(_)).Times(0);
     EXPECT_CALL(*(handler1.get()), cancelDirective(_)).Times(0);
 
-    DirectiveHandlerConfiguration configuration1 = {
-            {{NAMESPACE_SPEAKER, NAME_SET_VOLUME}, {handler0, BlockingPolicy::NON_BLOCKING}},
-            {{NAMESPACE_TEST, NAME_NON_BLOCKING}, {handler1, BlockingPolicy::NON_BLOCKING}}
-    };
-    DirectiveHandlerConfiguration configuration2 = {
-            {{NAMESPACE_TEST, NAME_NON_BLOCKING}, {handler0, BlockingPolicy::NON_BLOCKING}}
-    };
+    EXPECT_CALL(*(handler2.get()), handleDirectiveImmediately(directive1)).Times(1);
 
-    ASSERT_TRUE(m_sequencer->addDirectiveHandlers(configuration1));
-    ASSERT_TRUE(m_sequencer->removeDirectiveHandlers(configuration1));
-    ASSERT_TRUE(m_sequencer->addDirectiveHandlers(configuration2));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler0));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler1));
+
+    ASSERT_TRUE(m_sequencer->removeDirectiveHandler(handler0));
+    ASSERT_TRUE(m_sequencer->removeDirectiveHandler(handler1));
+
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler2));
 
     m_sequencer->onDirective(directive0);
     m_sequencer->onDirective(directive1);
-    ASSERT_TRUE(handler0->waitUntilHandling());
+    ASSERT_TRUE(handler2->waitUntilHandling());
 }
 
 /**
@@ -290,16 +295,16 @@ TEST_F(DirectiveSequencerTest, testBlockingDirective) {
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
             UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
-    auto handler = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
+    DirectiveHandlerConfiguration handlerConfig;
+    handlerConfig[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy::BLOCKING;
+    auto handler = MockDirectiveHandler::create(handlerConfig, LONG_HANDLING_TIME_MS);
 
     EXPECT_CALL(*(handler.get()), handleDirectiveImmediately(_)).Times(0);
     EXPECT_CALL(*(handler.get()), preHandleDirective(directive, _)).Times(1);
     EXPECT_CALL(*(handler.get()), handleDirective(MESSAGE_ID_0)).Times(1);
     EXPECT_CALL(*(handler.get()), cancelDirective(_)).Times(1);
 
-    ASSERT_TRUE(m_sequencer->addDirectiveHandlers({
-            {{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}, {handler, BlockingPolicy::BLOCKING}}
-    }));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler));
     m_sequencer->setDialogRequestId(DIALOG_REQUEST_ID_0);
     m_sequencer->onDirective(directive);
     ASSERT_TRUE(handler->waitUntilHandling());
@@ -320,8 +325,13 @@ TEST_F(DirectiveSequencerTest, testBlockingThenNonDialogDirective) {
     std::shared_ptr<AVSDirective> directive1 = AVSDirective::create(
             UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
-    auto handler0 = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
-    auto handler1 = MockDirectiveHandler::create();
+    DirectiveHandlerConfiguration handler0Config;
+    handler0Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy::BLOCKING;
+    auto handler0 = MockDirectiveHandler::create(handler0Config, LONG_HANDLING_TIME_MS);
+
+    DirectiveHandlerConfiguration handler1Config;
+    handler1Config[{NAMESPACE_SPEAKER, NAME_SET_VOLUME}] = BlockingPolicy::NON_BLOCKING;
+    auto handler1 = MockDirectiveHandler::create(handler1Config);
 
     EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(_)).Times(0);
     EXPECT_CALL(*(handler0.get()), preHandleDirective(directive0, _)).Times(1);
@@ -333,10 +343,9 @@ TEST_F(DirectiveSequencerTest, testBlockingThenNonDialogDirective) {
     EXPECT_CALL(*(handler1.get()), handleDirective(_)).Times(0);
     EXPECT_CALL(*(handler1.get()), cancelDirective(_)).Times(0);
 
-    ASSERT_TRUE(m_sequencer->addDirectiveHandlers({
-            {{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}, {handler0, BlockingPolicy::BLOCKING}},
-            {{NAMESPACE_SPEAKER, NAME_SET_VOLUME}, {handler1, BlockingPolicy::NON_BLOCKING}}
-    }));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler0));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler1));
+
     m_sequencer->setDialogRequestId(DIALOG_REQUEST_ID_0);
     m_sequencer->onDirective(directive0);
     m_sequencer->onDirective(directive1);
@@ -359,16 +368,16 @@ TEST_F(DirectiveSequencerTest, testBargeIn) {
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
             UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
-    auto handler = MockDirectiveHandler::create(std::chrono::milliseconds(LONG_HANDLING_TIME_MS));
+    DirectiveHandlerConfiguration handlerConfig;
+    handlerConfig[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy::BLOCKING;
+    auto handler = MockDirectiveHandler::create(handlerConfig, std::chrono::milliseconds(LONG_HANDLING_TIME_MS));
 
     EXPECT_CALL(*(handler.get()), handleDirectiveImmediately(_)).Times(0);
     EXPECT_CALL(*(handler.get()), preHandleDirective(directive, _)).Times(1);
     EXPECT_CALL(*(handler.get()), handleDirective(MESSAGE_ID_0)).Times(1);
     EXPECT_CALL(*(handler.get()), cancelDirective(MESSAGE_ID_0)).Times(1);
 
-    ASSERT_TRUE(m_sequencer->addDirectiveHandlers({
-            {{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}, {handler, BlockingPolicy::BLOCKING}}
-    }));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler));
     m_sequencer->setDialogRequestId(DIALOG_REQUEST_ID_0);
     m_sequencer->onDirective(directive);
     ASSERT_TRUE(handler->waitUntilHandling());
@@ -397,15 +406,21 @@ TEST_F(DirectiveSequencerTest, testBlockingThenNonBockingOnSameDialogId) {
     std::shared_ptr<AVSDirective> directive2 = AVSDirective::create(
             UNPARSED_DIRECTIVE, avsMessageHeader2, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
-    auto handler0 = MockDirectiveHandler::create();
-    auto handler1 = MockDirectiveHandler::create();
-    auto handler2 = MockDirectiveHandler::create();
+    DirectiveHandlerConfiguration handler0Config;
+    handler0Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] =  BlockingPolicy::BLOCKING;
+    auto handler0 = MockDirectiveHandler::create(handler0Config);
 
-    ASSERT_TRUE(m_sequencer->addDirectiveHandlers({
-            {{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}, {handler0, BlockingPolicy::BLOCKING}},
-            {{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}, {handler1, BlockingPolicy::NON_BLOCKING}},
-            {{NAMESPACE_TEST, NAME_NON_BLOCKING}, {handler2, BlockingPolicy::NON_BLOCKING}}
-    }));
+    DirectiveHandlerConfiguration handler1Config;
+    handler1Config[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] =  BlockingPolicy::NON_BLOCKING;
+    auto handler1 = MockDirectiveHandler::create(handler1Config);
+
+    DirectiveHandlerConfiguration handler2Config;
+    handler2Config[{NAMESPACE_TEST, NAME_NON_BLOCKING}] =  BlockingPolicy::NON_BLOCKING;
+    auto handler2 = MockDirectiveHandler::create(handler2Config);
+
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler0));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler1));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler2));
 
     EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(_)).Times(0);
     EXPECT_CALL(*(handler0.get()), preHandleDirective(directive0, _)).Times(1);
@@ -453,15 +468,21 @@ TEST_F(DirectiveSequencerTest, testThatBargeInDropsSubsequentDirectives) {
     std::shared_ptr<AVSDirective> directive2 = AVSDirective::create(
             UNPARSED_DIRECTIVE, avsMessageHeader2, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
-    auto handler0 = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
-    auto handler1 = MockDirectiveHandler::create();
-    auto handler2 = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
+    DirectiveHandlerConfiguration handler0Config;
+    handler0Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy::BLOCKING;
+    auto handler0 = MockDirectiveHandler::create(handler0Config, LONG_HANDLING_TIME_MS);
 
-    ASSERT_TRUE(m_sequencer->addDirectiveHandlers({
-            {{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}, {handler0, BlockingPolicy::BLOCKING}},
-            {{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}, {handler1, BlockingPolicy::NON_BLOCKING}},
-            {{NAMESPACE_TEST, NAME_BLOCKING}, {handler2, BlockingPolicy::BLOCKING}}
-    }));
+    DirectiveHandlerConfiguration handler1Config;
+    handler1Config[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] = BlockingPolicy::NON_BLOCKING;
+    auto handler1 = MockDirectiveHandler::create(handler1Config);
+
+    DirectiveHandlerConfiguration handler2Config;
+    handler2Config[{NAMESPACE_TEST, NAME_BLOCKING}] = BlockingPolicy::BLOCKING;
+    auto handler2 = MockDirectiveHandler::create(handler2Config, LONG_HANDLING_TIME_MS);
+
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler0));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler1));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler2));
 
     EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(directive0)).Times(0);
     EXPECT_CALL(*(handler0.get()), preHandleDirective(directive0, _)).Times(1);
@@ -506,13 +527,16 @@ TEST_F(DirectiveSequencerTest, testPreHandleDirectiveError) {
     std::shared_ptr<AVSDirective> directive1 = AVSDirective::create(
             UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
-    auto handler0 = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
-    auto handler1 = MockDirectiveHandler::create();
+    DirectiveHandlerConfiguration handler0Config;
+    handler0Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy::BLOCKING;
+    auto handler0 = MockDirectiveHandler::create(handler0Config, LONG_HANDLING_TIME_MS);
 
-    ASSERT_TRUE(m_sequencer->addDirectiveHandlers({
-            {{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}, {handler0, BlockingPolicy::BLOCKING}},
-            {{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}, {handler1, BlockingPolicy::NON_BLOCKING}}
-    }));
+    DirectiveHandlerConfiguration handler1Config;
+    handler1Config[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] = BlockingPolicy::NON_BLOCKING;
+    auto handler1 = MockDirectiveHandler::create(handler1Config);
+
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler0));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler1));
 
     EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(directive0)).Times(0);
     EXPECT_CALL(*(handler0.get()), preHandleDirective(directive0, _)).WillOnce(
@@ -547,13 +571,16 @@ TEST_F(DirectiveSequencerTest, testHandleDirectiveError) {
     std::shared_ptr<AVSDirective> directive1 = AVSDirective::create(
             UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
-    auto handler0 = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
-    auto handler1 = MockDirectiveHandler::create();
+    DirectiveHandlerConfiguration handler0Config;
+    handler0Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy::BLOCKING;
+    auto handler0 = MockDirectiveHandler::create(handler0Config, LONG_HANDLING_TIME_MS);
 
-    ASSERT_TRUE(m_sequencer->addDirectiveHandlers({
-            {{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}, {handler0, BlockingPolicy::BLOCKING}},
-            {{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}, {handler1, BlockingPolicy::NON_BLOCKING}}
-    }));
+    DirectiveHandlerConfiguration handler1Config;
+    handler1Config[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] = BlockingPolicy::NON_BLOCKING;
+    auto handler1 = MockDirectiveHandler::create(handler1Config);
+
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler0));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler1));
 
     EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(directive0)).Times(0);
     EXPECT_CALL(*(handler0.get()), preHandleDirective(directive0, _)).Times(1);
@@ -575,14 +602,14 @@ TEST_F(DirectiveSequencerTest, testHandleDirectiveError) {
 /**
  * Send a long-running @c BLOCKING @c AVSDirective followed by two @c NON_BLOCKING @c AVSDirectives with the same
  * @c DialogRequestId.  Once they have reached the handling and preHandling stages respectively, call
- * @c addDirectiveHandlers(), changing the handlers for the first two @c AVSDirectives.  After the handlers
+ * @c addDirectiveHandler(), changing the handlers for the first two @c AVSDirectives.  After the handlers
  * have been changed, trigger completion of the first @c AVSDirective. Expect that the first directive will be
  * completed by its initial handler (the switch was after handleDirective() was called, and there is no trigger to
  * cancel it. Expect that the second directive's first handler will get the preHandleDirective() call and that its
  * second handler will receive the handleDirective().  Expect that the third directive's handler will get calls for
  * preHandleDirective() and cancelDirective().  The cancel is triggered because the second directive's second
  * handler did not recognize the messageId passed in to handleDirective(), and returned false, canceling any
- * subsequent directives with the same dialogRequestId.  Along the way, call @c addDirectiveHandlers() while
+ * subsequent directives with the same dialogRequestId.  Along the way, call @c addDirectiveHandler() while
  * inside cancelDirective() to verify that that operation is refused.
  */
 TEST_F(DirectiveSequencerTest, testAddDirectiveHandlersWhileHandlingDirectives) {
@@ -599,30 +626,36 @@ TEST_F(DirectiveSequencerTest, testAddDirectiveHandlersWhileHandlingDirectives) 
     std::shared_ptr<AVSDirective> directive2 = AVSDirective::create(
             UNPARSED_DIRECTIVE, avsMessageHeader2, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
-    auto handler0 = MockDirectiveHandler::create(LONG_HANDLING_TIME_MS);
-    auto handler1 = MockDirectiveHandler::create();
-    auto handler2 = MockDirectiveHandler::create();
-    auto handler3 = MockDirectiveHandler::create();
-    auto handler4 = MockDirectiveHandler::create();
+    DirectiveHandlerConfiguration handler0Config;
+    handler0Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy::BLOCKING;
+    auto handler0 = MockDirectiveHandler::create(handler0Config, LONG_HANDLING_TIME_MS);
 
-    DirectiveHandlerConfiguration configuration1 = {
-            {{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}, {handler0, BlockingPolicy::BLOCKING}},
-            {{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}, {handler2, BlockingPolicy::NON_BLOCKING}},
-            {{NAMESPACE_TEST, NAME_NON_BLOCKING}, {handler4, BlockingPolicy::NON_BLOCKING}}
-    };
+    DirectiveHandlerConfiguration handler1Config;
+    handler1Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy::BLOCKING;
+    auto handler1 = MockDirectiveHandler::create(handler1Config);
 
-    DirectiveHandlerConfiguration configuration2 = {
-          {{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}, {handler1, BlockingPolicy::BLOCKING}},
-          {{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}, {handler3, BlockingPolicy::NON_BLOCKING}},
-          {{NAMESPACE_TEST, NAME_NON_BLOCKING}, {handler4, BlockingPolicy::NON_BLOCKING}}
-    };
+    DirectiveHandlerConfiguration handler2Config;
+    handler2Config[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] = BlockingPolicy::NON_BLOCKING;
+    auto handler2 = MockDirectiveHandler::create(handler2Config);
 
-    auto cancelDirectiveFunction = [this, &handler4, &configuration2](const std::string& messageId) {
-        ASSERT_TRUE(m_sequencer->removeDirectiveHandlers(configuration2));
+    DirectiveHandlerConfiguration handler3Config;
+    handler3Config[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] = BlockingPolicy::NON_BLOCKING; 
+    auto handler3 = MockDirectiveHandler::create(handler3Config);
+
+    DirectiveHandlerConfiguration handler4Config;
+    handler4Config[{NAMESPACE_TEST, NAME_NON_BLOCKING}] = BlockingPolicy::NON_BLOCKING;
+    auto handler4 = MockDirectiveHandler::create(handler4Config);
+
+    auto cancelDirectiveFunction = [this, &handler1, &handler3, &handler4](const std::string& messageId) {
+        ASSERT_TRUE(m_sequencer->removeDirectiveHandler(handler1));
+        ASSERT_TRUE(m_sequencer->removeDirectiveHandler(handler3));
+        ASSERT_TRUE(m_sequencer->removeDirectiveHandler(handler4));
         handler4->mockCancelDirective(messageId);
     };
 
-    ASSERT_TRUE(m_sequencer->addDirectiveHandlers(configuration1));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler0));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler2));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler4));
 
     EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(directive0)).Times(0);
     EXPECT_CALL(*(handler0.get()), preHandleDirective(directive0, _)).Times(1);
@@ -657,8 +690,13 @@ TEST_F(DirectiveSequencerTest, testAddDirectiveHandlersWhileHandlingDirectives) 
     handler0->waitUntilHandling();
     handler4->waitUntilPreHandling();
 
-    ASSERT_TRUE(m_sequencer->removeDirectiveHandlers(configuration1));
-    ASSERT_TRUE(m_sequencer->addDirectiveHandlers(configuration2));
+    ASSERT_TRUE(m_sequencer->removeDirectiveHandler(handler0));
+    ASSERT_TRUE(m_sequencer->removeDirectiveHandler(handler2));
+    ASSERT_TRUE(m_sequencer->removeDirectiveHandler(handler4));
+
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler1));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler3));
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler4));
 
     handler0->doHandlingCompleted();
     ASSERT_TRUE(handler4->waitUntilCanceling());

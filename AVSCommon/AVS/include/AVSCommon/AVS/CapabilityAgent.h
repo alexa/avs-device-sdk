@@ -1,7 +1,7 @@
 /*
  * CapabilityAgent.h
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 #include <memory>
 
 #include "AVSCommon/AVS/NamespaceAndName.h"
-#include "AVSCommon/ExceptionEncounteredSenderInterface.h"
+#include "AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h"
 #include "AVSCommon/SDKInterfaces/ChannelObserverInterface.h"
 #include "AVSCommon/SDKInterfaces/ContextRequesterInterface.h"
 #include "AVSCommon/SDKInterfaces/StateProviderInterface.h"
@@ -35,16 +35,16 @@ namespace avsCommon {
 namespace avs {
 
 /**
-* @c CapabilityAgent implements methods which most capability agents will need, namely:
-* @li @c DirectiveHandlerInterface,
-* @li Building the JSON event string given the name, payload and context,
-* @li A map of the message Id to @c AVSDirective and @c DirectiveResultInterface.
-* Derived capability agents may extend this class. They may have to implement the following interfaces:
-* @li @c ChannelObserverInterface: To use the Activity Focus Manager Library,
-* @li @c StateProviderInterface: To provide state to the @c ContextManager.
-* @li @c ContextRequesterInterface: To request context from the @c ContextManager,
-* as necessary.
-*/
+ * @c CapabilityAgent implements methods which most capability agents will need, namely:
+ * @li @c DirectiveHandlerInterface,
+ * @li Building the JSON event string given the name, payload and context,
+ * @li A map of the message Id to @c AVSDirective and @c DirectiveResultInterface.
+ * Derived capability agents may extend this class. They may have to implement the following interfaces:
+ * @li @c ChannelObserverInterface: To use the Activity Focus Manager Library,
+ * @li @c StateProviderInterface: To provide state to the @c ContextManager.
+ * @li @c ContextRequesterInterface: To request context from the @c ContextManager,
+ * as necessary.
+ */
 class CapabilityAgent :
         public sdkInterfaces::DirectiveHandlerInterface,
         public sdkInterfaces::ChannelObserverInterface,
@@ -75,7 +75,7 @@ public:
 
     void onDeregistered() override;
 
-    void onFocusChanged(sdkInterfaces::FocusState newFocus) override;
+    void onFocusChanged(FocusState newFocus) override;
 
     void provideState(const unsigned int stateRequestToken) override;
 
@@ -92,7 +92,7 @@ protected:
      */
     CapabilityAgent(
             const std::string &nameSpace,
-            std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
+            std::shared_ptr<sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
 
     /**
      * CapabilityAgent maintains a map from messageId to instances of DirectiveInfo so that CapabilityAgents
@@ -198,17 +198,20 @@ protected:
      * @param dialogRequestIdString The value associated with the "dialogRequestId" key.
      * @param payload The payload value associated with the "payload" key.
      * @param context Optional @c context to be sent with the event message.
-     * @return An event JSON string if successful else an empty string.
+     * @return A pair object consisting of the messageId and the event JSON string if successful,
+     * else a pair of empty strings.
      */
-    const std::string buildJsonEventString(const std::string &eventName,
-                                           const std::string &dialogRequestIdString = "",
-                                           const std::string &payload = "{}", const std::string &context = "");
+    const std::pair<std::string, std::string> buildJsonEventString(
+            const std::string &eventName,
+            const std::string &dialogRequestIdString = "",
+            const std::string &payload = "{}",
+            const std::string &context = "");
 
     /// The namespace of the capability agent.
     const std::string m_namespace;
 
     /// Object to use to send exceptionEncountered messages
-    std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> m_exceptionEncounteredSender;
+    std::shared_ptr<sdkInterfaces::ExceptionEncounteredSenderInterface> m_exceptionEncounteredSender;
 
 private:
     /**

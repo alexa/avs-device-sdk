@@ -21,24 +21,29 @@ namespace alexaClientSDK {
 namespace integration {
 namespace test {
 
-TestSpeechSynthesizerObserver::TestSpeechSynthesizerObserver(): m_state(SpeechSynthesizerState::FINISHED) {
+using avsCommon::sdkInterfaces::SpeechSynthesizerObserver;
+
+TestSpeechSynthesizerObserver::TestSpeechSynthesizerObserver(): 
+        m_state(SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED) {
 }
 
-void TestSpeechSynthesizerObserver::onStateChanged(SpeechSynthesizerState state) {
+void TestSpeechSynthesizerObserver::onStateChanged(SpeechSynthesizerObserver::SpeechSynthesizerState state) {
     std::unique_lock<std::mutex> lock(m_mutex);
     m_state = state;
     m_queue.push_back(state);
     m_wakeTrigger.notify_all();
 }
 
-bool TestSpeechSynthesizerObserver::checkState(const SpeechSynthesizerState expectedState, const std::chrono::seconds duration) {
+bool TestSpeechSynthesizerObserver::checkState(
+        const SpeechSynthesizerObserver::SpeechSynthesizerState expectedState, const std::chrono::seconds duration) {
     // Pull the front of the state queue
-    SpeechSynthesizerState hold = waitForNext(duration);
+    SpeechSynthesizerObserver::SpeechSynthesizerState hold = waitForNext(duration);
     return hold == expectedState;
 }
 
-SpeechSynthesizerState TestSpeechSynthesizerObserver::waitForNext (const std::chrono::seconds duration) {
-    SpeechSynthesizerState ret;
+SpeechSynthesizerObserver::SpeechSynthesizerState TestSpeechSynthesizerObserver::waitForNext (
+        const std::chrono::seconds duration) {
+    SpeechSynthesizerObserver::SpeechSynthesizerState ret;
     std::unique_lock<std::mutex> lock(m_mutex);
     if (!m_wakeTrigger.wait_for(lock, duration, [this]() { return !m_queue.empty(); })) {
         return m_state;
@@ -48,7 +53,7 @@ SpeechSynthesizerState TestSpeechSynthesizerObserver::waitForNext (const std::ch
     return ret;
 }
 
-SpeechSynthesizerState TestSpeechSynthesizerObserver::getCurrentState() {
+SpeechSynthesizerObserver::SpeechSynthesizerState TestSpeechSynthesizerObserver::getCurrentState() {
     return m_state;
 }
 

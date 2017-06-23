@@ -28,9 +28,9 @@
 #include <unordered_map>
 
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
-#include "AVSCommon/ExceptionEncounteredSenderInterface.h"
+#include "AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h"
 #include "AVSCommon/AVS/Attachment/AttachmentManager.h"
-#include "AVSCommon/JSON/JSONUtils.h"
+#include "AVSCommon/Utils/JSON/JSONUtils.h"
 
  using namespace alexaClientSDK::avsCommon;
 
@@ -42,11 +42,11 @@ namespace test {
  * TestExceptionEncounteredSender is a mock of the @c ExceptionEncounteredSenderInterface and allows tests 
  * to wait for invocations upon those interfaces and inspect the parameters of those invocations.
  */
-class TestExceptionEncounteredSender : public avsCommon::ExceptionEncounteredSenderInterface {
+class TestExceptionEncounteredSender : public avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface {
 public:
     void sendExceptionEncountered(
         const std::string& unparsedDirective,
-        avsCommon::ExceptionErrorType error,
+        avsCommon::avs::ExceptionErrorType error,
         const std::string& message) override;
     /**
      * Parse an @c AVSDirective from a JSON string.
@@ -55,7 +55,7 @@ public:
      * @param attachmentManager The @c AttachmentManager to initialize the new @c AVSDirective with.
      * @return A new @c AVSDirective, or nullptr if parsing the JSON fails.
      */
-    std::shared_ptr<AVSDirective> parseDirective(
+    std::shared_ptr<avs::AVSDirective> parseDirective(
         const std::string& rawJSON, std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager);
 
 
@@ -83,11 +83,11 @@ public:
         // Type of how the directive was passed.
         Type type;
         // AVSDirective passed from the Directive Sequencer. 
-        std::shared_ptr<avsCommon::AVSDirective> directive;
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive;
         // Unparsed directive string passed to sendExceptionEncountered.
         std::string exceptionUnparsedDirective;
         // Error type passed to sendExceptionEncountered.
-        ExceptionErrorType exceptionError;
+        avsCommon::avs::ExceptionErrorType exceptionError;
         // Additional information passed to sendExceptionEncountered.
         std::string exceptionMessage;
     };

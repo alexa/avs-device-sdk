@@ -20,7 +20,7 @@
 
 #include <memory>
 
-#include "AVSCommon/AVSDirective.h"
+#include "AVSCommon/AVS/AVSDirective.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {

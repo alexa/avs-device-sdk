@@ -15,12 +15,24 @@
  * permissions and limitations under the License.
  */
 
+#include <AVSCommon/Utils/Logger/Logger.h>
+
 #include "Integration/ObservableMessageRequest.h"
 
 #include <iostream>
 
 namespace alexaClientSDK {
 namespace integration {
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("ObservableMessageRequest");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
@@ -33,6 +45,7 @@ ObservableMessageRequest::ObservableMessageRequest(
 
 void ObservableMessageRequest::onSendCompleted(MessageRequest::Status sendMessageStatus) {
     std::lock_guard<std::mutex> lock(m_mutex);
+    ACSDK_DEBUG(LX("onSendCompleted").d("status", MessageRequest::statusToString(sendMessageStatus)));
     m_sendMessageStatus = sendMessageStatus;
     m_wakeTrigger.notify_all();
 }
@@ -51,7 +64,7 @@ bool ObservableMessageRequest::waitFor(
 }
 
 void ObservableMessageRequest::onExceptionReceived(const std::string & exceptionMessage) {
-    std::cout << "Received exception message:" << exceptionMessage << std::endl;
+    ACSDK_DEBUG(LX("onExceptionReceived").d("status", exceptionMessage));
 }
 
 } // namespace integration

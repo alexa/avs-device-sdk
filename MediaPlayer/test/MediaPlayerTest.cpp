@@ -1,7 +1,7 @@
 /*
  * MediaPlayerTest.cpp
  *
- * Copyright 2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,8 +26,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <AVSUtils/Logging/Logger.h>
-#include <AVSUtils/Memory/Memory.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Memory/Memory.h>
 
 #include "MediaPlayer/MediaPlayer.h"
 
@@ -37,8 +37,18 @@ namespace test {
 
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::avs::attachment;
-using namespace avsUtils::memory;
+using namespace avsCommon::utils::memory;
 using namespace ::testing;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("MediaPlayerTest");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// The path to the input Dir containing the test audio files.
 std::string inputsDirPath;
@@ -233,7 +243,7 @@ void MockPlayerObserver::onPlaybackFinished() {
 }
 
 void MockPlayerObserver::onPlaybackError(std::string error) {
-    avsUtils::Logger::log("Error encountered:" + error);
+    ACSDK_ERROR(LX("onPlaybackError").d("error", error));
 };
 
 bool MockPlayerObserver::waitForPlaybackStarted(const std::chrono::milliseconds duration) {
@@ -245,7 +255,7 @@ bool MockPlayerObserver::waitForPlaybackStarted(const std::chrono::milliseconds 
     return true;
 }
 
-bool MockPlayerObserver::waitForPlaybackFinished(const std::chrono::milliseconds duration){
+bool MockPlayerObserver::waitForPlaybackFinished(const std::chrono::milliseconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
     if (!m_wakePlaybackFinished.wait_for(lock, duration, [this]() { return m_playbackFinished; } ))
     {

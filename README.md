@@ -1,4 +1,4 @@
-## Alexa Client SDK v0.4.1
+## Alexa Client SDK v0.5
 
 This release of the Alexa Client SDK for C++ provides components for authentication and communications with the Alexa Voice Service (AVS), specifically AuthDelegate, Alexa Communications Library (ACL), Alexa Directive Sequencer Library (ADSL), Activity Focus Manager Library (AFML), Audio Input Manager (AIP), Wake Word Detector (WWD), and associated APIs.
 
@@ -65,7 +65,7 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 
 * C++ 11 or later
 * [GNU Compiler Collection (GCC) 4.8.5](https://gcc.gnu.org/) or later **OR** [Clang 3.3](http://clang.llvm.org/get_started.html) or later
-* [CMake 3.0](https://cmake.org/download/) or later
+* [CMake 3.1](https://cmake.org/download/) or later
 * [libcurl 7.50.2](https://curl.haxx.se/download.html) or later
 * [nghttp2 1.0](https://github.com/nghttp2/nghttp2) or later
 * [OpenSSL 1.0.2](https://www.openssl.org/source/) or later
@@ -169,9 +169,9 @@ cmake <path-to-source> -DKITTAI_KEY_WORD_DETECTOR=ON -DKITTAI_KEY_WORD_DETECTOR_
 
 ### Build with an implementation of `MediaPlayer`
 
-`MediaPlayer` (the reference implementation of the `MediaPlayerInterface`) is based upon [GStreamer](https://gstreamer.freedesktop.org/) and is not built by default. To build 'MediaPlayer' the `-DGSTREAMER_MEDIA_PLAYER=ON` option must be specified to CMake.
+`MediaPlayer` (the reference implementation of the `MediaPlayerInterface`) is based upon [GStreamer](https://gstreamer.freedesktop.org/), and is not built by default. To build 'MediaPlayer' the `-DGSTREAMER_MEDIA_PLAYER=ON` option must be specified to CMake.
 
-If GStreamer was [installed from source](https://gstreamer.freedesktop.org/documentation/frequently-asked-questions/getting.html) the prefix path provided when building must be specified to CMake with the `DCMAKE_PREFIX_PATH` option. This is an example CMake command:
+If GStreamer was [installed from source](https://gstreamer.freedesktop.org/documentation/frequently-asked-questions/getting.html), the prefix path provided when building must be specified to CMake with the `DCMAKE_PREFIX_PATH` option. This is an example CMake command:
 
 ```
 cmake <path-to-source> -DGSTREAMER_MEDIA_PLAYER=ON -DCMAKE_PREFIX_PATH=<path-to-GStreamer-build>
@@ -283,7 +283,7 @@ If the project was built with the Sensory wake word detector, the following file
 
 * [`spot-alexa-rpi-31000.snsr`](https://github.com/Sensory/alexa-rpi/blob/master/models/spot-alexa-rpi-31000.snsr)
 
-### Run Integration Tests with KITT.ai Enabled
+### Run Integration Tests with KITT.ai
 
 If the project was built with the KITT.ai wake word detector, the following files must be downloaded from [GitHub](https://github.com/Kitt-AI/snowboy/tree/master/resources) and placed in `Integration/inputs/KittAiModels` for the integration tests to run properly:
 * [`common.res`](https://github.com/Kitt-AI/snowboy/tree/master/resources)
@@ -295,7 +295,7 @@ To build the Alexa Client SDK API documentation, run this command from your buil
 
 ## Resources and Guides
 
-* [Step-by-step instructions to optimize libcurl for size in `*nix` systems](https://github.com/alexa/alexa-client-sdk/wiki/optimize-libcurl).
+* [Step-by-step instructions to optimize libcurl for size in `*nix` systems](https://github.com/alexa/alexa-client-sdk/wiki/optimize-libcurl).
 * [Step-by-step instructions to build libcurl with mbed TLS and nghttp2 for `*nix` systems](https://github.com/alexa/alexa-client-sdk/wiki/build-libcurl-with-mbed-TLS-and-nghttp2).
 
 ## Appendix A: Memory Profile
@@ -323,9 +323,9 @@ Unique size set (USS) and proportional size set (PSS) were measured by SMEM whil
 | ACL | 8 MB | 15 MB | 8 MB | 16 MB |
 | ADSL + ACL | 8 MB | 20 MB | 9 MB | 21 MB |
 | AIP | 9 MB | 12 MB | 9 MB | 13 MB |
-| SpeechSynthesizer** | 11 MB | 18 MB | 12 MB | 20 MB |
+| ** SpeechSynthesizer | 11 MB | 18 MB | 12 MB | 20 MB |
 
-***This test was run using the GStreamer-based MediaPlayer for audio playback.*
+** This test was run using the GStreamer-based MediaPlayer for audio playback.
 
 **Definitions**
 
@@ -356,6 +356,19 @@ By default libcurl is built with paths to a CA bundle and a directory containing
 
 ## Release Notes
 
+v0.5 released 6/23/2017:
+
+* Updated most SDK components to use new logging abstraction.
+* Added a getConfiguration() method to DirectiveHandlerInterface to register Capability Agents with Directive Sequencer.
+* Added ACL stream processing with Pause and redrive.
+* Removed the dependency of ACL Library on Authdelegate.
+* Added an interface to allow ACL to Add/Remove ConnectionStatusObserverInterface.
+* Fixed compile errors in KittAi, DirectiveHandler and compiler warnings in AIP test.
+* Corrected formatting of code in many files.
+* Fixes for the following Github issues:
+  * [MessageRequest callbacks never triggered if disconnected](https://github.com/alexa/alexa-client-sdk/issues/21)
+  * [AttachmentReader::read() returns ReadStatus::CLOSED if an AttachmentWriter has not been created yet](https://github.com/alexa/alexa-client-sdk/issues/25)
+
 v0.4.1 released 6/9/2017:
 
 * Implemented Sensory wake word detector functionality
@@ -368,12 +381,13 @@ v0.4.1 released 6/9/2017:
   * ContextManager
   * AVSUtils
   * AVSCommon
+* Bug fix for `MessageRouterTest` aborting intermittently
 * Bug fix for `MultipartParser.h` compiler warning
 * Suppression of sensitive log data even in debug builds. Use cmake parameter -DACSDK_EMIT_SENSITIVE_LOGS=ON to allow logging of sensitive information in DEBUG builds
 * Fix crash in ACL when attempting to use more than 10 streams
 * Updated MediaPlayer to use `autoaudiosink` instead of requiring `pulseaudio`
 * Updated MediaPlayer build to suppport local builds of GStreamer
-* Fixes for the following Github issues
+* Fixes for the following Github issues:
   * [MessageRouter::send() does not take the m_connectionMutex](https://github.com/alexa/alexa-client-sdk/issues/5)
   * [MessageRouter::disconnectAllTransportsLocked flow leads to erase while iterating transports vector](https://github.com/alexa/alexa-client-sdk/issues/8)
   * [Build errors when building with KittAi enabled](https://github.com/alexa/alexa-client-sdk/issues/9)

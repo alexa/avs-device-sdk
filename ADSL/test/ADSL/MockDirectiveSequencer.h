@@ -18,7 +18,7 @@
 #ifndef ALEXA_CLIENT_SDK_ADSL_TEST_ADSL_MOCK_DIRECTIVE_SEQUENCER_H_
 #define ALEXA_CLIENT_SDK_ADSL_TEST_ADSL_MOCK_DIRECTIVE_SEQUENCER_H_
 
-#include <AVSCommon/AVSDirective.h>
+#include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <gmock/gmock.h>
 #include <memory>
@@ -36,17 +36,19 @@ class MockDirectiveSequencer : public avsCommon::sdkInterfaces::DirectiveSequenc
 public:
     MOCK_METHOD0(shutdown,void());
 
-    MOCK_METHOD1(addDirectiveHandlers, bool(const avsCommon::avs::DirectiveHandlerConfiguration& configuration));
+    MOCK_METHOD1(addDirectiveHandler, 
+            bool(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler));
 
-    MOCK_METHOD1(removeDirectiveHandlers, bool(const avsCommon::avs::DirectiveHandlerConfiguration& configuration));
+    MOCK_METHOD1(removeDirectiveHandler, 
+            bool(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler));
 
     MOCK_METHOD1(setDialogRequestId, void(const std::string& dialogRequestId));
 
-    MOCK_METHOD1(onDirective, bool(std::shared_ptr<avsCommon::AVSDirective> directive));
+    MOCK_METHOD1(onDirective, bool(std::shared_ptr<avsCommon::avs::AVSDirective> directive));
 };
 
-}  // namespace test
-}  // namespace adsl
-}  // namespace alexaClientSDK
+} // namespace test
+} // namespace adsl
+} // namespace alexaClientSDK
 
 #endif // ALEXA_CLIENT_SDK_ADSL_TEST_ADSL_MOCK_DIRECTIVE_SEQUENCER_H_

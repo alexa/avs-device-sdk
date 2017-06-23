@@ -122,7 +122,9 @@ public:
      *
      * @note A stream is closed for the @c Reader if @c Reader::close() has been called on it, or if @c Writer::close()
      *     has been called and the @c Reader has consumed all remaining data left in the stream when the @c Writer
-     *     closed.
+     *     closed.  In the special case of a new stream, where no @c Writer has been created, the stream is not
+     *     considered to be closed for the @c Reader; attempts to @c read() will either block or return @c WOULDBLOCK, 
+     *     depending on the @c Policy.
      */
     ssize_t read(void* buf, size_t nWords, std::chrono::milliseconds timeout = std::chrono::milliseconds(0));
 
@@ -243,7 +245,7 @@ SharedDataStream<T>::Reader::~Reader() {
 template <typename T>
 ssize_t SharedDataStream<T>::Reader::read(void* buf, size_t nWords, std::chrono::milliseconds timeout) {
     if (nullptr == buf || 0 == nWords) {
-        avsUtils::Logger::log("Reader::read failed: Invalid parameter passed to read().");
+        utils::logger::deprecated::Logger::log("Reader::read failed: Invalid parameter passed to read().");
         return Error::INVALID;
     }
 
@@ -266,7 +268,7 @@ ssize_t SharedDataStream<T>::Reader::read(void* buf, size_t nWords, std::chrono:
     }
     size_t wordsAvailable = tell(Reference::BEFORE_WRITER);
     if (0 == wordsAvailable) {
-        if (!header->isWriterEnabled) {
+        if (header->writeEndCursor > 0 && !header->isWriterEnabled) {
             return Error::CLOSED;
         } else if (Policy::NONBLOCKING == m_policy) {
             return Error::WOULDBLOCK;
@@ -345,14 +347,14 @@ bool SharedDataStream<T>::Reader::seek(Index offset, Reference reference) {
             break;
         case Reference::BEFORE_READER:
             if (offset > *m_readerCursor) {
-                avsUtils::Logger::log("Reader::seek failed: Unable to seek before start of stream.");
+                utils::logger::deprecated::Logger::log("Reader::seek failed: Unable to seek before start of stream.");
                 return false;
             }
             absolute = *m_readerCursor - offset;
             break;
         case Reference::BEFORE_WRITER:
             if (offset > *writeStartCursor) {
-                avsUtils::Logger::log("Reader::seek failed: Unable to seek before start of stream.");
+                utils::logger::deprecated::Logger::log("Reader::seek failed: Unable to seek before start of stream.");
                 return false;
             }
             absolute = *writeStartCursor - offset;
@@ -363,13 +365,13 @@ bool SharedDataStream<T>::Reader::seek(Index offset, Reference reference) {
 
     // Don't seek beyond the close index.
     if (absolute > *m_readerCloseIndex) {
-        avsUtils::Logger::log("Reader::seek failed: Unable to seek beyond close index.");
+        utils::logger::deprecated::Logger::log("Reader::seek failed: Unable to seek beyond close index.");
         return false;
     }
 
     // Don't seek to future indices that have not been written yet.
     if (absolute > *writeStartCursor) {
-        avsUtils::Logger::log("Reader::seek failed: Unable to seek to future data which has not been written yet.");
+        utils::logger::deprecated::Logger::log("Reader::seek failed: Unable to seek to future data which has not been written yet.");
         return false;
     }
 
@@ -386,7 +388,7 @@ bool SharedDataStream<T>::Reader::seek(Index offset, Reference reference) {
     // backwardSeekMutex to prevent a writer from starting to overwrite us between here and the m_readerCursor update
     // below.  If this is not a backward seek, then the mutex is not held.
     if (*writeEndCursor - absolute > m_bufferLayout->getDataSize()) {
-        avsUtils::Logger::log("Reader::seek failed: Unable to seek to old data which is no longer in the buffer.");
+        utils::logger::deprecated::Logger::log("Reader::seek failed: Unable to seek to old data which is no longer in the buffer.");
         return false;
     }
 
@@ -415,7 +417,7 @@ typename SharedDataStream<T>::Index SharedDataStream<T>::Reader::tell(Reference 
         case Reference::ABSOLUTE:
             return *m_readerCursor;
     }
-    avsUtils::Logger::log("Reader::tell failed: invalid reference.");
+    utils::logger::deprecated::Logger::log("Reader::tell failed: invalid reference.");
     return std::numeric_limits<Index>::max();
 }
 
@@ -435,7 +437,7 @@ void SharedDataStream<T>::Reader::close(Index offset, Reference reference) {
             break;
         case Reference::BEFORE_WRITER:
             if (*writeStartCursor < offset) {
-                avsUtils::Logger::log("Reader::close: attempted to close at an historic index; closing now.");
+                utils::logger::deprecated::Logger::log("Reader::close: attempted to close at an historic index; closing now.");
             } else {
                 absolute = *writeStartCursor - offset;
             }
@@ -447,7 +449,7 @@ void SharedDataStream<T>::Reader::close(Index offset, Reference reference) {
             break;
     }
     if (!validReference) {
-        avsUtils::Logger::log("Reader::tell failed: invalid reference.");
+        utils::logger::deprecated::Logger::log("Reader::tell failed: invalid reference.");
     }
 
     *m_readerCloseIndex = absolute;
@@ -475,7 +477,7 @@ std::string SharedDataStream<T>::Reader::errorToString(Error error) {
         case Error::INVALID:
             return "INVALID";
     }
-    avsUtils::Logger::log("Reader::errorToString failed: invalid error " + to_string(error) + ".");
+    utils::logger::deprecated::Logger::log("Reader::errorToString failed: invalid error " + to_string(error) + ".");
     return "(unknown error " + to_string(error) + ")";
 }
 

@@ -14,7 +14,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#include "AVSUtils/Logging/Logger.h"
+#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
 #include "ACL/Transport/HTTP2Stream.h"
 #include "ACL/Transport/HTTP2Transport.h"
 
@@ -24,7 +24,7 @@
 namespace alexaClientSDK {
 namespace acl {
 
-using namespace alexaClientSDK::avsUtils;
+using namespace alexaClientSDK::avsCommon::utils;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 
@@ -44,8 +44,10 @@ static const std::string METADATA_FIELD_NAME = "metadata";
 static const std::string STREAM_CONTEXT_ID_PREFIX_STRING = "ACL_LOGICAL_HTTP2_STREAM_ID_";
 /// The prefix of request IDs passed back in the header of AVS replies.
 static const std::string X_AMZN_REQUESTID_PREFIX = "x-amzn-requestid:";
+#ifdef DEBUG
 /// Carriage return
 static const char CR = 0x0D;
+#endif
 
 // Definition for the class static member variable.
 unsigned int HTTP2Stream::m_streamIdCounter = 1;
@@ -59,20 +61,33 @@ static unsigned int incrementCounterByTwo(unsigned int* id) {
     return *id;
 }
 
+/**
+ * Get @c std::chrono::steady_clock::now() in a form that can be wrapped in @c atomic.
+ *
+ * @return @c std::chrono::steady_clock::now() in a form that can be wrapped in @c atomic.
+ */
+static std::chrono::steady_clock::rep getNow() {
+    return std::chrono::steady_clock::now().time_since_epoch().count();
+}
+
 HTTP2Stream::HTTP2Stream(MessageConsumerInterface* messageConsumer,
          std::shared_ptr<AttachmentManager> attachmentManager)
     : m_logicalStreamId{incrementCounterByTwo(&m_streamIdCounter)},
       m_parser{messageConsumer, attachmentManager, STREAM_CONTEXT_ID_PREFIX_STRING + std::to_string(m_logicalStreamId)},
-      m_isPaused{false} {
+      m_isPaused{false},
+      m_progressTimeout{std::chrono::steady_clock::duration::max().count()},
+      m_timeOfLastTransfer{getNow()} {
 }
 
 bool HTTP2Stream::reset() {
     if (!m_transfer.reset()) {
-        Logger::log("Could not reset curl easy handle");
+        logger::deprecated::Logger::log("Could not reset curl easy handle");
         return false;
     }
     m_currentRequest = nullptr;
     m_parser.reset();
+    m_progressTimeout = std::chrono::steady_clock::duration::max().count();
+    m_timeOfLastTransfer = getNow();
     return true;
 }
 
@@ -81,33 +96,33 @@ bool HTTP2Stream::setCommonOptions(const std::string& url, const std::string& au
     authHeader << AUTHORIZATION_HEADER << authToken;
 
     if (!m_transfer.setURL(url)) {
-        Logger::log("Could not set request URL");
+        logger::deprecated::Logger::log("Could not set request URL");
         return false;
     }
 
     if (!m_transfer.addHTTPHeader(authHeader.str())) {
-        Logger::log("Could not set requested HTTP header");
+        logger::deprecated::Logger::log("Could not set requested HTTP header");
         return false;
     }
 
     if (!m_transfer.setWriteCallback(&HTTP2Stream::writeCallback, this)) {
-        Logger::log("Could not set write callback");
+        logger::deprecated::Logger::log("Could not set write callback");
         return false;
     }
 
     if (!m_transfer.setHeaderCallback(&HTTP2Stream::headerCallback, this)) {
-        Logger::log("Could not set header callback");
+        logger::deprecated::Logger::log("Could not set header callback");
         return false;
     }
 #ifdef ACSDK_EMIT_SENSITIVE_LOGS
     if (curl_easy_setopt(m_transfer.getCurlHandle(), CURLOPT_VERBOSE, 1L) != CURLE_OK) {
-        Logger::log("Could not set verbose logging");
+        logger::deprecated::Logger::log("Could not set verbose logging");
         return false;
     }
 #endif
     // Set TCP_KEEPALIVE to ensure that we detect server initiated disconnects
     if (curl_easy_setopt(m_transfer.getCurlHandle(), CURLOPT_TCP_KEEPALIVE, 1) != CURLE_OK) {
-        Logger::log("Could not set TCP KEEPALIVE");
+        logger::deprecated::Logger::log("Could not set TCP KEEPALIVE");
         return false;
     }
     return true;
@@ -117,17 +132,17 @@ bool HTTP2Stream::initGet(const std::string& url ,const std::string& authToken) 
     reset();
 
     if (!m_transfer.getCurlHandle()) {
-        Logger::log("Stream curl easy handle not initialised");
+        logger::deprecated::Logger::log("Stream curl easy handle not initialised");
         return false;
     }
 
     if (!m_transfer.setTransferType(CurlEasyHandleWrapper::TransferType::kGET)) {
-        Logger::log("Could not set stream to GET");
+        logger::deprecated::Logger::log("Could not set stream to GET");
         return false;
     }
 
     if (!setCommonOptions(url, authToken)) {
-        Logger::log("Could not set common stream options");
+        logger::deprecated::Logger::log("Could not set common stream options");
         return false;
     }
 
@@ -140,7 +155,7 @@ bool HTTP2Stream::initPost(const std::string& url, const std::string& authToken,
     std::string requestPayload = request->getJsonContent();
 
     if (!m_transfer.getCurlHandle()) {
-        Logger::log("Stream curl easy handle not initialised");
+        logger::deprecated::Logger::log("Stream curl easy handle not initialised");
         return false;
     }
 
@@ -163,7 +178,7 @@ bool HTTP2Stream::initPost(const std::string& url, const std::string& authToken,
     }
 
     if (!setCommonOptions(url, authToken)) {
-        Logger::log("Could not set common stream options");
+        logger::deprecated::Logger::log("Could not set common stream options");
         return false;
     }
 
@@ -174,6 +189,7 @@ bool HTTP2Stream::initPost(const std::string& url, const std::string& authToken,
 size_t HTTP2Stream::writeCallback(char *data, size_t size, size_t nmemb, void *user) {
     size_t numChars = size * nmemb;
     HTTP2Stream *stream = static_cast<HTTP2Stream*>(user);
+    stream->m_timeOfLastTransfer = getNow();
     /**
      * If we get an HTTP 200 response code then we're getting a MIME multipart
      * payload. For all other response codes we're getting a JSON string without
@@ -202,11 +218,12 @@ size_t HTTP2Stream::headerCallback(char *data, size_t size, size_t nmemb, void *
 #ifdef DEBUG
     if (0 == header.find(X_AMZN_REQUESTID_PREFIX)) {
         auto end = header.find(CR);
-        Logger::log(header.substr(0, end));
+        logger::deprecated::Logger::log(header.substr(0, end));
     }
 #endif
     std::string boundary;
     HTTP2Stream *stream = static_cast<HTTP2Stream*>(user);
+    stream->m_timeOfLastTransfer = getNow();
     if (HTTP2Stream::HTTPResponseCodes::SUCCESS_OK == stream->getResponseCode()) {
         if (header.find(BOUNDARY_PREFIX) != std::string::npos) {
             boundary = header.substr(header.find(BOUNDARY_PREFIX));
@@ -220,6 +237,7 @@ size_t HTTP2Stream::headerCallback(char *data, size_t size, size_t nmemb, void *
 
 size_t HTTP2Stream::readCallback(char *data, size_t size, size_t nmemb, void *userData) {
     HTTP2Stream *stream = static_cast<HTTP2Stream*>(userData);
+    stream->m_timeOfLastTransfer = getNow();
 
     auto attachmentReader = stream->m_currentRequest->getAttachmentReader();
 
@@ -264,7 +282,7 @@ size_t HTTP2Stream::readCallback(char *data, size_t size, size_t nmemb, void *us
 long HTTP2Stream::getResponseCode() {
     long responseCode = 0;
     if (curl_easy_getinfo(m_transfer.getCurlHandle(), CURLINFO_RESPONSE_CODE, &responseCode) != CURLE_OK) {
-        Logger::log("Could not get HTTP response code");
+        logger::deprecated::Logger::log("Could not get HTTP response code");
         return -1;
     }
     return responseCode;
@@ -275,7 +293,7 @@ CURL* HTTP2Stream::getCurlHandle() {
 }
 
 void HTTP2Stream::notifyRequestObserver() {
-    if(m_exceptionBeingProcessed.length() > 0) {
+    if (m_exceptionBeingProcessed.length() > 0) {
         m_currentRequest->onExceptionReceived(m_exceptionBeingProcessed);
         m_exceptionBeingProcessed = "";
     }
@@ -293,6 +311,10 @@ void HTTP2Stream::notifyRequestObserver() {
         default:
             m_currentRequest->onSendCompleted(avsCommon::avs::MessageRequest::Status::SERVER_INTERNAL_ERROR);
     }
+}
+
+void HTTP2Stream::notifyRequestObserver(avsCommon::avs::MessageRequest::Status status) {
+    m_currentRequest->onSendCompleted(status);
 }
 
 bool HTTP2Stream::setStreamTimeout(const long timeoutSeconds) {
@@ -315,6 +337,14 @@ void HTTP2Stream::setPaused(bool isPaused) {
 
 bool HTTP2Stream::isPaused() const {
     return m_isPaused;
+}
+
+unsigned int HTTP2Stream::getLogicalStreamId() const {
+    return m_logicalStreamId;
+}
+
+bool HTTP2Stream::hasProgressTimedOut() const {
+    return (getNow() - m_timeOfLastTransfer) > m_progressTimeout;
 }
 
 } // namespace acl

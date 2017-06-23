@@ -23,7 +23,7 @@
 #include <string>
 #include <vector>
 
-#include "AVSUtils/Threading/Executor.h"
+#include "AVSCommon/Utils/Threading/Executor.h"
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/MessageRequest.h>
@@ -52,16 +52,13 @@ public:
      * the MessageRouter can authorize the client to AVS.
      * @param attachmentManager The AttachmentManager, which allows ACL to write attachments received from AVS.
      * @param avsEndpoint The endpoint to connect to AVS.
-     * @param sendExecutor An Executor on which all incoming requests will be submitted to be sent to the server.
-     * @param receiveExecutor An Executor on which all outgoing responses will be submitted to be sent to client
-     *     callbacks.
+     * @param executor An Executor used to perform asynchronous operations.
      */
     MessageRouter(
             std::shared_ptr<AuthDelegateInterface> authDelegate,
             std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
             const std::string& avsEndpoint,
-            std::shared_ptr<avsUtils::threading::Executor> sendExecutor,
-            std::shared_ptr<avsUtils::threading::Executor> receiveExecutor);
+            std::shared_ptr<avsCommon::utils::threading::Executor> executor);
 
     /**
      * Destructor.
@@ -72,7 +69,7 @@ public:
 
     void disable() override;
 
-    ConnectionStatusObserverInterface::Status getConnectionStatus() override;
+    ConnectionStatus getConnectionStatus() override;
 
     void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
 
@@ -82,7 +79,7 @@ public:
 
     void onConnected() override;
 
-    void onDisconnected(ConnectionStatusObserverInterface::ChangedReason reason) override;
+    void onDisconnected(avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
 
     void onServerSideDisconnect() override;
 
@@ -108,35 +105,35 @@ private:
             TransportObserverInterface* transportObserverInterface) = 0;
 
     /**
-     * Set the connection state.  If it changes, notify our observer.
+     * Set the connection state. If it changes, notify our observer.
      * @c m_connectionMutex must be locked to call this method.
      *
      * @param status The current status of the connection.
      * @param reason The reason the connection status changed.
      */
     void setConnectionStatusLocked(
-            const ConnectionStatusObserverInterface::Status status, 
-            const ConnectionStatusObserverInterface::ChangedReason reason);
+            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status, 
+            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
 
     /**
      * Notify the connection observer when the status has changed.
      * Architectural note:
      *  @li A derived class cannot access the required observer method directly due a friend relationship at the base
-     *    class level.  However this method bridges the gap, and allows the observer's public interface to remain
+     *    class level. However this method bridges the gap, and allows the observer's public interface to remain
      *    unchanged.
      *
      * @param status The current status of the connection.
      * @param reason The reason the connection status changed.
      */
     void notifyObserverOnConnectionStatusChanged(
-            const ConnectionStatusObserverInterface::Status status,
-            const ConnectionStatusObserverInterface::ChangedReason reason);
+            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
+            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
 
     /**
      * Notify the message observer of an incoming message from AVS.
      * Architectural note:
      *  @li A derived class cannot access the required observer method directly due a friend relationship at the base
-     *    class level.  However this method bridges the gap, and allows the observer's public interface to remain
+     *    class level. However this method bridges the gap, and allows the observer's public interface to remain
      *    unchanged.
      *
      * @param contextId The context id for the current message.
@@ -154,12 +151,12 @@ private:
      * Disconnects all transports. @c m_connectionMutex must be locked to call this method.
      *
      * @param reason The reason the last transport was disconnected
-     * @param lock Reference to the @c unique_lock that must be held when this method is called.  The lock may be
+     * @param lock Reference to the @c unique_lock that must be held when this method is called. The lock may be
      * released during the execution of this method, but will be locked when this method exits.
      */
     void disconnectAllTransportsLocked(
             std::unique_lock<std::mutex>& lock, 
-            const ConnectionStatusObserverInterface::ChangedReason reason);
+            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
 
     /**
      * Get the observer.
@@ -180,8 +177,11 @@ private:
     /// This mutex guards access to all connection related state, specifically the status and all transport interaction.
     std::mutex m_connectionMutex;
 
-    /// The current connection status.  Access serialized with @c m_connectionMutex.
-    ConnectionStatusObserverInterface::Status m_connectionStatus;
+    /// The current connection status. Access serialized with @c m_connectionMutex.
+    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status m_connectionStatus;
+
+    /// The current connection reason. Access serialized with @c m_connectionMutex.
+    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason m_connectionReason;
 
     /**
      * When the MessageRouter is enabled, any disconnect should automatically trigger a reconnect with AVS.
@@ -195,11 +195,12 @@ private:
     /// The current active transport to send messages on. Access serialized with @c m_connectionMutex.
     std::shared_ptr<TransportInterface> m_activeTransport;
 
-    /// Executor to execute sending any messages to AVS.
-    std::shared_ptr<avsUtils::threading::Executor> m_sendExecutor;
-
-    /// Executor to execute sending any callbacks to the client.
-    std::shared_ptr<avsUtils::threading::Executor> m_receiveExecutor;
+    /**
+     * Executor to perform asynchronous operations:
+     * @li Delivery of connection status notifications.
+     * @li completion of send operations delayed by a pending connection state.
+     */
+    std::shared_ptr<avsCommon::utils::threading::Executor> m_executor;
 
     /// The attachment manager.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;

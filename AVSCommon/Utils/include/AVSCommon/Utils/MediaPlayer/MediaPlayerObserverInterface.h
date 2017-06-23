@@ -1,7 +1,7 @@
 /*
  * MediaPlayerObserverInterface.h
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 
 #include <string>
 
-#ifndef ALEXA_CLIENT_SDK_AVSCCOMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_OBSERVER_INTERFACE_H_
-#define ALEXA_CLIENT_SDK_AVSCCOMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_OBSERVER_INTERFACE_H_
+#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_OBSERVER_INTERFACE_H_
+#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_OBSERVER_INTERFACE_H_
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -32,33 +32,33 @@ namespace mediaPlayer {
 class MediaPlayerObserverInterface {
 public:
     /**
-    * Destructor.
-    */
+     * Destructor.
+     */
     virtual ~MediaPlayerObserverInterface() = default;
 
     /**
-    * This is an indication to the observer that the @c MediaPlayer has starting playing the audio data.
-    *
-    * @note The observer has to return soon. Otherwise this could block the @c MediaPlayer from processing other signals
-    * or playback.
-    */
+     * This is an indication to the observer that the @c MediaPlayer has starting playing the audio data.
+     *
+     * @note The observer has to return soon. Otherwise this could block the @c MediaPlayer from processing other signals
+     * or playback.
+     */
     virtual void onPlaybackStarted() = 0;
 
     /**
-    * This is an indication to the observer that the @c MediaPlayer has starting finished the audio data.
-    *
-    * @note The observer has to return soon. Otherwise this could block the @c MediaPlayer from processing other signals
-    * or playback.
-    */
+     * This is an indication to the observer that the @c MediaPlayer has starting finished the audio data.
+     *
+     * @note The observer has to return soon. Otherwise this could block the @c MediaPlayer from processing other signals
+     * or playback.
+     */
     virtual void onPlaybackFinished() = 0;
 
     /**
-    * This is an indication to the observer that the @c MediaPlayer encountered an error. Errors can occur during
-    * playback.
-    *
-    * @note The observer has to return soon. Otherwise this could block the @c MediaPlayer from processing other signals
-    * or playback.
-    */
+     * This is an indication to the observer that the @c MediaPlayer encountered an error. Errors can occur during
+     * playback.
+     *
+     * @note The observer has to return soon. Otherwise this could block the @c MediaPlayer from processing other signals
+     * or playback.
+     */
     virtual void onPlaybackError(std::string error) = 0;
 };
 
@@ -67,4 +67,4 @@ public:
 } // namespace avsCommon
 } // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVSCCOMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_OBSERVER_INTERFACE_H_
+#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_OBSERVER_INTERFACE_H_

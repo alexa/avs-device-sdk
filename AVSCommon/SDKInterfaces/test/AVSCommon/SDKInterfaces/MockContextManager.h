@@ -35,7 +35,7 @@ public:
     MOCK_METHOD4(setState, SetStateResult (
             const avs::NamespaceAndName& namespaceAndName,
             const std::string& jsonState,
-            const StateRefreshPolicy& refreshPolicy,
+            const avs::StateRefreshPolicy& refreshPolicy,
             const unsigned int stateRequestToken));
     MOCK_METHOD1(getContext, void (std::shared_ptr<ContextRequesterInterface> contextRequester));
 };

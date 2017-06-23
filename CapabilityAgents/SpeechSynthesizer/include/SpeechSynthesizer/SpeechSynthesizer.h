@@ -1,7 +1,7 @@
 /*
  * SpeechSynthesizer.h
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,19 +23,18 @@
 #include <string>
 #include <unordered_set>
 
-#include <AVSCommon/AVSDirective.h>
+#include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
-#include <AVSCommon/ExceptionEncounteredSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/SpeechSynthesizerObserver.h>
+#include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
-#include <AVSUtils/Threading/Executor.h>
-
-#include "SpeechSynthesizer/SpeechSynthesizerObserver.h"
+#include <AVSCommon/Utils/Threading/Executor.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -49,27 +48,32 @@ class SpeechSynthesizer :
         public avsCommon::avs::CapabilityAgent,
         public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface {
 public:
+    /// Alias to the @c SpeechSynthesizerObserver for brevity.
+    using SpeechSynthesizerObserver = avsCommon::sdkInterfaces::SpeechSynthesizerObserver;
+
     /**
-    * Create a new @c SpeechSynthesizer instance.
-    *
-    * @param mediaPlayer The instance of the @c MediaPlayerInterface used to play audio.
-    * @param messageSender The instance of the @c MessageSenderInterface used to send events to AVS.
-    * @param focusManager The instance of the @c FocusManagerInterface used to acquire focus of a channel.
-    * @param contextManager The instance of the @c ContextObserverInterface to use to set the context
-    * of the @c SpeechSynthesizer.
-    * @param attachmentManager The instance of the @c AttachmentManagerInterface to use to read the attachment.
-    * @param exceptionSender The instance of the @c ExceptionEncounteredSenderInterface to use to notify AVS
-    * when a directive cannot be processed.
-    *
-    * @return Returns a new @c SpeechSynthesizer, or @c nullptr if the operation failed.
-    */
+     * Create a new @c SpeechSynthesizer instance.
+     *
+     * @param mediaPlayer The instance of the @c MediaPlayerInterface used to play audio.
+     * @param messageSender The instance of the @c MessageSenderInterface used to send events to AVS.
+     * @param focusManager The instance of the @c FocusManagerInterface used to acquire focus of a channel.
+     * @param contextManager The instance of the @c ContextObserverInterface to use to set the context
+     * of the @c SpeechSynthesizer.
+     * @param attachmentManager The instance of the @c AttachmentManagerInterface to use to read the attachment.
+     * @param exceptionSender The instance of the @c ExceptionEncounteredSenderInterface to use to notify AVS
+     * when a directive cannot be processed.
+     *
+     * @return Returns a new @c SpeechSynthesizer, or @c nullptr if the operation failed.
+     */
     static std::unique_ptr<SpeechSynthesizer> create(
             std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
             std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
             std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
             std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
             std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
-            std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionSender);
+            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+
+    avsCommon::avs::DirectiveHandlerConfiguration getConfiguration() const override;
 
     /**
      * Destructor.
@@ -85,7 +89,7 @@ public:
 
     void onDeregistered() override;
 
-    void handleDirectiveImmediately(std::shared_ptr <avsCommon::AVSDirective> directive) override;
+    void handleDirectiveImmediately(std::shared_ptr <avsCommon::avs::AVSDirective> directive) override;
 
     void preHandleDirective(std::shared_ptr<DirectiveInfo> info) override;
 
@@ -93,7 +97,7 @@ public:
 
     void cancelDirective(std::shared_ptr<DirectiveInfo> info) override;
 
-    void onFocusChanged(avsCommon::sdkInterfaces::FocusState newFocus) override;
+    void onFocusChanged(avsCommon::avs::FocusState newFocus) override;
 
     void provideState(const unsigned int stateRequestToken) override;
 
@@ -120,7 +124,7 @@ private:
          * @param resultIn The @c DirectiveHandlerResultInterface instance with which to populate this @c DirectiveInfo.
          */
         SpeakDirectiveInfo(
-                std::shared_ptr<avsCommon::AVSDirective> directive,
+                std::shared_ptr<avsCommon::avs::AVSDirective> directive,
                 std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result);
 
         /**
@@ -139,24 +143,24 @@ private:
     };
 
     /**
-    * Constructor
-    *
-    * @param mediaPlayer The instance of the @c MediaPlayerInterface used to play audio.
-    * @param messageSender The instance of the @c MessageSenderInterface used to send events to AVS.
-    * @param focusManager The instance of the @c FocusManagerInterface used to acquire focus of a channel.
-    * @param contextManager The instance of the @c ContextObserverInterface to use to set the context
-    * of the SpeechSynthesizer.
-    * @param attachmentManager The instance of the @c AttachmentManagerInterface to use to read the attachment.
-    * @param exceptionSender The instance of the @c ExceptionEncounteredSenderInterface to use to notify AVS
-    * when a directive cannot be processed.
-    */
+     * Constructor
+     *
+     * @param mediaPlayer The instance of the @c MediaPlayerInterface used to play audio.
+     * @param messageSender The instance of the @c MessageSenderInterface used to send events to AVS.
+     * @param focusManager The instance of the @c FocusManagerInterface used to acquire focus of a channel.
+     * @param contextManager The instance of the @c ContextObserverInterface to use to set the context
+     * of the SpeechSynthesizer.
+     * @param attachmentManager The instance of the @c AttachmentManagerInterface to use to read the attachment.
+     * @param exceptionSender The instance of the @c ExceptionEncounteredSenderInterface to use to notify AVS
+     * when a directive cannot be processed.
+     */
     SpeechSynthesizer(
             std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
             std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
             std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
             std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
             std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
-            std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionSender);
+            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
 
     /**
      * Initializes the @c SpeechSynthesizer.
@@ -166,7 +170,7 @@ private:
     void init();
 
     std::shared_ptr<DirectiveInfo> createDirectiveInfo(
-            std::shared_ptr<avsCommon::AVSDirective> directive,
+            std::shared_ptr<avsCommon::avs::AVSDirective> directive,
             std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) override;
 
     /**
@@ -221,9 +225,9 @@ private:
     void executeCancel(std::shared_ptr<DirectiveInfo> info);
 
     /**
-     * Execute a change of state (on the @c m_executor thread). If the @c m_desiredState is @c PLAYING, playing the audio
-     * of the current directive is started. If the @c m_desiredState is @c FINISHED this method triggers termination
-     * of playing the audio.
+     * Execute a change of state (on the @c m_executor thread). If the @c m_desiredState is @c PLAYING, playing the 
+     * audio of the current directive is started. If the @c m_desiredState is @c FINISHED this method triggers 
+     * termination of playing the audio.
      */
     void executeStateChange();
 
@@ -234,7 +238,8 @@ private:
      * @param state The state of the @c SpeechSynthesizer.
      * @param stateRequestToken The token to pass through when setting the state.
      */
-    void executeProvideState(const SpeechSynthesizerState &state, const unsigned int &stateRequestToken);
+    void executeProvideState(
+            const SpeechSynthesizerObserver::SpeechSynthesizerState &state, const unsigned int &stateRequestToken);
 
     /**
      * Handle (on the @c m_executor thread) notification that speech playback has started.
@@ -287,7 +292,7 @@ private:
      *
      * @param newState The new state of the @c SpeechSynthesizer.
      */
-    void setCurrentStateLocked(SpeechSynthesizerState newState);
+    void setCurrentStateLocked(SpeechSynthesizerObserver::SpeechSynthesizerState newState);
 
     /**
      * Set the desired state the @c SpeechSynthesizer needs to transition to based on the @c newFocus.
@@ -295,7 +300,7 @@ private:
      *
      * @param newFocus The new focus of the @c SpeechSynthesizer.
      */
-    void setDesiredStateLocked(avsCommon::sdkInterfaces::FocusState newFocus);
+    void setDesiredStateLocked(avsCommon::avs::FocusState newFocus);
 
     /**
      * Reset @c m_currentInfo, cleaning up any @c SpeechSynthesizer resources and removing from CapabilityAgent's
@@ -326,7 +331,7 @@ private:
      */
     void sendExceptionEncounteredAndReportFailed(
             std::shared_ptr<SpeakDirectiveInfo> info,
-            avsCommon::ExceptionErrorType type,
+            avsCommon::avs::ExceptionErrorType type,
             const std::string& message);
 
     /**
@@ -372,7 +377,7 @@ private:
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> m_attachmentManager;
 
     /// An object used to send AVS Exception messages.
-    std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> m_exceptionSender;
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> m_exceptionSender;
 
     /**
      * @c shared_ptr to the ChannelObserver portion of this.  This is a separate @c shared_ptr with a disabled
@@ -387,22 +392,22 @@ private:
      * The current state of the @c SpeechSynthesizer. @c m_mutex must be acquired before reading or writing the
      * @c m_currentState.
      */
-    SpeechSynthesizerState m_currentState;
+    SpeechSynthesizerObserver::SpeechSynthesizerState m_currentState;
 
     /**
      * The state the @c SpeechSynthesizer must transition to. @c m_mutex must be acquired before reading or writing
      * the @c m_desiredState.
      */
-    SpeechSynthesizerState m_desiredState;
+    SpeechSynthesizerObserver::SpeechSynthesizerState m_desiredState;
 
     /// The current focus acquired by the @c SpeechSynthesizer.
-    avsCommon::sdkInterfaces::FocusState m_currentFocus;
+    avsCommon::avs::FocusState m_currentFocus;
 
     /// @c SpeakDirectiveInfo instance for the @c AVSDirective currently being handled.
     std::shared_ptr<SpeakDirectiveInfo> m_currentInfo;
 
     /// @c Executor which queues up operations from asynchronous API calls.
-    avsUtils::threading::Executor m_executor;
+    avsCommon::utils::threading::Executor m_executor;
 
     /// Mutex to serialize access to m_currentState, m_desiredState, and m_waitOnStateChange.
     std::mutex m_mutex;

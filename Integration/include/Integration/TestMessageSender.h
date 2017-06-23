@@ -39,7 +39,7 @@ public:
 
     TestMessageSender (std::shared_ptr<acl::MessageRouterInterface> messageRouter,
                    bool isEnabled,
-                   std::shared_ptr<acl::ConnectionStatusObserverInterface> connectionStatusObserver,
+                   std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> connectionStatusObserver,
                    std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> messageObserver);
 
     class SendParams {
@@ -101,7 +101,7 @@ private:
     std::shared_ptr<acl::AVSConnectionManager> m_connectionManager;
 };
 
-} // test
+} // namespace test
 } // namespace avsCommon
 } // namespace alexaClientSDK
 

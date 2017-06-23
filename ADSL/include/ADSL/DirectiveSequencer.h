@@ -24,7 +24,7 @@
 #include <mutex>
 #include <thread>
 
-#include <AVSCommon/ExceptionEncounteredSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 
 #include "ADSL/DirectiveProcessor.h"
@@ -46,17 +46,17 @@ public:
      * @return Returns a new DirectiveSequencer, or nullptr if the operation failed.
      */
     static std::unique_ptr<DirectiveSequencerInterface> create(
-            std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionSender);
+            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
 
     ~DirectiveSequencer() override;
 
-    bool addDirectiveHandlers(const avsCommon::avs::DirectiveHandlerConfiguration& configuration) override;
+    bool addDirectiveHandler(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler) override;
 
-    bool removeDirectiveHandlers(const avsCommon::avs::DirectiveHandlerConfiguration& configuration) override;
+    bool removeDirectiveHandler(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler) override;
 
     void setDialogRequestId(const std::string& dialogRequestId) override;
 
-    bool onDirective(std::shared_ptr<avsCommon::AVSDirective> directive) override;
+    bool onDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive) override;
 
     void shutdown() override;
 
@@ -67,7 +67,7 @@ private:
      * @param exceptionSender An instance of the @c ExceptionEncounteredSenderInterface used to send
      * ExceptionEncountered messages to AVS for directives that are not handled.
      */
-    DirectiveSequencer(std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionSender);
+    DirectiveSequencer(std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
 
     /**
      * Thread method for m_receivingThread.
@@ -87,7 +87,7 @@ private:
     std::mutex m_mutex;
 
     /// The @c ExceptionEncounteredSenderInterface instance to send exceptions to.
-    std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> m_exceptionSender;
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> m_exceptionSender;
 
     /// Whether or not the @c DirectiveReceiver is shutting down.
     bool m_isShuttingDown;
@@ -99,7 +99,7 @@ private:
     std::shared_ptr<DirectiveProcessor> m_directiveProcessor;
 
     /// Queue of @c AVSDirectives waiting to be received.
-    std::deque<std::shared_ptr<avsCommon::AVSDirective>> m_receivingQueue;
+    std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>> m_receivingQueue;
 
     /// Condition variable used to wake m_receivingLoop when waiting.
     std::condition_variable m_wakeReceivingLoop;

@@ -1,7 +1,7 @@
 /*
  * Channel.cpp
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 namespace alexaClientSDK {
 namespace afml {
 
+using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 
 Channel::Channel(const unsigned int priority) :
@@ -36,7 +37,7 @@ void Channel::setFocus(FocusState focus) {
     if (focus == m_focusState) {
         return;
     }
-    
+
     m_focusState = focus;
     if (m_observer) {
         m_observer->onFocusChanged(m_focusState);

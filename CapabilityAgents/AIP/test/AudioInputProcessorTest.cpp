@@ -1,4 +1,4 @@
-/**
+/*
  * AudioInputProcessorTest.cpp
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -31,10 +31,10 @@
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
 #include <AVSCommon/SDKInterfaces/MockFocusManager.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
-#include <AVSCommon/MockExceptionEncounteredSender.h>
+#include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
 #include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
-#include <AVSUtils/Memory/Memory.h>
+#include <AVSCommon/Utils/Memory/Memory.h>
 
 #include "AIP/AudioInputProcessor.h"
 #include "MockObserver.h"
@@ -45,6 +45,8 @@ namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace aip {
 namespace test {
+
+using avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface;
 
 /// The name of the @c FocusManager channel used by @c AudioInputProvider.
 static const std::string CHANNEL_NAME = "Dialog";
@@ -173,7 +175,7 @@ static const std::string END_INDEX_KEY = "endIndexInSamples";
 static const unsigned int STATE_REQUEST_TOKEN = 12345;
 
 /// Value used in the tests for an expect speech initiator.
-static const std::string EXPECT_SPEECH_INITIATOR = "expectSpeechInitiator";
+static const std::string EXPECT_SPEECH_INITIATOR = R"({opaque:"expectSpeechInitiator"})";
 
 /// JSON key for the timeout field of an expect speech directive.
 static const std::string EXPECT_SPEECH_TIMEOUT_KEY = "timeoutInMilliseconds";
@@ -241,8 +243,8 @@ public:
     RecognizeEvent(
         AudioProvider audioProvider,
         Initiator initiator,
-        avsCommon::sdkInterfaces::AudioInputStream::Index begin = AudioInputProcessor::INVALID_INDEX,
-        avsCommon::sdkInterfaces::AudioInputStream::Index keywordEnd = AudioInputProcessor::INVALID_INDEX,
+        avsCommon::avs::AudioInputStream::Index begin = AudioInputProcessor::INVALID_INDEX,
+        avsCommon::avs::AudioInputStream::Index keywordEnd = AudioInputProcessor::INVALID_INDEX,
         std::string keyword = "");
 
     /**
@@ -264,7 +266,7 @@ public:
     void verifyJsonState(
         const avsCommon::avs::NamespaceAndName&,
         const std::string& jsonState,
-        const avsCommon::sdkInterfaces::StateRefreshPolicy&,
+        const avsCommon::avs::StateRefreshPolicy&,
         const unsigned int);
 
     /**
@@ -291,10 +293,10 @@ private:
     Initiator m_initiator;
 
     /// The begin index to use for this recognize event.
-    avsCommon::sdkInterfaces::AudioInputStream::Index m_begin;
+    avsCommon::avs::AudioInputStream::Index m_begin;
 
     /// The keyword end index to use for this recognize event.
-    avsCommon::sdkInterfaces::AudioInputStream::Index m_keywordEnd;
+    avsCommon::avs::AudioInputStream::Index m_keywordEnd;
 
     /// The keyword string to use for this recognize event.
     std::string m_keyword;
@@ -306,8 +308,8 @@ private:
 RecognizeEvent::RecognizeEvent(
         AudioProvider audioProvider,
         Initiator initiator,
-        avsCommon::sdkInterfaces::AudioInputStream::Index begin,
-        avsCommon::sdkInterfaces::AudioInputStream::Index keywordEnd,
+        avsCommon::avs::AudioInputStream::Index begin,
+        avsCommon::avs::AudioInputStream::Index keywordEnd,
         std::string keyword) :
         m_audioProvider{audioProvider}, m_initiator{initiator}, m_begin{begin}, m_keywordEnd{keywordEnd},
         m_keyword{keyword} {
@@ -322,7 +324,7 @@ bool RecognizeEvent::send(std::shared_ptr<AudioInputProcessor> audioInputProcess
 void RecognizeEvent::verifyJsonState(
         const avsCommon::avs::NamespaceAndName&,
         const std::string& jsonState,
-        const avsCommon::sdkInterfaces::StateRefreshPolicy&,
+        const avsCommon::avs::StateRefreshPolicy&,
         const unsigned int) {
     rapidjson::Document document = parseJson(jsonState);
     EXPECT_EQ(getJsonString(document, STATE_WAKEWORD_KEY), m_keyword);
@@ -371,8 +373,8 @@ void RecognizeEvent::verifyMessage(std::shared_ptr<avsCommon::avs::MessageReques
         EXPECT_NE(wakeWordIndices, initiatorPayload->value.MemberEnd());
 
         if (wakeWordIndices != initiatorPayload->value.MemberEnd()) {
-            EXPECT_EQ(getJsonInt64(wakeWordIndices->value, START_INDEX_KEY), m_begin);
-            EXPECT_EQ(getJsonInt64(wakeWordIndices->value, END_INDEX_KEY), m_keywordEnd);
+            EXPECT_EQ(getJsonInt64(wakeWordIndices->value, START_INDEX_KEY), static_cast<int64_t>(m_begin));
+            EXPECT_EQ(getJsonInt64(wakeWordIndices->value, END_INDEX_KEY), static_cast<int64_t>(m_keywordEnd));
         }
     }
     m_reader = request->getAttachmentReader();
@@ -402,8 +404,8 @@ protected:
     bool testRecognizeFails(
         AudioProvider audioProvider,
         Initiator initiator,
-        avsCommon::sdkInterfaces::AudioInputStream::Index begin = AudioInputProcessor::INVALID_INDEX,
-        avsCommon::sdkInterfaces::AudioInputStream::Index keywordEnd = AudioInputProcessor::INVALID_INDEX,
+        avsCommon::avs::AudioInputStream::Index begin = AudioInputProcessor::INVALID_INDEX,
+        avsCommon::avs::AudioInputStream::Index keywordEnd = AudioInputProcessor::INVALID_INDEX,
         std::string keyword = "");
 
     /**
@@ -415,8 +417,8 @@ protected:
     bool testRecognizeSucceeds(
         AudioProvider audioProvider,
         Initiator initiator,
-        avsCommon::sdkInterfaces::AudioInputStream::Index begin = AudioInputProcessor::INVALID_INDEX,
-        avsCommon::sdkInterfaces::AudioInputStream::Index keywordEnd = AudioInputProcessor::INVALID_INDEX,
+        avsCommon::avs::AudioInputStream::Index begin = AudioInputProcessor::INVALID_INDEX,
+        avsCommon::avs::AudioInputStream::Index keywordEnd = AudioInputProcessor::INVALID_INDEX,
         std::string keyword = "");
 
     /**
@@ -484,7 +486,7 @@ protected:
      * @param withDialogRequestId A flag indicating whether to include a dialog request ID.
      * @return the constructed @c AVSDirective.
      */
-    static std::shared_ptr<avsCommon::AVSDirective> createAVSDirective(
+    static std::shared_ptr<avsCommon::avs::AVSDirective> createAVSDirective(
         const avsCommon::avs::NamespaceAndName& directive,
         bool withDialogRequestId);
 
@@ -512,7 +514,7 @@ protected:
      * @param state The focus state to test with.
      * @return @c true if the @c AudioInputProcessor responds as expected, else @c false.
      */
-    bool testFocusChange(avsCommon::sdkInterfaces::FocusState state);
+    bool testFocusChange(avsCommon::avs::FocusState state);
 
     /// The mock @c DirectiveSequencerInterface.
     std::shared_ptr<avsCommon::sdkInterfaces::test::MockDirectiveSequencer> m_mockDirectiveSequencer;
@@ -527,10 +529,10 @@ protected:
     std::shared_ptr<avsCommon::sdkInterfaces::test::MockFocusManager> m_mockFocusManager;
 
     /// The mock @c ExceptionEncounteredSenderInterface.
-    std::shared_ptr<avsCommon::test::MockExceptionEncounteredSender> m_mockExceptionEncounteredSender;
+    std::shared_ptr<avsCommon::sdkInterfaces::test::MockExceptionEncounteredSender> m_mockExceptionEncounteredSender;
 
     /// A @c AudioInputStream::Writer to write audio data to m_audioProvider.
-    std::unique_ptr<avsCommon::sdkInterfaces::AudioInputStream::Writer> m_writer;
+    std::unique_ptr<avsCommon::avs::AudioInputStream::Writer> m_writer;
 
     /// The @c AudioProvider to test with.
     std::unique_ptr<AudioProvider> m_audioProvider;
@@ -550,22 +552,22 @@ void AudioInputProcessorTest::SetUp() {
     m_mockMessageSender = std::make_shared<avsCommon::sdkInterfaces::test::MockMessageSender>();
     m_mockContextManager = std::make_shared<avsCommon::sdkInterfaces::test::MockContextManager>();
     m_mockFocusManager = std::make_shared<avsCommon::sdkInterfaces::test::MockFocusManager>();
-    m_mockExceptionEncounteredSender = std::make_shared<avsCommon::test::MockExceptionEncounteredSender>();
+    m_mockExceptionEncounteredSender = std::make_shared<avsCommon::sdkInterfaces::test::MockExceptionEncounteredSender>();
     size_t bufferSize =
-            avsCommon::sdkInterfaces::AudioInputStream::calculateBufferSize(SDS_WORDS, SDS_WORDSIZE, SDS_MAXREADERS);
-    auto buffer = std::make_shared<avsCommon::sdkInterfaces::AudioInputStream::Buffer>(bufferSize);
-    auto stream = avsCommon::sdkInterfaces::AudioInputStream::create(buffer, SDS_WORDSIZE, SDS_MAXREADERS);
+            avsCommon::avs::AudioInputStream::calculateBufferSize(SDS_WORDS, SDS_WORDSIZE, SDS_MAXREADERS);
+    auto buffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(bufferSize);
+    auto stream = avsCommon::avs::AudioInputStream::create(buffer, SDS_WORDSIZE, SDS_MAXREADERS);
     ASSERT_NE(stream, nullptr);
-    m_writer = stream->createWriter(avsCommon::sdkInterfaces::AudioInputStream::Writer::Policy::NONBLOCKABLE);
+    m_writer = stream->createWriter(avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
     ASSERT_NE(m_writer, nullptr);
-    ASSERT_EQ(m_writer->write(buffer->data(), SDS_WORDS), SDS_WORDS);
-    avsCommon::AudioFormat format = {
-            avsCommon::AudioFormat::Encoding::LPCM,
-            avsCommon::AudioFormat::Endianness::LITTLE,
+    ASSERT_EQ(m_writer->write(buffer->data(), SDS_WORDS), static_cast<ssize_t>(SDS_WORDS));
+    avsCommon::utils::AudioFormat format = {
+            avsCommon::utils::AudioFormat::Encoding::LPCM,
+            avsCommon::utils::AudioFormat::Endianness::LITTLE,
             SAMPLE_RATE_HZ,
             SAMPLE_SIZE_IN_BITS,
             NUM_CHANNELS };
-    m_audioProvider = avsUtils::memory::make_unique<AudioProvider>(
+    m_audioProvider = avsCommon::utils::memory::make_unique<AudioProvider>(
             std::move(stream),
             format,
             ASRProfile::NEAR_FIELD,
@@ -589,15 +591,16 @@ void AudioInputProcessorTest::SetUp() {
 
 void AudioInputProcessorTest::TearDown() {
     EXPECT_CALL(*m_mockFocusManager, releaseChannel(CHANNEL_NAME, _)).Times(AtLeast(0));
-    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::IDLE)).Times(AtLeast(0));
+    EXPECT_CALL(
+            *m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::IDLE)).Times(AtLeast(0));
     m_audioInputProcessor->resetState().wait();
 }
 
 bool AudioInputProcessorTest::testRecognizeFails(
         AudioProvider audioProvider,
         Initiator initiator,
-        avsCommon::sdkInterfaces::AudioInputStream::Index begin,
-        avsCommon::sdkInterfaces::AudioInputStream::Index keywordEnd,
+        avsCommon::avs::AudioInputStream::Index begin,
+        avsCommon::avs::AudioInputStream::Index keywordEnd,
         std::string keyword) {
     RecognizeEvent recognize(audioProvider, initiator, begin, keywordEnd, keyword);
     return !recognize.send(m_audioInputProcessor);
@@ -606,8 +609,8 @@ bool AudioInputProcessorTest::testRecognizeFails(
 bool AudioInputProcessorTest::testRecognizeSucceeds(
         AudioProvider audioProvider,
         Initiator initiator,
-        avsCommon::sdkInterfaces::AudioInputStream::Index begin,
-        avsCommon::sdkInterfaces::AudioInputStream::Index keywordEnd,
+        avsCommon::avs::AudioInputStream::Index begin,
+        avsCommon::avs::AudioInputStream::Index keywordEnd,
         std::string keyword) {
     std::mutex mutex;
     std::condition_variable conditionVariable;
@@ -630,7 +633,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
         EXPECT_CALL(*m_mockContextManager, setState(
                 RECOGNIZER_STATE,
                 _,
-                avsCommon::sdkInterfaces::StateRefreshPolicy::NEVER,
+                avsCommon::avs::StateRefreshPolicy::NEVER,
                 STATE_REQUEST_TOKEN))
             .WillOnce(DoAll(
                 Invoke(m_recognizeEvent.get(), &RecognizeEvent::verifyJsonState),
@@ -641,7 +644,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
         EXPECT_CALL(*m_mockContextManager, setState(
                 RECOGNIZER_STATE,
                 _,
-                avsCommon::sdkInterfaces::StateRefreshPolicy::NEVER,
+                avsCommon::avs::StateRefreshPolicy::NEVER,
                 0))
             .WillOnce(DoAll(
                 Invoke(m_recognizeEvent.get(), &RecognizeEvent::verifyJsonState),
@@ -652,10 +655,10 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     }
 
     if (!bargeIn) {
-        EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::RECOGNIZING));
+        EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
         EXPECT_CALL(*m_mockFocusManager, acquireChannel(CHANNEL_NAME, _, ACTIVITY_ID))
             .WillOnce(InvokeWithoutArgs([this] {
-                m_audioInputProcessor->onFocusChanged(avsCommon::sdkInterfaces::FocusState::FOREGROUND);
+                m_audioInputProcessor->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND);
                 return true;}));
     }
     EXPECT_CALL(*m_mockDirectiveSequencer, setDialogRequestId(_));
@@ -674,8 +677,8 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
 }
 
 bool AudioInputProcessorTest::testStopCaptureSucceeds() {
-    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::BUSY));
-    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::IDLE));
+    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::BUSY));
+    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::IDLE));
     EXPECT_CALL(*m_mockFocusManager, releaseChannel(CHANNEL_NAME, _));
 
     auto stopCaptureResult = m_audioInputProcessor->stopCapture();
@@ -691,8 +694,8 @@ bool AudioInputProcessorTest::testContextFailure(avsCommon::sdkInterfaces::Conte
 
     EXPECT_CALL(*m_mockContextManager, getContext(_))
         .WillOnce(InvokeWithoutArgs([this, error] { m_audioInputProcessor->onContextFailure(error); }));
-    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::RECOGNIZING));
-    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::IDLE))
+    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
+    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::IDLE))
         .WillOnce(InvokeWithoutArgs([&] {
                 std::lock_guard<std::mutex> lock(mutex);
                 done = true;
@@ -712,15 +715,15 @@ bool AudioInputProcessorTest::testStopCaptureDirectiveSucceeds(bool withDialogRe
 
     auto avsDirective = createAVSDirective(STOP_CAPTURE, withDialogRequestId);
     auto result =
-        avsUtils::memory::make_unique<avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult>();
+        avsCommon::utils::memory::make_unique<avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult>();
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> directiveHandler = m_audioInputProcessor;
 
-    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::BUSY));
+    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::BUSY));
     EXPECT_CALL(*m_mockFocusManager, releaseChannel(CHANNEL_NAME, _));
     if (withDialogRequestId) {
         EXPECT_CALL(*result, setCompleted());
     }
-    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::IDLE))
+    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::IDLE))
         .WillOnce(InvokeWithoutArgs([&] {
                 std::lock_guard<std::mutex> lock(mutex);
                 done = true;
@@ -743,7 +746,7 @@ bool AudioInputProcessorTest::testStopCaptureDirectiveFails(bool withDialogReque
     bool done = false;
 
     auto avsDirective = createAVSDirective(STOP_CAPTURE, withDialogRequestId);
-    auto result = avsUtils::memory::make_unique<avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult>();
+    auto result = avsCommon::utils::memory::make_unique<avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult>();
     EXPECT_CALL(*result, setFailed(_))
         .WillOnce(InvokeWithoutArgs([&] {
                 std::lock_guard<std::mutex> lock(mutex);
@@ -768,11 +771,11 @@ bool AudioInputProcessorTest::testExpectSpeechSucceeds(bool withDialogRequestId)
 
     auto avsDirective = createAVSDirective(EXPECT_SPEECH, withDialogRequestId);
     auto result =
-        avsUtils::memory::make_unique<avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult>();
+        avsCommon::utils::memory::make_unique<avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult>();
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> directiveHandler = m_audioInputProcessor;
 
-    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::EXPECTING_SPEECH));
-    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::RECOGNIZING));
+    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH));
+    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
     if (withDialogRequestId) {
         EXPECT_CALL(*result, setCompleted());
     }
@@ -800,23 +803,23 @@ bool AudioInputProcessorTest::testExpectSpeechWaits(bool withDialogRequestId, bo
 
     auto avsDirective = createAVSDirective(EXPECT_SPEECH, withDialogRequestId);
     auto result =
-        avsUtils::memory::make_unique<avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult>();
+        avsCommon::utils::memory::make_unique<avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult>();
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> directiveHandler = m_audioInputProcessor;
 
     if (withDialogRequestId) {
         EXPECT_CALL(*result, setCompleted());
     }
     if (verifyTimeout) {
-        EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::EXPECTING_SPEECH));
+        EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH));
         EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
             .WillOnce(Invoke(&verifyExpectSpeechTimedOut));
-        EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::IDLE))
+        EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::IDLE))
             .WillOnce(InvokeWithoutArgs([&] {
                     std::lock_guard<std::mutex> lock(mutex);
                     done = true;
                     conditionVariable.notify_one(); }));
     } else {
-        EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::EXPECTING_SPEECH))
+        EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH))
             .WillOnce(InvokeWithoutArgs([&] {
                     std::lock_guard<std::mutex> lock(mutex);
                     done = true;
@@ -840,7 +843,7 @@ bool AudioInputProcessorTest::testExpectSpeechFails(bool withDialogRequestId) {
     bool done = false;
 
     auto avsDirective = createAVSDirective(EXPECT_SPEECH, WITH_DIALOG_REQUEST_ID);
-    auto result = avsUtils::memory::make_unique<avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult>();
+    auto result = avsCommon::utils::memory::make_unique<avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult>();
     if (WITH_DIALOG_REQUEST_ID) {
         EXPECT_CALL(*result, setFailed(_))
             .WillOnce(InvokeWithoutArgs([&] {
@@ -861,10 +864,10 @@ bool AudioInputProcessorTest::testExpectSpeechFails(bool withDialogRequestId) {
     }
 }
 
-std::shared_ptr<avsCommon::AVSDirective> AudioInputProcessorTest::createAVSDirective(
+std::shared_ptr<avsCommon::avs::AVSDirective> AudioInputProcessorTest::createAVSDirective(
         const avsCommon::avs::NamespaceAndName& directive,
         bool WITH_DIALOG_REQUEST_ID) {
-    auto header = std::make_shared<avsCommon::AVSMessageHeader>(
+    auto header = std::make_shared<avsCommon::avs::AVSMessageHeader>(
             directive.nameSpace,
             directive.name,
             avsCommon::utils::uuidGeneration::generateUUID(),
@@ -913,7 +916,7 @@ std::shared_ptr<avsCommon::AVSDirective> AudioInputProcessorTest::createAVSDirec
     document.Accept(documentWriter);
 
     auto mockAttachmentManager = std::make_shared<avsCommon::avs::attachment::test::MockAttachmentManager>();
-    return avsCommon::AVSDirective::create(
+    return avsCommon::avs::AVSDirective::create(
             documentBuffer.GetString(),
             header,
             payloadBuffer.GetString(),
@@ -965,7 +968,7 @@ void AudioInputProcessorTest::makeDefaultAudioProviderNotAlwaysReadable() {
     m_audioInputProcessor->addObserver(m_mockObserver);
 }
 
-bool AudioInputProcessorTest::testFocusChange(avsCommon::sdkInterfaces::FocusState state) {
+bool AudioInputProcessorTest::testFocusChange(avsCommon::avs::FocusState state) {
     std::mutex mutex;
     std::condition_variable conditionVariable;
     bool done = false;
@@ -976,7 +979,7 @@ bool AudioInputProcessorTest::testFocusChange(avsCommon::sdkInterfaces::FocusSta
         return false;
     }
     EXPECT_CALL(*m_mockFocusManager, releaseChannel(CHANNEL_NAME, _));
-    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::IDLE))
+    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::IDLE))
         .WillOnce(InvokeWithoutArgs([&] {
                 std::lock_guard<std::mutex> lock(mutex);
                 done = true;
@@ -1047,14 +1050,13 @@ TEST_F(AudioInputProcessorTest, create) {
 TEST_F(AudioInputProcessorTest, getConfiguration) {
     auto configuration = m_audioInputProcessor->getConfiguration();
     EXPECT_EQ(configuration.size(), NUM_DIRECTIVES);
-    avsCommon::avs::HandlerAndPolicy handlerAndPolicy{m_audioInputProcessor, BLOCKING_POLICY};
     for (auto namespaceAndName: DIRECTIVES) {
         auto directive = configuration.find(namespaceAndName);
         EXPECT_NE(directive, configuration.end());
         if (configuration.end() == directive) {
             continue;
         }
-        EXPECT_EQ(directive->second, handlerAndPolicy);
+        EXPECT_EQ(directive->second, BLOCKING_POLICY);
     }
 }
 
@@ -1095,7 +1097,7 @@ TEST_F(AudioInputProcessorTest, recognizeNullStream) {
 /// This function verifies that @c AudioInputProcessor::recognize() fails when given invalid @c AudioFormats.
 TEST_F(AudioInputProcessorTest, recognizeInvalidAudioFormat) {
     AudioProvider audioProvider = *m_audioProvider;
-    audioProvider.format.endianness = avsCommon::AudioFormat::Endianness::BIG;
+    audioProvider.format.endianness = avsCommon::utils::AudioFormat::Endianness::BIG;
     EXPECT_FALSE(m_audioInputProcessor->recognize(audioProvider, Initiator::PRESS_AND_HOLD).get());
     
     audioProvider = *m_audioProvider;
@@ -1132,7 +1134,7 @@ TEST_F(AudioInputProcessorTest, recognizeWakewordWithoutKeyword) {
  * index.
  */
 TEST_F(AudioInputProcessorTest, recognizeWakewordWithBadBegin) {
-    avsCommon::sdkInterfaces::AudioInputStream::Index begin = SDS_WORDS + 1;
+    avsCommon::avs::AudioInputStream::Index begin = SDS_WORDS + 1;
     auto end = AudioInputProcessor::INVALID_INDEX;
     EXPECT_TRUE(testRecognizeFails(*m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT));
 }
@@ -1146,7 +1148,7 @@ TEST_F(AudioInputProcessorTest, recognizeWakewordWithKeyword) {
 
 /// This function verifies that @c AudioInputProcessor::recognize() works with @c Initiator::WAKEWORD valid begin.
 TEST_F(AudioInputProcessorTest, recognizeWakewordWithGoodBegin) {
-    avsCommon::sdkInterfaces::AudioInputStream::Index begin = 0;
+    avsCommon::avs::AudioInputStream::Index begin = 0;
     auto end = AudioInputProcessor::INVALID_INDEX;
     EXPECT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT));
 }
@@ -1156,8 +1158,8 @@ TEST_F(AudioInputProcessorTest, recognizeWakewordWithGoodBegin) {
  * end indices
  */
 TEST_F(AudioInputProcessorTest, recognizeWakewordWithGoodBeginAndEnd) {
-    avsCommon::sdkInterfaces::AudioInputStream::Index begin = PREROLL_WORDS;
-    avsCommon::sdkInterfaces::AudioInputStream::Index end = PREROLL_WORDS + WAKEWORD_WORDS;
+    avsCommon::avs::AudioInputStream::Index begin = PREROLL_WORDS;
+    avsCommon::avs::AudioInputStream::Index end = PREROLL_WORDS + WAKEWORD_WORDS;
     EXPECT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT));
 }
 
@@ -1189,10 +1191,37 @@ TEST_F(AudioInputProcessorTest, recognizeWhileExpectingSpeech) {
     ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::PRESS_AND_HOLD));
 }
 
-/// This function verifies that @c AudioInputProcessor::recognize() works in @c State::RECOGNIZING.
-TEST_F(AudioInputProcessorTest, recognizeBargeInWhileRecognizing) {
+/**
+ * This function verifies that @c AudioInputProcessor::recognize() works in @c State::RECOGNIZING when the previous
+ * recognize used the CLOSE_TALK profile.
+ */
+TEST_F(AudioInputProcessorTest, recognizeBargeInWhileRecognizingCloseTalk) {
+    auto audioProvider = *m_audioProvider;
+    audioProvider.profile = ASRProfile::CLOSE_TALK;
+    ASSERT_TRUE(testRecognizeSucceeds(audioProvider, Initiator::TAP));
     ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::TAP));
-    ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::TAP));
+}
+
+/**
+ * This function verifies that @c AudioInputProcessor::recognize() fails in @c State::RECOGNIZING when the previous
+ * recognize used the NEAR_FIELD profile.
+ */
+TEST_F(AudioInputProcessorTest, recognizeBargeInWhileRecognizingNearField) {
+    auto audioProvider = *m_audioProvider;
+    audioProvider.profile = ASRProfile::NEAR_FIELD;
+    ASSERT_TRUE(testRecognizeSucceeds(audioProvider, Initiator::TAP));
+    ASSERT_TRUE(testRecognizeFails(*m_audioProvider, Initiator::TAP));
+}
+
+/**
+ * This function verifies that @c AudioInputProcessor::recognize() fails in @c State::RECOGNIZING when the previous
+ * recognize used the FAR_FIELD profile.
+ */
+TEST_F(AudioInputProcessorTest, recognizeBargeInWhileRecognizingFarField) {
+    auto audioProvider = *m_audioProvider;
+    audioProvider.profile = ASRProfile::FAR_FIELD;
+    ASSERT_TRUE(testRecognizeSucceeds(audioProvider, Initiator::TAP));
+    ASSERT_TRUE(testRecognizeFails(*m_audioProvider, Initiator::TAP));
 }
 
 /**
@@ -1244,7 +1273,7 @@ TEST_F(AudioInputProcessorTest, stopCaptureWhenRecognizing) {
             m_recognizeEvent->getReader()->read(buf.data(), buf.size(), &readStatus),
             (SDS_WORDS - 1) * SDS_WORDSIZE);
     ASSERT_EQ(readStatus, avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK);
-    EXPECT_EQ(m_recognizeEvent->getReader()->read(buf.data(), buf.size(), &readStatus), 0);
+    EXPECT_EQ(m_recognizeEvent->getReader()->read(buf.data(), buf.size(), &readStatus), 0U);
     ASSERT_EQ(readStatus, avsCommon::avs::attachment::AttachmentReader::ReadStatus::CLOSED);
 }
 
@@ -1257,7 +1286,7 @@ TEST_F(AudioInputProcessorTest, resetStateWhenIdle) {
 TEST_F(AudioInputProcessorTest, resetStateWhenExpectingSpeech) {
     removeDefaultAudioProvider();
     ASSERT_TRUE(testExpectSpeechWaits(WITH_DIALOG_REQUEST_ID, !VERIFY_TIMEOUT));
-    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::IDLE));
+    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::IDLE));
     m_audioInputProcessor->resetState().get();
 }
 
@@ -1266,7 +1295,7 @@ TEST_F(AudioInputProcessorTest, resetStateWhenRecognizing) {
     ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::TAP, 0));
 
     EXPECT_CALL(*m_mockFocusManager, releaseChannel(CHANNEL_NAME, _));
-    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessor::State::IDLE));
+    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::IDLE));
     m_audioInputProcessor->resetState().get();
 }
 
@@ -1367,13 +1396,13 @@ TEST_F(AudioInputProcessorTest, expectSpeechNoDefaultReadablePrevious) {
 /// This function verifies that a focus change to @c FocusState::BACKGROUND causes the @c AudioInputProcessor to
 /// release the channel and go back to @c State::IDLE.
 TEST_F(AudioInputProcessorTest, focusChangedBackground) {
-    ASSERT_TRUE(testFocusChange(avsCommon::sdkInterfaces::FocusState::BACKGROUND));
+    ASSERT_TRUE(testFocusChange(avsCommon::avs::FocusState::BACKGROUND));
 }
 
 /// This function verifies that a focus change to @c FocusState::NONE causes the @c AudioInputProcessor to
 /// release the channel and go back to @c State::IDLE.
 TEST_F(AudioInputProcessorTest, focusChangedNone) {
-    ASSERT_TRUE(testFocusChange(avsCommon::sdkInterfaces::FocusState::NONE));
+    ASSERT_TRUE(testFocusChange(avsCommon::avs::FocusState::NONE));
 }
 
 } // namespace test

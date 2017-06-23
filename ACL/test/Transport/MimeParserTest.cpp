@@ -102,7 +102,7 @@ public:
             int bytesRemaining = data.length() - numberBytesWritten;
             int bytesToFeed = bytesRemaining < writeQuantum ? bytesRemaining : writeQuantum;
 
-            if(MimeParser::DataParsedStatus::OK ==
+            if (MimeParser::DataParsedStatus::OK ==
                     m_parser->feed(const_cast<char*>(&(data.c_str()[numberBytesWritten])), bytesToFeed)) {
                 numberBytesWritten += bytesToFeed;
             }

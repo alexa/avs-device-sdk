@@ -16,11 +16,10 @@
  */
 
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentReader.h"
+#include "AVSCommon/Utils/Logger/LogEntry.h"
+#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
 
-#include <AVSUtils/Logger/LogEntry.h>
-#include <AVSUtils/Logging/Logger.h>
-
-using namespace alexaClientSDK::avsUtils;
+using namespace alexaClientSDK::avsCommon::utils;
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -35,7 +34,7 @@ static const std::string TAG("InProcessAttachmentReader");
  *
  * @param The event string for this @c LogEntry.
  */
-#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::unique_ptr<InProcessAttachmentReader> InProcessAttachmentReader::create(
         Policy policy,

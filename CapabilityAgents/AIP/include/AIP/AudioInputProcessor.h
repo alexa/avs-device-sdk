@@ -1,4 +1,4 @@
-/**
+/*
  * AudioInputProcessor.h
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -21,12 +21,13 @@
 #include <memory>
 #include <unordered_set>
 
-#include <AVSCommon/ExceptionEncounteredSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/AudioInputProcessorObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/ChannelObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
-#include <AVSUtils/Threading/Executor.h>
+#include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
@@ -38,9 +39,6 @@
 namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace aip {
-
-/// Forward-declare @c aip::ObserverInterface class.
-class ObserverInterface;
 
 /**
  * This class implements a @c SpeechRecognizer capability agent.
@@ -60,34 +58,11 @@ class ObserverInterface;
 class AudioInputProcessor
     : public avsCommon::avs::CapabilityAgent, public std::enable_shared_from_this<AudioInputProcessor> {
 public:
-    /// The different states the @c AudioInputProcessor can be in
-    enum class State {
-        /// In this state, the @c AudioInputProcessor is not waiting for or transmitting speech.
-        IDLE,
-
-        /// In this state, the @c AudioInputProcessor is waiting for a call to recognize().
-        EXPECTING_SPEECH,
-
-        /// In this state, the @c AudioInputProcessor is actively streaming speech.
-        RECOGNIZING,
-
-        /**
-         * In this state, the @c AudioInputProcessor has finished streaming and is waiting for completion of an Event.
-         * Note that @c recognize() calls are not permitted while in the @c BUSY state.
-         */
-        BUSY
-    };
-
-    /**
-     * This function converts the provided @c State to a string.
-     *
-     * @param state The @c State to convert to a string.
-     * @return The string conversion of @c state.
-     */
-    static std::string stateToString(State state);
+    /// Alias to the @c AudioInputProcessorObserverInterface for brevity.
+    using ObserverInterface = avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface;
 
     /// A reserved @c Index value which is considered invalid.
-    static const auto INVALID_INDEX = std::numeric_limits<avsCommon::sdkInterfaces::AudioInputStream::Index>::max();
+    static const auto INVALID_INDEX = std::numeric_limits<avsCommon::avs::AudioInputStream::Index>::max();
 
     /**
      * Creates a new @c AudioInputProcessor instance.
@@ -107,22 +82,8 @@ public:
          std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
          std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
          std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
-         std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionSender,
+         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
          AudioProvider defaultAudioProvider = AudioProvider::null());
-
-    /**
-     * This function provides the configuration data for registering/deregistering this object with
-     * @c DirectiveSequencerInterface.  This configuration should be used to register an @c AudioInputProvider instance
-     * with a directive sequencer using @c DirectiveSequencerInterface::addDirectiveHandlers().  When an
-     * @c AudioInputProvider instance is no longer needed, it can be deregistered from the directivesequencer by
-     * passing this configuration data to @c DirectiveSequencerInterface::removeDirectiveHandlers().
-     *
-     * TODO: Review strategy for registering/deregistering @c CapabilityAgent implementations with
-     *     @c DirectiveSequencerInterface - ACSDK277.
-     *
-     * @return The configuration data.
-     */
-    avsCommon::avs::DirectiveHandlerConfiguration getConfiguration();
 
     /**
      * Adds an observer to be notified of AudioInputProcessor state changes.
@@ -180,8 +141,8 @@ public:
     std::future<bool> recognize(
         AudioProvider audioProvider,
         Initiator initiator,
-        avsCommon::sdkInterfaces::AudioInputStream::Index begin = INVALID_INDEX,
-        avsCommon::sdkInterfaces::AudioInputStream::Index keywordEnd = INVALID_INDEX,
+        avsCommon::avs::AudioInputStream::Index begin = INVALID_INDEX,
+        avsCommon::avs::AudioInputStream::Index keywordEnd = INVALID_INDEX,
         std::string keyword = "");
 
     /**
@@ -217,16 +178,17 @@ public:
 
     /// @name CapabilityAgent/DirectiveHandlerInterface Functions
     /// @{
-    void handleDirectiveImmediately(std::shared_ptr<avsCommon::AVSDirective> directive) override;
+    void handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive) override;
     void preHandleDirective(std::shared_ptr<DirectiveInfo> info) override;
     void handleDirective(std::shared_ptr<DirectiveInfo> info) override;
     void cancelDirective(std::shared_ptr<DirectiveInfo> info) override;
     void onDeregistered() override;
+    avsCommon::avs::DirectiveHandlerConfiguration getConfiguration() const override;
     /// @}
 
     /// @name ChannelObserverInterface Functions
     /// @{
-    void onFocusChanged(avsCommon::sdkInterfaces::FocusState newFocus) override;
+    void onFocusChanged(avsCommon::avs::FocusState newFocus) override;
     /// @}
 
 private:
@@ -251,7 +213,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
-        std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         AudioProvider defaultAudioProvider);
 
     /**
@@ -287,16 +249,59 @@ private:
     /// @{
 
     /**
-     * @copyDoc recognize()
+     * This function builds and sends a @c Recognize event.  This version of the function expects an enumerated
+     * @c Initiator, and will build up the initiator json content for the event, before calling the
+     * @c executeRecognize() function below which takes an initiator string.
      *
-     * @note @c initiatorType is passed as a string to @c executeRecognize() so to support the @c ExpectSpeech opaque
-     *     initiator string.
+     * @see @c recognize() for a detailed explanation of the Recognize Event.
+     * 
+     * @param audioProvider The @c AudioProvider to stream audio from.
+     * @param initiator The type of interface that initiated this recognize event.
+     * @param begin The @c Index in @c audioProvider.stream where audio streaming should begin.  This parameter is
+     *     optional, and defaults to @c INVALID_INDEX.  When this parameter is not specified, @c recognize() will
+     *     stream audio starting at the time of the @c recognize() call.  If the @c initiator is @c WAKEWORD, and this
+     *     and @c keywordEnd are specified, streaming will begin between 0 and 500ms prior to the @c Index specified by
+     *     this parameter to attempt false wakeword validation.
+     * @param keywordEnd The @c Index in @c audioProvider.stream where the wakeword ends.  This parameter is optional,
+     *     and defaults to @c INVALID_INDEX.  This parameter is ignored if initiator is not @c WAKEWORD.
+     * @param keyword The text of the keyword which was recognized.  This parameter is optional, and defaults to an
+     *     empty string.  This parameter is ignored if initiator is not @c WAKEWORD.  The only value currently
+     *     accepted by AVS for keyword is "ALEXA".  See
+     *     https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/context#recognizerstate
+     * @return @c true if the Recognize Event was started successfully, else @c false.
      */
     bool executeRecognize(
         AudioProvider provider,
-        const std::string& initiatorType,
-        avsCommon::sdkInterfaces::AudioInputStream::Index begin = INVALID_INDEX,
-        avsCommon::sdkInterfaces::AudioInputStream::Index keywordEnd = INVALID_INDEX,
+        Initiator initiator,
+        avsCommon::avs::AudioInputStream::Index begin = INVALID_INDEX,
+        avsCommon::avs::AudioInputStream::Index keywordEnd = INVALID_INDEX,
+        const std::string& keyword = "");
+
+    /**
+     * This function builds and sends a @c Recognize event.  This version of the function expects a pre-built string
+     * containing the iniator json content for the event.  This initiator string is either built by the
+     * @c executeRecognize() function above which takes an enumerated @c Initiator, or is an opaque object provided by
+     * an @c ExpectSpeech directive.
+     *
+     * @see @c recognize() for a detailed explanation of the Recognize Event.
+     * 
+     * @param audioProvider The @c AudioProvider to stream audio from.
+     * @param initiatorJson A JSON string describing the type of interface that initiated this recognize event.
+     * @param begin The @c Index in @c audioProvider.stream where audio streaming should begin.  This parameter is
+     *     optional, and defaults to @c INVALID_INDEX.  When this parameter is not specified, @c recognize() will
+     *     stream audio starting at the time of the @c recognize() call.  If the @c initiator is @c WAKEWORD, and this
+     *     and @c keywordEnd are specified, streaming will begin between 0 and 500ms prior to the @c Index specified by
+     *     this parameter to attempt false wakeword validation.
+     * @param keyword The text of the keyword which was recognized.  This parameter is optional, and defaults to an
+     *     empty string.  This parameter is ignored if initiator is not @c WAKEWORD.  The only value currently
+     *     accepted by AVS for keyword is "ALEXA".  See
+     *     https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/context#recognizerstate
+     * @return @c true if the Recognize Event was started successfully, else @c false.
+     */
+    bool executeRecognize(
+        AudioProvider provider,
+        const std::string& initiatorJson,
+        avsCommon::avs::AudioInputStream::Index begin = INVALID_INDEX,
         const std::string& keyword = "");
 
     /**
@@ -328,7 +333,7 @@ private:
      *
      * @param newFocus The focus state to change to.
      */
-    void executeOnFocusChanged(avsCommon::sdkInterfaces::FocusState newFocus);
+    void executeOnFocusChanged(avsCommon::avs::FocusState newFocus);
 
     /**
      * This function asks the @c AudioInputProcessor to stop streaming audio and end an ongoing Recognize Event, which
@@ -393,7 +398,7 @@ private:
      *
      * @param state The new state to change to.
      */
-    void setState(State state);
+    void setState(ObserverInterface::State state);
 
     /**
      * Remove a directive from the map of message IDs to DirectiveInfo instances.
@@ -465,10 +470,10 @@ private:
     std::shared_ptr<avsCommon::avs::MessageRequest> m_request;
 
     /// The current state of the @c AudioInputProcessor.
-    State m_state;
+    ObserverInterface::State m_state;
 
     /// The current focus state of the @c AudioInputProcessor on the dialog channel.
-    avsCommon::sdkInterfaces::FocusState m_focusState;
+    avsCommon::avs::FocusState m_focusState;
 
     /**
      * The most recent wakeword used.  This variable defaults to "ALEXA", and is updated whenever a wakeword-enabled
@@ -484,7 +489,7 @@ private:
      * @note This declaration needs to come *after* the Executor Thread Variables above so that the thread shuts down
      *     before the Executor Thread Variables are destroyed.
      */
-    avsUtils::threading::Executor m_executor;
+    avsCommon::utils::threading::Executor m_executor;
 };
 
 } // namespace aip

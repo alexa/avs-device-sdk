@@ -18,7 +18,7 @@
 /// @file MessageInterpreterTest.cpp
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
-#include <AVSCommon/MockExceptionEncounteredSender.h>
+#include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
 #include <ADSL/DirectiveSequencer.h>
 #include <ADSL/MessageInterpreter.h>
 #include <gmock/gmock.h>
@@ -34,8 +34,9 @@ namespace test {
 using namespace ::testing;
 using namespace alexaClientSDK::acl;
 using namespace alexaClientSDK::avsCommon;
+using namespace alexaClientSDK::avsCommon::avs;
 using namespace alexaClientSDK::avsCommon::avs::attachment;
-using namespace alexaClientSDK::avsCommon::test;
+using namespace alexaClientSDK::avsCommon::sdkInterfaces::test;
 
 /// The namespace in AVS message.
 static const std::string NAMESPACE_TEST = "SpeechSynthesizer";

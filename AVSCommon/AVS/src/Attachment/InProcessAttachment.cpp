@@ -16,15 +16,14 @@
  */
 
 #include "AVSCommon/AVS/Attachment/InProcessAttachment.h"
-
-#include <AVSUtils/Memory/Memory.h>
+#include "AVSCommon/Utils/Memory/Memory.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace avs {
 namespace attachment {
 
-using namespace alexaClientSDK::avsUtils::memory;
+using namespace alexaClientSDK::avsCommon::utils::memory;
 
 InProcessAttachment::InProcessAttachment(const std::string & id, std::unique_ptr<SDSType> sds) :
         Attachment(id), m_sds{std::move(sds)} {

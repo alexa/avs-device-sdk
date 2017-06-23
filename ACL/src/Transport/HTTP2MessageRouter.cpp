@@ -1,4 +1,4 @@
-/**
+/*
  * HTTP2MessageRouter.cpp
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates.
@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#include <AVSUtils/Logging/Logger.h>
-#include <AVSUtils/Threading/Executor.h>
+#include <AVSCommon/Utils/Logger/DeprecatedLogger.h>
+#include <AVSCommon/Utils/Threading/Executor.h>
 
 #include "ACL/Transport/HTTP2MessageRouter.h"
 #include "ACL/Transport/HTTP2Transport.h"
@@ -24,16 +24,12 @@
 namespace alexaClientSDK {
 namespace acl {
 
-using namespace alexaClientSDK::avsUtils;
+using namespace alexaClientSDK::avsCommon::utils;
 
 HTTP2MessageRouter::HTTP2MessageRouter(std::shared_ptr<AuthDelegateInterface> authDelegate,
                                        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
                                        const std::string& avsEndpoint)
-    : MessageRouter(authDelegate,
-        attachmentManager,
-        avsEndpoint,
-        std::make_shared<threading::Executor>(),
-        std::make_shared<threading::Executor>()) {
+    : MessageRouter(authDelegate, attachmentManager, avsEndpoint, std::make_shared<threading::Executor>()) {
 }
 
 HTTP2MessageRouter::~HTTP2MessageRouter() {

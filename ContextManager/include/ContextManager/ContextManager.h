@@ -34,7 +34,7 @@
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextRequesterInterface.h>
 #include <AVSCommon/SDKInterfaces/StateProviderInterface.h>
-#include <AVSCommon/SDKInterfaces/StateRefreshPolicy.h>
+#include <AVSCommon/AVS/StateRefreshPolicy.h>
 #include <AVSCommon/AVS/NamespaceAndName.h>
 
 namespace alexaClientSDK {
@@ -60,7 +60,7 @@ public:
             std::shared_ptr<avsCommon::sdkInterfaces::StateProviderInterface> stateProvider) override;
 
     avsCommon::sdkInterfaces::SetStateResult setState(const avsCommon::avs::NamespaceAndName& stateProviderName,
-            const std::string& jsonState, const avsCommon::sdkInterfaces::StateRefreshPolicy& refreshPolicy,
+            const std::string& jsonState, const avsCommon::avs::StateRefreshPolicy& refreshPolicy,
             const unsigned int stateRequestToken = 0) override;
 
     void getContext(std::shared_ptr<avsCommon::sdkInterfaces::ContextRequesterInterface> contextRequester) override;
@@ -77,7 +77,7 @@ private:
         std::string jsonState;
 
         /// RefreshPolicy for the state of a @c StateProviderInterface.
-        avsCommon::sdkInterfaces::StateRefreshPolicy refreshPolicy;
+        avsCommon::avs::StateRefreshPolicy refreshPolicy;
 
         /**
          * Constructor.
@@ -88,8 +88,8 @@ private:
          */
         StateInfo(std::shared_ptr<avsCommon::sdkInterfaces::StateProviderInterface> initStateProvider = nullptr,
                 std::string initJsonState = "",
-                avsCommon::sdkInterfaces::StateRefreshPolicy initRefreshPolicy =
-                        avsCommon::sdkInterfaces::StateRefreshPolicy::ALWAYS);
+                avsCommon::avs::StateRefreshPolicy initRefreshPolicy =
+                        avsCommon::avs::StateRefreshPolicy::ALWAYS);
 };
 
     /// Constructor.
@@ -109,7 +109,7 @@ private:
      * @param refreshPolicy The refresh policy for the state.
      */
     avsCommon::sdkInterfaces::SetStateResult updateStateLocked(const avsCommon::avs::NamespaceAndName& stateProviderName,
-            const std::string& jsonState, const avsCommon::sdkInterfaces::StateRefreshPolicy& refreshPolicy);
+            const std::string& jsonState, const avsCommon::avs::StateRefreshPolicy& refreshPolicy);
 
     /**
      * Requests the @c StateProviderInterfaces for state based on the refreshPolicy.

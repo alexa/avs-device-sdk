@@ -1,4 +1,4 @@
-/**
+/*
  * UUIDGeneration.cpp
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -22,6 +22,7 @@
 #include <mutex>
 #include <climits>
 #include <algorithm>
+#include <functional>
 
 #include "AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h"
 

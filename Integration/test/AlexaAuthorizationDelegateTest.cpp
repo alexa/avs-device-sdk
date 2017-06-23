@@ -23,11 +23,11 @@
 #include <gtest/gtest.h>
 
 #include <AuthDelegate/AuthDelegate.h>
-#include <AVSUtils/Initialization/AlexaClientSDKInit.h>
+#include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 
 #include "Integration/AuthObserver.h"
 
-using namespace alexaClientSDK::avsUtils::initialization;
+using namespace alexaClientSDK::avsCommon::avs::initialization;
 using namespace alexaClientSDK::authDelegate;
 using namespace ::testing;
 

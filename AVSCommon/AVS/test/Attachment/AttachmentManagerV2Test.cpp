@@ -183,6 +183,40 @@ TEST_F(AttachmentManagerTest, testAttachmentManagerCreateReader) {
 }
 
 /**
+ * Test that a reader created from an attachment that doesn't have a writer will wait for the writer.
+ */
+TEST_F(AttachmentManagerTest, testAttachmentManagerReadAttachmentWithoutWriter) {
+    auto testPattern = createTestPattern(TEST_SDS_BUFFER_SIZE_IN_BYTES);
+    std::vector<uint8_t> result(testPattern.size());
+
+    // Create the reader.
+    auto reader = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, AttachmentReader::Policy::NON_BLOCKING);
+    ASSERT_NE(reader, nullptr);
+
+    // Verify that read indicates an empty (but not closed) buffer.
+    auto readStatus = InProcessAttachmentReader::ReadStatus::OK;
+    reader->read(result.data(), result.size(), &readStatus);
+    ASSERT_EQ(readStatus, InProcessAttachmentReader::ReadStatus::OK_WOULDBLOCK);
+
+    // Add the writer and verify read still indicates an empty (but not closed) buffer.
+    auto writer = m_manager.createWriter(TEST_ATTACHMENT_ID_STRING_ONE);
+    ASSERT_NE(writer, nullptr);
+    readStatus = InProcessAttachmentReader::ReadStatus::OK;
+    reader->read(result.data(), result.size(), &readStatus);
+    ASSERT_EQ(readStatus, InProcessAttachmentReader::ReadStatus::OK_WOULDBLOCK);
+
+    // Write some data and verify read succeeds.
+    auto writeStatus = InProcessAttachmentWriter::WriteStatus::OK;
+    auto numWritten = writer->write(testPattern.data(), testPattern.size(), &writeStatus);
+    ASSERT_EQ(numWritten, testPattern.size());
+    ASSERT_EQ(writeStatus, InProcessAttachmentWriter::WriteStatus::OK);
+    readStatus = InProcessAttachmentReader::ReadStatus::OK;
+    auto numRead = reader->read(result.data(), result.size(), &readStatus);
+    ASSERT_EQ(readStatus, InProcessAttachmentReader::ReadStatus::OK);
+    ASSERT_EQ(numRead, result.size());
+}
+
+/**
  * Test that the AttachmentManager's cleanup logic works as expected, and that it does not impact readers and
  * writers that are returned before the cleanup.
  */

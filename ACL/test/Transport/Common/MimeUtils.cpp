@@ -1,20 +1,20 @@
 /*
-* MimeUtils.cpp
-*
-* Copyright 2017 Amazon.com, Inc. or its affiliates.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * MimeUtils.cpp
+ *
+ * Copyright 2017 Amazon.com, Inc. or its affiliates.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 /// @file MimeUtils.cpp
 
@@ -45,7 +45,7 @@ static const std::string MIME_CONTENT_ID_PREFIX_STRING = "Content-ID: ";
 static const std::chrono::seconds WAIT_FOR_DIRECTIVE_TIMEOUT_IN_SECONDS = std::chrono::seconds(10);
 
 TestMimeJsonPart::TestMimeJsonPart(int dataSize, std::shared_ptr<TestableMessageObserver> messageObserver) :
-            m_message{createRandomAlphabetString(dataSize)}, m_messageObserver{messageObserver} {
+        m_message{createRandomAlphabetString(dataSize)}, m_messageObserver{messageObserver} {
 }
 
 std::string TestMimeJsonPart::toMimeString(const std::string & boundaryString) {
@@ -59,9 +59,9 @@ bool TestMimeJsonPart::validateMimeParsing() {
 }
 
 TestMimeAttachmentPart::TestMimeAttachmentPart(const std::string & contextId, const std::string contentId,
-                           int dataSize, std::shared_ptr<AttachmentManager> attachmentManager) :
-            m_contextId{contextId}, m_contentId{contentId},
-            m_attachmentData{createRandomAlphabetString(dataSize)}, m_attachmentManager{attachmentManager} {
+        int dataSize, std::shared_ptr<AttachmentManager> attachmentManager) :
+                m_contextId{contextId}, m_contentId{contentId},
+                m_attachmentData{createRandomAlphabetString(dataSize)}, m_attachmentManager{attachmentManager} {
 }
 
 std::string TestMimeAttachmentPart::toMimeString(const std::string & boundaryString) {
@@ -78,15 +78,15 @@ bool TestMimeAttachmentPart::validateMimeParsing() {
     std::vector<uint8_t> result(m_attachmentData.size());
     auto readStatus = InProcessAttachmentReader::ReadStatus::OK;
     auto numRead = reader->read(result.data(), result.size(), &readStatus);
-    if(numRead != m_attachmentData.length()) {
+    if (numRead != m_attachmentData.length()) {
         return false;
     }
-    if(readStatus != InProcessAttachmentReader::ReadStatus::OK) {
+    if (readStatus != InProcessAttachmentReader::ReadStatus::OK) {
         return false;
     }
 
     for (size_t i = 0; i < m_attachmentData.size(); ++i) {
-        if(result[i] != m_attachmentData[i]) {
+        if (result[i] != m_attachmentData[i]) {
             return false;
         }
     }
@@ -98,7 +98,7 @@ std::string constructTestMimeString(
         const std::vector<std::shared_ptr<TestMimePart>> & mimeParts, const std::string & boundaryString) {
     std::string mimeString;
 
-    for(auto mimePart : mimeParts) {
+    for (auto mimePart : mimeParts) {
         mimeString += mimePart->toMimeString(boundaryString);
     }
 

@@ -9,7 +9,7 @@
 
 #include <AVSCommon/SDKInterfaces/KeyWordObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/KeyWordDetectorStateObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/AudioInputStream.h>
+#include <AVSCommon/AVS/AudioInputStream.h>
 #include <AVSCommon/Utils/SDS/SharedDataStream.h>
 
 #include "KittAi/KittAiKeyWordDetector.h"
@@ -19,7 +19,9 @@ namespace kwd {
 namespace test {
 
 using namespace avsCommon;
+using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils;
 
 /// The path to the inputs folder that should be passed in via command line argument.
 std::string inputsDirPath;
@@ -61,10 +63,10 @@ static const int NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE = 2;
 std::vector<AudioInputStream::Index> END_INDICES_OF_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE = {20960, 51312};
 
 /// The compatible encoding for Kitt.ai.
-static const avsCommon::AudioFormat::Encoding COMPATIBLE_ENCODING = avsCommon::AudioFormat::Encoding::LPCM;
+static const avsCommon::utils::AudioFormat::Encoding COMPATIBLE_ENCODING = avsCommon::utils::AudioFormat::Encoding::LPCM;
 
 /// The compatible endianness for Kitt.ai.
-static const avsCommon::AudioFormat::Endianness COMPATIBLE_ENDIANNESS = avsCommon::AudioFormat::Endianness::LITTLE;
+static const avsCommon::utils::AudioFormat::Endianness COMPATIBLE_ENDIANNESS = avsCommon::utils::AudioFormat::Endianness::LITTLE;
 
 /// The compatible sample rate for Kitt.ai.
 static const unsigned int COMPATIBLE_SAMPLE_RATE = 16000;
@@ -302,8 +304,8 @@ TEST_F(KittAiKeyWordTest, invalidStream) {
 
 /// Tests that we don't get back a valid detector if an invalid endianness is passed in.
 TEST_F(KittAiKeyWordTest, incompatibleEndianness) {
-    auto rawBuffer = std::make_shared<avsCommon::sdkInterfaces::AudioInputStream::Buffer>(500000);
-    auto uniqueSds = avsCommon::sdkInterfaces::AudioInputStream::create(rawBuffer, 2, 1);
+    auto rawBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
+    auto uniqueSds = avsCommon::avs::AudioInputStream::create(rawBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> sds = std::move(uniqueSds);
 
     compatibleAudioFormat.endianness = AudioFormat::Endianness::BIG;
@@ -322,12 +324,12 @@ TEST_F(KittAiKeyWordTest, incompatibleEndianness) {
 
 /// Tests that we get back the expected number of keywords for the four_alexa.wav file for one keyword observer.
 TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForOneObserver) {
-    auto fourAlexasBuffer = std::make_shared<avsCommon::sdkInterfaces::AudioInputStream::Buffer>(500000);
-    auto fourAlexasSds = avsCommon::sdkInterfaces::AudioInputStream::create(fourAlexasBuffer, 2, 1);
+    auto fourAlexasBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
+    auto fourAlexasSds = avsCommon::avs::AudioInputStream::create(fourAlexasBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> fourAlexasAudioBuffer = std::move(fourAlexasSds);
 
     std::unique_ptr<AudioInputStream::Writer> fourAlexasAudioBufferWriter = fourAlexasAudioBuffer->createWriter(
-            avsCommon::sdkInterfaces::AudioInputStream::Writer::Policy::NONBLOCKABLE);
+            avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
 
     std::string audioFilePath = inputsDirPath + FOUR_ALEXAS_AUDIO_FILE;
     bool error;
@@ -357,12 +359,12 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForO
 
 /// Tests that we get back the expected number of keywords for the four_alexa.wav file for two keyword observers.
 TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForTwoObservers) {
-    auto fourAlexasBuffer = std::make_shared<avsCommon::sdkInterfaces::AudioInputStream::Buffer>(500000);
-    auto fourAlexasSds = avsCommon::sdkInterfaces::AudioInputStream::create(fourAlexasBuffer, 2, 1);
+    auto fourAlexasBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
+    auto fourAlexasSds = avsCommon::avs::AudioInputStream::create(fourAlexasBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> fourAlexasAudioBuffer = std::move(fourAlexasSds);
 
     std::unique_ptr<AudioInputStream::Writer> fourAlexasAudioBufferWriter = fourAlexasAudioBuffer->createWriter(
-            avsCommon::sdkInterfaces::AudioInputStream::Writer::Policy::NONBLOCKABLE);
+            avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
 
     std::string audioFilePath = inputsDirPath + FOUR_ALEXAS_AUDIO_FILE;
     bool error;
@@ -403,13 +405,13 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForT
  * observer.
  */
 TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileForOneObserver) {
-    auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::sdkInterfaces::AudioInputStream::Buffer>(500000);
-    auto alexaStopAlexaJokeSds = avsCommon::sdkInterfaces::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
+    auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
+    auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);
 
     std::unique_ptr<AudioInputStream::Writer> alexaStopAlexaJokeAudioBufferWriter = 
             alexaStopAlexaJokeAudioBuffer->createWriter(
-                    avsCommon::sdkInterfaces::AudioInputStream::Writer::Policy::NONBLOCKABLE);
+                    avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
 
     std::string audioFilePath = inputsDirPath + ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE;
     bool error;
@@ -442,13 +444,13 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudio
  * observer.
  */
 TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileForTwoObservers) {
-    auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::sdkInterfaces::AudioInputStream::Buffer>(500000);
-    auto alexaStopAlexaJokeSds = avsCommon::sdkInterfaces::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
+    auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
+    auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);
 
     std::unique_ptr<AudioInputStream::Writer> alexaStopAlexaJokeAudioBufferWriter = 
         alexaStopAlexaJokeAudioBuffer->createWriter(
-            avsCommon::sdkInterfaces::AudioInputStream::Writer::Policy::NONBLOCKABLE);
+            avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
 
     std::string audioFilePath = inputsDirPath + ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE;
     bool error;
@@ -486,13 +488,13 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudio
 
 /// Tests that the detector state changes to ACTIVE when the detector is initialized properly.
 TEST_F(KittAiKeyWordTest, getActiveState) {
-    auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::sdkInterfaces::AudioInputStream::Buffer>(500000);
-    auto alexaStopAlexaJokeSds = avsCommon::sdkInterfaces::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
+    auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
+    auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);
 
     std::unique_ptr<AudioInputStream::Writer> alexaStopAlexaJokeAudioBufferWriter = 
             alexaStopAlexaJokeAudioBuffer->createWriter(
-                    avsCommon::sdkInterfaces::AudioInputStream::Writer::Policy::NONBLOCKABLE);
+                    avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
 
     std::string audioFilePath = inputsDirPath + ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE;
     bool error;
@@ -523,13 +525,13 @@ TEST_F(KittAiKeyWordTest, getActiveState) {
  * of the SDS passed in and all keyword detections have occurred.
  */
 TEST_F(KittAiKeyWordTest, getStreamClosedState) {
-    auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::sdkInterfaces::AudioInputStream::Buffer>(500000);
-    auto alexaStopAlexaJokeSds = avsCommon::sdkInterfaces::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
+    auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
+    auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);
 
     std::unique_ptr<AudioInputStream::Writer> alexaStopAlexaJokeAudioBufferWriter = 
             alexaStopAlexaJokeAudioBuffer->createWriter(
-                    avsCommon::sdkInterfaces::AudioInputStream::Writer::Policy::NONBLOCKABLE);
+                    avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
 
     std::string audioFilePath = inputsDirPath + ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE;
     bool error;

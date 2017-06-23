@@ -19,7 +19,7 @@
 #define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_TRANSPORT_OBSERVER_INTERFACE_H_
 
 #include <memory>
-#include "ACL/ConnectionStatusObserverInterface.h"
+#include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace acl {
@@ -43,7 +43,7 @@ class TransportObserverInterface {
      * Called when we disconnect from AVS.
      * @param reason The reason that we disconnected.
      */
-    virtual void onDisconnected(ConnectionStatusObserverInterface::ChangedReason reason) = 0;
+    virtual void onDisconnected(avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) = 0;
 
     /**
      * Called when the server asks the client to reconnect

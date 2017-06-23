@@ -1,5 +1,5 @@
-/**
- * MockMessageRouterObserver.g
+/*
+ * MockMessageRouterObserver.h
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
@@ -44,11 +44,11 @@ public:
         return notifiedOfReceive;
     }
 
-    ConnectionStatusObserverInterface::Status getLatestConnectionStatus() {
+    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status getLatestConnectionStatus() {
         return m_status;
     }
 
-    ConnectionStatusObserverInterface::ChangedReason getLatestConnectionChangedReason() {
+    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason getLatestConnectionChangedReason() {
         return m_reason;
     }
 
@@ -57,8 +57,9 @@ public:
     }
 
 private:
-    virtual void onConnectionStatusChanged(const ConnectionStatusObserverInterface::Status status,
-                                           const ConnectionStatusObserverInterface::ChangedReason reason) override {
+    virtual void onConnectionStatusChanged(
+            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
+            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override {
         notifiedOfStatusChanged = true;
         m_status = status;
         m_reason = reason;
@@ -69,8 +70,8 @@ private:
         m_message = message;
     }
 
-    ConnectionStatusObserverInterface::Status m_status;
-    ConnectionStatusObserverInterface::ChangedReason m_reason;
+    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status m_status;
+    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason m_reason;
     std::string m_attachmentContextId;
     std::string m_message;
     bool notifiedOfStatusChanged;

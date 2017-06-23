@@ -22,25 +22,25 @@
 #include <condition_variable>
 #include <mutex>
 
-#include "ACL/AuthObserverInterface.h"
+#include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace integration {
 
-class AuthObserver : public alexaClientSDK::acl::AuthObserverInterface {
+class AuthObserver : public avsCommon::sdkInterfaces::AuthObserverInterface {
 public:
     AuthObserver();
     void onAuthStateChange(
-        const alexaClientSDK::acl::AuthObserverInterface::State,
-        const alexaClientSDK::acl::AuthObserverInterface::Error =
-            alexaClientSDK::acl::AuthObserverInterface::Error::NO_ERROR) override;
+        const avsCommon::sdkInterfaces::AuthObserverInterface::State,
+        const avsCommon::sdkInterfaces::AuthObserverInterface::Error =
+            avsCommon::sdkInterfaces::AuthObserverInterface::Error::NO_ERROR) override;
     AuthObserverInterface::State getAuthState() const;
     bool waitFor(
-            const alexaClientSDK::acl::AuthObserverInterface::State,
+            const avsCommon::sdkInterfaces::AuthObserverInterface::State,
             const std::chrono::seconds = std::chrono::seconds(20));
 private:
-    alexaClientSDK::acl::AuthObserverInterface::State m_authState;
-    alexaClientSDK::acl::AuthObserverInterface::Error m_authError;
+    avsCommon::sdkInterfaces::AuthObserverInterface::State m_authState;
+    avsCommon::sdkInterfaces::AuthObserverInterface::Error m_authError;
     std::mutex m_mutex;
     std::condition_variable m_wakeTrigger;
 };

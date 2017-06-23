@@ -67,6 +67,25 @@ public:
 
 };
 
+/**
+ * Write a @c ContextRequestError value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param error The error value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const ContextRequestError& error) {
+    switch (error) {
+        case ContextRequestError::STATE_PROVIDER_TIMEDOUT:
+            stream << "STATE_PROVIDER_TIMEDOUT";
+            break;
+        case ContextRequestError::BUILD_CONTEXT_ERROR:
+            stream << "BUILD_CONTEXT_ERROR";
+            break;
+    }
+    return stream;
+}
+
 } // namespace sdkInterfaces
 } // namespace avsCommon
 } // namespace alexaClientSDK

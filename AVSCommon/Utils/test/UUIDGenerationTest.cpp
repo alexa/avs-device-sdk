@@ -27,7 +27,7 @@
 
 namespace alexaClientSDK {
 namespace avsCommon {
-namespace test{
+namespace test {
 
 using namespace testing;
 using namespace avsCommon::utils::uuidGeneration;
@@ -79,14 +79,14 @@ TEST_F(UUIDGenerationTest, testUUIDStringLength) {
 }
 
 /**
-* Call @c generateUUID and expect a string of length @c UUID_LENGTH. Check that each character in the string
-* is a hexedecimal number except for the hyphens.
-*/
+ * Call @c generateUUID and expect a string of length @c UUID_LENGTH. Check that each character in the string
+ * is a hexedecimal number except for the hyphens.
+ */
 TEST_F(UUIDGenerationTest, testUUIDContainsOnlyHexCharacters) {
     auto uuid = generateUUID();
     ASSERT_EQ(UUID_LENGTH, uuid.length());
     for (unsigned int i = 0; i < uuid.length(); i++) {
-        if(i == HYPHEN1_POSITION || i == HYPHEN2_POSITION || i == HYPHEN3_POSITION || i == HYPHEN4_POSITION) {
+        if (i == HYPHEN1_POSITION || i == HYPHEN2_POSITION || i == HYPHEN3_POSITION || i == HYPHEN4_POSITION) {
             ASSERT_EQ(HYPHEN,  uuid.substr(i,1));
         } else {
             ASSERT_TRUE(isxdigit(uuid[i]));
@@ -127,7 +127,7 @@ TEST_F(UUIDGenerationTest, testUUIDHyphens) {
 TEST_F(UUIDGenerationTest, testMultipleRequests) {
     std::unordered_set<std::string> uuidsGenerated;
 
-    for(unsigned int i = 0; i < MAX_UUIDS_TO_GENERATE; ++i){
+    for (unsigned int i = 0; i < MAX_UUIDS_TO_GENERATE; ++i) {
         unsigned int prevSizeOfSet = uuidsGenerated.size();
         auto uuid = generateUUID();
         uuidsGenerated.insert(uuid);
@@ -147,8 +147,8 @@ TEST_F(UUIDGenerationTest, testMultipleConcurrentRequests) {
     std::vector<std::future<std::string>> uuidRequesters;
     std::unordered_set<std::string> uuidsGenerated;
 
-    for(int i = 0; i < no_of_threads; ++i){
-        auto future = std::async(std::launch::async, [this](){ return generateUUID(); });
+    for (int i = 0; i < no_of_threads; ++i) {
+        auto future = std::async(std::launch::async, [this]() { return generateUUID(); });
         uuidRequesters.push_back(std::move(future));
     }
 

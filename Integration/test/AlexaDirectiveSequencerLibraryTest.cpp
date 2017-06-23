@@ -35,13 +35,13 @@
 #include "AVSCommon/AVS/Attachment/AttachmentManager.h"
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h"
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentReader.h"
-#include "AVSCommon/ExceptionEncounteredSenderInterface.h"
+#include "AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h"
-#include "AVSCommon/JSON/JSONUtils.h"
-#include "AVSUtils/Initialization/AlexaClientSDKInit.h"
-#include "AVSUtils/Logger/LogEntry.h"
-#include "AVSUtils/Logging/Logger.h"
+#include "AVSCommon/Utils/JSON/JSONUtils.h"
+#include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
+#include "AVSCommon/Utils/Logger/LogEntry.h"
+#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
 #include "Integration/AuthObserver.h"
 #include "Integration/ClientMessageHandler.h"
 #include "Integration/ConnectionStatusObserver.h"
@@ -53,15 +53,16 @@ namespace alexaClientSDK {
 namespace integration {
 namespace test {
 
-using namespace alexaClientSDK::acl;
-using namespace alexaClientSDK::adsl;
-using namespace alexaClientSDK::authDelegate;
-using namespace alexaClientSDK::avsCommon;
-using namespace alexaClientSDK::avsCommon::avs;
-using namespace alexaClientSDK::avsCommon::sdkInterfaces;
-using namespace alexaClientSDK::avsUtils::initialization;
-using namespace alexaClientSDK::avsCommon::avs::attachment;
-using namespace alexaClientSDK::avsCommon::utils::sds;
+using namespace acl;
+using namespace adsl;
+using namespace authDelegate;
+using namespace avsCommon;
+using namespace avsCommon::avs;
+using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::avs::initialization;
+using namespace avsCommon::avs::attachment;
+using namespace avsCommon::utils::sds;
+using namespace avsCommon::utils::json;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AlexaDirectiveSequencerLibraryTest");
@@ -71,7 +72,7 @@ static const std::string TAG("AlexaDirectiveSequencerLibraryTest");
  *
  * @param The event string for this @c LogEntry.
  */
-#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /**
  * This string specifies a Recognize event using the specified profile.
@@ -233,7 +234,6 @@ protected:
         bool isEnabled = false;
         m_messageRouter = std::make_shared<HTTP2MessageRouter>(m_authDelegate, m_attachmentManager);
         m_exceptionEncounteredSender = std::make_shared<TestExceptionEncounteredSender>();
-        m_directiveHandler = std::make_shared<TestDirectiveHandler>();
         m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);
         m_messageInterpreter = std::make_shared<MessageInterpreter>(
             m_exceptionEncounteredSender,
@@ -246,7 +246,7 @@ protected:
         m_avsConnectionManager = AVSConnectionManager::create(
                 m_messageRouter,
                 isEnabled,
-                m_connectionStatusObserver,
+                { m_connectionStatusObserver },
                 m_messageInterpreter);
         connect();
     }
@@ -262,10 +262,10 @@ protected:
      */
     void connect() {
         ASSERT_TRUE(m_authObserver->waitFor(AuthObserver::State::REFRESHED))
-            << "Retrieving the auth token timed out.";
+                << "Retrieving the auth token timed out.";
         m_avsConnectionManager->enable();
         ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::CONNECTED))
-            << "Connecting timed out.";
+                << "Connecting timed out.";
     }
 
     /**
@@ -273,8 +273,8 @@ protected:
      */
     void disconnect() {
         m_avsConnectionManager->disable();
-        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::DISCONNECTED)) 
-            << "Connecting timed out.";
+        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::DISCONNECTED))
+                << "Connecting timed out.";
     }
 
     /**
@@ -356,41 +356,12 @@ protected:
     }
 
     /**
-     * Register @c m_handler as the handler for the specified directive, using the specified policy.
-     *
-     * @param namespaceAndName The type of directive m_handler will handle.
-     * @param blockingPolicy The blocking policy to be applied when handling directives of the specified type.
-     * @return Whether the handler was registered.
-     */
-    bool registerHandler(
-            const NamespaceAndName& namespaceAndName,
-            BlockingPolicy blockingPolicy) {
-        return registerHandler(namespaceAndName, blockingPolicy, m_directiveHandler);
-    }
-    /**
-     * Register a handler for the specified directive, using the specified policy.
-     *
-     * @param namespaceAndName The type of directive m_handler will handle.
-     * @param blockingPolicy The blocking policy to be applied when handling directives of the specified type.
-     * @param handler The handler for the handle the specified type of directive.
-     * @return Whether the handler was registered.
-     */
-    bool registerHandler(
-            const NamespaceAndName& namespaceAndName,
-            BlockingPolicy blockingPolicy,
-            std::shared_ptr<TestDirectiveHandler> handler) {
-        return m_directiveSequencer->addDirectiveHandlers({
-                {{namespaceAndName.nameSpace, namespaceAndName.name}, {handler, blockingPolicy}}
-        });
-    }
-
-    /**
      * Helper function to check that a directive with the given name is an exception.
      *
      * @param Pointer to a exception encountered sender to receive exceptions through.
      * @param String of the name of the directive that should be an exception.
      */
-    void assertExceptionWithName(const std::string name){
+    void assertExceptionWithName(const std::string name) {
         TestExceptionEncounteredSender::ExceptionParams params;
         bool nameFound = false;
         do {
@@ -398,7 +369,7 @@ protected:
             if (params.directive->getName() == name) {
                 nameFound = true;
             }
-        } while (params.type != TestExceptionEncounteredSender::ExceptionParams::Type::TIMEOUT 
+        } while (params.type != TestExceptionEncounteredSender::ExceptionParams::Type::TIMEOUT
                 && !nameFound);
         ASSERT_TRUE(nameFound);
         ASSERT_NE (params.type, TestExceptionEncounteredSender::ExceptionParams::Type::TIMEOUT);
@@ -422,9 +393,6 @@ protected:
     /// Object that manages the connection to @c AVS.
     std::shared_ptr<AVSConnectionManager> m_avsConnectionManager;
 
-    /// Handler to receive callbacks from @c DirectiveSequencer.
-    std::shared_ptr<TestDirectiveHandler> m_directiveHandler;
-
     /// The @c DirectiveSequencer instance to test.
     std::shared_ptr<DirectiveSequencerInterface> m_directiveSequencer;
 
@@ -446,11 +414,16 @@ protected:
  * that has been registered to handle an @c AVSDirective.
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, sendEventWithDirective) {
-    ASSERT_TRUE(registerHandler(SET_MUTE_PAIR, BlockingPolicy::NON_BLOCKING));
-    ASSERT_TRUE(registerHandler(SPEAK_PAIR, BlockingPolicy::BLOCKING));
+    DirectiveHandlerConfiguration config;
+    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
+    config[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
+
+    auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
+
+    ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
 
     // Send audio of "Joke" that will prompt SetMute and Speak.
-    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
+    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
@@ -459,7 +432,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendEventWithDirective) {
         SEND_EVENT_TIMEOUT_DURATION);
 
     // Wait for the first directive to route through to our handler.
-    auto params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    auto params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_FALSE(params.isTimeout());
 
 }
@@ -472,11 +445,16 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendEventWithDirective) {
  * completion of handling of any of the directives.
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveGroupWithoutBlocking) {
-    ASSERT_TRUE(registerHandler(SET_MUTE_PAIR, BlockingPolicy::NON_BLOCKING));
-    ASSERT_TRUE(registerHandler(SPEAK_PAIR, BlockingPolicy::NON_BLOCKING));
+    DirectiveHandlerConfiguration config;
+    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
+    config[SPEAK_PAIR] = BlockingPolicy::NON_BLOCKING;
+
+    auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
+
+    ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
 
     // Send audio of "Joke" that will prompt SetMute and Speak.
-    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
+    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
@@ -489,7 +467,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveGroupWithoutBlocking) {
     TestDirectiveHandler::DirectiveParams setMuteParams;
     TestDirectiveHandler::DirectiveParams speakParams;
     while (true) {
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         if (params.isTimeout()) {
             break;
         }
@@ -512,8 +490,13 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveGroupWithoutBlocking) {
  * second event.
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithDifferentDialogRequestID) {
-    ASSERT_TRUE(registerHandler(SET_MUTE_PAIR, BlockingPolicy::NON_BLOCKING));
-    ASSERT_TRUE(registerHandler(SPEAK_PAIR, BlockingPolicy::NON_BLOCKING));
+    DirectiveHandlerConfiguration config;
+    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
+    config[SPEAK_PAIR] = BlockingPolicy::NON_BLOCKING;
+
+    auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
+
+    ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
 
     // Send audio for a flashbriefing which will send back at least SetMute, Speak, SetMute, Play and Play.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
@@ -527,7 +510,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithDifferentDialogReque
     // Drain the directive results until we get a timeout. There should be no cancels or exceptions.
     TestDirectiveHandler::DirectiveParams params;
     do {
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         ASSERT_FALSE(params.isCancel());
     } while (!params.isTimeout());
 
@@ -541,7 +524,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithDifferentDialogReque
 
     // Directives from the second event do not reach the directive handler because they do no have
     // the current dialogRequestId.
-    params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(params.isTimeout());
 }
 
@@ -556,11 +539,16 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithDifferentDialogReque
  * in the second group.
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, dropQueueAfterBargeIn) {
-    ASSERT_TRUE(registerHandler(SET_MUTE_PAIR, BlockingPolicy::NON_BLOCKING));
-    ASSERT_TRUE(registerHandler(SPEAK_PAIR, BlockingPolicy::BLOCKING));
+    DirectiveHandlerConfiguration config;
+    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
+    config[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
+
+    auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
+
+    ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
 
     // Send audio for a flashbriefing which will send back (at least) SetMute, Speak, SetMute, Play and Play.
-    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
+    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
@@ -572,11 +560,11 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, dropQueueAfterBargeIn) {
 
     // Consume up to the blocking directive.
     do {
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         ASSERT_FALSE(params.isTimeout());
     } while (!params.isHandle() || params.directive->getName() != NAME_SPEAK);
     ASSERT_EQ(params.directive->getDialogRequestId(), FIRST_DIALOG_REQUEST_ID);
-    
+
     // Call setDialogRequestId(), canceling the previous group. Then send a new event with the new dialogRequestId.
     m_directiveSequencer->setDialogRequestId(SECOND_DIALOG_REQUEST_ID);
     std::string differentFile = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
@@ -590,7 +578,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, dropQueueAfterBargeIn) {
     bool cancelCalled = false;
     bool handleCalled = false;
     do {
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         if (params.isCancel()) {
             ASSERT_EQ(params.directive->getDialogRequestId(), FIRST_DIALOG_REQUEST_ID);
             cancelCalled = true;
@@ -613,12 +601,17 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, dropQueueAfterBargeIn) {
  * @c AVSDirectives with no @c dialogRequestId are processed properly.
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithoutADialogRequestID) {
-    ASSERT_TRUE(registerHandler(SET_MUTE_PAIR, BlockingPolicy::NON_BLOCKING));
-    ASSERT_TRUE(registerHandler(SPEAK_PAIR, BlockingPolicy::NON_BLOCKING));
-    ASSERT_TRUE(registerHandler(STOP_CAPTURE_PAIR, BlockingPolicy::NON_BLOCKING));
+    DirectiveHandlerConfiguration config;
+    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
+    config[SPEAK_PAIR] = BlockingPolicy::NON_BLOCKING;
+    config[STOP_CAPTURE_PAIR] = BlockingPolicy::NON_BLOCKING;
+
+    auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
+
+    ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
 
     // Send audio of "Joke" that will prompt SetMute and Speak.
-    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
+    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON_NEAR,
@@ -629,16 +622,16 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithoutADialogRequestID)
     TestDirectiveHandler::DirectiveParams params;
 
     // Make sure we get the handleImmediately from StopCapture.
-    params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(params.isHandleImmediately());
     ASSERT_TRUE(params.directive->getDialogRequestId().empty());
     ASSERT_EQ(params.directive->getName(), NAME_STOP_CAPTURE);
 
-    params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     while (!params.isTimeout()) {
-        // Make sure no other calls for StopCapture are made except for the initial handleImmediately. 
+        // Make sure no other calls for StopCapture are made except for the initial handleImmediately.
         ASSERT_NE(params.directive->getName(), NAME_STOP_CAPTURE);
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     }
 }
 
@@ -651,11 +644,16 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithoutADialogRequestID)
  * same value in the end.
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectivesForPreHandling) {
-    ASSERT_TRUE(registerHandler(SET_MUTE_PAIR, BlockingPolicy::NON_BLOCKING));
-    ASSERT_TRUE(registerHandler(SPEAK_PAIR, BlockingPolicy::BLOCKING));
+    DirectiveHandlerConfiguration config;
+    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
+    config[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
+
+    auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
+
+    ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
 
     // Send audio for a flashbriefing which will send back SetMute, Speak, SetMute, Play and Play.
-    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
+    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
@@ -663,10 +661,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectivesForPreHandling) {
         avsCommon::avs::MessageRequest::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
-    // Count each preHandle and handle that arrives. 
-    TestDirectiveHandler::DirectiveParams params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    int preHandleCounter = 0; 
-    int onHandleCounter = 0; 
+    // Count each preHandle and handle that arrives.
+    TestDirectiveHandler::DirectiveParams params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    int preHandleCounter = 0;
+    int onHandleCounter = 0;
     while (!params.isTimeout()) {
         if (params.isPreHandle()) {
             ++preHandleCounter;
@@ -676,7 +674,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectivesForPreHandling) {
             params.result->setCompleted();
         }
         ASSERT_TRUE(preHandleCounter >= onHandleCounter);
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     }
     // Verify there were the same number of calls for each.
     ASSERT_EQ(preHandleCounter, onHandleCounter);
@@ -690,11 +688,16 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectivesForPreHandling) {
  * is called to trigger the cancellation of subsequent @c AVSDirectives in the same group.
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, cancelDirectivesWhileInQueue) {
-    ASSERT_TRUE(registerHandler(SET_MUTE_PAIR, BlockingPolicy::NON_BLOCKING));
-    ASSERT_TRUE(registerHandler(SPEAK_PAIR, BlockingPolicy::BLOCKING));
+    DirectiveHandlerConfiguration config;
+    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
+    config[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
+
+    auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
+
+    ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
 
     // Send audio for a flashbriefing which will send back (at least) SetMute, Speak, SetMute, Play, and Play.
-    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
+    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
@@ -705,7 +708,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, cancelDirectivesWhileInQueue) {
     TestDirectiveHandler::DirectiveParams params;
 
     do {
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         ASSERT_FALSE(params.isTimeout());
     } while (!params.isHandle() || params.directive->getName() != NAME_SPEAK);
 
@@ -713,9 +716,9 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, cancelDirectivesWhileInQueue) {
     ASSERT_TRUE(params.result);
     params.result->setFailed("Test Error");
 
-    // Check that no other directives arrive for handling. 
+    // Check that no other directives arrive for handling.
     do {
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     } while (params.isCancel() || params.isPreHandle());
     ASSERT_TRUE(params.isTimeout());
 }
@@ -729,11 +732,16 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, cancelDirectivesWhileInQueue) {
  * to receive at least one subsequent directive.
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveAtTheFront) {
-    ASSERT_TRUE(registerHandler(SET_MUTE_PAIR, BlockingPolicy::BLOCKING));
-    ASSERT_TRUE(registerHandler(SPEAK_PAIR, BlockingPolicy::NON_BLOCKING));
+    DirectiveHandlerConfiguration config;
+    config[SET_MUTE_PAIR] = BlockingPolicy::BLOCKING;
+    config[SPEAK_PAIR] = BlockingPolicy::NON_BLOCKING;
+
+    auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
+
+    ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
 
     // Send audio of "Joke" that will prompt a stream of directives including SetMute.
-    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
+    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
@@ -745,7 +753,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveAtTheFront) {
     TestDirectiveHandler::DirectiveParams params;
     TestDirectiveHandler::DirectiveParams blockingParams;
     while (true) {
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         if (params.isTimeout()) {
             break;
         }
@@ -766,7 +774,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveAtTheFront) {
     // Expect subsequent directives, including Speak.
     TestDirectiveHandler::DirectiveParams speakParams;
     do {
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         if (params.isHandle() && params.directive->getName() == NAME_SPEAK) {
             // Remember that we saw a speak param.
             speakParams = params;
@@ -786,11 +794,16 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveAtTheFront) {
  * without waiting for the completion of any subsequent @c AVSDirectives.
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveInTheMiddle) {
-    ASSERT_TRUE(registerHandler(SET_MUTE_PAIR, BlockingPolicy::NON_BLOCKING));
-    ASSERT_TRUE(registerHandler(SPEAK_PAIR, BlockingPolicy::BLOCKING));
+    DirectiveHandlerConfiguration config;
+    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
+    config[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
+
+    auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
+
+    ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
 
     // Send audio for a flashbriefing which will send back SetMute, Speak, SetMute, Play and Play.
-    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
+    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
@@ -802,7 +815,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveInTheMiddle) {
 
     // Expect SetMute which is non-blocking.
     do {
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         ASSERT_FALSE(params.isTimeout());
     } while (!params.isHandle() || params.directive->getName() != NAME_SET_MUTE);
 
@@ -810,22 +823,22 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveInTheMiddle) {
 
     // Expect Speak which is blocking.
     do {
-        blockingParams = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        blockingParams = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         ASSERT_FALSE(blockingParams.isTimeout());
     } while (!blockingParams.isHandle() || blockingParams.directive->getName() != NAME_SPEAK);
 
     // Expect a timeout because we're blocked.
     do {
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         ASSERT_FALSE(params.isHandle());
     } while (!params.isTimeout());
-    
-    // Unblock the queue. 
+
+    // Unblock the queue.
     ASSERT_TRUE(blockingParams.result);
     blockingParams.result->setCompleted();
 
-    // See things that were previously blocked in the queue come through afterward. 
-    params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    // See things that were previously blocked in the queue come through afterward.
+    params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_FALSE(params.isTimeout());
 }
 
@@ -837,7 +850,12 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveInTheMiddle) {
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, noDirectiveHandlerRegisteredForADirectiveAtTheFront) {
     // Don't Register a DirectiveHandler for SetMute.
-    ASSERT_TRUE(registerHandler(SPEAK_PAIR, BlockingPolicy::NON_BLOCKING));
+    DirectiveHandlerConfiguration config;
+    config[SPEAK_PAIR] = BlockingPolicy::NON_BLOCKING;
+
+    auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
+
+    ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
 
     // Send audio of "Joke" that will trigger SetMute and possibly others.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
@@ -859,8 +877,14 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, noDirectiveHandlerRegisteredForADirec
  * a Recognize event, instead an exception encountered is expected.
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, noDirectiveHandlerRegisteredForADirectiveInTheMiddle) {
-    ASSERT_TRUE(registerHandler(SET_MUTE_PAIR, BlockingPolicy::NON_BLOCKING));
     // Don't Register a DirectiveHandler for Speak.
+    DirectiveHandlerConfiguration config;
+    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
+
+    auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
+
+    ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
+
 
     // Send audio of "Joke" that will trigger SetMute and speak.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
@@ -883,16 +907,22 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, noDirectiveHandlerRegisteredForADirec
  * Recognize event. The Handler that was first set is the only one that should receive the directive.
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, twoDirectiveHandlersRegisteredForADirective) {
-    auto directiveHandlerA = std::make_shared<TestDirectiveHandler>();
-    auto directiveHandlerB = std::make_shared<TestDirectiveHandler>();
+    DirectiveHandlerConfiguration handlerAConfig;
+    handlerAConfig[SET_MUTE_PAIR] = BlockingPolicy::BLOCKING;
 
-    ASSERT_TRUE(registerHandler(SET_MUTE_PAIR, BlockingPolicy::BLOCKING, directiveHandlerA));
+    auto directiveHandlerA = std::make_shared<TestDirectiveHandler>(handlerAConfig);
+
+    DirectiveHandlerConfiguration handlerbConfig;
+    handlerbConfig[SET_MUTE_PAIR] = BlockingPolicy::BLOCKING;
+    auto directiveHandlerB = std::make_shared<TestDirectiveHandler>(handlerbConfig);
+
+    ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandlerA));
 
     // Attempt to overwrite one of the handlers
-    ASSERT_FALSE(registerHandler(SET_MUTE_PAIR, BlockingPolicy::BLOCKING, directiveHandlerB));
+    ASSERT_FALSE(m_directiveSequencer->addDirectiveHandler(directiveHandlerB));
 
     // Send audio of "Joke" that will prompt SetMute.
-    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
+    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
@@ -921,12 +951,17 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, twoDirectiveHandlersRegisteredForADir
  * recognize event to respond to Alexa's question, and receiving the final directive group.
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, multiturnScenario) {
-    ASSERT_TRUE(registerHandler(SET_MUTE_PAIR, BlockingPolicy::NON_BLOCKING));
-    ASSERT_TRUE(registerHandler(SPEAK_PAIR, BlockingPolicy::BLOCKING));
-    ASSERT_TRUE(registerHandler(EXPECT_SPEECH_PAIR, BlockingPolicy::NON_BLOCKING));
+    DirectiveHandlerConfiguration config;
+    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
+    config[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
+    config[EXPECT_SPEECH_PAIR] = BlockingPolicy::NON_BLOCKING;
+
+    auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
+
+    ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
 
     // Send audio of "wikipedia" which will prompt a SetMute, a Speak, and an ExpectSpeech.
-    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID); 
+    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_WIKI_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
@@ -938,7 +973,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, multiturnScenario) {
 
     // Check we're being told to ExpectSpeech.
     do {
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         ASSERT_FALSE(params.isTimeout());
         ASSERT_EQ(params.directive->getDialogRequestId(), FIRST_DIALOG_REQUEST_ID);
         if (params.isHandle()) {
@@ -946,8 +981,8 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, multiturnScenario) {
         }
     } while ( !params.isHandle() || params.directive->getName() != NAME_EXPECT_SPEECH);
 
-    // Send back a recognize event. 
-    m_directiveSequencer->setDialogRequestId(SECOND_DIALOG_REQUEST_ID);  
+    // Send back a recognize event.
+    m_directiveSequencer->setDialogRequestId(SECOND_DIALOG_REQUEST_ID);
     std::string differentFile = inputPath + RECOGNIZE_LIONS_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_SECOND_RECOGNIZE_EVENT_JSON,
@@ -957,7 +992,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, multiturnScenario) {
 
     // Just the wikipedia directive group in response.
     do {
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         if (params.isHandle()) {
             ASSERT_EQ(params.directive->getDialogRequestId(), SECOND_DIALOG_REQUEST_ID);
             params.result->setCompleted();
@@ -969,7 +1004,12 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, multiturnScenario) {
  * Test ability to get an attachment from @c AttachmentManager.
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, getAttachmentWithContentId) {
-    ASSERT_TRUE(registerHandler(SPEAK_PAIR, BlockingPolicy::BLOCKING));
+    DirectiveHandlerConfiguration config;
+    config[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
+
+    auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
+
+    ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
 
     // Send audio of "Joke" that will prompt SetMute and Speak.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
@@ -983,7 +1023,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, getAttachmentWithContentId) {
     // Wait for the directive to route through to our handler.
     TestDirectiveHandler::DirectiveParams params;
     do {
-        params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         ASSERT_FALSE(params.isTimeout());
     } while (!params.isPreHandle() || params.directive->getName() != NAME_SPEAK);
 

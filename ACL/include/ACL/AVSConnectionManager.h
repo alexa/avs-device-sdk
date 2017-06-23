@@ -20,14 +20,16 @@
 
 #include <atomic>
 #include <memory>
+#include <mutex>
 #include <string>
+#include <unordered_set>
 
 #include <AVSCommon/AVS/MessageRequest.h>
+#include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 
 #include "ACL/AuthDelegateInterface.h"
-#include "ACL/ConnectionStatusObserverInterface.h"
 #include "ACL/Transport/MessageRouterInterface.h"
 #include "ACL/Transport/MessageRouterObserverInterface.h"
 
@@ -73,15 +75,18 @@ public:
      *
      * @param messageRouter The entity which handles sending and receiving of AVS messages.
      * @param isEnabled The enablement setting.  If true, then the created object will attempt to connect to AVS.
-     * @param connectionStatusObserver An optional observer which will be notified when the connection status changes.
+     * @param connectionStatusObservers An optional set of observers which will be notified when the connection status
+     *     changes.
      * @param messageObserver An optional observer which will be sent messages that arrive from AVS.
      * @return The created AVSConnectionManager object.
      */
-    static std::shared_ptr<AVSConnectionManager>
-            create(std::shared_ptr<MessageRouterInterface> messageRouter,
-                   bool isEnabled = true,
-                   std::shared_ptr<ConnectionStatusObserverInterface> connectionStatusObserver = nullptr,
-                   std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> messageObserver = nullptr);
+    static std::shared_ptr<AVSConnectionManager> create(
+            std::shared_ptr<MessageRouterInterface> messageRouter,
+            bool isEnabled = true,
+            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
+                    connectionStatusObservers =
+                    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>(),
+            std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> messageObserver = nullptr);
 
     /**
      * Enable the AVSConnectionManager object to make connections to AVS.  Once enabled, the object will attempt to
@@ -113,11 +118,35 @@ public:
     void reconnect();
 
     /**
+     * Returns whether the AVS connection is established. If the connection is pending, @c false will be returned.
+     *
+     * @return Whether the AVS connection is established.
+     */
+    bool isConnected() const;
+
+    /**
      * Set the URL endpoint for the AVS connection.  Calling this function with a new value will cause the
      * current active connection to be closed, and a new one opened to the new endpoint.
      * @param avsEndpoint The URL for the new AVS endpoint.
      */
     void setAVSEndpoint(const std::string& avsEndpoint);
+
+    /**
+     * Adds an observer to be notified of connection stauts changes. The observer will be notified of the current
+     * connection status before this function returns.
+     *
+     * @param observer The observer object to add.
+     */
+    void addConnectionStatusObserver(
+            std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer);
+
+    /**
+     * Removes an observer from being notified of connection status changes.
+     *
+     * @param observer The observer object to remove.
+     */
+    void removeConnectionStatusObserver(
+            std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer);
 
     void sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
 
@@ -127,23 +156,33 @@ private:
      * AVSConnectionManager constructor.
      *
      * @param messageRouter The entity which handles sending and receiving of AVS messages.
-     * @param connectionStatusObserver An optional observer which will be notified when the connection status changes.
+     * @param connectionStatusObservers An optional set of observers which will be notified when the connection status
+     *     changes.
      * @param messageObserver An optional observer which will be sent messages that arrive from AVS.
      */
-    AVSConnectionManager(std::shared_ptr<MessageRouterInterface> messageRouter,
-                         std::shared_ptr<ConnectionStatusObserverInterface> connectionStatusObserver = nullptr,
-                         std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> messageObserver = nullptr);
+    AVSConnectionManager(
+            std::shared_ptr<MessageRouterInterface> messageRouter,
+            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
+                    connectionStatusObservers =
+                    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>(),
+            std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> messageObserver = nullptr);
 
-    void onConnectionStatusChanged(const ConnectionStatusObserverInterface::Status status,
-                                   const ConnectionStatusObserverInterface::ChangedReason reason) override;
+    void onConnectionStatusChanged(
+            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
+            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
 
     void receive(const std::string & contextId, const std::string & message) override;
 
     /// Internal state to indicate if the Connection object is enabled for making an AVS connection.
     std::atomic<bool> m_isEnabled;
 
-    /// Client-provided connection status observer.
-    std::shared_ptr<ConnectionStatusObserverInterface> m_connectionStatusObserver;
+    /// Set of observers to notify when the connection status changes. @c m_connectionStatusObserverMutex must be
+    /// acquired before access.
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
+            m_connectionStatusObservers;
+
+    /// Mutex for connection status observers.
+    std::mutex m_connectionStatusObserverMutex;
 
     /// Client-provided message listener, which will receive all messages sent from AVS.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> m_messageObserver;

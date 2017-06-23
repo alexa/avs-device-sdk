@@ -27,7 +27,7 @@
 
 #include "AuthDelegate/AuthDelegate.h"
 #include "AuthDelegate/MockHttpPost.h"
-#include "AVSUtils/Initialization/AlexaClientSDKInit.h"
+#include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
 #include "MockAuthObserver.h"
 
 using namespace alexaClientSDK::authDelegate;
@@ -36,7 +36,8 @@ using namespace alexaClientSDK::acl;
 using namespace alexaClientSDK::acl::test;
 
 using namespace ::testing;
-using namespace alexaClientSDK::avsUtils::initialization;
+using namespace alexaClientSDK::avsCommon::avs::initialization;
+using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 
 /// URL to which the refresh token and access token request should be sent.
 static const std::string DEFAULT_LWA_URL = "https://api.amazon.com/auth/o2/token";

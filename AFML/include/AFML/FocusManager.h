@@ -1,7 +1,7 @@
 /*
  * FocusManager.h
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 
 #include "AFML/Channel.h"
-#include "AVSUtils/Threading/Executor.h"
+#include "AVSCommon/Utils/Threading/Executor.h"
 
 namespace alexaClientSDK {
 namespace afml {
@@ -217,7 +217,7 @@ private:
     std::set<std::shared_ptr<Channel>, ChannelPtrComparator> m_activeChannels;
 
     /// An internal executor that performs execution of callable objects passed to it sequentially but asynchronously.
-    avsUtils::threading::Executor m_executor;
+    avsCommon::utils::threading::Executor m_executor;
 
     /// Mutex used to lock m_activeChannels and Channels' activity ids.
     std::mutex m_mutex;

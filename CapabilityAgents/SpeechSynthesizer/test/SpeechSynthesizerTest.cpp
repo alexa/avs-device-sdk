@@ -22,7 +22,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <AVSCommon/MockExceptionEncounteredSender.h>
+#include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
 #include <AVSCommon/SDKInterfaces/MockFocusManager.h>
@@ -38,13 +38,12 @@ namespace capabilityAgents {
 namespace speechSynthesizer {
 namespace test {
 
-using namespace avsUtils;
+using namespace avsCommon::utils;
 using namespace avsCommon;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::test;
-using namespace avsCommon::test;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace ::testing;
 
@@ -306,7 +305,7 @@ MockMediaPlayer::~MockMediaPlayer() {
     if (m_playThread.joinable()) {
         m_playThread.join();
     }
-    if(m_stopThread.joinable()) {
+    if (m_stopThread.joinable()) {
         m_stopThread.join();
     }
 }
@@ -521,7 +520,7 @@ void SpeechSynthesizerTest::wakeOnSendMessage() {
     m_wakeSendMessagePromise.set_value();
 }
 
-/*
+/**
  * Test call to handleDirectiveImmediately.
  * Expected result is that @c acquireChannel is called with the correct channel. On focus changed @c FOREGROUND, audio
  * should play. Expect the @c ContextManager @c setState is called when state changes to @c PLAYING.
@@ -551,7 +550,7 @@ TEST_F(SpeechSynthesizerTest, testCallingHandleImmediately) {
     ASSERT_TRUE(std::future_status::ready == m_wakeSendMessageFuture.wait_for(WAIT_TIMEOUT));
 }
 
-/*
+/**
  * Tests preHandleDirective and HandleDirective
  * Call preHandle with a valid SPEAK directive. Then call handleDirective. Expected result is that @c acquireChannel
  * is called with the correct channel. On focus changed @c FOREGROUND, audio should play. Expect the @c ContextManager

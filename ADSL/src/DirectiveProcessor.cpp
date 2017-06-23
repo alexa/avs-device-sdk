@@ -1,29 +1,28 @@
 /*
-* DirectiveProcessor.cpp
-*
-* Copyright 2017 Amazon.com, Inc. or its affiliates.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * DirectiveProcessor.cpp
+ *
+ * Copyright 2017 Amazon.com, Inc. or its affiliates.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #include <algorithm>
 #include <iostream>
 #include <sstream>
 
-#include <AVSCommon/ExceptionEncountered.h>
-#include <AVSUtils/Logger/LogEntry.h>
-#include <AVSUtils/Logging/Logger.h>
-#include <AVSUtils/Memory/Memory.h>
+#include <AVSCommon/AVS/ExceptionErrorType.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Memory/Memory.h>
 
 #include "ADSL/DirectiveProcessor.h"
 
@@ -35,7 +34,7 @@ static const std::string TAG("DirectiveProcessor");
  *
  * @param The event string for this @c LogEntry.
  */
-#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 namespace alexaClientSDK {
 namespace adsl {
@@ -97,7 +96,7 @@ bool DirectiveProcessor::onDirective(std::shared_ptr<AVSDirective> directive) {
     m_directiveBeingPreHandled = directive;
     lock.unlock();
     auto handled = m_directiveRouter->preHandleDirective(
-            directive, alexaClientSDK::avsUtils::memory::make_unique<DirectiveHandlerResult>(m_handle, directive));
+            directive, alexaClientSDK::avsCommon::utils::memory::make_unique<DirectiveHandlerResult>(m_handle, directive));
     lock.lock();
     if (m_directiveBeingPreHandled) {
         m_directiveBeingPreHandled.reset();
@@ -202,9 +201,9 @@ bool DirectiveProcessor::removeFromCancelingQueueLocked(const std::string& messa
     return true;
 }
 
-std::deque<std::shared_ptr<avsCommon::AVSDirective>>::iterator DirectiveProcessor::findDirectiveInQueueLocked(
+std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>>::iterator DirectiveProcessor::findDirectiveInQueueLocked(
         const std::string& messageId,
-        std::deque<std::shared_ptr<avsCommon::AVSDirective>>& queue) {
+        std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>>& queue) {
     auto matches = [messageId](std::shared_ptr<AVSDirective> element) {
         return element->getMessageId() == messageId;
     };
@@ -212,8 +211,8 @@ std::deque<std::shared_ptr<avsCommon::AVSDirective>>::iterator DirectiveProcesso
 }
 
 void DirectiveProcessor::removeDirectiveFromQueueLocked(
-        std::deque<std::shared_ptr<avsCommon::AVSDirective>>::iterator it,
-        std::deque<std::shared_ptr<avsCommon::AVSDirective>>& queue) {
+        std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>>::iterator it,
+        std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>>& queue) {
     queue.erase(it);
     if (!queue.empty()) {
         m_wakeProcessingLoop.notify_one();
@@ -238,7 +237,7 @@ bool DirectiveProcessor::processCancelingQueueLocked(std::unique_lock<std::mutex
     if (m_cancelingQueue.empty()) {
         return false;
     }
-    std::deque<std::shared_ptr<avsCommon::AVSDirective>> temp(std::move(m_cancelingQueue));
+    std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>> temp(std::move(m_cancelingQueue));
     lock.unlock();
     for (auto directive : temp) {
         m_directiveRouter->cancelDirective(directive);

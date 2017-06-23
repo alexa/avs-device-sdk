@@ -22,7 +22,7 @@
 
 #include "AVSCommon/SDKInterfaces/ContextRequesterInterface.h"
 #include "AVSCommon/SDKInterfaces/StateProviderInterface.h"
-#include "AVSCommon/SDKInterfaces/StateRefreshPolicy.h"
+#include "AVSCommon/AVS/StateRefreshPolicy.h"
 #include "AVSCommon/AVS/NamespaceAndName.h"
 
 namespace alexaClientSDK {
@@ -98,7 +98,7 @@ public:
      * @return The status of the setState operation.
      */
     virtual SetStateResult setState(const avs::NamespaceAndName& namespaceAndName, const std::string& jsonState,
-            const StateRefreshPolicy& refreshPolicy, const unsigned int stateRequestToken = 0) = 0;
+            const avs::StateRefreshPolicy& refreshPolicy, const unsigned int stateRequestToken = 0) = 0;
 
     /**
      * Request the @c ContextManager for context. If a request to the @c StateProviderInterfaces for updated states

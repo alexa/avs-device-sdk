@@ -1,4 +1,4 @@
-/**
+/*
  * MockAuthDelegate.h
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -17,8 +17,9 @@
 #ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_AUTH_DELEGATE_H_
 #define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_AUTH_DELEGATE_H_
 
+#include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
+
 #include "ACL/AuthDelegateInterface.h"
-#include "ACL/AuthObserverInterface.h"
 
 #include <gmock/gmock.h>
 
@@ -31,7 +32,7 @@ namespace test {
 
 class MockAuthDelegate: public AuthDelegateInterface {
 public:
-    MOCK_METHOD1(setAuthObserver, void(std::shared_ptr<AuthObserverInterface>));
+    MOCK_METHOD1(setAuthObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface>));
     MOCK_METHOD0(getAuthToken, std::string());
 };
 

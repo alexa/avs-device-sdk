@@ -1,4 +1,4 @@
-/**
+/*
  * SharedDataStreamTest.cpp
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -601,9 +601,9 @@ TEST_F(SharedDataStreamTest, readerRead) {
     ASSERT_EQ(blocking->read(nullptr, WORDCOUNT), Sds::Reader::Error::INVALID);
     ASSERT_EQ(blocking->read(readBuf, 0), Sds::Reader::Error::INVALID);
 
-    // Verify both read types detect closed stream (no writer).
-    ASSERT_EQ(blocking->read(readBuf, WORDCOUNT, TIMEOUT), Sds::Reader::Error::CLOSED);
-    ASSERT_EQ(nonblocking->read(readBuf, WORDCOUNT), Sds::Reader::Error::CLOSED);
+    // Verify both read types detect unopened stream (no writer).
+    ASSERT_EQ(blocking->read(readBuf, WORDCOUNT, TIMEOUT), Sds::Reader::Error::TIMEDOUT);
+    ASSERT_EQ(nonblocking->read(readBuf, WORDCOUNT), Sds::Reader::Error::WOULDBLOCK);
 
     // Attach a writer.
     auto writer = sds->createWriter(Sds::Writer::Policy::NONBLOCKABLE);

@@ -24,6 +24,7 @@
 #include <gmock/gmock.h>
 
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
+#include <AVSCommon/AVS/NamespaceAndName.h>
 
 namespace alexaClientSDK {
 namespace adsl {
@@ -36,7 +37,7 @@ namespace test {
 class DirectiveHandlerMockAdapter : public avsCommon::sdkInterfaces::DirectiveHandlerInterface {
 public:
     void preHandleDirective(
-            std::shared_ptr<avsCommon::AVSDirective> directive,
+            std::shared_ptr<avsCommon::avs::AVSDirective> directive,
             std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) override;
 
     /**
@@ -46,7 +47,7 @@ public:
      * @param result The object to receive completion/failure notifications.
      */
     virtual void preHandleDirective(
-            std::shared_ptr<avsCommon::AVSDirective> directive,
+            std::shared_ptr<avsCommon::avs::AVSDirective> directive,
             std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) = 0;
 };
 
@@ -65,10 +66,12 @@ public:
     /**
      * Create a MockDirectiveHandler.
      *
+     * @param config The @c avsCommon::avs::DirectiveHandlerConfiguration of the handler.
      * @param handlingTimeMs The amount of time (in milliseconds) this handler takes to handle directives.
      * @return A new MockDirectiveHandler.
      */
     static std::shared_ptr<testing::NiceMock<MockDirectiveHandler>> create(
+            avsCommon::avs::DirectiveHandlerConfiguration config,
             std::chrono::milliseconds handlingTimeMs = DEFAULT_HANDLING_TIME_MS);
 
     /**
@@ -76,7 +79,9 @@ public:
      *
      * @param handlingTimeMs The amount of time (in milliseconds) this handler takes to handle directives.
      */
-    MockDirectiveHandler(std::chrono::milliseconds handlingTimeMs);
+    MockDirectiveHandler(
+            avsCommon::avs::DirectiveHandlerConfiguration config,
+            std::chrono::milliseconds handlingTimeMs);
 
     /// Destructor.
     ~MockDirectiveHandler();
@@ -86,7 +91,7 @@ public:
      *
      * @param directive The directive to handle.
      */
-    void mockHandleDirectiveImmediately(std::shared_ptr<avsCommon::AVSDirective> directive);
+    void mockHandleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
     /**
      * The functional part of mocking preHandleDirective().
@@ -95,7 +100,7 @@ public:
      * @param result The result object to
      */
     void mockPreHandleDirective(
-            std::shared_ptr<avsCommon::AVSDirective> directive,
+            std::shared_ptr<avsCommon::avs::AVSDirective> directive,
             std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result);
 
     /**
@@ -133,7 +138,7 @@ public:
      * @param result An object to receive the result of the handling operation.
      */
     void doPreHandlingFailed(
-            std::shared_ptr<avsCommon::AVSDirective> directive,
+            std::shared_ptr<avsCommon::avs::AVSDirective> directive,
             std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result);
 
     /**
@@ -189,7 +194,7 @@ public:
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> m_result;
 
     /// The @c AVSDirective (if any) being handled.
-    std::shared_ptr<avsCommon::AVSDirective> m_directive;
+    std::shared_ptr<avsCommon::avs::AVSDirective> m_directive;
 
     /// Thread to perform handleDirective() asynchronously.
     std::thread m_doHandleDirectiveThread;
@@ -230,12 +235,13 @@ public:
     /// Future to notify when a completed result is reported.
     std::future<void> m_completedFuture;
 
-    MOCK_METHOD1(handleDirectiveImmediately, void(std::shared_ptr<avsCommon::AVSDirective>));
-    MOCK_METHOD2(preHandleDirective, void(std::shared_ptr<avsCommon::AVSDirective>,
+    MOCK_METHOD1(handleDirectiveImmediately, void(std::shared_ptr<avsCommon::avs::AVSDirective>));
+    MOCK_METHOD2(preHandleDirective, void(std::shared_ptr<avsCommon::avs::AVSDirective>,
             std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface>));
     MOCK_METHOD1(handleDirective, bool(const std::string&));
     MOCK_METHOD1(cancelDirective, void(const std::string&));
     MOCK_METHOD0(onDeregistered, void());
+    MOCK_CONST_METHOD0(getConfiguration, avsCommon::avs::DirectiveHandlerConfiguration());
 
     /// Default amount of time taken to handle a directive (0).
     static const std::chrono::milliseconds DEFAULT_HANDLING_TIME_MS;

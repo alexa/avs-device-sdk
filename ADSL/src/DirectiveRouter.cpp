@@ -20,8 +20,7 @@
 #include <sstream>
 #include <vector>
 
-#include <AVSUtils/Logger/LogEntry.h>
-#include <AVSUtils/Logging/Logger.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "ADSL/DirectiveRouter.h"
 
@@ -33,7 +32,7 @@ static const std::string TAG("DirectiveRouter");
  *
  * @param The event string for this @c LogEntry.
  */
-#define LX(event) ::alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
+#define LX(event) ::alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 namespace alexaClientSDK {
 namespace adsl {
@@ -49,16 +48,18 @@ DirectiveRouter::~DirectiveRouter() {
     }
 }
 
-bool DirectiveRouter::addDirectiveHandlers(const DirectiveHandlerConfiguration& configuration) {
+bool DirectiveRouter::addDirectiveHandler(std::shared_ptr<DirectiveHandlerInterface> handler) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
+    if (!handler) {
+        ACSDK_ERROR(LX("addDirectiveHandlersFailed").d("reason", "emptyHandler"));
+        return false;
+    }
+
+    auto configuration = handler->getConfiguration();
     for (auto item : configuration) {
-        if (!item.second) {
-            ACSDK_ERROR(LX("addDirectiveHandlersFailed")
-                    .d("reason", "emptyHandlerAndPolicy")
-                    .d("namespace", item.first.nameSpace)
-                    .d("name", item.first.name));
-            return false;
+        if (BlockingPolicy::NONE == item.second) {
+            ACSDK_ERROR(LX("addDirectiveHandlersFailed").d("reason", "nonePolicy"));
         }
         auto it = m_configuration.find(item.first);
         if (m_configuration.end() != it) {
@@ -71,31 +72,39 @@ bool DirectiveRouter::addDirectiveHandlers(const DirectiveHandlerConfiguration& 
     }
 
     for (auto item : configuration) {
-        m_configuration[item.first] = item.second;
-        incrementHandlerReferenceCountLocked(item.second.handler);
+        HandlerAndPolicy handlerAndPolicy(handler, item.second);
+        m_configuration[item.first] = handlerAndPolicy;
+        incrementHandlerReferenceCountLocked(handler);
         ACSDK_INFO(LX("addDirectiveHandlers")
                 .d("action", "added")
                 .d("namespace", item.first.nameSpace)
                 .d("name", item.first.name)
-                .d("handler", item.second.handler.get())
-                .d("policy", item.second.policy));
+                .d("handler", handler.get())
+                .d("policy", item.second));
     }
 
     return true;
+
 }
 
-bool DirectiveRouter::removeDirectiveHandlers(const DirectiveHandlerConfiguration& configuration) {
+bool DirectiveRouter::removeDirectiveHandler(std::shared_ptr<DirectiveHandlerInterface> handler) {
     std::unique_lock<std::mutex> lock(m_mutex);
 
+    if (!handler) {
+        ACSDK_ERROR(LX("removeDirectiveHandlersFailed").d("reason", "emptyHandler"));
+        return false;
+    }
+
+    auto configuration = handler->getConfiguration();
     for (auto item : configuration) {
         auto it = m_configuration.find(item.first);
-        if (m_configuration.end() == it || it->second != item.second) {
+        if (m_configuration.end() == it || it->second != HandlerAndPolicy(handler, item.second)) {
             ACSDK_ERROR(LX("removeDirectiveHandlersFailed")
                     .d("reason", "notFound")
                     .d("namespace", item.first.nameSpace)
                     .d("name", item.first.name)
-                    .d("handler", item.second.handler.get())
-                    .d("policy", item.second.policy));
+                    .d("handler", handler.get())
+                    .d("policy", item.second));
             return false;
         }
     }
@@ -112,24 +121,24 @@ bool DirectiveRouter::removeDirectiveHandlers(const DirectiveHandlerConfiguratio
                 .d("action", "removed")
                 .d("namespace", item.first.nameSpace)
                 .d("name", item.first.name)
-                .d("handler", item.second.handler.get())
-                .d("policy", item.second.policy));
-        auto it = m_handlerReferenceCounts.find(item.second.handler);
+                .d("handler", handler.get())
+                .d("policy", item.second));
+        auto it = m_handlerReferenceCounts.find(handler);
         if (0 == --(it->second)) {
-            releasedHandlers.push_back(item.second.handler);
+            releasedHandlers.push_back(handler);
             m_handlerReferenceCounts.erase(it);
         }
     }
     lock.unlock();
-    for (auto handler : releasedHandlers) {
-        ACSDK_INFO(LX("onDeregisteredCalled").d("handler", handler.get()));
-        handler->onDeregistered();
+    for (auto releasedHandler : releasedHandlers) {
+        ACSDK_INFO(LX("onDeregisteredCalled").d("handler", releasedHandler.get()));
+        releasedHandler->onDeregistered();
     }
 
     return true;
 }
 
-bool DirectiveRouter::handleDirectiveImmediately(std::shared_ptr<avsCommon::AVSDirective> directive) {
+bool DirectiveRouter::handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive) {
     std::unique_lock<std::mutex> lock(m_mutex);
     auto handlerAndPolicy = getHandlerAndPolicyLocked(directive);
     if (!handlerAndPolicy) {
@@ -144,7 +153,7 @@ bool DirectiveRouter::handleDirectiveImmediately(std::shared_ptr<avsCommon::AVSD
 }
 
 bool DirectiveRouter::preHandleDirective(
-        std::shared_ptr<avsCommon::AVSDirective> directive,
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive,
         std::unique_ptr<DirectiveHandlerResultInterface> result) {
     std::unique_lock<std::mutex> lock(m_mutex);
     auto handlerAndPolicy = getHandlerAndPolicyLocked(directive);
@@ -159,7 +168,7 @@ bool DirectiveRouter::preHandleDirective(
     return true;
 }
 
-bool DirectiveRouter::handleDirective(std::shared_ptr<avsCommon::AVSDirective> directive, BlockingPolicy* policyOut) {
+bool DirectiveRouter::handleDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive, BlockingPolicy* policyOut) {
     if (!policyOut) {
         ACSDK_ERROR(LX("handleDirectiveFailed")
                 .d("messageId", directive->getMessageId()).d("reason", "nullptrPolicyOut"));
@@ -187,7 +196,7 @@ bool DirectiveRouter::handleDirective(std::shared_ptr<avsCommon::AVSDirective> d
 }
 
 
-bool DirectiveRouter::cancelDirective(std::shared_ptr<avsCommon::AVSDirective> directive) {
+bool DirectiveRouter::cancelDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive) {
     std::unique_lock<std::mutex> lock(m_mutex);
     auto handlerAndPolicy = getHandlerAndPolicyLocked(directive);
     if (!handlerAndPolicy) {
@@ -217,7 +226,7 @@ DirectiveRouter::HandlerCallScope::~HandlerCallScope() {
     m_router->decrementHandlerReferenceCountLocked(m_lock, m_handler);
 }
 
-HandlerAndPolicy DirectiveRouter::getHandlerAndPolicyLocked(std::shared_ptr<avsCommon::AVSDirective> directive) {
+HandlerAndPolicy DirectiveRouter::getHandlerAndPolicyLocked(std::shared_ptr<avsCommon::avs::AVSDirective> directive) {
     if (!directive) {
         ACSDK_WARN(LX("getHandlerAndPolicyLockedFailed").d("reason", "nullptrDirective"));
         return HandlerAndPolicy();
@@ -229,7 +238,7 @@ HandlerAndPolicy DirectiveRouter::getHandlerAndPolicyLocked(std::shared_ptr<avsC
     return it->second;
 }
 
-void DirectiveRouter::incrementHandlerReferenceCountLocked(std::shared_ptr<DirectiveHandlerInterface> handler){
+void DirectiveRouter::incrementHandlerReferenceCountLocked(std::shared_ptr<DirectiveHandlerInterface> handler) {
     const auto it = m_handlerReferenceCounts.find(handler);
     if (it != m_handlerReferenceCounts.end()) {
         it->second++;

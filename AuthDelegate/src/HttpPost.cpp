@@ -15,16 +15,15 @@
  * permissions and limitations under the License.
  */
 
-#include <AVSUtils/LibcurlUtils/LibcurlUtils.h>
-#include <AVSUtils/Logger/LogEntry.h>
-#include <AVSUtils/Logging/Logger.h>
+#include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "AuthDelegate/HttpPost.h"
 
 namespace alexaClientSDK {
 namespace authDelegate {
 
-using namespace alexaClientSDK::avsUtils;
+using namespace alexaClientSDK::avsCommon::utils;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("HttpPost");
@@ -34,11 +33,11 @@ static const std::string TAG("HttpPost");
  *
  * @param The event string for this @c LogEntry.
  */
-#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::unique_ptr<HttpPost> HttpPost::create() {
     std::unique_ptr<HttpPost> httpPost(new HttpPost());
-    if (httpPost->init()){
+    if (httpPost->init()) {
         return httpPost;
     }
     return nullptr;

@@ -1,7 +1,7 @@
 /*
  * AbstractKeywordDetector.h
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@
 #include <mutex>
 #include <unordered_set>
 
-#include <AVSCommon/AudioFormat.h>
-#include <AVSCommon/SDKInterfaces/AudioInputStream.h>
+#include <AVSCommon/Utils/AudioFormat.h>
+#include <AVSCommon/AVS/AudioInputStream.h>
 #include <AVSCommon/SDKInterfaces/KeyWordObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/KeyWordDetectorStateObserverInterface.h>
 
@@ -89,10 +89,10 @@ protected:
      * @param endIndex The absolute end index of the last part of the keyword within the stream of the @c stream.
      */
     void notifyKeyWordObservers(
-            std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream> stream,
+            std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
             std::string keyword,
-            avsCommon::sdkInterfaces::AudioInputStream::Index beginIndex,
-            avsCommon::sdkInterfaces::AudioInputStream::Index endIndex) const;
+            avsCommon::avs::AudioInputStream::Index beginIndex,
+            avsCommon::avs::AudioInputStream::Index endIndex) const;
 
     /**
      * Notifies all keyword detector state observers of state changes in the derived detector.
@@ -114,8 +114,8 @@ protected:
      * @return The number of words successfully read.
      */
     ssize_t readFromStream(
-        std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream::Reader> reader,
-        std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream> stream,
+        std::shared_ptr<avsCommon::avs::AudioInputStream::Reader> reader,
+        std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
         void * buf, 
         size_t nWords,
         std::chrono::milliseconds timeout,
@@ -127,7 +127,7 @@ protected:
      * @param audioFormat The audio format to check
      * @return @c true if the endiannesses don't match and @c false otherwise.
      */
-    static bool isByteswappingRequired(avsCommon::AudioFormat audioFormat);
+    static bool isByteswappingRequired(avsCommon::utils::AudioFormat audioFormat);
 private:
     /**
      * The observers to notify on key word detections. This should be locked with m_keyWordObserversMutex prior to

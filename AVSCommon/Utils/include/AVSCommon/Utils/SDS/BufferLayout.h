@@ -444,11 +444,11 @@ template <typename T>
 bool SharedDataStream<T>::BufferLayout::init(size_t wordSize, size_t maxReaders) {
     // Make sure parameters are not too large to store.
     if (wordSize > std::numeric_limits<decltype(Header::wordSize)>::max()) {
-        avsUtils::Logger::log("BufferLayout::init failed: wordSize is too large.");
+        utils::logger::deprecated::Logger::log("BufferLayout::init failed: wordSize is too large.");
         return false;
     }
     if (maxReaders > std::numeric_limits<decltype(Header::maxReaders)>::max()) {
-        avsUtils::Logger::log("BufferLayout::init failed: maxReaders is too large.");
+        utils::logger::deprecated::Logger::log("BufferLayout::init failed: maxReaders is too large.");
         return false;
     }
     
@@ -493,26 +493,26 @@ bool SharedDataStream<T>::BufferLayout::attach() {
     // Verify compatibility.
     auto header = getHeader();
     if (header->magic != MAGIC_NUMBER) {
-        avsUtils::Logger::log("BufferLayout::attach failed: Invalid magic number in buffer header.");
+        utils::logger::deprecated::Logger::log("BufferLayout::attach failed: Invalid magic number in buffer header.");
         return false;
     }
     if (header->version != VERSION) {
-        avsUtils::Logger::log("BufferLayout::attach failed: Incompatible version in buffer header.");
+        utils::logger::deprecated::Logger::log("BufferLayout::attach failed: Incompatible version in buffer header.");
         return false;
     }
     if (header->traitsNameHash != stableHash(T::traitsName)) {
-        avsUtils::Logger::log("BufferLayout::attach failed: Incompatible traits hash in buffer header.");
+        utils::logger::deprecated::Logger::log("BufferLayout::attach failed: Incompatible traits hash in buffer header.");
         return false;
     }
 
     // Attach.
     std::lock_guard<Mutex> lock(header->attachMutex);
     if (0 == header->referenceCount) {
-        avsUtils::Logger::log("BufferLayout::attach failed: Can not attach to a buffer which has no other users.");
+        utils::logger::deprecated::Logger::log("BufferLayout::attach failed: Can not attach to a buffer which has no other users.");
         return false;
     }
     if (std::numeric_limits<decltype(header->referenceCount)>::max() == header->referenceCount) {
-        avsUtils::Logger::log("BufferLayout::attach failed: Too many users attached to buffer.");
+        utils::logger::deprecated::Logger::log("BufferLayout::attach failed: Too many users attached to buffer.");
         return false;
     }
     ++header->referenceCount;

@@ -21,7 +21,7 @@
 #include <memory>
 #include <string>
 
-#include "ACL/AuthObserverInterface.h"
+#include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace acl {
@@ -52,7 +52,7 @@ public:
      *
      * @param observer The object to observe this authorization state of this AuthDelegate.
      */
-    virtual void setAuthObserver(std::shared_ptr<AuthObserverInterface> observer) = 0;
+    virtual void setAuthObserver(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> observer) = 0;
 
     /**
      * Get the current LWA authoriation token.

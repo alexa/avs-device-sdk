@@ -49,9 +49,6 @@ inline std::string initiatorToString(Initiator initiator) {
         case Initiator::WAKEWORD:
             return "WAKEWORD";
     }
-    avsUtils::Logger::log(
-            "initiatorToString failed: unknown initiator " +
-            std::to_string(static_cast<int>(initiator)) + ".");
     return "Unknown Inititator";
 }
 

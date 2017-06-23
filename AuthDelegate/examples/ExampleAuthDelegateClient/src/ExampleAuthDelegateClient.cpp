@@ -17,16 +17,14 @@
 
 #include <cstdlib>
 #include <fstream>
-#include <iostream>
 
-#include <AVSUtils/Initialization/AlexaClientSDKInit.h>
-#include <AVSUtils/Logger/LogEntry.h>
-#include <AVSUtils/Logging/Logger.h>
+#include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "AuthDelegate/AuthDelegate.h"
 
 using namespace alexaClientSDK;
-using acl::AuthObserverInterface;
+using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 using authDelegate::AuthDelegate;
 
 /// String to identify log entries originating from this file.
@@ -37,7 +35,7 @@ static const std::string TAG("AlexAuthDelegateClient");
  *
  * @param The event string for this @c LogEntry.
  */
-#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// Simple implementation of the AuthDelegateObserverInterface.
 class Observer : public AuthObserverInterface {
@@ -50,8 +48,12 @@ public:
     void onAuthStateChange(
             AuthObserverInterface::State newState,
             AuthObserverInterface::Error error = AuthObserverInterface::Error::NO_ERROR) override {
-        std::cout << "onAuthTokenStateChange: (newState=" << static_cast<int>(newState) 
-            << ", newError=" << static_cast<int>(error) << std::endl;
+        if (error == AuthObserverInterface::Error::NO_ERROR) {
+            ACSDK_DEBUG(LX("onAuthStateChange").d("newState", newState));
+        } else {
+            ACSDK_ERROR(LX("onAuthStateChangeError").d("newState", newState).d("error", error));
+        }
+
         std::lock_guard<std::mutex> lock(m_mutex);
         m_state = newState;
         m_error = error;
@@ -64,7 +66,7 @@ public:
      */
     bool wait() {
         std::unique_lock<std::mutex> lock(m_mutex);
-        m_wakeTrigger.wait(lock, [this](){
+        m_wakeTrigger.wait(lock, [this]() {
             return AuthObserverInterface::State::REFRESHED == m_state ||
                    AuthObserverInterface::State::UNRECOVERABLE_ERROR == m_state;
         });
@@ -91,7 +93,7 @@ int exerciseAuthDelegate() {
     auto authDelegate = AuthDelegate::create();
 
     if (!authDelegate) {
-        std::cerr << "AuthDelegate::Create() failed." << std::endl;
+        ACSDK_ERROR(LX("exerciseAuthDelegateFailed").d("reason", "failedToCreateAuthDelegate"));
         return EXIT_FAILURE;
     }
 
@@ -105,10 +107,8 @@ int exerciseAuthDelegate() {
     }
 
     for (int ix = 0; ix < 100; ix++) {
-        std::cout
-            << "getAccessToken() returned: "
-            << authDelegate->getAuthToken()
-            << std::endl;
+        std::string accessToken = authDelegate->getAuthToken();
+        ACSDK_DEBUG(LX("getAccessToken").sensitive("token", accessToken));
         std::this_thread::sleep_for(std::chrono::seconds(2));
     }
 
@@ -129,11 +129,11 @@ int main(int argc, const char* argv[]) {
                 .d("path", argv[1]));
         return EXIT_FAILURE;
     }
-    if (!avsUtils::initialization::AlexaClientSDKInit::initialize({&infile})) {
+    if (!avsCommon::avs::initialization::AlexaClientSDKInit::initialize({&infile})) {
         ACSDK_ERROR(LX("ExampleAuthDelegateClientFailed").d("reason", "alexaClientSDKInitFailed"));
         return EXIT_FAILURE;
     }
     auto result = exerciseAuthDelegate();
-    avsUtils::initialization::AlexaClientSDKInit::uninitialize();
+    avsCommon::avs::initialization::AlexaClientSDKInit::uninitialize();
     return result;
 }

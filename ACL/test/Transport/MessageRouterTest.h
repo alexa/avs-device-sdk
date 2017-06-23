@@ -1,4 +1,4 @@
-/**
+/*
  * MessageRouterTest.h
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -22,8 +22,8 @@
 #include <sstream>
 #include <string>
 
-#include "AVSUtils/Threading/Executor.h"
-#include "AVSUtils/Memory/Memory.h"
+#include "AVSCommon/Utils/Threading/Executor.h"
+#include "AVSCommon/Utils/Memory/Memory.h"
 
 #include "MockMessageRouterObserver.h"
 #include "MockAuthDelegate.h"
@@ -38,8 +38,8 @@ namespace test {
 using namespace transport;
 using namespace transport::test;
 using namespace avsCommon::avs::attachment;
-using namespace avsUtils::threading;
-using namespace avsUtils::memory;
+using namespace avsCommon::utils::threading;
+using namespace avsCommon::utils::memory;
 
 using namespace ::testing;
 
@@ -50,9 +50,8 @@ public:
             std::shared_ptr<AttachmentManager> attachmentManager,
             std::shared_ptr<MockTransport> transport,
             const std::string& avsEndpoint,
-            std::shared_ptr<avsUtils::threading::Executor> sendExecutor,
-            std::shared_ptr<avsUtils::threading::Executor> receiveExecutor)
-            : MessageRouter(authDelegate, attachmentManager, avsEndpoint, sendExecutor, receiveExecutor),
+            std::shared_ptr<avsCommon::utils::threading::Executor> executor)
+            : MessageRouter(authDelegate, attachmentManager, avsEndpoint, executor),
               m_mockTransport{transport} {
     }
 
@@ -83,28 +82,25 @@ public:
             m_mockAuthDelegate{std::make_shared<MockAuthDelegate>()},
             m_attachmentManager{std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS)},
             m_mockTransport{std::make_shared<NiceMock<MockTransport>>()},
-            m_sendExecutor{std::make_shared<Executor>()},
-            m_receiveExecutor{std::make_shared<Executor>()},
+            m_executor{std::make_shared<Executor>()},
             m_router{m_mockAuthDelegate,
                      m_attachmentManager,
                      m_mockTransport,
                      AVS_ENDPOINT,
-                     m_sendExecutor,
-                     m_receiveExecutor} {
+                     m_executor} {
         m_router.setObserver(m_mockMessageRouterObserver);
     }
 
     void TearDown() {
         // Wait on both executors to ensure everything is finished
-        waitOnExecutor(m_sendExecutor, SHORT_TIMEOUT_MS);
-        waitOnExecutor(m_receiveExecutor, SHORT_TIMEOUT_MS);
+        waitOnExecutor(m_executor, SHORT_TIMEOUT_MS);
     }
 
     std::shared_ptr<avsCommon::avs::MessageRequest> createMessageRequest() {
         return std::make_shared<avsCommon::avs::MessageRequest>(MESSAGE, nullptr);
     }
     void waitOnExecutor(std::shared_ptr<Executor> executor, std::chrono::milliseconds millisecondsToWait) {
-        auto future = executor->submit([](){;});
+        auto future = executor->submit([]() {;});
         auto status = future.wait_for(millisecondsToWait);
 
         ASSERT_EQ(std::future_status::ready, status);
@@ -130,8 +126,7 @@ public:
     std::shared_ptr<MockAuthDelegate> m_mockAuthDelegate;
     std::shared_ptr<AttachmentManager> m_attachmentManager;
     std::shared_ptr<NiceMock<MockTransport>> m_mockTransport;
-    std::shared_ptr<avsUtils::threading::Executor> m_sendExecutor;
-    std::shared_ptr<avsUtils::threading::Executor> m_receiveExecutor;
+    std::shared_ptr<avsCommon::utils::threading::Executor> m_executor;
     TestableMessageRouter m_router;
 };
 

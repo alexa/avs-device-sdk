@@ -1,7 +1,7 @@
 /*
  * AbstractKeywordDetector.cpp
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,15 +15,26 @@
  * permissions and limitations under the License.
  */
 
-#include "AVSUtils/Logging/Logger.h"
- 
+#include <AVSCommon/Utils/Logger/Logger.h>
+
 #include "KWD/AbstractKeywordDetector.h"
 
 namespace alexaClientSDK {
 namespace kwd {
 
 using namespace avsCommon;
+using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("AbstractKeywordDetector");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 void AbstractKeywordDetector::addKeyWordObserver(std::shared_ptr<KeyWordObserverInterface> keyWordObserver) {
     std::lock_guard<std::mutex> lock(m_keyWordObserversMutex);
@@ -48,9 +59,9 @@ void AbstractKeywordDetector::removeKeyWordDetectorStateObserver(
 }
 
 AbstractKeywordDetector::AbstractKeywordDetector(
-        std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers, 
+        std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
         std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers) :
-    m_keyWordObservers{keyWordObservers}, 
+    m_keyWordObservers{keyWordObservers},
     m_keyWordDetectorStateObservers{keyWordDetectorStateObservers},
     m_detectorState{KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED} {
 }
@@ -79,11 +90,11 @@ void AbstractKeywordDetector::notifyKeyWordDetectorStateObservers(
 }
 
 ssize_t AbstractKeywordDetector::readFromStream(
-        std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream::Reader> reader,
-        std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream> stream,
-        void * buf, 
+        std::shared_ptr<avsCommon::avs::AudioInputStream::Reader> reader,
+        std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+        void * buf,
         size_t nWords,
-        std::chrono::milliseconds timeout, 
+        std::chrono::milliseconds timeout,
         bool* errorOccurred) {
     if (errorOccurred) {
         *errorOccurred = false;
@@ -91,7 +102,7 @@ ssize_t AbstractKeywordDetector::readFromStream(
     ssize_t wordsRead = reader->read(buf, nWords, timeout);
     // Stream has been closed
     if (wordsRead == 0) {
-        avsUtils::Logger::log("Reader stream has been closed");
+        ACSDK_DEBUG(LX("readFromStream").d("event", "streamClosed"));
         notifyKeyWordDetectorStateObservers(
             KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED);
         if (errorOccurred) {
@@ -101,19 +112,22 @@ ssize_t AbstractKeywordDetector::readFromStream(
     } else if (wordsRead < 0) {
         switch (wordsRead) {
             case AudioInputStream::Reader::Error::OVERRUN:
-                avsUtils::Logger::log(
-                    "Reader of stream has been overwritten by " + 
-                    std::to_string(reader->tell(AudioInputStream::Reader::Reference::BEFORE_WRITER) - 
-                    stream->getDataSize()) + "words"
-                );
+                ACSDK_ERROR(LX("readFromStreamFailed")
+                        .d("reason", "streamOverrun")
+                        .d("numWordsOverrun",
+                            std::to_string(reader->tell(AudioInputStream::Reader::Reference::BEFORE_WRITER) - stream->getDataSize())));
                 reader->seek(0, AudioInputStream::Reader::Reference::BEFORE_WRITER);
                 break;
             case AudioInputStream::Reader::Error::TIMEDOUT:
-                avsUtils::Logger::log("Reader of stream has timed out");
+                ACSDK_INFO(LX("readFromStreamFailed").d("reason", "readerTimeOut"));
                 break;
             default:
                 // We should never get this since we are using a Blocking Reader.
-                avsUtils::Logger::log("Unexpected return error from Reader");
+                ACSDK_ERROR(LX("readFromStreamFailed")
+                    .d("reason", "unexpectedError")
+                    // Leave as ssize_t to avoid messiness of casting to enum.
+                    .d("error", wordsRead));
+
                 notifyKeyWordDetectorStateObservers(
                     KeyWordDetectorStateObserverInterface::KeyWordDetectorState::ERROR);
                 if (errorOccurred) {
@@ -125,7 +139,7 @@ ssize_t AbstractKeywordDetector::readFromStream(
     return wordsRead;
 }
 
-bool AbstractKeywordDetector::isByteswappingRequired(avsCommon::AudioFormat audioFormat) {
+bool AbstractKeywordDetector::isByteswappingRequired(avsCommon::utils::AudioFormat audioFormat) {
     bool isPlatformLittleEndian = false;
     int num = 1;
     char* firstBytePtr = reinterpret_cast<char*>(&num);
@@ -133,7 +147,7 @@ bool AbstractKeywordDetector::isByteswappingRequired(avsCommon::AudioFormat audi
         isPlatformLittleEndian = true;
     }
 
-    bool isFormatLittleEndian = (audioFormat.endianness == avsCommon::AudioFormat::Endianness::LITTLE);
+    bool isFormatLittleEndian = (audioFormat.endianness == avsCommon::utils::AudioFormat::Endianness::LITTLE);
     return isPlatformLittleEndian != isFormatLittleEndian;
 }
 

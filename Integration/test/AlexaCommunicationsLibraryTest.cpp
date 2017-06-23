@@ -29,9 +29,9 @@
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachment.h>
 #include <AVSCommon/Utils/SDS/InProcessSDS.h>
-#include <AVSUtils/Initialization/AlexaClientSDKInit.h>
-#include <AVSUtils/Logger/LogEntry.h>
-#include <AVSUtils/Logging/Logger.h>
+#include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
+#include <AVSCommon/Utils/Logger/LogEntry.h>
+#include <AVSCommon/Utils/Logger/DeprecatedLogger.h>
 
 #include "Integration/AuthObserver.h"
 #include "Integration/ClientMessageHandler.h"
@@ -47,7 +47,7 @@ using namespace authDelegate;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::utils::sds;
-using namespace avsUtils::initialization;
+using namespace avsCommon::avs::initialization;
 
 /// This is a basic synchronize JSON message which may be used to initiate a connection with AVS.
 static const std::string SYNCHRONIZE_STATE_JSON =
@@ -197,7 +197,7 @@ public:
         m_avsConnectionManager = AVSConnectionManager::create(
                 m_messageRouter,
                 isEnabled,
-                m_connectionStatusObserver,
+                { m_connectionStatusObserver },
                 m_clientMessageHandler);
         connect();
     }
@@ -306,9 +306,8 @@ public:
 
 /// Test connecting and disconnecting from AVS.
 TEST_F(AlexaCommunicationsLibraryTest, testConnectAndDisconnect) {
-    /*
-     * Connect is called in SetUp and disconnect is called in TearDown.  This function requires no additional logic.
-     */
+    // Connect is called in SetUp and disconnect is called in TearDown. Simply check that we are connected.
+    ASSERT_TRUE(m_avsConnectionManager->isConnected());
 }
 
 /**
@@ -378,8 +377,8 @@ TEST_F(AlexaCommunicationsLibraryTest, testSendEventsSerially) {
 TEST_F(AlexaCommunicationsLibraryTest, testSendEventsConcurrently) {
     std::vector<std::future<void>> futures;
 
-    for(int i = 0; i < MAX_CONCURRENT_STREAMS; ++i){
-        auto future = std::async(std::launch::async, [this](){ sendRandomEvent(); });
+    for (int i = 0; i < MAX_CONCURRENT_STREAMS; ++i) {
+        auto future = std::async(std::launch::async, [this]() { sendRandomEvent(); });
         futures.push_back(std::move(future));
     }
 
@@ -418,6 +417,22 @@ TEST_F(AlexaCommunicationsLibraryTest, testPersistentConnection) {
                                 << "Connection changed after a response was received";
     sendEvent(CT_RECOGNIZE_EVENT_JSON, MessageRequest::Status::SUCCESS, std::chrono::seconds(10),
             attachmentReader);
+}
+
+/**
+ * Test add- and removeConnectionStatuObserver, expecting the observer to be updated only when it is added.
+ */
+TEST_F(AlexaCommunicationsLibraryTest, testMultipleConnectionStatusObservers) {
+    auto observer = std::make_shared<ConnectionStatusObserver>();
+    m_avsConnectionManager->addConnectionStatusObserver(observer);
+
+    ASSERT_TRUE(observer->waitFor(ConnectionStatusObserverInterface::Status::CONNECTED));
+
+    // Remove the observer and disconnect, expecting the status to not change.
+    m_avsConnectionManager->removeConnectionStatusObserver(observer);
+    disconnect();
+    ASSERT_EQ(observer->getConnectionStatus(), ConnectionStatusObserverInterface::Status::CONNECTED);
+    ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::DISCONNECTED));
 }
 
 } // namespace test

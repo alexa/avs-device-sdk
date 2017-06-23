@@ -1,7 +1,7 @@
 /*
  * MediaPlayer.cpp
  *
- * Copyright 2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,8 +17,7 @@
 
 #include <cstring>
 
-#include <AVSUtils/Logger/LogEntry.h>
-#include <AVSUtils/Logging/Logger.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/AVS/Attachment/AttachmentReader.h>
 
 #include "MediaPlayer/MediaPlayer.h"
@@ -26,7 +25,7 @@
 namespace alexaClientSDK {
 namespace mediaPlayer {
 
-using namespace avsUtils;
+using namespace avsCommon::utils;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::avs::attachment;
 
@@ -38,14 +37,7 @@ static const std::string TAG("MediaPlayer");
  *
  * @param The event string for this @c LogEntry.
  */
-#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
-
-// Extra detailed logging. Suppressed by default.
-#ifdef ENABLE_MEDIA_PLAYER_DEBUG9_LOGGING
-#define ACSDK_DEBUG9(...) ACSDK_DEBUG(__VA_ARGS__)
-#else
-#define ACSDK_DEBUG9(...)
-#endif
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 // Macro used to verify that various methods are running on the worker thread as expected.
 #ifdef DEBUG
@@ -99,7 +91,7 @@ MediaPlayerStatus MediaPlayer::setSource(std::unique_ptr<AttachmentReader> reade
     ACSDK_DEBUG9(LX("setSourceCalled"));
     std::promise<MediaPlayerStatus> promise;
     auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &promise, &reader](){
+    std::function<gboolean()> callback = [this, &promise, &reader]() {
         handleSetSource(&promise, std::move(reader));
         return false;
     };
@@ -111,7 +103,7 @@ MediaPlayerStatus MediaPlayer::play() {
     ACSDK_DEBUG9(LX("playCalled"));
     std::promise<MediaPlayerStatus> promise;
     auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &promise](){
+    std::function<gboolean()> callback = [this, &promise]() {
         handlePlay(&promise);
         return false;
     };
@@ -123,7 +115,7 @@ MediaPlayerStatus MediaPlayer::stop() {
     ACSDK_DEBUG9(LX("stopCalled"));
     std::promise<MediaPlayerStatus> promise;
     auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &promise](){
+    std::function<gboolean()> callback = [this, &promise]() {
         handleStop(&promise);
         return false;
     };
@@ -135,7 +127,7 @@ int64_t MediaPlayer::getOffsetInMilliseconds() {
     ACSDK_DEBUG9(LX("getOffsetInMillisecondsCalled"));
     std::promise<int64_t> promise;
     auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &promise](){
+    std::function<gboolean()> callback = [this, &promise]() {
         handleGetOffsetInMilliseconds(&promise);
         return false;
     };
@@ -147,7 +139,7 @@ void MediaPlayer::setObserver(std::shared_ptr<MediaPlayerObserverInterface> obse
     ACSDK_DEBUG9(LX("setObserverCalled"));
     std::promise<void> promise;
     auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &promise, observer](){
+    std::function<gboolean()> callback = [this, &promise, observer]() {
         handleSetObserver(&promise, observer);
         return false;
     };
@@ -165,7 +157,7 @@ MediaPlayer::MediaPlayer() :
 }
 
 MediaPlayerStatus MediaPlayer::initPlayer() {
-    if(false == gst_init_check (NULL, NULL, NULL)) {
+    if (false == gst_init_check (NULL, NULL, NULL)) {
         ACSDK_ERROR(LX("initPlayerFailed").d("reason", "gstInitCheckFailed"));
         return MediaPlayerStatus::FAILURE;
     }
@@ -275,7 +267,7 @@ void MediaPlayer::onPadAdded(GstElement *decoder, GstPad *pad, gpointer pointer)
     auto mediaPlayer = static_cast<MediaPlayer*>(pointer);
     std::promise<void> promise;
     auto future = promise.get_future();
-    std::function<gboolean()> callback = [mediaPlayer, &promise, decoder, pad](){
+    std::function<gboolean()> callback = [mediaPlayer, &promise, decoder, pad]() {
         mediaPlayer->handlePadAdded(&promise, decoder, pad);
         return false;
     };

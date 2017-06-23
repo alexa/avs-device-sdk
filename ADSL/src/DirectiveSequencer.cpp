@@ -1,28 +1,27 @@
 /*
-* DirectiveSequencer.cpp
-*
-* Copyright 2017 Amazon.com, Inc. or its affiliates.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * DirectiveSequencer.cpp
+ *
+ * Copyright 2017 Amazon.com, Inc. or its affiliates.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #include <algorithm>
 #include <iostream>
 #include <sstream>
 
-#include <AVSCommon/ExceptionEncountered.h>
-#include <AVSUtils/Logger/LogEntry.h>
-#include <AVSUtils/Logging/Logger.h>
+#include <AVSCommon/AVS/ExceptionErrorType.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "ADSL/DirectiveSequencer.h"
 
@@ -34,7 +33,7 @@ static const std::string TAG("DirectiveSequencer");
  *
  * @param The event string for this @c LogEntry.
  */
-#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 namespace alexaClientSDK {
 namespace adsl {
@@ -44,7 +43,7 @@ using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 
 std::unique_ptr<DirectiveSequencerInterface> DirectiveSequencer::create(
-        std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionSender) {
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) {
     if (!exceptionSender) {
         ACSDK_INFO(LX("createFailed").d("reason", "nullptrExceptionSender"));
         return nullptr;
@@ -69,12 +68,12 @@ void DirectiveSequencer::shutdown() {
     m_directiveProcessor->shutdown();
 }
 
-bool DirectiveSequencer::addDirectiveHandlers(const DirectiveHandlerConfiguration& configuration) {
-    return m_directiveRouter.addDirectiveHandlers(configuration);
+bool DirectiveSequencer::addDirectiveHandler(std::shared_ptr<DirectiveHandlerInterface> handler) {
+    return m_directiveRouter.addDirectiveHandler(handler);
 }
 
-bool DirectiveSequencer::removeDirectiveHandlers(const DirectiveHandlerConfiguration& configuration) {
-    return m_directiveRouter.removeDirectiveHandlers(configuration);
+bool DirectiveSequencer::removeDirectiveHandler(std::shared_ptr<DirectiveHandlerInterface> handler) {
+    return m_directiveRouter.removeDirectiveHandler(handler);
 }
 
 void DirectiveSequencer::setDialogRequestId(const std::string& dialogRequestId) {
@@ -101,7 +100,7 @@ bool DirectiveSequencer::onDirective(std::shared_ptr<AVSDirective> directive) {
 }
 
 DirectiveSequencer::DirectiveSequencer(
-        std::shared_ptr<avsCommon::ExceptionEncounteredSenderInterface> exceptionSender) :
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) :
         m_mutex{},
         m_exceptionSender{exceptionSender},
         m_isShuttingDown{false} {
@@ -141,7 +140,7 @@ void DirectiveSequencer::receiveDirectiveLocked(std::unique_lock<std::mutex> &lo
         ACSDK_INFO(LX("sendingExceptionEncountered").d("messageId", directive->getMessageId()));
         m_exceptionSender->sendExceptionEncountered(
                 directive->getUnparsedDirective(),
-                avsCommon::ExceptionErrorType::UNSUPPORTED_OPERATION,
+                ExceptionErrorType::UNSUPPORTED_OPERATION,
                 "Unsupported operation");
     }
     lock.lock();

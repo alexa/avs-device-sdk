@@ -15,6 +15,7 @@
  * permissions and limitations under the License.
  */
 
+#include <functional>
 #include <iostream>
 #include <random>
 #include <sstream>
@@ -22,10 +23,9 @@
 #include <rapidjson/error/en.h>
 #include <unordered_map>
 
-#include <AVSUtils/Configuration/ConfigurationNode.h>
-#include <AVSUtils/Initialization/AlexaClientSDKInit.h>
-#include <AVSUtils/Logger/LogEntry.h>
-#include <AVSUtils/Logging/Logger.h>
+#include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
+#include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "AuthDelegate/AuthDelegate.h"
 #include "AuthDelegate/HttpPost.h"
@@ -33,7 +33,7 @@
 namespace alexaClientSDK {
 namespace authDelegate {
 
-using acl::AuthObserverInterface;
+using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AuthDelegate");
@@ -43,7 +43,7 @@ static const std::string TAG("AuthDelegate");
  *
  * @param The event string for this @c LogEntry.
  */
-#define LX(event) alexaClientSDK::avsUtils::logger::LogEntry(TAG, event)
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// Name of @c ConfigurationNode for AuthDelegate
 const std::string CONFIG_KEY_AUTH_DELEGATE = "authDelegate";
@@ -136,7 +136,7 @@ static bool isUnrecoverable(const std::string & error) {
  */
 static bool isUnrecoverable(AuthObserverInterface::Error error) {
     for (auto errorCodeMapElement : g_unrecoverableErrorCodeMap) {
-        if(errorCodeMapElement.second == error) {
+        if (errorCodeMapElement.second == error) {
             return true;
         }
     }
@@ -155,11 +155,11 @@ static AuthObserverInterface::Error getErrorCode(const std::string & error) {
         return AuthObserverInterface::Error::NO_ERROR;
     } else {
         auto errorIterator = g_recoverableErrorCodeMap.find(error);
-        if(g_recoverableErrorCodeMap.end() != errorIterator) {
+        if (g_recoverableErrorCodeMap.end() != errorIterator) {
             return errorIterator->second;
         } else {
             errorIterator = g_unrecoverableErrorCodeMap.find(error);
-            if(g_unrecoverableErrorCodeMap.end() != errorIterator) {
+            if (g_unrecoverableErrorCodeMap.end() != errorIterator) {
                 return errorIterator->second;
             }
         }
@@ -220,7 +220,7 @@ std::unique_ptr<AuthDelegate> AuthDelegate::create() {
 }
 
 std::unique_ptr<AuthDelegate> AuthDelegate::create(std::unique_ptr<HttpPostInterface> httpPost) {
-    if (!avsUtils::initialization::AlexaClientSDKInit::isInitialized()) {
+    if (!avsCommon::avs::initialization::AlexaClientSDKInit::isInitialized()) {
         ACSDK_ERROR(LX("createFailed").d("reason", "sdkNotInitialized"));
         return nullptr;
     }
@@ -268,7 +268,7 @@ std::string AuthDelegate::getAuthToken() {
 }
 
 bool AuthDelegate::init() {
-    auto configuration = avsUtils::configuration::ConfigurationNode::getRoot()[CONFIG_KEY_AUTH_DELEGATE];
+    auto configuration = avsCommon::utils::configuration::ConfigurationNode::getRoot()[CONFIG_KEY_AUTH_DELEGATE];
     if (!configuration) {
         ACSDK_ERROR(LX("initFailed").d("reason", "missingConfigurationValue").d("key", CONFIG_KEY_AUTH_DELEGATE));
         return false;

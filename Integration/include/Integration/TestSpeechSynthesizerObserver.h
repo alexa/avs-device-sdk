@@ -1,7 +1,7 @@
 /*
  * TestSpeechSynthesizerObserver.h
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,10 +23,7 @@
 #include <mutex>
 #include <condition_variable>
 
-#include "SpeechSynthesizer/SpeechSynthesizerObserver.h"
-#include "SpeechSynthesizer/SpeechSynthesizerState.h"
-
-using namespace alexaClientSDK::capabilityAgents::speechSynthesizer;
+#include <AVSCommon/SDKInterfaces/SpeechSynthesizerObserver.h>
 
 namespace alexaClientSDK {
 namespace integration {
@@ -35,25 +32,27 @@ namespace test {
 /**
  * Interface for observing a SpeechSynthesizer.
  */
-class TestSpeechSynthesizerObserver : public SpeechSynthesizerObserver {
+class TestSpeechSynthesizerObserver : public avsCommon::sdkInterfaces::SpeechSynthesizerObserver {
 public:
     TestSpeechSynthesizerObserver();
 
     ~TestSpeechSynthesizerObserver() = default;
 
-    void onStateChanged(SpeechSynthesizerState state) override;
+    void onStateChanged(avsCommon::sdkInterfaces::SpeechSynthesizerObserver::SpeechSynthesizerState state) override;
 
-    bool checkState(const SpeechSynthesizerState expectedState, const std::chrono::seconds duration);
+    bool checkState(
+            const avsCommon::sdkInterfaces::SpeechSynthesizerObserver::SpeechSynthesizerState expectedState, const std::chrono::seconds duration);
 
-    SpeechSynthesizerState waitForNext (const std::chrono::seconds duration);
+    avsCommon::sdkInterfaces::SpeechSynthesizerObserver::SpeechSynthesizerState waitForNext (
+            const std::chrono::seconds duration);
     
-    SpeechSynthesizerState getCurrentState();
+    avsCommon::sdkInterfaces::SpeechSynthesizerObserver::SpeechSynthesizerState getCurrentState();
 
 private:
-    SpeechSynthesizerState m_state;
+    avsCommon::sdkInterfaces::SpeechSynthesizerObserver::SpeechSynthesizerState m_state;
     std::mutex m_mutex;
     std::condition_variable m_wakeTrigger;
-    std::deque<SpeechSynthesizerState> m_queue;
+    std::deque<avsCommon::sdkInterfaces::SpeechSynthesizerObserver::SpeechSynthesizerState> m_queue;
 };
 
 } // namespace test

@@ -1,7 +1,7 @@
 /*
  * SensoryKeywordDetector.h
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,8 +23,8 @@
 #include <thread>
 #include <unordered_set>
 
-#include <AVSCommon/AudioFormat.h>
-#include <AVSCommon/SDKInterfaces/AudioInputStream.h>
+#include <AVSCommon/Utils/AudioFormat.h>
+#include <AVSCommon/AVS/AudioInputStream.h>
 #include <AVSCommon/SDKInterfaces/KeyWordObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/KeyWordDetectorStateObserverInterface.h>
 
@@ -35,6 +35,7 @@ namespace alexaClientSDK {
 namespace kwd {
 
 using namespace avsCommon;
+using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 
 class SensoryKeywordDetector : public AbstractKeywordDetector {
@@ -57,7 +58,7 @@ public:
      */
     static std::unique_ptr<SensoryKeywordDetector> create(
             std::shared_ptr<AudioInputStream> stream,
-            avsCommon::AudioFormat audioFormat,
+            avsCommon::utils::AudioFormat audioFormat,
             std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers, 
             std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> 
                 keyWordDetectorStateObservers,
@@ -88,7 +89,7 @@ private:
             std::shared_ptr<AudioInputStream> stream, 
             std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers, 
             std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers,
-            avsCommon::AudioFormat audioFormat,
+            avsCommon::utils::AudioFormat audioFormat,
             std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(10));
 
     /**
@@ -126,16 +127,16 @@ private:
     std::atomic<bool> m_isShuttingDown;
 
     /// The stream of audio data.
-    const std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream> m_stream;
+    const std::shared_ptr<avsCommon::avs::AudioInputStream> m_stream;
 
     /// The reader that will be used to read audio data from the stream.
-    std::shared_ptr<avsCommon::sdkInterfaces::AudioInputStream::Reader> m_streamReader;
+    std::shared_ptr<avsCommon::avs::AudioInputStream::Reader> m_streamReader;
 
     /**
      * This serves as a reference point used when notifying observers of keyword detection indices since Sensory has no
      * way of specifying a start index.
      */
-    avsCommon::sdkInterfaces::AudioInputStream::Index m_beginIndexOfStreamReader;
+    avsCommon::avs::AudioInputStream::Index m_beginIndexOfStreamReader;
 
     /// Internal thread that reads audio from the buffer and feeds it to the Sensory engine.
     std::thread m_detectionThread;
