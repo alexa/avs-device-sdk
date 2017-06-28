@@ -98,7 +98,7 @@ private:
      *
      * @return Whether the downchannel stream was successfully set up.
      */
-    bool setupDownchannelStream();
+    bool setupDownchannelStreamLocked();
 
     /**
      * Main network loop. Will establish a connection then repeatedly call curl_multi_perform in order to

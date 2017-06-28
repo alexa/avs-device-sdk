@@ -154,7 +154,7 @@ bool HTTP2Transport::connect() {
         return false;
     }
 
-    if (!setupDownchannelStream()) {
+    if (!setupDownchannelStreamLocked()) {
         m_multi.reset();
         logger::deprecated::Logger::log("Could not setup Downchannel stream");
         return false;
@@ -191,14 +191,14 @@ void HTTP2Transport::send(std::shared_ptr<avsCommon::avs::MessageRequest> reques
     }
 }
 
-bool HTTP2Transport::setupDownchannelStream() {
+bool HTTP2Transport::setupDownchannelStreamLocked() {
     if (m_downchannelStream) {
         CURLMcode ret = curl_multi_remove_handle(m_multi->handle, m_downchannelStream->getCurlHandle());
         if (ret != CURLM_OK) {
             logger::deprecated::Logger::log(
                     std::string("Could not remove downchannel stream from multi handle. error=") +
                             curl_multi_strerror(ret));
-            setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
+            setIsStoppingLocked(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
             return false;
         }
         m_streamPool.releaseStream(m_downchannelStream);
@@ -208,7 +208,7 @@ bool HTTP2Transport::setupDownchannelStream() {
     std::string authToken = m_authDelegate->getAuthToken();
     if (authToken.empty()) {
         logger::deprecated::Logger::log("Could not get auth token.");
-        setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INVALID_AUTH);
+        setIsStoppingLocked(ConnectionStatusObserverInterface::ChangedReason::INVALID_AUTH);
         return false;
     }
 
@@ -216,7 +216,7 @@ bool HTTP2Transport::setupDownchannelStream() {
     m_downchannelStream = m_streamPool.createGetStream(url, authToken, m_messageConsumer);
     if (!m_downchannelStream) {
         logger::deprecated::Logger::log("Could not setup downchannel stream");
-        setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
+        setIsStoppingLocked(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
         return false;
     }
     // Since the downchannel is the first stream to be established, make sure it times out if
@@ -224,7 +224,7 @@ bool HTTP2Transport::setupDownchannelStream() {
     if (!m_downchannelStream->setConnectionTimeout(ESTABLISH_CONNECTION_TIMEOUT)) {
         m_streamPool.releaseStream(m_downchannelStream);
         m_downchannelStream.reset();
-        setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
+        setIsStoppingLocked(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
         return false;
     }
 
@@ -235,7 +235,7 @@ bool HTTP2Transport::setupDownchannelStream() {
         logger::deprecated::Logger::log(
                 std::string("Could not add downchannel stream to multi handle. error=") +
                         curl_multi_strerror(result));
-        setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
+        setIsStoppingLocked(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
         return false;
     }
 
@@ -438,9 +438,11 @@ bool HTTP2Transport::establishConnection() {
             setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
         }
     }
-    if (!setupDownchannelStream()) {
+
+    std::lock_guard<std::mutex> lock(m_mutex);
+    if (!setupDownchannelStreamLocked()) {
         logger::deprecated::Logger::log("establishConnectionFailed:reason=setupDownchannelStreamFailed.");
-        setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
+        setIsStoppingLocked(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
     }
     return false;
 }
