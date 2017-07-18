@@ -17,18 +17,61 @@
 
 #include "AVSCommon/Utils/JSON/JSONUtils.h"
 
-#include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
-#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
+#include "AVSCommon/Utils/Logger/Logger.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
 namespace json {
 namespace jsonUtils {
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("JsonUtils");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+/**
+ * Write a @c rapidjson::Type value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param type The type value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+static std::ostream& operator<<(std::ostream& stream, rapidjson::Type type) {
+    switch (type) {
+        case rapidjson::Type::kNullType:
+            stream << "NULL";
+            break;
+        case rapidjson::Type::kFalseType:
+            stream << "FALSE";
+            break;
+        case rapidjson::Type::kTrueType:
+            stream << "TRUE";
+            break;
+        case rapidjson::Type::kObjectType:
+            stream << "OBJECT";
+            break;
+        case rapidjson::Type::kArrayType:
+            stream << "ARRAY";
+            break;
+        case rapidjson::Type::kStringType:
+            stream << "STRING";
+            break;
+        case rapidjson::Type::kNumberType:
+            stream << "NUMBER";
+            break;
+    }
+    return stream;
+}
 
 /**
  * Invoke a rapidjson parse a on JSON string.
@@ -37,31 +80,22 @@ namespace jsonUtils {
  * @param[out] document The output parameter rapidjson document.
  * @return @c true If the JSON content was valid, @c false otherwise.
  */
-static bool parseJSON(const std::string& jsonContent, rapidjson::Document* document) {
+bool parseJSON(const std::string& jsonContent, rapidjson::Document* document) {
+
+    if (!document) {
+        ACSDK_ERROR(LX("parseJSONFailed").d("reason", "nullDocument"));
+        return false;
+    }
 
     document->Parse(jsonContent.c_str());
 
     if (document->HasParseError()) {
-        logger::deprecated::Logger::log("rapidjson detected a parsing error at offset:" + std::to_string(document->GetErrorOffset()) +
-                            ", error message: " + GetParseError_En(document->GetParseError()));
+        ACSDK_ERROR(LX("parseJSONFailed")
+                .d("offset", document->GetErrorOffset())
+                .d("error", GetParseError_En(document->GetParseError())));
         return false;
     }
     return true;
-}
-
-/**
- * Verify a given rapidjson document node contains a given key as a direct child node.
- *
- * @param documentNode A logical node within a parsed JSON document which rapidjson understands.
- * @param key The key being looked up.
- * @return @c true If the document node contains the key as a direct child node, @c false otherwise.
- */
-static bool documentNodeContainsKey(const rapidjson::Value& documentNode, const std::string& key) {
-    if (!documentNode.IsObject()) {
-        logger::deprecated::Logger::log("The JSON node is not of object type.  Only object types can contain key-value pair child nodes.");
-        return false;
-    }
-    return documentNode.FindMember(key.c_str()) != documentNode.MemberEnd();
 }
 
 /**
@@ -73,7 +107,10 @@ static bool documentNodeContainsKey(const rapidjson::Value& documentNode, const 
 static void serializeJSONObjectToString(const rapidjson::Value& documentNode, std::string* value) {
 
     if (!documentNode.IsObject()) {
-        logger::deprecated::Logger::log("The given rapidjson node is not of Object type.");
+        ACSDK_ERROR(LX("serializeJSONObjectToStringFailed")
+                .d("reason", "invalidType")
+                .d("expectedType", rapidjson::Type::kObjectType)
+                .d("type", documentNode.GetType()));
         return;
     }
 
@@ -81,24 +118,58 @@ static void serializeJSONObjectToString(const rapidjson::Value& documentNode, st
     rapidjson::Writer<rapidjson::StringBuffer> writer(stringBuffer);
 
     if (!documentNode.Accept(writer)) {
-        logger::deprecated::Logger::log("The given rapidjson node could not accept a writer object.");
+        ACSDK_ERROR(LX("serializeJSONObjectToStringFailed")
+                .d("reason", "acceptFailed")
+                .d("handler", "Writer"));
         return;
     }
 
     *value = stringBuffer.GetString();
 }
 
-/**
- * Converts a given rapidjson document node to a string.  The node must be either of Object or String type.
- *
- * @param documentNode A logical node within a parsed JSON document which rapidjson understands.
- * @param[out] value The output parameter which will be assigned the string value.
- * @return @c true If the node was converted to a string ok, @c false otherwise.
- */
-static bool getValueAsString(const rapidjson::Value& documentNode, std::string* value) {
+bool findNode(const rapidjson::Value& jsonNode, const std::string& key, rapidjson::Value::ConstMemberIterator* iteratorPtr) {
+    if (!iteratorPtr) {
+        ACSDK_ERROR(LX("findNodeFailed").d("reason", "nullIteratorPtr"));
+        return false;
+    }
+
+    auto iterator = jsonNode.FindMember(key);
+    if (iterator == jsonNode.MemberEnd()) {
+        ACSDK_ERROR(LX("findNodeFailed").d("reason", "missingDirectChild").d("child", key));
+        return false;
+    }
+
+    *iteratorPtr = iterator;
+
+    return true;
+}
+
+// TODO: ACSDK-382  Remove and replace references with the template retrieveValue function
+bool lookupStringValue(const std::string& jsonContent, const std::string& key, std::string* value) {
+    return retrieveValue(jsonContent, key, value);
+}
+
+// TODO: ACSDK-382 Remove and replace references with the template retrieveValue function
+bool lookupInt64Value(const std::string& jsonContent, const std::string& key, int64_t* value) {
+    return retrieveValue(jsonContent, key, value);
+}
+
+// Overloads of convertToValue
+
+bool convertToValue(const rapidjson::Value& documentNode, std::string* value) {
+    if (!value) {
+         ACSDK_ERROR(LX("convertToStringValueFailed").d("reason", "nullValue"));
+         return false;
+    }
 
     if (!documentNode.IsString() && !documentNode.IsObject()) {
-        logger::deprecated::Logger::log("rapidjson document node cannot be converted to a string.");
+        std::ostringstream expectedTypes;
+        expectedTypes << rapidjson::Type::kObjectType << "/" << rapidjson::Type::kStringType;
+
+        ACSDK_ERROR(LX("convertToStringValueFailed")
+                .d("reason", "invalidType")
+                .d("expectedTypes", expectedTypes.str())
+                .d("type", documentNode.GetType()));
         return false;
     }
 
@@ -111,76 +182,31 @@ static bool getValueAsString(const rapidjson::Value& documentNode, std::string* 
     return true;
 }
 
-/**
- * Converts a given rapidjson value node to a 64-bit signed integer.  The node must be Int64 type.
- *
- * @param documentNode A logical node within a parsed JSON document which rapidjson understands.
- * @param[out] value The output parameter which will be assigned the int64_t value.
- * @return @c true If the node was converted to an int64 ok, @c false otherwise.
- */
-static bool getValueAsInt64(const rapidjson::Value& valueNode, int64_t* value) {
-    if (!valueNode.IsInt64()) {
-        logger::deprecated::Logger::log("rapidjson document node cannot be converted to an int64.");
+bool convertToValue(const rapidjson::Value& documentNode, int64_t* value) {
+    if (!value) {
+         ACSDK_ERROR(LX("convertToInt64ValueFailed").d("reason", "nullValue"));
+         return false;
+    }
+
+    if (!documentNode.IsInt64()) {
+        ACSDK_ERROR(LX("convertToInt64ValueFailed").d("reason", "invalidValue").d("expectedValue", "Int64"));
         return false;
     }
 
-    *value = valueNode.GetInt64();
+    *value = documentNode.GetInt64();
 
     return true;
 }
 
-bool lookupStringValue(const std::string& jsonContent, const std::string& key, std::string* value) {
-    if (!value) {
-        logger::deprecated::Logger::log("The output parameter value is nullptr.");
+bool jsonArrayExists(const rapidjson::Value & parsedDocument, const std::string & key) {
+    auto iter = parsedDocument.FindMember(key.c_str());
+    if (parsedDocument.MemberEnd() != iter) {
+        ACSDK_ERROR(LX("lookupArrayExistsFailed").d("reason", "keyNotFound").d("key", key));
         return false;
     }
 
-    rapidjson::Document document;
-    if (!parseJSON(jsonContent, &document)) {
-        logger::deprecated::Logger::log("The json content could not be parsed.");
-        return false;
-    }
-
-    // To traverse the logical JSON tree, rapidjson works with value types, from which document derives.
-    // Let's make a local reference of this type to clarify what's going on.
-    const rapidjson::Value& documentRootNode = document;
-
-    if (!documentNodeContainsKey(documentRootNode, key)) {
-        logger::deprecated::Logger::log("The parsed JSON document does not contain a direct child node with the key:'" + key + "'.");
-        return false;
-    }
-
-    if (!getValueAsString(document[key.c_str()], value)) {
-        logger::deprecated::Logger::log("Could not convert the rapidjson document node to a string.");
-        return false;
-    }
-
-    return true;
-}
-
-bool lookupInt64Value(const std::string& jsonContent, const std::string& key, int64_t* value) {
-    if (!value) {
-        logger::deprecated::Logger::log("The output parameter value is nullptr.");
-        return false;
-    }
-
-    rapidjson::Document document;
-    if (!parseJSON(jsonContent, &document)) {
-        logger::deprecated::Logger::log("The json content could not be parsed.");
-        return false;
-    }
-
-    // To traverse the logical JSON tree, rapidjson works with value types, from which document derives.
-    // Let's make a local reference of this type to clarify what's going on.
-    const rapidjson::Value& documentRootNode = document;
-
-    if (!documentNodeContainsKey(documentRootNode, key)) {
-        logger::deprecated::Logger::log("The parsed JSON document does not contain a direct child node with the key:'" + key + "'.");
-        return false;
-    }
-
-    if (!getValueAsInt64(document[key.c_str()], value)) {
-        logger::deprecated::Logger::log("Could not convert the rapidjson document node to an int64.");
+    if (!iter->value.IsArray()) {
+        ACSDK_ERROR(LX("lookupArrayExistsFailed").d("reason", "notArrayType"));
         return false;
     }
 

@@ -74,9 +74,8 @@ private:
      *
      * @param policy The @c AttachmentReader::Policy of this object.
      * @param sds The underlying @c SharedDataStream which this object will use.
-     * @param index If being constructed from an existing @c SharedDataStream, the index indicates where to read from.
      */
-    InProcessAttachmentReader(Policy policy, std::shared_ptr<SDSType> sds, SDSTypeIndex index = 0);
+    InProcessAttachmentReader(Policy policy, std::shared_ptr<SDSType> sds);
 
     /// The underlying @c SharedDataStream reader.
     std::shared_ptr<SDSTypeReader> m_reader;

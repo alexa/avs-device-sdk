@@ -7,8 +7,8 @@
 
 # If no build type is specified by specifying it on the command line, default to debug.
 if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose the type of build, options are: DEBUG, RELEASE, or MINSIZEREL." FORCE)
-    message("No build type specified, defaulting to DEBUG.")
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: DEBUG, RELEASE, or MINSIZEREL." FORCE)
+    message("No build type specified, defaulting to Release.")
 endif()
 
 # Verify the build type is valid.
@@ -47,7 +47,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Determine the platform and compiler dependent flags.
 if (UNIX)
-    set(CXX_PLATFORM_DEPENDENT_FLAGS_DEBUG      "-DDEBUG -DACSDK_DEBUG_LOG_ENABLED -Wall -g")
+    set(CXX_PLATFORM_DEPENDENT_FLAGS_DEBUG      "-DDEBUG -DACSDK_DEBUG_LOG_ENABLED -Wall -Wsign-compare -g")
     set(CXX_PLATFORM_DEPENDENT_FLAGS_RELEASE    "-DNDEBUG -Wall -O2")
     set(CXX_PLATFORM_DEPENDENT_FLAGS_MINSIZEREL "-DNDEBUG -Wall -Os")
 elseif(MSVC)

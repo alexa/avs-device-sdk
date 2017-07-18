@@ -20,6 +20,7 @@
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/AVS/AVSMessageHeader.h>
 #include <AVSCommon/AVS/AVSDirective.h>
+#include <rapidjson/document.h>
 
 #include <AVSCommon/Utils/Logger/Logger.h>
 
@@ -30,8 +31,9 @@ using namespace avsCommon;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
-using namespace avsCommon::utils::json;
+using namespace avsCommon::utils::json::jsonUtils;
 using namespace acl;
+using namespace rapidjson;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("MessageInterpreter");
@@ -82,42 +84,63 @@ MessageInterpreter::MessageInterpreter(
         m_directiveSequencer{directiveSequencer}, m_attachmentManager{attachmentManager} {
 }
 
-void MessageInterpreter::receive(const std::string & contextId, const std::string & message) {
+void MessageInterpreter::receive(const std::string& contextId, const std::string& message) {
 
-    std::string directiveBody;
+    Document document;
 
-    if (!lookupJsonValueHelper(message, message, JSON_MESSAGE_DIRECTIVE_KEY, &directiveBody)) {
+    if (!parseJSON(message, &document)) {
+        const std::string error = "Parsing JSON Document failed";
+        sendExceptionEncounteredHelper(m_exceptionEncounteredSender, message, error);
         return;
     }
 
-    std::string header;
-    if (!lookupJsonValueHelper(message, directiveBody, JSON_MESSAGE_HEADER_KEY, &header)) {
+    // Get iterator to child nodes
+    Value::ConstMemberIterator directiveIt;
+    if (!findNode(document, JSON_MESSAGE_DIRECTIVE_KEY, &directiveIt)) {
+        sendParseValueException(JSON_MESSAGE_DIRECTIVE_KEY, message);
         return;
     }
 
+    Value::ConstMemberIterator headerIt;
+    if (!findNode(directiveIt->value, JSON_MESSAGE_HEADER_KEY, &headerIt)) {
+        sendParseValueException(JSON_MESSAGE_HEADER_KEY, message);
+        return;
+    }
+
+    // Retrieve values
     std::string payload;
-    if (!lookupJsonValueHelper(message, directiveBody, JSON_MESSAGE_PAYLOAD_KEY, &payload)) {
+    if (!retrieveValue(directiveIt->value, JSON_MESSAGE_PAYLOAD_KEY, &payload)) {
+        sendParseValueException(JSON_MESSAGE_PAYLOAD_KEY, message);
         return;
     }
 
     std::string avsNamespace;
-    if (!lookupJsonValueHelper(message, header, JSON_MESSAGE_NAMESPACE_KEY, &avsNamespace)) {
+    if (!retrieveValue(headerIt->value, JSON_MESSAGE_NAMESPACE_KEY, &avsNamespace)) {
+        sendParseValueException(JSON_MESSAGE_NAMESPACE_KEY, message);
         return;
     }
 
     std::string avsName;
-    if (!lookupJsonValueHelper(message, header, JSON_MESSAGE_NAME_KEY, &avsName)) {
+    if (!retrieveValue(headerIt->value, JSON_MESSAGE_NAME_KEY, &avsName)) {
+        sendParseValueException(JSON_MESSAGE_NAME_KEY, message);
         return;
     }
 
     std::string avsMessageId;
-    if (!lookupJsonValueHelper(message, header, JSON_MESSAGE_ID_KEY, &avsMessageId)) {
+    if (!retrieveValue(headerIt->value, JSON_MESSAGE_ID_KEY, &avsMessageId)) {
+        sendParseValueException(JSON_MESSAGE_ID_KEY, message);
         return;
     }
 
     // This is an optional header field - it's ok if it is not present.
+    // Avoid jsonUtils::retrieveValue because it logs a missing value as an ERROR.
     std::string avsDialogRequestId;
-    jsonUtils::lookupStringValue(header, JSON_MESSAGE_DIALOG_REQUEST_ID_KEY, &avsDialogRequestId);
+    auto it = headerIt->value.FindMember(JSON_MESSAGE_DIALOG_REQUEST_ID_KEY);
+    if (it != headerIt->value.MemberEnd()) {
+        convertToValue(it->value, &avsDialogRequestId);
+    } else {
+        ACSDK_DEBUG(LX("receive").d("messageId", avsMessageId).m("No dialogRequestId attached to message."));
+    }
 
     auto avsMessageHeader =
             std::make_shared<AVSMessageHeader>(avsNamespace, avsName, avsMessageId, avsDialogRequestId);
@@ -132,21 +155,13 @@ void MessageInterpreter::receive(const std::string & contextId, const std::strin
     m_directiveSequencer->onDirective(avsDirective);
 }
 
-bool MessageInterpreter::lookupJsonValueHelper(
-        const std::string & avsMessage,
-        const std::string& jsonMessageHeader,
-        const std::string& lookupKey,
-        std::string* outputValue) {
-    if (!jsonUtils::lookupStringValue(jsonMessageHeader, lookupKey, outputValue)) {
-        const std::string errorDescription = "Could not look up key from AVS JSON directive string: " + lookupKey;
-        ACSDK_ERROR(LX("lookupJsonValueHelperFailed")
-                .d("reason", "valueRetrievalFailed")
-                .d("key", lookupKey)
-                .d("payload", jsonMessageHeader));
-        sendExceptionEncounteredHelper(m_exceptionEncounteredSender, avsMessage, errorDescription);
-        return false;
-    }
-    return true;
+void MessageInterpreter::sendParseValueException(const std::string& key, const std::string& json) {
+    alexaClientSDK::avsCommon::utils::logger::LogEntry* errorDescription = &(LX("messageParsingFailed")
+        .d("reason", "valueRetrievalFailed")
+        .d("key", key)
+        .d("payload", json));
+    ACSDK_ERROR(*errorDescription);
+    sendExceptionEncounteredHelper(m_exceptionEncounteredSender, json, errorDescription->c_str());
 }
 
 } // namespace directiveSequencer

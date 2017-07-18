@@ -14,7 +14,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
+#include <AVSCommon/Utils/Logger/Logger.h>
 #include "ACL/Transport/MimeParser.h"
 #include <sstream>
 
@@ -23,6 +23,16 @@ namespace acl {
 
 using namespace avsCommon::utils;
 using namespace avsCommon::avs::attachment;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("MimeParser");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// MIME field name for a part's MIME type
 static const std::string MIME_CONTENT_TYPE_FIELD_NAME = "Content-Type";
@@ -52,7 +62,7 @@ static const char LINE_FEED_ASCII = 10;
 std::string sanitizeContentId(const std::string& mimeContentId) {
     std::string sanitizedContentId;
     if (mimeContentId.empty()) {
-        logger::deprecated::Logger::log("The mimeContentId is empty, can't be sanitized");
+        ACSDK_ERROR(LX("sanitizeContentIdFailed").d("reason", "emptyMimeContentId"));
     } else if ( ('<' == mimeContentId.front()) && ('>' == mimeContentId.back()) ) {
         // Getting attachment ID within angle bracket <>.
         sanitizedContentId = mimeContentId.substr(1, mimeContentId.size() - 2);
@@ -83,7 +93,9 @@ void MimeParser::partBeginCallback(const MultipartHeaders &headers, void *userDa
     MimeParser *parser = static_cast<MimeParser*>(userData);
 
     if (parser->m_dataParsedStatus != MimeParser::DataParsedStatus::OK) {
-        logger::deprecated::Logger::log("partBeginCallbackFailed: There was a data processing error.");
+        ACSDK_ERROR(LX("partBeginCallbackFailed")
+                .d("reason", "mimeParsingFailed")
+                .d("status", parser->m_dataParsedStatus));
         return;
     }
 
@@ -99,8 +111,9 @@ void MimeParser::partBeginCallback(const MultipartHeaders &headers, void *userDa
             if (!parser->m_attachmentWriter && attachmentId != parser->m_attachmentIdBeingReceived) {
                 parser->m_attachmentWriter = parser->m_attachmentManager->createWriter(attachmentId);
                 if (!parser->m_attachmentWriter) {
-                    logger::deprecated::Logger::log("partBeginCallbackFailed: Could not create attachmentWriter with attachmentId:" +
-                            attachmentId);
+                    ACSDK_ERROR(LX("partBeginCallbackFailed")
+                            .d("reason", "createWriterFailed")
+                            .d("attachmentId", attachmentId));
                 }
             }
         }
@@ -111,7 +124,7 @@ void MimeParser::partBeginCallback(const MultipartHeaders &headers, void *userDa
 MimeParser::DataParsedStatus MimeParser::writeDataToAttachment(const char *buffer, size_t size) {
     // Error case.  We can't process the attachment.
     if (!m_attachmentWriter) {
-        logger::deprecated::Logger::log("writeDataToAttachmentFailed: no attachment writer.");
+        ACSDK_ERROR(LX("writeDataToAttachmentFailed").d("reason", "nullAttachmentWriter"));
         return MimeParser::DataParsedStatus::ERROR;
     }
 
@@ -120,26 +133,26 @@ MimeParser::DataParsedStatus MimeParser::writeDataToAttachment(const char *buffe
 
     // The underlying memory was closed elsewhere.
     if (AttachmentWriter::WriteStatus::CLOSED == writeStatus) {
-        logger::deprecated::Logger::log("writeDataToAttachmentFailed: attachment writer is closed.");
+        ACSDK_WARN(LX("writeDataToAttachmentFailed").d("reason", "attachmentWriterIsClosed"));
         return MimeParser::DataParsedStatus::ERROR;
     }
 
     // A low-level error with the Attachment occurred.
     if (AttachmentWriter::WriteStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE == writeStatus ||
-       AttachmentWriter::WriteStatus::ERROR_INTERNAL == writeStatus) {
-        logger::deprecated::Logger::log("writeDataToAttachmentFailed: attachment writer internal error.");
+            AttachmentWriter::WriteStatus::ERROR_INTERNAL == writeStatus) {
+        ACSDK_ERROR(LX("writeDataToAttachmentFailed").d("reason", "attachmentWriterInternalError"));
         return MimeParser::DataParsedStatus::ERROR;
     }
 
     // We're blocked on a slow reader.
     if (AttachmentWriter::WriteStatus::OK_BUFFER_FULL == writeStatus) {
-        logger::deprecated::Logger::log("writeDataToAttachmentFailed: attachment writer unable to write all data.");
+        ACSDK_DEBUG(LX("writeDataToAttachmentFailed").d("reason", "attachmentWriterBufferFull"));
         return MimeParser::DataParsedStatus::INCOMPLETE;
     }
 
     // A final sanity check to ensure we wrote the data we intended to.
     if (AttachmentWriter::WriteStatus::OK == writeStatus && numWritten != size) {
-        logger::deprecated::Logger::log("writeDataToAttachmentFailed: attachment writer did not write all data, but still returned ok.");
+        ACSDK_ERROR(LX("writeDataToAttachmentFailed").d("reason", "writeTruncated"));
         return MimeParser::DataParsedStatus::ERROR;
     }
 
@@ -150,13 +163,15 @@ void MimeParser::partDataCallback(const char *buffer, size_t size, void *userDat
     MimeParser *parser = static_cast<MimeParser*>(userData);
 
     if (parser->m_dataParsedStatus != MimeParser::DataParsedStatus::OK) {
-        logger::deprecated::Logger::log("partDataCallbackFailed: There was a data processing error.");
+        ACSDK_ERROR(LX("partDataCallbackFailed")
+                .d("reason", "mimeParsingError")
+                .d("status", parser->m_dataParsedStatus));
         return;
     }
 
     // If we've already processed any of this part in a previous incomplete iteration, let's not process it twice.
     if (!parser->shouldProcessBytes(size)) {
-        logger::deprecated::Logger::log("partDataCallbackFailed: Bytes already processed - skipping.");
+        ACSDK_DEBUG(LX("partDataCallbackSkipped").d("reason", "bytesAlreadyProcessed"));
         parser->updateCurrentByteProgress(size);
         parser->m_dataParsedStatus = MimeParser::DataParsedStatus::OK;
         return;
@@ -170,8 +185,10 @@ void MimeParser::partDataCallback(const char *buffer, size_t size, void *userDat
 
     // Sanity check that we actually have correctly bounded work to do.
     if (0 == bytesToProcess || bytesToProcess > size) {
-        logger::deprecated::Logger::log("partDataCallbackFailed: error determining bytes to process: evaluated as:" +
-                std::to_string(bytesToProcess));
+        ACSDK_ERROR(LX("partDataCallbackFailed")
+                .d("reason", "invalidBytesToProcess")
+                .d("bytesToProcess", bytesToProcess)
+                .d("totalSize", size));
         parser->m_dataParsedStatus = MimeParser::DataParsedStatus::ERROR;
         return;
     }
@@ -191,7 +208,7 @@ void MimeParser::partDataCallback(const char *buffer, size_t size, void *userDat
             }
             break;
         default:
-            logger::deprecated::Logger::log("Data received for usupported part type");
+            ACSDK_ERROR(LX("partDataCallbackFailed").d("reason", "unsupportedContentType"));
             parser->m_dataParsedStatus = MimeParser::DataParsedStatus::ERROR;
     }
 }
@@ -200,15 +217,18 @@ void MimeParser::partEndCallback(void *userData) {
     MimeParser *parser = static_cast<MimeParser*>(userData);
 
     if (parser->m_dataParsedStatus != MimeParser::DataParsedStatus::OK) {
-        logger::deprecated::Logger::log("partEndCallbackFailed: There was a data processing error.");
+        ACSDK_ERROR(LX("partEndCallbackFailed")
+                .d("reason", "mimeParsingError")
+                .d("status", parser->m_dataParsedStatus));
         return;
     }
 
     switch (parser->m_currDataType) {
         case MimeParser::ContentType::JSON:
             if (!parser->m_messageConsumer) {
-                logger::deprecated::Logger::log(std::string("partEndCallbackFailed:") +
-                        "Message Consumer has not been set. Message from ACL cannot be processed.");
+                ACSDK_ERROR(LX("partEndCallbackFailed")
+                        .d("reason", "nullMessageConsumer")
+                        .d("status", parser->m_dataParsedStatus));
                 break;
             }
             // Check there's data to send out, because in a re-drive we may skip a directive that's been seen before.
@@ -224,7 +244,7 @@ void MimeParser::partEndCallback(void *userData) {
             break;
 
         default:
-            logger::deprecated::Logger::log("Ended part for unsupported part type");
+            ACSDK_ERROR(LX("partEndCallbackFailed").d("reason", "unsupportedContentType"));
     }
 }
 

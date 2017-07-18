@@ -2,7 +2,7 @@ add_definitions("-DACSDK_LOG_MODULE=kittAiKeyWordDetector")
 add_library(KITTAI SHARED
     KittAiKeyWordDetector.cpp)
 
-include_directories(KITTAI
+target_include_directories(KITTAI PUBLIC
 	"${KITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR}"
 	"${KWD_SOURCE_DIR}/include"
 	"${KITTAI_SOURCE_DIR}/include")

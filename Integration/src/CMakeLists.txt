@@ -6,6 +6,8 @@ target_include_directories(Integration PUBLIC "${Integration_SOURCE_DIR}/include
 target_include_directories(Integration PUBLIC "${CapabilityAgents_SOURCE_DIR}/include")
 target_include_directories(Integration PUBLIC "${AIP_SOURCE_DIR}/include")
 target_include_directories(Integration PUBLIC "${SpeechSynthesizer_SOURCE_DIR}/include")
+target_include_directories(Integration PUBLIC "${Alerts_SOURCE_DIR}/include")
+target_include_directories(Integration PUBLIC "${AVSSystem_SOURCE_DIR}/include")
 target_include_directories(Integration PUBLIC "${KITTAI_SOURCE_DIR}/include")
 
 target_link_libraries(Integration ACL AuthDelegate)

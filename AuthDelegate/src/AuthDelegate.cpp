@@ -252,14 +252,25 @@ AuthDelegate::~AuthDelegate() {
     }
 }
 
-void AuthDelegate::setAuthObserver(std::shared_ptr<AuthObserverInterface> observer) {
+void AuthDelegate::addAuthObserver(std::shared_ptr<AuthObserverInterface> observer) {
     std::lock_guard<std::mutex> lock(m_mutex);
-    if (observer != m_observer) {
-        m_observer = observer;
-        if (m_observer) {
-            m_observer->onAuthStateChange(m_authState, m_authError);
-        }
+    if (!observer) {
+        return;
     }
+
+    if (!m_observers.insert(observer).second) {
+        return;
+    }
+
+    observer->onAuthStateChange(m_authState, m_authError);
+}
+
+void AuthDelegate::removeAuthObserver(std::shared_ptr<AuthObserverInterface> observer) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    if (!observer) {
+        return;
+    }
+    m_observers.erase(observer);
 }
 
 std::string AuthDelegate::getAuthToken() {
@@ -456,9 +467,9 @@ void AuthDelegate::setState(AuthObserverInterface::State newState) {
 
     if (m_authState != newState) {
         m_authState = newState;
-        if (m_observer) {
+        for (auto observer : m_observers) {
             ACSDK_DEBUG(LX("onAuthStateChangeCalled").d("state", (int)m_authState).d("error", (int)m_authError));
-            m_observer->onAuthStateChange(m_authState, m_authError);
+            observer->onAuthStateChange(m_authState, m_authError);
         }
     }
 }

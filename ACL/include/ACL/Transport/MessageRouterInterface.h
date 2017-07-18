@@ -24,7 +24,6 @@
 
 #include "AVSCommon/Utils/Threading/Executor.h"
 #include "AVSCommon/AVS/MessageRequest.h"
-#include "ACL/AuthDelegateInterface.h"
 
 #include "ACL/Transport/MessageRouterObserverInterface.h"
 #include "ACL/Transport/TransportInterface.h"

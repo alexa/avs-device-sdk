@@ -25,6 +25,8 @@
 #include <limits>
 #include <cstring>
 
+#include "AVSCommon/Utils/Logger/LoggerUtils.h"
+
 #include "SharedDataStream.h"
 
 namespace alexaClientSDK {
@@ -131,6 +133,11 @@ public:
     static std::string errorToString(Error error);
 
 private:
+    /**
+     * The tag associated with log entries from this class.
+     */
+    static const std::string TAG;
+
     /// The @c Policy to use for writing to the stream.
     Policy m_policy;
 
@@ -144,6 +151,9 @@ private:
      */
     bool m_closed;
 };
+
+template <typename T>
+const std::string SharedDataStream<T>::Writer::TAG = "SdsWriter";
 
 template <typename T>
 SharedDataStream<T>::Writer::Writer(Policy policy, std::shared_ptr<BufferLayout> bufferLayout) :
@@ -161,14 +171,18 @@ SharedDataStream<T>::Writer::~Writer() {
 
 template <typename T>
 ssize_t SharedDataStream<T>::Writer::write(const void* buf, size_t nWords) {
-    if (nullptr == buf || 0 == nWords) {
-        utils::logger::deprecated::Logger::log("Writer::write failed: Invalid parameter passed to write().");
+    if (nullptr == buf) {
+        logger::acsdkError(logger::LogEntry(TAG, "writeFailed").d("reason", "nullBuffer"));
+        return Error::INVALID;
+    }
+    if (0 == nWords) {
+        logger::acsdkError(logger::LogEntry(TAG, "writeFailed").d("reason", "zeroNumWords"));
         return Error::INVALID;
     }
 
     auto header = m_bufferLayout->getHeader();
     if (!header->isWriterEnabled) {
-        utils::logger::deprecated::Logger::log("Writer::write failed: Can't write with a disabled writer.");
+        logger::acsdkError(logger::LogEntry(TAG, "writeFailed").d("reason", "writerDisabled"));
         return Error::CLOSED;
     }
 

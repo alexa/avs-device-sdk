@@ -34,6 +34,7 @@ namespace test {
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
+using namespace rapidjson;
 
 /// Namespace for SpeechRecognizer.
 static const std::string NAMESPACE_SPEECH_RECOGNIZER("SpeechRecognizer");
@@ -43,6 +44,12 @@ static const std::string NAME_STOP_CAPTURE("StopCapture");
 
 /// Name for SpeechRecognizer state.
 static const std::string NAME_RECOGNIZE("Recognize");
+
+/// Event key.
+static const std::string EVENT("event");
+
+/// Header key.
+static const std::string HEADER("header");
 
 /// Message Id key.
 static const std::string MESSAGE_ID("messageId");
@@ -320,31 +327,8 @@ const std::pair<std::string, std::string> MockCapabilityAgent::callBuildJsonEven
 class CapabilityAgentTest : public ::testing::Test {
 public:
     /**
-     * Find the pattern in the @c searchString and if found, return the substring from the beginning of the searchString
-     * to the position of where pattern is found.
-     *
-     * @param pattern The string pattern to look for in the searchString.
-     * @param searchString The search string in which to look for the string pattern.
-     * @return The substring from the beginning of the searchString to the first occurrence of pattern appears. It there
-     * is no pattern in the searchString return an empty string.
-     */
-    std::string findStringFromStart(std::string pattern, std::string searchString);
-
-    /**
-     * Find the pattern in the searchString and if found, return the substring from the position of where pattern is
-     * found till the end of the string.
-     *
-     * @param pattern The string pattern to look for in the searchString.
-     * @param searchString The search string in which to look for the string pattern.
-     * @param pos Position in the search string from which to start the search for the pattern.
-     * @return The substring of the searchstring starting from where the first occurrence of pattern appears. It there
-     * is no pattern in the searchString return an empty string.
-     */
-    std::string findStringTillEnd(std::string pattern, std::string searchString, size_t pos = 0);
-
-    /**
      * Tests the @c buildJsonEventString functionality. Calls @c buildJsonEventString and compares it to the test
-     * string. Assert if the strings are not equal.     *
+     * string. Assert if the strings are not equal.
      *
      * @param testTuple A tuple of test string, dialogRequestId and context.
      * @param dialogRequestIdPresent Whether a dialogRequestId is expected or not. This helps decide which parts of the
@@ -365,39 +349,58 @@ void CapabilityAgentTest::SetUp() {
     m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
 }
 
-std::string CapabilityAgentTest::findStringFromStart(std::string pattern, std::string searchString) {
-    std::size_t foundPattern = searchString.find(pattern);
-    if (foundPattern == std::string::npos) {
-        return "";
+/**
+ * Helper function to remove the messageId.
+ *
+ * @param document The document from which to remove the messageId.
+ * @param messageId The messageId that was removed (if successful).
+ * @return bool Indicates whether removing the messageId was successful.
+ */
+bool removeMessageId(Document *document, std::string *messageId) {
+    if (!document || !messageId) {
+        return false;
     }
-    return searchString.substr(0, foundPattern);
+
+    auto it = document->FindMember(EVENT.c_str());
+    if (it == document->MemberEnd()) return false;
+
+    it = it->value.FindMember(HEADER.c_str());
+    if (it == document->MemberEnd()) return false;
+    auto& eventHeader = it->value;
+
+    it = it->value.FindMember(MESSAGE_ID.c_str());
+    if (it == document->MemberEnd()) return false;
+
+    *messageId = it->value.GetString();
+    eventHeader.RemoveMember(it);
+
+    return true;
 }
 
-std::string CapabilityAgentTest::findStringTillEnd(std::string pattern, std::string searchString, size_t pos) {
-    std::size_t foundPattern = searchString.find(pattern, pos);
-    if (foundPattern == std::string::npos) {
-        return "";
-    }
-    return searchString.substr(foundPattern);
-}
-
-void CapabilityAgentTest::testBuildJsonEventString(std::tuple<std::string, std::string, std::string> testTuple,
-            bool dialogRequestIdPresent) {
+void CapabilityAgentTest::testBuildJsonEventString(
+        std::tuple<std::string, std::string, std::string> testTuple,
+        bool dialogRequestIdPresent) {
     std::string testString = std::get<0>(testTuple);
     std::pair<std::string, std::string> msgIdAndJsonEvent = m_capabilityAgent->callBuildJsonEventString(NAME_RECOGNIZE,
             std::get<1>(testTuple), PAYLOAD_SPEECH_RECOGNIZER, std::get<2>(testTuple));
     std::string& jsonEventString = msgIdAndJsonEvent.second;
 
-    ASSERT_NE(std::string::npos, jsonEventString.find(msgIdAndJsonEvent.first));
-    ASSERT_EQ(findStringFromStart(MESSAGE_ID, testString), findStringFromStart(MESSAGE_ID, jsonEventString));
+    Document expected, actual;
+    expected.Parse(testString);
+    actual.Parse(jsonEventString);
 
-    if (dialogRequestIdPresent) {
-        ASSERT_EQ(findStringTillEnd(DIALOG_REQUEST_ID, testString),
-                  findStringTillEnd(DIALOG_REQUEST_ID, jsonEventString));
-    } else {
-        ASSERT_EQ(findStringTillEnd(PAYLOAD, testString, testString.find(MESSAGE_ID)),
-                  findStringTillEnd(PAYLOAD, jsonEventString, jsonEventString.find(MESSAGE_ID)));
-    }
+    // messageId is randomly generated. Remove before comparing the Event strings.
+
+    std::string expectedMsgId;
+    ASSERT_TRUE(removeMessageId(&expected, &expectedMsgId));
+
+    std::string actualMsgId;
+    ASSERT_TRUE(removeMessageId(&actual, &actualMsgId));
+
+    // Check that messageId in the output pair is equal to the messageId in the body.
+    ASSERT_EQ(actualMsgId, msgIdAndJsonEvent.first);
+
+    ASSERT_EQ(expected, actual);
 }
 
 /**

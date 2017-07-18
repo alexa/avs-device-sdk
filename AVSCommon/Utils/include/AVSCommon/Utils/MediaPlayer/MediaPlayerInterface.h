@@ -58,14 +58,29 @@ public:
      *
      * The @c MediaPlayer can handle only one source at a time.
      *
-     * @param attachmentReader Object with which to read an incoming audio attahment.
+     * @param attachmentReader Object with which to read an incoming audio attachment.
+     *
+     * @return @c SUCCESS if the source was set successfully else @c FAILURE. If setSource is called when audio is
+     * currently playing, the playing audio will be stopped and the source set to the new value. If there is an error
+     * stopping the player, this will return @c FAILURE.
+     */
+    virtual MediaPlayerStatus setSource(
+            std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) = 0;
+
+    /**
+     * Set the source to play. The source should be set before issuing @c play or @c stop.
+     *
+     * The @c MediaPlayer can handle only one source at a time.
+     *
+     * @param stream Object with which to read an incoming audio stream.
+     * @param repeat Whether the audio stream should be played in a loop until stopped.
      *
      * @return @c SUCCESS if the the source was set successfully else @c FAILURE. If setSource is called when audio is
      * currently playing, the playing audio will be stopped and the source set to the new value. If there is an error
      * stopping the player, this will return @c FAILURE.
      */
     virtual MediaPlayerStatus setSource(
-            std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) = 0;
+            std::unique_ptr<std::istream> stream, bool repeat) = 0;
 
     /**
      * Start playing audio. The source should be set before issuing @c play. If @c play is called without

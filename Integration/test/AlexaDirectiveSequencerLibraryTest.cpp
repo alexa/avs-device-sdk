@@ -40,8 +40,7 @@
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h"
 #include "AVSCommon/Utils/JSON/JSONUtils.h"
 #include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
-#include "AVSCommon/Utils/Logger/LogEntry.h"
-#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
+#include "AVSCommon/Utils/Logger/Logger.h"
 #include "Integration/AuthObserver.h"
 #include "Integration/ClientMessageHandler.h"
 #include "Integration/ConnectionStatusObserver.h"
@@ -226,7 +225,7 @@ protected:
         ASSERT_TRUE(AlexaClientSDKInit::initialize({&infile}));
         m_authObserver = std::make_shared<AuthObserver>();
         m_authDelegate = AuthDelegate::create();
-        m_authDelegate->setAuthObserver(m_authObserver);
+        m_authDelegate->addAuthObserver(m_authObserver);
         m_attachmentManager = std::make_shared<avsCommon::avs::attachment::AttachmentManager>(
                  AttachmentManager::AttachmentType::IN_PROCESS);
         m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
@@ -247,7 +246,7 @@ protected:
                 m_messageRouter,
                 isEnabled,
                 { m_connectionStatusObserver },
-                m_messageInterpreter);
+                { m_messageInterpreter });
         connect();
     }
 

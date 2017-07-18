@@ -6,11 +6,7 @@ add_library(AuthDelegate SHARED
     AuthDelegate.cpp
     HttpPost.cpp)
 target_include_directories(AuthDelegate PUBLIC
-    ${AuthDelegate_SOURCE_DIR}/include
-    ${AVSCommon_SOURCE_DIR}/include/SDKInterfaces
-    ${ACL_SOURCE_DIR}/include)
+    ${AuthDelegate_SOURCE_DIR}/include)
 target_include_directories(AuthDelegate PRIVATE
-    ${RAPIDJSON_INCLUDE_DIR}
-    ${AVSCommon_SOURCE_DIR}/AVS/include
-    ${AVSCommon_SOURCE_DIR}/Utils/include)
+    ${RAPIDJSON_INCLUDE_DIR})
 target_link_libraries(AuthDelegate AVSCommon ${CURL_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})

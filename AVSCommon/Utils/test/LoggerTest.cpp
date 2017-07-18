@@ -120,6 +120,26 @@ public:
     std::string m_lastText;
 };
 
+/**
+ * Mock derivation of ModuleLogger for verifying calls and parameters to those calls.
+ */
+class MockModuleLogger : public ModuleLogger {
+public:
+    /**
+     * MockModuleLogger constructor.
+     */
+    MockModuleLogger();
+
+    /**
+     * MockModuleLogger destructor.
+     */
+    ~MockModuleLogger();
+
+    Level getLogLevel() {
+        return Logger::m_level;
+    }
+};
+
 /// Global to hold on to the current @c MockLogger to use.
 static std::shared_ptr<MockLogger> g_log;
 
@@ -186,6 +206,13 @@ void MockLogger::mockEmit(
     m_lastTime = time;
     m_lastThreadMoniker = threadMoniker;
     m_lastText = text;
+}
+
+MockModuleLogger::MockModuleLogger() : ModuleLogger(ACSDK_STRINGIFY(ACSDK_LOG_SINK)) {
+}
+
+MockModuleLogger::~MockModuleLogger() {
+    m_sink.removeLogLevelObserver(this);
 }
 
 /**
@@ -547,6 +574,45 @@ TEST_F(LoggerTest, testSensitiveDataSuppressed) {
 #else
     ASSERT_FALSE(result);
 #endif
+}
+
+/**
+ * Test observer mechanism in the MockModuleLogger.  Expects that when the logLevel changes for the sink, the
+ * callback of the MockModuleLogger is triggered.  Also make sure any changes to sink's logLevel is ignored
+ * after the MockModuleLogger's logLevel has been set.
+ */
+TEST_F(LoggerTest, testModuleLoggerObserver) {
+    MockModuleLogger mockModuleLogger;
+    ACSDK_GET_SINK_LOGGER().setLevel(Level::WARN);
+    ASSERT_EQ(mockModuleLogger.getLogLevel(), Level::WARN);
+    mockModuleLogger.setLevel(Level::CRITICAL);
+    ASSERT_EQ(mockModuleLogger.getLogLevel(), Level::CRITICAL);
+    ACSDK_GET_SINK_LOGGER().setLevel(Level::NONE);
+    ASSERT_EQ(mockModuleLogger.getLogLevel(), Level::CRITICAL);
+}
+
+/**
+ * Test observer mechanism with multiple observers.  Expects all observers to be notified of the logLevel change.
+ */
+TEST_F(LoggerTest, testMultipleModuleLoggerObservers) {
+    MockModuleLogger mockModuleLogger1;
+    MockModuleLogger mockModuleLogger2;
+    MockModuleLogger mockModuleLogger3;
+
+    ACSDK_GET_SINK_LOGGER().setLevel(Level::WARN);
+    ASSERT_EQ(mockModuleLogger1.getLogLevel(), Level::WARN);
+    ASSERT_EQ(mockModuleLogger2.getLogLevel(), Level::WARN);
+    ASSERT_EQ(mockModuleLogger3.getLogLevel(), Level::WARN);
+
+    mockModuleLogger1.setLevel(Level::CRITICAL);
+    ASSERT_EQ(mockModuleLogger1.getLogLevel(), Level::CRITICAL);
+    ASSERT_EQ(mockModuleLogger2.getLogLevel(), Level::WARN);
+    ASSERT_EQ(mockModuleLogger3.getLogLevel(), Level::WARN);
+
+    ACSDK_GET_SINK_LOGGER().setLevel(Level::NONE);
+    ASSERT_EQ(mockModuleLogger1.getLogLevel(), Level::CRITICAL);
+    ASSERT_EQ(mockModuleLogger2.getLogLevel(), Level::NONE);
+    ASSERT_EQ(mockModuleLogger3.getLogLevel(), Level::NONE);
 }
 
 } // namespace test

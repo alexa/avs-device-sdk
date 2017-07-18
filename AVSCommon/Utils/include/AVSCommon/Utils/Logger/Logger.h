@@ -20,12 +20,15 @@
 
 #include <atomic>
 #include <chrono>
+#include <mutex>
 #include <sstream>
+#include <vector>
 
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 
 #include "AVSCommon/Utils/Logger/Level.h"
 #include "AVSCommon/Utils/Logger/LogEntry.h"
+#include "AVSCommon/Utils/Logger/LogLevelObserverInterface.h"
 
 /**
  * Inner part of ACSDK_STRINGIFY.  Turns an expression in to a string literal.
@@ -159,7 +162,7 @@ public:
      *
      * @param level The lowest severity level to be output by this logger.
      */
-    inline void setLevel(Level level);
+    virtual void setLevel(Level level);
 
     /**
      * Return true of logs of a specified severity should be emitted by this Logger.
@@ -193,6 +196,22 @@ public:
             const char *threadMoniker,
             const char *text) = 0;
 
+    /**
+     * Add an observer to this object.
+     *
+     * @param An observer to this class, which will be notified when
+     * the logLevel changes.
+     */
+    void addLogLevelObserver(LogLevelObserverInterface * observer);
+
+    /**
+     * Remove an observer to this object.
+     *
+     * @param An observer to this class that will be removed from the
+     * notificaiton of logLevel changes.
+     */
+    void removeLogLevelObserver(LogLevelObserverInterface * observer);
+
 protected:
     /**
      * Initialize @c Logger parameters from the specified @c ConfigurationNode.
@@ -201,14 +220,21 @@ protected:
      */
     void init(const configuration::ConfigurationNode configuration);
 
-private:
     /// The lowest severity level of logs to be output by this Logger.
     std::atomic<Level> m_level;
-};
 
-void Logger::setLevel(Level level) {
-    m_level = level;
-}
+private:
+    /**
+     * Notify the observers of a logLevel change.
+     */
+    void notifyObserversOnLogLevelChanged();
+
+    /// Vector of observers that want to be notified of logLevel changes
+    std::vector<LogLevelObserverInterface *> m_observers;
+
+    /// This mutex guards access to m_observers
+    std::mutex m_observersMutex;
+};
 
 bool Logger::shouldLog(Level level) const {
     return level >= m_level;

@@ -1,5 +1,5 @@
 /*
- * MockAuthObserver.h
+ * SourceInterface.h
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
@@ -15,25 +15,26 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ACL_TEST_MOCK_AUTH_OBSERVER_H_
-#define ALEXA_CLIENT_SDK_ACL_TEST_MOCK_AUTH_OBSERVER_H_
+#ifndef ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_SOURCE_INTERFACE_H_
+#define ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_SOURCE_INTERFACE_H_
 
-#include <gmock/gmock.h>
-#include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
+#include "MediaPlayer/PipelineInterface.h"
 
 namespace alexaClientSDK {
-namespace acl {
-namespace test {
+namespace mediaPlayer {
 
-/// Mock AuthObserverInterface class
-class MockAuthObserver : public avsCommon::sdkInterfaces::AuthObserverInterface {
+/**
+* Interface to request operations on an audio source.
+*/
+class SourceInterface {
 public:
-    MOCK_METHOD2(onAuthStateChange, void(State newState, Error error));
+    /**
+     * Destructor.
+     */
+    virtual ~SourceInterface() = default;
 };
 
-} // namespace test
-} // namespace acl
+} // namespace mediaPlayer
 } // namespace alexaClientSDK
 
-
-#endif  // ALEXA_CLIENT_SDK_ACL_TEST_MOCK_AUTH_OBSERVER_H_
+#endif // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_SOURCE_INTERFACE_H_

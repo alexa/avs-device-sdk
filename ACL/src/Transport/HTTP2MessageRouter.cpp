@@ -15,7 +15,6 @@
  * permissions and limitations under the License.
  */
 
-#include <AVSCommon/Utils/Logger/DeprecatedLogger.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
 #include "ACL/Transport/HTTP2MessageRouter.h"
@@ -25,11 +24,14 @@ namespace alexaClientSDK {
 namespace acl {
 
 using namespace alexaClientSDK::avsCommon::utils;
+using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::avs::attachment;
 
-HTTP2MessageRouter::HTTP2MessageRouter(std::shared_ptr<AuthDelegateInterface> authDelegate,
-                                       std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-                                       const std::string& avsEndpoint)
-    : MessageRouter(authDelegate, attachmentManager, avsEndpoint, std::make_shared<threading::Executor>()) {
+HTTP2MessageRouter::HTTP2MessageRouter(
+        std::shared_ptr<AuthDelegateInterface> authDelegate,
+        std::shared_ptr<AttachmentManager> attachmentManager,
+        const std::string& avsEndpoint)
+    : MessageRouter(authDelegate, attachmentManager, avsEndpoint) {
 }
 
 HTTP2MessageRouter::~HTTP2MessageRouter() {
@@ -37,7 +39,7 @@ HTTP2MessageRouter::~HTTP2MessageRouter() {
 
 std::shared_ptr<TransportInterface> HTTP2MessageRouter::createTransport(
         std::shared_ptr<AuthDelegateInterface> authDelegate,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        std::shared_ptr<AttachmentManager> attachmentManager,
         const std::string& avsEndpoint,
         MessageConsumerInterface* messageConsumerInterface,
         TransportObserverInterface* transportObserverInterface) {

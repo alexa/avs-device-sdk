@@ -33,13 +33,36 @@ void ModuleLogger::emit(
     }
 }
 
+void ModuleLogger::setLevel(Level level) {
+    Logger::m_level = level;
+
+    /*
+     * Once the logLevel of the MoudleLogger has been changed, it should no
+     * longer use the logLevel in the m_sink, hence the flag is cleared here.
+     */
+    m_useSinkLogLevel = false;
+}
+
+void ModuleLogger::onLogLevelChanged(Level level) {
+    if (m_useSinkLogLevel) {
+        Logger::m_level = level;
+    }
+}
+
 ModuleLogger::ModuleLogger(const std::string& configKey, Logger& sink) :
-#ifdef DEBUG
-        Logger(Level::DEBUG0),
-#else
-        Logger(Level::INFO),
-#endif // DEBUG
+        Logger(Level::UNKNOWN),
+        m_useSinkLogLevel(true),
         m_sink(sink) {
+    /*
+     * Note that m_useSinkLogLevel is set to true by default.  The idea is for
+     * the ModuleLogger to use the same logLevel as its sink unless it's been
+     * set specifically.
+     *
+     * By adding itself as an observer, the logLevel of the ModuleLogger will
+     * be set to be the same as the one in the sink.
+     */
+    m_sink.addLogLevelObserver(this);
+
     init(configuration::ConfigurationNode::getRoot()[configKey]);
 }
 

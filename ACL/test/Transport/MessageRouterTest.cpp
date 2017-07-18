@@ -47,7 +47,7 @@ TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfConnectionPe
     setupStateToPending();
 
     // wait for the result to propagate by scheduling a task on the client executor
-    waitOnExecutor(m_executor, SHORT_TIMEOUT_MS);
+    waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
     ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionStatus(),
             ConnectionStatusObserverInterface::Status::PENDING);
@@ -59,7 +59,7 @@ TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfNewConnectio
     setupStateToConnected();
 
     // wait for the result to propagate by scheduling a task on the client executor
-    waitOnExecutor(m_executor, SHORT_TIMEOUT_MS);
+    waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
     ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionStatus(),
             ConnectionStatusObserverInterface::Status::CONNECTED);
@@ -75,7 +75,7 @@ TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfTransportDis
     m_router.onDisconnected(reason);
 
     // wait for the result to propagate by scheduling a task on the client executor
-    waitOnExecutor(m_executor, SHORT_TIMEOUT_MS);
+    waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
     ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionStatus(),
             ConnectionStatusObserverInterface::Status::DISCONNECTED);
@@ -88,7 +88,7 @@ TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfRouterDiscon
     m_router.disable();
 
     // wait for the result to propagate by scheduling a task on the client executor
-    waitOnExecutor(m_executor, SHORT_TIMEOUT_MS);
+    waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
     ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionStatus(),
             ConnectionStatusObserverInterface::Status::DISCONNECTED);
@@ -130,7 +130,7 @@ TEST_F(MessageRouterTest, sendFailsWhenPending) {
     EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(1);
 
     m_router.send(messageRequest);
-    waitOnExecutor(m_executor, SHORT_TIMEOUT_MS);
+    waitOnMessageRouter(SHORT_TIMEOUT_MS);
 }
 
 TEST_F(MessageRouterTest, sendMessageDoesNotSendAfterDisconnected) {
@@ -173,7 +173,7 @@ TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
     // Reset the MessageRouterObserver, there should be no interactions with the observer
     m_router.onServerSideDisconnect();
 
-    waitOnExecutor(m_executor, SHORT_TIMEOUT_MS);
+    waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
     ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionStatus(),
             ConnectionStatusObserverInterface::Status::PENDING);
@@ -184,7 +184,7 @@ TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
     connectMockTransport(newTransport.get());
     m_router.onConnected();
 
-    waitOnExecutor(m_executor, SHORT_TIMEOUT_MS);
+    waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
     ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionStatus(),
             ConnectionStatusObserverInterface::Status::CONNECTED);
@@ -203,7 +203,7 @@ TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
 
     m_router.send(messageRequest);
 
-    waitOnExecutor(m_executor, SHORT_TIMEOUT_MS);
+    waitOnMessageRouter(SHORT_TIMEOUT_MS);
 }
 
 } // namespace test

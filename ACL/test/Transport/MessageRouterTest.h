@@ -46,12 +46,11 @@ using namespace ::testing;
 class TestableMessageRouter : public MessageRouter {
 public:
     TestableMessageRouter(
-            std::shared_ptr<AuthDelegateInterface> authDelegate,
+            std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
             std::shared_ptr<AttachmentManager> attachmentManager,
             std::shared_ptr<MockTransport> transport,
-            const std::string& avsEndpoint,
-            std::shared_ptr<avsCommon::utils::threading::Executor> executor)
-            : MessageRouter(authDelegate, attachmentManager, avsEndpoint, executor),
+            const std::string& avsEndpoint)
+            : MessageRouter(authDelegate, attachmentManager, avsEndpoint),
               m_mockTransport{transport} {
     }
 
@@ -59,9 +58,21 @@ public:
         m_mockTransport = transport;
     }
 
+    /**
+     * Check if the underlying executor is in ready state within a given wait time.
+     *
+     * @param time to wait up to specified milliseconds.
+     * @return Whether the underlying executor is ready or not.
+     */
+    bool isExecutorReady(std::chrono::milliseconds millisecondsToWait) {
+        auto future = m_executor.submit([]() {;});
+        auto status = future.wait_for(millisecondsToWait);
+        return status == std::future_status::ready;
+    }
+
 private:
     std::shared_ptr<TransportInterface> createTransport(
-            std::shared_ptr<AuthDelegateInterface> authDelegate,
+            std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
             std::shared_ptr<AttachmentManager> attachmentManager,
             const std::string& avsEndpoint,
             MessageConsumerInterface* messageConsumerInterface,
@@ -82,30 +93,26 @@ public:
             m_mockAuthDelegate{std::make_shared<MockAuthDelegate>()},
             m_attachmentManager{std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS)},
             m_mockTransport{std::make_shared<NiceMock<MockTransport>>()},
-            m_executor{std::make_shared<Executor>()},
             m_router{m_mockAuthDelegate,
                      m_attachmentManager,
                      m_mockTransport,
-                     AVS_ENDPOINT,
-                     m_executor} {
+                     AVS_ENDPOINT} {
         m_router.setObserver(m_mockMessageRouterObserver);
     }
 
     void TearDown() {
-        // Wait on both executors to ensure everything is finished
-        waitOnExecutor(m_executor, SHORT_TIMEOUT_MS);
+        // Wait on MessageRouter to ensure everything is finished
+        waitOnMessageRouter(SHORT_TIMEOUT_MS);
     }
 
     std::shared_ptr<avsCommon::avs::MessageRequest> createMessageRequest() {
         return std::make_shared<avsCommon::avs::MessageRequest>(MESSAGE, nullptr);
     }
-    void waitOnExecutor(std::shared_ptr<Executor> executor, std::chrono::milliseconds millisecondsToWait) {
-        auto future = executor->submit([]() {;});
-        auto status = future.wait_for(millisecondsToWait);
+    void waitOnMessageRouter(std::chrono::milliseconds millisecondsToWait) {
+        auto status = m_router.isExecutorReady(millisecondsToWait);
 
-        ASSERT_EQ(std::future_status::ready, status);
+        ASSERT_EQ(true, status);
     }
-
     void setupStateToPending() {
         initializeMockTransport(m_mockTransport.get());
         m_router.enable();
@@ -126,7 +133,6 @@ public:
     std::shared_ptr<MockAuthDelegate> m_mockAuthDelegate;
     std::shared_ptr<AttachmentManager> m_attachmentManager;
     std::shared_ptr<NiceMock<MockTransport>> m_mockTransport;
-    std::shared_ptr<avsCommon::utils::threading::Executor> m_executor;
     TestableMessageRouter m_router;
 };
 

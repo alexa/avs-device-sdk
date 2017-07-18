@@ -272,9 +272,16 @@ public:
      * Sets the audio source to play.
      *
      */
-    void setMediaPlayerSource(
+    void setAttachmentReaderSource(
             int iterations = 1,
             std::vector<size_t> receiveSizes = {std::numeric_limits<size_t>::max()});
+
+    /**
+     * Sets IStream source to play.
+     *
+     * @param repeat Whether to play the stream over and over until stopped.
+     */
+    void setIStreamSource(bool repeat = false);
 
     /// An instance of the @c MediaPlayer
     std::shared_ptr<MediaPlayer> m_mediaPlayer;
@@ -290,9 +297,14 @@ void MediaPlayerTest::SetUp() {
     m_mediaPlayer->setObserver(m_playerObserver);
 }
 
-void MediaPlayerTest::setMediaPlayerSource(int iterations, std::vector<size_t> receiveSizes) {
+void MediaPlayerTest::setAttachmentReaderSource(int iterations, std::vector<size_t> receiveSizes) {
     ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->setSource(
             std::unique_ptr<AttachmentReader>(new MockAttachmentReader(iterations, receiveSizes))));
+}
+
+void MediaPlayerTest::setIStreamSource(bool repeat) {
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->setSource(
+            make_unique<std::ifstream>(inputsDirPath + MP3_FILE_PATH), repeat));
 }
 
 /**
@@ -300,7 +312,7 @@ void MediaPlayerTest::setMediaPlayerSource(int iterations, std::vector<size_t> r
  * Check whether the playback started and playback finished notifications are received.
  */
 TEST_F(MediaPlayerTest, testStartPlayWaitForEnd) {
-    setMediaPlayerSource();
+    setAttachmentReaderSource();
 
     ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
@@ -313,13 +325,13 @@ TEST_F(MediaPlayerTest, testStartPlayWaitForEnd) {
  * Call @c play. The audio should play again from the beginning. Wait till the end.
  */
 TEST_F(MediaPlayerTest, testStartPlayWaitForEndStartPlayAgain) {
-    setMediaPlayerSource();
+    setIStreamSource();
 
     ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 
-    setMediaPlayerSource();
+    setAttachmentReaderSource();
     ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
@@ -331,11 +343,11 @@ TEST_F(MediaPlayerTest, testStartPlayWaitForEndStartPlayAgain) {
  * the playback finished notification is received.
  */
 TEST_F(MediaPlayerTest, testStopPlay) {
-    setMediaPlayerSource();
+    setIStreamSource(true);
 
     ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
-    std::this_thread::sleep_for (std::chrono::seconds(1));
+    std::this_thread::sleep_for (std::chrono::seconds(5));
     ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->stop());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 }
@@ -346,7 +358,7 @@ TEST_F(MediaPlayerTest, testStopPlay) {
  * and wait for the playback finished notification is received. Call @c play again.
  */
 TEST_F(MediaPlayerTest, testStartPlayCallAfterStopPlay) {
-    setMediaPlayerSource();
+    setAttachmentReaderSource();
 
     ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
@@ -354,7 +366,7 @@ TEST_F(MediaPlayerTest, testStartPlayCallAfterStopPlay) {
     ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->stop());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 
-    setMediaPlayerSource();
+    setAttachmentReaderSource();
 
     ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
@@ -370,7 +382,7 @@ TEST_F(MediaPlayerTest, testStartPlayCallAfterStopPlay) {
  * Call @c getOffsetInMilliseconds again. Check the offset value.
  */
 TEST_F(MediaPlayerTest, testGetOffsetInMilliseconds) {
-    setMediaPlayerSource();
+    setAttachmentReaderSource();
 
     ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
@@ -389,7 +401,7 @@ TEST_F(MediaPlayerTest, testGetOffsetInMilliseconds) {
  * Repeat the above for a new source.
  */
 TEST_F(MediaPlayerTest, testPlayingTwoAttachments) {
-    setMediaPlayerSource();
+    setAttachmentReaderSource();
 
     ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
@@ -397,7 +409,7 @@ TEST_F(MediaPlayerTest, testPlayingTwoAttachments) {
     ASSERT_NE(-1, m_mediaPlayer->getOffsetInMilliseconds());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 
-    setMediaPlayerSource();
+    setAttachmentReaderSource();
 
     ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
@@ -414,7 +426,7 @@ TEST_F(MediaPlayerTest, testPlayingTwoAttachments) {
  * To a human ear the playback of this test is expected to sound reasonably smooth.
  */
 TEST_F(MediaPlayerTest, testUnsteadyReads) {
-    setMediaPlayerSource(
+    setAttachmentReaderSource(
             3, {
                     // Sporadic receive sizes averaging out to about 6000 bytes per second.
                     // Each element corresponds to a 100 millisecond time interval, so each
@@ -444,7 +456,7 @@ TEST_F(MediaPlayerTest, testUnsteadyReads) {
  * initially, then be interrupted for a few seconds, and then continue fairly smoothly.
  */
 TEST_F(MediaPlayerTest, testRecoveryFromPausedReads) {
-    setMediaPlayerSource(
+    setAttachmentReaderSource(
             3, {
                     // Receive sizes averaging out to 6000 bytes per second with a 3 second gap.
                     // Each element corresponds to a 100 millisecond time interval, so each

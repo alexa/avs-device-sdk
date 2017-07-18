@@ -4,4 +4,6 @@ project(CapabilityAgents LANGUAGES CXX)
 include(../build/BuildDefaults.cmake)
 
 add_subdirectory("AIP")
+add_subdirectory("Alerts")
 add_subdirectory("SpeechSynthesizer")
+add_subdirectory("System")

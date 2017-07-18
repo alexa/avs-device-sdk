@@ -21,17 +21,33 @@ namespace alexaClientSDK {
 namespace integration {
 namespace test {
 
+/// String to identify log entries originating from this file.
+static const std::string TAG("TestMediaPlayer");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
 TestMediaPlayer::~TestMediaPlayer() {
 }
 
 avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::setSource(
         std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
     m_attachmentReader = std::move(attachmentReader);
-    return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;    
+    return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
+}
+
+avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::setSource(
+        std::unique_ptr<std::istream> stream, bool repeat) {
+    m_istream = std::move(stream);
+    return avsCommon::utils::mediaPlayer::MediaPlayerStatus::PENDING;
 }
 
 avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::play() {
-    if (m_observer && m_attachmentReader) {
+    if (m_observer) {
         m_observer->onPlaybackStarted();
         m_playbackFinished = true;
         m_timer = std::unique_ptr<avsCommon::utils::timing::Timer>(new avsCommon::utils::timing::Timer);
@@ -46,7 +62,8 @@ avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::play() {
                 }
             );
         return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
-    } else {
+    }
+    else {
         return avsCommon::utils::mediaPlayer::MediaPlayerStatus::FAILURE;
     }
 }

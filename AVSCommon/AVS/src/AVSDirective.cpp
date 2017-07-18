@@ -16,7 +16,7 @@
  */
 
 #include "AVSCommon/AVS/AVSDirective.h"
-#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
+#include "AVSCommon/Utils/Logger/Logger.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -25,6 +25,16 @@ namespace avs {
 using namespace avsCommon::utils;
 using namespace avsCommon::avs::attachment;
 
+/// String to identify log entries originating from this file.
+static const std::string TAG("AvsDirective");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
 std::unique_ptr<AVSDirective> AVSDirective::create(
         const std::string& unparsedDirective,
         std::shared_ptr<AVSMessageHeader> avsMessageHeader,
@@ -32,11 +42,11 @@ std::unique_ptr<AVSDirective> AVSDirective::create(
         std::shared_ptr<AttachmentManagerInterface> attachmentManager,
         const std::string & attachmentContextId) {
     if (!avsMessageHeader) {
-        utils::logger::deprecated::Logger::log("AVSDirective::create - message header was nullptr.");
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullMessageHeader"));
         return nullptr;
     }
     if (!attachmentManager) {
-        utils::logger::deprecated::Logger::log("AVSDirective::create - attachmentManager was nullptr.");
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullAttachmentManager"));
         return nullptr;
     }
     return std::unique_ptr<AVSDirective>(new AVSDirective(unparsedDirective, avsMessageHeader, payload,

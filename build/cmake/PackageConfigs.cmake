@@ -11,3 +11,6 @@ set(CURL_PACKAGE_CONFIG 7.43.0 REQUIRED)
 
 # Make the Threads package required.
 set(THREADS_PACKAGE_CONFIG REQUIRED)
+
+# Minimum version of OpenSSL required
+set(OPENSSL_MIN_VERSION 1.0.2)

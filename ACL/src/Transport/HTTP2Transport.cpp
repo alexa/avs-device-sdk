@@ -18,16 +18,29 @@
 #include "ACL/Transport/HTTP2Transport.h"
 
 #include <chrono>
-#include <random>
 #include <functional>
+#include <random>
+#include <stdio.h>
 
-#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
+#include <AVSCommon/Utils/Logger/Logger.h>
 
 namespace alexaClientSDK {
 namespace acl {
 
-using namespace avsCommon::sdkInterfaces;
 using namespace alexaClientSDK::avsCommon::utils;
+using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::avs;
+using namespace avsCommon::avs::attachment;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("HTTP2Transport");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /**
  * The maximum number of streams we can have active at once.  Please see here for more information:
@@ -98,22 +111,81 @@ static std::chrono::milliseconds calculateTimeToRetry(int retryCount) {
     return delayMs;
 }
 
+#ifdef ACSDK_OPENSSL_MIN_VER_REQUIRED
+/**
+ * This function checks the minimum version of OpenSSL required and prints a warning if the version is too old or
+ * the version string parsing failed.
+ */
+static void verifyOpenSslVersion(curl_version_info_data* data) {
+    // There are three numbers in OpenSSL version: major.minor.patch
+    static const int NUM_OF_VERSION_NUMBER = 3;
+
+    unsigned int versionUsed[NUM_OF_VERSION_NUMBER];
+    unsigned int minVersionRequired[NUM_OF_VERSION_NUMBER];
+
+    if (!data) {
+        ACSDK_ERROR(LX("verifyOpenSslVersionFailed").d("reason", "nullData"));
+        return;
+    } else if (!data->ssl_version) {
+        ACSDK_ERROR(LX("verifyOpenSslVersionFailed").d("reason", "nullSslVersion"));
+        return;
+    }
+
+    // parse ssl_version
+    int matchedVersionUsed =
+        sscanf(data->ssl_version,
+            "OpenSSL/%u.%u.%u",
+            &versionUsed[0], &versionUsed[1], &versionUsed[2]);
+
+    // parse minimum OpenSSL version required
+    int matchedVersionRequired =
+        sscanf(ACSDK_STRINGIFY(ACSDK_OPENSSL_MIN_VER_REQUIRED),
+            "%u.%u.%u",
+            &minVersionRequired[0], &minVersionRequired[1], &minVersionRequired[2]);
+
+    if (matchedVersionUsed == matchedVersionRequired && matchedVersionUsed == NUM_OF_VERSION_NUMBER) {
+        bool versionRequirementFailed = false;
+
+        for (int i = 0; i < NUM_OF_VERSION_NUMBER; i++) {
+            if (versionUsed[i] < minVersionRequired[i]) {
+                versionRequirementFailed = true;
+                break;
+            } else if (versionUsed[i] > minVersionRequired[i]) {
+                break;
+            }
+        }
+        if (versionRequirementFailed) {
+            ACSDK_WARN(LX("OpenSSL minimum version requirement failed!")
+                    .d("version", data->ssl_version)
+                    .d("required", ACSDK_STRINGIFY(ACSDK_OPENSSL_MIN_VER_REQUIRED)));
+        }
+    } else {
+        ACSDK_WARN(LX("Unable to parse OpenSSL version!")
+                .d("version", data->ssl_version)
+                .d("required", ACSDK_STRINGIFY(ACSDK_OPENSSL_MIN_VER_REQUIRED)));
+    }
+}
+#endif
+
 /**
  * This function logs a warning if the version of curl is not recent enough for use with the ACL.
  */
 static void printCurlDiagnostics() {
-#ifdef DEBUG
-    // TODO: ACSDK-79 add libcurl initialization to the ACL
     curl_version_info_data* data = curl_version_info(CURLVERSION_NOW);
-    if (!(data->features & CURL_VERSION_HTTP2)) {
-        logger::deprecated::Logger::log("WARNING: This libcurl does not have HTTP/2 support built!");
+    if (data && !(data->features & CURL_VERSION_HTTP2)) {
+        ACSDK_CRITICAL(LX("libcurl not built with HTTP/2 support!"));
     }
+
+#ifdef ACSDK_OPENSSL_MIN_VER_REQUIRED
+    verifyOpenSslVersion(data);
 #endif
 }
 
-HTTP2Transport::HTTP2Transport(std::shared_ptr<AuthDelegateInterface> authDelegate, const std::string& avsEndpoint,
+HTTP2Transport::HTTP2Transport(
+        std::shared_ptr<AuthDelegateInterface> authDelegate,
+        const std::string& avsEndpoint,
         MessageConsumerInterface* messageConsumerInterface,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        std::shared_ptr<AttachmentManager> attachmentManager,
         TransportObserverInterface* observer)
         :
         m_observer{observer},
@@ -137,7 +209,7 @@ bool HTTP2Transport::connect() {
     // This function spawns a worker thread, so let's ensure this function may only be called when
     // the worker thread is not running.
     if (m_isNetworkThreadRunning) {
-        logger::deprecated::Logger::log("HTTP2Transport::connect() - connection already being attempted.  Returning false.");
+        ACSDK_ERROR(LX("connectFailed").d("reason", "networkThreadAlreadyRunning"));
         return false;
     }
 
@@ -145,18 +217,20 @@ bool HTTP2Transport::connect() {
     m_multi->handle = curl_multi_init();
     if (!m_multi->handle) {
         m_multi.reset();
-        logger::deprecated::Logger::log("Could not create curl multi handle");
+        ACSDK_ERROR(LX("connectFailed").d("reason", "createCurlMultiHandleFailed"));
         return false;
     }
     if (curl_multi_setopt(m_multi->handle, CURLMOPT_PIPELINING, 2L) != CURLM_OK) {
         m_multi.reset();
-        logger::deprecated::Logger::log("Could not enable HTTP2 pipelining");
+        ACSDK_ERROR(LX("connectFailed").d("reason", "enableHTTP2PipeliningFailed"));
         return false;
     }
 
-    if (!setupDownchannelStream()) {
+    ConnectionStatusObserverInterface::ChangedReason reason =
+            ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR;
+    if (!setupDownchannelStream(&reason)) {
         m_multi.reset();
-        logger::deprecated::Logger::log("Could not setup Downchannel stream");
+        ACSDK_ERROR(LX("connectFailed").d("reason", "setupDownchannelStreamFailed").d("error", reason));
         return false;
     }
 
@@ -183,22 +257,27 @@ bool HTTP2Transport::isConnected() {
     return isConnectedLocked();
 }
 
-void HTTP2Transport::send(std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+void HTTP2Transport::send(std::shared_ptr<MessageRequest> request) {
     if (!request) {
-        logger::deprecated::Logger::log("sendFailed:nullRequest");
+        ACSDK_ERROR(LX("sendFailed").d("reason", "nullRequest"));
     } else if (!enqueueRequest(request)) {
-        request->onSendCompleted(avsCommon::avs::MessageRequest::Status::NOT_CONNECTED);
+        request->onSendCompleted(MessageRequest::Status::NOT_CONNECTED);
     }
 }
 
-bool HTTP2Transport::setupDownchannelStream() {
+bool HTTP2Transport::setupDownchannelStream(ConnectionStatusObserverInterface::ChangedReason* reason) {
+    if (!reason) {
+        ACSDK_CRITICAL(LX("setupDownchannelStreamFailed").d("reason", "nullReason"));
+        return false;
+    }
     if (m_downchannelStream) {
         CURLMcode ret = curl_multi_remove_handle(m_multi->handle, m_downchannelStream->getCurlHandle());
         if (ret != CURLM_OK) {
-            logger::deprecated::Logger::log(
-                    std::string("Could not remove downchannel stream from multi handle. error=") +
-                            curl_multi_strerror(ret));
-            setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
+            ACSDK_ERROR(LX("setupDownchannelStreamFailed")
+                    .d("reason", "curlFailure")
+                    .d("method", "curl_multi_remove_handle")
+                    .d("error", curl_multi_strerror(ret)));
+            *reason = ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR;
             return false;
         }
         m_streamPool.releaseStream(m_downchannelStream);
@@ -207,16 +286,16 @@ bool HTTP2Transport::setupDownchannelStream() {
 
     std::string authToken = m_authDelegate->getAuthToken();
     if (authToken.empty()) {
-        logger::deprecated::Logger::log("Could not get auth token.");
-        setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INVALID_AUTH);
+        ACSDK_ERROR(LX("setupDownchannelStreamFailed").d("reason", "getAuthTokenFailed"));
+        *reason = ConnectionStatusObserverInterface::ChangedReason::INVALID_AUTH;
         return false;
     }
 
     std::string url = m_avsEndpoint + AVS_DOWNCHANNEL_URL_PATH_EXTENSION;
     m_downchannelStream = m_streamPool.createGetStream(url, authToken, m_messageConsumer);
     if (!m_downchannelStream) {
-        logger::deprecated::Logger::log("Could not setup downchannel stream");
-        setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
+        ACSDK_ERROR(LX("setupDownchannelStreamFailed").d("reason", "createGetStreamFailed"));
+        *reason = ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR;
         return false;
     }
     // Since the downchannel is the first stream to be established, make sure it times out if
@@ -224,7 +303,8 @@ bool HTTP2Transport::setupDownchannelStream() {
     if (!m_downchannelStream->setConnectionTimeout(ESTABLISH_CONNECTION_TIMEOUT)) {
         m_streamPool.releaseStream(m_downchannelStream);
         m_downchannelStream.reset();
-        setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
+        ACSDK_ERROR(LX("setupDownchannelStreamFailed").d("reason", "setConnectionTimeoutFailed"));
+        *reason = ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR;
         return false;
     }
 
@@ -232,10 +312,11 @@ bool HTTP2Transport::setupDownchannelStream() {
     if (result != CURLM_OK) {
         m_streamPool.releaseStream(m_downchannelStream);
         m_downchannelStream.reset();
-        logger::deprecated::Logger::log(
-                std::string("Could not add downchannel stream to multi handle. error=") +
-                        curl_multi_strerror(result));
-        setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
+        ACSDK_ERROR(LX("setupDownchannelStreamFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_multi_add_handle")
+                .d("error", curl_multi_strerror(result)));
+        *reason = ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR;
         return false;
     }
 
@@ -247,7 +328,9 @@ void HTTP2Transport::networkLoop() {
     int retryCount = 0;
     while (!establishConnection() && !isStopping()) {
         retryCount++;
-        logger::deprecated::Logger::log("Could not setup downchannel, retry count: " + std::to_string(retryCount));
+        ACSDK_ERROR(LX("networkLoopRetryingToConnect")
+                .d("reason", "establishConnectionFailed")
+                .d("retryCount", retryCount));
         auto retryBackoff = calculateTimeToRetry(retryCount);
         std::unique_lock<std::mutex> lock(m_mutex);
         m_wakeRetryTrigger.wait_for(lock, retryBackoff, [this]{ return m_isStopping; });
@@ -270,9 +353,10 @@ void HTTP2Transport::networkLoop() {
         if (CURLM_CALL_MULTI_PERFORM == ret) {
             continue;
         } else if (ret != CURLM_OK) {
-            std::string error("CURL multi perform failed: ");
-            error.append(curl_multi_strerror(ret));
-            logger::deprecated::Logger::log(error);
+            ACSDK_ERROR(LX("networkLoopStopping")
+                    .d("reason", "curlFailure")
+                    .d("method", "curl_multi_perform")
+                    .d("error", curl_multi_strerror(ret)));
             setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
             break;
         }
@@ -307,9 +391,10 @@ void HTTP2Transport::networkLoop() {
         //TODO: ACSDK-281 - investigate the timeout values and performance consequences for curl_multi_wait.
         ret = curl_multi_wait(m_multi->handle, NULL, 0, multiWaitTimeoutMs, &numTransfersUpdated);
         if (ret != CURLM_OK) {
-            std::string error("CURL multi wait failed: ");
-            error.append(curl_multi_strerror(ret));
-            logger::deprecated::Logger::log(error);
+            ACSDK_ERROR(LX("networkLoopStopping")
+                    .d("reason", "curlFailure")
+                    .d("method", "curl_multi_wait")
+                    .d("error", curl_multi_strerror(ret)));
             setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
             break;
         }
@@ -349,7 +434,7 @@ void HTTP2Transport::networkLoop() {
             timeouts++;
             if (timeouts >= NUM_TIMEOUTS_BEFORE_PING) {
                 if (!sendPing()) {
-                    logger::deprecated::Logger::log("could not send ping!");
+                    ACSDK_ERROR(LX("networkLoopStopping").d("reason", "sendPingFailed"));
                     setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
                     break;
                 }
@@ -366,9 +451,13 @@ void HTTP2Transport::networkLoop() {
     // Remove active event handles from multi handle and release them back into the event pool.
     auto it = m_activeStreams.begin();
     while (it != m_activeStreams.end()) {
-        (*it).second->notifyRequestObserver(avsCommon::avs::MessageRequest::Status::NOT_CONNECTED);
-        if (curl_multi_remove_handle(m_multi->handle, (*it).first) != CURLM_OK) {
-            logger::deprecated::Logger::log("Could not remove easy handle from multi handle");
+        (*it).second->notifyRequestObserver(MessageRequest::Status::NOT_CONNECTED);
+        CURLMcode ret = curl_multi_remove_handle(m_multi->handle, (*it).first);
+        if (ret != CURLM_OK) {
+            ACSDK_ERROR(LX("networkLoopCleanupFailed")
+                    .d("reason", "curlFailure")
+                    .d("method", "curl_multi_remove_handle")
+                    .d("error", curl_multi_strerror(ret)));
             (*it).second.reset(); // Force stream to be deleted, also don't put back in the pool
             it = m_activeStreams.erase(it);
             continue;
@@ -376,8 +465,12 @@ void HTTP2Transport::networkLoop() {
         m_streamPool.releaseStream((*it).second);
         it = m_activeStreams.erase(it);
     }
-    if (curl_multi_remove_handle(m_multi->handle, m_downchannelStream->getCurlHandle()) != CURLM_OK) {
-        logger::deprecated::Logger::log("Could not remove downchannel handle from multi handle");
+    CURLMcode ret = curl_multi_remove_handle(m_multi->handle, m_downchannelStream->getCurlHandle());
+    if (ret != CURLM_OK) {
+        ACSDK_ERROR(LX("networkLoopCleanupFailed")
+                    .d("reason", "curlFailure")
+                    .d("method", "curl_multi_remove_handle")
+                    .d("error", curl_multi_strerror(ret)));
         //Don't do anything here since we should to cleanup the downchannel stream anyway
     }
     m_streamPool.releaseStream(m_downchannelStream);
@@ -407,9 +500,10 @@ bool HTTP2Transport::establishConnection() {
         if (CURLM_CALL_MULTI_PERFORM == ret) {
             continue;
         } else if (ret != CURLM_OK) {
-            std::string error("CURL multi perform failed: ");
-            error.append(curl_multi_strerror(ret));
-            logger::deprecated::Logger::log(error);
+            ACSDK_ERROR(LX("establishConnectionFailed")
+                    .d("reason", "curlFailure")
+                    .d("method", "curl_multi_perform")
+                    .d("error", curl_multi_strerror(ret)));
             setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
         }
         long downchannelResponseCode = m_downchannelStream->getResponseCode();
@@ -426,21 +520,27 @@ bool HTTP2Transport::establishConnection() {
                 return true;
             }
         } else if (downchannelResponseCode < 0) {
-            logger::deprecated::Logger::log("Getting downchannel response code failed!");
+            ACSDK_ERROR(LX("establishConnectionFailed")
+                    .d("reason", "negativeResponseCode")
+                    .d("responseCode", downchannelResponseCode));
             setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
         }
         // wait for activity on the downchannel stream, kinda like poll()
         ret = curl_multi_wait(m_multi->handle, NULL, 0 , WAIT_FOR_ACTIVITY_TIMEOUT_MS, &numTransfersUpdated);
         if (ret != CURLM_OK) {
-            std::string error("CURL multi wait failed: ");
-            error.append(curl_multi_strerror(ret));
-            logger::deprecated::Logger::log(error);
+            ACSDK_ERROR(LX("establishConnectionFailed")
+                    .d("reason", "curlFailure")
+                    .d("method", "curl_multi_wait")
+                    .d("error", curl_multi_strerror(ret)));
             setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
         }
     }
-    if (!setupDownchannelStream()) {
-        logger::deprecated::Logger::log("establishConnectionFailed:reason=setupDownchannelStreamFailed.");
-        setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
+
+    ConnectionStatusObserverInterface::ChangedReason reason =
+            ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR;
+    if (!setupDownchannelStream(&reason)) {
+        ACSDK_ERROR(LX("establishConnectionFailed").d("reason", "setupDownchannelStreamFailed").d("error", reason));
+        setIsStopping(reason);
     }
     return false;
 }
@@ -463,11 +563,13 @@ void HTTP2Transport::cleanupFinishedStreams() {
                 setIsStopping(ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT);
                 continue;
             } else {
-                std::shared_ptr<HTTP2Stream> stream = m_activeStreams[message->easy_handle];
-                stream->notifyRequestObserver();
-                curl_multi_remove_handle(m_multi->handle, message->easy_handle);
-                m_activeStreams.erase(message->easy_handle);
-                m_streamPool.releaseStream(stream);
+                auto it = m_activeStreams.find(message->easy_handle);
+                if (it != m_activeStreams.end()) {
+                    it->second->notifyRequestObserver();
+                    cleanupStream(it->second);
+                } else {
+                    ACSDK_ERROR(LX("cleanupFinishedStreamError").d("reason", "streamNotFound"));
+                }
             }
         }
     } while (message);
@@ -483,28 +585,31 @@ void HTTP2Transport::cleanupStalledStreams() {
         }
         auto stream = it->second;
         if (stream->hasProgressTimedOut()) {
-            std::stringstream message;
-            message << "streamProgressTimedOut:streamId=" << stream->getLogicalStreamId();
-            logger::deprecated::Logger::log(message.str());
+            ACSDK_INFO(LX("streamProgressTimedOut").d("streamId", stream->getLogicalStreamId()));
             stream->notifyRequestObserver(avsCommon::avs::MessageRequest::Status::TIMEDOUT);
-            auto result = curl_multi_remove_handle(m_multi->handle, handle);
-            if (result != CURLM_OK) {
-                message.clear();
-                message
-                        << "cleanupStalledStreamsError:reason=curl_multi_remove_handleFailed"
-                        << ",error=" << curl_multi_strerror(result)
-                        << ",streamId=" << stream->getLogicalStreamId()
-                        << ",result=stoppingNetworkLoop";
-                logger::deprecated::Logger::log(message.str());
-                setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
-            }
-            ++it;
-            m_activeStreams.erase(handle);
-            m_streamPool.releaseStream(stream);
+            cleanupStream((it++)->second);
         } else {
             ++it;
         }
     }
+}
+
+void HTTP2Transport::cleanupStream(std::shared_ptr<HTTP2Stream> stream) {
+    if (!stream) {
+        ACSDK_ERROR(LX("cleanupStreamFailed").d("reason", "nullStream"));
+        return;
+    }
+    auto result = curl_multi_remove_handle(m_multi->handle, stream->getCurlHandle());
+    if (result != CURLM_OK) {
+        ACSDK_ERROR(LX("cleanupStreamFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_multi_remove_handle")
+                .d("streamId", stream->getLogicalStreamId())
+                .d("result", "stoppingNetworkLoop"));
+        setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
+    }
+    m_activeStreams.erase(stream->getCurlHandle());
+    m_streamPool.releaseStream(stream);
 }
 
 bool HTTP2Transport::canProcessOutgoingMessage() {
@@ -526,7 +631,7 @@ void HTTP2Transport::processNextOutgoingMessage() {
     }
     auto authToken = m_authDelegate->getAuthToken();
     if (authToken.empty()) {
-        request->onSendCompleted(avsCommon::avs::MessageRequest::Status::INVALID_AUTH);
+        request->onSendCompleted(MessageRequest::Status::INVALID_AUTH);
         return;
     }
     auto url =  m_avsEndpoint + AVS_EVENT_URL_PATH_EXTENSION;
@@ -535,7 +640,7 @@ void HTTP2Transport::processNextOutgoingMessage() {
     if (stream) {
         stream->setProgressTimeout(STREAM_PROGRESS_TIMEOUT);
         if (curl_multi_add_handle(m_multi->handle, stream->getCurlHandle()) != CURLM_OK) {
-            stream->notifyRequestObserver(avsCommon::avs::MessageRequest::Status::INTERNAL_ERROR);
+            stream->notifyRequestObserver(MessageRequest::Status::INTERNAL_ERROR);
         } else {
             m_activeStreams.insert(ActiveTransferEntry(stream->getCurlHandle(), stream));
         }
@@ -549,7 +654,7 @@ bool HTTP2Transport::sendPing() {
 
     std::string authToken = m_authDelegate->getAuthToken();
     if (authToken.empty()) {
-        logger::deprecated::Logger::log("Could not get auth token.");
+        ACSDK_ERROR(LX("sendPingFailed").d("reason", "getAuthTokenFailed"));
         setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INVALID_AUTH);
         return false;
     }
@@ -558,7 +663,7 @@ bool HTTP2Transport::sendPing() {
 
     m_pingStream = m_streamPool.createGetStream(url, authToken, m_messageConsumer);
     if (!m_pingStream) {
-        logger::deprecated::Logger::log("Could not create ping stream");
+        ACSDK_ERROR(LX("sendPingFailed").d("reason", "createPingStreamFailed"));
         setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
         return false;
     }
@@ -570,8 +675,10 @@ bool HTTP2Transport::sendPing() {
 
     CURLMcode ret = curl_multi_add_handle(m_multi->handle, m_pingStream->getCurlHandle());
     if (ret != CURLM_OK) {
-        std::string err = "Could not add ping stream to curl multi handle returned: ";
-        logger::deprecated::Logger::log(err + curl_multi_strerror(ret));
+        ACSDK_ERROR(LX("sendPingFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_multi_add_handle")
+                .d("error", curl_multi_strerror(ret)));
         setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
         return false;
     }
@@ -581,7 +688,8 @@ bool HTTP2Transport::sendPing() {
 
 void HTTP2Transport::handlePingResponse() {
     if (HTTP2Stream::HTTPResponseCodes::SUCCESS_NO_CONTENT != m_pingStream->getResponseCode()) {
-        logger::deprecated::Logger::log("Ping failed returned: " + std::to_string(m_pingStream->getResponseCode()));
+        ACSDK_ERROR(LX("pingFailed")
+                .d("responseCode", m_pingStream->getResponseCode()));
         setIsStopping(ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT);
     }
     curl_multi_remove_handle(m_multi->handle, m_pingStream->getCurlHandle());
@@ -636,9 +744,9 @@ void HTTP2Transport::setIsConnectedFalse() {
     m_observer->onDisconnected(disconnectReason);
 }
 
-bool HTTP2Transport::enqueueRequest(std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+bool HTTP2Transport::enqueueRequest(std::shared_ptr<MessageRequest> request) {
     if (!request) {
-        logger::deprecated::Logger::log("enqueueRequestFailed:nullRequest");
+        ACSDK_ERROR(LX("enqueueRequestFailed").d("reason", "nullRequest"));
         return false;
     }
     std::lock_guard<std::mutex> lock(m_mutex);
@@ -649,7 +757,7 @@ bool HTTP2Transport::enqueueRequest(std::shared_ptr<avsCommon::avs::MessageReque
     return false;
 }
 
-std::shared_ptr<avsCommon::avs::MessageRequest> HTTP2Transport::dequeueRequest() {
+std::shared_ptr<MessageRequest> HTTP2Transport::dequeueRequest() {
     std::lock_guard<std::mutex> lock(m_mutex);
     if (m_requestQueue.empty()) {
         return nullptr;
@@ -663,7 +771,7 @@ std::shared_ptr<avsCommon::avs::MessageRequest> HTTP2Transport::dequeueRequest()
 void HTTP2Transport::clearQueuedRequests(){
     std::lock_guard<std::mutex> lock(m_mutex);
     for (auto request : m_requestQueue) {
-        request->onSendCompleted(avsCommon::avs::MessageRequest::Status::NOT_CONNECTED);
+        request->onSendCompleted(MessageRequest::Status::NOT_CONNECTED);
     }
     m_requestQueue.clear();
 }

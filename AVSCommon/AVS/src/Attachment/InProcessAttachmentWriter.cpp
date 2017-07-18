@@ -16,10 +16,7 @@
  */
 
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h"
-#include "AVSCommon/Utils/Logger/LogEntry.h"
-#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
-
-#include <iostream>
+#include "AVSCommon/Utils/Logger/Logger.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {

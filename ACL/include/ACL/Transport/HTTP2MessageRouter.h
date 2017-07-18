@@ -42,9 +42,10 @@ public:
      * @param authDelegate The AuthDelegate implementation.
      * @param avsEndpoint The URL for the AVS endpoint of this object.
      */
-    HTTP2MessageRouter(std::shared_ptr<AuthDelegateInterface> authDelegate,
-                       std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-                       const std::string& avsEndpoint = "https://avs-alexa-na.amazon.com");
+    HTTP2MessageRouter(
+            std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
+            std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+            const std::string& avsEndpoint = "https://avs-alexa-na.amazon.com");
 
     /**
      * Destructor.
@@ -53,7 +54,7 @@ public:
 
 private:
     std::shared_ptr<TransportInterface> createTransport(
-            std::shared_ptr<AuthDelegateInterface> authDelegate,
+            std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
             std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
             const std::string& avsEndpoint,
             MessageConsumerInterface* messageConsumerInterface,

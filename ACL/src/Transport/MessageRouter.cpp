@@ -18,10 +18,7 @@
 #include <algorithm>
 #include <curl/curl.h>
 
-#include "ACL/EnumUtils.h"
-
-#include <AVSCommon/Utils/Logger/LogEntry.h>
-#include <AVSCommon/Utils/Logger/DeprecatedLogger.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
@@ -32,6 +29,8 @@ namespace acl {
 
 using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 using namespace alexaClientSDK::avsCommon::utils;
+using namespace avsCommon::avs::attachment;
+using namespace avsCommon::avs;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("MessageRouter");
@@ -45,21 +44,19 @@ static const std::string TAG("MessageRouter");
 
 MessageRouter::MessageRouter(
         std::shared_ptr<AuthDelegateInterface> authDelegate,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-        const std::string& avsEndpoint,
-        std::shared_ptr<avsCommon::utils::threading::Executor> executor):
+        std::shared_ptr<AttachmentManager> attachmentManager,
+        const std::string& avsEndpoint):
     m_avsEndpoint{avsEndpoint},
     m_authDelegate{authDelegate},
     m_connectionStatus{ConnectionStatusObserverInterface::Status::DISCONNECTED},
     m_connectionReason{ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST},
     m_isEnabled{false},
-    m_executor{executor},
     m_attachmentManager{attachmentManager} {
 }
 
 MessageRouter::~MessageRouter() {
     disable();
-    m_executor->waitForSubmittedTasks();
+    m_executor.waitForSubmittedTasks();
 }
 
 MessageRouterInterface::ConnectionStatus MessageRouter::getConnectionStatus() {
@@ -83,7 +80,7 @@ void MessageRouter::disable() {
     disconnectAllTransportsLocked(lock, ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
 }
 
-void MessageRouter::send(std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+void MessageRouter::send(std::shared_ptr<MessageRequest> request) {
     if (!request) {
         ACSDK_ERROR(LX("sendFailed").d("reason", "nullRequest"));
         return;
@@ -93,7 +90,7 @@ void MessageRouter::send(std::shared_ptr<avsCommon::avs::MessageRequest> request
         m_activeTransport->send(request);
     } else {
         ACSDK_ERROR(LX("sendFailed").d("reason", "noActiveTransport"));
-        request->onSendCompleted(avsCommon::avs::MessageRequest::Status::NOT_CONNECTED);
+        request->onSendCompleted(MessageRequest::Status::NOT_CONNECTED);
     }
 }
 
@@ -175,7 +172,7 @@ void MessageRouter::notifyObserverOnConnectionStatusChanged(
             observer->onConnectionStatusChanged(status, reason);
         }
     };
-    m_executor->submit(task);
+    m_executor.submit(task);
 }
 
 void MessageRouter::notifyObserverOnReceive(const std::string & contextId, const std::string & message) {
@@ -185,7 +182,7 @@ void MessageRouter::notifyObserverOnReceive(const std::string & contextId, const
             temp->receive(contextId, message);
         }
     };
-    m_executor->submit(task);
+    m_executor.submit(task);
 }
 
 void MessageRouter::createActiveTransportLocked() {

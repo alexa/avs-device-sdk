@@ -15,6 +15,9 @@
  * permissions and limitations under the License.
  */
 
+/**
+ * @file
+ */
 #ifndef ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_MIME_PARSER_H_
 #define ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_MIME_PARSER_H_
 
@@ -199,6 +202,28 @@ private:
      */
     size_t m_totalSuccessfullyProcessedBytes;
 };
+
+/**
+ * Write a @c DataParsedStatus value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param status The status value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, MimeParser::DataParsedStatus status) {
+    switch (status) {
+        case MimeParser::DataParsedStatus::OK:
+            stream << "OK";
+            break;
+        case MimeParser::DataParsedStatus::INCOMPLETE:
+            stream << "INCOMPLETE";
+            break;
+        case MimeParser::DataParsedStatus::ERROR:
+            stream << "ERROR";
+            break;
+    }
+    return stream;
+}
 
 } // acl
 } // alexaClientSDK

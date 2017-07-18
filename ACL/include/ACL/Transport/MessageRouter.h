@@ -28,7 +28,7 @@
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 
-#include "ACL/AuthDelegateInterface.h"
+#include "AVSCommon/SDKInterfaces/AuthDelegateInterface.h"
 #include "ACL/Transport/MessageRouterInterface.h"
 #include "ACL/Transport/MessageRouterObserverInterface.h"
 #include "ACL/Transport/TransportInterface.h"
@@ -52,13 +52,11 @@ public:
      * the MessageRouter can authorize the client to AVS.
      * @param attachmentManager The AttachmentManager, which allows ACL to write attachments received from AVS.
      * @param avsEndpoint The endpoint to connect to AVS.
-     * @param executor An Executor used to perform asynchronous operations.
      */
     MessageRouter(
-            std::shared_ptr<AuthDelegateInterface> authDelegate,
+            std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
             std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-            const std::string& avsEndpoint,
-            std::shared_ptr<avsCommon::utils::threading::Executor> executor);
+            const std::string& avsEndpoint);
 
     /**
      * Destructor.
@@ -98,7 +96,7 @@ private:
      * TODO: ACSDK-99 Replace this with an injected transport factory.
      */
     virtual std::shared_ptr<TransportInterface> createTransport(
-            std::shared_ptr<AuthDelegateInterface> authDelegate,
+            std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
             std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
             const std::string& avsEndpoint,
             MessageConsumerInterface* messageConsumerInterface,
@@ -172,7 +170,7 @@ private:
     std::string m_avsEndpoint;
 
     /// The AuthDelegateInterface which provides a valid access token.
-    std::shared_ptr<AuthDelegateInterface> m_authDelegate;
+    std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> m_authDelegate;
 
     /// This mutex guards access to all connection related state, specifically the status and all transport interaction.
     std::mutex m_connectionMutex;
@@ -195,15 +193,16 @@ private:
     /// The current active transport to send messages on. Access serialized with @c m_connectionMutex.
     std::shared_ptr<TransportInterface> m_activeTransport;
 
+    /// The attachment manager.
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
+
+protected:
     /**
      * Executor to perform asynchronous operations:
      * @li Delivery of connection status notifications.
      * @li completion of send operations delayed by a pending connection state.
      */
-    std::shared_ptr<avsCommon::utils::threading::Executor> m_executor;
-
-    /// The attachment manager.
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
+    avsCommon::utils::threading::Executor m_executor;
 };
 
 } // namespace acl

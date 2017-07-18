@@ -23,3 +23,6 @@ include(KeywordDetector)
 
 # Setup media player variables.
 include(MediaPlayer)
+
+# Setup PortAudio variables.
+include(PortAudio)

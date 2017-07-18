@@ -25,7 +25,7 @@
 #include <mutex>
 #include <thread>
 
-#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
+#include "AVSCommon/Utils/Logger/LoggerUtils.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -206,6 +206,11 @@ private:
         size_t maxCount,
         std::function<void()> task);
 
+    /**
+     * The tag associated with log entries from this class.
+     */
+    static const std::string TAG;
+
     /// The condition variable used to wait for @c stop() or period timeouts.
     std::condition_variable m_waitCondition;
 
@@ -234,14 +239,18 @@ bool Timer::start(
     Task task,
     Args &&... args) {
 
-    if (delay < std::chrono::duration<Rep, Period>::zero() || period < std::chrono::duration<Rep, Period>::zero()) {
-        utils::logger::deprecated::Logger::log("Unable to start timer: negative delay or period.");
+    if (delay < std::chrono::duration<Rep, Period>::zero()) {
+        logger::acsdkError(logger::LogEntry(TAG, "startFailed").d("reason", "negativeDelay"));
+        return false;
+    }
+    if(period < std::chrono::duration<Rep, Period>::zero()) {
+        logger::acsdkError(logger::LogEntry(TAG, "startFailed").d("reason", "negativePeriod"));
         return false;
     }
 
     // Can't start if already running.
     if (!activate()) {
-        utils::logger::deprecated::Logger::log("Unable to start timer: already running.");
+        logger::acsdkError(logger::LogEntry(TAG, "startFailed").d("reason", "timerAlreadyActive"));
         return false;
     }
 
@@ -289,7 +298,7 @@ auto Timer::start(
 
     // Can't start if already running.
     if (!activate()) {
-        utils::logger::deprecated::Logger::log("Unable to start timer: already running.");
+        logger::acsdkError(logger::LogEntry(TAG, "startFailed").d("reason", "timerAlreadyActive"));
         using FutureType = decltype(task(args...));
         return std::future<FutureType>();
     }

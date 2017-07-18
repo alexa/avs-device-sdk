@@ -19,8 +19,7 @@
 
 #include "AVSCommon/Utils/Configuration/ConfigurationNode.h"
 #include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
-#include "AVSCommon/Utils/Logger/LogEntry.h"
-#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
+#include "AVSCommon/Utils/Logger/Logger.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {

@@ -18,6 +18,8 @@
 #ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_FOCUS_STATE_H_
 #define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_FOCUS_STATE_H_
 
+#include <string>
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace avs {
@@ -35,6 +37,35 @@ enum class FocusState {
     /// This focus is used to represent when a Channel is not being used or when an observer should stop.
     NONE
 };
+
+/**
+ * This function converts the provided @c FocusState to a string.
+ *
+ * @param state The @c FocusState to convert to a string.
+ * @return The string conversion of @c state.
+ */
+inline std::string focusStateToString(FocusState state) {
+    switch (state) {
+        case FocusState::FOREGROUND:
+            return "FOREGROUND";
+        case FocusState::BACKGROUND:
+            return "BACKGROUND";
+        case FocusState::NONE:
+            return "NONE";
+    }
+    return "Unknown State";
+}
+
+/**
+ * Write a @c FocusState value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param state The @c FocusState value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const FocusState& state) {
+    return stream << focusStateToString(state);
+}
 
 } // namespace avs
 } // namespace avsCommon

@@ -78,7 +78,7 @@ protected:
  */
 TEST_F(AlexaAuthorizationDelegateTest, refreshAuthToken) {
     auto authDelegate = AuthDelegate::create();
-    authDelegate->setAuthObserver(m_authObserver);
+    authDelegate->addAuthObserver(m_authObserver);
     bool tokenRefreshed = m_authObserver->waitFor(AuthObserver::State::REFRESHED,
         std::chrono::seconds(TIME_OUT_IN_SECONDS));
     ASSERT_TRUE(tokenRefreshed) << "Refreshing the auth token timed out.";
@@ -102,7 +102,7 @@ TEST_F(AlexaAuthorizationDelegateTest, invalidRefreshTokenWithUnrecoverableError
         })";
     ASSERT_TRUE(AlexaClientSDKInit::initialize({&infile, &override}));
     auto authDelegate = AuthDelegate::create();
-    authDelegate->setAuthObserver(m_authObserver);
+    authDelegate->addAuthObserver(m_authObserver);
     bool gotUnrecoverableError = m_authObserver->waitFor(AuthObserver::State::UNRECOVERABLE_ERROR,
          std::chrono::seconds(TIME_OUT_IN_SECONDS));
     ASSERT_TRUE(gotUnrecoverableError) << "Waiting for UNRECOVERABLE_ERROR timed out";

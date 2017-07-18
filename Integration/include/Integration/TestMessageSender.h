@@ -90,6 +90,32 @@ public:
      * @param avsEndpoint The URL for the new AVS endpoint.
      */
     void setAVSEndpoint(const std::string& avsEndpoint);
+
+        void addConnectionStatusObserver(
+            std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer);
+
+    /**
+     * Removes an observer from being notified of connection status changes.
+     *
+     * @param observer The observer object to remove.
+     */
+    void removeConnectionStatusObserver(
+            std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer);
+
+    /**
+     * Adds an observer to be notified of message receptions.
+     *
+     * @param observer The observer object to add.
+     */
+    void addMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer);
+
+    /**
+     * Removes an observer from being notified of message receptions.
+     *
+     * @param observer The observer object to remove.
+     */
+    void removeMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer);
+
 private:
     /// Mutex to protect m_queue.
     std::mutex m_mutex;

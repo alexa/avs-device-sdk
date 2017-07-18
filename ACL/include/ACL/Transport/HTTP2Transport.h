@@ -31,7 +31,7 @@
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 
-#include "ACL/AuthDelegateInterface.h"
+#include "AVSCommon/SDKInterfaces/AuthDelegateInterface.h"
 #include "ACL/Transport/TransportInterface.h"
 #include "ACL/Transport/TransportObserverInterface.h"
 #include "ACL/Transport/HTTP2Stream.h"
@@ -56,10 +56,12 @@ public:
      * @param attachmentManager The attachment manager that manages the attachments.
      * @param observer The optional observer to this class.
      */
-    HTTP2Transport(std::shared_ptr<AuthDelegateInterface> authDelegate, const std::string& avsEndpoint,
-        MessageConsumerInterface* messageConsumerInterface,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-        TransportObserverInterface* observer = nullptr);
+    HTTP2Transport(
+            std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
+            const std::string& avsEndpoint,
+            MessageConsumerInterface* messageConsumerInterface,
+            std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+            TransportObserverInterface* observer = nullptr);
 
     /**
      * Destructor.
@@ -96,9 +98,10 @@ private:
     /**
      * Sets up the downchannel stream. If a downchannel stream already exists, it is torn down and reset.
      *
-     * @return Whether the downchannel stream was successfully set up.
+     * @param[out] reason Pointer to receive the reason the operation failed, if it does.
+     * @return Whether the operation was successful.
      */
-    bool setupDownchannelStream();
+    bool setupDownchannelStream(avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason* reason);
 
     /**
      * Main network loop. Will establish a connection then repeatedly call curl_multi_perform in order to
@@ -122,6 +125,13 @@ private:
      * Check for streams that have not progressed within their timeout and remove them.
      */
     void cleanupStalledStreams();
+
+    /**
+     * Cleanup a stream, removing it from @c m_multi and @c m_activeStreams and releasing it back to @c m_streamPool.
+     *
+     * @param stream The stream to clean up.
+     */
+    void cleanupStream(std::shared_ptr<HTTP2Stream> stream);
 
     /**
      * Checks all the currently executing message requests to see if they have HTTP response codes.
@@ -219,7 +229,7 @@ private:
     MessageConsumerInterface *m_messageConsumer;
 
     /// Auth delegate implementation.
-    std::shared_ptr<AuthDelegateInterface> m_authDelegate;
+    std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> m_authDelegate;
 
     /// The URL of the AVS server we will connect to.
     std::string m_avsEndpoint;

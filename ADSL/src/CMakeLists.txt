@@ -13,5 +13,4 @@ target_include_directories(ADSL PUBLIC
     "${AVSCommon_INCLUDE_DIRS}")
 target_link_libraries(ADSL
     ${CMAKE_THREAD_LIBS_INIT}
-    AVSCommon
-    ACL)
+    AVSCommon)

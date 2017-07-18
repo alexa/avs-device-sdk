@@ -52,7 +52,7 @@ public:
                 m_messageRouter,
                 true,
                 std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>(),
-                nullptr);
+                std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>>());
     }
 
 protected:
@@ -72,6 +72,20 @@ TEST_F(AVSConnectionManagerTest, addConnectionStatusObserverNull) {
  */
 TEST_F(AVSConnectionManagerTest, removeConnectionStatusObserverNull) {
     m_avsConnectionManager->removeConnectionStatusObserver(nullptr);
+}
+
+/**
+ * Test addMessageObserver with a @c nullptr observer, expecting no errors.
+ */
+TEST_F(AVSConnectionManagerTest, addMessageObserverNull) {
+    m_avsConnectionManager->addMessageObserver(nullptr);
+}
+
+/**
+ * Test removeMessageObserver with a @c nullptr observer, expecting no errors.
+ */
+TEST_F(AVSConnectionManagerTest, removeMessageObserverNull) {
+    m_avsConnectionManager->removeMessageObserver(nullptr);
 }
 
 } // namespace test

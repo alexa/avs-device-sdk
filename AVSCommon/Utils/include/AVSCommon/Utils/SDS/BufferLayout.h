@@ -23,6 +23,7 @@
 #include <vector>
 #include <mutex>
 
+#include "AVSCommon/Utils/Logger/LoggerUtils.h"
 #include "SharedDataStream.h"
 
 namespace alexaClientSDK {
@@ -374,6 +375,11 @@ private:
     void calculateAndCacheConstants(size_t wordSize, size_t maxReaders);
 
     /**
+     * The tag associated with log entries from this class.
+     */
+    static const std::string TAG;
+
+    /**
      * This function reports whether this SDS is attached to its @c Buffer.
      *
      * @return @c true if this SDS is attached to its @c Buffer, else @c false.
@@ -398,6 +404,9 @@ private:
     /// Precalculated pointer to the circular data.
     uint8_t* m_data;
 };
+
+template <typename T>
+const std::string SharedDataStream<T>::BufferLayout::TAG = "SdsBufferLayout";
 
 template <typename T>
 SharedDataStream<T>::BufferLayout::BufferLayout(std::shared_ptr<Buffer> buffer):
@@ -444,14 +453,20 @@ template <typename T>
 bool SharedDataStream<T>::BufferLayout::init(size_t wordSize, size_t maxReaders) {
     // Make sure parameters are not too large to store.
     if (wordSize > std::numeric_limits<decltype(Header::wordSize)>::max()) {
-        utils::logger::deprecated::Logger::log("BufferLayout::init failed: wordSize is too large.");
+        logger::acsdkError(logger::LogEntry(TAG, "initFailed")
+                .d("reason", "wordSizeTooLarge")
+                .d("wordSize", wordSize)
+                .d("wordSizeLimit", std::numeric_limits<decltype(Header::wordSize)>::max()));
         return false;
     }
     if (maxReaders > std::numeric_limits<decltype(Header::maxReaders)>::max()) {
-        utils::logger::deprecated::Logger::log("BufferLayout::init failed: maxReaders is too large.");
+        logger::acsdkError(logger::LogEntry(TAG, "initFailed")
+                .d("reason", "maxReadersTooLarge")
+                .d("maxReaders", maxReaders)
+                .d("maxReadersLimit", std::numeric_limits<decltype(Header::maxReaders)>::max()));
         return false;
     }
-    
+
     // Pre-calculate some pointers and sizes that are frequently accessed.
     calculateAndCacheConstants(wordSize, maxReaders);
 
@@ -493,26 +508,38 @@ bool SharedDataStream<T>::BufferLayout::attach() {
     // Verify compatibility.
     auto header = getHeader();
     if (header->magic != MAGIC_NUMBER) {
-        utils::logger::deprecated::Logger::log("BufferLayout::attach failed: Invalid magic number in buffer header.");
+        logger::acsdkError(logger::LogEntry(TAG, "attachFailed")
+                .d("reason", "magicNumberMismatch")
+                .d("magicNumber", header->magic)
+                .d("expectedMagicNumber", std::to_string(MAGIC_NUMBER)));
         return false;
     }
     if (header->version != VERSION) {
-        utils::logger::deprecated::Logger::log("BufferLayout::attach failed: Incompatible version in buffer header.");
+        logger::acsdkError(logger::LogEntry(TAG, "attachFailed")
+                .d("reason", "incompatibleVersion")
+                .d("version", header->version)
+                .d("expectedVersion", std::to_string(VERSION)));
         return false;
     }
     if (header->traitsNameHash != stableHash(T::traitsName)) {
-        utils::logger::deprecated::Logger::log("BufferLayout::attach failed: Incompatible traits hash in buffer header.");
+        logger::acsdkError(logger::LogEntry(TAG, "attachFailed")
+                .d("reason", "traitsNameHashMismatch")
+                .d("hash", header->traitsNameHash)
+                .d("expectedHash", stableHash(T::traitsName)));
         return false;
     }
 
     // Attach.
     std::lock_guard<Mutex> lock(header->attachMutex);
     if (0 == header->referenceCount) {
-        utils::logger::deprecated::Logger::log("BufferLayout::attach failed: Can not attach to a buffer which has no other users.");
+        logger::acsdkError(logger::LogEntry(TAG, "attachFailed").d("reason", "zeroUsers"));
         return false;
     }
     if (std::numeric_limits<decltype(header->referenceCount)>::max() == header->referenceCount) {
-        utils::logger::deprecated::Logger::log("BufferLayout::attach failed: Too many users attached to buffer.");
+          logger::acsdkError(logger::LogEntry(TAG, "attachFailed")
+                .d("reason", "bufferMaxUsersExceeded")
+                .d("numUsers", header->referenceCount)
+                .d("maxNumUsers", std::numeric_limits<decltype(header->referenceCount)>::max));
         return false;
     }
     ++header->referenceCount;

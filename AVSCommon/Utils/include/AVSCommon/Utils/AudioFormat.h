@@ -15,6 +15,9 @@
  * permissions and limitations under the License.
  */
 
+/**
+ * @file
+ */
 #ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_AUDIO_FORMAT_H_
 #define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_AUDIO_FORMAT_H_
 

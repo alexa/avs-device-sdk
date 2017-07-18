@@ -98,7 +98,7 @@ int exerciseAuthDelegate() {
     }
 
     auto observer = std::make_shared<Observer>();
-    authDelegate->setAuthObserver(observer);
+    authDelegate->addAuthObserver(observer);
 
     // Wait until we know we are authorized or know we will never be authorized.
     if (!observer->wait()) {

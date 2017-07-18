@@ -31,8 +31,10 @@
 #include <AVSCommon/Utils/Timing/Timer.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/AVS/DirectiveHandlerConfiguration.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
+#include <AVSCommon/AVS/DialogUXStateAggregator.h>
 #include "AudioProvider.h"
 #include "Initiator.h"
 
@@ -55,8 +57,10 @@ namespace aip {
  * @note @c AudioInputProcessor should be returned to an @c IDLE state before closing the application.  This can be
  * achieved by waiting on the @c std::future returned by a call to @c resetState().
  */
-class AudioInputProcessor
-    : public avsCommon::avs::CapabilityAgent, public std::enable_shared_from_this<AudioInputProcessor> {
+class AudioInputProcessor :
+        public avsCommon::avs::CapabilityAgent,
+        public avsCommon::sdkInterfaces::DialogUXStateObserverInterface,
+        public std::enable_shared_from_this<AudioInputProcessor> {
 public:
     /// Alias to the @c AudioInputProcessorObserverInterface for brevity.
     using ObserverInterface = avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface;
@@ -71,19 +75,21 @@ public:
      * @param messageSender The object to use for sending events.
      * @param contextManager The AVS Context manager used to generate system context for events.
      * @param focusManager The channel focus manager used to manage usage of the dialog channel.
-     * @param exceptionSender The object to use for sending AVS Exception messages.
+     * @param dialogUXStateAggregator The dialog state aggregator which tracks UX states related to dialog.
+     * @param exceptionEncounteredSender The object to use for sending AVS Exception messages.
      * @param defaultAudioProvider A default @c avsCommon::AudioProvider to use for ExpectSpeech if the previous
      *     provider is not readable (@c avsCommon::AudioProvider::alwaysReadable).  This parameter is optional and
      *     defaults to an invalid @c avsCommon::AudioProvider.
      * @return A @c std::shared_ptr to the new @c AudioInputProcessor instance.
      */
-     static std::shared_ptr<AudioInputProcessor> create(
-         std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
-         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
-         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
-         AudioProvider defaultAudioProvider = AudioProvider::null());
+    static std::shared_ptr<AudioInputProcessor> create(
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
+        std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        AudioProvider defaultAudioProvider = AudioProvider::null());
 
     /**
      * Adds an observer to be notified of AudioInputProcessor state changes.
@@ -94,6 +100,9 @@ public:
 
     /**
      * Removes an observer from the set of observers to be notified of AudioInputProcessor state changes.
+     *
+     * @note This is a synchronous call which can not be made by an observer callback.  Attempting to call
+     *     @c removeObserver() from @c ObserverInterface::onStateChanged() will result in a deadlock.
      *
      * @param observer The observer object to remove.
      */
@@ -189,6 +198,12 @@ public:
     /// @name ChannelObserverInterface Functions
     /// @{
     void onFocusChanged(avsCommon::avs::FocusState newFocus) override;
+    /// @}
+
+    /// @name DialogUXStateObserverInterface Functions
+    /// @{
+    void onDialogUXStateChanged(
+            avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) override;
     /// @}
 
 private:
@@ -393,6 +408,15 @@ private:
     void executeProvideState(bool sendToken = false, unsigned int stateRequestToken = 0);
 
     /**
+     * This function is called whenever the AVS UX dialog state of the system changes. This function will block 
+     * processing of other state changes, so any implementation of this should return quickly.
+     *
+     * @param newState The new dialog specific AVS UX state.
+     */
+    void executeOnDialogUXStateChanged(
+            avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState);
+
+    /**
      * This function updates the @c AudioInputProcessor state and notifies the state observer.  Any changes to
      * @c m_state should be made through this function.
      *
@@ -406,6 +430,9 @@ private:
      * @param info The @c DirectiveInfo containing the @c AVSDirective whose message ID is to be removed.
      */
     void removeDirective(std::shared_ptr<DirectiveInfo> info);
+
+    /// This function sends @c m_request, updates state, and calls @c m_deferredStopCapture if pending.
+    void sendRequestNow();
 
     /// @}
 
@@ -481,6 +508,21 @@ private:
      * wakeword field in the RecognizerState context.
      */
     std::string m_wakeword;
+
+    /**
+     * This flag is set to @c true upon entering the @c RECOGNIZING state, and remains true until the @c Recognize
+     * event is sent.
+     */
+    bool m_preparingToSend;
+
+    /**
+     * If @c stopCapture() is called during @c RECOGNIZING before the event is sent, the stop operation is stored in
+     * this variable so that it can be called after the @c Recognize event is sent.
+     */
+    std::function<void()> m_deferredStopCapture;
+
+    /// This flag indicates whether the initial dialog UX State has been received.
+    bool m_initialDialogUXStateReceived;    
     /// @}
 
     /**

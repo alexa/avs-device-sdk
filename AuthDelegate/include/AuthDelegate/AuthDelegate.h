@@ -24,8 +24,9 @@
 #include <mutex>
 #include <thread>
 #include <string>
+#include <unordered_set>
 
-#include <ACL/AuthDelegateInterface.h>
+#include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 
 #include "AuthDelegate/HttpPostInterface.h"
@@ -38,7 +39,7 @@ namespace authDelegate {
  * specifies LWA 'client ID', 'client Secret', and 'refresh token' values and uses those to keep a
  * valid authorization token available.
  */
-class AuthDelegate : public acl::AuthDelegateInterface {
+class AuthDelegate : public avsCommon::sdkInterfaces::AuthDelegateInterface {
 public:
 
     /**
@@ -84,7 +85,9 @@ public:
      */
     AuthDelegate& operator=(const AuthDelegate& rhs) = delete;
 
-    void setAuthObserver(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> observer) override;
+    void addAuthObserver(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> observer) override;
+
+    void removeAuthObserver(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> observer) override;
 
     std::string getAuthToken() override;
 
@@ -153,8 +156,8 @@ private:
      */
     void setState(avsCommon::sdkInterfaces::AuthObserverInterface::State newState);
 
-    /// Authorization state change observer. Access is synchronized with @c m_mutex.
-    std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> m_observer;
+    /// Authorization state change observers. Access is synchronized with @c m_mutex.
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface>> m_observers;
 
     /// Current state authorization. Access is synchronized with @c m_mutex.
     avsCommon::sdkInterfaces::AuthObserverInterface::State m_authState;

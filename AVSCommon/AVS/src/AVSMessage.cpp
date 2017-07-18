@@ -15,14 +15,11 @@
  * permissions and limitations under the License.
  */
 
-#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
 #include "AVSCommon/AVS/AVSMessage.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace avs {
-
-using namespace alexaClientSDK::avsCommon::utils;
 
 AVSMessage::AVSMessage(std::shared_ptr<AVSMessageHeader> avsMessageHeader, std::string payload) :
         m_header{avsMessageHeader}, m_payload{std::move(payload)} {

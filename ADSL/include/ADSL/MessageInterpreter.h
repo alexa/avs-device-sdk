@@ -24,6 +24,7 @@
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
+#include <rapidjson/document.h>
 
 namespace alexaClientSDK {
 namespace adsl {
@@ -51,22 +52,15 @@ public:
     void receive(const std::string & contextId, const std::string & message) override;
 
 private:
+
     /**
-     * This helper function is used to access fields at various levels within the JSON message
-     * sent to us from AVS. This function also encapsulates error and exception handling logic appropriately.
+     * Logs an error and sends an exception to AVS. This signifies that an error occurred when attempting to
+     * parse a value with a particular @c key.
      *
-     * TODO: [ACSDK-202] Refine this helper function to make sure sending exception encountered event is clear to
-     *       the caller.
-     *
-     * @param avsMessage The message received from AVS.
-     * @param jsonMessageHeader The JSON string of message header we are trying to parse, which is a substring of the
-     *        directive.
-     * @param lookupKey The key we are looking for.
-     * @param[out] outputValue The value of the key that we are looking for.
-     * @return @c true if the value was found, @false otherwise, in which case an Exception has also been sent to AVS.
+     * @param key They key whose value could not be parsed.
+     * @param json The JSON message that was being parsed.
      */
-    bool lookupJsonValueHelper(const std::string & avsMessage, const std::string& jsonMessageHeader,
-        const std::string& lookupKey, std::string* outputValue);
+    void sendParseValueException(const std::string& key, const std::string& json);
 
     /// Object that manages sending exceptions encountered messages to AVS.
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> m_exceptionEncounteredSender;

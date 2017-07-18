@@ -16,8 +16,7 @@
  */
 
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentReader.h"
-#include "AVSCommon/Utils/Logger/LogEntry.h"
-#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
+#include "AVSCommon/Utils/Logger/Logger.h"
 
 using namespace alexaClientSDK::avsCommon::utils;
 
@@ -39,16 +38,16 @@ static const std::string TAG("InProcessAttachmentReader");
 std::unique_ptr<InProcessAttachmentReader> InProcessAttachmentReader::create(
         Policy policy,
         std::shared_ptr<SDSType> sds,
-        SDSTypeIndex index,
+        SDSTypeIndex offset,
         SDSTypeReader::Reference reference) {
-    auto reader = std::unique_ptr<InProcessAttachmentReader>(new InProcessAttachmentReader(policy, sds, index));
+    auto reader = std::unique_ptr<InProcessAttachmentReader>(new InProcessAttachmentReader(policy, sds));
 
     if (!reader->m_reader) {
         ACSDK_ERROR(LX("createFailed").d("reason", "object not fully created"));
         return nullptr;
     }
 
-    if (!reader->m_reader->seek(index, reference)) {
+    if (!reader->m_reader->seek(offset, reference)) {
         ACSDK_ERROR(LX("ConstructorFailed").d("reason", "seek failed"));
         return nullptr;
     }
@@ -56,7 +55,7 @@ std::unique_ptr<InProcessAttachmentReader> InProcessAttachmentReader::create(
     return reader;
 }
 
-InProcessAttachmentReader::InProcessAttachmentReader(Policy policy, std::shared_ptr<SDSType> sds, SDSTypeIndex index) {
+InProcessAttachmentReader::InProcessAttachmentReader(Policy policy, std::shared_ptr<SDSType> sds) {
     if (!sds) {
         ACSDK_ERROR(LX("ConstructorFailed").d("reason", "SDS parameter is nullptr"));
         return;

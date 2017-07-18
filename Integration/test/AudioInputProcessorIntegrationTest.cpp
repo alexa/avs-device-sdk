@@ -376,7 +376,7 @@ protected:
         ASSERT_TRUE(AlexaClientSDKInit::initialize({&infile}));
         m_authObserver = std::make_shared<AuthObserver>();
         m_authDelegate = AuthDelegate::create();
-        m_authDelegate->setAuthObserver(m_authObserver);
+        m_authDelegate->addAuthObserver(m_authObserver);
         m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
 
         auto attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
@@ -428,6 +428,7 @@ protected:
         m_tapToTalkButton = std::make_shared<tapToTalkButton>();
         m_holdToTalkButton = std::make_shared<holdToTalkButton>();
         m_focusManager = std::make_shared<FocusManager>();
+        m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>();
 
         m_contextManager = ContextManager::create();
         ASSERT_NE (nullptr, m_contextManager);
@@ -449,9 +450,11 @@ protected:
             m_avsConnectionManager,
             m_contextManager,
             m_focusManager,
+            m_dialogUXStateAggregator,
             m_exceptionEncounteredSender
         );
         ASSERT_NE (nullptr, m_AudioInputProcessor);
+        m_AudioInputProcessor->addObserver(m_dialogUXStateAggregator);
 
         m_testClient = std::make_shared<TestClient>();
 
@@ -549,6 +552,7 @@ protected:
     std::shared_ptr<MessageInterpreter> m_messageInterpreter;
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
     std::shared_ptr<afml::FocusManager> m_focusManager;
+    std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> m_dialogUXStateAggregator;
     std::shared_ptr<TestClient> m_testClient;
     std::shared_ptr<AudioInputProcessor> m_AudioInputProcessor;
     std::shared_ptr<AipStateObserver> m_StateObserver;

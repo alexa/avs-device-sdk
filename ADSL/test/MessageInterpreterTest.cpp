@@ -159,11 +159,11 @@ static const std::string DIRECTIVE_INVALID_PAYLOAD_KEY = R"({
 static const std::string DIRECTIVE_NO_DIALOG_REQUEST_ID_KEY = R"({
     "directive": {
         "header": {
-            "namespace":"namespace_test",
-            "name": "name_test",
-            "messageId": "messageId_test"
+            "namespace":")" + NAMESPACE_TEST + R"(",
+            "name": ")" + NAME_TEST + R"(",
+            "messageId": ")" + MESSAGE_ID_TEST + R"("
         },
-        "payload":{}
+        "payload": )" + PAYLOAD_TEST + R"(
     }
 })";
 
@@ -269,6 +269,15 @@ TEST_F(MessageIntepreterTest, messageHasInvalidMessageIdKey) {
 TEST_F(MessageIntepreterTest, messageHasNoDialogRequestIdKey) {
     EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _))
             .Times(0);
+    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
+            .Times(1)
+            .WillOnce(Invoke([](std::shared_ptr<AVSDirective> avsDirective) -> bool {
+                    EXPECT_EQ(avsDirective->getNamespace(), NAMESPACE_TEST);
+                    EXPECT_EQ(avsDirective->getName(), NAME_TEST);
+                    EXPECT_EQ(avsDirective->getMessageId(), MESSAGE_ID_TEST);
+                    EXPECT_TRUE(avsDirective->getDialogRequestId().empty());
+                    return true;
+            }));
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_NO_DIALOG_REQUEST_ID_KEY);
 }
 
@@ -306,15 +315,11 @@ TEST_F(MessageIntepreterTest, messageIsValidDirective) {
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
             .Times(1)
             .WillOnce(Invoke([](std::shared_ptr<AVSDirective> avsDirective) -> bool {
-                // This lambda function is necessary because the ASSERT_EQ is a macro that "returns void";
-                auto verifyArguments = [](std::shared_ptr<AVSDirective> avsDirective) {
-                    ASSERT_EQ(avsDirective->getNamespace(), NAMESPACE_TEST);
-                    ASSERT_EQ(avsDirective->getName(), NAME_TEST);
-                    ASSERT_EQ(avsDirective->getMessageId(), MESSAGE_ID_TEST);
-                    ASSERT_EQ(avsDirective->getDialogRequestId(), DIALOG_REQUEST_ID_TEST);
-                };
-                verifyArguments(avsDirective);
-                return true;
+                    EXPECT_EQ(avsDirective->getNamespace(), NAMESPACE_TEST);
+                    EXPECT_EQ(avsDirective->getName(), NAME_TEST);
+                    EXPECT_EQ(avsDirective->getMessageId(), MESSAGE_ID_TEST);
+                    EXPECT_EQ(avsDirective->getDialogRequestId(), DIALOG_REQUEST_ID_TEST);
+                    return true;
             }));
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, SPEAK_DIRECTIVE);
 }

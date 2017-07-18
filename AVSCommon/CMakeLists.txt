@@ -18,15 +18,17 @@ add_library(AVSCommon SHARED
     AVS/src/AVSMessage.cpp
     AVS/src/AVSMessageHeader.cpp
     AVS/src/CapabilityAgent.cpp
+    AVS/src/EventBuilder.cpp
+    AVS/src/ExceptionEncounteredSender.cpp
     AVS/src/HandlerAndPolicy.cpp
     AVS/src/MessageRequest.cpp
     AVS/src/NamespaceAndName.cpp
+    AVS/src/DialogUXStateAggregator.cpp
     Utils/src/Configuration/ConfigurationNode.cpp
     Utils/src/Executor.cpp
     Utils/src/JSONUtils.cpp
     Utils/src/LibcurlUtils.cpp
     Utils/src/Logger/ConsoleLogger.cpp
-    Utils/src/Logger/DeprecatedLogger.cpp
     Utils/src/Logger/Level.cpp
     Utils/src/Logger/LogEntry.cpp
     Utils/src/Logger/LogEntryBuffer.cpp
@@ -35,9 +37,11 @@ add_library(AVSCommon SHARED
     Utils/src/Logger/LoggerUtils.cpp
     Utils/src/Logger/ModuleLogger.cpp
     Utils/src/Logger/ThreadMoniker.cpp
+    Utils/src/StringUtils.cpp
     Utils/src/TaskQueue.cpp
     Utils/src/TaskThread.cpp
     Utils/src/Timer.cpp
+    Utils/src/TimeUtils.cpp
     Utils/src/UUIDGeneration.cpp)
 
 target_include_directories(AVSCommon PUBLIC

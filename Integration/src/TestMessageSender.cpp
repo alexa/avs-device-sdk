@@ -33,7 +33,7 @@ TestMessageSender::TestMessageSender(
         std::shared_ptr<ConnectionStatusObserverInterface> connectionStatusObserver,
         std::shared_ptr<MessageObserverInterface> messageObserver) {
     m_connectionManager = acl::AVSConnectionManager::create(messageRouter, isEnabled, { connectionStatusObserver },
-            messageObserver);
+            { messageObserver });
 }
 
 void TestMessageSender::sendMessage(std::shared_ptr<MessageRequest> request) {
@@ -77,6 +77,39 @@ void TestMessageSender::reconnect() {
 void TestMessageSender::setAVSEndpoint(const std::string& avsEndpoint) {
     m_connectionManager->setAVSEndpoint(avsEndpoint);
 }
+
+    void TestMessageSender::addConnectionStatusObserver(
+            std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer){
+        m_connectionManager->addConnectionStatusObserver(observer);
+    }
+
+    /**
+     * Removes an observer from being notified of connection status changes.
+     *
+     * @param observer The observer object to remove.
+     */
+    void TestMessageSender::removeConnectionStatusObserver(
+            std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer) {
+        m_connectionManager->removeConnectionStatusObserver(observer);
+    }
+
+    /**
+     * Adds an observer to be notified of message receptions.
+     *
+     * @param observer The observer object to add.
+     */
+    void TestMessageSender::addMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) {
+        m_connectionManager->addMessageObserver(observer);
+    }
+
+    /**
+     * Removes an observer from being notified of message receptions.
+     *
+     * @param observer The observer object to remove.
+     */
+    void TestMessageSender::removeMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) {
+        m_connectionManager->removeMessageObserver(observer);
+    }
 
 } // namespace test
 } // namespace integration

@@ -28,7 +28,7 @@ namespace logger {
 /**
  * @c Logger implementation providing per module configuration. Forwards logs to another @c Logger.
  */
-class ModuleLogger : public Logger {
+class ModuleLogger : public Logger, protected LogLevelObserverInterface {
 public:
     /**
      * Constructor.
@@ -39,6 +39,8 @@ public:
      */
     ModuleLogger(const std::string& configKey, Logger& sink = ACSDK_GET_SINK_LOGGER());
 
+    void setLevel(Level level) override;
+
     void emit(
             Level level,
             std::chrono::system_clock::time_point time,
@@ -46,6 +48,12 @@ public:
             const char *text) override;
 
 private:
+    void onLogLevelChanged(Level level) override;
+
+    /// flag to determine if the m_sink's logLevel is to be used
+    bool m_useSinkLogLevel;
+
+protected:
     /// The @c Logger to forward logs to.
     Logger& m_sink;
 };

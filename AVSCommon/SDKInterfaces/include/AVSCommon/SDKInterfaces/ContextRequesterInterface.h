@@ -15,10 +15,14 @@
  * permissions and limitations under the License.
  */
 
+/**
+ * @file
+ */
 #ifndef ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_CONTEXT_REQUESTER_INTERFACE_H
 #define ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_CONTEXT_REQUESTER_INTERFACE_H
 
-#include<string>
+#include <string>
+#include <ostream>
 
 namespace alexaClientSDK {
 namespace avsCommon {

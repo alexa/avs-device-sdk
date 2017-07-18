@@ -22,7 +22,7 @@
 #include <cstddef>
 #include <memory>
 
-#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
+#include "AVSCommon/Utils/Logger/LoggerUtils.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -296,18 +296,26 @@ private:
             bool forceReplacement,
             std::unique_lock<Mutex>* lock);
 
+    /**
+     * The tag associated with log entries from this class.
+     */
+    static const std::string TAG;
+
     /// The @c BufferLayout of the shared buffer.
     std::shared_ptr<BufferLayout> m_bufferLayout;
 
 };
 
 template <typename T>
+const std::string SharedDataStream<T>::TAG = "SharedDataStream";
+
+template <typename T>
 size_t SharedDataStream<T>::calculateBufferSize(size_t nWords, size_t wordSize, size_t maxReaders) {
     if (0 == nWords) {
-        utils::logger::deprecated::Logger::log("SharedDataStream::calculateBufferSize failed: nWords must be greater than 0.");
+        logger::acsdkError(logger::LogEntry(TAG, "calculateBufferSizeFailed").d("reason", "numWordsZero"));
         return 0;
     } else if (0 == wordSize) {
-        utils::logger::deprecated::Logger::log("SharedDataStream::calcluateBufferSize failed: wordSize must be greater than 0.");
+        logger::acsdkError(logger::LogEntry(TAG, "calculateBufferSizeFailed").d("reason", "wordSizeZero"));
         return 0;
     }
     size_t overhead = BufferLayout::calculateDataOffset(wordSize, maxReaders);
@@ -325,10 +333,13 @@ std::unique_ptr<SharedDataStream<T>> SharedDataStream<T>::create(
         // Logged in calcutlateBuffersize().
         return nullptr;
     } else if (nullptr == buffer) {
-        utils::logger::deprecated::Logger::log("SharedDataStream::create failed: Buffer can not be nullptr.");
+        logger::acsdkError(logger::LogEntry(TAG, "createFailed").d("reason", "nullBuffer"));
         return nullptr;
     } else if (expectedSize > buffer->size()) {
-        utils::logger::deprecated::Logger::log("SharedDataStream::create failed: Buffer is not large enough to hold any data.");
+        logger::acsdkError(logger::LogEntry(TAG, "createFailed")
+                .d("reason", "bufferSizeTooSmall")
+                .d("bufferSize", buffer->size())
+                .d("expectedSize", expectedSize));
         return nullptr;
     }
 
@@ -372,9 +383,9 @@ SharedDataStream<T>::createWriter(typename Writer::Policy policy, bool forceRepl
     auto header = m_bufferLayout->getHeader();
     std::lock_guard<Mutex> lock(header->writerEnableMutex);
     if (header->isWriterEnabled && !forceReplacement) {
-        utils::logger::deprecated::Logger::log(
-                "SharedDataStream::createWriter failed: A writer is already attached and this call did not specify "
-                "forceReplacement=true.");
+        logger::acsdkError(logger::LogEntry(TAG, "createWriterFailed")
+                .d("reason", "existingWriterAttached")
+                .d("forceReplacement", "false"));
         return nullptr;
     } else {
         return std::unique_ptr<Writer>(new Writer(policy, m_bufferLayout));
@@ -390,7 +401,7 @@ SharedDataStream<T>::createReader(typename Reader::Policy policy, bool startWith
             return createReaderLocked(id, policy, startWithNewData, false, &lock);
         }
     }
-    utils::logger::deprecated::Logger::log("SharedDataStream::createReader failed: all readers are already in use.");
+    logger::acsdkError(logger::LogEntry(TAG, "createWriterFailed").d("reason", "noAvailableReaders"));
     return nullptr;
 }
 
@@ -419,9 +430,10 @@ SharedDataStream<T>::createReaderLocked(
         bool forceReplacement,
         std::unique_lock<Mutex> * lock) {
     if (m_bufferLayout->isReaderEnabled(id) && !forceReplacement) {
-        utils::logger::deprecated::Logger::log(
-                "SharedDataStream::createReaderLocked failed: The requested reader id already attached and this "
-                "call did not specify forceReplacement=true.");
+        logger::acsdkError(logger::LogEntry(TAG, "createReaderLockedFailed")
+                .d("reason", "readerAlreadyAttached")
+                .d("readerId", id)
+                .d("forceReplacement", "false"));
         return nullptr;
     } else {
         // Note: Reader constructor does not call updateUnconsumedCursor() automatically, because we may be seeking to
@@ -429,7 +441,7 @@ SharedDataStream<T>::createReaderLocked(
         // we seek.
         auto reader = std::unique_ptr<Reader>(new Reader(policy, m_bufferLayout, id));
         lock->unlock();
-        
+
         if (startWithNewData) {
             // We're not moving the cursor again, so call updateUnconsumedCursor() now.
             m_bufferLayout->updateOldestUnconsumedCursor();

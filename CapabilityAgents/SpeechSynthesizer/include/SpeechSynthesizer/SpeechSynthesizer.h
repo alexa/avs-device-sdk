@@ -22,6 +22,7 @@
 #include <mutex>
 #include <string>
 #include <unordered_set>
+#include <deque>
 
 #include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
@@ -87,6 +88,16 @@ public:
      */
     void addObserver(std::shared_ptr<SpeechSynthesizerObserver> observer);
 
+    /**
+     * Remove an observer from the SpeechSynthesizer.
+     *
+     * @note This is a synchronous call which can not be made by an observer callback.  Attempting to call
+     *     @c removeObserver() from @c SpeechSynthesizerObserver::onStateChanged() will result in a deadlock.
+     *
+     * @param observer The observer to remove.
+     */
+    void removeObserver(std::shared_ptr<SpeechSynthesizerObserver> observer);
+
     void onDeregistered() override;
 
     void handleDirectiveImmediately(std::shared_ptr <avsCommon::avs::AVSDirective> directive) override;
@@ -113,24 +124,25 @@ public:
 
 private:
     /**
-     * Derivation of @c DirectiveInfo used to associate data with Speak directives.
+     * This class has all the data that is needed to process @c Speak directives.
      */
-    class SpeakDirectiveInfo : public DirectiveInfo {
+    class SpeakDirectiveInfo {
     public:
         /**
          * Constructor.
          *
-         * @param directiveIn The @c AVSDirective with which to populate this @c DirectiveInfo.
-         * @param resultIn The @c DirectiveHandlerResultInterface instance with which to populate this @c DirectiveInfo.
+         * @param directiveInfo The @c DirectiveInfo.
          */
-        SpeakDirectiveInfo(
-                std::shared_ptr<avsCommon::avs::AVSDirective> directive,
-                std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result);
+        SpeakDirectiveInfo(std::shared_ptr<DirectiveInfo> directiveInfo);
 
-        /**
-         * Release Speak specific resources.
-         */
+        /// Release Speak specific resources.
         void clear();
+
+        /// @c AVSDirective that is passed during preHandle.
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive;
+
+        /// @c DirectiveHandlerResultInterface.
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result;
 
         /// The token for this Speak directive.
         std::string token;
@@ -140,6 +152,9 @@ private:
 
         /// A flag to indicate if an event needs to be sent to AVS on playback finished.
         bool sendPlaybackFinishedMessage;
+
+        /// A flag to indicate if the directive complete message has to be sent to the @c DirectiveSequencer.
+        bool sendCompletedMessage;
     };
 
     /**
@@ -168,10 +183,6 @@ private:
      * Adds the @c SpeechSynthesizer as a state provider with the @c ContextManager.
      */
     void init();
-
-    std::shared_ptr<DirectiveInfo> createDirectiveInfo(
-            std::shared_ptr<avsCommon::avs::AVSDirective> directive,
-            std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) override;
 
     /**
      * Handle a SpeechSynthesizer.Speak directive (on the @c m_executor thread) immediately. Starts playing the speech
@@ -361,6 +372,39 @@ private:
             std::shared_ptr<DirectiveInfo> info,
             bool checkResult = true);
 
+    /**
+     * Find the @c SpeakDirectiveInfo instance (if any) for the specified @c messageId.
+     *
+     * @param messageId The messageId value to find @c SpeakDirectiveInfo for.
+     * @return The @c SpeakDirectiveInfo instance for @c messageId.
+     */
+    std::shared_ptr<SpeakDirectiveInfo> getSpeakDirectiveInfo(const std::string& messageId);
+
+    /**
+     * Checks if the @c messageId is already present in the map. If its not present, adds an entry to the map.
+     * @param messageId The @c messageId value to add to the @c m_speakDirectiveInfoMap
+     * @param speakDirectiveInfo The @c SpeakDirectiveInfo corresponding to the @c messageId to add.
+     * @return @c true if @c messageId to @c SpeakDirectiveInfo mapping was added. @c false if entry already exists
+     * for the @c messageId.
+     */
+    bool setSpeakDirectiveInfo(
+            const std::string& messageId,
+            std::shared_ptr<SpeechSynthesizer::SpeakDirectiveInfo> speakDirectiveInfo);
+
+    /**
+     * Adds the @c SpeakDirectiveInfo to the @c m_speakInfoQueue. If the entry is being added to an empty queue,
+     * it initiates @c executeHandle on the @c SpeakDirectiveInfo.
+     * @param speakInfo The @c SpeakDirectiveInfo to add to the @c m_speakInfoQueue.
+     */
+    void addToDirectiveQueue(std::shared_ptr<SpeakDirectiveInfo> speakInfo);
+
+    /**
+     * Removes the @c SpeakDirectiveInfo corresponding to the @c messageId from the @c m_speakDirectiveInfoMap.
+     *
+     * @param messageId The @c messageId to remove.
+     */
+    void removeSpeakDirectiveInfo(const std::string &messageId);
+
     /// MediaPlayerInterface instance to send audio attachments to
     std::shared_ptr <avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_speechPlayer;
 
@@ -375,9 +419,6 @@ private:
 
     /// The @c AttachmentManager used to read attachments.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> m_attachmentManager;
-
-    /// An object used to send AVS Exception messages.
-    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> m_exceptionSender;
 
     /**
      * @c shared_ptr to the ChannelObserver portion of this.  This is a separate @c shared_ptr with a disabled
@@ -414,6 +455,22 @@ private:
 
     /// Condition variable to wake @c onFocusChanged() once the state transition to desired state is complete.
     std::condition_variable m_waitOnStateChange;
+
+    /// Map of message Id to @c SpeakDirectiveInfo.
+    std::unordered_map <std::string, std::shared_ptr<SpeakDirectiveInfo>> m_speakDirectiveInfoMap;
+
+    /**
+     * Mutex to protect @c messageId to @c SpeakDirectiveInfo mapping. This mutex must be acquired before accessing
+     * or modifying the m_speakDirectiveInfoMap
+     */
+    std::mutex m_speakDirectiveInfoMutex;
+
+    /// Queue which holds the directives to be processed.
+    std::deque<std::shared_ptr<SpeakDirectiveInfo>> m_speakInfoQueue;
+
+    /// Serializes access to @c m_speakInfoQueue
+    std::mutex m_speakInfoQueueMutex;
+
 };
 
 } // namespace speechSynthesizer

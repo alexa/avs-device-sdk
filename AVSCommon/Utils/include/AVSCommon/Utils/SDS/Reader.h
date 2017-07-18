@@ -25,6 +25,7 @@
 #include <limits>
 #include <cstring>
 
+#include "AVSCommon/Utils/Logger/LoggerUtils.h"
 #include "SharedDataStream.h"
 
 namespace alexaClientSDK {
@@ -192,6 +193,11 @@ public:
     static std::string errorToString(Error error);
 
 private:
+    /**
+     * The tag associated with log entries from this class.
+     */
+    static const std::string TAG;
+
     /// The @c Policy to use for reading from the stream.
     Policy m_policy;
 
@@ -210,6 +216,9 @@ private:
     /// Pointer to this reader's close index in BufferLayout::getReaderCloseIndexArray().
     AtomicIndex* m_readerCloseIndex;
 };
+
+template <typename T>
+const std::string SharedDataStream<T>::Reader::TAG = "SdsReader";
 
 template <typename T>
 SharedDataStream<T>::Reader::Reader(
@@ -244,8 +253,13 @@ SharedDataStream<T>::Reader::~Reader() {
     
 template <typename T>
 ssize_t SharedDataStream<T>::Reader::read(void* buf, size_t nWords, std::chrono::milliseconds timeout) {
-    if (nullptr == buf || 0 == nWords) {
-        utils::logger::deprecated::Logger::log("Reader::read failed: Invalid parameter passed to read().");
+    if (nullptr == buf) {
+        logger::acsdkError(logger::LogEntry(TAG, "readFailed").d("reason", "nullBuffer"));
+        return Error::INVALID;
+    }
+
+    if (0 == nWords) {
+        logger::acsdkError(logger::LogEntry(TAG, "readFailed").d("reason", "invalidNumWords").d("numWords", nWords));
         return Error::INVALID;
     }
 
@@ -347,14 +361,22 @@ bool SharedDataStream<T>::Reader::seek(Index offset, Reference reference) {
             break;
         case Reference::BEFORE_READER:
             if (offset > *m_readerCursor) {
-                utils::logger::deprecated::Logger::log("Reader::seek failed: Unable to seek before start of stream.");
+                logger::acsdkError(logger::LogEntry(TAG, "seekFailed")
+                        .d("reason", "seekBeforeStreamStart")
+                        .d("reference", "BEFORE_READER")
+                        .d("seekOffset", offset)
+                        .d("readerCursor", m_readerCursor->load()));
                 return false;
             }
             absolute = *m_readerCursor - offset;
             break;
         case Reference::BEFORE_WRITER:
             if (offset > *writeStartCursor) {
-                utils::logger::deprecated::Logger::log("Reader::seek failed: Unable to seek before start of stream.");
+                logger::acsdkError(logger::LogEntry(TAG, "seekFailed")
+                        .d("reason", "seekBeforeStreamStart")
+                        .d("reference", "BEFORE_WRITER")
+                        .d("seekOffset", offset)
+                        .d("writeStartCursor", writeStartCursor->load()));
                 return false;
             }
             absolute = *writeStartCursor - offset;
@@ -365,13 +387,19 @@ bool SharedDataStream<T>::Reader::seek(Index offset, Reference reference) {
 
     // Don't seek beyond the close index.
     if (absolute > *m_readerCloseIndex) {
-        utils::logger::deprecated::Logger::log("Reader::seek failed: Unable to seek beyond close index.");
+        logger::acsdkError(logger::LogEntry(TAG, "seekFailed")
+                .d("reason", "seekBeyondCloseIndex")
+                .d("position", absolute)
+                .d("readerCloseIndex", m_readerCloseIndex->load()));
         return false;
     }
 
     // Don't seek to future indices that have not been written yet.
     if (absolute > *writeStartCursor) {
-        utils::logger::deprecated::Logger::log("Reader::seek failed: Unable to seek to future data which has not been written yet.");
+        logger::acsdkError(logger::LogEntry(TAG, "seekFailed")
+                .d("reason", "seekUnwrittenIndices")
+                .d("position", absolute)
+                .d("writeStartCursor", writeStartCursor->load()));
         return false;
     }
 
@@ -388,7 +416,7 @@ bool SharedDataStream<T>::Reader::seek(Index offset, Reference reference) {
     // backwardSeekMutex to prevent a writer from starting to overwrite us between here and the m_readerCursor update
     // below.  If this is not a backward seek, then the mutex is not held.
     if (*writeEndCursor - absolute > m_bufferLayout->getDataSize()) {
-        utils::logger::deprecated::Logger::log("Reader::seek failed: Unable to seek to old data which is no longer in the buffer.");
+        logger::acsdkError(logger::LogEntry(TAG, "seekFailed").d("reason", "seekOverwrittenData"));
         return false;
     }
 
@@ -417,7 +445,7 @@ typename SharedDataStream<T>::Index SharedDataStream<T>::Reader::tell(Reference 
         case Reference::ABSOLUTE:
             return *m_readerCursor;
     }
-    utils::logger::deprecated::Logger::log("Reader::tell failed: invalid reference.");
+    logger::acsdkError(logger::LogEntry(TAG, "tellFailed").d("reason", "invalidReference"));
     return std::numeric_limits<Index>::max();
 }
 
@@ -437,7 +465,11 @@ void SharedDataStream<T>::Reader::close(Index offset, Reference reference) {
             break;
         case Reference::BEFORE_WRITER:
             if (*writeStartCursor < offset) {
-                utils::logger::deprecated::Logger::log("Reader::close: attempted to close at an historic index; closing now.");
+                logger::acsdkError(logger::LogEntry(TAG, "closeFailed")
+                        .d("reason", "invalidIndex")
+                        .d("reference", "BEFORE_WRITER")
+                        .d("offset", offset)
+                        .d("writeStartCursor", writeStartCursor->load()));
             } else {
                 absolute = *writeStartCursor - offset;
             }
@@ -449,7 +481,7 @@ void SharedDataStream<T>::Reader::close(Index offset, Reference reference) {
             break;
     }
     if (!validReference) {
-        utils::logger::deprecated::Logger::log("Reader::tell failed: invalid reference.");
+        logger::acsdkError(logger::LogEntry(TAG, "closeFailed").d("reason", "invalidReference"));
     }
 
     *m_readerCloseIndex = absolute;
@@ -477,7 +509,7 @@ std::string SharedDataStream<T>::Reader::errorToString(Error error) {
         case Error::INVALID:
             return "INVALID";
     }
-    utils::logger::deprecated::Logger::log("Reader::errorToString failed: invalid error " + to_string(error) + ".");
+    logger::acsdkError(logger::LogEntry(TAG, "errorToStringFailed").d("reason", "invalidError").d("error", error));
     return "(unknown error " + to_string(error) + ")";
 }
 

@@ -62,20 +62,31 @@ public:
      * @param state The @c State to convert to a string.
      * @return The string conversion of @c state.
      */
-    static std::string stateToString(AudioInputProcessorObserverInterface::State state) {
+    static std::string stateToString(State state) {
         switch (state) {
-            case AudioInputProcessorObserverInterface::State::IDLE:
+            case State::IDLE:
                 return "IDLE";
-            case AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH:
+            case State::EXPECTING_SPEECH:
                 return "EXPECTING_SPEECH";
-            case AudioInputProcessorObserverInterface::State::RECOGNIZING:
+            case State::RECOGNIZING:
                 return "RECOGNIZING";
-            case AudioInputProcessorObserverInterface::State::BUSY:
+            case State::BUSY:
                 return "BUSY";
         }
         return "Unknown State";
     }
 };
+
+/**
+ * Write an @c AudioInputProcessorObserverInterface::State value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param state The @c AudioInputProcessorObserverInterface::State value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const AudioInputProcessorObserverInterface::State& state) {
+    return stream << AudioInputProcessorObserverInterface::stateToString(state);
+}
 
 } // namespace sdkInterfaces
 } // namespace avsCommon

@@ -30,8 +30,7 @@
 #include <AVSCommon/AVS/Attachment/InProcessAttachment.h>
 #include <AVSCommon/Utils/SDS/InProcessSDS.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
-#include <AVSCommon/Utils/Logger/LogEntry.h>
-#include <AVSCommon/Utils/Logger/DeprecatedLogger.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "Integration/AuthObserver.h"
 #include "Integration/ClientMessageHandler.h"
@@ -185,7 +184,7 @@ public:
 
         m_authObserver = std::make_shared<AuthObserver>();
         ASSERT_TRUE(m_authDelegate = AuthDelegate::create());
-        m_authDelegate->setAuthObserver(m_authObserver);
+        m_authDelegate->addAuthObserver(m_authObserver);
 
         m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
 
@@ -198,7 +197,7 @@ public:
                 m_messageRouter,
                 isEnabled,
                 { m_connectionStatusObserver },
-                m_clientMessageHandler);
+                { m_clientMessageHandler });
         connect();
     }
 

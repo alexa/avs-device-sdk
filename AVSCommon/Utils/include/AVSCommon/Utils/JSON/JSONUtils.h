@@ -17,7 +17,10 @@
 #ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_JSON_JSONUTILS_H_
 #define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_JSON_JSONUTILS_H_
 
+#include <rapidjson/document.h>
 #include <string>
+
+#include "AVSCommon/Utils/Logger/LoggerUtils.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -26,14 +29,32 @@ namespace json {
 namespace jsonUtils {
 
 /**
+ * Returns the tag for logging purposes.
+ */
+inline static std::string getTag() {
+    return "JsonUtils";
+}
+
+/**
+ * Give a @c rapidjson::Value object, this function will find a direct child node that matches the
+ * @c key. Copy constructors are hidden for @c rapidjson::Value objects, so iterators are used to
+ * retrieve the value of the node.
+ *
+ * @param jsonNode The JSON node object.
+ * @param key The key of the underlying JSON content we wish to acquire the value of.
+ * @param[out] iteratorPtr A pointer to a @c ConstMemberIterator, which will contain the @c Value.
+ * @return @c true if the lookup is successful, @c false otherwise.
+ */
+bool findNode(const rapidjson::Value& jsonNode, const std::string& key, rapidjson::Value::ConstMemberIterator* iteratorPtr);
+
+/**
+ * TODO: ACSDK-382 Remove references of this method with the retrieveValue method.
  * Given a JSON string, this function will look up a particular string value of a direct child
  * node of the logical JSON document.  If the node being looked up is a logical JSON object,
  * then that object will be serialized and placed in the output string parameter.
  *
  * In this initial version of the api, this function will return false if the given key refers to a
  * boolean, number or array.
- *
- * TODO: [ACSDK-177] This function needs to be reconsidered in the future because it is of limited utility.
  *
  * @param jsonContent The JSON string content.
  * @param key The key of the underlying JSON content we wish to acquire the value of.
@@ -43,9 +64,8 @@ namespace jsonUtils {
 bool lookupStringValue(const std::string& jsonContent, const std::string& key, std::string* value);
 
 /**
+ * TODO: ACSDK-382 Replace references of this method with the retrieveValue method.
  * This function is similar to lookupStringValue(), but converts the value to an int64_t
- *
- * TODO: [ACSDK-177] This function needs to be reconsidered in the future because it is of limited utility.
  *
  * @param jsonContent The JSON string content.
  * @param key The key of the underlying JSON content we wish to acquire the value of.
@@ -53,6 +73,97 @@ bool lookupStringValue(const std::string& jsonContent, const std::string& key, s
  * @return @c true if the lookup is successful, @c false otherwise.
  */
 bool lookupInt64Value(const std::string& jsonContent, const std::string& key, int64_t* value);
+
+/**
+ * Invoke a rapidjson parse on a JSON string.
+ *
+ * @param jsonContent The JSON content to be parsed.
+ * @param[out] document The output parameter rapidjson document.
+ * @return @c true If the JSON content was valid, @c false otherwise.
+ */
+bool parseJSON(const std::string& jsonContent, rapidjson::Document* document);
+
+/**
+ * Converts a given rapidjson document node to a string. The node must be either of Object or String type.
+ *
+ * @param documentNode A logical node within a parsed JSON document which rapidjson understands.
+ * @param[out] value The output parameter which will be assigned the string value.
+ * @return @c true If the node was converted to a string ok, @c false otherwise.
+ */
+bool convertToValue(const rapidjson::Value& documentNode, std::string* value);
+
+/**
+ * Converts a given rapidjson value node to a 64-bit signed integer. The node must be Int64 type.
+ *
+ * @param documentNode A logical node within a parsed JSON document which rapidjson understands.
+ * @param[out] value The output parameter which will be assigned the int64_t value.
+ * @return @c true If the node was successfully converted, @c false otherwise.
+ */
+bool convertToValue(const rapidjson::Value& documentNode, int64_t* value);
+
+/**
+ * A template function to find and retrieve a value of type T from a direct child of the
+ * provided @c rapidjson::Value object. The type T must have an overload of the function
+ * @c convertToValue.
+ *
+ * @param jsonNode A logical node within a parsed JSON document which rapidjson understands.
+ * @param key The key in which to look for the value.
+ * @param[out] value The output parameter which will be assigned the value of type T.
+ * @return @c true If the node was successfully converted, @c false otherwise.
+ */
+template <typename T>
+bool retrieveValue(const rapidjson::Value& jsonNode, const std::string& key, T* value) {
+    if (!value) {
+        logger::acsdkError(logger::LogEntry(getTag(), "retrieveValueFailed").d("reason", "nullValue"));
+        return false;
+    }
+
+    rapidjson::Value::ConstMemberIterator iterator;
+    if (!findNode(jsonNode, key, &iterator)) {
+        return false;
+    }
+
+    if (!convertToValue(iterator->value, value)) {
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * A template function to find and retrieve a value of type T from the provided JSON string.
+ * The provided string will first be parsed into a JSON document, after which the associated
+ * value T will be retrieved. The type T must have an overload of the function @c convertToValue.
+ *
+ * @param jsonString A JSON string.
+ * @param key The key in which to look for the value.
+ * @param[out] value The output parameter which will be assigned the value of type T.
+ * @return @c true If the node was successfully converted, @c false otherwise.
+ */
+template <typename T>
+bool retrieveValue(const std::string jsonString, const std::string& key, T* value) {
+    if (!value) {
+        logger::acsdkError(logger::LogEntry(getTag(), "retrieveValueFailed").d("reason", "nullValue"));
+        return false;
+    }
+
+    rapidjson::Document document;
+    if (!parseJSON(jsonString, &document)) {
+        logger::acsdkError(logger::LogEntry(getTag(), "retrieveValueFailed").d("reason", "parsingError"));
+        return false;
+    }
+
+    return retrieveValue(document, key, value);
+}
+
+/**
+ * Queries whether an array object exists as a child of a pre-parsed rapidjson::Value element.
+ *
+ * @param parsedDocument The Value within which the array should be looked for.
+ * @param key The name of the array being looked for.
+ * @return Whether a child element of array type was found.
+ */
+bool jsonArrayExists(const rapidjson::Value & parsedDocument, const std::string & key);
 
 } // namespace jsonUtils
 } // namespace json

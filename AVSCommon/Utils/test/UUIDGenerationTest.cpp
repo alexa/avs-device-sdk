@@ -19,6 +19,7 @@
 #include <vector>
 #include <unordered_set>
 #include <cctype>
+#include <random>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -67,6 +68,9 @@ static const unsigned int MAX_UUIDS_TO_GENERATE(100);
 
 /// The maximum threads to test with.
 static const unsigned int MAX_TEST_THREADS(10);
+
+/// The maximum number of retries.
+static const unsigned int MAX_RETRIES(20);
 
 class UUIDGenerationTest : public ::testing::Test {
 };
@@ -161,6 +165,26 @@ TEST_F(UUIDGenerationTest, testMultipleConcurrentRequests) {
         ASSERT_EQ(UUID_VARIANT,  strtoul(uuid.substr(UUID_VARIANT_OFFSET,1).c_str(), nullptr, 16) & UUID_VARIANT);
         ASSERT_EQ(prevSizeOfSet+1, uuidsGenerated.size());
     }
+}
+
+/**
+ * Call @c generateUUID and ensure all hex values are generated. Will retry @c MAX_RETRIES times.
+ */
+TEST_F(UUIDGenerationTest, testAllHexValuesGenerated) {
+    std::unordered_set<char> hexCharacters = {
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+    };
+    for (unsigned int retry = 0; retry < MAX_RETRIES && !hexCharacters.empty(); retry++) {
+        std::string uuid = generateUUID();
+        for (const char &digit : uuid) {
+            hexCharacters.erase(digit);
+            if (hexCharacters.empty()) {
+                break;
+            }
+        }
+    }
+
+    ASSERT_TRUE(hexCharacters.empty());
 }
 
 } // namespace test

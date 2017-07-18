@@ -8,13 +8,15 @@ ALEXA CLIENT SDK COMPONENTS
 The following Alexa Client SDK components are licensed under the Apache
 License, Version 2.0 (the "License"):
 
+- Activity Focus Manager Library (AFML)
+- Alerts Capability Agent
 - Alexa Communications Library (ACL)
 - Alexa Directive Sequencer Library (ADSL)
-- Activity Focus Manager Library (AFML)
 - Audio Input Processor (AIP)
-- Speech Synthesizer Capability Agent
-- Media Player
 - Key Word Detector (KWD)
+- Media Player
+- Sample App
+- Speech Synthesizer Capability Agent
 
 You may not use this file except in compliance with the License. A copy of
 the License is located at

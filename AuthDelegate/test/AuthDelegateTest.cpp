@@ -32,8 +32,6 @@
 
 using namespace alexaClientSDK::authDelegate;
 using namespace alexaClientSDK::authDelegate::test;
-using namespace alexaClientSDK::acl;
-using namespace alexaClientSDK::acl::test;
 
 using namespace ::testing;
 using namespace alexaClientSDK::avsCommon::avs::initialization;
@@ -217,13 +215,25 @@ TEST_F(AuthDelegateTest, create) {
 }
 
 /**
- * Test setAuthObserver() with a @c nullptr, expecting no exceptions or crashes.
+ * Test addAuthObserver() with a @c nullptr, expecting no exceptions or crashes.
  */
-TEST_F(AuthDelegateTest, setAuthObserverNull) {
+TEST_F(AuthDelegateTest, addAuthObserverNull) {
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     ASSERT_TRUE(authDelegate);
 
-    authDelegate->setAuthObserver(nullptr);
+    authDelegate->addAuthObserver(nullptr);
+
+    SUCCEED();
+}
+
+/**
+ * Test removeAuthObserver() with a @c nullptr, expecting no exceptions or crashes.
+ */
+TEST_F(AuthDelegateTest, removeAuthObserverNull) {
+    auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
+    ASSERT_TRUE(authDelegate);
+
+    authDelegate->removeAuthObserver(nullptr);
 
     SUCCEED();
 }
@@ -232,9 +242,10 @@ TEST_F(AuthDelegateTest, setAuthObserverNull) {
  * Test setAuthObserver() with a valid observer, expecting the observer to be updated with an UNINITIALIZED
  * state.
  */
-TEST_F(AuthDelegateTest, setAuthObserver) {
+TEST_F(AuthDelegateTest, addMultipleAuthObserver) {
 
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
+    std::shared_ptr<NiceMock<MockAuthObserver>> m_mockAuthObserver2 = std::make_shared<NiceMock<MockAuthObserver>>();
     ASSERT_TRUE(authDelegate);
 
     EXPECT_CALL(
@@ -247,7 +258,18 @@ TEST_F(AuthDelegateTest, setAuthObserver) {
             onAuthStateChange(AuthObserverInterface::State::EXPIRED, _))
                     .Times(AtMost(1));
 
-    authDelegate->setAuthObserver(m_mockAuthObserver);
+    EXPECT_CALL(
+            *m_mockAuthObserver2,
+            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, _))
+                    .Times(AtMost(1));
+
+    EXPECT_CALL(
+            *m_mockAuthObserver2,
+            onAuthStateChange(AuthObserverInterface::State::EXPIRED, _))
+                    .Times(AtMost(1));
+
+    authDelegate->addAuthObserver(m_mockAuthObserver);
+    authDelegate->addAuthObserver(m_mockAuthObserver2);
 }
 
 /**
@@ -278,7 +300,7 @@ TEST_F(AuthDelegateTest, retry) {
             }));
 
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
-    authDelegate->setAuthObserver(m_mockAuthObserver);
+    authDelegate->addAuthObserver(m_mockAuthObserver);
     ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&tokenRefreshed]() { return tokenRefreshed;}));
 }
 
@@ -316,7 +338,7 @@ TEST_F(AuthDelegateTest, expirationNotification) {
             }));
 
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
-    authDelegate->setAuthObserver(m_mockAuthObserver);
+    authDelegate->addAuthObserver(m_mockAuthObserver);
     ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&tokenExpired]() {return tokenExpired;}));
 }
 
@@ -362,7 +384,7 @@ TEST_F(AuthDelegateTest, recoverAfterExpiration) {
             }));
 
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
-    authDelegate->setAuthObserver(m_mockAuthObserver);
+    authDelegate->addAuthObserver(m_mockAuthObserver);
     ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&tokenRefreshed]() {return tokenRefreshed;}));
 }
 
@@ -396,7 +418,7 @@ TEST_F(AuthDelegateTest, unrecoverableErrorNotification) {
             }));
 
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
-    authDelegate->setAuthObserver(m_mockAuthObserver);
+    authDelegate->addAuthObserver(m_mockAuthObserver);
     ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&errorReceived]() {return errorReceived;}));
 }
 

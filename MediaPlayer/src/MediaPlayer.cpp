@@ -20,6 +20,8 @@
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/AVS/Attachment/AttachmentReader.h>
 
+#include "MediaPlayer/AttachmentReaderSource.h"
+#include "MediaPlayer/IStreamSource.h"
 #include "MediaPlayer/MediaPlayer.h"
 
 namespace alexaClientSDK {
@@ -39,26 +41,6 @@ static const std::string TAG("MediaPlayer");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-// Macro used to verify that various methods are running on the worker thread as expected.
-#ifdef DEBUG
-#define VERIFY_ON_WORKER_THREAD()                                                                       \
-    do {                                                                                                \
-        auto id = std::this_thread::get_id();                                                           \
-        if (id != m_workerThreadId) {                                                                   \
-            ACSDK_ERROR(LX("VERIFY_ON_WORKER_THREAD_FAILED")                                            \
-                    .d("line", __LINE__).d("thisThreadId", id).d("workerThreadId", m_workerThreadId));  \
-        }                                                                                               \
-    } while (false)
-#else
-#define VERIFY_ON_WORKER_THREAD() do {} while (false)
-#endif
-
-/// The number of bytes read from the attachment with each read in the read loop.
-static const unsigned int CHUNK_SIZE(4096);
-
-/// The interval to wait (in milliseconds) between successive attempts to read audio data when none is available.
-static const guint RETRY_INTERVALS_MILLISECONDS[] = {0, 10, 10, 10, 20, 20, 50, 100};
-
 /// Timeout value for calls to @c gst_element_get_state() calls.
 static const unsigned int TIMEOUT_ZERO_NANOSECONDS(0);
 
@@ -68,7 +50,7 @@ static const unsigned int NANOSECONDS_TO_MILLISECONDS(1000000);
 std::shared_ptr<MediaPlayer> MediaPlayer::create() {
     ACSDK_DEBUG9(LX("createCalled"));
     std::shared_ptr<MediaPlayer> mediaPlayer(new MediaPlayer());
-    if (MediaPlayerStatus::SUCCESS == mediaPlayer->initPlayer()) {
+    if (mediaPlayer->init()) {
         return mediaPlayer;
     } else {
         return nullptr;
@@ -82,17 +64,30 @@ MediaPlayer::~MediaPlayer() {
     if (m_mainLoopThread.joinable()) {
         m_mainLoopThread.join();
     }
-    gst_object_unref(m_audioPipeline.pipeline);
+    gst_object_unref(m_pipeline.pipeline);
     g_source_remove(m_busWatchId);
     g_main_loop_unref(m_mainLoop);
 }
 
-MediaPlayerStatus MediaPlayer::setSource(std::unique_ptr<AttachmentReader> reader) {
-    ACSDK_DEBUG9(LX("setSourceCalled"));
+MediaPlayerStatus MediaPlayer::setSource(
+        std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> reader) {
+    ACSDK_DEBUG9(LX("setSourceCalled").d("sourceType", "AttachmentReader"));
     std::promise<MediaPlayerStatus> promise;
     auto future = promise.get_future();
     std::function<gboolean()> callback = [this, &promise, &reader]() {
-        handleSetSource(&promise, std::move(reader));
+        handleSetAttachmentReaderSource(&promise, std::move(reader));
+        return false;
+    };
+    queueCallback(&callback);
+    return future.get();
+}
+
+MediaPlayerStatus MediaPlayer::setSource(std::unique_ptr<std::istream> stream, bool repeat) {
+    ACSDK_DEBUG9(LX("setSourceCalled").d("sourceType", "istream"));
+    std::promise<MediaPlayerStatus> promise;
+    auto future = promise.get_future();
+    std::function<gboolean()> callback = [this, &promise, &stream, repeat]() {
+        handleSetIStreamSource(&promise, std::move(stream), repeat);
         return false;
     };
     queueCallback(&callback);
@@ -147,111 +142,90 @@ void MediaPlayer::setObserver(std::shared_ptr<MediaPlayerObserverInterface> obse
     future.wait();
 }
 
-MediaPlayer::MediaPlayer() :
-        m_sourceId{0},
-        m_sourceRetryCount{0},
-        m_playbackFinishedSent{false},
-        m_playerObserver{nullptr},
-        m_handleNeedDataFunction{[this]() { return handleNeedData(); }},
-        m_handleEnoughDataFunction{[this]() { return handleEnoughData(); }} {
+void MediaPlayer::setAppSrc(GstAppSrc* appSrc) {
+    m_pipeline.appsrc = appSrc;
 }
 
-MediaPlayerStatus MediaPlayer::initPlayer() {
+GstAppSrc* MediaPlayer::getAppSrc() const {
+    return m_pipeline.appsrc;
+}
+
+void MediaPlayer::setDecoder(GstElement* decoder) {
+    m_pipeline.decoder = decoder;
+}
+
+GstElement* MediaPlayer::getDecoder() const {
+    return m_pipeline.decoder;
+}
+
+GstElement* MediaPlayer::getPipeline() const {
+    return m_pipeline.pipeline;
+}
+
+MediaPlayer::MediaPlayer() :
+        m_pipeline{nullptr, nullptr, nullptr, nullptr, nullptr},
+        m_playbackFinishedSent{false},
+        m_playerObserver{nullptr} {
+}
+
+bool MediaPlayer::init() {
     if (false == gst_init_check (NULL, NULL, NULL)) {
         ACSDK_ERROR(LX("initPlayerFailed").d("reason", "gstInitCheckFailed"));
-        return MediaPlayerStatus::FAILURE;
+        return false;
     }
-
-    g_idle_add(reinterpret_cast<GSourceFunc>(&MediaPlayer::onSetWorkerThreadId), this);
 
     if (!(m_mainLoop = g_main_loop_new(nullptr, false))) {
         ACSDK_ERROR(LX("initPlayerFailed").d("reason", "gstMainLoopNewFailed"));
-        return MediaPlayerStatus::FAILURE;
+        return false;
     };
-
-    m_audioPipeline.appsrc = reinterpret_cast<GstAppSrc*>(gst_element_factory_make("appsrc", "src"));
-    if (!m_audioPipeline.appsrc) {
-        ACSDK_ERROR(LX("initPlayerFailed").d("reason", "createSourceElementFailed"));
-        return MediaPlayerStatus::FAILURE;
-    }
-    gst_app_src_set_stream_type(m_audioPipeline.appsrc, GST_APP_STREAM_TYPE_STREAM);
-
-    m_audioPipeline.decoder = gst_element_factory_make("decodebin", "decoder");
-    if (!m_audioPipeline.decoder) {
-        ACSDK_ERROR(LX("initPlayerFailed").d("reason", "createDecoderElementFailed"));
-        return MediaPlayerStatus::FAILURE;
-    }
-
-    m_audioPipeline.converter = gst_element_factory_make("audioconvert", "converter");
-    if (!m_audioPipeline.converter) {
-        ACSDK_ERROR(LX("initPlayerFailed").d("reason", "createConverterElementFailed"));
-        return MediaPlayerStatus::FAILURE;
-    }
-
-    m_audioPipeline.audioSink = gst_element_factory_make("autoaudiosink", "audio_sink");
-    if (!m_audioPipeline.audioSink) {
-        ACSDK_ERROR(LX("initPlayerFailed").d("reason", "createAudioSinkElementFailed"));
-        return MediaPlayerStatus::FAILURE;
-    }
-
-    m_audioPipeline.pipeline = gst_pipeline_new("audio-pipeline");
-    if (!m_audioPipeline.pipeline) {
-        ACSDK_ERROR(LX("initPlayerFailed").d("reason", "createPipelineElementFailed"));
-        return MediaPlayerStatus::FAILURE;
-    }
-
-    GstBus* bus = gst_pipeline_get_bus(GST_PIPELINE(m_audioPipeline.pipeline));
-    m_busWatchId = gst_bus_add_watch(bus, &MediaPlayer::onBusMessage, this);
-    gst_object_unref(bus);
-
-    gst_bin_add_many(GST_BIN(m_audioPipeline.pipeline), reinterpret_cast<GstElement*>(m_audioPipeline.appsrc),
-            m_audioPipeline.decoder, m_audioPipeline.converter, m_audioPipeline.audioSink, nullptr);
-    /*
-     * Link the source and decoder elements. The decoder source pad is added dynamically after it has determined the
-     * stream type it is decoding. Once the pad has been added, pad-added signal is emitted, and the padAddedHandler
-     * callback will link the newly created source pad of the decoder to the sink of the converter element.
-     */
-    if (false == gst_element_link(reinterpret_cast<GstElement*>(m_audioPipeline.appsrc), m_audioPipeline.decoder)) {
-        ACSDK_ERROR(LX("initPlayerFailed").d("reason", "createSourceToDecoderLinkFailed"));
-        return MediaPlayerStatus::FAILURE;
-    }
-    if (false == gst_element_link(m_audioPipeline.converter, m_audioPipeline.audioSink)) {
-        ACSDK_ERROR(LX("initPlayerFailed").d("reason", "createConverterToSinkLinkFailed"));
-        return MediaPlayerStatus::FAILURE;
-    }
-    /*
-     * Once the source pad for the decoder has been added, the decoder emits the pad-added signal. Connect the signal
-     * to the callback which performs the linking of the decoder source pad to the converter sink pad.
-     */
-    if (!g_signal_connect(m_audioPipeline.decoder, "pad-added", G_CALLBACK(onPadAdded), this)) {
-        ACSDK_ERROR(LX("initPlayerFailed").d("reason", "connectPadAddedSignalFailed"));
-        return MediaPlayerStatus::FAILURE;
-    }
-    /*
-     * When the appsrc needs data, it emits the signal need-data. Connect the need-data signal to the onNeedData
-     * callback which handles pushing data to the appsrc element.
-     */
-    if (!g_signal_connect(m_audioPipeline.appsrc, "need-data", G_CALLBACK(onNeedData), this)) {
-        ACSDK_ERROR(LX("initPlayerFailed").d("reason", "connectNeedDataSignalFailed"));
-        return MediaPlayerStatus::FAILURE;
-    }
-    /*
-     * When the appsrc had enough data, it emits the signal enough-data. Connect the enough-data signal to the
-     * onEnoughData callback which handles stopping the data push to the appsrc element.
-     */
-    if (!g_signal_connect(m_audioPipeline.appsrc, "enough-data", G_CALLBACK(onEnoughData), this)) {
-        ACSDK_ERROR(LX("initPlayerFailed").d("reason", "connectEnoughDataSignalFailed"));
-        return MediaPlayerStatus::FAILURE;
-    }
 
     m_mainLoopThread = std::thread(g_main_loop_run, m_mainLoop);
 
-    return MediaPlayerStatus::SUCCESS;
+    return true;
 }
 
-gboolean MediaPlayer::onSetWorkerThreadId(gpointer pointer) {
-    static_cast<MediaPlayer*>(pointer)->m_workerThreadId = std::this_thread::get_id();
-    return false;
+bool MediaPlayer::setupPipeline() {
+
+    m_pipeline.converter = gst_element_factory_make("audioconvert", "converter");
+    if (!m_pipeline.converter) {
+        ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createConverterElementFailed"));
+        return false;
+    }
+
+    m_pipeline.audioSink = gst_element_factory_make("autoaudiosink", "audio_sink");
+    if (!m_pipeline.audioSink) {
+        ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createAudioSinkElementFailed"));
+        return false;
+    }
+
+    m_pipeline.pipeline = gst_pipeline_new("audio-pipeline");
+    if (!m_pipeline.pipeline) {
+        ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createPipelineElementFailed"));
+        return false;
+    }
+
+    GstBus* bus = gst_pipeline_get_bus(GST_PIPELINE(m_pipeline.pipeline));
+    m_busWatchId = gst_bus_add_watch(bus, &MediaPlayer::onBusMessage, this);
+    gst_object_unref(bus);
+
+    // Link only the converter and sink here. Src will be linked in respective source files.
+    gst_bin_add_many(GST_BIN(m_pipeline.pipeline), m_pipeline.converter, m_pipeline.audioSink, nullptr);
+
+    if (!gst_element_link(m_pipeline.converter, m_pipeline.audioSink)) {
+        ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createConverterToSinkLinkFailed"));
+        return false;
+    }
+
+    return true;
+}
+
+void MediaPlayer::tearDownPipeline() {
+    if (m_pipeline.pipeline) {
+        doStop();
+        gst_object_unref(m_pipeline.pipeline);
+        m_pipeline.pipeline = nullptr;
+        g_source_remove(m_busWatchId);
+    }
 }
 
 void MediaPlayer::queueCallback(const std::function<gboolean()> *callback) {
@@ -276,9 +250,8 @@ void MediaPlayer::onPadAdded(GstElement *decoder, GstPad *pad, gpointer pointer)
 }
 
 void MediaPlayer::handlePadAdded(std::promise<void>* promise, GstElement *decoder, GstPad *pad) {
-    VERIFY_ON_WORKER_THREAD();
     ACSDK_DEBUG9(LX("handlePadAddedSignalCalled"));
-    GstElement *converter = m_audioPipeline.converter;
+    GstElement *converter = m_pipeline.converter;
     gst_element_link(decoder, converter);
     promise->set_value();
 }
@@ -288,10 +261,9 @@ gboolean MediaPlayer::onBusMessage(GstBus *bus, GstMessage *message, gpointer me
 }
 
 gboolean MediaPlayer::handleBusMessage(GstMessage *message) {
-    VERIFY_ON_WORKER_THREAD();
     switch (GST_MESSAGE_TYPE(message)) {
         case GST_MESSAGE_EOS:
-            if (GST_MESSAGE_SRC(message) == GST_OBJECT_CAST(m_audioPipeline.pipeline)) {
+            if (GST_MESSAGE_SRC(message) == GST_OBJECT_CAST(m_pipeline.pipeline)) {
                 sendPlaybackFinished();
             }
             break;
@@ -307,7 +279,7 @@ gboolean MediaPlayer::handleBusMessage(GstMessage *message) {
         }
         case GST_MESSAGE_STATE_CHANGED: {
             // Check that the state change is for the pipeline.
-            if (GST_MESSAGE_SRC(message) == GST_OBJECT_CAST(m_audioPipeline.pipeline)) {
+            if (GST_MESSAGE_SRC(message) == GST_OBJECT_CAST(m_pipeline.pipeline)) {
                 GstState oldState;
                 GstState newState;
                 GstState pendingState;
@@ -332,25 +304,75 @@ gboolean MediaPlayer::handleBusMessage(GstMessage *message) {
     return true;
 }
 
-void MediaPlayer::handleSetSource(
+void MediaPlayer::handleSetAttachmentReaderSource(
         std::promise<MediaPlayerStatus> *promise, std::unique_ptr<AttachmentReader> reader) {
-    VERIFY_ON_WORKER_THREAD();
     ACSDK_DEBUG(LX("handleSetSourceCalled"));
-    if (MediaPlayerStatus::SUCCESS != doStop()) {
-        ACSDK_ERROR(LX("handleSetSourceFailed").d("reason", "doStopFailed"));
+
+    tearDownPipeline();
+
+    if (!setupPipeline()) {
+        ACSDK_ERROR(LX("handleSetAttachmentReaderSourceFailed").d("reason", "setupPipelineFailed"));
         promise->set_value(MediaPlayerStatus::FAILURE);
         return;
-    };
-    uninstallOnReadDataHandler();
-    resetAttachmentReader(std::move(reader));
-    m_playbackFinishedSent = false;
+    }
+
+    m_source = AttachmentReaderSource::create(this, std::move(reader));
+
+    if (!m_source) {
+        ACSDK_ERROR(LX("handleSetAttachmentReaderSourceFailed").d("reason", "sourceIsNullptr"));
+        promise->set_value(MediaPlayerStatus::FAILURE);
+        return;
+    }
+
+    /*
+     * Once the source pad for the decoder has been added, the decoder emits the pad-added signal. Connect the signal
+     * to the callback which performs the linking of the decoder source pad to the converter sink pad.
+     */
+    if (!g_signal_connect(m_pipeline.decoder, "pad-added", G_CALLBACK(onPadAdded), this)) {
+        ACSDK_ERROR(LX("handleSetAttachmentReaderSourceFailed").d("reason", "connectPadAddedSignalFailed"));
+        promise->set_value(MediaPlayerStatus::FAILURE);
+        return;
+    }
+
+    promise->set_value(MediaPlayerStatus::SUCCESS);
+}
+
+void MediaPlayer::handleSetIStreamSource(
+        std::promise<MediaPlayerStatus> *promise, std::unique_ptr<std::istream> stream, bool repeat) {
+    ACSDK_DEBUG(LX("handleSetSourceCalled"));
+
+    tearDownPipeline();
+
+    if (!setupPipeline()) {
+        ACSDK_ERROR(LX("handleSetIStreamSourceFailed").d("reason", "setupPipelineFailed"));
+        promise->set_value(MediaPlayerStatus::FAILURE);
+        return;
+    }
+
+    m_source = IStreamSource::create(this, std::move(stream), repeat);
+
+    if (!m_source) {
+        ACSDK_ERROR(LX("handleSetIStreamSourceFailed").d("reason", "sourceIsNullptr"));
+        promise->set_value(MediaPlayerStatus::FAILURE);
+        return;
+    }
+
+    /*
+    * Once the source pad for the decoder has been added, the decoder emits the pad-added signal. Connect the signal
+    * to the callback which performs the linking of the decoder source pad to the converter sink pad.
+    */
+    if (!g_signal_connect(m_pipeline.decoder, "pad-added", G_CALLBACK(onPadAdded), this)) {
+        ACSDK_ERROR(LX("handleSetIStreamSourceFailed").d("reason", "connectPadAddedSignalFailed"));
+        promise->set_value(MediaPlayerStatus::FAILURE);
+        return;
+    }
+
     promise->set_value(MediaPlayerStatus::SUCCESS);
 }
 
 void MediaPlayer::handlePlay(std::promise<MediaPlayerStatus> *promise) {
-    VERIFY_ON_WORKER_THREAD();
     ACSDK_DEBUG(LX("handlePlayCalled"));
-    if (!m_attachmentReader) {
+    if (!m_source) {
         ACSDK_ERROR(LX("handlePlayFailed").d("reason", "sourceNotSet"));
         promise->set_value(MediaPlayerStatus::FAILURE);
         return;
@@ -365,7 +387,7 @@ void MediaPlayer::handlePlay(std::promise<MediaPlayerStatus> *promise) {
 
     m_playbackFinishedSent = false;
 
-    auto stateChangeRet = gst_element_set_state(m_audioPipeline.pipeline, GST_STATE_PLAYING);
+    auto stateChangeRet = gst_element_set_state(m_pipeline.pipeline, GST_STATE_PLAYING);
     if (GST_STATE_CHANGE_FAILURE == stateChangeRet) {
         ACSDK_ERROR(LX("handlePlayFailed").d("reason", "gstElementSetStateFailure"));
         promise->set_value(MediaPlayerStatus::FAILURE);
@@ -378,17 +400,15 @@ void MediaPlayer::handlePlay(std::promise<MediaPlayerStatus> *promise) {
 }
 
 void MediaPlayer::handleStop(std::promise<MediaPlayerStatus> *promise) {
-    VERIFY_ON_WORKER_THREAD();
     ACSDK_DEBUG(LX("handleStopCalled"));
     promise->set_value(doStop());
 }
 
 MediaPlayerStatus MediaPlayer::doStop() {
-    VERIFY_ON_WORKER_THREAD();
     GstState state;
     GstState pending;
 
-    auto stateChangeRet = gst_element_get_state(m_audioPipeline.pipeline, &state, &pending, TIMEOUT_ZERO_NANOSECONDS);
+    auto stateChangeRet = gst_element_get_state(m_pipeline.pipeline, &state, &pending, TIMEOUT_ZERO_NANOSECONDS);
     if (GST_STATE_CHANGE_FAILURE == stateChangeRet) {
         ACSDK_ERROR(LX("doStopFailed").d("reason", "gstElementGetStateFailed"));
         return MediaPlayerStatus::FAILURE;
@@ -399,16 +419,16 @@ MediaPlayerStatus MediaPlayer::doStop() {
     } else if (GST_STATE_CHANGE_ASYNC == stateChangeRet && GST_STATE_NULL == pending) {
         ACSDK_DEBUG(LX("doStopSuccess").d("reason", "alreadyStopping"));
     } else {
-        resetAttachmentReader();
-        stateChangeRet = gst_element_set_state(m_audioPipeline.pipeline, GST_STATE_NULL);
+        stateChangeRet = gst_element_set_state(m_pipeline.pipeline, GST_STATE_NULL);
         if (GST_STATE_CHANGE_FAILURE == stateChangeRet) {
             ACSDK_ERROR(LX("doStopFailed").d("reason", "gstElementSetStateFailed"));
+            m_source.reset();
             return MediaPlayerStatus::FAILURE;
         } else if (GST_STATE_CHANGE_ASYNC == stateChangeRet) {
             ACSDK_DEBUG9(LX("doStopPending"));
             return MediaPlayerStatus::PENDING;
         } else {
-            clearOnReadDataHandler();
+            m_source.reset();
             sendPlaybackFinished();
         }
     }
@@ -417,19 +437,18 @@ MediaPlayerStatus MediaPlayer::doStop() {
 }
 
 void MediaPlayer::handleGetOffsetInMilliseconds(std::promise<int64_t> *promise) {
-    VERIFY_ON_WORKER_THREAD();
     ACSDK_DEBUG(LX("handleGetOffsetInMillisecondsCalled"));
     gint64 position = -1;
     GstState state;
     GstState pending;
 
     auto stateChangeRet = gst_element_get_state(
-            m_audioPipeline.pipeline, &state, &pending, TIMEOUT_ZERO_NANOSECONDS);
+            m_pipeline.pipeline, &state, &pending, TIMEOUT_ZERO_NANOSECONDS);
     if (GST_STATE_CHANGE_FAILURE == stateChangeRet) {
         ACSDK_ERROR(LX("handleGetOffsetInMillisecondsFailed").d("reason", "getElementGetStateFailed"));
     } else if (GST_STATE_CHANGE_SUCCESS == stateChangeRet &&
            (GST_STATE_PLAYING == state || GST_STATE_PAUSED == state) &&
-           gst_element_query_position(m_audioPipeline.pipeline, GST_FORMAT_TIME, &position)) {
+           gst_element_query_position(m_pipeline.pipeline, GST_FORMAT_TIME, &position)) {
         position /= NANOSECONDS_TO_MILLISECONDS;
     }
     promise->set_value(static_cast<int64_t>(position));
@@ -438,14 +457,12 @@ void MediaPlayer::handleGetOffsetInMilliseconds(std::promise<int64_t> *promise) 
 void MediaPlayer::handleSetObserver(
         std::promise<void>* promise,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) {
-    VERIFY_ON_WORKER_THREAD();
     ACSDK_DEBUG(LX("handleSetObserverCalled"));
     m_playerObserver = observer;
     promise->set_value();
 }
 
 void MediaPlayer::sendPlaybackStarted() {
-    VERIFY_ON_WORKER_THREAD();
     ACSDK_DEBUG(LX("callingOnPlaybackStarted"));
     if (m_playerObserver) {
         m_playerObserver->onPlaybackStarted();
@@ -453,8 +470,7 @@ void MediaPlayer::sendPlaybackStarted() {
 }
 
 void MediaPlayer::sendPlaybackFinished() {
-    VERIFY_ON_WORKER_THREAD();
-    uninstallOnReadDataHandler();
+    m_source.reset();
     if (!m_playbackFinishedSent) {
         m_playbackFinishedSent = true;
         ACSDK_DEBUG(LX("callingOnPlaybackFinished"));
@@ -465,186 +481,10 @@ void MediaPlayer::sendPlaybackFinished() {
 }
 
 void MediaPlayer::sendPlaybackError(const std::string& error) {
-    VERIFY_ON_WORKER_THREAD();
     ACSDK_DEBUG(LX("callingOnPlaybackError").d("error", error));
     if (m_playerObserver) {
         m_playerObserver->onPlaybackError(error);
     }
-}
-
-void MediaPlayer::onNeedData(GstElement *pipeline, guint size, gpointer pointer) {
-    ACSDK_DEBUG9(LX("onNeedDataCalled").d("size", size));
-    auto mediaPlayer = static_cast<MediaPlayer*>(pointer);
-    mediaPlayer->queueCallback(&mediaPlayer->m_handleNeedDataFunction);
-}
-
-gboolean MediaPlayer::handleNeedData() {
-    VERIFY_ON_WORKER_THREAD();
-    installOnReadDataHandler();
-    return false;
-}
-
-void MediaPlayer::onEnoughData(GstElement *pipeline, gpointer pointer) {
-    ACSDK_DEBUG9(LX("onEnoughDataCalled"));
-    auto mediaPlayer = static_cast<MediaPlayer*>(pointer);
-    mediaPlayer->queueCallback(&mediaPlayer->m_handleEnoughDataFunction);
-}
-
-gboolean MediaPlayer::handleEnoughData() {
-    VERIFY_ON_WORKER_THREAD();
-    uninstallOnReadDataHandler();
-    return false;
-}
-
-gboolean MediaPlayer::onReadData(gpointer mediaPlayer) {
-    return static_cast<MediaPlayer*>(mediaPlayer)->handleReadData();
-}
-
-gboolean MediaPlayer::handleReadData() {
-    VERIFY_ON_WORKER_THREAD();
-    if (!m_attachmentReader) {
-        ACSDK_ERROR(LX("onReadDataFailed").d("reason", "calledAfterEndOfStreamReached"));
-        return false;
-    }
-
-    auto buffer = gst_buffer_new_allocate(nullptr, CHUNK_SIZE, nullptr);
-
-    if (!buffer) {
-        ACSDK_ERROR(LX("onReadDataFailed").d("reason", "gstBufferNewAllocateFailed"));
-        endDataFromAttachment();
-        return false;
-    }
-
-    GstMapInfo info;
-    if (!gst_buffer_map(buffer, &info, GST_MAP_WRITE)) {
-        ACSDK_ERROR(LX("onReadDataFailed").d("reason", "gstBufferMapFailed"));
-        gst_buffer_unref(buffer);
-        endDataFromAttachment();
-        return false;
-    }
-
-    auto status = AttachmentReader::ReadStatus::OK;
-    auto size = m_attachmentReader->read(info.data, info.size, &status);
-
-    ACSDK_DEBUG9(LX("read").d("size", size).d("status", static_cast<int>(status)));
-
-    gst_buffer_unmap(buffer, &info);
-
-    if (size > 0 && size < info.size) {
-        gst_buffer_resize(buffer, 0, size);
-    }
-
-    switch (status) {
-        case AttachmentReader::ReadStatus::CLOSED:
-            if (0 == size) {
-                break;
-            }
-            // Fall through if some data was read.
-        case AttachmentReader::ReadStatus::OK:
-        case AttachmentReader::ReadStatus::OK_WOULDBLOCK:
-            if (size > 0) {
-                installOnReadDataHandler();
-                auto flowRet = gst_app_src_push_buffer(m_audioPipeline.appsrc, buffer);
-                if (flowRet != GST_FLOW_OK) {
-                    ACSDK_ERROR(LX("onReadDataFailed")
-                            .d("reason", "gstAppSrcPushBufferFailed").d("error", static_cast<int>(flowRet)));
-                    break;
-                }
-                return true;
-            }
-            // Fall through to retry reading later.
-        case AttachmentReader::ReadStatus::OK_TIMEDOUT: {
-            gst_buffer_unref(buffer);
-            updateOnReadDataHandler();
-            return true;
-        }
-        case AttachmentReader::ReadStatus::ERROR_OVERRUN:
-        case AttachmentReader::ReadStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:
-        case AttachmentReader::ReadStatus::ERROR_INTERNAL:
-            auto error = static_cast<int>(status);
-            ACSDK_ERROR(LX("onReadDataFailed").d("reason", "readFailed").d("error", error));
-            break;
-    }
-
-    gst_buffer_unref(buffer);
-    endDataFromAttachment();
-    return false;
-}
-
-void MediaPlayer::endDataFromAttachment() {
-    VERIFY_ON_WORKER_THREAD();
-    ACSDK_DEBUG9(LX("endDataFromAttachmentCalled"));
-    auto flowRet = gst_app_src_end_of_stream(m_audioPipeline.appsrc);
-    if (flowRet != GST_FLOW_OK) {
-        ACSDK_ERROR(LX("endDataFromAttachmentFailed")
-                .d("reason", "gstAppSrcEndOfStreamFailed").d("result", static_cast<int>(flowRet)));
-    }
-    resetAttachmentReader();
-    clearOnReadDataHandler();
-}
-
-void MediaPlayer::resetAttachmentReader(std::shared_ptr<AttachmentReader> reader) {
-    VERIFY_ON_WORKER_THREAD();
-    if (m_attachmentReader) {
-        m_attachmentReader->close();
-    }
-    m_attachmentReader = reader;
-}
-
-void MediaPlayer::installOnReadDataHandler() {
-    VERIFY_ON_WORKER_THREAD();
-    if (!m_attachmentReader) {
-        return;
-    }
-    if (m_sourceId != 0) {
-        // Remove the existing source if it was timer based.  Otherwise it is already properly installed.
-        if (m_sourceRetryCount != 0) {
-            ACSDK_DEBUG9(LX("installOnReadDataHandler").d("action", "removeSourceId").d("sourceId", m_sourceId));
-            if (!g_source_remove(m_sourceId)) {
-                ACSDK_ERROR(LX("installOnReadDataHandlerError")
-                        .d("reason", "gSourceRemoveFailed").d("sourceId", m_sourceId));
-            }
-        } else {
-            return;
-        }
-    }
-    m_sourceRetryCount = 0;
-    m_sourceId = g_idle_add(reinterpret_cast<GSourceFunc>(&onReadData), this);
-    ACSDK_DEBUG9(LX("installOnReadDataHandler").d("action", "newSourceId").d("sourceId", m_sourceId));
-}
-
-void MediaPlayer::updateOnReadDataHandler() {
-    VERIFY_ON_WORKER_THREAD();
-    if (m_sourceRetryCount < sizeof(RETRY_INTERVALS_MILLISECONDS) / sizeof(RETRY_INTERVALS_MILLISECONDS[0])) {
-        ACSDK_DEBUG9(LX("updateOnReadDataHandler").d("action", "removeSourceId").d("sourceId", m_sourceId));
-        if (!g_source_remove(m_sourceId)) {
-            ACSDK_ERROR(LX("updateOnReadDataHandlerError")
-                    .d("reason", "gSourceRemoveFailed").d("sourceId", m_sourceId));
-        }
-        auto interval = RETRY_INTERVALS_MILLISECONDS[m_sourceRetryCount];
-        m_sourceRetryCount++;
-        m_sourceId = g_timeout_add(interval, reinterpret_cast<GSourceFunc>(&onReadData), this);
-        ACSDK_DEBUG9(LX("updateOnReadDataHandlerNewSourceId")
-                .d("action", "newSourceId").d("sourceId", m_sourceId).d("sourceRetryCount", m_sourceRetryCount));
-    }
-}
-
-void MediaPlayer::uninstallOnReadDataHandler() {
-    VERIFY_ON_WORKER_THREAD();
-    if (m_sourceId != 0) {
-        if (!g_source_remove(m_sourceId)) {
-            ACSDK_ERROR(LX("uninstallOnReadDataHandlerError")
-                    .d("reason", "gSourceRemoveFailed").d("sourceId", m_sourceId));
-        }
-        clearOnReadDataHandler();
-    }
-}
-
-void MediaPlayer::clearOnReadDataHandler() {
-    VERIFY_ON_WORKER_THREAD();
-    ACSDK_DEBUG9(LX("clearOnReadDataHandlerCalled"));
-    m_sourceRetryCount = 0;
-    m_sourceId = 0;
 }
 
 } // namespace mediaPlayer

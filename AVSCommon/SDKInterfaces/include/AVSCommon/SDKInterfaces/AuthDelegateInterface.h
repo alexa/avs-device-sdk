@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_AUTH_DELEGATE_INTERFACE_H_
-#define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_AUTH_DELEGATE_INTERFACE_H_
+#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_AUTH_DELEGATE_INTERFACE_H_
+#define ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_AUTH_DELEGATE_INTERFACE_H_
 
 #include <memory>
 #include <string>
@@ -24,7 +24,8 @@
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 
 namespace alexaClientSDK {
-namespace acl {
+namespace avsCommon {
+namespace sdkInterfaces {
 
 /**
  * The AuthDelegateInterface is used to provide clients with valid LWA authroization
@@ -52,7 +53,14 @@ public:
      *
      * @param observer The object to observe this authorization state of this AuthDelegate.
      */
-    virtual void setAuthObserver(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> observer) = 0;
+    virtual void addAuthObserver(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> observer) = 0;
+
+    /**
+     * Remove an observer
+     *
+     * @param observer The observer to remove.
+     */
+    virtual void removeAuthObserver(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> observer) = 0;
 
     /**
      * Get the current LWA authoriation token.
@@ -63,7 +71,8 @@ public:
     virtual std::string getAuthToken() = 0;
 };
 
-} // namespace acl
+} // namespace sdkInterfaces
+} // namespace avsCommon
 } // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_AUTH_DELEGATE_INTERFACE_H_
+#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_AUTH_DELEGATE_INTERFACE_H_

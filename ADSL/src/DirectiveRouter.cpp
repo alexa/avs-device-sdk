@@ -32,7 +32,7 @@ static const std::string TAG("DirectiveRouter");
  *
  * @param The event string for this @c LogEntry.
  */
-#define LX(event) ::alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 namespace alexaClientSDK {
 namespace adsl {

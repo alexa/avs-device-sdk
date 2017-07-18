@@ -15,15 +15,13 @@
  * permissions and limitations under the License.
  */
 
-#include "AVSCommon/AVS/Attachment/AttachmentManager.h"
-
 #include <vector>
 
-#include "AVSCommon/Utils/Logger/LogEntry.h"
-#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
+#include "AVSCommon/AVS/Attachment/InProcessAttachment.h"
+#include "AVSCommon/Utils/Logger/Logger.h"
 #include "AVSCommon/Utils/Memory/Memory.h"
 
-#include "AVSCommon/AVS/Attachment/InProcessAttachment.h"
+#include "AVSCommon/AVS/Attachment/AttachmentManager.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {

@@ -18,7 +18,7 @@
 #include <iostream>
 
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
-#include <AVSCommon/Utils/Logger/DeprecatedLogger.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "ACL/Transport/CurlEasyHandleWrapper.h"
 
@@ -26,6 +26,16 @@ namespace alexaClientSDK {
 namespace acl {
 
 using namespace alexaClientSDK::avsCommon::utils;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("CurlEasyHandleWrapper");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// MIME Content-Type for JSON data
 static std::string JSON_MIME_TYPE = "text/json";
@@ -50,13 +60,18 @@ CurlEasyHandleWrapper::~CurlEasyHandleWrapper() {
 bool CurlEasyHandleWrapper::reset() {
     cleanupResources();
     long responseCode = 0;
-    if (curl_easy_getinfo(m_handle, CURLINFO_RESPONSE_CODE, &responseCode) != CURLE_OK) {
-        logger::deprecated::Logger::log("could not get transfer response code");
+    CURLcode ret = curl_easy_getinfo(m_handle, CURLINFO_RESPONSE_CODE, &responseCode);
+    if (ret != CURLE_OK) {
+        ACSDK_ERROR(LX("resetFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_easy_getinfo")
+                .d("info", "CURLINFO_RESPONSE_CODE")
+                .d("error", curl_easy_strerror(ret)));
         curl_easy_cleanup(m_handle);
         m_handle = curl_easy_init();
         //If we can't create a new handle don't try to set options
         if (!m_handle) {
-            logger::deprecated::Logger::log("could not create new curl handle");
+            ACSDK_ERROR(LX("resetFailed").d("reason", "curlFailure").d("method", "curl_easy_init"));
             return false;
         }
         return setDefaultOptions();
@@ -70,10 +85,11 @@ bool CurlEasyHandleWrapper::reset() {
      * TODO: ACSDK-104 Find a way to re-use all handles, or re-evaluate the easy handle pooling scheme
      */
     if (HTTP_RESPONSE_SUCCESS_NO_CONTENT == responseCode) {
+        ACSDK_DEBUG(LX("reset").d("responseCode", "HTTP_RESPONSE_SUCCESS_NO_CONTENT"));
         curl_easy_cleanup(m_handle);
         m_handle = curl_easy_init();
         if (!m_handle) {
-            logger::deprecated::Logger::log("could not create new curl handle");
+            ACSDK_ERROR(LX("resetFailed").d("reason", "curlFailure").d("method", "curl_easy_init"));
             return false;
         }
     } else {
@@ -89,13 +105,19 @@ CURL* CurlEasyHandleWrapper::getCurlHandle() {
 bool CurlEasyHandleWrapper::addHTTPHeader(const std::string& header) {
     m_requestHeaders = curl_slist_append(m_requestHeaders, header.c_str());
     if (!m_requestHeaders) {
-        logger::deprecated::Logger::log("Could not add header to HTTPheaders");
-        // TODO: log headers in debug mode
+        ACSDK_ERROR(LX("addHTTPHeaderFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_slist_append"));
+        ACSDK_DEBUG(LX("addHTTPHeaderFailed").d("header", header));
         return false;
     }
-    if (curl_easy_setopt(m_handle, CURLOPT_HTTPHEADER, m_requestHeaders) != CURLE_OK) {
-        logger::deprecated::Logger::log("Could not add HTTPheaders to easy handle");
-        // TODO: log headers in debug mode
+    CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_HTTPHEADER, m_requestHeaders);
+    if (ret != CURLE_OK) {
+        ACSDK_ERROR(LX("addHTTPHeaderFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_easy_setopt")
+                .d("option", "CURLOPT_HTTPHEADER")
+                .d("error", curl_easy_strerror(ret)));
         return false;
     }
     return true;
@@ -104,32 +126,51 @@ bool CurlEasyHandleWrapper::addHTTPHeader(const std::string& header) {
 bool CurlEasyHandleWrapper::addPostHeader(const std::string& header) {
     m_postHeaders = curl_slist_append(m_postHeaders, header.c_str());
     if (!m_requestHeaders) {
-        logger::deprecated::Logger::log("Could not add header to POST headers");
-        // TODO: log headers in debug mode
+        ACSDK_ERROR(LX("addPostHeaderFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_slist_append"));
+        ACSDK_DEBUG(LX("addPostHeaderFailed").d("header", header));
         return false;
     }
     return true;
 }
 
 bool CurlEasyHandleWrapper::setURL(const std::string& url) {
-    if (curl_easy_setopt(m_handle, CURLOPT_URL, url.c_str()) != CURLE_OK) {
-        logger::deprecated::Logger::log("Cannot set URL");
+    CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_URL, url.c_str());
+    if (ret != CURLE_OK) {
+        ACSDK_ERROR(LX("setUrlFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_easy_setopt")
+                .d("option", "CURLOPT_URL")
+                .d("url", url)
+                .d("error", curl_easy_strerror(ret)));
         return false;
     }
     return true;
 }
 
 bool CurlEasyHandleWrapper::setTransferType(TransferType type) {
+    CURLcode ret;
     switch (type) {
         case TransferType::kGET:
-            if (curl_easy_setopt(m_handle, CURLOPT_HTTPGET, 1L) != CURLE_OK) {
-                logger::deprecated::Logger::log("Cannot set transfer to GET");
+            ret = curl_easy_setopt(m_handle, CURLOPT_HTTPGET, 1L);
+            if (ret != CURLE_OK) {
+                ACSDK_ERROR(LX("setTransferTypeFailed")
+                        .d("reason", "curlFailure")
+                        .d("method", "curl_easy_setopt")
+                        .d("option", "CURLOPT_HTTPGET")
+                        .d("error", curl_easy_strerror(ret)));
                 return false;
             }
             break;
         case TransferType::kPOST:
-            if (!m_post || curl_easy_setopt(m_handle, CURLOPT_HTTPPOST, m_post) != CURLE_OK) {
-                logger::deprecated::Logger::log("Cannot set transfer to POST");
+            ret = curl_easy_setopt(m_handle, CURLOPT_HTTPPOST, m_post);
+            if (!m_post || ret != CURLE_OK) {
+                ACSDK_ERROR(LX("setTransferTypeFailed")
+                        .d("reason", "curlFailure")
+                        .d("method", "curl_easy_setopt")
+                        .d("option", "CURLOPT_HTTPPOST")
+                        .d("error", curl_easy_strerror(ret)));
                 return false;
             }
             break;
@@ -142,7 +183,13 @@ bool CurlEasyHandleWrapper::setPostContent(const std::string& fieldName, const s
     CURLFORMcode ret = curl_formadd(&m_post, &last, CURLFORM_COPYNAME, fieldName.c_str(), CURLFORM_COPYCONTENTS, payload.c_str(),
                 CURLFORM_CONTENTTYPE, JSON_MIME_TYPE.c_str(), CURLFORM_CONTENTHEADER, m_postHeaders, CURLFORM_END);
     if (ret) {
-        logger::deprecated::Logger::log("Could not set string post content: " + fieldName);
+        ACSDK_ERROR(LX("setPostContentFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_formadd")
+                .d("fieldName", fieldName)
+                .sensitive("content", payload)
+                .d("curlFormCode", ret));
+
         return false;
     }
     return true;
@@ -151,7 +198,12 @@ bool CurlEasyHandleWrapper::setPostContent(const std::string& fieldName, const s
 bool CurlEasyHandleWrapper::setTransferTimeout(const long timeoutSeconds) {
     CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_TIMEOUT, timeoutSeconds);
     if (ret != CURLE_OK) {
-        logger::deprecated::Logger::log("Could not set transfer timeout returned: " + std::string(curl_easy_strerror(ret)));
+        ACSDK_ERROR(LX("setTransferTimeoutFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_easy_setopt")
+                .d("option", "CURLOPT_TIMEOUT")
+                .d("timeOut", timeoutSeconds)
+                .d("error", curl_easy_strerror(ret)));
         return false;
     }
     return true;
@@ -162,7 +214,11 @@ bool CurlEasyHandleWrapper::setPostStream(const std::string& fieldName, void *us
     CURLFORMcode ret = curl_formadd(&m_post, &last, CURLFORM_COPYNAME, fieldName.c_str(), CURLFORM_STREAM, userData,
                 CURLFORM_CONTENTTYPE, OCTET_MIME_TYPE.c_str(), CURLFORM_END);
     if (ret) {
-        logger::deprecated::Logger::log("Could not set string post content: " + fieldName +", errror code: " +std::to_string(ret));
+        ACSDK_ERROR(LX("setPostStreamFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_formadd")
+                .d("fieldName", fieldName)
+                .d("curlFormCode", ret));
         return false;
     }
     return true;
@@ -171,7 +227,12 @@ bool CurlEasyHandleWrapper::setPostStream(const std::string& fieldName, void *us
 bool CurlEasyHandleWrapper::setConnectionTimeout(const std::chrono::seconds timeoutSeconds) {
     CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_CONNECTTIMEOUT, timeoutSeconds.count());
     if (ret != CURLE_OK) {
-        logger::deprecated::Logger::log("Could not set connection timeout returned: " + std::string(curl_easy_strerror(ret)));
+        ACSDK_ERROR(LX("setConnectionTimeoutFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_easy_setopt")
+                .d("option", "CURLOPT_TIMEOUT")
+                .d("timeOut", timeoutSeconds.count())
+                .d("error", curl_easy_strerror(ret)));
         return false;
     }
 
@@ -179,13 +240,23 @@ bool CurlEasyHandleWrapper::setConnectionTimeout(const std::chrono::seconds time
 }
 
 bool CurlEasyHandleWrapper::setWriteCallback(CurlCallback callback, void* userData) {
-    if (curl_easy_setopt(m_handle, CURLOPT_WRITEFUNCTION, callback) != CURLE_OK) {
-        logger::deprecated::Logger::log("Cannot set write callback");
+    CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_WRITEFUNCTION, callback);
+    if (ret != CURLE_OK) {
+        ACSDK_ERROR(LX("setWriteCallbackFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_easy_setopt")
+                .d("option", "CURLOPT_WRITEFUNCTION")
+                .d("error", curl_easy_strerror(ret)));
         return false;
     }
     if (userData) {
-        if (curl_easy_setopt(m_handle, CURLOPT_WRITEDATA, userData) != CURLE_OK) {
-            logger::deprecated::Logger::log("Cannot set user data for write callback");
+        ret = curl_easy_setopt(m_handle, CURLOPT_WRITEDATA, userData);
+        if (ret != CURLE_OK) {
+            ACSDK_ERROR(LX("setWriteCallbackFailed")
+                    .d("reason", "curlFailure")
+                    .d("method", "curl_easy_setopt")
+                    .d("option", "CURLOPT_WRITEDATA")
+                    .d("error", curl_easy_strerror(ret)));
             return false;
         }
     }
@@ -193,13 +264,23 @@ bool CurlEasyHandleWrapper::setWriteCallback(CurlCallback callback, void* userDa
 }
 
 bool CurlEasyHandleWrapper::setHeaderCallback(CurlCallback callback, void* userData) {
-    if (curl_easy_setopt(m_handle, CURLOPT_HEADERFUNCTION, callback) != CURLE_OK) {
-        logger::deprecated::Logger::log("Cannot set header callback");
+    CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_HEADERFUNCTION, callback);
+    if (ret != CURLE_OK) {
+        ACSDK_ERROR(LX("setHeaderCallbackFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_easy_setopt")
+                .d("option", "CURLOPT_HEADERFUNCTION")
+                .d("error", curl_easy_strerror(ret)));
         return false;
     }
     if (userData) {
-        if (curl_easy_setopt(m_handle, CURLOPT_HEADERDATA, userData) != CURLE_OK) {
-            logger::deprecated::Logger::log("Cannot set user data for header callback");
+        ret = curl_easy_setopt(m_handle, CURLOPT_HEADERDATA, userData);
+        if (ret != CURLE_OK) {
+            ACSDK_ERROR(LX("setHeaderCallbackFailed")
+                    .d("reason", "curlFailure")
+                    .d("method", "curl_easy_setopt")
+                    .d("option", "CURLOPT_HEADERDATA")
+                    .d("error", curl_easy_strerror(ret)));
             return false;
         }
     }
@@ -207,13 +288,23 @@ bool CurlEasyHandleWrapper::setHeaderCallback(CurlCallback callback, void* userD
 }
 
 bool CurlEasyHandleWrapper::setReadCallback(CurlCallback callback, void* userData) {
-    if (curl_easy_setopt(m_handle, CURLOPT_READFUNCTION, callback) != CURLE_OK) {
-        logger::deprecated::Logger::log("Cannot set read callback");
+    CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_READFUNCTION, callback);
+    if (ret != CURLE_OK) {
+        ACSDK_ERROR(LX("setReadCallbackFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_easy_setopt")
+                .d("option", "CURLOPT_READFUNCTION")
+                .d("error", curl_easy_strerror(ret)));
         return false;
     }
     if (userData) {
-        if (curl_easy_setopt(m_handle, CURLOPT_READDATA, userData) != CURLE_OK) {
-            logger::deprecated::Logger::log("Cannot set user data for read callback");
+        ret = curl_easy_setopt(m_handle, CURLOPT_READDATA, userData);
+        if (ret != CURLE_OK) {
+                ACSDK_ERROR(LX("setReadCallbackFailed")
+                    .d("reason", "curlFailure")
+                    .d("method", "curl_easy_setopt")
+                    .d("option", "CURLOPT_READDATA")
+                    .d("error", curl_easy_strerror(ret)));
             return false;
         }
     }

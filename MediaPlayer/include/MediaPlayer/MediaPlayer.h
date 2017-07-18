@@ -32,13 +32,16 @@
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 
+#include "MediaPlayer/PipelineInterface.h"
+#include "MediaPlayer/SourceInterface.h"
+
 namespace alexaClientSDK {
 namespace mediaPlayer {
 
 /**
  * Class that handles creation of audio pipeline and playing of audio data.
  */
-class MediaPlayer: public avsCommon::utils::mediaPlayer::MediaPlayerInterface {
+class MediaPlayer : public avsCommon::utils::mediaPlayer::MediaPlayerInterface, private PipelineInterface {
 public:
     /**
      * Creates an instance of the @c MediaPlayer.
@@ -52,16 +55,27 @@ public:
      */
     ~MediaPlayer();
 
+    /// @name Overridden @c MediaPlayerInterface methods.
+    /// @{
     avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(
-            std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> reader) override;
-
+            std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) override;
+    avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(
+            std::unique_ptr<std::istream> stream, bool repeat) override;
     avsCommon::utils::mediaPlayer::MediaPlayerStatus play() override;
-
     avsCommon::utils::mediaPlayer::MediaPlayerStatus stop() override;
-
     int64_t getOffsetInMilliseconds() override;
-
     void setObserver(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) override;
+    /// @}
+
+    /// @name Overridden @c PipelineInterface methods.
+    /// @{
+    void setAppSrc(GstAppSrc* appSrc) override;
+    GstAppSrc* getAppSrc() const override;
+    void setDecoder(GstElement* decoder) override;
+    GstElement* getDecoder() const override;
+    GstElement* getPipeline() const override;
+    void queueCallback(const std::function<gboolean()>* callback) override;
+    /// @}
 
 private:
     /**
@@ -98,12 +112,11 @@ private:
     MediaPlayer();
 
     /**
-     * Initializes Gstreamer. Creates the different elements of the pipeline and links the elements. Sets up the
-     * signals and their callbacks.
+     * Initializes GStreamer and starts a main event loop on a new thread.
      *
      * @return @c SUCCESS if initialization was successful. Else @c FAILURE.
      */
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus initPlayer();
+    bool init();
 
     /**
      * Worker thread handler for setting m_workerThreadId.
@@ -113,19 +126,24 @@ private:
     static gboolean onSetWorkerThreadId(gpointer pointer);
 
     /**
-     * Queue the specified callback for execution on the worker thread.
-     *
-     * @param callback The callback to queue.
-     */
-    void queueCallback(const std::function<gboolean()>* callback);
-
-    /**
      * Notification of a callback to execute on the worker thread.
      *
      * @param callback The callback to execute.
      * @return Whether the callback should be called back when worker thread is once again idle.
      */
     static gboolean onCallback(const std::function<gboolean()>* callback);
+
+    /**
+     * Creates the @c AudioPipeline elements and links them together.
+     *
+     * @return @c true if all the elements were created and linked successfully else @c false.
+     */
+    bool setupPipeline();
+
+    /**
+     * Stops the currently playing audio and deletes the pipeline.
+     */
+    void tearDownPipeline();
 
     /**
      * This handles linking the source pad of the decoder to the sink pad of the converter once the pad-added signal
@@ -151,7 +169,7 @@ private:
     /**
      * The callback for processing messages posted on the bus.
      *
-     * @param bus Gstreamer bus.
+     * @param bus GStreamer bus.
      * @param msg The message posted to the bus.
      * @param mediaPlayer The instance of the mediaPlayer that the @c bus is a part of.
      *
@@ -174,11 +192,23 @@ private:
      *
      * @param promise A promise to fulfill with a @ MediaPlayerStatus value once the source has been set
      * (or the operation failed).
-     * @param reader The AttachmentReader with which to receive the audio to play.
+     * @param reader The @c AttachmentReader with which to receive the audio to play.
      */
-    void handleSetSource(
+    void handleSetAttachmentReaderSource(
             std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise,
             std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> reader);
+
+    /**
+     * Worker thread handler for setting the source of audio to play.
+     *
+     * @param promise A promise to fulfill with a @ MediaPlayerStatus value once the source has been set
+     * (or the operation failed).
+     * @param stream The source from which to receive the audio to play.
+     */
+    void handleSetIStreamSource(
+            std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise,
+            std::unique_ptr<std::istream> stream,
+            bool repeat);
 
     /**
      * Worker thread handler for starting playback of the current audio source.
@@ -237,87 +267,8 @@ private:
      */
     void sendPlaybackError(const std::string& error);
 
-    /**
-     * The callback for pushing data into the appsrc element.
-     *
-     * @param pipeline The pipeline element.
-     * @param size The size of the data to push to the pipeline.
-     * @param mediaPlayer The instance of the mediaPlayer that the bus is a part of.
-     */
-    static void onNeedData(GstElement* pipeline, guint size, gpointer mediaPlayer);
-
-    /**
-     * Pushes data into the appsrc element by starting a read data loop to run.
-     *
-     * @return Whether this callback should be called again on the worker thread.
-     */
-    gboolean handleNeedData();
-
-    /**
-     * The callback to stop pushing data into the appsrc element.
-     *
-     * @param pipeline The pipeline element.
-     * @param mediaPlayer The instance of the mediaPlayer that the pipeline is a part of.
-     */
-    static void onEnoughData(GstElement* pipeline, gpointer mediaPlayer);
-
-    /**
-     * Stops pushing data to the appsrc element.
-     *
-     * @return Whether this callback should be called again on the worker thread.
-     */
-    gboolean handleEnoughData();
-
-    /**
-     * The callback for reading data from the attachment.
-     *
-     * @param mediaPlayer An instance of the mediaPlayer.
-     *
-     * @return @c false if there is an error or end of attachment else @c true.
-     */
-    static gboolean onReadData(gpointer mediaPlayer);
-
-    /**
-     * Reads data from the attachment and pushes it into appsrc element.
-     *
-     * @return @c false if there is an error or end of attachment else @c true.
-     */
-    gboolean handleReadData();
-
-    /**
-     * Signal gstreamer about the end of the audio stream.  @c close() and release @c m_attachmentReader.
-     */
-    void endDataFromAttachment();
-
-    /**
-     * Close @c m_attachmentReader (if not @c nullptr) and release it.
-     */
-    void resetAttachmentReader(
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader = nullptr);
-
-    /**
-     * Install the @c onReadData() handler.  If it is already installed, reset the retry count.
-     */
-    void installOnReadDataHandler();
-
-    /**
-     * Update when to call @c onReadData() handler based upon the number of retries since data was last read.
-     */
-    void updateOnReadDataHandler();
-
-    /**
-     * Uninstall the @c onReadData() handler.
-     */
-    void uninstallOnReadDataHandler();
-
-    /**
-     * Clear out the tracking of the @c onReadData() handler callback.  This is used when gstreamer is
-     * known to have uninstalled the handler on its own.
-     */
-    void clearOnReadDataHandler();
-
     /// An instance of the @c AudioPipeline.
-    AudioPipeline m_audioPipeline;
+    AudioPipeline m_pipeline;
 
     /// Main event loop.
     GMainLoop* m_mainLoop;
@@ -325,20 +276,8 @@ private:
     // Main loop thread
     std::thread m_mainLoopThread;
 
-    // The thread that callbacks queued via @c g_idle_add() and @c m_timeout_add() will be called on.
-    std::thread::id m_workerThreadId;
-
     /// Bus Id to track the bus.
     guint m_busWatchId;
-
-    /// The sourceId used to identify the installation of the onReadData() handler.
-    guint m_sourceId;
-
-    /// Number of times reading data has been attempted since data was last successfully read.
-    guint m_sourceRetryCount;
-
-    /// The AttachmentReader to read audioData from.
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_attachmentReader;
 
     /// Flag to indicate when a playback finished notification has been sent to the observer.
     bool m_playbackFinishedSent;
@@ -346,11 +285,8 @@ private:
     /// @c MediaPlayerObserverInterface instance to notify when the playback state changes.
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> m_playerObserver;
 
-    /// Function to invoke on the worker thread thread when more data is needed.
-    const std::function<gboolean()> m_handleNeedDataFunction;
-
-    /// Function to invoke on the worker thread thread when there is enough data.
-    const std::function<gboolean()> m_handleEnoughDataFunction;
+    /// @c SourceInterface instance set to the appropriate source.
+    std::unique_ptr<SourceInterface> m_source;
 };
 
 } // namespace mediaPlayer

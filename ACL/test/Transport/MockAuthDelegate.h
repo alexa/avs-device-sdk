@@ -19,7 +19,7 @@
 
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 
-#include "ACL/AuthDelegateInterface.h"
+#include "AVSCommon/SDKInterfaces/AuthDelegateInterface.h"
 
 #include <gmock/gmock.h>
 
@@ -30,9 +30,10 @@ namespace alexaClientSDK {
 namespace acl {
 namespace test {
 
-class MockAuthDelegate: public AuthDelegateInterface {
+class MockAuthDelegate: public avsCommon::sdkInterfaces::AuthDelegateInterface {
 public:
-    MOCK_METHOD1(setAuthObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface>));
+    MOCK_METHOD1(addAuthObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface>));
+    MOCK_METHOD1(removeAuthObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface>));
     MOCK_METHOD0(getAuthToken, std::string());
 };
 

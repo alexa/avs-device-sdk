@@ -48,6 +48,9 @@ public:
     avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(
             std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) override;
 
+    avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(
+            std::unique_ptr<std::istream> stream, bool repeat) override;
+
     avsCommon::utils::mediaPlayer::MediaPlayerStatus play() override;
 
     avsCommon::utils::mediaPlayer::MediaPlayerStatus stop() override;
@@ -66,6 +69,8 @@ private:
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_attachmentReader;
     /// Timer to wait to send onPlaybackFinished to the observer.
     std::unique_ptr<avsCommon::utils::timing::Timer> m_timer;
+    // istream for Alerts. 
+    std::unique_ptr<std::istream> m_istream; 
 };
 } // namespace test
 } // namespace integration

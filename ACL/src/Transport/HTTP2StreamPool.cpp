@@ -14,11 +14,21 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
+#include <AVSCommon/Utils/Logger/Logger.h>
 #include "ACL/Transport/HTTP2StreamPool.h"
 
 namespace alexaClientSDK {
 namespace acl {
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("HTTP2StreamPool");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 using namespace avsCommon::utils;
 
@@ -34,12 +44,11 @@ std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createGetStream(const std::string&
         MessageConsumerInterface *messageConsumer) {
     std::shared_ptr<HTTP2Stream> stream = getStream(messageConsumer);
     if (!stream) {
-        logger::deprecated::Logger::log("Could not get stream from stream pool");
-        releaseStream(stream);
+        ACSDK_ERROR(LX("createGetStreamFailed").d("reason", "getStreamFailed"));
         return nullptr;
     }
     if (!stream->initGet(url, authToken)) {
-        logger::deprecated::Logger::log("Could not setup stream for get request");
+        ACSDK_ERROR(LX("createGetStreamFailed").d("reason", "initGetFailed"));
         releaseStream(stream);
         return nullptr;
     }
@@ -49,13 +58,17 @@ std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createGetStream(const std::string&
 std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createPostStream(const std::string& url, const std::string& authToken,
         std::shared_ptr<avsCommon::avs::MessageRequest> request, MessageConsumerInterface *messageConsumer) {
     std::shared_ptr<HTTP2Stream> stream = getStream(messageConsumer);
+    if (!request) {
+        ACSDK_ERROR(LX("createPostStreamFailed").d("reason","nullMessageRequest"));
+        return nullptr;
+    }
     if (!stream) {
-        logger::deprecated::Logger::log("Could not get stream from stream pool");
+        ACSDK_ERROR(LX("createPostStreamFailed").d("reason", "getStreamFailed"));
         request->onSendCompleted(avsCommon::avs::MessageRequest::Status::INTERNAL_ERROR);
         return nullptr;
     }
     if (!stream->initPost(url, authToken, request)) {
-        logger::deprecated::Logger::log("Could not setup stream for post request");
+        ACSDK_ERROR(LX("createPostStreamFailed").d("reason", "initPostFailed"));
         request->onSendCompleted(avsCommon::avs::MessageRequest::Status::INTERNAL_ERROR);
         releaseStream(stream);
         return nullptr;
@@ -64,6 +77,11 @@ std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createPostStream(const std::string
 }
 
 std::shared_ptr<HTTP2Stream> HTTP2StreamPool::getStream(MessageConsumerInterface *messageConsumer) {
+
+    if (!messageConsumer) {
+        ACSDK_ERROR(LX("getStreamFailed").d("reason", "nullptrMessageConsumer"));
+        return nullptr;
+    }
     std::lock_guard<std::mutex> lock(m_mutex);
     if (m_numRemovedStreams >= m_maxStreams) {
         return nullptr;
@@ -79,7 +97,17 @@ std::shared_ptr<HTTP2Stream> HTTP2StreamPool::getStream(MessageConsumerInterface
 }
 
 void HTTP2StreamPool::releaseStream(std::shared_ptr<HTTP2Stream> stream) {
+    if (!stream){
+        return;
+    }
     std::lock_guard<std::mutex> lock(m_mutex);
+
+    //Check to avoid releasing the same stream more than once accidentally
+    for (auto item : m_pool) {
+        if (item == stream) {
+            return;
+        }
+    }
 
     if (stream->reset()) {
         m_pool.push_back(stream);

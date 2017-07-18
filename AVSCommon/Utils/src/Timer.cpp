@@ -22,6 +22,8 @@ namespace avsCommon {
 namespace utils {
 namespace timing {
 
+const std::string Timer::TAG = "Timer";
+
 Timer::Timer() : m_running(false), m_stopping(false) {
 }
 

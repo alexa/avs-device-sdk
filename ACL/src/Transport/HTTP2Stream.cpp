@@ -14,7 +14,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#include "AVSCommon/Utils/Logger/DeprecatedLogger.h"
+#include <AVSCommon/Utils/Logger/Logger.h>
 #include "ACL/Transport/HTTP2Stream.h"
 #include "ACL/Transport/HTTP2Transport.h"
 
@@ -27,6 +27,16 @@ namespace acl {
 using namespace alexaClientSDK::avsCommon::utils;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("HTTP2Stream");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// MIME boundary string prefix in HTTP header.
 static const std::string BOUNDARY_PREFIX = "boundary=";
@@ -81,7 +91,7 @@ HTTP2Stream::HTTP2Stream(MessageConsumerInterface* messageConsumer,
 
 bool HTTP2Stream::reset() {
     if (!m_transfer.reset()) {
-        logger::deprecated::Logger::log("Could not reset curl easy handle");
+        ACSDK_ERROR(LX("resetFailed").d("reason", "resetHandleFailed"));
         return false;
     }
     m_currentRequest = nullptr;
@@ -92,37 +102,52 @@ bool HTTP2Stream::reset() {
 }
 
 bool HTTP2Stream::setCommonOptions(const std::string& url, const std::string& authToken) {
+    CURLcode ret;
     std::ostringstream authHeader;
     authHeader << AUTHORIZATION_HEADER << authToken;
 
     if (!m_transfer.setURL(url)) {
-        logger::deprecated::Logger::log("Could not set request URL");
+        ACSDK_ERROR(LX("setCommonOptionsFailed")
+                .d("reason", "setURLFailed")
+                .d("url", url));
         return false;
     }
 
     if (!m_transfer.addHTTPHeader(authHeader.str())) {
-        logger::deprecated::Logger::log("Could not set requested HTTP header");
+        ACSDK_ERROR(LX("setCommonOptionsFailed")
+                .d("reason", "addHTTPHeaderFailed")
+                .sensitive("authHeader", authHeader.str()));
         return false;
     }
 
     if (!m_transfer.setWriteCallback(&HTTP2Stream::writeCallback, this)) {
-        logger::deprecated::Logger::log("Could not set write callback");
+        ACSDK_ERROR(LX("setCommonOptionsFailed").d("reason", "setWriteCallbackFailed"));
         return false;
     }
 
     if (!m_transfer.setHeaderCallback(&HTTP2Stream::headerCallback, this)) {
-        logger::deprecated::Logger::log("Could not set header callback");
+        ACSDK_ERROR(LX("setCommonOptionsFailed").d("reason", "setHeaderCallbackFailed"));
         return false;
     }
 #ifdef ACSDK_EMIT_SENSITIVE_LOGS
-    if (curl_easy_setopt(m_transfer.getCurlHandle(), CURLOPT_VERBOSE, 1L) != CURLE_OK) {
-        logger::deprecated::Logger::log("Could not set verbose logging");
+    ret = curl_easy_setopt(m_transfer.getCurlHandle(), CURLOPT_VERBOSE, 1L);
+    if (ret != CURLE_OK) {
+        ACSDK_ERROR(LX("setCommonOptionsFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_easy_setopt")
+                .d("option", "CURLOPT_VERBOSE")
+                .d("error", curl_easy_strerror(ret)));
         return false;
     }
 #endif
+    ret = curl_easy_setopt(m_transfer.getCurlHandle(), CURLOPT_TCP_KEEPALIVE, 1);
     // Set TCP_KEEPALIVE to ensure that we detect server initiated disconnects
-    if (curl_easy_setopt(m_transfer.getCurlHandle(), CURLOPT_TCP_KEEPALIVE, 1) != CURLE_OK) {
-        logger::deprecated::Logger::log("Could not set TCP KEEPALIVE");
+    if (ret != CURLE_OK) {
+        ACSDK_ERROR(LX("setCommonOptionsFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_easy_setopt")
+                .d("option", "CURLOPT_TCP_KEEPALIVE")
+                .d("error", curl_easy_strerror(ret)));
         return false;
     }
     return true;
@@ -131,18 +156,27 @@ bool HTTP2Stream::setCommonOptions(const std::string& url, const std::string& au
 bool HTTP2Stream::initGet(const std::string& url ,const std::string& authToken) {
     reset();
 
+    if (url.empty()) {
+        ACSDK_ERROR(LX("initGetFailed").d("reason", "emptyURL"));
+        return false;
+    }
+
+    if (authToken.empty()) {
+        ACSDK_ERROR(LX("initGetFailed").d("reason", "emptyAuthToken"));
+        return false;
+    }
+
     if (!m_transfer.getCurlHandle()) {
-        logger::deprecated::Logger::log("Stream curl easy handle not initialised");
+        ACSDK_ERROR(LX("initGetFailed").d("reason", "curlEasyHandleUninitialized"));
         return false;
     }
 
     if (!m_transfer.setTransferType(CurlEasyHandleWrapper::TransferType::kGET)) {
-        logger::deprecated::Logger::log("Could not set stream to GET");
         return false;
     }
 
     if (!setCommonOptions(url, authToken)) {
-        logger::deprecated::Logger::log("Could not set common stream options");
+        ACSDK_ERROR(LX("initGetFailed").d("reason", "setCommonOptionsFailed"));
         return false;
     }
 
@@ -154,8 +188,23 @@ bool HTTP2Stream::initPost(const std::string& url, const std::string& authToken,
     reset();
     std::string requestPayload = request->getJsonContent();
 
+    if (url.empty()) {
+        ACSDK_ERROR(LX("initPostFailed").d("reason", "emptyURL"));
+        return false;
+    }
+
+    if (authToken.empty()) {
+        ACSDK_ERROR(LX("initPostFailed").d("reason", "emptyAuthToken"));
+        return false;
+    }
+
+    if (!request) {
+        ACSDK_ERROR(LX("initPostFailed").d("reason", "nullMessageRequest"));
+        return false;
+    }
+
     if (!m_transfer.getCurlHandle()) {
-        logger::deprecated::Logger::log("Stream curl easy handle not initialised");
+        ACSDK_ERROR(LX("initPostFailed").d("reason", "curlEasyHandleUninitialized"));
         return false;
     }
 
@@ -178,7 +227,7 @@ bool HTTP2Stream::initPost(const std::string& url, const std::string& authToken,
     }
 
     if (!setCommonOptions(url, authToken)) {
-        logger::deprecated::Logger::log("Could not set common stream options");
+        ACSDK_ERROR(LX("initPostFailed").d("reason", "setCommonOptionsFailed"));
         return false;
     }
 
@@ -218,7 +267,7 @@ size_t HTTP2Stream::headerCallback(char *data, size_t size, size_t nmemb, void *
 #ifdef DEBUG
     if (0 == header.find(X_AMZN_REQUESTID_PREFIX)) {
         auto end = header.find(CR);
-        logger::deprecated::Logger::log(header.substr(0, end));
+        ACSDK_DEBUG(LX("receivedRequestId").d("value", header.substr(0, end)));
     }
 #endif
     std::string boundary;
@@ -281,8 +330,13 @@ size_t HTTP2Stream::readCallback(char *data, size_t size, size_t nmemb, void *us
 
 long HTTP2Stream::getResponseCode() {
     long responseCode = 0;
-    if (curl_easy_getinfo(m_transfer.getCurlHandle(), CURLINFO_RESPONSE_CODE, &responseCode) != CURLE_OK) {
-        logger::deprecated::Logger::log("Could not get HTTP response code");
+    CURLcode ret = curl_easy_getinfo(m_transfer.getCurlHandle(), CURLINFO_RESPONSE_CODE, &responseCode);
+    if (ret != CURLE_OK) {
+        ACSDK_ERROR(LX("getResponseCodeFailed")
+                .d("reason", "curlFailure")
+                .d("method", "curl_easy_getinfo")
+                .d("info", "CURLINFO_RESPONSE_CODE")
+                .d("error", curl_easy_strerror(ret)));
         return -1;
     }
     return responseCode;
