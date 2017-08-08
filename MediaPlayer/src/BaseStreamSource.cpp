@@ -47,10 +47,26 @@ BaseStreamSource::BaseStreamSource(PipelineInterface* pipeline) :
         m_sourceId{0},
         m_sourceRetryCount{0},
         m_handleNeedDataFunction{[this]() { return handleNeedData(); }},
-        m_handleEnoughDataFunction{[this]() { return handleEnoughData(); }} {
+        m_handleEnoughDataFunction{[this]() { return handleEnoughData(); }},
+        m_needDataHandlerId{0},
+        m_enoughDataHandlerId{0},
+        m_needDataCallbackId{0},
+        m_enoughDataCallbackId{0} {
 }
 
 BaseStreamSource::~BaseStreamSource() {
+    ACSDK_DEBUG9(LX("~BaseStreamSource"));
+    g_signal_handler_disconnect(m_pipeline->getAppSrc(), m_needDataHandlerId);
+    g_signal_handler_disconnect(m_pipeline->getAppSrc(), m_enoughDataHandlerId);
+    {
+        std::lock_guard<std::mutex> lock(m_callbackIdMutex);
+        if (m_needDataCallbackId && !g_source_remove(m_needDataCallbackId)) {
+            ACSDK_ERROR(LX("gSourceRemove failed for m_needDataCallbackId"));
+        }
+        if (m_enoughDataCallbackId && !g_source_remove(m_enoughDataCallbackId)) {
+            ACSDK_ERROR(LX("gSourceRemove failed for m_enoughDataCallbackId"));
+        }
+    }
     uninstallOnReadDataHandler();
 }
 
@@ -96,7 +112,8 @@ bool BaseStreamSource::init() {
      * When the appsrc needs data, it emits the signal need-data. Connect the need-data signal to the onNeedData
      * callback which handles pushing data to the appsrc element.
      */
-    if (!g_signal_connect(appsrc, "need-data", G_CALLBACK(onNeedData), this)) {
+    m_needDataHandlerId = g_signal_connect(appsrc, "need-data", G_CALLBACK(onNeedData), this);
+    if (0 == m_needDataHandlerId) {
         ACSDK_ERROR(LX("initFailed").d("reason", "connectNeedDataSignalFailed"));
         return false;
     }
@@ -104,7 +121,8 @@ bool BaseStreamSource::init() {
      * When the appsrc had enough data, it emits the signal enough-data. Connect the enough-data signal to the
      * onEnoughData callback which handles stopping the data push to the appsrc element.
      */
-    if (!g_signal_connect(appsrc, "enough-data", G_CALLBACK(onEnoughData), this)) {
+    m_enoughDataHandlerId = g_signal_connect(appsrc, "enough-data", G_CALLBACK(onEnoughData), this);
+    if (0 == m_enoughDataHandlerId) {
         ACSDK_ERROR(LX("initFailed").d("reason", "connectEnoughDataSignalFailed"));
         return false;
     }
@@ -180,7 +198,7 @@ void BaseStreamSource::uninstallOnReadDataHandler() {
 }
 
 void BaseStreamSource::clearOnReadDataHandler() {
-    ACSDK_DEBUG9(LX("clearOnReadDataHandlerCalled"));
+    ACSDK_DEBUG9(LX("clearOnReadDataHandlerCalled").d("sourceId", m_sourceId));
     m_sourceRetryCount = 0;
     m_sourceId = 0;
 }
@@ -188,11 +206,18 @@ void BaseStreamSource::clearOnReadDataHandler() {
 void BaseStreamSource::onNeedData(GstElement *pipeline, guint size, gpointer pointer) {
     ACSDK_DEBUG9(LX("onNeedDataCalled").d("size", size));
     auto source = static_cast<BaseStreamSource*>(pointer);
-    source->m_pipeline->queueCallback(&source->m_handleNeedDataFunction);
+    std::lock_guard<std::mutex> lock(source->m_callbackIdMutex);
+    if (source->m_needDataCallbackId) {
+        ACSDK_DEBUG9(LX("m_needDataCallbackId already set"));
+        return;
+    }
+    source->m_needDataCallbackId = source->m_pipeline->queueCallback(&source->m_handleNeedDataFunction);
 }
 
 gboolean BaseStreamSource::handleNeedData() {
     ACSDK_DEBUG9(LX("handleNeedDataCalled"));
+    std::lock_guard<std::mutex> lock(m_callbackIdMutex);
+    m_needDataCallbackId = 0;
     installOnReadDataHandler();
     return false;
 }
@@ -200,17 +225,37 @@ gboolean BaseStreamSource::handleNeedData() {
 void BaseStreamSource::onEnoughData(GstElement *pipeline, gpointer pointer) {
     ACSDK_DEBUG9(LX("onEnoughDataCalled"));
     auto source = static_cast<BaseStreamSource*>(pointer);
-    source->m_pipeline->queueCallback(&source->m_handleEnoughDataFunction);
+    std::lock_guard<std::mutex> lock(source->m_callbackIdMutex);
+    if (source->m_enoughDataCallbackId) {
+        ACSDK_DEBUG9(LX("m_enoughDataCallbackId already set"));
+        return;
+    }
+    source->m_enoughDataCallbackId = source->m_pipeline->queueCallback(&source->m_handleEnoughDataFunction);
 }
 
 gboolean BaseStreamSource::handleEnoughData() {
     ACSDK_DEBUG9(LX("handleEnoughDataCalled"));
+    std::lock_guard<std::mutex> lock(m_callbackIdMutex);
+    m_enoughDataCallbackId = 0;
     uninstallOnReadDataHandler();
     return false;
 }
 
 gboolean BaseStreamSource::onReadData(gpointer pointer) {
     return static_cast<BaseStreamSource*>(pointer)->handleReadData();
+}
+
+// No additional processing is necessary.
+bool BaseStreamSource::handleEndOfStream() {
+    return true;
+}
+
+// Source streams do not contain additional data.
+bool BaseStreamSource::hasAdditionalData() {
+    return false;
+}
+
+void BaseStreamSource::preprocess() {
 }
 
 } // namespace mediaPlayer

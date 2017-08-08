@@ -20,7 +20,6 @@
 
 #include <memory>
 
-#include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <DefaultClient/DefaultClient.h>
 
 #include "PortAudioMicrophoneWrapper.h"
@@ -33,7 +32,7 @@ namespace sampleApp {
  * This class manages most of the user interaction by taking in commands and notifying the DefaultClient and the
  * userInterface (the view) accordingly.
  */
-class InteractionManager : public avsCommon::sdkInterfaces::DialogUXStateObserverInterface {
+class InteractionManager {
 public:
     /**
      * Constructor.
@@ -56,8 +55,6 @@ public:
      * Should be called when a user requests help.
      */
     void help();
-
-    void onDialogUXStateChanged(avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState state) override;
 
     /**
      * Toggles the microphone state if the Sample App was built with wakeword. When the microphone is turned off, the

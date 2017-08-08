@@ -8,7 +8,6 @@ add_library(ADSL SHARED
     DirectiveSequencer.cpp
     MessageInterpreter.cpp)
 target_include_directories(ADSL PUBLIC
-    "${ACL_SOURCE_DIR}/include"
     "${ADSL_SOURCE_DIR}/include"
     "${AVSCommon_INCLUDE_DIRS}")
 target_link_libraries(ADSL

@@ -23,6 +23,7 @@
 #include "Alerts/Renderer/RendererObserverInterface.h"
 
 #include <AVSCommon/AVS/FocusState.h>
+#include <AVSCommon/Utils/Timing/Timer.h>
 
 #include <map>
 #include <string>
@@ -279,22 +280,6 @@ public:
      */
     void snooze(const std::string & updatedScheduledTime_ISO_8601);
 
-    /**
-     * A temporary function to control if simple mode is enabled.
-     * Simple mode is a workaround for our gstreamer implementation behaving incorrectly.
-     *
-     * @return If simple mode is enabled.
-     */
-    static bool isSimpleModeEnabled();
-
-    /**
-     * A temporary function to activate an alert in a simple manner.  In particular, the caller will not receive
-     * any callbacks with respect to alert status changes.
-     *
-     * @param focusState The current focus state the alert should have.
-     */
-    void activateSimple(avsCommon::avs::FocusState focusState);
-
 private:
     /// A friend relationship, since our storage interface needs access to all fields.
     friend class storage::SQLiteAlertStorage;
@@ -305,14 +290,9 @@ private:
     void startRenderer();
 
     /**
-     * A utility function to start an alert's renderer in a simple mode, where the caller will not receive callbacks.
+     * A utility function to be invoked when the maximum time for an alert has expired.
      */
-    void startRendererSimple();
-
-    /**
-     * A utility function to start an alert's renderer in a simple mode, where the caller will not receive callbacks.
-     */
-    void stopRendererSimple();
+    void onMaxTimerExpiration();
 
     /// The AVS token for the alert.
     std::string m_token;
@@ -337,6 +317,10 @@ private:
     std::shared_ptr<renderer::RendererInterface> m_renderer;
     /// The observer of the alert.
     AlertObserverInterface* m_observer;
+    /// A flag to capture if the maximum time timer has expired for this alert.
+    bool m_hasTimerExpired;
+    /// The timer to ensure this alert is not active longer than a maximum length of time.
+    avsCommon::utils::timing::Timer m_maxLengthTimer;
 };
 
 } // namespace alerts

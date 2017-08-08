@@ -80,7 +80,8 @@ void MessageRouter::disable() {
     disconnectAllTransportsLocked(lock, ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
 }
 
-void MessageRouter::send(std::shared_ptr<MessageRequest> request) {
+// TODO: ACSDK-421: Revert this to use send().
+void MessageRouter::sendMessage(std::shared_ptr<MessageRequest> request) {
     if (!request) {
         ACSDK_ERROR(LX("sendFailed").d("reason", "nullRequest"));
         return;

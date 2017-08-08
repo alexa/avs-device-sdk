@@ -39,14 +39,16 @@ namespace adsl {
  * @par
  * @c DirectiveProcessor receives directives via its @c onDirective() method. The @c dialogRequestId property of
  * incoming directives is checked against the current @c dialogRequestId (which is set by @c setDialogRequestId()).
- * If the values do not match, the @c AVSDirective is dropped, and @c onDirective() returns @c true to indicate that
- * the @c AVSDirective has been consumed (in this case, because it is not longer relevant).
+ * If the @c AVSDirective's value is not empty and does not match, the @c AVSDirective is dropped, and
+ * @c onDirective() returns @c true to indicate that the @c AVSDirective has been consumed (in this case, because
+ * it is not longer relevant).
  * @par
  * After passing this hurdle, the @c AVSDirective is forwarded to the @c preHandleDirective() method of whichever
  * @c DirectiveHandler is registered to handle the @c AVSDirective. If no @c DirectiveHandler is registered, the
- * incoming directive is rejected and any directives already queued for handling by the @c DirectiveProcessor are
- * canceled (because an entire dialog is canceled when the handling of any of its directives fails), and
- * @c onDirective() returns @c false to indicate that the unhandled @c AVDirective was rejected.
+ * incoming directive is rejected and any directives with the same dialogRequestId that are already queued for
+ * handling by the @c DirectiveProcessor are canceled (because an entire dialog is canceled when the handling of
+ * any of its directives fails), and @c onDirective() returns @c false to indicate that the unhandled @c AVDirective
+ * was rejected.
  * @par
  * Once an @c AVSDirective has been successfully forwarded for preHandling, it is enqueued awaiting its turn to be
  * handled. Handling is accomplished by forwarding the @c AVSDirective to the @c handleDirective() method of
@@ -131,64 +133,32 @@ private:
         /// Handle of the @c DirectiveProcessor to forward notifications to.
         ProcessorHandle m_processorHandle;
 
-        /// The @c messageId of the @c AVSDirective whose handling result will be specified by this instance.
-        std::string m_messageId;
+        /// The @c AVSDirective whose handling result will be specified by this instance.
+        std::shared_ptr<avsCommon::avs::AVSDirective> m_directive;
     };
 
     /**
      * Receive notification that the handling of an @c AVSDirective has completed.
      *
-     * @param messageId The @c messageId of the @c AVSDirective whose handling has completed.
+     * @param directive The @c AVSDirective whose handling has completed.
      */
-    void onHandlingCompleted(const std::string& messageId);
+    void onHandlingCompleted(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
     /**
      * Receive notification that the handling of an @c AVSDirective has failed.
      *
-     * @param messageId The @c messageId of the @c AVSDirective whose handling has failed.
+     * @param directive The @c AVSDirective whose handling has failed.
      * @param description A description (suitable for logging diagnostics) that indicates the nature of the failure.
      */
-    void onHandlingFailed(const std::string& messageId, const std::string& description);
+    void onHandlingFailed(std::shared_ptr<avsCommon::avs::AVSDirective> directive, const std::string& description);
 
     /**
-     * Remove an @c AVSDirective from @c m_handlingQueue.
-     * @note This method must only be called by threads that have acquired @c m_contextMutex.
+     * Remove an @c AVSDirective from processing.
+     * @note This method must only be called by threads that have acquired @c m_mutex.
      *
-     * @param messagId The @c messageId of the @c AVSDirective to remove.
-     * @return Whether the @c AVSDirective was actually removed.
+     * @param directive The @c AVSDirective to remove from processing.
      */
-    bool removeFromHandlingQueueLocked(const std::string& messageId);
-
-    /**
-     * Remove an @c AVSDirective from @c m_cancelingQueue.
-     * @note This method must only be called by threads that have acquired @c m_contextMutex.
-     *
-     * @param messageId The @c messageId of the @c AVSDirective to remove.
-     * @return Whether the @c AVSDirective was actually removed.
-     */
-    bool removeFromCancelingQueueLocked(const std::string& messageId);
-
-    /**
-     * Find the specified @c AVSDirective in the specified queue.
-     *
-     * @param messageId The message ID of the @c AVSDirective to find.
-     * @param queue The queue to search for the @c AVSDirective.
-     * @return An iterator positioned at the matching directive (or @c queue::end(), if not found).
-     */
-    static std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>>::iterator findDirectiveInQueueLocked(
-            const std::string& messageId,
-            std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>>& queue);
-
-    /**
-     * Remove the specified @c AVSDirective from the specified queue.  If the queue is not empty after the
-     * removal, wake @c m_processingLoop.
-     *
-     * @param it An iterator positioned at the @c AVSDirective to remove from the queue.
-     * @param queue The queue to remove the @c AVSDirective from.
-     */
-    void removeDirectiveFromQueueLocked(
-            std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>>::iterator it,
-            std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>>& queue);
+    void removeDirectiveLocked(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
     /**
      * Thread method for m_processingThread.
@@ -197,9 +167,9 @@ private:
 
     /**
      * Process (cancel) all the items in @c m_cancelingQueue.
-     * @note This method must only be called by threads that have acquired @c m_contextMutex.
+     * @note This method must only be called by threads that have acquired @c m_mutex.
      *
-     * @param lock A @c unique_lock on m_contextMutex from the callers context, allowing this method to release
+     * @param lock A @c unique_lock on m_mutex from the callers context, allowing this method to release
      * (and re-acquire) the lock around callbacks that need to be invoked.
      * @return Whether the @c AVSDirectives in @c m_cancelingQueue were processed.
      */
@@ -207,17 +177,36 @@ private:
 
     /**
      * Process (handle) the next @c AVSDirective in @c m_handlingQueue.
-     * @note This method must only be called by threads that have acquired @c m_contextMutex.
+     * @note This method must only be called by threads that have acquired @c m_mutex.
      *
-     * @param lock A @c unique_lock on m_contextMutex from the callers context, allowing this method to release
+     * @param lock A @c unique_lock on m_mutex from the callers context, allowing this method to release
      * (and re-acquire) the lock around callbacks that need to be invoked.
      * @return  Whether an @c AVSDirective from m_handlingQueue was processed.
      */
     bool handleDirectiveLocked(std::unique_lock<std::mutex>& lock);
 
     /**
+     * Set the current @c dialogRequestId. This cancels the processing of any @c AVSDirectives with a non-empty
+     * dialogRequestId.
+     * @note This method must only be called by threads that have acquired @c m_mutex.
+     *
+     * @param dialogRequestId The new value for the current @c dialogRequestId.
+     */
+    void setDialogRequestIdLocked(const std::string& dialogRequestId);
+
+    /**
+     * Cancel the processing any @c AVSDirective with the specified dialogRequestId, and clear the m_dialogRequestID
+     * if it matches the specified dialogRequestId.
+     * @note This method must only be called by threads that have acquired @c m_mutex.
+     *
+     * @param dialogRequestId The dialogRequestId to scrub from processing.
+     */
+    void scrubDialogRequestIdLocked(const std::string& dialogRequestId);
+
+    /**
      * Move all the directives being handled or queued for handling to @c m_cancelingQueue. Also reset the
      * current @c dialogRequestId.
+     * @note This method must only be called by threads that have acquired @c m_mutex.
      */
     void queueAllDirectivesForCancellationLocked();
 

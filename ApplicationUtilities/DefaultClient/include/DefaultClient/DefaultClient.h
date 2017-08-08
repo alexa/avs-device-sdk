@@ -25,11 +25,13 @@
 #include <AIP/AudioProvider.h>
 #include <Alerts/AlertsCapabilityAgent.h>
 #include <Alerts/Storage/AlertStorageInterface.h>
+#include <AudioPlayer/AudioPlayer.h>
 #include <AVSCommon/AVS/DialogUXStateAggregator.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
+#include <System/StateSynchronizer.h>
 
 namespace alexaClientSDK {
 namespace defaultClient {
@@ -48,6 +50,7 @@ public:
      * connect() after creation.
      * 
      * @param speakMediaPlayer The media player to use to play Alexa speech from.
+     * @param audioMediaPlayer The media player to use to play Alexa audio content from.
      * @param alertsMediaPlayer The media player to use to play alerts from.
      * @param authDelegate The component that provides the client with valid LWA authorization.
      * @Param alertStorage The storage interface that will be used to store alerts.
@@ -62,6 +65,7 @@ public:
      */
     static std::unique_ptr<DefaultClient> create(
             std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
+            std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
             std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
             std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
             std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
@@ -181,6 +185,7 @@ private:
      * Initializes the SDK and "glues" all the components together.
      * 
      * @param speakMediaPlayer The media player to use to play Alexa speech from.
+     * @param audioMediaPlayer The media player to use to play Alexa audio content from.
      * @param alertsMediaPlayer The media player to use to play alerts from.
      * @param authDelegate The component that provides the client with valid LWA authorization.
      * @Param alertStorage The storage interface that will be used to store alerts.
@@ -191,6 +196,7 @@ private:
      */
     bool initialize(
             std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
+            std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
             std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
             std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
             std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
@@ -211,11 +217,17 @@ private:
     /// The audio input processor.
     std::shared_ptr<capabilityAgents::aip::AudioInputProcessor> m_audioInputProcessor;
 
+    /// The audio player.
+    std::shared_ptr<capabilityAgents::audioPlayer::AudioPlayer> m_audioPlayer;
+
     /// The alerts capability agent.
     std::shared_ptr<capabilityAgents::alerts::AlertsCapabilityAgent> m_alertsCapabilityAgent;
 
     /// The Alexa dialog UX aggregator.
     std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> m_dialogUXStateAggregator;
+
+    /// The state synchronizer.
+    std::shared_ptr<capabilityAgents::system::StateSynchronizer> m_stateSynchronizer;
 };
 
 } // namespace defaultClient

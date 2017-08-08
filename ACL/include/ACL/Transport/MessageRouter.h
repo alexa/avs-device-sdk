@@ -69,7 +69,8 @@ public:
 
     ConnectionStatus getConnectionStatus() override;
 
-    void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
+    // TODO: ACSDK-421: Revert this to use send().
+    void sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
 
     void setAVSEndpoint(const std::string& avsEndpoint) override;
 

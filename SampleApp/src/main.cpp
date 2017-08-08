@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <cctype>
 #include <iostream>
 #include <fstream>
 
@@ -56,6 +58,33 @@ static const float KITT_AI_AUDIO_GAIN = 2.0;
 static const bool KITT_AI_APPLY_FRONT_END_PROCESSING = true;
 #endif
 
+/// A set of all log levels.
+static const std::set<alexaClientSDK::avsCommon::utils::logger::Level> allLevels = {
+        alexaClientSDK::avsCommon::utils::logger::Level::DEBUG9,
+        alexaClientSDK::avsCommon::utils::logger::Level::DEBUG8,
+        alexaClientSDK::avsCommon::utils::logger::Level::DEBUG7,
+        alexaClientSDK::avsCommon::utils::logger::Level::DEBUG6,
+        alexaClientSDK::avsCommon::utils::logger::Level::DEBUG5,
+        alexaClientSDK::avsCommon::utils::logger::Level::DEBUG4,
+        alexaClientSDK::avsCommon::utils::logger::Level::DEBUG3,
+        alexaClientSDK::avsCommon::utils::logger::Level::DEBUG2,
+        alexaClientSDK::avsCommon::utils::logger::Level::DEBUG1,
+        alexaClientSDK::avsCommon::utils::logger::Level::DEBUG0,
+        alexaClientSDK::avsCommon::utils::logger::Level::INFO,
+        alexaClientSDK::avsCommon::utils::logger::Level::WARN,
+        alexaClientSDK::avsCommon::utils::logger::Level::ERROR,
+        alexaClientSDK::avsCommon::utils::logger::Level::CRITICAL,
+        alexaClientSDK::avsCommon::utils::logger::Level::NONE
+};
+
+/**
+ * Gets a log level consumable by the SDK based on the user input string for log level.
+ *
+ * @param userInputLogLevel The string to be parsed into a log level.
+ * @return The log level. This will default to NONE if the input string is not properly parsable.
+ */
+alexaClientSDK::avsCommon::utils::logger::Level getLogLevelFromUserInput(std::string userInputLogLevel);
+
 /**
  * This serves as the starting point for the application. The main activities here are setting up authorization, an
  * output media player, input audio streams, and the DefaultClient.
@@ -63,20 +92,31 @@ static const bool KITT_AI_APPLY_FRONT_END_PROCESSING = true;
 int main(int argc, char **argv) {
     std::string pathToConfig;
     std::string pathToInputFolder;
+    alexaClientSDK::avsCommon::utils::logger::Level logLevel = alexaClientSDK::avsCommon::utils::logger::Level::NONE;
 
 #if defined(KWD_KITTAI) || defined(KWD_SENSORY)
     if (argc < 3) {
         alexaClientSDK::sampleApp::ConsolePrinter::simplePrint(
-                "USAGE: ./SampleApp <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder>");
+                "USAGE: " + 
+                std::string(argv[0]) + 
+                " <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder> [log_level]");
         return EXIT_FAILURE;
     } else {
         pathToInputFolder = std::string(argv[2]);
+        if (4 == argc) {
+            std::string inputLogLevel = std::string(argv[3]);
+            logLevel = getLogLevelFromUserInput(inputLogLevel);
+        }
     }
 #else
     if (argc < 2) {
         alexaClientSDK::sampleApp::ConsolePrinter::simplePrint(
-                "USAGE: ./SampleApp <path_to_AlexaClientSDKConfig.json>");
+                "USAGE: " + std::string(argv[0]) + " <path_to_AlexaClientSDKConfig.json> [log_level]");
         return EXIT_FAILURE;
+    }
+    if (3 == argc) {
+        std::string inputLogLevel = std::string(argv[2]);
+        logLevel = getLogLevelFromUserInput(inputLogLevel);
     }
 #endif
 
@@ -96,10 +136,24 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
+    if (alexaClientSDK::avsCommon::utils::logger::Level::UNKNOWN == logLevel) {
+        alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Unknown log level input!");
+        alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Possible log level options are: ");
+        for (auto it = allLevels.begin(); 
+                it != allLevels.end(); 
+                ++it) {
+            alexaClientSDK::sampleApp::ConsolePrinter::simplePrint(
+                    alexaClientSDK::avsCommon::utils::logger::convertLevelToName(*it)
+            );
+        }
+        return EXIT_FAILURE;
+    }
+
     // TODO: ACSDK-362/386 Find a way to log and print output at the same time that the messages don't get scrambled up
     // Setting logging to none so that the application may print its own output.
-    alexaClientSDK::avsCommon::utils::logger::ConsoleLogger::instance().setLevel(
-            alexaClientSDK::avsCommon::utils::logger::Level::NONE);
+    alexaClientSDK::sampleApp::ConsolePrinter::simplePrint(
+            "Running app with log level: " + alexaClientSDK::avsCommon::utils::logger::convertLevelToName(logLevel));
+    alexaClientSDK::avsCommon::utils::logger::ConsoleLogger::instance().setLevel(logLevel);
 
     /*
      * Creating the media players. Here, the default GStreamer based MediaPlayer is being created. However, any
@@ -107,7 +161,13 @@ int main(int argc, char **argv) {
      */
     auto speakMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create();
     if (!speakMediaPlayer) {
-        alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Failed to create media player!");
+        alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Failed to create media player for speech!");
+        return EXIT_FAILURE;
+    }
+
+    auto audioMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create();
+    if (!audioMediaPlayer) {
+        alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Failed to create media player for content!");
         return EXIT_FAILURE;
     }
 
@@ -147,6 +207,7 @@ int main(int argc, char **argv) {
     std::shared_ptr<alexaClientSDK::defaultClient::DefaultClient> client = 
             alexaClientSDK::defaultClient::DefaultClient::create(
                     speakMediaPlayer, 
+                    audioMediaPlayer, 
                     alertsMediaPlayer,
                     authDelegate, 
                     alertStorage,
@@ -230,6 +291,9 @@ int main(int argc, char **argv) {
 
     std::shared_ptr<alexaClientSDK::sampleApp::PortAudioMicrophoneWrapper> micWrapper = 
             alexaClientSDK::sampleApp::PortAudioMicrophoneWrapper::create(sharedDataStream);
+    if (!micWrapper) {
+        return EXIT_FAILURE;
+    }
 
     // Creating wake word audio provider, if necessary
 #ifdef KWD
@@ -287,11 +351,6 @@ int main(int argc, char **argv) {
             holdToTalkAudioProvider, 
             tapToTalkAudioProvider);
 #endif
-    /*
-     * Adding the interaction manager as an dialog state observer here so that it may know when to stop streaming
-     * microphone data, specifically for tap to talk interactions.
-     */
-    client->addAlexaDialogStateObserver(interactionManager);
 
     // Creating the input observer and running it.
     auto inputManager = alexaClientSDK::sampleApp::UserInputManager::create(interactionManager);
@@ -304,4 +363,9 @@ int main(int argc, char **argv) {
     inputManager->run();
 
     return EXIT_SUCCESS;
+}
+
+alexaClientSDK::avsCommon::utils::logger::Level getLogLevelFromUserInput(std::string userInputLogLevel) {
+    std::transform(userInputLogLevel.begin(), userInputLogLevel.end(), userInputLogLevel.begin(), ::toupper);
+    return alexaClientSDK::avsCommon::utils::logger::convertNameToLevel(userInputLogLevel);
 }

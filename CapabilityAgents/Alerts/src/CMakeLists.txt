@@ -1,3 +1,5 @@
+add_definitions("-DACSDK_LOG_MODULE=alerts")
+
 add_library(Alerts SHARED
         Renderer/Renderer.cpp
         Storage/SQLiteAlertStorage.cpp

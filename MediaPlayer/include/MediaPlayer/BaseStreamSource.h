@@ -42,6 +42,10 @@ public:
     
     ~BaseStreamSource() override;
 
+    bool hasAdditionalData() override;
+    bool handleEndOfStream() override;
+    void preprocess() override;
+
 protected:
     /**
      * Initializes a source. Creates all the necessary pipeline elements such that audio output from the final
@@ -159,6 +163,21 @@ private:
 
     /// Function to invoke on the worker thread thread when there is enough data.
     const std::function<gboolean()> m_handleEnoughDataFunction;
+
+    /// ID of the handler installed to receive need data signals.
+    guint m_needDataHandlerId;
+
+    /// ID of the handler installed to receive enough data signals.
+    guint m_enoughDataHandlerId;
+
+    /// Mutex to serialize access to idle callback IDs.
+    std::mutex m_callbackIdMutex;
+
+    /// ID of idle callback to handle need data.
+    guint m_needDataCallbackId;
+
+    /// ID of idle callback to handle enough data.
+    guint m_enoughDataCallbackId;
 };
 
 } // namespace mediaPlayer

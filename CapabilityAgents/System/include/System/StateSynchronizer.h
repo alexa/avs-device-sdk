@@ -19,12 +19,16 @@
 #define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_SYSTEM_INCLUDE_SYSTEM_STATE_SYNCHRONIZER_H_
 
 #include <memory>
+#include <mutex>
 #include <string>
+#include <unordered_set>
 
+#include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextRequesterInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/StateSynchronizerObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -35,6 +39,9 @@ class StateSynchronizer :
     public avsCommon::sdkInterfaces::ContextRequesterInterface,
     public std::enable_shared_from_this<StateSynchronizer> {
 public:
+    /// Alias for @c StateSynchronizerObserverInterface for brevity.
+    using ObserverInterface = avsCommon::sdkInterfaces::StateSynchronizerObserverInterface;
+
     /**
      * Create an instance of StateSynchronizer.
      *
@@ -58,6 +65,37 @@ public:
     void onContextAvailable(const std::string& jsonContext) override;
     void onContextFailure(const avsCommon::sdkInterfaces::ContextRequestError error) override;
     /// @}
+
+    /**
+     * Add a @c StateSynchronizerObserverInterface to be notified.
+     *
+     * @param observer The @c StateSynchronizerObserverInterface to be added
+     * @note The added observer (if it's not added before) will immediately get @c onStateChanged callback with the
+     * current state of @c StateSynchronizer.
+     */
+    void addObserver(std::shared_ptr<ObserverInterface> observer);
+
+    /**
+     * Remove a @c StateSynchronizerObserverInterface from the list of notifiers.
+     *
+     * @param observer The @c StateSynchronizerObserverInterface to be removed.
+     */
+    void removeObserver(std::shared_ptr<ObserverInterface> observer);
+
+    /**
+     * Manage completion of event being sent.
+     *
+     * @param messageStatus The status of submitted @c MessageRequest.
+     */
+    void messageSent(avsCommon::avs::MessageRequest::Status messageStatus);
+
+    /**
+     * Shutdown sequence for the instance.
+     *
+     * Performing all cleanup operations to prepare the object for destruction.  This function must be called prior to
+     * destruction to properly clean up the instance.
+     */
+    void shutdown();
 private:
     /**
      * Constructor.
@@ -69,11 +107,29 @@ private:
             std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
             std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender);
 
+    /**
+     * Notify the observers. This function uses @c m_state and therefore should be called when its mutex,
+     * @c m_stateMutex is locked.
+     */
+    void notifyObserversLocked();
+
     /// The @c MessageSenderInterface used to send event messages.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
 
     /// The @c ContextManager used to generate system context for events.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
+
+    /// The set of @c StateSynchronizerObserverInterface objects that will be notified upon synchronization.
+    std::unordered_set<std::shared_ptr<ObserverInterface>> m_observers;
+
+    /// The mutex to synchronize access to @c m_observers.
+    std::mutex m_observerMutex;
+
+    /// The current state of @c StateSynchronizer.
+    ObserverInterface::State m_state;
+
+    /// The mutex to synchronize access to @c m_state.
+    std::mutex m_stateMutex;
 };
 
 

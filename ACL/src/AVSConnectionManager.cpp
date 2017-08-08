@@ -43,16 +43,33 @@ AVSConnectionManager::create(std::shared_ptr<MessageRouterInterface> messageRout
         std::unordered_set<std::shared_ptr<ConnectionStatusObserverInterface>> connectionStatusObservers,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>> messageObservers) {
     if (!avsCommon::avs::initialization::AlexaClientSDKInit::isInitialized()) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "uninitialziedAlexaClientSdk").d("return", "nullPtr"));
+        ACSDK_ERROR(LX("createFailed").d("reason", "uninitialziedAlexaClientSdk").d("return", "nullptr"));
         return nullptr;
+    }
+
+    if (!messageRouter) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullMessageRouter").d("return", "nullptr"));
+        return nullptr;
+    }
+
+    for (auto observer : connectionStatusObservers) {
+        if (!observer) {
+            ACSDK_ERROR(LX("createFailed").d("reason", "nullConnectionStatusObserver").d("return", "nullptr"));
+            return nullptr;
+        }
+    }
+
+    for(auto observer : messageObservers) {
+        if (!observer) {
+            ACSDK_ERROR(LX("createFailed").d("reason", "nullMessageObserver").d("return", "nullptr"));
+            return nullptr;
+        }
     }
 
     auto connectionManager = std::shared_ptr<AVSConnectionManager>(
             new AVSConnectionManager(messageRouter, connectionStatusObservers, messageObservers));
 
-    if (messageRouter) {
-        messageRouter->setObserver(connectionManager);
-    }
+    messageRouter->setObserver(connectionManager);
 
     if (isEnabled) {
         connectionManager->enable();
@@ -66,6 +83,7 @@ AVSConnectionManager::AVSConnectionManager(
         std::unordered_set<std::shared_ptr<ConnectionStatusObserverInterface>> connectionStatusObservers,
         std::unordered_set<std::shared_ptr<MessageObserverInterface>> messageObservers)
         : m_isEnabled{false},
+          m_isSynchronized{false},
           m_connectionStatusObservers{connectionStatusObservers},
           m_messageObservers{messageObservers},
           m_messageRouter{messageRouter} {
@@ -93,7 +111,13 @@ void AVSConnectionManager::reconnect() {
 }
 
 void AVSConnectionManager::sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) {
-    m_messageRouter->send(request);
+    // TODO: ACSDK-421: Implement synchronized state check at a lower level.
+    if (m_isSynchronized) {
+        m_messageRouter->sendMessage(request);
+    } else {
+        ACSDK_DEBUG(LX("sendMessageNotSuccessful").d("reason", "notSynchronized"));
+        request->onSendCompleted(avsCommon::avs::MessageRequest::Status::NOT_SYNCHRONIZED);
+    }
 }
 
 bool AVSConnectionManager::isConnected() const {
@@ -165,6 +189,10 @@ void AVSConnectionManager::onConnectionStatusChanged(
     for (auto observer : observers) {
         observer->onConnectionStatusChanged(status, reason);
     }
+}
+
+void AVSConnectionManager::onStateChanged(StateSynchronizerObserverInterface::State newState) {
+    m_isSynchronized = (StateSynchronizerObserverInterface::State::SYNCHRONIZED == newState);
 }
 
 void AVSConnectionManager::receive(const std::string & contextId, const std::string & message) {

@@ -28,6 +28,7 @@ using namespace alexaClientSDK::avsCommon::utils;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 
+
 /// String to identify log entries originating from this file.
 static const std::string TAG("HTTP2Stream");
 
@@ -209,20 +210,24 @@ bool HTTP2Stream::initPost(const std::string& url, const std::string& authToken,
     }
 
     if (!m_transfer.setPostContent(METADATA_FIELD_NAME, requestPayload)) {
+        ACSDK_ERROR(LX("initPostFailed").d("reason", "setPostContentFailed"));
         return false;
     }
 
     if (!m_transfer.setReadCallback(HTTP2Stream::readCallback, this)) {
+        ACSDK_ERROR(LX("initPostFailed").d("reason", "setReadCallbackFailed"));
         return false;
     }
 
     if (request->getAttachmentReader()) {
         if (!m_transfer.setPostStream(ATTACHMENT_FIELD_NAME, this)) {
+            ACSDK_ERROR(LX("initPostFailed").d("reason", "setPostStreamFailed"));
             return false;
         }
     }
 
     if (!m_transfer.setTransferType(CurlEasyHandleWrapper::TransferType::kPOST)) {
+        ACSDK_ERROR(LX("initPostFailed").d("reason", "setTransferTypeFailed"));
         return false;
     }
 
@@ -262,6 +267,10 @@ size_t HTTP2Stream::writeCallback(char *data, size_t size, size_t nmemb, void *u
 }
 
 size_t HTTP2Stream::headerCallback(char *data, size_t size, size_t nmemb, void *user) {
+    if (!user) {
+        ACSDK_ERROR(LX("headerCallbackFailed").d("reason","nullUser"));
+        return 0;
+    }
     size_t headerLength = size * nmemb;
     std::string header(data, headerLength);
 #ifdef DEBUG
@@ -285,9 +294,14 @@ size_t HTTP2Stream::headerCallback(char *data, size_t size, size_t nmemb, void *
 }
 
 size_t HTTP2Stream::readCallback(char *data, size_t size, size_t nmemb, void *userData) {
-    HTTP2Stream *stream = static_cast<HTTP2Stream*>(userData);
-    stream->m_timeOfLastTransfer = getNow();
+    if (!userData) {
+        ACSDK_ERROR(LX("readCallbackFailed").d("reason","nullUserData"));
+        return 0;
+    }
 
+    HTTP2Stream *stream = static_cast<HTTP2Stream*>(userData);
+
+    stream->m_timeOfLastTransfer = getNow();
     auto attachmentReader = stream->m_currentRequest->getAttachmentReader();
 
     // This is ok - it means there's no attachment to send.  Return 0 so libcurl can complete the stream to AVS.
@@ -301,7 +315,6 @@ size_t HTTP2Stream::readCallback(char *data, size_t size, size_t nmemb, void *us
     auto bytesRead = attachmentReader->read(data, maxBytesToRead, &readStatus);
 
     switch (readStatus) {
-
         // The good cases.
         case AttachmentReader::ReadStatus::OK:
         case AttachmentReader::ReadStatus::OK_WOULDBLOCK:
@@ -318,7 +331,6 @@ size_t HTTP2Stream::readCallback(char *data, size_t size, size_t nmemb, void *us
         case AttachmentReader::ReadStatus::ERROR_INTERNAL:
             return CURL_READFUNC_ABORT;
     }
-
     // The attachment has no more data right now, but is still readable.
     if (0 == bytesRead) {
         stream->setPaused(true);

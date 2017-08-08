@@ -18,7 +18,7 @@
 #include "SampleApp/UserInputManager.h"
 #include "SampleApp/ConsolePrinter.h"
 
-#include <string>
+#include <cctype>
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -50,6 +50,7 @@ void UserInputManager::run() {
     while(true) {
         char x;
         std::cin >> x;
+        x = ::tolower(x);
         if (x == QUIT) {
             return;
         } else if (x == INFO) {

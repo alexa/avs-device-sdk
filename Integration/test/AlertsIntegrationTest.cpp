@@ -58,6 +58,7 @@
 #include "Integration/TestSpeechSynthesizerObserver.h"
 #include "SpeechSynthesizer/SpeechSynthesizer.h"
 #include "System/StateSynchronizer.h"
+#include "System/UserInactivityMonitor.h"
 
 #ifdef GSTREAMER_MEDIA_PLAYER
 #include "MediaPlayer/MediaPlayer.h"
@@ -137,7 +138,7 @@ static const std::string CONTENT_ACTIVITY_ID = "Content";
 /// Sample alerts activity id.
 static const std::string ALERTS_ACTIVITY_ID = "Alerts";
 // This Integer to be used to specify a timeout in seconds.
-static const std::chrono::seconds WAIT_FOR_TIMEOUT_DURATION(15);
+static const std::chrono::seconds WAIT_FOR_TIMEOUT_DURATION(20);
 /// The compatible encoding for AIP.
 static const avsCommon::utils::AudioFormat::Encoding COMPATIBLE_ENCODING = 
         avsCommon::utils::AudioFormat::Encoding::LPCM;
@@ -180,6 +181,34 @@ static const std::string TAG("AlertsIntegrationTest");
 
 std::string configPath;
 std::string inputPath;
+
+/// A test observer to wait for state synchronizer.
+class TestStateSynchronizerObserver : public StateSynchronizerObserverInterface {
+public:
+    TestStateSynchronizerObserver() : m_state{State::NOT_SYNCHRONIZED} {}
+    void onStateChanged(State newState) override {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_state = newState;
+        m_conditionVariable.notify_all();
+    }
+
+    /**
+     * Wait the state sychronizer to notify us of a state change to the specified state.
+     *
+     * @param state The state to wait for.
+     * @param timeout The amount of time to wait for the requested state change.
+     * @return @c true if the state change occured within the specified timeout, else @c false.
+     */
+    bool waitForState(State state, std::chrono::milliseconds timeout) {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        return m_conditionVariable.wait_for(lock, timeout, [this, state] () { return state == m_state; });
+    }
+
+private:
+    State m_state;
+    std::mutex m_mutex;
+    std::condition_variable m_conditionVariable;
+};
 
 /// A test observer that mocks out the ChannelObserverInterface##onFocusChanged() call.
 class TestClient : public ChannelObserverInterface {
@@ -287,7 +316,7 @@ protected:
         m_focusManager = std::make_shared<FocusManager>();
         m_testContentClient = std::make_shared<TestClient>();
         ASSERT_TRUE(m_focusManager->acquireChannel(FocusManager::CONTENT_CHANNEL_NAME, m_testContentClient, CONTENT_ACTIVITY_ID));
-        bool focusChanged;
+        bool focusChanged = false; 
         ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::FOREGROUND);
         ASSERT_TRUE(focusChanged);
 
@@ -330,13 +359,17 @@ protected:
 
         m_holdToTalkButton = std::make_shared<holdToTalkButton>();
 
-         m_AudioInputProcessor = AudioInputProcessor::create(
+        m_userInactivityMonitor = UserInactivityMonitor::create(
+                m_avsConnectionManager,
+                m_exceptionEncounteredSender);
+        m_AudioInputProcessor = AudioInputProcessor::create(
             m_directiveSequencer,
             m_avsConnectionManager,
             m_contextManager,
             m_focusManager,
             m_dialogUXStateAggregator,
-            m_exceptionEncounteredSender
+            m_exceptionEncounteredSender,
+            m_userInactivityMonitor
         );
         ASSERT_NE (nullptr, m_AudioInputProcessor);
         m_AudioInputProcessor->addObserver(m_dialogUXStateAggregator);
@@ -373,19 +406,28 @@ protected:
             m_alertRenderer,
             m_alertStorage,
             m_alertObserver);
+        ASSERT_NE(m_alertsAgent, nullptr);
         m_alertsAgent->onLocalStop();
         m_alertsAgent->removeAllAlerts();
         m_directiveSequencer->addDirectiveHandler(m_alertsAgent);
 
         m_avsConnectionManager->addConnectionStatusObserver(m_alertsAgent);
 
+        // TODO: ACSDK-421: Revert this to use m_connectionManager rather than m_messageRouter.
         m_stateSynchronizer = StateSynchronizer::create(
             m_contextManager,
-            m_avsConnectionManager);
+            m_messageRouter);
         ASSERT_NE(nullptr, m_stateSynchronizer);
+
+        auto stateSynchronizerObserver = std::make_shared<TestStateSynchronizerObserver>();
+        m_stateSynchronizer->addObserver(stateSynchronizerObserver);
+
         m_avsConnectionManager->addConnectionStatusObserver(m_stateSynchronizer);
 
         connect();
+        ASSERT_TRUE(stateSynchronizerObserver->waitForState(
+                StateSynchronizerObserverInterface::State::SYNCHRONIZED,
+                WAIT_FOR_TIMEOUT_DURATION));
 
         m_alertsAgent->enableSendEvents();
     }
@@ -488,7 +530,7 @@ protected:
         ASSERT_TRUE(m_holdToTalkButton->startRecognizing(m_AudioInputProcessor, m_HoldToTalkAudioProvider));
 
         // Put audio onto the SDS saying "Tell me a joke".
-        bool error;
+        bool error = false;
         std::string file = inputPath + audioFile;
         std::vector<int16_t> audioData = readAudioFromFile(file, &error);
         ASSERT_FALSE(error);
@@ -527,6 +569,7 @@ protected:
     std::unique_ptr<AudioInputStream::Writer> m_AudioBufferWriter;
     std::shared_ptr<AudioInputStream> m_AudioBuffer;
     std::shared_ptr<AudioInputProcessor> m_AudioInputProcessor;
+    std::shared_ptr<UserInactivityMonitor> m_userInactivityMonitor;
 
     FocusState m_focusState;
     std::mutex m_mutex;
@@ -550,9 +593,6 @@ protected:
  * Set a 5 second timer, ensure it goes off, then use local stop and make sure the timer is stopped. 
  */
 TEST_F(AlertsTest, handleOneTimerWithLocalStop) {
-    TestMessageSender::SendParams sendSyncParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendSyncParams, NAME_SYNC_STATE));
-
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -575,15 +615,14 @@ TEST_F(AlertsTest, handleOneTimerWithLocalStop) {
     ASSERT_EQ(m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state, AlertObserverInterface::State::STARTED);
 
     // The test channel client has been notified the content channel has been backgrounded.
-    bool focusChanged; 
+    bool focusChanged = false; 
     ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
     ASSERT_TRUE(focusChanged); 
 
     // Locally stop the alarm.
     m_alertsAgent->onLocalStop();
 
-    // This step removed as a workaround for our gstreamer implementation behaving incorrectly.
-    //ASSERT_EQ(m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state, AlertObserverInterface::State::STOPPED);
+    ASSERT_EQ(m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state, AlertObserverInterface::State::STOPPED);
 
     // AlertStopped Event is sent.
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -600,16 +639,13 @@ TEST_F(AlertsTest, handleOneTimerWithLocalStop) {
  * Set two second timer, ensure they go off, then stop both timers.
  */
 TEST_F(AlertsTest, handleMultipleTimersWithLocalStop) {
-    TestMessageSender::SendParams sendSyncParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendSyncParams, NAME_SYNC_STATE));
-
     // Write audio to SDS saying "Set a timer for 15 seconds".
     sendAudioFileAsRecognize(RECOGNIZE_VERY_LONG_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendParams, NAME_RECOGNIZE));
 
     // The test channel client has been notified the content channel has been backgrounded.
-    bool focusChanged; 
+    bool focusChanged = false; 
     ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
     ASSERT_TRUE(focusChanged); 
 
@@ -672,7 +708,7 @@ TEST_F(AlertsTest, handleMultipleTimersWithLocalStop) {
     ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
     ASSERT_TRUE(focusChanged);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(600));
 
     // Locally stop the second alarm.
     m_alertsAgent->onLocalStop();
@@ -693,9 +729,6 @@ TEST_F(AlertsTest, handleMultipleTimersWithLocalStop) {
  * stopped. 
  */
 TEST_F(AlertsTest, stealChannelFromActiveAlert) {
-    TestMessageSender::SendParams sendSyncParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendSyncParams, NAME_SYNC_STATE));
-
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -717,7 +750,7 @@ TEST_F(AlertsTest, stealChannelFromActiveAlert) {
     ASSERT_EQ(m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state, AlertObserverInterface::State::STARTED);
 
     // The test channel client has been notified the content channel has been backgrounded.
-    bool focusChanged; 
+    bool focusChanged = false; 
     ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
     ASSERT_TRUE(focusChanged); 
 
@@ -728,8 +761,7 @@ TEST_F(AlertsTest, stealChannelFromActiveAlert) {
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STOPPED));
 
-    // This step removed as a workaround for our gstreamer implementation behaving incorrectly.
-    //ASSERT_EQ(m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state, AlertObserverInterface::State::STOPPED);
+    ASSERT_EQ(m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state, AlertObserverInterface::State::STOPPED);
 
     // Release the alerts channel.
     m_focusManager->releaseChannel(FocusManager::ALERTS_CHANNEL_NAME, m_testDialogClient);
@@ -746,9 +778,6 @@ TEST_F(AlertsTest, stealChannelFromActiveAlert) {
  * Locally stop the alert and ensure AlertStopped is sent. 
  */
 TEST_F(AlertsTest, DisconnectAndReconnectBeforeLocalStop) {
-    TestMessageSender::SendParams sendSyncParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendSyncParams, NAME_SYNC_STATE));
-
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -770,14 +799,11 @@ TEST_F(AlertsTest, DisconnectAndReconnectBeforeLocalStop) {
     std::this_thread::sleep_for(std::chrono::milliseconds(6000));
 
     // The test channel client has been notified the content channel has been backgrounded.
-    bool focusChanged; 
+    bool focusChanged = false; 
     ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
     ASSERT_TRUE(focusChanged); 
 
     connect();
-
-    sendSyncParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendSyncParams, NAME_SYNC_STATE));
 
     // Locally stop the alarm.
     m_alertsAgent->onLocalStop();
@@ -801,9 +827,6 @@ TEST_F(AlertsTest, DisconnectAndReconnectBeforeLocalStop) {
  * and ensure AlertStopped is sent. 
  */
 TEST_F(AlertsTest, DisconnectAndReconnect) {
-    TestMessageSender::SendParams sendSyncParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendSyncParams, NAME_SYNC_STATE));
-
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -824,17 +847,15 @@ TEST_F(AlertsTest, DisconnectAndReconnect) {
     std::this_thread::sleep_for(std::chrono::milliseconds(6000));
 
     // The test channel client has been notified the content channel has been backgrounded.
-    bool focusChanged; 
-    ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
-    ASSERT_TRUE(focusChanged); 
+    bool focusChanged = false; 
+
+    EXPECT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
+    EXPECT_TRUE(focusChanged); 
 
     // Locally stop the alarm.
     m_alertsAgent->onLocalStop();
 
     connect();
-
-    sendSyncParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendSyncParams, NAME_SYNC_STATE));
 
     //AlertStopped Event is sent.
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -852,14 +873,11 @@ TEST_F(AlertsTest, DisconnectAndReconnect) {
  * events are sent for it. 
  */
 TEST_F(AlertsTest, RemoveAllAlertsBeforeAlertIsActive) {
-    TestMessageSender::SendParams sendSyncParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendSyncParams, NAME_SYNC_STATE));
-
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendParams, NAME_RECOGNIZE));
-    bool focusChanged; 
+    bool focusChanged = false; 
     ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
     ASSERT_TRUE(focusChanged);
     ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::FOREGROUND);
@@ -899,9 +917,6 @@ TEST_F(AlertsTest, RemoveAllAlertsBeforeAlertIsActive) {
  * and the DeleteAlertSucceeded event is sent. 
  */
 TEST_F(AlertsTest, cancelAlertBeforeItIsActive) {
-    TestMessageSender::SendParams sendSyncParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendSyncParams, NAME_SYNC_STATE));
-
     // Write audio to SDS saying "Set a timer for 10 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_LONG_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -927,10 +942,6 @@ TEST_F(AlertsTest, cancelAlertBeforeItIsActive) {
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendParams, NAME_DELETE_ALERT_SUCCEEDED));
 
-    bool focusChanged; 
-    ASSERT_NE(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
-    ASSERT_TRUE(focusChanged);
-
     // Speech is handled. 
     sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendStartedParams, NAME_SPEECH_STARTED));
@@ -938,10 +949,13 @@ TEST_F(AlertsTest, cancelAlertBeforeItIsActive) {
     ASSERT_TRUE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED));
 
     // Low priority Test client gets back permission to the test channel.
+    bool focusChanged = false; 
     ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::FOREGROUND);
-    ASSERT_TRUE(focusChanged);
 
-    // AlertStarted Event is sent.
+    m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged);
+    ASSERT_FALSE(focusChanged);
+
+    // AlertStarted Event is not sent.
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_FALSE(checkSentEventName(sendParams, NAME_ALERT_STARTED));
 }
@@ -953,8 +967,6 @@ TEST_F(AlertsTest, cancelAlertBeforeItIsActive) {
  */
 TEST_F(AlertsTest, RemoveStorageBeforeAlarmIsSet) {
     m_alertStorage->close();
-    TestMessageSender::SendParams sendSyncParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendSyncParams, NAME_SYNC_STATE));
 
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_LONG_TIMER_AUDIO_FILE_NAME);
@@ -967,7 +979,7 @@ TEST_F(AlertsTest, RemoveStorageBeforeAlarmIsSet) {
     TestMessageSender::SendParams sendFinishedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED));
     
-    bool focusChanged; 
+    bool focusChanged = false; 
     ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::FOREGROUND);
     ASSERT_TRUE(focusChanged);
 
@@ -986,8 +998,6 @@ TEST_F(AlertsTest, RemoveStorageBeforeAlarmIsSet) {
     ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::FOREGROUND);
     ASSERT_TRUE(focusChanged);
 
-    m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged);
-    ASSERT_FALSE(focusChanged);
 }
 
 /**
@@ -997,9 +1007,6 @@ TEST_F(AlertsTest, RemoveStorageBeforeAlarmIsSet) {
  * the background. When the speak is complete, the alert is forgrounded and can be locally stopped. 
  */
 TEST_F(AlertsTest, UserShortUnrelatedBargeInOnActiveTimer) {
-    TestMessageSender::SendParams sendSyncParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendSyncParams, NAME_SYNC_STATE));
-
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -1020,7 +1027,7 @@ TEST_F(AlertsTest, UserShortUnrelatedBargeInOnActiveTimer) {
     ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STARTED));
 
     // The test channel client has been notified the content channel has been backgrounded.
-    bool focusChanged;
+    bool focusChanged = false; 
     ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
     ASSERT_TRUE(focusChanged);
 
@@ -1042,19 +1049,19 @@ TEST_F(AlertsTest, UserShortUnrelatedBargeInOnActiveTimer) {
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_ENTERED_FOREGROUND));
 
+    std::this_thread::sleep_for(std::chrono::milliseconds(600));
+
     // Locally stop the alarm.
     m_alertsAgent->onLocalStop();
 
     // AlertStopped Event is sent.
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STOPPED));
+    EXPECT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STOPPED));
 
     // Low priority Test client gets back permission to the test channel 
     EXPECT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::FOREGROUND);
     EXPECT_TRUE(focusChanged);
 
-    m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged);
-    ASSERT_FALSE(focusChanged);
 }
 
 /**
@@ -1064,9 +1071,6 @@ TEST_F(AlertsTest, UserShortUnrelatedBargeInOnActiveTimer) {
  * the background. When all the speaks are complete, the alert is forgrounded and can be locally stopped. 
  */
 TEST_F(AlertsTest, UserLongUnrelatedBargeInOnActiveTimer) {
-    TestMessageSender::SendParams sendSyncParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendSyncParams, NAME_SYNC_STATE));
-
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -1090,7 +1094,7 @@ TEST_F(AlertsTest, UserLongUnrelatedBargeInOnActiveTimer) {
     ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STARTED));
 
     // The test channel client has been notified the content channel has been backgrounded.
-    bool focusChanged; 
+    bool focusChanged = false; 
     ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
     ASSERT_TRUE(focusChanged); 
 
@@ -1108,19 +1112,16 @@ TEST_F(AlertsTest, UserLongUnrelatedBargeInOnActiveTimer) {
         ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_ENTERED_BACKGROUND));
     }
 
-    // sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    // ASSERT_TRUE(checkSentEventName(sendParams, NAME_RECOGNIZE));
-
-    // sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    // ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_ENTERED_BACKGROUND));
-
     // Speech is handled. 
     sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    if (getSentEventName(sendParams) == NAME_ALERT_ENTERED_FOREGROUND) {
+        sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    }
     ASSERT_TRUE(checkSentEventName(sendStartedParams, NAME_SPEECH_STARTED));
     sendFinishedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED));
 
-    // For each speak directive that results from "what's up", the alert losses anf gains foreground. 
+    // For each speak directive that results from "what's up", the alert losses and gains foreground. 
     for (int i = 0; i <4; i++) {
         sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_ENTERED_FOREGROUND));
@@ -1133,14 +1134,10 @@ TEST_F(AlertsTest, UserLongUnrelatedBargeInOnActiveTimer) {
         ASSERT_TRUE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED));
     }
 
+    std::this_thread::sleep_for(std::chrono::milliseconds(600));
+
     // Locally stop the alarm.
     m_alertsAgent->onLocalStop();
-
-    // These steps removed as a workaround for our gstreamer implementation behaving incorrectly.
-    // AlertStopped Event is sent.
-    // sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    //ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STOPPED));
-
 
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     if (getSentEventName(sendParams) == NAME_ALERT_ENTERED_FOREGROUND) {
@@ -1156,8 +1153,6 @@ TEST_F(AlertsTest, UserLongUnrelatedBargeInOnActiveTimer) {
     EXPECT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::FOREGROUND);
     EXPECT_TRUE(focusChanged);
 
-    m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged);
-    ASSERT_FALSE(focusChanged);
 }
 
 /**
@@ -1168,9 +1163,6 @@ TEST_F(AlertsTest, UserLongUnrelatedBargeInOnActiveTimer) {
  * before locally stopping it. 
  */
 TEST_F(AlertsTest, UserSpeakingWhenAlertShouldBeActive) {
-    TestMessageSender::SendParams sendSyncParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendSyncParams, NAME_SYNC_STATE));
-
     // Write audio to SDS saying "Set a timer for 10 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_LONG_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -1186,49 +1178,58 @@ TEST_F(AlertsTest, UserSpeakingWhenAlertShouldBeActive) {
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendParams, NAME_SET_ALERT_SUCCEEDED));
 
-    // Write audio to SDS sying "Weather".
-    sendAudioFileAsRecognize(RECOGNIZE_WEATHER_AUDIO_FILE_NAME);
+    // Signal to the AIP to start recognizing.
+    ASSERT_NE(nullptr, m_HoldToTalkAudioProvider);
+    ASSERT_TRUE(m_holdToTalkButton->startRecognizing(m_AudioInputProcessor, m_HoldToTalkAudioProvider));
 
-    // The test channel client has been notified the content channel has been backgrounded.
-    bool focusChanged; 
-    ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
-    ASSERT_TRUE(focusChanged); 
+    // Put audio onto the SDS saying "Tell me a joke".
+    bool error = false;
+    std::string file = inputPath + RECOGNIZE_WEATHER_AUDIO_FILE_NAME;
+    std::vector<int16_t> audioData = readAudioFromFile(file, &error);
+    ASSERT_FALSE(error);
+    ASSERT_FALSE(audioData.empty());
+    m_AudioBufferWriter->write(audioData.data(), audioData.size());
 
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendParams, NAME_RECOGNIZE));
 
-    // Speech is handled. 
-    sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    EXPECT_TRUE(checkSentEventName(sendStartedParams, NAME_SPEECH_STARTED));
+    // The test channel client has been notified the content channel has been backgrounded.
+    bool focusChanged = false; 
+    ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
+    ASSERT_TRUE(focusChanged); 
 
     // AlertStarted Event is sent.
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    EXPECT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STARTED));
+    ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STARTED));
+
+    // Stop holding the button.
+    ASSERT_TRUE(m_holdToTalkButton->stopRecognizing(m_AudioInputProcessor));
+
+    // Speech is handled. 
+    sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    ASSERT_TRUE(checkSentEventName(sendStartedParams, NAME_SPEECH_STARTED));
 
     sendFinishedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     if(getSentEventName(sendParams) == NAME_SPEECH_FINISHED) {
         sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-        EXPECT_TRUE(checkSentEventName(sendParams, NAME_ALERT_ENTERED_FOREGROUND));
+        ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_ENTERED_FOREGROUND));
     }
     else {
-        EXPECT_TRUE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED));
+        ASSERT_TRUE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED));
     }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(800));
 
     // Locally stop the alarm.
     m_alertsAgent->onLocalStop();
 
-    // These steps removed as a workaround for our gstreamer implementation behaving incorrectly.
     // Low priority Test client gets back permission to the test channel 
-    //EXPECT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::FOREGROUND);
-    //EXPECT_TRUE(focusChanged);
+    ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::FOREGROUND);
+    ASSERT_TRUE(focusChanged);
 
-    //m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged);
-    //ASSERT_FALSE(focusChanged);
 }
 
 TEST_F(AlertsTest, handleOneTimerWithVocalStop) {
-    TestMessageSender::SendParams sendSyncParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendSyncParams, NAME_SYNC_STATE));
 
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
@@ -1255,7 +1256,7 @@ TEST_F(AlertsTest, handleOneTimerWithVocalStop) {
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 
     // The test channel client has been notified the content channel has been backgrounded.
-    bool focusChanged; 
+    bool focusChanged = false; 
     ASSERT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
     ASSERT_TRUE(focusChanged); 
 
@@ -1281,14 +1282,16 @@ TEST_F(AlertsTest, handleOneTimerWithVocalStop) {
     }
     else {
         ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STOPPED));
+
     }
+
+    sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    ASSERT_TRUE(checkSentEventName(sendParams, NAME_DELETE_ALERT_SUCCEEDED));
 
     // Low priority Test client gets back permission to the test channel 
     EXPECT_EQ(m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::FOREGROUND);
     EXPECT_TRUE(focusChanged);
 
-    m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged);
-    ASSERT_FALSE(focusChanged);
 }
 
 } // namespace test

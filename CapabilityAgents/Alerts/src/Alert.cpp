@@ -45,14 +45,15 @@ using namespace rapidjson;
 
 /// String for lookup of the token value in a parsed JSON document.
 static const std::string KEY_TOKEN = "token";
+
 /// String for lookup of the scheduled time value in a parsed JSON document.
 static const std::string KEY_SCHEDULED_TIME = "scheduledTime";
+
+/// We won't allow an alert to render more than 1 hour.
+const std::chrono::seconds MAXIMUM_ALERT_RENDERING_TIME = std::chrono::hours(1);
+
 /// String to identify log entries originating from this file.
 static const std::string TAG("Alert");
-
-/// A file-static variable to control if simple mode is enabled.  This variable, and all the logic it controls when
-/// true, will be deleted once our gstreamer implementation is improved.
-static const bool AVS_ALERTS_SIMPLE_MODE_ENABLED = true;
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -125,7 +126,7 @@ std::string Alert::parseFromJsonStatusToString(Alert::ParseFromJsonStatus parseF
 Alert::Alert() :
         m_dbId{0}, m_scheduledTime_Unix{0}, m_state{State::SET},
         m_rendererState{RendererObserverInterface::State::UNSET}, m_stopReason{StopReason::UNSET},
-        m_focusState{avsCommon::avs::FocusState::NONE}, m_observer{nullptr} {
+        m_focusState{avsCommon::avs::FocusState::NONE}, m_observer{nullptr}, m_hasTimerExpired{false} {
 
 }
 
@@ -191,31 +192,31 @@ void Alert::reset() {
 }
 
 void Alert::activate() {
-    if (isSimpleModeEnabled()) {
-        startRendererSimple();
+    if (Alert::State::ACTIVATING == m_state || Alert::State::ACTIVE == m_state) {
+        ACSDK_ERROR(LX("activateFailed").m("Alert is already active."));
         return;
     }
 
     m_state = Alert::State::ACTIVATING;
+
+    if (!m_maxLengthTimer.isActive()) {
+        if (!m_maxLengthTimer.start(
+                MAXIMUM_ALERT_RENDERING_TIME, std::bind(&Alert::onMaxTimerExpiration, this)).valid()) {
+            ACSDK_ERROR(LX("executeStartFailed").d("reason", "startTimerFailed"));
+        }
+    }
+
     startRenderer();
 }
 
 void Alert::deActivate(StopReason reason) {
-    if (isSimpleModeEnabled()) {
-        stopRendererSimple();
-        return;
-    }
-
     m_state = Alert::State::STOPPING;
     m_stopReason = reason;
+    m_maxLengthTimer.stop();
     m_renderer->stop();
 }
 
 void Alert::onRendererStateChange(RendererObserverInterface::State state, const std::string & reason) {
-    if (isSimpleModeEnabled()) {
-        return;
-    }
-
     switch (state) {
         case RendererObserverInterface::State::UNSET:
             // no-op
@@ -232,25 +233,24 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
             break;
 
         case RendererObserverInterface::State::STOPPED:
-            if (Alert::State::STOPPING == m_state) {
-                m_state = State::STOPPED;
+            if (m_hasTimerExpired) {
+                m_state = State::COMPLETED;
                 if (m_observer) {
-                    m_observer->onAlertStateChange(m_token, AlertObserverInterface::State::STOPPED);
+                    m_observer->onAlertStateChange(m_token, AlertObserverInterface::State::COMPLETED);
                 }
-            } else if (Alert::State::SNOOZING == m_state) {
-                m_state = State::SNOOZED;
-                if (m_observer) {
-                    m_observer->onAlertStateChange(m_token, AlertObserverInterface::State::SNOOZED);
+            } else {
+                if (Alert::State::STOPPING == m_state) {
+                    m_state = State::STOPPED;
+                    if (m_observer) {
+                        m_observer->onAlertStateChange(m_token, AlertObserverInterface::State::STOPPED);
+                    }
+                } else if (Alert::State::SNOOZING == m_state) {
+                    m_state = State::SNOOZED;
+                    if (m_observer) {
+                        m_observer->onAlertStateChange(m_token, AlertObserverInterface::State::SNOOZED);
+                    }
                 }
             }
-            break;
-
-        case RendererObserverInterface::State::COMPLETED:
-            m_state = State::COMPLETED;
-            if (m_observer) {
-                m_observer->onAlertStateChange(m_token, AlertObserverInterface::State::COMPLETED);
-            }
-
             break;
 
         case RendererObserverInterface::State::ERROR:
@@ -297,11 +297,6 @@ void Alert::startRenderer() {
         fileName = getDefaultShortAudioFilePath();
     }
 
-    if (isSimpleModeEnabled()) {
-        startRendererSimple();
-        return;
-    }
-
     m_renderer->setObserver(this);
     m_renderer->start(fileName);
 }
@@ -319,41 +314,16 @@ void Alert::snooze(const std::string & updatedScheduledTime_ISO_8601) {
 
     m_state = State::SNOOZING;
     m_renderer->stop();
-
-    if (isSimpleModeEnabled()) {
-        m_state = State::SET;
-    }
 }
 
 Alert::StopReason Alert::getStopReason() const {
     return m_stopReason;
 }
 
-void Alert::startRendererSimple() {
-    if (avsCommon::avs::FocusState::BACKGROUND == m_focusState) {
-        ACSDK_INFO(LX("Alert in background - not playing file."));
-        return;
-    }
-
+void Alert::onMaxTimerExpiration() {
+    m_state = Alert::State::STOPPING;
+    m_hasTimerExpired = true;
     m_renderer->stop();
-    m_renderer->setObserver(this);
-    m_renderer->start(getDefaultAudioFilePath());
-}
-
-void Alert::stopRendererSimple() {
-    m_state = Alert::State::STOPPED;
-    m_stopReason = Alert::StopReason::AVS_STOP;
-    m_renderer->stop();
-}
-
-bool Alert::isSimpleModeEnabled() {
-    return AVS_ALERTS_SIMPLE_MODE_ENABLED;
-}
-
-void Alert::activateSimple(avsCommon::avs::FocusState focusState) {
-    m_focusState = focusState;
-    m_state = Alert::State::ACTIVE;
-    startRendererSimple();
 }
 
 } // namespace alerts

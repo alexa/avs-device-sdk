@@ -23,6 +23,7 @@
 
 #include <AVSCommon/SDKInterfaces/AudioInputProcessorObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/UserActivityNotifierInterface.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/ChannelObserverInterface.h>
@@ -77,6 +78,7 @@ public:
      * @param focusManager The channel focus manager used to manage usage of the dialog channel.
      * @param dialogUXStateAggregator The dialog state aggregator which tracks UX states related to dialog.
      * @param exceptionEncounteredSender The object to use for sending AVS Exception messages.
+     * @param userActivityNotifier The object to use for resetting user inactivity.
      * @param defaultAudioProvider A default @c avsCommon::AudioProvider to use for ExpectSpeech if the previous
      *     provider is not readable (@c avsCommon::AudioProvider::alwaysReadable).  This parameter is optional and
      *     defaults to an invalid @c avsCommon::AudioProvider.
@@ -89,6 +91,7 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> userActivityNotifier,
         AudioProvider defaultAudioProvider = AudioProvider::null());
 
     /**
@@ -215,6 +218,7 @@ private:
      * @param contextManager The AVS Context manager used to generate system context for events.
      * @param focusManager The channel focus manager used to manage usage of the dialog channel.
      * @param exceptionEncounteredSender The object to use for sending ExceptionEncountered messages.
+     * @param userActivityNotifier The object to use for resetting user inactivity.
      * @param defaultAudioProvider A default @c avsCommon::AudioProvider to use for ExpectSpeech if the previous
      *     provider is not readable (@c AudioProvider::alwaysReadable).  This parameter is optional, and ignored if set
      *     to @c AudioProvider::null().
@@ -229,6 +233,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> userActivityNotifier,
         AudioProvider defaultAudioProvider);
 
     /**
@@ -447,6 +452,9 @@ private:
 
     /// The @c FocusManager used to manage usage of the dialog channel.
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_focusManager;
+
+    /// The @c UserInactivityMonitor used to reset the inactivity timer of the user.
+    std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> m_userActivityNotifier;
 
     /// Timer which runs in the @c EXPECTING_SPEECH state.
     avsCommon::utils::timing::Timer m_expectingSpeechTimer;

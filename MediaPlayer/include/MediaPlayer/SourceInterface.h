@@ -32,6 +32,28 @@ public:
      * Destructor.
      */
     virtual ~SourceInterface() = default;
+
+    /**
+     * Internally, a source may need additional processing after EOS is reached.
+     * This function will process that data.
+     *
+     * @return A boolean indicating whether the process operation was successful.
+     */
+    virtual bool handleEndOfStream() = 0;
+
+    /**
+     * Internally, a source may have additional data after processing an EOS.
+     * This function indicates whether there is additional data, and should be called
+     * after @c handleEndOfStream().
+     *
+     * @return A boolean indicating whether the source has additional data to be played.
+     */
+    virtual bool hasAdditionalData() = 0;
+
+    /**
+     * Perform preprocessing  of the source. Must be called before reading from the source.
+     */
+    virtual void preprocess() = 0;
 };
 
 } // namespace mediaPlayer

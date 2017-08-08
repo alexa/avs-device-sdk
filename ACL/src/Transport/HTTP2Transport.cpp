@@ -344,10 +344,8 @@ void HTTP2Transport::networkLoop() {
      * While the connection is alive we should have at least 1 transfer active (the downchannel).
      */
     int numTransfersLeft = 1;
+    int timeouts = 0;
     while (numTransfersLeft && !isStopping()) {
-
-        int numTransfersUpdated = 0;
-        int timeouts = 0;
 
         CURLMcode ret = curl_multi_perform(m_multi->handle, &numTransfersLeft);
         if (CURLM_CALL_MULTI_PERFORM == ret) {
@@ -389,6 +387,7 @@ void HTTP2Transport::networkLoop() {
 
         //TODO: ACSDK-69 replace timeout with signal fd
         //TODO: ACSDK-281 - investigate the timeout values and performance consequences for curl_multi_wait.
+        int numTransfersUpdated = 0;
         ret = curl_multi_wait(m_multi->handle, NULL, 0, multiWaitTimeoutMs, &numTransfersUpdated);
         if (ret != CURLM_OK) {
             ACSDK_ERROR(LX("networkLoopStopping")
@@ -487,7 +486,6 @@ void HTTP2Transport::networkLoop() {
 bool HTTP2Transport::establishConnection() {
     // Set numTransferLeft to 1 because the downchannel stream has been added already.
     int numTransfersLeft = 1;
-    int numTransfersUpdated = 0;
 
     /*
      * Calls curl_multi_perform until downchannel stream receives an HTTP2 response code. If the downchannel stream
@@ -526,6 +524,7 @@ bool HTTP2Transport::establishConnection() {
             setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
         }
         // wait for activity on the downchannel stream, kinda like poll()
+        int numTransfersUpdated = 0;
         ret = curl_multi_wait(m_multi->handle, NULL, 0 , WAIT_FOR_ACTIVITY_TIMEOUT_MS, &numTransfersUpdated);
         if (ret != CURLM_OK) {
             ACSDK_ERROR(LX("establishConnectionFailed")
@@ -648,6 +647,8 @@ void HTTP2Transport::processNextOutgoingMessage() {
 }
 
 bool HTTP2Transport::sendPing() {
+    ACSDK_DEBUG(LX("sendPing").d("pingStream", m_pingStream.get()));
+
     if (m_pingStream) {
         return true;
     }
@@ -687,6 +688,7 @@ bool HTTP2Transport::sendPing() {
 }
 
 void HTTP2Transport::handlePingResponse() {
+    ACSDK_DEBUG(LX("handlePingResponse"));
     if (HTTP2Stream::HTTPResponseCodes::SUCCESS_NO_CONTENT != m_pingStream->getResponseCode()) {
         ACSDK_ERROR(LX("pingFailed")
                 .d("responseCode", m_pingStream->getResponseCode()));

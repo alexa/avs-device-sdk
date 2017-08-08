@@ -15,6 +15,7 @@
  * permissions and limitations under the License.
  */
 
+#include <list>
 #include <gtest/gtest.h>
 
 #include "ExecutorTestUtils.h"
@@ -127,6 +128,91 @@ TEST_F(ExecutorTest, submitFunctionWithObjectReturnTypeObjectArgsAndVerifyExecut
     auto future_status = future.wait_for(SHORT_TIMEOUT_MS);
     ASSERT_EQ(future_status, std::future_status::ready);
     ASSERT_EQ(future.get().getValue(), value.getValue());
+}
+
+TEST_F(ExecutorTest, submitToFront) {
+    std::atomic<bool> ready(false);
+    std::atomic<bool> blocked(false);
+    std::list<int> order;
+
+    // submit a task which will block the executor
+    executor.submit(
+        [&] {
+            blocked = true;
+            while (!ready) {
+                std::this_thread::yield();
+            }
+        }
+    );
+
+    // wait for it to block
+    while (!blocked) {
+        std::this_thread::yield();
+    }
+
+    // submit a task to the empty queue
+    executor.submit([&] { order.push_back(1); });
+
+    // submit a task to the back of the queue
+    executor.submit([&] { order.push_back(2); });
+
+    // submit a task to the front of the queue
+    executor.submitToFront([&] { order.push_back(3); });
+
+    // unblock the executor
+    ready = true;
+
+    // wait for all tasks to complete
+    executor.waitForSubmittedTasks();
+
+    // verify execution order
+    ASSERT_EQ(order.size(), 3U);
+    ASSERT_EQ(order.front(), 3);
+    ASSERT_EQ(order.back(), 2);
+}
+
+/// Used by @c futureWaitsForTaskCleanup delay and timestamp the time of lambda parameter destruction.
+struct SlowDestructor {
+    /// Constructor.
+    SlowDestructor() : cleanedUp{nullptr} {
+    }
+
+    /// Destructor which delays destruction, timestamps, and notifies a condition variable when it is done
+    ~SlowDestructor() {
+        if (cleanedUp) {
+            /* Delay briefly so that there is a measurable delay between the completion of the lambda's content and the
+               cleanup of the lambda's parameters */
+            std::this_thread::sleep_for(SHORT_TIMEOUT_MS / 10);
+
+            // Note the time when the destructor has (nominally) completed.
+            *cleanedUp = true;
+        }
+    }
+
+    /**
+     * Boolean indicating destruction is completed (if != nullptr).  Mutable so that a lambda can write to it in a
+     * SlowDestructor parameter that is captured by value.
+     */
+    mutable std::atomic<bool> * cleanedUp;
+
+};
+
+/// This test verifies that the executor waits to fulfill its promise until after the task is cleaned up.
+TEST_F(ExecutorTest, futureWaitsForTaskCleanup) {
+    std::atomic<bool> cleanedUp(false);
+    SlowDestructor slowDestructor;
+
+    // Submit a lambda to execute which captures a parameter by value that is slow to destruct.
+    executor.submit(
+        [slowDestructor, &cleanedUp] {
+            // Update the captured copy of slowDestructor so that it will delay destruction and update the cleanedUp
+            // flag.
+            slowDestructor.cleanedUp = &cleanedUp;
+        }
+        // wait for the promise to be fulfilled.
+    ).wait();
+
+    ASSERT_TRUE(cleanedUp);
 }
 
 } // namespace test

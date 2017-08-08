@@ -25,12 +25,14 @@
 #include <memory>
 #include <string>
 #include <thread>
+#include <queue>
 
 #include <gst/gst.h>
 #include <gst/app/gstappsrc.h>
 
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
+#include <AVSCommon/Utils/PlaylistParser/PlaylistParserInterface.h>
 
 #include "MediaPlayer/PipelineInterface.h"
 #include "MediaPlayer/SourceInterface.h"
@@ -41,7 +43,9 @@ namespace mediaPlayer {
 /**
  * Class that handles creation of audio pipeline and playing of audio data.
  */
-class MediaPlayer : public avsCommon::utils::mediaPlayer::MediaPlayerInterface, private PipelineInterface {
+class MediaPlayer :
+        public avsCommon::utils::mediaPlayer::MediaPlayerInterface,
+        private PipelineInterface {
 public:
     /**
      * Creates an instance of the @c MediaPlayer.
@@ -55,26 +59,34 @@ public:
      */
     ~MediaPlayer();
 
-    /// @name Overridden @c MediaPlayerInterface methods.
+    /// @name Overridden MediaPlayerInterface methods.
     /// @{
     avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(
-            std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) override;
+            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) override;
     avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(
-            std::unique_ptr<std::istream> stream, bool repeat) override;
+            std::shared_ptr<std::istream> stream, bool repeat) override;
+    avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(const std::string& url) override;
+
     avsCommon::utils::mediaPlayer::MediaPlayerStatus play() override;
     avsCommon::utils::mediaPlayer::MediaPlayerStatus stop() override;
+    avsCommon::utils::mediaPlayer::MediaPlayerStatus pause() override;
+    /**
+     * To resume playback after a pause, call @c resume. Calling @c play
+     * will reset the pipeline and source, and will not resume playback.
+     */
+    avsCommon::utils::mediaPlayer::MediaPlayerStatus resume() override;
     int64_t getOffsetInMilliseconds() override;
     void setObserver(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) override;
     /// @}
 
-    /// @name Overridden @c PipelineInterface methods.
+    /// @name Overridden PipelineInterface methods.
     /// @{
     void setAppSrc(GstAppSrc* appSrc) override;
     GstAppSrc* getAppSrc() const override;
     void setDecoder(GstElement* decoder) override;
     GstElement* getDecoder() const override;
     GstElement* getPipeline() const override;
-    void queueCallback(const std::function<gboolean()>* callback) override;
+    guint queueCallback(const std::function<gboolean()>* callback) override;
     /// @}
 
 private:
@@ -104,6 +116,15 @@ private:
 
         /// Pipeline element.
         GstElement* pipeline;
+
+        /// Constructor.
+        AudioPipeline()
+                :
+                appsrc{nullptr},
+                decoder{nullptr},
+                converter{nullptr},
+                audioSink{nullptr},
+                pipeline{nullptr} {};
     };
 
     /**
@@ -144,6 +165,11 @@ private:
      * Stops the currently playing audio and deletes the pipeline.
      */
     void tearDownPipeline();
+
+    /*
+     * Resets the @c AudioPipeline.
+     */
+    void resetPipeline();
 
     /**
      * This handles linking the source pad of the decoder to the sink pad of the converter once the pad-added signal
@@ -196,7 +222,11 @@ private:
      */
     void handleSetAttachmentReaderSource(
             std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise,
-            std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> reader);
+            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader);
+
+    void handleSetSource(
+            std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus> promise,
+            std::string url);
 
     /**
      * Worker thread handler for setting the source of audio to play.
@@ -207,7 +237,7 @@ private:
      */
     void handleSetIStreamSource(
             std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise,
-            std::unique_ptr<std::istream> stream,
+            std::shared_ptr<std::istream> stream,
             bool repeat);
 
     /**
@@ -232,6 +262,22 @@ private:
      * @return The status of the operation.
      */
     avsCommon::utils::mediaPlayer::MediaPlayerStatus doStop();
+
+    /**
+     * Worker thread handler for pausing playback of the current audio source.
+     *
+     * @param promise A promise to fulfill with a @c MediaPlayerStatus value once playback has been paused
+     * (or the operation has failed).
+     */
+    void handlePause(std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise);
+
+    /**
+     * Worker thread handler for resume playback of the current audio source.
+     *
+     * @param promise A promise to fulfill with a @c MediaPlayerStatus value once playback has been resumed
+     * (or the operation has failed).
+     */
+    void handleResume(std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise);
 
     /**
      * Worker thread handler for getting the current playback position.
@@ -261,11 +307,31 @@ private:
     void sendPlaybackFinished();
 
     /**
+     * Sends the playback paused notification to the observer.
+     */
+    void sendPlaybackPaused();
+
+    /**
+     * Sends the playback resumed notification to the observer.
+     */
+    void sendPlaybackResumed();
+
+    /**
      * Sends the playback error notification to the observer.
      *
      * @param error The error details.
      */
     void sendPlaybackError(const std::string& error);
+
+    /**
+     * Sends the buffer underrun notification to the observer.
+     */
+    void sendBufferUnderrun();
+
+    /**
+     * Sends the buffer refilled notification to the observer.
+     */
+    void sendBufferRefilled();
 
     /// An instance of the @c AudioPipeline.
     AudioPipeline m_pipeline;
@@ -276,17 +342,29 @@ private:
     // Main loop thread
     std::thread m_mainLoopThread;
 
+    // Set Source thread.
+    std::thread m_setSourceThread;
+
     /// Bus Id to track the bus.
     guint m_busWatchId;
 
+    /// Flag to indicate when a playback started notification has been sent to the observer.
+    bool m_playbackStartedSent;
+
     /// Flag to indicate when a playback finished notification has been sent to the observer.
     bool m_playbackFinishedSent;
+
+    /// Flag to indicate whether a playback is paused.
+    bool m_isPaused;
+
+    /// Flag to indicate whether a buffer underrun is occurring.
+    bool m_isBufferUnderrun;
 
     /// @c MediaPlayerObserverInterface instance to notify when the playback state changes.
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> m_playerObserver;
 
     /// @c SourceInterface instance set to the appropriate source.
-    std::unique_ptr<SourceInterface> m_source;
+    std::shared_ptr<SourceInterface> m_source;
 };
 
 } // namespace mediaPlayer

@@ -276,15 +276,13 @@ void AlertsCapabilityAgent::handleDirectiveImmediately(std::shared_ptr<avsCommon
 }
 
 void AlertsCapabilityAgent::preHandleDirective(std::shared_ptr<DirectiveInfo> info) {
-    ACSDK_ERROR(LX("preHandleDirective").m("unexpected call."));
+    m_caExecutor.submit([this, info]() { executeHandleDirectiveImmediately(info); });
 }
 
 void AlertsCapabilityAgent::handleDirective(std::shared_ptr<DirectiveInfo> info) {
-    ACSDK_ERROR(LX("handleDirective").m("unexpected call."));
 }
 
 void AlertsCapabilityAgent::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
-    ACSDK_ERROR(LX("cancelDirective").m("unexpected call."));
 }
 
 void AlertsCapabilityAgent::onDeregistered() {
@@ -406,6 +404,7 @@ void AlertsCapabilityAgent::onAlertStateChange(const std::string &alertToken, Al
                 sendEvent(ALERT_STARTED_EVENT_NAME, m_activeAlert->getToken());
                 m_activeAlert->setStateActive();
                 m_alertStorage->modify(m_activeAlert);
+
                 updateContextManagerLocked();
             }
             break;
@@ -607,10 +606,14 @@ bool AlertsCapabilityAgent::initializeAlerts(const ConfigurationNode &configurat
         }
     }
 
+    int64_t unixEpochNow;
+    if (!getCurrentUnixTime(&unixEpochNow)) {
+        ACSDK_ERROR(LX("initializeAlertsFailed").d("reason", "could not get current unix time."));
+        return false;
+    }
+
     std::vector<std::shared_ptr<Alert>> alerts;
     m_alertStorage->load(&alerts);
-
-    auto unixEpochNow = getCurrentUnixTime();
 
     for (auto &alert : alerts) {
         if (isAlertPastDue(alert, unixEpochNow)) {
@@ -700,26 +703,14 @@ bool AlertsCapabilityAgent::handleSetAlert(const std::shared_ptr<avsCommon::avs:
     }
 
     *alertToken = parsedAlert->getToken();
+
     std::lock_guard<std::mutex> lock(m_mutex);
 
     if (m_activeAlert &&
         (m_activeAlert->getToken() == *alertToken) &&
         (Alert::State::ACTIVE == m_activeAlert->getState())) {
-
         snoozeAlertLocked(m_activeAlert, parsedAlert->getScheduledTime_ISO_8601());
         sendEvent(ALERT_STOPPED_EVENT_NAME, m_activeAlert->getToken());
-
-        // We won't be getting callbacks in simple mode.  Handle all work here.
-        if (Alert::isSimpleModeEnabled()) {
-            m_activeAlert->reset();
-            m_scheduledAlerts.insert(m_activeAlert);
-            m_activeAlert.reset();
-            m_alertRenderer->setObserver(nullptr);
-            releaseChannel();
-            updateContextManagerLocked();
-            scheduleNextAlertForRendering();
-        }
-
     } else {
         if (getScheduledAlertByTokenLocked(parsedAlert->getToken())) {
             // This is the best default behavior.  If we send SetAlertFailed for a duplicate Alert,
@@ -730,7 +721,11 @@ bool AlertsCapabilityAgent::handleSetAlert(const std::shared_ptr<avsCommon::avs:
             return true;
         }
 
-        auto unixEpochNow = getCurrentUnixTime();
+        int64_t unixEpochNow;
+        if (!getCurrentUnixTime(&unixEpochNow)) {
+            ACSDK_ERROR(LX("handleSetAlertFailed").d("reason", "could not get current unix time."));
+            return false;
+        }
 
         if (isAlertPastDue(parsedAlert, unixEpochNow)) {
             ACSDK_ERROR(LX("handleSetAlertFailed").d("reason", "parsed alert is past-due.  Ignoring."));
@@ -791,6 +786,7 @@ bool AlertsCapabilityAgent::handleDeleteAlert(const std::shared_ptr<avsCommon::a
 }
 
 void AlertsCapabilityAgent::sendEvent(const std::string & eventName, const std::string & alertToken) {
+
     /**
      * TODO : ACSDK-393 to investigate if Events which cannot be sent right away should be stored somehow and
      * sent retrospectively once a connection is established.
@@ -877,7 +873,11 @@ void AlertsCapabilityAgent::executeScheduleNextAlertForRendering() {
         m_scheduledAlertTimer.stop();
     }
 
-    int64_t timeNow = getCurrentUnixTime();
+    int64_t timeNow;
+    if (!getCurrentUnixTime(&timeNow)) {
+        ACSDK_ERROR(LX("executeScheduleNextAlertForRenderingFailed").d("reason", "could not get current unix time."));
+        return;
+    }
 
     std::chrono::seconds secondsToWait{alert->getScheduledTime_Unix() - timeNow};
 
@@ -915,15 +915,8 @@ void AlertsCapabilityAgent::activateNextAlertLocked() {
     m_activeAlert = *(m_scheduledAlerts.begin());
     m_scheduledAlerts.erase(m_scheduledAlerts.begin());
 
-    if (Alert::isSimpleModeEnabled()) {
-        m_activeAlert->activateSimple(m_focusState);
-        sendEvent(ALERT_STARTED_EVENT_NAME, m_activeAlert->getToken());
-        m_alertStorage->modify(m_activeAlert);
-        updateContextManagerLocked();
-    } else {
-        m_activeAlert->setFocusState(m_focusState);
-        m_activeAlert->activate();
-    }
+    m_activeAlert->setFocusState(m_focusState);
+    m_activeAlert->activate();
 }
 
 std::shared_ptr<Alert> AlertsCapabilityAgent::getScheduledAlertByTokenLocked(const std::string & token) {
@@ -981,7 +974,11 @@ void AlertsCapabilityAgent::releaseChannel() {
 }
 
 void AlertsCapabilityAgent::filterPastDueAlerts() {
-    auto unixEpochNow = getCurrentUnixTime();
+    int64_t unixEpochNow;
+    if (!getCurrentUnixTime(&unixEpochNow)) {
+        ACSDK_ERROR(LX("filterPastDueAlertsFailed").d("reason", "could not get current unix time."));
+        return;
+    }
 
     std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -1005,25 +1002,8 @@ void AlertsCapabilityAgent::filterPastDueAlerts() {
 }
 
 void AlertsCapabilityAgent::deactivateActiveAlertHelper(Alert::StopReason stopReason) {
-    if (!m_activeAlert) {
-        return;
-    }
-
-    m_activeAlert->deActivate(stopReason);
-
-    // We won't get callbacks in simple mode.  Handle all work here.
-    if (Alert::isSimpleModeEnabled()) {
-        // NOTE: Only send AlertStopped Event if local stop.  Otherwise this is done during DeleteAlert handling.
-        if (Alert::StopReason::LOCAL_STOP == stopReason) {
-            sendEvent(ALERT_STOPPED_EVENT_NAME, m_activeAlert->getToken());
-        }
-
-        m_alertStorage->erase(m_activeAlert);
-        m_activeAlert.reset();
-        m_alertRenderer->setObserver(nullptr);
-        releaseChannel();
-        updateContextManagerLocked();
-        scheduleNextAlertForRendering();
+    if (m_activeAlert) {
+        m_activeAlert->deActivate(stopReason);
     }
 }
 

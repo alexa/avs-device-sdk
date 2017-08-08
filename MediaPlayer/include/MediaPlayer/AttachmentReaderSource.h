@@ -43,7 +43,7 @@ public:
      */
     static std::unique_ptr<AttachmentReaderSource> create(
             PipelineInterface* pipeline,
-            std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader);
+            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader);
 
     ~AttachmentReaderSource();
 
@@ -56,7 +56,7 @@ private:
      */
     AttachmentReaderSource(
             PipelineInterface* pipeline,
-            std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader);
+            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader);
 
     /// @name Overridden BaseStreamSource methods.
     /// @{
@@ -67,7 +67,7 @@ private:
 
 private:
     /// The @c AttachmentReader to read audioData from.
-    std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> m_reader;
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_reader;
 };
 
 } // namespace mediaPlayer

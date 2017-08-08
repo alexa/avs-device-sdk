@@ -44,7 +44,7 @@ static const unsigned int CHUNK_SIZE(4096);
 
 std::unique_ptr<IStreamSource> IStreamSource::create(
         PipelineInterface* pipeline,
-        std::unique_ptr<std::istream> stream,
+        std::shared_ptr<std::istream> stream,
         bool repeat) {
     std::unique_ptr<IStreamSource> result(new IStreamSource(pipeline, std::move(stream), repeat));
     if (result->init()) {
@@ -53,10 +53,10 @@ std::unique_ptr<IStreamSource> IStreamSource::create(
     return nullptr;
 };
 
-IStreamSource::IStreamSource(PipelineInterface* pipeline, std::unique_ptr<std::istream> stream, bool repeat)
+IStreamSource::IStreamSource(PipelineInterface* pipeline, std::shared_ptr<std::istream> stream, bool repeat)
         :
         BaseStreamSource{pipeline},
-        m_stream{std::move(stream)},
+        m_stream{stream},
         m_repeat{repeat} {
 };
 
@@ -103,7 +103,7 @@ gboolean IStreamSource::handleReadData() {
 
     m_stream->read(reinterpret_cast<std::istream::char_type*>(info.data), info.size);
 
-    std::streamsize size;
+    unsigned long size;
     if (m_stream->bad()) {
         size = 0;
         ACSDK_WARN(LX("readFailed").d("bad", m_stream->bad()).d("eof", m_stream->eof()));

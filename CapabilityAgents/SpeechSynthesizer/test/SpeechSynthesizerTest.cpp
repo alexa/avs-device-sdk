@@ -148,56 +148,7 @@ public:
             const std::string & attachmentId, AttachmentReader::Policy policy));
 };
 
-/**
- * gmock does not fully support C++11's move only semantics.  Replaces the use of unique_ptr in
- * @c MediaPlayerInterface with shared_ptr so that methods using unique_ptr can be mocked.
- */
-class MediaPlayerMockAdapter : public MediaPlayerInterface {
-public:
-    virtual ~MediaPlayerMockAdapter() = default;
-
-    MediaPlayerStatus setSource(
-            std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) override;
-
-    MediaPlayerStatus setSource(std::unique_ptr<std::istream> stream, bool repeat) override;
-
-    /**
-     * Variant of setSource taking a shared_ptr instead of a unique_ptr.
-     *
-     * @param attachmentReader The audioAttachment to read.
-     * @return @c SUCCESS if the the source was set successfully else @c FAILURE. If setSource is called when audio is
-     * currently playing, the playing audio will be stopped and the source set to the new value. If there is an error
-     * stopping the player, this will return @c FAILURE.
-     */
-    virtual void setSource(
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) = 0;
-
-    /**
-     * Variant of setSource taking a shared_ptr instead of a unique_ptr.
-     *
-     * @param stream Object with which to read an incoming audio stream.
-     * @param repeat Whether the audio stream should be played in a loop until stopped.
-     * @return @c SUCCESS if the the source was set successfully else @c FAILURE. If setSource is called when audio is
-     * currently playing, the playing audio will be stopped and the source set to the new value. If there is an error
-     * stopping the player, this will return @c FAILURE.
-     */
-    virtual void setSource(std::shared_ptr<std::istream> stream, bool repeat) = 0;
-};
-
-MediaPlayerStatus MediaPlayerMockAdapter::setSource(
-        std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> temp(std::move(attachmentReader));
-    setSource(temp);
-    return MediaPlayerStatus::SUCCESS;
-}
-
-MediaPlayerStatus MediaPlayerMockAdapter::setSource(std::unique_ptr<std::istream> stream, bool repeat) {
-    std::shared_ptr<std::istream> temp(std::move(stream));
-    setSource(temp, repeat);
-    return MediaPlayerStatus::SUCCESS;
-}
-
-class MockMediaPlayer : public MediaPlayerMockAdapter {
+class MockMediaPlayer : public MediaPlayerInterface {
 public:
     /// Constructor.
     MockMediaPlayer();
@@ -216,10 +167,21 @@ public:
     void setObserver(
             std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) /*override*/;
 
-    MOCK_METHOD1(setSource, void(std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader));
-    MOCK_METHOD2(setSource, void(std::shared_ptr<std::istream> stream, bool repeat));
+    MOCK_METHOD1(setSource, MediaPlayerStatus(std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader));
+    MOCK_METHOD2(setSource, MediaPlayerStatus(std::shared_ptr<std::istream> stream, bool repeat));
+#ifdef __clang__
+// Remove warnings when compiling with clang.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverloaded-virtual"
+    MOCK_METHOD1(setSource, MediaPlayerStatus(const std::string& url));
+#pragma clang diagnostic pop
+#else
+    MOCK_METHOD1(setSource, MediaPlayerStatus(const std::string& url));
+#endif
     MOCK_METHOD0(play, MediaPlayerStatus());
     MOCK_METHOD0(stop, MediaPlayerStatus());
+    MOCK_METHOD0(pause, MediaPlayerStatus());
+    MOCK_METHOD0(resume, MediaPlayerStatus());
     MOCK_METHOD0(getOffsetInMilliseconds, int64_t());
 
     /**
@@ -315,9 +277,15 @@ std::shared_ptr<NiceMock<MockMediaPlayer>> MockMediaPlayer::create() {
     return result;
 }
 
-MockMediaPlayer::MockMediaPlayer(): m_play{false}, m_stop{false}, m_shutdown{false}, m_wakePlayPromise{},
-        m_wakePlayFuture{m_wakePlayPromise.get_future()}, m_wakeStopPromise{},
-        m_wakeStopFuture{m_wakeStopPromise.get_future()}, m_playerObserver{nullptr} {
+MockMediaPlayer::MockMediaPlayer():
+        m_play{false},
+        m_stop{false},
+        m_shutdown{false},
+        m_wakePlayPromise{},
+        m_wakePlayFuture{m_wakePlayPromise.get_future()},
+        m_wakeStopPromise{},
+        m_wakeStopFuture{m_wakeStopPromise.get_future()},
+        m_playerObserver{nullptr} {
 }
 
 MockMediaPlayer::~MockMediaPlayer() {
@@ -576,7 +544,10 @@ TEST_F(SpeechSynthesizerTest, testCallingHandleImmediately) {
 
     EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _, FOCUS_MANAGER_ACTIVITY_ID)).Times(1).
             WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), setSource(_)).Times(AtLeast(1));
+    EXPECT_CALL(
+            *(m_mockSpeechPlayer.get()),
+            setSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+            .Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), play()).Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffsetInMilliseconds()).Times(1).WillOnce(Return(100));
     EXPECT_CALL(*(m_mockContextManager.get()), setState(
@@ -607,7 +578,10 @@ TEST_F(SpeechSynthesizerTest, testCallingHandle) {
 
     EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _, FOCUS_MANAGER_ACTIVITY_ID)).Times(1).
             WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), setSource(_)).Times(AtLeast(1));
+    EXPECT_CALL(
+            *(m_mockSpeechPlayer.get()),
+            setSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+            .Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), play()).Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffsetInMilliseconds()).Times(1).WillOnce(Return(100));
     EXPECT_CALL(*(m_mockContextManager.get()), setState(
@@ -663,7 +637,10 @@ TEST_F(SpeechSynthesizerTest, testCallingCancelAfterHandle) {
 
     EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _, FOCUS_MANAGER_ACTIVITY_ID)).Times(1).
             WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), setSource(_)).Times(AtLeast(1));
+    EXPECT_CALL(
+            *(m_mockSpeechPlayer.get()),
+            setSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+            .Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), play()).Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffsetInMilliseconds()).Times(1).WillOnce(Return(100));
     EXPECT_CALL(*(m_mockContextManager.get()), setState(
@@ -723,7 +700,10 @@ TEST_F(SpeechSynthesizerTest, testCallingProvideStateWhenPlaying) {
 
     EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _, FOCUS_MANAGER_ACTIVITY_ID)).Times(1).
             WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), setSource(_)).Times(AtLeast(1));
+    EXPECT_CALL(
+            *(m_mockSpeechPlayer.get()),
+            setSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+            .Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), play()).Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffsetInMilliseconds()).Times(AtLeast(1)).WillRepeatedly(Return(100));
     EXPECT_CALL(*(m_mockContextManager.get()), setState(
@@ -773,7 +753,10 @@ TEST_F(SpeechSynthesizerTest, testBargeInWhilePlaying) {
 
     EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _, FOCUS_MANAGER_ACTIVITY_ID)).Times(AtLeast(1)).
             WillRepeatedly(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), setSource(_)).Times(AtLeast(1));
+    EXPECT_CALL(
+            *(m_mockSpeechPlayer.get()),
+            setSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+            .Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), play()).Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffsetInMilliseconds()).Times(1).WillOnce(Return(100));
     EXPECT_CALL(*(m_mockContextManager.get()), setState(
@@ -803,6 +786,7 @@ TEST_F(SpeechSynthesizerTest, testBargeInWhilePlaying) {
     ASSERT_TRUE(m_mockSpeechPlayer->waitUntilPlaybackFinished());
     ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
     ASSERT_TRUE(std::future_status::ready == m_wakeReleaseChannelFuture.wait_for(WAIT_TIMEOUT));
+    ASSERT_TRUE(std::future_status::ready == m_wakeAcquireChannelFuture.wait_for(WAIT_TIMEOUT));
 }
 
 } // namespace test

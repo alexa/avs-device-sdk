@@ -54,6 +54,8 @@ std::string MessageRequest::statusToString(Status status) {
             return "SUCCESS";
         case Status::NOT_CONNECTED:
             return "NOT_CONNECTED";
+        case Status::NOT_SYNCHRONIZED:
+            return "NOT_SYNCHRONIZED";
         case Status::TIMEDOUT:
             return "TIMEDOUT";
         case Status::PROTOCOL_ERROR:

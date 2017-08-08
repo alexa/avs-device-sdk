@@ -247,6 +247,9 @@ protected:
                 isEnabled,
                 { m_connectionStatusObserver },
                 { m_messageInterpreter });
+        // TODO: ACSDK-421: Remove the callback when m_avsConnection manager is no longer an observer to
+        // StateSynchronizer.
+        m_avsConnectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
         connect();
     }
 
@@ -620,9 +623,15 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithoutADialogRequestID)
 
     TestDirectiveHandler::DirectiveParams params;
 
-    // Make sure we get the handleImmediately from StopCapture.
+    // Make sure we get preHandle followed by handle for StopCapture.
+    
     params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(params.isHandleImmediately());
+    ASSERT_TRUE(params.isPreHandle());
+    ASSERT_TRUE(params.directive->getDialogRequestId().empty());
+    ASSERT_EQ(params.directive->getName(), NAME_STOP_CAPTURE);
+
+    params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    ASSERT_TRUE(params.isHandle());
     ASSERT_TRUE(params.directive->getDialogRequestId().empty());
     ASSERT_EQ(params.directive->getName(), NAME_STOP_CAPTURE);
 

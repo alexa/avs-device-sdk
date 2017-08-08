@@ -56,6 +56,12 @@ std::string inputsDirPath;
 /// MP3 test file path.
 static const std::string MP3_FILE_PATH("/fox_dog.mp3");
 
+/// Playlist file path.
+static const std::string M3U_FILE_PATH("/fox_dog_playlist.m3u");
+
+/// file URI Prefix
+static const std::string FILE_PREFIX("file://");
+
 /**
  * Mock AttachmentReader.
  */
@@ -197,6 +203,10 @@ public:
 
     void onPlaybackError(std::string error) override;
 
+    void onPlaybackPaused() override;
+
+    void onPlaybackResumed() override;
+
     /**
      * Wait for a message to be received.
      *
@@ -215,6 +225,38 @@ public:
      */
     bool waitForPlaybackFinished(const std::chrono::milliseconds duration = std::chrono::milliseconds(5000));
 
+    /**
+     * Wait for a message to be received.
+     *
+     * This function waits for a specified number of milliseconds for a message to arrive.
+     * @param duration Number of milliseconds to wait before giving up.
+     * @return true if a message was received within the specified duration, else false.
+     */
+    bool waitForPlaybackPaused(const std::chrono::milliseconds duration = std::chrono::milliseconds(5000));
+
+    /**
+     * Wait for a message to be received.
+     *
+     * This function waits for a specified number of milliseconds for a message to arrive.
+     * @param duration Number of milliseconds to wait before giving up.
+     * @return true if a message was received within the specified duration, else false.
+     */
+    bool waitForPlaybackResumed(const std::chrono::milliseconds duration = std::chrono::milliseconds(5000));
+
+    /**
+     * TODO: Make this class a mock and remove this.
+     *
+     * This gets the number of times onPlaybackStarted was called.
+     */
+    int getOnPlaybackStartedCallCount();
+
+    /**
+     * TODO: Make this class a mock and remove this.
+     *
+     * This gets the number of times onPlaybackFinished was called.
+     */
+    int getOnPlaybackFinishedCallCount();
+
 private:
     /// Mutex to protect the flags @c m_playbackStarted and .@c m_playbackFinished.
     std::mutex m_mutex;
@@ -222,10 +264,23 @@ private:
     std::condition_variable m_wakePlaybackStarted;
     /// Trigger to wake up m_wakePlaybackStarted calls.
     std::condition_variable m_wakePlaybackFinished;
+    /// Trigger to wake up m_wakePlaybackPaused calls.
+    std::condition_variable m_wakePlaybackPaused;
+    /// Trigger to wake up m_wakePlaybackResumed calls.
+    std::condition_variable m_wakePlaybackResumed;
+
+    // TODO: Make this class a mock and remove these.
+    int m_onPlaybackStartedCallCount = 0;
+    int m_onPlaybackFinishedCallCount = 0;
+
     /// Flag to set when a playback start message is received.
     bool m_playbackStarted;
     /// Flag to set when a playback finished message is received.
     bool m_playbackFinished;
+    /// Flag to set when a playback paused message is received.
+    bool m_playbackPaused;
+    /// Flag to set when a playback paused message is received.
+    bool m_playbackResumed;
 };
 
 void MockPlayerObserver::onPlaybackStarted() {
@@ -233,6 +288,7 @@ void MockPlayerObserver::onPlaybackStarted() {
     m_playbackStarted = true;
     m_playbackFinished = false;
     m_wakePlaybackStarted.notify_all();
+    m_onPlaybackStartedCallCount++;
 }
 
 void MockPlayerObserver::onPlaybackFinished() {
@@ -240,10 +296,24 @@ void MockPlayerObserver::onPlaybackFinished() {
     m_playbackFinished = true;
     m_playbackStarted = false;
     m_wakePlaybackFinished.notify_all();
+    m_onPlaybackFinishedCallCount++;
 }
 
 void MockPlayerObserver::onPlaybackError(std::string error) {
     ACSDK_ERROR(LX("onPlaybackError").d("error", error));
+};
+
+void MockPlayerObserver::onPlaybackPaused() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_playbackPaused = true;
+    m_wakePlaybackPaused.notify_all();
+};
+
+void MockPlayerObserver::onPlaybackResumed() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_playbackResumed = true;
+    m_playbackPaused = false;
+    m_wakePlaybackResumed.notify_all();
 };
 
 bool MockPlayerObserver::waitForPlaybackStarted(const std::chrono::milliseconds duration) {
@@ -262,6 +332,32 @@ bool MockPlayerObserver::waitForPlaybackFinished(const std::chrono::milliseconds
         return false;
     }
     return true;
+}
+
+bool MockPlayerObserver::waitForPlaybackPaused(const std::chrono::milliseconds duration) {
+    std::unique_lock<std::mutex> lock(m_mutex);
+    if (!m_wakePlaybackPaused.wait_for(lock, duration, [this]() { return m_playbackPaused; } ))
+    {
+        return false;
+    }
+    return true;
+}
+
+bool MockPlayerObserver::waitForPlaybackResumed(const std::chrono::milliseconds duration) {
+    std::unique_lock<std::mutex> lock(m_mutex);
+    if (!m_wakePlaybackResumed.wait_for(lock, duration, [this]() { return m_playbackResumed; } ))
+    {
+        return false;
+    }
+    return true;
+}
+
+int MockPlayerObserver::getOnPlaybackStartedCallCount() {
+    return m_onPlaybackStartedCallCount;
+}
+
+int MockPlayerObserver::getOnPlaybackFinishedCallCount() {
+    return m_onPlaybackFinishedCallCount;
 }
 
 class MediaPlayerTest: public ::testing::Test{
@@ -320,6 +416,36 @@ TEST_F(MediaPlayerTest, testStartPlayWaitForEnd) {
 }
 
 /**
+ * Set the source of the @c MediaPlayer to a url representing a single audio file. Playback audio till the end.
+ * Check whether the playback started and playback finished notifications are received.
+ */
+TEST_F(MediaPlayerTest, testStartPlayForUrl) {
+
+    std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);
+    m_mediaPlayer->setSource(url_single);
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
+}
+
+/**
+ * Set the source of the @c MediaPlayer twice consecutively to a url representing a single audio file.
+ * Playback audio till the end. Check whether the playback started and playback finished notifications
+ * are received.
+ */
+TEST_F(MediaPlayerTest, testConsecutiveSetSource) {
+
+    std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);
+    m_mediaPlayer->setSource("");
+    m_mediaPlayer->setSource(url_single);
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
+}
+
+/**
  * Read an audio file into a buffer. Set the source of the @c MediaPlayer to the buffer. Playback audio till the end.
  * Check whether the playback started and playback finished notifications are received.
  * Call @c play. The audio should play again from the beginning. Wait till the end.
@@ -371,6 +497,123 @@ TEST_F(MediaPlayerTest, testStartPlayCallAfterStopPlay) {
     ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
     std::this_thread::sleep_for (std::chrono::seconds(1));
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->stop());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
+}
+
+/*
+ * Pause an audio after playback has started.
+ */
+TEST_F(MediaPlayerTest, testPauseDuringPlay) {
+    setIStreamSource(true);
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->pause());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackPaused());
+    // onPlaybackFinish should NOT be called during a pause.
+    // TODO: Detect this via making the MediaPlayerObserverMock a mock object.
+    ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 0);
+}
+
+/*
+ * Play of a paused audio. This behavior is not supported, and will result in the
+ * audio being stopped.
+ */
+TEST_F(MediaPlayerTest, testPlayAfterPause) {
+    setIStreamSource(true);
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->pause());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackPaused());
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
+    // TODO: Make the MediaPlayerObserverMock a mock object and ensure onPlaybackStarted should NOT be called
+    // during a resume.
+    ASSERT_EQ(m_playerObserver->getOnPlaybackStartedCallCount(), 1);
+    ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
+}
+
+/*
+ * Stop of a paused audio after playback has started. An additional stop and play event should
+ * be sent.
+ */
+TEST_F(MediaPlayerTest, testStopAfterPause) {
+    setIStreamSource(true);
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->pause());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackPaused());
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->stop());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
+    // TODO: Make the MediaPlayerObserverMock a mock object and ensure onPlaybackStarted should NOT be called
+    // during a resume.
+    ASSERT_EQ(m_playerObserver->getOnPlaybackStartedCallCount(), 1);
+    ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
+}
+
+/*
+ * Pause of a paused audio after playback has started. The pause() should fail.
+ */
+TEST_F(MediaPlayerTest, testPauseAfterPause) {
+    setIStreamSource(true);
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->pause());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackPaused());
+
+    ASSERT_EQ(MediaPlayerStatus::FAILURE, m_mediaPlayer->pause());
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->stop());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
+}
+
+/*
+ * Resume play of a paused audio after playback has started.
+ */
+TEST_F(MediaPlayerTest, testResumeAfterPause) {
+    setIStreamSource(true);
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->pause());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackPaused());
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->resume());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackResumed());
+    // onPlaybackStarted should NOT be called during a pause.
+    // TODO: Make the MediaPlayerObserverMock a mock object and ensure onPlaybackStarted should NOT be called
+    // during a resume.
+    ASSERT_EQ(m_playerObserver->getOnPlaybackStartedCallCount(), 1);
+}
+
+/*
+ * Calling resume after playback has started. The resume operation should fail.
+ */
+TEST_F(MediaPlayerTest, testResumeAfterPlay) {
+    setIStreamSource(true);
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
+
+    ASSERT_EQ(MediaPlayerStatus::FAILURE, m_mediaPlayer->resume());
+
     ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->stop());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 }
@@ -480,6 +723,25 @@ TEST_F(MediaPlayerTest, testRecoveryFromPausedReads) {
 
 #endif
 
+#ifdef TOTEM_PLPARSER
+/**
+ * Check playback of an URL identifying a playlist. Wait until the end.
+ * Ensure that onPlaybackStarted and onPlaybackFinished are only called once each.
+ */
+
+TEST_F(MediaPlayerTest, testStartPlayWithUrlPlaylistWaitForEnd) {
+
+    std::string url_playlist(FILE_PREFIX + inputsDirPath + M3U_FILE_PATH);
+    m_mediaPlayer->setSource(url_playlist);
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted(std::chrono::milliseconds(10000)));
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(std::chrono::milliseconds(10000)));
+    ASSERT_EQ(m_playerObserver->getOnPlaybackStartedCallCount(), 1);
+    ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
+}
+#endif
+
 } // namespace test
 } // namespace mediaPlayer
 } // namespace alexaClientSDK
@@ -488,7 +750,7 @@ int main (int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
 
     if (argc < 2) {
-        std::cerr << "Usage: MediaPlayerTest <path to test inputs folder>" << std::endl;
+        std::cerr << "Usage: MediaPlayerTest <absolute path to test inputs folder>" << std::endl;
     } else {
         alexaClientSDK::mediaPlayer::test::inputsDirPath = std::string(argv[1]);
         return RUN_ALL_TESTS();

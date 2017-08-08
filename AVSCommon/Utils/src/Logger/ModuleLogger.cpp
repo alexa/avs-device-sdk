@@ -17,6 +17,7 @@
 
 // ModuleLogger.h will be indirectly pulled in through Logger.h when ACSDK_LOG_MODULE is defined.
 #include "AVSCommon/Utils/Logger/Logger.h"
+#include "AVSCommon/Utils/Logger/LoggerSinkManager.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -29,7 +30,7 @@ void ModuleLogger::emit(
         const char *threadId,
         const char *text) {
     if (shouldLog(level)) {
-        m_sink.emit(level, time, threadId, text);
+        m_sink.load()->emit(level, time, threadId, text);
     }
 }
 
@@ -49,19 +50,32 @@ void ModuleLogger::onLogLevelChanged(Level level) {
     }
 }
 
-ModuleLogger::ModuleLogger(const std::string& configKey, Logger& sink) :
+void ModuleLogger::onSinkChanged(Logger& logger) {
+    if (m_sink.load()) {
+        m_sink.load()->removeLogLevelObserver(this);
+    }
+    m_sink = &logger;
+    m_sink.load()->addLogLevelObserver(this);
+}
+
+ModuleLogger::ModuleLogger(const std::string& configKey) :
         Logger(Level::UNKNOWN),
         m_useSinkLogLevel(true),
-        m_sink(sink) {
+        m_sink(nullptr) {
     /*
      * Note that m_useSinkLogLevel is set to true by default.  The idea is for
      * the ModuleLogger to use the same logLevel as its sink unless it's been
      * set specifically.
-     *
-     * By adding itself as an observer, the logLevel of the ModuleLogger will
-     * be set to be the same as the one in the sink.
      */
-    m_sink.addLogLevelObserver(this);
+
+    /*
+     * By adding itself to the LoggerSinkManager, the LoggerSinkManager will
+     * notify the ModuleLogger of the current sink logger via the
+     * SinkObserverInterface callback.  And in the onSinkChanged callback,
+     * upon adding itself as a logLevel observer, the sink will notify the
+     * ModuleLogger the current logLevel via the onLogLevelChanged callback.
+     */
+    LoggerSinkManager::instance().addSinkObserver(this);
 
     init(configuration::ConfigurationNode::getRoot()[configKey]);
 }

@@ -28,16 +28,15 @@ namespace logger {
 /**
  * @c Logger implementation providing per module configuration. Forwards logs to another @c Logger.
  */
-class ModuleLogger : public Logger, protected LogLevelObserverInterface {
+class ModuleLogger : public Logger, protected LogLevelObserverInterface, protected SinkObserverInterface {
 public:
     /**
      * Constructor.
      *
      * @param configKey The name of the root configuration key to inspect for a "logLevel" string value. That
      * string is used to specify the lowest log severity level that this @c ModuleLogger should emit.
-     * @param sink The @c Logger to forwards logs to.
      */
-    ModuleLogger(const std::string& configKey, Logger& sink = ACSDK_GET_SINK_LOGGER());
+    ModuleLogger(const std::string& configKey);
 
     void setLevel(Level level) override;
 
@@ -50,12 +49,14 @@ public:
 private:
     void onLogLevelChanged(Level level) override;
 
+    void onSinkChanged(Logger& sink) override;
+
     /// flag to determine if the m_sink's logLevel is to be used
     bool m_useSinkLogLevel;
 
 protected:
     /// The @c Logger to forward logs to.
-    Logger& m_sink;
+    std::atomic<Logger*> m_sink;
 };
 
 } // namespace logger

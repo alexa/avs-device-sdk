@@ -44,8 +44,8 @@ static const unsigned int CHUNK_SIZE(4096);
 
 std::unique_ptr<AttachmentReaderSource> AttachmentReaderSource::create(
         PipelineInterface* pipeline,
-        std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
-    std::unique_ptr<AttachmentReaderSource> result(new AttachmentReaderSource(pipeline, std::move(attachmentReader)));
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
+    std::unique_ptr<AttachmentReaderSource> result(new AttachmentReaderSource(pipeline, attachmentReader));
     if (result->init()) {
         return result;
     }
@@ -58,10 +58,10 @@ AttachmentReaderSource::~AttachmentReaderSource() {
 
 AttachmentReaderSource::AttachmentReaderSource(
         PipelineInterface* pipeline,
-        std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> reader)
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader)
         :
         BaseStreamSource{pipeline},
-        m_reader{std::move(reader)} {
+        m_reader{reader} {
 };
 
 bool AttachmentReaderSource::isOpen() {

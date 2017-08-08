@@ -66,6 +66,7 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> userActivityNotifier,
         AudioProvider defaultAudioProvider) {
     if (!directiveSequencer) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullDirectiveSequencer"));
@@ -85,6 +86,9 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
     } else if (!exceptionEncounteredSender) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullExceptionEncounteredSender"));
         return nullptr;
+    } else if (!userActivityNotifier) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullUserActivityNotifier"));
+        return nullptr;
     }
 
     auto aip = std::shared_ptr<AudioInputProcessor>(new AudioInputProcessor(
@@ -93,10 +97,13 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
             contextManager,
             focusManager,
             exceptionEncounteredSender,
+            userActivityNotifier,
             defaultAudioProvider));
 
-    contextManager->setStateProvider(RECOGNIZER_STATE, aip);
-    dialogUXStateAggregator->addObserver(aip);
+    if (aip) {
+        contextManager->setStateProvider(RECOGNIZER_STATE, aip);
+        dialogUXStateAggregator->addObserver(aip);
+    }
 
     return aip;
 }
@@ -258,12 +265,14 @@ AudioInputProcessor::AudioInputProcessor(
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> userActivityNotifier,
         AudioProvider defaultAudioProvider) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         m_directiveSequencer{directiveSequencer},
         m_messageSender{messageSender},
         m_contextManager{contextManager},
         m_focusManager{focusManager},
+        m_userActivityNotifier{userActivityNotifier},
         m_defaultAudioProvider{defaultAudioProvider},
         m_lastAudioProvider{AudioProvider::null()},
         m_state{ObserverInterface::State::IDLE},
@@ -589,7 +598,6 @@ bool AudioInputProcessor::executeStopCapture(bool stopImmediately, std::shared_p
                 .d("state", m_state));
         return false;
     }
-
     // Create a lambda to do the StopCapture.
     std::function<void()> stopCapture = [=] {
         ACSDK_DEBUG(LX("stopCapture").d("stopImmediately", stopImmediately));
@@ -731,6 +739,12 @@ void AudioInputProcessor::setState(ObserverInterface::State state) {
     if (m_state == state) {
         return;
     }
+
+    // Reset the user inactivity if transitioning to or from `RECOGNIZING` state.
+    if (ObserverInterface::State::RECOGNIZING == m_state || ObserverInterface::State::RECOGNIZING == state) {
+        m_userActivityNotifier->onUserActive();
+    }
+
     ACSDK_DEBUG(LX("setState").d("from", m_state).d("to", state));
     m_state = state;
     for (auto observer: m_observers) {

@@ -18,6 +18,8 @@
 #ifndef ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_SPEECH_SYNTHESIZER_OBSERVER_H_
 #define ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_SPEECH_SYNTHESIZER_OBSERVER_H_
 
+#include <iostream>
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace sdkInterfaces {
@@ -49,6 +51,25 @@ public:
      */
     virtual void onStateChanged(SpeechSynthesizerState state) = 0;
 };
+
+/**
+ * Write a @c State value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param state The state value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const SpeechSynthesizerObserver::SpeechSynthesizerState state) {
+    switch(state) {
+        case SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING:
+            stream << "PLAYING";
+            break;
+        case SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED:
+            stream << "FINISHED";
+            break;
+    }
+    return stream;
+}
 
 } // namespace sdkInterfaces
 } // namespace avsCommon

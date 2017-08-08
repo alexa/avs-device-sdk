@@ -25,7 +25,8 @@
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
 #include <ContextManager/ContextManager.h>
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
-#include <System/StateSynchronizer.h>
+#include <System/EndpointHandler.h>
+#include <System/UserInactivityMonitor.h>
 
 namespace alexaClientSDK {
 namespace defaultClient {
@@ -42,6 +43,7 @@ static const std::string TAG("DefaultClient");
 
 std::unique_ptr<DefaultClient> DefaultClient::create(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
@@ -52,6 +54,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::unique_ptr<DefaultClient> defaultClient(new DefaultClient());
     if (!defaultClient->initialize(
                 speakMediaPlayer, 
+                audioMediaPlayer, 
                 alertsMediaPlayer, 
                 authDelegate, 
                 alertStorage, 
@@ -65,6 +68,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
 
 bool DefaultClient::initialize(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
@@ -74,6 +78,11 @@ bool DefaultClient::initialize(
                 connectionObservers) {
     if (!speakMediaPlayer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullSpeakMediaPlayer"));
+        return false;
+    }
+
+    if (!audioMediaPlayer) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullAudioMediaPlayer"));
         return false;
     }
 
@@ -178,14 +187,27 @@ bool DefaultClient::initialize(
      * Creating the state synchronizer - This component is responsible for updating AVS of the state of all components 
      * whenever a new connection is established as part of the System interface of AVS.
      */
-    auto stateSynchronizer = capabilityAgents::system::StateSynchronizer::create(
-            contextManager, m_connectionManager);
-    if (!stateSynchronizer) {
+    // TODO: ACSDK-421: Revert this to use m_connectionManager rather than messageRouter.
+    m_stateSynchronizer = capabilityAgents::system::StateSynchronizer::create(
+            contextManager, messageRouter);
+    if (!m_stateSynchronizer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateStateSynchronizer"));
         return false;
     }
 
-    m_connectionManager->addConnectionStatusObserver(stateSynchronizer);
+    m_connectionManager->addConnectionStatusObserver(m_stateSynchronizer);
+    m_stateSynchronizer->addObserver(m_connectionManager);
+
+    /*
+     * Creating the User Inactivity Monitor - This component is responsibly for updating AVS of user inactivity as
+     * described in the System Interface of AVS.
+     */
+    auto userInactivityMonitor = capabilityAgents::system::UserInactivityMonitor::create(
+            m_connectionManager, exceptionSender);
+    if (!userInactivityMonitor) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateUserInactivityMonitor"));
+        return false;
+    }
 
     /*
      * Creating the Audio Input Processor - This component is the Capability Agent that implments the SpeechRecognizer
@@ -197,7 +219,8 @@ bool DefaultClient::initialize(
             contextManager,
             m_focusManager,
             m_dialogUXStateAggregator,
-            exceptionSender);
+            exceptionSender,
+            userInactivityMonitor);
     if (!m_audioInputProcessor) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateAudioInputProcessor"));
         return false;
@@ -225,6 +248,22 @@ bool DefaultClient::initialize(
     speechSynthesizer->addObserver(m_dialogUXStateAggregator);
 
     /*
+     * Creating the Audio Player - This component is the Capability Agent that implements the AudioPlayer
+     * interface of AVS.
+     */
+    m_audioPlayer = capabilityAgents::audioPlayer::AudioPlayer::create(
+            audioMediaPlayer,
+            m_connectionManager,
+            m_focusManager,
+            contextManager,
+            attachmentManager,
+            exceptionSender);
+    if (!m_audioPlayer) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateAudioPlayer"));
+        return false;
+    }
+
+    /*
      * Creating the Alerts Capability Agent - This component is the Capability Agent that implements the Alerts
      * interface of AVS.
      */
@@ -244,12 +283,29 @@ bool DefaultClient::initialize(
     m_connectionManager->addConnectionStatusObserver(m_alertsCapabilityAgent);
 
     /*
+     * Creating the Endpoint Handler - This component is responsible for handling directives from AVS instructing the
+     * client to change the endpoint to connect to.
+     */
+    auto endpointHandler = capabilityAgents::system::EndpointHandler::create(m_connectionManager, exceptionSender);
+    if (!endpointHandler) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateEndpointHandler"));
+        return false;   
+    }
+
+    /*
      * The following two statements show how to register capability agents to the directive sequencer.
      */
     if (!m_directiveSequencer->addDirectiveHandler(speechSynthesizer)) {
         ACSDK_ERROR(LX("initializeFailed")
                 .d("reason", "unableToRegisterDirectiveHandler")
                 .d("directiveHandler", "SpeechSynthesizer"));
+        return false;
+    }
+
+    if (!m_directiveSequencer->addDirectiveHandler(m_audioPlayer)) {
+        ACSDK_ERROR(LX("initializeFailed")
+                .d("reason", "unableToRegisterDirectiveHandler")
+                .d("directiveHandler", "AudioPlayer"));
         return false;
     }
 
@@ -264,6 +320,20 @@ bool DefaultClient::initialize(
         ACSDK_ERROR(LX("initializeFailed")
                 .d("reason", "unableToRegisterDirectiveHandler")
                 .d("directiveHandler", "AlertsCapabilityAgent"));
+        return false;        
+    }
+
+    if (!m_directiveSequencer->addDirectiveHandler(endpointHandler)) {
+        ACSDK_ERROR(LX("initializeFailed")
+                .d("reason", "unableToRegisterDirectiveHandler")
+                .d("directiveHandler", "EndpointHandler"));
+        return false;        
+    }
+
+    if (!m_directiveSequencer->addDirectiveHandler(userInactivityMonitor)) {
+        ACSDK_ERROR(LX("initializeFailed")
+                .d("reason", "unableToRegisterDirectiveHandler")
+                .d("directiveHandler", "UserInactivityMonitor"));
         return false;        
     }
 
@@ -338,8 +408,14 @@ DefaultClient::~DefaultClient() {
     if (m_directiveSequencer) {
         m_directiveSequencer->shutdown();
     }
+    if (m_stateSynchronizer) {
+        m_stateSynchronizer->shutdown();
+    }
     if (m_audioInputProcessor) {
         m_audioInputProcessor->resetState().get();
+    }
+    if (m_audioPlayer) {
+        m_audioPlayer->shutdown();
     }
     m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
 }

@@ -29,6 +29,7 @@
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/StateSynchronizerObserverInterface.h>
 
 #include "ACL/Transport/MessageRouterInterface.h"
 #include "ACL/Transport/MessageRouterObserverInterface.h"
@@ -69,6 +70,8 @@ namespace acl {
 class AVSConnectionManager :
     public avsCommon::sdkInterfaces::MessageSenderInterface,
     public avsCommon::sdkInterfaces::AVSEndpointAssignerInterface,
+    /* TODO: ACSDK-421: Remove the implementation of StateSynchronizerObserverInterface */
+    public avsCommon::sdkInterfaces::StateSynchronizerObserverInterface,
     public MessageRouterObserverInterface {
 public:
     /**
@@ -77,8 +80,9 @@ public:
      * @param messageRouter The entity which handles sending and receiving of AVS messages.
      * @param isEnabled The enablement setting.  If true, then the created object will attempt to connect to AVS.
      * @param connectionStatusObservers An optional set of observers which will be notified when the connection status
-     *     changes.
+     *     changes. The observers cannot be a nullptr.
      * @param messageObservers An optional set of observer which will be sent messages that arrive from AVS.
+     *      The observers cannot be a nullptr.
      * @return The created AVSConnectionManager object.
      */
     static std::shared_ptr<AVSConnectionManager> create(
@@ -160,6 +164,9 @@ public:
 
     void sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
 
+    /* TODO: ACSDK-421: Remove the implementation of StateSynchronizerObserverInterface */
+    void onStateChanged(avsCommon::sdkInterfaces::StateSynchronizerObserverInterface::State newState) override;
+
     /**
      * @note Set the URL endpoint for the AVS connection.  Calling this function with a new value will cause the
      * current active connection to be closed, and a new one opened to the new endpoint.
@@ -193,6 +200,10 @@ private:
 
     /// Internal state to indicate if the Connection object is enabled for making an AVS connection.
     std::atomic<bool> m_isEnabled;
+
+    /* TODO: ACSDK-421: Remove the implementation of StateSynchronizerObserverInterface */
+    /// Internal object that flags if @c StateSynchronizer had sent the initial event successfully.
+    std::atomic<bool> m_isSynchronized;
 
     /// Set of observers to notify when the connection status changes. @c m_connectionStatusObserverMutex must be
     /// acquired before access.

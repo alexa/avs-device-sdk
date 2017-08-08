@@ -21,6 +21,9 @@ include(Logger)
 # Setup keyword requirement variables.
 include(KeywordDetector)
 
+# Setup playlist parser variables.
+include(PlaylistParser)
+
 # Setup media player variables.
 include(MediaPlayer)
 

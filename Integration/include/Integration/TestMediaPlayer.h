@@ -46,15 +46,21 @@ public:
     ~TestMediaPlayer();
 
     avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(
-            std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) override;
+            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) override;
 
     avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(
-            std::unique_ptr<std::istream> stream, bool repeat) override;
+            std::shared_ptr<std::istream> stream, bool repeat) override;
+
+    avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(const std::string& url) override;
 
     avsCommon::utils::mediaPlayer::MediaPlayerStatus play() override;
 
     avsCommon::utils::mediaPlayer::MediaPlayerStatus stop() override;
-    
+
+    avsCommon::utils::mediaPlayer::MediaPlayerStatus pause() override;
+
+    avsCommon::utils::mediaPlayer::MediaPlayerStatus resume() override;
+
     int64_t getOffsetInMilliseconds() override;
 
     void setObserver(
@@ -68,9 +74,9 @@ private:
     /// The AttachmentReader to read audioData from.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_attachmentReader;
     /// Timer to wait to send onPlaybackFinished to the observer.
-    std::unique_ptr<avsCommon::utils::timing::Timer> m_timer;
+    std::shared_ptr<avsCommon::utils::timing::Timer> m_timer;
     // istream for Alerts. 
-    std::unique_ptr<std::istream> m_istream; 
+    std::shared_ptr<std::istream> m_istream; 
 };
 } // namespace test
 } // namespace integration

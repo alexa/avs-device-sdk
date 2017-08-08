@@ -60,6 +60,40 @@ public:
      * or playback.
      */
     virtual void onPlaybackError(std::string error) = 0;
+
+    /**
+     * This is an indication to the observer that the @c MediaPlayer has paused playing the audio data.
+     *
+     * @note The observer has to return soon. Otherwise this could block the @c MediaPlayer from processing other signals
+     * or playback.
+     */
+    virtual void onPlaybackPaused() {};
+
+    /**
+     * This is an indication to the observer that the @c MediaPlayer has resumed playing the audio data.
+     *
+     * @note The observer has to return soon. Otherwise this could block the @c MediaPlayer from processing other signals
+     * or playback.
+     */
+    virtual void onPlaybackResumed() {};
+
+    /**
+     * This is an indication to the observer that the @c MediaPlayer is experiencing a buffer underrun.
+     * This will only be sent after playback has started. Playback will be paused until the buffer is filled.
+     *
+     * @note The observer has to return soon. Otherwise this could block the @c MediaPlayer from processing other signals
+     * or playback.
+     */
+    virtual void onBufferUnderrun() {}
+
+    /**
+     * This is an indication to the observer that the @c MediaPlayer's buffer has refilled. This will only be sent after playback
+     * has started. Playback will resume.
+     *
+     * @note The observer has to return soon. Otherwise this could block the @c MediaPlayer from processing other signals
+     * or playback.
+     */
+    virtual void onBufferRefilled() {}
 };
 
 } // namespace mediaPlayer

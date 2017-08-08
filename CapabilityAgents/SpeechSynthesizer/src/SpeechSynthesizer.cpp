@@ -140,6 +140,7 @@ avsCommon::avs::DirectiveHandlerConfiguration SpeechSynthesizer::getConfiguratio
 }
 
 SpeechSynthesizer::~SpeechSynthesizer() {
+    ACSDK_DEBUG(LX("~SpeechSynthesizer"));
     m_speechPlayer->setObserver(nullptr);
     {
         std::unique_lock<std::mutex> lock(m_mutex);
@@ -168,35 +169,43 @@ SpeechSynthesizer::~SpeechSynthesizer() {
 }
 
 void SpeechSynthesizer::addObserver(std::shared_ptr<SpeechSynthesizerObserver> observer) {
+    ACSDK_DEBUG9(LX("addObserver").d("observer", observer.get()));
     m_executor.submit([this, observer] () { m_observers.insert(observer); });
 }
 
 void SpeechSynthesizer::removeObserver(std::shared_ptr<SpeechSynthesizerObserver> observer) {
+    ACSDK_DEBUG9(LX("removeObserver").d("observer", observer.get()));
     m_executor.submit([this, observer] () { m_observers.erase(observer); }).wait();
 }
 
 void SpeechSynthesizer::onDeregistered() {
+    ACSDK_DEBUG9(LX("onDeregistered"));
     // default no-op
 }
 
 void SpeechSynthesizer::handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive) {
+    ACSDK_DEBUG9(LX("handleDirectiveImmediately").d("messageId", directive->getMessageId()));
     auto info = createDirectiveInfo(directive, nullptr);
     m_executor.submit([this, info] () { executeHandleImmediately(info); });
 }
 
 void SpeechSynthesizer::preHandleDirective(std::shared_ptr<DirectiveInfo> info) {
+    ACSDK_DEBUG9(LX("preHandleDirective").d("messageId", info->directive->getMessageId()));
     m_executor.submit([this, info] () { executePreHandle(info); });
 }
 
 void SpeechSynthesizer::handleDirective(std::shared_ptr<DirectiveInfo> info) {
+    ACSDK_DEBUG9(LX("handleDirective").d("messageId", info->directive->getMessageId()));
     m_executor.submit([this, info] () { executeHandle(info); });
 }
 
 void SpeechSynthesizer::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
+    ACSDK_DEBUG9(LX("cancelDirective").d("messageId", info->directive->getMessageId()));
     m_executor.submit([this, info] () { executeCancel(info); });
 }
 
 void SpeechSynthesizer::onFocusChanged(FocusState newFocus) {
+    ACSDK_DEBUG(LX("onFocusChanged").d("newFocus", newFocus));
     std::unique_lock<std::mutex> lock(m_mutex);
     m_currentFocus = newFocus;
     setDesiredStateLocked(newFocus);
@@ -206,8 +215,10 @@ void SpeechSynthesizer::onFocusChanged(FocusState newFocus) {
     auto messageId = (m_currentInfo && m_currentInfo->directive) ? m_currentInfo->directive->getMessageId() : "";
     m_executor.submit([this] () { executeStateChange(); });
     // Block until we achieve the desired state.
-    if (!m_waitOnStateChange.wait_for(lock, STATE_CHANGE_TIMEOUT, [this] () {
+    if (m_waitOnStateChange.wait_for(lock, STATE_CHANGE_TIMEOUT, [this] () {
             return m_currentState == m_desiredState; })) {
+        ACSDK_DEBUG9(LX("onFocusChangedSuccess"));
+    } else {
         ACSDK_ERROR(LX("onFocusChangeFailed").d("reason", "stateChangeTimeout")
                 .d("messageId", messageId));
         if (m_currentInfo) {
@@ -216,32 +227,38 @@ void SpeechSynthesizer::onFocusChanged(FocusState newFocus) {
                     avsCommon::avs::ExceptionErrorType::INTERNAL_ERROR,
                     "stateChangeTimeout");
         }
-    };
+    }
 }
 
 void SpeechSynthesizer::provideState(const unsigned int stateRequestToken) {
+    ACSDK_DEBUG9(LX("provideState").d("token", stateRequestToken));
     std::lock_guard<std::mutex> lock(m_mutex);
     auto state = m_currentState;
     m_executor.submit([this, state, stateRequestToken] () { executeProvideState(state, stateRequestToken); });
 }
 
 void SpeechSynthesizer::onContextAvailable(const std::string& jsonContext) {
+    ACSDK_DEBUG9(LX("onContextAvailable").d("context", jsonContext));
     // default no-op
 }
 
 void SpeechSynthesizer::onContextFailure(const ContextRequestError error) {
+    ACSDK_DEBUG9(LX("onContextFailure").d("error", error));
     // default no-op
 }
 
 void SpeechSynthesizer::onPlaybackStarted() {
+    ACSDK_DEBUG9(LX("onPlaybackStarted"));
     m_executor.submit([this] () { executePlaybackStarted(); });
 }
 
 void SpeechSynthesizer::onPlaybackFinished() {
+    ACSDK_DEBUG9(LX("onPlaybackFinished"));
     m_executor.submit([this] () { executePlaybackFinished(); });
 }
 
 void SpeechSynthesizer::onPlaybackError(std::string error) {
+    ACSDK_DEBUG9(LX("onPlaybackError"));
     m_executor.submit([this, error] () { executePlaybackError(error); });
 }
 
@@ -296,6 +313,7 @@ void SpeechSynthesizer::init() {
 }
 
 void SpeechSynthesizer::executeHandleImmediately(std::shared_ptr<DirectiveInfo> info) {
+    ACSDK_DEBUG(LX("executeHandleImmediately").d("messageId", info->directive->getMessageId()));
     auto speakInfo = validateInfo("executeHandleImmediately", info, false);
     if (!speakInfo) {
         ACSDK_ERROR(LX("executeHandleImmediatelyFailed").d("reason", "invalidDirective"));
@@ -388,6 +406,7 @@ void SpeechSynthesizer::executeHandleAfterValidation(std::shared_ptr<SpeakDirect
 }
 
 void SpeechSynthesizer::executePreHandle(std::shared_ptr<DirectiveInfo> info) {
+    ACSDK_DEBUG(LX("executePreHandle").d("messageId", info->directive->getMessageId()));
     auto speakInfo = validateInfo("executePreHandle", info);
     if (!speakInfo) {
         ACSDK_ERROR(LX("executePreHandleFailed").d("reason", "invalidDirectiveInfo"));
@@ -397,6 +416,7 @@ void SpeechSynthesizer::executePreHandle(std::shared_ptr<DirectiveInfo> info) {
 }
 
 void SpeechSynthesizer::executeHandle(std::shared_ptr<DirectiveInfo> info) {
+    ACSDK_DEBUG(LX("executeHandle").d("messageId", info->directive->getMessageId()));
     auto speakInfo = validateInfo("executeHandle", info);
     if (!speakInfo) {
         ACSDK_ERROR(LX("executeHandleFailed").d("reason", "invalidDirectiveInfo"));
@@ -406,6 +426,7 @@ void SpeechSynthesizer::executeHandle(std::shared_ptr<DirectiveInfo> info) {
 }
 
 void SpeechSynthesizer::executeCancel(std::shared_ptr<DirectiveInfo> info) {
+    ACSDK_DEBUG(LX("executeCancel").d("messageId", info->directive->getMessageId()));
     auto speakInfo = validateInfo("executeCancel", info);
     if (!speakInfo) {
         ACSDK_ERROR(LX("executeCancelFailed").d("reason", "invalidDirectiveInfo"));
@@ -442,6 +463,7 @@ void SpeechSynthesizer::executeStateChange() {
         std::lock_guard<std::mutex> lock(m_mutex);
         newState = m_desiredState;
     }
+    ACSDK_DEBUG(LX("executeStateChange").d("newState", newState));
     switch (newState) {
         case SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING:
             m_currentInfo->sendPlaybackFinishedMessage = true;
@@ -449,6 +471,7 @@ void SpeechSynthesizer::executeStateChange() {
             startPlaying();
             break;
         case SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED:
+            m_currentInfo->sendPlaybackFinishedMessage = false;
             stopPlaying();
             break;
     }
@@ -456,6 +479,7 @@ void SpeechSynthesizer::executeStateChange() {
 
 void SpeechSynthesizer::executeProvideState(
             const SpeechSynthesizerObserver::SpeechSynthesizerState &state, const unsigned int& stateRequestToken) {
+    ACSDK_DEBUG(LX("executeProvideState").d("stateRequestToken", stateRequestToken));
     int64_t offsetInMilliseconds = 0;
     StateRefreshPolicy refreshPolicy = StateRefreshPolicy::NEVER;
     std::string speakDirectiveToken;
@@ -479,12 +503,13 @@ void SpeechSynthesizer::executeProvideState(
     auto result = m_contextManager->setState(CONTEXT_MANAGER_SPEECH_STATE, jsonState, refreshPolicy,
             stateRequestToken);
     if (result != SetStateResult::SUCCESS) {
-        ACSDK_ERROR(LX("executeProvideState").d("reason", "contextManagerSetStateFailed").
+        ACSDK_ERROR(LX("executeProvideStateFailed").d("reason", "contextManagerSetStateFailed").
                 d("token", speakDirectiveToken));
     }
 }
 
 void SpeechSynthesizer::executePlaybackStarted() {
+    ACSDK_DEBUG(LX("executePlaybackStarted"));
     {
         std::lock_guard<std::mutex> lock(m_mutex);
         setCurrentStateLocked(SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING);
@@ -503,6 +528,7 @@ void SpeechSynthesizer::executePlaybackStarted() {
 }
 
 void SpeechSynthesizer::executePlaybackFinished() {
+    ACSDK_DEBUG(LX("executePlaybackFinished"));
     if (!m_currentInfo) {
         ACSDK_ERROR(LX("executePlaybackFinishedIgnored").d("reason", "nullptrDirectiveInfo"));
         return;
@@ -538,6 +564,7 @@ void SpeechSynthesizer::executePlaybackFinished() {
 }
 
 void SpeechSynthesizer::executePlaybackError(std::string error) {
+    ACSDK_DEBUG(LX("executePlaybackError").d("error", error));
     if (!m_currentInfo) {
         return;
     }
@@ -589,6 +616,7 @@ std::string SpeechSynthesizer::buildPayload(std::string &token) {
 }
 
 void SpeechSynthesizer::startPlaying() {
+    ACSDK_DEBUG9(LX("startPlaying"));
     m_speechPlayer->setSource(std::move(m_currentInfo->attachmentReader));
     auto mediaPlayerStatus = m_speechPlayer->play();
     switch (mediaPlayerStatus) {
@@ -602,6 +630,7 @@ void SpeechSynthesizer::startPlaying() {
 }
 
 void SpeechSynthesizer::stopPlaying() {
+    ACSDK_DEBUG9(LX("stopPlaying"));
     auto mediaPlayerStatus = m_speechPlayer->stop();
     switch (mediaPlayerStatus) {
         case MediaPlayerStatus::SUCCESS:
@@ -648,6 +677,7 @@ void SpeechSynthesizer::resetCurrentInfo(std::shared_ptr<SpeakDirectiveInfo> spe
 }
 
 void SpeechSynthesizer::setHandlingCompleted() {
+    ACSDK_DEBUG9(LX("setHandlingCompleted"));
     if (m_currentInfo && m_currentInfo->result) {
         m_currentInfo->result->setCompleted();
     }
@@ -676,6 +706,7 @@ void SpeechSynthesizer::sendExceptionEncounteredAndReportMissingProperty(
 }
 
 void SpeechSynthesizer::releaseForegroundFocus() {
+    ACSDK_DEBUG9(LX("releaseForegroundFocus"));
     {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_currentFocus = FocusState::NONE;
@@ -740,6 +771,7 @@ void SpeechSynthesizer::addToDirectiveQueue(std::shared_ptr<SpeakDirectiveInfo> 
         m_speakInfoQueue.push_back(speakInfo);
         executeHandleAfterValidation(speakInfo);
     } else {
+        ACSDK_DEBUG9(LX("addToDirectiveQueue").d("queueSize", m_speakInfoQueue.size()));
         m_speakInfoQueue.push_back(speakInfo);
     }
 }

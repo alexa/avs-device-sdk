@@ -19,6 +19,7 @@
 #define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_INTERFACE_H_
 
 #include <cstdint>
+#include <future>
 #include <memory>
 
 #include "AVSCommon/AVS/Attachment/AttachmentReader.h"
@@ -65,7 +66,20 @@ public:
      * stopping the player, this will return @c FAILURE.
      */
     virtual MediaPlayerStatus setSource(
-            std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) = 0;
+            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) = 0;
+
+    /**
+     * Set the source to play. The source should be set before issuing @c play or @c stop.
+     *
+     * The @c MediaPlayer can handle only one source at a time.
+     *
+     * @param url The url to set as the source.
+     *
+     * @return @c SUCCESS if the source was set successfully else @c FAILURE. If setSource is called when audio is
+     * currently playing, the playing audio will be stopped and the source set to the new value. If there is an error
+     * stopping the player, this will return @c FAILURE.
+     */
+    virtual MediaPlayerStatus setSource(const std::string& url) = 0;
 
     /**
      * Set the source to play. The source should be set before issuing @c play or @c stop.
@@ -80,7 +94,12 @@ public:
      * stopping the player, this will return @c FAILURE.
      */
     virtual MediaPlayerStatus setSource(
-            std::unique_ptr<std::istream> stream, bool repeat) = 0;
+            std::shared_ptr<std::istream> stream, bool repeat) = 0;
+
+    /**
+     * TODO ACSDK-423: Implement setOffset behavior.
+     */
+    virtual MediaPlayerStatus setOffset(std::chrono::milliseconds offset) { return MediaPlayerStatus::FAILURE; }
 
     /**
      * Start playing audio. The source should be set before issuing @c play. If @c play is called without
@@ -105,6 +124,31 @@ public:
      * transition was unsuccessful, returns @c FAILURE.
      */
     virtual MediaPlayerStatus stop() = 0;
+
+    /**
+     * Pause playing the audio. Once audio has been paused, calling @c resume() will start the audio.
+     * The source should be set before issuing @c pause. If @c pause is called without setting source, it will
+     * return an error.
+     * Calling @c pause will only have an effect when audio is currently playing. Calling @c pause in all other states will have no effect,
+     * and result in a return of @c FAILURE.
+     *
+     * @return @c SUCCESS if the state transition to pause was successful. If state transition is pending then it returns
+     * @c PENDING and the state transition status is notified via @c onPlaybackPaused or @c onPlaybackError. If state
+     * transition was unsuccessful, returns @c FAILURE.
+     */
+    virtual MediaPlayerStatus pause() = 0;
+
+    /**
+     * Resume playing the paused audio. The source should be set before issuing @c resume. If @c resume is called without setting source, it will
+     * return an error.
+     * Calling @c resume will only have an effect when audio is currently paused. Calling @c resume in other states will have no effect,
+     * and result in a return of @c FAILURE.
+     *
+     * @return @c SUCCESS if the state transition to play was successful. If state transition is pending then it returns
+     * @c PENDING and the state transition status is notified via @c onPlaybackResumed or @c onPlaybackError. If state
+     * transition was unsuccessful, returns @c FAILURE.
+     */
+    virtual MediaPlayerStatus resume() = 0;
 
     /**
      * Returns the offset, in milliseconds, of the media stream.

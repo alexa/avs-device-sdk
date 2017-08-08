@@ -40,8 +40,6 @@ public:
         STARTED,
         /// The renderer has stopped rendering due to being stopped via a direct api call.
         STOPPED,
-        /// The renderer has stopped due to completion of playing assets, or by an internal timeout.
-        COMPLETED,
         /// The renderer has encountered an error.
         ERROR
     };

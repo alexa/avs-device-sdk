@@ -447,9 +447,6 @@ private:
     /// @c SpeakDirectiveInfo instance for the @c AVSDirective currently being handled.
     std::shared_ptr<SpeakDirectiveInfo> m_currentInfo;
 
-    /// @c Executor which queues up operations from asynchronous API calls.
-    avsCommon::utils::threading::Executor m_executor;
-
     /// Mutex to serialize access to m_currentState, m_desiredState, and m_waitOnStateChange.
     std::mutex m_mutex;
 
@@ -471,6 +468,13 @@ private:
     /// Serializes access to @c m_speakInfoQueue
     std::mutex m_speakInfoQueueMutex;
 
+    /**
+     * @c Executor which queues up operations from asynchronous API calls.
+     *
+     * @note This declaration needs to come *after* any variables used by the executor thread so that the thread shuts
+     *     down before the variables are destroyed.
+     */
+    avsCommon::utils::threading::Executor m_executor;
 };
 
 } // namespace speechSynthesizer

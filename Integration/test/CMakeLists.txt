@@ -14,10 +14,11 @@ set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${AVSSystem_SOURCE_DIR}/include"
      "${GST_INCLUDE_DIRS}"
      "${AVSCommon_INCLUDE_DIRS}"
+     "${AudioPlayer_INCLUDE_DIRS}"
      "${MediaPlayer_SOURCE_DIR}/include"
      "${CONTEXTMANAGER_SOURCE_DIR}/include")
 
-    set(LINK_PATH ACL AuthDelegate AFML ADSL AIP Alerts AVSSystem ContextManager KWD SpeechSynthesizer Integration gtest gmock)
+    set(LINK_PATH ACL AuthDelegate AFML ADSL AIP Alerts AudioPlayer AVSSystem ContextManager KWD SpeechSynthesizer Integration gtest gmock)
 
     if(KITTAI_KEY_WORD_DETECTOR)
         SET(LINK_PATH ${LINK_PATH} KITTAI)
@@ -54,7 +55,8 @@ if(BUILD_TESTING)
         "${CMAKE_CURRENT_SOURCE_DIR}/AlexaDirectiveSequencerLibraryTest.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/AudioInputProcessorIntegrationTest.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/SpeechSynthesizerIntegrationTest.cpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/AlertsIntegrationTest.cpp")
+        "${CMAKE_CURRENT_SOURCE_DIR}/AlertsIntegrationTest.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/AudioPlayerIntegrationTest.cpp")
     # file(GLOB_RECURSE testSourceFiles RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*Test.cpp")
     foreach (testSourceFile IN LISTS testSourceFiles)
         get_filename_component(testName ${testSourceFile} NAME_WE)
@@ -74,6 +76,7 @@ if(BUILD_TESTING)
             COMMAND AudioInputProcessorIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
             COMMAND SpeechSynthesizerIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
             COMMAND AlertsIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
+            COMMAND AudioPlayerIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
             COMMAND ${CTEST_CUSTOM_POST_TEST})
     message(STATUS "Please fill ${SDK_CONFIG_FILE_TARGET} before you execute integration tests.")
 endif()

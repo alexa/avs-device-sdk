@@ -276,7 +276,7 @@ Value ContextManager::buildState(const NamespaceAndName& namespaceAndName, const
     }
 
     state.AddMember(StringRef(HEADER_JSON_KEY), header, allocator);
-    state.AddMember(StringRef(PAYLOAD_JSON_KEY), payload, allocator);
+    state.AddMember(StringRef(PAYLOAD_JSON_KEY), Value(payload, allocator), allocator);
 
     return state;
 }

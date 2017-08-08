@@ -20,11 +20,9 @@
 
 #include <memory>
 
-#include <ACL/AVSConnectionManager.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
-#include <rapidjson/document.h>
 
 namespace alexaClientSDK {
 namespace adsl {

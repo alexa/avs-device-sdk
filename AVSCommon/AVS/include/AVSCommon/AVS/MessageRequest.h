@@ -46,6 +46,9 @@ public:
         /// The send failed because AVS was not connected.
         NOT_CONNECTED,
 
+        /// The send failed because AVS is not synchronized.
+        NOT_SYNCHRONIZED,
+
         /// The send failed because of timeout waiting for AVS response.
         TIMEDOUT,
 

@@ -40,9 +40,6 @@ static const std::string TAG("Renderer");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-/// We won't allow an alert to render more than 1 hour.
-const std::chrono::seconds MAXIMUM_ALERT_RENDERING_TIME_SECONDS = std::chrono::hours(1);
-
 std::shared_ptr<Renderer> Renderer::create(std::shared_ptr<MediaPlayerInterface> mediaPlayer) {
     if (!mediaPlayer) {
         ACSDK_ERROR(LX("createFailed").m("mediaPlayer parameter was nullptr."));
@@ -56,7 +53,7 @@ std::shared_ptr<Renderer> Renderer::create(std::shared_ptr<MediaPlayerInterface>
 
 Renderer::Renderer(std::shared_ptr<MediaPlayerInterface> mediaPlayer) :
         m_mediaPlayer{mediaPlayer}, m_observer{nullptr}, m_loopCount{0}, m_loopPauseInMilliseconds{0},
-        m_isRendering{false}, m_isStopping{false} {
+        m_isRendering{false} {
 
 }
 
@@ -89,7 +86,6 @@ void Renderer::start(const std::string & localAudioFilePath,
     m_urls = urls;
     m_loopCount = loopCount;
     m_loopPauseInMilliseconds = loopPauseInMilliseconds;
-    m_timeRenderingStarted = std::chrono::steady_clock::now();
     lock.unlock();
 
     m_executor.submit([this] () { executeStart(); });
@@ -101,7 +97,6 @@ void Renderer::stop() {
 
 void Renderer::executeStart() {
     std::unique_lock<std::mutex> lock(m_mutex);
-    m_isStopping = false;
     std::string localAudioFilePathCopy = m_localAudioFilePath;
     lock.unlock();
 
@@ -115,12 +110,16 @@ void Renderer::executeStart() {
 
 void Renderer::executeStop() {
     std::unique_lock<std::mutex> lock(m_mutex);
-    m_isStopping = true;
     bool isRenderingCopy = m_isRendering;
+    RendererObserverInterface* observerCopy = m_observer;
     lock.unlock();
 
     if (isRenderingCopy) {
         m_mediaPlayer->stop();
+    } else {
+        if (observerCopy) {
+            observerCopy->onRendererStateChange(RendererObserverInterface::State::STOPPED);
+        }
     }
 }
 
@@ -137,31 +136,12 @@ void Renderer::onPlaybackStarted() {
 
 void Renderer::onPlaybackFinished() {
     std::unique_lock<std::mutex> lock(m_mutex);
-    bool isStoppingCopy = m_isStopping;
     m_isRendering = false;
-    auto timeRenderingStartedCopy = m_timeRenderingStarted;
     RendererObserverInterface* observerCopy = m_observer;
     lock.unlock();
 
-    auto currentTime = std::chrono::steady_clock::now();
-    auto secondsRendering =
-            std::chrono::duration_cast<std::chrono::seconds>(currentTime - timeRenderingStartedCopy);
-
-    // basic error checking in case clocks are off.
-    if (secondsRendering.count() < 0) {
-        secondsRendering = std::chrono::seconds::zero();
-        ACSDK_ERROR(LX("onPlaybackFinished").m("time rendering has been evaluated to less than zero."));
-    }
-
-    if (secondsRendering > MAXIMUM_ALERT_RENDERING_TIME_SECONDS) {
-        m_mediaPlayer->stop();
-        if (observerCopy) {
-            observerCopy->onRendererStateChange(RendererObserverInterface::State::COMPLETED);
-        }
-    } else if (isStoppingCopy) {
-        if (observerCopy) {
-            observerCopy->onRendererStateChange(RendererObserverInterface::State::STOPPED);
-        }
+    if (observerCopy) {
+        observerCopy->onRendererStateChange(RendererObserverInterface::State::STOPPED);
     }
 }
 

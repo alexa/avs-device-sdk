@@ -29,6 +29,7 @@
 #include "AVSCommon/Utils/Logger/Level.h"
 #include "AVSCommon/Utils/Logger/LogEntry.h"
 #include "AVSCommon/Utils/Logger/LogLevelObserverInterface.h"
+#include "AVSCommon/Utils/Logger/SinkObserverInterface.h"
 
 /**
  * Inner part of ACSDK_STRINGIFY.  Turns an expression in to a string literal.

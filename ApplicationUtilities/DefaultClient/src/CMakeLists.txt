@@ -12,6 +12,7 @@ target_link_libraries(DefaultClient
     AFML 
     AIP 
     Alerts
-    SpeechSynthesizer 
+    SpeechSynthesizer
+    AudioPlayer
     AVSSystem
     ContextManager)

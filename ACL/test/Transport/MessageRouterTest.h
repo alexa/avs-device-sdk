@@ -128,6 +128,7 @@ public:
     static const std::string MESSAGE;
     static const int MESSAGE_LENGTH;
     static const std::chrono::milliseconds SHORT_TIMEOUT_MS;
+    static const std::string CONTEXT_ID;
 
     std::shared_ptr<MockMessageRouterObserver> m_mockMessageRouterObserver;
     std::shared_ptr<MockAuthDelegate> m_mockAuthDelegate;
@@ -139,6 +140,7 @@ public:
 const std::string MessageRouterTest::MESSAGE = "123456789";
 const int MessageRouterTest::MESSAGE_LENGTH = 10;
 const std::chrono::milliseconds MessageRouterTest::SHORT_TIMEOUT_MS = std::chrono::milliseconds(1000);
+const std::string MessageRouterTest::CONTEXT_ID = "contextIdString";
 
 } // namespace test
 } // namespace acl

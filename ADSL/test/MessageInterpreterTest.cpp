@@ -32,7 +32,6 @@ namespace adsl {
 namespace test {
 
 using namespace ::testing;
-using namespace alexaClientSDK::acl;
 using namespace alexaClientSDK::avsCommon;
 using namespace alexaClientSDK::avsCommon::avs;
 using namespace alexaClientSDK::avsCommon::avs::attachment;

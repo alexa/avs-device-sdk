@@ -35,15 +35,19 @@ TestMediaPlayer::~TestMediaPlayer() {
 }
 
 avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::setSource(
-        std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
     m_attachmentReader = std::move(attachmentReader);
     return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
 }
 
 avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::setSource(
-        std::unique_ptr<std::istream> stream, bool repeat) {
-    m_istream = std::move(stream);
+        std::shared_ptr<std::istream> stream, bool repeat) {
+    m_istream = stream;
     return avsCommon::utils::mediaPlayer::MediaPlayerStatus::PENDING;
+}
+
+avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::setSource(const std::string& url) {
+    return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
 }
 
 avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::play() {
@@ -76,6 +80,16 @@ avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::stop() {
     } else {
         return avsCommon::utils::mediaPlayer::MediaPlayerStatus::FAILURE;
     }      
+}
+
+// TODO Add implementation
+avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::pause() {
+    return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
+}
+
+// TODO Add implementation
+avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::resume() {
+    return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
 }
 
 int64_t TestMediaPlayer::getOffsetInMilliseconds() {

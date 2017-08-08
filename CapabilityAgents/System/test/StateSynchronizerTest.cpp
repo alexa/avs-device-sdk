@@ -15,6 +15,8 @@
  * permissions and limitations under the License.
  */
 
+/// @file StateSynchronizerTest
+
 #include <gtest/gtest.h>
 #include <rapidjson/document.h>
 
@@ -22,6 +24,7 @@
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
+#include <AVSCommon/SDKInterfaces/MockStateSynchronizerObserver.h>
 
 #include "System/StateSynchronizer.h"
 
@@ -73,6 +76,13 @@ static bool checkMessageRequest(std::shared_ptr<MessageRequest> messageRequest) 
     return payloadNode->value.ObjectEmpty();
 }
 
+class TestMessageSender : public MessageSenderInterface {
+    void sendMessage(std::shared_ptr<MessageRequest> messageRequest) {
+        EXPECT_TRUE(checkMessageRequest(messageRequest));
+        messageRequest->onSendCompleted(MessageRequest::Status::SUCCESS);
+    }
+};
+
 /// Test harness for @c StateSynchronizer class.
 class StateSynchronizerTest : public ::testing::Test {
 public:
@@ -83,12 +93,15 @@ protected:
     /// Mocked Context Manager. Note that we make it a strict mock to ensure we test the flow completely.
     std::shared_ptr<StrictMock<MockContextManager>> m_mockContextManager;
     /// Mocked Message Sender. Note that we make it a strict mock to ensure we test the flow completely.
-    std::shared_ptr<StrictMock<MockMessageSender>> m_mockMessageSender;
+    std::shared_ptr<TestMessageSender> m_mockMessageSender;
+    /// Mocked State Synchronizer Observer. Note that we make it a strict mock to ensure we test the flow completely.
+    std::shared_ptr<StrictMock<MockStateSynchronizerObserver>> m_mockStateSynchronizerObserver;
 };
 
 void StateSynchronizerTest::SetUp() {
     m_mockContextManager = std::make_shared<StrictMock<MockContextManager>>();
-    m_mockMessageSender = std::make_shared<StrictMock<MockMessageSender>>();
+    m_mockMessageSender = std::make_shared<TestMessageSender>();
+    m_mockStateSynchronizerObserver = std::make_shared<StrictMock<MockStateSynchronizerObserver>>();
 }
 
 /**
@@ -143,7 +156,29 @@ TEST_F(StateSynchronizerTest, contextReceivedSendsMessage) {
     auto stateSynchronizer = StateSynchronizer::create(strictMockContextManager, m_mockMessageSender);
     ASSERT_NE(nullptr, stateSynchronizer);
 
-    EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequest,Eq(true))));
+    stateSynchronizer->onContextAvailable(MOCK_CONTEXT);
+}
+
+/**
+ * This case tests if @c onContextReceived sends a message request to the message sender interface.
+ */
+TEST_F(StateSynchronizerTest, contextReceivedSendsMessageAndNotifiesObserver) {
+    auto stateSynchronizer = StateSynchronizer::create(m_mockContextManager, m_mockMessageSender);
+    ASSERT_NE(nullptr, stateSynchronizer);
+
+    EXPECT_CALL(
+            *m_mockStateSynchronizerObserver,
+            onStateChanged(StateSynchronizerObserverInterface::State::NOT_SYNCHRONIZED)).Times(1);
+    stateSynchronizer->addObserver(m_mockStateSynchronizerObserver);
+
+    EXPECT_CALL(*m_mockContextManager, getContext(NotNull()));
+    stateSynchronizer->onConnectionStatusChanged(
+            ConnectionStatusObserverInterface::Status::CONNECTED,
+            ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
+
+    EXPECT_CALL(
+            *m_mockStateSynchronizerObserver,
+            onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED)).Times(1);
     stateSynchronizer->onContextAvailable(MOCK_CONTEXT);
 }
 

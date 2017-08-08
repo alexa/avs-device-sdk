@@ -56,9 +56,10 @@ bool convert8601TimeStringToUnix(const std::string & timeString, int64_t* unixTi
 /**
  * Gets the current time in Unix epoch time, as a 64 bit integer.
  *
- * @return The current time in Unix epoch time, as a 64 bit integer.
+ * @param[out] currentTime The current time in Unix epoch time, as a 64 bit integer.
+ * @return Whether the get time was successful.
  */
-int64_t getCurrentUnixTime();
+bool getCurrentUnixTime(int64_t* currentTime);
 
 } // namespace timing
 } // namespace utils

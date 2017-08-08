@@ -23,6 +23,8 @@
 #include <deque>
 #include <mutex>
 
+#include <ACL/AVSConnectionManager.h>
+
 #include "AVSCommon/SDKInterfaces/MessageSenderInterface.h"
 #include "AVSCommon/SDKInterfaces/MessageObserverInterface.h"
 

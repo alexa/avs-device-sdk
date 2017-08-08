@@ -56,6 +56,7 @@
 #include "Integration/TestMessageSender.h"
 #include "Integration/TestDirectiveHandler.h"
 #include "Integration/TestExceptionEncounteredSender.h"
+#include "System/UserInactivityMonitor.h"
 
 // If the tests are created with both Kittai and Sensory, Kittai is chosen.
 #ifdef KWD_KITTAI
@@ -78,6 +79,7 @@ using namespace alexaClientSDK::avsCommon::avs::attachment;
 using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 using namespace alexaClientSDK::avsCommon::avs::initialization;
 using namespace capabilityAgents::aip;
+using namespace capabilityAgents::system;
 using namespace sdkInterfaces;
 using namespace avsCommon::utils::sds;
 using namespace avsCommon::utils::json;
@@ -445,13 +447,17 @@ protected:
                 ASSERT_NE (nullptr, m_avsConnectionManager);
         connect();
 
+        m_userInactivityMonitor = UserInactivityMonitor::create(
+                m_avsConnectionManager,
+                m_exceptionEncounteredSender);
         m_AudioInputProcessor = AudioInputProcessor::create(
             m_directiveSequencer,
             m_avsConnectionManager,
             m_contextManager,
             m_focusManager,
             m_dialogUXStateAggregator,
-            m_exceptionEncounteredSender
+            m_exceptionEncounteredSender,
+            m_userInactivityMonitor
         );
         ASSERT_NE (nullptr, m_AudioInputProcessor);
         m_AudioInputProcessor->addObserver(m_dialogUXStateAggregator);
@@ -554,6 +560,7 @@ protected:
     std::shared_ptr<afml::FocusManager> m_focusManager;
     std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> m_dialogUXStateAggregator;
     std::shared_ptr<TestClient> m_testClient;
+    std::shared_ptr<UserInactivityMonitor> m_userInactivityMonitor;
     std::shared_ptr<AudioInputProcessor> m_AudioInputProcessor;
     std::shared_ptr<AipStateObserver> m_StateObserver;
     std::shared_ptr<tapToTalkButton> m_tapToTalkButton;

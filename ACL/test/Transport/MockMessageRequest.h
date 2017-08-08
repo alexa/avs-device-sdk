@@ -38,6 +38,8 @@ public:
      */
     MockMessageRequest() : avsCommon::avs::MessageRequest{"", nullptr} { }
     MOCK_METHOD1(onExceptionReceived, void(const std::string & exceptionMessage));
+    MOCK_METHOD1(onSendCompleted, void(Status status));
+
 };
 
 } // namespace test

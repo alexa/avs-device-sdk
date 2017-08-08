@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+#include <ctime>
+
 #include "AVSCommon/Utils/Timing/TimeUtils.h"
 
 #include "AVSCommon/Utils/Logger/Logger.h"
@@ -99,8 +101,13 @@ bool convert8601TimeStringToUnix(const std::string & timeString, int64_t* unixTi
         return false;
     }
 
-    time_t rawtime = time(0);
-    tm* timeInfo = localtime(&rawtime);
+    std::time_t rawtime = std::time(0);
+    auto timeInfo = std::localtime(&rawtime);
+
+    if (!timeInfo) {
+        ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("localtime returned nullptr."));
+        return false;
+    }
 
     if (timeString.length() != ENCODED_TIME_STRING_EXPECTED_LENGTH) {
         ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").d("unexpected time string length:", timeString.length()));
@@ -147,20 +154,29 @@ bool convert8601TimeStringToUnix(const std::string & timeString, int64_t* unixTi
     timeInfo->tm_year -= 1900;
     timeInfo->tm_mon -= 1;
 
-    *unixTime = static_cast<int64_t>(mktime(timeInfo));
+    *unixTime = static_cast<int64_t>(std::mktime(timeInfo));
 
     return true;
 }
 
-int64_t getCurrentUnixTime() {
+bool getCurrentUnixTime(int64_t* currentTime) {
 
     // TODO : ACSDK-387 to investigate a simpler and more portable implementation of this logic.
 
-    time_t rawtime = time(0);
-    tm* timeInfo = localtime(&rawtime);
-    int64_t unixEpochNow = static_cast<int64_t>(mktime(timeInfo));
+    if (!currentTime) {
+        ACSDK_ERROR(LX("getCurrentUnixTimeFailed").m("currentTime parameter was nullptr."));
+        return false;
+    }
 
-    return unixEpochNow;
+    std::time_t rawtime = std::time(0);
+    auto timeInfo = std::localtime(&rawtime);
+    if (!timeInfo) {
+        ACSDK_ERROR(LX("getCurrentUnixTimeFailed").m("localtime returned nullptr."));
+        return false;
+    }
+    *currentTime = static_cast<int64_t>(std::mktime(timeInfo));
+
+    return true;
 }
 
 } // namespace timing

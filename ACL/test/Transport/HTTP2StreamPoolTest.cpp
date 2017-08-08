@@ -96,7 +96,6 @@ TEST_F(HTTP2StreamPoolTest, initGetFails) {
     ASSERT_EQ(stream, nullptr);
     stream = m_testableStreamPool->createGetStream(TEST_LIBCURL_URL, LIBCURL_TEST_AUTH_STRING, nullptr);
     ASSERT_EQ(stream, nullptr);
-    stream = m_testableStreamPool->createGetStream(TEST_LIBCURL_URL, LIBCURL_TEST_AUTH_STRING, &m_testableConsumer);
 }
 
 /**

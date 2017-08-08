@@ -1,16 +1,14 @@
-## Alexa Client SDK v0.6
+## AVS Device SDK v1.0.0
 
-This release introduces an implementation of the `Alerts` capability agent with support for timers and alarms, as well as classes used to handle directives and events in the [Systems interface](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system), and a sample app that demonstrates SDK functionality.
-
-**NOTE**: This release requires a filesystem to store audio assets for timers and alarms.  
-
-Native components for the following capability agents are **not** included in this release and will be added in future releases: `AudioPlayer`, `PlaybackController`, `Speaker`, and  `Settings`. However, it's important to note, this release does support directives from the referenced interfaces.
+Please note the following for this release:  
+* Native components for the following capability agents are **not** included in v1.0 and will be added in future releases: `PlaybackController`, `Speaker`, and `Settings`.  
+* iHeartRadio is supported. Support for additional audio codecs, containers, streaming formats, and playlists will be included in future releases.  
 
 ## Overview
 
-The Alexa Client SDK provides a modern C++ (11 or later) interface for the Alexa Voice Service (AVS) that allows developers to add intelligent voice control to connected products. It is modular and abstracted, providing components to handle discrete functionality such as speech capture, audio processing, and communications, with each component exposing APIs that you can use and customize for your integration.  
+The AVS Device SDK for C++ provides a modern C++ (11 or later) interface for the Alexa Voice Service (AVS) that allows developers to add intelligent voice control to connected products. It is modular and abstracted, providing components to handle discrete functionality such as speech capture, audio processing, and communications, with each component exposing APIs that you can use and customize for your integration. It also includes a sample app, which demonstrates interactions with the Alexa Voice Service (AVS).   
 
-The SDK also includes a sample app that demonstrates interactions with AVS.  
+To quickly setup your Raspberry Pi development environment or to learn how to optimize libcurl for size, [click here](https://github.com/alexa/alexa-client-sdk/wiki) to see the wiki.
 
 * [Common Terms](#common-terms)  
 * [SDK Components](#sdk-components)   
@@ -21,7 +19,7 @@ The SDK also includes a sample app that demonstrates interactions with AVS.
 * [Run Unit Tests](#run-unit-tests)  
 * [Run Integration Tests](#run-integration-tests)  
 * [Run the Sample App](#run-the-sample-app)
-* [Alexa Client SDK API Documentation(Doxygen)](#alexa-client-sdk-api-documentation)
+* [AVS Device SDK for C++ API Documentation(Doxygen)](#alexa-client-sdk-api-documentation)
 * [Resources and Guides](#resources-and-guides)  
 * [Release Notes](#release-notes)
 
@@ -35,9 +33,9 @@ The SDK also includes a sample app that demonstrates interactions with AVS.
 
 ## SDK Components
 
-This architecture diagram illustrates the data flows between components that comprise the Alexa Client SDK.
+This architecture diagram illustrates the data flows between components that comprise the AVS Device SDK for C++.
 
-![SDK Architecture Diagram](https://images-na.ssl-images-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-voice-service/docs/avs-cpp-sdk-architecture-20170601.png)
+![SDK Architecture Diagram](https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/Alexa_Device_SDK_Architecture.png)
 
 **Audio Signal Processor (ASP)** - Applies signal processing algorithms to both input and output audio channels. The applied algorithms are designed to produce clean audio data and include, but are not limited to: acoustic echo cancellation (AEC), beam forming (fixed or adaptive), voice activity detection (VAD), and dynamic range compression (DRC). If a multi-microphone array is present, the ASP constructs and outputs a single audio stream for the array.
 
@@ -76,7 +74,9 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 * [Speaker](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speaker) - The interface for volume control, including mute and unmute.
 * [System](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system) - The interface for communicating product status/state to AVS.
 
-## Minimum Requirements and Dependencies
+## Minimum Requirements and Dependencies  
+
+Instructions are available to help you quickly [setup a development environment for RaspberryPi](#resources-and-guides), and [build libcurl with nghttp2 for macOS](#resources-and-guides).
 
 * C++ 11 or later
 * [GNU Compiler Collection (GCC) 4.8.5](https://gcc.gnu.org/) or later **OR** [Clang 3.3](http://clang.llvm.org/get_started.html) or later
@@ -85,8 +85,10 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 * [nghttp2 1.0](https://github.com/nghttp2/nghttp2) or later
 * [OpenSSL 1.0.2](https://www.openssl.org/source/) or later
 * [Doxygen 1.8.13](http://www.stack.nl/~dimitri/doxygen/download.html) or later (required to build API documentation)  
-* **NEW** - [SQLite 3.19.3](https://www.sqlite.org/download.html) or later (required for Alerts)  
-* **NEW** - For Alerts to work as expected, the device system clock must be set to UTC time. We recommend using `NTP` to do this.
+* [SQLite 3.19.3](https://www.sqlite.org/download.html) or later (required for Alerts)  
+* For Alerts to work as expected:  
+  * The device system clock must be set to UTC time. We recommend using `NTP` to do this   
+  * A filesystem is required  
 
 **MediaPlayer Reference Implementation Dependencies**  
 Building the reference implementation of the `MediaPlayerInterface` (the class `MediaPlayer`) is optional, but requires:  
@@ -97,14 +99,14 @@ Building the reference implementation of the `MediaPlayerInterface` (the class `
 * [GStreamer Libav Plugin 1.8](https://gstreamer.freedesktop.org/releases/gst-libav/1.8.0.html) or later **OR**
 [GStreamer Ugly Plugins 1.8](https://gstreamer.freedesktop.org/releases/gst-plugins-ugly/1.8.0.html) or later, for decoding MP3 data.
 
-**NOTE**: The plugins may depend on libraries which need to be installed as well for the GStreamer based `MediaPlayer` to work correctly.  
+**NOTE**: The plugins may depend on libraries which need to be installed for the GStreamer based `MediaPlayer` to work correctly.  
 
 **Sample App Dependencies**  
 Building the sample app is optional, but requires:  
 * [PortAudio v190600_20161030](http://www.portaudio.com/download.html)
 * GStreamer
 
-**NOTE**: The sample app will still work with or without the SDK being built with a wake word engine. If built without a wake word engine, hands-free mode will be disabled in the sample app.
+**NOTE**: The sample app will work with or without a wake word engine. If built without a wake word engine, hands-free mode will be disabled in the sample app.  
 
 ## Prerequisites
 
@@ -156,12 +158,14 @@ The following build types are supported:
 * `RELEASE` - Adds `-O2` flag and removes `-g` flag.
 * `MINSIZEREL` - Compiles with `RELEASE` flags and optimizations (`-O`s) for a smaller build size.
 
-To specify a build type, use this command in place of step 4 below (see [Build for Generic Linux](#generic-linux) or [Build for macOS](#build-for-macosß)):
-`cmake <path-to-source> -DCMAKE_BUILD_TYPE=<build-type>`
+To specify a build type, use this command in place of step 4 below:
+`cmake <path-to-source> -DCMAKE_BUILD_TYPE=<build-type>`  
 
-### Build with a Wake Word Detector
+### Build with a Wake Word Detector  
 
-The Alexa Client SDK supports wake word detectors from [Sensory](https://github.com/Sensory/alexa-rpi) and [KITT.ai](https://github.com/Kitt-AI/snowboy/). The following options are required to build with a wake word detector, please replace `<wake-word-name>` with `SENSORY` for Sensory, and `KITTAI` for KITT.ai:
+**Note**: Wake word detector and key word detector (KWD) are used interchangeably.
+
+The AVS Device SDK for C++ supports wake word detectors from [Sensory](https://github.com/Sensory/alexa-rpi) and [KITT.ai](https://github.com/Kitt-AI/snowboy/). The following options are required to build with a wake word detector, please replace `<wake-word-name>` with `SENSORY` for Sensory, and `KITTAI` for KITT.ai:
 
 * `-D<wake-word-name>_KEY_WORD_DETECTOR=<ON or OFF>` - Specifies if the wake word detector is enabled or disabled during build.
 * `-D<wake-word-name>_KEY_WORD_DETECTOR_LIB_PATH=<path-to-lib>` - The path to the wake word detector library.
@@ -197,7 +201,9 @@ cmake <path-to-source> -DKITTAI_KEY_WORD_DETECTOR=ON -DKITTAI_KEY_WORD_DETECTOR_
 
 `MediaPlayer` (the reference implementation of the `MediaPlayerInterface`) is based upon [GStreamer](https://gstreamer.freedesktop.org/), and is not built by default. To build 'MediaPlayer' the `-DGSTREAMER_MEDIA_PLAYER=ON` option must be specified to CMake.
 
-If GStreamer was [installed from source](https://gstreamer.freedesktop.org/documentation/frequently-asked-questions/getting.html), the prefix path provided when building must be specified to CMake with the `DCMAKE_PREFIX_PATH` option. This is an example CMake command:
+If GStreamer was [installed from source](https://gstreamer.freedesktop.org/documentation/frequently-asked-questions/getting.html), the prefix path provided when building must be specified to CMake with the `DCMAKE_PREFIX_PATH` option.
+
+This is an example `cmake` command:
 
 ```
 cmake <path-to-source> -DGSTREAMER_MEDIA_PLAYER=ON -DCMAKE_PREFIX_PATH=<path-to-GStreamer-build>
@@ -205,9 +211,9 @@ cmake <path-to-source> -DGSTREAMER_MEDIA_PLAYER=ON -DCMAKE_PREFIX_PATH=<path-to-
 
 ### Build with PortAudio (Required to Run the Sample App)  
 
-PortAudio is required to build and run the Alexa Client SDK Sample App. Build instructions are available for [Linux](http://portaudio.com/docs/v19-doxydocs/compile_linux.html) and [macOS](http://portaudio.com/docs/v19-doxydocs/compile_mac_coreaudio.html).  
+PortAudio is required to build and run the AVS Device SDK for C++ Sample App. Build instructions are available for [Linux](http://portaudio.com/docs/v19-doxydocs/compile_linux.html) and [macOS](http://portaudio.com/docs/v19-doxydocs/compile_mac_coreaudio.html).  
 
-This is sample CMake command to build the Alexa Client SDK with PortAudio:
+This is sample CMake command to build the AVS Device SDK for C++ with PortAudio:
 
 ```
 cmake <path-to-source> -DPORTAUDIO=ON
@@ -221,65 +227,44 @@ cmake <path-to-source> -DPORTAUDIO=ON
 -DPORTAUDIO_LIB_PATH=.../portaudio/lib/.libs/libportaudio.a
 -DPORTAUDIO_INCLUDE_DIR=.../portaudio/include
 ```
+
+## Build for Generic Linux / Raspberry Pi / macOS
+
+To create an out-of-source build:
+
+1. Clone the repository (or download and extract the tarball).
+2. Create a build directory out-of-source. **Important**: The directory cannot be a subdirectory of the source folder.
+3. `cd` into your build directory.
+4. From your build directory, run `cmake` on the source directory to generate make files for the SDK: `cmake <path-to-source-code>`.
+5. After you've successfully run `cmake`, you should see the following message: `-- Please fill <path-to-build-directory>/Integration/AlexaClientSDKConfig.json before you execute integration tests.`. Open `Integration/AlexaClientSDKConfig.json` with your favorite text editor and fill in your product information.
+6. From the build directory, run `make` to build the SDK.  
+
 ### Application Settings
 
 The SDK will require a configuration JSON file, an example of which is located in `Integration/AlexaClientSDKConfig.json`. The contents of the JSON should be populated with your product information (which you got from the developer portal when registering a product and creating a security profile), and the location of your database and sound files. This JSON file is required for the integration tests to work properly, as well as for the Sample App.
 
-The layout of the file is as follows:
+The layout of the file is as follows:  
+
 ```json
 {
-"authDelegate":{
-"deviceTypeId":"<Device Type ID for your device on the Developer portal>",
-"clientId":"<ClientID for the security profile of the device>",
-"clientSecret":"<ClientSecret for the security profile of the device>",
-"deviceSerialNumber":"<a unique number for your device>"
-},
-"alertsCapabilityAgent": {
-"databaseFilePath":"/<path-to-db-directory>/<db-file-name>",
-"alarmSoundFilePath":"/<path-to-alarm-sound>/alarm_normal.mp3",
-"alarmShortSoundFilePath":"/<path-to-short-alarm-sound>/alarm_short.wav",
-"timerSoundFilePath":"/<path-to-timer-sound>/timer_normal.mp3",
-"timerShortSoundFilePath":"/<path-to-short-timer-sound>/timer_short.wav"
-}
+  "authDelegate":{
+    "deviceTypeId":"<Device Type ID for your device on the Developer portal>",
+    "clientId":"<ClientID for the security profile of the device>",
+    "clientSecret":"<ClientSecret for the security profile of the device>",
+    "deviceSerialNumber":"<a unique number for your device>"
+  },
+  "alertsCapabilityAgent": {
+    "databaseFilePath":"/<path-to-db-directory>/<db-file-name>",
+    "alarmSoundFilePath":"/<path-to-alarm-sound>/alarm_normal.mp3",
+    "alarmShortSoundFilePath":"/<path-to-short-alarm-sound>/alarm_short.wav",
+    "timerSoundFilePath":"/<path-to-timer-sound>/timer_normal.mp3",
+    "timerShortSoundFilePath":"/<path-to-short-timer-sound>/timer_short.wav"
+  }
 }
 ```
 **NOTE**: The `deviceSerialNumber` is a unique identifier that you create. It is **not** provided by Amazon.
-**NOTE**: The audio files for the alerts can be downloaded from [here](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/content/alexa-voice-service-ux-design-guidelines#attention). Note that the Alexa Voice Service UX guidelines mandate that these audio files must be used for Alexa alerts.
-
-### Build for Generic Linux
-
-To create an out-of-source build for Linux:
-
-1. Clone the repository (or download and extract the tarball).
-2. Create a build directory out-of-source. **Important**: The directory cannot be a subdirectory of the source folder.
-3. `cd` into your build directory.
-4. From your build directory, run `cmake` on the source directory to generate make files for the SDK: `cmake <path-to-source-code>`.
-5. After you've successfully run `cmake`, you should see the following message: `-- Please fill <path-to-build-directory>/Integration/AlexaClientSDKConfig.json before you execute integration tests.`. Open `Integration/AlexaClientSDKConfig.json` with your favorite text editor and fill in your product information.
-6. From the build directory, run `make` to build the SDK.
-
-### Build for macOS
-
-Building for macOS requires some additional setup. Specifically, you need to ensure that you are running the latest version of cURL and that cURL is linked to nghttp2 (the default installation does not).
-
-To recompile cURL, follow these instructions:
-
-1. Install [Homebrew](http://brew.sh/), if you haven't done so already.
-2. Install cURL with HTTP2 support:
-`brew install curl --with-nghttp2`
-3. Force cURL to explicitly link to the updated binary:
-`brew link curl --force`
-4. Close and reopen terminal.
-5. Confirm version and source with this command:
-`brew info curl`
-
-To create an out-of-source build for macOS:
-
-1. Clone the repository (or download and extract the tarball).
-2. Create a build directory out-of-source. **Important**: The directory cannot be a subdirectory of the source folder.
-3. `cd` into your build directory.
-4. From your build directory, run `cmake` on the source directory to generate make files for the SDK: `cmake <path-to-source-code>`.
-5. After you've successfully run `cmake`, you should see the following message: `-- Please fill <path-to-build-directory>/Integration/AlexaClientSDKConfig.json before you execute integration tests.`. Open `Integration/AlexaClientSDKConfig.json` with your favorite text editor and fill in your product information.
-6. From the build directory, run `make` to build the SDK.
+**NOTE**: Audio assets included in this repository are licensed as "Alexa Materials" under the [Alexa Voice
+Service Agreement](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/support/terms-and-agreements).
 
 ## Run AuthServer
 
@@ -297,7 +282,7 @@ You should see a message that indicates the server is running.
 
 ## Run Unit Tests
 
-Unit tests for the Alexa Client SDK use the [Google Test](https://github.com/google/googletest) framework. Ensure that the [Google Test](https://github.com/google/googletest) is installed, then run the following command:
+Unit tests for the AVS Device SDK for C++ use the [Google Test](https://github.com/google/googletest) framework. Ensure that the [Google Test](https://github.com/google/googletest) is installed, then run the following command:
 `make all test`
 
 Ensure that all tests are passed before you begin integration testing.
@@ -347,208 +332,57 @@ Before you run the sample app, it's important to note that the application takes
 Navigate to the `SampleApp/src` folder from your build directory. Then run this command:
 
 ```
-TZ=UTC ./SampleApp <REQUIRED-path-to-config-json> <OPTIONAL-path-to-wake-word-engine-folder-enclosing-model-files>
+TZ=UTC ./SampleApp <REQUIRED-path-to-config-json> <OPTIONAL-path-to-wake-word-engine-folder-enclosing-model-files> <OPTIONAL-log-level>
 ```
 
-**Note**: Logging is currently disabled in the Sample App. We plan on updating the Sample App to allow the user to set logging levels when running the app, but at the moment, to turn on logging for the Sample App, the following lines (101-102) in SampleApp/src/main.cpp will need to be commented:
-```
-alexaClientSDK::avsCommon::utils::logger::ConsoleLogger::instance().setLevel(
-alexaClientSDK::avsCommon::utils::logger::Level::NONE);
-```
-Alternatively, you can change the `NONE` to the desired level of logging.
-**Note**: Enabling logging *might* cause Sample App messages and logging messages to become interwoven.
+**Note**: The following logging levels are supported with `DEBUG9` providing the highest and `CRITICAL` the lowest level of logging: `DEBUG9`, `DEBUG8`, `DEBUG7`, `DEBUG6`, `DEBUG5`, `DEBUG4`, `DEBUG3`, `DEBUG2`, `DEBUG1`, `DEBUG0`, `INFO`, `WARN`, `ERROR`, and `CRITICAL`.
 
-## Alexa Client SDK API Documentation
+**Note**: The user must wait several seconds after starting up the sample app before the sample app is properly usable.
 
-To build the Alexa Client SDK API documentation, run this command from your build directory: `make doc`.
+## AVS Device SDK for C++ API Documentation
+
+To build API documentation locally, run this command from your build directory: `make doc`.
 
 ## Resources and Guides
 
+* [How To Setup Your Raspberry Pi Development Environment](https://github.com/alexa/alexa-client-sdk/wiki/How-to-build-your-raspberrypi-development-environment)
+* [How To Build libcurl with nghttp2 on macOS](https://github.com/alexa/alexa-client-sdk/wiki/How-to-build-libcurl-with-nghttp2-for-macos)  
 * [Step-by-step instructions to optimize libcurl for size in `*nix` systems](https://github.com/alexa/alexa-client-sdk/wiki/optimize-libcurl).
 * [Step-by-step instructions to build libcurl with mbed TLS and nghttp2 for `*nix` systems](https://github.com/alexa/alexa-client-sdk/wiki/build-libcurl-with-mbed-TLS-and-nghttp2).  
 
-## Appendix A: Memory Profile
+## Appendix A: Runtime Configuration of path to CA Certificates
 
-This appendix provides the memory profiles for various modules of the Alexa Client SDK. The numbers were observed running integration tests on a machine running Ubuntu 16.04.2 LTS.
-
-| Module | Source Code Size (Bytes) | Library Size RELEASE Build (libxxx.so) (Bytes) | Library Size MINSIZEREL Build (libxxx.so) (Bytes) |
-|--------|--------------------------|------------------------------------------------|---------------------------------------------------|
-| ACL | 356 KB | 250 KB | 239 KB |
-| ADSL | 224 KB | 175 KB | 159 KB |
-| AFML | 80 KB | 133 KB | 126 KB |
-| ContextManager | 84 KB | 122 KB | 116 KB |
-| AIP | 184 KB | 340 KB | 348 KB |
-| SpeechSynthesizer | 120 KB | 311 KB | 321 KB |
-| AVSCommon | 772 KB | 252 KB | 228 KB |
-| AVSUtils | 332 KB | 167 KB | 133 KB |
-| Total | 2152 KB | 1750 KB | 1670 KB |
-
-**Runtime Memory**
-
-Unique size set (USS) and proportional size set (PSS) were measured by SMEM while integration tests were run.
-
-| Runtime Memory | Average USS | Max USS (Bytes) | Average PSS | Max PSS (Bytes) |
-|----------------|-------------|-----------------|-------------|-----------------|
-| ACL | 8 MB | 15 MB | 8 MB | 16 MB |
-| ADSL + ACL | 8 MB | 20 MB | 9 MB | 21 MB |
-| AIP | 9 MB | 12 MB | 9 MB | 13 MB |
-| ** SpeechSynthesizer | 11 MB | 18 MB | 12 MB | 20 MB |
-
-** This test was run using the GStreamer-based MediaPlayer for audio playback.
-
-**Definitions**
-
-* **USS**: The amount of memory that is private to the process and not shared with any other processes.
-* **PSS**:  The amount of memory shared with other processes; divided by the number of processes sharing each page.
-
-## Appendix B: Directive Lifecycle Diagram
-
-![Directive Lifecycle](https://images-na.ssl-images-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-voice-service/docs/avs-directive-lifecycle.png)
-
-## Appendix C: Runtime Configuration of path to CA Certificates
-
-By default libcurl is built with paths to a CA bundle and a directory containing CA certificates.  You can direct the Alexa Client SDK to configure libcurl to use an additional path to directories containing CA certificates via the [CURLOPT_CAPATH](https://curl.haxx.se/libcurl/c/CURLOPT_CAPATH.html) setting.  This is done by adding a `"libcurlUtils/CURLOPT_CAPATH"` entry to the `AlexaClientSDKConfig.json` file.  Here is an example:
+By default libcurl is built with paths to a CA bundle and a directory containing CA certificates.  You can direct the AVS Device SDK for C++ to configure libcurl to use an additional path to directories containing CA certificates via the [CURLOPT_CAPATH](https://curl.haxx.se/libcurl/c/CURLOPT_CAPATH.html) setting.  This is done by adding a `"libcurlUtils/CURLOPT_CAPATH"` entry to the `AlexaClientSDKConfig.json` file.  Here is an example:
 
 ```
 {
-"authDelegate" : {
-"clientId" : "INSERT_YOUR_CLIENT_ID_HERE",
-"refreshToken" : "INSERT_YOUR_REFRESH_TOKEN_HERE",
-"clientSecret" : "INSERT_YOUR_CLIENT_SECRET_HERE"
-},
-"libcurlUtils" : {
-"CURLOPT_CAPATH" : "INSERT_YOUR_CA_CERTIFICATE_PATH_HERE"
-}
+  "authDelegate" : {
+    "clientId" : "INSERT_YOUR_CLIENT_ID_HERE",
+    "refreshToken" : "INSERT_YOUR_REFRESH_TOKEN_HERE",
+    "clientSecret" : "INSERT_YOUR_CLIENT_SECRET_HERE"
+  },
+  "libcurlUtils" : {
+    "CURLOPT_CAPATH" : "INSERT_YOUR_CA_CERTIFICATE_PATH_HERE"
+  }
 }
 ```
 **Note** If you want to assure that libcurl is *only* using CA certificates from this path you may need to reconfigure libcurl with the `--without-ca-bundle` and `--without-ca-path` options and rebuild it to suppress the default paths.  See [The libcurl documention](https://curl.haxx.se/docs/sslcerts.html) for more information.
 
-## Release Notes
+## Release Notes  
 
-v0.6 released 7/14/2017:  
+**Note**: Features, updates, and resolved issues from previous releases are available to view in CHANGELOG.md.
 
-* Added a sample app that leverages the SDK.   
-* Added an implementation of the `Alerts` capability agent.  
-* Added the `DefaultClient` class.  
-* Added the following classes to support directives and events in the [`Systems` interface](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system): `StateSynchronizer`, `EndpointHandler`, and `ExceptionEncounteredSender`.   
-* Added unit tests for `ACL`.  
-* Updated `MediaPlayer` to play local files given an `std::istream`.    
-* Changed build configuration from `Debug` to `Release`.  
-* Removed `DeprecatedLogger` class. 
-* Known Issues:
-    * MediaPlayer: Our `GStreamer` based implementation of `MediaPlayer` is not fully robust, and may result in fatal runtime errors, under the following conditions:
-        * Attempting to play multiple simultaneous audio streams
-        * Calling `MediaPlayer::play()` and `MediaPlayer::stop()` when the MediaPlayer is already playing or stopped, respectively.
-        * Other miscellaneous issues, which will be addressed in the near future
-    * `AlertsCapabilityAgent`:
-        * This component has been temporarily simplified to work around the known `MediaPlayer` issues mentioned above
-        * Fully satisfies the AVS specification except for sending retrospective Events, for example, sending `AlertStarted` for an Alert which rendered when there was no Internet connection
-        * This component is not fully thread-safe, however, this will be addressed shortly
-        * Alerts currently run indefinitely until stopped manually by the user. This will be addressed shortly by having a timeout value for an alert to stop playing.
-        * Alerts do not play in the background when Alexa is speaking, but will continue playing after Alexa stops speaking.
-    * `Sample App`:
-      * Without the refresh token being filled out in the JSON file, the sample app crashes on start up.
-      * Any connection loss during the `Listening` state keeps the app stuck in that state, unless the ongoing interaction is manually stopped by the user.
-      * At the end of a shopping list with more than 5 items, the interaction in which Alexa asks the user if he/she would like to hear more does not finish properly.
-  * `Tests`:
-    * `SpeechSynthesizer` unit tests hang on some older versions of GCC due to a tear down issue in the test suite
-    * Intermittent Alerts integration test failures caused by rigidness in expected behavior in the tests
-
-v0.5 released 6/23/2017:
-
-* Updated most SDK components to use new logging abstraction.
-* Added a `getConfiguration()` method to `DirectiveHandlerInterface` to register Capability Agents with Directive Sequencer.
-* Added ACL stream processing with Pause and redrive.
-* Removed the dependency of ACL Library on `Authdelegate`.
-* Added an interface to allow ACL to Add/Remove `ConnectionStatusObserverInterface`.
-* Fixed compile errors in KittAi, DirectiveHandler and compiler warnings in AIP test.
-* Corrected formatting of code in many files.
-* Fixes for the following Github issues:
-* [MessageRequest callbacks never triggered if disconnected](https://github.com/alexa/alexa-client-sdk/issues/21)
-* [AttachmentReader::read() returns ReadStatus::CLOSED if an AttachmentWriter has not been created yet](https://github.com/alexa/alexa-client-sdk/issues/25)
-
-v0.4.1 released 6/9/2017:
-
-* Implemented Sensory wake word detector functionality
-* Removed the need for a `std::recursive_mutex` in `MessageRouter`
-* Added AIP unit test
-* Added `handleDirectiveImmediately` functionality to `SpeechSynthesizer`
-* Added memory profiles for:
-* AIP
-* SpeechSynthesizer
-* ContextManager
-* AVSUtils
-* AVSCommon
-* Bug fix for `MessageRouterTest` aborting intermittently
-* Bug fix for `MultipartParser.h` compiler warning
-* Suppression of sensitive log data even in debug builds. Use cmake parameter -DACSDK_EMIT_SENSITIVE_LOGS=ON to allow logging of sensitive information in DEBUG builds
-* Fix crash in ACL when attempting to use more than 10 streams
-* Updated MediaPlayer to use `autoaudiosink` instead of requiring `pulseaudio`
-* Updated MediaPlayer build to suppport local builds of GStreamer
-* Fixes for the following Github issues:
-* [MessageRouter::send() does not take the m_connectionMutex](https://github.com/alexa/alexa-client-sdk/issues/5)
-* [MessageRouter::disconnectAllTransportsLocked flow leads to erase while iterating transports vector](https://github.com/alexa/alexa-client-sdk/issues/8)
-* [Build errors when building with KittAi enabled](https://github.com/alexa/alexa-client-sdk/issues/9)
-* [HTTP2Transport race may lead to deadlock](https://github.com/alexa/alexa-client-sdk/issues/10)
-* [Crash in HTTP2Transport::cleanupFinishedStreams()](https://github.com/alexa/alexa-client-sdk/issues/17)
-* [The attachment writer interface should take a `const void*` instead of `void*`](https://github.com/alexa/alexa-client-sdk/issues/24)
-
-v0.4 updated 5/31/2017:
-
-* Added `AuthServer`, an authorization server implementation used to retrieve refresh tokens from LWA.
-
-v0.4 release 5/24/2017:
-
-* Added the `SpeechSynthesizer`, an implementation of the `SpeechRecognizer` capability agent.
-* Implemented a reference `MediaPlayer` based on [GStreamer](https://gstreamer.freedesktop.org/) for audio playback.
-* Added the `MediaPlayerInterface` that allows you to implement your own media player.
-* Updated `ACL` to support asynchronous receipt of audio attachments from AVS.
-* Bug Fixes:
-* Some intermittent unit test failures were fixed.
-* Known Issues:
-* `ACL`'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed.
-* When an `AttachmentReader` does not deliver data for prolonged periods `MediaPlayer` may not resume playing the delayed audio.
-
-v0.3 released 5/17/2017:
-
-* Added the `CapabilityAgent` base class that is used to build capability agent implementations.
-* Added the `ContextManager` class that allows multiple Capability Agents to store and access state. These events include `context`, which is used to communicate the state of each capability agent to AVS:
-* [`Recognize`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechrecognizer#recognize)
-* [`PlayCommandIssued`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/playbackcontroller#playcommandissued)
-* [`PauseCommandIssued`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/playbackcontroller#pausecommandissued)
-* [`NextCommandIssued`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/playbackcontroller#nextcommandissued)
-* [`PreviousCommandIssued`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/playbackcontroller#previouscommandissued)
-* [`SynchronizeState`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system#synchronizestate)
-* [`ExceptionEncountered`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system#exceptionencountered)
-* Implemented the `SharedDataStream` (SDS) to asynchronously communicate data between a local reader and writer.
-* Added `AudioInputProcessor` (AIP), an implementation of a `SpeechRecognizer` capability agent.
-* Added the WakeWord Detector (WWD), which recognizes keywords in audio streams. v0.3 implements a wrapper for KITT.ai.
-* Added a new implementation of `AttachmentManager` and associated classes for use with SDS.
-* Updated the `ACL` to support asynchronously sending audio to AVS.
-
-v0.2.1 released 5/3/2017:
-* Replaced the configuration file `AuthDelegate.config` with `AlexaClientSDKConfig.json`.
-* Added the ability to specify a `CURLOPT_CAPATH` value to be used when libcurl is used by ACL and AuthDelegate.  See [**Appendix C**](#appendix-c-runtime-configuration-of-path-to-ca-certificates) for details.
-* Changes to ADSL interfaces:
-The v0.2 interface for registering directive handlers (`DirectiveSequencer::setDirectiveHandlers()`) was problematic because it canceled the ongoing processing of directives and dropped further directives until it completed. The revised API makes the operation immediate without canceling or dropping any handling.  However, it does create the possibility that `DirectiveHandlerInterface` methods `preHandleDirective()` and `handleDirective()` may be called on different handlers for the same directive.
-* `DirectiveSequencerInterface::setDirectiveHandlers()` was replaced by `addDirectiveHandlers()` and `removeDirectiveHandlers()`.
-* `DirectiveHandlerInterface::shutdown()` was replaced with `onDeregistered()`.
-* `DirectiveHandlerInterface::preHandleDirective()` now takes a `std::unique_ptr` instead of a `std::shared_ptr` to `DirectiveHandlerResultInterface`.
-* `DirectiveHandlerInterface::handleDirective()` now returns a bool indicating if the handler recognizes the `messageId`.
-* Bug fixes:
-* ACL and AuthDelegate now require TLSv1.2.
-* `onDirective()` now sends `ExceptionEncountered` for unhandled directives.
-* `DirectiveSequencer::shutdown()` no longer sends `ExceptionEncountered()` for queued directives.
-
-v0.2 updated 3/27/2017:
-* Added memory profiling for ACL and ADSL.  See [**Appendix A**](#appendix-a-mempry-profile).
-* Added command to build API documentation.
-
-v0.2 released 3/9/2017:
-* Alexa Client SDK v0.2 released.
-* Architecture diagram has been updated to include the ADSL and AMFL.
-* CMake build types and options have been updated.
-* New documentation for libcurl optimization included.
-
-v0.1 released 2/10/2017:
-* Alexa Client SDK v0.1 released.
+v1.0.0 released 8/7/2017:
+* Features  
+  * Native components for the following capability agents are included in this release: `Alerts`, `AudioPlayer`, `SpeechRecognizer`, `SpeechSynthesizer`, and `System`
+  * Supports iHeartRadio  
+  * Includes a sample application to demonstrate interactions with AVS
+* Known Issues
+  * Native components for the following capability agents are **not** included in this release: `PlaybackController`, `Speaker`, `Settings`, `TemplateRuntime`, and `Notifications`  
+  * Amazon Music, TuneIn, and SiriusXM are not supported in v1.0  
+  * The `AlertsCapabilityAgent` satisfies the [AVS specification](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/timers-and-alarms-conceptual-overview) except for sending retrospective events. For example, sending `AlertStarted` for an Alert which rendered when there was no internet connection.  
+  * `ACL`'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed.
+  * When an `AttachmentReader` does not deliver data for prolonged periods, `MediaPlayer` may not resume playing the delayed audio.
+  * Without the refresh token in the JSON file, the sample app crashes on start up.
+  * Any connection loss during the `Listening` state keeps the app stuck in this state, unless the ongoing interaction is manually stopped by the user.
+  * The user must wait several seconds after starting up the sample app before the sample app is properly usable.

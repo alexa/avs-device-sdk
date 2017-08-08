@@ -56,6 +56,10 @@ public:
         return m_message;
     }
 
+    std::string getAttachmentContextId() {
+        return m_attachmentContextId;
+    }
+
 private:
     virtual void onConnectionStatusChanged(
             const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,

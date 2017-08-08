@@ -1,3 +1,5 @@
+add_definitions("-DACSDK_LOG_MODULE=speechSynthesizer")
+
 add_library(SpeechSynthesizer SHARED
         SpeechSynthesizer.cpp)
 

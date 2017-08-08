@@ -42,7 +42,7 @@ public:
      */
     static std::unique_ptr<IStreamSource> create(
             PipelineInterface* pipeline,
-            std::unique_ptr<std::istream> stream,
+            std::shared_ptr<std::istream> stream,
             bool repeat);
 
     /**
@@ -58,7 +58,7 @@ private:
      * @param stream The @c std::istream from which to create the pipeline source.
      * @param repeat Whether the stream should be replayed until stopped.
      */
-    IStreamSource(PipelineInterface* pipeline, std::unique_ptr<std::istream> stream, bool repeat);
+    IStreamSource(PipelineInterface* pipeline, std::shared_ptr<std::istream> stream, bool repeat);
 
     /// @name Overridden BaseStreamSource methods.
     /// @{
@@ -68,8 +68,8 @@ private:
     /// @}
 
 private:
-    /// The AttachmentReader to read audioData from.
-    std::unique_ptr<std::istream> m_stream;
+    /// The std::istream to read audioData from.
+    std::shared_ptr<std::istream> m_stream;
 
     /// Play the stream over and over until told to stop.
     bool m_repeat;

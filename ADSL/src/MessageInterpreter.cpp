@@ -32,7 +32,6 @@ using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::json::jsonUtils;
-using namespace acl;
 using namespace rapidjson;
 
 /// String to identify log entries originating from this file.

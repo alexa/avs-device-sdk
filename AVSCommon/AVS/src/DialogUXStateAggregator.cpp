@@ -106,6 +106,9 @@ void DialogUXStateAggregator::onStateChanged(SpeechSynthesizerObserver::SpeechSy
                     setState(DialogUXStateObserverInterface::DialogUXState::SPEAKING);
                     return;
                 case SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED:
+                    if (DialogUXStateObserverInterface::DialogUXState::SPEAKING != m_currentState) {
+                        return;
+                    }
                     if (!m_multiturnSpeakingToListeningTimer.start(
                             SHORT_TIMEOUT, std::bind(
                                     &DialogUXStateAggregator::transitionFromSpeakingFinished, this)).valid()) {

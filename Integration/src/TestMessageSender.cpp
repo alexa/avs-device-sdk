@@ -34,6 +34,9 @@ TestMessageSender::TestMessageSender(
         std::shared_ptr<MessageObserverInterface> messageObserver) {
     m_connectionManager = acl::AVSConnectionManager::create(messageRouter, isEnabled, { connectionStatusObserver },
             { messageObserver });
+    // TODO: ACSDK-421: Remove the callback when m_avsConnection manager is no longer an observer to
+    // StateSynchronizer.
+    m_connectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
 }
 
 void TestMessageSender::sendMessage(std::shared_ptr<MessageRequest> request) {

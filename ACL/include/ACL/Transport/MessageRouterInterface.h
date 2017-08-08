@@ -24,6 +24,8 @@
 
 #include "AVSCommon/Utils/Threading/Executor.h"
 #include "AVSCommon/AVS/MessageRequest.h"
+// TODO: ACSDK-421: Revert this to implement send().
+#include "AVSCommon/SDKInterfaces/MessageSenderInterface.h"
 
 #include "ACL/Transport/MessageRouterObserverInterface.h"
 #include "ACL/Transport/TransportInterface.h"
@@ -37,7 +39,8 @@ namespace acl {
  *
  * Implementations of this class are required to be thread-safe.
  */
-class MessageRouterInterface {
+// TODO: ACSDK-421: Remove the inheritance from MessageSenderInterface.
+class MessageRouterInterface : public avsCommon::sdkInterfaces::MessageSenderInterface {
 public:
     /// Alias to a connection status and changed reason pair.
     using ConnectionStatus = std::pair<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status,
@@ -62,16 +65,6 @@ public:
      * @return Returns the connection status and changed reason pair of the underlying implementation.
      */
     virtual ConnectionStatus getConnectionStatus() = 0;
-
-    /**
-     * Send a message to AVS.
-     * If the underlying implementation is not connected, or is in the process of changing its connection state,
-     * this function should do nothing and return false.
-     * Otherwise it should enqueue the message to be sent, and return true.
-     * @param request The message to be sent to AVS.
-     * @return Whether the underlying implementation successfully enqueued the message to be sent.
-     */
-    virtual void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) = 0;
 
     /**
      * Set the URL endpoint for the AVS connection.  Calling this function with a new value will cause the

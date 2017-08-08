@@ -104,7 +104,8 @@ TEST_F(MessageRouterTest, sendIsSuccessfulWhenConnected) {
     // Expect to have the message sent to the transport
     EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(1);
 
-    m_router.send(messageRequest);
+    // TODO: ACSDK-421: Revert this to use send().
+    m_router.sendMessage(messageRequest);
 
     // Since we connected we will be disconnected when the router is destroyed
     EXPECT_CALL(*m_mockTransport, disconnect()).Times(AnyNumber());
@@ -116,7 +117,8 @@ TEST_F(MessageRouterTest, sendFailsWhenDisconnected) {
     // Expect to have the message sent to the transport
     EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(0);
 
-    m_router.send(messageRequest);
+    // TODO: ACSDK-421: Revert this to use send().
+    m_router.sendMessage(messageRequest);
 }
 
 TEST_F(MessageRouterTest, sendFailsWhenPending) {
@@ -129,7 +131,8 @@ TEST_F(MessageRouterTest, sendFailsWhenPending) {
     // Expect to have the message sent to the transport.
     EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(1);
 
-    m_router.send(messageRequest);
+    // TODO: ACSDK-421: Revert this to use send().
+    m_router.sendMessage(messageRequest);
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 }
 
@@ -144,7 +147,8 @@ TEST_F(MessageRouterTest, sendMessageDoesNotSendAfterDisconnected) {
     // Expect to have the message sent to the transport
     EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(0);
 
-    m_router.send(messageRequest);
+    // TODO: ACSDK-421: Revert this to use send().
+    m_router.sendMessage(messageRequest);
 }
 
 TEST_F(MessageRouterTest, disconnectDisconnectsConnectedTransports) {
@@ -201,11 +205,34 @@ TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
 
     EXPECT_CALL(*newTransport.get(), send(messageRequest)).Times(1);
 
-    m_router.send(messageRequest);
+    // TODO: ACSDK-421: Revert this to use send().
+    m_router.sendMessage(messageRequest);
 
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 }
 
+/**
+ * This tests the calling of private method @c receive() for MessageRouterObserver from MessageRouter
+ */
+TEST_F(MessageRouterTest, onReceiveTest) {
+    m_mockMessageRouterObserver->reset();
+    m_router.consumeMessage(CONTEXT_ID, MESSAGE);
+    waitOnMessageRouter(SHORT_TIMEOUT_MS);
+    ASSERT_TRUE(m_mockMessageRouterObserver->wasNotifiedOfReceive());
+    ASSERT_EQ(CONTEXT_ID, m_mockMessageRouterObserver->getAttachmentContextId());
+    ASSERT_EQ(MESSAGE, m_mockMessageRouterObserver->getLatestMessage());
+}
+
+/**
+ * This tests the calling of private method @c onConnectionStatusChanged()
+ * for MessageRouterObserver from MessageRouter
+ */
+TEST_F(MessageRouterTest, onConnectionStatusChangedTest) {
+    m_mockMessageRouterObserver->reset();
+    setupStateToConnected();
+    waitOnMessageRouter(SHORT_TIMEOUT_MS);
+    ASSERT_TRUE(m_mockMessageRouterObserver->wasNotifiedOfStatusChange());
+}
 } // namespace test
 } // namespace acl
 } // namespace alexaClientSDK

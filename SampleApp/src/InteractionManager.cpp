@@ -35,11 +35,8 @@ InteractionManager::InteractionManager(
     m_wakeWordAudioProvider{wakeWordAudioProvider},
     m_isHoldOccurring{false},
     m_isTapOccurring{false},
-    m_isMicOn{false} { 
-    if (m_wakeWordAudioProvider) {
-        m_isMicOn = true;
+    m_isMicOn{true} { 
         m_micWrapper->startStreamingMicrophoneData();
-    }
 };
 
 void InteractionManager::begin() {
@@ -55,26 +52,6 @@ void InteractionManager::help() {
     m_executor.submit(
         [this] () {
             m_userInterface->printHelpScreen();
-        }
-    );
-}
-
-void InteractionManager::onDialogUXStateChanged(
-        avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState state) {
-    m_executor.submit(
-        [this, state] () {
-            /*
-             * This is an optimization that stops the microphone from continuously streaming audio data into the buffer
-             * when a tap to talk recognize finishes. This isn't strictly necessary, as the SDK will not consume the
-             * audio data when not in the middle of an active recognition.
-             */
-            if (avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE == state && 
-                    m_isTapOccurring) {
-                m_isTapOccurring = false;
-                if (!m_wakeWordAudioProvider || (m_wakeWordAudioProvider && !m_isMicOn)) {
-                    m_micWrapper->stopStreamingMicrophoneData();
-                }
-            }
         }
     );
 }
@@ -101,17 +78,16 @@ void InteractionManager::microphoneToggle() {
 void InteractionManager::holdToggled() {
     m_executor.submit(
         [this] () {
+            if (!m_isMicOn) {
+                return;
+            }
             if (!m_isHoldOccurring) {
                 if (m_client->notifyOfHoldToTalkStart(m_holdToTalkAudioProvider).get()) {
                     m_isHoldOccurring = true;
-                    m_micWrapper->startStreamingMicrophoneData();
                 }
             } else {
                 m_isHoldOccurring = false;
                 m_client->notifyOfHoldToTalkEnd();
-                if (!m_wakeWordAudioProvider || (m_wakeWordAudioProvider && !m_isMicOn)) {
-                    m_micWrapper->stopStreamingMicrophoneData();
-                }
             }
         }
     );
@@ -120,9 +96,11 @@ void InteractionManager::holdToggled() {
 void InteractionManager::tap() {
     m_executor.submit(
         [this] () {
+            if (!m_isMicOn) {
+                return;
+            }
             if (m_client->notifyOfTapToTalk(m_tapToTalkAudioProvider).get()) {
                 m_isTapOccurring = true;
-                m_micWrapper->startStreamingMicrophoneData();
             }
         }
     );

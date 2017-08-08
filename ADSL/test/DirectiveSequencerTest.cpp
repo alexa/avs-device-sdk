@@ -225,9 +225,9 @@ TEST_F(DirectiveSequencerTest, testEmptyDialogRequestId) {
     DirectiveHandlerConfiguration config;
     config[{NAMESPACE_SPEAKER, NAME_SET_VOLUME}] = BlockingPolicy::NON_BLOCKING;
     auto handler = MockDirectiveHandler::create(config);
-    EXPECT_CALL(*(handler.get()), handleDirectiveImmediately(directive)).Times(1);
-    EXPECT_CALL(*(handler.get()), preHandleDirective(_, _)).Times(0);
-    EXPECT_CALL(*(handler.get()), handleDirective(_)).Times(0);
+    EXPECT_CALL(*(handler.get()), handleDirectiveImmediately(directive)).Times(0);
+    EXPECT_CALL(*(handler.get()), preHandleDirective(_, _)).Times(1);
+    EXPECT_CALL(*(handler.get()), handleDirective(_)).Times(1);
     EXPECT_CALL(*(handler.get()), cancelDirective(_)).Times(0);
     ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler));
     m_sequencer->onDirective(directive);
@@ -269,7 +269,8 @@ TEST_F(DirectiveSequencerTest, testRemovingAndChangingHandlers) {
     EXPECT_CALL(*(handler1.get()), handleDirective(_)).Times(0);
     EXPECT_CALL(*(handler1.get()), cancelDirective(_)).Times(0);
 
-    EXPECT_CALL(*(handler2.get()), handleDirectiveImmediately(directive1)).Times(1);
+    EXPECT_CALL(*(handler2.get()), preHandleDirective(directive1, _)).Times(1);
+    EXPECT_CALL(*(handler2.get()), handleDirective(MESSAGE_ID_1)).Times(1);
 
     ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler0));
     ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler1));
@@ -338,9 +339,9 @@ TEST_F(DirectiveSequencerTest, testBlockingThenNonDialogDirective) {
     EXPECT_CALL(*(handler0.get()), handleDirective(MESSAGE_ID_0)).Times(1);
     EXPECT_CALL(*(handler0.get()), cancelDirective(_)).Times(1);
 
-    EXPECT_CALL(*(handler1.get()), handleDirectiveImmediately(directive1)).Times(1);
-    EXPECT_CALL(*(handler1.get()), preHandleDirective(_, _)).Times(0);
-    EXPECT_CALL(*(handler1.get()), handleDirective(_)).Times(0);
+    EXPECT_CALL(*(handler1.get()), handleDirectiveImmediately(directive1)).Times(0);
+    EXPECT_CALL(*(handler1.get()), preHandleDirective(_, _)).Times(1);
+    EXPECT_CALL(*(handler1.get()), handleDirective(_)).Times(1);
     EXPECT_CALL(*(handler1.get()), cancelDirective(_)).Times(0);
 
     ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler0));
@@ -349,7 +350,7 @@ TEST_F(DirectiveSequencerTest, testBlockingThenNonDialogDirective) {
     m_sequencer->setDialogRequestId(DIALOG_REQUEST_ID_0);
     m_sequencer->onDirective(directive0);
     m_sequencer->onDirective(directive1);
-    ASSERT_TRUE(handler1->waitUntilHandling());
+    ASSERT_TRUE(handler1->waitUntilPreHandling());
     ASSERT_TRUE(handler0->waitUntilHandling());
     m_sequencer->setDialogRequestId(DIALOG_REQUEST_ID_1);
     ASSERT_TRUE(handler0->waitUntilCanceling());

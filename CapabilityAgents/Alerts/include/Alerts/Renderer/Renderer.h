@@ -107,12 +107,6 @@ private:
     /// A flag to capture if renderer is active.
     bool m_isRendering;
 
-    /// The time when the rendering started.
-    std::chrono::steady_clock::time_point m_timeRenderingStarted;
-
-    /// A flag to capture if the renderer has been asked to stop.
-    bool m_isStopping;
-
     /// The @c Executor which serially and asynchronously handles operations with regard to rendering the alert.
     /// TODO : ACSDK-388 to update the onPlayback* callback functions to also go through the executor.
     avsCommon::utils::threading::Executor m_executor;

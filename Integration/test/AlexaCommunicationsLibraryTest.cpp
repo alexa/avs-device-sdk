@@ -198,6 +198,9 @@ public:
                 isEnabled,
                 { m_connectionStatusObserver },
                 { m_clientMessageHandler });
+        // TODO: ACSDK-421: Remove the callback when m_avsConnection manager is no longer an observer to
+        // StateSynchronizer.
+        m_avsConnectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
         connect();
     }
 

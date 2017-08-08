@@ -34,6 +34,7 @@ add_library(AVSCommon SHARED
     Utils/src/Logger/LogEntryBuffer.cpp
     Utils/src/Logger/LogEntryStream.cpp
     Utils/src/Logger/Logger.cpp
+    Utils/src/Logger/LoggerSinkManager.cpp
     Utils/src/Logger/LoggerUtils.cpp
     Utils/src/Logger/ModuleLogger.cpp
     Utils/src/Logger/ThreadMoniker.cpp
