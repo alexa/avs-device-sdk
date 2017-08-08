@@ -368,7 +368,7 @@ By default libcurl is built with paths to a CA bundle and a directory containing
 
 ## Release Notes  
 
-**Note**: Features, updates, and resolved issues from previous releases are available to view in CHANGELOG.md.
+**Note**: Features, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
 v1.0.0 released 8/7/2017:
 * Features  
