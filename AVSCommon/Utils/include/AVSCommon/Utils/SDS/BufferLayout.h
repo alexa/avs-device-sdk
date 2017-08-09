@@ -20,9 +20,8 @@
 
 #include <cstdint>
 #include <cstddef>
-#include <mutex>
-#include <string>
 #include <vector>
+#include <mutex>
 
 #include "AVSCommon/Utils/Logger/LoggerUtils.h"
 #include "SharedDataStream.h"
