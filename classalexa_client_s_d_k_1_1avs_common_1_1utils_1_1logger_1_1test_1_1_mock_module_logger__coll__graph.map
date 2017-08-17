@@ -1,0 +1,6 @@
+<map id="alexaClientSDK::avsCommon::utils::logger::test::MockModuleLogger" name="alexaClientSDK::avsCommon::utils::logger::test::MockModuleLogger">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_module_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::ModuleLogger" alt="" coords="290,75,487,113"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::Logger" alt="" coords="25,5,222,44"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_level_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::logger::LogLevelObserver\lInterface" alt="" coords="17,68,230,120"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_sink_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::logger::SinkObserverInterface" alt="" coords="5,144,242,183"/>
+</map>

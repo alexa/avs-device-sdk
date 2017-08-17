@@ -1,0 +1,4 @@
+<map id="alexaClientSDK::sampleApp::UIManager" name="alexaClientSDK::sampleApp::UIManager">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer. " alt="" coords="14,5,217,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ConnectionStatus\lObserverInterface" alt="" coords="5,81,226,133"/>
+</map>

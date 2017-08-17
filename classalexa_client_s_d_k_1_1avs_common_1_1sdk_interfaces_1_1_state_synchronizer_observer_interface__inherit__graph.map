@@ -1,0 +1,5 @@
+<map id="alexaClientSDK::avsCommon::sdkInterfaces::StateSynchronizerObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::StateSynchronizerObserverInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html" title="alexaClientSDK::acl\l::AVSConnectionManager" alt="" coords="313,5,488,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_state_synchronizer_observer.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockStateSynchronizerObserver" alt="" coords="292,68,509,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_state_synchronizer_observer.html" title="A test observer to wait for state synchronizer. " alt="" coords="278,144,524,183"/>
+</map>

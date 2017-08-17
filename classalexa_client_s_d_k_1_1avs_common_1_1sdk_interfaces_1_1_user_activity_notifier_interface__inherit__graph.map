@@ -1,0 +1,4 @@
+<map id="alexaClientSDK::avsCommon::sdkInterfaces::UserActivityNotifierInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::UserActivityNotifierInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_user_activity_notifier.html" title="Mock class that implements UserActivityNotifierInterface. " alt="" coords="283,5,480,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_user_inactivity_monitor.html" title="This class implementes a CapabilityAgent that handles the SetEndpoint directive. " alt="" coords="281,81,481,133"/>
+</map>

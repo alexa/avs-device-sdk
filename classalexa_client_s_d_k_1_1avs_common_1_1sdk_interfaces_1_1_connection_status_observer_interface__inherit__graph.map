@@ -1,0 +1,8 @@
+<map id="alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_connection_status_observer.html" title="This class allows us to test ConnectionStatusObserver interaction. " alt="" coords="296,5,490,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html" title="alexaClientSDK::capability\lAgents::alerts::AlertsCapabilityAgent" alt="" coords="274,81,512,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_state_synchronizer.html" title="alexaClientSDK::capability\lAgents::system::StateSynchronizer" alt="" coords="278,144,507,183"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1integration_1_1_connection_status_observer.html" title="alexaClientSDK::integration\l::ConnectionStatusObserver" alt="" coords="298,207,487,245"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1sample_app_1_1_connection_observer.html" title="alexaClientSDK::sampleApp\l::ConnectionObserver" alt="" coords="298,269,487,308"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title="alexaClientSDK::sampleApp\l::UIManager" alt="" coords="298,332,487,371"/>
+</map>

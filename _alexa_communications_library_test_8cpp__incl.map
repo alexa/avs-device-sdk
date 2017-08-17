@@ -1,0 +1,36 @@
+<map id="/Users/kcecka/projects/avs&#45;cpp&#45;sdk/Integration/test/AlexaCommunicationsLibraryTest.cpp" name="/Users/kcecka/projects/avs&#45;cpp&#45;sdk/Integration/test/AlexaCommunicationsLibraryTest.cpp">
+<area shape="rect" id="node6" href="$_a_v_s_connection_manager_8h_source.html" title="ACL/AVSConnectionManager.h" alt="" coords="3692,299,3900,324"/>
+<area shape="rect" id="node22" href="$_h_t_t_p2_message_router_8h_source.html" title="ACL/Transport/HTTP2Message\lRouter.h" alt="" coords="3511,119,3718,157"/>
+<area shape="rect" id="node23" href="$_attachment_manager_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="1154,292,1355,331"/>
+<area shape="rect" id="node27" href="$_in_process_s_d_s_8h_source.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1854,552,2016,591"/>
+<area shape="rect" id="node35" href="$_auth_delegate_8h_source.html" title="AuthDelegate/AuthDelegate.h" alt="" coords="668,472,866,497"/>
+<area shape="rect" id="node38" href="$_in_process_attachment_8h_source.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachment.h" alt="" coords="1683,379,1885,417"/>
+<area shape="rect" id="node41" href="$_alexa_client_s_d_k_init_8h_source.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="2394,552,2598,591"/>
+<area shape="rect" id="node42" href="$_logger_8h_source.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2616,465,2792,504"/>
+<area shape="rect" id="node47" href="$_auth_observer_8h_source.html" title="Integration/AuthObserver.h" alt="" coords="166,559,346,584"/>
+<area shape="rect" id="node48" href="$_client_message_handler_8h_source.html" title="Integration/ClientMessage\lHandler.h" alt="" coords="893,205,1069,244"/>
+<area shape="rect" id="node49" href="$_connection_status_observer_8h_source.html" title="Integration/ConnectionStatus\lObserver.h" alt="" coords="450,465,643,504"/>
+<area shape="rect" id="node50" href="$_observable_message_request_8h_source.html" title="Integration/ObservableMessage\lRequest.h" alt="" coords="1019,465,1229,504"/>
+<area shape="rect" id="node12" href="$_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_message_request_8h_source.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="4401,559,4650,584"/>
+<area shape="rect" id="node13" href="$_a_v_s_endpoint_assigner_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/AVSEndpointAssignerInterface.h" alt="" coords="3834,379,4052,417"/>
+<area shape="rect" id="node14" href="$_connection_status_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="3324,552,3572,591"/>
+<area shape="rect" id="node16" href="$_message_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="2243,379,2440,417"/>
+<area shape="rect" id="node17" href="$_message_sender_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="4503,465,4694,504"/>
+<area shape="rect" id="node18" href="$_state_synchronizer_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/StateSynchronizerObserverInterface.h" alt="" coords="4075,379,4327,417"/>
+<area shape="rect" id="node19" href="$_requires_shutdown_8h_source.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2961,552,3149,591"/>
+<area shape="rect" id="node20" href="$_message_router_interface_8h_source.html" title="ACL/Transport/MessageRouter\lInterface.h" alt="" coords="4452,379,4657,417"/>
+<area shape="rect" id="node21" href="$_message_router_observer_interface_8h_source.html" title="ACL/Transport/MessageRouter\lObserverInterface.h" alt="" coords="3732,465,3937,504"/>
+<area shape="rect" id="node31" href="$_message_router_8h_source.html" title="ACL/Transport/MessageRouter.h" alt="" coords="3580,212,3796,237"/>
+<area shape="rect" id="node34" href="$_message_consumer_interface_8h_source.html" title="ACL/Transport/MessageConsumer\lInterface.h" alt="" coords="4553,292,4780,331"/>
+<area shape="rect" id="node25" href="$_attachment_manager_interface_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="2011,379,2219,417"/>
+<area shape="rect" id="node26" href="$_attachment_8h_source.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="2187,465,2389,504"/>
+<area shape="rect" id="node30" href="$_shared_data_stream_8h_source.html" title="SharedDataStream.h" alt="" coords="1891,645,2037,671"/>
+<area shape="rect" id="node32" href="$_auth_delegate_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="1355,552,1546,591"/>
+<area shape="rect" id="node33" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="257,639,447,677"/>
+<area shape="rect" id="node37" href="$_http_post_interface_8h_source.html" title="AuthDelegate/HttpPostInterface.h" alt="" coords="858,559,1078,584"/>
+<area shape="rect" id="node39" href="$_in_process_attachment_reader_8h_source.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="1681,465,1887,504"/>
+<area shape="rect" id="node40" href="$_in_process_attachment_writer_8h_source.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h" alt="" coords="1962,465,2163,504"/>
+<area shape="rect" id="node44" href="$_configuration_node_8h_source.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2722,552,2936,591"/>
+<area shape="rect" id="node45" href="$_level_8h_source.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="3796,552,3972,591"/>
+<area shape="rect" id="node46" href="$_log_entry_8h_source.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="3596,552,3772,591"/>
+</map>
