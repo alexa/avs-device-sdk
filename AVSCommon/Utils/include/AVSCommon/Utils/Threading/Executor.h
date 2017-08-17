@@ -72,12 +72,18 @@ public:
      */
     void waitForSubmittedTasks();
 
+    /// Clears the executor of outstanding tasks and refuses any additional tasks to be submitted.
+    void shutdown();
+
+    /// Returns whether or not the executor is shutdown.
+    bool isShutdown();
+
 private:
     /// The queue of tasks to execute.
     std::shared_ptr<TaskQueue> m_taskQueue;
 
     /// The thread to execute tasks on. The thread must be declared last to be destructed first.
-    TaskThread m_taskThread;
+    std::unique_ptr<TaskThread> m_taskThread;
 };
 
 

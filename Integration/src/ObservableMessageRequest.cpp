@@ -40,13 +40,17 @@ using namespace avsCommon::avs::attachment;
 ObservableMessageRequest::ObservableMessageRequest(
         const std::string & jsonContent,
         std::shared_ptr<AttachmentReader> attachmentReader) :
-        MessageRequest{jsonContent, attachmentReader}, m_sendMessageStatus(MessageRequest::Status::PENDING) {
+        MessageRequest{jsonContent, attachmentReader},
+        m_sendMessageStatus(MessageRequest::Status::PENDING),
+        m_sendCompleted{false},
+        m_exceptionReceived{false} {
 }
 
 void ObservableMessageRequest::onSendCompleted(MessageRequest::Status sendMessageStatus) {
     std::lock_guard<std::mutex> lock(m_mutex);
     ACSDK_DEBUG(LX("onSendCompleted").d("status", MessageRequest::statusToString(sendMessageStatus)));
     m_sendMessageStatus = sendMessageStatus;
+    m_sendCompleted = true;
     m_wakeTrigger.notify_all();
 }
 
@@ -65,6 +69,15 @@ bool ObservableMessageRequest::waitFor(
 
 void ObservableMessageRequest::onExceptionReceived(const std::string & exceptionMessage) {
     ACSDK_DEBUG(LX("onExceptionReceived").d("status", exceptionMessage));
+    m_exceptionReceived = true;
+}
+
+bool ObservableMessageRequest::hasSendCompleted() {
+    return m_sendCompleted;
+}
+
+bool ObservableMessageRequest::wasExceptionReceived() {
+    return m_exceptionReceived;
 }
 
 } // namespace integration

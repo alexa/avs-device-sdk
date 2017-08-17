@@ -135,6 +135,7 @@ TEST_F(EndpointHandlerTest, handleDirectiveProperly) {
     EXPECT_CALL(*m_mockAVSEndpointAssigner, setAVSEndpoint(ResultOf(&checkIncomingEndpoint, Eq(true))));
     directiveSequencer->onDirective(endpointDirective);
     exitTrigger.wait_for(exitLock, std::chrono::seconds(2));
+    directiveSequencer->shutdown();
 }
 
 } // namespace test

@@ -302,7 +302,7 @@ void AlertsCapabilityAgent::disableSendEvents() {
 
 void AlertsCapabilityAgent::onConnectionStatusChanged(const Status status, const ChangedReason reason) {
     std::lock_guard<std::mutex> lock(m_mutex);
-    m_isConnected = (Status::CONNECTED == status);
+    m_isConnected = (Status::POST_CONNECTED == status);
 }
 
 void AlertsCapabilityAgent::onFocusChanged(avsCommon::avs::FocusState focusState) {
@@ -494,6 +494,7 @@ AlertsCapabilityAgent::AlertsCapabilityAgent(
         std::shared_ptr<storage::AlertStorageInterface> alertStorage,
         std::shared_ptr<AlertObserverInterface> observer)
         : CapabilityAgent("Alerts", exceptionEncounteredSender),
+          RequiresShutdown("AlertsCapabilityAgent"),
           m_messageSender{messageSender},
           m_focusManager{focusManager},
           m_contextManager{contextManager},
@@ -502,6 +503,22 @@ AlertsCapabilityAgent::AlertsCapabilityAgent(
           m_isConnected{false}, m_sendEventsEnabled{false}, m_focusState{avsCommon::avs::FocusState::NONE},
           m_observer{observer} {
 
+}
+
+void AlertsCapabilityAgent::doShutdown() {
+    releaseChannel();
+    m_scheduledAlertTimer.stop();
+    m_caExecutor.shutdown();
+    m_alertSchedulerExecutor.shutdown();
+    m_messageSender.reset();
+    m_focusManager.reset();
+    m_contextManager.reset();
+    m_alertStorage.reset();
+    m_alertRenderer.reset();
+    m_activeAlert.reset();
+    m_scheduledAlerts.clear();
+    m_pastDueAlerts.clear();
+    m_observer.reset();
 }
 
 bool AlertsCapabilityAgent::initialize() {

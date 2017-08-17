@@ -25,6 +25,7 @@
 #include <AIP/AudioProvider.h>
 #include <Alerts/AlertsCapabilityAgent.h>
 #include <Alerts/Storage/AlertStorageInterface.h>
+#include <SpeechSynthesizer/SpeechSynthesizer.h>
 #include <AudioPlayer/AudioPlayer.h>
 #include <AVSCommon/AVS/DialogUXStateAggregator.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
@@ -216,6 +217,9 @@ private:
 
     /// The audio input processor.
     std::shared_ptr<capabilityAgents::aip::AudioInputProcessor> m_audioInputProcessor;
+
+    /// The speech synthesizer.
+    std::shared_ptr<capabilityAgents::speechSynthesizer::SpeechSynthesizer> m_speechSynthesizer;
 
     /// The audio player.
     std::shared_ptr<capabilityAgents::audioPlayer::AudioPlayer> m_audioPlayer;

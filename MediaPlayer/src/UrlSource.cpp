@@ -71,7 +71,10 @@ UrlSource::UrlSource(
 bool UrlSource::init() {
     ACSDK_DEBUG(LX("initCalledForUrlSource"));
 
-    m_playlistParser->parsePlaylist(m_url, shared_from_this());
+    if (!m_playlistParser->parsePlaylist(m_url, shared_from_this())) {
+        ACSDK_ERROR(LX("initFailed").d("reason", "startingParsePlaylistFailed"));
+        return false;
+    }
 
     auto decoder = gst_element_factory_make("uridecodebin", "decoder");
     if (!decoder) {

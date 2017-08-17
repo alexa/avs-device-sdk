@@ -34,7 +34,9 @@ namespace test {
  */
 class MockDirectiveSequencer : public avsCommon::sdkInterfaces::DirectiveSequencerInterface {
 public:
-    MOCK_METHOD0(shutdown,void());
+    MockDirectiveSequencer();
+
+    MOCK_METHOD0(doShutdown,void());
 
     MOCK_METHOD1(addDirectiveHandler, 
             bool(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler));
@@ -46,6 +48,10 @@ public:
 
     MOCK_METHOD1(onDirective, bool(std::shared_ptr<avsCommon::avs::AVSDirective> directive));
 };
+
+inline MockDirectiveSequencer::MockDirectiveSequencer() :
+        avsCommon::sdkInterfaces::DirectiveSequencerInterface{"MockDirectiveSequencer"} {
+}
 
 } // namespace test
 } // namespace adsl

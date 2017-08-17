@@ -198,9 +198,6 @@ public:
                 isEnabled,
                 { m_connectionStatusObserver },
                 { m_clientMessageHandler });
-        // TODO: ACSDK-421: Remove the callback when m_avsConnection manager is no longer an observer to
-        // StateSynchronizer.
-        m_avsConnectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
         connect();
     }
 
@@ -214,6 +211,11 @@ public:
         m_avsConnectionManager->enable();
         ASSERT_TRUE(m_connectionStatusObserver->waitFor(
                 ConnectionStatusObserverInterface::Status::CONNECTED)) << "Connecting timed out.";
+        // TODO: ACSDK-421: Remove the callback when m_avsConnection manager is no longer an observer to
+        // StateSynchronizer.
+        m_avsConnectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
+        ASSERT_TRUE(m_connectionStatusObserver->waitFor(
+                ConnectionStatusObserverInterface::Status::POST_CONNECTED)) << "Post connecting timed out.";
     }
 
     void disconnect() {
@@ -233,8 +235,8 @@ public:
         auto messageRequest = std::make_shared<ObservableMessageRequest>(jsonContent, attachmentReader);
 
         m_avsConnectionManager->sendMessage(messageRequest);
-
         ASSERT_TRUE(messageRequest->waitFor(expectedStatus, timeout));
+        ASSERT_TRUE(messageRequest->hasSendCompleted() || messageRequest->wasExceptionReceived());
     }
 
     /**

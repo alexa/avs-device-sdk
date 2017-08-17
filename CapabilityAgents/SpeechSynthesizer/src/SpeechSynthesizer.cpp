@@ -96,7 +96,7 @@ static const char PLAYER_STATE_FINISHED[] = "FINISHED";
 /// The duration to wait for a state change in @c onFocusChanged before failing.
 static const std::chrono::seconds STATE_CHANGE_TIMEOUT{2};
 
-std::unique_ptr<SpeechSynthesizer> SpeechSynthesizer::create(
+std::shared_ptr<SpeechSynthesizer> SpeechSynthesizer::create(
         std::shared_ptr<MediaPlayerInterface> mediaPlayer,
         std::shared_ptr<MessageSenderInterface> messageSender,
         std::shared_ptr<FocusManagerInterface> focusManager,
@@ -127,7 +127,7 @@ std::unique_ptr<SpeechSynthesizer> SpeechSynthesizer::create(
         ACSDK_ERROR(LX("SpeechSynthesizerCreationFailed").d("reason", "exceptionSenderNullReference"));
         return nullptr;
     }
-    std::unique_ptr<SpeechSynthesizer> speechSynthesizer(new SpeechSynthesizer(
+    auto speechSynthesizer = std::shared_ptr<SpeechSynthesizer>(new SpeechSynthesizer(
             mediaPlayer, messageSender, focusManager, contextManager, attachmentManager, exceptionSender));
     speechSynthesizer->init();
     return speechSynthesizer;
@@ -137,35 +137,6 @@ avsCommon::avs::DirectiveHandlerConfiguration SpeechSynthesizer::getConfiguratio
     avsCommon::avs::DirectiveHandlerConfiguration configuration;
     configuration[SPEAK] = avsCommon::avs::BlockingPolicy::BLOCKING;
     return configuration;
-}
-
-SpeechSynthesizer::~SpeechSynthesizer() {
-    ACSDK_DEBUG(LX("~SpeechSynthesizer"));
-    m_speechPlayer->setObserver(nullptr);
-    {
-        std::unique_lock<std::mutex> lock(m_mutex);
-        if (SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING == m_currentState || 
-                    SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING == m_desiredState) {
-            m_desiredState = SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED;
-            m_currentInfo->sendPlaybackFinishedMessage = false;
-            stopPlaying();
-            m_currentState = SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED;
-            lock.unlock();
-            releaseForegroundFocus();
-        }
-    }
-    {
-        std::lock_guard<std::mutex> lock(m_speakInfoQueueMutex);
-        for (auto it = m_speakInfoQueue.begin(); it != m_speakInfoQueue.end(); it++) {
-            if (it->get()->result) {
-                it->get()->result->setFailed("SpeechSynthesizerShuttingDown");
-            }
-            removeSpeakDirectiveInfo(it->get()->directive->getMessageId());
-            removeDirective(it->get()->directive->getMessageId());
-        }
-    }
-    m_speechPlayer.reset();
-    m_waitOnStateChange.notify_one();
 }
 
 void SpeechSynthesizer::addObserver(std::shared_ptr<SpeechSynthesizerObserver> observer) {
@@ -284,6 +255,7 @@ SpeechSynthesizer::SpeechSynthesizer(
         std::shared_ptr<attachment::AttachmentManagerInterface> attachmentManager,
         std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender) :
         CapabilityAgent{NAMESPACE, exceptionSender},
+        RequiresShutdown{"SpeechSynthesizer"},
         m_speechPlayer{mediaPlayer},
         m_messageSender{messageSender},
         m_focusManager{focusManager},
@@ -292,24 +264,46 @@ SpeechSynthesizer::SpeechSynthesizer(
         m_currentState{SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED},
         m_desiredState{SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED},
         m_currentFocus{FocusState::NONE} {
-    // The shared_ptr m_focusManager and calls made through it passing a shared_ptr to this SpeechSynthesizer pose
-    // a shared_ptr cycle hazard. To eliminate this hazard a separate shared_ptr to the ChannelObserver portion
-    // of this (with a disabled deleter) is created and passed to FocusManager instead of a shared_from_this().
-    m_thisAsChannelObserver = std::shared_ptr<ChannelObserverInterface>(this, [](MediaPlayerObserverInterface*) {});
+}
+
+void SpeechSynthesizer::doShutdown() {
+    ACSDK_DEBUG9(LX("doShutdown"));
+    m_speechPlayer->setObserver(nullptr);
+    {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        if (SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING == m_currentState || 
+                    SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING == m_desiredState) {
+            m_desiredState = SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED;
+            m_currentInfo->sendPlaybackFinishedMessage = false;
+            stopPlaying();
+            m_currentState = SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED;
+            lock.unlock();
+            releaseForegroundFocus();
+        }
+    }
+    {
+        std::lock_guard<std::mutex> lock(m_speakInfoQueueMutex);
+        for (auto& info : m_speakInfoQueue) {
+            if (info.get()->result) {
+                info.get()->result->setFailed("SpeechSynthesizerShuttingDown");
+            }
+            removeSpeakDirectiveInfo(info.get()->directive->getMessageId());
+            removeDirective(info.get()->directive->getMessageId());
+        }
+    }
+    m_executor.shutdown();
+    m_speechPlayer.reset();
+    m_waitOnStateChange.notify_one();
+    m_messageSender.reset();
+    m_focusManager.reset();
+    m_contextManager.reset();
+    m_attachmentManager.reset();
+    m_observers.clear();
 }
 
 void SpeechSynthesizer::init() {
-    // SpeechSynthesizer holds a shared_ptr to MediaPlayer and MediaPlayer holds a shared_ptr to a
-    // MediaPlayerObserverInterface, which SpeechSynthesizer is derived from. This would result in shared_ptr
-    // circular reference that would prevent both SpeechSynthesizer and its MediaPlayer from ever being deleted.
-    // This problem is prevented by passing MediaPlayer a separate shared_ptr to this SpeechSynthesizer with a
-    // disabled deleter. The separate shared_ptr prevents MediaPlayer's reference to SpeechSynthesizer from
-    // preventing SpeechSynthesizer's deletion. The disabled deleter prevents MediaPlayer's eventual release of
-    // its shared_ptr to SpeechSynthesizer from causing a duplicate deletion of SpeechSynthesizer.
-    std::shared_ptr<MediaPlayerObserverInterface> thisAsMediaPlayerObserver(this, [](MediaPlayerObserverInterface*) {});
-    m_speechPlayer->setObserver(thisAsMediaPlayerObserver);
-    std::shared_ptr<StateProviderInterface> thisAsStateProvider(this, [](StateProviderInterface*) {});
-    m_contextManager->setStateProvider(CONTEXT_MANAGER_SPEECH_STATE, thisAsStateProvider);
+    m_speechPlayer->setObserver(shared_from_this());
+    m_contextManager->setStateProvider(CONTEXT_MANAGER_SPEECH_STATE, shared_from_this());
 }
 
 void SpeechSynthesizer::executeHandleImmediately(std::shared_ptr<DirectiveInfo> info) {
@@ -396,7 +390,7 @@ void SpeechSynthesizer::executePreHandleAfterValidation(std::shared_ptr<SpeakDir
 
 void SpeechSynthesizer::executeHandleAfterValidation(std::shared_ptr<SpeakDirectiveInfo> speakInfo) {
     m_currentInfo = speakInfo;
-    if (!m_focusManager->acquireChannel(CHANNEL_NAME, m_thisAsChannelObserver, FOCUS_MANAGER_ACTIVITY_ID)) {
+    if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), FOCUS_MANAGER_ACTIVITY_ID)) {
         static const std::string message = std::string("Could not acquire ") + CHANNEL_NAME + " for " +
                 FOCUS_MANAGER_ACTIVITY_ID;
         ACSDK_ERROR(LX("executeHandleFailed").d("reason", "CouldNotAcquireChannel")
@@ -711,7 +705,7 @@ void SpeechSynthesizer::releaseForegroundFocus() {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_currentFocus = FocusState::NONE;
     }
-    m_focusManager->releaseChannel(CHANNEL_NAME, m_thisAsChannelObserver);
+    m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
 }
 
 std::shared_ptr<SpeechSynthesizer::SpeakDirectiveInfo> SpeechSynthesizer::validateInfo(

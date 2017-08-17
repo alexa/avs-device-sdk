@@ -82,11 +82,25 @@ AVSConnectionManager::AVSConnectionManager(
         std::shared_ptr<MessageRouterInterface> messageRouter,
         std::unordered_set<std::shared_ptr<ConnectionStatusObserverInterface>> connectionStatusObservers,
         std::unordered_set<std::shared_ptr<MessageObserverInterface>> messageObservers)
-        : m_isEnabled{false},
+        : RequiresShutdown{"AVSConnectionManager"},
+          m_isEnabled{false},
           m_isSynchronized{false},
           m_connectionStatusObservers{connectionStatusObservers},
           m_messageObservers{messageObservers},
           m_messageRouter{messageRouter} {
+}
+
+void AVSConnectionManager::doShutdown() {
+    disable();
+    {
+        std::lock_guard<std::mutex> lock{m_connectionStatusObserverMutex};
+        m_connectionStatusObservers.clear();
+    }
+    {
+        std::lock_guard<std::mutex> lock{m_messageOberverMutex};
+        m_messageObservers.clear();
+    }
+    m_messageRouter.reset();
 }
 
 void AVSConnectionManager::enable() {
@@ -112,9 +126,12 @@ void AVSConnectionManager::reconnect() {
 
 void AVSConnectionManager::sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) {
     // TODO: ACSDK-421: Implement synchronized state check at a lower level.
+    std::unique_lock<std::mutex> lock{m_synchronizationMutex};
     if (m_isSynchronized) {
+        lock.unlock();
         m_messageRouter->sendMessage(request);
     } else {
+        lock.unlock();
         ACSDK_DEBUG(LX("sendMessageNotSuccessful").d("reason", "notSynchronized"));
         request->onSendCompleted(avsCommon::avs::MessageRequest::Status::NOT_SYNCHRONIZED);
     }
@@ -180,8 +197,14 @@ void AVSConnectionManager::removeMessageObserver(
 }
 
 void AVSConnectionManager::onConnectionStatusChanged(
-  const ConnectionStatusObserverInterface::Status status,
+        const ConnectionStatusObserverInterface::Status status,
         const ConnectionStatusObserverInterface::ChangedReason reason) {
+    if (status == ConnectionStatusObserverInterface::Status::DISCONNECTED || 
+                status == ConnectionStatusObserverInterface::Status::PENDING ) {
+        std::lock_guard<std::mutex>{m_synchronizationMutex};
+        m_isSynchronized = false;
+    }
+
     std::unique_lock<std::mutex> lock{m_connectionStatusObserverMutex};
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>> observers{m_connectionStatusObservers};
     lock.unlock();
@@ -192,7 +215,14 @@ void AVSConnectionManager::onConnectionStatusChanged(
 }
 
 void AVSConnectionManager::onStateChanged(StateSynchronizerObserverInterface::State newState) {
+    std::unique_lock<std::mutex> lock{m_synchronizationMutex};
     m_isSynchronized = (StateSynchronizerObserverInterface::State::SYNCHRONIZED == newState);
+    if (m_isSynchronized) {
+        lock.unlock();
+        onConnectionStatusChanged(
+                ConnectionStatusObserverInterface::Status::POST_CONNECTED, 
+                ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
+    }
 }
 
 void AVSConnectionManager::receive(const std::string & contextId, const std::string & message) {

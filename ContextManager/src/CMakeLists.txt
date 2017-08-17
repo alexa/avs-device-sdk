@@ -8,3 +8,6 @@ target_include_directories(ContextManager PUBLIC
 
 target_link_libraries(ContextManager
     AVSCommon)
+
+# install target
+asdk_install()

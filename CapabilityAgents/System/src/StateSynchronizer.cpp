@@ -86,49 +86,66 @@ void StateSynchronizer::shutdown() {
     m_observers.clear();
 }
 
-void StateSynchronizer::notifyObserversLocked() {
+void StateSynchronizer::notifyObservers() {
     std::unique_lock<std::mutex> observerLock(m_observerMutex);
     auto currentObservers = m_observers;
     observerLock.unlock();
+    std::unique_lock<std::mutex> statusLock(m_stateMutex);
+    auto currentState = m_state;
+    statusLock.unlock();
     for (auto observer : currentObservers) {
-        observer->onStateChanged(m_state);
+        observer->onStateChanged(currentState);
     }
 }
 
 void StateSynchronizer::messageSent(MessageRequest::Status messageStatus) {
     if (MessageRequest::Status::SUCCESS == messageStatus) {
-        std::lock_guard<std::mutex> stateLock(m_stateMutex);
+        std::unique_lock<std::mutex> stateLock(m_stateMutex);
+        ACSDK_INFO(LX("messageSentSuccessfully"));
         if (ObserverInterface::State::SYNCHRONIZED != m_state) {
             m_state = ObserverInterface::State::SYNCHRONIZED;
-            notifyObserversLocked();
+            stateLock.unlock();
+            notifyObservers();
         }
     } else {
         // If the message send was unsuccessful, send another request to @c ContextManager.
-        ACSDK_ERROR(LX("messageSendNotSuccessful"));
-        m_contextManager->getContext(shared_from_this());
+        ACSDK_WARN(LX("messageSendNotSuccessful"));
+        if (!m_isConnected) {
+            m_contextManager->getContext(shared_from_this());
+        }
     }
 }
 
 void StateSynchronizer::onConnectionStatusChanged(
         const ConnectionStatusObserverInterface::Status status,
         const ConnectionStatusObserverInterface::ChangedReason reason) {
-    std::lock_guard<std::mutex> stateLock(m_stateMutex);
-    if (ConnectionStatusObserverInterface::Status::CONNECTED == status) {
-        if (ObserverInterface::State::SYNCHRONIZED == m_state) {
-            ACSDK_ERROR(LX("unexpectedConnectionStatusChange").d("reason", "connectHappenedUnexpectedly"));
-        } else {
-            // This is the case when we should send @c SynchronizeState event.
-            m_contextManager->getContext(shared_from_this());
-        }
-    } else {
-        if (ObserverInterface::State::NOT_SYNCHRONIZED == m_state) {
-            ACSDK_INFO(LX("unexpectedConnectionStatusChange").d("reason", "noConnectHappenedUnexpectedly"));
-        } else {
-            // This is the case when we should notify observers that the connection is not yet synchronized.
-            m_state = ObserverInterface::State::NOT_SYNCHRONIZED;
-            notifyObserversLocked();
-        }
-    }
+    std::unique_lock<std::mutex> stateLock(m_stateMutex);
+    switch (status) {
+        case ConnectionStatusObserverInterface::Status::DISCONNECTED:
+            /* FALL-THROUGH */
+        case ConnectionStatusObserverInterface::Status::PENDING:
+            m_isConnected = false;
+            if (ObserverInterface::State::NOT_SYNCHRONIZED != m_state) {
+                m_state = ObserverInterface::State::NOT_SYNCHRONIZED;
+                stateLock.unlock();
+                notifyObservers();
+            }
+            break;
+        case ConnectionStatusObserverInterface::Status::CONNECTED:
+            m_isConnected = true;
+            if (ObserverInterface::State::SYNCHRONIZED == m_state) {
+                ACSDK_ERROR(LX("unexpectedConnectionStatusChange").d("reason", "connectHappenedWhileSynchronized"));
+            } else {
+                // This is the case when we should send @c SynchronizeState event.
+                ACSDK_INFO(LX("requestingContext")
+                        .d("reason", "connectionStatusChanged")
+                        .d("receivedStatus", status));
+                m_contextManager->getContext(shared_from_this());
+            }
+            break;
+        case ConnectionStatusObserverInterface::Status::POST_CONNECTED:
+            break;
+     }
 }
 
 void StateSynchronizer::onContextAvailable(const std::string& jsonContext) {
@@ -153,8 +170,8 @@ StateSynchronizer::StateSynchronizer(
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender) :
     m_messageSender{messageSender},
     m_contextManager{contextManager},
-    m_state{ObserverInterface::State::NOT_SYNCHRONIZED}
-{
+    m_isConnected{false},
+    m_state{ObserverInterface::State::NOT_SYNCHRONIZED} {
 }
 
 } // namespace system

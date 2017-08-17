@@ -215,6 +215,44 @@ TEST_F(ExecutorTest, futureWaitsForTaskCleanup) {
     ASSERT_TRUE(cleanedUp);
 }
 
+/// This test verifies that the shutdown function completes the current task and does not accept new tasks.
+TEST_F(ExecutorTest, shutdown) {
+    std::atomic<bool> ready(false);
+    std::atomic<bool> blocked(false);
+
+    // submit a task which will block the executor and then sleep briefly
+    auto done = executor.submit(
+        [&] {
+            blocked = true;
+            while (!ready) {
+                std::this_thread::yield();
+            }
+            std::this_thread::sleep_for(SHORT_TIMEOUT_MS);
+        }
+    );
+
+    // wait for it to block
+    while (!blocked) {
+        std::this_thread::yield();
+    }
+
+    // release the task to start sleeping
+    ready = true;
+
+    // shut down the executor
+    EXPECT_FALSE(executor.isShutdown());
+    executor.shutdown();
+    EXPECT_TRUE(executor.isShutdown());
+
+    // verify that the task has now completed
+    EXPECT_TRUE(done.valid());
+    done.get();
+
+    // try to submit a new task and verify that it is rejected
+    auto rejected = executor.submit([] {});
+    ASSERT_FALSE(rejected.valid());
+}
+
 } // namespace test
 } // namespace threading
 } // namespace avsCommon

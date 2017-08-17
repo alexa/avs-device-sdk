@@ -17,6 +17,8 @@
  * permissions and limitations under the License.
  */
 
+#include <chrono>
+
 #include "AVSCommon/Utils/Logger/Logger.h"
 
 namespace alexaClientSDK {
@@ -137,6 +139,21 @@ void acsdkCritical(const LogEntry& entry);
  * @param entry A log entry.
  */
 void logEntry(Level level, const LogEntry& entry);
+
+/**
+ * Formats a log message into a printable string with other metadata regarding the log message.
+ *
+ * @param level The severity Level of this log line.
+ * @param time The time that the event to log occurred.
+ * @param threadMoniker Moniker of the thread that generated the event.
+ * @param text The text of the entry to log.
+ * @return The formatted string.
+ */
+std::string formatLogString(
+        Level level,
+        std::chrono::system_clock::time_point time,
+        const char *threadMoniker,
+        const char *text);
 
 } // namespace logger
 } // namespace utils

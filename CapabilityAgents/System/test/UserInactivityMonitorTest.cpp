@@ -173,6 +173,7 @@ TEST_F(UserInactivityMonitorTest, handleDirectiveProperly) {
 
     directiveSequencer->onDirective(userInactivityDirective);
     exitTrigger.wait_for(exitLock, USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD/2);
+    directiveSequencer->shutdown();
 }
 
 /**
@@ -234,6 +235,7 @@ TEST_F(UserInactivityMonitorTest, sendMultipleReportsWithReset) {
     directiveSequencer->onDirective(userInactivityDirective);
 
     exitTrigger.wait_for(exitLock, repetitionCount * USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD/2);
+    directiveSequencer->shutdown();
 }
 
 } // namespace test

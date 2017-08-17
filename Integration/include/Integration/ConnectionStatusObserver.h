@@ -20,25 +20,56 @@
 
 #include <chrono>
 #include <condition_variable>
+#include <deque>
 #include <mutex>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace integration {
 
+/**
+ * The class implements ConnectionStatusObserverInterface for testing.
+ */
 class ConnectionStatusObserver : public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface {
 public:
+
+    /**
+     * ConnectionStatusObserver constructor.
+     */
     ConnectionStatusObserver();
+
     void onConnectionStatusChanged(
-    		const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status connectionStatus,
+            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status connectionStatus,
             const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
+    /**
+     * The utility function to get the connection status.
+     * @return Status The @c connectionStatus for the connection.
+     */
     avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status getConnectionStatus() const;
+
+    /**
+     * Function to allow waiting for an expected status when a connection or disconnection is done.
+     * @param connectionStatus The expected connection status for which the waiting is done.
+     * @param duration The maximum time waiting for the expected connectionStatus.
+     * @return true if expected connectionStatus is received within @c duration else false.
+     */
     bool waitFor(const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status connectionStatus,
                  const std::chrono::seconds duration = std::chrono::seconds(10));
+
+    /**
+     * Function to check if the connection is broken due to Server side Disconnect.
+     * @return true if the disconnect happens due to SERVER_SIDE_DISCONNECT else false.
+     */
+    bool checkForServerSideDisconnect();
+
 private:
-    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status m_connectionStatus;
-    std::mutex m_mutex;
+    /// Mutex used internally to enforce thread safety and serialize read/write access to @c m_statusChanges.
+    mutable std::mutex m_mutex;
+    /// The cv used when waiting for a particular status of a connection
     std::condition_variable m_wakeTrigger;
+    /// The queue of values of the pair (Connection status, ChangedReason) throughout the connection.
+    std::deque<std::pair<ConnectionStatusObserverInterface::Status,
+                        ConnectionStatusObserverInterface::ChangedReason>> m_statusChanges;
 };
 
 } // namespace integration

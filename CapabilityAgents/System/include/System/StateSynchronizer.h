@@ -18,6 +18,7 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_SYSTEM_INCLUDE_SYSTEM_STATE_SYNCHRONIZER_H_
 #define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_SYSTEM_INCLUDE_SYSTEM_STATE_SYNCHRONIZER_H_
 
+#include <atomic>
 #include <memory>
 #include <mutex>
 #include <string>
@@ -108,10 +109,10 @@ private:
             std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender);
 
     /**
-     * Notify the observers. This function uses @c m_state and therefore should be called when its mutex,
-     * @c m_stateMutex is locked.
+     * Notify the observers. This function locks both @c m_stateMutex and @ m_observerMutex so these locks should not be
+     * held when calling this function.
      */
-    void notifyObserversLocked();
+    void notifyObservers();
 
     /// The @c MessageSenderInterface used to send event messages.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
@@ -124,6 +125,9 @@ private:
 
     /// The mutex to synchronize access to @c m_observers.
     std::mutex m_observerMutex;
+
+    /// The flag that describes if the connection is alive.
+    std::atomic_bool m_isConnected;
 
     /// The current state of @c StateSynchronizer.
     ObserverInterface::State m_state;

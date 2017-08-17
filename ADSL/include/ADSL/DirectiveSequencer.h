@@ -48,8 +48,6 @@ public:
     static std::unique_ptr<DirectiveSequencerInterface> create(
             std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
 
-    ~DirectiveSequencer() override;
-
     bool addDirectiveHandler(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler) override;
 
     bool removeDirectiveHandler(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler) override;
@@ -57,8 +55,6 @@ public:
     void setDialogRequestId(const std::string& dialogRequestId) override;
 
     bool onDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive) override;
-
-    void shutdown() override;
 
 private:
     /**
@@ -68,6 +64,13 @@ private:
      * ExceptionEncountered messages to AVS for directives that are not handled.
      */
     DirectiveSequencer(std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+
+    /**
+     * @copydoc
+     *
+     * This method blocks until all processing of directives has stopped.
+     */
+    void doShutdown() override;
 
     /**
      * Thread method for m_receivingThread.

@@ -25,6 +25,7 @@
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 
@@ -48,6 +49,7 @@ namespace audioPlayer {
 class AudioPlayer :
         public avsCommon::avs::CapabilityAgent,
         public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface,
+        public avsCommon::utils::RequiresShutdown,
         public std::enable_shared_from_this<AudioPlayer> {
 public:
     /**
@@ -68,9 +70,6 @@ public:
             std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
             std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
             std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
-
-    /// Prepares/enables the @c AudioPlayer to be deleted.
-    void shutdown();
 
     /// @name StateProviderInterface Functions
     /// @{
@@ -122,6 +121,11 @@ private:
             std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
             std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
             std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+
+    /// @name RequiresShutdown Functions
+    /// @{
+    void doShutdown() override;
+    /// @}
 
     /**
      * This function deserializes a @c Directive's payload into a @c rapidjson::Document.
@@ -230,8 +234,12 @@ private:
     /// This fuction plays the next @c AudioItem in the queue.
     void playNextItem();
 
-    /// This function executes a parsed @c STOP directive.
-    void executeStop();
+    /**
+     * This function executes a parsed @c STOP directive.
+     *
+     * @param releaseFocus Indicates whether this function should release focus on the content channel.
+     */
+    void executeStop(bool releaseFocus = true);
 
     /**
      * This function executes a parsed @c CLEAR_QUEUE directive.

@@ -66,7 +66,7 @@ static const std::chrono::milliseconds MARGIN = std::chrono::milliseconds(250);
 static const AudioInputStream::Index MARGIN_IN_SAMPLES = MARGIN.count() * SAMPLES_PER_MS;
 
 /// The number of "Alexa" keywords in the four_alexa.wav file.
-static const int NUM_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE = 4;
+static const size_t NUM_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE = 4;
 
 /// The approximate begin indices of the four "Alexa" keywords in the four_alexa.wav file.
 std::vector<AudioInputStream::Index> BEGIN_INDICES_OF_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE = {7520, 39680, 58880, 77120};
@@ -75,7 +75,7 @@ std::vector<AudioInputStream::Index> BEGIN_INDICES_OF_ALEXAS_IN_FOUR_ALEXAS_AUDI
 std::vector<AudioInputStream::Index> END_INDICES_OF_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE = {21440, 52800, 72480, 91552};
 
 /// The number of "Alexa" keywords in the alexa_stop_alexa_joke.wav file.
-static const int NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE = 2;
+static const size_t NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE = 2;
 
 /// The approximate begin indices of the two "Alexa" keywords in the alexa_stop_alexa_joke.wav file.
 std::vector<AudioInputStream::Index> BEGIN_INDICES_OF_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE = {8000, 38240};

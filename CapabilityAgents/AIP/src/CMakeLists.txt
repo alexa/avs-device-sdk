@@ -12,3 +12,6 @@ target_link_libraries(AIP
     AVSCommon
     ADSL
     AFML)
+
+# install target
+asdk_install()

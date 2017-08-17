@@ -158,6 +158,9 @@ public:
      */
     Logger(Level level);
 
+    /// Destructor.
+    virtual ~Logger() = default;
+
     /**
      * Set the lowest severity level to be output by this logger.
      *

@@ -128,6 +128,8 @@ void UIManager::printState() {
         ConsolePrinter::prettyPrint("Client not connected!");
     } else if (m_connectionStatus == avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::PENDING) {
         ConsolePrinter::prettyPrint("Connecting...");
+    } else if (m_connectionStatus == avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED) {
+        ConsolePrinter::prettyPrint("Performing post connect actions...");
     } else {
         switch (m_dialogState) {
             case DialogUXState::IDLE:

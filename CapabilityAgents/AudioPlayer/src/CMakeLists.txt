@@ -6,3 +6,6 @@ target_include_directories(AudioPlayer PUBLIC
     "${AVSCommon_INCLUDE_DIRS}")
 target_link_libraries(AudioPlayer
     AVSCommon)
+
+# install target
+asdk_install()

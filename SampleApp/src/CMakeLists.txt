@@ -6,7 +6,8 @@ add_executable(SampleApp
     ConsolePrinter.cpp
     UIManager.cpp
     KeywordObserver.cpp
-    ConnectionObserver.cpp)
+    ConnectionObserver.cpp
+    SampleApplication.cpp)
 
 target_include_directories(SampleApp PUBLIC 
     "${SampleApp_SOURCE_DIR}/include"

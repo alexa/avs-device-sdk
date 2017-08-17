@@ -29,6 +29,7 @@
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 
@@ -49,6 +50,7 @@ static const std::chrono::minutes ALERT_PAST_DUE_CUTOFF_MINUTES = std::chrono::m
 class AlertsCapabilityAgent : public avsCommon::avs::CapabilityAgent,
                               public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface,
                               public AlertObserverInterface,
+                              public avsCommon::utils::RequiresShutdown,
                               public std::enable_shared_from_this<AlertsCapabilityAgent> {
 public:
     /**
@@ -138,6 +140,8 @@ private:
             std::shared_ptr<renderer::RendererInterface> renderer,
             std::shared_ptr<storage::AlertStorageInterface> alertStorage,
             std::shared_ptr<AlertObserverInterface> observer);
+
+    void doShutdown() override;
 
     /**
      * Initializes this object.

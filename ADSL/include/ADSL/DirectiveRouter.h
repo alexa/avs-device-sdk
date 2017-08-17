@@ -24,6 +24,7 @@
 #include <AVSCommon/AVS/NamespaceAndName.h>
 #include <AVSCommon/AVS/DirectiveHandlerConfiguration.h>
 #include <AVSCommon/AVS/HandlerAndPolicy.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 
 namespace alexaClientSDK {
 namespace adsl {
@@ -31,12 +32,10 @@ namespace adsl {
  * Class to maintain a mapping from @c NamespaceAndName to @c HandlerAndPolicy, and to invoke
  * @c DirectiveHandlerInterface methods on the @c DirectiveHandler registered for a given @c AVSDirective.
  */
-class DirectiveRouter {
+class DirectiveRouter : public avsCommon::utils::RequiresShutdown{
 public:
-    /**
-     * Destructor.
-     */
-    ~DirectiveRouter();
+    /// Constructor.
+    DirectiveRouter();
 
     /**
      * Add mappings from from handler's @c NamespaceAndName values to @c BlockingPolicy values, gotten through the
@@ -100,6 +99,8 @@ public:
     bool cancelDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
 private:
+    void doShutdown() override;
+
     /**
      * The lifecycle of instances of this class are used to set-up and tear-down around a call to a
      * @c DirectiveHandlerInterface method.  In particular, while instantiated it increments the reference count of
@@ -168,6 +169,21 @@ private:
     void decrementHandlerReferenceCountLocked(
             std::unique_lock<std::mutex>& lock,
             std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
+
+    /**
+     * Remove the specified mappings from @c NamespaceAndName values to @c BlockingPolicy values, gotten through the
+     * handler's getConfiguration() method. If any of the specified mappings do not match an existing mapping, the 
+     * entire operation is refused.  This function should be called while holding m_mutex.
+     *
+     * @param handler The handler to remove.
+     * @param[out] releasedHandlers A vector of handlers which need to have onDeregistered() called after releasing the
+     *     lock.
+     * @return @c true if @c handler was removed successfully, else @c false.
+     *     vector indicates an error occurred.
+     */
+    bool removeDirectiveHandlerLocked(
+            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler,
+            std::vector<std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface>> * releasedHandlers);
 
     /// A mutex used to serialize access to @c m_configuration and @c m_handlerReferenceCounts.
     std::mutex m_mutex;

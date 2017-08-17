@@ -12,3 +12,6 @@ target_include_directories(MediaPlayer PUBLIC
     "${PlaylistParser_SOURCE_DIR}/include")
 
 target_link_libraries(MediaPlayer "${GST_LDFLAGS}" AVSCommon PlaylistParser)
+
+# install target
+asdk_install()

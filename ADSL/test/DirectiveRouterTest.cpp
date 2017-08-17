@@ -89,6 +89,7 @@ static const std::chrono::seconds LONG_TIMEOUT(15);
 class DirectiveRouterTest : public ::testing::Test {
 public:
     void SetUp() override;
+    void TearDown() override;
 
     /// A DirectiveRouter instance to test with.
     DirectiveRouter m_router;
@@ -121,6 +122,10 @@ void DirectiveRouterTest::SetUp() {
             NAMESPACE_AND_NAME_1_0, MESSAGE_ID_1_0, DIALOG_REQUEST_ID_0);
     m_directive_1_0 = AVSDirective::create(
             UNPARSED_DIRECTIVE, avsMessageHeader_1_0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
+}
+
+void DirectiveRouterTest::TearDown() {
+    m_router.shutdown();
 }
 
 /**

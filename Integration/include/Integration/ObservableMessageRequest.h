@@ -18,6 +18,7 @@
 #ifndef ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_OBSERVABLE_MESSAGE_REQUEST_H_
 #define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_OBSERVABLE_MESSAGE_REQUEST_H_
 
+#include <atomic>
 #include <chrono>
 #include <condition_variable>
 #include <mutex>
@@ -48,7 +49,10 @@ public:
      * Function to allow waiting for a particular status back from the component sending the message to AVS.
      */
     bool waitFor(const avsCommon::avs::MessageRequest::Status, const std::chrono::seconds = std::chrono::seconds(10));
-
+    /// Function indicating if onSendCompleted has been called
+    bool hasSendCompleted();
+    /// Function indicating if onExceptionReceived has been called
+    bool wasExceptionReceived();
 private:
     /// The status of whether the message was sent to AVS ok.
     avsCommon::avs::MessageRequest::Status m_sendMessageStatus;
@@ -56,6 +60,10 @@ private:
     mutable std::mutex m_mutex;
     /// The cv used when waiting for a particular status of a message being sent.
     std::condition_variable m_wakeTrigger;
+    /// The variable that gets set when send is completed.
+    std::atomic<bool> m_sendCompleted;
+    /// The variable that gets set when exception is received.
+    std::atomic<bool> m_exceptionReceived;
 };
 
 } // namespace integration

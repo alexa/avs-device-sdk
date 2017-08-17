@@ -10,3 +10,6 @@ target_include_directories(AVSSystem
     PUBLIC "${AVSSystem_SOURCE_DIR}/include")
 
 target_link_libraries(AVSSystem AVSCommon)
+
+# install target
+asdk_install()

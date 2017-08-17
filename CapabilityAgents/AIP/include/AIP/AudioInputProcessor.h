@@ -28,6 +28,7 @@
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/ChannelObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
@@ -54,13 +55,11 @@ namespace aip {
  * the @c recognize() functions.  To stop sending audio, application code should call the @c stopCapture() function.
  * Application code can also register objects which implement the @c ObserverInterface to receive notifications when
  * the @c AudioInputProcessor state changes.
- *
- * @note @c AudioInputProcessor should be returned to an @c IDLE state before closing the application.  This can be
- * achieved by waiting on the @c std::future returned by a call to @c resetState().
  */
 class AudioInputProcessor :
         public avsCommon::avs::CapabilityAgent,
         public avsCommon::sdkInterfaces::DialogUXStateObserverInterface,
+        public avsCommon::utils::RequiresShutdown,
         public std::enable_shared_from_this<AudioInputProcessor> {
 public:
     /// Alias to the @c AudioInputProcessorObserverInterface for brevity.
@@ -171,8 +170,6 @@ public:
      * This function forces the @c AudioInputProcessor back to the @c IDLE state.  This function can be called in any
      * state, and will end any Event which is currently in progress.
      *
-     * @note This function should be called when shutting down an AIP to ensure it is in a quiescent state.
-     *
      * @return A future which indicates when the @c AudioInputProcessor is back to the @c IDLE state.
      */
     std::future<void> resetState();
@@ -235,6 +232,11 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> userActivityNotifier,
         AudioProvider defaultAudioProvider);
+
+    /// @name RequiresShutdown Functions
+    /// @{
+    void doShutdown() override;
+    /// @}
 
     /**
      * This is a helper function which submits an @c Executor call to @c executeExpectSpeechTimedOut() when

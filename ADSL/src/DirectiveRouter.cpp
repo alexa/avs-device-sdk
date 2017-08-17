@@ -39,17 +39,18 @@ namespace adsl {
 
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils;
 
-DirectiveRouter::~DirectiveRouter() {
-    std::lock_guard<std::mutex> lock(m_mutex);
-
-    for (auto item : m_handlerReferenceCounts) {
-        item.first->onDeregistered();
-    }
+DirectiveRouter::DirectiveRouter() : RequiresShutdown{"DirectiveRouter"} {
 }
 
 bool DirectiveRouter::addDirectiveHandler(std::shared_ptr<DirectiveHandlerInterface> handler) {
     std::lock_guard<std::mutex> lock(m_mutex);
+
+    if (isShutdown()) {
+        ACSDK_ERROR(LX("addDirectiveHandlersFailed").d("reason", "isShutdown"));
+        return false;
+    }
 
     if (!handler) {
         ACSDK_ERROR(LX("addDirectiveHandlersFailed").d("reason", "emptyHandler"));
@@ -87,11 +88,15 @@ bool DirectiveRouter::addDirectiveHandler(std::shared_ptr<DirectiveHandlerInterf
 
 }
 
-bool DirectiveRouter::removeDirectiveHandler(std::shared_ptr<DirectiveHandlerInterface> handler) {
-    std::unique_lock<std::mutex> lock(m_mutex);
-
+bool DirectiveRouter::removeDirectiveHandlerLocked(
+        std::shared_ptr<DirectiveHandlerInterface> handler,
+        std::vector<std::shared_ptr<DirectiveHandlerInterface>> * releasedHandlers) {
+    if (!releasedHandlers) {
+        ACSDK_ERROR(LX("removeDirectiveHandlersFailed").d("reason", "nullptrReleasedHandlers"));
+        return false;
+    }
     if (!handler) {
-        ACSDK_ERROR(LX("removeDirectiveHandlersFailed").d("reason", "emptyHandler"));
+        ACSDK_ERROR(LX("removeDirectiveHandlersFailed").d("reason", "nullptrHandler"));
         return false;
     }
 
@@ -114,7 +119,6 @@ bool DirectiveRouter::removeDirectiveHandler(std::shared_ptr<DirectiveHandlerInt
      * would create a race condition because that function temporarily releases @c m_mutex when a count goes to zero.
      * Instead, the operation is expanded here with the lock released once we know which handlers to notify.
      */
-    std::vector<std::shared_ptr<DirectiveHandlerInterface>> releasedHandlers;
     for (auto item : configuration) {
         m_configuration.erase(item.first);
         ACSDK_INFO(LX("removeDirectiveHandlers")
@@ -125,9 +129,18 @@ bool DirectiveRouter::removeDirectiveHandler(std::shared_ptr<DirectiveHandlerInt
                 .d("policy", item.second));
         auto it = m_handlerReferenceCounts.find(handler);
         if (0 == --(it->second)) {
-            releasedHandlers.push_back(handler);
+            releasedHandlers->push_back(handler);
             m_handlerReferenceCounts.erase(it);
         }
+    }
+    return true;
+}
+
+bool DirectiveRouter::removeDirectiveHandler(std::shared_ptr<DirectiveHandlerInterface> handler) {
+    std::unique_lock<std::mutex> lock(m_mutex);
+    std::vector<std::shared_ptr<DirectiveHandlerInterface>> releasedHandlers;
+    if (!removeDirectiveHandlerLocked(handler, &releasedHandlers)) {
+        return false;
     }
     lock.unlock();
     for (auto releasedHandler : releasedHandlers) {
@@ -208,6 +221,30 @@ bool DirectiveRouter::cancelDirective(std::shared_ptr<avsCommon::avs::AVSDirecti
     HandlerCallScope scope(lock, this, handlerAndPolicy.handler);
     handlerAndPolicy.handler->cancelDirective(directive->getMessageId());
     return true;
+}
+
+void DirectiveRouter::doShutdown() {
+    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface>> releasedHandlers;
+    std::unique_lock<std::mutex> lock(m_mutex);
+
+    // Should remove all configurations cleanly.
+    size_t numConfigurations = m_configuration.size();
+    for (size_t i = 0; i < numConfigurations && !m_configuration.empty(); ++i) {
+        std::vector<std::shared_ptr<DirectiveHandlerInterface>> handlers;
+        if (removeDirectiveHandlerLocked(m_configuration.begin()->second.handler, &handlers)) {
+            releasedHandlers.insert(releasedHandlers.end(), handlers.begin(), handlers.end());
+        }
+    }
+
+    // For good measure
+    m_configuration.clear();
+
+    lock.unlock();
+
+    for (auto releasedHandler : releasedHandlers) {
+        ACSDK_INFO(LX("onDeregisteredCalled").d("handler", releasedHandler.get()));
+        releasedHandler->onDeregistered();
+    }
 }
 
 DirectiveRouter::HandlerCallScope::HandlerCallScope(

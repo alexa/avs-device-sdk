@@ -15,6 +15,7 @@
  * permissions and limitations under the License.
  */
 
+#include "AVSCommon/Utils/Memory/Memory.h"
 #include "AVSCommon/Utils/Threading/Executor.h"
 
 namespace alexaClientSDK {
@@ -22,12 +23,14 @@ namespace avsCommon {
 namespace utils {
 namespace threading {
 
-Executor::Executor() : m_taskQueue{std::make_shared<TaskQueue>()}, m_taskThread{m_taskQueue} {
-    m_taskThread.start();
+Executor::Executor() :
+        m_taskQueue{std::make_shared<TaskQueue>()},
+        m_taskThread{memory::make_unique<TaskThread>(m_taskQueue)} {
+    m_taskThread->start();
 }
 
 Executor::~Executor() {
-    m_taskQueue->shutdown();
+    shutdown();
 }
 
 void Executor::waitForSubmittedTasks() {
@@ -38,6 +41,15 @@ void Executor::waitForSubmittedTasks() {
     };
     submit(task);
     flushedFuture.get();
+}
+
+void Executor::shutdown() {
+    m_taskQueue->shutdown();
+    m_taskThread.reset();
+}
+
+bool Executor::isShutdown() {
+    return m_taskQueue->isShutdown();
 }
 
 } // namespace threading

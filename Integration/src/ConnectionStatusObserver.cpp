@@ -25,25 +25,37 @@ namespace integration {
 using alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface;
 
 ConnectionStatusObserver::ConnectionStatusObserver(): 
-        m_connectionStatus(ConnectionStatusObserverInterface::Status::DISCONNECTED) {
+        m_statusChanges({std::make_pair(Status::DISCONNECTED, ChangedReason::ACL_CLIENT_REQUEST)}) {
 }
 
 void ConnectionStatusObserver::onConnectionStatusChanged(
-        const ConnectionStatusObserverInterface::Status connectionStatus,
-        const ConnectionStatusObserverInterface::ChangedReason reason) {
-    m_connectionStatus = connectionStatus;
+        const Status connectionStatus,
+        const ChangedReason reason) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_statusChanges.push_back(std::make_pair(connectionStatus, reason));
     m_wakeTrigger.notify_all();
 }
 
+bool ConnectionStatusObserver::checkForServerSideDisconnect() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    for (auto pairValue : m_statusChanges) {
+        if (pairValue.first == Status::PENDING && pairValue.second == ChangedReason::SERVER_SIDE_DISCONNECT) {
+            return true;
+        }
+    }
+    return false;
+}
+
 ConnectionStatusObserverInterface::Status ConnectionStatusObserver::getConnectionStatus() const {
-    return m_connectionStatus;
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return m_statusChanges.back().first;
 }
 
 bool ConnectionStatusObserver::waitFor(
-        const ConnectionStatusObserverInterface::Status connectionStatus, const std::chrono::seconds duration) {
+        const Status connectionStatus, const std::chrono::seconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
     return m_wakeTrigger.wait_for(lock, duration, [this, connectionStatus]() {
-        return m_connectionStatus == connectionStatus;
+        return m_statusChanges.back().first == connectionStatus;
     });
 }
 

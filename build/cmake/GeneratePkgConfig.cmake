@@ -1,0 +1,10 @@
+#
+# Generate a .pc pkg_config file for the SDK
+#
+
+CONFIGURE_FILE(
+  "${PROJECT_SOURCE_DIR}/pkg-config.pc.cmake"
+  "${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pc"
+)
+set(PKG_CONFIG_OUTPUT_PATH ${ASDK_LIB_INSTALL_DIR}/pkgconfig)
+install(FILES "${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pc" DESTINATION ${PKG_CONFIG_OUTPUT_PATH})

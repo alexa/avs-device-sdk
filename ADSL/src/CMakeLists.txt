@@ -13,3 +13,6 @@ target_include_directories(ADSL PUBLIC
 target_link_libraries(ADSL
     ${CMAKE_THREAD_LIBS_INIT}
     AVSCommon)
+
+# install target
+asdk_install()

@@ -40,7 +40,10 @@ public:
         PENDING,
 
         /// ACL is connected to AVS.
-        CONNECTED
+        CONNECTED,
+
+        /// ACL is connected and has done any necessary post-connection actions.
+        POST_CONNECTED
     };
 
     /**
@@ -121,6 +124,9 @@ inline std::ostream& operator << (std::ostream& stream, ConnectionStatusObserver
             break;
         case ConnectionStatusObserverInterface::Status::CONNECTED:
             stream << "CONNECTED";
+            break;
+        case ConnectionStatusObserverInterface::Status::POST_CONNECTED:
+            stream << "POST_CONNECTED";
             break;
     }
     return stream;

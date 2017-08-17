@@ -54,6 +54,7 @@ if(BUILD_TESTING)
         "${CMAKE_CURRENT_SOURCE_DIR}/AlexaCommunicationsLibraryTest.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/AlexaDirectiveSequencerLibraryTest.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/AudioInputProcessorIntegrationTest.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/ServerDisconnectIntegrationTest.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/SpeechSynthesizerIntegrationTest.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/AlertsIntegrationTest.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/AudioPlayerIntegrationTest.cpp")
@@ -74,9 +75,24 @@ if(BUILD_TESTING)
             COMMAND AlexaCommunicationsLibraryTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
             COMMAND AlexaDirectiveSequencerLibraryTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
             COMMAND AudioInputProcessorIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
+            COMMAND ServerDisconnectIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
             COMMAND SpeechSynthesizerIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
             COMMAND AlertsIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
             COMMAND AudioPlayerIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
             COMMAND ${CTEST_CUSTOM_POST_TEST})
     message(STATUS "Please fill ${SDK_CONFIG_FILE_TARGET} before you execute integration tests.")
+
+    if(NETWORK_INTEGRATION_TESTS AND (${CMAKE_SYSTEM_NAME} MATCHES "Linux"))
+        set(networkTestSourceFile
+            "${CMAKE_CURRENT_SOURCE_DIR}/NetworkIntegrationTests.cpp")
+        get_filename_component(networkTestName ${networkTestSourceFile} NAME_WE)
+        add_executable(${networkTestName} ${networkTestSourceFile})
+        target_include_directories(${networkTestName} PUBLIC "${INCLUDE_PATH}")
+        target_link_libraries(${networkTestName} "${LINK_PATH}")
+        add_custom_target(networkIntegration
+                COMMAND NetworkIntegrationTests "${SDK_CONFIG_FILE_TARGET}" "${NETWORK_INTERFACE}")
+        message(STATUS "Please fill ${SDK_CONFIG_FILE_TARGET} before you execute integration tests.")
+    else()
+        message("Skipping build of NetworkIntegrationTests.cpp.")
+    endif()
 endif()

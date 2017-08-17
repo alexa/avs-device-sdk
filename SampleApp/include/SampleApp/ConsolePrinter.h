@@ -21,14 +21,21 @@
 #include <mutex>
 #include <string>
 
+#include <AVSCommon/Utils/Logger/Logger.h>
+
 namespace alexaClientSDK {
 namespace sampleApp {
 
 /**
  * A simple class that prints to the screen.
  */
-class ConsolePrinter {
+class ConsolePrinter : public avsCommon::utils::logger::Logger {
 public:
+    /**
+     * Constructor.
+     */
+    ConsolePrinter();
+    
     /**
      * Prints a simple message along with an \n.
      *
@@ -42,6 +49,12 @@ public:
      * @param stringToPrint The string to print.
      */
     static void prettyPrint(const std::string &stringToPrint);
+
+    void emit(
+            avsCommon::utils::logger::Level level,
+            std::chrono::system_clock::time_point time,
+            const char *threadMoniker,
+            const char *text) override;
     
 private:
     /// Used to serialize access to std::cout.

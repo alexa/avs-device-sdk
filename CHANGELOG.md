@@ -1,5 +1,23 @@
 ## ChangeLog
+### [1.0.1] - 2017-08-17
 
+* Added a fix to the sample app so that the `StateSynchronization` event is the first that gets sent to AVS.
+* Added a `POST_CONNECTED` enum to `ConnectionStatusObserver`.
+* `StateSychronizer` now automatically sends a `StateSynchronization` event when it receives a notification that `ACL` is `CONNECTED`.
+* Added `make install` for installing the AVS Device SDK.
+* Added an optional `make networkIntegration` for integration tests for slow network (only on Linux platforms).
+* Added shutdown management which fully cleans up SDK objects during teardown.
+* Fixed an issue with `AudioPlayer` barge-in which was preventing subsequent audio from playing.
+* Changed `Mediaplayer` buffering to reduce stuttering.
+* Known Issues:
+  * Connection loss during listening keeps the app in that state even after connection is regained. Pressing ‘s’ unsticks the state.
+  * Play/Pause media restarts it from the beginning.
+  * `SpeechSynthesizer` shows wrong UX state during a burst of Speaks.
+  * Quitting the sample app while `AudioPlayer` is playing something causes a segmentation fault.
+  * `AudioPlayer` sending `PlaybackPaused` during flash briefing.
+  * Long Delay playing live stations on iHeartRadio.
+  * Teardown warnings at the end of integration tests.
+  
 ### [1.0.0] - 2017-08-07
 
 * Added `AudioPlayer` capability agent.

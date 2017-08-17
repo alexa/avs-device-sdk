@@ -16,3 +16,6 @@ else()
 
     target_link_libraries(PlaylistParser AVSCommon)
 endif()
+
+# install target
+asdk_install()

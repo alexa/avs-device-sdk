@@ -16,10 +16,12 @@
  */
 
 /**
- * @file
+ * @file AudioFormat.h
  */
 #ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_AUDIO_FORMAT_H_
 #define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_AUDIO_FORMAT_H_
+
+#include <ostream>
 
 namespace alexaClientSDK {
 namespace avsCommon {

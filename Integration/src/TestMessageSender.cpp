@@ -114,6 +114,10 @@ void TestMessageSender::setAVSEndpoint(const std::string& avsEndpoint) {
         m_connectionManager->removeMessageObserver(observer);
     }
 
+    void TestMessageSender::synchronize() {
+        m_connectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
+    }
+
 } // namespace test
 } // namespace integration
 } // namespace alexaClientSDK

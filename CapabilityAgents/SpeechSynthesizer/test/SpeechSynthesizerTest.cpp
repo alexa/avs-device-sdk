@@ -369,6 +369,7 @@ public:
     SpeechSynthesizerTest();
 
     void SetUp() override;
+    void TearDown() override;
 
     /// @c SpeechSynthesizer to test
     std::shared_ptr<SpeechSynthesizer> m_speechSynthesizer;
@@ -501,6 +502,10 @@ void SpeechSynthesizerTest::SetUp() {
     ASSERT_TRUE(m_speechSynthesizer);
 }
 
+void SpeechSynthesizerTest::TearDown() {
+    m_speechSynthesizer->shutdown();
+}
+
 SetStateResult SpeechSynthesizerTest::wakeOnSetState() {
     m_wakeSetStatePromise.set_value();
     return SetStateResult::SUCCESS;
@@ -599,9 +604,6 @@ TEST_F(SpeechSynthesizerTest, testCallingHandle) {
     ASSERT_TRUE(m_mockSpeechPlayer->waitUntilPlaybackStarted());
     ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
     ASSERT_TRUE(std::future_status::ready == m_wakeSendMessageFuture.wait_for(WAIT_TIMEOUT));
-
-    // Explicitly release, otherwise test failures.
-    m_speechSynthesizer.reset();
 }
 
 /**

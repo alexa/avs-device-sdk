@@ -38,6 +38,7 @@ add_library(AVSCommon SHARED
     Utils/src/Logger/LoggerUtils.cpp
     Utils/src/Logger/ModuleLogger.cpp
     Utils/src/Logger/ThreadMoniker.cpp
+    Utils/src/RequiresShutdown.cpp
     Utils/src/StringUtils.cpp
     Utils/src/TaskQueue.cpp
     Utils/src/TaskThread.cpp
@@ -54,3 +55,9 @@ target_include_directories(AVSCommon PUBLIC
 
 target_link_libraries(AVSCommon
     ${CURL_LIBRARIES})
+
+# install target
+LIST(APPEND PATHS "${PROJECT_SOURCE_DIR}/AVS/include")
+LIST(APPEND PATHS "${PROJECT_SOURCE_DIR}/SDKInterfaces/include")
+LIST(APPEND PATHS "${PROJECT_SOURCE_DIR}/Utils/include")
+asdk_install_multiple("${PATHS}")

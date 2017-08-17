@@ -24,7 +24,6 @@
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
 #include <ContextManager/ContextManager.h>
-#include <SpeechSynthesizer/SpeechSynthesizer.h>
 #include <System/EndpointHandler.h>
 #include <System/UserInactivityMonitor.h>
 
@@ -131,7 +130,7 @@ bool DefaultClient::initialize(
     m_connectionManager = acl::AVSConnectionManager::create(
             messageRouter, 
             false, 
-            connectionObservers, 
+            connectionObservers,
             {m_dialogUXStateAggregator});
     if (!m_connectionManager) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateConnectionManager"));
@@ -232,7 +231,7 @@ bool DefaultClient::initialize(
      * Creating the Speech Synthesizer - This component is the Capability Agent that implements the SpeechSynthesizer
      * interface of AVS.
      */
-    std::shared_ptr<capabilityAgents::speechSynthesizer::SpeechSynthesizer> speechSynthesizer = 
+    m_speechSynthesizer = 
             capabilityAgents::speechSynthesizer::SpeechSynthesizer::create(
                     speakMediaPlayer,
                     m_connectionManager,
@@ -240,12 +239,12 @@ bool DefaultClient::initialize(
                     contextManager,
                     attachmentManager,
                     exceptionSender);
-    if (!speechSynthesizer) {
+    if (!m_speechSynthesizer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSpeechSynthesizer"));
         return false;
     }
 
-    speechSynthesizer->addObserver(m_dialogUXStateAggregator);
+    m_speechSynthesizer->addObserver(m_dialogUXStateAggregator);
 
     /*
      * Creating the Audio Player - This component is the Capability Agent that implements the AudioPlayer
@@ -295,7 +294,7 @@ bool DefaultClient::initialize(
     /*
      * The following two statements show how to register capability agents to the directive sequencer.
      */
-    if (!m_directiveSequencer->addDirectiveHandler(speechSynthesizer)) {
+    if (!m_directiveSequencer->addDirectiveHandler(m_speechSynthesizer)) {
         ACSDK_ERROR(LX("initializeFailed")
                 .d("reason", "unableToRegisterDirectiveHandler")
                 .d("directiveHandler", "SpeechSynthesizer"));
@@ -412,12 +411,20 @@ DefaultClient::~DefaultClient() {
         m_stateSynchronizer->shutdown();
     }
     if (m_audioInputProcessor) {
-        m_audioInputProcessor->resetState().get();
+        m_audioInputProcessor->shutdown();
     }
     if (m_audioPlayer) {
         m_audioPlayer->shutdown();
     }
-    m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
+    if (m_speechSynthesizer) {
+        m_speechSynthesizer->shutdown();
+    }
+    if (m_alertsCapabilityAgent) {
+        m_alertsCapabilityAgent->shutdown();
+    }
+    if (m_connectionManager) {
+        m_connectionManager->shutdown();
+    }
 }
 
 } // namespace defaultClient

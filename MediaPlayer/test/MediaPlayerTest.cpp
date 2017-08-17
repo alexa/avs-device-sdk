@@ -430,6 +430,13 @@ TEST_F(MediaPlayerTest, testStartPlayForUrl) {
 }
 
 /**
+ * Set the source of the @c MediaPlayer to an empty url. The return should be a nullptr.
+ */
+TEST_F(MediaPlayerTest, testSetSourceEmptyUrl) {
+    ASSERT_EQ(m_mediaPlayer->setSource(""), MediaPlayerStatus::FAILURE);
+}
+
+/**
  * Set the source of the @c MediaPlayer twice consecutively to a url representing a single audio file.
  * Playback audio till the end. Check whether the playback started and playback finished notifications
  * are received.

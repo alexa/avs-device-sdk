@@ -517,6 +517,9 @@ protected:
         m_avsConnectionManager->enable();
         ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::CONNECTED))
                 << "Connecting timed out.";
+        m_avsConnectionManager->synchronize();
+        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::POST_CONNECTED))
+                << "Post connecting timed out.";
     }
 
     /**

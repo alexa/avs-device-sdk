@@ -126,11 +126,6 @@ std::shared_ptr<AudioPlayer> AudioPlayer::create(
     return audioPlayer;
 }
 
-void AudioPlayer::shutdown() {
-    m_mediaPlayer->setObserver(nullptr);
-    m_executor.submit([this] { executeStop(); m_audioItems.clear(); }).wait();
-}
-
 void AudioPlayer::provideState(unsigned int stateRequestToken) {
     m_executor.submit([this, stateRequestToken] { executeProvideState(true, stateRequestToken); });
 }
@@ -253,6 +248,7 @@ AudioPlayer::AudioPlayer(
         std::shared_ptr<AttachmentManagerInterface> attachmentManager,
         std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender) :
         CapabilityAgent{NAMESPACE, exceptionSender},
+        RequiresShutdown{"AudioPlayer"},
         m_mediaPlayer{mediaPlayer},
         m_messageSender{messageSender},
         m_focusManager{focusManager},
@@ -265,6 +261,19 @@ AudioPlayer::AudioPlayer(
         m_currentActivity{PlayerActivity::IDLE},
         m_starting{false},
         m_focus{FocusState::NONE} {
+}
+
+void AudioPlayer::doShutdown() {
+    m_executor.shutdown();
+    executeStop();
+    m_mediaPlayer->setObserver(nullptr);
+    m_mediaPlayer.reset();
+    m_messageSender.reset();
+    m_focusManager.reset();
+    m_contextManager->setStateProvider(STATE, nullptr);
+    m_contextManager.reset();
+    m_attachmentManager.reset();
+    m_audioItems.clear();
 }
 
 bool AudioPlayer::parseDirectivePayload(std::shared_ptr<DirectiveInfo> info, rapidjson::Document * document) {
@@ -621,17 +630,20 @@ void AudioPlayer::executeOnPlaybackError(std::string error) {
 }
 
 void AudioPlayer::executeOnPlaybackPaused() {
+    ACSDK_DEBUG9(LX("executeOnPlaybackPaused"));
     // TODO: AVS recommends sending this after a recognize event to reduce latency (ACSDK-371).
     sendPlaybackPausedEvent();
     changeActivity(PlayerActivity::PAUSED);
 }
 
 void AudioPlayer::executeOnPlaybackResumed() {
+    ACSDK_DEBUG9(LX("executeOnPlaybackResumed"));
     sendPlaybackResumedEvent();
     changeActivity(PlayerActivity::PLAYING);
 }
 
 void AudioPlayer::executeOnBufferUnderrun() {
+    ACSDK_DEBUG9(LX("executeOnBufferUnderrun"));
     if (PlayerActivity::BUFFER_UNDERRUN == m_currentActivity) {
         ACSDK_ERROR(LX("executeOnBufferUnderrunFailed").d("reason", "alreadyInUnderrun"));
         return;
@@ -642,6 +654,7 @@ void AudioPlayer::executeOnBufferUnderrun() {
 }
 
 void AudioPlayer::executeOnBufferRefilled() {
+    ACSDK_DEBUG9(LX("executeOnBufferRefilled"));
     sendPlaybackStutterFinishedEvent();
     changeActivity(PlayerActivity::PLAYING);
 }
@@ -650,7 +663,7 @@ void AudioPlayer::executePlay(PlayBehavior playBehavior, const AudioItem& audioI
     ACSDK_DEBUG9(LX("executePlay").d("playBehavior", playBehavior));
     switch (playBehavior) {
         case PlayBehavior::REPLACE_ALL:
-            executeStop();
+            executeStop(false);
             // FALL-THROUGH
         case PlayBehavior::REPLACE_ENQUEUED:
             m_audioItems.clear();
@@ -681,7 +694,9 @@ void AudioPlayer::executePlay(PlayBehavior playBehavior, const AudioItem& audioI
         return;
     }
     
-    if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), ACTIVITY_ID)) {
+    if (FocusState::FOREGROUND == m_focus) {
+        playNextItem();
+    } else if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), ACTIVITY_ID)) {
         ACSDK_ERROR(LX("executePlayFailed")
                 .d("reason", "CouldNotAcquireChannel"));
         sendPlaybackFailedEvent(
@@ -759,7 +774,7 @@ void AudioPlayer::playNextItem() {
     }
 }
 
-void AudioPlayer::executeStop() {
+void AudioPlayer::executeStop(bool releaseFocus) {
     ACSDK_DEBUG9(LX("executestop").d("m_currentActivity", m_currentActivity));
     switch (m_currentActivity) {
         case PlayerActivity::IDLE:
@@ -783,7 +798,7 @@ void AudioPlayer::executeStop() {
     m_starting = false;
     m_delayTimer.stop();
     m_intervalTimer.stop();
-    if (m_focus != avsCommon::avs::FocusState::NONE) {
+    if (releaseFocus && m_focus != avsCommon::avs::FocusState::NONE) {
         m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
     }
     changeActivity(PlayerActivity::STOPPED);

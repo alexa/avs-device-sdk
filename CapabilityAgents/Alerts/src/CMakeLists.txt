@@ -15,3 +15,6 @@ target_include_directories(Alerts PUBLIC
         "${SQLITE_INCLUDE_DIRS}")
 
 target_link_libraries(Alerts AVSCommon "${SQLITE_LDFLAGS}")
+
+# install target
+asdk_install()

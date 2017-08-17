@@ -159,21 +159,21 @@ bool KittAiKeyWordDetector::init(avsCommon::utils::AudioFormat audioFormat) {
 }
 
 bool KittAiKeyWordDetector::isAudioFormatCompatibleWithKittAi(avsCommon::utils::AudioFormat audioFormat) {
-    if (audioFormat.numChannels != m_kittAiEngine->NumChannels()) {
+    if (audioFormat.numChannels != static_cast<unsigned int>(m_kittAiEngine->NumChannels())) {
         ACSDK_ERROR(LX("isAudioFormatCompatibleWithKittAiFailed")
                 .d("reason", "numChannelsMismatch")
                 .d("kittAiNumChannels", m_kittAiEngine->NumChannels())
                 .d("numChannels", audioFormat.numChannels));
         return false;
     }
-    if (audioFormat.sampleRateHz != m_kittAiEngine->SampleRate()) {
+    if (audioFormat.sampleRateHz != static_cast<unsigned int>(m_kittAiEngine->SampleRate())) {
         ACSDK_ERROR(LX("isAudioFormatCompatibleWithKittAiFailed")
                 .d("reason", "sampleRateMismatch")
                 .d("kittAiSampleRate", m_kittAiEngine->SampleRate())
                 .d("sampleRate", audioFormat.sampleRateHz));
         return false;
     }
-    if (audioFormat.sampleSizeInBits != m_kittAiEngine->BitsPerSample()) {
+    if (audioFormat.sampleSizeInBits != static_cast<unsigned int>(m_kittAiEngine->BitsPerSample())) {
         ACSDK_ERROR(LX("isAudioFormatCompatibleWithKittAiFailed")
                 .d("reason", "sampleSizeInBitsMismatch")
                 .d("kittAiSampleSizeInBits", m_kittAiEngine->BitsPerSample())

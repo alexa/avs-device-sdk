@@ -23,6 +23,7 @@
 
 #include "AVSCommon/AVS/AVSDirective.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
+#include "AVSCommon/Utils/RequiresShutdown.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -41,11 +42,17 @@ namespace sdkInterfaces {
  * @c dialogRequestId are handled. All others are ignored. Specifying a new @c DialogRequestId value while
  * @c AVSDirectives are already being handled will cancel the handling of @c AVSDirectives that have the
  * previous @c DialogRequestId and whose handling has not completed.
- *
- * This interface was factored out of DirectiveSequencer to facilitate mocking for unit tests.
  */
-class DirectiveSequencerInterface {
+class DirectiveSequencerInterface : public utils::RequiresShutdown {
 public:
+    /**
+     * Constructor.
+     *
+     * @param name The name of the class or object which requires shutdown calls.  Used in log messages when problems
+     *    are detected in shutdown or destruction sequences.
+     */
+    DirectiveSequencerInterface(const std::string& name);
+
     /**
      * Destructor.
      */
@@ -93,12 +100,12 @@ public:
      * @return Whether or not the directive was accepted.
      */
     virtual bool onDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive) = 0;
-
-    /**
-     * Shut down the DirectiveSequencer.  This method blocks until all processing of directives has stopped.
-     */
-    virtual void shutdown() = 0;
 };
+
+inline DirectiveSequencerInterface::DirectiveSequencerInterface(const std::string& name) :
+        utils::RequiresShutdown{name} {
+}
+
 
 } // namespace sdkInterfaces
 } // namespace avsCommon

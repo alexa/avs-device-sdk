@@ -8,3 +8,6 @@ target_include_directories(KITTAI PUBLIC
 	"${KITTAI_SOURCE_DIR}/include")
 
 target_link_libraries(KITTAI KWD AVSCommon "${KITTAI_KEY_WORD_DETECTOR_LIB_PATH}" blas)
+
+# install target
+asdk_install()

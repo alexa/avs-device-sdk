@@ -35,6 +35,7 @@
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
 namespace alexaClientSDK {
@@ -47,7 +48,9 @@ namespace speechSynthesizer {
  */
 class SpeechSynthesizer :
         public avsCommon::avs::CapabilityAgent,
-        public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface {
+        public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface,
+        public avsCommon::utils::RequiresShutdown,
+        public std::enable_shared_from_this<SpeechSynthesizer> {
 public:
     /// Alias to the @c SpeechSynthesizerObserver for brevity.
     using SpeechSynthesizerObserver = avsCommon::sdkInterfaces::SpeechSynthesizerObserver;
@@ -66,7 +69,7 @@ public:
      *
      * @return Returns a new @c SpeechSynthesizer, or @c nullptr if the operation failed.
      */
-    static std::unique_ptr<SpeechSynthesizer> create(
+    static std::shared_ptr<SpeechSynthesizer> create(
             std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
             std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
             std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
@@ -75,11 +78,6 @@ public:
             std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
 
     avsCommon::avs::DirectiveHandlerConfiguration getConfiguration() const override;
-
-    /**
-     * Destructor.
-     */
-    ~SpeechSynthesizer() override;
 
     /**
      * Add an observer to the SpeechSynthesizer.
@@ -176,6 +174,8 @@ private:
             std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
             std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
             std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+
+    void doShutdown() override;
 
     /**
      * Initializes the @c SpeechSynthesizer.
@@ -419,12 +419,6 @@ private:
 
     /// The @c AttachmentManager used to read attachments.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> m_attachmentManager;
-
-    /**
-     * @c shared_ptr to the ChannelObserver portion of this.  This is a separate @c shared_ptr with a disabled
-     * deleter allowing @c SpeechSynthesizer to observe FocusManager without creating a cyclic @c shared_ptr.
-     */
-    std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> m_thisAsChannelObserver;
 
     /// The set of @c SpeechSynthesizerObserver instances to notify of state changes.
     std::unordered_set<std::shared_ptr<SpeechSynthesizerObserver>> m_observers;

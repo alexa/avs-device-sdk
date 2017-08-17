@@ -247,9 +247,6 @@ protected:
                 isEnabled,
                 { m_connectionStatusObserver },
                 { m_messageInterpreter });
-        // TODO: ACSDK-421: Remove the callback when m_avsConnection manager is no longer an observer to
-        // StateSynchronizer.
-        m_avsConnectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
         connect();
     }
 
@@ -268,6 +265,11 @@ protected:
         m_avsConnectionManager->enable();
         ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::CONNECTED))
                 << "Connecting timed out.";
+        // TODO: ACSDK-421: Remove the callback when m_avsConnection manager is no longer an observer to
+        // StateSynchronizer.
+        m_avsConnectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
+        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::POST_CONNECTED))
+                << "Post connecting timed out.";        
     }
 
     /**

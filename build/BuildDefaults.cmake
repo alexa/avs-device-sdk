@@ -29,3 +29,6 @@ include(MediaPlayer)
 
 # Setup PortAudio variables.
 include(PortAudio)
+
+# Setup Test Options variables.
+include(TestOptions)

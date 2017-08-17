@@ -459,7 +459,7 @@ void MediaPlayer::handleSetAttachmentReaderSource(
         return;
     }
 
-    m_source = std::move(AttachmentReaderSource::create(this, reader));
+    m_source = AttachmentReaderSource::create(this, reader);
 
     if (!m_source) {
         ACSDK_ERROR(LX("handleSetAttachmentReaderSourceFailed").d("reason", "sourceIsNullptr"));
@@ -492,7 +492,7 @@ void MediaPlayer::handleSetIStreamSource(
         return;
     }
 
-    m_source = std::move(IStreamSource::create(this, stream, repeat));
+    m_source = IStreamSource::create(this, stream, repeat);
 
     if (!m_source) {
         ACSDK_ERROR(LX("handleSetIStreamSourceFailed").d("reason", "sourceIsNullptr"));
@@ -563,6 +563,28 @@ void MediaPlayer::handlePlay(std::promise<MediaPlayerStatus> *promise) {
     }
 
     m_playbackFinishedSent = false;
+
+    gboolean supportsBuffering;
+    g_object_get(m_pipeline.decoder,
+            "use-buffering", &supportsBuffering,
+            NULL);
+    ACSDK_DEBUG(LX("handlePlay").d("supportsBuffering", supportsBuffering));
+
+    if (supportsBuffering) {
+        /*
+         * Set pipeline to PAUSED state to start buffering.
+         * When buffer is full, GST_MESSAGE_BUFFERING will be sent,
+         * and handleBusMessage() will then set the pipeline to PLAY.
+         */
+        if (GST_STATE_CHANGE_FAILURE == gst_element_set_state(m_pipeline.pipeline, GST_STATE_PAUSED)) {
+            ACSDK_ERROR(LX("handlePlayFailed").d("reason", "failedToStartBuffering"));
+            promise->set_value(MediaPlayerStatus::FAILURE);
+        } else {
+            ACSDK_INFO(LX("Starting Buffering"));
+            promise->set_value(MediaPlayerStatus::PENDING);
+        }
+        return;
+    }
 
     auto stateChangeRet = gst_element_set_state(m_pipeline.pipeline, GST_STATE_PLAYING);
     ACSDK_DEBUG(LX("handlePlay").d("stateReturn", gst_element_state_change_return_get_name(stateChangeRet)));

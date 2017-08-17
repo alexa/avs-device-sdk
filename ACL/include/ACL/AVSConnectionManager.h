@@ -30,6 +30,7 @@
 #include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/StateSynchronizerObserverInterface.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 
 #include "ACL/Transport/MessageRouterInterface.h"
 #include "ACL/Transport/MessageRouterObserverInterface.h"
@@ -72,7 +73,8 @@ class AVSConnectionManager :
     public avsCommon::sdkInterfaces::AVSEndpointAssignerInterface,
     /* TODO: ACSDK-421: Remove the implementation of StateSynchronizerObserverInterface */
     public avsCommon::sdkInterfaces::StateSynchronizerObserverInterface,
-    public MessageRouterObserverInterface {
+    public MessageRouterObserverInterface,
+    public avsCommon::utils::RequiresShutdown {
 public:
     /**
      * A factory function that creates an AVSConnectionManager object.
@@ -192,6 +194,8 @@ private:
                     messageObserver = 
                     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>>());
 
+    void doShutdown() override;
+
     void onConnectionStatusChanged(
             const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
             const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
@@ -203,7 +207,10 @@ private:
 
     /* TODO: ACSDK-421: Remove the implementation of StateSynchronizerObserverInterface */
     /// Internal object that flags if @c StateSynchronizer had sent the initial event successfully.
-    std::atomic<bool> m_isSynchronized;
+    bool m_isSynchronized;
+
+    /// Mutex to protect @c m_isSynchronized.
+    std::mutex m_synchronizationMutex;
 
     /// Set of observers to notify when the connection status changes. @c m_connectionStatusObserverMutex must be
     /// acquired before access.

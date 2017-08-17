@@ -1,3 +1,7 @@
+if(POLICY CMP0057)
+    cmake_policy(SET CMP0057 NEW)
+endif()
+
 include(CTest)
 include(ThirdParty/googletest.cmake)
 

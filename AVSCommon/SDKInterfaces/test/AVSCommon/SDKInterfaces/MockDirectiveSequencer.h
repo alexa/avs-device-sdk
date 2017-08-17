@@ -29,12 +29,18 @@ namespace test {
 /// Mock class that implements the DirectiveSequencer.
 class MockDirectiveSequencer : public DirectiveSequencerInterface {
 public:
+    MockDirectiveSequencer();
     MOCK_METHOD1(addDirectiveHandler, bool (std::shared_ptr<DirectiveHandlerInterface> handler));
     MOCK_METHOD1(removeDirectiveHandler, bool (std::shared_ptr<DirectiveHandlerInterface> handler));
     MOCK_METHOD1(setDialogRequestId, void (const std::string& dialogRequestId));
     MOCK_METHOD1(onDirective, bool (std::shared_ptr<avsCommon::avs::AVSDirective> directive));
-    MOCK_METHOD0(shutdown, void ());
+    MOCK_METHOD0(doShutdown, void ());
 };
+
+
+inline MockDirectiveSequencer::MockDirectiveSequencer() :
+        avsCommon::sdkInterfaces::DirectiveSequencerInterface{"MockDirectiveSequencer"} {
+}
 
 } // namespace test
 } // namespace sdkInterfaces

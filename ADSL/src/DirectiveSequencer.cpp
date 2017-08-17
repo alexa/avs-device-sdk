@@ -51,23 +51,6 @@ std::unique_ptr<DirectiveSequencerInterface> DirectiveSequencer::create(
     return std::unique_ptr<DirectiveSequencerInterface>(new DirectiveSequencer(exceptionSender));
 }
 
-DirectiveSequencer::~DirectiveSequencer() {
-    shutdown();
-}
-
-void DirectiveSequencer::shutdown() {
-    ACSDK_INFO(LX("shutdown"));
-    {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        m_isShuttingDown = true;
-        m_wakeReceivingLoop.notify_one();
-    }
-    if (m_receivingThread.joinable()) {
-        m_receivingThread.join();
-    }
-    m_directiveProcessor->shutdown();
-}
-
 bool DirectiveSequencer::addDirectiveHandler(std::shared_ptr<DirectiveHandlerInterface> handler) {
     return m_directiveRouter.addDirectiveHandler(handler);
 }
@@ -101,11 +84,27 @@ bool DirectiveSequencer::onDirective(std::shared_ptr<AVSDirective> directive) {
 
 DirectiveSequencer::DirectiveSequencer(
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) :
+        DirectiveSequencerInterface{"DirectiveSequencer"},
         m_mutex{},
         m_exceptionSender{exceptionSender},
         m_isShuttingDown{false} {
     m_directiveProcessor = std::make_shared<DirectiveProcessor>(&m_directiveRouter);
     m_receivingThread = std::thread(&DirectiveSequencer::receivingLoop, this);
+}
+
+void DirectiveSequencer::doShutdown() {
+    ACSDK_INFO(LX("doShutdown"));
+    {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_isShuttingDown = true;
+        m_wakeReceivingLoop.notify_one();
+    }
+    if (m_receivingThread.joinable()) {
+        m_receivingThread.join();
+    }
+    m_directiveProcessor->shutdown();
+    m_directiveRouter.shutdown();
+    m_exceptionSender.reset();
 }
 
 void DirectiveSequencer::receivingLoop() {

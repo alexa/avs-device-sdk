@@ -118,6 +118,11 @@ public:
      */
     void removeMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer);
 
+    /**
+     * Synchronizes the internal AVSConnectionManager.
+     */
+    void synchronize();
+
 private:
     /// Mutex to protect m_queue.
     std::mutex m_mutex;

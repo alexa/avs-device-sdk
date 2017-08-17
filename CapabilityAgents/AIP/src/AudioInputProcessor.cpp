@@ -268,6 +268,7 @@ AudioInputProcessor::AudioInputProcessor(
         std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> userActivityNotifier,
         AudioProvider defaultAudioProvider) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
+        RequiresShutdown{"AudioInputProcessor"},
         m_directiveSequencer{directiveSequencer},
         m_messageSender{messageSender},
         m_contextManager{contextManager},
@@ -279,6 +280,17 @@ AudioInputProcessor::AudioInputProcessor(
         m_focusState{avsCommon::avs::FocusState::NONE},
         m_preparingToSend{false},
         m_initialDialogUXStateReceived{false} {
+}
+
+void AudioInputProcessor::doShutdown() {
+    m_executor.shutdown();
+    executeResetState();
+    m_directiveSequencer.reset();
+    m_messageSender.reset();
+    m_contextManager.reset();
+    m_focusManager.reset();
+    m_userActivityNotifier.reset();
+    m_observers.clear();
 }
 
 std::future<bool> AudioInputProcessor::expectSpeechTimedOut() {
