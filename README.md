@@ -1,8 +1,3 @@
-### AVS Device SDK v1.0.1
-
-An SDK for devices to interface with the Alexa Voice Service and add intelligent voice control to any connected device. Visit us at [developer.amazon.com/avs/sdk](https://developer.amazon.com/avs/sdk). 
-
-
 ### What is the Alexa Voice Service (AVS)?
 
 The Alexa Voice Service (AVS) enables developers to integrate Alexa directly into their products, bringing the convenience of voice control to any connected device. AVS provides developers with access to a suite of resources to quickly and easily build Alexa-enabled products, including APIs, hardware development kits, software development kits, and documentation. 
