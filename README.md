@@ -82,7 +82,7 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 
 **Note**: Features, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
-v1.0.1 released 8/17/2017:
+v1.0.2 released 8/23/2017:
 * **Features**  
   * Native components for the following capability agents are included in this release: `Alerts`, `AudioPlayer`, `SpeechRecognizer`, `SpeechSynthesizer`, and `System`
   * Supports iHeartRadio  

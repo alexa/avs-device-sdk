@@ -332,8 +332,11 @@ void AudioInputProcessor::handleExpectSpeechDirective(std::shared_ptr<DirectiveI
         return;
     }
 
-    std::string initiator;
-    avsCommon::utils::json::jsonUtils::lookupStringValue(info->directive->getPayload(), "initiator", &initiator);
+    /**
+     * TODO: Once AVS starts sending an opaque initiator, parse it out here and pass it on to executeExpectSpeech
+     * (ACSDK-479).
+     */
+    std::string initiator = "";
 
     m_executor.submit(
         [this, timeout, initiator, info] () {

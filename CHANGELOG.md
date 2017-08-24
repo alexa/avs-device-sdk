@@ -1,4 +1,7 @@
 ## ChangeLog
+### [1.0.2] - 2017-08-23
+* Removed code from AIP which propagates ExpectSpeech initiator strings to subsequent Recognize events.  This code will be re-introduced when AVS starts sending initiator strings.
+
 ### [1.0.1] - 2017-08-17
 
 * Added a fix to the sample app so that the `StateSynchronization` event is the first that gets sent to AVS.
