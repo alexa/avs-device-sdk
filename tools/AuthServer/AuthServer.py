@@ -19,7 +19,7 @@ import json
 
 from os.path import abspath, isfile, dirname
 import sys
-from urllib import urlencode
+from urllib.parse import urlencode
 
 # Shuts down the web-server.
 def shutdown(): 
@@ -57,25 +57,25 @@ else:
 
 # Check if the configuration file exists.
 if not isfile(configFilename):
-    print 'The file "' + \
+    print ('The file "' + \
             configFilename + \
-            '" does not exists. Please create this file and fill required data.'
+            '" does not exists. Please create this file and fill required data.')
     sys.exit(1)
 
 try:
     configFile = open(configFilename,'r')
 except IOError:
-    print 'File "' + configFilename + '" not found!'
+    print ('File "' + configFilename + '" not found!')
     sys.exit(1)
 else:
     with configFile:
         configData = json.load(configFile)
-        if not configData.has_key(authDelegateKey):
-            print 'The config file "' + \
+        if authDelegateKey not in configData:
+            print ('The config file "' + \
                     configFilename + \
                     '" is missing the field "' + \
                     authDelegateKey + \
-                    '".'
+                    '".')
             sys.exit(1)
         else:
             authDelegateDict = configData[authDelegateKey]
@@ -83,17 +83,16 @@ else:
 
 # Check if all required keys are parsed.
 requiredKeys = ['clientId', 'clientSecret', 'deviceTypeId', 'deviceSerialNumber']
-try:
-    missingKey = requiredKeys[map(authDelegateDict.has_key,requiredKeys).index(False)];
-    print 'Missing key: "' + missingKey + '". The list of required keys are:'
-    print ' * ' + '\n * '.join(requiredKeys)
-    print 'Exiting.'
+missingKey = [key for key in requiredKeys if key not in authDelegateDict]
+if missingKey:
+    missingKey = ' '.join(missingKey)
+    print ('Missing key: "' + missingKey + '". The list of required keys are:')
+    print (' * ' + '\n * '.join(requiredKeys))
+    print ('Exiting.')
     sys.exit(1)
-except ValueError:
-    pass
 
 # Refresh the refresh token to check if it really is a refresh token.
-if authDelegateDict.has_key('refreshToken'):
+if 'refreshToken' in authDelegateDict:
     postData = {
             'grant_type': 'refresh_token',
             'refresh_token': authDelegateDict['refreshToken'],
@@ -104,13 +103,13 @@ if authDelegateDict.has_key('refreshToken'):
             data=urlencode(postData),
             headers=amazonLwaApiHeaders)
     if 200 == tokenRefreshRequest.status_code:
-        print 'You have a valid refresh token already in the file.' 
+        print ('You have a valid refresh token already in the file.')
         sys.exit(0)
     else:
-        print 'The refresh request failed with the response code ' + \
+        print ('The refresh request failed with the response code ' + \
                 str(tokenRefreshRequest.status_code) + \
                 ('. This might be due to a bad refresh token or bad client data. '
-                'We will continue with getting a refresh token, discarding the one in the file.\n')
+                'We will continue with getting a refresh token, discarding the one in the file.\n'))
 
 # The top page redirects to LWA page.
 @app.route('/')
@@ -144,7 +143,7 @@ def get_refresh_token():
             amazonLwaApiUrl,
             data=urlencode(postData),
             headers=amazonLwaApiHeaders)
-    if not tokenRequest.json().has_key('refresh_token'):
+    if 'refresh_token' not in tokenRequest.json():
         return 'LWA did not return a refresh token, with the response code ' + \
                 str(tokenRequest.status_code) + \
                 '.  This is most likely due to an error. Check the following JSON response:<br/>' + \
@@ -154,7 +153,7 @@ def get_refresh_token():
     try:
         configFile = open(configFilename,'w')
     except IOError:
-        print 'File "' + configFilename + '" cannot be opened!'
+        print ('File "' + configFilename + '" cannot be opened!')
         return '<h1>The file "' + \
                 configFilename + \
                 '" cannot be opened, please check if the file is open elsewere.<br/>' + \
