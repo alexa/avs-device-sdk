@@ -107,6 +107,5 @@ var searchData=
   ['avsdirective',['AVSDirective',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_directive.html',1,'alexaClientSDK::avsCommon::avs']]],
   ['avsendpointassignerinterface',['AVSEndpointAssignerInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_endpoint_assigner_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['avsmessage',['AVSMessage',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message.html',1,'alexaClientSDK::avsCommon::avs::AVSMessage'],['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message.html#a72ec5253158d65661e36e3c0d6bbe9b5',1,'alexaClientSDK::avsCommon::avs::AVSMessage::AVSMessage()']]],
-  ['avsmessageheader',['AVSMessageHeader',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_header.html',1,'alexaClientSDK::avsCommon::avs::AVSMessageHeader'],['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_header.html#a5a0630c688b3b7edbd4b166f642f5415',1,'alexaClientSDK::avsCommon::avs::AVSMessageHeader::AVSMessageHeader()']]],
-  ['avs_20device_20sdk_20v1_2e0_2e1',['AVS Device SDK v1.0.1',['../index.html',1,'']]]
+  ['avsmessageheader',['AVSMessageHeader',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_header.html',1,'alexaClientSDK::avsCommon::avs::AVSMessageHeader'],['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_header.html#a5a0630c688b3b7edbd4b166f642f5415',1,'alexaClientSDK::avsCommon::avs::AVSMessageHeader::AVSMessageHeader()']]]
 ];

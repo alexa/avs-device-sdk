@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.1</span>
+   &#160;<span id="projectnumber">1.0.2</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -65,7 +65,32 @@ $(function() {
 <div class="title">ChangeLog </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h3>[1.0.0] - 2017-08-07</h3>
+<div class="textblock"><h3>[1.0.2] - 2017-08-23</h3>
+<ul>
+<li>Removed code from AIP which propagates ExpectSpeech initiator strings to subsequent Recognize events. This code will be re-introduced when AVS starts sending initiator strings.</li>
+</ul>
+<h3>[1.0.1] - 2017-08-17</h3>
+<ul>
+<li>Added a fix to the sample app so that the <code>StateSynchronization</code> event is the first that gets sent to AVS.</li>
+<li>Added a <code>POST_CONNECTED</code> enum to <code>ConnectionStatusObserver</code>.</li>
+<li><code>StateSychronizer</code> now automatically sends a <code>StateSynchronization</code> event when it receives a notification that <code>ACL</code> is <code>CONNECTED</code>.</li>
+<li>Added <code>make install</code> for installing the AVS Device SDK.</li>
+<li>Added an optional <code>make networkIntegration</code> for integration tests for slow network (only on Linux platforms).</li>
+<li>Added shutdown management which fully cleans up SDK objects during teardown.</li>
+<li>Fixed an issue with <code>AudioPlayer</code> barge-in which was preventing subsequent audio from playing.</li>
+<li>Changed <code>Mediaplayer</code> buffering to reduce stuttering.</li>
+<li>Known Issues:<ul>
+<li>Connection loss during listening keeps the app in that state even after connection is regained. Pressing ‘s’ unsticks the state.</li>
+<li>Play/Pause media restarts it from the beginning.</li>
+<li><code>SpeechSynthesizer</code> shows wrong UX state during a burst of Speaks.</li>
+<li>Quitting the sample app while <code>AudioPlayer</code> is playing something causes a segmentation fault.</li>
+<li><code>AudioPlayer</code> sending <code>PlaybackPaused</code> during flash briefing.</li>
+<li>Long Delay playing live stations on iHeartRadio.</li>
+<li>Teardown warnings at the end of integration tests.</li>
+</ul>
+</li>
+</ul>
+<h3>[1.0.0] - 2017-08-07</h3>
 <ul>
 <li>Added <code>AudioPlayer</code> capability agent.<ul>
 <li>Supports iHeartRadio.</li>
@@ -271,7 +296,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

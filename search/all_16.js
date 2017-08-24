@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['what_20is_20the_20alexa_20voice_20service_20_28avs_29_3f',['What is the Alexa Voice Service (AVS)?',['../index.html',1,'']]],
   ['wait',['wait',['../class_observer.html#a423c6e995b7c4c7a645ab86ea2860038',1,'Observer::wait()'],['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits_1_1_condition_variable.html#a9b410f55c3cf4e1c7fb9ea6239418622',1,'alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits::ConditionVariable::wait(std::unique_lock&lt; Mutex &gt; &amp;lock)'],['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits_1_1_condition_variable.html#a9aca4904adaf654d9b56a76e3e327940',1,'alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits::ConditionVariable::wait(std::unique_lock&lt; Mutex &gt; &amp;lock, Predicate pred)']]],
   ['wait_5ffor',['wait_for',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits_1_1_condition_variable.html#a3c112807761728626fc87f030d5fb457',1,'alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits::ConditionVariable']]],
   ['wait_5ffor_5fdirective_5ftimeout_5fin_5fseconds',['WAIT_FOR_DIRECTIVE_TIMEOUT_IN_SECONDS',['../_mime_utils_8cpp.html#a925bfc45137aefb485e9aa58a2c26c50',1,'alexaClientSDK::acl::test']]],
