@@ -35,6 +35,7 @@
 #include "AVSCommon/AVS/Attachment/AttachmentManager.h"
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h"
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentReader.h"
+#include "AVSCommon/AVS/EventBuilder.h"
 #include "AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h"
@@ -47,6 +48,9 @@
 #include "Integration/ObservableMessageRequest.h"
 #include "Integration/TestDirectiveHandler.h"
 #include "Integration/TestExceptionEncounteredSender.h"
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/error/en.h>
 
 namespace alexaClientSDK {
 namespace integration {
@@ -62,6 +66,7 @@ using namespace avsCommon::avs::initialization;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::utils::sds;
 using namespace avsCommon::utils::json;
+using namespace rapidjson;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AlexaDirectiveSequencerLibraryTest");
@@ -137,7 +142,6 @@ static const std::string TAG("AlexaDirectiveSequencerLibraryTest");
         "}]"                                                      \
     "}"
 
-
 /// This is a 16 bit 16 kHz little endian linear PCM audio file of "Joke" to be recognized.
 static const std::string RECOGNIZE_JOKE_AUDIO_FILE_NAME = "/recognize_joke_test.wav";
 /// This is a 16 bit 16 kHz little endian linear PCM audio file of "Wikipedia" to be recognized.
@@ -146,6 +150,8 @@ static const std::string RECOGNIZE_WIKI_AUDIO_FILE_NAME = "/recognize_wiki_test.
 static const std::string RECOGNIZE_LIONS_AUDIO_FILE_NAME = "/recognize_lions_test.wav";
 /// This is a 16 bit 16 kHz little endian linear PCM audio file of "What's up" to be recognized.
 static const std::string RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME = "/recognize_whats_up_test.wav";
+/// This is a 16 bit 16 kHz little endian linear PCM audio file of "Set a timer for 5 seconds" to be recognized.
+static const std::string RECOGNIZE_TIMER_AUDIO_FILE_NAME = "/recognize_timer_test.wav";
 
 //String to be used as a basic DialogRequestID.
 #define FIRST_DIALOG_REQUEST_ID "DialogRequestID123"
@@ -154,11 +160,8 @@ static const std::string RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME = "/recognize_whats_
 
 /// This string specifies a Recognize event using the CLOSE_TALK profile and uses the first DialogRequestID.
 static const std::string CT_FIRST_RECOGNIZE_EVENT_JSON = RECOGNIZE_EVENT_JSON(CLOSE_TALK, FIRST_DIALOG_REQUEST_ID);
-/// This string specifies a Recognize event using the CLOSE_TALK profile and uses the first DialogRequestID.
-static const std::string CT_FIRST_RECOGNIZE_EVENT_JSON_NEAR = RECOGNIZE_EVENT_JSON(NEAR_FIELD, FIRST_DIALOG_REQUEST_ID);
 /// This string specifies a Recognize event using the CLOSE_TALK profile and uses the second DialogRequestID.
 static const std::string CT_SECOND_RECOGNIZE_EVENT_JSON = RECOGNIZE_EVENT_JSON(CLOSE_TALK, SECOND_DIALOG_REQUEST_ID);
-
 // This string to be used for ClearQueue Directives which use the NAMESPACE_AUDIO_PLAYER namespace.
 static const std::string NAME_CLEAR_QUEUE = "ClearQueue";
 // This string to be used for ExpectSpeech Directives which use the NAMESPACE_SPEECH_RECOGNIZER namespace.
@@ -171,17 +174,25 @@ static const std::string NAME_SET_MUTE = "SetMute";
 static const std::string NAME_SPEAK = "Speak";
 // This string to be used for Stop Directives which use the NAMESPACE_AUDIO_PLAYER namespace.
 static const std::string NAME_STOP = "Stop";
+// This string to be used for SpeechStarted Directives which use the NAMESPACE_SPEECH_SYNTHESIZER namespace.
+static const std::string NAME_SPEECH_STARTED = "SpeechStarted";
+// This string to be used for SpeechFinished Directives which use the NAMESPACE_SPEECH_SYNTHESIZER namespace.
+static const std::string NAME_SPEECH_FINISHED = "SpeechFinished";
+// This string to be used for SetAlertFailed Directives which use the NAMESPACE_ALERTS namespace.
+static const std::string NAME_SET_ALERT_FAILED = "SetAlertFailed";
+// This string to be used for SetAlert Directives which use the NAMESPACE_ALERTS namespace.
+static const std::string NAME_SET_ALERT = "SetAlert";
 
 // This String to be used to register the AudioPlayer namespace to a DirectiveHandler.
 static const std::string NAMESPACE_AUDIO_PLAYER = "AudioPlayer";
+// This String to be used to register the Alerts namespace to a DirectiveHandler.
+static const std::string NAMESPACE_ALERTS = "Alerts";
 // This String to be used to register the Speaker namespace to a DirectiveHandler.
 static const std::string NAMESPACE_SPEAKER = "Speaker";
 // This String to be used to register the SpeechRecognizer namespace to a DirectiveHandler.
 static const std::string NAMESPACE_SPEECH_RECOGNIZER = "SpeechRecognizer";
 // This String to be used to register the SpeechSynthesizer namespace to a DirectiveHandler.
 static const std::string NAMESPACE_SPEECH_SYNTHESIZER = "SpeechSynthesizer";
-// This string to be used for StopCapture Directives which use the NAMESPACE_SPEECH_RECOGNIZER namespace.
-static const std::string NAME_STOP_CAPTURE = "StopCapture";
 
 // This pair connects a ExpectSpeech name and SpeechRecognizer namespace for use in DirectiveHandler registration.
 static const NamespaceAndName EXPECT_SPEECH_PAIR(NAMESPACE_SPEECH_RECOGNIZER, NAME_EXPECT_SPEECH);
@@ -189,8 +200,8 @@ static const NamespaceAndName EXPECT_SPEECH_PAIR(NAMESPACE_SPEECH_RECOGNIZER, NA
 static const NamespaceAndName SET_MUTE_PAIR(NAMESPACE_SPEAKER, NAME_SET_MUTE);
 // This pair connects a Speak name and SpeechSynthesizer namespace for use in DirectiveHandler registration.
 static const NamespaceAndName SPEAK_PAIR(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK);
-// This pair connects a StopCapture name and SpeechRecognizer namespace for use in DirectiveHandler registration.
-static const NamespaceAndName STOP_CAPTURE_PAIR(NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE);
+// This pair connects a SetAlert name and Alerts namespace for use in DirectiveHandler registration.
+static const NamespaceAndName SET_ALERT_PAIR(NAMESPACE_ALERTS, NAME_SET_ALERT);
 
 // This Integer to be used to specify a timeout in seconds for a directive to reach the DirectiveHandler.
 static const std::chrono::seconds WAIT_FOR_TIMEOUT_DURATION(5);
@@ -211,6 +222,10 @@ static const std::string JSON_MESSAGE_MESSAGE_ID_KEY = "messageId";
 static const std::string JSON_MESSAGE_DIALOG_REQUEST_ID_KEY = "dialogRequestId";
 /// JSON key to get the payload object of a message.
 static const std::string JSON_MESSAGE_PAYLOAD_KEY = "payload";
+/// JSON key to get the payload object of a message.
+static const std::string JSON_MESSAGE_TOKEN_KEY = "token";
+/// JSON key to add to the payload object of a message.
+static const char TOKEN_KEY[] = "token";
 
 /// Path to configuration file (from command line arguments).
 std::string configPath;
@@ -379,6 +394,27 @@ protected:
         ASSERT_NE (params.type, TestExceptionEncounteredSender::ExceptionParams::Type::TIMEOUT);
     }
 
+    /**
+     * Function to setup a message with a token and send it to AVS.
+     *
+     * @param eventName Name of the event to send.
+     * @param eventNameSpace Namespace if the Name of the event to send.
+     * @param dialogRequestID DialogRequestID to use to send the event.
+     * @param token Token to be added to the event payload.
+     */
+    void sendEventWithToken(const std::string& eventName, const std::string& eventNameSpace, 
+            const std::string& dialogRequestID, std::string token) {
+        rapidjson::Document payload(rapidjson::kObjectType);
+        payload.AddMember(TOKEN_KEY, token, payload.GetAllocator());
+
+        rapidjson::StringBuffer buffer;
+        rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+        ASSERT_TRUE (payload.Accept(writer));
+
+        auto event = buildJsonEventString(eventNameSpace, eventName, dialogRequestID, buffer.GetString());
+        sendEvent(event.second, nullptr,avsCommon::avs::MessageRequest::Status::SUCCESS, std::chrono::seconds(SEND_EVENT_TIMEOUT_DURATION));
+    }
+
     /// Object to monitor the status of the authorization to communicate with @c AVS.
     std::shared_ptr<AuthObserver> m_authObserver;
 
@@ -409,7 +445,21 @@ protected:
     std::shared_ptr<TestExceptionEncounteredSender> m_exceptionEncounteredSender;
 };
 
-
+/**
+ * Helper function to extract the token from a directive.
+ *
+ * @param params that has the JSON to be searched through.
+ * @param returnToken to hold the reulting token.
+ * @return Indicates whether extracting the token was successful.
+ */
+bool getToken(TestDirectiveHandler::DirectiveParams params, std::string &returnToken) {
+    std::string directiveString;
+    std::string directivePayload;
+    std::string directiveToken;
+    jsonUtils::lookupStringValue(params.directive->getUnparsedDirective(), JSON_MESSAGE_DIRECTIVE_KEY, &directiveString);
+    jsonUtils::lookupStringValue(directiveString, JSON_MESSAGE_PAYLOAD_KEY, &directivePayload);
+    return jsonUtils::lookupStringValue(directivePayload, JSON_MESSAGE_TOKEN_KEY, &returnToken);
+}
 
 /**
  * Test DirectiveSequencer's ability to pass an @c AVSDirective to a @c DirectiveHandler.
@@ -600,49 +650,71 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, dropQueueAfterBargeIn) {
 /**
  * Test @c DirectiveSequencer's ability to handle a Directive without a DialogRequestID.
  *
- * This test sends a @c NEAR_FIELD @c Recognize event to AVS to trigger delivery of a @c StopCapture directive.
- * @c StopCapture directives do not have a @c dialogRequestId value. This test uses that fact to verify that
+ * This test sends a @c Recognize event to AVS to trigger delivery of a @c Speak and a @c SetAlert directive.
+ * @c SetAlert directives do not have a @c dialogRequestId value. This test uses that fact to verify that
  * @c AVSDirectives with no @c dialogRequestId are processed properly.
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithoutADialogRequestID) {
     DirectiveHandlerConfiguration config;
-    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
     config[SPEAK_PAIR] = BlockingPolicy::NON_BLOCKING;
-    config[STOP_CAPTURE_PAIR] = BlockingPolicy::NON_BLOCKING;
+    config[SET_ALERT_PAIR] = BlockingPolicy::NON_BLOCKING;
 
     auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
     ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
 
-    // Send audio of "Joke" that will prompt SetMute and Speak.
+    // Send audio of "Set a timer for 5 seconds" that will prompt a Speak.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
-    std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
+    std::string file = inputPath + RECOGNIZE_TIMER_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON_NEAR,
+        CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
         avsCommon::avs::MessageRequest::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
+    std::string token;
+    bool handleAlertFound = false;
+    bool prehandleAlertFound = false;
+    bool prehandleSpeakFound = false;
+
     TestDirectiveHandler::DirectiveParams params;
-
-    // Make sure we get preHandle followed by handle for StopCapture.
-    
     params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(params.isPreHandle());
-    ASSERT_TRUE(params.directive->getDialogRequestId().empty());
-    ASSERT_EQ(params.directive->getName(), NAME_STOP_CAPTURE);
+    while (!params.isTimeout()) {
+        if (params.directive->getName() == NAME_SPEAK) {
+            ASSERT_FALSE(params.directive->getDialogRequestId().empty());
+            if (params.isPreHandle()) {
+                prehandleSpeakFound = true;
+            } else if (params.isHandle()) {
+                ASSERT_TRUE(prehandleSpeakFound);
+                ASSERT_TRUE(getToken(params, token));
+                // Send speechFinished to prompt the cloud to send setAlert which does not have a DialogRequestID.
+                sendEventWithToken(NAME_SPEECH_FINISHED, NAMESPACE_SPEECH_SYNTHESIZER, FIRST_DIALOG_REQUEST_ID, token);
+            }
+        } else {
+            ASSERT_EQ(params.directive->getName(), NAME_SET_ALERT);
+            ASSERT_TRUE(params.directive->getDialogRequestId().empty());
+            if (params.isPreHandle()) {
+                prehandleAlertFound = true;
+            } else if (params.isHandle()) {
+                ASSERT_TRUE(prehandleAlertFound);
+                handleAlertFound = true;
+                ASSERT_TRUE(getToken(params, token));
+            }
+        }
+        params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    }
+    ASSERT_TRUE(handleAlertFound);
 
-    params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(params.isHandle());
-    ASSERT_TRUE(params.directive->getDialogRequestId().empty());
-    ASSERT_EQ(params.directive->getName(), NAME_STOP_CAPTURE);
+    // Send setAlertFailed to clean up the alert on the cloud side.
+    sendEventWithToken(NAME_SET_ALERT_FAILED, NAMESPACE_ALERTS, FIRST_DIALOG_REQUEST_ID, token);
 
     params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     while (!params.isTimeout()) {
-        // Make sure no other calls for StopCapture are made except for the initial handleImmediately.
-        ASSERT_NE(params.directive->getName(), NAME_STOP_CAPTURE);
+        // Make sure no other calls for SetAlert are made except for the initial handleImmediately.
+        ASSERT_NE(params.directive->getName(), NAME_SET_ALERT);
         params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     }
+
 }
 
 /**

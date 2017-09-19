@@ -62,6 +62,20 @@ static const std::string M3U_FILE_PATH("/fox_dog_playlist.m3u");
 /// file URI Prefix
 static const std::string FILE_PREFIX("file://");
 
+/// File length for the MP3 test file.
+static const std::chrono::milliseconds MP3_FILE_LENGTH(2688);
+
+// setOffset timing constants.
+
+/// Offset to start playback at.
+static const std::chrono::milliseconds OFFSET(2000);
+
+/// Tolerance when setting expectations.
+static const std::chrono::milliseconds TOLERANCE(200);
+
+/// Padding to add to offsets when necessary.
+static const std::chrono::milliseconds PADDING(10);
+
 /**
  * Mock AttachmentReader.
  */
@@ -440,6 +454,8 @@ TEST_F(MediaPlayerTest, testSetSourceEmptyUrl) {
  * Set the source of the @c MediaPlayer twice consecutively to a url representing a single audio file.
  * Playback audio till the end. Check whether the playback started and playback finished notifications
  * are received.
+ *
+ * Consecutive calls to setSource(const std::string url) without play() cause tests to occasionally fail: ACSDK-508.
  */
 TEST_F(MediaPlayerTest, testConsecutiveSetSource) {
 
@@ -637,9 +653,18 @@ TEST_F(MediaPlayerTest, testGetOffsetInMilliseconds) {
     ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
     std::this_thread::sleep_for (std::chrono::seconds(1));
-    ASSERT_NE(-1, m_mediaPlayer->getOffsetInMilliseconds());
+    int64_t offset = m_mediaPlayer->getOffsetInMilliseconds();
+    ASSERT_TRUE((offset > 0) && (offset <= MP3_FILE_LENGTH.count()));
     ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->stop());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
+    ASSERT_EQ(-1, m_mediaPlayer->getOffsetInMilliseconds());
+}
+
+/**
+ * Test getOffsetInMilliseconds with a null pipeline. Expect that -1 is returned.
+ * This currently results in errors on shutdown. Will be fixed by ACSDK-446.
+ */
+TEST_F(MediaPlayerTest, testGetOffsetInMillisecondsNullPipeline) {
     ASSERT_EQ(-1, m_mediaPlayer->getOffsetInMilliseconds());
 }
 
@@ -748,6 +773,113 @@ TEST_F(MediaPlayerTest, testStartPlayWithUrlPlaylistWaitForEnd) {
     ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
 }
 #endif
+
+/**
+ * Test setting the offset to a seekable source. Setting the offset should succeed and playback should start from the offset.
+ */
+TEST_F(MediaPlayerTest, testSetOffsetSeekableSource) {
+    std::chrono::milliseconds offset(OFFSET);
+
+    std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);
+    m_mediaPlayer->setSource(url_single);
+    ASSERT_EQ(MediaPlayerStatus::SUCCESS, m_mediaPlayer->setOffset(offset));
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
+    auto start = std::chrono::steady_clock::now();
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
+
+    std::chrono::milliseconds timeElapsed =
+        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
+    ACSDK_INFO(LX("MediaPlayerTest").d("timeElapsed", timeElapsed.count()));
+
+    // Time elapsed should be total file length minus the offset.
+    ASSERT_TRUE(timeElapsed < (MP3_FILE_LENGTH - offset + TOLERANCE));
+    ASSERT_EQ(m_playerObserver->getOnPlaybackStartedCallCount(), 1);
+    ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
+}
+
+/**
+ * Test setting the offset to an un-seekable pipeline. Setting the offset should succeed, but
+ * no seeking should occur. Playback will start from the beginning.
+ */
+TEST_F(MediaPlayerTest, testSetOffsetUnseekable) {
+    std::chrono::milliseconds offset(OFFSET);
+
+    setAttachmentReaderSource();
+    // Ensure that source is set to not seekable.
+    gst_app_src_set_stream_type(m_mediaPlayer->getAppSrc(), GST_APP_STREAM_TYPE_STREAM);
+
+    ASSERT_EQ(MediaPlayerStatus::SUCCESS, m_mediaPlayer->setOffset(offset));
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
+    auto start = std::chrono::steady_clock::now();
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
+
+    std::chrono::milliseconds timeElapsed =
+        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
+    ACSDK_INFO(LX("MediaPlayerTest").d("timeElapsed", timeElapsed.count()));
+
+    // Time elapsed should be the length of the file.
+    ASSERT_TRUE(timeElapsed >= (MP3_FILE_LENGTH));
+    ASSERT_EQ(m_playerObserver->getOnPlaybackStartedCallCount(), 1);
+    ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
+}
+
+/**
+ * Test setting the offset outside the bounds of the source. Playback will immediately end.
+ */
+TEST_F(MediaPlayerTest, testSetOffsetOutsideBounds) {
+    std::chrono::milliseconds outOfBounds(MP3_FILE_LENGTH + PADDING);
+
+    std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);
+    m_mediaPlayer->setSource(url_single);
+    ASSERT_EQ(MediaPlayerStatus::SUCCESS, m_mediaPlayer->setOffset(outOfBounds));
+
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
+    auto start = std::chrono::steady_clock::now();
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
+
+    std::chrono::milliseconds timeElapsed =
+        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
+    ACSDK_INFO(LX("MediaPlayerTest").d("timeElapsed", timeElapsed.count()));
+
+    // Time elapsed should be zero.
+    ASSERT_TRUE(timeElapsed < std::chrono::milliseconds::zero() + TOLERANCE);
+    ASSERT_EQ(m_playerObserver->getOnPlaybackStartedCallCount(), 1);
+    ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
+}
+
+/**
+ * Test calling setSource resets the offset.
+ *
+ * Consecutive calls to setSource(const std::string url) without play() cause tests to occasionally fail: ACSDK-508.
+ */
+TEST_F(MediaPlayerTest, testSetSourceResetsOffset) {
+    std::chrono::milliseconds offset(OFFSET);
+
+    std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);
+    m_mediaPlayer->setSource(url_single);
+    ASSERT_EQ(MediaPlayerStatus::SUCCESS, m_mediaPlayer->setOffset(offset));
+
+    m_mediaPlayer->setSource(url_single);
+    // Play, expect full file.
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
+    auto start = std::chrono::steady_clock::now();
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
+
+    std::chrono::milliseconds timeElapsed =
+        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
+    ACSDK_INFO(LX("MediaPlayerTest").d("timeElapsed", timeElapsed.count()));
+
+    // Time elapsed should be the full file.
+    ASSERT_TRUE(timeElapsed >= MP3_FILE_LENGTH);
+    ASSERT_EQ(m_playerObserver->getOnPlaybackStartedCallCount(), 1);
+    ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
+}
 
 } // namespace test
 } // namespace mediaPlayer

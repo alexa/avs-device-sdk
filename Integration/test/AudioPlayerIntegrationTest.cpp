@@ -649,7 +649,6 @@ TEST_F(AudioPlayerTest, FlashBriefing) {
 
     if (hasFlashbriefingItems) {
         // The last speak is then allowed.
-        sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         EXPECT_TRUE(checkSentEventName(sendStartedParams, NAME_SPEECH_STARTED));
         sendFinishedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         EXPECT_TRUE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED)); 

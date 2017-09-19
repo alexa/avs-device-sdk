@@ -208,6 +208,12 @@ static const std::chrono::seconds SEND_EVENT_TIMEOUT_DURATION(20);
 static const std::chrono::seconds DIRECTIVE_TIMEOUT_DURATION(7);
 // This Integer to be used when it is expected the duration will timeout.
 static const std::chrono::seconds WANTING_TIMEOUT_DURATION(1);
+// This Integer to be used to specify a timeout in seconds for the Media Player to finish playing.
+static const std::chrono::seconds WAIT_FOR_MEDIA_PLAYER_TIMEOUT_DURATION(60);
+// This Integer to be used to specify number of Speak Directives to validate in test handleMultipleConsecutiveSpeaks.
+// Although we anticipate four Speak Directives, we validate only three Speak Directives.
+// Validating three Speak Directives helps keep the test short.
+static const unsigned int NUMBER_OF_SPEAK_DIRECTIVES_TO_VALIDATE = 3;
 
 /// JSON key to get the event object of a message.
 static const std::string JSON_MESSAGE_EVENT_KEY = "event";
@@ -614,8 +620,7 @@ TEST_F(SpeechSynthesizerTest, handleMultipleConsecutiveSpeaks) {
     TestMessageSender::SendParams sendRecognizeParams = m_avsConnectionManager->waitForNext(DIRECTIVE_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendRecognizeParams, NAME_RECOGNIZE));
 
-    int numberOfAnticipatedSpeakDirectives = 4;
-    for (int x = 0; x < numberOfAnticipatedSpeakDirectives; ++x) {
+    for (unsigned int x = 0; x < NUMBER_OF_SPEAK_DIRECTIVES_TO_VALIDATE; ++x) {
         // Each iteration, remove the blocking setMute directive.
         TestDirectiveHandler::DirectiveParams params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         while (params.type != TestDirectiveHandler::DirectiveParams::Type::HANDLE) {
@@ -637,7 +642,7 @@ TEST_F(SpeechSynthesizerTest, handleMultipleConsecutiveSpeaks) {
 
         // Media Player has finished.
         ASSERT_EQ(m_speechSynthesizerObserver->waitForNext(
-                WAIT_FOR_TIMEOUT_DURATION), SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED);
+                WAIT_FOR_MEDIA_PLAYER_TIMEOUT_DURATION), SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED);
 
         // SpeechFinished was sent.
         TestMessageSender::SendParams sendFinishedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);

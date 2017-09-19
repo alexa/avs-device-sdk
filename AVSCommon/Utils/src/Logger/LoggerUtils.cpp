@@ -18,6 +18,8 @@
 #include "AVSCommon/Utils/Logger/LoggerUtils.h"
 #include "AVSCommon/Utils/Logger/Logger.h"
 
+#include <cstdio>
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
@@ -132,7 +134,7 @@ std::string formatLogString(
             std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() % 
                     MILLISECONDS_PER_SECOND);
     char millisString[MILLIS_STRING_SIZE];
-    if (snprintf(millisString, sizeof(millisString), MILLIS_FORMAT_STRING, timeMillisPart) < 0) {
+    if (std::snprintf(millisString, sizeof(millisString), MILLIS_FORMAT_STRING, timeMillisPart) < 0) {
         millisecondFailure = true;
     }
 

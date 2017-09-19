@@ -199,8 +199,8 @@ bool convertToValue(const rapidjson::Value& documentNode, int64_t* value) {
 }
 
 bool jsonArrayExists(const rapidjson::Value & parsedDocument, const std::string & key) {
-    auto iter = parsedDocument.FindMember(key.c_str());
-    if (parsedDocument.MemberEnd() != iter) {
+    auto iter = parsedDocument.FindMember(key);
+    if (parsedDocument.MemberEnd() == iter) {
         ACSDK_ERROR(LX("lookupArrayExistsFailed").d("reason", "keyNotFound").d("key", key));
         return false;
     }

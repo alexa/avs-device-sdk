@@ -328,8 +328,17 @@ private:
     /// Send a @c PlaybackMetadataExtracted event.
     void sendStreamMetadataExtractedEvent();
 
-    /// Get the media player offset.
-    std::chrono::milliseconds getMediaPlayerOffset();
+    /**
+     * Get the current offset in the audio stream.
+     *
+     * @note @c MediaPlayer has a getOffset function which only works while actively playing, but AudioPlayer needs to
+     *     be able to report its offset at any time, even when paused or stopped.  To address the gap, this function
+     *     reports the live offset from @c MediaPlayer when it is playing, and reports a cached offset when
+     *     @c MediaPlayer is not playing.
+     *
+     * @return The current offset in the stream.
+     */
+    std::chrono::milliseconds getOffset();
 
     /// @}
 
@@ -408,6 +417,13 @@ private:
 
     /// This timer is used to send @c ProgressReportIntervalElapsed events.
     avsCommon::utils::timing::Timer m_intervalTimer;
+
+    /**
+     * This keeps track of the current offset in the audio stream.  Reading the offset from @c MediaPlayer is
+     * insufficient because @c MediaPlayer only returns a valid offset when it is actively playing, but @c AudioPlayer
+     * must return a valid offset when @c MediaPlayer is stopped.
+     */
+    std::chrono::milliseconds m_offset;
 
     /// @}
 

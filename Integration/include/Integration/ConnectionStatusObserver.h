@@ -54,14 +54,13 @@ public:
      * @return true if expected connectionStatus is received within @c duration else false.
      */
     bool waitFor(const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status connectionStatus,
-                 const std::chrono::seconds duration = std::chrono::seconds(10));
+                 const std::chrono::seconds duration = std::chrono::seconds(15));
 
     /**
      * Function to check if the connection is broken due to Server side Disconnect.
      * @return true if the disconnect happens due to SERVER_SIDE_DISCONNECT else false.
      */
     bool checkForServerSideDisconnect();
-
 private:
     /// Mutex used internally to enforce thread safety and serialize read/write access to @c m_statusChanges.
     mutable std::mutex m_mutex;

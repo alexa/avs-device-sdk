@@ -22,6 +22,7 @@ using namespace alexaClientSDK;
 using namespace acl;
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils;
 
 namespace alexaClientSDK {
 namespace integration {
@@ -31,7 +32,7 @@ TestMessageSender::TestMessageSender(
         std::shared_ptr<acl::MessageRouterInterface> messageRouter,
         bool isEnabled,
         std::shared_ptr<ConnectionStatusObserverInterface> connectionStatusObserver,
-        std::shared_ptr<MessageObserverInterface> messageObserver) {
+        std::shared_ptr<MessageObserverInterface> messageObserver) : RequiresShutdown{"TestMessageSender"} {
     m_connectionManager = acl::AVSConnectionManager::create(messageRouter, isEnabled, { connectionStatusObserver },
             { messageObserver });
     // TODO: ACSDK-421: Remove the callback when m_avsConnection manager is no longer an observer to
@@ -116,6 +117,10 @@ void TestMessageSender::setAVSEndpoint(const std::string& avsEndpoint) {
 
     void TestMessageSender::synchronize() {
         m_connectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
+    }
+
+    void TestMessageSender::doShutdown() {
+        m_connectionManager->shutdown();
     }
 
 } // namespace test

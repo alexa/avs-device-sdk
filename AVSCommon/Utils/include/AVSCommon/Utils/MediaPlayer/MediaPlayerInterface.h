@@ -97,7 +97,15 @@ public:
             std::shared_ptr<std::istream> stream, bool repeat) = 0;
 
     /**
-     * TODO ACSDK-423: Implement setOffset behavior.
+     * Set the offset for playback. A seek will be performed to the offset at the next @c play() command.
+     *
+     * The following situations will reset the offset:
+     * # A seek attempt is made (ie. via play()).
+     * # A new source is set.
+     *
+     * @param offset The offset in milliseconds to seek to.
+     *
+     * @return @c SUCCESS if the offset was successfully set, and FAILURE for any error.
      */
     virtual MediaPlayerStatus setOffset(std::chrono::milliseconds offset) { return MediaPlayerStatus::FAILURE; }
 

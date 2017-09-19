@@ -260,7 +260,8 @@ AudioPlayer::AudioPlayer(
         m_playbackFinished{false},
         m_currentActivity{PlayerActivity::IDLE},
         m_starting{false},
-        m_focus{FocusState::NONE} {
+        m_focus{FocusState::NONE},
+        m_offset{std::chrono::milliseconds{std::chrono::milliseconds::zero()}} {
 }
 
 void AudioPlayer::doShutdown() {
@@ -483,7 +484,7 @@ void AudioPlayer::executeProvideState(bool sendToken, unsigned int stateRequestT
     state.AddMember(TOKEN_KEY, m_token, state.GetAllocator());
     state.AddMember(
             OFFSET_KEY,
-            std::chrono::duration_cast<std::chrono::milliseconds>(getMediaPlayerOffset()).count(),
+            std::chrono::duration_cast<std::chrono::milliseconds>(getOffset()).count(),
             state.GetAllocator());
     state.AddMember(ACTIVITY_KEY, playerActivityToString(m_currentActivity), state.GetAllocator());
 
@@ -506,7 +507,11 @@ void AudioPlayer::executeProvideState(bool sendToken, unsigned int stateRequestT
 }
 
 void AudioPlayer::executeOnFocusChanged(FocusState newFocus) {
-    ACSDK_DEBUG9(LX("executeOnFocusChanged").d("from", m_focus).d("to", newFocus));
+    ACSDK_DEBUG9(LX("executeOnFocusChanged")
+            .d("from", m_focus)
+            .d("to", newFocus)
+            .d("m_starting", m_starting)
+            .d("m_currentActivity", m_currentActivity));
     if (m_focus == newFocus) {
         return;
     }
@@ -572,9 +577,21 @@ void AudioPlayer::executeOnFocusChanged(FocusState newFocus) {
             }
             break;
         case FocusState::NONE:
-            if (PlayerActivity::STOPPED == m_currentActivity) {
-                break;
+            switch (m_currentActivity) {
+                case PlayerActivity::IDLE:
+                case PlayerActivity::STOPPED:
+                case PlayerActivity::FINISHED:
+                    // Nothing to more to do if we're already not playing; we got here because the act of stopping
+                    // caused the channel to be released, which in turn caused this callback.
+                    return;
+                case PlayerActivity::PLAYING:
+                case PlayerActivity::PAUSED:
+                case PlayerActivity::BUFFER_UNDERRUN:
+                    // If The focus change came in while we were in a 'playing' state, we need to stop because we are
+                    // yielding the channel.
+                    break;
             }
+
             m_audioItems.clear();
 
             std::unique_lock<std::mutex> lock(m_playbackMutex);
@@ -606,6 +623,7 @@ void AudioPlayer::executeOnPlaybackStarted() {
 }
 
 void AudioPlayer::executeOnPlaybackFinished() {
+    ACSDK_DEBUG9(LX("executeOnPlaybackFinished"));
     if (m_currentActivity != PlayerActivity::PLAYING ) {
         ACSDK_ERROR(LX("executeOnPlaybackFinishedError")
                 .d("reason", "notPlaying")
@@ -710,6 +728,7 @@ void AudioPlayer::executePlay(PlayBehavior playBehavior, const AudioItem& audioI
 }
 
 void AudioPlayer::playNextItem() {
+    ACSDK_DEBUG9(LX("playNextItem").d("m_audioItems.size", m_audioItems.size()));
     if (m_audioItems.empty()) {
         sendPlaybackFailedEvent(
                 m_token,
@@ -742,6 +761,7 @@ void AudioPlayer::playNextItem() {
         return;
     }
 
+    ACSDK_DEBUG9(LX("playNextItem").d("item.stream.offset", item.stream.offset.count()));
     if (item.stream.offset.count() && m_mediaPlayer->setOffset(item.stream.offset) == MediaPlayerStatus::FAILURE) {
         sendPlaybackFailedEvent(
                 m_token,
@@ -776,6 +796,7 @@ void AudioPlayer::playNextItem() {
 
 void AudioPlayer::executeStop(bool releaseFocus) {
     ACSDK_DEBUG9(LX("executestop").d("m_currentActivity", m_currentActivity));
+    auto stopStatus = MediaPlayerStatus::SUCCESS;
     switch (m_currentActivity) {
         case PlayerActivity::IDLE:
         case PlayerActivity::STOPPED:
@@ -788,9 +809,8 @@ void AudioPlayer::executeStop(bool releaseFocus) {
         case PlayerActivity::PLAYING:
         case PlayerActivity::PAUSED:
         case PlayerActivity::BUFFER_UNDERRUN:
-            if (m_mediaPlayer->stop() == MediaPlayerStatus::FAILURE) {
-                executeOnPlaybackError("stopFailed");
-            }
+            getOffset();
+            stopStatus = m_mediaPlayer->stop();
             break;
         default:
             break;
@@ -802,6 +822,9 @@ void AudioPlayer::executeStop(bool releaseFocus) {
         m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
     }
     changeActivity(PlayerActivity::STOPPED);
+    if (MediaPlayerStatus::FAILURE == stopStatus) {
+        executeOnPlaybackError("mediaPlayerStopFailed");
+    }
     sendPlaybackStoppedEvent();
 }
 
@@ -847,7 +870,7 @@ void AudioPlayer::sendEventWithTokenAndOffset(const std::string& eventName) {
     payload.AddMember(TOKEN_KEY, m_token, payload.GetAllocator());
     payload.AddMember(
             OFFSET_KEY,
-            std::chrono::duration_cast<std::chrono::milliseconds>(getMediaPlayerOffset()).count(),
+            std::chrono::duration_cast<std::chrono::milliseconds>(getOffset()).count(),
             payload.GetAllocator());
 
     rapidjson::StringBuffer buffer;
@@ -887,7 +910,7 @@ void AudioPlayer::sendPlaybackStutterFinishedEvent() {
     payload.AddMember(TOKEN_KEY, m_token, payload.GetAllocator());
     payload.AddMember(
             OFFSET_KEY,
-            std::chrono::duration_cast<std::chrono::milliseconds>(getMediaPlayerOffset()).count(),
+            std::chrono::duration_cast<std::chrono::milliseconds>(getOffset()).count(),
             payload.GetAllocator());
     auto stutterDuration = std::chrono::steady_clock::now() - m_bufferUnderrunTimestamp;
     payload.AddMember(
@@ -920,7 +943,9 @@ void AudioPlayer::sendPlaybackFailedEvent(
 
     rapidjson::Value currentPlaybackState(rapidjson::kObjectType);
     currentPlaybackState.AddMember(TOKEN_KEY, m_token, payload.GetAllocator());
-    currentPlaybackState.AddMember(OFFSET_KEY, m_mediaPlayer->getOffsetInMilliseconds(), payload.GetAllocator());
+    currentPlaybackState.AddMember(
+            OFFSET_KEY,
+            std::chrono::duration_cast<std::chrono::milliseconds>(getOffset()).count(), payload.GetAllocator());
     currentPlaybackState.AddMember(ACTIVITY_KEY, playerActivityToString(m_currentActivity), payload.GetAllocator());
 
     payload.AddMember("currentPlaybackState", currentPlaybackState, payload.GetAllocator());
@@ -965,12 +990,15 @@ void AudioPlayer::sendStreamMetadataExtractedEvent() {
     //TODO: Implement/call this once MediaPlayer exports metadata info (ACSDK-414).
 }
 
-std::chrono::milliseconds AudioPlayer::getMediaPlayerOffset() {
-    auto offset = m_mediaPlayer->getOffsetInMilliseconds();
-    if (offset < 0) {
-        offset = 0;
+std::chrono::milliseconds AudioPlayer::getOffset() {
+    if (PlayerActivity::PLAYING != m_currentActivity) {
+        return m_offset;
     }
-    return std::chrono::milliseconds(offset);
+    m_offset = std::chrono::milliseconds(m_mediaPlayer->getOffsetInMilliseconds());
+    if (m_offset < std::chrono::milliseconds::zero()) {
+        m_offset = std::chrono::milliseconds::zero();
+    }
+    return m_offset;
 }
 
 } // namespace audioPlayer

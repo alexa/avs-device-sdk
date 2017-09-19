@@ -1,4 +1,17 @@
 ## ChangeLog
+### [1.0.3] - 2017-09-19
+* **Enhancements**
+  * Implemented `setOffSet` in `MediaPlayer`.
+  * [Updated `LoggerUtils.cpp`](https://github.com/alexa/avs-device-sdk/issues/77).
+
+* **Bug Fixes**
+  * [Bug fix to address incorrect stop behavior caused when Audio Focus is set to `NONE` and released](https://github.com/alexa/avs-device-sdk/issues/129).
+  * Bug fix for intermittent failure in `handleMultipleConsecutiveSpeaks`.
+  * Bug fix for `jsonArrayExist` incorrectly parsing JSON when trying to locate array children.
+  * Bug fix for ADSL test failures with `sendDirectiveWithoutADialogRequestId`.
+  * Bug fix for `SpeechSynthesizer` showing the wrong UX state when a burst of `Speak` directives are received.
+  * Bug fix for recursive loop in `AudioPlayer.Stop`.
+
 ### [1.0.2] - 2017-08-23
 * Removed code from AIP which propagates ExpectSpeech initiator strings to subsequent Recognize events.  This code will be re-introduced when AVS starts sending initiator strings.
 

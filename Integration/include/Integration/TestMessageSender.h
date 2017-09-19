@@ -24,15 +24,17 @@
 #include <mutex>
 
 #include <ACL/AVSConnectionManager.h>
-
-#include "AVSCommon/SDKInterfaces/MessageSenderInterface.h"
-#include "AVSCommon/SDKInterfaces/MessageObserverInterface.h"
+#include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 
 namespace alexaClientSDK {
 namespace integration {
 namespace test {
 
-class TestMessageSender : public avsCommon::sdkInterfaces::MessageSenderInterface {
+class TestMessageSender :
+        public avsCommon::sdkInterfaces::MessageSenderInterface,
+        public avsCommon::utils::RequiresShutdown {
 public:
     /// Destructor.
     ~TestMessageSender() = default;
@@ -122,6 +124,8 @@ public:
      * Synchronizes the internal AVSConnectionManager.
      */
     void synchronize();
+
+    void doShutdown() override;
 
 private:
     /// Mutex to protect m_queue.

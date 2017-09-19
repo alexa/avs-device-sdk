@@ -24,10 +24,10 @@
 #else
 #include <PlaylistParser/DummyPlaylistParser.h>
 #endif
-
 #include "MediaPlayer/AttachmentReaderSource.h"
 #include "MediaPlayer/IStreamSource.h"
 #include "MediaPlayer/UrlSource.h"
+
 #include "MediaPlayer/MediaPlayer.h"
 
 namespace alexaClientSDK {
@@ -191,6 +191,18 @@ int64_t MediaPlayer::getOffsetInMilliseconds() {
     return future.get();
 }
 
+MediaPlayerStatus MediaPlayer::setOffset(std::chrono::milliseconds offset) {
+    ACSDK_DEBUG9(LX("setOffsetCalled"));
+    std::promise<MediaPlayerStatus> promise;
+    auto future = promise.get_future();
+    std::function<gboolean()> callback = [this, &promise, offset]() {
+        handleSetOffset(&promise, offset);
+        return false;
+    };
+    queueCallback(&callback);
+    return future.get();
+}
+
 void MediaPlayer::setObserver(std::shared_ptr<MediaPlayerObserverInterface> observer) {
     ACSDK_DEBUG9(LX("setObserverCalled"));
     std::promise<void> promise;
@@ -290,6 +302,7 @@ void MediaPlayer::tearDownPipeline() {
         resetPipeline();
         g_source_remove(m_busWatchId);
     }
+    m_offsetManager.clear();
 }
 
 void MediaPlayer::resetPipeline() {
@@ -299,6 +312,49 @@ void MediaPlayer::resetPipeline() {
     m_pipeline.decoder = nullptr;
     m_pipeline.converter = nullptr;
     m_pipeline.audioSink = nullptr;
+}
+
+bool MediaPlayer::queryIsSeekable(bool* isSeekable) {
+    ACSDK_DEBUG9(LX("queryIsSeekable"));
+    gboolean seekable;
+    GstQuery* query;
+    query = gst_query_new_seeking(GST_FORMAT_TIME);
+    if (gst_element_query(m_pipeline.pipeline, query)) {
+        gst_query_parse_seeking(query, NULL, &seekable, NULL, NULL);
+        *isSeekable = (seekable == TRUE);
+        ACSDK_DEBUG(LX("queryIsSeekable").d("isSeekable", *isSeekable));
+        gst_query_unref(query);
+        return true;
+    } else {
+        ACSDK_ERROR(LX("queryIsSeekableFailed").d("reason", "seekQueryFailed"));
+        gst_query_unref(query);
+        return false;
+    }
+}
+
+bool MediaPlayer::seek() {
+    bool seekSuccessful = true;
+    ACSDK_DEBUG9(LX("seekCalled"));
+    if (!m_offsetManager.isSeekable() || !m_offsetManager.isSeekPointSet()) {
+        ACSDK_ERROR(LX("seekFailed")
+                .d("reason", "invalidState")
+                .d("isSeekable", m_offsetManager.isSeekable())
+                .d("seekPointSet", m_offsetManager.isSeekPointSet()));
+        seekSuccessful = false;
+    } else if (!gst_element_seek_simple(
+                m_pipeline.pipeline,
+                GST_FORMAT_TIME, // ns
+                static_cast<GstSeekFlags>(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT),
+                std::chrono::duration_cast<std::chrono::nanoseconds>(
+                    m_offsetManager.getSeekPoint()).count())) {
+        ACSDK_ERROR(LX("seekFailed").d("reason", "gstElementSeekSimpleFailed"));
+        seekSuccessful = false;
+    } else {
+        ACSDK_DEBUG(LX("seekSuccessful").d("offsetInMs", m_offsetManager.getSeekPoint().count()));
+    }
+
+    m_offsetManager.clear();
+    return seekSuccessful;
 }
 
 guint MediaPlayer::queueCallback(const std::function<gboolean()> *callback) {
@@ -334,6 +390,7 @@ gboolean MediaPlayer::onBusMessage(GstBus *bus, GstMessage *message, gpointer me
 }
 
 gboolean MediaPlayer::handleBusMessage(GstMessage *message) {
+    ACSDK_DEBUG9(LX("messageReceived").d("messageType", gst_message_type_get_name(GST_MESSAGE_TYPE(message))));
     switch (GST_MESSAGE_TYPE(message)) {
         case GST_MESSAGE_EOS:
             if (GST_MESSAGE_SRC(message) == GST_OBJECT_CAST(m_pipeline.pipeline)) {
@@ -363,6 +420,7 @@ gboolean MediaPlayer::handleBusMessage(GstMessage *message) {
                     }
                 } else {
                     sendPlaybackFinished();
+                    tearDownPipeline();
                 }
             }
             break;
@@ -389,6 +447,10 @@ gboolean MediaPlayer::handleBusMessage(GstMessage *message) {
                 GstState newState;
                 GstState pendingState;
                 gst_message_parse_state_changed(message, &oldState, &newState, &pendingState);
+                ACSDK_DEBUG9(LX("State Change")
+                        .d("oldState", gst_element_state_get_name(oldState))
+                        .d("newState", gst_element_state_get_name(newState))
+                        .d("pendingState", gst_element_state_get_name(pendingState)));
                 if (newState == GST_STATE_PLAYING) {
                     if (!m_playbackStartedSent) {
                         sendPlaybackStarted();
@@ -401,8 +463,7 @@ gboolean MediaPlayer::handleBusMessage(GstMessage *message) {
                             m_isPaused = false;
                         }
                     }
-                } else if (newState == GST_STATE_PAUSED &&
-                    oldState == GST_STATE_PLAYING) {
+                } else if (newState == GST_STATE_PAUSED && oldState == GST_STATE_PLAYING) {
                     if (m_isBufferUnderrun) {
                         sendBufferUnderrun();
                     } else if (!m_isPaused) {
@@ -432,7 +493,18 @@ gboolean MediaPlayer::handleBusMessage(GstMessage *message) {
                     m_isBufferUnderrun = true;
                 }
             } else {
-                if (GST_STATE_CHANGE_FAILURE == gst_element_set_state(m_pipeline.pipeline, GST_STATE_PLAYING)) {
+                bool isSeekable = false;
+                if (queryIsSeekable(&isSeekable)) {
+                   m_offsetManager.setIsSeekable(isSeekable);
+                }
+
+                ACSDK_DEBUG9(LX("offsetState")
+                        .d("isSeekable", m_offsetManager.isSeekable())
+                        .d("isSeekPointSet", m_offsetManager.isSeekPointSet()));
+
+                if (m_offsetManager.isSeekable() && m_offsetManager.isSeekPointSet()) {
+                    seek();
+                } else if (GST_STATE_CHANGE_FAILURE == gst_element_set_state(m_pipeline.pipeline, GST_STATE_PLAYING)) {
                     std::string error = "resumingOnBufferRefilledFailed";
                     ACSDK_ERROR(LX(error));
                     sendPlaybackError(error);
@@ -715,20 +787,59 @@ void MediaPlayer::handleGetOffsetInMilliseconds(std::promise<int64_t> *promise) 
     ACSDK_DEBUG(LX("handleGetOffsetInMillisecondsCalled"));
     gint64 position = -1;
     GstState state;
-    GstState pending;
-    if (m_pipeline.pipeline) {
-        auto stateChangeRet = gst_element_get_state(
-        m_pipeline.pipeline, &state, &pending, TIMEOUT_ZERO_NANOSECONDS);
-        if (GST_STATE_CHANGE_FAILURE == stateChangeRet) {
-            ACSDK_ERROR(LX("handleGetOffsetInMillisecondsFailed").d("reason", "getElementGetStateFailed"));
-        } else if (GST_STATE_CHANGE_SUCCESS == stateChangeRet &&
-                   (GST_STATE_PLAYING == state || GST_STATE_PAUSED == state) &&
-                   gst_element_query_position(m_pipeline.pipeline, GST_FORMAT_TIME, &position)) {
-            position /= NANOSECONDS_TO_MILLISECONDS;
-        }
+
+    // Check if pipeline is set.
+    if (!m_pipeline.pipeline) {
+        ACSDK_INFO(LX("handleGetOffsetInMilliseconds").m("pipelineNotSet"));
+        promise->set_value(static_cast<int64_t>(-1));
+        return;
+    }
+
+    auto stateChangeRet = gst_element_get_state(
+            m_pipeline.pipeline,
+            &state,
+            NULL,
+            TIMEOUT_ZERO_NANOSECONDS);
+
+    if (GST_STATE_CHANGE_FAILURE == stateChangeRet) {
+        // Getting the state failed.
+        ACSDK_ERROR(LX("handleGetOffsetInMillisecondsFailed").d("reason", "getElementGetStateFailure"));
+    } else if (GST_STATE_CHANGE_SUCCESS != stateChangeRet) {
+        // Getting the state was not successful (GST_STATE_CHANGE_ASYNC or GST_STATE_CHANGE_NO_PREROLL).
+        ACSDK_INFO(LX("handleGetOffsetInMilliseconds")
+                .d("reason", "getElementGetStateUnsuccessful")
+                .d("stateChangeReturn", gst_element_state_change_return_get_name(stateChangeRet)));
+    } else if (GST_STATE_PAUSED != state && GST_STATE_PLAYING != state) {
+         // Invalid State.
+        std::ostringstream expectedStates;
+        expectedStates << gst_element_state_get_name(GST_STATE_PAUSED)
+                       << "/"
+                       << gst_element_state_get_name(GST_STATE_PLAYING);
+        ACSDK_ERROR(LX("handleGetOffsetInMillisecondsFailed")
+                .d("reason", "invalidPipelineState")
+                .d("state", gst_element_state_get_name(state))
+                .d("expectedStates", expectedStates.str()));
+    } else if (!gst_element_query_position(m_pipeline.pipeline, GST_FORMAT_TIME, &position)) {
+        /*
+         * Query Failed. Explicitly reset the position to -1 as gst_element_query_position() does not guarantee
+         * value of position in the event of a failure.
+         */
+        position = -1;
+        ACSDK_ERROR(LX("handleGetOffsetInMillisecondsFailed").d("reason", "gstElementQueryPositionError"));
+    } else {
+        // Query succeeded.
+        position /= NANOSECONDS_TO_MILLISECONDS;
     }
 
     promise->set_value(static_cast<int64_t>(position));
+}
+
+void MediaPlayer::handleSetOffset(
+        std::promise<MediaPlayerStatus> *promise,
+        std::chrono::milliseconds offset) {
+    ACSDK_DEBUG(LX("handleSetOffsetCalled"));
+    m_offsetManager.setSeekPoint(offset);
+    promise->set_value(MediaPlayerStatus::SUCCESS);
 }
 
 void MediaPlayer::handleSetObserver(

@@ -1,6 +1,6 @@
 ### What is the Alexa Voice Service (AVS)?
 
-The Alexa Voice Service (AVS) enables developers to integrate Alexa directly into their products, bringing the convenience of voice control to any connected device. AVS provides developers with access to a suite of resources to quickly and easily build Alexa-enabled products, including APIs, hardware development kits, software development kits, and documentation. 
+The Alexa Voice Service (AVS) enables developers to integrate Alexa directly into their products, bringing the convenience of voice control to any connected device. AVS provides developers with access to a suite of resources to quickly and easily build Alexa-enabled products, including APIs, hardware development kits, software development kits, and documentation.
 
 [Learn more »](https://developer.amazon.com/alexa-voice-service)
 
@@ -24,13 +24,13 @@ Or if you prefer, you can start with our [SDK API Documentation](https://alexa.g
 
 ### SDK Architecture  
 
-This diagram illustrates the data flows between components that comprise the AVS Device SDK for C++. 
+This diagram illustrates the data flows between components that comprise the AVS Device SDK for C++.
 
 ![SDK Architecture Diagram](https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/Alexa_Device_SDK_Architecture.png)
 
 **Audio Signal Processor (ASP)** - Third-party software that applies signal processing algorithms to both input and output audio channels. The applied algorithms are designed to produce clean audio data and include, but are not limited to acoustic echo cancellation (AEC), beam forming (fixed or adaptive), voice activity detection (VAD), and dynamic range compression (DRC). If a multi-microphone array is present, the ASP constructs and outputs a single audio stream for the array.
 
-**Shared Data Stream (SDS)** - A single producer, multi-consumer buffer that allows for the transport of any type of data between a single writer and one or more readers. SDS performs two key tasks: 
+**Shared Data Stream (SDS)** - A single producer, multi-consumer buffer that allows for the transport of any type of data between a single writer and one or more readers. SDS performs two key tasks:
 
 1. It passes audio data between the audio front end (or Audio Signal Processor), the wake word engine, and the Alexa Communications Library (ACL) before sending to AVS  
 2. It passes data attachments sent by AVS to specific capability agents via the ACL  
@@ -62,7 +62,7 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 * [SpeechSynthesizer](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechsynthesizer) - The interface for Alexa speech output.
 * [Alerts](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/alerts) - The interface for setting, stopping, and deleting timers and alarms.
 * [AudioPlayer](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/audioplayer) - The interface for managing and controlling audio playback.  
-* [Notifications](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/notifications) - The interface for displaying notifications indicators. 
+* [Notifications](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/notifications) - The interface for displaying notifications indicators.
 * [PlaybackController](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/playbackcontroller) - The interface for navigating a playback queue via GUI or buttons.
 * [Speaker](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speaker) - The interface for volume control, including mute and unmute.
 * [System](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system) - The interface for communicating product status/state to AVS.  
@@ -82,16 +82,16 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 
 **Note**: Features, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
-v1.0.2 released 8/23/2017:
-* **Features**  
-  * Native components for the following capability agents are included in this release: `Alerts`, `AudioPlayer`, `SpeechRecognizer`, `SpeechSynthesizer`, and `System`
-  * Supports iHeartRadio  
-  * Includes a sample application to demonstrate interactions with AVS
-* **Known Issues**
-  * Native components for the following capability agents are **not** included in this release: `PlaybackController`, `Speaker`, `Settings`, `TemplateRuntime`, and `Notifications`  
-  * Amazon Music, TuneIn,  SiriusXM, and audio books are not supported in v1.0.1  
-  * The `AlertsCapabilityAgent` satisfies the [AVS specification](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/timers-and-alarms-conceptual-overview) except for sending retrospective events. For example, sending `AlertStarted` for an Alert which rendered when there was no internet connection.  
-  * `ACL`'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed.
-  * When an `AttachmentReader` does not deliver data for prolonged periods, `MediaPlayer` may not resume playing the delayed audio.
-  * Without the refresh token in the JSON file, the sample app crashes on start up.
-  * Any connection loss during the `Listening` state keeps the app stuck in this state, unless the ongoing interaction is manually stopped by the user.
+v1.0.3 released 9/19/2017:  
+
+* **Enhancements**  
+  * Implemented `setOffSet` in `MediaPlayer`.    
+  * [Updated `LoggerUtils.cpp`](https://github.com/alexa/avs-device-sdk/issues/77).
+
+* **Bug Fixes**  
+  * [Bug fix to address incorrect stop behavior caused when Audio Focus is set to `NONE` and released](https://github.com/alexa/avs-device-sdk/issues/129). 
+  * Bug fix for intermittent failure in `handleMultipleConsecutiveSpeaks`.  
+  * Bug fix for `jsonArrayExist` incorrectly parsing JSON when trying to locate array children.  
+  * Bug fix for ADSL test failures with `sendDirectiveWithoutADialogRequestId`.  
+  * Bug fix for `SpeechSynthesizer` showing the wrong UX state when a burst of `Speak` directives are received.  
+  * Bug fix for recursive loop in `AudioPlayer.Stop`.  

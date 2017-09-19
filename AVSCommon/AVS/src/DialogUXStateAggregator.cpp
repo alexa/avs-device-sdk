@@ -73,7 +73,7 @@ void DialogUXStateAggregator::onStateChanged(AudioInputProcessorObserverInterfac
         [this, state] () {
             switch (state) {
                 case AudioInputProcessorObserverInterface::State::IDLE:
-                    if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState) {
+                    if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState) { 
                         return;
                     }
                     setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
@@ -109,6 +109,9 @@ void DialogUXStateAggregator::onStateChanged(SpeechSynthesizerObserver::SpeechSy
                     if (DialogUXStateObserverInterface::DialogUXState::SPEAKING != m_currentState) {
                         return;
                     }
+
+                    m_currentState = DialogUXStateObserverInterface::DialogUXState::FINISHED;
+
                     if (!m_multiturnSpeakingToListeningTimer.start(
                             SHORT_TIMEOUT, std::bind(
                                     &DialogUXStateAggregator::transitionFromSpeakingFinished, this)).valid()) {
@@ -161,7 +164,7 @@ void DialogUXStateAggregator::transitionFromThinkingTimedOut() {
 void DialogUXStateAggregator::transitionFromSpeakingFinished() {
     m_executor.submit(
         [this] () {
-            if (DialogUXStateObserverInterface::DialogUXState::SPEAKING == m_currentState) {
+            if (DialogUXStateObserverInterface::DialogUXState::FINISHED == m_currentState) {
                 setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
             }
         }

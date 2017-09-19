@@ -44,7 +44,15 @@ public:
         THINKING,
 
         /// Alexa is responding to a request with speech.
-        SPEAKING
+        SPEAKING,
+
+        /**
+         * Alexa has finished processing a SPEAK directive. In this state there
+         * are no notifications triggered. If the SPEAK directive is part of a
+         * speech burst UX moves back to the SPEAKING state. If it was the last
+         * SPEAK directive after timeout the UX state moves to the IDLE state.
+         */
+        FINISHED
     };
 
     /**
@@ -79,6 +87,8 @@ inline std::string DialogUXStateObserverInterface::stateToString(DialogUXState s
             return "THINKING";
         case DialogUXState::SPEAKING:
             return "SPEAKING";
+        case DialogUXState::FINISHED:
+            return "FINISHED";
     }
     return "Unknown State";
 }

@@ -34,6 +34,7 @@
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/PlaylistParser/PlaylistParserInterface.h>
 
+#include "MediaPlayer/OffsetManager.h"
 #include "MediaPlayer/PipelineInterface.h"
 #include "MediaPlayer/SourceInterface.h"
 
@@ -76,6 +77,11 @@ public:
      */
     avsCommon::utils::mediaPlayer::MediaPlayerStatus resume() override;
     int64_t getOffsetInMilliseconds() override;
+    /**
+     * This function is a setter, storing @c offset to be consumed internally by @c play().
+     * The function will always return MediaPlayerStatus::SUCCESS.
+     */
+    avsCommon::utils::mediaPlayer::MediaPlayerStatus setOffset(std::chrono::milliseconds offset) override;
     void setObserver(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) override;
     /// @}
 
@@ -287,6 +293,16 @@ private:
     void handleGetOffsetInMilliseconds(std::promise<int64_t>* promise);
 
     /**
+     * Worker thread handler for setting the playback position.
+     *
+     * @param promise A promise to fulfill with a @c MediaPlayerStatus value once the offset has been set.
+     * @param offset The offset to start playing from.
+     */
+    void handleSetOffset(
+            std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise,
+            std::chrono::milliseconds offset);
+
+    /**
      * Worker thread handler for setting the observer.
      *
      * @param promise A void promise to fulfill once the observer has been set.
@@ -332,6 +348,24 @@ private:
      * Sends the buffer refilled notification to the observer.
      */
     void sendBufferRefilled();
+
+    /**
+     * Used to obtain seeking information about the pipeline.
+     *
+     * @param isSeekable A boolean indicating whether the stream is seekable.
+     * @return A boolean indicating whether the operation was successful.
+     */
+    bool queryIsSeekable(bool* isSeekable);
+
+    /**
+     * Performs a seek to the @c seekPoint.
+     *
+     * @return A boolean indicating whether the seek operation was successful.
+     */
+    bool seek();
+
+    /// An instance of the @c OffsetManager.
+    OffsetManager m_offsetManager;
 
     /// An instance of the @c AudioPipeline.
     AudioPipeline m_pipeline;
