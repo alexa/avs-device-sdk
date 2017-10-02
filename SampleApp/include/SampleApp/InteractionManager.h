@@ -38,13 +38,12 @@ public:
      * Constructor.
      */
     InteractionManager(
-            std::shared_ptr<defaultClient::DefaultClient> client, 
-            std::shared_ptr<sampleApp::PortAudioMicrophoneWrapper> micWrapper,
-            std::shared_ptr<sampleApp::UIManager> userInterface,
-            capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
-            capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
-            capabilityAgents::aip::AudioProvider wakeWordAudioProvider = 
-                    capabilityAgents::aip::AudioProvider::null());
+        std::shared_ptr<defaultClient::DefaultClient> client,
+        std::shared_ptr<sampleApp::PortAudioMicrophoneWrapper> micWrapper,
+        std::shared_ptr<sampleApp::UIManager> userInterface,
+        capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
+        capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
+        capabilityAgents::aip::AudioProvider wakeWordAudioProvider = capabilityAgents::aip::AudioProvider::null());
 
     /**
      * Begins the interaction between the Sample App and the user. This should only be called at startup.
@@ -59,7 +58,7 @@ public:
     /**
      * Toggles the microphone state if the Sample App was built with wakeword. When the microphone is turned off, the
      * app enters a privacy mode in which it stops recording audio data from the microphone, thus disabling Alexa waking
-     * up due to wake word. Note however that hold-to-talk and tap-to-talk modes will still work by recording 
+     * up due to wake word. Note however that hold-to-talk and tap-to-talk modes will still work by recording
      * microphone data temporarily until a user initiated interacion is complete. If this app was built without wakeword
      * then this will do nothing as the microphone is already off.
      */
@@ -79,6 +78,46 @@ public:
      * Acts as a "stop" button. This stops whatever has foreground focus.
      */
     void stopForegroundActivity();
+
+    /**
+     * Should be called whenever a user presses 'PLAY' for playback.
+     */
+    void playbackPlay();
+
+    /**
+     * Should be called whenever a user presses 'PAUSE' for playback.
+     */
+    void playbackPause();
+
+    /**
+     * Should be called whenever a user presses 'NEXT' for playback.
+     */
+    void playbackNext();
+
+    /**
+     * Should be called whenever a user presses 'PREVIOUS' for playback.
+     */
+    void playbackPrevious();
+
+    /**
+     * Should be called whenever a user presses 'SETTINGS' for settings options.
+     */
+    void settings();
+
+    /**
+     * Should be called whenever a user requests 'LOCALE' change.
+     */
+    void locale();
+
+    /**
+     * Should be called whenever a user presses invalid option.
+     */
+    void errorValue();
+
+    /**
+     * Should be called when setting value is selected by the user.
+     */
+    void changeSetting(const std::string& key, const std::string& value);
 
 private:
     /// The default SDK client.
@@ -114,7 +153,7 @@ private:
     avsCommon::utils::threading::Executor m_executor;
 };
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_INTERACTION_MANAGER_H_
+#endif  // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_INTERACTION_MANAGER_H_

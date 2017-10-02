@@ -34,9 +34,9 @@ public:
     MOCK_METHOD1(setAVSEndpoint, void(const std::string& avsEndpoint));
 };
 
-} // namespace test
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_TEST_AVS_COMMON_SDK_INTERFACES_MOCK_AVS_ENDPOINT_ASSIGNER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_TEST_AVS_COMMON_SDK_INTERFACES_MOCK_AVS_ENDPOINT_ASSIGNER_H_

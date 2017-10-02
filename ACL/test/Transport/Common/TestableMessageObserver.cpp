@@ -24,14 +24,15 @@ namespace test {
 
 using namespace avsCommon::sdkInterfaces;
 
-void TestableMessageObserver::receive(const std::string &contextId, const std::string &message) {
+void TestableMessageObserver::receive(const std::string& contextId, const std::string& message) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_receivedDirectives.push_back(message);
     m_cv.notify_all();
 }
 
 bool TestableMessageObserver::waitForDirective(
-        const std::string &directiveMessage, const std::chrono::seconds duration) {
+    const std::string& directiveMessage,
+    const std::chrono::seconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
     return m_cv.wait_for(lock, duration, [this, directiveMessage]() {
         for (auto directive : m_receivedDirectives) {
@@ -43,6 +44,6 @@ bool TestableMessageObserver::waitForDirective(
     });
 }
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK

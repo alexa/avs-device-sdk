@@ -18,6 +18,7 @@
 #ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_INTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_INTERFACE_H_
 
+#include <chrono>
 #include <cstdint>
 #include <future>
 #include <memory>
@@ -44,6 +45,9 @@ enum class MediaPlayerStatus {
     FAILURE
 };
 
+/// Represents offset returned when MediaPlayer is in an invalid state.
+static const std::chrono::milliseconds MEDIA_PLAYER_INVALID_OFFSET{-1};
+
 /**
  * A MediaPlayer allows for sourcing, playback control, navigation, and querying the state of media content.
  */
@@ -66,7 +70,7 @@ public:
      * stopping the player, this will return @c FAILURE.
      */
     virtual MediaPlayerStatus setSource(
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) = 0;
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) = 0;
 
     /**
      * Set the source to play. The source should be set before issuing @c play or @c stop.
@@ -93,8 +97,7 @@ public:
      * currently playing, the playing audio will be stopped and the source set to the new value. If there is an error
      * stopping the player, this will return @c FAILURE.
      */
-    virtual MediaPlayerStatus setSource(
-            std::shared_ptr<std::istream> stream, bool repeat) = 0;
+    virtual MediaPlayerStatus setSource(std::shared_ptr<std::istream> stream, bool repeat) = 0;
 
     /**
      * Set the offset for playback. A seek will be performed to the offset at the next @c play() command.
@@ -107,7 +110,9 @@ public:
      *
      * @return @c SUCCESS if the offset was successfully set, and FAILURE for any error.
      */
-    virtual MediaPlayerStatus setOffset(std::chrono::milliseconds offset) { return MediaPlayerStatus::FAILURE; }
+    virtual MediaPlayerStatus setOffset(std::chrono::milliseconds offset) {
+        return MediaPlayerStatus::FAILURE;
+    }
 
     /**
      * Start playing audio. The source should be set before issuing @c play. If @c play is called without
@@ -137,20 +142,20 @@ public:
      * Pause playing the audio. Once audio has been paused, calling @c resume() will start the audio.
      * The source should be set before issuing @c pause. If @c pause is called without setting source, it will
      * return an error.
-     * Calling @c pause will only have an effect when audio is currently playing. Calling @c pause in all other states will have no effect,
-     * and result in a return of @c FAILURE.
+     * Calling @c pause will only have an effect when audio is currently playing. Calling @c pause in all other states
+     * will have no effect, and result in a return of @c FAILURE.
      *
-     * @return @c SUCCESS if the state transition to pause was successful. If state transition is pending then it returns
+     * @return @c SUCCESS if the state transition to pause was successful. If state transition is pending then it
+     * returns
      * @c PENDING and the state transition status is notified via @c onPlaybackPaused or @c onPlaybackError. If state
      * transition was unsuccessful, returns @c FAILURE.
      */
     virtual MediaPlayerStatus pause() = 0;
 
     /**
-     * Resume playing the paused audio. The source should be set before issuing @c resume. If @c resume is called without setting source, it will
-     * return an error.
-     * Calling @c resume will only have an effect when audio is currently paused. Calling @c resume in other states will have no effect,
-     * and result in a return of @c FAILURE.
+     * Resume playing the paused audio. The source should be set before issuing @c resume. If @c resume is called
+     * without setting source, it will return an error. Calling @c resume will only have an effect when audio is
+     * currently paused. Calling @c resume in other states will have no effect, and result in a return of @c FAILURE.
      *
      * @return @c SUCCESS if the state transition to play was successful. If state transition is pending then it returns
      * @c PENDING and the state transition status is notified via @c onPlaybackResumed or @c onPlaybackError. If state
@@ -162,9 +167,9 @@ public:
      * Returns the offset, in milliseconds, of the media stream.
      *
      * @return If a stream is playing, the offset in milliseconds that the stream has been playing,
-     * if there is no stream playing it returns @c -1.
+     * if there is no stream playing it returns @c MEDIA_PLAYER_INVALID_OFFSET.
      */
-    virtual int64_t getOffsetInMilliseconds() = 0;
+    virtual std::chrono::milliseconds getOffset() = 0;
 
     /**
      * Sets an observer to be notified when playback state changes.
@@ -172,12 +177,12 @@ public:
      * @param playerObserver The observer to send the notifications to.
      */
     virtual void setObserver(
-            std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) = 0;
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) = 0;
 };
 
-} // namespace mediaPlayer
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEDIA_PLAYER_MEDIA_PLAYER_INTERFACE_H_

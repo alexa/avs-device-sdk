@@ -24,6 +24,7 @@
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/Utils/MediaPlayer/ErrorTypes.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
@@ -31,7 +32,6 @@
 
 #include "AudioItem.h"
 #include "ClearBehavior.h"
-#include "ErrorType.h"
 #include "PlayBehavior.h"
 #include "PlayerActivity.h"
 
@@ -46,11 +46,11 @@ namespace audioPlayer {
  *
  * @note For instances of this class to be cleaned up correctly, @c shutdown() must be called.
  */
-class AudioPlayer :
-        public avsCommon::avs::CapabilityAgent,
-        public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface,
-        public avsCommon::utils::RequiresShutdown,
-        public std::enable_shared_from_this<AudioPlayer> {
+class AudioPlayer
+        : public avsCommon::avs::CapabilityAgent
+        , public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface
+        , public avsCommon::utils::RequiresShutdown
+        , public std::enable_shared_from_this<AudioPlayer> {
 public:
     /**
      * Creates a new @c AudioPlayer instance.
@@ -64,12 +64,12 @@ public:
      * @return A @c std::shared_ptr to the new @c AudioPlayer instance.
      */
     static std::shared_ptr<AudioPlayer> create(
-            std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
-            std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-            std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
-            std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
-            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
 
     /// @name StateProviderInterface Functions
     /// @{
@@ -95,7 +95,7 @@ public:
     /// @{
     void onPlaybackStarted() override;
     void onPlaybackFinished() override;
-    void onPlaybackError(std::string error) override;
+    void onPlaybackError(const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error) override;
     void onPlaybackPaused() override;
     void onPlaybackResumed() override;
     void onBufferUnderrun() override;
@@ -115,12 +115,12 @@ private:
      * @return A @c std::shared_ptr to the new @c AudioPlayer instance.
      */
     AudioPlayer(
-            std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
-            std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-            std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
-            std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
-            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
 
     /// @name RequiresShutdown Functions
     /// @{
@@ -209,7 +209,7 @@ private:
      *
      * @param error Text describing the nature of the error.
      */
-    void executeOnPlaybackError(std::string error);
+    void executeOnPlaybackError(const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error);
 
     /// Handle notification that audio playback has paused.
     void executeOnPlaybackPaused();
@@ -268,9 +268,9 @@ private:
      * @param message The error message to include in the ExceptionEncountered message.
      */
     void sendExceptionEncounteredAndReportFailed(
-            std::shared_ptr<DirectiveInfo> info,
-            const std::string& message,
-            avsCommon::avs::ExceptionErrorType type = avsCommon::avs::ExceptionErrorType::INTERNAL_ERROR);
+        std::shared_ptr<DirectiveInfo> info,
+        const std::string& message,
+        avsCommon::avs::ExceptionErrorType type = avsCommon::avs::ExceptionErrorType::INTERNAL_ERROR);
 
     /**
      * Most of the @c AudioPlayer events use the same payload, and only vary in their event name.  This utility
@@ -309,9 +309,9 @@ private:
      * @param message A message describing the failure.
      */
     void sendPlaybackFailedEvent(
-           const std::string& failingToken,
-           ErrorType errorType,
-           const std::string& message);
+        const std::string& failingToken,
+        avsCommon::utils::mediaPlayer::ErrorType errorType,
+        const std::string& message);
 
     /// Send a @c PlaybackStopped event.
     void sendPlaybackStoppedEvent();
@@ -364,7 +364,7 @@ private:
      * accessed asychronously by the @c MediaPlayerObserverInterface callbacks, as well as by @c m_executor functions.
      * These accesses are synchronized by m_blaybackMutex.
      */
-    /// @{    
+    /// @{
 
     /// Flag which is set by @c onPlaybackStarted.
     bool m_playbackStarted;
@@ -392,7 +392,7 @@ private:
      * These member variables are only accessed by functions in the @c m_executor worker thread, and do not require any
      * synchronization.
      */
-    /// @{    
+    /// @{
 
     /// The current state of the @c AudioPlayer.
     PlayerActivity m_currentActivity;
@@ -436,8 +436,8 @@ private:
     avsCommon::utils::threading::Executor m_executor;
 };
 
-} // namespace audioPlayer
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace audioPlayer
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_AUDIO_PLAYER_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_AUDIO_PLAYER_H_

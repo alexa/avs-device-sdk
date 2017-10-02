@@ -51,22 +51,24 @@ static const std::chrono::milliseconds MARGIN = std::chrono::milliseconds(100);
 static const AudioInputStream::Index MARGIN_IN_SAMPLES = MARGIN.count() * SAMPLES_PER_MS;
 
 /// The number of "Alexa" keywords in the four_alexa.wav file.
-static const int NUM_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE = 4;
+static const size_t NUM_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE = 4;
 
 /// The approximate end indices of the four "Alexa" hotwords in the four_alexa.wav file.
 std::vector<AudioInputStream::Index> END_INDICES_OF_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE = {21440, 52800, 72480, 91552};
 
 /// The number of "Alexa" keywords in the alexa_stop_alexa_joke.wav file.
-static const int NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE = 2;
+static const size_t NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE = 2;
 
 /// The approximate end indices of the two "Alexa" hotwords in the alexa_stop_alexa_joke.wav file.
 std::vector<AudioInputStream::Index> END_INDICES_OF_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE = {20960, 51312};
 
 /// The compatible encoding for Kitt.ai.
-static const avsCommon::utils::AudioFormat::Encoding COMPATIBLE_ENCODING = avsCommon::utils::AudioFormat::Encoding::LPCM;
+static const avsCommon::utils::AudioFormat::Encoding COMPATIBLE_ENCODING =
+    avsCommon::utils::AudioFormat::Encoding::LPCM;
 
 /// The compatible endianness for Kitt.ai.
-static const avsCommon::utils::AudioFormat::Endianness COMPATIBLE_ENDIANNESS = avsCommon::utils::AudioFormat::Endianness::LITTLE;
+static const avsCommon::utils::AudioFormat::Endianness COMPATIBLE_ENDIANNESS =
+    avsCommon::utils::AudioFormat::Endianness::LITTLE;
 
 /// The compatible sample rate for Kitt.ai.
 static const unsigned int COMPATIBLE_SAMPLE_RATE = 16000;
@@ -103,10 +105,10 @@ public:
 
     /// Implementation of the KeyWordObserverInterface##onKeyWordDetected() call.
     void onKeyWordDetected(
-            std::shared_ptr<AudioInputStream> stream,
-            std::string keyword,
-            AudioInputStream::Index beginIndex,
-            AudioInputStream::Index endIndex) {
+        std::shared_ptr<AudioInputStream> stream,
+        std::string keyword,
+        AudioInputStream::Index beginIndex,
+        AudioInputStream::Index endIndex) {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_detectionResults.push_back({endIndex, keyword});
         m_detectionOccurred.notify_one();
@@ -120,9 +122,10 @@ public:
      * @return The detection results that actually occurred.
      */
     std::vector<detectionResult> waitForNDetections(
-            unsigned int numDetectionsExpected, std::chrono::milliseconds timeout) {
+        unsigned int numDetectionsExpected,
+        std::chrono::milliseconds timeout) {
         std::unique_lock<std::mutex> lock(m_mutex);
-        m_detectionOccurred.wait_for(lock, timeout, [this, numDetectionsExpected] () {
+        m_detectionOccurred.wait_for(lock, timeout, [this, numDetectionsExpected]() {
             return m_detectionResults.size() == numDetectionsExpected;
         });
         return m_detectionResults;
@@ -145,9 +148,9 @@ public:
     /**
      * Constructor.
      */
-    testStateObserver() : 
-        m_state(KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED), 
-        m_stateChangeOccurred{false} {
+    testStateObserver() :
+            m_state(KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED),
+            m_stateChangeOccurred{false} {
     }
 
     /// Implementation of the KeyWordDetectorStateObserverInterface##onStateChanged() call.
@@ -166,11 +169,10 @@ public:
      * @return Returns the state of the observer.
      */
     KeyWordDetectorStateObserverInterface::KeyWordDetectorState waitForStateChange(
-            std::chrono::milliseconds timeout, bool* stateChanged) {
+        std::chrono::milliseconds timeout,
+        bool* stateChanged) {
         std::unique_lock<std::mutex> lock(m_mutex);
-        bool success = m_stateChanged.wait_for(lock, timeout, [this] () {
-            return m_stateChangeOccurred;
-        });
+        bool success = m_stateChanged.wait_for(lock, timeout, [this]() { return m_stateChangeOccurred; });
 
         if (!success) {
             *stateChanged = false;
@@ -180,6 +182,7 @@ public:
         }
         return m_state;
     }
+
 private:
     /// The state of the observer.
     KeyWordDetectorStateObserverInterface::KeyWordDetectorState m_state;
@@ -195,8 +198,8 @@ private:
 };
 
 class KittAiKeyWordTest : public ::testing::Test {
-    protected:
-    std::vector<int16_t> readAudioFromFile(const std::string &fileName, bool* errorOccurred) {
+protected:
+    std::vector<int16_t> readAudioFromFile(const std::string& fileName, bool* errorOccurred) {
         const int RIFF_HEADER_SIZE = 44;
 
         std::ifstream inputFile(fileName.c_str(), std::ifstream::binary);
@@ -223,9 +226,9 @@ class KittAiKeyWordTest : public ::testing::Test {
 
         std::vector<int16_t> retVal(numSamples, 0);
 
-        inputFile.read((char *)&retVal[0], numSamples * 2);
+        inputFile.read((char*)&retVal[0], numSamples * 2);
 
-        if (inputFile.gcount() != numSamples*2) {
+        if (inputFile.gcount() != numSamples * 2) {
             std::cout << "Error reading audio file" << std::endl;
             if (errorOccurred) {
                 *errorOccurred = true;
@@ -241,9 +244,9 @@ class KittAiKeyWordTest : public ::testing::Test {
     }
 
     bool isResultPresent(
-            std::vector<testKeyWordObserver::detectionResult>& results,
-            AudioInputStream::Index expectedEndIndex,
-            const std::string& expectedKeyword) {
+        std::vector<testKeyWordObserver::detectionResult>& results,
+        AudioInputStream::Index expectedEndIndex,
+        const std::string& expectedKeyword) {
         AudioInputStream::Index highBound = expectedEndIndex + MARGIN_IN_SAMPLES;
         AudioInputStream::Index lowBound = expectedEndIndex - MARGIN_IN_SAMPLES;
         for (auto result : results) {
@@ -275,30 +278,29 @@ class KittAiKeyWordTest : public ::testing::Test {
         compatibleAudioFormat.endianness = COMPATIBLE_ENDIANNESS;
         compatibleAudioFormat.encoding = COMPATIBLE_ENCODING;
 
+        std::ifstream filePresent((inputsDirPath + MODEL_FILE).c_str());
+        ASSERT_TRUE(filePresent.good()) << "Unable to find " + inputsDirPath + MODEL_FILE
+                                        << ". Please place model file within this location.";
 
-        std::ifstream filePresent((inputsDirPath+MODEL_FILE).c_str());
-        ASSERT_TRUE(filePresent.good()) << 
-        "Unable to find " + inputsDirPath+MODEL_FILE << ". Please place model file within this location.";
+        std::ifstream filePresent2((inputsDirPath + RESOURCE_FILE).c_str());
+        ASSERT_TRUE(filePresent2.good()) << "Unable to find " + inputsDirPath + RESOURCE_FILE
+                                         << ". Please place model file within this location.";
 
-        std::ifstream filePresent2((inputsDirPath+RESOURCE_FILE).c_str());
-        ASSERT_TRUE(filePresent2.good()) << 
-        "Unable to find " + inputsDirPath+RESOURCE_FILE << ". Please place model file within this location.";
-
-        config = {inputsDirPath+MODEL_FILE, MODEL_KEYWORD, KITTAI_SENSITIVITY};
+        config = {inputsDirPath + MODEL_FILE, MODEL_KEYWORD, KITTAI_SENSITIVITY};
     }
 };
 
 /// Tests that we don't get back a valid detector if an invalid stream is passed in.
 TEST_F(KittAiKeyWordTest, invalidStream) {
     auto detector = KittAiKeyWordDetector::create(
-            nullptr, 
-            compatibleAudioFormat, 
-            {keyWordObserver1}, 
-            std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>(), 
-            inputsDirPath + RESOURCE_FILE, 
-            {config}, 
-            KITTAI_AUDIO_GAIN, 
-            KITTAI_APPLY_FRONTEND_PROCESSING);
+        nullptr,
+        compatibleAudioFormat,
+        {keyWordObserver1},
+        std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>(),
+        inputsDirPath + RESOURCE_FILE,
+        {config},
+        KITTAI_AUDIO_GAIN,
+        KITTAI_APPLY_FRONTEND_PROCESSING);
     ASSERT_FALSE(detector);
 }
 
@@ -311,13 +313,13 @@ TEST_F(KittAiKeyWordTest, incompatibleEndianness) {
     compatibleAudioFormat.endianness = AudioFormat::Endianness::BIG;
 
     auto detector = KittAiKeyWordDetector::create(
-        sds, 
-        compatibleAudioFormat, 
-        {keyWordObserver1}, 
-        std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>(), 
-        inputsDirPath+RESOURCE_FILE, 
-        {config}, 
-        1.0, 
+        sds,
+        compatibleAudioFormat,
+        {keyWordObserver1},
+        std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>(),
+        inputsDirPath + RESOURCE_FILE,
+        {config},
+        1.0,
         false);
     ASSERT_FALSE(detector);
 }
@@ -328,8 +330,8 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForO
     auto fourAlexasSds = avsCommon::avs::AudioInputStream::create(fourAlexasBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> fourAlexasAudioBuffer = std::move(fourAlexasSds);
 
-    std::unique_ptr<AudioInputStream::Writer> fourAlexasAudioBufferWriter = fourAlexasAudioBuffer->createWriter(
-            avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
+    std::unique_ptr<AudioInputStream::Writer> fourAlexasAudioBufferWriter =
+        fourAlexasAudioBuffer->createWriter(avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
 
     std::string audioFilePath = inputsDirPath + FOUR_ALEXAS_AUDIO_FILE;
     bool error;
@@ -339,17 +341,17 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForO
     fourAlexasAudioBufferWriter->write(audioData.data(), audioData.size());
 
     auto detector = KittAiKeyWordDetector::create(
-        fourAlexasAudioBuffer, 
-        compatibleAudioFormat, 
-        {keyWordObserver1}, 
-        std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>(), 
-        inputsDirPath+RESOURCE_FILE, 
-        {config}, 
-        KITTAI_AUDIO_GAIN, 
+        fourAlexasAudioBuffer,
+        compatibleAudioFormat,
+        {keyWordObserver1},
+        std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>(),
+        inputsDirPath + RESOURCE_FILE,
+        {config},
+        KITTAI_AUDIO_GAIN,
         KITTAI_APPLY_FRONTEND_PROCESSING);
     ASSERT_TRUE(detector);
-    auto detections = keyWordObserver1->waitForNDetections(
-            END_INDICES_OF_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE.size(), DEFAULT_TIMEOUT);
+    auto detections =
+        keyWordObserver1->waitForNDetections(END_INDICES_OF_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE.size(), DEFAULT_TIMEOUT);
     ASSERT_EQ(detections.size(), NUM_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE);
 
     for (auto index : END_INDICES_OF_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE) {
@@ -363,8 +365,8 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForT
     auto fourAlexasSds = avsCommon::avs::AudioInputStream::create(fourAlexasBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> fourAlexasAudioBuffer = std::move(fourAlexasSds);
 
-    std::unique_ptr<AudioInputStream::Writer> fourAlexasAudioBufferWriter = fourAlexasAudioBuffer->createWriter(
-            avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
+    std::unique_ptr<AudioInputStream::Writer> fourAlexasAudioBufferWriter =
+        fourAlexasAudioBuffer->createWriter(avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
 
     std::string audioFilePath = inputsDirPath + FOUR_ALEXAS_AUDIO_FILE;
     bool error;
@@ -374,25 +376,23 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForT
     fourAlexasAudioBufferWriter->write(audioData.data(), audioData.size());
 
     auto detector = KittAiKeyWordDetector::create(
-        fourAlexasAudioBuffer, 
-        compatibleAudioFormat, 
-        {keyWordObserver1, keyWordObserver2}, 
-        std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>(), 
-        inputsDirPath+RESOURCE_FILE, 
-        {config}, 
-        KITTAI_AUDIO_GAIN, 
+        fourAlexasAudioBuffer,
+        compatibleAudioFormat,
+        {keyWordObserver1, keyWordObserver2},
+        std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>(),
+        inputsDirPath + RESOURCE_FILE,
+        {config},
+        KITTAI_AUDIO_GAIN,
         KITTAI_APPLY_FRONTEND_PROCESSING);
     ASSERT_TRUE(detector);
-    auto detections = keyWordObserver1->waitForNDetections(
-        NUM_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE, DEFAULT_TIMEOUT);
+    auto detections = keyWordObserver1->waitForNDetections(NUM_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE, DEFAULT_TIMEOUT);
     ASSERT_EQ(detections.size(), NUM_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE);
 
     for (auto index : END_INDICES_OF_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE) {
         ASSERT_TRUE(isResultPresent(detections, index, MODEL_KEYWORD));
     }
 
-    detections = keyWordObserver2->waitForNDetections(
-        NUM_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE, DEFAULT_TIMEOUT);
+    detections = keyWordObserver2->waitForNDetections(NUM_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE, DEFAULT_TIMEOUT);
     ASSERT_EQ(detections.size(), NUM_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE);
 
     for (auto index : END_INDICES_OF_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE) {
@@ -401,7 +401,7 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForT
 }
 
 /**
- * Tests that we get back the expected number of keywords for the alexa_stop_alexa_joke.wav file for one keyword 
+ * Tests that we get back the expected number of keywords for the alexa_stop_alexa_joke.wav file for one keyword
  * observer.
  */
 TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileForOneObserver) {
@@ -409,9 +409,8 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudio
     auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);
 
-    std::unique_ptr<AudioInputStream::Writer> alexaStopAlexaJokeAudioBufferWriter = 
-            alexaStopAlexaJokeAudioBuffer->createWriter(
-                    avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
+    std::unique_ptr<AudioInputStream::Writer> alexaStopAlexaJokeAudioBufferWriter =
+        alexaStopAlexaJokeAudioBuffer->createWriter(avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
 
     std::string audioFilePath = inputsDirPath + ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE;
     bool error;
@@ -421,17 +420,17 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudio
     alexaStopAlexaJokeAudioBufferWriter->write(audioData.data(), audioData.size());
 
     auto detector = KittAiKeyWordDetector::create(
-            alexaStopAlexaJokeAudioBuffer, 
-            compatibleAudioFormat, 
-            {keyWordObserver1}, 
-            std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>(), 
-            inputsDirPath+RESOURCE_FILE, 
-            {config}, 
-            KITTAI_AUDIO_GAIN, 
-            KITTAI_APPLY_FRONTEND_PROCESSING);
+        alexaStopAlexaJokeAudioBuffer,
+        compatibleAudioFormat,
+        {keyWordObserver1},
+        std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>(),
+        inputsDirPath + RESOURCE_FILE,
+        {config},
+        KITTAI_AUDIO_GAIN,
+        KITTAI_APPLY_FRONTEND_PROCESSING);
     ASSERT_TRUE(detector);
-    auto detections = keyWordObserver1->waitForNDetections(
-            NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE, DEFAULT_TIMEOUT);
+    auto detections =
+        keyWordObserver1->waitForNDetections(NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE, DEFAULT_TIMEOUT);
     ASSERT_EQ(detections.size(), NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE);
 
     for (auto index : END_INDICES_OF_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE) {
@@ -440,7 +439,7 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudio
 }
 
 /**
- * Tests that we get back the expected number of keywords for the alexa_stop_alexa_joke.wav file for two keyword 
+ * Tests that we get back the expected number of keywords for the alexa_stop_alexa_joke.wav file for two keyword
  * observer.
  */
 TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileForTwoObservers) {
@@ -448,9 +447,8 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudio
     auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);
 
-    std::unique_ptr<AudioInputStream::Writer> alexaStopAlexaJokeAudioBufferWriter = 
-        alexaStopAlexaJokeAudioBuffer->createWriter(
-            avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
+    std::unique_ptr<AudioInputStream::Writer> alexaStopAlexaJokeAudioBufferWriter =
+        alexaStopAlexaJokeAudioBuffer->createWriter(avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
 
     std::string audioFilePath = inputsDirPath + ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE;
     bool error;
@@ -460,25 +458,24 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudio
     alexaStopAlexaJokeAudioBufferWriter->write(audioData.data(), audioData.size());
 
     auto detector = KittAiKeyWordDetector::create(
-            alexaStopAlexaJokeAudioBuffer, 
-            compatibleAudioFormat, 
-            {keyWordObserver1, keyWordObserver2}, 
-            std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>(), 
-            inputsDirPath+RESOURCE_FILE, 
-            {config}, 
-            KITTAI_AUDIO_GAIN, 
-            KITTAI_APPLY_FRONTEND_PROCESSING);
+        alexaStopAlexaJokeAudioBuffer,
+        compatibleAudioFormat,
+        {keyWordObserver1, keyWordObserver2},
+        std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>(),
+        inputsDirPath + RESOURCE_FILE,
+        {config},
+        KITTAI_AUDIO_GAIN,
+        KITTAI_APPLY_FRONTEND_PROCESSING);
     ASSERT_TRUE(detector);
-    auto detections = keyWordObserver1->waitForNDetections(
-        NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE, DEFAULT_TIMEOUT);
+    auto detections =
+        keyWordObserver1->waitForNDetections(NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE, DEFAULT_TIMEOUT);
     ASSERT_EQ(detections.size(), NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE);
 
     for (auto index : END_INDICES_OF_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE) {
         ASSERT_TRUE(isResultPresent(detections, index, MODEL_KEYWORD));
     }
 
-    detections = keyWordObserver2->waitForNDetections(
-        NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE, DEFAULT_TIMEOUT);
+    detections = keyWordObserver2->waitForNDetections(NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE, DEFAULT_TIMEOUT);
     ASSERT_EQ(detections.size(), NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE);
 
     for (auto index : END_INDICES_OF_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE) {
@@ -492,9 +489,8 @@ TEST_F(KittAiKeyWordTest, getActiveState) {
     auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);
 
-    std::unique_ptr<AudioInputStream::Writer> alexaStopAlexaJokeAudioBufferWriter = 
-            alexaStopAlexaJokeAudioBuffer->createWriter(
-                    avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
+    std::unique_ptr<AudioInputStream::Writer> alexaStopAlexaJokeAudioBufferWriter =
+        alexaStopAlexaJokeAudioBuffer->createWriter(avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
 
     std::string audioFilePath = inputsDirPath + ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE;
     bool error;
@@ -504,18 +500,18 @@ TEST_F(KittAiKeyWordTest, getActiveState) {
     alexaStopAlexaJokeAudioBufferWriter->write(audioData.data(), audioData.size());
 
     auto detector = KittAiKeyWordDetector::create(
-            alexaStopAlexaJokeAudioBuffer, 
-            compatibleAudioFormat, 
-            std::unordered_set<std::shared_ptr<KeyWordObserverInterface>>(), 
-            {stateObserver}, 
-            inputsDirPath+RESOURCE_FILE, 
-            {config}, 
-            KITTAI_AUDIO_GAIN, 
-            false);
+        alexaStopAlexaJokeAudioBuffer,
+        compatibleAudioFormat,
+        std::unordered_set<std::shared_ptr<KeyWordObserverInterface>>(),
+        {stateObserver},
+        inputsDirPath + RESOURCE_FILE,
+        {config},
+        KITTAI_AUDIO_GAIN,
+        false);
     ASSERT_TRUE(detector);
     bool stateChanged = false;
-    KeyWordDetectorStateObserverInterface::KeyWordDetectorState stateReceived = stateObserver->waitForStateChange(
-            DEFAULT_TIMEOUT, &stateChanged);
+    KeyWordDetectorStateObserverInterface::KeyWordDetectorState stateReceived =
+        stateObserver->waitForStateChange(DEFAULT_TIMEOUT, &stateChanged);
     ASSERT_TRUE(stateChanged);
     ASSERT_EQ(stateReceived, KeyWordDetectorStateObserverInterface::KeyWordDetectorState::ACTIVE);
 }
@@ -529,9 +525,8 @@ TEST_F(KittAiKeyWordTest, getStreamClosedState) {
     auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);
 
-    std::unique_ptr<AudioInputStream::Writer> alexaStopAlexaJokeAudioBufferWriter = 
-            alexaStopAlexaJokeAudioBuffer->createWriter(
-                    avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
+    std::unique_ptr<AudioInputStream::Writer> alexaStopAlexaJokeAudioBufferWriter =
+        alexaStopAlexaJokeAudioBuffer->createWriter(avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
 
     std::string audioFilePath = inputsDirPath + ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE;
     bool error;
@@ -541,40 +536,39 @@ TEST_F(KittAiKeyWordTest, getStreamClosedState) {
     alexaStopAlexaJokeAudioBufferWriter->write(audioData.data(), audioData.size());
 
     auto detector = KittAiKeyWordDetector::create(
-            alexaStopAlexaJokeAudioBuffer, 
-            compatibleAudioFormat, 
-            {keyWordObserver1}, 
-            {stateObserver}, 
-            inputsDirPath+RESOURCE_FILE, 
-            {config}, 
-            KITTAI_AUDIO_GAIN, 
-            false);
+        alexaStopAlexaJokeAudioBuffer,
+        compatibleAudioFormat,
+        {keyWordObserver1},
+        {stateObserver},
+        inputsDirPath + RESOURCE_FILE,
+        {config},
+        KITTAI_AUDIO_GAIN,
+        false);
     ASSERT_TRUE(detector);
 
     // so that when we close the writer, we know for sure that the reader will be closed
-    auto detections = keyWordObserver1->waitForNDetections(
-            NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE, DEFAULT_TIMEOUT);
+    auto detections =
+        keyWordObserver1->waitForNDetections(NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE, DEFAULT_TIMEOUT);
     ASSERT_EQ(detections.size(), NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE);
 
     bool stateChanged = false;
-    KeyWordDetectorStateObserverInterface::KeyWordDetectorState stateReceived = stateObserver->waitForStateChange(
-            DEFAULT_TIMEOUT, &stateChanged);
+    KeyWordDetectorStateObserverInterface::KeyWordDetectorState stateReceived =
+        stateObserver->waitForStateChange(DEFAULT_TIMEOUT, &stateChanged);
     ASSERT_TRUE(stateChanged);
     ASSERT_EQ(stateReceived, KeyWordDetectorStateObserverInterface::KeyWordDetectorState::ACTIVE);
 
     alexaStopAlexaJokeAudioBufferWriter->close();
     stateChanged = false;
-    stateReceived = stateObserver->waitForStateChange(
-            DEFAULT_TIMEOUT, &stateChanged);
+    stateReceived = stateObserver->waitForStateChange(DEFAULT_TIMEOUT, &stateChanged);
     ASSERT_TRUE(stateChanged);
     ASSERT_EQ(stateReceived, KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED);
 }
 
-} // namespace test
-} // namespace kwd
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace kwd
+}  // namespace alexaClientSDK
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     if (argc < 2) {
         std::cerr << "USAGE: KittAiKeyWordDetectorTest <path_to_inputs_folder>" << std::endl;

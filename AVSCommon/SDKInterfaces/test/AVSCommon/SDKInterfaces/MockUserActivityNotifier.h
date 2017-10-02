@@ -32,9 +32,9 @@ public:
     MOCK_METHOD0(onUserActive, void());
 };
 
-} // namespace test
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_TEST_AVS_COMMON_SDK_INTERFACES_MOCK_USER_ACTIVITY_NOTIFIER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_TEST_AVS_COMMON_SDK_INTERFACES_MOCK_USER_ACTIVITY_NOTIFIER_H_

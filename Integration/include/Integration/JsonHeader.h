@@ -3,6 +3,7 @@
 
 // Todo ACSDK-443: Move the JSON to text file
 /// This is a basic synchronize JSON message which may be used to initiate a connection with AVS.
+// clang-format off
 static const std::string SYNCHRONIZE_STATE_JSON =
     "{"
         "\"context\":[{"
@@ -26,5 +27,6 @@ static const std::string SYNCHRONIZE_STATE_JSON =
             "}"
         "}"
     "}";
+// clang-format on
 
-#endif //ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_JSON_HEADER_H_
+#endif  // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_JSON_HEADER_H_

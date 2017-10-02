@@ -57,8 +57,8 @@ public:
     virtual void setFailed(const std::string& description) = 0;
 };
 
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_DIRECTIVE_HANDLER_RESULT_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_DIRECTIVE_HANDLER_RESULT_INTERFACE_H_

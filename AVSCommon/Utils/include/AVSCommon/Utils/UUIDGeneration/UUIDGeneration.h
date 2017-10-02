@@ -27,17 +27,18 @@ namespace uuidGeneration {
 
 /**
  * Generates a variant 1, version 4 universally unique identifier (UUID) consisting of 32 hexadecimal digits.
- * The UUID generated is of the format xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx where M indicates the version, and the two most
- *  significant bits of N indicates the variant. M is 0100 (binary) for version 4 and N is 10xx(binary) for variant 1.
+ * The UUID generated is of the format xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx where M indicates the version, and the two
+ * most significant bits of N indicates the variant. M is 0100 (binary) for version 4 and N is 10xx(binary) for
+ * variant 1.
  * @see https://tools.ietf.org/html/rfc4122.
  *
  * @return A uuid as a string.
  */
 const std::string generateUUID();
 
-} // namespace uuidGeneration
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace uuidGeneration
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVSCCOMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_UUID_GENERATION_UUID_GENERATION_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCCOMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_UUID_GENERATION_UUID_GENERATION_H_

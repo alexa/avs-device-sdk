@@ -53,7 +53,7 @@ public:
      *
      * @return Whether the initialization was successful.
      */
-    static bool initialize(const std::vector<std::istream *> &jsonStreams);
+    static bool initialize(const std::vector<std::istream*>& jsonStreams);
 
     /**
      * Uninitialize the Alexa Client SDK.
@@ -72,8 +72,8 @@ private:
     static std::atomic_int g_isInitialized;
 };
 
-} // namespace initialization
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_INITIALIZATION_ALEXA_CLIENT_SDK_INIT_H_
+}  // namespace initialization
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_INITIALIZATION_ALEXA_CLIENT_SDK_INIT_H_

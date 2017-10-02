@@ -39,9 +39,9 @@ public:
     virtual void onLogLevelChanged(Level level) = 0;
 };
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOG_LEVEL_OBSERVER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOG_LEVEL_OBSERVER_INTERFACE_H_

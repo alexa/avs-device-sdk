@@ -24,8 +24,8 @@ namespace alexaClientSDK {
 namespace mediaPlayer {
 
 /**
-* Interface to request operations on an audio source.
-*/
+ * Interface to request operations on an audio source.
+ */
 class SourceInterface {
 public:
     /**
@@ -54,9 +54,22 @@ public:
      * Perform preprocessing  of the source. Must be called before reading from the source.
      */
     virtual void preprocess() = 0;
+
+    /**
+     * Indicates whether a source is local or remote from the perspective of the MediaPlayer (e.g. playing out of the
+     * SDS is local, playing a URL is remote).
+     *
+     * @return A boolean indicating whether the source is from a remote or local source
+     */
+    virtual bool isPlaybackRemote() const = 0;
+
+    /*
+     * Indicates that this source should no longer try to play any audio.
+     */
+    virtual void terminate() = 0;
 };
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_SOURCE_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_SOURCE_INTERFACE_H_

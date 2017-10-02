@@ -24,6 +24,7 @@
 #include <map>
 #include <memory>
 #include <mutex>
+#include <unordered_set>
 #include <queue>
 #include <string>
 #include <thread>
@@ -32,12 +33,16 @@
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 
 #include "AVSCommon/SDKInterfaces/AuthDelegateInterface.h"
-#include "ACL/Transport/TransportInterface.h"
-#include "ACL/Transport/TransportObserverInterface.h"
+#include "AVSCommon/SDKInterfaces/ContextManagerInterface.h"
+#include "ACL/Transport/CurlMultiHandleWrapper.h"
 #include "ACL/Transport/HTTP2Stream.h"
 #include "ACL/Transport/HTTP2StreamPool.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
-
+#include "ACL/Transport/PostConnectObject.h"
+#include "ACL/Transport/PostConnectObserverInterface.h"
+#include "ACL/Transport/PostConnectSendMessageInterface.h"
+#include "ACL/Transport/TransportInterface.h"
+#include "ACL/Transport/TransportObserverInterface.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -45,28 +50,28 @@ namespace acl {
 /**
  * Class to create and manage an HTTP/2 connection to AVS.
  */
-class HTTP2Transport : public TransportInterface {
+class HTTP2Transport
+        : public TransportInterface
+        , public PostConnectObserverInterface
+        , public PostConnectSendMessageInterface
+        , public std::enable_shared_from_this<HTTP2Transport> {
 public:
     /**
-     * Constructor.
+     * A function that creates a HTTP2Transport object.
      *
      * @param authDelegate The AuthDelegate implementation.
      * @param avsEndpoint The URL for the AVS endpoint of this object.
      * @param messageConsumer The MessageConsumerInterface to pass messages to.
      * @param attachmentManager The attachment manager that manages the attachments.
-     * @param observer The optional observer to this class.
+     * @param observer The observer to this class.
+     * @return A shared pointer to a HTTP2Transport object.
      */
-    HTTP2Transport(
-            std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
-            const std::string& avsEndpoint,
-            MessageConsumerInterface* messageConsumerInterface,
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-            TransportObserverInterface* observer = nullptr);
-
-    /**
-     * Destructor.
-     */
-    ~HTTP2Transport();
+    static std::shared_ptr<HTTP2Transport> create(
+        std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
+        const std::string& avsEndpoint,
+        std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        std::shared_ptr<TransportObserverInterface> observer);
 
     /**
      * @inheritDoc
@@ -79,18 +84,59 @@ public:
 
     bool isConnected() override;
 
+    void onPostConnected() override;
+
+    void sendPostConnectMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
     void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
+
+    /**
+     * Method to add observers for TranportObserverInterface.
+     *
+     * @param observer The observer object to add.
+     */
+    void addObserver(std::shared_ptr<TransportObserverInterface> observer);
+
+    /**
+     * Method to add observers for TranportObserverInterface.
+     *
+     * @param observer The observer object to add.
+     */
+    void removeObserver(std::shared_ptr<TransportObserverInterface> observer);
 
 private:
     /**
-     * Struct to hold a CURL multi handle and clean up the multi handle on delete.
+     * HTTP2Transport Constructor.
+     *
+     * @param authDelegate The AuthDelegate implementation.
+     * @param avsEndpoint The URL for the AVS endpoint of this object.
+     * @param messageConsumer The MessageConsumerInterface to pass messages to.
+     * @param attachmentManager The attachment manager that manages the attachments.
+     * @param observer The observer to this class.
      */
-    struct MultiHandle {
-        CURLM* handle;
-        ~MultiHandle() {
-            curl_multi_cleanup(handle);
-        }
-    };
+    HTTP2Transport(
+        std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
+        const std::string& avsEndpoint,
+        std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        std::shared_ptr<PostConnectObject> postConnectObject,
+        std::shared_ptr<TransportObserverInterface> observer);
+
+    /**
+     * Notify registered observers on a transport disconnect.
+     */
+    void notifyObserversOnServerSideDisconnect();
+
+    /**
+     * Notify registered observers on a server side disconnect.
+     */
+    void notifyObserversOnDisconnect(avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
+
+    /**
+     * Notify registered observers on a transport connect.
+     */
+    void notifyObserversOnConnected();
+
+    void doShutdown() override;
 
     /// Type defining an entry in the Event queue
     typedef std::pair<CURL*, std::shared_ptr<HTTP2Stream>> ActiveTransferEntry;
@@ -125,13 +171,6 @@ private:
      * Check for streams that have not progressed within their timeout and remove them.
      */
     void cleanupStalledStreams();
-
-    /**
-     * Cleanup a stream, removing it from @c m_multi and @c m_activeStreams and releasing it back to @c m_streamPool.
-     *
-     * @param stream The stream to clean up.
-     */
-    void cleanupStream(std::shared_ptr<HTTP2Stream> stream);
 
     /**
      * Checks all the currently executing message requests to see if they have HTTP response codes.
@@ -205,9 +244,12 @@ private:
      * Queue a @c MessageRequest for processing (to the back of the queue).
      *
      * @param request The MessageRequest to queue for sending.
+     * @param ignoreConnectionStatus set to @c false to block messages to AVS, @c true
+     * when invoked through the @c PostConnectSendMessage interface to allow
+     * post-connect messages to AVS in the unconnected state.
      * @return Whether the request was enqueued.
      */
-    bool enqueueRequest(std::shared_ptr<avsCommon::avs::MessageRequest> request);
+    bool enqueueRequest(std::shared_ptr<avsCommon::avs::MessageRequest> request, bool ignoreConnectionStatus = false);
 
     /**
      * De-queue a @c MessageRequest from (the front of) the queue of @c MessageRequest instances to process.
@@ -222,11 +264,65 @@ private:
      */
     void clearQueuedRequests();
 
-    /// Observer of this class, to be notified on changes in connection and received attachments.
-    TransportObserverInterface *m_observer;
+    /**
+     * Release the down channel stream.
+     *
+     * @param removeFromMulti Whether to remove the stream from @c m_multi as part of releasing the stream.
+     * @param[out] reason If the operation fails, returns reason value.
+     * @return Whether the operation was successful.
+     */
+    bool releaseDownchannelStream(
+        bool removeFromMulti = true,
+        avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason* reason = nullptr);
+
+    /**
+     * Release the ping stream.
+     *
+     * @param removeFromMulti Whether to remove the stream from @c m_multi as part of releasing the stream.
+     * @return Whether the operation was successful.
+     */
+    bool releasePingStream(bool removeFromMulti = true);
+
+    /**
+     * Release all the event streams.
+     */
+    void releaseAllEventStreams();
+
+    /**
+     * Release an event stream.
+     *
+     * @param stream The event stream to release.
+     * @param removeFromMulti Whether to remove the stream from @c m_multi as part of releasing the stream.
+     * @return Whether the operation was successful.
+     */
+    bool releaseEventStream(std::shared_ptr<HTTP2Stream> stream, bool removeFromMulti = true);
+
+    /**
+     * Release a stream
+     *
+     * @param stream The stream to release.
+     * @param removeFromMulti Whether to remove the stream from @c m_multi as part of releasing the stream.
+     * @param name Name of the stream to release (for logging).
+     * @return Whether the operation was successful.
+     */
+    bool releaseStream(std::shared_ptr<HTTP2Stream> stream, bool removeFromMulti, const std::string& name);
+
+    /**
+     * Return whether a specified stream is an 'event' stream.
+     *
+     * @param stream The stream to check.
+     * @return Whether a specified stream is an 'event' stream.
+     */
+    bool isEventStream(std::shared_ptr<HTTP2Stream> stream);
+
+    /// Mutex to protect access to the m_observers variable.
+    std::mutex m_observerMutex;
+
+    /// Observers of this class, to be notified on changes in connection and received attachments.
+    std::unordered_set<std::shared_ptr<TransportObserverInterface>> m_observers;
 
     /// Observer of this class, to be passed received messages from AVS.
-    MessageConsumerInterface *m_messageConsumer;
+    std::shared_ptr<MessageConsumerInterface> m_messageConsumer;
 
     /// Auth delegate implementation.
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> m_authDelegate;
@@ -241,7 +337,7 @@ private:
     std::shared_ptr<HTTP2Stream> m_pingStream;
 
     /// Represents a CURL multi handle.
-    std::unique_ptr<MultiHandle> m_multi;
+    std::unique_ptr<CurlMultiHandleWrapper> m_multi;
 
     /// The list of streams that either do not have HTTP response headers, or have outstanding response data.
     std::map<CURL*, std::shared_ptr<HTTP2Stream>> m_activeStreams;
@@ -272,9 +368,12 @@ private:
 
     /// Used to wake the main network thread in connection retry back-off situation.
     std::condition_variable m_wakeRetryTrigger;
+
+    /// PostConnect object.
+    std::shared_ptr<PostConnectObject> m_postConnectObject;
 };
 
-} // alexaClientSDK
-} // acl
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_TRANSPORT_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_TRANSPORT_H_

@@ -35,33 +35,33 @@ public:
      * Constructor.
      */
     ConsolePrinter();
-    
+
     /**
      * Prints a simple message along with an \n.
      *
      * @param stringToPrint The string to print.
      */
-    static void simplePrint(const std::string &stringToPrint);
+    static void simplePrint(const std::string& stringToPrint);
 
     /**
      * Prints a message with a pretty format with a \n after.
      *
      * @param stringToPrint The string to print.
      */
-    static void prettyPrint(const std::string &stringToPrint);
+    static void prettyPrint(const std::string& stringToPrint);
 
     void emit(
-            avsCommon::utils::logger::Level level,
-            std::chrono::system_clock::time_point time,
-            const char *threadMoniker,
-            const char *text) override;
-    
+        avsCommon::utils::logger::Level level,
+        std::chrono::system_clock::time_point time,
+        const char* threadMoniker,
+        const char* text) override;
+
 private:
     /// Used to serialize access to std::cout.
     static std::mutex m_mutex;
 };
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_CONSOLE_PRINTER_H_
+#endif  // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_CONSOLE_PRINTER_H_

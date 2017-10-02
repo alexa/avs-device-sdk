@@ -42,7 +42,7 @@ enum class ASRProfile {
  * @param profile The profile value to write to the @c ostream as a string.
  * @return The @c ostream that was passed in and written to.
  */
-inline std::ostream& operator << (std::ostream& stream, ASRProfile profile) {
+inline std::ostream& operator<<(std::ostream& stream, ASRProfile profile) {
     switch (profile) {
         case ASRProfile::CLOSE_TALK:
             stream << "CLOSE_TALK";
@@ -57,9 +57,8 @@ inline std::ostream& operator << (std::ostream& stream, ASRProfile profile) {
     return stream;
 }
 
+}  // namespace aip
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-} // namespace aip
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
-
-#endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_ASR_PROFILE_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_ASR_PROFILE_H_

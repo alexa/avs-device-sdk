@@ -23,6 +23,7 @@
 #include <utility>
 
 #include "AVSCommon/Utils/Threading/Executor.h"
+#include "AVSCommon/Utils/RequiresShutdown.h"
 #include "AVSCommon/AVS/MessageRequest.h"
 // TODO: ACSDK-421: Revert this to implement send().
 #include "AVSCommon/SDKInterfaces/MessageSenderInterface.h"
@@ -40,11 +41,20 @@ namespace acl {
  * Implementations of this class are required to be thread-safe.
  */
 // TODO: ACSDK-421: Remove the inheritance from MessageSenderInterface.
-class MessageRouterInterface : public avsCommon::sdkInterfaces::MessageSenderInterface {
+class MessageRouterInterface
+        : public avsCommon::sdkInterfaces::MessageSenderInterface
+        , public avsCommon::utils::RequiresShutdown {
 public:
     /// Alias to a connection status and changed reason pair.
-    using ConnectionStatus = std::pair<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status,
-            avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason>;
+    using ConnectionStatus = std::pair<
+        avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status,
+        avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason>;
+
+    /**
+     * Constructor.
+     */
+    MessageRouterInterface(const std::string& name);
+
     /**
      * Begin the process of establishing an AVS connection.
      * If the underlying implementation is already connected, or is in the process of changing its connection state,
@@ -56,6 +66,7 @@ public:
      * Close the AVS connection.
      * If the underlying implementation is not connected, or is in the process of changing its connection state,
      * this function should do nothing.
+     *
      */
     virtual void disable() = 0;
 
@@ -81,7 +92,10 @@ public:
     virtual void setObserver(std::shared_ptr<MessageRouterObserverInterface> observer) = 0;
 };
 
-} // namespace acl
-} // namespace alexaClientSDK
+inline MessageRouterInterface::MessageRouterInterface(const std::string& name) : RequiresShutdown(name) {
+}
 
-#endif // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_ROUTER_H_
+}  // namespace acl
+}  // namespace alexaClientSDK
+
+#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_ROUTER_H_

@@ -56,11 +56,10 @@ public:
      *
      * @param messageConsumer The MessageConsumerInterface which should receive messages from AVS.
      * @param attachmentManager The attachment manager that manages the attachment.
-     * @param attachmentContextId The context id to use when creating attachments.
      */
-    MimeParser(MessageConsumerInterface *messageConsumer,
-               std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-               const std::string & attachmentContextId);
+    MimeParser(
+        std::shared_ptr<MessageConsumerInterface> messageConsumer,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager);
 
     /**
      * Resets class for use in another transfer.
@@ -73,7 +72,14 @@ public:
      * @param length length of data to feed.
      * @return A value expressing the final status of the read operation.
      */
-    DataParsedStatus feed(char *data, size_t length);
+    DataParsedStatus feed(char* data, size_t length);
+
+    /**
+     * Set the context ID to use when creating attachments.
+     *
+     * @param attachmentContextId The context ID to use when creating attachments.
+     */
+    void setAttachmentContextId(const std::string& attachmentContextId);
 
     /**
      * Sets the MIME multipart boundary string that the underlying mime multipart parser
@@ -87,7 +93,7 @@ public:
      * The returned parameter's lifetime is guaranteed to be valid for the lifetime of the MimeParser object.
      * @return The MessageConsumer object being used by the MimeParser.
      */
-    MessageConsumerInterface* getMessageConsumer();
+    std::shared_ptr<MessageConsumerInterface> getMessageConsumer();
 
     /**
      * A utility function to close the currently active attachment writer, if there is one.
@@ -111,7 +117,7 @@ private:
      * @param headers The MIME headers for the upcoming MIME part
      * @param user A pointer to user set data (should always be an instance of this class)
      */
-    static void partBeginCallback(const MultipartHeaders &headers, void *userData);
+    static void partBeginCallback(const MultipartHeaders& headers, void* userData);
 
     /**
      * Callback that gets called when data from a MIME part is available
@@ -119,13 +125,13 @@ private:
      * @param size The size of the data provided
      * @param user A pointer to user set data (should always be an instance of this class)
      */
-    static void partDataCallback(const char *buffer, size_t size, void *userData);
+    static void partDataCallback(const char* buffer, size_t size, void* userData);
 
     /**
      * Callback that gets called when a multipart MIME part ends
      * @param user A pointer to user set data (should always be an instance of this class)
      */
-    static void partEndCallback(void *userData);
+    static void partEndCallback(void* userData);
 
     /**
      * Utility function to encapsulate the logic required to write data to an attachment.
@@ -134,7 +140,7 @@ private:
      * @param size The size of the data to be written to the attachment.
      * @return A value expressing the final status of the write operation.
      */
-    MimeParser::DataParsedStatus writeDataToAttachment(const char *buffer, size_t size);
+    MimeParser::DataParsedStatus writeDataToAttachment(const char* buffer, size_t size);
 
     /**
      * Utility function to determine if the given number of bytes has been processed already by this mime parser
@@ -161,6 +167,13 @@ private:
      */
     void resetByteProgressCounters();
 
+    /**
+     * Remember if the attachment writer's buffer is full.
+     *
+     * @param isFull Whether the attachment writer's buffer is full.
+     **/
+    void setAttachmentWriterBufferFull(bool isFull);
+
     /// Tracks whether we've received our first block of data in the stream.
     bool m_receivedFirstChunk;
     /// Tracks the Content-Type of the current MIME part.
@@ -168,7 +181,7 @@ private:
     /// Instance of a multipart MIME reader.
     MultipartReader m_multipartReader;
     /// The object to report back to when JSON MIME parts are received.
-    MessageConsumerInterface *m_messageConsumer;
+    std::shared_ptr<MessageConsumerInterface> m_messageConsumer;
     /// The attachment manager.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
     /// The contextId, needed for creating attachments.
@@ -201,6 +214,8 @@ private:
      * should not be re-processed.
      */
     size_t m_totalSuccessfullyProcessedBytes;
+    /// Records whether the attachment writer's buffer appears to be full.
+    bool m_isAttachmentWriterBufferFull;
 };
 
 /**
@@ -225,7 +240,7 @@ inline std::ostream& operator<<(std::ostream& stream, MimeParser::DataParsedStat
     return stream;
 }
 
-} // acl
-} // alexaClientSDK
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_MIME_PARSER_H_
+#endif  // ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_MIME_PARSER_H_

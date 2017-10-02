@@ -115,18 +115,18 @@ void DirectiveProcessorTest::SetUp() {
     m_processor = std::make_shared<DirectiveProcessor>(m_router.get());
     m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
 
-    auto avsMessageHeader_0_0 = std::make_shared<AVSMessageHeader>(
-            NAMESPACE_AND_NAME_0_0, MESSAGE_ID_0_0, DIALOG_REQUEST_ID_0);
+    auto avsMessageHeader_0_0 =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AND_NAME_0_0, MESSAGE_ID_0_0, DIALOG_REQUEST_ID_0);
     m_directive_0_0 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader_0_0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
-    auto avsMessageHeader_0_1 = std::make_shared<AVSMessageHeader>(
-            NAMESPACE_AND_NAME_0_1, MESSAGE_ID_0_1, DIALOG_REQUEST_ID_0);
+        UNPARSED_DIRECTIVE, avsMessageHeader_0_0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
+    auto avsMessageHeader_0_1 =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AND_NAME_0_1, MESSAGE_ID_0_1, DIALOG_REQUEST_ID_0);
     m_directive_0_1 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader_0_1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
-    auto avsMessageHeader_1_0 = std::make_shared<AVSMessageHeader>(
-            NAMESPACE_AND_NAME_1_0, MESSAGE_ID_1_0, DIALOG_REQUEST_ID_1);
+        UNPARSED_DIRECTIVE, avsMessageHeader_0_1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
+    auto avsMessageHeader_1_0 =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AND_NAME_1_0, MESSAGE_ID_1_0, DIALOG_REQUEST_ID_1);
     m_directive_1_0 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader_1_0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
+        UNPARSED_DIRECTIVE, avsMessageHeader_1_0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 }
 
 /**
@@ -228,8 +228,7 @@ TEST_F(DirectiveProcessorTest, testOnUnregisteredDirective) {
 
     DirectiveHandlerConfiguration handler2Config;
     handler2Config[{NAMESPACE_AND_NAME_1_0}] = BlockingPolicy::NON_BLOCKING;
-    std::shared_ptr<MockDirectiveHandler> handler2 = MockDirectiveHandler::create(handler2Config);    
-
+    std::shared_ptr<MockDirectiveHandler> handler2 = MockDirectiveHandler::create(handler2Config);
 
     ASSERT_TRUE(m_router->addDirectiveHandler(handler1));
     ASSERT_TRUE(m_router->addDirectiveHandler(handler2));
@@ -267,8 +266,8 @@ TEST_F(DirectiveProcessorTest, testOnUnregisteredDirective) {
 TEST_F(DirectiveProcessorTest, testSetDialogRequestIdCancelsOutstandingDirectives) {
     DirectiveHandlerConfiguration longRunningHandlerConfig;
     longRunningHandlerConfig[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::BLOCKING;
-    auto longRunningHandler = MockDirectiveHandler::create(
-            longRunningHandlerConfig, MockDirectiveHandler::DEFAULT_DONE_TIMEOUT_MS);
+    auto longRunningHandler =
+        MockDirectiveHandler::create(longRunningHandlerConfig, MockDirectiveHandler::DEFAULT_DONE_TIMEOUT_MS);
 
     DirectiveHandlerConfiguration handler1Config;
     handler1Config[{NAMESPACE_AND_NAME_0_1}] = BlockingPolicy::NON_BLOCKING;
@@ -276,7 +275,7 @@ TEST_F(DirectiveProcessorTest, testSetDialogRequestIdCancelsOutstandingDirective
 
     DirectiveHandlerConfiguration handler2Config;
     handler2Config[{NAMESPACE_AND_NAME_1_0}] = BlockingPolicy::NON_BLOCKING;
-    auto handler2 = MockDirectiveHandler::create(handler2Config);    
+    auto handler2 = MockDirectiveHandler::create(handler2Config);
 
     ASSERT_TRUE(m_router->addDirectiveHandler(longRunningHandler));
     ASSERT_TRUE(m_router->addDirectiveHandler(handler1));
@@ -307,6 +306,6 @@ TEST_F(DirectiveProcessorTest, testSetDialogRequestIdCancelsOutstandingDirective
     ASSERT_TRUE(handler2->waitUntilCompleted());
 }
 
-} // namespace test
-} // namespace adsl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace adsl
+}  // namespace alexaClientSDK

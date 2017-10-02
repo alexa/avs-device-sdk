@@ -28,6 +28,8 @@
 
 #include "ACL/AVSConnectionManager.h"
 #include "ACL/Transport/HTTP2MessageRouter.h"
+#include "ACL/Transport/PostConnectObject.h"
+#include <ContextManager/ContextManager.h>
 #include "AVSCommon/AVS/BlockingPolicy.h"
 #include "ADSL/DirectiveSequencer.h"
 #include "ADSL/MessageInterpreter.h"
@@ -84,6 +86,7 @@ static const std::string TAG("AlexaDirectiveSequencerLibraryTest");
  * CLOSE_TALK performs end-of-speech detection on the client, so no directive is sent from AVS to stop recording.
  * NEAR_FIELD performs end-of-speech detection in AVS, so a directive is sent from AVS to stop recording.
  */
+// clang-format off
 #define RECOGNIZE_EVENT_JSON(PROFILE, DIALOG_REQUEST_ID )         \
     "{"                                                           \
         "\"event\":{"                                             \
@@ -141,6 +144,7 @@ static const std::string TAG("AlexaDirectiveSequencerLibraryTest");
             "}"                                                   \
         "}]"                                                      \
     "}"
+// clang-format on
 
 /// This is a 16 bit 16 kHz little endian linear PCM audio file of "Joke" to be recognized.
 static const std::string RECOGNIZE_JOKE_AUDIO_FILE_NAME = "/recognize_joke_test.wav";
@@ -153,9 +157,9 @@ static const std::string RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME = "/recognize_whats_
 /// This is a 16 bit 16 kHz little endian linear PCM audio file of "Set a timer for 5 seconds" to be recognized.
 static const std::string RECOGNIZE_TIMER_AUDIO_FILE_NAME = "/recognize_timer_test.wav";
 
-//String to be used as a basic DialogRequestID.
+// String to be used as a basic DialogRequestID.
 #define FIRST_DIALOG_REQUEST_ID "DialogRequestID123"
-//String to be used as a DialogRequestID when the first has already been used.
+// String to be used as a DialogRequestID when the first has already been used.
 #define SECOND_DIALOG_REQUEST_ID "DialogRequestID456"
 
 /// This string specifies a Recognize event using the CLOSE_TALK profile and uses the first DialogRequestID.
@@ -238,11 +242,12 @@ protected:
         std::ifstream infile(configPath);
         ASSERT_TRUE(infile.good());
         ASSERT_TRUE(AlexaClientSDKInit::initialize({&infile}));
+
         m_authObserver = std::make_shared<AuthObserver>();
         m_authDelegate = AuthDelegate::create();
         m_authDelegate->addAuthObserver(m_authObserver);
         m_attachmentManager = std::make_shared<avsCommon::avs::attachment::AttachmentManager>(
-                 AttachmentManager::AttachmentType::IN_PROCESS);
+            AttachmentManager::AttachmentType::IN_PROCESS);
         m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
         m_clientMessageHandler = std::make_shared<ClientMessageHandler>(m_attachmentManager);
         bool isEnabled = false;
@@ -250,24 +255,24 @@ protected:
         m_exceptionEncounteredSender = std::make_shared<TestExceptionEncounteredSender>();
         m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);
         m_messageInterpreter = std::make_shared<MessageInterpreter>(
-            m_exceptionEncounteredSender,
-            m_directiveSequencer,
-            m_attachmentManager);
+            m_exceptionEncounteredSender, m_directiveSequencer, m_attachmentManager);
+
+        m_contextManager = contextManager::ContextManager::create();
+        ASSERT_NE(m_contextManager, nullptr);
+        PostConnectObject::init(m_contextManager);
 
         // note: No DirectiveHandlers have been registered with the DirectiveSequencer yet. Registration of
         // handlers is deferred to individual test implementations.
 
         m_avsConnectionManager = AVSConnectionManager::create(
-                m_messageRouter,
-                isEnabled,
-                { m_connectionStatusObserver },
-                { m_messageInterpreter });
+            m_messageRouter, isEnabled, {m_connectionStatusObserver}, {m_messageInterpreter});
         connect();
     }
 
     void TearDown() override {
         disconnect();
         m_directiveSequencer->shutdown();
+        m_avsConnectionManager->shutdown();
         AlexaClientSDKInit::uninitialize();
     }
 
@@ -275,16 +280,10 @@ protected:
      * Connect to AVS.
      */
     void connect() {
-        ASSERT_TRUE(m_authObserver->waitFor(AuthObserver::State::REFRESHED))
-                << "Retrieving the auth token timed out.";
+        ASSERT_TRUE(m_authObserver->waitFor(AuthObserver::State::REFRESHED)) << "Retrieving the auth token timed out.";
         m_avsConnectionManager->enable();
         ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::CONNECTED))
-                << "Connecting timed out.";
-        // TODO: ACSDK-421: Remove the callback when m_avsConnection manager is no longer an observer to
-        // StateSynchronizer.
-        m_avsConnectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
-        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::POST_CONNECTED))
-                << "Post connecting timed out.";        
+            << "Connecting timed out.";
     }
 
     /**
@@ -293,7 +292,7 @@ protected:
     void disconnect() {
         m_avsConnectionManager->disable();
         ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::DISCONNECTED))
-                << "Connecting timed out.";
+            << "Connecting timed out.";
     }
 
     /**
@@ -303,10 +302,11 @@ protected:
      * @param expectStatus The status to expect from the call to send the message.
      * @param timeout How long to wait for a result from delivering the message.
      */
-    void sendEvent(const std::string & jsonContent,
-                   std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
-                   MessageRequest::Status expectedStatus,
-                   std::chrono::seconds timeout) {
+    void sendEvent(
+        const std::string& jsonContent,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status expectedStatus,
+        std::chrono::seconds timeout) {
         auto messageRequest = std::make_shared<ObservableMessageRequest>(jsonContent, attachmentReader);
         m_avsConnectionManager->sendMessage(messageRequest);
         ASSERT_TRUE(messageRequest->waitFor(expectedStatus, timeout));
@@ -320,9 +320,9 @@ protected:
      * @param timeout How long to wait for a result from delivering the message.
      */
     void setupMessageAndSend(
-            const std::string& json,
-            avsCommon::avs::MessageRequest::Status expectedStatus,
-            std::chrono::seconds timeout) {
+        const std::string& json,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status expectedStatus,
+        std::chrono::seconds timeout) {
         sendEvent(json, nullptr, expectedStatus, timeout);
     }
 
@@ -335,11 +335,10 @@ protected:
      * @param timeout How long to wait for a result from delivering the message.
      */
     void setupMessageWithAttachmentAndSend(
-            const std::string& json,
-            std::string& file,
-            avsCommon::avs::MessageRequest::Status expectedStatus,
-            std::chrono::seconds timeout) {
-
+        const std::string& json,
+        std::string& file,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status expectedStatus,
+        std::chrono::seconds timeout) {
         auto is = std::make_shared<std::ifstream>(file, std::ios::binary);
         ASSERT_TRUE(is->is_open());
 
@@ -360,15 +359,16 @@ protected:
             attachmentWriter->write(localBuffer.data(), numBytesRead, &writeStatus);
 
             // write status should be either OK or CLOSED
-            bool writeStatusOk = (AttachmentWriter::WriteStatus::OK == writeStatus ||
-                    AttachmentWriter::WriteStatus::CLOSED == writeStatus);
+            bool writeStatusOk =
+                (AttachmentWriter::WriteStatus::OK == writeStatus ||
+                 AttachmentWriter::WriteStatus::CLOSED == writeStatus);
             ASSERT_TRUE(writeStatusOk);
         }
 
         attachmentWriter->close();
 
         std::shared_ptr<InProcessAttachmentReader> attachmentReader =
-                InProcessAttachmentReader::create(AttachmentReader::Policy::NON_BLOCKING, sds);
+            InProcessAttachmentReader::create(AttachmentReader::Policy::NON_BLOCKING, sds);
         ASSERT_NE(attachmentReader, nullptr);
 
         sendEvent(json, attachmentReader, expectedStatus, std::chrono::seconds(timeout));
@@ -388,10 +388,9 @@ protected:
             if (params.directive->getName() == name) {
                 nameFound = true;
             }
-        } while (params.type != TestExceptionEncounteredSender::ExceptionParams::Type::TIMEOUT
-                && !nameFound);
+        } while (params.type != TestExceptionEncounteredSender::ExceptionParams::Type::TIMEOUT && !nameFound);
         ASSERT_TRUE(nameFound);
-        ASSERT_NE (params.type, TestExceptionEncounteredSender::ExceptionParams::Type::TIMEOUT);
+        ASSERT_NE(params.type, TestExceptionEncounteredSender::ExceptionParams::Type::TIMEOUT);
     }
 
     /**
@@ -402,17 +401,24 @@ protected:
      * @param dialogRequestID DialogRequestID to use to send the event.
      * @param token Token to be added to the event payload.
      */
-    void sendEventWithToken(const std::string& eventName, const std::string& eventNameSpace, 
-            const std::string& dialogRequestID, std::string token) {
+    void sendEventWithToken(
+        const std::string& eventName,
+        const std::string& eventNameSpace,
+        const std::string& dialogRequestID,
+        std::string token) {
         rapidjson::Document payload(rapidjson::kObjectType);
         payload.AddMember(TOKEN_KEY, token, payload.GetAllocator());
 
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-        ASSERT_TRUE (payload.Accept(writer));
+        ASSERT_TRUE(payload.Accept(writer));
 
         auto event = buildJsonEventString(eventNameSpace, eventName, dialogRequestID, buffer.GetString());
-        sendEvent(event.second, nullptr,avsCommon::avs::MessageRequest::Status::SUCCESS, std::chrono::seconds(SEND_EVENT_TIMEOUT_DURATION));
+        sendEvent(
+            event.second,
+            nullptr,
+            avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
+            std::chrono::seconds(SEND_EVENT_TIMEOUT_DURATION));
     }
 
     /// Object to monitor the status of the authorization to communicate with @c AVS.
@@ -420,6 +426,9 @@ protected:
 
     /// Object to acquire authorization to communicate with @c AVS.
     std::shared_ptr<AuthDelegate> m_authDelegate;
+
+    /// Object to acquire SDK context.
+    std::shared_ptr<contextManager::ContextManager> m_contextManager;
 
     /// The Attachment Manager.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
@@ -452,11 +461,12 @@ protected:
  * @param returnToken to hold the reulting token.
  * @return Indicates whether extracting the token was successful.
  */
-bool getToken(TestDirectiveHandler::DirectiveParams params, std::string &returnToken) {
+bool getToken(TestDirectiveHandler::DirectiveParams params, std::string& returnToken) {
     std::string directiveString;
     std::string directivePayload;
     std::string directiveToken;
-    jsonUtils::lookupStringValue(params.directive->getUnparsedDirective(), JSON_MESSAGE_DIRECTIVE_KEY, &directiveString);
+    jsonUtils::lookupStringValue(
+        params.directive->getUnparsedDirective(), JSON_MESSAGE_DIRECTIVE_KEY, &directiveString);
     jsonUtils::lookupStringValue(directiveString, JSON_MESSAGE_PAYLOAD_KEY, &directivePayload);
     return jsonUtils::lookupStringValue(directivePayload, JSON_MESSAGE_TOKEN_KEY, &returnToken);
 }
@@ -482,13 +492,12 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendEventWithDirective) {
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     // Wait for the first directive to route through to our handler.
     auto params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_FALSE(params.isTimeout());
-
 }
 
 /**
@@ -513,7 +522,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveGroupWithoutBlocking) {
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     // Look for SetMute and Speak without completing the handling of any directives.
@@ -558,7 +567,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithDifferentDialogReque
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     // Drain the directive results until we get a timeout. There should be no cancels or exceptions.
@@ -573,7 +582,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithDifferentDialogReque
     setupMessageWithAttachmentAndSend(
         CT_SECOND_RECOGNIZE_EVENT_JSON,
         file,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     // Directives from the second event do not reach the directive handler because they do no have
@@ -607,7 +616,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, dropQueueAfterBargeIn) {
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     TestDirectiveHandler::DirectiveParams params;
@@ -623,10 +632,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, dropQueueAfterBargeIn) {
     m_directiveSequencer->setDialogRequestId(SECOND_DIALOG_REQUEST_ID);
     std::string differentFile = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-            CT_SECOND_RECOGNIZE_EVENT_JSON,
-            differentFile,
-            avsCommon::avs::MessageRequest::Status::SUCCESS,
-            SEND_EVENT_TIMEOUT_DURATION);
+        CT_SECOND_RECOGNIZE_EVENT_JSON,
+        differentFile,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     // Consume cancellations and the new directives.
     bool cancelCalled = false;
@@ -669,7 +678,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithoutADialogRequestID)
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     std::string token;
@@ -714,7 +723,6 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithoutADialogRequestID)
         ASSERT_NE(params.directive->getName(), NAME_SET_ALERT);
         params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     }
-
 }
 
 /**
@@ -740,7 +748,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectivesForPreHandling) {
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     // Count each preHandle and handle that arrives.
@@ -784,7 +792,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, cancelDirectivesWhileInQueue) {
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     TestDirectiveHandler::DirectiveParams params;
@@ -828,7 +836,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveAtTheFront) {
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     // Expect set-mute which is blocking and no other handles after that (timeout reached because SetMute blocks).
@@ -890,7 +898,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveInTheMiddle) {
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     TestDirectiveHandler::DirectiveParams params;
@@ -945,7 +953,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, noDirectiveHandlerRegisteredForADirec
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     // Make sure no SetMute directives are given to the handler, and that they result in exception encountered.
@@ -967,14 +975,13 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, noDirectiveHandlerRegisteredForADirec
 
     ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandler));
 
-
     // Send audio of "Joke" that will trigger SetMute and speak.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     // Make sure no Speak directives are given to the handler, and that they result in exception encountered.
@@ -1009,7 +1016,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, twoDirectiveHandlersRegisteredForADir
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     // A received the SetMute directive.
@@ -1023,7 +1030,6 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, twoDirectiveHandlersRegisteredForADir
     TestDirectiveHandler::DirectiveParams paramsB = directiveHandlerB->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(paramsB.isTimeout());
 }
-
 
 /**
  * Test @c DirectiveSequencer's ability to handle a multi-turn scenario
@@ -1048,7 +1054,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, multiturnScenario) {
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     TestDirectiveHandler::DirectiveParams params;
@@ -1061,7 +1067,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, multiturnScenario) {
         if (params.isHandle()) {
             params.result->setCompleted();
         }
-    } while ( !params.isHandle() || params.directive->getName() != NAME_EXPECT_SPEECH);
+    } while (!params.isHandle() || params.directive->getName() != NAME_EXPECT_SPEECH);
 
     // Send back a recognize event.
     m_directiveSequencer->setDialogRequestId(SECOND_DIALOG_REQUEST_ID);
@@ -1069,7 +1075,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, multiturnScenario) {
     setupMessageWithAttachmentAndSend(
         CT_SECOND_RECOGNIZE_EVENT_JSON,
         differentFile,
-        avsCommon::avs::MessageRequest::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         SEND_EVENT_TIMEOUT_DURATION);
 
     // Just the wikipedia directive group in response.
@@ -1097,10 +1103,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, getAttachmentWithContentId) {
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
-            CT_FIRST_RECOGNIZE_EVENT_JSON,
-            file,
-            avsCommon::avs::MessageRequest::Status::SUCCESS,
-            SEND_EVENT_TIMEOUT_DURATION);
+        CT_FIRST_RECOGNIZE_EVENT_JSON,
+        file,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
+        SEND_EVENT_TIMEOUT_DURATION);
 
     // Wait for the directive to route through to our handler.
     TestDirectiveHandler::DirectiveParams params;
@@ -1124,15 +1130,15 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, getAttachmentWithContentId) {
     ASSERT_NE(attachmentReader, nullptr);
 }
 
-} // namespace test
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace integration
+}  // namespace alexaClientSDK
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     if (argc < 3) {
         std::cerr << "USAGE: AlexaDirectiveSequencerLibraryTest <path_to_auth_delgate_config> <path_to_inputs_folder>"
-                << std::endl;
+                  << std::endl;
         return 1;
 
     } else {
@@ -1141,5 +1147,3 @@ int main(int argc, char **argv) {
         return RUN_ALL_TESTS();
     }
 }
-
-

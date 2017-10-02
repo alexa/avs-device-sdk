@@ -30,20 +30,24 @@ using namespace ::testing;
 using namespace alexaClientSDK::avsCommon::avs::initialization;
 using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 
-
 /// This class allows us to test MessageObserver interaction
 class MockMessageObserver : public MessageObserverInterface {
 public:
-    MockMessageObserver() { }
-    MOCK_METHOD2(receive, void(const std::string & contextId, const std::string & message));
+    MockMessageObserver() {
+    }
+    MOCK_METHOD2(receive, void(const std::string& contextId, const std::string& message));
 };
 
 /// This class allows us to test ConnectionStatusObserver interaction
 class MockConnectionStatusObserver : public ConnectionStatusObserverInterface {
 public:
-    MockConnectionStatusObserver() { }
-    MOCK_METHOD2(onConnectionStatusChanged, void(ConnectionStatusObserverInterface::Status status,
-                                            ConnectionStatusObserverInterface::ChangedReason reason));
+    MockConnectionStatusObserver() {
+    }
+    MOCK_METHOD2(
+        onConnectionStatusChanged,
+        void(
+            ConnectionStatusObserverInterface::Status status,
+            ConnectionStatusObserverInterface::ChangedReason reason));
 };
 
 /**
@@ -51,10 +55,12 @@ public:
  */
 class MockMessageRouter : public MessageRouterInterface {
 public:
-    MockMessageRouter() { }
+    MockMessageRouter() : MessageRouterInterface{"MockMessageRouter"} {
+    }
 
     MOCK_METHOD0(enable, void());
     MOCK_METHOD0(disable, void());
+    MOCK_METHOD0(doShutdown, void());
     MOCK_METHOD0(getConnectionStatus, MessageRouterInterface::ConnectionStatus());
     // TODO: ACSDK-421: Revert this to use send().
     MOCK_METHOD1(sendMessage, void(std::shared_ptr<avsCommon::avs::MessageRequest> request));
@@ -75,16 +81,15 @@ public:
 };
 
 void AVSConnectionManagerTest::SetUp() {
-    AlexaClientSDKInit::initialize(std::vector<std::istream *>());
+    AlexaClientSDKInit::initialize(std::vector<std::istream*>());
     m_messageRouter = std::make_shared<MockMessageRouter>();
     m_observer = std::make_shared<MockConnectionStatusObserver>();
     m_messageObserver = std::make_shared<MockMessageObserver>();
     m_avsConnectionManager = AVSConnectionManager::create(
-                m_messageRouter,
-                true,
-                std::unordered_set<std::shared_ptr<ConnectionStatusObserverInterface>>(),
-                std::unordered_set<std::shared_ptr<MessageObserverInterface>>());
-    m_avsConnectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
+        m_messageRouter,
+        true,
+        std::unordered_set<std::shared_ptr<ConnectionStatusObserverInterface>>(),
+        std::unordered_set<std::shared_ptr<MessageObserverInterface>>());
 }
 
 void AVSConnectionManagerTest::TearDown() {
@@ -109,22 +114,37 @@ TEST_F(AVSConnectionManagerTest, createWithNullMessageRouterAndObservers) {
     ASSERT_EQ(nullptr, m_avsConnectionManager->create(m_messageRouter, true, {m_observer}, {nullptr}));
     std::shared_ptr<MockConnectionStatusObserver> validConnectionStatusObserver;
     validConnectionStatusObserver = std::make_shared<MockConnectionStatusObserver>();
-    ASSERT_EQ(nullptr, m_avsConnectionManager->create(
-                    m_messageRouter, true, {m_observer, nullptr, validConnectionStatusObserver}, {m_messageObserver}));
+    ASSERT_EQ(
+        nullptr,
+        m_avsConnectionManager->create(
+            m_messageRouter, true, {m_observer, nullptr, validConnectionStatusObserver}, {m_messageObserver}));
     std::shared_ptr<MockMessageObserver> validMessageObserver;
     validMessageObserver = std::make_shared<MockMessageObserver>();
-    ASSERT_EQ(nullptr, m_avsConnectionManager->create(
-                m_messageRouter, true, {m_observer}, {m_messageObserver, nullptr, validMessageObserver}));
+    ASSERT_EQ(
+        nullptr,
+        m_avsConnectionManager->create(
+            m_messageRouter, true, {m_observer}, {m_messageObserver, nullptr, validMessageObserver}));
     ASSERT_EQ(nullptr, m_avsConnectionManager->create(m_messageRouter, true, {nullptr}, {nullptr}));
     // create should pass with empty set of ConnectionStatusObservers
-    ASSERT_NE(nullptr, m_avsConnectionManager->create(m_messageRouter, true,
-                std::unordered_set<std::shared_ptr<ConnectionStatusObserverInterface>>(), {validMessageObserver}));
+    ASSERT_NE(
+        nullptr,
+        m_avsConnectionManager->create(
+            m_messageRouter,
+            true,
+            std::unordered_set<std::shared_ptr<ConnectionStatusObserverInterface>>(),
+            {validMessageObserver}));
     // create should pass with empty set of MessageObservers
-    ASSERT_NE(nullptr, m_avsConnectionManager->create(m_messageRouter, true,
-                {validConnectionStatusObserver}, std::unordered_set<std::shared_ptr<MessageObserverInterface>>()));
+    ASSERT_NE(
+        nullptr,
+        m_avsConnectionManager->create(
+            m_messageRouter,
+            true,
+            {validConnectionStatusObserver},
+            std::unordered_set<std::shared_ptr<MessageObserverInterface>>()));
     // create should pass with valid messageRouter, ConnectionStatusObservers and MessageObservers
-    ASSERT_NE(nullptr, m_avsConnectionManager->create(
-                    m_messageRouter, true, {validConnectionStatusObserver}, {validMessageObserver}));
+    ASSERT_NE(
+        nullptr,
+        m_avsConnectionManager->create(m_messageRouter, true, {validConnectionStatusObserver}, {validMessageObserver}));
 }
 
 /**
@@ -139,7 +159,6 @@ TEST_F(AVSConnectionManagerTest, addConnectionStatusObserverNull) {
  * Test with addConnectionStatusObserver with MockConnectionStatusObserver.
  */
 TEST_F(AVSConnectionManagerTest, addConnectionStatusObserverValid) {
-    EXPECT_CALL(*m_messageRouter, getConnectionStatus()).Times(1);
     EXPECT_CALL(*m_observer, onConnectionStatusChanged(_, _)).Times(1);
     m_avsConnectionManager->addConnectionStatusObserver(m_observer);
 }
@@ -198,11 +217,11 @@ TEST_F(AVSConnectionManagerTest, setAVSEndpointTest) {
     EXPECT_CALL(*m_messageRouter, setAVSEndpoint(_)).Times(1);
     m_avsConnectionManager->setAVSEndpoint("AVSEndpoint");
 }
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

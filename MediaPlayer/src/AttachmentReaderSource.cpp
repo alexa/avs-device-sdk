@@ -43,8 +43,8 @@ static const std::string TAG("AttachmentReaderSource");
 static const unsigned int CHUNK_SIZE(4096);
 
 std::unique_ptr<AttachmentReaderSource> AttachmentReaderSource::create(
-        PipelineInterface* pipeline,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
+    PipelineInterface* pipeline,
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
     std::unique_ptr<AttachmentReaderSource> result(new AttachmentReaderSource(pipeline, attachmentReader));
     if (result->init()) {
         return result;
@@ -57,12 +57,14 @@ AttachmentReaderSource::~AttachmentReaderSource() {
 }
 
 AttachmentReaderSource::AttachmentReaderSource(
-        PipelineInterface* pipeline,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader)
-        :
+    PipelineInterface* pipeline,
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader) :
         BaseStreamSource{pipeline},
-        m_reader{reader} {
-};
+        m_reader{reader} {};
+
+bool AttachmentReaderSource::isPlaybackRemote() const {
+    return false;
+}
 
 bool AttachmentReaderSource::isOpen() {
     return m_reader != nullptr;
@@ -76,7 +78,6 @@ void AttachmentReaderSource::close() {
 }
 
 gboolean AttachmentReaderSource::handleReadData() {
-
     if (!m_reader) {
         ACSDK_ERROR(LX("handleReadDataFailed").d("reason", "attachmentReaderIsNullPtr"));
         return false;
@@ -114,7 +115,7 @@ gboolean AttachmentReaderSource::handleReadData() {
             if (0 == size) {
                 break;
             }
-            // Fall through if some data was read.
+        // Fall through if some data was read.
         case AttachmentReader::ReadStatus::OK:
         case AttachmentReader::ReadStatus::OK_WOULDBLOCK:
             if (size > 0) {
@@ -122,12 +123,13 @@ gboolean AttachmentReaderSource::handleReadData() {
                 auto flowRet = gst_app_src_push_buffer(getAppSrc(), buffer);
                 if (flowRet != GST_FLOW_OK) {
                     ACSDK_ERROR(LX("handleReadDataFailed")
-                            .d("reason", "gstAppSrcPushBufferFailed").d("error", gst_flow_get_name(flowRet)));
+                                    .d("reason", "gstAppSrcPushBufferFailed")
+                                    .d("error", gst_flow_get_name(flowRet)));
                     break;
                 }
                 return true;
             }
-            // Fall through to retry reading later.
+        // Fall through to retry reading later.
         case AttachmentReader::ReadStatus::OK_TIMEDOUT: {
             gst_buffer_unref(buffer);
             updateOnReadDataHandler();
@@ -146,5 +148,5 @@ gboolean AttachmentReaderSource::handleReadData() {
     return false;
 }
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK

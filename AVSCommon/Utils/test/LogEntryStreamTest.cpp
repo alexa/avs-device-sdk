@@ -27,7 +27,6 @@ namespace test {
 
 using namespace ::testing;
 
-
 /**
  * Class for testing the LogEntryStream class
  */
@@ -95,8 +94,8 @@ TEST_F(LogEntryStreamTest, aLotOfStrings) {
     ASSERT_EQ(strlen(m_stream.c_str()), expected.str().length());
 }
 
-} // namespace test
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

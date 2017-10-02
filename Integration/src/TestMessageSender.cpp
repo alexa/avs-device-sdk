@@ -29,15 +29,13 @@ namespace integration {
 namespace test {
 
 TestMessageSender::TestMessageSender(
-        std::shared_ptr<acl::MessageRouterInterface> messageRouter,
-        bool isEnabled,
-        std::shared_ptr<ConnectionStatusObserverInterface> connectionStatusObserver,
-        std::shared_ptr<MessageObserverInterface> messageObserver) : RequiresShutdown{"TestMessageSender"} {
-    m_connectionManager = acl::AVSConnectionManager::create(messageRouter, isEnabled, { connectionStatusObserver },
-            { messageObserver });
-    // TODO: ACSDK-421: Remove the callback when m_avsConnection manager is no longer an observer to
-    // StateSynchronizer.
-    m_connectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
+    std::shared_ptr<acl::MessageRouterInterface> messageRouter,
+    bool isEnabled,
+    std::shared_ptr<ConnectionStatusObserverInterface> connectionStatusObserver,
+    std::shared_ptr<MessageObserverInterface> messageObserver) :
+        RequiresShutdown{"TestMessageSender"} {
+    m_connectionManager =
+        acl::AVSConnectionManager::create(messageRouter, isEnabled, {connectionStatusObserver}, {messageObserver});
 }
 
 void TestMessageSender::sendMessage(std::shared_ptr<MessageRequest> request) {
@@ -82,47 +80,34 @@ void TestMessageSender::setAVSEndpoint(const std::string& avsEndpoint) {
     m_connectionManager->setAVSEndpoint(avsEndpoint);
 }
 
-    void TestMessageSender::addConnectionStatusObserver(
-            std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer){
-        m_connectionManager->addConnectionStatusObserver(observer);
-    }
+void TestMessageSender::addConnectionStatusObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer) {
+    m_connectionManager->addConnectionStatusObserver(observer);
+}
 
-    /**
-     * Removes an observer from being notified of connection status changes.
-     *
-     * @param observer The observer object to remove.
-     */
-    void TestMessageSender::removeConnectionStatusObserver(
-            std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer) {
-        m_connectionManager->removeConnectionStatusObserver(observer);
-    }
+void TestMessageSender::removeConnectionStatusObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer) {
+    m_connectionManager->removeConnectionStatusObserver(observer);
+}
 
-    /**
-     * Adds an observer to be notified of message receptions.
-     *
-     * @param observer The observer object to add.
-     */
-    void TestMessageSender::addMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) {
-        m_connectionManager->addMessageObserver(observer);
-    }
+void TestMessageSender::addMessageObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) {
+    m_connectionManager->addMessageObserver(observer);
+}
 
-    /**
-     * Removes an observer from being notified of message receptions.
-     *
-     * @param observer The observer object to remove.
-     */
-    void TestMessageSender::removeMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) {
-        m_connectionManager->removeMessageObserver(observer);
-    }
+void TestMessageSender::doShutdown() {
+    m_connectionManager->shutdown();
+}
 
-    void TestMessageSender::synchronize() {
-        m_connectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
-    }
+void TestMessageSender::removeMessageObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) {
+    m_connectionManager->removeMessageObserver(observer);
+}
 
-    void TestMessageSender::doShutdown() {
-        m_connectionManager->shutdown();
-    }
+std::shared_ptr<acl::AVSConnectionManager> TestMessageSender::getConnectionManager() const {
+    return m_connectionManager;
+}
 
-} // namespace test
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace integration
+}  // namespace alexaClientSDK

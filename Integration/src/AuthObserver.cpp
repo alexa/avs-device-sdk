@@ -23,14 +23,14 @@ namespace integration {
 
 using avsCommon::sdkInterfaces::AuthObserverInterface;
 
-AuthObserver::AuthObserver():
-    m_authState(AuthObserverInterface::State::UNINITIALIZED),
-    m_authError(AuthObserverInterface::Error::NO_ERROR) {
+AuthObserver::AuthObserver() :
+        m_authState(AuthObserverInterface::State::UNINITIALIZED),
+        m_authError(AuthObserverInterface::Error::NO_ERROR) {
 }
 
 void AuthObserver::onAuthStateChange(
-        const AuthObserverInterface::State authState,
-        const AuthObserverInterface::Error authError) {
+    const AuthObserverInterface::State authState,
+    const AuthObserverInterface::Error authError) {
     m_authState = authState;
     m_authError = authError;
     m_wakeTrigger.notify_all();
@@ -42,10 +42,8 @@ AuthObserverInterface::State AuthObserver::getAuthState() const {
 
 bool AuthObserver::waitFor(const AuthObserverInterface::State authState, const std::chrono::seconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
-    return m_wakeTrigger.wait_for(lock, duration, [this, authState]() {
-        return m_authState == authState;
-    });
+    return m_wakeTrigger.wait_for(lock, duration, [this, authState]() { return m_authState == authState; });
 }
 
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace integration
+}  // namespace alexaClientSDK

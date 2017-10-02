@@ -22,12 +22,14 @@
 #include <memory>
 #include <mutex>
 #include <thread>
+#include <unordered_map>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
+#include <PlaylistParser/PlaylistParser.h>
 
 #include "MediaPlayer/MediaPlayer.h"
 
@@ -56,8 +58,9 @@ std::string inputsDirPath;
 /// MP3 test file path.
 static const std::string MP3_FILE_PATH("/fox_dog.mp3");
 
-/// Playlist file path.
-static const std::string M3U_FILE_PATH("/fox_dog_playlist.m3u");
+static const std::string TEST_M3U_PLAYLIST_URL("fox_dog_playlist.m3u");
+
+static std::string TEST_M3U_PLAYLIST_CONTENT;
 
 /// file URI Prefix
 static const std::string FILE_PREFIX("file://");
@@ -76,6 +79,79 @@ static const std::chrono::milliseconds TOLERANCE(200);
 /// Padding to add to offsets when necessary.
 static const std::chrono::milliseconds PADDING(10);
 
+static std::unordered_map<std::string, std::string> urlsToContentTypes;
+
+static std::unordered_map<std::string, std::string> urlsToContent;
+
+/// A mock content fetcher
+class MockContentFetcher : public avsCommon::sdkInterfaces::HTTPContentFetcherInterface {
+public:
+    MockContentFetcher(const std::string& url) : m_url{url} {
+    }
+
+    std::unique_ptr<avsCommon::utils::HTTPContent> getContent(FetchOptions fetchOption) override {
+        if (fetchOption == FetchOptions::CONTENT_TYPE) {
+            auto urlAndContentType = urlsToContentTypes.find(m_url);
+            if (urlAndContentType == urlsToContentTypes.end()) {
+                return nullptr;
+            } else {
+                std::promise<long> statusPromise;
+                auto statusFuture = statusPromise.get_future();
+                statusPromise.set_value(200);
+                std::promise<std::string> contentTypePromise;
+                auto contentTypeFuture = contentTypePromise.get_future();
+                contentTypePromise.set_value(urlAndContentType->second);
+                return avsCommon::utils::memory::make_unique<avsCommon::utils::HTTPContent>(
+                    avsCommon::utils::HTTPContent{std::move(statusFuture), std::move(contentTypeFuture), nullptr});
+            }
+        } else {
+            auto urlAndContent = urlsToContent.find(m_url);
+            if (urlAndContent == urlsToContent.end()) {
+                return nullptr;
+            }
+            std::promise<long> statusPromise;
+            auto statusFuture = statusPromise.get_future();
+            statusPromise.set_value(200);
+            std::promise<std::string> contentTypePromise;
+            auto contentTypeFuture = contentTypePromise.get_future();
+            contentTypePromise.set_value("");
+            auto attachment = writeStringIntoAttachment(urlAndContent->second);
+            if (!attachment) {
+                return nullptr;
+            }
+            return avsCommon::utils::memory::make_unique<avsCommon::utils::HTTPContent>(
+                avsCommon::utils::HTTPContent{std::move(statusFuture), std::move(contentTypeFuture), attachment});
+        }
+    }
+
+private:
+    std::shared_ptr<avsCommon::avs::attachment::InProcessAttachment> writeStringIntoAttachment(
+        const std::string& string) {
+        static int id = 0;
+        std::shared_ptr<avsCommon::avs::attachment::InProcessAttachment> stream =
+            std::make_shared<avsCommon::avs::attachment::InProcessAttachment>(std::to_string(id++));
+        if (!stream) {
+            return nullptr;
+        }
+        auto writer = stream->createWriter();
+        if (!writer) {
+            return nullptr;
+        }
+        avsCommon::avs::attachment::AttachmentWriter::WriteStatus writeStatus;
+        writer->write(string.data(), string.size(), &writeStatus);
+        return stream;
+    };
+
+    std::string m_url;
+};
+
+/// A mock factory that creates mock content fetchers
+class MockContentFetcherFactory : public avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface {
+    std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> create(const std::string& url) {
+        return avsCommon::utils::memory::make_unique<MockContentFetcher>(url);
+    }
+};
+
 /**
  * Mock AttachmentReader.
  */
@@ -92,8 +168,7 @@ public:
      */
     MockAttachmentReader(int iterations = 1, std::vector<size_t> receiveSizes = {std::numeric_limits<size_t>::max()});
 
-    size_t read(
-            void* buf, std::size_t numBytes, ReadStatus* readStatus, std::chrono::milliseconds timeoutMs) override;
+    size_t read(void* buf, std::size_t numBytes, ReadStatus* readStatus, std::chrono::milliseconds timeoutMs) override;
 
     void close(ClosePoint closePoint) override;
 
@@ -141,8 +216,10 @@ MockAttachmentReader::MockAttachmentReader(int iterations, std::vector<size_t> r
 }
 
 size_t MockAttachmentReader::read(
-        void* buf, std::size_t numBytes, ReadStatus* readStatus, std::chrono::milliseconds timeoutMs) {
-
+    void* buf,
+    std::size_t numBytes,
+    ReadStatus* readStatus,
+    std::chrono::milliseconds timeoutMs) {
     // Convert the current time in to an index in to m_receivedTotals (time since @c m_startTime
     // divided by 100 millisecond intervals).
     auto now = std::chrono::steady_clock::now();
@@ -162,7 +239,7 @@ size_t MockAttachmentReader::read(
     auto status = ReadStatus::ERROR_INTERNAL;
     if (available > 0) {
         auto sizeToRead = std::min(available, numBytes);
-        result = receiveBytes(static_cast<char *>(buf), sizeToRead);
+        result = receiveBytes(static_cast<char*>(buf), sizeToRead);
         if (result > 0) {
             m_totalRead += result;
             status = (result == numBytes) ? ReadStatus::OK : ReadStatus::OK_WOULDBLOCK;
@@ -204,18 +281,18 @@ size_t MockAttachmentReader::receiveBytes(char* buf, std::size_t size) {
     return result;
 }
 
-class MockPlayerObserver: public MediaPlayerObserverInterface {
+class MockPlayerObserver : public MediaPlayerObserverInterface {
 public:
     /**
      * Destructor.
      */
-    ~MockPlayerObserver() {};
+    ~MockPlayerObserver(){};
 
     void onPlaybackStarted() override;
 
     void onPlaybackFinished() override;
 
-    void onPlaybackError(std::string error) override;
+    void onPlaybackError(const ErrorType& type, std::string error) override;
 
     void onPlaybackPaused() override;
 
@@ -313,8 +390,8 @@ void MockPlayerObserver::onPlaybackFinished() {
     m_onPlaybackFinishedCallCount++;
 }
 
-void MockPlayerObserver::onPlaybackError(std::string error) {
-    ACSDK_ERROR(LX("onPlaybackError").d("error", error));
+void MockPlayerObserver::onPlaybackError(const ErrorType& type, std::string error) {
+    ACSDK_ERROR(LX("onPlaybackError").d("type", type).d("error", error));
 };
 
 void MockPlayerObserver::onPlaybackPaused() {
@@ -332,8 +409,7 @@ void MockPlayerObserver::onPlaybackResumed() {
 
 bool MockPlayerObserver::waitForPlaybackStarted(const std::chrono::milliseconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
-    if (!m_wakePlaybackStarted.wait_for(lock, duration, [this]() { return m_playbackStarted; } ))
-    {
+    if (!m_wakePlaybackStarted.wait_for(lock, duration, [this]() { return m_playbackStarted; })) {
         return false;
     }
     return true;
@@ -341,8 +417,7 @@ bool MockPlayerObserver::waitForPlaybackStarted(const std::chrono::milliseconds 
 
 bool MockPlayerObserver::waitForPlaybackFinished(const std::chrono::milliseconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
-    if (!m_wakePlaybackFinished.wait_for(lock, duration, [this]() { return m_playbackFinished; } ))
-    {
+    if (!m_wakePlaybackFinished.wait_for(lock, duration, [this]() { return m_playbackFinished; })) {
         return false;
     }
     return true;
@@ -350,8 +425,7 @@ bool MockPlayerObserver::waitForPlaybackFinished(const std::chrono::milliseconds
 
 bool MockPlayerObserver::waitForPlaybackPaused(const std::chrono::milliseconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
-    if (!m_wakePlaybackPaused.wait_for(lock, duration, [this]() { return m_playbackPaused; } ))
-    {
+    if (!m_wakePlaybackPaused.wait_for(lock, duration, [this]() { return m_playbackPaused; })) {
         return false;
     }
     return true;
@@ -359,8 +433,7 @@ bool MockPlayerObserver::waitForPlaybackPaused(const std::chrono::milliseconds d
 
 bool MockPlayerObserver::waitForPlaybackResumed(const std::chrono::milliseconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
-    if (!m_wakePlaybackResumed.wait_for(lock, duration, [this]() { return m_playbackResumed; } ))
-    {
+    if (!m_wakePlaybackResumed.wait_for(lock, duration, [this]() { return m_playbackResumed; })) {
         return false;
     }
     return true;
@@ -374,7 +447,7 @@ int MockPlayerObserver::getOnPlaybackFinishedCallCount() {
     return m_onPlaybackFinishedCallCount;
 }
 
-class MediaPlayerTest: public ::testing::Test{
+class MediaPlayerTest : public ::testing::Test {
 public:
     void SetUp() override;
 
@@ -383,8 +456,8 @@ public:
      *
      */
     void setAttachmentReaderSource(
-            int iterations = 1,
-            std::vector<size_t> receiveSizes = {std::numeric_limits<size_t>::max()});
+        int iterations = 1,
+        std::vector<size_t> receiveSizes = {std::numeric_limits<size_t>::max()});
 
     /**
      * Sets IStream source to play.
@@ -402,19 +475,22 @@ public:
 
 void MediaPlayerTest::SetUp() {
     m_playerObserver = std::make_shared<MockPlayerObserver>();
-    m_mediaPlayer = MediaPlayer::create();
+    m_mediaPlayer = MediaPlayer::create(std::make_shared<MockContentFetcherFactory>());
     ASSERT_TRUE(m_mediaPlayer);
     m_mediaPlayer->setObserver(m_playerObserver);
 }
 
 void MediaPlayerTest::setAttachmentReaderSource(int iterations, std::vector<size_t> receiveSizes) {
-    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->setSource(
+    ASSERT_NE(
+        MediaPlayerStatus::FAILURE,
+        m_mediaPlayer->setSource(
             std::unique_ptr<AttachmentReader>(new MockAttachmentReader(iterations, receiveSizes))));
 }
 
 void MediaPlayerTest::setIStreamSource(bool repeat) {
-    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->setSource(
-            make_unique<std::ifstream>(inputsDirPath + MP3_FILE_PATH), repeat));
+    ASSERT_NE(
+        MediaPlayerStatus::FAILURE,
+        m_mediaPlayer->setSource(make_unique<std::ifstream>(inputsDirPath + MP3_FILE_PATH), repeat));
 }
 
 /**
@@ -424,7 +500,7 @@ void MediaPlayerTest::setIStreamSource(bool repeat) {
 TEST_F(MediaPlayerTest, testStartPlayWaitForEnd) {
     setAttachmentReaderSource();
 
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 }
@@ -434,11 +510,10 @@ TEST_F(MediaPlayerTest, testStartPlayWaitForEnd) {
  * Check whether the playback started and playback finished notifications are received.
  */
 TEST_F(MediaPlayerTest, testStartPlayForUrl) {
-
     std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);
     m_mediaPlayer->setSource(url_single);
 
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 }
@@ -458,12 +533,11 @@ TEST_F(MediaPlayerTest, testSetSourceEmptyUrl) {
  * Consecutive calls to setSource(const std::string url) without play() cause tests to occasionally fail: ACSDK-508.
  */
 TEST_F(MediaPlayerTest, testConsecutiveSetSource) {
-
     std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);
     m_mediaPlayer->setSource("");
     m_mediaPlayer->setSource(url_single);
 
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 }
@@ -476,12 +550,12 @@ TEST_F(MediaPlayerTest, testConsecutiveSetSource) {
 TEST_F(MediaPlayerTest, testStartPlayWaitForEndStartPlayAgain) {
     setIStreamSource();
 
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 
     setAttachmentReaderSource();
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 }
@@ -494,10 +568,10 @@ TEST_F(MediaPlayerTest, testStartPlayWaitForEndStartPlayAgain) {
 TEST_F(MediaPlayerTest, testStopPlay) {
     setIStreamSource(true);
 
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
-    std::this_thread::sleep_for (std::chrono::seconds(5));
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->stop());
+    std::this_thread::sleep_for(std::chrono::seconds(5));
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->stop());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 }
 
@@ -509,17 +583,17 @@ TEST_F(MediaPlayerTest, testStopPlay) {
 TEST_F(MediaPlayerTest, testStartPlayCallAfterStopPlay) {
     setAttachmentReaderSource();
 
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
-    std::this_thread::sleep_for (std::chrono::seconds(1));
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->stop());
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->stop());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 
     setAttachmentReaderSource();
 
     ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
-    std::this_thread::sleep_for (std::chrono::seconds(1));
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->stop());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 }
@@ -551,7 +625,7 @@ TEST_F(MediaPlayerTest, testPlayAfterPause) {
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
     std::this_thread::sleep_for(std::chrono::milliseconds(200));
 
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->pause());
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->pause());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackPaused());
     std::this_thread::sleep_for(std::chrono::milliseconds(200));
 
@@ -643,55 +717,60 @@ TEST_F(MediaPlayerTest, testResumeAfterPlay) {
 
 /**
  * Read an audio file into a buffer. Set the source of the @c MediaPlayer to the buffer. Playback audio for a few
- * seconds. Playback started notification should be received when the playback starts. Call @c getOffsetInMilliseconds.
+ * seconds. Playback started notification should be received when the playback starts. Call @c getOffset.
  * Check the offset value. Then call @c stop and expect the playback finished notification is received.
- * Call @c getOffsetInMilliseconds again. Check the offset value.
+ * Call @c getOffset again. Check the offset value.
  */
 TEST_F(MediaPlayerTest, testGetOffsetInMilliseconds) {
     setAttachmentReaderSource();
 
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
-    std::this_thread::sleep_for (std::chrono::seconds(1));
-    int64_t offset = m_mediaPlayer->getOffsetInMilliseconds();
-    ASSERT_TRUE((offset > 0) && (offset <= MP3_FILE_LENGTH.count()));
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->stop());
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    std::chrono::milliseconds offset = m_mediaPlayer->getOffset();
+    ASSERT_TRUE((offset > std::chrono::milliseconds::zero()) && (offset <= MP3_FILE_LENGTH));
+
+    ASSERT_NE(MEDIA_PLAYER_INVALID_OFFSET, offset);
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->stop());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
-    ASSERT_EQ(-1, m_mediaPlayer->getOffsetInMilliseconds());
+    ASSERT_EQ(MEDIA_PLAYER_INVALID_OFFSET, m_mediaPlayer->getOffset());
 }
 
 /**
- * Test getOffsetInMilliseconds with a null pipeline. Expect that -1 is returned.
+ * Test getOffset with a null pipeline. Expect that MEDIA_PLAYER_INVALID_OFFSET is returned.
  * This currently results in errors on shutdown. Will be fixed by ACSDK-446.
  */
 TEST_F(MediaPlayerTest, testGetOffsetInMillisecondsNullPipeline) {
-    ASSERT_EQ(-1, m_mediaPlayer->getOffsetInMilliseconds());
+    ASSERT_EQ(MEDIA_PLAYER_INVALID_OFFSET, m_mediaPlayer->getOffset());
 }
 
 /**
  * Check playing two attachments back to back.
  * Read an audio file into a buffer. Set the source of the @c MediaPlayer to the buffer. Playback audio for a few
- * seconds. Playback started notification should be received when the playback starts. Call @c getOffsetInMilliseconds.
+ * seconds. Playback started notification should be received when the playback starts. Call @c getOffset.
  * Check the offset value. Wait for playback to finish and expect the playback finished notification is received.
  * Repeat the above for a new source.
  */
 TEST_F(MediaPlayerTest, testPlayingTwoAttachments) {
     setAttachmentReaderSource();
 
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
-    std::this_thread::sleep_for (std::chrono::seconds(1));
-    ASSERT_NE(-1, m_mediaPlayer->getOffsetInMilliseconds());
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    ASSERT_NE(MEDIA_PLAYER_INVALID_OFFSET, m_mediaPlayer->getOffset());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 
     setAttachmentReaderSource();
 
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
-    std::this_thread::sleep_for (std::chrono::seconds(1));
-    ASSERT_NE(-1, m_mediaPlayer->getOffsetInMilliseconds());
-    std::this_thread::sleep_for (std::chrono::seconds(1));
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->stop());
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    ASSERT_NE(MEDIA_PLAYER_INVALID_OFFSET, m_mediaPlayer->getOffset());
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->stop());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
 }
 
@@ -701,6 +780,7 @@ TEST_F(MediaPlayerTest, testPlayingTwoAttachments) {
  * To a human ear the playback of this test is expected to sound reasonably smooth.
  */
 TEST_F(MediaPlayerTest, testUnsteadyReads) {
+    // clang-format off
     setAttachmentReaderSource(
             3, {
                     // Sporadic receive sizes averaging out to about 6000 bytes per second.
@@ -717,6 +797,8 @@ TEST_F(MediaPlayerTest, testUnsteadyReads) {
                     0, 0, 0, 1000, 0, 0, 0, 1000, 0, 1000,
                     0, 0, 0, 0, 3000, 0, 0, 0, 0, 6000
             });
+    // clang-format on
+
     ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(std::chrono::milliseconds(15000)));
@@ -731,6 +813,7 @@ TEST_F(MediaPlayerTest, testUnsteadyReads) {
  * initially, then be interrupted for a few seconds, and then continue fairly smoothly.
  */
 TEST_F(MediaPlayerTest, testRecoveryFromPausedReads) {
+    // clang-format off
     setAttachmentReaderSource(
             3, {
                     // Receive sizes averaging out to 6000 bytes per second with a 3 second gap.
@@ -748,6 +831,8 @@ TEST_F(MediaPlayerTest, testRecoveryFromPausedReads) {
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 6000,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 6000
             });
+    // clang-format on
+
     ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(std::chrono::milliseconds(20000)));
@@ -755,27 +840,20 @@ TEST_F(MediaPlayerTest, testRecoveryFromPausedReads) {
 
 #endif
 
-#ifdef TOTEM_PLPARSER
-/**
- * Check playback of an URL identifying a playlist. Wait until the end.
- * Ensure that onPlaybackStarted and onPlaybackFinished are only called once each.
- */
-
 TEST_F(MediaPlayerTest, testStartPlayWithUrlPlaylistWaitForEnd) {
-
-    std::string url_playlist(FILE_PREFIX + inputsDirPath + M3U_FILE_PATH);
-    m_mediaPlayer->setSource(url_playlist);
-
-    ASSERT_NE(MediaPlayerStatus::FAILURE,m_mediaPlayer->play());
+    m_mediaPlayer->setSource(TEST_M3U_PLAYLIST_URL);
+    ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted(std::chrono::milliseconds(10000)));
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(std::chrono::milliseconds(10000)));
     ASSERT_EQ(m_playerObserver->getOnPlaybackStartedCallCount(), 1);
     ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
 }
-#endif
 
+// TODO: ACSDK-627 This test fails frequently on Ubuntu Linux platforms.
+#ifdef RESOLVED_ACSDK_627
 /**
- * Test setting the offset to a seekable source. Setting the offset should succeed and playback should start from the offset.
+ * Test setting the offset to a seekable source. Setting the offset should succeed and playback should start from the
+ * offset.
  */
 TEST_F(MediaPlayerTest, testSetOffsetSeekableSource) {
     std::chrono::milliseconds offset(OFFSET);
@@ -798,6 +876,7 @@ TEST_F(MediaPlayerTest, testSetOffsetSeekableSource) {
     ASSERT_EQ(m_playerObserver->getOnPlaybackStartedCallCount(), 1);
     ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
 }
+#endif
 
 /**
  * Test setting the offset to an un-seekable pipeline. Setting the offset should succeed, but
@@ -881,17 +960,50 @@ TEST_F(MediaPlayerTest, testSetSourceResetsOffset) {
     ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
 }
 
-} // namespace test
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+/**
+ * Test consecutive setSource() and play() calls.  Expect the PlaybackStarted and PlaybackFinished will be received
+ * before the timeout.
+ */
+TEST_F(MediaPlayerTest, testRepeatUrl) {
+    std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);
+    for (int i = 0; i < 10; i++) {
+        m_mediaPlayer->setSource(url_single);
+        ASSERT_NE(MediaPlayerStatus::FAILURE, m_mediaPlayer->play());
+        ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted());
+        ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished());
+    }
+}
 
-int main (int argc, char** argv) {
+}  // namespace test
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK
+
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
 
     if (argc < 2) {
         std::cerr << "Usage: MediaPlayerTest <absolute path to test inputs folder>" << std::endl;
     } else {
         alexaClientSDK::mediaPlayer::test::inputsDirPath = std::string(argv[1]);
+        alexaClientSDK::mediaPlayer::test::urlsToContentTypes.insert(
+            {alexaClientSDK::mediaPlayer::test::FILE_PREFIX + alexaClientSDK::mediaPlayer::test::inputsDirPath +
+                 alexaClientSDK::mediaPlayer::test::MP3_FILE_PATH,
+             "audio/mpeg"});
+        alexaClientSDK::mediaPlayer::test::urlsToContentTypes.insert(
+            {alexaClientSDK::mediaPlayer::test::TEST_M3U_PLAYLIST_URL, "audio/mpegurl"});
+        alexaClientSDK::mediaPlayer::test::TEST_M3U_PLAYLIST_CONTENT =
+            std::string("EXTINF:2,fox_dog.mp3\n") +
+            std::string(
+                alexaClientSDK::mediaPlayer::test::FILE_PREFIX + alexaClientSDK::mediaPlayer::test::inputsDirPath +
+                alexaClientSDK::mediaPlayer::test::MP3_FILE_PATH) +
+            '\n' + std::string("EXTINF:2,fox_dog.mp3\n") +
+            std::string(
+                alexaClientSDK::mediaPlayer::test::FILE_PREFIX + alexaClientSDK::mediaPlayer::test::inputsDirPath +
+                alexaClientSDK::mediaPlayer::test::MP3_FILE_PATH) +
+            '\n';
+        alexaClientSDK::mediaPlayer::test::urlsToContent.insert(
+            {alexaClientSDK::mediaPlayer::test::TEST_M3U_PLAYLIST_URL,
+             alexaClientSDK::mediaPlayer::test::TEST_M3U_PLAYLIST_CONTENT});
         return RUN_ALL_TESTS();
     }
 }

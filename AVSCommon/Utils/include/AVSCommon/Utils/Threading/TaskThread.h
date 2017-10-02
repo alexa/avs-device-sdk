@@ -74,11 +74,9 @@ private:
     std::thread m_thread;
 };
 
-} // namespace threading
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace threading
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_THREADING_TASK_THREAD_H_
-
-
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_THREADING_TASK_THREAD_H_

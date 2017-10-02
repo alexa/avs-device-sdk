@@ -38,8 +38,9 @@ public:
      * risk of this wrapper object being created with a nullptr.
      * @param writer The AttachmentWriter object to be wrapped by this class.
      */
-    TestableAttachmentWriter(std::shared_ptr<avsCommon::utils::sds::InProcessSDS> dummySDS,
-            std::unique_ptr<avsCommon::avs::attachment::AttachmentWriter> writer);
+    TestableAttachmentWriter(
+        std::shared_ptr<avsCommon::utils::sds::InProcessSDS> dummySDS,
+        std::unique_ptr<avsCommon::avs::attachment::AttachmentWriter> writer);
 
     std::size_t write(const void* buf, std::size_t numBytes, WriteStatus* writeStatus) override;
 
@@ -52,8 +53,8 @@ private:
     bool m_hasWriteBeenInvoked;
 };
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_ATTACHMENT_WRITER_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_ATTACHMENT_WRITER_H_

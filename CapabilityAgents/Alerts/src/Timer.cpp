@@ -29,11 +29,11 @@ std::string Timer::m_defaultShortAudioFilePath;
 /// Definition for static class data member.
 const std::string Timer::TYPE_NAME = "TIMER";
 
-void Timer::setDefaultAudioFilePath(const std::string & filePath) {
+void Timer::setDefaultAudioFilePath(const std::string& filePath) {
     m_defaultAudioFilePath = filePath;
 }
 
-void Timer::setDefaultShortAudioFilePath(const std::string & filePath) {
+void Timer::setDefaultShortAudioFilePath(const std::string& filePath) {
     m_defaultShortAudioFilePath = filePath;
 }
 
@@ -49,6 +49,6 @@ std::string Timer::getTypeName() const {
     return TYPE_NAME;
 }
 
-} // namespace alerts
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace alerts
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK

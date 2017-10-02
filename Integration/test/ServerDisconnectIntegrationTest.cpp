@@ -23,10 +23,13 @@
 #include <gtest/gtest.h>
 #include <ACL/AVSConnectionManager.h>
 #include <ACL/Transport/HTTP2MessageRouter.h>
+#include <ACL/Transport/PostConnectSynchronizer.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AuthDelegate/AuthDelegate.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
+#include <ContextManager/ContextManager.h>
 
 #include "Integration/AuthObserver.h"
 #include "Integration/ConnectionStatusObserver.h"
@@ -58,17 +61,15 @@ static const std::string TAG("ServerDisconnectIntegrationTest");
 
 /// The time to wait for expected message status on sending the message.
 static const int TIMEOUT_FOR_SEND_IN_SECONDS = 10;
-/// The time to wait for SERVER_SIDE_DISCONNECT.
-static const int WAIT_TIME_IN_SECONDS = 5;
+
 /// Path to the AlexaClientSDKConfig.json file.
 std::string g_configPath;
 
 /**
  * This class tests the functionality for communication between client and AVS using ACL library.
  */
-class AVSCommunication {
+class AVSCommunication : public avsCommon::utils::RequiresShutdown {
 public:
-
     /**
      * Create an AVSCommunication object which initializes @c m_connectionStatusObserver, @c m_avsConnectionManager,
      * @c m_authObserver, @c m_authDelegate and @c m_messageRouter.
@@ -87,24 +88,33 @@ public:
     void disconnect();
 
     /**
+     * Function to retun the connection status observer.
+     */
+    std::shared_ptr<ConnectionStatusObserver> getConnectionStatusObserver();
+
+    /**
      * The function to send one message to AVS.
      * @param jsonContent The content in json format to send in the message.
      * @param expectedStatus The expected status of the message being sent to AVS.
      * @param timeout The maximum time to wait for the @c expectedStatus.
      * @param attachmentReader The attachment reader for the MessageRequest.
-     * @return true if expected MessageRequest::Status is received within the @c timeout else false.
+     * @return true if expected avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status is received within the
+     * @c timeout else false.
      */
     bool sendEvent(
-            const std::string & jsonContent,
-            MessageRequest::Status expectedStatus,
-            std::chrono::seconds timeout,
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader = nullptr);
+        const std::string& jsonContent,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status expectedStatus,
+        std::chrono::seconds timeout,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader = nullptr);
 
     /**
      * The function to check for Server Side Disconnect for the current connection.
      * @return true if disconnect is due to SERVER_SIDE_DISCONNECT else false.
      */
     bool checkForServerSideDisconnect();
+
+protected:
+    void doShutdown() override;
 
 private:
     /**
@@ -117,10 +127,11 @@ private:
     std::shared_ptr<AVSConnectionManager> m_avsConnectionManager;
     /// AuthObserver for checking the status of authorization.
     std::shared_ptr<AuthObserver> m_authObserver;
+    /// ContextManager object.
+    std::shared_ptr<contextManager::ContextManager> m_contextManager;
 };
 
-
-AVSCommunication::AVSCommunication() {
+AVSCommunication::AVSCommunication() : RequiresShutdown("AVSCommunication") {
 }
 
 std::unique_ptr<AVSCommunication> AVSCommunication::create() {
@@ -138,11 +149,14 @@ std::unique_ptr<AVSCommunication> AVSCommunication::create() {
     authDelegate->addAuthObserver(avsCommunication->m_authObserver);
     avsCommunication->m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
     messageRouter = std::make_shared<HTTP2MessageRouter>(authDelegate, nullptr);
+    avsCommunication->m_contextManager = contextManager::ContextManager::create();
+    PostConnectObject::init(avsCommunication->m_contextManager);
+
     avsCommunication->m_avsConnectionManager = AVSConnectionManager::create(
-                                messageRouter,
-                                false,
-                                { avsCommunication->m_connectionStatusObserver },
-                                std::unordered_set<std::shared_ptr<MessageObserverInterface>>());
+        messageRouter,
+        false,
+        {avsCommunication->m_connectionStatusObserver},
+        std::unordered_set<std::shared_ptr<MessageObserverInterface>>());
     if (!avsCommunication->m_avsConnectionManager) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullAVSConnectionManager"));
         return nullptr;
@@ -153,24 +167,34 @@ std::unique_ptr<AVSCommunication> AVSCommunication::create() {
 void AVSCommunication::connect() {
     ASSERT_TRUE(m_authObserver->waitFor(AuthObserver::State::REFRESHED));
     m_avsConnectionManager->enable();
+
+    /*
+    Cannot wait anymore for status to move to connected state
+    AVS could kick one the comm's out even before reaching CONNECTED
+    state when post-connect sends the context with its profile.
     ASSERT_TRUE(m_connectionStatusObserver->waitFor(
                 ConnectionStatusObserverInterface::Status::CONNECTED));
-    m_avsConnectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
-    ASSERT_TRUE(m_connectionStatusObserver->waitFor(
-                ConnectionStatusObserverInterface::Status::POST_CONNECTED));
+    */
 }
 
 void AVSCommunication::disconnect() {
     m_avsConnectionManager->disable();
-    ASSERT_TRUE(m_connectionStatusObserver->waitFor(
-                ConnectionStatusObserverInterface::Status::DISCONNECTED));
+    ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::DISCONNECTED));
+}
+
+std::shared_ptr<ConnectionStatusObserver> AVSCommunication::getConnectionStatusObserver() {
+    return m_connectionStatusObserver;
+}
+
+void AVSCommunication::doShutdown() {
+    m_avsConnectionManager->shutdown();
 }
 
 bool AVSCommunication::sendEvent(
-        const std::string & jsonContent,
-        MessageRequest::Status expectedStatus,
-        std::chrono::seconds timeout,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
+    const std::string& jsonContent,
+    avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status expectedStatus,
+    std::chrono::seconds timeout,
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
     auto messageRequest = std::make_shared<ObservableMessageRequest>(jsonContent, attachmentReader);
     m_avsConnectionManager->sendMessage(messageRequest);
     return messageRequest->waitFor(expectedStatus, timeout);
@@ -204,6 +228,8 @@ void ServerDisconnectIntegrationTest::SetUp() {
 }
 
 void ServerDisconnectIntegrationTest::TearDown() {
+    m_firstAvsCommunication->shutdown();
+    m_secondAvsCommunication->shutdown();
     AlexaClientSDKInit::uninitialize();
 }
 
@@ -213,12 +239,13 @@ void ServerDisconnectIntegrationTest::TearDown() {
  */
 TEST_F(ServerDisconnectIntegrationTest, testConnect) {
     m_firstAvsCommunication->connect();
+    ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
+        ConnectionStatusObserverInterface::Status::CONNECTED));
+
     m_secondAvsCommunication->connect();
-
-    std::this_thread::sleep_for(std::chrono::seconds(WAIT_TIME_IN_SECONDS));
-
+    ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
+        ConnectionStatusObserverInterface::Status::PENDING));
     EXPECT_TRUE(m_firstAvsCommunication->checkForServerSideDisconnect());
-    EXPECT_TRUE(m_secondAvsCommunication->checkForServerSideDisconnect());
 
     m_firstAvsCommunication->disconnect();
     m_secondAvsCommunication->disconnect();
@@ -230,22 +257,25 @@ TEST_F(ServerDisconnectIntegrationTest, testConnect) {
  */
 TEST_F(ServerDisconnectIntegrationTest, testReConnect) {
     m_firstAvsCommunication->connect();
+    ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
+        ConnectionStatusObserverInterface::Status::CONNECTED));
+
     m_secondAvsCommunication->connect();
-
-    std::this_thread::sleep_for(std::chrono::seconds(WAIT_TIME_IN_SECONDS));
-
+    ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
+        ConnectionStatusObserverInterface::Status::PENDING));
     EXPECT_TRUE(m_firstAvsCommunication->checkForServerSideDisconnect());
-    EXPECT_TRUE(m_secondAvsCommunication->checkForServerSideDisconnect());
 
     m_firstAvsCommunication->disconnect();
+    m_secondAvsCommunication->disconnect();
+
     m_firstAvsCommunication->connect();
-
-    std::this_thread::sleep_for(std::chrono::seconds(WAIT_TIME_IN_SECONDS));
-
-    EXPECT_TRUE(m_firstAvsCommunication->checkForServerSideDisconnect());
-    EXPECT_TRUE(m_secondAvsCommunication->checkForServerSideDisconnect());
-
+    ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
+        ConnectionStatusObserverInterface::Status::CONNECTED));
     m_firstAvsCommunication->disconnect();
+
+    m_secondAvsCommunication->connect();
+    ASSERT_TRUE(m_secondAvsCommunication->getConnectionStatusObserver()->waitFor(
+        ConnectionStatusObserverInterface::Status::CONNECTED));
     m_secondAvsCommunication->disconnect();
 }
 
@@ -255,29 +285,47 @@ TEST_F(ServerDisconnectIntegrationTest, testReConnect) {
  */
 TEST_F(ServerDisconnectIntegrationTest, testSendEvent) {
     m_firstAvsCommunication->connect();
+    ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
+        ConnectionStatusObserverInterface::Status::CONNECTED));
+
     m_secondAvsCommunication->connect();
-
-    std::this_thread::sleep_for(std::chrono::seconds(WAIT_TIME_IN_SECONDS));
-
-    ASSERT_FALSE(m_firstAvsCommunication->sendEvent(SYNCHRONIZE_STATE_JSON, MessageRequest::Status::SUCCESS,
-                std::chrono::seconds(TIMEOUT_FOR_SEND_IN_SECONDS)));
-
+    ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
+        ConnectionStatusObserverInterface::Status::PENDING));
     EXPECT_TRUE(m_firstAvsCommunication->checkForServerSideDisconnect());
-    EXPECT_TRUE(m_secondAvsCommunication->checkForServerSideDisconnect());
 
     m_firstAvsCommunication->disconnect();
     m_secondAvsCommunication->disconnect();
-}
-}//namespace test
-}//namespace integration
-}//namespace alexaClientSDK
 
-int main(int argc, char **argv) {
+    m_firstAvsCommunication->connect();
+    ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
+        ConnectionStatusObserverInterface::Status::CONNECTED));
+
+    ASSERT_TRUE(m_firstAvsCommunication->sendEvent(
+        SYNCHRONIZE_STATE_JSON,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
+        std::chrono::seconds(TIMEOUT_FOR_SEND_IN_SECONDS)));
+    m_firstAvsCommunication->disconnect();
+
+    m_secondAvsCommunication->connect();
+    ASSERT_TRUE(m_secondAvsCommunication->getConnectionStatusObserver()->waitFor(
+        ConnectionStatusObserverInterface::Status::CONNECTED));
+
+    ASSERT_TRUE(m_secondAvsCommunication->sendEvent(
+        SYNCHRONIZE_STATE_JSON,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
+        std::chrono::seconds(TIMEOUT_FOR_SEND_IN_SECONDS)));
+    m_secondAvsCommunication->disconnect();
+}
+
+}  // namespace test
+}  // namespace integration
+}  // namespace alexaClientSDK
+
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
 
     if (argc < 2) {
-        std::cerr << "USAGE: ServerDisconnectIntegrationTest <path_to_auth_delegate_config>"
-                << std::endl;
+        std::cerr << "USAGE: ServerDisconnectIntegrationTest <path_to_auth_delegate_config>" << std::endl;
         return 1;
     } else {
         alexaClientSDK::integration::test::g_configPath = std::string(argv[1]);

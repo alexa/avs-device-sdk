@@ -41,7 +41,7 @@ public:
      *
      * @param attachmentId The id for this attachment.
      */
-    Attachment(const std::string & attachmentId);
+    Attachment(const std::string& attachmentId);
 
     /**
      * Destructor.
@@ -95,9 +95,9 @@ protected:
     std::atomic<bool> m_hasCreatedReader;
 };
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_H_

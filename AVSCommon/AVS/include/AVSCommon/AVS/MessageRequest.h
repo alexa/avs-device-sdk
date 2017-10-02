@@ -20,8 +20,11 @@
 
 #include <memory>
 #include <string>
+#include <mutex>
+#include <unordered_set>
 
 #include "AVSCommon/AVS/Attachment/AttachmentReader.h"
+#include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -34,53 +37,13 @@ namespace avs {
 class MessageRequest {
 public:
     /**
-     * This enum expresses the various end-states that a send request could arrive at.
-     */
-    enum class Status {
-        /// The message has not yet been processed for sending.
-        PENDING,
-
-        /// The message was successfully sent.
-        SUCCESS,
-
-        /// The send failed because AVS was not connected.
-        NOT_CONNECTED,
-
-        /// The send failed because AVS is not synchronized.
-        NOT_SYNCHRONIZED,
-
-        /// The send failed because of timeout waiting for AVS response.
-        TIMEDOUT,
-
-        /// The send failed due to an underlying protocol error.
-        PROTOCOL_ERROR,
-
-        /// The send failed due to an internal error within ACL.
-        INTERNAL_ERROR,
-
-        /// The send failed due to an internal error on the server.
-        SERVER_INTERNAL_ERROR,
-
-        /// The send failed due to server refusing the request.
-        REFUSED,
-
-        /// The send failed due to server canceling it before the transmission completed.
-        CANCELED,
-
-        /// The send failed due to excessive load on the server.
-        THROTTLED,
-
-        /// The access credentials provided to ACL were invalid.
-        INVALID_AUTH
-    };
-
-    /**
      * Constructor.
      * @param jsonContent The message to be sent to AVS.
      * @param attachmentReader The attachment data (if present) to be sent to AVS along with the message.
      * Defaults to @c nullptr.
      */
-    MessageRequest(const std::string & jsonContent,
+    MessageRequest(
+        const std::string& jsonContent,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader = nullptr);
 
     /**
@@ -106,14 +69,28 @@ public:
      * This is called once the send request has completed.  The status parameter indicates success or failure.
      * @param status Whether the send request succeeded or failed.
      */
-    virtual void onSendCompleted(Status status);
+    virtual void sendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status);
 
     /**
      * This function will be called if AVS responds with an exception message to this message request being sent.
      *
      * @param exceptionMessage The exception message.
      */
-    virtual void onExceptionReceived(const std::string & exceptionMessage);
+    virtual void exceptionReceived(const std::string& exceptionMessage);
+
+    /**
+     * Add observer of MessageRequestObserverInterface.
+     *
+     * @param observer The observer to be added to the set.
+     */
+    void addObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageRequestObserverInterface> observer);
+
+    /**
+     * Remove observer of MessageRequestObserverInterface.
+     *
+     * @param observer The observer to be removed from the set.
+     */
+    void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageRequestObserverInterface> observer);
 
     /**
      * Utility function to convert a modern enum class to a string.
@@ -121,17 +98,32 @@ public:
      * @param status The enum value.
      * @return The string representation of the incoming value.
      */
-    static std::string statusToString(Status status);
+    static std::string statusToString(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status);
 
-private:
+    /**
+     * A function to evaluate if the given status reflects receipt of the message by the server.
+     *
+     * @param status The status being queried.
+     * @return Whether the status reflects receipt of the message by the server.
+     */
+    static bool isServerStatus(sdkInterfaces::MessageRequestObserverInterface::Status status);
+
+protected:
+    /// Mutex to guard access of m_observers.
+    std::mutex m_observerMutex;
+
+    /// Set of observers of MessageRequestObserverInterface.
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageRequestObserverInterface>> m_observers;
+
     /// The JSON content to be sent to AVS.
     std::string m_jsonContent;
+
     /// The AttachmentReader of the Attachment data to be sent to AVS.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_attachmentReader;
 };
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_MESSAGE_REQUEST_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_MESSAGE_REQUEST_H_

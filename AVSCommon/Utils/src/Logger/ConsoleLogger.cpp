@@ -40,10 +40,10 @@ Logger& ConsoleLogger::instance() {
 static std::mutex g_coutMutex;
 
 void ConsoleLogger::emit(
-        Level level,
-        std::chrono::system_clock::time_point time,
-        const char *threadMoniker,
-        const char *text) {
+    Level level,
+    std::chrono::system_clock::time_point time,
+    const char* threadMoniker,
+    const char* text) {
     std::lock_guard<std::mutex> lock(g_coutMutex);
     std::cout << formatLogString(level, time, threadMoniker, text) << std::endl;
 }
@@ -53,7 +53,7 @@ ConsoleLogger::ConsoleLogger() :
         Logger(Level::DEBUG0)
 #else
         Logger(Level::INFO)
-#endif // DEBUG
+#endif  // DEBUG
 {
     init(configuration::ConfigurationNode::getRoot()[CONFIG_KEY_DEFAULT_LOGGER]);
 }
@@ -62,8 +62,7 @@ Logger& getConsoleLogger() {
     return ConsoleLogger::instance();
 }
 
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
-
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

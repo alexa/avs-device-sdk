@@ -32,20 +32,17 @@ namespace playlistParser {
  */
 enum class PlaylistParseResult {
 
-    /// The playlist was parsed successfully.
-    PARSE_RESULT_SUCCESS,
+    /// The playlist has been fully parsed successfully. This indicates that parsing of the playlist has completed.
+    SUCCESS,
 
-    /// The playlist could not be handled.
-    PARSE_RESULT_UNHANDLED,
+    /**
+     * The playlist parsing has encountered an error and will abort parsing. In this case, the url in the callback will
+     * not be valid.
+     */
+    ERROR,
 
-    /// There was an error parsing the playlist.
-    PARSE_RESULT_ERROR,
-
-    /// The playlist was ignored due to its scheme or MIME type.
-    PARSE_RESULT_IGNORED,
-
-    ///Parsing of the playlist was cancelled part-way through.
-    PARSE_RESULT_CANCELLED
+    /// The playlist parsing is still ongoing.
+    STILL_ONGOING
 };
 
 /**
@@ -59,16 +56,13 @@ public:
     virtual ~PlaylistParserObserverInterface() = default;
 
     /**
-     * Notification that the playlist parsing has been completed.
+     * Notification that an entry has been parsed.
      *
-     * @param playlistUrl The playlist that was parsed.
-     * @param urls A list of the urls extracted from the playlist.
+     * @param requestId The id of the callback to connect this callback to an original request.
+     * @param url An entry that has been extracted.
      * @param parseResult The result of parsing the playlist.
      */
-    virtual void onPlaylistParsed(
-            std::string playlistUrl,
-            std::queue<std::string> urls,
-            PlaylistParseResult parseResult) = 0;
+    virtual void onPlaylistEntryParsed(int requestId, std::string url, PlaylistParseResult parseResult) = 0;
 };
 
 /**
@@ -80,28 +74,22 @@ public:
  */
 inline std::ostream& operator<<(std::ostream& stream, const PlaylistParseResult& result) {
     switch (result) {
-        case PlaylistParseResult::PARSE_RESULT_SUCCESS:
-            stream << "PARSE_RESULT_SUCCESS";
+        case PlaylistParseResult::SUCCESS:
+            stream << "SUCCESS";
             break;
-        case PlaylistParseResult::PARSE_RESULT_UNHANDLED:
-            stream << "PARSE_RESULT_UNHANDLED";
+        case PlaylistParseResult::ERROR:
+            stream << "ERROR";
             break;
-        case PlaylistParseResult::PARSE_RESULT_ERROR:
-            stream << "PARSE_RESULT_ERROR";
-            break;
-        case PlaylistParseResult::PARSE_RESULT_IGNORED:
-            stream << "PARSE_RESULT_IGNORED";
-            break;
-        case PlaylistParseResult::PARSE_RESULT_CANCELLED:
-            stream << "PARSE_RESULT_CANCELLED";
+        case PlaylistParseResult::STILL_ONGOING:
+            stream << "STILL_ONGOING";
             break;
     }
     return stream;
 }
 
-} // namespace playlistParser
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace playlistParser
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_PLAYLIST_PARSER_PLAYLIST_PARSER_OBSERVER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_PLAYLIST_PARSER_PLAYLIST_PARSER_OBSERVER_INTERFACE_H_

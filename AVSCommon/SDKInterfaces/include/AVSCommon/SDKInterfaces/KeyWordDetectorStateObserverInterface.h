@@ -53,8 +53,8 @@ public:
     virtual void onStateChanged(KeyWordDetectorState keyWordDetectorState) = 0;
 };
 
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_KEY_WORD_DETECTOR_STATE_OBSERVER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_KEY_WORD_DETECTOR_STATE_OBSERVER_INTERFACE_H_

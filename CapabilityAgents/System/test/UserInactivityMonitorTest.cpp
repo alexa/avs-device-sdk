@@ -125,12 +125,10 @@ TEST_F(UserInactivityMonitorTest, createSuccessfully) {
     EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequestAndReleaseTrigger, Eq(true))));
 
     auto userInactivityMonitor = UserInactivityMonitor::create(
-            m_mockMessageSender,
-            m_mockExceptionEncounteredSender,
-            USER_INACTIVITY_REPORT_PERIOD);
+        m_mockMessageSender, m_mockExceptionEncounteredSender, USER_INACTIVITY_REPORT_PERIOD);
     ASSERT_NE(nullptr, userInactivityMonitor);
 
-    exitTrigger.wait_for(exitLock, USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD/2);
+    exitTrigger.wait_for(exitLock, USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD / 2);
 }
 
 /**
@@ -151,28 +149,20 @@ TEST_F(UserInactivityMonitorTest, handleDirectiveProperly) {
     EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequestAndReleaseTrigger, Eq(true))));
 
     auto userInactivityMonitor = UserInactivityMonitor::create(
-            m_mockMessageSender,
-            m_mockExceptionEncounteredSender,
-            USER_INACTIVITY_REPORT_PERIOD);
+        m_mockMessageSender, m_mockExceptionEncounteredSender, USER_INACTIVITY_REPORT_PERIOD);
     ASSERT_NE(nullptr, userInactivityMonitor);
 
     auto directiveSequencer = adsl::DirectiveSequencer::create(m_mockExceptionEncounteredSender);
     directiveSequencer->addDirectiveHandler(userInactivityMonitor);
 
     auto userInactivityDirectiveHeader = std::make_shared<AVSMessageHeader>(
-            USER_INACTIVITY_RESET_NAMESPACE,
-            USER_INACTIVITY_RESET_NAME,
-            USER_INACTIVITY_MESSAGE_ID);
+        USER_INACTIVITY_RESET_NAMESPACE, USER_INACTIVITY_RESET_NAME, USER_INACTIVITY_MESSAGE_ID);
     auto attachmentManager = std::make_shared<StrictMock<attachment::test::MockAttachmentManager>>();
-    std::shared_ptr<AVSDirective> userInactivityDirective = AVSDirective::create(
-            "",
-            userInactivityDirectiveHeader,
-            "",
-            attachmentManager,
-            "");
+    std::shared_ptr<AVSDirective> userInactivityDirective =
+        AVSDirective::create("", userInactivityDirectiveHeader, "", attachmentManager, "");
 
     directiveSequencer->onDirective(userInactivityDirective);
-    exitTrigger.wait_for(exitLock, USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD/2);
+    exitTrigger.wait_for(exitLock, USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD / 2);
     directiveSequencer->shutdown();
 }
 
@@ -184,17 +174,13 @@ TEST_F(UserInactivityMonitorTest, sendMultipleReports) {
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);
     int repetitionCount = 3;
-    EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequest, Eq(true))))
-            .Times(repetitionCount - 1);
-    EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequestAndReleaseTrigger, Eq(true))))
-            .Times(1);
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequest, Eq(true)))).Times(repetitionCount - 1);
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequestAndReleaseTrigger, Eq(true)))).Times(1);
     auto userInactivityMonitor = UserInactivityMonitor::create(
-            m_mockMessageSender,
-            m_mockExceptionEncounteredSender,
-            USER_INACTIVITY_REPORT_PERIOD);
+        m_mockMessageSender, m_mockExceptionEncounteredSender, USER_INACTIVITY_REPORT_PERIOD);
     ASSERT_NE(nullptr, userInactivityMonitor);
 
-    exitTrigger.wait_for(exitLock, repetitionCount * USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD/2);
+    exitTrigger.wait_for(exitLock, repetitionCount * USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD / 2);
 }
 
 /**
@@ -206,39 +192,30 @@ TEST_F(UserInactivityMonitorTest, sendMultipleReportsWithReset) {
     std::unique_lock<std::mutex> exitLock(exitMutex);
     int repetitionCount = 5;
     EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequest, Eq(true))))
-            .Times(AtLeast(repetitionCount- 1));
-    EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequestAndReleaseTrigger, Eq(true))))
-            .Times(1);
+        .Times(AtLeast(repetitionCount - 1));
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequestAndReleaseTrigger, Eq(true)))).Times(1);
 
     auto userInactivityMonitor = UserInactivityMonitor::create(
-            m_mockMessageSender,
-            m_mockExceptionEncounteredSender,
-            USER_INACTIVITY_REPORT_PERIOD);
+        m_mockMessageSender, m_mockExceptionEncounteredSender, USER_INACTIVITY_REPORT_PERIOD);
     ASSERT_NE(nullptr, userInactivityMonitor);
 
     auto directiveSequencer = adsl::DirectiveSequencer::create(m_mockExceptionEncounteredSender);
     directiveSequencer->addDirectiveHandler(userInactivityMonitor);
 
     auto userInactivityDirectiveHeader = std::make_shared<AVSMessageHeader>(
-            USER_INACTIVITY_RESET_NAMESPACE,
-            USER_INACTIVITY_RESET_NAME,
-            USER_INACTIVITY_MESSAGE_ID);
+        USER_INACTIVITY_RESET_NAMESPACE, USER_INACTIVITY_RESET_NAME, USER_INACTIVITY_MESSAGE_ID);
     auto attachmentManager = std::make_shared<StrictMock<attachment::test::MockAttachmentManager>>();
-    std::shared_ptr<AVSDirective> userInactivityDirective = AVSDirective::create(
-            "",
-            userInactivityDirectiveHeader,
-            "",
-            attachmentManager,
-            "");
+    std::shared_ptr<AVSDirective> userInactivityDirective =
+        AVSDirective::create("", userInactivityDirectiveHeader, "", attachmentManager, "");
 
-    std::this_thread::sleep_for(2*USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD/2);
+    std::this_thread::sleep_for(2 * USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD / 2);
     directiveSequencer->onDirective(userInactivityDirective);
 
-    exitTrigger.wait_for(exitLock, repetitionCount * USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD/2);
+    exitTrigger.wait_for(exitLock, repetitionCount * USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD / 2);
     directiveSequencer->shutdown();
 }
 
-} // namespace test
-} // namespace system
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace system
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK

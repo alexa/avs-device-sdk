@@ -38,8 +38,8 @@ static const std::string TAG("DialogUXStateAggregator");
  */
 static const std::chrono::milliseconds SHORT_TIMEOUT{200};
 
-DialogUXStateAggregator::DialogUXStateAggregator(std::chrono::milliseconds timeoutForThinkingToIdle) : 
-        m_currentState{DialogUXStateObserverInterface::DialogUXState::IDLE}, 
+DialogUXStateAggregator::DialogUXStateAggregator(std::chrono::milliseconds timeoutForThinkingToIdle) :
+        m_currentState{DialogUXStateObserverInterface::DialogUXState::IDLE},
         m_timeoutForThinkingToIdle{timeoutForThinkingToIdle} {
 }
 
@@ -48,12 +48,10 @@ void DialogUXStateAggregator::addObserver(std::shared_ptr<DialogUXStateObserverI
         ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
         return;
     }
-    m_executor.submit(
-        [this, observer] () {
-            m_observers.insert(observer);
-            observer->onDialogUXStateChanged(m_currentState);
-        }
-    );
+    m_executor.submit([this, observer]() {
+        m_observers.insert(observer);
+        observer->onDialogUXStateChanged(m_currentState);
+    });
 }
 
 void DialogUXStateAggregator::removeObserver(std::shared_ptr<DialogUXStateObserverInterface> observer) {
@@ -61,85 +59,87 @@ void DialogUXStateAggregator::removeObserver(std::shared_ptr<DialogUXStateObserv
         ACSDK_ERROR(LX("removeObserverFailed").d("reason", "nullObserver"));
         return;
     }
-    m_executor.submit(
-        [this, observer] () {
-            m_observers.erase(observer);
-        }
-    ).wait();
+    m_executor.submit([this, observer]() { m_observers.erase(observer); }).wait();
 }
 
 void DialogUXStateAggregator::onStateChanged(AudioInputProcessorObserverInterface::State state) {
-    m_executor.submit(
-        [this, state] () {
-            switch (state) {
-                case AudioInputProcessorObserverInterface::State::IDLE:
-                    if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState) { 
-                        return;
-                    }
-                    setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
+    m_executor.submit([this, state]() {
+        switch (state) {
+            case AudioInputProcessorObserverInterface::State::IDLE:
+                if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState) {
                     return;
-                case AudioInputProcessorObserverInterface::State::RECOGNIZING:
-                    setState(DialogUXStateObserverInterface::DialogUXState::LISTENING);
-                    return;
-                case AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH:
-                    setState(DialogUXStateObserverInterface::DialogUXState::LISTENING);
-                    return;
-                case AudioInputProcessorObserverInterface::State::BUSY:
-                    setState(DialogUXStateObserverInterface::DialogUXState::THINKING);
-                    if (!m_thinkingToIdleTimer.start(
-                                m_timeoutForThinkingToIdle, std::bind(
-                                        &DialogUXStateAggregator::transitionFromThinkingTimedOut, this)).valid()) {
-                        ACSDK_ERROR(LX("failedToStartTimerFromThinkingToIdle"));
-                    }
-                    return;
-            }
-            ACSDK_ERROR(LX("unknownAudioInputProcessorState"));
+                }
+                setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
+                return;
+            case AudioInputProcessorObserverInterface::State::RECOGNIZING:
+                setState(DialogUXStateObserverInterface::DialogUXState::LISTENING);
+                return;
+            case AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH:
+                setState(DialogUXStateObserverInterface::DialogUXState::LISTENING);
+                return;
+            case AudioInputProcessorObserverInterface::State::BUSY:
+                setState(DialogUXStateObserverInterface::DialogUXState::THINKING);
+                if (!m_thinkingToIdleTimer
+                         .start(
+                             m_timeoutForThinkingToIdle,
+                             std::bind(&DialogUXStateAggregator::transitionFromThinkingTimedOut, this))
+                         .valid()) {
+                    ACSDK_ERROR(LX("failedToStartTimerFromThinkingToIdle"));
+                }
+                return;
         }
-    );
+        ACSDK_ERROR(LX("unknownAudioInputProcessorState"));
+    });
 }
 
 void DialogUXStateAggregator::onStateChanged(SpeechSynthesizerObserver::SpeechSynthesizerState state) {
-    m_executor.submit(
-        [this, state] () {
-            switch (state) {
-                case SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING:
-                    setState(DialogUXStateObserverInterface::DialogUXState::SPEAKING);
+    m_executor.submit([this, state]() {
+        switch (state) {
+            case SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING:
+                setState(DialogUXStateObserverInterface::DialogUXState::SPEAKING);
+                return;
+            case SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED:
+                if (DialogUXStateObserverInterface::DialogUXState::SPEAKING != m_currentState) {
                     return;
-                case SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED:
-                    if (DialogUXStateObserverInterface::DialogUXState::SPEAKING != m_currentState) {
-                        return;
-                    }
+                }
 
-                    m_currentState = DialogUXStateObserverInterface::DialogUXState::FINISHED;
+                m_currentState = DialogUXStateObserverInterface::DialogUXState::FINISHED;
 
-                    if (!m_multiturnSpeakingToListeningTimer.start(
-                            SHORT_TIMEOUT, std::bind(
-                                    &DialogUXStateAggregator::transitionFromSpeakingFinished, this)).valid()) {
-                        ACSDK_ERROR(LX("failedToStartTimerFromSpeakingFinishedToIdle"));
-                    }
-                    return;
-            }
-            ACSDK_ERROR(LX("unknownSpeechSynthesizerState"));
+                if (!m_multiturnSpeakingToListeningTimer
+                         .start(
+                             SHORT_TIMEOUT, std::bind(&DialogUXStateAggregator::transitionFromSpeakingFinished, this))
+                         .valid()) {
+                    ACSDK_ERROR(LX("failedToStartTimerFromSpeakingFinishedToIdle"));
+                }
+                return;
         }
-    );
+        ACSDK_ERROR(LX("unknownSpeechSynthesizerState"));
+    });
 }
 
-void DialogUXStateAggregator::receive(const std::string & contextId, const std::string & message) {
-    m_executor.submit(
-        [this] () {
-            if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState) {
-                /* 
-                 * Stop the long timer and start a short timer so that either the state will change (i.e. Speech begins)
-                 * or we automatically go to idle after the short timeout (i.e. the directive received isn't related to
-                 * speech, like a setVolume directive).
-                 */
-                m_thinkingToIdleTimer.stop();
-                m_thinkingToIdleTimer.start(
-                        SHORT_TIMEOUT, std::bind(
-                                &DialogUXStateAggregator::transitionFromThinkingTimedOut, this));
-            }
+void DialogUXStateAggregator::receive(const std::string& contextId, const std::string& message) {
+    m_executor.submit([this]() {
+        if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState) {
+            /*
+             * Stop the long timer and start a short timer so that either the state will change (i.e. Speech begins)
+             * or we automatically go to idle after the short timeout (i.e. the directive received isn't related to
+             * speech, like a setVolume directive).
+             */
+            m_thinkingToIdleTimer.stop();
+            m_thinkingToIdleTimer.start(
+                SHORT_TIMEOUT, std::bind(&DialogUXStateAggregator::transitionFromThinkingTimedOut, this));
         }
-    );
+    });
+}
+
+void DialogUXStateAggregator::onConnectionStatusChanged(
+    const ConnectionStatusObserverInterface::Status status,
+    const ConnectionStatusObserverInterface::ChangedReason reason) {
+    m_executor.submit([this, &status]() {
+        if (status != avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED) {
+            setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
+        }
+    });
 }
 
 void DialogUXStateAggregator::notifyObserversOfState() {
@@ -151,24 +151,20 @@ void DialogUXStateAggregator::notifyObserversOfState() {
 }
 
 void DialogUXStateAggregator::transitionFromThinkingTimedOut() {
-    m_executor.submit(
-        [this] () {
-            if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState) {
-                ACSDK_DEBUG(LX("transitionFromThinkingTimedOut"));
-                setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
-            }
+    m_executor.submit([this]() {
+        if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState) {
+            ACSDK_DEBUG(LX("transitionFromThinkingTimedOut"));
+            setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
         }
-    );
+    });
 }
 
 void DialogUXStateAggregator::transitionFromSpeakingFinished() {
-    m_executor.submit(
-        [this] () {
-            if (DialogUXStateObserverInterface::DialogUXState::FINISHED == m_currentState) {
-                setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
-            }
+    m_executor.submit([this]() {
+        if (DialogUXStateObserverInterface::DialogUXState::FINISHED == m_currentState) {
+            setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
         }
-    );
+    });
 }
 
 void DialogUXStateAggregator::setState(sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) {
@@ -182,6 +178,6 @@ void DialogUXStateAggregator::setState(sdkInterfaces::DialogUXStateObserverInter
     notifyObserversOfState();
 }
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

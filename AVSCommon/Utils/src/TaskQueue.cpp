@@ -28,9 +28,7 @@ TaskQueue::TaskQueue() : m_shutdown{false} {
 std::unique_ptr<std::function<void()>> TaskQueue::pop() {
     std::unique_lock<std::mutex> queueLock{m_queueMutex};
 
-    auto shouldNotWait = [this]() {
-        return m_shutdown || !m_queue.empty();
-    };
+    auto shouldNotWait = [this]() { return m_shutdown || !m_queue.empty(); };
 
     if (!shouldNotWait()) {
         m_queueChanged.wait(queueLock, shouldNotWait);
@@ -57,7 +55,7 @@ bool TaskQueue::isShutdown() {
     return m_shutdown;
 }
 
-} // namespace threading
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace threading
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

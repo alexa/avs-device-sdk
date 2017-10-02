@@ -44,7 +44,7 @@ enum class ContextRequestError {
  */
 class ContextRequesterInterface {
 public:
-     /**
+    /**
      * Destructor.
      */
     virtual ~ContextRequesterInterface() = default;
@@ -68,7 +68,6 @@ public:
      * @param error The reason why the getContext request failed.
      */
     virtual void onContextFailure(const ContextRequestError error) = 0;
-
 };
 
 /**
@@ -90,8 +89,8 @@ inline std::ostream& operator<<(std::ostream& stream, const ContextRequestError&
     return stream;
 }
 
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_CONTEXT_REQUESTER_INTERFACE_H
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_CONTEXT_REQUESTER_INTERFACE_H

@@ -33,7 +33,6 @@ namespace authDelegate {
 /// LIBCURL based implementation of HttpPostInterface.
 class HttpPost : public HttpPostInterface {
 public:
-
     /// HttpPost destructor
     ~HttpPost();
 
@@ -59,10 +58,8 @@ public:
      */
     static std::unique_ptr<HttpPost> create();
 
-    long doPost(const std::string& m_url,
-            const std::string& data,
-            std::chrono::seconds timeout,
-            std::string& body) override;
+    long doPost(const std::string& m_url, const std::string& data, std::chrono::seconds timeout, std::string& body)
+        override;
 
 private:
     /**
@@ -87,7 +84,8 @@ private:
      * @param param The param option to pass through to curl_easy_setopt.
      * @return @c true of the operation was successful.
      */
-    template<typename ParamType> bool setopt(CURLoption option, ParamType param);
+    template <typename ParamType>
+    bool setopt(CURLoption option, ParamType param);
 
     /**
      * Callback function used to accumulate the body of the HTTP Post response
@@ -111,7 +109,7 @@ private:
     std::string m_bodyAccumulator;
 };
 
-} // namespace authDelegate
-} // namespace alexaClientSDK
+}  // namespace authDelegate
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_HTTP_POST_H_
+#endif  // ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_HTTP_POST_H_

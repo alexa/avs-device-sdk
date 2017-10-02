@@ -31,13 +31,19 @@ namespace test {
 /// Minimal DirectiveHandlerInterface implementation so we can generate instance pointers.
 class TestDirectiveHandler : public sdkInterfaces::DirectiveHandlerInterface {
 public:
-    void handleDirectiveImmediately(std::shared_ptr <AVSDirective>) override {}
-        void preHandleDirective(
-        std::shared_ptr <AVSDirective>,
-        std::unique_ptr <sdkInterfaces::DirectiveHandlerResultInterface>) override {}
-    bool handleDirective(const std::string&) override { return false; }
-    void cancelDirective(const std::string&) override {}
-    void onDeregistered() override {}
+    void handleDirectiveImmediately(std::shared_ptr<AVSDirective>) override {
+    }
+    void preHandleDirective(
+        std::shared_ptr<AVSDirective>,
+        std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface>) override {
+    }
+    bool handleDirective(const std::string&) override {
+        return false;
+    }
+    void cancelDirective(const std::string&) override {
+    }
+    void onDeregistered() override {
+    }
     avs::DirectiveHandlerConfiguration getConfiguration() const override {
         // Not using an empty initializer list here to account for a GCC 4.9.2 regression
         return avs::DirectiveHandlerConfiguration();
@@ -47,8 +53,7 @@ public:
 /**
  * HandlerAndPolicyTest
  */
-class HandlerAndPolicyTest : public ::testing::Test {
-};
+class HandlerAndPolicyTest : public ::testing::Test {};
 
 /**
  * Invoke default constructor.  Expect @c nameSpace and @c name properties are both empty strings.
@@ -107,7 +112,7 @@ TEST_F(HandlerAndPolicyTest, testOperatorEqualandNotEqual) {
     ASSERT_NE(handlerAndPolicy3, handlerAndPolicy4);
 }
 
-} // namespace test
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

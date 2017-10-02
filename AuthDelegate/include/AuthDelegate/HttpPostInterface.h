@@ -46,14 +46,14 @@ public:
      * @param[out] body A string to receive the body of the request if there is one.
      * @return A HttpStatus indicating the disposition of the Post request.
      */
-    virtual long doPost(const std::string& url,
-            const std::string& data,
-            std::chrono::seconds timeout,
-            std::string& body) = 0;
-
+    virtual long doPost(
+        const std::string& url,
+        const std::string& data,
+        std::chrono::seconds timeout,
+        std::string& body) = 0;
 };
 
-} // namespace authDelegate
-} // namespace alexaClientSDK
+}  // namespace authDelegate
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_HTTP_POST_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_HTTP_POST_INTERFACE_H_

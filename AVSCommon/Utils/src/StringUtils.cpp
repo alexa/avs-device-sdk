@@ -42,7 +42,7 @@ static const std::string TAG("StringUtils");
 
 static const int BASE_TEN = 10;
 
-bool stringToInt(const std::string & str, int* result) {
+bool stringToInt(const std::string& str, int* result) {
     return stringToInt(str.c_str(), result);
 }
 
@@ -67,8 +67,7 @@ bool stringToInt(const char* str, int* result) {
         return false;
     }
 
-    if (ERANGE == errno ||
-        tempResult < std::numeric_limits<int>::min() ||
+    if (ERANGE == errno || tempResult < std::numeric_limits<int>::min() ||
         tempResult > std::numeric_limits<int>::max()) {
         ACSDK_ERROR(LX("stringToIntFailed").m("converted number was out of range."));
         return false;
@@ -78,7 +77,7 @@ bool stringToInt(const char* str, int* result) {
     return true;
 }
 
-} // namespace string
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace string
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

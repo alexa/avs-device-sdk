@@ -17,6 +17,8 @@
 
 #include "AVSCommon/Utils/Logger/LogEntryStream.h"
 
+#include "AVSCommon/Utils/RetryTimer.h"
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
@@ -29,7 +31,7 @@ const char* LogEntryStream::LogEntryStream::c_str() const {
     return LogEntryBuffer::c_str();
 }
 
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

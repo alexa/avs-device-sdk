@@ -24,9 +24,9 @@ using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 
 Channel::Channel(const unsigned int priority) :
-    m_priority{priority},
-    m_focusState{FocusState::NONE},
-    m_observer{nullptr} {
+        m_priority{priority},
+        m_focusState{FocusState::NONE},
+        m_observer{nullptr} {
 }
 
 unsigned int Channel::getPriority() const {
@@ -80,5 +80,5 @@ bool Channel::doesObserverOwnChannel(std::shared_ptr<ChannelObserverInterface> o
     return observer == m_observer;
 }
 
-} // namespace afml
-} // namespace alexaClientSDK
+}  // namespace afml
+}  // namespace alexaClientSDK

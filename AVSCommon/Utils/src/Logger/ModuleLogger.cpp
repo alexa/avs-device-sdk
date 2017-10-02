@@ -25,10 +25,10 @@ namespace utils {
 namespace logger {
 
 void ModuleLogger::emit(
-        Level level,
-        std::chrono::system_clock::time_point time,
-        const char *threadId,
-        const char *text) {
+    Level level,
+    std::chrono::system_clock::time_point time,
+    const char* threadId,
+    const char* text) {
     if (shouldLog(level)) {
         m_sink.load()->emit(level, time, threadId, text);
     }
@@ -80,8 +80,7 @@ ModuleLogger::ModuleLogger(const std::string& configKey) :
     init(configuration::ConfigurationNode::getRoot()[configKey]);
 }
 
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
-
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

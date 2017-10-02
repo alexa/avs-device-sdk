@@ -25,8 +25,9 @@ namespace attachment {
 
 using namespace alexaClientSDK::avsCommon::utils::memory;
 
-InProcessAttachment::InProcessAttachment(const std::string & id, std::unique_ptr<SDSType> sds) :
-        Attachment(id), m_sds{std::move(sds)} {
+InProcessAttachment::InProcessAttachment(const std::string& id, std::unique_ptr<SDSType> sds) :
+        Attachment(id),
+        m_sds{std::move(sds)} {
     if (!m_sds) {
         auto buffSize = SDSType::calculateBufferSize(SDS_BUFFER_DEFAULT_SIZE_IN_BYTES);
         auto buff = std::make_shared<SDSBufferType>(buffSize);
@@ -64,7 +65,7 @@ std::unique_ptr<AttachmentReader> InProcessAttachment::createReader(AttachmentRe
     return std::move(reader);
 }
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

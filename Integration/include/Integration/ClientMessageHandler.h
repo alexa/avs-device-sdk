@@ -40,10 +40,10 @@ public:
 
     /**
      * Implementation of the interface's receive function.
-     * 
+     *
      * For the purposes of these integration tests, this function simply logs and counts messages.
      */
-    void receive(const std::string & contextId, const std::string & message) override;
+    void receive(const std::string& contextId, const std::string& message) override;
 
     /**
      * Wait for a message to be received.
@@ -65,7 +65,7 @@ private:
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
 };
 
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace integration
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_CLIENT_MESSAGE_HANDLER_H_
+#endif  // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_CLIENT_MESSAGE_HANDLER_H_

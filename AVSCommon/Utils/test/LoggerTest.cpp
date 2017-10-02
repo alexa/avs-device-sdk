@@ -30,7 +30,6 @@ namespace test {
 
 using namespace ::testing;
 
-
 /// Macro used to initial creation of log entries for this source.
 #define LX(event) LogEntry(TEST_SOURCE_STRING, event)
 
@@ -53,10 +52,12 @@ using namespace ::testing;
 #define ESCAPED_METADATA_VALUE R"(reserved_chars['\\' '\,' '\:' '\='])"
 
 /// Expected output string for test of boolean metadata.
+// clang-format off
 #define METADATA_EXPECTED_BOOLEANS                      \
         METADATA_KEY_TRUE KEY_VALUE_SEPARATOR "true"    \
         KEY_VALUE_PAIR_SEPARATOR                        \
         METADATA_KEY_FALSE KEY_VALUE_SEPARATOR "false"
+// clang-format on
 
 /// String used to test that the source component is logged
 static const std::string TEST_SOURCE_STRING = "<The_Source_Of_Log_Entries>";
@@ -77,13 +78,10 @@ static const std::string TEST_MESSAGE_STRING_1 = "World Hello!";
  */
 class MockLogger : public Logger {
 public:
-
     MOCK_METHOD1(shouldLog, bool(Level level));
-    MOCK_METHOD4(emit, void(
-            Level level,
-            std::chrono::system_clock::time_point time,
-            const char *threadMoniker,
-            const char *text));
+    MOCK_METHOD4(
+        emit,
+        void(Level level, std::chrono::system_clock::time_point time, const char* threadMoniker, const char* text));
 
     /**
      * Create a new MockLogger instance.
@@ -104,11 +102,7 @@ public:
      * @param threadMoniker Moniker of the thread that generated the event.
      * @param text The text of the log entry.
      */
-    void mockEmit(
-            Level level,
-            std::chrono::system_clock::time_point time,
-            const char *threadId,
-            const char *text);
+    void mockEmit(Level level, std::chrono::system_clock::time_point time, const char* threadId, const char* text);
 
     /// The last time value passed in a log(...) call.
     std::chrono::system_clock::time_point m_lastTime;
@@ -154,26 +148,23 @@ public:
      */
     TestLogger();
 
-    void emit(
-            Level level,
-            std::chrono::system_clock::time_point time,
-            const char *threadMoniker,
-            const char *text) override;
+    void emit(Level level, std::chrono::system_clock::time_point time, const char* threadMoniker, const char* text)
+        override;
 };
 
 TestLogger::TestLogger() : Logger(Level::DEBUG9) {
 }
 
 void TestLogger::emit(
-        Level level,
-        std::chrono::system_clock::time_point time,
-        const char *threadMoniker,
-        const char *text) {
+    Level level,
+    std::chrono::system_clock::time_point time,
+    const char* threadMoniker,
+    const char* text) {
     g_log->emit(level, time, threadMoniker, text);
 }
 
 // Temporarily back out of namespace "test" to put getLoggerTestLogger() in the required namespace.
-} // namespace test
+}  // namespace test
 
 /**
  * Function for ACSDK_* macros to use to get the @c Logger to use.
@@ -187,7 +178,6 @@ Logger& getLoggerTestLogger() {
 // Return to namespace "test"
 namespace test {
 
-
 std::shared_ptr<NiceMock<MockLogger>> MockLogger::create() {
     auto result = std::make_shared<NiceMock<MockLogger>>();
     ON_CALL(*result.get(), shouldLog(_)).WillByDefault(Return(true));
@@ -199,10 +189,10 @@ MockLogger::MockLogger() : Logger(Level::DEBUG9) {
 }
 
 void MockLogger::mockEmit(
-        Level level,
-        std::chrono::system_clock::time_point time,
-        const char *threadMoniker,
-        const char *text) {
+    Level level,
+    std::chrono::system_clock::time_point time,
+    const char* threadMoniker,
+    const char* text) {
     m_lastTime = time;
     m_lastThreadMoniker = threadMoniker;
     m_lastText = text;
@@ -247,7 +237,6 @@ void LoggerTest::TearDown() {
 }
 
 void LoggerTest::setLevelExpectations(Level level) {
-
     g_log = MockLogger::create();
     ACSDK_GET_LOGGER_FUNCTION().setLevel(level);
 
@@ -549,7 +538,9 @@ TEST_F(LoggerTest, verifyMetadata) {
     ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
     EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
     ACSDK_INFO(LX("testing metadata")
-            .d(METADATA_KEY, UNESCAPED_METADATA_VALUE).d(METADATA_KEY_TRUE, true).d(METADATA_KEY_FALSE, false));
+                   .d(METADATA_KEY, UNESCAPED_METADATA_VALUE)
+                   .d(METADATA_KEY_TRUE, true)
+                   .d(METADATA_KEY_FALSE, false));
     ASSERT_NE(g_log->m_lastText.find(METADATA_KEY KEY_VALUE_SEPARATOR ESCAPED_METADATA_VALUE), std::string::npos);
     ASSERT_NE(g_log->m_lastText.find(METADATA_EXPECTED_BOOLEANS), std::string::npos);
 }
@@ -649,8 +640,8 @@ TEST_F(LoggerTest, testChangeSinkLogger) {
     LoggerSinkManager::instance().changeSinkLogger(getLoggerTestLogger());
 }
 
-} // namespace test
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

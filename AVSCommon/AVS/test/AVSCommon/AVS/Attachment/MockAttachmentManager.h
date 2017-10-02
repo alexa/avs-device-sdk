@@ -18,7 +18,6 @@
 #ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_TEST_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_MANAGER_INTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_TEST_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_MANAGER_INTERFACE_H_
 
-
 #include <chrono>
 #include <string>
 #include <memory>
@@ -33,22 +32,20 @@ namespace attachment {
 namespace test {
 
 /// Mock class that implements the AttachmentManager.
-class MockAttachmentManager : public AttachmentManagerInterface{
+class MockAttachmentManager : public AttachmentManagerInterface {
 public:
-    MOCK_CONST_METHOD2(
-            generateAttachmentId,
-            std::string (const std::string & contextId, const std::string & contentId));
-    MOCK_METHOD1(setAttachmentTimeoutMinutes, bool (std::chrono::minutes timeoutMinutes));
-    MOCK_METHOD1(createWriter, std::unique_ptr<AttachmentWriter> (const std::string & attachmentId));
+    MOCK_CONST_METHOD2(generateAttachmentId, std::string(const std::string& contextId, const std::string& contentId));
+    MOCK_METHOD1(setAttachmentTimeoutMinutes, bool(std::chrono::minutes timeoutMinutes));
+    MOCK_METHOD1(createWriter, std::unique_ptr<AttachmentWriter>(const std::string& attachmentId));
     MOCK_METHOD2(
-            createReader,
-            std::unique_ptr<AttachmentReader> (const std::string & attachmentId, AttachmentReader::Policy policy));
+        createReader,
+        std::unique_ptr<AttachmentReader>(const std::string& attachmentId, AttachmentReader::Policy policy));
 };
 
-} // namespace test
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_TEST_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_MANAGER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_TEST_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_MANAGER_INTERFACE_H_

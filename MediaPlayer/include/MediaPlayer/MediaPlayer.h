@@ -30,6 +30,7 @@
 #include <gst/gst.h>
 #include <gst/app/gstappsrc.h>
 
+#include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/PlaylistParser/PlaylistParserInterface.h>
@@ -44,16 +45,19 @@ namespace mediaPlayer {
 /**
  * Class that handles creation of audio pipeline and playing of audio data.
  */
-class MediaPlayer :
-        public avsCommon::utils::mediaPlayer::MediaPlayerInterface,
-        private PipelineInterface {
+class MediaPlayer
+        : public avsCommon::utils::mediaPlayer::MediaPlayerInterface
+        , private PipelineInterface {
 public:
     /**
      * Creates an instance of the @c MediaPlayer.
      *
+     * @param contentFetcherFactory Used to create objects that can fetch remote HTTP content.
      * @return An instance of the @c MediaPlayer if successful else a @c nullptr.
      */
-    static std::shared_ptr<MediaPlayer> create();
+    static std::shared_ptr<MediaPlayer> create(
+        std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory =
+            nullptr);
 
     /**
      * Destructor.
@@ -63,9 +67,9 @@ public:
     /// @name Overridden MediaPlayerInterface methods.
     /// @{
     avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) override;
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(
-            std::shared_ptr<std::istream> stream, bool repeat) override;
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) override;
+    avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(std::shared_ptr<std::istream> stream, bool repeat)
+        override;
     avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(const std::string& url) override;
 
     avsCommon::utils::mediaPlayer::MediaPlayerStatus play() override;
@@ -76,7 +80,7 @@ public:
      * will reset the pipeline and source, and will not resume playback.
      */
     avsCommon::utils::mediaPlayer::MediaPlayerStatus resume() override;
-    int64_t getOffsetInMilliseconds() override;
+    std::chrono::milliseconds getOffset() override;
     /**
      * This function is a setter, storing @c offset to be consumed internally by @c play().
      * The function will always return MediaPlayerStatus::SUCCESS.
@@ -124,8 +128,7 @@ private:
         GstElement* pipeline;
 
         /// Constructor.
-        AudioPipeline()
-                :
+        AudioPipeline() :
                 appsrc{nullptr},
                 decoder{nullptr},
                 converter{nullptr},
@@ -135,8 +138,11 @@ private:
 
     /**
      * Constructor.
+     *
+     * @param contentFetcherFactory Used to create objects that can fetch remote HTTP content.
      */
-    MediaPlayer();
+    MediaPlayer(
+        std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory);
 
     /**
      * Initializes GStreamer and starts a main event loop on a new thread.
@@ -161,16 +167,18 @@ private:
     static gboolean onCallback(const std::function<gboolean()>* callback);
 
     /**
-     * Creates the @c AudioPipeline elements and links them together.
+     * Creates the @c AudioPipeline with the permanent elements and links them together.  The permanent elements
+     * are converter and audioSink.
      *
      * @return @c true if all the elements were created and linked successfully else @c false.
      */
     bool setupPipeline();
 
     /**
-     * Stops the currently playing audio and deletes the pipeline.
+     * Stops the currently playing audio and removes the transient elements.  The transient elements
+     * are appsrc and decoder.
      */
-    void tearDownPipeline();
+    void tearDownTransientPipelineElements();
 
     /*
      * Resets the @c AudioPipeline.
@@ -227,12 +235,10 @@ private:
      * @param reader The @c AttachmentReader with which to receive the audio to play.
      */
     void handleSetAttachmentReaderSource(
-            std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise,
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader);
+        std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader);
 
-    void handleSetSource(
-            std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus> promise,
-            std::string url);
+    void handleSetSource(std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus> promise, std::string url);
 
     /**
      * Worker thread handler for setting the source of audio to play.
@@ -242,9 +248,9 @@ private:
      * @param stream The source from which to receive the audio to play.
      */
     void handleSetIStreamSource(
-            std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise,
-            std::shared_ptr<std::istream> stream,
-            bool repeat);
+        std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise,
+        std::shared_ptr<std::istream> stream,
+        bool repeat);
 
     /**
      * Worker thread handler for starting playback of the current audio source.
@@ -290,7 +296,7 @@ private:
      *
      * @param promise A promise to fulfill with the offset once the value has been determined.
      */
-    void handleGetOffsetInMilliseconds(std::promise<int64_t>* promise);
+    void handleGetOffset(std::promise<std::chrono::milliseconds>* promise);
 
     /**
      * Worker thread handler for setting the playback position.
@@ -299,8 +305,8 @@ private:
      * @param offset The offset to start playing from.
      */
     void handleSetOffset(
-            std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise,
-            std::chrono::milliseconds offset);
+        std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise,
+        std::chrono::milliseconds offset);
 
     /**
      * Worker thread handler for setting the observer.
@@ -309,8 +315,8 @@ private:
      * @param observer The new observer.
      */
     void handleSetObserver(
-            std::promise<void>* promise,
-            std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer);
+        std::promise<void>* promise,
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer);
 
     /**
      * Sends the playback started notification to the observer.
@@ -335,9 +341,12 @@ private:
     /**
      * Sends the playback error notification to the observer.
      *
+     * @param type The error type.
      * @param error The error details.
      */
-    void sendPlaybackError(const std::string& error);
+    void sendPlaybackError(
+        const alexaClientSDK::avsCommon::utils::mediaPlayer::ErrorType& type,
+        const std::string& error);
 
     /**
      * Sends the buffer underrun notification to the observer.
@@ -358,6 +367,14 @@ private:
     bool queryIsSeekable(bool* isSeekable);
 
     /**
+     * Used to obtain the current buffering status of the pipeline.
+     *
+     * @param[out] buffering Whether the pipeline is currently buffering.
+     * @return A boolean indicating whether the operation was successful.
+     */
+    bool queryBufferingStatus(bool* buffering);
+
+    /**
      * Performs a seek to the @c seekPoint.
      *
      * @return A boolean indicating whether the seek operation was successful.
@@ -366,6 +383,9 @@ private:
 
     /// An instance of the @c OffsetManager.
     OffsetManager m_offsetManager;
+
+    /// Used to create objects that can fetch remote HTTP content.
+    std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> m_contentFetcherFactory;
 
     /// An instance of the @c AudioPipeline.
     AudioPipeline m_pipeline;
@@ -401,7 +421,7 @@ private:
     std::shared_ptr<SourceInterface> m_source;
 };
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_MEDIA_PLAYER_H_
+#endif  // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_MEDIA_PLAYER_H_

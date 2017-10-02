@@ -43,11 +43,12 @@ public:
      * @param attachmentContextId The contextId required to get attachments from the AttachmentManager.
      * @return The created AVSDirective object or @c nullptr if creation failed.
      */
-    static std::unique_ptr<AVSDirective> create(const std::string& unparsedDirective,
+    static std::unique_ptr<AVSDirective> create(
+        const std::string& unparsedDirective,
         std::shared_ptr<AVSMessageHeader> avsMessageHeader,
         const std::string& payload,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
-        const std::string & attachmentContextId);
+        const std::string& attachmentContextId);
 
     /**
      * Returns a reader for the attachment associated with this directive.
@@ -57,7 +58,8 @@ public:
      * @return An attachment reader or @c nullptr if no attachment was found with the given @c contentId.
      */
     std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> getAttachmentReader(
-            const std::string & contentId, avsCommon::avs::attachment::AttachmentReader::Policy readerPolicy) const;
+        const std::string& contentId,
+        avsCommon::avs::attachment::AttachmentReader::Policy readerPolicy) const;
 
     /**
      * Returns the underlying unparsed directive.
@@ -74,11 +76,12 @@ private:
      * @param attachmentManager The attachment manager object.
      * @param attachmentContextId The contextId required to get attachments from the AttachmentManager.
      */
-    AVSDirective(const std::string& unparsedDirective,
+    AVSDirective(
+        const std::string& unparsedDirective,
         std::shared_ptr<AVSMessageHeader> avsMessageHeader,
         const std::string& payload,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
-        const std::string & attachmentContextId);
+        const std::string& attachmentContextId);
 
     /// The unparsed directive JSON string from AVS.
     const std::string m_unparsedDirective;
@@ -88,8 +91,8 @@ private:
     std::string m_attachmentContextId;
 };
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_AVS_DIRECTIVE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_AVS_DIRECTIVE_H_

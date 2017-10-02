@@ -86,7 +86,7 @@ public:
  * @return The @c ostream that was passed in and written to.
  */
 inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterface::State& state) {
-    switch(state) {
+    switch (state) {
         case AuthObserverInterface::State::UNINITIALIZED:
             stream << "UNINTIALIZED";
             break;
@@ -111,7 +111,7 @@ inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterfac
  * @return The @c ostream that was passed in and written to.
  */
 inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterface::Error& error) {
-    switch(error) {
+    switch (error) {
         case AuthObserverInterface::Error::NO_ERROR:
             stream << "NO_ERROR";
             break;
@@ -140,8 +140,8 @@ inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterfac
     return stream;
 }
 
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_AUTH_OBSERVER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_AUTH_OBSERVER_INTERFACE_H_

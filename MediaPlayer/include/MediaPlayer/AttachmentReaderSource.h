@@ -30,7 +30,6 @@
 namespace alexaClientSDK {
 namespace mediaPlayer {
 
-
 class AttachmentReaderSource : public BaseStreamSource {
 public:
     /**
@@ -42,10 +41,15 @@ public:
      * @return An instance of the @c AttachmentReaderSource if successful else a @c nullptr.
      */
     static std::unique_ptr<AttachmentReaderSource> create(
-            PipelineInterface* pipeline,
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader);
+        PipelineInterface* pipeline,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader);
 
     ~AttachmentReaderSource();
+
+    /// @name Overridden SourceInterface methods.
+    /// @{
+    bool isPlaybackRemote() const override;
+    /// @}
 
 private:
     /**
@@ -55,14 +59,15 @@ private:
      * @param attachmentReader The @c AttachmentReader from which to create the pipeline source from.
      */
     AttachmentReaderSource(
-            PipelineInterface* pipeline,
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader);
+        PipelineInterface* pipeline,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader);
 
     /// @name Overridden BaseStreamSource methods.
     /// @{
     bool isOpen() override;
     void close() override;
     gboolean handleReadData() override;
+    void terminate() override{};
     /// @}
 
 private:
@@ -70,8 +75,7 @@ private:
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_reader;
 };
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_ATTACHMENT_READER_SOURCE_H_
-
+#endif  // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_ATTACHMENT_READER_SOURCE_H_

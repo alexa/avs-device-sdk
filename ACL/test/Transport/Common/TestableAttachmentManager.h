@@ -35,23 +35,24 @@ public:
      */
     TestableAttachmentManager();
 
-    std::string generateAttachmentId(const std::string & contextId, const std::string & contentId) const override;
+    std::string generateAttachmentId(const std::string& contextId, const std::string& contentId) const override;
 
     bool setAttachmentTimeoutMinutes(std::chrono::minutes timeoutMinutes) override;
 
     std::unique_ptr<avsCommon::avs::attachment::AttachmentWriter> createWriter(
-            const std::string & attachmentId) override;
+        const std::string& attachmentId) override;
 
     std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> createReader(
-            const std::string & attachmentId, avsCommon::avs::attachment::AttachmentReader::Policy policy) override;
+        const std::string& attachmentId,
+        avsCommon::avs::attachment::AttachmentReader::Policy policy) override;
 
 private:
     /// The real AttachmentManager that most functionality routes to.
     std::unique_ptr<avsCommon::avs::attachment::AttachmentManager> m_manager;
 };
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_ATTACHMENT_MANAGER_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_ATTACHMENT_MANAGER_H_

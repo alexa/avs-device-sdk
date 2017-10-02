@@ -29,7 +29,6 @@ namespace logger {
 /// LogEntry is used to compile the log entry text to log via Logger.
 class LogEntry {
 public:
-
     /**
      * Constructor.
      * @param source The name of the source of this log entry.
@@ -74,7 +73,7 @@ public:
      * @param value The value to add to this LogEntry.
      * @return This instance to facilitate adding more information to this log entry.
      */
-    template<typename ValueType>
+    template <typename ValueType>
     inline LogEntry& d(const char* key, const ValueType& value);
 
     /**
@@ -85,7 +84,7 @@ public:
      * @param value The value to add to this LogEntry.
      * @return This instance to facilitate adding more information to this log entry.
      */
-    template<typename ValueType>
+    template <typename ValueType>
     inline LogEntry& sensitive(const char* key, const ValueType& value);
 
     /**
@@ -137,7 +136,7 @@ private:
     LogEntryStream m_stream;
 };
 
-template<typename ValueType>
+template <typename ValueType>
 LogEntry& LogEntry::d(const char* key, const ValueType& value) {
     prefixKeyValuePair();
     m_stream << key << KEY_VALUE_SEPARATOR << value;
@@ -147,20 +146,20 @@ LogEntry& LogEntry::d(const char* key, const ValueType& value) {
 // Define ACSDK_EMIT_SENSITIVE_LOGS if you want to include sensitive data in log output.
 #ifdef ACSDK_EMIT_SENSITIVE_LOGS
 
-template<typename ValueType>
+template <typename ValueType>
 LogEntry& LogEntry::sensitive(const char* key, const ValueType& value) {
     return d(key, value);
 }
 #else
-template<typename ValueType>
+template <typename ValueType>
 LogEntry& LogEntry::sensitive(const char* key, const ValueType& value) {
     return *this;
 }
 #endif
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOG_ENTRY_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOG_ENTRY_H_

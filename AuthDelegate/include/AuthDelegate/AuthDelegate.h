@@ -41,7 +41,6 @@ namespace authDelegate {
  */
 class AuthDelegate : public avsCommon::sdkInterfaces::AuthDelegateInterface {
 public:
-
     /**
      * Create an AuthDelegate.
      * This function cannot be called if:
@@ -92,7 +91,6 @@ public:
     std::string getAuthToken() override;
 
 private:
-
     /**
      * AuthDelegate constructor.
      *
@@ -137,10 +135,8 @@ private:
      * @param suffix The string immediately succeeding the value to parse
      * @return The substring found between prefix and suffix.
      */
-    std::string parseResponseValue(
-            const std::string& response,
-            const std::string& prefix,
-            const std::string& suffix) const;
+    std::string parseResponseValue(const std::string& response, const std::string& prefix, const std::string& suffix)
+        const;
 
     /**
      * Determine if the auth token has expired.
@@ -151,7 +147,7 @@ private:
 
     /**
      * Set the authorization state to be reported to our client.  If the state has changed, notify the client.
-     * 
+     *
      * @param newState The new state.
      */
     void setState(avsCommon::sdkInterfaces::AuthObserverInterface::State newState);
@@ -235,8 +231,7 @@ private:
     std::unique_ptr<HttpPostInterface> m_HttpPost;
 };
 
-} // namespace authDelegate
-} // namespace alexaClientSDK
+}  // namespace authDelegate
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_AUTH_DELEGATE_H_
-
+#endif  // ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_AUTH_DELEGATE_H_

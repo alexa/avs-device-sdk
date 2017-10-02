@@ -41,8 +41,8 @@ std::string createRandomAlphabetString(int stringSize);
  */
 int generateRandomNumber(int min, int max);
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_COMMON_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_COMMON_H_

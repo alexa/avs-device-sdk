@@ -36,9 +36,8 @@ public:
      *
      * @param stream The shared data stream to write to.
      * @return A unique_ptr to a @c PortAudioMicrophoneWrapper if creation was successful and @c nullptr otherwise.
-     */ 
-    static std::unique_ptr<PortAudioMicrophoneWrapper> create(
-            std::shared_ptr<avsCommon::avs::AudioInputStream> stream);
+     */
+    static std::unique_ptr<PortAudioMicrophoneWrapper> create(std::shared_ptr<avsCommon::avs::AudioInputStream> stream);
 
     /**
      * Stops streaming from the microphone.
@@ -62,14 +61,14 @@ public:
 private:
     /**
      * Constructor.
-     * 
+     *
      * @param stream The shared data stream to write to.
      */
     PortAudioMicrophoneWrapper(std::shared_ptr<avsCommon::avs::AudioInputStream> stream);
 
     /**
      * The callback that PortAudio will issue when audio is avaiable to read.
-     * 
+     *
      * @param inputBuffer The temporary buffer that microphone audio data will be available in.
      * @param outputBuffer Not used here.
      * @param numSamples The number of samples available to consume.
@@ -79,12 +78,12 @@ private:
      * @return A PortAudio code that will indicate how PortAudio should continue.
      */
     static int PortAudioCallback(
-            const void* inputBuffer,
-            void* outputBuffer,
-            unsigned long numSamples,
-            const PaStreamCallbackTimeInfo* timeInfo,
-            PaStreamCallbackFlags statusFlags,
-            void* userData);
+        const void* inputBuffer,
+        void* outputBuffer,
+        unsigned long numSamples,
+        const PaStreamCallbackTimeInfo* timeInfo,
+        PaStreamCallbackFlags statusFlags,
+        void* userData);
 
     /// Initializes PortAudio
     bool initialize();
@@ -99,13 +98,13 @@ private:
     PaStream* m_paStream;
 
     /**
-     * A lock to seralize access to startStreamingMicrophoneData() and stopStreamingMicrophoneData() between different 
+     * A lock to seralize access to startStreamingMicrophoneData() and stopStreamingMicrophoneData() between different
      * threads.
      */
     std::mutex m_mutex;
 };
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_PORT_AUDIO_MICROPHONE_WRAPPER_H_
+#endif  // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_PORT_AUDIO_MICROPHONE_WRAPPER_H_

@@ -41,7 +41,8 @@ public:
      * @params attachmentManager The attachment manager.
      */
     HTTP2StreamPool(
-        const int maxStreams, std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager);
+        const int maxStreams,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager);
 
     /**
      * Grabs an HTTP2Stream from the pool and configures it to be an HTTP GET.
@@ -51,8 +52,10 @@ public:
      * @param messageConsumer The MessageConsumerInterface to pass messages to.
      * @return An HTTP2Stream from the stream pool, or @c nullptr if there was an error.
      */
-    std::shared_ptr<HTTP2Stream> createGetStream(const std::string& url, const std::string& authToken,
-            MessageConsumerInterface *messageConsumer);
+    std::shared_ptr<HTTP2Stream> createGetStream(
+        const std::string& url,
+        const std::string& authToken,
+        std::shared_ptr<MessageConsumerInterface> messageConsumer);
 
     /**
      * Grabs an HTTP2Stream from the pool and configures it to be an HTTP POST.
@@ -63,14 +66,18 @@ public:
      * @param messageConsumer The MessageConsumerInterface to pass messages to.
      * @return An HTTP2Stream from the stream pool, or @c nullptr if there was an error.
      */
-    std::shared_ptr<HTTP2Stream> createPostStream(const std::string& url, const std::string& authToken,
-            std::shared_ptr<avsCommon::avs::MessageRequest> request, MessageConsumerInterface *messageConsumer);
+    std::shared_ptr<HTTP2Stream> createPostStream(
+        const std::string& url,
+        const std::string& authToken,
+        std::shared_ptr<avsCommon::avs::MessageRequest> request,
+        std::shared_ptr<MessageConsumerInterface> messageConsumer);
 
     /**
      * Returns an HTTP2Stream back into the pool.
      * @param context Returns the given EventStream back into the pool.
      */
     void releaseStream(std::shared_ptr<HTTP2Stream> stream);
+
 private:
     /**
      * Gets a stream from the stream pool  If the pool is empty, returns a new HTTP2Stream.
@@ -78,21 +85,29 @@ private:
      * @param messageConsumer The MessageConsumerInterface which should receive messages from AVS.
      * @return an HTTP2Stream from the pool, a new stream, or @c nullptr if there are too many active streams.
      */
-    std::shared_ptr<HTTP2Stream> getStream(MessageConsumerInterface *messageConsumer);
+    std::shared_ptr<HTTP2Stream> getStream(std::shared_ptr<MessageConsumerInterface> messageConsumer);
 
     /// A growing pool of EventStreams.
     std::vector<std::shared_ptr<HTTP2Stream>> m_pool;
     /// Mutex used to lock the EventStream pool.
     std::mutex m_mutex;
-    /// The number of streams that have been released from the pool.
-    std::atomic<int> m_numRemovedStreams;
+    /// The number of streams that have been acquired from the pool.
+    int m_numAcquiredStreams;
     /// The maximum number of streams that can be active in the pool.
     const int m_maxStreams;
     /// The attachment manager.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
+    /**
+     * A static counter to ensure each newly acquired stream across all pools has a different ID.  The notion of a
+     * stream ID is needed to provide a per-HTTP/2-stream context for any given attachment received from AVS.  AVS
+     * can only guarantee that the identifying 'contentId' for an attachment is unique within a HTTP/2 stream,
+     * hence this variable.
+     * @note: These IDs are not to be confused with HTTP2's internal stream IDs.
+     */
+    static unsigned int m_nextStreamId;
 };
 
-} // acl
-} // alexaClientSDK
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_STREAM_POOL_H_
+#endif  // ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_STREAM_POOL_H_

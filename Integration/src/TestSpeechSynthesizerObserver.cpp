@@ -23,7 +23,7 @@ namespace test {
 
 using avsCommon::sdkInterfaces::SpeechSynthesizerObserver;
 
-TestSpeechSynthesizerObserver::TestSpeechSynthesizerObserver(): 
+TestSpeechSynthesizerObserver::TestSpeechSynthesizerObserver() :
         m_state(SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED) {
 }
 
@@ -35,14 +35,15 @@ void TestSpeechSynthesizerObserver::onStateChanged(SpeechSynthesizerObserver::Sp
 }
 
 bool TestSpeechSynthesizerObserver::checkState(
-        const SpeechSynthesizerObserver::SpeechSynthesizerState expectedState, const std::chrono::seconds duration) {
+    const SpeechSynthesizerObserver::SpeechSynthesizerState expectedState,
+    const std::chrono::seconds duration) {
     // Pull the front of the state queue
     SpeechSynthesizerObserver::SpeechSynthesizerState hold = waitForNext(duration);
     return hold == expectedState;
 }
 
-SpeechSynthesizerObserver::SpeechSynthesizerState TestSpeechSynthesizerObserver::waitForNext (
-        const std::chrono::seconds duration) {
+SpeechSynthesizerObserver::SpeechSynthesizerState TestSpeechSynthesizerObserver::waitForNext(
+    const std::chrono::seconds duration) {
     SpeechSynthesizerObserver::SpeechSynthesizerState ret;
     std::unique_lock<std::mutex> lock(m_mutex);
     if (!m_wakeTrigger.wait_for(lock, duration, [this]() { return !m_queue.empty(); })) {
@@ -57,6 +58,6 @@ SpeechSynthesizerObserver::SpeechSynthesizerState TestSpeechSynthesizerObserver:
     return m_state;
 }
 
-} // namespace test
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace integration
+}  // namespace alexaClientSDK

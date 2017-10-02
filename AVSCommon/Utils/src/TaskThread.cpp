@@ -22,10 +22,7 @@ namespace avsCommon {
 namespace utils {
 namespace threading {
 
-
-TaskThread::TaskThread(std::shared_ptr<TaskQueue> taskQueue) :
-    m_taskQueue{taskQueue},
-    m_shutdown{false} {
+TaskThread::TaskThread(std::shared_ptr<TaskQueue> taskQueue) : m_taskQueue{taskQueue}, m_shutdown{false} {
 }
 
 TaskThread::~TaskThread() {
@@ -62,7 +59,7 @@ void TaskThread::processTasksLoop() {
     }
 }
 
-} // namespace threading
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace threading
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

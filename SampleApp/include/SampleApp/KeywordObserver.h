@@ -40,13 +40,14 @@ public:
      * @param audioProvider The audio provider from which to stream audio data from.
      */
     KeywordObserver(
-            std::shared_ptr<defaultClient::DefaultClient> client, capabilityAgents::aip::AudioProvider audioProvider);            
+        std::shared_ptr<defaultClient::DefaultClient> client,
+        capabilityAgents::aip::AudioProvider audioProvider);
 
     void onKeyWordDetected(
-            std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
-            std::string keyword,
-            avsCommon::avs::AudioInputStream::Index beginIndex,
-            avsCommon::avs::AudioInputStream::Index endIndex) override;
+        std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+        std::string keyword,
+        avsCommon::avs::AudioInputStream::Index beginIndex,
+        avsCommon::avs::AudioInputStream::Index endIndex) override;
 
 private:
     /// The default SDK client.
@@ -56,7 +57,7 @@ private:
     capabilityAgents::aip::AudioProvider m_audioProvider;
 };
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_KEYWORD_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_KEYWORD_OBSERVER_H_

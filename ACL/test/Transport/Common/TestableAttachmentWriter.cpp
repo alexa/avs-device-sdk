@@ -25,9 +25,12 @@ namespace test {
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::utils::sds;
 
-TestableAttachmentWriter::TestableAttachmentWriter(std::shared_ptr<InProcessSDS> dummySDS,
-        std::unique_ptr<AttachmentWriter> writer) :
-        InProcessAttachmentWriter{dummySDS}, m_writer{std::move(writer)}, m_hasWriteBeenInvoked{false} {
+TestableAttachmentWriter::TestableAttachmentWriter(
+    std::shared_ptr<InProcessSDS> dummySDS,
+    std::unique_ptr<AttachmentWriter> writer) :
+        InProcessAttachmentWriter{dummySDS},
+        m_writer{std::move(writer)},
+        m_hasWriteBeenInvoked{false} {
 }
 
 std::size_t TestableAttachmentWriter::write(const void* buf, std::size_t numBytes, WriteStatus* writeStatus) {
@@ -54,6 +57,6 @@ void TestableAttachmentWriter::close() {
     m_writer->close();
 }
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK

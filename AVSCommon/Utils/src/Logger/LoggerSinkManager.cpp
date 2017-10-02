@@ -48,9 +48,7 @@ void LoggerSinkManager::removeSinkObserver(SinkObserverInterface* observer) {
         return;
     }
     std::lock_guard<std::mutex> lock(m_sinkObserverMutex);
-    m_sinkObservers.erase(
-        std::remove(m_sinkObservers.begin(), m_sinkObservers.end(), observer),
-        m_sinkObservers.end());
+    m_sinkObservers.erase(std::remove(m_sinkObservers.begin(), m_sinkObservers.end(), observer), m_sinkObservers.end());
 }
 
 void LoggerSinkManager::changeSinkLogger(Logger& sink) {
@@ -74,11 +72,10 @@ void LoggerSinkManager::changeSinkLogger(Logger& sink) {
     }
 }
 
-LoggerSinkManager::LoggerSinkManager() :
-    m_sink(&ACSDK_GET_SINK_LOGGER()) {
+LoggerSinkManager::LoggerSinkManager() : m_sink(&ACSDK_GET_SINK_LOGGER()) {
 }
 
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

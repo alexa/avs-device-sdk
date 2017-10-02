@@ -18,7 +18,6 @@
 #ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_MANAGER_INTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_MANAGER_INTERFACE_H_
 
-
 #include <chrono>
 #include <string>
 #include <memory>
@@ -64,7 +63,7 @@ public:
      * @param contentId The contentId, which is considered unique when paired with a particular contextId.
      * @return The combined strings, which may be then used as a single attachmentId, per the logic outlined above.
      */
-    virtual std::string generateAttachmentId(const std::string & contextId, const std::string & contentId) const = 0;
+    virtual std::string generateAttachmentId(const std::string& contextId, const std::string& contentId) const = 0;
 
     /**
      * Sets the timeout parameter which is used to ensure unused attachments are eventually cleaned up.  This
@@ -89,7 +88,7 @@ public:
      * @param attachmentId The id of the @c Attachment.
      * @return An @c AttachmentWriter.
      */
-    virtual std::unique_ptr<AttachmentWriter> createWriter(const std::string & attachmentId) = 0;
+    virtual std::unique_ptr<AttachmentWriter> createWriter(const std::string& attachmentId) = 0;
 
     /**
      * Returns a pointer to an @c AttachmentReader.
@@ -100,12 +99,13 @@ public:
      * @return An @c AttachmentReader.
      */
     virtual std::unique_ptr<AttachmentReader> createReader(
-            const std::string & attachmentId, AttachmentReader::Policy policy) = 0;
+        const std::string& attachmentId,
+        AttachmentReader::Policy policy) = 0;
 };
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_MANAGER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_MANAGER_INTERFACE_H_

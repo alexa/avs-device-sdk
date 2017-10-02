@@ -148,7 +148,7 @@ TEST_F(AttachmentTest, testAttachmentCreateMultipleWriters) {
     ASSERT_EQ(writer2, nullptr);
 }
 
-} // namespace test
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

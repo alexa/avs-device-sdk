@@ -27,7 +27,6 @@ namespace mediaPlayer {
  * TODO ACSDK-459: Implement support for seeking across playlists.
  */
 class OffsetManager {
-
 public:
     /**
      * Constructor with initialization of members.
@@ -75,7 +74,6 @@ public:
     void clear();
 
 private:
-
     /// The seekpoint in milliseconds.
     std::chrono::milliseconds m_seekPoint;
 
@@ -86,7 +84,7 @@ private:
     bool m_isSeekPointSet;
 };
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_OFFSET_MANAGER_H_
+#endif  // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_OFFSET_MANAGER_H_

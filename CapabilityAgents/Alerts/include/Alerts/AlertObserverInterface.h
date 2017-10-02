@@ -33,6 +33,8 @@ public:
      * An enum class to represent the states an alert can be in.
      */
     enum class State {
+        /// The alert is ready to start, and is waiting for channel focus.
+        READY,
         /// The alert has started.
         STARTED,
         /// The alert has stopped due to user or system intervention.
@@ -63,11 +65,54 @@ public:
      * @param state The state of the alert.
      * @param reason The reason for the state change.
      */
-    virtual void onAlertStateChange(const std::string & alertToken, State state, const std::string & reason = "") = 0;
+    virtual void onAlertStateChange(const std::string& alertToken, State state, const std::string& reason = "") = 0;
+
+    /**
+     * Convert a @c State to a @c std::string.
+     *
+     * @param state The @c State to convert.
+     * @return The string representation of @c state.
+     */
+    static std::string stateToString(State state);
 };
 
-} // namespace alerts
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+inline std::string AlertObserverInterface::stateToString(State state) {
+    switch (state) {
+        case State::READY:
+            return "READY";
+        case State::STARTED:
+            return "STARTED";
+        case State::STOPPED:
+            return "STOPPED";
+        case State::SNOOZED:
+            return "SNOOZED";
+        case State::COMPLETED:
+            return "COMPLETED";
+        case State::PAST_DUE:
+            return "PAST_DUE";
+        case State::FOCUS_ENTERED_FOREGROUND:
+            return "FOCUS_ENTERED_FOREGROUND";
+        case State::FOCUS_ENTERED_BACKGROUND:
+            return "FOCUS_ENTERED_BACKGROUND";
+        case State::ERROR:
+            return "ERROR";
+    }
+    return "unknown State";
+}
 
-#endif // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_ALERT_OBSERVER_INTERFACE_H_
+/**
+ * Write a @c State value to an @c ostream.
+ *
+ * @param stream The stream to write the value to.
+ * @param state The @c State value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const AlertObserverInterface::State& state) {
+    return stream << AlertObserverInterface::stateToString(state);
+}
+
+}  // namespace alerts
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
+
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_ALERT_OBSERVER_INTERFACE_H_

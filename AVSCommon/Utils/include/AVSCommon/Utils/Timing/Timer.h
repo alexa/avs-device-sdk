@@ -58,7 +58,7 @@ public:
         /**
          * The period specifies the time from the end of one task call to the start of the next task call.  This period
          * type ensures a specific amount of idle time between task calls.
-         */ 
+         */
         RELATIVE
     };
 
@@ -95,14 +95,14 @@ public:
      * @param args The arguments to call the task with.
      * @returns @c true if the timer started, else @c false.
      */
-    template<typename Rep, typename Period, typename Task, typename... Args>
+    template <typename Rep, typename Period, typename Task, typename... Args>
     bool start(
         const std::chrono::duration<Rep, Period>& delay,
         const std::chrono::duration<Rep, Period>& period,
         PeriodType periodType,
         size_t maxCount,
         Task task,
-        Args &&... args);
+        Args&&... args);
 
     /**
      * Submits a callable type (function, lambda expression, bind expression, or another function object) to be
@@ -125,13 +125,13 @@ public:
      * @param args The arguments to call @c task with.
      * @returns @c true if the timer started, else @c false.
      */
-    template<typename Rep, typename Period, typename Task, typename... Args>
+    template <typename Rep, typename Period, typename Task, typename... Args>
     bool start(
         const std::chrono::duration<Rep, Period>& period,
         PeriodType periodType,
         size_t maxCount,
         Task task,
-        Args &&... args);
+        Args&&... args);
 
     /**
      * Submits a callable type (function, lambda expression, bind expression, or another function object) to be
@@ -151,11 +151,9 @@ public:
      * @returns A valid @c std::future for the return value of @c task if the timer started, else an invalid
      *     @c std::future.  Note that the promise will be broken if @c stop() is called before @c task is called.
      */
-    template<typename Rep, typename Period, typename Task, typename... Args>
-    auto start(
-        const std::chrono::duration<Rep, Period>& delay,
-        Task task,
-        Args &&... args) -> std::future<decltype(task(args...))>;
+    template <typename Rep, typename Period, typename Task, typename... Args>
+    auto start(const std::chrono::duration<Rep, Period>& delay, Task task, Args&&... args)
+        -> std::future<decltype(task(args...))>;
 
     /**
      * Stops the @c Timer (if running).  This will not interrupt an active call to the task, but will prevent any
@@ -198,7 +196,7 @@ private:
      *     @c PeriodType::ABSOLUTE and the task runtime exceeds @c period.
      * @param task A callable type representing a task.
      */
-    template<typename Rep, typename Period>
+    template <typename Rep, typename Period>
     void callTask(
         std::chrono::duration<Rep, Period> delay,
         std::chrono::duration<Rep, Period> period,
@@ -230,20 +228,19 @@ private:
     bool m_stopping;
 };
 
-template<typename Rep, typename Period, typename Task, typename... Args>
+template <typename Rep, typename Period, typename Task, typename... Args>
 bool Timer::start(
     const std::chrono::duration<Rep, Period>& delay,
     const std::chrono::duration<Rep, Period>& period,
     PeriodType periodType,
     size_t maxCount,
     Task task,
-    Args &&... args) {
-
+    Args&&... args) {
     if (delay < std::chrono::duration<Rep, Period>::zero()) {
         logger::acsdkError(logger::LogEntry(TAG, "startFailed").d("reason", "negativeDelay"));
         return false;
     }
-    if(period < std::chrono::duration<Rep, Period>::zero()) {
+    if (period < std::chrono::duration<Rep, Period>::zero()) {
         logger::acsdkError(logger::LogEntry(TAG, "startFailed").d("reason", "negativePeriod"));
         return false;
     }
@@ -267,35 +264,25 @@ bool Timer::start(
     auto translatedTask = [boundTask]() { boundTask->operator()(); };
 
     // Kick off the new timer thread.
-    m_thread = std::thread{std::bind(
-        &Timer::callTask<Rep, Period>,
-        this,
-        delay,
-        period,
-        periodType,
-        maxCount,
-        translatedTask)};
+    m_thread = std::thread{
+        std::bind(&Timer::callTask<Rep, Period>, this, delay, period, periodType, maxCount, translatedTask)};
 
     return true;
 }
 
-template<typename Rep, typename Period, typename Task, typename... Args>
+template <typename Rep, typename Period, typename Task, typename... Args>
 bool Timer::start(
     const std::chrono::duration<Rep, Period>& period,
     PeriodType periodType,
     size_t maxCount,
     Task task,
-    Args &&... args) {
-
+    Args&&... args) {
     return start(period, period, periodType, maxCount, std::forward<Task>(task), std::forward<Args>(args)...);
 }
 
-template<typename Rep, typename Period, typename Task, typename... Args>
-auto Timer::start(
-    const std::chrono::duration<Rep, Period>& delay,
-    Task task,
-    Args &&... args) -> std::future<decltype(task(args...))> {
-
+template <typename Rep, typename Period, typename Task, typename... Args>
+auto Timer::start(const std::chrono::duration<Rep, Period>& delay, Task task, Args&&... args)
+    -> std::future<decltype(task(args...))> {
     // Can't start if already running.
     if (!activate()) {
         logger::acsdkError(logger::LogEntry(TAG, "startFailed").d("reason", "timerAlreadyActive"));
@@ -324,26 +311,19 @@ auto Timer::start(
 
     // Kick off the new timer thread.
     static const size_t once = 1;
-    m_thread = std::thread{std::bind(
-        &Timer::callTask<Rep, Period>,
-        this,
-        delay,
-        delay,
-        PeriodType::ABSOLUTE,
-        once,
-        translatedTask)};
+    m_thread = std::thread{
+        std::bind(&Timer::callTask<Rep, Period>, this, delay, delay, PeriodType::ABSOLUTE, once, translatedTask)};
 
     return packagedTask->get_future();
 }
 
-template<typename Rep, typename Period>
+template <typename Rep, typename Period>
 void Timer::callTask(
     std::chrono::duration<Rep, Period> delay,
     std::chrono::duration<Rep, Period> period,
     PeriodType periodType,
     size_t maxCount,
     std::function<void()> task) {
-
     // Timepoint to measure delay/period against.
     auto now = std::chrono::steady_clock::now();
 
@@ -364,36 +344,35 @@ void Timer::callTask(
         }
 
         switch (periodType) {
-        case PeriodType::ABSOLUTE:
-            // Update our estimate of where we should be after the delay.
-            now += waitTime;
+            case PeriodType::ABSOLUTE:
+                // Update our estimate of where we should be after the delay.
+                now += waitTime;
 
-            // Run the task if we're still on schedule.
-            if (!offSchedule) {
+                // Run the task if we're still on schedule.
+                if (!offSchedule) {
+                    task();
+                }
+
+                // If the task runtime put us off schedule, skip the next task run.
+                if (now + period < std::chrono::steady_clock::now()) {
+                    offSchedule = true;
+                } else {
+                    offSchedule = false;
+                }
+                break;
+
+            case PeriodType::RELATIVE:
                 task();
-            }
-
-            // If the task runtime put us off schedule, skip the next task run.
-            if (now + period < std::chrono::steady_clock::now()) {
-                offSchedule = true;
-            } else {
-                offSchedule = false;
-            }
-            break;
-
-        case PeriodType::RELATIVE:
-            task();
-            now = std::chrono::steady_clock::now();
-            break;
+                now = std::chrono::steady_clock::now();
+                break;
         }
     }
     m_running = false;
 }
 
+}  // namespace timing
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-} // namespace timing
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
-
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_TIMING_TIMER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_TIMING_TIMER_H_

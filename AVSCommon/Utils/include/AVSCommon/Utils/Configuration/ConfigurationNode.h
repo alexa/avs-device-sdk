@@ -53,9 +53,9 @@ namespace configuration {
  * @endcode
  *
  * The configuration is specified via JSON documents with a root object that corresponds to the root
- * @c ConfigurationNode value returned by ConfigurationNode::getRoot().  ConfiguriatonNode Sub-nodes accessed by operator[<key>]
- * correspond to JSON objects values with the of the name <key>.  So, the code example above would return
- * "someStringValue" if the configuration was initialized with the following JSON document:
+ * @c ConfigurationNode value returned by ConfigurationNode::getRoot().  ConfiguriatonNode Sub-nodes accessed by
+ * operator[<key>] correspond to JSON objects values with the of the name <key>.  So, the code example above would
+ * return "someStringValue" if the configuration was initialized with the following JSON document:
  * @code
  *     {
  *         "someComponent" : {
@@ -85,7 +85,7 @@ public:
      *
      * @return Whether the initialization was successful.
      */
-    static bool initialize(const std::vector<std::istream *> &jsonStreams);
+    static bool initialize(const std::vector<std::istream*>& jsonStreams);
 
     /**
      * Uninitialize the global configuration.
@@ -115,7 +115,7 @@ public:
      * @c false if not specified.
      * @return Whether this @c ConfigurationNode has a @c bool value for @c key.
      */
-    bool getBool(const std::string& key, bool *out = nullptr, bool defaultValue = false) const;
+    bool getBool(const std::string& key, bool* out = nullptr, bool defaultValue = false) const;
 
     /**
      * Get @c int value for @c key from this @c ConfigurationNode.
@@ -126,7 +126,7 @@ public:
      * Zero if not specified.
      * @return Whether this @c ConfigurationNode has an @c int value for @c key.
      */
-    bool getInt(const std::string& key, int *out = nullptr, int defaultValue = 0) const;
+    bool getInt(const std::string& key, int* out = nullptr, int defaultValue = 0) const;
 
     /**
      * Get the @c string value for @c key from this @c ConfigurationNode.
@@ -152,11 +152,11 @@ public:
      * value for @c key.  Zero if not specified.
      * @return Whether this @c ConfigurationNode has an integer value for @c key.
      */
-    template<typename InputType, typename OutputType, typename DefaultType>
+    template <typename InputType, typename OutputType, typename DefaultType>
     bool getDuration(
-            const std::string& key,
-            OutputType* out = static_cast<std::chrono::seconds>(0),
-            DefaultType defaultValue = std::chrono::seconds(0)) const;
+        const std::string& key,
+        OutputType* out = static_cast<std::chrono::seconds>(0),
+        DefaultType defaultValue = std::chrono::seconds(0)) const;
 
     /**
      * operator[] to get @c ConfigurationNode value for @c key from this @c ConfigurationNode.
@@ -205,13 +205,13 @@ private:
      * @param getType rapidjson::Value member function to get the desired type.
      * @return Whether a value of the specified @c Type is present for @c key.
      */
-    template<typename Type>
+    template <typename Type>
     bool getValue(
-            const std::string& key,
-            Type *out,
-            Type defaultValue,
-            bool (rapidjson::Value::*isType)() const,
-            Type (rapidjson::Value::*getType)() const) const;
+        const std::string& key,
+        Type* out,
+        Type defaultValue,
+        bool (rapidjson::Value::*isType)() const,
+        Type (rapidjson::Value::*getType)() const) const;
 
     /// Object value within the global configuration that this @c ConfigurationNode represents.
     const rapidjson::Value* m_object;
@@ -229,7 +229,7 @@ private:
     static ConfigurationNode m_root;
 };
 
-template<typename InputType, typename OutputType, typename DefaultType>
+template <typename InputType, typename OutputType, typename DefaultType>
 bool ConfigurationNode::getDuration(const std::string& key, OutputType* out, DefaultType defaultValue) const {
     int temp;
     auto result = getInt(key, &temp);
@@ -239,9 +239,9 @@ bool ConfigurationNode::getDuration(const std::string& key, OutputType* out, Def
     return result;
 }
 
-} // namespace configuration
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace configuration
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_CONFIGURATION_CONFIGURATION_NODE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_CONFIGURATION_CONFIGURATION_NODE_H_

@@ -97,7 +97,6 @@ void AttachmentWriterTest::testMultipleReads(bool closeWriterBeforeReading) {
     int iterationsMax = 10;
 
     while (!done && iterations < iterationsMax) {
-
         auto bytesRead = m_reader->read(result.data(), result.size(), &readStatus);
 
         if (terminalStatus == readStatus) {
@@ -187,7 +186,7 @@ TEST_F(AttachmentWriterTest, testAttachmentWriterAndReaderMultipleReadsOfUnfinis
     testMultipleReads(false);
 }
 
-} // namespace test
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

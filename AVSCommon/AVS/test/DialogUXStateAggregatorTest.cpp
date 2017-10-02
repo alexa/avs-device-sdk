@@ -53,7 +53,6 @@ public:
         m_state = newState;
         m_changeOccurred = true;
         m_UXChanged.notify_one();
-
     }
 
     /**
@@ -64,11 +63,10 @@ public:
      * @return Returns @c true if the callback occured within the timeout period and @c false otherwise.
      */
     DialogUXStateObserverInterface::DialogUXState waitForStateChange(
-            std::chrono::milliseconds timeout, bool* uxChanged) {
+        std::chrono::milliseconds timeout,
+        bool* uxChanged) {
         std::unique_lock<std::mutex> lock{m_mutex};
-        bool success = m_UXChanged.wait_for(lock, timeout, [this] () {
-            return m_changeOccurred;
-        });
+        bool success = m_UXChanged.wait_for(lock, timeout, [this]() { return m_changeOccurred; });
 
         if (!success) {
             *uxChanged = false;
@@ -104,9 +102,9 @@ public:
      * @param timeout An optional timeout parameter to wait for a state change
      */
     void assertStateChange(
-            std::shared_ptr<TestObserver> observer,
-            DialogUXStateObserverInterface::DialogUXState expectedState,
-            std::chrono::milliseconds timeout = DEFAULT_TIMEOUT) {
+        std::shared_ptr<TestObserver> observer,
+        DialogUXStateObserverInterface::DialogUXState expectedState,
+        std::chrono::milliseconds timeout = DEFAULT_TIMEOUT) {
         ASSERT_TRUE(observer);
         bool stateChanged = false;
         auto receivedState = observer->waitForStateChange(timeout, &stateChanged);
@@ -129,7 +127,9 @@ public:
 };
 
 /// Test fixture for testing DialogUXStateAggregator.
-class DialogUXAggregatorTest : public ::testing::Test, public StateChangeManager {
+class DialogUXAggregatorTest
+        : public ::testing::Test
+        , public StateChangeManager {
 protected:
     /// The UX state aggregator
     std::shared_ptr<DialogUXStateAggregator> m_aggregator;
@@ -221,10 +221,10 @@ TEST_F(DialogUXAggregatorTest, aipBusyLeadsToThinkingState) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
 }
 
-/// Tests that BUSY state goes to IDLE after the specified timeout. 
+/// Tests that BUSY state goes to IDLE after the specified timeout.
 TEST_F(DialogUXAggregatorTest, busyGoesToIdleAfterTimeout) {
-    std::shared_ptr<DialogUXStateAggregator> anotherAggregator = 
-            std::make_shared<DialogUXStateAggregator>(std::chrono::milliseconds(200));
+    std::shared_ptr<DialogUXStateAggregator> anotherAggregator =
+        std::make_shared<DialogUXStateAggregator>(std::chrono::milliseconds(200));
 
     anotherAggregator->addObserver(m_anotherTestObserver);
 
@@ -234,12 +234,10 @@ TEST_F(DialogUXAggregatorTest, busyGoesToIdleAfterTimeout) {
     assertStateChange(m_anotherTestObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
 
     assertStateChange(
-            m_anotherTestObserver, 
-            DialogUXStateObserverInterface::DialogUXState::IDLE, 
-            std::chrono::milliseconds(400));
+        m_anotherTestObserver, DialogUXStateObserverInterface::DialogUXState::IDLE, std::chrono::milliseconds(400));
 }
 
-/// Tests that the BUSY state remains in BUSY immediately if a message is received. 
+/// Tests that the BUSY state remains in BUSY immediately if a message is received.
 TEST_F(DialogUXAggregatorTest, busyThenReceiveRemainsInBusyImmediately) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
@@ -261,7 +259,7 @@ TEST_F(DialogUXAggregatorTest, busyThenReceiveGoesToIdleAfterShortTimeout) {
     m_aggregator->receive("", "");
 
     assertStateChange(
-            m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE, std::chrono::milliseconds(250));
+        m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE, std::chrono::milliseconds(250));
 }
 
 /// Tests that the BUSY state goes to IDLE after a SpeechSynthesizer speak state is received.
@@ -278,8 +276,8 @@ TEST_F(DialogUXAggregatorTest, busyThenReceiveThenSpeakGoesToSpeak) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::SPEAKING);
 }
 
-/** 
- * Tests that the BUSY state goes to SPEAKING but not IDLE after both a message is received and a SpeechSynthesizer 
+/**
+ * Tests that the BUSY state goes to SPEAKING but not IDLE after both a message is received and a SpeechSynthesizer
  * speak state is received.
  */
 TEST_F(DialogUXAggregatorTest, busyThenReceiveThenSpeakGoesToSpeakButNotIdle) {
@@ -299,7 +297,7 @@ TEST_F(DialogUXAggregatorTest, busyThenReceiveThenSpeakGoesToSpeakButNotIdle) {
 
 /// Tests that a SpeechSynthesizer finished state leads to the IDLE state.
 TEST_F(DialogUXAggregatorTest, speakingFinishedGoesToIdle) {
-    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE); 
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
@@ -317,7 +315,7 @@ TEST_F(DialogUXAggregatorTest, speakingFinishedGoesToIdle) {
 
 /// Tests that a SpeechSynthesizer finished state does not go to the IDLE state after a very short timeout.
 TEST_F(DialogUXAggregatorTest, speakingFinishedDoesNotGoesToIdleImmediately) {
-    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE); 
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
@@ -330,8 +328,7 @@ TEST_F(DialogUXAggregatorTest, speakingFinishedDoesNotGoesToIdleImmediately) {
 
     m_aggregator->onStateChanged(sdkInterfaces::SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED);
 
-    assertNoStateChange(
-            m_testObserver);
+    assertNoStateChange(m_testObserver);
 }
 
 /// Tests that a simple message receive does nothing.
@@ -351,6 +348,6 @@ TEST_F(DialogUXAggregatorTest, simpleReceiveDoesNothing) {
     assertNoStateChange(m_testObserver);
 }
 
-} // namespace test
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

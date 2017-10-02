@@ -24,7 +24,7 @@ using namespace avsCommon::sdkInterfaces;
 
 ConnectionObserver::ConnectionObserver() :
         m_authState(AuthObserverInterface::State::UNINITIALIZED),
-        m_connectionStatus(ConnectionStatusObserverInterface::Status::DISCONNECTED) {            
+        m_connectionStatus(ConnectionStatusObserverInterface::Status::DISCONNECTED) {
 }
 
 void ConnectionObserver::onAuthStateChange(AuthObserverInterface::State newState, AuthObserverInterface::Error error) {
@@ -34,27 +34,25 @@ void ConnectionObserver::onAuthStateChange(AuthObserverInterface::State newState
 }
 
 void ConnectionObserver::onConnectionStatusChanged(
-        const ConnectionStatusObserverInterface::Status status, 
-        const ConnectionStatusObserverInterface::ChangedReason reason) {
+    const ConnectionStatusObserverInterface::Status status,
+    const ConnectionStatusObserverInterface::ChangedReason reason) {
     std::lock_guard<std::mutex> lock{m_mutex};
     m_connectionStatus = status;
-    m_trigger.notify_all();   
+    m_trigger.notify_all();
 }
 
 bool ConnectionObserver::waitFor(const AuthObserverInterface::State authState, const std::chrono::seconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
-    return m_trigger.wait_for(lock, duration, [this, authState]() {
-        return authState == m_authState;
-    });
+    return m_trigger.wait_for(lock, duration, [this, authState]() { return authState == m_authState; });
 }
 
 bool ConnectionObserver::waitFor(
-        const ConnectionStatusObserverInterface::Status connectionStatus, const std::chrono::seconds duration) {
+    const ConnectionStatusObserverInterface::Status connectionStatus,
+    const std::chrono::seconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
-    return m_trigger.wait_for(lock, duration, [this, connectionStatus]() {
-        return connectionStatus == m_connectionStatus;
-    });
+    return m_trigger.wait_for(
+        lock, duration, [this, connectionStatus]() { return connectionStatus == m_connectionStatus; });
 }
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK

@@ -15,9 +15,12 @@
  * permissions and limitations under the License.
  */
 
-#include <AVSCommon/Utils/Logger/Logger.h>
-
 #include "PlaylistParser/PlaylistParser.h"
+
+#include <algorithm>
+#include <sstream>
+
+#include <AVSCommon/Utils/Logger/Logger.h>
 
 namespace alexaClientSDK {
 namespace playlistParser {
@@ -32,215 +35,314 @@ static const std::string TAG("PlaylistParser");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-std::unique_ptr<PlaylistParser> PlaylistParser::create() {
-    ACSDK_DEBUG9(LX("createCalled"));
-    std::unique_ptr<PlaylistParser> playlistParser(new PlaylistParser());
-    return playlistParser;
+/// The HTML content-type of an M3U playlist.
+static const std::string M3U_CONTENT_TYPE = "mpegurl";
+
+/// The HTML content-type of a PLS playlist.
+static const std::string PLS_CONTENT_TYPE = "scpls";
+
+/// The number of bytes read from the attachment with each read in the read loop.
+static const size_t CHUNK_SIZE(1024);
+
+/// The id of each request.
+static int g_id = 0;
+
+/// The first line of an M3U8 playlist.
+static const std::string M3U8_PLAYLIST_HEADER = "#EXTM3U";
+
+/// The first line of a PLS playlist.
+static const std::string PLS_PLAYLIST_HEADER = "[playlist]";
+
+/// The beginning of a line in a PLS file indicating a URL.
+static const std::string PLS_FILE = "File";
+
+std::unique_ptr<PlaylistParser> PlaylistParser::create(
+    std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory) {
+    if (!contentFetcherFactory) {
+        return nullptr;
+    }
+    return std::unique_ptr<PlaylistParser>(new PlaylistParser(contentFetcherFactory));
 }
 
-PlaylistParser::~PlaylistParser() {
-    ACSDK_DEBUG9(LX("destructorCalled"));
-    {
-        std::unique_lock<std::mutex> lock(m_mutex);
-        m_isShuttingDown = true;
-        for (auto info : m_playlistInfoQueue) {
-            g_signal_handler_disconnect(info->parser, info->playlistStartedHandlerId);
-            g_signal_handler_disconnect(info->parser, info->entryParsedHandlerId);
-            info->observer->onPlaylistParsed(
-                    info->playlistUrl,
-                    info->urlQueue,
-                    avsCommon::utils::playlistParser::PlaylistParseResult::PARSE_RESULT_CANCELLED);
-        }
-        m_playlistInfoQueue.clear();
-        m_playlistInfo = nullptr;
-    }
-    m_wakeParsingLoop.notify_one();
-    if (m_parserThread.joinable()) {
-        m_parserThread.join();
-    }
-}
-
-bool PlaylistParser::parsePlaylist(const std::string& url,
-            std::shared_ptr<avsCommon::utils::playlistParser::PlaylistParserObserverInterface> observer) {
-    ACSDK_DEBUG9(LX("parsePlaylist").d("url", url));
-
+int PlaylistParser::parsePlaylist(
+    std::string url,
+    std::shared_ptr<avsCommon::utils::playlistParser::PlaylistParserObserverInterface> observer,
+    std::vector<PlaylistType> playlistTypesToNotBeParsed) {
     if (url.empty()) {
-        ACSDK_ERROR(LX("parsePlaylistFailed").d("reason","emptyUrl"));
-        return false;
+        return START_FAILURE;
     }
-
     if (!observer) {
-        ACSDK_ERROR(LX("parsePlaylistFailed").d("reason","observerIsNullptr"));
+        return START_FAILURE;
+    }
+
+    auto id = ++g_id;
+
+    m_executor.submit([this, id, observer, url, playlistTypesToNotBeParsed]() {
+        doDepthFirstSearch(id, observer, url, playlistTypesToNotBeParsed);
+    });
+    return id;
+}
+
+PlaylistParser::PlaylistParser(
+    std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory) :
+        m_contentFetcherFactory{contentFetcherFactory} {
+}
+
+void PlaylistParser::doDepthFirstSearch(
+    int id,
+    std::shared_ptr<avsCommon::utils::playlistParser::PlaylistParserObserverInterface> observer,
+    const std::string& rootUrl,
+    std::vector<PlaylistType> playlistTypesToNotBeParsed) {
+    /*
+     * A depth first search, as follows:
+     * 1. Push root to vector.
+     * 2. While vector isn't empty, pop from front and push children, in the order they appeared, to front of vector.
+     */
+    std::deque<std::string> urlsToParse;
+    urlsToParse.push_front(rootUrl);
+    while (!urlsToParse.empty()) {
+        auto url = urlsToParse.front();
+        urlsToParse.pop_front();
+        auto contentFetcher = m_contentFetcherFactory->create(url);
+        auto httpContent = contentFetcher->getContent(
+            avsCommon::sdkInterfaces::HTTPContentFetcherInterface::FetchOptions::CONTENT_TYPE);
+        if (!httpContent || !(*httpContent)) {
+            ACSDK_ERROR(LX("getHTTPContent").d("reason", "badHTTPContentReceived"));
+            observer->onPlaylistEntryParsed(id, url, avsCommon::utils::playlistParser::PlaylistParseResult::ERROR);
+            return;
+        }
+        std::string contentType = httpContent->contentType.get();
+        ACSDK_DEBUG9(LX("PlaylistParser").d("contentType", contentType).sensitive("url", url));
+        std::transform(contentType.begin(), contentType.end(), contentType.begin(), ::tolower);
+        // Checking the HTML content type to see if the URL is a playlist.
+        if (contentType.find(M3U_CONTENT_TYPE) != std::string::npos) {
+            std::string playlistContent;
+            if (!getContentFromPlaylistUrlIntoString(url, &playlistContent)) {
+                ACSDK_ERROR(LX("failedToRetrieveContent").sensitive("url", url));
+                observer->onPlaylistEntryParsed(id, url, avsCommon::utils::playlistParser::PlaylistParseResult::ERROR);
+                return;
+            }
+            // This playlist may either be M3U or M3U8 so some additional parsing is required.
+            bool isM3U8 = isM3UPlaylistM3U8(playlistContent);
+            if (isM3U8) {
+                ACSDK_DEBUG9(LX("isM3U8Playlist").sensitive("url", url));
+            } else {
+                ACSDK_DEBUG9(LX("isPlainM3UPlaylist").sensitive("url", url));
+            }
+            // TODO: investigate refactoring the two std::finds into a common place
+            if (std::find(
+                    playlistTypesToNotBeParsed.begin(),
+                    playlistTypesToNotBeParsed.end(),
+                    isM3U8 ? PlaylistType::M3U8 : PlaylistType::M3U) != playlistTypesToNotBeParsed.end()) {
+                observer->onPlaylistEntryParsed(
+                    id,
+                    url,
+                    urlsToParse.empty() ? avsCommon::utils::playlistParser::PlaylistParseResult::SUCCESS
+                                        : avsCommon::utils::playlistParser::PlaylistParseResult::STILL_ONGOING);
+                continue;
+            }
+            auto childrenUrls = parseM3UContent(url, playlistContent);
+            if (childrenUrls.empty()) {
+                ACSDK_ERROR(LX("noChildrenURLs"));
+                observer->onPlaylistEntryParsed(id, url, avsCommon::utils::playlistParser::PlaylistParseResult::ERROR);
+                return;
+            }
+            for (auto reverseIt = childrenUrls.rbegin(); reverseIt != childrenUrls.rend(); ++reverseIt) {
+                urlsToParse.push_front(*reverseIt);
+            }
+        } else if (contentType.find(PLS_CONTENT_TYPE) != std::string::npos) {
+            ACSDK_DEBUG9(LX("isPLSPlaylist").sensitive("url", url));
+            /*
+             * This is for sure a PLS playlist, so if PLS is one of the desired playlist types to not be parsed, then
+             * notify and return immediately.
+             */
+            if (std::find(playlistTypesToNotBeParsed.begin(), playlistTypesToNotBeParsed.end(), PlaylistType::PLS) !=
+                playlistTypesToNotBeParsed.end()) {
+                observer->onPlaylistEntryParsed(
+                    id,
+                    url,
+                    urlsToParse.empty() ? avsCommon::utils::playlistParser::PlaylistParseResult::SUCCESS
+                                        : avsCommon::utils::playlistParser::PlaylistParseResult::STILL_ONGOING);
+                continue;
+            }
+            std::string playlistContent;
+            if (!getContentFromPlaylistUrlIntoString(url, &playlistContent)) {
+                observer->onPlaylistEntryParsed(id, url, avsCommon::utils::playlistParser::PlaylistParseResult::ERROR);
+                return;
+            }
+            auto childrenUrls = parsePLSContent(url, playlistContent);
+            if (childrenUrls.empty()) {
+                observer->onPlaylistEntryParsed(id, url, avsCommon::utils::playlistParser::PlaylistParseResult::ERROR);
+                return;
+            }
+            for (auto reverseIt = childrenUrls.rbegin(); reverseIt != childrenUrls.rend(); ++reverseIt) {
+                urlsToParse.push_front(*reverseIt);
+            }
+        } else {
+            // This is a non-playlist URL or a playlist that we don't support (M3U, M3U8, PLS).
+            observer->onPlaylistEntryParsed(
+                id,
+                url,
+                urlsToParse.empty() ? avsCommon::utils::playlistParser::PlaylistParseResult::SUCCESS
+                                    : avsCommon::utils::playlistParser::PlaylistParseResult::STILL_ONGOING);
+        }
+    }
+}
+
+bool PlaylistParser::getContentFromPlaylistUrlIntoString(const std::string& url, std::string* content) const {
+    if (!content) {
+        ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "nullString"));
         return false;
     }
-
-    auto playlistInfo = createPlaylistInfo(url, observer);
-    if (!playlistInfo) {
-        ACSDK_ERROR(LX("parsePlaylistFailed").d("reason", "cannotCreateNewPlaylistInfo"));
+    auto contentFetcher = m_contentFetcherFactory->create(url);
+    auto httpContent =
+        contentFetcher->getContent(avsCommon::sdkInterfaces::HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
+    if (!httpContent) {
+        ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "nullHTTPContentReceived"));
         return false;
     }
-
-    playlistInfo->playlistUrl = url;
-    playlistInfo->observer = observer;
-
-    {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        m_playlistInfoQueue.push_back(playlistInfo);
-        m_wakeParsingLoop.notify_one();
+    if (!(*httpContent)) {
+        ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "badHTTPContentReceived"));
+        return false;
     }
+    auto reader = httpContent->dataStream->createReader(avsCommon::avs::attachment::AttachmentReader::Policy::BLOCKING);
+    if (!reader) {
+        ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "failedToCreateStreamReader"));
+        return false;
+    }
+    avsCommon::avs::attachment::AttachmentReader::ReadStatus readStatus =
+        avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK;
+    std::string playlistContent;
+    std::vector<char> buffer(CHUNK_SIZE, 0);
+    bool streamClosed = false;
+    while (!streamClosed) {
+        auto bytesRead = reader->read(buffer.data(), buffer.size(), &readStatus);
+        switch (readStatus) {
+            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::CLOSED:
+                streamClosed = true;
+                if (bytesRead == 0) {
+                    break;
+                }
+            /* FALL THROUGH - to add any data received even if closed */
+            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK:
+            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK_WOULDBLOCK:
+            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK_TIMEDOUT:
+                playlistContent.append(buffer.data(), bytesRead);
+                break;
+            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::ERROR_OVERRUN:
+            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:
+            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::ERROR_INTERNAL:
+                ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "readError"));
+                return false;
+        }
+    }
+    *content = playlistContent;
     return true;
 }
 
-PlaylistParser::PlaylistInfo::PlaylistInfo(TotemPlParser* plParser)
-        :
-        parser{plParser},
-        playlistStartedHandlerId{0},
-        entryParsedHandlerId{0} {
-}
-
-
-PlaylistParser::PlaylistInfo::~PlaylistInfo() {
-    g_clear_object(&parser);
-}
-
-PlaylistParser::PlaylistParser()
-        :
-        m_isParsingActive{false},
-        m_isShuttingDown{false} {
-    m_parserThread = std::thread(&PlaylistParser::parsingLoop, this);
-}
-
-std::shared_ptr<PlaylistParser::PlaylistInfo> PlaylistParser::createPlaylistInfo(
-        const std::string& url,
-        std::shared_ptr<avsCommon::utils::playlistParser::PlaylistParserObserverInterface> observer) {
-    ACSDK_DEBUG9(LX("createPlaylistInfo"));
-
-    TotemPlParser* parser = totem_pl_parser_new();
-    if (!parser) {
-        ACSDK_ERROR(LX("createPlaylistInfoFailed").d("reason", "cannotCreateNewParser"));
-        return nullptr;
-    }
-
-    std::shared_ptr<PlaylistParser::PlaylistInfo> playlistInfo = std::make_shared<PlaylistInfo>(parser);
-
-    g_object_set(parser, "recurse", TRUE, "disable-unsafe", TRUE, "force", TRUE, NULL);
-
-    playlistInfo->playlistStartedHandlerId = g_signal_connect(G_OBJECT(parser), "playlist-started",
-            G_CALLBACK(onPlaylistStarted), this);
-    if (!playlistInfo->playlistStartedHandlerId) {
-        ACSDK_ERROR(LX("createPlaylistInfoFailed").d("reason", "cannotConnectPlaylistStartedSignal"));
-        return nullptr;
-    }
-
-    playlistInfo->entryParsedHandlerId = g_signal_connect(G_OBJECT(parser), "entry-parsed",
-            G_CALLBACK(onEntryParsed), this);
-    if (!playlistInfo->entryParsedHandlerId) {
-        ACSDK_ERROR(LX("createPlaylistInfoFailed").d("reason", "cannotConnectEntryParsedSignal"));
-        g_signal_handler_disconnect(playlistInfo->parser, playlistInfo->playlistStartedHandlerId);
-        return nullptr;
-    }
-
-    return playlistInfo;
-}
-
-void PlaylistParser::onPlaylistStarted (TotemPlParser *parser, gchar *url, TotemPlParserMetadata *metadata,
-            gpointer pointer) {
-    ACSDK_DEBUG9(LX("onPlaylistStarted").d("url", url));
-}
-
-void PlaylistParser::onEntryParsed(TotemPlParser *parser, gchar *url, TotemPlParserMetadata *metadata,
-            gpointer pointer) {
-    ACSDK_DEBUG9(LX("onEntryParsed").d("url", url));
-    auto playlistParser = static_cast<PlaylistParser *>(pointer);
-    if (playlistParser && playlistParser->m_playlistInfo){
-        playlistParser->handleOnEntryParsed(url, playlistParser->m_playlistInfo);
-    }
-}
-
-void PlaylistParser::onParseComplete(GObject* parser, GAsyncResult* result, gpointer pointer) {
-    ACSDK_DEBUG9(LX("onParseComplete"));
-    auto playlistParser = static_cast<PlaylistParser *>(pointer);
-    if (playlistParser && playlistParser->m_playlistInfo) {
-        playlistParser->handleOnParseComplete(result, playlistParser->m_playlistInfo);
-    }
-}
-
-void PlaylistParser::handleParsingLocked(std::unique_lock<std::mutex>& lock) {
-    ACSDK_DEBUG9(LX("handleParsingLocked"));
-    m_playlistInfo = m_playlistInfoQueue.front();
-    m_isParsingActive = true;
-    lock.unlock();
-    totem_pl_parser_parse_async(m_playlistInfo->parser, m_playlistInfo->playlistUrl.c_str(), FALSE, NULL,
-            onParseComplete, this);
-}
-
-void PlaylistParser::handleOnEntryParsed(gchar *url, std::shared_ptr<PlaylistInfo> playlistInfo) {
-    ACSDK_DEBUG9(LX("handleOnEntryParsed").d("url", url));
-    std::lock_guard<std::mutex> lock(playlistInfo->mutex);
-    playlistInfo->urlQueue.push(url);
-}
-
-void PlaylistParser::handleOnParseComplete(GAsyncResult* result, std::shared_ptr<PlaylistInfo> playlistInfo) {
-    ACSDK_DEBUG9(LX("handleOnParseComplete"));
-    GError *error = nullptr;
-    auto parserResult = totem_pl_parser_parse_finish (playlistInfo->parser, result, &error);
-    std::queue<std::string> urlQueue;
-
-    {
-        std::lock_guard<std::mutex> lock(playlistInfo->mutex);
-        urlQueue = playlistInfo->urlQueue;
-    }
-
-    playlistInfo->observer->onPlaylistParsed(
-            playlistInfo->playlistUrl,
-            urlQueue,
-            mapResult(parserResult));
-
-    {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        if (!m_playlistInfoQueue.empty()) {
-            m_playlistInfoQueue.pop_front();
+std::vector<std::string> PlaylistParser::parseM3UContent(const std::string& playlistURL, const std::string& content) {
+    /*
+     * An M3U playlist is formatted such that all metadata information is prepended with a '#' and everything else is a
+     * URL to play.
+     */
+    std::vector<std::string> urlsParsed;
+    std::istringstream iss(content);
+    std::string line;
+    while (std::getline(iss, line)) {
+        removeCarriageReturnFromLine(&line);
+        std::istringstream iss2(line);
+        char firstChar;
+        iss2 >> firstChar;
+        if (!iss2 || firstChar == '#') {
+            continue;
         }
-        m_isParsingActive = false;
-        m_wakeParsingLoop.notify_one();
-    }
-}
-
-avsCommon::utils::playlistParser::PlaylistParseResult PlaylistParser::mapResult(TotemPlParserResult result) {
-    switch(result) {
-        case TOTEM_PL_PARSER_RESULT_SUCCESS:
-            ACSDK_DEBUG9(LX("playlistParsingSuccessful"));
-            return avsCommon::utils::playlistParser::PlaylistParseResult::PARSE_RESULT_SUCCESS;
-        case TOTEM_PL_PARSER_RESULT_UNHANDLED:
-            ACSDK_DEBUG9(LX("playlistCouldNotBeHandled"));
-            return avsCommon::utils::playlistParser::PlaylistParseResult::PARSE_RESULT_UNHANDLED;
-        case TOTEM_PL_PARSER_RESULT_ERROR:
-            ACSDK_DEBUG9(LX("playlistParsingError"));
-            return avsCommon::utils::playlistParser::PlaylistParseResult::PARSE_RESULT_ERROR;
-        case TOTEM_PL_PARSER_RESULT_IGNORED:
-            ACSDK_DEBUG9(LX("playlistWasIgnoredDueToSchemeOrMimeType"));
-            return avsCommon::utils::playlistParser::PlaylistParseResult::PARSE_RESULT_IGNORED;
-        case TOTEM_PL_PARSER_RESULT_CANCELLED:
-            ACSDK_DEBUG9(LX("playlistParsingWasCancelledPartWayThrough"));
-            return avsCommon::utils::playlistParser::PlaylistParseResult::PARSE_RESULT_CANCELLED;
-    }
-    return avsCommon::utils::playlistParser::PlaylistParseResult::PARSE_RESULT_ERROR;
-}
-
-void PlaylistParser::parsingLoop() {
-    auto wake = [this]() {
-        return (m_isShuttingDown || (!m_playlistInfoQueue.empty() && !m_isParsingActive));
-    };
-
-    while (true) {
-        std::unique_lock<std::mutex> lock(m_mutex);
-        m_wakeParsingLoop.wait(lock, wake);
-        if (m_isShuttingDown) {
-            break;
+        // at this point, "line" is a url
+        if (isURLAbsolute(line)) {
+            urlsParsed.push_back(line);
+        } else {
+            std::string absoluteURL;
+            if (getAbsoluteURLFromRelativePathToURL(playlistURL, line, &absoluteURL)) {
+                urlsParsed.push_back(absoluteURL);
+            }
         }
-        handleParsingLocked(lock);
+    }
+    return urlsParsed;
+}
+
+std::vector<std::string> PlaylistParser::parsePLSContent(const std::string& playlistURL, const std::string& content) {
+    /*
+     * A PLS playlist is formatted such that all URLs to play are prepended with "File'N'=", where 'N' refers to the
+     * numbered URL. For example "File1=url.com ... File2="anotherurl.com".
+     */
+    std::vector<std::string> urlsParsed;
+    std::istringstream iss(content);
+    std::string line;
+    while (std::getline(iss, line)) {
+        removeCarriageReturnFromLine(&line);
+        if (line.compare(0, PLS_FILE.length(), PLS_FILE) == 0) {
+            std::string url = line.substr(line.find_first_of('=') + 1);
+            if (isURLAbsolute(url)) {
+                urlsParsed.push_back(url);
+            } else {
+                std::string absoluteURL;
+                if (getAbsoluteURLFromRelativePathToURL(playlistURL, url, &absoluteURL)) {
+                    urlsParsed.push_back(absoluteURL);
+                }
+            }
+        }
+    }
+    return urlsParsed;
+}
+
+void PlaylistParser::removeCarriageReturnFromLine(std::string* line) {
+    if (!line) {
+        return;
+    }
+    if (!line->empty() && (line->back() == '\r' || line->back() == '\n')) {
+        line->pop_back();
     }
 }
 
-} // namespace playlistParser
-} // namespace alexaClientSDK
+bool PlaylistParser::isURLAbsolute(const std::string& url) {
+    return url.find("://") != std::string::npos;
+}
+
+bool PlaylistParser::getAbsoluteURLFromRelativePathToURL(
+    std::string baseURL,
+    std::string relativePath,
+    std::string* absoluteURL) {
+    auto positionOfLastSlash = baseURL.find_last_of('/');
+    if (positionOfLastSlash == std::string::npos) {
+        return false;
+    } else {
+        if (!absoluteURL) {
+            return false;
+        }
+        baseURL.resize(positionOfLastSlash + 1);
+        *absoluteURL = baseURL + relativePath;
+        return true;
+    }
+}
+
+bool PlaylistParser::isM3UPlaylistM3U8(const std::string& playlistContent) {
+    std::istringstream iss(playlistContent);
+    std::string line;
+    if (std::getline(iss, line)) {
+        /*
+         * This isn't the best way of determining whether a playlist is M3U8 or M3U. However, there isn't really a
+         * better way that I could come up with. The playlist header I'm searching for is "EXTM3U" which indicates that
+         * this playlist is an "Extended M3U" playlist as opposed to a plain M3U playlist. In my testing, I've found
+         * that all M3U8 playlists are also extended M3U playlists, but this might not be guaranteed.
+         */
+        if (line.compare(0, M3U8_PLAYLIST_HEADER.length(), M3U8_PLAYLIST_HEADER) == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
+}  // namespace playlistParser
+}  // namespace alexaClientSDK

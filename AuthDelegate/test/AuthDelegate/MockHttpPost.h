@@ -31,12 +31,13 @@ namespace test {
 /// Mock HttpPostInterface class
 class MockHttpPost : public HttpPostInterface {
 public:
-    MOCK_METHOD4(doPost, long(const std::string& url, const std::string& data, std::chrono::seconds timeout,
-        std::string& body));
+    MOCK_METHOD4(
+        doPost,
+        long(const std::string& url, const std::string& data, std::chrono::seconds timeout, std::string& body));
 };
 
-} // namespace test
-} // namespace authDelegate
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace authDelegate
+}  // namespace alexaClientSDK
 
 #endif  // ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_AUTHDELEGATE_MOCK_HTTP_POST_H_

@@ -39,14 +39,14 @@ namespace avs {
  * else a pair of empty strings.
  */
 const std::pair<std::string, std::string> buildJsonEventString(
-        const std::string &nameSpace,
-        const std::string &eventName,
-        const std::string &dialogRequestIdValue = "",
-        const std::string &jsonPayloadValue = "{}",
-        const std::string &jsonContext = "");
+    const std::string& nameSpace,
+    const std::string& eventName,
+    const std::string& dialogRequestIdValue = "",
+    const std::string& jsonPayloadValue = "{}",
+    const std::string& jsonContext = "");
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_EVENT_BUILDER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_EVENT_BUILDER_H_

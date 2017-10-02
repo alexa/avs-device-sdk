@@ -31,13 +31,13 @@ namespace test {
 /// Mock @c DirectiveHandlerResultInterface implementation.
 class MockDirectiveHandlerResult : public DirectiveHandlerResultInterface {
 public:
-     MOCK_METHOD0(setCompleted, void());
-     MOCK_METHOD1(setFailed, void(const std::string& description));
+    MOCK_METHOD0(setCompleted, void());
+    MOCK_METHOD1(setFailed, void(const std::string& description));
 };
 
-} // namespace test
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_TEST_AVS_COMMON_SDK_INTERFACES_MOCK_DIRECTIVE_HANDLER_RESULT_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_TEST_AVS_COMMON_SDK_INTERFACES_MOCK_DIRECTIVE_HANDLER_RESULT_H_

@@ -42,7 +42,7 @@ public:
      *
      * @return The moniker for @c std::this_thread.
      */
-    static inline const std::string &getThisThreadMoniker();
+    static inline const std::string& getThisThreadMoniker();
 
 private:
     /// The current thread's moniker.
@@ -52,14 +52,13 @@ private:
     static thread_local ThreadMoniker m_threadMoniker;
 };
 
-const std::string &ThreadMoniker::getThisThreadMoniker() {
+const std::string& ThreadMoniker::getThisThreadMoniker() {
     return m_threadMoniker.m_moniker;
 }
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_THREAD_MONIKER_H_
-
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_THREAD_MONIKER_H_

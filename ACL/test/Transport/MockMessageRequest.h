@@ -18,6 +18,7 @@
 #define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_MESSAGE_REQUEST_H_
 
 #include <AVSCommon/AVS/MessageRequest.h>
+#include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
 
 #include <gmock/gmock.h>
 
@@ -36,14 +37,14 @@ public:
     /**
      * Constructor.
      */
-    MockMessageRequest() : avsCommon::avs::MessageRequest{"", nullptr} { }
-    MOCK_METHOD1(onExceptionReceived, void(const std::string & exceptionMessage));
-    MOCK_METHOD1(onSendCompleted, void(Status status));
-
+    MockMessageRequest() : avsCommon::avs::MessageRequest{"", nullptr} {
+    }
+    MOCK_METHOD1(exceptionReceived, void(const std::string& exceptionMessage));
+    MOCK_METHOD1(sendCompleted, void(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status));
 };
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_MESSAGE_REQUEST_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_MESSAGE_REQUEST_H_

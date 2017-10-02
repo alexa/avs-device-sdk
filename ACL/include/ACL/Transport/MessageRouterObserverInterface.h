@@ -39,8 +39,8 @@ private:
      * @param reason The reason the connection status changed.
      */
     virtual void onConnectionStatusChanged(
-            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
-            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) = 0;
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) = 0;
 
     /**
      * This function will be called when a Message arrives from AVS.
@@ -48,13 +48,13 @@ private:
      * @param contextId The contextId of the AVS message, which is used when acquiring attachments.
      * @param message The AVS message that has been received.
      */
-    virtual void receive(const std::string & contextId, const std::string & message) = 0;
+    virtual void receive(const std::string& contextId, const std::string& message) = 0;
 
     /// The friend declaration.
     friend class MessageRouter;
 };
 
-} // namespace ACL
-} // namespace AlexaClientSDK
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_ROUTER_OBSERVER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_ROUTER_OBSERVER_INTERFACE_H_

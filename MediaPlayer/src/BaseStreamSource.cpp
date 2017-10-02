@@ -71,7 +71,7 @@ BaseStreamSource::~BaseStreamSource() {
 }
 
 bool BaseStreamSource::init() {
-    auto appsrc = reinterpret_cast<GstAppSrc *>(gst_element_factory_make("appsrc", "src"));
+    auto appsrc = reinterpret_cast<GstAppSrc*>(gst_element_factory_make("appsrc", "src"));
     if (!appsrc) {
         ACSDK_ERROR(LX("initFailed").d("reason", "createSourceElementFailed"));
         return false;
@@ -104,7 +104,7 @@ bool BaseStreamSource::init() {
      * stream type it is decoding. Once the pad has been added, pad-added signal is emitted, and the padAddedHandler
      * callback will link the newly created source pad of the decoder to the sink of the converter element.
      */
-    if (!gst_element_link(reinterpret_cast<GstElement *>(appsrc), decoder)) {
+    if (!gst_element_link(reinterpret_cast<GstElement*>(appsrc), decoder)) {
         ACSDK_ERROR(LX("initFailed").d("reason", "createSourceToDecoderLinkFailed"));
         return false;
     }
@@ -145,7 +145,8 @@ void BaseStreamSource::signalEndOfData() {
     auto flowRet = gst_app_src_end_of_stream(m_pipeline->getAppSrc());
     if (flowRet != GST_FLOW_OK) {
         ACSDK_ERROR(LX("signalEndOfDataFailed")
-                .d("reason", "gstAppSrcEndOfStreamFailed").d("result", gst_flow_get_name(flowRet)));
+                        .d("reason", "gstAppSrcEndOfStreamFailed")
+                        .d("result", gst_flow_get_name(flowRet)));
     }
     close();
     clearOnReadDataHandler();
@@ -160,8 +161,8 @@ void BaseStreamSource::installOnReadDataHandler() {
         if (m_sourceRetryCount != 0) {
             ACSDK_DEBUG9(LX("installOnReadDataHandler").d("action", "removeSourceId").d("sourceId", m_sourceId));
             if (!g_source_remove(m_sourceId)) {
-                ACSDK_ERROR(LX("installOnReadDataHandlerError")
-                        .d("reason", "gSourceRemoveFailed").d("sourceId", m_sourceId));
+                ACSDK_ERROR(
+                    LX("installOnReadDataHandlerError").d("reason", "gSourceRemoveFailed").d("sourceId", m_sourceId));
             }
         } else {
             return;
@@ -176,22 +177,24 @@ void BaseStreamSource::updateOnReadDataHandler() {
     if (m_sourceRetryCount < sizeof(RETRY_INTERVALS_MILLISECONDS) / sizeof(RETRY_INTERVALS_MILLISECONDS[0])) {
         ACSDK_DEBUG9(LX("updateOnReadDataHandler").d("action", "removeSourceId").d("sourceId", m_sourceId));
         if (!g_source_remove(m_sourceId)) {
-            ACSDK_ERROR(LX("updateOnReadDataHandlerError")
-                    .d("reason", "gSourceRemoveFailed").d("sourceId", m_sourceId));
+            ACSDK_ERROR(
+                LX("updateOnReadDataHandlerError").d("reason", "gSourceRemoveFailed").d("sourceId", m_sourceId));
         }
         auto interval = RETRY_INTERVALS_MILLISECONDS[m_sourceRetryCount];
         m_sourceRetryCount++;
         m_sourceId = g_timeout_add(interval, reinterpret_cast<GSourceFunc>(&onReadData), this);
         ACSDK_DEBUG9(LX("updateOnReadDataHandlerNewSourceId")
-                .d("action", "newSourceId").d("sourceId", m_sourceId).d("sourceRetryCount", m_sourceRetryCount));
+                         .d("action", "newSourceId")
+                         .d("sourceId", m_sourceId)
+                         .d("sourceRetryCount", m_sourceRetryCount));
     }
 }
 
 void BaseStreamSource::uninstallOnReadDataHandler() {
     if (m_sourceId != 0) {
         if (!g_source_remove(m_sourceId)) {
-            ACSDK_ERROR(LX("uninstallOnReadDataHandlerError")
-                    .d("reason", "gSourceRemoveFailed").d("sourceId", m_sourceId));
+            ACSDK_ERROR(
+                LX("uninstallOnReadDataHandlerError").d("reason", "gSourceRemoveFailed").d("sourceId", m_sourceId));
         }
         clearOnReadDataHandler();
     }
@@ -203,7 +206,7 @@ void BaseStreamSource::clearOnReadDataHandler() {
     m_sourceId = 0;
 }
 
-void BaseStreamSource::onNeedData(GstElement *pipeline, guint size, gpointer pointer) {
+void BaseStreamSource::onNeedData(GstElement* pipeline, guint size, gpointer pointer) {
     ACSDK_DEBUG9(LX("onNeedDataCalled").d("size", size));
     auto source = static_cast<BaseStreamSource*>(pointer);
     std::lock_guard<std::mutex> lock(source->m_callbackIdMutex);
@@ -222,7 +225,7 @@ gboolean BaseStreamSource::handleNeedData() {
     return false;
 }
 
-void BaseStreamSource::onEnoughData(GstElement *pipeline, gpointer pointer) {
+void BaseStreamSource::onEnoughData(GstElement* pipeline, gpointer pointer) {
     ACSDK_DEBUG9(LX("onEnoughDataCalled"));
     auto source = static_cast<BaseStreamSource*>(pointer);
     std::lock_guard<std::mutex> lock(source->m_callbackIdMutex);
@@ -258,5 +261,5 @@ bool BaseStreamSource::hasAdditionalData() {
 void BaseStreamSource::preprocess() {
 }
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK

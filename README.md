@@ -82,16 +82,44 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 
 **Note**: Features, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
-v1.0.3 released 9/19/2017:  
+v1.1 released 10/02/2017:  
 
-* **Enhancements**  
-  * Implemented `setOffSet` in `MediaPlayer`.    
-  * [Updated `LoggerUtils.cpp`](https://github.com/alexa/avs-device-sdk/issues/77).
+**Enhancements**
 
-* **Bug Fixes**  
-  * [Bug fix to address incorrect stop behavior caused when Audio Focus is set to `NONE` and released](https://github.com/alexa/avs-device-sdk/issues/129). 
-  * Bug fix for intermittent failure in `handleMultipleConsecutiveSpeaks`.  
-  * Bug fix for `jsonArrayExist` incorrectly parsing JSON when trying to locate array children.  
-  * Bug fix for ADSL test failures with `sendDirectiveWithoutADialogRequestId`.  
-  * Bug fix for `SpeechSynthesizer` showing the wrong UX state when a burst of `Speak` directives are received.  
-  * Bug fix for recursive loop in `AudioPlayer.Stop`.  
+* The SDK now supports TuneIn, Audible, Pandora, SiriusXM, Kindle Books, and Amazon Music.
+* Added a capability agent for Settings, which allows a client to notify Alexa of locale changes.
+* Added a capability agent for PlaybackController, which exposes these transport controls: play, pause, next, and previous.
+* Added `PlaylistParser`, which is used to parse m3u and pls formatted playlists.
+* Added new unit tests for `AudioPlayer`.
+* Refactored the Alerts capability agent to support named timers and reminders.  
+
+**Bug Fixes**  
+
+* Bug fix to address AIP getting stuck in the `LISTENING` or `THINKING` state and refusing user input during a network outage.   
+* Bug fix for the sample app crashing when it runs for more than 5 minutes following a network disconnect.  
+* Bug fix for user utterances being ignored after long Alexa TTS.  
+* Bug fix for GStreamer errors that appear on `SampleApp` exit that result from accessing the pipeline before it has been setup.  
+* Fix crash when playing URLs one after another.  
+* Bug fix for overrun in `AlertsRenderer`.
+* SampleApp crashing when issuing "Alexa skip" command with iHeartRadio. (https://github.com/alexa/avs-device-sdk/issues/153)
+* [`HTTP2Transport` network thread triggering a join on itself.](https://github.com/alexa/avs-device-sdk/issues/127)
+* [`HTTP2Stream` request handling truncating exception messages.](https://github.com/alexa/avs-device-sdk/issues/67)
+* [`AudioPlayer` was attempting an incorrect state transition from `STOPPED` to `PLAYING` through a `playbackResumed`.](https://github.com/alexa/avs-device-sdk/issues/138)
+
+
+**Known Issues**
+
+* Native components for the following capability agents are **not** included in this release: `Speaker`, `TemplateRuntime`, and `Notifications`  
+* `ACL`'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed.
+* When an `AttachmentReader` does not deliver data for prolonged periods, `MediaPlayer` may not resume playing the delayed audio.
+* Without the refresh token in the JSON file, the sample app crashes on start up.
+* Alerts do not play after restarting the device.
+* Alexa's responses are cut off by about half a second when asking "What's up" or barging into an active alarm to ask the time.
+* Switching from Kindle to Amazon Music after pausing and resuming Kindle doesn't work.
+* Pause/resume on Amazon Music causes entire song to start over.
+* Stuck in listening state if `ExpectSpeech` comes in when the microphone has been turned off.
+* Pausing and resuming Pandora causes stuttering, looped audio.
+* Audible features are not fully supported.
+* `Recognize` event after regaining network connection and during an alarm going off can cause client to get stuck in `Recognizing` state.
+* Three Alerts integration tests fail: `handleMultipleTimersWithLocalStop`, `AlertsTest.UserLongUnrelatedBargeInOnActiveTimer`, `AlertsTest.handleOneTimerWithVocalStop`
+* `MediaPlayerTest.testSetOffsetSeekableSource` unit test fails intermittently on Linux.

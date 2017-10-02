@@ -34,25 +34,25 @@ namespace afml {
 
 /**
  * The FocusManager takes requests to acquire and release Channels and updates the focuses of other Channels based on
- * their priorities so that the invariant that there can only be one Foreground Channel is held. The following 
+ * their priorities so that the invariant that there can only be one Foreground Channel is held. The following
  * operations are provided:
  *
- * acquire Channel - clients should call the acquireChannel() method, passing in the name of the Channel they wish to 
- * acquire, a pointer to the observer that they want to be notified once they get focus, and a unique activity id. 
+ * acquire Channel - clients should call the acquireChannel() method, passing in the name of the Channel they wish to
+ * acquire, a pointer to the observer that they want to be notified once they get focus, and a unique activity id.
  *
  * release Channel - clients should call the releaseChannel() method, passing in the name of the Channel and the
  * observer of the Channel they wish to release.
  *
  * stop foreground Channel - clients should call the stopForegroundActivitiy() method.
  *
- * All of these methods will notify the observer of the Channel of focus changes via an asynchronous callback to the 
+ * All of these methods will notify the observer of the Channel of focus changes via an asynchronous callback to the
  * ChannelObserverInterface##onFocusChanged() method, at which point the client should make a user observable change
  * based on the focus it receives.
  */
 class FocusManager : public avsCommon::sdkInterfaces::FocusManagerInterface {
 public:
     /**
-     * The configuration used by the FocusManager to create Channel objects. Each configuration object has a 
+     * The configuration used by the FocusManager to create Channel objects. Each configuration object has a
      * name and priority.
      */
     struct ChannelConfiguration {
@@ -63,8 +63,9 @@ public:
          * @param configPriority The priority of the channel. Lower number priorities result in higher priority
          * Channels. The highest priority number possible is 0.
          */
-        ChannelConfiguration(const std::string & configName, unsigned int configPriority) 
-            : name{configName}, priority{configPriority} {
+        ChannelConfiguration(const std::string& configName, unsigned int configPriority) :
+                name{configName},
+                priority{configPriority} {
         }
 
         /**
@@ -87,20 +88,20 @@ public:
      * This constructor creates Channels based on the provided configurations. This is defaulted to the default
      * AVS Channel configuration names and priorities if no input parameter is provided.
      *
-     * @param channelConfigurations A vector of @c channelConfiguration objects that will be used to create the 
+     * @param channelConfigurations A vector of @c channelConfiguration objects that will be used to create the
      * Channels. No two Channels should have the same name or priority. If there are multiple configurations with the
      * same name or priority, the latter Channels with that name or priority will not be created.
      */
-    FocusManager(const std::vector<ChannelConfiguration>& channelConfigurations = {
-            {DIALOG_CHANNEL_NAME, DIALOG_CHANNEL_PRIORITY}, 
-            {ALERTS_CHANNEL_NAME, ALERTS_CHANNEL_PRIORITY}, 
-            {CONTENT_CHANNEL_NAME, CONTENT_CHANNEL_PRIORITY}
-        });
+    FocusManager(
+        const std::vector<ChannelConfiguration>& channelConfigurations = {
+            {DIALOG_CHANNEL_NAME, DIALOG_CHANNEL_PRIORITY},
+            {ALERTS_CHANNEL_NAME, ALERTS_CHANNEL_PRIORITY},
+            {CONTENT_CHANNEL_NAME, CONTENT_CHANNEL_PRIORITY}});
 
     bool acquireChannel(
-            const std::string& channelName, 
-            std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver,
-            const std::string& activityId) override;
+        const std::string& channelName,
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver,
+        const std::string& activityId) override;
 
     std::future<bool> releaseChannel(
         const std::string& channelName,
@@ -127,7 +128,7 @@ private:
     };
 
     /**
-     * Grants access to the Channel specified and updates other Channels as needed. This function provides the full 
+     * Grants access to the Channel specified and updates other Channels as needed. This function provides the full
      * implementation which the public method will call.
      *
      * @param channelToAcquire The Channel to acquire.
@@ -135,12 +136,12 @@ private:
      * @param activityId The id of the new activity on the Channel.
      */
     void acquireChannelHelper(
-            std::shared_ptr<Channel> channelToAcquire, 
-            std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver,
-            const std::string& activityId);
+        std::shared_ptr<Channel> channelToAcquire,
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver,
+        const std::string& activityId);
 
     /**
-     * Releases the Channel specified and updates other Channels as needed. This function provides the full 
+     * Releases the Channel specified and updates other Channels as needed. This function provides the full
      * implementation which the public method will call.
      *
      * @param channelToRelease The Channel to release.
@@ -149,10 +150,10 @@ private:
      * @param channelName The name of the Channel.
      */
     void releaseChannelHelper(
-            std::shared_ptr<Channel> channelToRelease, 
-            std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver,
-            std::shared_ptr<std::promise<bool>> releaseChannelSuccess,
-            const std::string& channelName);
+        std::shared_ptr<Channel> channelToRelease,
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver,
+        std::shared_ptr<std::promise<bool>> releaseChannelSuccess,
+        const std::string& channelName);
 
     /**
      * Stops the Channel specified and updates other Channels as needed if the activity id passed in matches the
@@ -162,7 +163,8 @@ private:
      * @param foregroundChannelActivityId The id of the activity to stop.
      */
     void stopForegroundActivityHelper(
-        std::shared_ptr<Channel> foregroundChannel, std::string foregroundChannelActivityId);
+        std::shared_ptr<Channel> foregroundChannel,
+        std::string foregroundChannelActivityId);
 
     /**
      * Finds the channel from the given channel name.
@@ -223,7 +225,7 @@ private:
     std::mutex m_mutex;
 };
 
-} // namespace afml
-} // namespace alexaClientSDK
+}  // namespace afml
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_FOCUS_MANAGER_H_
+#endif  // ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_FOCUS_MANAGER_H_

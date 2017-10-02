@@ -84,8 +84,11 @@ public:
      * reader policy.
      * @return The number of bytes read as a result of this call.
      */
-    virtual std::size_t read(void* buf, std::size_t numBytes, ReadStatus* readStatus,
-                             std::chrono::milliseconds timeoutMs = std::chrono::milliseconds(0)) = 0;
+    virtual std::size_t read(
+        void* buf,
+        std::size_t numBytes,
+        ReadStatus* readStatus,
+        std::chrono::milliseconds timeoutMs = std::chrono::milliseconds(0)) = 0;
 
     /**
      * The close function.  An implementation will take care of any resource management when a reader no longer
@@ -96,9 +99,9 @@ public:
     virtual void close(ClosePoint closePoint = ClosePoint::AFTER_DRAINING_CURRENT_BUFFER) = 0;
 };
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_READER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_READER_H_

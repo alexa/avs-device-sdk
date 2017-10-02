@@ -43,9 +43,9 @@ static const std::string TAG("IStreamSource");
 static const unsigned int CHUNK_SIZE(4096);
 
 std::unique_ptr<IStreamSource> IStreamSource::create(
-        PipelineInterface* pipeline,
-        std::shared_ptr<std::istream> stream,
-        bool repeat) {
+    PipelineInterface* pipeline,
+    std::shared_ptr<std::istream> stream,
+    bool repeat) {
     std::unique_ptr<IStreamSource> result(new IStreamSource(pipeline, std::move(stream), repeat));
     if (result->init()) {
         return result;
@@ -53,17 +53,18 @@ std::unique_ptr<IStreamSource> IStreamSource::create(
     return nullptr;
 };
 
-IStreamSource::IStreamSource(PipelineInterface* pipeline, std::shared_ptr<std::istream> stream, bool repeat)
-        :
+IStreamSource::IStreamSource(PipelineInterface* pipeline, std::shared_ptr<std::istream> stream, bool repeat) :
         BaseStreamSource{pipeline},
         m_stream{stream},
-        m_repeat{repeat} {
-};
+        m_repeat{repeat} {};
 
 IStreamSource::~IStreamSource() {
     close();
 }
 
+bool IStreamSource::isPlaybackRemote() const {
+    return false;
+}
 
 bool IStreamSource::isOpen() {
     return m_stream != nullptr;
@@ -74,7 +75,6 @@ void IStreamSource::close() {
 }
 
 gboolean IStreamSource::handleReadData() {
-
     if (!isOpen()) {
         ACSDK_ERROR(LX("handleReadDataFailed").d("reason", "attachmentReaderIsNullPtr"));
         return false;
@@ -122,7 +122,8 @@ gboolean IStreamSource::handleReadData() {
         auto flowRet = gst_app_src_push_buffer(getAppSrc(), buffer);
         if (flowRet != GST_FLOW_OK) {
             ACSDK_ERROR(LX("handleReadDataFailed")
-                    .d("reason", "gstAppSrcPushBufferFailed").d("error", gst_flow_get_name(flowRet)));
+                            .d("reason", "gstAppSrcPushBufferFailed")
+                            .d("error", gst_flow_get_name(flowRet)));
             return false;
         } else {
             return true;
@@ -140,5 +141,5 @@ gboolean IStreamSource::handleReadData() {
     return true;
 }
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK

@@ -38,7 +38,7 @@ public:
      * @param numBlocks The number of "blocks" to read or write
      * @param userData Some user data passed in with CURLOPT_XDATA (where X = READ, WRITE, or HEADER)
      */
-    typedef size_t (*CurlCallback)(char *buffer, size_t blockSize, size_t numBlocks, void *userData);
+    typedef size_t (*CurlCallback)(char* buffer, size_t blockSize, size_t numBlocks, void* userData);
 
     /**
      * Definitions for HTTP action types
@@ -141,14 +141,14 @@ public:
      * @param userData User data passed into the read callback.
      * @return Whether the addition was successful.
      */
-    bool setPostStream(const std::string& fieldName, void *userData);
+    bool setPostStream(const std::string& fieldName, void* userData);
 
     /**
      * Sets how long the stream should take, in seconds, to establish a connection.
      * If not set explicitly there is no timeout.
      *
-     * @param timeoutSeconds The amount of time, in seconds, establishing a connection should take. Set to @c 0 to disable
-     * a timeout.
+     * @param timeoutSeconds The amount of time, in seconds, establishing a connection should take. Set to @c 0 to
+     * disable a timeout.
      * @returns Whether setting the timeout was successful
      */
     bool setConnectionTimeout(const std::chrono::seconds timeoutSeconds);
@@ -200,16 +200,16 @@ private:
     bool setDefaultOptions();
 
     /// The associated libcurl easy handle
-    CURL *m_handle;
+    CURL* m_handle;
     /// A list of headers needed to be added at the HTTP level
-    curl_slist *m_requestHeaders;
+    curl_slist* m_requestHeaders;
     /// A list of headers needed to be added to a POST action
-    curl_slist *m_postHeaders;
+    curl_slist* m_postHeaders;
     /// The associated multipart post
-    curl_httppost *m_post;
+    curl_httppost* m_post;
 };
 
-} // alexaClientSDK
-} // acl
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_CURL_EASY_HANDLE_WRAPPER_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_CURL_EASY_HANDLE_WRAPPER_H_

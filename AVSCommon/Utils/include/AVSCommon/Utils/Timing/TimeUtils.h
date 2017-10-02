@@ -19,6 +19,7 @@
 #define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_TIMING_TIME_UTILS_H_
 
 #include <string>
+#include "AVSCommon/Utils/RetryTimer.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -51,7 +52,7 @@ namespace timing {
  * @param[out] unixTime The converted time into Unix epoch time.
  * @return Whether the conversion was successful.
  */
-bool convert8601TimeStringToUnix(const std::string & timeString, int64_t* unixTime);
+bool convert8601TimeStringToUnix(const std::string& timeString, int64_t* unixTime);
 
 /**
  * Gets the current time in Unix epoch time, as a 64 bit integer.
@@ -61,9 +62,9 @@ bool convert8601TimeStringToUnix(const std::string & timeString, int64_t* unixTi
  */
 bool getCurrentUnixTime(int64_t* currentTime);
 
-} // namespace timing
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace timing
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_TIMING_TIME_UTILS_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_TIMING_TIME_UTILS_H_

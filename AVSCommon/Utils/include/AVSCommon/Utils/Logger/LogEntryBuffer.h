@@ -59,7 +59,6 @@ public:
     const char* c_str() const;
 
 private:
-
     /// A small embedded buffer used unless the data to be buffered grows beyond its capacity.
     char m_smallBuffer[ACSDK_LOG_ENTRY_BUFFER_SMALL_BUFFER_SIZE];
 
@@ -70,9 +69,9 @@ private:
     std::unique_ptr<std::vector<char>> m_largeBuffer;
 };
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOG_ENTRY_BUFFER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOG_ENTRY_BUFFER_H_

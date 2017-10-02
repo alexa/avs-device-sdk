@@ -31,13 +31,14 @@ namespace test {
  */
 class MockExceptionEncounteredSender : public ExceptionEncounteredSenderInterface {
 public:
-    MOCK_METHOD3(sendExceptionEncountered, void(const std::string& unparsedDirective, avs::ExceptionErrorType error,
-        const std::string& errorDescription));
+    MOCK_METHOD3(
+        sendExceptionEncountered,
+        void(const std::string& unparsedDirective, avs::ExceptionErrorType error, const std::string& errorDescription));
 };
 
-} // namespace test
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_TEST_AVS_COMMON_MOCK_EXCEPTION_ENCOUNTERED_SENDER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_TEST_AVS_COMMON_MOCK_EXCEPTION_ENCOUNTERED_SENDER_H_

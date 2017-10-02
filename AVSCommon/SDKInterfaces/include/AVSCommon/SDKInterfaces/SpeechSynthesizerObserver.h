@@ -60,7 +60,7 @@ public:
  * @return The @c ostream that was passed in and written to.
  */
 inline std::ostream& operator<<(std::ostream& stream, const SpeechSynthesizerObserver::SpeechSynthesizerState state) {
-    switch(state) {
+    switch (state) {
         case SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING:
             stream << "PLAYING";
             break;
@@ -71,8 +71,8 @@ inline std::ostream& operator<<(std::ostream& stream, const SpeechSynthesizerObs
     return stream;
 }
 
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_SPEECH_SYNTHESIZER_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_SPEECH_SYNTHESIZER_OBSERVER_H_

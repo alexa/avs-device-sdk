@@ -80,21 +80,20 @@ public:
      */
     AttachmentManager(AttachmentType attachmentType);
 
-    std::string generateAttachmentId(const std::string & contextId, const std::string & contentId) const override;
+    std::string generateAttachmentId(const std::string& contextId, const std::string& contentId) const override;
 
     bool setAttachmentTimeoutMinutes(std::chrono::minutes timeoutMinutes) override;
 
-    std::unique_ptr<AttachmentWriter> createWriter(const std::string & attachmentId) override;
+    std::unique_ptr<AttachmentWriter> createWriter(const std::string& attachmentId) override;
 
-    std::unique_ptr<AttachmentReader> createReader(
-            const std::string & attachmentId, AttachmentReader::Policy policy) override;
+    std::unique_ptr<AttachmentReader> createReader(const std::string& attachmentId, AttachmentReader::Policy policy)
+        override;
 
 private:
     /**
      * A utility structure to encapsulate an @c Attachment, its creation time, and other appropriate data fields.
      */
     struct AttachmentManagementDetails {
-
         /**
          * Constructor.  This sets the creationTime to the time of instantiation.
          */
@@ -115,7 +114,7 @@ private:
      * @param attachmentId The attachment id for the attachment detail being requested.
      * @return The attachment detail object.
      */
-    AttachmentManagementDetails & getDetailsLocked(const std::string & attachmentId);
+    AttachmentManagementDetails& getDetailsLocked(const std::string& attachmentId);
 
     /**
      * A cleanup function, which will release an @c AttachmentManagementDetails from the map if either both a writer
@@ -134,9 +133,9 @@ private:
     std::unordered_map<std::string, AttachmentManagementDetails> m_attachmentDetailsMap;
 };
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_MANAGER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_MANAGER_H_

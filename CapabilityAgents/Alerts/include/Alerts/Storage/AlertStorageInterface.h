@@ -49,7 +49,7 @@ public:
      * @return @c true If the database is created ok, or @c false if either the file exists or a database is already
      * being handled by this object.
      */
-    virtual bool createDatabase(const std::string & filePath) = 0;
+    virtual bool createDatabase(const std::string& filePath) = 0;
 
     /**
      * Open a database with the given filepath.  If this object is already managing an open database, or the file
@@ -59,7 +59,7 @@ public:
      * @return @c true If the database is opened ok, @c false if either the file does not exist, if this object is
      * already managing an open database, or if there is another internal reason the database could not be opened.
      */
-    virtual bool open(const std::string & filePath) = 0;
+    virtual bool open(const std::string& filePath) = 0;
 
     /**
      * Query if this object is currently managing an open database.
@@ -79,7 +79,7 @@ public:
      * @param token The AVS token which uniquely identifies an alert.
      * @return @c true If the alert is stored in the database, @c false otherwise.
      */
-    virtual bool alertExists(const std::string & token) = 0;
+    virtual bool alertExists(const std::string& token) = 0;
 
     /**
      * Stores a single @c Alert in the database.
@@ -126,7 +126,7 @@ public:
      * @param alertDbIds A container of alert ids.
      * @return Whether the alerts were successfully erased.
      */
-    virtual bool erase(const std::vector<int> & alertDbIds) = 0;
+    virtual bool erase(const std::vector<int>& alertDbIds) = 0;
 
     /**
      * A utility function to clear the database of all records.  Note that the database will still exist, as will
@@ -155,9 +155,9 @@ public:
     virtual void printStats(StatLevel level = StatLevel::ONE_LINE) = 0;
 };
 
-} // namespace storage
-} // namespace alerts
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace storage
+}  // namespace alerts
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_STORAGE_SQLITE_ALERT_STORAGE_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_STORAGE_SQLITE_ALERT_STORAGE_INTERFACE_H_

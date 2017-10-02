@@ -20,7 +20,7 @@
 
 #include "Alerts/AlertObserverInterface.h"
 #include "Alerts/Alert.h"
-#include "Alerts/Storage/AlertStorageInterface.h"
+#include "Alerts/AlertScheduler.h"
 
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/MessageRequest.h>
@@ -33,8 +33,11 @@
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 
+#include <CertifiedSender/CertifiedSender.h>
+
 #include <chrono>
 #include <set>
+#include <unordered_set>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -44,37 +47,34 @@ static const std::chrono::minutes ALERT_PAST_DUE_CUTOFF_MINUTES = std::chrono::m
 
 /**
  * This class implements an Alerts capability agent.
- *
- * This class will not send Events to AVS until enableSendEvents() is called.
  */
-class AlertsCapabilityAgent : public avsCommon::avs::CapabilityAgent,
-                              public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface,
-                              public AlertObserverInterface,
-                              public avsCommon::utils::RequiresShutdown,
-                              public std::enable_shared_from_this<AlertsCapabilityAgent> {
+class AlertsCapabilityAgent
+        : public avsCommon::avs::CapabilityAgent
+        , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface
+        , public AlertObserverInterface
+        , public avsCommon::utils::RequiresShutdown
+        , public std::enable_shared_from_this<AlertsCapabilityAgent> {
 public:
     /**
      * Create function.
      *
-     * TODO : ACSDK-394 to change the observer model to support adding / removing multiple observers.
-     *
      * @param messageSender An interface to which this object will send Events to AVS.
+     * @param certifiedMessageSender An interface to which this object will send guaranteed Events to AVS.
      * @param focusManager An interface with which this object will request and release Alert channel focus.
-     * @param contextManager An interface to which this object will send context updates as stored alerts change.
-     * @param exceptionEncounteredSender An interface which allows ExceptionEncountered messages to be sent to AVS.
-     * @param renderer An alert renderer, which Alerts will use to generate user-perceivable effects when active.
+     * @param contextManager An interface to which this object will send context updates as alert states change.
+     * @param exceptionEncounteredSender An interface which allows ExceptionEncountered Events to be sent to AVS.
      * @param alertStorage An interface to store, load, modify and delete Alerts.
-     * @param observer An observer which will be notified of any Alert events which occur.
-     * @return An pointer to an object of this type, or nullptr if there were problems during construction.
+     * @param alertRenderer An alert renderer, which Alerts will use to generate user-perceivable effects when active.
+     * @return A pointer to an object of this type, or nullptr if there were problems during construction.
      */
     static std::shared_ptr<AlertsCapabilityAgent> create(
-            std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-            std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
-            std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-            std::shared_ptr<renderer::RendererInterface> renderer,
-            std::shared_ptr<storage::AlertStorageInterface> alertStorage,
-            std::shared_ptr<AlertObserverInterface> observer);
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+        std::shared_ptr<certifiedSender::CertifiedSender> certifiedMessageSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        std::shared_ptr<storage::AlertStorageInterface> alertStorage,
+        std::shared_ptr<renderer::RendererInterface> alertRenderer);
 
     avsCommon::avs::DirectiveHandlerConfiguration getConfiguration() const override;
 
@@ -88,30 +88,26 @@ public:
 
     void onDeregistered() override;
 
-    /**
-     * Calling this function allows this object to send Events to AVS.
-     * This is useful for workflows where other Events need to be sent before this object's Events.
-     */
-    void enableSendEvents();
-
-    /**
-     * Calling this function prevents this object from sending Events to AVS.
-     * This allows the system to send other Events which may need to be sent before this object begins sending Events.
-     */
-    void disableSendEvents();
-
     void onConnectionStatusChanged(const Status status, const ChangedReason reason) override;
 
     void onFocusChanged(avsCommon::avs::FocusState focusState) override;
 
-    void onAlertStateChange(
-            const std::string & token, AlertObserverInterface::State state, const std::string & reason) override;
+    void onAlertStateChange(const std::string& token, AlertObserverInterface::State state, const std::string& reason)
+        override;
 
     /**
-     * This function provides a way for application code to request this object stop any active alert as the result
-     * of a user action, such as pressing a physical 'stop' button on the device.
+     * Adds an observer to be notified of alert status changes.
+     *
+     * @param observer The observer to add.
      */
-    void onLocalStop();
+    void addObserver(std::shared_ptr<AlertObserverInterface> observer);
+
+    /**
+     * Removes an observer from being notified of alert status changes.
+     *
+     * @param observer The observer to remove.
+     */
+    void removeObserver(std::shared_ptr<AlertObserverInterface> observer);
 
     /**
      * A function that allows an application to clear all alerts from storage.  This may be useful for a scenario
@@ -120,26 +116,32 @@ public:
      */
     void removeAllAlerts();
 
+    /**
+     * This function provides a way for application code to request this object stop any active alert as the result
+     * of a user action, such as pressing a physical 'stop' button on the device.
+     */
+    void onLocalStop();
+
 private:
     /**
      * Constructor.
      *
      * @param messageSender An interface to which this object will send Events to AVS.
+     * @param certifiedMessageSender An interface to which this object will send guaranteed Events to AVS.
      * @param focusManager An interface with which this object will request and release Alert channel focus.
      * @param contextManager An interface to which this object will send context updates as stored alerts change.
      * @param exceptionEncounteredSender An interface which allows ExceptionEncountered messages to be sent to AVS.
-     * @param renderer An alert renderer, which Alerts will use to generate user-perceivable effects when active.
      * @param alertStorage An interface to store, load, modify and delete Alerts.
-     * @param observer An observer which will be notified of any Alert events which occur.
+     * @param alertRenderer An alert renderer, which Alerts will use to generate user-perceivable effects when active.
      */
     AlertsCapabilityAgent(
-            std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-            std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
-            std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-            std::shared_ptr<renderer::RendererInterface> renderer,
-            std::shared_ptr<storage::AlertStorageInterface> alertStorage,
-            std::shared_ptr<AlertObserverInterface> observer);
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+        std::shared_ptr<certifiedSender::CertifiedSender> certifiedMessageSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        std::shared_ptr<storage::AlertStorageInterface> alertStorage,
+        std::shared_ptr<renderer::RendererInterface> alertRenderer);
 
     void doShutdown() override;
 
@@ -153,14 +155,26 @@ private:
      *
      * @param configurationRoot The configuration object parsed during SDK initialization.
      */
-    bool initializeDefaultSounds(const avsCommon::utils::configuration::ConfigurationNode & configurationRoot);
+    bool initializeDefaultSounds(const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
 
     /**
      * Initializes the alerts for this object.
      *
      * @param configurationRoot The configuration object parsed during SDK initialization.
      */
-    bool initializeAlerts(const avsCommon::utils::configuration::ConfigurationNode & configurationRoot);
+    bool initializeAlerts(const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
+
+    /**
+     * @name Executor Thread Functions
+     *
+     * These functions (and only these functions) are called by @c m_executor on a single worker thread.  All other
+     * public functions in this class can be called asynchronously, and pass data to the @c Executor thread through
+     * parameters to lambda functions.  No additional synchronization is needed.
+     *
+     * The other private functions in this class are called from the execute* functions, and so also don't require
+     * additional synchronization.
+     */
+    /// @{
 
     /**
      * An implementation of this directive handling function, which may be called by the internal executor.
@@ -168,6 +182,77 @@ private:
      * @param info The Directive information.
      */
     void executeHandleDirectiveImmediately(std::shared_ptr<DirectiveInfo> info);
+
+    /**
+     * A handler function which will be called by our internal executor when we are de-registered from
+     * receiving directives.
+     */
+    void executeOnDeregistered();
+
+    /**
+     * A handler function which will be called by our internal executor when the connection status changes.
+     *
+     * @param status The connection status.
+     * @param reason The reason the connection status changed.
+     */
+    void executeOnConnectionStatusChanged(const Status status, const ChangedReason reason);
+
+    /**
+     * A handler function which will be called by our internal executor when the channel focus changes.
+     *
+     * @param focusState The current focus of the channel.
+     */
+    void executeOnFocusChanged(avsCommon::avs::FocusState focusState);
+
+    /**
+     * A handler function which will be called by our internal executor when an alert's status changes.
+     *
+     * @param alertToken The AVS token identifying the alert.
+     * @param state The state of the alert.
+     * @param reason The reason the the state changed, if applicable.
+     */
+    void executeOnAlertStateChange(
+        const std::string& alertToken,
+        AlertObserverInterface::State state,
+        const std::string& reason);
+
+    /**
+     * A handler function which will be called by our internal executor to add an alert observer.
+     *
+     * @param observer The observer to add.
+     */
+    void executeAddObserver(std::shared_ptr<AlertObserverInterface> observer);
+
+    /**
+     * A handler function which will be called by our internal executor to remove an alert observer.
+     *
+     * @param observer The observer to remove.
+     */
+    void executeRemoveObserver(std::shared_ptr<AlertObserverInterface> observer);
+
+    /**
+     * A handler function which will be called by our internal executor to notify observers of alert changes.
+     *
+     * @param alertToken The AVS token identifying the alert.
+     * @param state The state of the alert.
+     * @param reason The reason the the state changed, if applicable.
+     */
+    void executeNotifyObservers(
+        const std::string& alertToken,
+        AlertObserverInterface::State state,
+        const std::string& reason = "");
+
+    /**
+     * A handler function which will be called by our internal executor to remove all alerts currently being managed.
+     */
+    void executeRemoveAllAlerts();
+
+    /**
+     * A handler function which will be called by our internal executor to handle a local stop.
+     */
+    void executeOnLocalStop();
+
+    /// @}
 
     /**
      * A helper function to handle the SetAlert directive.
@@ -178,9 +263,10 @@ private:
      * succeeded.
      * @return Whether the SetAlert processing was successful.
      */
-    bool handleSetAlert(const std::shared_ptr<avsCommon::avs::AVSDirective> & directive,
-                        const rapidjson::Document & payload,
-                        std::string* alertToken);
+    bool handleSetAlert(
+        const std::shared_ptr<avsCommon::avs::AVSDirective>& directive,
+        const rapidjson::Document& payload,
+        std::string* alertToken);
 
     /**
      * A helper function to handle the DeleteAlert directive.
@@ -191,18 +277,22 @@ private:
      * succeeded.
      * @return Whether the DeleteAlert processing was successful.
      */
-    bool handleDeleteAlert(const std::shared_ptr<avsCommon::avs::AVSDirective> & directive,
-                           const rapidjson::Document & payload,
-                           std::string* alertToken);
+    bool handleDeleteAlert(
+        const std::shared_ptr<avsCommon::avs::AVSDirective>& directive,
+        const rapidjson::Document& payload,
+        std::string* alertToken);
 
     /**
      * Utility function to send an Event to AVS.  All current Events per AVS documentation are with respect to
-     * a single Alert, so the parameter is the given Alert token.
+     * a single Alert, so the parameter is the given Alert token.  If isCertified is set to true, then the Event
+     * will be guaranteed to be sent to AVS at some point in the future, even if there is no currently active
+     * connection.  If it is set to false, and there is no currently active connection, the Event will not be sent.
      *
      * @param eventName The name of the Event to be sent.
      * @param alertToken The token of the Alert being sent to AVS within the Event.
+     * @param isCertified Whether the event must be guaranteed to be sent.  See function description for details.
      */
-    void sendEvent(const std::string & eventName, const std::string & alertToken);
+    void sendEvent(const std::string& eventName, const std::string& alertToken, bool isCertified = false);
 
     /**
      * A utility function to simplify calling the ExceptionEncounteredSender.
@@ -211,48 +301,13 @@ private:
      * @param errorMessage The error message we will send to AVS.
      */
     void sendProcessingDirectiveException(
-            const std::shared_ptr<avsCommon::avs::AVSDirective> & directive, const std::string & errorMessage);
-
-    /**
-     * A utility function to update the ContextManager with the current state of all Alerts.
-     * This function requires that m_mutex be locked.
-     */
-    void updateContextManagerLocked();
-
-    /**
-     * A utility function to enqueue on the executor a request that we determine the next alert to be rendered.
-     */
-    void scheduleNextAlertForRendering();
-
-    /**
-     * A utility function to determine the next alert to be rendered, and sets a timer waiting for it.
-     */
-    void executeScheduleNextAlertForRendering();
-
-    /**
-     * A utility function to handle sending Alert focus changes via the executor.
-     *
-     * @param alertToken The AVS Token for the alert.
-     * @param focusState The focus state of the alert.
-     */
-    void executeSendAlertFocusChangeEvent(const std::string & alertToken, avsCommon::avs::FocusState focusState);
-
-    /**
-     * A utility function to handle sending notifications to the Alert observer via the executor.
-     *
-     * @param alertToken The AVS Token for the alert.
-     * @param state The alert state.
-     * @param reason The optional reason for the alert state occurring.
-     */
-    void executeNotifyObserver(
-            const std::string & alertToken, AlertObserverInterface::State state, const std::string & reason = "");
+        const std::shared_ptr<avsCommon::avs::AVSDirective>& directive,
+        const std::string& errorMessage);
 
     /**
      * A utility function to acquire the Alerts channel.
-     *
-     * @return Whether we were successful making the request.
      */
-    bool acquireChannel();
+    void acquireChannel();
 
     /**
      * A utility function to release the Alerts channel.
@@ -260,83 +315,56 @@ private:
     void releaseChannel();
 
     /**
-     * A utility function to activate the next alert in our queue.
-     * This function requires that m_mutex be locked.
+     * A utility function to update the focus manager with the current state of all alerts.
      */
-    void activateNextAlertLocked();
+    void updateContextManager();
 
     /**
-     * A utility function to retreive a scheduled alert given its token.
-     * This function requires that m_mutex be locked.
+     * Creates a Context string for the alerts currently being managed.
      *
-     * @param token The token for the alert.
-     * @return The scheduled Alert, otherwise nullptr.
+     * @return A Context string for the alerts currently being managed.
      */
-    std::shared_ptr<Alert> getScheduledAlertByTokenLocked(const std::string & token);
+    std::string getContextString();
 
     /**
-     * A utility function to update an alert to snooze.
-     * This function requires that m_mutex be locked.
+     * @name Executor Thread Variables
      *
-     * @param alert The alert to be snoozed.
-     * @param updatedTime The new time the alert should occur.
-     * @return Whether the snooze was successful.
+     * These variables are only accessed by the @c m_executor, with the exception of initialization, and shutdown.
+     * The first thing shutdown does is shutdown the @c m_executor, thus making this safe.
      */
-    bool snoozeAlertLocked(std::shared_ptr<Alert> alert, const std::string & updatedTime);
+    /// @{
 
-    /**
-     * A utility function to inspect all scheduled alerts, and remove those which are evaluated to be past-due.
-     * This also processes any alerts stored in the m_pastDueAlerts container.
-     */
-    void filterPastDueAlerts();
-
-    /**
-     * A utility function to factor out common code when deactivating an alert.
-     *
-     * @param stopReason The reason the alert is being stopped.
-     */
-    void deactivateActiveAlertHelper(Alert::StopReason stopReason);
-
-    /// The MessageSender object.
+    /// The regular MessageSender object.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
+    /// The CertifiedSender object.
+    std::shared_ptr<certifiedSender::CertifiedSender> m_certifiedSender;
     /// The FocusManager object.
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_focusManager;
     /// The ContextManager object.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
-    /// The AlertStorage object.
-    std::shared_ptr<storage::AlertStorageInterface> m_alertStorage;
-    /// The AlertRenderer object.
-    std::shared_ptr<renderer::RendererInterface> m_alertRenderer;
 
-    /// The mutex to control accessing local variables in this object.
-    std::mutex m_mutex;
-
-    /// The alert, if any, which is currently active.
-    std::shared_ptr<Alert> m_activeAlert;
-    /// All alerts which are scheduled to occur, ordered ascending by time.
-    std::set<std::shared_ptr<Alert>, Alert::TimeComparator> m_scheduledAlerts;
-    /// Alerts which are evaluated as past-due at startup.  These will be cleaned up once Events can be sent.
-    std::vector<std::shared_ptr<Alert>> m_pastDueAlerts;
+    /// Set of observers to notify when an alert status changes.  @c m_mutex must be acquired before access.
+    std::unordered_set<std::shared_ptr<AlertObserverInterface>> m_observers;
 
     /// Variable to capture if we are currently connected to AVS.
     bool m_isConnected;
-    /// Variable to capture if we may send Events.
-    bool m_sendEventsEnabled;
-    /// Our current focus state.
-    avsCommon::avs::FocusState m_focusState;
-    // The timer for the next alert to go off, if one is not already active.
-    avsCommon::utils::timing::Timer m_scheduledAlertTimer;
-    /// An observer of this class that we should notify when an alert activates, and transitions states.
-    std::shared_ptr<AlertObserverInterface> m_observer;
 
-    /// The @c Executor which queues up operations from asynchronous API calls to the AlertsCapabilityAgent interface.
-    avsCommon::utils::threading::Executor m_caExecutor;
-    /// The @c Executor which serially and asynchronously handles operations with regard to the next active alert.
-    avsCommon::utils::threading::Executor m_alertSchedulerExecutor;
+    /// Our helper object that takes care of managing alert persistence and rendering.
+    AlertScheduler m_alertScheduler;
+
+    /// @}
+
+    /**
+     * The @c Executor which queues up operations from asynchronous API calls.
+     *
+     * @note This declaration needs to come *after* the Executor Thread Variables above so that the thread shuts down
+     *     before the Executor Thread Variables are destroyed.
+     */
+    avsCommon::utils::threading::Executor m_executor;
 };
 
-} // namespace alerts
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace alerts
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_ALERTS_CAPABILITY_AGENT_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_ALERTS_CAPABILITY_AGENT_H_

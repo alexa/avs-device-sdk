@@ -30,7 +30,6 @@
 namespace alexaClientSDK {
 namespace mediaPlayer {
 
-
 class BaseStreamSource : public SourceInterface {
 public:
     /**
@@ -39,7 +38,7 @@ public:
      * @param pipeline The @c PipelineInterface through which the source of the @c AudioPipeline may be set.
      */
     BaseStreamSource(PipelineInterface* pipeline);
-    
+
     ~BaseStreamSource() override;
 
     bool hasAdditionalData() override;
@@ -180,8 +179,7 @@ private:
     guint m_enoughDataCallbackId;
 };
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_BASE_STREAM_SOURCE_H_
-
+#endif  // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_BASE_STREAM_SOURCE_H_

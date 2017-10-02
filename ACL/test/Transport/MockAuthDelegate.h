@@ -30,15 +30,15 @@ namespace alexaClientSDK {
 namespace acl {
 namespace test {
 
-class MockAuthDelegate: public avsCommon::sdkInterfaces::AuthDelegateInterface {
+class MockAuthDelegate : public avsCommon::sdkInterfaces::AuthDelegateInterface {
 public:
     MOCK_METHOD1(addAuthObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface>));
     MOCK_METHOD1(removeAuthObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface>));
     MOCK_METHOD0(getAuthToken, std::string());
 };
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_AUTH_DELEGATE_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_AUTH_DELEGATE_H_

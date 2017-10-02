@@ -27,9 +27,8 @@ namespace utils {
 namespace threading {
 namespace test {
 
-class TaskQueueTest: public ::testing::Test {
+class TaskQueueTest : public ::testing::Test {
 public:
-
     /**
      * Asserts that a call to pop on an empty queue is blocking, and will be awoken by a task being pushed onto
      * the queue
@@ -80,7 +79,7 @@ TEST_F(TaskQueueTest, pushStdBindAndVerifyPopReturnsIt) {
 }
 
 TEST_F(TaskQueueTest, pushLambdaAndVerifyPopReturnsIt) {
-    auto future = queue.push([]() { });
+    auto future = queue.push([]() {});
     auto task = queue.pop();
     task->operator()();
     auto future_status = future.wait_for(SHORT_TIMEOUT_MS);
@@ -126,7 +125,7 @@ TEST_F(TaskQueueTest, pushFunctionWithObjectReturnTypeNoArgsAndVerifyPopReturnsI
 
 TEST_F(TaskQueueTest, pushFunctionWithNoReturnTypePrimitiveArgsAndVerifyPopReturnsIt) {
     int value = VALUE;
-    auto future = queue.push([](int number) { }, value);
+    auto future = queue.push([](int number) {}, value);
     auto task = queue.pop();
     task->operator()();
     auto future_status = future.wait_for(SHORT_TIMEOUT_MS);
@@ -135,7 +134,7 @@ TEST_F(TaskQueueTest, pushFunctionWithNoReturnTypePrimitiveArgsAndVerifyPopRetur
 
 TEST_F(TaskQueueTest, pushFunctionWithNoReturnTypeObjectArgsAndVerifyPopReturnsIt) {
     SimpleObject arg(0);
-    auto future = queue.push([](SimpleObject object) { }, arg);
+    auto future = queue.push([](SimpleObject object) {}, arg);
     auto task = queue.pop();
     task->operator()();
     auto future_status = future.wait_for(SHORT_TIMEOUT_MS);
@@ -280,8 +279,8 @@ TEST_F(TaskQueueTest, pushFailsToEnqueueANewTaskOnAShutdownQueue) {
     ASSERT_EQ(retrievedTask, nullptr);
 }
 
-} // namespace test
-} // namespace threading
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace threading
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

@@ -20,6 +20,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "PlaylistParserObserverInterface.h"
 
@@ -29,10 +30,19 @@ namespace utils {
 namespace playlistParser {
 
 /**
- * A PlaylistParser parses playlists.
+ * An interface that can be implemented to parse playlists in a DFS manner.
  */
 class PlaylistParserInterface {
 public:
+    /// The different types of playlists that are currently supported
+    enum class PlaylistType {
+        M3U,
+
+        M3U8,
+
+        PLS
+    };
+
     /**
      * Destructor.
      */
@@ -40,20 +50,25 @@ public:
 
     /**
      * This function returns immediately. It parses the playlist specified in the @c url asynchronously. The playlist
-     * parsing is a DFS parsing. If the playlist contains a link to another playlist, then it will proceed to parse
-     * that before proceeding. The result of parsing the playlist is notified to the
-     * @c PlaylistParserObserverInterface via the @c onPlaylistParsed call.
+     * will be parsed in a DFS manner. If the playlist contains a link to another playlist, then it will proceed to
+     * parse that before proceeding. Callbacks willbe issued @c PlaylistParserObserverInterface via the @c
+     * onPlaylistParsed call whenever a entry has been parsed.
      *
      * @param url The url of the playlist to be parsed.
-     * @param observer The observer to be notified of when playlist parsing is complete.
-     * @return @c true if it was successful in adding a new playlist parsing request to the queue @c else false.
+     * @param observer The observer to be notified of playlist parsing.
+     * @param playlistTypesToNotBeParsed The playlist types to skip parsing of.
+     * @return 0 if adding a new playlist parsing request to the queue failed or the id of the request otherwise. This
+     * id will be included in the callback to notify the observer which original request the callback is referencing.
      */
-    virtual bool parsePlaylist(const std::string& url, std::shared_ptr<PlaylistParserObserverInterface> observer) = 0;
+    virtual int parsePlaylist(
+        std::string url,
+        std::shared_ptr<PlaylistParserObserverInterface> observer,
+        std::vector<PlaylistType> playlistTypesToNotBeParsed = std::vector<PlaylistType>()) = 0;
 };
 
-} // namespace playlistParser
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace playlistParser
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_PLAYLIST_PARSER_PLAYLIST_PARSER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_PLAYLIST_PARSER_PLAYLIST_PARSER_INTERFACE_H_

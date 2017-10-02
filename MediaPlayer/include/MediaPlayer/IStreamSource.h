@@ -41,9 +41,9 @@ public:
      * @param repeat Whether the stream should be replayed until stopped.
      */
     static std::unique_ptr<IStreamSource> create(
-            PipelineInterface* pipeline,
-            std::shared_ptr<std::istream> stream,
-            bool repeat);
+        PipelineInterface* pipeline,
+        std::shared_ptr<std::istream> stream,
+        bool repeat);
 
     /**
      * Destructor.
@@ -60,6 +60,13 @@ private:
      */
     IStreamSource(PipelineInterface* pipeline, std::shared_ptr<std::istream> stream, bool repeat);
 
+    /// @name Overridden SourceInterface methods.
+    /// @{
+    bool isPlaybackRemote() const override;
+
+    void terminate() override{};
+    /// @}
+
     /// @name Overridden BaseStreamSource methods.
     /// @{
     bool isOpen() override;
@@ -75,8 +82,7 @@ private:
     bool m_repeat;
 };
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_ISTREAM_SOURCE_H_
-
+#endif  // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_ISTREAM_SOURCE_H_

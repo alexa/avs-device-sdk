@@ -21,22 +21,23 @@
 #include <memory>
 #include <unordered_set>
 
-#include <AVSCommon/SDKInterfaces/AudioInputProcessorObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
-#include <AVSCommon/SDKInterfaces/UserActivityNotifierInterface.h>
+#include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
-#include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
+#include <AVSCommon/AVS/DirectiveHandlerConfiguration.h>
+#include <AVSCommon/AVS/DialogUXStateAggregator.h>
+#include <AVSCommon/SDKInterfaces/AudioInputProcessorObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ChannelObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
+#include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/UserActivityNotifierInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
-#include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
-#include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
-#include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
-#include <AVSCommon/AVS/DirectiveHandlerConfiguration.h>
-#include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
-#include <AVSCommon/AVS/DialogUXStateAggregator.h>
 #include "AudioProvider.h"
 #include "Initiator.h"
 
@@ -56,11 +57,12 @@ namespace aip {
  * Application code can also register objects which implement the @c ObserverInterface to receive notifications when
  * the @c AudioInputProcessor state changes.
  */
-class AudioInputProcessor :
-        public avsCommon::avs::CapabilityAgent,
-        public avsCommon::sdkInterfaces::DialogUXStateObserverInterface,
-        public avsCommon::utils::RequiresShutdown,
-        public std::enable_shared_from_this<AudioInputProcessor> {
+class AudioInputProcessor
+        : public avsCommon::avs::CapabilityAgent
+        , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
+        , public avsCommon::sdkInterfaces::MessageRequestObserverInterface
+        , public avsCommon::utils::RequiresShutdown
+        , public std::enable_shared_from_this<AudioInputProcessor> {
 public:
     /// Alias to the @c AudioInputProcessorObserverInterface for brevity.
     using ObserverInterface = avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface;
@@ -133,7 +135,7 @@ public:
      * If all of the above requirements are met, audio steaming will start between 0 and 500ms before @c begin, and the
      * cloud will perform additional verification of the wakeword audio before proceeding to recognize the subsequent
      * audio.
-     * 
+     *
      * @param audioProvider The @c AudioProvider to stream audio from.
      * @param initiator The type of interface that initiated this recognize event.
      * @param begin The @c Index in @c audioProvider.stream where audio streaming should begin.  This parameter is
@@ -185,6 +187,12 @@ public:
     void onContextFailure(const avsCommon::sdkInterfaces::ContextRequestError error) override;
     /// @}
 
+    /// @name MessageRequestObserverInterface Functions
+    /// @{
+    void onSendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status) override;
+    void onExceptionReceived(const std::string& exceptionMessage) override;
+    /// @}
+
     /// @name CapabilityAgent/DirectiveHandlerInterface Functions
     /// @{
     void handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive) override;
@@ -203,7 +211,7 @@ public:
     /// @name DialogUXStateObserverInterface Functions
     /// @{
     void onDialogUXStateChanged(
-            avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) override;
+        avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) override;
     /// @}
 
 private:
@@ -276,7 +284,7 @@ private:
      * @c executeRecognize() function below which takes an initiator string.
      *
      * @see @c recognize() for a detailed explanation of the Recognize Event.
-     * 
+     *
      * @param audioProvider The @c AudioProvider to stream audio from.
      * @param initiator The type of interface that initiated this recognize event.
      * @param begin The @c Index in @c audioProvider.stream where audio streaming should begin.  This parameter is
@@ -306,7 +314,7 @@ private:
      * an @c ExpectSpeech directive.
      *
      * @see @c recognize() for a detailed explanation of the Recognize Event.
-     * 
+     *
      * @param audioProvider The @c AudioProvider to stream audio from.
      * @param initiatorJson A JSON string describing the type of interface that initiated this recognize event.
      * @param begin The @c Index in @c audioProvider.stream where audio streaming should begin.  This parameter is
@@ -394,7 +402,9 @@ private:
      *     @c RECOGNIZING, else @c false.
      */
     bool executeExpectSpeech(
-            std::chrono::milliseconds timeout, std::string initiator, std::shared_ptr<DirectiveInfo> info);
+        std::chrono::milliseconds timeout,
+        std::string initiator,
+        std::shared_ptr<DirectiveInfo> info);
 
     /**
      * This function is called when @c m_expectingSpeechTimer expires.  It will send an ExpectSpeechTimedOut event.
@@ -415,13 +425,13 @@ private:
     void executeProvideState(bool sendToken = false, unsigned int stateRequestToken = 0);
 
     /**
-     * This function is called whenever the AVS UX dialog state of the system changes. This function will block 
+     * This function is called whenever the AVS UX dialog state of the system changes. This function will block
      * processing of other state changes, so any implementation of this should return quickly.
      *
      * @param newState The new dialog specific AVS UX state.
      */
     void executeOnDialogUXStateChanged(
-            avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState);
+        avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState);
 
     /**
      * This function updates the @c AudioInputProcessor state and notifies the state observer.  Any changes to
@@ -532,7 +542,7 @@ private:
     std::function<void()> m_deferredStopCapture;
 
     /// This flag indicates whether the initial dialog UX State has been received.
-    bool m_initialDialogUXStateReceived;    
+    bool m_initialDialogUXStateReceived;
     /// @}
 
     /**
@@ -544,8 +554,8 @@ private:
     avsCommon::utils::threading::Executor m_executor;
 };
 
-} // namespace aip
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace aip
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AIP_INCLUDE_AIP_AUDIO_INPUT_PROCESSOR_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AIP_INCLUDE_AIP_AUDIO_INPUT_PROCESSOR_H_

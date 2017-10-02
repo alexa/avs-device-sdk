@@ -46,9 +46,9 @@ namespace libcurlUtils {
  */
 bool prepareForTLS(CURL* handle);
 
-} // namespace libcurlUtils
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace libcurlUtils
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_LIBCURLUTILS_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_LIBCURLUTILS_H_

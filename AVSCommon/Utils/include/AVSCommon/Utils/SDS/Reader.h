@@ -124,7 +124,7 @@ public:
      * @note A stream is closed for the @c Reader if @c Reader::close() has been called on it, or if @c Writer::close()
      *     has been called and the @c Reader has consumed all remaining data left in the stream when the @c Writer
      *     closed.  In the special case of a new stream, where no @c Writer has been created, the stream is not
-     *     considered to be closed for the @c Reader; attempts to @c read() will either block or return @c WOULDBLOCK, 
+     *     considered to be closed for the @c Reader; attempts to @c read() will either block or return @c WOULDBLOCK,
      *     depending on the @c Policy.
      */
     ssize_t read(void* buf, size_t nWords, std::chrono::milliseconds timeout = std::chrono::milliseconds(0));
@@ -221,11 +221,10 @@ template <typename T>
 const std::string SharedDataStream<T>::Reader::TAG = "SdsReader";
 
 template <typename T>
-SharedDataStream<T>::Reader::Reader(
-        Policy policy,
-        std::shared_ptr<BufferLayout> bufferLayout,
-        uint8_t id) :
-        m_policy{policy}, m_bufferLayout{bufferLayout}, m_id{id},
+SharedDataStream<T>::Reader::Reader(Policy policy, std::shared_ptr<BufferLayout> bufferLayout, uint8_t id) :
+        m_policy{policy},
+        m_bufferLayout{bufferLayout},
+        m_id{id},
         m_readerCursor{&m_bufferLayout->getReaderCursorArray()[m_id]},
         m_readerCloseIndex{&m_bufferLayout->getReaderCloseIndexArray()[m_id]} {
     // Note - SharedDataStream::createReader() holds readerEnableMutex while calling this function.
@@ -250,7 +249,7 @@ SharedDataStream<T>::Reader::~Reader() {
     m_bufferLayout->disableReaderLocked(m_id);
     m_bufferLayout->updateOldestUnconsumedCursor();
 }
-    
+
 template <typename T>
 ssize_t SharedDataStream<T>::Reader::read(void* buf, size_t nWords, std::chrono::milliseconds timeout) {
     if (nullptr == buf) {
@@ -289,13 +288,10 @@ ssize_t SharedDataStream<T>::Reader::read(void* buf, size_t nWords, std::chrono:
         } else if (Policy::BLOCKING == m_policy) {
             if (std::chrono::milliseconds::zero() == timeout) {
                 header->dataAvailableConditionVariable.wait(
-                        lock,
-                        [this] { return tell(Reference::BEFORE_WRITER) > 0; });
+                    lock, [this] { return tell(Reference::BEFORE_WRITER) > 0; });
             } else {
                 if (!header->dataAvailableConditionVariable.wait_for(
-                        lock,
-                        timeout,
-                        [this] { return tell(Reference::BEFORE_WRITER) > 0; })) {
+                        lock, timeout, [this] { return tell(Reference::BEFORE_WRITER) > 0; })) {
                     return Error::TIMEDOUT;
                 }
             }
@@ -313,7 +309,7 @@ ssize_t SharedDataStream<T>::Reader::read(void* buf, size_t nWords, std::chrono:
     if ((*m_readerCursor + nWords) > readerCloseIndex) {
         nWords = readerCloseIndex - *m_readerCursor;
     }
-    
+
     // Split it across the wrap.
     size_t beforeWrap = m_bufferLayout->wordsUntilWrap(*m_readerCursor);
     if (beforeWrap > nWords) {
@@ -326,9 +322,9 @@ ssize_t SharedDataStream<T>::Reader::read(void* buf, size_t nWords, std::chrono:
     memcpy(buf8, m_bufferLayout->getData(*m_readerCursor), beforeWrap * getWordSize());
     if (afterWrap > 0) {
         memcpy(
-                buf8 + (beforeWrap * getWordSize()),
-                m_bufferLayout->getData(*m_readerCursor + beforeWrap),
-                afterWrap * getWordSize());
+            buf8 + (beforeWrap * getWordSize()),
+            m_bufferLayout->getData(*m_readerCursor + beforeWrap),
+            afterWrap * getWordSize());
     }
 
     // Advance the read cursor.
@@ -362,10 +358,10 @@ bool SharedDataStream<T>::Reader::seek(Index offset, Reference reference) {
         case Reference::BEFORE_READER:
             if (offset > *m_readerCursor) {
                 logger::acsdkError(logger::LogEntry(TAG, "seekFailed")
-                        .d("reason", "seekBeforeStreamStart")
-                        .d("reference", "BEFORE_READER")
-                        .d("seekOffset", offset)
-                        .d("readerCursor", m_readerCursor->load()));
+                                       .d("reason", "seekBeforeStreamStart")
+                                       .d("reference", "BEFORE_READER")
+                                       .d("seekOffset", offset)
+                                       .d("readerCursor", m_readerCursor->load()));
                 return false;
             }
             absolute = *m_readerCursor - offset;
@@ -373,10 +369,10 @@ bool SharedDataStream<T>::Reader::seek(Index offset, Reference reference) {
         case Reference::BEFORE_WRITER:
             if (offset > *writeStartCursor) {
                 logger::acsdkError(logger::LogEntry(TAG, "seekFailed")
-                        .d("reason", "seekBeforeStreamStart")
-                        .d("reference", "BEFORE_WRITER")
-                        .d("seekOffset", offset)
-                        .d("writeStartCursor", writeStartCursor->load()));
+                                       .d("reason", "seekBeforeStreamStart")
+                                       .d("reference", "BEFORE_WRITER")
+                                       .d("seekOffset", offset)
+                                       .d("writeStartCursor", writeStartCursor->load()));
                 return false;
             }
             absolute = *writeStartCursor - offset;
@@ -388,18 +384,18 @@ bool SharedDataStream<T>::Reader::seek(Index offset, Reference reference) {
     // Don't seek beyond the close index.
     if (absolute > *m_readerCloseIndex) {
         logger::acsdkError(logger::LogEntry(TAG, "seekFailed")
-                .d("reason", "seekBeyondCloseIndex")
-                .d("position", absolute)
-                .d("readerCloseIndex", m_readerCloseIndex->load()));
+                               .d("reason", "seekBeyondCloseIndex")
+                               .d("position", absolute)
+                               .d("readerCloseIndex", m_readerCloseIndex->load()));
         return false;
     }
 
     // Don't seek to future indices that have not been written yet.
     if (absolute > *writeStartCursor) {
         logger::acsdkError(logger::LogEntry(TAG, "seekFailed")
-                .d("reason", "seekUnwrittenIndices")
-                .d("position", absolute)
-                .d("writeStartCursor", writeStartCursor->load()));
+                               .d("reason", "seekUnwrittenIndices")
+                               .d("position", absolute)
+                               .d("writeStartCursor", writeStartCursor->load()));
         return false;
     }
 
@@ -466,10 +462,10 @@ void SharedDataStream<T>::Reader::close(Index offset, Reference reference) {
         case Reference::BEFORE_WRITER:
             if (*writeStartCursor < offset) {
                 logger::acsdkError(logger::LogEntry(TAG, "closeFailed")
-                        .d("reason", "invalidIndex")
-                        .d("reference", "BEFORE_WRITER")
-                        .d("offset", offset)
-                        .d("writeStartCursor", writeStartCursor->load()));
+                                       .d("reason", "invalidIndex")
+                                       .d("reference", "BEFORE_WRITER")
+                                       .d("offset", offset)
+                                       .d("writeStartCursor", writeStartCursor->load()));
             } else {
                 absolute = *writeStartCursor - offset;
             }
@@ -513,9 +509,9 @@ std::string SharedDataStream<T>::Reader::errorToString(Error error) {
     return "(unknown error " + to_string(error) + ")";
 }
 
-} // namespace sds
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sds
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_READER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_READER_H_

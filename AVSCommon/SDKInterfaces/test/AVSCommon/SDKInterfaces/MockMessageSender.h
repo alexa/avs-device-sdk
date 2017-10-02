@@ -29,12 +29,12 @@ namespace test {
 /// Mock class that implements the MessageSender.
 class MockMessageSender : public MessageSenderInterface {
 public:
-    MOCK_METHOD1(sendMessage, void (std::shared_ptr<avs::MessageRequest> request));
+    MOCK_METHOD1(sendMessage, void(std::shared_ptr<avs::MessageRequest> request));
 };
 
-} // namespace test
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_TEST_AVS_COMMON_SDK_INTERFACES_MOCK_MESSAGE_SENDER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_TEST_AVS_COMMON_SDK_INTERFACES_MOCK_MESSAGE_SENDER_H_

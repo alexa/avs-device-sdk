@@ -42,15 +42,16 @@ public:
      * @param handlerIn The @c AVSDirectiveHandlerInterface value for this instance.
      * @param policyIn The @c BlockingPolicy value for this instance.
      */
-    HandlerAndPolicy(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handlerIn,
-            BlockingPolicy policyIn);
+    HandlerAndPolicy(
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handlerIn,
+        BlockingPolicy policyIn);
 
     /**
      * Return whether this instance specifies a non-null directive handler and a non-NONE BlockingPolicy.
      *
      * @return Whether this instance specifies a non-null directive handler and a non-NONE BlockingPolicy.
      */
-    operator bool () const;
+    operator bool() const;
 
     /// The @c DirectiveHandlerInterface value for this instance.
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler;
@@ -66,7 +67,7 @@ public:
  * @param rhs The HandlerAndPolicy instance on the right hand side of the == operation.
  * @return Whether the @c lhs instance is equal to the @c rhs instance.
  */
-bool operator == (const HandlerAndPolicy& lhs, const HandlerAndPolicy& rhs);
+bool operator==(const HandlerAndPolicy& lhs, const HandlerAndPolicy& rhs);
 
 /**
  * != operator.
@@ -75,10 +76,10 @@ bool operator == (const HandlerAndPolicy& lhs, const HandlerAndPolicy& rhs);
  * @param rhs The HandlerAndPolicy instance on the right hand side of the != operation.
  * @return Whether the @c lhs instance is NOT equal to the @c rhs instance.
  */
-bool operator != (const HandlerAndPolicy& lhs, const HandlerAndPolicy& rhs);
+bool operator!=(const HandlerAndPolicy& lhs, const HandlerAndPolicy& rhs);
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_HANDLER_AND_POLICY_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_HANDLER_AND_POLICY_H_

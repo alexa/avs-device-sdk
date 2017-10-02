@@ -56,7 +56,7 @@ static const auto TIMEOUT = std::chrono::seconds(1);
 static const size_t ITERATIONS = 5;
 
 /// Test harness for Timer class.
-class TimerTest: public ::testing::Test {
+class TimerTest : public ::testing::Test {
 public:
     /// Set up the test harness for running a test.
     void SetUp() override;
@@ -129,7 +129,6 @@ void TimerTest::verifyTimestamps(
     Timer::PeriodType periodType,
     std::chrono::milliseconds duration,
     size_t iterations) {
-
     // For ABSOLUTE periods, the actual number of task calls may be less than iterations if duration exceeds
     // period.
     size_t expectedTaskCalls = iterations;
@@ -140,10 +139,8 @@ void TimerTest::verifyTimestamps(
 
     std::unique_lock<std::mutex> lock(m_mutex);
     ASSERT_TRUE(m_conditionVariable.wait_for(
-        lock,
-        TIMEOUT,
-        [this, expectedTaskCalls] { return m_timestamps.size() == expectedTaskCalls; }));
-    
+        lock, TIMEOUT, [this, expectedTaskCalls] { return m_timestamps.size() == expectedTaskCalls; }));
+
     // First timestamp should always occur after an elapsed time of delay.
     auto timestamp = m_timestamps.begin();
     auto elapsed = delay;
@@ -181,7 +178,7 @@ void TimerTest::verifyTimestamps(
         }
     }
 
-    //note: can't ASSERT_EQ on iterators with older GCC versions - see https://github.com/google/googletest/issues/742
+    // note: can't ASSERT_EQ on iterators with older GCC versions - see https://github.com/google/googletest/issues/742
     bool timestampEqualsEnd = (timestamp == m_timestamps.end());
     ASSERT_TRUE(timestampEqualsEnd);
 }
@@ -214,10 +211,7 @@ TEST_F(TimerTest, singleShot) {
 TEST_F(TimerTest, multiShot) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
-        SHORT_DELAY,
-        Timer::PeriodType::ABSOLUTE,
-        ITERATIONS,
-        std::bind(&TimerTest::simpleTask, this, NO_DELAY)));
+        SHORT_DELAY, Timer::PeriodType::ABSOLUTE, ITERATIONS, std::bind(&TimerTest::simpleTask, this, NO_DELAY)));
     ASSERT_TRUE(m_timer->isActive());
     verifyTimestamps(t0, SHORT_DELAY, SHORT_DELAY, Timer::PeriodType::ABSOLUTE, NO_DELAY, ITERATIONS);
     ASSERT_TRUE(waitForInactive());
@@ -248,10 +242,7 @@ TEST_F(TimerTest, multiShotWithDelay) {
 TEST_F(TimerTest, forever) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
-        SHORT_DELAY,
-        Timer::PeriodType::ABSOLUTE,
-        Timer::FOREVER,
-        std::bind(&TimerTest::simpleTask, this, NO_DELAY)));
+        SHORT_DELAY, Timer::PeriodType::ABSOLUTE, Timer::FOREVER, std::bind(&TimerTest::simpleTask, this, NO_DELAY)));
     ASSERT_TRUE(m_timer->isActive());
     verifyTimestamps(t0, SHORT_DELAY, SHORT_DELAY, Timer::PeriodType::ABSOLUTE, NO_DELAY, ITERATIONS);
     ASSERT_TRUE(m_timer->isActive());
@@ -266,10 +257,7 @@ TEST_F(TimerTest, forever) {
 TEST_F(TimerTest, slowTaskLessThanPeriod) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
-        MEDIUM_DELAY,
-        Timer::PeriodType::ABSOLUTE,
-        ITERATIONS,
-        std::bind(&TimerTest::simpleTask, this, SHORT_DELAY)));
+        MEDIUM_DELAY, Timer::PeriodType::ABSOLUTE, ITERATIONS, std::bind(&TimerTest::simpleTask, this, SHORT_DELAY)));
     ASSERT_TRUE(m_timer->isActive());
     verifyTimestamps(t0, MEDIUM_DELAY, MEDIUM_DELAY, Timer::PeriodType::ABSOLUTE, SHORT_DELAY, ITERATIONS);
 }
@@ -281,10 +269,7 @@ TEST_F(TimerTest, slowTaskLessThanPeriod) {
 TEST_F(TimerTest, slowTaskGreaterThanPeriod) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
-        SHORT_DELAY,
-        Timer::PeriodType::ABSOLUTE,
-        ITERATIONS,
-        std::bind(&TimerTest::simpleTask, this, MEDIUM_DELAY)));
+        SHORT_DELAY, Timer::PeriodType::ABSOLUTE, ITERATIONS, std::bind(&TimerTest::simpleTask, this, MEDIUM_DELAY)));
     ASSERT_TRUE(m_timer->isActive());
     verifyTimestamps(t0, SHORT_DELAY, SHORT_DELAY, Timer::PeriodType::ABSOLUTE, MEDIUM_DELAY, ITERATIONS);
 }
@@ -296,10 +281,7 @@ TEST_F(TimerTest, slowTaskGreaterThanPeriod) {
 TEST_F(TimerTest, slowTaskGreaterThanTwoPeriods) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
-        SHORT_DELAY,
-        Timer::PeriodType::ABSOLUTE,
-        ITERATIONS,
-        std::bind(&TimerTest::simpleTask, this, LONG_DELAY)));
+        SHORT_DELAY, Timer::PeriodType::ABSOLUTE, ITERATIONS, std::bind(&TimerTest::simpleTask, this, LONG_DELAY)));
     ASSERT_TRUE(m_timer->isActive());
     verifyTimestamps(t0, SHORT_DELAY, SHORT_DELAY, Timer::PeriodType::ABSOLUTE, LONG_DELAY, ITERATIONS);
 }
@@ -311,10 +293,7 @@ TEST_F(TimerTest, slowTaskGreaterThanTwoPeriods) {
 TEST_F(TimerTest, endToStartPeriod) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
-        SHORT_DELAY,
-        Timer::PeriodType::RELATIVE,
-        ITERATIONS,
-        std::bind(&TimerTest::simpleTask, this, MEDIUM_DELAY)));
+        SHORT_DELAY, Timer::PeriodType::RELATIVE, ITERATIONS, std::bind(&TimerTest::simpleTask, this, MEDIUM_DELAY)));
     ASSERT_TRUE(m_timer->isActive());
     verifyTimestamps(t0, SHORT_DELAY, SHORT_DELAY, Timer::PeriodType::RELATIVE, MEDIUM_DELAY, ITERATIONS);
 }
@@ -372,10 +351,7 @@ TEST_F(TimerTest, stopSingleShotAfterTask) {
 TEST_F(TimerTest, stopMultiShot) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
-        SHORT_DELAY,
-        Timer::PeriodType::ABSOLUTE,
-        ITERATIONS,
-        std::bind(&TimerTest::simpleTask, this, NO_DELAY)));
+        SHORT_DELAY, Timer::PeriodType::ABSOLUTE, ITERATIONS, std::bind(&TimerTest::simpleTask, this, NO_DELAY)));
     ASSERT_TRUE(m_timer->isActive());
     verifyTimestamps(t0, SHORT_DELAY, SHORT_DELAY, Timer::PeriodType::ABSOLUTE, NO_DELAY, ITERATIONS - 1);
     ASSERT_TRUE(m_timer->isActive());
@@ -463,10 +439,10 @@ TEST_F(TimerTest, deleteDuringTask) {
     verifyTimestamps(t0, SHORT_DELAY, SHORT_DELAY, Timer::PeriodType::ABSOLUTE, SHORT_DELAY);
 }
 
-/// This test verifies that 
+/// This test verifies that
 
-} // namespace test
-} // namespace timing
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace timing
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

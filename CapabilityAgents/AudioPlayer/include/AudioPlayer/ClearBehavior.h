@@ -27,7 +27,7 @@ namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace audioPlayer {
 
-/// Used to determine clear queue behavior. 
+/// Used to determine clear queue behavior.
 enum class ClearBehavior {
     /// Clears the queue and continues to play the currently playing stream.
     CLEAR_ENQUEUED,
@@ -59,7 +59,7 @@ inline std::string clearBehaviorToString(ClearBehavior clearBehavior) {
  * @param[out] clearBehavior The converted @c ClearBehavior.
  * @return @c true if the string converted succesfully, else @c false.
  */
-inline bool stringToClearBehavior(const std::string& text, ClearBehavior * clearBehavior) {
+inline bool stringToClearBehavior(const std::string& text, ClearBehavior* clearBehavior) {
     if (nullptr == clearBehavior) {
         return false;
     } else if (clearBehaviorToString(ClearBehavior::CLEAR_ENQUEUED) == text) {
@@ -98,8 +98,8 @@ inline bool convertToValue(const rapidjson::Value& documentNode, ClearBehavior* 
     return stringToClearBehavior(text, clearBehavior);
 }
 
-} // namespace audioPlayer
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace audioPlayer
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_CLEAR_BEHAVIOR_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_CLEAR_BEHAVIOR_H_

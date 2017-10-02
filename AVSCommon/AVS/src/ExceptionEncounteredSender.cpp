@@ -64,8 +64,8 @@ static const char ERROR_TYPE_KEY[] = "type";
 static const char ERROR_MESSAGE_KEY[] = "message";
 
 std::unique_ptr<ExceptionEncounteredSender> ExceptionEncounteredSender::create(
-        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messagesender) {
-    if(!messagesender) {
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messagesender) {
+    if (!messagesender) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullMessageSender"));
         return nullptr;
     }
@@ -73,10 +73,9 @@ std::unique_ptr<ExceptionEncounteredSender> ExceptionEncounteredSender::create(
 }
 
 void ExceptionEncounteredSender::sendExceptionEncountered(
-        const std::string& unparsedDirective,
-        avs::ExceptionErrorType error,
-        const std::string& errorDescription) {
-
+    const std::string& unparsedDirective,
+    avs::ExceptionErrorType error,
+    const std::string& errorDescription) {
     // Constructing Json for Context
     rapidjson::Document contextDocument(rapidjson::kObjectType);
     rapidjson::Value contextArray(rapidjson::kArrayType);
@@ -86,25 +85,17 @@ void ExceptionEncounteredSender::sendExceptionEncountered(
     contextDocument.Accept(contextWriter);
     std::string contextJson = contextBuffer.GetString();
 
-    //Constructing Json for Payload
+    // Constructing Json for Payload
     rapidjson::Document payloadDataDocument(rapidjson::kObjectType);
     payloadDataDocument.AddMember(
-        UNPARSED_DIRECTIVE_KEY_STRING,
-        rapidjson::StringRef(unparsedDirective),
-        payloadDataDocument.GetAllocator());
+        UNPARSED_DIRECTIVE_KEY_STRING, rapidjson::StringRef(unparsedDirective), payloadDataDocument.GetAllocator());
     rapidjson::Document errorDataDocument(rapidjson::kObjectType);
     std::ostringstream errorStringVal;
     errorStringVal << error;
-    errorDataDocument.AddMember(
-        ERROR_TYPE_KEY,
-        errorStringVal.str(),
-        errorDataDocument.GetAllocator());
+    errorDataDocument.AddMember(ERROR_TYPE_KEY, errorStringVal.str(), errorDataDocument.GetAllocator());
     rapidjson::Value messageJson(rapidjson::StringRef(errorDescription));
     errorDataDocument.AddMember(ERROR_MESSAGE_KEY, messageJson, errorDataDocument.GetAllocator());
-    payloadDataDocument.AddMember(
-        ERROR_KEY,
-        errorDataDocument,
-        payloadDataDocument.GetAllocator());
+    payloadDataDocument.AddMember(ERROR_KEY, errorDataDocument, payloadDataDocument.GetAllocator());
 
     rapidjson::StringBuffer payloadJson;
     rapidjson::Writer<rapidjson::StringBuffer> payloadWriter(payloadJson);
@@ -116,20 +107,16 @@ void ExceptionEncounteredSender::sendExceptionEncountered(
         ACSDK_ERROR(LX("sendExceptionEncounteredFailed").d("reason", "payloadEmpty"));
         return;
     }
-    auto msgIdAndJsonEvent = buildJsonEventString(
-        NAMESPACE,
-        EXCEPTION_ENCOUNTERED_EVENT_NAME,
-        "",
-        payload,
-        contextJson);
+    auto msgIdAndJsonEvent =
+        buildJsonEventString(NAMESPACE, EXCEPTION_ENCOUNTERED_EVENT_NAME, "", payload, contextJson);
 
     // msgId should not be empty
-    if(msgIdAndJsonEvent.first.empty()) {
+    if (msgIdAndJsonEvent.first.empty()) {
         ACSDK_ERROR(LX("sendExceptionEncounteredFailed").d("reason", "msgIdEmpty"));
         return;
     }
 
-    //Json event should not be empty
+    // Json event should not be empty
     if (msgIdAndJsonEvent.second.empty()) {
         ACSDK_ERROR(LX("sendExceptionEncounteredFailed").d("reason", "JsonEventEmpty"));
         return;
@@ -139,10 +126,10 @@ void ExceptionEncounteredSender::sendExceptionEncountered(
 }
 
 ExceptionEncounteredSender::ExceptionEncounteredSender(
-    std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender):
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender) :
         m_messageSender{messageSender} {
 }
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

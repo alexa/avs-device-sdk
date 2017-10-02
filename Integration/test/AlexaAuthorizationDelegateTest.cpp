@@ -39,7 +39,7 @@ std::string g_configPath;
 /// Timeout in seconds for AuthDelegate to wait for LWA response.
 const int TIME_OUT_IN_SECONDS = 60;
 
-} // namespace
+}  // namespace
 
 namespace alexaClientSDK {
 namespace integration {
@@ -48,7 +48,6 @@ namespace test {
 /// Define test fixture for AuthDelegate integration test.
 class AlexaAuthorizationDelegateTest : public ::testing::Test {
 protected:
-
     /// Initialize test dependencies
     AlexaAuthorizationDelegateTest() {
         m_authObserver = std::make_shared<AuthObserver>();
@@ -79,8 +78,8 @@ protected:
 TEST_F(AlexaAuthorizationDelegateTest, refreshAuthToken) {
     auto authDelegate = AuthDelegate::create();
     authDelegate->addAuthObserver(m_authObserver);
-    bool tokenRefreshed = m_authObserver->waitFor(AuthObserver::State::REFRESHED,
-        std::chrono::seconds(TIME_OUT_IN_SECONDS));
+    bool tokenRefreshed =
+        m_authObserver->waitFor(AuthObserver::State::REFRESHED, std::chrono::seconds(TIME_OUT_IN_SECONDS));
     ASSERT_TRUE(tokenRefreshed) << "Refreshing the auth token timed out.";
 }
 
@@ -103,16 +102,16 @@ TEST_F(AlexaAuthorizationDelegateTest, invalidRefreshTokenWithUnrecoverableError
     ASSERT_TRUE(AlexaClientSDKInit::initialize({&infile, &override}));
     auto authDelegate = AuthDelegate::create();
     authDelegate->addAuthObserver(m_authObserver);
-    bool gotUnrecoverableError = m_authObserver->waitFor(AuthObserver::State::UNRECOVERABLE_ERROR,
-         std::chrono::seconds(TIME_OUT_IN_SECONDS));
+    bool gotUnrecoverableError =
+        m_authObserver->waitFor(AuthObserver::State::UNRECOVERABLE_ERROR, std::chrono::seconds(TIME_OUT_IN_SECONDS));
     ASSERT_TRUE(gotUnrecoverableError) << "Waiting for UNRECOVERABLE_ERROR timed out";
 }
 
-}   // namespace test
-}   // namespace integration
-}   // namespace alexaClientSDK
+}  // namespace test
+}  // namespace integration
+}  // namespace alexaClientSDK
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     if (argc < 2) {
         std::cerr << "USAGE: AlexaAuthorizationDelegateTest <path to AlexaClientSDKConfig.json>" << std::endl;

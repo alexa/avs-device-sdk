@@ -99,11 +99,11 @@ char convertLevelToChar(Level level);
  * @return The @c Level corresponding to the specified name. If the @c name is not recognized,
  * returns @c Level::UNKNOWN.
  */
-Level convertNameToLevel(const std::string &name);
+Level convertNameToLevel(const std::string& name);
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LEVEL_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LEVEL_H_

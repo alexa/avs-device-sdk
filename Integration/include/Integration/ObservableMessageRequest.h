@@ -33,29 +33,33 @@ public:
     /**
      * Constructor.
      */
-    ObservableMessageRequest(const std::string & jsonContent,
+    ObservableMessageRequest(
+        const std::string& jsonContent,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader = nullptr);
 
-    void onSendCompleted(avsCommon::avs::MessageRequest::Status) override;
+    void sendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status) override;
 
-    void onExceptionReceived(const std::string & exceptionMessage) override;
+    void exceptionReceived(const std::string& exceptionMessage) override;
 
     /**
      * Utility function to get the status once the message has been sent.
      */
-    avsCommon::avs::MessageRequest::Status getSendMessageStatus() const;
+    avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status getSendMessageStatus() const;
 
     /**
      * Function to allow waiting for a particular status back from the component sending the message to AVS.
      */
-    bool waitFor(const avsCommon::avs::MessageRequest::Status, const std::chrono::seconds = std::chrono::seconds(10));
-    /// Function indicating if onSendCompleted has been called
+    bool waitFor(
+        const avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status,
+        const std::chrono::seconds = std::chrono::seconds(10));
+    /// Function indicating if sendCompleted has been called
     bool hasSendCompleted();
-    /// Function indicating if onExceptionReceived has been called
+    /// Function indicating if exceptionReceived has been called
     bool wasExceptionReceived();
+
 private:
     /// The status of whether the message was sent to AVS ok.
-    avsCommon::avs::MessageRequest::Status m_sendMessageStatus;
+    avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status m_sendMessageStatus;
     /// Mutex used internally to enforce thread safety.
     mutable std::mutex m_mutex;
     /// The cv used when waiting for a particular status of a message being sent.
@@ -66,7 +70,7 @@ private:
     std::atomic<bool> m_exceptionReceived;
 };
 
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace integration
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_OBSERVABLE_MESSAGE_REQUEST_H_
+#endif  // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_OBSERVABLE_MESSAGE_REQUEST_H_

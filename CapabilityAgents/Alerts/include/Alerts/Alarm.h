@@ -25,7 +25,11 @@ namespace capabilityAgents {
 namespace alerts {
 
 /**
- * An Alarm class.
+ * An Alarm class.  This represents an alert which the user wishes to activate at a specific point in time,
+ * which they specify as that absolute time point, rather than an offset from the current time.
+ *
+ * There is no expected special behavior for this type of alert - it will render a simple audio asset on the device
+ * when activated.
  */
 class Alarm : public Alert {
 public:
@@ -35,16 +39,20 @@ public:
     /**
      * A static function to set the default audio file path for this type of alert.
      *
+     * @note This function should only be called at initialization, before any objects have been instantiated.
+     *
      * @param filePath The path to the audio file.
      */
-    static void setDefaultAudioFilePath(const std::string & filePath);
+    static void setDefaultAudioFilePath(const std::string& filePath);
 
     /**
      * A static function to set the short audio file path for this type of alert.
      *
+     * @note This function should only be called at initialization, before any objects have been instantiated.
+     *
      * @param filePath The path to the audio file.
      */
-    static void setDefaultShortAudioFilePath(const std::string & filePath);
+    static void setDefaultShortAudioFilePath(const std::string& filePath);
 
     std::string getDefaultAudioFilePath() const override;
 
@@ -59,8 +67,8 @@ private:
     static std::string m_defaultShortAudioFilePath;
 };
 
-} // namespace alerts
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace alerts
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_ALARM_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_ALARM_H_

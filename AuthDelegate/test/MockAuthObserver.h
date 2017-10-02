@@ -31,9 +31,8 @@ public:
     MOCK_METHOD2(onAuthStateChange, void(State newState, Error error));
 };
 
-} // namespace test
-} // namespace authDelegate
-} // namespace alexaClientSDK
-
+}  // namespace test
+}  // namespace authDelegate
+}  // namespace alexaClientSDK
 
 #endif  // ALEXA_CLIENT_SDK_AUTH_DELEGATE_TEST_MOCK_AUTH_OBSERVER_H_

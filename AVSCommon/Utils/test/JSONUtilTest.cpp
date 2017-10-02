@@ -72,6 +72,7 @@ static const std::string INVALID_DIRECTIVE = R"({
         })";
 
 /// A sample AVS speak directive with all valid JSON keys.
+// clang-format off
 static const std::string SPEAK_DIRECTIVE = R"({
     "directive": {
         "header": {
@@ -83,6 +84,7 @@ static const std::string SPEAK_DIRECTIVE = R"({
         "payload": )" + PAYLOAD_TEST + R"(
     }
 })";
+// clang-format on
 
 /// The JSON key used in @c int64Json().
 static const std::string INT64_KEY = "anInt64";
@@ -104,7 +106,7 @@ static const double A_DOUBLE = 1.0;
 
 /// A function to generate JSON containing the key @c INT64_KEY with the provided @c value.
 static const std::string int64Json(const std::string& value) {
-  return R"({")" + INT64_KEY + R"(": )" + value + R"(})";
+    return R"({")" + INT64_KEY + R"(": )" + value + R"(})";
 }
 
 /// A valid string JSON Value.
@@ -179,7 +181,6 @@ TEST_F(JSONUtilTest, extractPayloadFromValidDirective) {
 
     ASSERT_EQ(payload, PAYLOAD_TEST);
 }
-
 
 /**
  * Test failure to extract an int64.
@@ -411,8 +412,8 @@ TEST_F(JSONUtilTest, convertToInt64ValueWithNullOutputParam) {
     ASSERT_FALSE(convertToValue(node, value));
 }
 
-} // namespace test
-} // namespace json
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace json
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

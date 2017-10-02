@@ -53,8 +53,7 @@ bool Timer::activate() {
     return !m_running.exchange(true);
 }
 
-
-} // namespace timing
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace timing
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

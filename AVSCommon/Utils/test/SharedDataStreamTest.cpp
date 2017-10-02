@@ -52,7 +52,7 @@ struct MinimalTraits {
     /// Forward declare a @c ConditionVariable type.
     class ConditionVariable;
     /// Unique string describing this set of traits.
-    static constexpr const char * traitsName = "alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits";
+    static constexpr const char* traitsName = "alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits";
 };
 
 /**
@@ -72,7 +72,7 @@ struct MinimalTraits2 {
     /// Same @c ConditionVariable type as @c MinimalTraits.
     using ConditionVariable = MinimalTraits::ConditionVariable;
     /// Unique string descring this set of traits.  Note that this differes from @c MinimalTraits::traitsName.
-    static constexpr const char * traitsName = "alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits2";
+    static constexpr const char* traitsName = "alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits2";
 };
 
 /// An @c AtomicIndex type with the minimum functionality required by SDS.
@@ -123,7 +123,7 @@ public:
         return InProcessSDS::Buffer::size();
     }
     /// Get a pointer to the raw data buffer.
-    InProcessSDS::Buffer::value_type * data() {
+    InProcessSDS::Buffer::value_type* data() {
         return InProcessSDS::Buffer::data();
     }
 };
@@ -154,17 +154,14 @@ public:
         InProcessSDS::ConditionVariable::wait(*lockPointer);
     }
     /// Wait forever for @c pred to be true.
-    template<class Predicate>
+    template <class Predicate>
     void wait(std::unique_lock<Mutex>& lock, Predicate pred) {
         auto lockPointer = reinterpret_cast<std::unique_lock<InProcessSDS::Mutex>*>(&lock);
         InProcessSDS::ConditionVariable::wait(*lockPointer, pred);
     }
     /// Wait until timeout for @c pred to be true.
-    template<class Rep, class Period, class Predicate>
-    bool wait_for(
-        std::unique_lock<Mutex>& lock,
-        const std::chrono::duration<Rep, Period>& rel_time,
-        Predicate pred) {
+    template <class Rep, class Period, class Predicate>
+    bool wait_for(std::unique_lock<Mutex>& lock, const std::chrono::duration<Rep, Period>& rel_time, Predicate pred) {
         auto lockPointer = reinterpret_cast<std::unique_lock<InProcessSDS::Mutex>*>(&lock);
         return InProcessSDS::ConditionVariable::wait_for(*lockPointer, rel_time, pred);
     }
@@ -207,10 +204,10 @@ private:
 };
 
 std::future<size_t> Source::run(
-        std::shared_ptr<Sds::Writer> writer,
-        size_t frequencyHz,
-        size_t blockSizeWords,
-        size_t maxWords) {
+    std::shared_ptr<Sds::Writer> writer,
+    size_t frequencyHz,
+    size_t blockSizeWords,
+    size_t maxWords) {
     m_counter = 0;
     size_t wordSize = writer->getWordSize();
     std::chrono::nanoseconds period(frequencyHz ? ((1000000000 / frequencyHz) * blockSizeWords) : 0);
@@ -219,7 +216,7 @@ std::future<size_t> Source::run(
         timing::Timer::PeriodType::RELATIVE,
         timing::Timer::FOREVER,
         [this, writer, frequencyHz, blockSizeWords, maxWords, wordSize] {
-            uint8_t block[blockSizeWords * writer->getWordSize()];
+            std::vector<uint8_t> block(blockSizeWords * writer->getWordSize());
             size_t wordsToWrite = 0;
             for (size_t word = 0; word < blockSizeWords; ++word) {
                 for (size_t byte = 0; byte < wordSize; ++byte) {
@@ -237,10 +234,9 @@ std::future<size_t> Source::run(
             }
             ssize_t nWords;
             do {
-                nWords =
-                    writer->write(block, wordsToWrite);
+                nWords = writer->write(block.data(), wordsToWrite);
             } while (nWords == Sds::Writer::Error::WOULDBLOCK);
-            bool unexpectedWriteReturn = nWords != static_cast<ssize_t>(sizeof(block) / wordSize);
+            bool unexpectedWriteReturn = nWords != static_cast<ssize_t>(block.size() / wordSize);
             EXPECT_FALSE(unexpectedWriteReturn) << "write returned " << nWords;
             if (unexpectedWriteReturn || (maxWords > 0 && m_counter == maxWords)) {
                 m_timer.stop();
@@ -276,6 +272,7 @@ public:
         size_t frequencyHz,
         size_t blockSizeWords,
         size_t maxWords = 0);
+
 private:
     /// The @c Timer to use for receiving data.
     timing::Timer m_timer;
@@ -288,10 +285,10 @@ private:
 };
 
 std::future<size_t> Sink::run(
-        std::shared_ptr<Sds::Reader> reader,
-        size_t frequencyHz,
-        size_t blockSizeWords,
-        size_t maxWords) {
+    std::shared_ptr<Sds::Reader> reader,
+    size_t frequencyHz,
+    size_t blockSizeWords,
+    size_t maxWords) {
     m_counter = 0;
     size_t wordSize = reader->getWordSize();
     std::chrono::nanoseconds period(frequencyHz ? ((1000000000 / frequencyHz) * blockSizeWords) : 0);
@@ -300,8 +297,8 @@ std::future<size_t> Sink::run(
         timing::Timer::PeriodType::RELATIVE,
         timing::Timer::FOREVER,
         [this, reader, frequencyHz, blockSizeWords, maxWords, wordSize] {
-            uint8_t block[blockSizeWords * wordSize];
-            ssize_t nWords = reader->read(block, sizeof(block) / wordSize);
+            std::vector<uint8_t> block(blockSizeWords * wordSize);
+            ssize_t nWords = reader->read(block.data(), block.size() / wordSize);
             if (nWords == Sds::Reader::Error::WOULDBLOCK) {
                 return;
             } else if (nWords == Sds::Reader::Error::CLOSED) {
@@ -309,11 +306,11 @@ std::future<size_t> Sink::run(
                 m_promise.set_value(m_counter);
                 return;
             }
-            bool unexpectedReadReturn = nWords <= 0 || nWords > static_cast<ssize_t>(sizeof(block) / wordSize);
+            bool unexpectedReadReturn = nWords <= 0 || nWords > static_cast<ssize_t>(block.size() / wordSize);
             EXPECT_FALSE(unexpectedReadReturn) << "read returned " << nWords;
             if (unexpectedReadReturn) {
-                    m_timer.stop();
-                    m_promise.set_value(m_counter);
+                m_timer.stop();
+                m_promise.set_value(m_counter);
             }
             for (ssize_t word = 0; word < nWords; ++word) {
                 for (size_t byte = 0; byte < wordSize; ++byte) {
@@ -441,19 +438,19 @@ TEST_F(SharedDataStreamTest, sdsOpen) {
     ASSERT_EQ(sds3, nullptr);
 
     // Verify that open fails if magic number is wrong.
-    uint32_t * buffer32 = reinterpret_cast<uint32_t *>(buffer->data());
-    buffer32[0]= ~buffer32[0];
+    uint32_t* buffer32 = reinterpret_cast<uint32_t*>(buffer->data());
+    buffer32[0] = ~buffer32[0];
     sds2 = Sds::open(buffer);
     ASSERT_EQ(sds2, nullptr);
-    buffer32[0]= ~buffer32[0];
+    buffer32[0] = ~buffer32[0];
     sds2 = Sds::open(buffer);
     ASSERT_NE(sds2, nullptr);
 
     // Verify that open fails if version is incompatible.
-    buffer32[1]= ~buffer32[1];
+    buffer32[1] = ~buffer32[1];
     sds2 = Sds::open(buffer);
     ASSERT_EQ(sds2, nullptr);
-    buffer32[1]= ~buffer32[1];
+    buffer32[1] = ~buffer32[1];
     sds2 = Sds::open(buffer);
     ASSERT_NE(sds2, nullptr);
 }
@@ -637,7 +634,7 @@ TEST_F(SharedDataStreamTest, readerRead) {
 
     // Verify blocked reader unblocks.
     ASSERT_TRUE(blocking->seek(0, Sds::Reader::Reference::BEFORE_WRITER));
-    auto numRead = std::async([blocking, readBuf] () mutable { return blocking->read(readBuf, WORDCOUNT, TIMEOUT); });
+    auto numRead = std::async([blocking, readBuf]() mutable { return blocking->read(readBuf, WORDCOUNT, TIMEOUT); });
     ASSERT_NE(numRead.wait_for(std::chrono::milliseconds::zero()), std::future_status::ready);
     ASSERT_EQ(writer->write(writeBuf, WORDCOUNT), static_cast<ssize_t>(WORDCOUNT));
     ASSERT_EQ(numRead.get(), static_cast<ssize_t>(WORDCOUNT));
@@ -686,13 +683,13 @@ TEST_F(SharedDataStreamTest, readerSeek) {
 
     // Verify we can seek forward from the current read position to the end of the written data.
     seekWords = writeWords - readerPos;
-    ASSERT_TRUE(reader->seek(seekWords,  Sds::Reader::Reference::AFTER_READER));
+    ASSERT_TRUE(reader->seek(seekWords, Sds::Reader::Reference::AFTER_READER));
     readerPos += seekWords;
     ASSERT_EQ(reader->read(readBuf, readWords), Sds::Reader::Error::WOULDBLOCK);
 
     // Verify we can't seek forward from the current read position beyond the end of the written data.
     seekWords = 1;
-    ASSERT_FALSE(reader->seek(seekWords,  Sds::Reader::Reference::AFTER_READER));
+    ASSERT_FALSE(reader->seek(seekWords, Sds::Reader::Reference::AFTER_READER));
     ASSERT_EQ(reader->read(readBuf, readWords), Sds::Reader::Error::WOULDBLOCK);
 
     //--- Sds::Reader::Reference::BEFORE_READER ---
@@ -1061,7 +1058,7 @@ TEST_F(SharedDataStreamTest, concurrencyNonblockableWriterDualReader) {
     auto buffer = std::make_shared<Sds::Buffer>(bufferSize);
     auto sds = Sds::create(buffer, WORDSIZE, MAXREADERS);
     ASSERT_TRUE(sds);
-    
+
     auto writer = sds->createWriter(Sds::Writer::Policy::NONBLOCKABLE);
     ASSERT_TRUE(writer);
     auto blockingReader = sds->createReader(Sds::Reader::Policy::BLOCKING);
@@ -1096,7 +1093,7 @@ TEST_F(SharedDataStreamTest, concurrencyAllOrNothingWriterNonblockingReader) {
     auto buffer = std::make_shared<Sds::Buffer>(bufferSize);
     auto sds = Sds::create(buffer, WORDSIZE, MAXREADERS);
     ASSERT_TRUE(sds);
-    
+
     std::shared_ptr<Sds::Writer> writer = sds->createWriter(Sds::Writer::Policy::ALL_OR_NOTHING);
     ASSERT_TRUE(writer);
     auto reader = sds->createReader(Sds::Reader::Policy::NONBLOCKING);
@@ -1141,8 +1138,8 @@ TEST_F(SharedDataStreamTest, concurrencyMultipleSds) {
     ASSERT_EQ(caWords.get(), TEST_SIZE_WORDS);
 }
 
-} // namespace test
-} // namespace sds
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace sds
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

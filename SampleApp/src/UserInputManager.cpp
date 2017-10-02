@@ -29,6 +29,15 @@ static const char QUIT = 'q';
 static const char INFO = 'i';
 static const char MIC_TOGGLE = 'm';
 static const char STOP = 's';
+static const char PLAY = '1';
+static const char PAUSE = '2';
+static const char NEXT = '3';
+static const char PREVIOUS = '4';
+static const char SETTINGS = 'c';
+
+enum class SettingsValues : char { LOCALE = '1' };
+
+static const std::unordered_map<char, std::string> LOCALE_VALUES({{'1', "en-US"}, {'2', "en-GB"}, {'3', "de-DE"}});
 
 std::unique_ptr<UserInputManager> UserInputManager::create(std::shared_ptr<InteractionManager> interactionManager) {
     if (!interactionManager) {
@@ -38,8 +47,8 @@ std::unique_ptr<UserInputManager> UserInputManager::create(std::shared_ptr<Inter
     return std::unique_ptr<UserInputManager>(new UserInputManager(interactionManager));
 }
 
-UserInputManager::UserInputManager(std::shared_ptr<InteractionManager> interactionManager) : 
-        m_interactionManager{interactionManager} { 
+UserInputManager::UserInputManager(std::shared_ptr<InteractionManager> interactionManager) :
+        m_interactionManager{interactionManager} {
 }
 
 void UserInputManager::run() {
@@ -47,7 +56,7 @@ void UserInputManager::run() {
         return;
     }
     m_interactionManager->begin();
-    while(true) {
+    while (true) {
         char x;
         std::cin >> x;
         x = ::tolower(x);
@@ -63,9 +72,40 @@ void UserInputManager::run() {
             m_interactionManager->tap();
         } else if (x == STOP) {
             m_interactionManager->stopForegroundActivity();
+        } else if (x == PLAY) {
+            m_interactionManager->playbackPlay();
+        } else if (x == PAUSE) {
+            m_interactionManager->playbackPause();
+        } else if (x == NEXT) {
+            m_interactionManager->playbackNext();
+        } else if (x == PREVIOUS) {
+            m_interactionManager->playbackPrevious();
+        } else if (x == SETTINGS) {
+            m_interactionManager->settings();
+            char y;
+            std::cin >> y;
+            // Check the Setting which has to be changed.
+            switch (y) {
+                case (char)SettingsValues::LOCALE: {
+                    char localeValue;
+                    m_interactionManager->locale();
+                    std::cin >> localeValue;
+                    auto searchLocale = LOCALE_VALUES.find(localeValue);
+                    if (searchLocale != LOCALE_VALUES.end()) {
+                        m_interactionManager->changeSetting("locale", searchLocale->second);
+                    } else {
+                        m_interactionManager->errorValue();
+                    }
+                    break;
+                }
+                default:
+                    m_interactionManager->errorValue();
+                    break;
+            }
+            m_interactionManager->help();
         }
     }
 }
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK

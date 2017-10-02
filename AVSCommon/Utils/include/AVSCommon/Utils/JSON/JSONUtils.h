@@ -45,7 +45,10 @@ inline static std::string getTag() {
  * @param[out] iteratorPtr A pointer to a @c ConstMemberIterator, which will contain the @c Value.
  * @return @c true if the lookup is successful, @c false otherwise.
  */
-bool findNode(const rapidjson::Value& jsonNode, const std::string& key, rapidjson::Value::ConstMemberIterator* iteratorPtr);
+bool findNode(
+    const rapidjson::Value& jsonNode,
+    const std::string& key,
+    rapidjson::Value::ConstMemberIterator* iteratorPtr);
 
 /**
  * TODO: ACSDK-382 Remove references of this method with the retrieveValue method.
@@ -163,12 +166,12 @@ bool retrieveValue(const std::string jsonString, const std::string& key, T* valu
  * @param key The name of the array being looked for.
  * @return Whether a child element of array type was found.
  */
-bool jsonArrayExists(const rapidjson::Value & parsedDocument, const std::string & key);
+bool jsonArrayExists(const rapidjson::Value& parsedDocument, const std::string& key);
 
-} // namespace jsonUtils
-} // namespace json
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace jsonUtils
+}  // namespace json
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_JSON_JSONUTILS_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_JSON_JSONUTILS_H_

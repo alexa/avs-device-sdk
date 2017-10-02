@@ -29,11 +29,11 @@ std::string Alarm::m_defaultShortAudioFilePath;
 /// Definition for static class data member.
 const std::string Alarm::TYPE_NAME = "ALARM";
 
-void Alarm::setDefaultAudioFilePath(const std::string & filePath) {
+void Alarm::setDefaultAudioFilePath(const std::string& filePath) {
     m_defaultAudioFilePath = filePath;
 }
 
-void Alarm::setDefaultShortAudioFilePath(const std::string & filePath) {
+void Alarm::setDefaultShortAudioFilePath(const std::string& filePath) {
     m_defaultShortAudioFilePath = filePath;
 }
 
@@ -49,6 +49,6 @@ std::string Alarm::getTypeName() const {
     return TYPE_NAME;
 }
 
-} // namespace alerts
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace alerts
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK

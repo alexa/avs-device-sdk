@@ -14,7 +14,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
- 
+
 #include "Integration/TestMediaPlayer.h"
 
 namespace alexaClientSDK {
@@ -35,13 +35,14 @@ TestMediaPlayer::~TestMediaPlayer() {
 }
 
 avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::setSource(
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
     m_attachmentReader = std::move(attachmentReader);
     return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
 }
 
 avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::setSource(
-        std::shared_ptr<std::istream> stream, bool repeat) {
+    std::shared_ptr<std::istream> stream,
+    bool repeat) {
     m_istream = stream;
     return avsCommon::utils::mediaPlayer::MediaPlayerStatus::PENDING;
 }
@@ -56,18 +57,14 @@ avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::play() {
         m_playbackFinished = true;
         m_timer = std::unique_ptr<avsCommon::utils::timing::Timer>(new avsCommon::utils::timing::Timer);
         // Wait 600 milliseconds before sending onPlaybackFinished.
-        m_timer->start(
-                std::chrono::milliseconds(600), 
-                [this] {
-                    if (m_playbackFinished) {
-                        m_observer->onPlaybackFinished();
-                        m_playbackFinished = false;
-                    }
-                }
-            );
+        m_timer->start(std::chrono::milliseconds(600), [this] {
+            if (m_playbackFinished) {
+                m_observer->onPlaybackFinished();
+                m_playbackFinished = false;
+            }
+        });
         return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
-    }
-    else {
+    } else {
         return avsCommon::utils::mediaPlayer::MediaPlayerStatus::FAILURE;
     }
 }
@@ -79,7 +76,7 @@ avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::stop() {
         return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
     } else {
         return avsCommon::utils::mediaPlayer::MediaPlayerStatus::FAILURE;
-    }      
+    }
 }
 
 // TODO Add implementation
@@ -92,14 +89,14 @@ avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::resume() {
     return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
 }
 
-int64_t TestMediaPlayer::getOffsetInMilliseconds() {
-    return 0;
+std::chrono::milliseconds TestMediaPlayer::getOffset() {
+    return std::chrono::milliseconds::zero();
 }
 
 void TestMediaPlayer::setObserver(
-        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) {
-    m_observer = playerObserver;  
+    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) {
+    m_observer = playerObserver;
 }
-} // namespace test
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace integration
+}  // namespace alexaClientSDK

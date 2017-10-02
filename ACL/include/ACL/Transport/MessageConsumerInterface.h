@@ -39,10 +39,10 @@ public:
      * @param contextId The context id for the current message.
      * @param message The AVS message in string representation.
      */
-    virtual void consumeMessage(const std::string & contextId, const std::string & message) = 0;
+    virtual void consumeMessage(const std::string& contextId, const std::string& message) = 0;
 };
 
-} // acl
-} // alexaClientSDK
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_CONSUMER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_CONSUMER_INTERFACE_H_

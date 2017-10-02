@@ -34,7 +34,7 @@ namespace test {
  */
 class TestableMessageObserver : public avsCommon::sdkInterfaces::MessageObserverInterface {
 public:
-    void receive(const std::string &contextId, const std::string &message) override;
+    void receive(const std::string& contextId, const std::string& message) override;
 
     /**
      * A function to wait for a specific directive to be received.
@@ -43,7 +43,7 @@ public:
      * @param duraton The maximum time the caller should wait for this to occur.
      * @return Whether the directive was received ok within the timeout.
      */
-    bool waitForDirective(const std::string &directiveMessage, const std::chrono::seconds duration);
+    bool waitForDirective(const std::string& directiveMessage, const std::chrono::seconds duration);
 
 private:
     /// Mutex for the cv.
@@ -54,8 +54,8 @@ private:
     std::vector<std::string> m_receivedDirectives;
 };
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_MESSAGE_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_MESSAGE_OBSERVER_H_

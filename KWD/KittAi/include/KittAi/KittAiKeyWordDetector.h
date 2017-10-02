@@ -49,7 +49,7 @@ public:
 
         /**
          * The sensitivity that the user wishes to be associated with the keyword. This should be a value between 0 and
-         * 1. The higher this is, the more keyword detections will occur. However, more false alarms might also occur 
+         * 1. The higher this is, the more keyword detections will occur. However, more false alarms might also occur
          * more frequently. @see https://github.com/Kitt-AI/snowboy for more information regarding this.
          */
         double sensitivity;
@@ -66,7 +66,7 @@ public:
      * @param resourceFilePath The path to the resource file.
      * @param kittAiConfigurations A vector of @c KittAiConfiguration objects that will be used to initialize the
      * engine and keywords.
-     * @param audioGain This controls whether to increase (>1) or decrease (<1) input volume. 
+     * @param audioGain This controls whether to increase (>1) or decrease (<1) input volume.
      * @param applyFrontEnd Whether to apply frontend audio processing.
      * @param msToPushPerIteration The amount of data in milliseconds to push to Kitt.ai at a time. Smaller sizes will
      * lead to less delay but more CPU usage. Additionally, larger amounts of data fed into the engine per iteration
@@ -76,17 +76,17 @@ public:
      * @see https://github.com/Kitt-AI/snowboy for more information regarding @c audioGain and @c applyFrontEnd.
      */
     static std::unique_ptr<KittAiKeyWordDetector> create(
-            std::shared_ptr<avsCommon::avs::AudioInputStream> stream, 
-            avsCommon::utils::AudioFormat audioFormat, 
-            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>> keyWordObservers, 
-            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>> 
-                keyWordDetectorStateObservers,
-            const std::string& resourceFilePath,
-            const std::vector<KittAiConfiguration> kittAiConfigurations,
-            float audioGain,
-            bool applyFrontEnd,
-            std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(20));
-    
+        std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+        avsCommon::utils::AudioFormat audioFormat,
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>> keyWordObservers,
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>
+            keyWordDetectorStateObservers,
+        const std::string& resourceFilePath,
+        const std::vector<KittAiConfiguration> kittAiConfigurations,
+        float audioGain,
+        bool applyFrontEnd,
+        std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(20));
+
     /**
      * Destructor.
      */
@@ -108,24 +108,24 @@ private:
      * @param applyFrontEnd Whether to apply frontend audio processing.
      * @param msToPushPerIteration The amount of data in milliseconds to push to Kitt.ai at a time. Smaller sizes will
      * lead to less delay but more CPU usage. Additionally, larger amounts of data fed into the engine per iteration
-     * might lead longer delays before receiving keyword detection events. This has been defaulted to 20 milliseconds 
+     * might lead longer delays before receiving keyword detection events. This has been defaulted to 20 milliseconds
      * as it is a good trade off between CPU usage and recognition delay.
      * @see https://github.com/Kitt-AI/snowboy for more information regarding @c audioGain and @c applyFrontEnd.
      */
     KittAiKeyWordDetector(
-            std::shared_ptr<avsCommon::avs::AudioInputStream> stream, 
-            avsCommon::utils::AudioFormat audioFormat,  
-            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>> keyWordObservers, 
-            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>> 
-                keyWordDetectorStateObservers,
-            const std::string& resourceFilePath,
-            const std::vector<KittAiConfiguration> kittAiConfigurations,
-            float audioGain,
-            bool applyFrontEnd,
-            std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(20));
+        std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+        avsCommon::utils::AudioFormat audioFormat,
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>> keyWordObservers,
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>
+            keyWordDetectorStateObservers,
+        const std::string& resourceFilePath,
+        const std::vector<KittAiConfiguration> kittAiConfigurations,
+        float audioGain,
+        bool applyFrontEnd,
+        std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(20));
 
     /**
-     * Initializes the stream reader and kicks off a thread to read data from the stream. This function should only be 
+     * Initializes the stream reader and kicks off a thread to read data from the stream. This function should only be
      * called once with each new @c KittAiKeyWordDetector.
      *
      * @param audioFormat The format of the audio data located within the stream.
@@ -136,7 +136,7 @@ private:
     /**
      * Checks to see if an @c avsCommon::utils::AudioFormat is compatible with Kitt.ai.
      *
-     * @param audioFormat The audio format to check. 
+     * @param audioFormat The audio format to check.
      * @return @c true if the audio format is compatible and @c false otherwise.
      */
     bool isAudioFormatCompatibleWithKittAi(avsCommon::utils::AudioFormat audioFormat);
@@ -173,7 +173,7 @@ private:
     const size_t m_maxSamplesPerPush;
 };
 
-} // namespace kwd
-} // namespace alexaClientSDK
+}  // namespace kwd
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_KWD_KITT_AI_INCLUDE_KWD_KITT_AI_KEY_WORD_DETECTOR_H_
+#endif  // ALEXA_CLIENT_SDK_KWD_KITT_AI_INCLUDE_KWD_KITT_AI_KEY_WORD_DETECTOR_H_

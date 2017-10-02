@@ -53,63 +53,63 @@ static const char LEVEL_AND_TEXT_SEPARATOR = ' ';
 static const int MILLISECONDS_PER_SECOND = 1000;
 
 void acsdkDebug9(const LogEntry& entry) {
-   logEntry(Level::DEBUG9, entry);
+    logEntry(Level::DEBUG9, entry);
 }
 
 void acsdkDebug8(const LogEntry& entry) {
-   logEntry(Level::DEBUG8, entry);
+    logEntry(Level::DEBUG8, entry);
 }
 
 void acsdkDebug7(const LogEntry& entry) {
-   logEntry(Level::DEBUG7, entry);
+    logEntry(Level::DEBUG7, entry);
 }
 
 void acsdkDebug6(const LogEntry& entry) {
-   logEntry(Level::DEBUG6, entry);
+    logEntry(Level::DEBUG6, entry);
 }
 
 void acsdkDebug5(const LogEntry& entry) {
-   logEntry(Level::DEBUG5, entry);
+    logEntry(Level::DEBUG5, entry);
 }
 
 void acsdkDebug4(const LogEntry& entry) {
-   logEntry(Level::DEBUG4, entry);
+    logEntry(Level::DEBUG4, entry);
 }
 
 void acsdkDebug3(const LogEntry& entry) {
-   logEntry(Level::DEBUG3, entry);
+    logEntry(Level::DEBUG3, entry);
 }
 
 void acsdkDebug2(const LogEntry& entry) {
-   logEntry(Level::DEBUG2, entry);
+    logEntry(Level::DEBUG2, entry);
 }
 
 void acsdkDebug1(const LogEntry& entry) {
-   logEntry(Level::DEBUG1, entry);
+    logEntry(Level::DEBUG1, entry);
 }
 
 void acsdkDebug0(const LogEntry& entry) {
-   logEntry(Level::DEBUG0, entry);
+    logEntry(Level::DEBUG0, entry);
 }
 
 void acsdkDebug(const LogEntry& entry) {
-   logEntry(Level::DEBUG0, entry);
+    logEntry(Level::DEBUG0, entry);
 }
 
 void acsdkInfo(const LogEntry& entry) {
-   logEntry(Level::INFO, entry);
+    logEntry(Level::INFO, entry);
 }
 
 void acsdkWarn(const LogEntry& entry) {
-   logEntry(Level::WARN, entry);
+    logEntry(Level::WARN, entry);
 }
 
 void acsdkError(const LogEntry& entry) {
-   logEntry(Level::ERROR, entry);
+    logEntry(Level::ERROR, entry);
 }
 
 void acsdkCritical(const LogEntry& entry) {
-   logEntry(Level::CRITICAL, entry);
+    logEntry(Level::CRITICAL, entry);
 }
 
 void logEntry(Level level, const LogEntry& entry) {
@@ -118,10 +118,10 @@ void logEntry(Level level, const LogEntry& entry) {
 }
 
 std::string formatLogString(
-        Level level,
-        std::chrono::system_clock::time_point time,
-        const char *threadMoniker,
-        const char *text) {
+    Level level,
+    std::chrono::system_clock::time_point time,
+    const char* threadMoniker,
+    const char* text) {
     bool dateTimeFailure = false;
     bool millisecondFailure = false;
     char dateTimeString[DATE_AND_TIME_STRING_SIZE];
@@ -131,28 +131,23 @@ std::string formatLogString(
         dateTimeFailure = true;
     }
     auto timeMillisPart = static_cast<int>(
-            std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() % 
-                    MILLISECONDS_PER_SECOND);
+        std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() %
+        MILLISECONDS_PER_SECOND);
     char millisString[MILLIS_STRING_SIZE];
     if (std::snprintf(millisString, sizeof(millisString), MILLIS_FORMAT_STRING, timeMillisPart) < 0) {
         millisecondFailure = true;
     }
 
     std::stringstream stringToEmit;
-    stringToEmit
-        << (dateTimeFailure ? "ERROR: strftime() failed.  Date and time not logged." : dateTimeString)
-        << TIME_AND_MILLIS_SEPARATOR
-        << (millisecondFailure ? "ERROR: snprintf() failed.  Milliseconds not logged." : millisString)
-        << MILLIS_AND_THREAD_SEPARATOR
-        << threadMoniker
-        << THREAD_AND_LEVEL_SEPARATOR
-        << convertLevelToChar(level)
-        << LEVEL_AND_TEXT_SEPARATOR
-        << text;
+    stringToEmit << (dateTimeFailure ? "ERROR: strftime() failed.  Date and time not logged." : dateTimeString)
+                 << TIME_AND_MILLIS_SEPARATOR
+                 << (millisecondFailure ? "ERROR: snprintf() failed.  Milliseconds not logged." : millisString)
+                 << MILLIS_AND_THREAD_SEPARATOR << threadMoniker << THREAD_AND_LEVEL_SEPARATOR
+                 << convertLevelToChar(level) << LEVEL_AND_TEXT_SEPARATOR << text;
     return stringToEmit.str();
 }
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

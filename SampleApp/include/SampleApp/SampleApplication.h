@@ -43,9 +43,9 @@ public:
      * @return A new @c SampleApplication, or @c nullptr if the operation failed.
      */
     static std::unique_ptr<SampleApplication> create(
-           const std::string& pathToConfig,
-           const std::string& pathToInputFolder,
-           const std::string& logLevel = "");
+        const std::string& pathToConfig,
+        const std::string& pathToInputFolder,
+        const std::string& logLevel = "");
 
     /// Runs the application, blocking until the user asks the application to quit.
     void run();
@@ -60,10 +60,7 @@ private:
      *     logging level will be used.
      * @return @c true if initialization succeeded, else @c false.
      */
-    bool initialize(
-           const std::string& pathToConfig,
-           const std::string& pathToInputFolder,
-           const std::string& logLevel);
+    bool initialize(const std::string& pathToConfig, const std::string& pathToInputFolder, const std::string& logLevel);
 
     /// The @c UserInputManager which controls the client.
     std::unique_ptr<UserInputManager> m_userInputManager;
@@ -74,7 +71,7 @@ private:
 #endif
 };
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_SAMPLE_APPLICATION_H_
+#endif  // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_SAMPLE_APPLICATION_H_

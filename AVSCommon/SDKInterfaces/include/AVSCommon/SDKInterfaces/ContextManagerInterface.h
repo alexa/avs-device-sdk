@@ -42,7 +42,8 @@ enum class SetStateResult {
     STATE_PROVIDER_NOT_REGISTERED,
 
     /**
-     * @c setState request failed because the @c StateProviderInterface provided the wrong token to the @c ContextManager.
+     * @c setState request failed because the @c StateProviderInterface provided the wrong token to the @c
+     * ContextManager.
      */
     STATE_TOKEN_OUTDATED
 };
@@ -61,7 +62,7 @@ public:
     virtual ~ContextManagerInterface() = default;
 
     /**
-     * Registers a @c StateProviderInterface with the @c ContextManager. When the context manager receives a 
+     * Registers a @c StateProviderInterface with the @c ContextManager. When the context manager receives a
      * @c getContext request, it queries the registered @c StateProviderInterfaces for updated state, if needed.
      * If a @c StateProviderInterface tries to register a @c NamespaceAndName that is already present, the older
      * @c StateProviderInterface will be replaced with the new one.
@@ -71,8 +72,9 @@ public:
      * @param namespaceAndName The namespace and name of the @c StateProviderInterface.
      * @param stateProvider The @c StateProviderInterface that will be mapped against the @c namespaceAndName.
      */
-    virtual void setStateProvider(const avs::NamespaceAndName& namespaceAndName,
-            std::shared_ptr<StateProviderInterface> stateProvider) = 0;
+    virtual void setStateProvider(
+        const avs::NamespaceAndName& namespaceAndName,
+        std::shared_ptr<StateProviderInterface> stateProvider) = 0;
 
     /**
      * Sets the state information. The refresh policy indicates to the @c ContextManager whether on a @c getContext
@@ -97,8 +99,11 @@ public:
      *
      * @return The status of the setState operation.
      */
-    virtual SetStateResult setState(const avs::NamespaceAndName& namespaceAndName, const std::string& jsonState,
-            const avs::StateRefreshPolicy& refreshPolicy, const unsigned int stateRequestToken = 0) = 0;
+    virtual SetStateResult setState(
+        const avs::NamespaceAndName& namespaceAndName,
+        const std::string& jsonState,
+        const avs::StateRefreshPolicy& refreshPolicy,
+        const unsigned int stateRequestToken = 0) = 0;
 
     /**
      * Request the @c ContextManager for context. If a request to the @c StateProviderInterfaces for updated states
@@ -113,8 +118,8 @@ public:
     virtual void getContext(std::shared_ptr<ContextRequesterInterface> contextRequester) = 0;
 };
 
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_CONTEXT_MANAGER_INTERFACE_H
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_CONTEXT_MANAGER_INTERFACE_H

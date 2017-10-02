@@ -35,12 +35,12 @@ using SDSBufferType = avsCommon::utils::sds::InProcessSDSTraits::Buffer;
 
 TestableAttachmentManager::TestableAttachmentManager() :
         AttachmentManager{AttachmentManager::AttachmentType::IN_PROCESS},
-        m_manager{std::unique_ptr<AttachmentManager>(
-                new AttachmentManager(AttachmentManager::AttachmentType::IN_PROCESS))} {
+        m_manager{
+            std::unique_ptr<AttachmentManager>(new AttachmentManager(AttachmentManager::AttachmentType::IN_PROCESS))} {
 }
 
-std::string TestableAttachmentManager::generateAttachmentId(
-        const std::string & contextId, const std::string & contentId) const {
+std::string TestableAttachmentManager::generateAttachmentId(const std::string& contextId, const std::string& contentId)
+    const {
     return m_manager->generateAttachmentId(contextId, contentId);
 }
 
@@ -48,7 +48,7 @@ bool TestableAttachmentManager::setAttachmentTimeoutMinutes(std::chrono::minutes
     return m_manager->setAttachmentTimeoutMinutes(timeoutMinutes);
 }
 
-std::unique_ptr<AttachmentWriter> TestableAttachmentManager::createWriter(const std::string & attachmentId) {
+std::unique_ptr<AttachmentWriter> TestableAttachmentManager::createWriter(const std::string& attachmentId) {
     // First, let's create a dummy SDS.  Otherwise we need to intantiate the writer with nullptr, which is
     // probably not a good idea.
     auto buffSize = SDSType::calculateBufferSize(DUMMY_SDS_BUFFER_SIZE);
@@ -59,17 +59,18 @@ std::unique_ptr<AttachmentWriter> TestableAttachmentManager::createWriter(const 
     auto writer = m_manager->createWriter(attachmentId);
     // Now create the wrapper class.
     std::unique_ptr<AttachmentWriter> testableWriter =
-            std::unique_ptr<TestableAttachmentWriter>(new TestableAttachmentWriter(dummySDS, std::move(writer)));
+        std::unique_ptr<TestableAttachmentWriter>(new TestableAttachmentWriter(dummySDS, std::move(writer)));
 
     // Done!
     return testableWriter;
 }
 
 std::unique_ptr<AttachmentReader> TestableAttachmentManager::createReader(
-        const std::string & attachmentId, AttachmentReader::Policy policy) {
+    const std::string& attachmentId,
+    AttachmentReader::Policy policy) {
     return m_manager->createReader(attachmentId, policy);
 }
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK

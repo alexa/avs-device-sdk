@@ -22,7 +22,8 @@ namespace avsCommon {
 namespace avs {
 
 AVSMessage::AVSMessage(std::shared_ptr<AVSMessageHeader> avsMessageHeader, std::string payload) :
-        m_header{avsMessageHeader}, m_payload{std::move(payload)} {
+        m_header{avsMessageHeader},
+        m_payload{std::move(payload)} {
 }
 
 std::string AVSMessage::getNamespace() const {
@@ -49,6 +50,6 @@ std::string AVSMessage::getHeaderAsString() const {
     return m_header->getAsString();
 }
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

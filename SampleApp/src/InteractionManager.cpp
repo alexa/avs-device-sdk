@@ -21,98 +21,114 @@ namespace alexaClientSDK {
 namespace sampleApp {
 
 InteractionManager::InteractionManager(
-        std::shared_ptr<defaultClient::DefaultClient> client, 
-        std::shared_ptr<sampleApp::PortAudioMicrophoneWrapper> micWrapper,
-        std::shared_ptr<sampleApp::UIManager> userInterface,
-        capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
-        capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
-        capabilityAgents::aip::AudioProvider wakeWordAudioProvider) : 
-    m_client{client}, 
-    m_micWrapper{micWrapper}, 
-    m_userInterface{userInterface},
-    m_holdToTalkAudioProvider{holdToTalkAudioProvider},
-    m_tapToTalkAudioProvider{tapToTalkAudioProvider},
-    m_wakeWordAudioProvider{wakeWordAudioProvider},
-    m_isHoldOccurring{false},
-    m_isTapOccurring{false},
-    m_isMicOn{true} { 
-        m_micWrapper->startStreamingMicrophoneData();
+    std::shared_ptr<defaultClient::DefaultClient> client,
+    std::shared_ptr<sampleApp::PortAudioMicrophoneWrapper> micWrapper,
+    std::shared_ptr<sampleApp::UIManager> userInterface,
+    capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
+    capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
+    capabilityAgents::aip::AudioProvider wakeWordAudioProvider) :
+        m_client{client},
+        m_micWrapper{micWrapper},
+        m_userInterface{userInterface},
+        m_holdToTalkAudioProvider{holdToTalkAudioProvider},
+        m_tapToTalkAudioProvider{tapToTalkAudioProvider},
+        m_wakeWordAudioProvider{wakeWordAudioProvider},
+        m_isHoldOccurring{false},
+        m_isTapOccurring{false},
+        m_isMicOn{true} {
+    m_micWrapper->startStreamingMicrophoneData();
 };
 
 void InteractionManager::begin() {
-    m_executor.submit(
-        [this] () {
-            m_userInterface->printWelcomeScreen();
-            m_userInterface->printHelpScreen();
-        }
-    );
+    m_executor.submit([this]() {
+        m_userInterface->printWelcomeScreen();
+        m_userInterface->printHelpScreen();
+    });
 }
 
 void InteractionManager::help() {
-    m_executor.submit(
-        [this] () {
-            m_userInterface->printHelpScreen();
-        }
-    );
+    m_executor.submit([this]() { m_userInterface->printHelpScreen(); });
+}
+
+void InteractionManager::settings() {
+    m_executor.submit([this]() { m_userInterface->printSettingsScreen(); });
+}
+
+void InteractionManager::locale() {
+    m_executor.submit([this]() { m_userInterface->printLocaleScreen(); });
+}
+
+void InteractionManager::errorValue() {
+    m_executor.submit([this]() { m_userInterface->printErrorScreen(); });
+}
+
+void InteractionManager::changeSetting(const std::string& key, const std::string& value) {
+    m_executor.submit([this, key, value]() { m_client->changeSetting(key, value); });
 }
 
 void InteractionManager::microphoneToggle() {
-    m_executor.submit(
-        [this] () {
-            if (!m_wakeWordAudioProvider) {
-                return;
-            }
-            if (m_isMicOn) {
-                m_isMicOn = false;
-                m_micWrapper->stopStreamingMicrophoneData();
-                m_userInterface->microphoneOff();
-            } else {
-                m_isMicOn = true;
-                m_micWrapper->startStreamingMicrophoneData();
-                m_userInterface->microphoneOn();
-            }
+    m_executor.submit([this]() {
+        if (!m_wakeWordAudioProvider) {
+            return;
         }
-    );
+        if (m_isMicOn) {
+            m_isMicOn = false;
+            m_micWrapper->stopStreamingMicrophoneData();
+            m_userInterface->microphoneOff();
+        } else {
+            m_isMicOn = true;
+            m_micWrapper->startStreamingMicrophoneData();
+            m_userInterface->microphoneOn();
+        }
+    });
 }
 
 void InteractionManager::holdToggled() {
-    m_executor.submit(
-        [this] () {
-            if (!m_isMicOn) {
-                return;
-            }
-            if (!m_isHoldOccurring) {
-                if (m_client->notifyOfHoldToTalkStart(m_holdToTalkAudioProvider).get()) {
-                    m_isHoldOccurring = true;
-                }
-            } else {
-                m_isHoldOccurring = false;
-                m_client->notifyOfHoldToTalkEnd();
-            }
+    m_executor.submit([this]() {
+        if (!m_isMicOn) {
+            return;
         }
-    );
+        if (!m_isHoldOccurring) {
+            if (m_client->notifyOfHoldToTalkStart(m_holdToTalkAudioProvider).get()) {
+                m_isHoldOccurring = true;
+            }
+        } else {
+            m_isHoldOccurring = false;
+            m_client->notifyOfHoldToTalkEnd();
+        }
+    });
 }
 
 void InteractionManager::tap() {
-    m_executor.submit(
-        [this] () {
-            if (!m_isMicOn) {
-                return;
-            }
-            if (m_client->notifyOfTapToTalk(m_tapToTalkAudioProvider).get()) {
-                m_isTapOccurring = true;
-            }
+    m_executor.submit([this]() {
+        if (!m_isMicOn) {
+            return;
         }
-    );
+        if (m_client->notifyOfTapToTalk(m_tapToTalkAudioProvider).get()) {
+            m_isTapOccurring = true;
+        }
+    });
 }
 
 void InteractionManager::stopForegroundActivity() {
-    m_executor.submit(
-        [this] () {
-            m_client->stopForegroundActivity();
-        }
-    );
+    m_executor.submit([this]() { m_client->stopForegroundActivity(); });
 }
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+void InteractionManager::playbackPlay() {
+    m_executor.submit([this]() { m_client->getPlaybackControllerInterface().playButtonPressed(); });
+}
+
+void InteractionManager::playbackPause() {
+    m_executor.submit([this]() { m_client->getPlaybackControllerInterface().pauseButtonPressed(); });
+}
+
+void InteractionManager::playbackNext() {
+    m_executor.submit([this]() { m_client->getPlaybackControllerInterface().nextButtonPressed(); });
+}
+
+void InteractionManager::playbackPrevious() {
+    m_executor.submit([this]() { m_client->getPlaybackControllerInterface().previousButtonPressed(); });
+}
+
+}  // namespace sampleApp
+}  // namespace alexaClientSDK

@@ -32,16 +32,15 @@ namespace utils {
 namespace memory {
 
 // START Herb Sutter code sample adaptation
-template<typename T, typename... Args>
-std::unique_ptr<T> make_unique(Args&&... args)
-{
+template <typename T, typename... Args>
+std::unique_ptr<T> make_unique(Args&&... args) {
     return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
 // END Herb Sutter code sample adaptation
 
-} // namespace memory
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace memory
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEMORY_MEMORY_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_MEMORY_MEMORY_H_

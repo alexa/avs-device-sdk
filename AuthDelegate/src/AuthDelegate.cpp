@@ -84,7 +84,7 @@ static const std::string POST_DATA_BETWEEN_CLIENT_ID_AND_REFRESH_TOKEN = "&refre
 /// POST data between 'refresh_token' and 'client_secret' that is sent to LWA to refresh the auth token.
 static const std::string POST_DATA_BETWEEN_REFRESH_TOKEN_AND_CLIENT_SECRET = "&client_secret=";
 
-/// This is the property name in the JSON which refers to the access token. 
+/// This is the property name in the JSON which refers to the access token.
 static const std::string JSON_KEY_ACCESS_TOKEN = "access_token";
 
 /// This is the property name in the JSON which refers to the refresh token.
@@ -124,7 +124,7 @@ static const std::unordered_map<std::string, AuthObserverInterface::Error> g_unr
  * @param error The HTTP error code.
  * @return @c true if @c error is unrecoverable, @c false otherwise.
  */
-static bool isUnrecoverable(const std::string & error) {
+static bool isUnrecoverable(const std::string& error) {
     return g_unrecoverableErrorCodeMap.end() != g_unrecoverableErrorCodeMap.find(error);
 }
 
@@ -150,7 +150,7 @@ static bool isUnrecoverable(AuthObserverInterface::Error error) {
  * @return the Error enum code corresponding to @c error. If error is "", returns NO_ERROR. If it is an unknown error,
  * returns UNKNOWN_ERROR.
  */
-static AuthObserverInterface::Error getErrorCode(const std::string & error) {
+static AuthObserverInterface::Error getErrorCode(const std::string& error) {
     if (error.empty()) {
         return AuthObserverInterface::Error::NO_ERROR;
     } else {
@@ -180,13 +180,13 @@ static std::chrono::steady_clock::time_point calculateTimeToRetry(int retryCount
      * doc/en_US/offamazonpayments/LoginAndPayWithAmazonIntegrationGuide.pdf
      */
     static const int retryBackoffTimes[] = {
-        0,     // Retry 1:  0.00s range with 0.5 randomization: [ 0.0s.  0.0s]
-        1000,  // Retry 2:  1.00s range with 0.5 randomization: [ 0.5s,  1.5s]
-        2000,  // Retry 3:  2.00s range with 0.5 randomization: [ 1.0s,  3.0s]
-        4000,  // Retry 4:  5.00s range with 0.5 randomization: [ 2.0s,  6.0s]
-        10000, // Retry 5: 10.00s range with 0.5 randomization: [ 5.0s, 15.0s]
-        30000, // Retry 6: 20.00s range with 0.5 randomization: [15.0s, 45.0s]
-        60000, // Retry 7: 60.00s range with 0.5 randomization: [30.0s, 90.0s]
+        0,      // Retry 1:  0.00s range with 0.5 randomization: [ 0.0s.  0.0s]
+        1000,   // Retry 2:  1.00s range with 0.5 randomization: [ 0.5s,  1.5s]
+        2000,   // Retry 3:  2.00s range with 0.5 randomization: [ 1.0s,  3.0s]
+        4000,   // Retry 4:  5.00s range with 0.5 randomization: [ 2.0s,  6.0s]
+        10000,  // Retry 5: 10.00s range with 0.5 randomization: [ 5.0s, 15.0s]
+        30000,  // Retry 6: 20.00s range with 0.5 randomization: [15.0s, 45.0s]
+        60000,  // Retry 7: 60.00s range with 0.5 randomization: [30.0s, 90.0s]
     };
     /// Scale of range (relative to table entry) to select a random value from.
     static const double RETRY_RANDOMIZATION_FACTOR = 0.5;
@@ -196,8 +196,7 @@ static std::chrono::steady_clock::time_point calculateTimeToRetry(int retryCount
     static const double RETRY_INCREASE_FACTOR = 1 + RETRY_RANDOMIZATION_FACTOR;
 
     // Cap count to the size of the table
-    static const int retryTableSize =
-        (sizeof(retryBackoffTimes) / sizeof(retryBackoffTimes[0]));
+    static const int retryTableSize = (sizeof(retryBackoffTimes) / sizeof(retryBackoffTimes[0]));
     if (retryCount < 0) {
         retryCount = 0;
     } else if (retryCount >= retryTableSize) {
@@ -231,14 +230,13 @@ std::unique_ptr<AuthDelegate> AuthDelegate::create(std::unique_ptr<HttpPostInter
     return nullptr;
 }
 
-AuthDelegate::AuthDelegate(std::unique_ptr<HttpPostInterface> httpPost):
-    m_authState{AuthObserverInterface::State::UNINITIALIZED},
-    m_authError{AuthObserverInterface::Error::NO_ERROR},
-    m_isStopping{false},
-    m_expirationTime{std::chrono::time_point<std::chrono::steady_clock>::max()},
-    m_retryCount{0},
-    m_HttpPost{std::move(httpPost)}
-{
+AuthDelegate::AuthDelegate(std::unique_ptr<HttpPostInterface> httpPost) :
+        m_authState{AuthObserverInterface::State::UNINITIALIZED},
+        m_authError{AuthObserverInterface::Error::NO_ERROR},
+        m_isStopping{false},
+        m_expirationTime{std::chrono::time_point<std::chrono::steady_clock>::max()},
+        m_retryCount{0},
+        m_HttpPost{std::move(httpPost)} {
 }
 
 AuthDelegate::~AuthDelegate() {
@@ -303,12 +301,10 @@ bool AuthDelegate::init() {
     configuration.getString(CONFIG_KEY_LWA_URL, &m_lwaUrl, DEFAULT_LWA_URL);
 
     configuration.getDuration<std::chrono::seconds>(
-            CONFIG_KEY_REQUEST_TIMEOUT, &m_requestTimeout, DEFAULT_REQUEST_TIMEOUT);
+        CONFIG_KEY_REQUEST_TIMEOUT, &m_requestTimeout, DEFAULT_REQUEST_TIMEOUT);
 
     configuration.getDuration<std::chrono::seconds>(
-            CONFIG_KEY_AUTH_TOKEN_REFRESH_HEAD_START,
-            &m_authTokenRefreshHeadStart,
-            DEFAULT_AUTH_TOKEN_REFRESH_HEAD_START);
+        CONFIG_KEY_AUTH_TOKEN_REFRESH_HEAD_START, &m_authTokenRefreshHeadStart, DEFAULT_AUTH_TOKEN_REFRESH_HEAD_START);
 
     if (!m_HttpPost) {
         ACSDK_ERROR(LX("initFailed").d("reason", "nullptrHttPost"));
@@ -320,14 +316,12 @@ bool AuthDelegate::init() {
 }
 
 void AuthDelegate::refreshAndNotifyThreadFunction() {
-    std::function<bool()> isStopping = [this] {
-        return m_isStopping;
-    };
+    std::function<bool()> isStopping = [this] { return m_isStopping; };
 
     while (true) {
         std::unique_lock<std::mutex> lock(m_mutex);
-        bool isAboutToExpire = (AuthObserverInterface::State::REFRESHED == m_authState &&
-                m_expirationTime < m_timeToRefresh);
+        bool isAboutToExpire =
+            (AuthObserverInterface::State::REFRESHED == m_authState && m_expirationTime < m_timeToRefresh);
         auto nextActionTime = (isAboutToExpire ? m_expirationTime : m_timeToRefresh);
         auto nextState = m_authState;
 
@@ -361,10 +355,8 @@ AuthObserverInterface::Error AuthDelegate::refreshAuthToken() {
     }
 
     std::ostringstream postData;
-    postData
-        << POST_DATA_UP_TO_CLIENT_ID << m_clientId
-        << POST_DATA_BETWEEN_CLIENT_ID_AND_REFRESH_TOKEN << m_refreshToken
-        << POST_DATA_BETWEEN_REFRESH_TOKEN_AND_CLIENT_SECRET << m_clientSecret;
+    postData << POST_DATA_UP_TO_CLIENT_ID << m_clientId << POST_DATA_BETWEEN_CLIENT_ID_AND_REFRESH_TOKEN
+             << m_refreshToken << POST_DATA_BETWEEN_REFRESH_TOKEN_AND_CLIENT_SECRET << m_clientSecret;
 
     std::string body;
     auto code = m_HttpPost->doPost(m_lwaUrl, postData.str(), timeout, body);
@@ -386,9 +378,9 @@ AuthObserverInterface::Error AuthDelegate::handleLwaResponse(long code, const st
     rapidjson::Document document;
     if (document.Parse(body.c_str()).HasParseError()) {
         ACSDK_ERROR(LX("handleLwaResponseFailed")
-                .d("reason", "parseJsonFailed")
-                .d("position", document.GetErrorOffset())
-                .d("error", GetParseError_En(document.GetParseError())));
+                        .d("reason", "parseJsonFailed")
+                        .d("position", document.GetErrorOffset())
+                        .d("error", GetParseError_En(document.GetParseError())));
         return AuthObserverInterface::Error::UNKNOWN_ERROR;
     }
 
@@ -414,17 +406,17 @@ AuthObserverInterface::Error AuthDelegate::handleLwaResponse(long code, const st
 
         if (authToken.empty() || refreshToken.empty() || expiresInSeconds == 0) {
             ACSDK_ERROR(LX("handleLwaResponseFailed")
-                    .d("authTokenEmpty", authToken.empty())
-                    .d("refreshTokenEmpty", refreshToken.empty())
-                    .d("expiresInSeconds", expiresInSeconds));
+                            .d("authTokenEmpty", authToken.empty())
+                            .d("refreshTokenEmpty", refreshToken.empty())
+                            .d("expiresInSeconds", expiresInSeconds));
             ACSDK_DEBUG(LX("handleLwaresponseFailed").d("body", body));
             return AuthObserverInterface::Error::UNKNOWN_ERROR;
         }
 
         ACSDK_DEBUG(LX("handleLwaResponseSucceeded")
-                .sensitive("refreshToken", refreshToken)
-                .sensitive("authToken", authToken)
-                .d("expiresInSeconds", expiresInSeconds));
+                        .sensitive("refreshToken", refreshToken)
+                        .sensitive("authToken", authToken)
+                        .d("expiresInSeconds", expiresInSeconds));
 
         m_refreshToken = refreshToken;
         m_expirationTime = m_requestTime + std::chrono::seconds(expiresInSeconds);
@@ -458,7 +450,7 @@ bool AuthDelegate::hasAuthTokenExpired() {
 
 void AuthDelegate::setState(AuthObserverInterface::State newState) {
     std::lock_guard<std::mutex> lock(m_mutex);
-    
+
     if (isUnrecoverable(m_authError)) {
         ACSDK_ERROR(LX("threadStopping").d("reason", "encounteredUnrecoverableError"));
         newState = AuthObserverInterface::State::UNRECOVERABLE_ERROR;
@@ -474,5 +466,5 @@ void AuthDelegate::setState(AuthObserverInterface::State newState) {
     }
 }
 
-} // namespace authDelegate
-} // namespace alexaClientSDK
+}  // namespace authDelegate
+}  // namespace alexaClientSDK

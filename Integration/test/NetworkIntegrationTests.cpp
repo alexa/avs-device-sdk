@@ -24,6 +24,7 @@
 #include <gtest/gtest.h>
 #include <ACL/AVSConnectionManager.h>
 #include <ACL/Transport/HTTP2MessageRouter.h>
+#include <ContextManager/ContextManager.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AuthDelegate/AuthDelegate.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
@@ -91,10 +92,10 @@ public:
      * @param attachmentReader The attachment reader for the MessageRequest.
      */
     void sendEvent(
-            const std::string & jsonContent,
-            MessageRequest::Status expectedStatus,
-            std::chrono::seconds timeout,
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader = nullptr);
+        const std::string& jsonContent,
+        MessageRequest::Status expectedStatus,
+        std::chrono::seconds timeout,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader = nullptr);
 
     /**
      * The function adds delay to the network.
@@ -112,6 +113,9 @@ protected:
     std::shared_ptr<ConnectionStatusObserver> m_connectionStatusObserver;
     /// Connection Manager for handling the communication between client and AVS.
     std::shared_ptr<AVSConnectionManager> m_avsConnectionManager;
+
+    /// ContextManager object.
+    std::shared_ptr<contextManager::ContextManager> m_contextManager;
 
 private:
     /// AuthObserver for checking the status of authorization.
@@ -133,41 +137,42 @@ void NetworkIntegrationTests::SetUp() {
     authDelegate->addAuthObserver(m_authObserver);
     m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
     messageRouter = std::make_shared<HTTP2MessageRouter>(authDelegate, nullptr);
+
+    m_contextManager = contextManager::ContextManager::create();
+    ASSERT_NE(m_contextManager, nullptr);
+    PostConnectObject::init(m_contextManager);
+
     bool isEnabled = false;
     m_avsConnectionManager = AVSConnectionManager::create(
-            messageRouter,
-            isEnabled,
-            { m_connectionStatusObserver },
-            std::unordered_set<std::shared_ptr<MessageObserverInterface>>());
+        messageRouter,
+        isEnabled,
+        {m_connectionStatusObserver},
+        std::unordered_set<std::shared_ptr<MessageObserverInterface>>());
     ASSERT_NE(m_avsConnectionManager, nullptr);
 }
 
 void NetworkIntegrationTests::TearDown() {
-        AlexaClientSDKInit::uninitialize();
-        deleteDelay();
+    AlexaClientSDKInit::uninitialize();
+    deleteDelay();
 }
 
 void NetworkIntegrationTests::connect() {
     ASSERT_TRUE(m_authObserver->waitFor(AuthObserver::State::REFRESHED));
     m_avsConnectionManager->enable();
-    ASSERT_TRUE(m_connectionStatusObserver->waitFor(
-        ConnectionStatusObserverInterface::Status::CONNECTED));
-    m_avsConnectionManager->onStateChanged(StateSynchronizerObserverInterface::State::SYNCHRONIZED);
-    ASSERT_TRUE(m_connectionStatusObserver->waitFor(
-        ConnectionStatusObserverInterface::Status::POST_CONNECTED));
+    ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::CONNECTED));
 }
 
 void NetworkIntegrationTests::disconnect() {
     m_avsConnectionManager->disable();
-    ASSERT_TRUE(m_connectionStatusObserver->waitFor(
-        ConnectionStatusObserverInterface::Status::DISCONNECTED)) << "Disconnecting timed out.";
+    ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::DISCONNECTED))
+        << "Disconnecting timed out.";
 }
 
 void NetworkIntegrationTests::sendEvent(
-        const std::string & jsonContent,
-        MessageRequest::Status expectedStatus,
-        std::chrono::seconds timeout,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
+    const std::string& jsonContent,
+    MessageRequest::Status expectedStatus,
+    std::chrono::seconds timeout,
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
     auto messageRequest = std::make_shared<ObservableMessageRequest>(jsonContent, attachmentReader);
     m_avsConnectionManager->sendMessage(messageRequest);
     ASSERT_TRUE(messageRequest->waitFor(expectedStatus, timeout));
@@ -224,8 +229,8 @@ TEST_F(NetworkIntegrationTests, testReConnectAfterDelay) {
 TEST_F(NetworkIntegrationTests, testSendEventAfterDelayPass) {
     connect();
     addDelay(DELAY_TIME);
-    sendEvent(SYNCHRONIZE_STATE_JSON, MessageRequest::Status::SUCCESS,
-                std::chrono::seconds(TIMEOUT_FOR_SEND_IN_SECONDS));
+    sendEvent(
+        SYNCHRONIZE_STATE_JSON, MessageRequest::Status::SUCCESS, std::chrono::seconds(TIMEOUT_FOR_SEND_IN_SECONDS));
     disconnect();
 }
 
@@ -236,15 +241,17 @@ TEST_F(NetworkIntegrationTests, testSendEventAfterDelayPass) {
 TEST_F(NetworkIntegrationTests, testSendEventAfterDelayFails) {
     connect();
     addDelay(LONG_DELAY_TIME);
-    sendEvent(SYNCHRONIZE_STATE_JSON, MessageRequest::Status::TIMEDOUT,
-                std::chrono::seconds(LONG_TIMEOUT_FOR_SEND_IN_SECONDS));
+    sendEvent(
+        SYNCHRONIZE_STATE_JSON,
+        MessageRequest::Status::TIMEDOUT,
+        std::chrono::seconds(LONG_TIMEOUT_FOR_SEND_IN_SECONDS));
     disconnect();
 }
-}//namespace test
-}//namespace integration
-}//namespace alexaClientSDK
+}  // namespace test
+}  // namespace integration
+}  // namespace alexaClientSDK
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
 
     if (getuid()) {
@@ -253,7 +260,7 @@ int main(int argc, char **argv) {
     }
     if (argc < 3) {
         std::cerr << "USAGE: NetworkIntegrationTests <path_to_auth_delgate_config> <Network_Interface_Name>"
-                << std::endl;
+                  << std::endl;
         return 1;
     } else {
         alexaClientSDK::integration::test::g_configPath = std::string(argv[1]);

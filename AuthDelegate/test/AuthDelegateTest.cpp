@@ -15,7 +15,6 @@
  * permissions and limitations under the License.
  */
 
-
 #include <condition_variable>
 #include <chrono>
 #include <functional>
@@ -68,7 +67,6 @@ static const std::string DEFAULT_SDK_CONFIGURATION = R"({
 /// Define test fixture for testing AuthDelegate.
 class AuthDelegateTest : public ::testing::Test {
 protected:
-
     /// Initialize the objects for testing
     AuthDelegateTest() {
         m_mockHttpPost = std::unique_ptr<MockHttpPost>(new MockHttpPost());
@@ -78,7 +76,7 @@ protected:
     /// Stub certain mock objects with default actions
     virtual void SetUp() override {
         ON_CALL(*m_mockHttpPost, doPost(_, _, _, _))
-                .WillByDefault(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED));
+            .WillByDefault(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED));
         std::stringstream configuration;
         configuration << DEFAULT_SDK_CONFIGURATION;
         ASSERT_TRUE(AlexaClientSDKInit::initialize({&configuration}));
@@ -243,30 +241,19 @@ TEST_F(AuthDelegateTest, removeAuthObserverNull) {
  * state.
  */
 TEST_F(AuthDelegateTest, addMultipleAuthObserver) {
-
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     std::shared_ptr<NiceMock<MockAuthObserver>> m_mockAuthObserver2 = std::make_shared<NiceMock<MockAuthObserver>>();
     ASSERT_TRUE(authDelegate);
 
-    EXPECT_CALL(
-            *m_mockAuthObserver,
-            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, _))
-                    .Times(AtMost(1));
+    EXPECT_CALL(*m_mockAuthObserver, onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, _))
+        .Times(AtMost(1));
 
-    EXPECT_CALL(
-            *m_mockAuthObserver,
-            onAuthStateChange(AuthObserverInterface::State::EXPIRED, _))
-                    .Times(AtMost(1));
+    EXPECT_CALL(*m_mockAuthObserver, onAuthStateChange(AuthObserverInterface::State::EXPIRED, _)).Times(AtMost(1));
 
-    EXPECT_CALL(
-            *m_mockAuthObserver2,
-            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, _))
-                    .Times(AtMost(1));
+    EXPECT_CALL(*m_mockAuthObserver2, onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, _))
+        .Times(AtMost(1));
 
-    EXPECT_CALL(
-            *m_mockAuthObserver2,
-            onAuthStateChange(AuthObserverInterface::State::EXPIRED, _))
-                    .Times(AtMost(1));
+    EXPECT_CALL(*m_mockAuthObserver2, onAuthStateChange(AuthObserverInterface::State::EXPIRED, _)).Times(AtMost(1));
 
     authDelegate->addAuthObserver(m_mockAuthObserver);
     authDelegate->addAuthObserver(m_mockAuthObserver2);
@@ -282,26 +269,26 @@ TEST_F(AuthDelegateTest, retry) {
     bool tokenRefreshed = false;
     const auto& validResponse = generateValidLwaResponseWithExpiration(std::chrono::seconds(60));
     EXPECT_CALL(*m_mockHttpPost, doPost(_, _, _, _))
-            .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
-            .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
-            .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)));
+        .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
+        .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
+        .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)));
 
     EXPECT_CALL(
-            *m_mockAuthObserver,
-            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
-            .Times(AtMost(1));
+        *m_mockAuthObserver,
+        onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
+        .Times(AtMost(1));
 
     EXPECT_CALL(
-            *m_mockAuthObserver,
-            onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
-            .WillOnce(InvokeWithoutArgs([this, &tokenRefreshed]() {
-                tokenRefreshed = true;
-                m_cv.notify_all();
-            }));
+        *m_mockAuthObserver,
+        onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
+        .WillOnce(InvokeWithoutArgs([this, &tokenRefreshed]() {
+            tokenRefreshed = true;
+            m_cv.notify_all();
+        }));
 
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     authDelegate->addAuthObserver(m_mockAuthObserver);
-    ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&tokenRefreshed]() { return tokenRefreshed;}));
+    ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&tokenRefreshed]() { return tokenRefreshed; }));
 }
 
 /**
@@ -315,31 +302,31 @@ TEST_F(AuthDelegateTest, expirationNotification) {
     const auto& validResponse = generateValidLwaResponseWithExpiration(std::chrono::seconds(1));
 
     EXPECT_CALL(*m_mockHttpPost, doPost(_, _, _, _))
-            .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)))
-            .WillRepeatedly(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED));
+        .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)))
+        .WillRepeatedly(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED));
 
     ::testing::InSequence s;
     EXPECT_CALL(
-            *m_mockAuthObserver,
-            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
-            .Times(AtMost(1));
+        *m_mockAuthObserver,
+        onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
+        .Times(AtMost(1));
 
     EXPECT_CALL(
-            *m_mockAuthObserver,
-            onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
-            .Times(1);
+        *m_mockAuthObserver,
+        onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
+        .Times(1);
 
     EXPECT_CALL(
-            *m_mockAuthObserver,
-            onAuthStateChange(AuthObserverInterface::State::EXPIRED, AuthObserverInterface::Error::UNKNOWN_ERROR))
-            .WillOnce(InvokeWithoutArgs([this, &tokenExpired]() {
-                tokenExpired = true;
-                m_cv.notify_all();
-            }));
+        *m_mockAuthObserver,
+        onAuthStateChange(AuthObserverInterface::State::EXPIRED, AuthObserverInterface::Error::UNKNOWN_ERROR))
+        .WillOnce(InvokeWithoutArgs([this, &tokenExpired]() {
+            tokenExpired = true;
+            m_cv.notify_all();
+        }));
 
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     authDelegate->addAuthObserver(m_mockAuthObserver);
-    ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&tokenExpired]() {return tokenExpired;}));
+    ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&tokenExpired]() { return tokenExpired; }));
 }
 
 /**
@@ -353,39 +340,39 @@ TEST_F(AuthDelegateTest, recoverAfterExpiration) {
     const auto& validResponse = generateValidLwaResponseWithExpiration(std::chrono::seconds(3));
 
     EXPECT_CALL(*m_mockHttpPost, doPost(_, _, _, _))
-            .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)))
-            .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
-            .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
-            .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
-            .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)));
+        .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)))
+        .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
+        .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
+        .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
+        .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)));
 
     ::testing::InSequence s;
     EXPECT_CALL(
-            *m_mockAuthObserver,
-            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
-            .Times(AtMost(1));
+        *m_mockAuthObserver,
+        onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
+        .Times(AtMost(1));
 
     EXPECT_CALL(
-            *m_mockAuthObserver,
-            onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
-            .Times(1);
+        *m_mockAuthObserver,
+        onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
+        .Times(1);
 
     EXPECT_CALL(
-            *m_mockAuthObserver,
-            onAuthStateChange(AuthObserverInterface::State::EXPIRED, AuthObserverInterface::Error::UNKNOWN_ERROR))
-            .Times(1);
+        *m_mockAuthObserver,
+        onAuthStateChange(AuthObserverInterface::State::EXPIRED, AuthObserverInterface::Error::UNKNOWN_ERROR))
+        .Times(1);
 
     EXPECT_CALL(
-            *m_mockAuthObserver,
-            onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
-            .WillOnce(InvokeWithoutArgs([this, &tokenRefreshed]() {
-                tokenRefreshed = true;
-                m_cv.notify_all();
-            }));
+        *m_mockAuthObserver,
+        onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
+        .WillOnce(InvokeWithoutArgs([this, &tokenRefreshed]() {
+            tokenRefreshed = true;
+            m_cv.notify_all();
+        }));
 
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     authDelegate->addAuthObserver(m_mockAuthObserver);
-    ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&tokenRefreshed]() {return tokenRefreshed;}));
+    ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&tokenRefreshed]() { return tokenRefreshed; }));
 }
 
 /**
@@ -399,26 +386,24 @@ TEST_F(AuthDelegateTest, unrecoverableErrorNotification) {
     const auto& invalidRequestResponse = generateErrorLwaResponseWithErrorCode(ERROR_CODE_INVALID_REQUEST);
 
     EXPECT_CALL(*m_mockHttpPost, doPost(_, _, _, _))
-            .WillOnce(DoAll(SetArgReferee<3>(invalidRequestResponse), Return(HTTP_RESPONSE_CODE_BAD_REQUEST)))
-            .WillRepeatedly(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED));
+        .WillOnce(DoAll(SetArgReferee<3>(invalidRequestResponse), Return(HTTP_RESPONSE_CODE_BAD_REQUEST)))
+        .WillRepeatedly(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED));
 
     EXPECT_CALL(
-            *m_mockAuthObserver,
-            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
-            .Times(AtMost(1));
+        *m_mockAuthObserver,
+        onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
+        .Times(AtMost(1));
 
     EXPECT_CALL(
-            *m_mockAuthObserver,
-            onAuthStateChange(
-                AuthObserverInterface::State::UNRECOVERABLE_ERROR,
-                AuthObserverInterface::Error::INVALID_REQUEST))
-            .WillOnce(InvokeWithoutArgs([this, &errorReceived]() {
-                errorReceived = true;
-                m_cv.notify_all();
-            }));
+        *m_mockAuthObserver,
+        onAuthStateChange(
+            AuthObserverInterface::State::UNRECOVERABLE_ERROR, AuthObserverInterface::Error::INVALID_REQUEST))
+        .WillOnce(InvokeWithoutArgs([this, &errorReceived]() {
+            errorReceived = true;
+            m_cv.notify_all();
+        }));
 
     auto authDelegate = AuthDelegate::create(std::move(m_mockHttpPost));
     authDelegate->addAuthObserver(m_mockAuthObserver);
-    ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&errorReceived]() {return errorReceived;}));
+    ASSERT_TRUE(waitFor(TIME_OUT_IN_SECONDS, [&errorReceived]() { return errorReceived; }));
 }
-

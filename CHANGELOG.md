@@ -1,4 +1,55 @@
 ## ChangeLog
+
+### [1.1.0] - 2017-10-02
+* **Enhancements**
+  * Better GStreamer error reporting. MediaPlayer used to only report   `MEDIA_ERROR_UNKNOWN`, now reports more specific errors as defined in `ErrorType.h`.
+  * Codebase has been formatted for easier reading.
+  * `DirectiveRouter::removeDirectiveHandler()` signature changed and now returns a bool indicating if given handler should be successfully removed or not.
+  * Cleanup of raw and shared pointers in the creation of `Transport` objects.
+  * `HTTP2Stream`s now have IDs assigned as they are acquired as opposed to created, making associated logs easier to interpret.
+  * `AlertsCapabilityAgent` has been refactored.
+      * Alert management has been factored out into an `AlertScheduler` class.
+  * Creation of Reminder (implements Alert) class.
+  * Added new capability agent for `PlaybackController` with unit tests.
+  * Added Settings interface with unit tests.
+  * Return type of `getOffsetInMilliseconds()` changed from `int64_t` to `std::chronology::milliseconds`.
+  * Added `AudioPlayer` unit tests.
+  * Added teardown for all Integration tests except Alerts.
+  * Implemented PlaylistParser.
+  
+* **Bug fixes**: 
+
+  * AIP getting stuck in `LISTENING` or `THINKING` and refusing user input on network outage.
+  * SampleApp crashing if running for 5 minutes after network disconnect.
+  * Issue where on repeated user barge-ins, `AudioPlayer` would not pause. Specifically, the third attempt to “Play iHeartRadio” would not result in currently-playing music pausing.
+  * Utterances being ignored after particularly long TTS.
+  * GStreamer errors cropping up on SampleApp exit as a result of accessing the pipeline before it’s been setup.
+  * Crashing when playing one URL after another.
+  * Buffer overrun in Alerts Renderer.
+  * [SampleApp crashing when issuing "Alexa skip" command with iHeartRadio.](https://github.com/alexa/avs-device-sdk/issues/153)
+  * [`HTTP2Transport` network thread triggering a join on itself.](https://github.com/alexa/avs-device-sdk/issues/127)
+  * [`HTTP2Stream` request handling truncating exception messages.](https://github.com/alexa/avs-device-sdk/issues/67)
+  * [`AudioPlayer` was attempting an incorrect state transition from `STOPPED` to `PLAYING` through a `playbackResumed`.](https://github.com/alexa/avs-device-sdk/issues/138)
+
+* **Known Issues**
+
+* Native components for the following capability agents are **not** included in this release: `Speaker`, `TemplateRuntime`, and `Notifications`  
+* `ACL`'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed.
+* When an `AttachmentReader` does not deliver data for prolonged periods, `MediaPlayer` may not resume playing the delayed audio.
+* Without the refresh token in the JSON file, the sample app crashes on start up.
+* Alerts do not play after restarting the device.
+* Alexa's responses are cut off by about half a second when asking "What's up" or barging into an active alarm to ask the time.
+* Switching from Kindle to Amazon Music after pausing and resuming Kindle doesn't work.
+* Pause/resume on Amazon Music causes entire song to start over.
+* Stuck in listening state if `ExpectSpeech` comes in when the microphone has been turned off.
+* Pausing and resuming Pandora causes stuttering, looped audio.
+* Audible features are not fully supported.
+* `Recognize` event after regaining network connection and during an alarm going off can cause client to get stuck in `Recognizing` state.
+* Three Alerts integration tests fail: `handleMultipleTimersWithLocalStop`, `AlertsTest.UserLongUnrelatedBargeInOnActiveTimer`, `AlertsTest.handleOneTimerWithVocalStop`
+* `MediaPlayerTest.testSetOffsetSeekableSource` unit test fails intermittently on Linux.
+
+
+
 ### [1.0.3] - 2017-09-19
 * **Enhancements**
   * Implemented `setOffSet` in `MediaPlayer`.

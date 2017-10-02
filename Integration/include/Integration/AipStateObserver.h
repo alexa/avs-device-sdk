@@ -30,12 +30,13 @@ namespace integration {
 
 class AipStateObserver : public avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface {
 public:
-	AipStateObserver();
-	void onStateChanged(avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State newState) override;
-	bool checkState(const avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State expectedState, 
-    	const std::chrono::seconds duration = std::chrono::seconds(10));
-	avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State waitForNext (
-			const std::chrono::seconds duration);
+    AipStateObserver();
+    void onStateChanged(avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State newState) override;
+    bool checkState(
+        const avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State expectedState,
+        const std::chrono::seconds duration = std::chrono::seconds(10));
+    avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State waitForNext(
+        const std::chrono::seconds duration);
 
 private:
     avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State m_state;
@@ -44,7 +45,7 @@ private:
     std::deque<avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State> m_queue;
 };
 
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace integration
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AIP_STATE_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AIP_STATE_OBSERVER_H_

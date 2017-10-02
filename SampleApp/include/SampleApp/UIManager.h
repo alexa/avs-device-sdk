@@ -21,6 +21,7 @@
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/SingleSettingObserverInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
 namespace alexaClientSDK {
@@ -30,13 +31,16 @@ namespace sampleApp {
  * This class manages the states that the user will see when interacting with the Sample Application. For now, it simply
  * prints states to the screen.
  */
-class UIManager : 
-        public avsCommon::sdkInterfaces::DialogUXStateObserverInterface,
-        public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface {
+class UIManager
+        : public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
+        , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface
+        , public avsCommon::sdkInterfaces::SingleSettingObserverInterface {
 public:
     void onDialogUXStateChanged(DialogUXState state) override;
 
     void onConnectionStatusChanged(const Status status, const ChangedReason reason) override;
+
+    void onSettingChanged(const std::string& key, const std::string& value) override;
 
     /**
      * Prints the welcome screen.
@@ -47,6 +51,21 @@ public:
      * Prints the help screen.
      */
     void printHelpScreen();
+
+    /**
+     * Prints the Settings Options screen.
+     */
+    void printSettingsScreen();
+
+    /**
+     * Prints the Locale Options screen.
+     */
+    void printLocaleScreen();
+
+    /**
+     * Prints the Error Message for Wrong Input.
+     */
+    void printErrorScreen();
 
     /**
      * Notifies the user that the microphone is off.
@@ -64,7 +83,7 @@ private:
      * component states. This should only be used within the internal executor.
      */
     void printState();
-    
+
     /// The current dialog UX state of the SDK
     DialogUXState m_dialogState;
 
@@ -75,7 +94,7 @@ private:
     avsCommon::utils::threading::Executor m_executor;
 };
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_UI_MANAGER_H_
+#endif  // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_UI_MANAGER_H_

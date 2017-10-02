@@ -18,200 +18,143 @@
 #ifndef ALEXA_CLIENT_SDK_PLAYLIST_PARSER_INCLUDE_PLAYLIST_PARSER_PLAYLIST_PARSER_H_
 #define ALEXA_CLIENT_SDK_PLAYLIST_PARSER_INCLUDE_PLAYLIST_PARSER_PLAYLIST_PARSER_H_
 
-#include <condition_variable>
 #include <deque>
-#include <thread>
-#include <utility>
+#include <memory>
+#include <unordered_map>
 
-#include <totem-pl-parser.h>
-
+#include <AVSCommon/AVS/Attachment/AttachmentReader.h>
+#include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
 #include <AVSCommon/Utils/PlaylistParser/PlaylistParserInterface.h>
+#include <AVSCommon/Utils/Threading/Executor.h>
 
 namespace alexaClientSDK {
 namespace playlistParser {
 
 /**
- * This implementation of the PlaylistParser uses the Totem Playlist Parser library.
- * @see https://github.com/GNOME/totem-pl-parser
- * @see https://developer.gnome.org/totem-pl-parser/stable/TotemPlParser.html.
  *
- * @note For the playlist parser to function properly, a main event loop needs to be running. If there is no main event
- * loop the signals related to parsing playlist will not be called.
  */
 class PlaylistParser : public avsCommon::utils::playlistParser::PlaylistParserInterface {
 public:
     /**
-     * Creates an instance of the @c PlaylistParser.
+     * Creates a new @c PlaylistParser instance.
      *
-     * @return An instance of the @c PlaylistParser if successful else a @c nullptr.
+     * @param contentFetcherFactory A factory that can create @c HTTPContentFetcherInterfaces.
+     * @return An @c std::unique_ptr to a new @c PlaylistParser if successful or @c nullptr otherwise.
      */
-    static std::unique_ptr<PlaylistParser> create();
+    static std::unique_ptr<PlaylistParser> create(
+        std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory);
 
-    /**
-     * Destructor.
-     */
-    ~PlaylistParser();
+    int parsePlaylist(
+        std::string url,
+        std::shared_ptr<avsCommon::utils::playlistParser::PlaylistParserObserverInterface> observer,
+        std::vector<PlaylistType> playlistTypesToNotBeParsed = std::vector<PlaylistType>()) override;
 
-    bool parsePlaylist(const std::string& url,
-            std::shared_ptr<avsCommon::utils::playlistParser::PlaylistParserObserverInterface> observer) override;
+    /// A return value that indicates a failure to start the playlist parsing.
+    static const int START_FAILURE = 0;
 
 private:
     /**
-     * Class which has all the information to parse a playlist and the observer to whom the notification needs to be
-     * sent once the parsing has been completed.
-     */
-    class PlaylistInfo {
-    public:
-        /// Constructor. It initializes the parser.
-        PlaylistInfo(TotemPlParser* parser);
-
-        /// Destructor.
-        ~PlaylistInfo();
-
-        /// An instance of the @c TotemPlParser.
-        TotemPlParser* parser;
-
-        /// The playlist url.
-        std::string playlistUrl;
-
-        /// An instance of the observer to notify once parsing is complete.
-        std::shared_ptr<avsCommon::utils::playlistParser::PlaylistParserObserverInterface> observer;
-
-        /// A queue of urls extracted from the playlist.
-        std::queue<std::string> urlQueue;
-
-        /// ID of the handler installed to receive playlist started data signals.
-        guint playlistStartedHandlerId;
-
-        /// ID of the handler installed to receive entry parsed data signals.
-        guint entryParsedHandlerId;
-
-        /// Mutex to serialize access to @c urlQueue.
-        std::mutex mutex;
-    };
-
-    /**
-     * Initializes the @c m_parserThread.
-     */
-    PlaylistParser();
-
-    /**
-     * Creates an instance of the @c PlaylistInfo and initializes its parser with an instance of the @c TotemPlParser.
-     * Connects signals for the parser to the callbacks.
+     * Constructor.
      *
-     * @param url The url of the playlist to be parsed.
-     * @param observer The observer to be notified of when playlist parsing is complete.
-     * @return A @c PlaylistInfo if successful else @c nullptr.
+     * @param contentFetcherFactory The object that will be used to create objects with which to fetch content from
+     * urls.
+     */
+    PlaylistParser(
+        std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory);
+
+    /**
+     * Parses the playlist pointed to by the url specified in a depth first search manner.
      *
-     * @note This should be called only after validating the url and observer.
+     * @param id The id of the request.
+     * @param observer The observer to notify.
+     * @param rootUrl The initial URL to parse.
      */
-    std::shared_ptr<PlaylistParser::PlaylistInfo> createPlaylistInfo(
-            const std::string& url,
-            std::shared_ptr<avsCommon::utils::playlistParser::PlaylistParserObserverInterface> observer);
+    void doDepthFirstSearch(
+        int id,
+        std::shared_ptr<avsCommon::utils::playlistParser::PlaylistParserObserverInterface> observer,
+        const std::string& rootUrl,
+        std::vector<PlaylistType> playlistTypesToNotBeParsed);
 
     /**
-     * Callback for when playlist parsing begins.
+     * Parses an M3U playlist and returns the "children" URLs in the order they appeared in the playlist.
      *
-     * @param parser The instance of the @c TotemPlParser.
-     * @param url The playlist url being parsed.
-     * @param metadata The metadata associated with the playlist.
-     * @param playlistInfo The instance of the @c PlaylistInfo associated with the parser.
+     * @param content The content to parse.
+     * @return A vector of URLs in the order they appeared in the playlist.
      */
-    static void onPlaylistStarted(
-            TotemPlParser* parser,
-            gchar* url,
-            TotemPlParserMetadata* metadata,
-            gpointer playlistInfo);
+    static std::vector<std::string> parseM3UContent(const std::string& playlistURL, const std::string& content);
 
     /**
-     * Callback for when an entry has been extracted from the playlist.
+     * Parses an PLS playlist and returns the "children" URLs in the order they appeared in the playlist.
      *
-     * @param parser The instance of the @c TotemPlParser.
-     * @param url The url entry extracted from the playlist.
-     * @param metadata The metadata associated with the entry.
-     * @param playlistInfo The instance of the @c PlaylistInfo associated with the parser.
+     * @param content The content to parse.
+     * @return A vector of URLs in the order they appeared in the playlist.
      */
-    static void onEntryParsed(
-            TotemPlParser* parser,
-            gchar* url,
-            TotemPlParserMetadata* metadata,
-            gpointer playlistInfo);
+    static std::vector<std::string> parsePLSContent(const std::string& playlistURL, const std::string& content);
 
     /**
-     * Callback for when the parsing is complete.
+     * Determines the playlist type of an M3U playlist.
      *
-     * @param parser The instance of the @c TotemPlParser.
-     * @param result The result of the playlist parsing.
-     * @param playlistInfo The instance of the @c PlaylistInfo associated with the parser.
+     * @param playlistContent The M3U playlist in @c std::string format.
+     * @return @c true if the playlist is M3U8 or @c false otherwise
      */
-    static void onParseComplete(GObject* parser, GAsyncResult* result, gpointer playlistInfo);
+    static bool isM3UPlaylistM3U8(const std::string& playlistContent);
 
     /**
-     * Calls the function to start playlist parsing. This function is called after acquiring a lock to @c m_mutex.
-     * The function will release the lock before calling the Totem parsing function.
+     * Removes a carriage return from the end of a line. This is required to handle Windows style line breaks ('\r\n').
+     * std::getline reads by default up to '\n' so at times, the '\r' may be included when readinglines.
      *
-     * @param lock The lock acquired on @c m_mutex.
+     * @param line The line to parse
      */
-    void handleParsingLocked(std::unique_lock<std::mutex>& lock);
+    static void removeCarriageReturnFromLine(std::string* line);
 
     /**
-     * Adds the url entry to the queue of entries to be sent to the observer.
+     * Retrieves content from a URL and stores it into a string.
      *
-     * @param url The url entry extracted from the playlist.
-     * @param playlistInfo The instance of the @c PlaylistInfo associated with the parser.
+     * @param url The URL to retrieve from.
+     * @param [out] content The playlist content.
+     * @return @c true if no error occured or @c false otherwise.
+     * @note This function should be used to retrieve content specifically from playlist URLs. Attempting to use this
+     * on a media URL could be blocking forever as the URL might point to a live stream.
      */
-    void handleOnEntryParsed(gchar *url, std::shared_ptr<PlaylistInfo> playlistInfo);
+    bool getContentFromPlaylistUrlIntoString(const std::string& url, std::string* content) const;
 
     /**
-     * Translates the @c result to @c PlaylistParseResult and calls @c onPlaylistParsed.
+     * Determines whether the provided url is an absolute url as opposed to a relative url. This is done by simply
+     * checking to see if the string contains the substring "://".
      *
-     * @param result The result of parsing the playlist.
-     * @param playlistInfo The instance of the @c PlaylistInfo associated with the parser.
+     * @param url The url to check.
+     * @return @c true if the url is an absolute url and @c false otherwise.
      */
-    void handleOnParseComplete(GAsyncResult* result, std::shared_ptr<PlaylistInfo> playlistInfo);
+    static bool isURLAbsolute(const std::string& url);
 
     /**
-     * Translates the @c TotemPlParserResult to a @c PlaylistParseResult.
+     * Creates an absolute url, given a base url and a relative path from that url. For example, if
+     * "www.awesomewebsite.com/music/test.m3u" was the base url and the relative path was "music.mp3",
+     * "www.awesomewebsite.com/music/music.mp3" would be returned.
      *
-     * @param result The @c TotemPlParserResult of playlist parsing.
-     * @return the @c PlaylistParseResult
+     * @param baseURL The base url to add the relative path to.
+     * @param relativePath The relative path to add to the base url.
+     * @param [out] absoluteURL The absolute url generated
+     * @return @c true If everything was successful and @c false otherwise.
      */
-    avsCommon::utils::playlistParser::PlaylistParseResult mapResult(TotemPlParserResult result);
+    static bool getAbsoluteURLFromRelativePathToURL(
+        std::string baseURL,
+        std::string relativePath,
+        std::string* absoluteURL);
+
+    /// Used to retrieve content from URLs
+    std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> m_contentFetcherFactory;
 
     /**
-     * Method that processes the playlist parsing requests in the @c m_playlistInfoQueue
+     * @c Executor which queues up operations from asynchronous API calls.
+     *
+     * @note This declaration needs to come *after* the Executor Thread Variables above so that the thread shuts down
+     *     before the Executor Thread Variables are destroyed.
      */
-    void parsingLoop();
-
-    /// The @c PlaylistInfo currently being processed.
-    std::shared_ptr<PlaylistInfo> m_playlistInfo;
-
-    /// The thread on which the playlist parse requests are executed.
-    std::thread m_parserThread;
-
-    /**
-     * Flag to indicate if a playlist is currently being parsed. @c m_mutex must be acquired before accessing this flag.
-     */
-    bool m_isParsingActive;
-
-    /**
-     * Flag to indicate whether the playlist parser is shutting down. @c m_mutex must be acquired before accessing this
-     * flag.
-     */
-    bool m_isShuttingDown;
-
-    /// Condition variable used to wake @c parsingLoop.
-    std::condition_variable m_wakeParsingLoop;
-
-    /// Queue to which the playlist parsing requests are added. @c m_mutex must be acquired before accessing this queue.
-    std::deque<std::shared_ptr<PlaylistInfo>> m_playlistInfoQueue;
-
-    /// Mutex which serializes access to @c m_isParsingActive, @c m_isShuttingDown, @c m_playlistInfoQueue.
-    std::mutex m_mutex;
+    avsCommon::utils::threading::Executor m_executor;
 };
 
-} // namespace playlistParser
-} // namespace alexaClientSDK
+}  // namespace playlistParser
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_PLAYLIST_PARSER_INCLUDE_PLAYLIST_PARSER_PLAYLIST_PARSER_H_
-
+#endif  // ALEXA_CLIENT_SDK_PLAYLIST_PARSER_INCLUDE_PLAYLIST_PARSER_PLAYLIST_PARSER_H_

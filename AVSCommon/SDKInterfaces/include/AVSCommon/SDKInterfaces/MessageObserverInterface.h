@@ -39,11 +39,11 @@ public:
      * message arrived on.
      * @param message The AVS message that has been received.
      */
-    virtual void receive(const std::string & contextId, const std::string & message) = 0;
+    virtual void receive(const std::string& contextId, const std::string& message) = 0;
 };
 
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_MESSAGE_OBSERVER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_MESSAGE_OBSERVER_INTERFACE_H_

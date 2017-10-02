@@ -83,8 +83,8 @@ private:
     bool m_isShutdown;
 };
 
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_REQUIRES_SHUTDOWN_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_REQUIRES_SHUTDOWN_H_

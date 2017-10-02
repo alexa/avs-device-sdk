@@ -43,8 +43,11 @@ namespace acl {
  *
  * Implementations of this class are required to be thread-safe.
  */
-class MessageRouter: public MessageRouterInterface, public TransportObserverInterface, public MessageConsumerInterface {
-
+class MessageRouter
+        : public MessageRouterInterface
+        , public TransportObserverInterface
+        , public MessageConsumerInterface
+        , public std::enable_shared_from_this<MessageRouter> {
 public:
     /**
      * Constructor.
@@ -54,14 +57,9 @@ public:
      * @param avsEndpoint The endpoint to connect to AVS.
      */
     MessageRouter(
-            std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-            const std::string& avsEndpoint);
-
-    /**
-     * Destructor.
-     */
-    virtual ~MessageRouter();
+        std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        const std::string& avsEndpoint);
 
     void enable() override;
 
@@ -82,7 +80,9 @@ public:
 
     void onServerSideDisconnect() override;
 
-    void consumeMessage(const std::string & contextId, const std::string & message) override;
+    void consumeMessage(const std::string& contextId, const std::string& message) override;
+
+    void doShutdown() override;
 
 private:
     /**
@@ -97,11 +97,11 @@ private:
      * TODO: ACSDK-99 Replace this with an injected transport factory.
      */
     virtual std::shared_ptr<TransportInterface> createTransport(
-            std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-            const std::string& avsEndpoint,
-            MessageConsumerInterface* messageConsumerInterface,
-            TransportObserverInterface* transportObserverInterface) = 0;
+        std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        const std::string& avsEndpoint,
+        std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
+        std::shared_ptr<TransportObserverInterface> transportObserverInterface) = 0;
 
     /**
      * Set the connection state. If it changes, notify our observer.
@@ -111,8 +111,8 @@ private:
      * @param reason The reason the connection status changed.
      */
     void setConnectionStatusLocked(
-            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status, 
-            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
 
     /**
      * Notify the connection observer when the status has changed.
@@ -125,8 +125,8 @@ private:
      * @param reason The reason the connection status changed.
      */
     void notifyObserverOnConnectionStatusChanged(
-            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
-            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
 
     /**
      * Notify the message observer of an incoming message from AVS.
@@ -138,7 +138,7 @@ private:
      * @param contextId The context id for the current message.
      * @param message The AVS message in string representation.
      */
-    void notifyObserverOnReceive(const std::string & contextId, const std::string & message);
+    void notifyObserverOnReceive(const std::string& contextId, const std::string& message);
 
     /**
      * Creates a new transport, and begins the connection process. The new transport immediately becomes the active
@@ -154,8 +154,8 @@ private:
      * released during the execution of this method, but will be locked when this method exits.
      */
     void disconnectAllTransportsLocked(
-            std::unique_lock<std::mutex>& lock, 
-            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
+        std::unique_lock<std::mutex>& lock,
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
 
     /**
      * Get the observer.
@@ -163,6 +163,20 @@ private:
      * @return The observer.
      */
     std::shared_ptr<MessageRouterObserverInterface> getObserver();
+
+    /**
+     * Reset m_activeTransport. First check if m_activeTransport is in m_transports.  If not, issue
+     * a warning (because it should be) and queue the safe release of our reference to the transport.
+     * @c m_connectionMutex must be locked to call this method.
+     */
+    void safelyResetActiveTransportLocked();
+
+    /**
+     * Hold a reference to a transport until its shutdown() method (executed on our executor) returns.
+     *
+     * @param transport The TransportInterface instance to retain a reference to.
+     */
+    void safelyReleaseTransport(std::shared_ptr<TransportInterface> transport);
 
     /// The observer object. Access serialized with @c m_connectionMutex.
     std::shared_ptr<MessageRouterObserverInterface> m_observer;
@@ -206,7 +220,7 @@ protected:
     avsCommon::utils::threading::Executor m_executor;
 };
 
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_ROUTER_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_ROUTER_H_

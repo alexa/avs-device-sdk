@@ -42,7 +42,7 @@ public:
      * @param boundaryString The boundary string for the MIME text.
      * @return The generated MIME string.
      */
-    virtual std::string toMimeString(const std::string & boundaryString) = 0;
+    virtual std::string toMimeString(const std::string& boundaryString) = 0;
 
     /**
      * Function to validate the MIME part was parsed elsewhere and received correctly.  Subclass specializations will
@@ -66,7 +66,7 @@ public:
      */
     TestMimeJsonPart(int dataSize, std::shared_ptr<TestableMessageObserver> messageObserver);
 
-    std::string toMimeString(const std::string & boundaryString) override;
+    std::string toMimeString(const std::string& boundaryString) override;
     virtual bool validateMimeParsing() override;
 
 private:
@@ -89,10 +89,13 @@ public:
      * @param dataSize The size of the attachment data to be generated and tested.
      * @param attachmentManager An attachment manager with which this class should interact.
      */
-    TestMimeAttachmentPart(const std::string & contextId, const std::string contentId,
-                           int dataSize, std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager);
+    TestMimeAttachmentPart(
+        const std::string& contextId,
+        const std::string contentId,
+        int dataSize,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager);
 
-    std::string toMimeString(const std::string & boundaryString) override;
+    std::string toMimeString(const std::string& boundaryString) override;
     virtual bool validateMimeParsing() override;
 
 private:
@@ -115,10 +118,11 @@ private:
  * @return The generated MIME string.
  */
 std::string constructTestMimeString(
-        const std::vector<std::shared_ptr<TestMimePart>> & mimeParts, const std::string & boundaryString);
+    const std::vector<std::shared_ptr<TestMimePart>>& mimeParts,
+    const std::string& boundaryString);
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MIME_UTILS_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MIME_UTILS_H_

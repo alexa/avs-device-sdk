@@ -51,20 +51,15 @@ std::shared_ptr<Renderer> Renderer::create(std::shared_ptr<MediaPlayerInterface>
     return renderer;
 }
 
-Renderer::Renderer(std::shared_ptr<MediaPlayerInterface> mediaPlayer) :
-        m_mediaPlayer{mediaPlayer}, m_observer{nullptr}, m_loopCount{0}, m_loopPauseInMilliseconds{0},
-        m_isRendering{false} {
-
-}
-
 void Renderer::setObserver(RendererObserverInterface* observer) {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    m_observer = observer;
+    m_executor.submit([this, observer]() { executeSetObserver(observer); });
 }
 
-void Renderer::start(const std::string & localAudioFilePath,
-                     const std::vector<std::string> & urls,
-                     int loopCount, std::chrono::milliseconds loopPauseInMilliseconds) {
+void Renderer::start(
+    const std::string& localAudioFilePath,
+    const std::vector<std::string>& urls,
+    int loopCount,
+    std::chrono::milliseconds loopPause) {
     if (localAudioFilePath.empty() && urls.empty()) {
         ACSDK_ERROR(LX("startFailed").m("both local audio file path and urls are empty."));
         return;
@@ -75,88 +70,146 @@ void Renderer::start(const std::string & localAudioFilePath,
         loopCount = 0;
     }
 
-    if (loopPauseInMilliseconds.count() < 0) {
-        ACSDK_ERROR(LX("startInvalidParam")
-                .m("loopPauseInMilliseconds less than zero - adjusting to acceptable minimum."));
-        loopPauseInMilliseconds = std::chrono::milliseconds::zero();
+    if (loopPause.count() < 0) {
+        ACSDK_ERROR(LX("startInvalidParam").m("loopPause less than zero - adjusting to acceptable minimum."));
+        loopPause = std::chrono::milliseconds{0};
     }
 
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_localAudioFilePath = localAudioFilePath;
-    m_urls = urls;
-    m_loopCount = loopCount;
-    m_loopPauseInMilliseconds = loopPauseInMilliseconds;
-    lock.unlock();
-
-    m_executor.submit([this] () { executeStart(); });
+    m_executor.submit([this, localAudioFilePath, urls, loopCount, loopPause]() {
+        executeStart(localAudioFilePath, urls, loopCount, loopPause);
+    });
 }
 
 void Renderer::stop() {
-    m_executor.submit([this] () { executeStop(); });
+    m_executor.submit([this]() { executeStop(); });
 }
 
-void Renderer::executeStart() {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    std::string localAudioFilePathCopy = m_localAudioFilePath;
-    lock.unlock();
+void Renderer::onPlaybackStarted() {
+    m_executor.submit([this]() { executeOnPlaybackStarted(); });
+}
+
+void Renderer::onPlaybackFinished() {
+    m_executor.submit([this]() { executeOnPlaybackFinished(); });
+}
+
+void Renderer::onPlaybackError(const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error) {
+    m_executor.submit([this, type, error]() { executeOnPlaybackError(type, error); });
+}
+
+Renderer::Renderer(std::shared_ptr<MediaPlayerInterface> mediaPlayer) :
+        m_mediaPlayer{mediaPlayer},
+        m_observer{nullptr},
+        m_nextUrlIndexToRender{0},
+        m_loopCount{0},
+        m_loopPause{std::chrono::milliseconds{0}},
+        m_isRendering{false},
+        m_isStopping{false} {
+}
+
+void Renderer::executeSetObserver(RendererObserverInterface* observer) {
+    ACSDK_DEBUG1(LX("executeSetObserver"));
+    m_observer = observer;
+}
+
+void Renderer::executeStart(
+    const std::string& localAudioFilePath,
+    const std::vector<std::string>& urls,
+    int loopCount,
+    std::chrono::milliseconds loopPause) {
+    ACSDK_DEBUG1(LX("executeStart")
+                     .d("localAudioFilePath", localAudioFilePath)
+                     .d("urls.size", urls.size())
+                     .d("loopCount", loopCount)
+                     .d("loopPause (ms)", std::chrono::duration_cast<std::chrono::milliseconds>(loopPause).count()));
+    m_localAudioFilePath = localAudioFilePath;
+    m_urls = urls;
+    m_loopCount = loopCount;
+    m_loopPause = loopPause;
+    ACSDK_DEBUG9(
+        LX("executeStart")
+            .d("m_urls.size", m_urls.size())
+            .d("m_loopCount", m_loopCount)
+            .d("m_loopPause (ms)", std::chrono::duration_cast<std::chrono::milliseconds>(m_loopPause).count()));
+    m_isStopping = false;
 
     // TODO : ACSDK-389 to update the local audio to being streams rather than file paths.
 
-    std::unique_ptr<std::ifstream> is(new std::ifstream(localAudioFilePathCopy, std::ios::binary));
+    if (urls.empty()) {
+        std::unique_ptr<std::ifstream> is(new std::ifstream(m_localAudioFilePath, std::ios::binary));
+        if (is->fail()) {
+            ACSDK_ERROR(LX("executeStartFailed").d("fileName", m_localAudioFilePath).m("could not open file."));
+            return;
+        }
+        ACSDK_DEBUG9(LX("executeStart").d("setSource", m_localAudioFilePath));
+        m_mediaPlayer->setSource(std::move(is), true);
+    } else {
+        m_nextUrlIndexToRender = 0;
+        ACSDK_DEBUG9(LX("executeStart").d("setSource", m_nextUrlIndexToRender));
+        m_mediaPlayer->setSource(m_urls[m_nextUrlIndexToRender++]);
+    }
 
-    m_mediaPlayer->setSource(std::move(is), true);
     m_mediaPlayer->play();
 }
 
 void Renderer::executeStop() {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    bool isRenderingCopy = m_isRendering;
-    RendererObserverInterface* observerCopy = m_observer;
-    lock.unlock();
-
-    if (isRenderingCopy) {
+    ACSDK_DEBUG1(LX("executeStop"));
+    m_isStopping = true;
+    if (m_isRendering) {
         m_mediaPlayer->stop();
-    } else {
-        if (observerCopy) {
-            observerCopy->onRendererStateChange(RendererObserverInterface::State::STOPPED);
+    } else if (m_observer) {
+        m_observer->onRendererStateChange(RendererObserverInterface::State::STOPPED);
+    }
+}
+
+void Renderer::executeOnPlaybackStarted() {
+    ACSDK_DEBUG1(LX("executeOnPlaybackStarted"));
+    m_isRendering = true;
+
+    if (m_observer) {
+        m_observer->onRendererStateChange(RendererObserverInterface::State::STARTED);
+    }
+}
+
+void Renderer::executeOnPlaybackFinished() {
+    ACSDK_DEBUG1(LX("executeOnPlaybackFinished"));
+    if (!m_isStopping && !m_urls.empty()) {
+        // see if we need to reset the loop, and invoke the pause between loops.
+        if (m_nextUrlIndexToRender >= static_cast<int>(m_urls.size()) && m_loopCount > 0) {
+            if (m_loopPause.count() > 0) {
+                std::this_thread::sleep_for(m_loopPause);
+            }
+
+            m_loopCount--;
+            m_nextUrlIndexToRender = 0;
+        }
+
+        // play the next url in the list
+        if (m_nextUrlIndexToRender < static_cast<int>(m_urls.size())) {
+            ACSDK_DEBUG9(LX("executeonPlaybackFinished").d("setSource", m_nextUrlIndexToRender));
+            m_mediaPlayer->setSource(m_urls[m_nextUrlIndexToRender++]);
+            m_mediaPlayer->play();
+
+            return;
         }
     }
-}
 
-void Renderer::onPlaybackStarted() {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_isRendering = true;
-    RendererObserverInterface* observerCopy = m_observer;
-    lock.unlock();
-
-    if (observerCopy) {
-        observerCopy->onRendererStateChange(RendererObserverInterface::State::STARTED);
-    }
-}
-
-void Renderer::onPlaybackFinished() {
-    std::unique_lock<std::mutex> lock(m_mutex);
     m_isRendering = false;
-    RendererObserverInterface* observerCopy = m_observer;
-    lock.unlock();
 
-    if (observerCopy) {
-        observerCopy->onRendererStateChange(RendererObserverInterface::State::STOPPED);
+    if (m_observer) {
+        m_observer->onRendererStateChange(RendererObserverInterface::State::STOPPED);
     }
 }
 
-void Renderer::onPlaybackError(std::string error) {
-    std::unique_lock<std::mutex> lock(m_mutex);
+void Renderer::executeOnPlaybackError(const avsCommon::utils::mediaPlayer::ErrorType& type, const std::string& error) {
+    ACSDK_DEBUG1(LX("executeOnPlaybackError").d("type", type).d("error", error));
     m_isRendering = false;
-    RendererObserverInterface* observerCopy = m_observer;
-    lock.unlock();
 
-    if (observerCopy) {
-        observerCopy->onRendererStateChange(RendererObserverInterface::State::ERROR, error);
+    if (m_observer) {
+        m_observer->onRendererStateChange(RendererObserverInterface::State::ERROR, error);
     }
 }
 
-} // namespace renderer
-} // namespace alerts
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace renderer
+}  // namespace alerts
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK

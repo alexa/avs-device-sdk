@@ -34,7 +34,7 @@ namespace test {
 
 using ::testing::Return;
 
-class MockTransportObserver: public TransportObserverInterface {
+class MockTransportObserver : public TransportObserverInterface {
 public:
     MOCK_METHOD0(onConnected, void());
     MOCK_METHOD1(onDisconnected, void(ConnectionChangedReason));
@@ -42,9 +42,9 @@ public:
     MOCK_METHOD1(onMessageReceived, void(std::shared_ptr<Message>));
 };
 
-} // namespace test
-} // namespace transport
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace transport
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_TRANSPORT_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_TRANSPORT_OBSERVER_H_

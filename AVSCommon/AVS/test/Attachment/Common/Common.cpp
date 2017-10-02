@@ -43,7 +43,7 @@ std::vector<uint8_t> createTestPattern(int patternSize) {
     return vec;
 }
 
-} // namespace test
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

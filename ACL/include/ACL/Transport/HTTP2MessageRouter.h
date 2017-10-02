@@ -26,7 +26,6 @@
 #include "ACL/Transport/MessageRouter.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
 
-
 namespace alexaClientSDK {
 namespace acl {
 
@@ -34,7 +33,7 @@ namespace acl {
  * An HTTP2MessageRouter routes request messages to the Alexa Voice Service, and response messages to the client. It
  * uses an HTTP2 connection with AVS.
  */
-class HTTP2MessageRouter: public MessageRouter {
+class HTTP2MessageRouter : public MessageRouter {
 public:
     /**
      * Constructor.
@@ -43,9 +42,9 @@ public:
      * @param avsEndpoint The URL for the AVS endpoint of this object.
      */
     HTTP2MessageRouter(
-            std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-            const std::string& avsEndpoint = "https://avs-alexa-na.amazon.com");
+        std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        const std::string& avsEndpoint = "https://avs-alexa-na.amazon.com");
 
     /**
      * Destructor.
@@ -54,14 +53,14 @@ public:
 
 private:
     std::shared_ptr<TransportInterface> createTransport(
-            std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-            const std::string& avsEndpoint,
-            MessageConsumerInterface* messageConsumerInterface,
-            TransportObserverInterface* transportObserverInterface) override;
+        std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        const std::string& avsEndpoint,
+        std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
+        std::shared_ptr<TransportObserverInterface> transportObserverInterface) override;
 };
 
-} // acl
-} // alexaClientSDK
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_MESSAGE_ROUTER_H_
+#endif  // ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_MESSAGE_ROUTER_H_

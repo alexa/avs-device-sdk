@@ -44,7 +44,7 @@ public:
      *
      * @param object A pointer to the object to track.
      */
-    void add(const RequiresShutdown * object);
+    void add(const RequiresShutdown* object);
 
     /**
      * Removes a @c RequiresShutdown object from the set of objects being tracked.  This must be called at destruction
@@ -52,7 +52,7 @@ public:
      *
      * @param object A pointer to the object to track.
      */
-    void remove(const RequiresShutdown * object);
+    void remove(const RequiresShutdown* object);
 
     /// Destructor.
     ~ShutdownMonitor();
@@ -62,13 +62,13 @@ private:
     std::mutex m_mutex;
 
     /// Alias to the container type used to hold objects.
-    using Objects = std::unordered_set<const RequiresShutdown *>;
+    using Objects = std::unordered_set<const RequiresShutdown*>;
 
     /// The @c RequiredShutdown objects being tracked.
     Objects m_objects;
 };
 
-void ShutdownMonitor::add(const RequiresShutdown * object) {
+void ShutdownMonitor::add(const RequiresShutdown* object) {
     if (nullptr == object) {
         ACSDK_ERROR(LX("addFailed").d("reason", "nullptrObject"));
     }
@@ -82,7 +82,7 @@ void ShutdownMonitor::add(const RequiresShutdown * object) {
     }
 }
 
-void ShutdownMonitor::remove(const RequiresShutdown * object) {
+void ShutdownMonitor::remove(const RequiresShutdown* object) {
     if (nullptr == object) {
         ACSDK_ERROR(LX("removeFailed").d("reason", "nullptrObject"));
     }
@@ -137,6 +137,6 @@ bool RequiresShutdown::isShutdown() const {
     return m_isShutdown;
 }
 
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

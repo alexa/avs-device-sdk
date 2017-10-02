@@ -19,7 +19,7 @@
 #define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AIP_INCLUDE_AIP_TEST_MOCK_OBSERVER_H_
 
 #include <gmock/gmock.h>
- 
+
 #include <AVSCommon/SDKInterfaces/AudioInputProcessorObserverInterface.h>
 
 namespace alexaClientSDK {
@@ -30,13 +30,12 @@ namespace test {
 /// Mock class that implements the Observer.
 class MockObserver : public avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface {
 public:
-    MOCK_METHOD1(
-            onStateChanged, void (avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State state));
+    MOCK_METHOD1(onStateChanged, void(avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State state));
 };
 
-} // namespace test
-} // namespace aip
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace aip
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AIP_INCLUDE_AIP_TEST_MOCK_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AIP_INCLUDE_AIP_TEST_MOCK_OBSERVER_H_

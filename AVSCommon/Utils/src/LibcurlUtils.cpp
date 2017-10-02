@@ -63,16 +63,20 @@ static const std::string CAPATH_CONFIG_KEY = "CURLOPT_CAPATH";
  * @param valueAsString String representation of the value being set.
  * @return Whether the option was set.
  */
-template<typename ValueType>
+template <typename ValueType>
 static bool setopt(
-        CURL* handle, CURLoption option, ValueType value, const char* optionName, const char* valueAsString) {
+    CURL* handle,
+    CURLoption option,
+    ValueType value,
+    const char* optionName,
+    const char* valueAsString) {
     auto result = curl_easy_setopt(handle, option, value);
     if (result != CURLE_OK) {
         ACSDK_ERROR(LX("curl_easy_setoptFailed")
-                .d("option", optionName)
-                .sensitive("value", valueAsString)
-                .d("result", result)
-                .d("error", curl_easy_strerror(result)));
+                        .d("option", optionName)
+                        .sensitive("value", valueAsString)
+                        .d("result", result)
+                        .d("error", curl_easy_strerror(result)));
         return false;
     }
     return true;
@@ -84,10 +88,9 @@ bool prepareForTLS(CURL* handle) {
         return false;
     }
     if (!(SETOPT(handle, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2) &&
-            SETOPT(handle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0) &&
-            SETOPT(handle, CURLOPT_USE_SSL, CURLUSESSL_ALL) &&
-            SETOPT(handle, CURLOPT_SSL_VERIFYPEER, 1L) &&
-            SETOPT(handle, CURLOPT_SSL_VERIFYHOST, 2L))) {
+          SETOPT(handle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0) &&
+          SETOPT(handle, CURLOPT_USE_SSL, CURLUSESSL_ALL) && SETOPT(handle, CURLOPT_SSL_VERIFYPEER, 1L) &&
+          SETOPT(handle, CURLOPT_SSL_VERIFYHOST, 2L))) {
         return false;
     }
 
@@ -99,7 +102,7 @@ bool prepareForTLS(CURL* handle) {
     return true;
 }
 
-} // namespace libcurlUtils
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace libcurlUtils
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

@@ -60,7 +60,7 @@ public:
 
     /**
      * Add the specified handler as a handler for its specified namespace, name, and policy. Note that implmentations
-     * of this should call the handler's getConfiguration() method to get the namespace(s), name(s), and policy(ies) of 
+     * of this should call the handler's getConfiguration() method to get the namespace(s), name(s), and policy(ies) of
      * the handler. If any of the mappings fail, the entire call is refused.
      *
      * @param handler The handler to add.
@@ -69,9 +69,9 @@ public:
     virtual bool addDirectiveHandler(std::shared_ptr<DirectiveHandlerInterface> handler) = 0;
 
     /**
-     * Remove the specified handler's mapping of @c NamespaceAndName to @c BlockingPolicy values. Note that 
-     * implementations of this should call the handler's getConfiguration() method to get the namespace(s), name(s), and 
-     * policy(ies) of the handler. If the handler's configurations are unable to be removed, the entire operation is 
+     * Remove the specified handler's mapping of @c NamespaceAndName to @c BlockingPolicy values. Note that
+     * implementations of this should call the handler's getConfiguration() method to get the namespace(s), name(s), and
+     * policy(ies) of the handler. If the handler's configurations are unable to be removed, the entire operation is
      * refused.
 
      specified mappings from @c NamespaceAndName values to @c HandlerAndPolicy values. If any of
@@ -106,9 +106,8 @@ inline DirectiveSequencerInterface::DirectiveSequencerInterface(const std::strin
         utils::RequiresShutdown{name} {
 }
 
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
-
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_DIRECTIVE_SEQUENCER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_DIRECTIVE_SEQUENCER_INTERFACE_H_

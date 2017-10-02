@@ -55,7 +55,7 @@ struct AudioProvider {
      * This function provides an invalid AudioProvider which has no stream associated with it.
      *
      * @return An invalid AudioProvider which has no stream associated with it.
-     */    
+     */
     static const AudioProvider& null();
 
     /**
@@ -92,9 +92,14 @@ inline AudioProvider::AudioProvider(
     bool alwaysReadable,
     bool canOverride,
     bool canBeOverridden)
-    // Note: There is an issue with braced initialization of an aggregate type in GCC 4.8, so parentheses are used
-    //     below to initialize format.
-    : stream{stream}, format(format), profile{profile}, alwaysReadable{alwaysReadable}, canOverride{canOverride},
+        // Note: There is an issue with braced initialization of an aggregate type in GCC 4.8, so parentheses are used
+        //     below to initialize format.
+        :
+        stream{stream},
+        format(format),
+        profile{profile},
+        alwaysReadable{alwaysReadable},
+        canOverride{canOverride},
         canBeOverridden{canBeOverridden} {
 }
 
@@ -113,9 +118,8 @@ inline AudioProvider::operator bool() const {
     return stream != nullptr;
 }
 
+}  // namespace aip
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-} // namespace aip
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
-
-#endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_AUDIO_PROVIDER_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_AUDIO_PROVIDER_H_

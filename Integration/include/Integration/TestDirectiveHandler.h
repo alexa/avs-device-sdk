@@ -38,7 +38,7 @@ namespace integration {
 namespace test {
 
 /**
- * TestDirectiveHandler is a mock of the @c DirectiveHandlerInterface and allows tests 
+ * TestDirectiveHandler is a mock of the @c DirectiveHandlerInterface and allows tests
  * to wait for invocations upon those interfaces and inspect the parameters of those invocations.
  */
 class TestDirectiveHandler : public avsCommon::sdkInterfaces::DirectiveHandlerInterface {
@@ -54,8 +54,8 @@ public:
     void handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive) override;
 
     void preHandleDirective(
-            std::shared_ptr<avsCommon::avs::AVSDirective> directive,
-            std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) override;
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive,
+        std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) override;
 
     bool handleDirective(const std::string& messageId) override;
 
@@ -139,7 +139,7 @@ public:
             PREHANDLE,
             // Set when handleDirective is called.
             HANDLE,
-            //Set when cancelDirective is called.
+            // Set when cancelDirective is called.
             CANCEL,
             // Set when waitForNext times out waiting for a directive.
             TIMEOUT
@@ -147,17 +147,16 @@ public:
 
         // Type of how the directive was passed to DirectiveHandler.
         Type type;
-        // AVSDirective passed from the Directive Sequencer to the DirectiveHandler. 
+        // AVSDirective passed from the Directive Sequencer to the DirectiveHandler.
         std::shared_ptr<avsCommon::avs::AVSDirective> directive;
         // DirectiveHandlerResult to inform the Directive Sequencer a directive has either successfully or
         // unsuccessfully handled.
         std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result;
-
     };
 
     /**
-     * Function to retrieve the next DirectiveParams in the test queue or time out if the queue is empty. Takes a duration in seconds 
-     * to wait before timing out.
+     * Function to retrieve the next DirectiveParams in the test queue or time out if the queue is empty. Takes a
+     * duration in seconds to wait before timing out.
      */
     DirectiveParams waitForNext(const std::chrono::seconds duration);
 
@@ -169,14 +168,15 @@ private:
     /// Queue of received directives that have not been waited on.
     std::deque<DirectiveParams> m_queue;
     /// map of message IDs to result handlers.
-    std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface>> m_results;
+    std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface>>
+        m_results;
     /// map of message IDs to result handlers.
     std::unordered_map<std::string, std::shared_ptr<avsCommon::avs::AVSDirective>> m_directives;
     /// The @c avsCommon::avs::DirectiveHandlerConfiguration of the handler.
     avsCommon::avs::DirectiveHandlerConfiguration m_configuration;
 };
-} // namespace test
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace integration
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TEST_DIRECTIVE_HANDLER_H_
+#endif  // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TEST_DIRECTIVE_HANDLER_H_

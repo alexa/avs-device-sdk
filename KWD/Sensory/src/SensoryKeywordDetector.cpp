@@ -52,11 +52,12 @@ static const unsigned int SENSORY_COMPATIBLE_SAMPLE_SIZE_IN_BITS = 16;
 static const unsigned int SENSORY_COMPATIBLE_NUM_CHANNELS = 1;
 
 /// The Sensory compatible audio encoding of LPCM.
-static const avsCommon::utils::AudioFormat::Encoding SENSORY_COMPATIBLE_ENCODING = avsCommon::utils::AudioFormat::Encoding::LPCM;
+static const avsCommon::utils::AudioFormat::Encoding SENSORY_COMPATIBLE_ENCODING =
+    avsCommon::utils::AudioFormat::Encoding::LPCM;
 
 /// The Sensory compatible endianness which is little endian.
-static const avsCommon::utils::AudioFormat::Endianness SENSORY_COMPATIBLE_ENDIANNESS = 
-        avsCommon::utils::AudioFormat::Endianness::LITTLE;
+static const avsCommon::utils::AudioFormat::Endianness SENSORY_COMPATIBLE_ENDIANNESS =
+    avsCommon::utils::AudioFormat::Endianness::LITTLE;
 
 /**
  * Checks to see if an @c avsCommon::utils::AudioFormat is compatible with Sensory.
@@ -67,43 +68,43 @@ static const avsCommon::utils::AudioFormat::Endianness SENSORY_COMPATIBLE_ENDIAN
 static bool isAudioFormatCompatibleWithSensory(avsCommon::utils::AudioFormat audioFormat) {
     if (SENSORY_COMPATIBLE_ENCODING != audioFormat.encoding) {
         ACSDK_ERROR(LX("isAudioFormatCompatibleWithSensoryFailed")
-                .d("reason", "incompatibleEncoding")
-                .d("sensoryEncoding", SENSORY_COMPATIBLE_ENCODING)
-                .d("encoding", audioFormat.encoding));
+                        .d("reason", "incompatibleEncoding")
+                        .d("sensoryEncoding", SENSORY_COMPATIBLE_ENCODING)
+                        .d("encoding", audioFormat.encoding));
         return false;
     }
     if (SENSORY_COMPATIBLE_ENDIANNESS != audioFormat.endianness) {
         ACSDK_ERROR(LX("isAudioFormatCompatibleWithSensoryFailed")
-                .d("reason", "incompatibleEndianess")
-                .d("sensoryEndianness", SENSORY_COMPATIBLE_ENDIANNESS)
-                .d("endianness", audioFormat.endianness));
+                        .d("reason", "incompatibleEndianess")
+                        .d("sensoryEndianness", SENSORY_COMPATIBLE_ENDIANNESS)
+                        .d("endianness", audioFormat.endianness));
         return false;
     }
     if (SENSORY_COMPATIBLE_SAMPLE_RATE != audioFormat.sampleRateHz) {
         ACSDK_ERROR(LX("isAudioFormatCompatibleWithSensoryFailed")
-                .d("reason", "incompatibleSampleRate")
-                .d("sensorySampleRate", SENSORY_COMPATIBLE_SAMPLE_RATE)
-                .d("sampleRate", audioFormat.sampleRateHz));
+                        .d("reason", "incompatibleSampleRate")
+                        .d("sensorySampleRate", SENSORY_COMPATIBLE_SAMPLE_RATE)
+                        .d("sampleRate", audioFormat.sampleRateHz));
         return false;
     }
     if (SENSORY_COMPATIBLE_SAMPLE_SIZE_IN_BITS != audioFormat.sampleSizeInBits) {
         ACSDK_ERROR(LX("isAudioFormatCompatibleWithSensoryFailed")
-                .d("reason", "incompatibleSampleSizeInBits")
-                .d("sensorySampleSizeInBits", SENSORY_COMPATIBLE_SAMPLE_SIZE_IN_BITS)
-                .d("sampleSizeInBits", audioFormat.sampleSizeInBits));
+                        .d("reason", "incompatibleSampleSizeInBits")
+                        .d("sensorySampleSizeInBits", SENSORY_COMPATIBLE_SAMPLE_SIZE_IN_BITS)
+                        .d("sampleSizeInBits", audioFormat.sampleSizeInBits));
         return false;
     }
     if (SENSORY_COMPATIBLE_NUM_CHANNELS != audioFormat.numChannels) {
         ACSDK_ERROR(LX("isAudioFormatCompatibleWithSensoryFailed")
-                .d("reason", "incompatibleNumChannels")
-                .d("sensoryNumChannels", SENSORY_COMPATIBLE_NUM_CHANNELS)
-                .d("numChannels", audioFormat.numChannels));
+                        .d("reason", "incompatibleNumChannels")
+                        .d("sensoryNumChannels", SENSORY_COMPATIBLE_NUM_CHANNELS)
+                        .d("numChannels", audioFormat.numChannels));
         return false;
     }
     return true;
 }
 
-/** 
+/**
  * Returns information about the ongoing sensory session. Primarily used to populate error messages.
  *
  * @param session The Sensory session handle.
@@ -126,8 +127,7 @@ static std::string getSensoryDetails(SnsrSession session, SnsrRC result) {
 }
 
 SnsrRC SensoryKeywordDetector::keyWordDetectedCallback(SnsrSession s, const char* key, void* userData) {
-    SensoryKeywordDetector* engine =
-        static_cast<SensoryKeywordDetector*>(userData);
+    SensoryKeywordDetector* engine = static_cast<SensoryKeywordDetector*>(userData);
     SnsrRC result;
     const char* keyword;
     double begin;
@@ -135,43 +135,43 @@ SnsrRC SensoryKeywordDetector::keyWordDetectedCallback(SnsrSession s, const char
     result = snsrGetDouble(s, SNSR_RES_BEGIN_SAMPLE, &begin);
     if (result != SNSR_RC_OK) {
         ACSDK_ERROR(LX("keyWordDetectedCallbackFailed")
-                .d("reason", "invalidBeginIndex")
-                .d("error", getSensoryDetails(s, result)));
+                        .d("reason", "invalidBeginIndex")
+                        .d("error", getSensoryDetails(s, result)));
         return result;
     }
 
     result = snsrGetDouble(s, SNSR_RES_END_SAMPLE, &end);
     if (result != SNSR_RC_OK) {
         ACSDK_ERROR(LX("keyWordDetectedCallbackFailed")
-                .d("reason", "invalidEndIndex")
-                .d("error", getSensoryDetails(s, result)));
+                        .d("reason", "invalidEndIndex")
+                        .d("error", getSensoryDetails(s, result)));
         return result;
     }
 
     result = snsrGetString(s, SNSR_RES_TEXT, &keyword);
     if (result != SNSR_RC_OK) {
         ACSDK_ERROR(LX("keyWordDetectedCallbackFailed")
-                .d("reason", "keywordRetrievalFailure")
-                .d("error", getSensoryDetails(s, result)));
+                        .d("reason", "keywordRetrievalFailure")
+                        .d("error", getSensoryDetails(s, result)));
         return result;
     }
 
     engine->notifyKeyWordObservers(
-            engine->m_stream,
-            keyword,
-            engine->m_beginIndexOfStreamReader + begin,
-            engine->m_beginIndexOfStreamReader + end);
+        engine->m_stream,
+        keyword,
+        engine->m_beginIndexOfStreamReader + begin,
+        engine->m_beginIndexOfStreamReader + end);
     return SNSR_RC_OK;
 }
 
 std::unique_ptr<SensoryKeywordDetector> SensoryKeywordDetector::create(
-        std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
-        avsCommon::utils::AudioFormat audioFormat,
-        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>> keyWordObservers,
-        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>
-            keyWordDetectorStateObservers,
-        const std::string& modelFilePath,
-        std::chrono::milliseconds msToPushPerIteration) {
+    std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+    avsCommon::utils::AudioFormat audioFormat,
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>> keyWordObservers,
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>
+        keyWordDetectorStateObservers,
+    const std::string& modelFilePath,
+    std::chrono::milliseconds msToPushPerIteration) {
     if (!stream) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullStream"));
         return nullptr;
@@ -186,10 +186,8 @@ std::unique_ptr<SensoryKeywordDetector> SensoryKeywordDetector::create(
     if (!isAudioFormatCompatibleWithSensory(audioFormat)) {
         return nullptr;
     }
-    std::unique_ptr<SensoryKeywordDetector> detector(
-            new SensoryKeywordDetector(
-                    stream, keyWordObservers, keyWordDetectorStateObservers, audioFormat, msToPushPerIteration)
-    );
+    std::unique_ptr<SensoryKeywordDetector> detector(new SensoryKeywordDetector(
+        stream, keyWordObservers, keyWordDetectorStateObservers, audioFormat, msToPushPerIteration));
     if (!detector->init(modelFilePath)) {
         ACSDK_ERROR(LX("createFailed").d("reason", "initDetectorFailed"));
         return nullptr;
@@ -206,16 +204,15 @@ SensoryKeywordDetector::~SensoryKeywordDetector() {
 }
 
 SensoryKeywordDetector::SensoryKeywordDetector(
-        std::shared_ptr<AudioInputStream> stream,
-        std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
-        std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>
-            keyWordDetectorStateObservers,
-        avsCommon::utils::AudioFormat audioFormat,
-        std::chrono::milliseconds msToPushPerIteration) :
-    AbstractKeywordDetector(keyWordObservers, keyWordDetectorStateObservers),
-    m_stream{stream},
-    m_session{nullptr},
-    m_maxSamplesPerPush{(audioFormat.sampleRateHz / HERTZ_PER_KILOHERTZ) * msToPushPerIteration.count()} {
+    std::shared_ptr<AudioInputStream> stream,
+    std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
+    std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers,
+    avsCommon::utils::AudioFormat audioFormat,
+    std::chrono::milliseconds msToPushPerIteration) :
+        AbstractKeywordDetector(keyWordObservers, keyWordDetectorStateObservers),
+        m_stream{stream},
+        m_session{nullptr},
+        m_maxSamplesPerPush{(audioFormat.sampleRateHz / HERTZ_PER_KILOHERTZ) * msToPushPerIteration.count()} {
 }
 
 bool SensoryKeywordDetector::init(const std::string& modelFilePath) {
@@ -229,8 +226,8 @@ bool SensoryKeywordDetector::init(const std::string& modelFilePath) {
     SnsrRC result = snsrNew(&m_session);
     if (result != SNSR_RC_OK) {
         ACSDK_ERROR(LX("initFailed")
-                .d("reason", "allocatingNewSessionFailed")
-                .d("error", getSensoryDetails(m_session, result)));
+                        .d("reason", "allocatingNewSessionFailed")
+                        .d("error", getSensoryDetails(m_session, result)));
         return false;
     }
 
@@ -255,18 +252,17 @@ bool SensoryKeywordDetector::init(const std::string& modelFilePath) {
 
     result = snsrLoad(m_session, snsrStreamFromFileName(modelFilePath.c_str(), "r"));
     if (result != SNSR_RC_OK) {
-        ACSDK_ERROR(LX("initFailed")
-            .d("reason", "loadingSensoryModelFailed")
-            .d("error", getSensoryDetails(m_session, result)));
+        ACSDK_ERROR(
+            LX("initFailed").d("reason", "loadingSensoryModelFailed").d("error", getSensoryDetails(m_session, result)));
         return false;
     }
 
     result = snsrRequire(m_session, SNSR_TASK_TYPE, SNSR_PHRASESPOT);
     if (result != SNSR_RC_OK) {
         ACSDK_ERROR(LX("initFailed")
-            .d("reason", "invalidTaskType")
-            .d("expected", "SNSR_PHRASESPOT")
-            .d("error", getSensoryDetails(m_session, result)));
+                        .d("reason", "invalidTaskType")
+                        .d("expected", "SNSR_PHRASESPOT")
+                        .d("error", getSensoryDetails(m_session, result)));
         return false;
     }
 
@@ -287,14 +283,12 @@ bool SensoryKeywordDetector::setUpRuntimeSettings(SnsrSession* session) {
 
     // Setting the callback handler
     SnsrRC result = snsrSetHandler(
-            *session,
-            SNSR_RESULT_EVENT,
-            snsrCallback(keyWordDetectedCallback, nullptr, reinterpret_cast<void*>(this)));
+        *session, SNSR_RESULT_EVENT, snsrCallback(keyWordDetectedCallback, nullptr, reinterpret_cast<void*>(this)));
 
     if (result != SNSR_RC_OK) {
         ACSDK_ERROR(LX("setUpRuntimeSettingsFailed")
-            .d("reason", "setKeywordDetectionHandlerFailure")
-            .d("error", getSensoryDetails(*session, result)));
+                        .d("reason", "setKeywordDetectionHandlerFailure")
+                        .d("error", getSensoryDetails(*session, result)));
         return false;
     }
 
@@ -305,8 +299,8 @@ bool SensoryKeywordDetector::setUpRuntimeSettings(SnsrSession* session) {
     result = snsrSetInt(*session, SNSR_AUTO_FLUSH, 0);
     if (result != SNSR_RC_OK) {
         ACSDK_ERROR(LX("setUpRuntimeSettingsFailed")
-            .d("reason", "disableAutoPipelineFlushingFailed")
-            .d("error", getSensoryDetails(*session, result)));
+                        .d("reason", "disableAutoPipelineFlushingFailed")
+                        .d("error", getSensoryDetails(*session, result)));
         return false;
     }
 
@@ -322,12 +316,7 @@ void SensoryKeywordDetector::detectionLoop() {
     while (!m_isShuttingDown) {
         bool didErrorOccur = false;
         wordsRead = readFromStream(
-                m_streamReader,
-                m_stream,
-                audioDataToPush,
-                m_maxSamplesPerPush,
-                TIMEOUT_FOR_READ_CALLS,
-                &didErrorOccur);
+            m_streamReader, m_stream, audioDataToPush, m_maxSamplesPerPush, TIMEOUT_FOR_READ_CALLS, &didErrorOccur);
         if (didErrorOccur) {
             /*
              * Note that this does not include the overrun condition, which the base class handles by instructing the
@@ -336,7 +325,7 @@ void SensoryKeywordDetector::detectionLoop() {
             break;
         } else if (wordsRead == AudioInputStream::Reader::Error::OVERRUN) {
             /*
-             * Updating reference point of Reader so that new indices that get emitted to keyWordObservers can be 
+             * Updating reference point of Reader so that new indices that get emitted to keyWordObservers can be
              * relative to it.
              */
             m_beginIndexOfStreamReader = m_streamReader->tell();
@@ -349,8 +338,8 @@ void SensoryKeywordDetector::detectionLoop() {
             result = snsrDup(m_session, &newSession);
             if (result != SNSR_RC_OK) {
                 ACSDK_ERROR(LX("detectionLoopFailed")
-                    .d("reason", "sessionDuplicationFailed")
-                    .d("error", getSensoryDetails(newSession, result)));
+                                .d("reason", "sessionDuplicationFailed")
+                                .d("error", getSensoryDetails(newSession, result)));
                 break;
             }
 
@@ -362,9 +351,9 @@ void SensoryKeywordDetector::detectionLoop() {
         } else if (wordsRead > 0) {
             // Words were successfully read.
             snsrSetStream(
-                    m_session,
-                    SNSR_SOURCE_AUDIO_PCM,
-                    snsrStreamFromMemory(audioDataToPush, wordsRead * sizeof(*audioDataToPush), SNSR_ST_MODE_READ));
+                m_session,
+                SNSR_SOURCE_AUDIO_PCM,
+                snsrStreamFromMemory(audioDataToPush, wordsRead * sizeof(*audioDataToPush), SNSR_ST_MODE_READ));
             result = snsrRun(m_session);
             switch (result) {
                 case SNSR_RC_STREAM_END:
@@ -375,11 +364,11 @@ void SensoryKeywordDetector::detectionLoop() {
                 default:
                     // A different return from the callback function that indicates some sort of error
                     ACSDK_ERROR(LX("detectionLoopFailed")
-                        .d("reason", "unexpectedReturn")
-                        .d("error", getSensoryDetails(m_session, result)));
+                                    .d("reason", "unexpectedReturn")
+                                    .d("error", getSensoryDetails(m_session, result)));
 
                     notifyKeyWordDetectorStateObservers(
-                            KeyWordDetectorStateObserverInterface::KeyWordDetectorState::ERROR);
+                        KeyWordDetectorStateObserverInterface::KeyWordDetectorState::ERROR);
                     didErrorOccur = true;
                     break;
             }
@@ -393,5 +382,5 @@ void SensoryKeywordDetector::detectionLoop() {
     m_streamReader->close();
 }
 
-} // namespace kwd
-} // namespace alexaClientSDK
+}  // namespace kwd
+}  // namespace alexaClientSDK

@@ -26,8 +26,8 @@ namespace avs {
 /// The type used store and stream binary data.
 using AudioInputStream = utils::sds::InProcessSDS;
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_AUDIO_INPUT_STREAM_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_AUDIO_INPUT_STREAM_H_

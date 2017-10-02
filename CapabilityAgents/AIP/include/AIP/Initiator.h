@@ -52,9 +52,8 @@ inline std::string initiatorToString(Initiator initiator) {
     return "Unknown Inititator";
 }
 
+}  // namespace aip
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-} // namespace aip
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
-
-#endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_INITIATOR_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_INITIATOR_H_

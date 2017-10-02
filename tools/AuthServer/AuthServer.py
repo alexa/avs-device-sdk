@@ -47,6 +47,13 @@ amazonLwaApiHeaders = {'Content-Type': 'application/x-www-form-urlencoded'}
 # Default configuration filename, to be filled by CMake
 defaultConfigFilename = "${SDK_CONFIG_FILE_TARGET}"
 
+# JSON keys for config file
+CLIENT_ID = 'clientId'
+CLIENT_SECRET = 'clientSecret'
+PRODUCT_ID = 'productId'
+DEVICE_SERIAL_NUMBER = 'deviceSerialNumber'
+REFRESH_TOKEN = 'refreshToken'
+
 # Read the configuration filename from the command line arguments -if it exists.
 if 2 == len(sys.argv):
     configFilename = abspath(sys.argv[1])
@@ -82,7 +89,7 @@ else:
 
 
 # Check if all required keys are parsed.
-requiredKeys = ['clientId', 'clientSecret', 'deviceTypeId', 'deviceSerialNumber']
+requiredKeys = [CLIENT_ID, CLIENT_SECRET, PRODUCT_ID, DEVICE_SERIAL_NUMBER]
 try:
     missingKey = requiredKeys[map(authDelegateDict.has_key,requiredKeys).index(False)];
     print 'Missing key: "' + missingKey + '". The list of required keys are:'
@@ -93,12 +100,12 @@ except ValueError:
     pass
 
 # Refresh the refresh token to check if it really is a refresh token.
-if authDelegateDict.has_key('refreshToken'):
+if authDelegateDict.has_key(REFRESH_TOKEN):
     postData = {
             'grant_type': 'refresh_token',
-            'refresh_token': authDelegateDict['refreshToken'],
-            'client_id': authDelegateDict['clientId'],
-            'client_secret': authDelegateDict['clientSecret']}
+            'refresh_token': authDelegateDict[REFRESH_TOKEN],
+            'client_id': authDelegateDict[CLIENT_ID],
+            'client_secret': authDelegateDict[CLIENT_SECRET]}
     tokenRefreshRequest = requests.post(
             amazonLwaApiUrl,
             data=urlencode(postData),
@@ -119,12 +126,12 @@ def index():
             '{{"productID":"{productId}",'
             '"productInstanceAttributes":'
             '{{"deviceSerialNumber":"{deviceSerialNumber}"}}}}}}').format(
-                    productId=authDelegateDict['deviceTypeId'],
-                    deviceSerialNumber=authDelegateDict['deviceSerialNumber'])
+                    productId=authDelegateDict[PRODUCT_ID],
+                    deviceSerialNumber=authDelegateDict[DEVICE_SERIAL_NUMBER])
     lwaUrl = 'https://www.amazon.com/ap/oa/?' + urlencode({
         'scope': 'alexa:all',
         'scope_data': scopeData,
-        'client_id': authDelegateDict['clientId'],
+        'client_id': authDelegateDict[CLIENT_ID],
         'response_type': 'code',
         'redirect_uri': redirectUri,
         })
@@ -136,8 +143,8 @@ def get_refresh_token():
     postData = {
             'grant_type': 'authorization_code',
             'code': request.args.get('code',''),
-            'client_id': authDelegateDict['clientId'],
-            'client_secret': authDelegateDict['clientSecret'],
+            'client_id': authDelegateDict[CLIENT_ID],
+            'client_secret': authDelegateDict[CLIENT_SECRET],
             'redirect_uri': redirectUri,
             }
     tokenRequest = requests.post(

@@ -20,9 +20,9 @@
 
 #include "Alerts/Renderer/RendererObserverInterface.h"
 
-#include <chrono>
 #include <string>
 #include <vector>
+#include <chrono>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -65,10 +65,11 @@ public:
      * @param loopCount The number of times the urls should be rendered.
      * @param loopPauseInMilliseconds The number of milliseconds to pause between rendering url sequences.
      */
-    virtual void start(const std::string & localAudioFilePath,
-                       const std::vector<std::string> & urls = std::vector<std::string>(),
-                       int loopCount = 0,
-                       std::chrono::milliseconds loopPauseInMilliseconds = std::chrono::milliseconds(0)) = 0;
+    virtual void start(
+        const std::string& localAudioFilePath,
+        const std::vector<std::string>& urls = std::vector<std::string>(),
+        int loopCount = 0,
+        std::chrono::milliseconds loopPause = std::chrono::milliseconds{0}) = 0;
 
     /**
      * Stop rendering.
@@ -76,9 +77,9 @@ public:
     virtual void stop() = 0;
 };
 
-} // namespace renderer
-} // namespace alerts
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace renderer
+}  // namespace alerts
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERER_INTERFACE_H_

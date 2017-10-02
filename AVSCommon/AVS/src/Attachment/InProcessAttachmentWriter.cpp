@@ -113,8 +113,8 @@ std::size_t InProcessAttachmentWriter::write(const void* buff, std::size_t numBy
         // If the status was not updated, then there's an error code from SDS we may not be handling.
         if (WriteStatus::OK == *writeStatus) {
             ACSDK_ERROR(LX("writeFailed")
-                    .d("reason", "unhandled error code from underlying SDS")
-                    .d("code", std::to_string(writeResult)));
+                            .d("reason", "unhandled error code from underlying SDS")
+                            .d("code", std::to_string(writeResult)));
             *writeStatus = WriteStatus::ERROR_INTERNAL;
         }
 
@@ -135,7 +135,7 @@ void InProcessAttachmentWriter::close() {
     }
 }
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

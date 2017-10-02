@@ -33,7 +33,7 @@ enum class FocusState {
 
     /// Represents the intermediate level focus a Channel can have.
     BACKGROUND,
-    
+
     /// This focus is used to represent when a Channel is not being used or when an observer should stop.
     NONE
 };
@@ -67,8 +67,8 @@ inline std::ostream& operator<<(std::ostream& stream, const FocusState& state) {
     return stream << focusStateToString(state);
 }
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_FOCUS_STATE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_FOCUS_STATE_H_

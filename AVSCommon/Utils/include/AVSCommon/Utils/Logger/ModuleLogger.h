@@ -28,7 +28,10 @@ namespace logger {
 /**
  * @c Logger implementation providing per module configuration. Forwards logs to another @c Logger.
  */
-class ModuleLogger : public Logger, protected LogLevelObserverInterface, protected SinkObserverInterface {
+class ModuleLogger
+        : public Logger
+        , protected LogLevelObserverInterface
+        , protected SinkObserverInterface {
 public:
     /**
      * Constructor.
@@ -40,11 +43,7 @@ public:
 
     void setLevel(Level level) override;
 
-    void emit(
-            Level level,
-            std::chrono::system_clock::time_point time,
-            const char *threadId,
-            const char *text) override;
+    void emit(Level level, std::chrono::system_clock::time_point time, const char* threadId, const char* text) override;
 
 private:
     void onLogLevelChanged(Level level) override;
@@ -59,9 +58,9 @@ protected:
     std::atomic<Logger*> m_sink;
 };
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_MODULE_LOGGER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_MODULE_LOGGER_H_

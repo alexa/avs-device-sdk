@@ -54,7 +54,8 @@ public:
     /**
      * Constructor.
      */
-    AttachmentManagerTest() : m_manager{AttachmentManager::AttachmentType::IN_PROCESS} { }
+    AttachmentManagerTest() : m_manager{AttachmentManager::AttachmentType::IN_PROCESS} {
+    }
 
     /// Local type aliases.
     using ReaderVec = std::vector<std::unique_ptr<AttachmentReader>>;
@@ -68,7 +69,7 @@ public:
     /**
      * Utility function for testing writer futures.
      */
-    void testWriters(const WriterVec & writers, bool expectedValid);
+    void testWriters(const WriterVec& writers, bool expectedValid);
 
     /**
      * Utility function for creating three reader futures, and inserting them into the vector.
@@ -78,7 +79,7 @@ public:
     /**
      * Utility function for testing reader futures.
      */
-    void testReaders(const ReaderVec & readers, bool expectedValid);
+    void testReaders(const ReaderVec& readers, bool expectedValid);
 
     /// A local @c AttachmentManager object.
     AttachmentManager m_manager;
@@ -90,8 +91,8 @@ void AttachmentManagerTest::createWriters(WriterVec* writers) {
     writers->push_back(m_manager.createWriter(TEST_ATTACHMENT_ID_STRING_THREE));
 }
 
-void AttachmentManagerTest::testWriters(const WriterVec & writers, bool expectedValid) {
-    for (auto & writer : writers) {
+void AttachmentManagerTest::testWriters(const WriterVec& writers, bool expectedValid) {
+    for (auto& writer : writers) {
         if (expectedValid) {
             ASSERT_NE(writer, nullptr);
         } else {
@@ -106,8 +107,8 @@ void AttachmentManagerTest::createReaders(ReaderVec* readers) {
     readers->push_back(m_manager.createReader(TEST_ATTACHMENT_ID_STRING_THREE, AttachmentReader::Policy::BLOCKING));
 }
 
-void AttachmentManagerTest::testReaders(const ReaderVec & readers, bool expectedValid) {
-    for (auto & reader : readers) {
+void AttachmentManagerTest::testReaders(const ReaderVec& readers, bool expectedValid) {
+    for (auto& reader : readers) {
         if (expectedValid) {
             ASSERT_NE(reader, nullptr);
         } else {
@@ -293,7 +294,7 @@ TEST_F(AttachmentManagerTest, testAttachmentWriterAndReaderInOnePass) {
     }
 }
 
-} // namespace test
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

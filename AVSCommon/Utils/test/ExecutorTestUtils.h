@@ -54,18 +54,19 @@ public:
  */
 class SimpleObject {
 public:
-    SimpleObject() : m_value{0} { };
-    SimpleObject(int value) : m_value{value} { };
+    SimpleObject() : m_value{0} {};
+    SimpleObject(int value) : m_value{value} {};
 
     int getValue() {
         return m_value;
     }
+
 private:
     int m_value;
 };
 
-} // namespace test
-} // namespace threading
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace threading
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

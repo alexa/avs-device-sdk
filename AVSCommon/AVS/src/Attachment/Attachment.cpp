@@ -22,8 +22,10 @@ namespace avsCommon {
 namespace avs {
 namespace attachment {
 
-Attachment::Attachment(const std::string & attachmentId)
-        : m_id{attachmentId}, m_hasCreatedWriter{false}, m_hasCreatedReader{false} {
+Attachment::Attachment(const std::string& attachmentId) :
+        m_id{attachmentId},
+        m_hasCreatedWriter{false},
+        m_hasCreatedReader{false} {
 }
 
 std::string Attachment::getId() const {
@@ -38,7 +40,7 @@ bool Attachment::hasCreatedWriter() {
     return m_hasCreatedWriter;
 }
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

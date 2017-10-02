@@ -32,14 +32,14 @@ namespace adsl {
  * Class to maintain a mapping from @c NamespaceAndName to @c HandlerAndPolicy, and to invoke
  * @c DirectiveHandlerInterface methods on the @c DirectiveHandler registered for a given @c AVSDirective.
  */
-class DirectiveRouter : public avsCommon::utils::RequiresShutdown{
+class DirectiveRouter : public avsCommon::utils::RequiresShutdown {
 public:
     /// Constructor.
     DirectiveRouter();
 
     /**
      * Add mappings from from handler's @c NamespaceAndName values to @c BlockingPolicy values, gotten through the
-     * handler's getConfiguration() method. If a mapping for any of the specified @c NamespaceAndName values already 
+     * handler's getConfiguration() method. If a mapping for any of the specified @c NamespaceAndName values already
      * exists the entire call is refused.
      *
      * @param handler The handler to add.
@@ -49,7 +49,7 @@ public:
 
     /**
      * Remove the specified mappings from @c NamespaceAndName values to @c BlockingPolicy values, gotten through the
-     * handler's getConfiguration() method. If any of the specified mappings do not match an existing mapping, the 
+     * handler's getConfiguration() method. If any of the specified mappings do not match an existing mapping, the
      * entire operation is refused.
      *
      * @param handler The handler to remove.
@@ -74,8 +74,8 @@ public:
      * @return Whether or not the handler was invoked.
      */
     bool preHandleDirective(
-            std::shared_ptr<avsCommon::avs::AVSDirective> directive,
-            std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result);
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive,
+        std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result);
 
     /**
      * Invoke @c handleDirective() on the handler registered for the given @c AVSDirective.
@@ -120,9 +120,9 @@ private:
          * @param handler The @c DirectiveHandlerInterface instance to call.
          */
         HandlerCallScope(
-                std::unique_lock<std::mutex>& lock,
-                DirectiveRouter* router,
-                std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
+            std::unique_lock<std::mutex>& lock,
+            DirectiveRouter* router,
+            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
 
         /**
          * Destructor.
@@ -157,7 +157,7 @@ private:
      * @param handler The handler for which the reference count should be incremented.
      */
     void incrementHandlerReferenceCountLocked(
-            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
 
     /**
      * Decrement the reference count for the specified handler.  If the reference count goes to zero, call
@@ -167,23 +167,18 @@ private:
      * @param handler The @c DirectiveHandlerInterface instance whose reference count is to be decremented.
      */
     void decrementHandlerReferenceCountLocked(
-            std::unique_lock<std::mutex>& lock,
-            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
+        std::unique_lock<std::mutex>& lock,
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
 
     /**
      * Remove the specified mappings from @c NamespaceAndName values to @c BlockingPolicy values, gotten through the
-     * handler's getConfiguration() method. If any of the specified mappings do not match an existing mapping, the 
+     * handler's getConfiguration() method. If any of the specified mappings do not match an existing mapping, the
      * entire operation is refused.  This function should be called while holding m_mutex.
      *
      * @param handler The handler to remove.
-     * @param[out] releasedHandlers A vector of handlers which need to have onDeregistered() called after releasing the
-     *     lock.
-     * @return @c true if @c handler was removed successfully, else @c false.
-     *     vector indicates an error occurred.
+     * @return @c true if @c handler was removed successfully, else @c false indicates an error occurred.
      */
-    bool removeDirectiveHandlerLocked(
-            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler,
-            std::vector<std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface>> * releasedHandlers);
+    bool removeDirectiveHandlerLocked(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
 
     /// A mutex used to serialize access to @c m_configuration and @c m_handlerReferenceCounts.
     std::mutex m_mutex;
@@ -201,10 +196,10 @@ private:
      * indicating that the handler will no longer be called (unless, of course, it is re-registered).
      */
     std::unordered_map<std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface>, int>
-            m_handlerReferenceCounts;
+        m_handlerReferenceCounts;
 };
 
-} // namespace adsl
-} // namespace alexaClientSDK
+}  // namespace adsl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_ROUTER_H_
+#endif  // ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_ROUTER_H_

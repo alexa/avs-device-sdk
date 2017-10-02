@@ -47,7 +47,7 @@ public:
      * @param id The attachment id.
      * @param sds The underlying @c SharedDataStream object.  If not specified, then this class will create its own.
      */
-    InProcessAttachment(const std::string & id, std::unique_ptr<SDSType> sds = nullptr);
+    InProcessAttachment(const std::string& id, std::unique_ptr<SDSType> sds = nullptr);
 
     std::unique_ptr<AttachmentWriter> createWriter() override;
 
@@ -58,9 +58,9 @@ private:
     std::shared_ptr<SDSType> m_sds;
 };
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_IN_PROCESS_ATTACHMENT_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_IN_PROCESS_ATTACHMENT_H_

@@ -52,10 +52,10 @@ static const std::string ENDPOINTING_NAME = "SetEndpoint";
 static const std::string ENDPOINT_PAYLOAD_KEY = "endpoint";
 
 void EndpointHandler::removeDirectiveGracefully(
-        std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info,
-        bool isFailure,
-        const std::string &report) {
-    if(info) {
+    std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info,
+    bool isFailure,
+    const std::string& report) {
+    if (info) {
         if (info->result) {
             if (isFailure) {
                 info->result->setFailed(report);
@@ -70,13 +70,13 @@ void EndpointHandler::removeDirectiveGracefully(
 }
 
 std::shared_ptr<EndpointHandler> EndpointHandler::create(
-        std::shared_ptr<AVSEndpointAssignerInterface> avsEndpointAssigner,
-        std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender) {
-    if(!avsEndpointAssigner) {
+    std::shared_ptr<AVSEndpointAssignerInterface> avsEndpointAssigner,
+    std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender) {
+    if (!avsEndpointAssigner) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullAvsEndpointInterface"));
         return nullptr;
     }
-    if(!exceptionEncounteredSender) {
+    if (!exceptionEncounteredSender) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullExceptionEncounteredSender"));
         return nullptr;
     }
@@ -84,16 +84,15 @@ std::shared_ptr<EndpointHandler> EndpointHandler::create(
 }
 
 EndpointHandler::EndpointHandler(
-        std::shared_ptr<AVSEndpointAssignerInterface> avsEndpointAssigner,
-        std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender) :
+    std::shared_ptr<AVSEndpointAssignerInterface> avsEndpointAssigner,
+    std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender) :
         CapabilityAgent(ENDPOINTING_NAMESPACE, exceptionEncounteredSender),
         m_avsEndpointAssigner{avsEndpointAssigner} {
 }
 
 avsCommon::avs::DirectiveHandlerConfiguration EndpointHandler::getConfiguration() const {
-    return avsCommon::avs::DirectiveHandlerConfiguration{{
-            NamespaceAndName{ENDPOINTING_NAMESPACE, ENDPOINTING_NAME},
-            avsCommon::avs::BlockingPolicy::NON_BLOCKING}};
+    return avsCommon::avs::DirectiveHandlerConfiguration{
+        {NamespaceAndName{ENDPOINTING_NAMESPACE, ENDPOINTING_NAME}, avsCommon::avs::BlockingPolicy::NON_BLOCKING}};
 }
 
 void EndpointHandler::preHandleDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) {
@@ -127,6 +126,6 @@ void EndpointHandler::cancelDirective(std::shared_ptr<avsCommon::avs::Capability
     CapabilityAgent::removeDirective(info->directive->getMessageId());
 }
 
-} // namespace system
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace system
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK

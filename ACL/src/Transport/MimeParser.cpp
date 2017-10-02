@@ -63,7 +63,7 @@ std::string sanitizeContentId(const std::string& mimeContentId) {
     std::string sanitizedContentId;
     if (mimeContentId.empty()) {
         ACSDK_ERROR(LX("sanitizeContentIdFailed").d("reason", "emptyMimeContentId"));
-    } else if ( ('<' == mimeContentId.front()) && ('>' == mimeContentId.back()) ) {
+    } else if (('<' == mimeContentId.front()) && ('>' == mimeContentId.back())) {
         // Getting attachment ID within angle bracket <>.
         sanitizedContentId = mimeContentId.substr(1, mimeContentId.size() - 2);
     } else {
@@ -72,30 +72,29 @@ std::string sanitizeContentId(const std::string& mimeContentId) {
     return sanitizedContentId;
 }
 
-MimeParser::MimeParser(MessageConsumerInterface *messageConsumer,
-        std::shared_ptr<AttachmentManager> attachmentManager,
-        const std::string & attachmentContextId)
-        : m_receivedFirstChunk{false},
-          m_currDataType{ContentType::NONE},
-          m_messageConsumer{messageConsumer},
-          m_attachmentManager{attachmentManager},
-          m_attachmentContextId{attachmentContextId},
-          m_dataParsedStatus{DataParsedStatus::OK},
-          m_currentByteProgress{0},
-          m_totalSuccessfullyProcessedBytes{0} {
-      m_multipartReader.onPartBegin = MimeParser::partBeginCallback;
-      m_multipartReader.onPartData = MimeParser::partDataCallback;
-      m_multipartReader.onPartEnd = MimeParser::partEndCallback;
-      m_multipartReader.userData = this;
+MimeParser::MimeParser(
+    std::shared_ptr<MessageConsumerInterface> messageConsumer,
+    std::shared_ptr<AttachmentManager> attachmentManager) :
+        m_receivedFirstChunk{false},
+        m_currDataType{ContentType::NONE},
+        m_messageConsumer{messageConsumer},
+        m_attachmentManager{attachmentManager},
+        m_dataParsedStatus{DataParsedStatus::OK},
+        m_currentByteProgress{0},
+        m_totalSuccessfullyProcessedBytes{0},
+        m_isAttachmentWriterBufferFull{false} {
+    m_multipartReader.onPartBegin = MimeParser::partBeginCallback;
+    m_multipartReader.onPartData = MimeParser::partDataCallback;
+    m_multipartReader.onPartEnd = MimeParser::partEndCallback;
+    m_multipartReader.userData = this;
 }
 
-void MimeParser::partBeginCallback(const MultipartHeaders &headers, void *userData) {
-    MimeParser *parser = static_cast<MimeParser*>(userData);
+void MimeParser::partBeginCallback(const MultipartHeaders& headers, void* userData) {
+    MimeParser* parser = static_cast<MimeParser*>(userData);
 
     if (parser->m_dataParsedStatus != MimeParser::DataParsedStatus::OK) {
-        ACSDK_ERROR(LX("partBeginCallbackFailed")
-                .d("reason", "mimeParsingFailed")
-                .d("status", parser->m_dataParsedStatus));
+        ACSDK_ERROR(
+            LX("partBeginCallbackFailed").d("reason", "mimeParsingFailed").d("status", parser->m_dataParsedStatus));
         return;
     }
 
@@ -105,15 +104,15 @@ void MimeParser::partBeginCallback(const MultipartHeaders &headers, void *userDa
     } else if (contentType.find(MIME_OCTET_STREAM_CONTENT_TYPE) != std::string::npos) {
         if (1 == headers.count(MIME_CONTENT_ID_FIELD_NAME)) {
             auto contentId = sanitizeContentId(headers[MIME_CONTENT_ID_FIELD_NAME]);
-            auto attachmentId = parser->m_attachmentManager->generateAttachmentId(
-                    parser->m_attachmentContextId, contentId);
+            auto attachmentId =
+                parser->m_attachmentManager->generateAttachmentId(parser->m_attachmentContextId, contentId);
 
             if (!parser->m_attachmentWriter && attachmentId != parser->m_attachmentIdBeingReceived) {
                 parser->m_attachmentWriter = parser->m_attachmentManager->createWriter(attachmentId);
                 if (!parser->m_attachmentWriter) {
                     ACSDK_ERROR(LX("partBeginCallbackFailed")
-                            .d("reason", "createWriterFailed")
-                            .d("attachmentId", attachmentId));
+                                    .d("reason", "createWriterFailed")
+                                    .d("attachmentId", attachmentId));
                 }
             }
         }
@@ -121,7 +120,7 @@ void MimeParser::partBeginCallback(const MultipartHeaders &headers, void *userDa
     }
 }
 
-MimeParser::DataParsedStatus MimeParser::writeDataToAttachment(const char *buffer, size_t size) {
+MimeParser::DataParsedStatus MimeParser::writeDataToAttachment(const char* buffer, size_t size) {
     // Error case.  We can't process the attachment.
     if (!m_attachmentWriter) {
         ACSDK_ERROR(LX("writeDataToAttachmentFailed").d("reason", "nullAttachmentWriter"));
@@ -139,14 +138,14 @@ MimeParser::DataParsedStatus MimeParser::writeDataToAttachment(const char *buffe
 
     // A low-level error with the Attachment occurred.
     if (AttachmentWriter::WriteStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE == writeStatus ||
-            AttachmentWriter::WriteStatus::ERROR_INTERNAL == writeStatus) {
+        AttachmentWriter::WriteStatus::ERROR_INTERNAL == writeStatus) {
         ACSDK_ERROR(LX("writeDataToAttachmentFailed").d("reason", "attachmentWriterInternalError"));
         return MimeParser::DataParsedStatus::ERROR;
     }
 
     // We're blocked on a slow reader.
     if (AttachmentWriter::WriteStatus::OK_BUFFER_FULL == writeStatus) {
-        ACSDK_DEBUG(LX("writeDataToAttachmentFailed").d("reason", "attachmentWriterBufferFull"));
+        setAttachmentWriterBufferFull(true);
         return MimeParser::DataParsedStatus::INCOMPLETE;
     }
 
@@ -156,16 +155,16 @@ MimeParser::DataParsedStatus MimeParser::writeDataToAttachment(const char *buffe
         return MimeParser::DataParsedStatus::ERROR;
     }
 
+    setAttachmentWriterBufferFull(false);
     return MimeParser::DataParsedStatus::OK;
 }
 
-void MimeParser::partDataCallback(const char *buffer, size_t size, void *userData) {
-    MimeParser *parser = static_cast<MimeParser*>(userData);
+void MimeParser::partDataCallback(const char* buffer, size_t size, void* userData) {
+    MimeParser* parser = static_cast<MimeParser*>(userData);
 
     if (parser->m_dataParsedStatus != MimeParser::DataParsedStatus::OK) {
-        ACSDK_ERROR(LX("partDataCallbackFailed")
-                .d("reason", "mimeParsingError")
-                .d("status", parser->m_dataParsedStatus));
+        ACSDK_ERROR(
+            LX("partDataCallbackFailed").d("reason", "mimeParsingError").d("status", parser->m_dataParsedStatus));
         return;
     }
 
@@ -186,9 +185,9 @@ void MimeParser::partDataCallback(const char *buffer, size_t size, void *userDat
     // Sanity check that we actually have correctly bounded work to do.
     if (0 == bytesToProcess || bytesToProcess > size) {
         ACSDK_ERROR(LX("partDataCallbackFailed")
-                .d("reason", "invalidBytesToProcess")
-                .d("bytesToProcess", bytesToProcess)
-                .d("totalSize", size));
+                        .d("reason", "invalidBytesToProcess")
+                        .d("bytesToProcess", bytesToProcess)
+                        .d("totalSize", size));
         parser->m_dataParsedStatus = MimeParser::DataParsedStatus::ERROR;
         return;
     }
@@ -213,13 +212,12 @@ void MimeParser::partDataCallback(const char *buffer, size_t size, void *userDat
     }
 }
 
-void MimeParser::partEndCallback(void *userData) {
-    MimeParser *parser = static_cast<MimeParser*>(userData);
+void MimeParser::partEndCallback(void* userData) {
+    MimeParser* parser = static_cast<MimeParser*>(userData);
 
     if (parser->m_dataParsedStatus != MimeParser::DataParsedStatus::OK) {
-        ACSDK_ERROR(LX("partEndCallbackFailed")
-                .d("reason", "mimeParsingError")
-                .d("status", parser->m_dataParsedStatus));
+        ACSDK_ERROR(
+            LX("partEndCallbackFailed").d("reason", "mimeParsingError").d("status", parser->m_dataParsedStatus));
         return;
     }
 
@@ -227,14 +225,14 @@ void MimeParser::partEndCallback(void *userData) {
         case MimeParser::ContentType::JSON:
             if (!parser->m_messageConsumer) {
                 ACSDK_ERROR(LX("partEndCallbackFailed")
-                        .d("reason", "nullMessageConsumer")
-                        .d("status", parser->m_dataParsedStatus));
+                                .d("reason", "nullMessageConsumer")
+                                .d("status", parser->m_dataParsedStatus));
                 break;
             }
             // Check there's data to send out, because in a re-drive we may skip a directive that's been seen before.
             if (parser->m_directiveBeingReceived != "") {
-                parser->m_messageConsumer->consumeMessage(parser->m_attachmentContextId,
-                        parser->m_directiveBeingReceived);
+                parser->m_messageConsumer->consumeMessage(
+                    parser->m_attachmentContextId, parser->m_directiveBeingReceived);
                 parser->m_directiveBeingReceived = "";
             }
             break;
@@ -253,12 +251,17 @@ void MimeParser::reset() {
     m_receivedFirstChunk = false;
     m_multipartReader.reset();
     m_dataParsedStatus = DataParsedStatus::OK;
+    closeActiveAttachmentWriter();
+    m_isAttachmentWriterBufferFull = false;
+}
+
+void MimeParser::setAttachmentContextId(const std::string& attachmentContextId) {
+    m_attachmentContextId = attachmentContextId;
 }
 
 void MimeParser::setBoundaryString(const std::string& boundaryString) {
     m_multipartReader.setBoundary(boundaryString);
 }
-
 
 /*
  * This function is designed to allow the processing of MIME multipart data in chunks.  If a chunk of data cannot
@@ -281,7 +284,7 @@ void MimeParser::setBoundaryString(const std::string& boundaryString) {
  * is not successful, restore the object to its initial state, allowing a re-drive.  Otherwise it is left in its
  * resulting state for subsequent data chunks.
  */
-MimeParser::DataParsedStatus MimeParser::feed(char *data, size_t length) {
+MimeParser::DataParsedStatus MimeParser::feed(char* data, size_t length) {
     // Capture old state in case the complete parse does not succeed (see function comments).
     auto oldReader = m_multipartReader;
     auto oldReceivedFirstChunk = m_receivedFirstChunk;
@@ -318,7 +321,7 @@ MimeParser::DataParsedStatus MimeParser::feed(char *data, size_t length) {
     return m_dataParsedStatus;
 }
 
-MessageConsumerInterface* MimeParser::getMessageConsumer() {
+std::shared_ptr<MessageConsumerInterface> MimeParser::getMessageConsumer() {
     return m_messageConsumer;
 }
 
@@ -343,5 +346,13 @@ void MimeParser::resetByteProgressCounters() {
     m_currentByteProgress = 0;
 }
 
-}// acl
-}// alexaClientSDK
+void MimeParser::setAttachmentWriterBufferFull(bool isFull) {
+    if (isFull == m_isAttachmentWriterBufferFull) {
+        return;
+    }
+    ACSDK_DEBUG0(LX("setAttachmentWriterBufferFull").d("full", isFull));
+    m_isAttachmentWriterBufferFull = isFull;
+}
+
+}  // namespace acl
+}  // namespace alexaClientSDK

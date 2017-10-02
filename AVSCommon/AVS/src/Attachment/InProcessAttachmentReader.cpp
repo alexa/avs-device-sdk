@@ -36,10 +36,10 @@ static const std::string TAG("InProcessAttachmentReader");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::unique_ptr<InProcessAttachmentReader> InProcessAttachmentReader::create(
-        Policy policy,
-        std::shared_ptr<SDSType> sds,
-        SDSTypeIndex offset,
-        SDSTypeReader::Reference reference) {
+    Policy policy,
+    std::shared_ptr<SDSType> sds,
+    SDSTypeIndex offset,
+    SDSTypeReader::Reference reference) {
     auto reader = std::unique_ptr<InProcessAttachmentReader>(new InProcessAttachmentReader(policy, sds));
 
     if (!reader->m_reader) {
@@ -61,8 +61,8 @@ InProcessAttachmentReader::InProcessAttachmentReader(Policy policy, std::shared_
         return;
     }
 
-    auto sdsPolicy = (AttachmentReader::Policy::BLOCKING == policy) ?
-                     SDSType::Reader::Policy::BLOCKING : SDSType::Reader::Policy::NONBLOCKING;
+    auto sdsPolicy = (AttachmentReader::Policy::BLOCKING == policy) ? SDSType::Reader::Policy::BLOCKING
+                                                                    : SDSType::Reader::Policy::NONBLOCKING;
 
     m_reader = sds->createReader(sdsPolicy);
 
@@ -77,7 +77,10 @@ InProcessAttachmentReader::~InProcessAttachmentReader() {
 }
 
 std::size_t InProcessAttachmentReader::read(
-        void* buf, std::size_t numBytes, ReadStatus* readStatus, std::chrono::milliseconds timeoutMs) {
+    void* buf,
+    std::size_t numBytes,
+    ReadStatus* readStatus,
+    std::chrono::milliseconds timeoutMs) {
     if (!readStatus) {
         ACSDK_ERROR(LX("readFailed").d("reason", "read status is nullptr"));
         return 0;
@@ -170,7 +173,7 @@ void InProcessAttachmentReader::close(ClosePoint closePoint) {
     }
 }
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

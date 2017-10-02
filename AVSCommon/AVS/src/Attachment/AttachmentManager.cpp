@@ -49,19 +49,19 @@ constexpr std::chrono::minutes AttachmentManager::ATTACHMENT_MANAGER_TIMOUT_MINU
 static const std::string ATTACHMENT_ID_COMBINING_SUBSTRING = ":";
 
 AttachmentManager::AttachmentManagementDetails::AttachmentManagementDetails() :
-    creationTime{std::chrono::steady_clock::now()} {
+        creationTime{std::chrono::steady_clock::now()} {
 }
 
 AttachmentManager::AttachmentManager(AttachmentType attachmentType) :
-    m_attachmentType{attachmentType}, m_attachmentExpirationMinutes{ATTACHMENT_MANAGER_TIMOUT_MINUTES_DEFAULT} {
+        m_attachmentType{attachmentType},
+        m_attachmentExpirationMinutes{ATTACHMENT_MANAGER_TIMOUT_MINUTES_DEFAULT} {
 }
 
-std::string AttachmentManager::generateAttachmentId(
-        const std::string & contextId, const std::string & contentId) const {
+std::string AttachmentManager::generateAttachmentId(const std::string& contextId, const std::string& contentId) const {
     if (contextId.empty() && contentId.empty()) {
         ACSDK_ERROR(LX("generateAttachmentIdFailed")
-                .d("reason", "contextId and contentId are empty")
-                .d("result", "empty string"));
+                        .d("reason", "contextId and contentId are empty")
+                        .d("result", "empty string"));
         return "";
     }
     if (contextId.empty()) {
@@ -81,8 +81,8 @@ bool AttachmentManager::setAttachmentTimeoutMinutes(std::chrono::minutes minutes
         int minimumMinutes = ATTACHMENT_MANAGER_TIMOUT_MINUTES_MINIMUM.count();
         std::string minutePrintString = (1 == minimumMinutes) ? " minute" : " minutes";
         ACSDK_ERROR(LX("setAttachmentTimeoutError")
-                .d("reason", "timeout parameter less than minimum value")
-                .d("attemptedSetting", std::to_string(minimumMinutes) + minutePrintString));
+                        .d("reason", "timeout parameter less than minimum value")
+                        .d("attemptedSetting", std::to_string(minimumMinutes) + minutePrintString));
         return false;
     }
 
@@ -91,14 +91,12 @@ bool AttachmentManager::setAttachmentTimeoutMinutes(std::chrono::minutes minutes
     return true;
 }
 
-AttachmentManager::AttachmentManagementDetails & AttachmentManager::getDetailsLocked(const std::string & attachmentId) {
-
+AttachmentManager::AttachmentManagementDetails& AttachmentManager::getDetailsLocked(const std::string& attachmentId) {
     // This call ensures the details object exists, whether updated previously, or as a new object.
-    auto & details = m_attachmentDetailsMap[attachmentId];
+    auto& details = m_attachmentDetailsMap[attachmentId];
 
     // If it's a new object, the inner attachment has not yet been created.  Let's go do that.
     if (!details.attachment) {
-
         // Lack of default case will allow compiler to generate warnings if a case is unhandled.
         switch (m_attachmentType) {
             // The in-process attachment type.
@@ -118,10 +116,10 @@ AttachmentManager::AttachmentManagementDetails & AttachmentManager::getDetailsLo
     return details;
 }
 
-std::unique_ptr<AttachmentWriter> AttachmentManager::createWriter(const std::string & attachmentId) {
+std::unique_ptr<AttachmentWriter> AttachmentManager::createWriter(const std::string& attachmentId) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    auto & details = getDetailsLocked(attachmentId);
+    auto& details = getDetailsLocked(attachmentId);
     if (!details.attachment) {
         ACSDK_ERROR(LX("createWriterFailed").d("reason", "Could not access attachment"));
         return nullptr;
@@ -133,10 +131,11 @@ std::unique_ptr<AttachmentWriter> AttachmentManager::createWriter(const std::str
 }
 
 std::unique_ptr<AttachmentReader> AttachmentManager::createReader(
-        const std::string & attachmentId, AttachmentReader::Policy policy) {
+    const std::string& attachmentId,
+    AttachmentReader::Policy policy) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    auto & details = getDetailsLocked(attachmentId);
+    auto& details = getDetailsLocked(attachmentId);
     if (!details.attachment) {
         ACSDK_ERROR(LX("createWriterFailed").d("reason", "Could not access attachment"));
         return nullptr;
@@ -151,8 +150,8 @@ void AttachmentManager::removeExpiredAttachmentsLocked() {
     std::vector<std::string> idsToErase;
     auto now = std::chrono::steady_clock::now();
 
-    for (auto & iter : m_attachmentDetailsMap) {
-        auto & details = iter.second;
+    for (auto& iter : m_attachmentDetailsMap) {
+        auto& details = iter.second;
 
         /*
          * Our criteria for releasing an AttachmentManagementDetails object - either:
@@ -163,7 +162,7 @@ void AttachmentManager::removeExpiredAttachmentsLocked() {
         auto attachmentLifetime = std::chrono::duration_cast<std::chrono::minutes>(now - details.creationTime);
 
         if ((details.attachment->hasCreatedReader() && details.attachment->hasCreatedWriter()) ||
-                attachmentLifetime > m_attachmentExpirationMinutes) {
+            attachmentLifetime > m_attachmentExpirationMinutes) {
             idsToErase.push_back(iter.first);
         }
     }
@@ -173,7 +172,7 @@ void AttachmentManager::removeExpiredAttachmentsLocked() {
     }
 }
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

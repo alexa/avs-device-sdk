@@ -16,18 +16,32 @@
  */
 
 #include "AVSCommon/AVS/MessageRequest.h"
+#include "AVSCommon/Utils/Logger/Logger.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace avs {
 
-MessageRequest::MessageRequest(const std::string & jsonContent,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) :
-        m_jsonContent{jsonContent}, m_attachmentReader{attachmentReader} {
+using namespace sdkInterfaces;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("MessageRequest");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+MessageRequest::MessageRequest(
+    const std::string& jsonContent,
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) :
+        m_jsonContent{jsonContent},
+        m_attachmentReader{attachmentReader} {
 }
 
 MessageRequest::~MessageRequest() {
-
 }
 
 std::string MessageRequest::getJsonContent() {
@@ -38,45 +52,103 @@ std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> MessageRequest::ge
     return m_attachmentReader;
 }
 
-void MessageRequest::onSendCompleted(Status status) {
-    // default no-op
+void MessageRequest::sendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status) {
+    std::unique_lock<std::mutex> lock{m_observerMutex};
+    auto observers = m_observers;
+    lock.unlock();
+
+    for (auto observer : observers) {
+        observer->onSendCompleted(status);
+    }
 }
 
-void MessageRequest::onExceptionReceived(const std::string & exceptionMessage) {
-    // default no-op
+void MessageRequest::exceptionReceived(const std::string& exceptionMessage) {
+    ACSDK_ERROR(LX("onExceptionReceived").d("exception", exceptionMessage));
+
+    std::unique_lock<std::mutex> lock{m_observerMutex};
+    auto observers = m_observers;
+    lock.unlock();
+
+    for (auto observer : observers) {
+        observer->onExceptionReceived(exceptionMessage);
+    }
 }
 
-std::string MessageRequest::statusToString(Status status) {
+void MessageRequest::addObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageRequestObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+
+    std::lock_guard<std::mutex> lock{m_observerMutex};
+    m_observers.insert(observer);
+}
+
+void MessageRequest::removeObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageRequestObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("removeObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+
+    std::lock_guard<std::mutex> lock{m_observerMutex};
+    m_observers.erase(observer);
+}
+
+using namespace avsCommon::sdkInterfaces;
+
+std::string MessageRequest::statusToString(MessageRequestObserverInterface::Status status) {
     switch (status) {
-        case Status::PENDING:
+        case MessageRequestObserverInterface::Status::PENDING:
             return "PENDING";
-        case Status::SUCCESS:
+        case MessageRequestObserverInterface::Status::SUCCESS:
             return "SUCCESS";
-        case Status::NOT_CONNECTED:
+        case MessageRequestObserverInterface::Status::NOT_CONNECTED:
             return "NOT_CONNECTED";
-        case Status::NOT_SYNCHRONIZED:
+        case MessageRequestObserverInterface::Status::NOT_SYNCHRONIZED:
             return "NOT_SYNCHRONIZED";
-        case Status::TIMEDOUT:
+        case MessageRequestObserverInterface::Status::TIMEDOUT:
             return "TIMEDOUT";
-        case Status::PROTOCOL_ERROR:
+        case MessageRequestObserverInterface::Status::PROTOCOL_ERROR:
             return "PROTOCOL_ERROR";
-        case Status::INTERNAL_ERROR:
+        case MessageRequestObserverInterface::Status::INTERNAL_ERROR:
             return "INTERNAL_ERROR";
-        case Status::SERVER_INTERNAL_ERROR:
+        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR:
             return "SERVER_INTERNAL_ERROR";
-        case Status::REFUSED:
+        case MessageRequestObserverInterface::Status::REFUSED:
             return "REFUSED";
-        case Status::CANCELED:
+        case MessageRequestObserverInterface::Status::CANCELED:
             return "CANCELED";
-        case Status::THROTTLED:
+        case MessageRequestObserverInterface::Status::THROTTLED:
             return "THROTTLED";
-        case Status::INVALID_AUTH:
+        case MessageRequestObserverInterface::Status::INVALID_AUTH:
             return "INVALID_AUTH";
     }
 
     return "sendMessageStatusToString_UNHANDLED_ERROR";
 }
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+bool MessageRequest::isServerStatus(MessageRequestObserverInterface::Status status) {
+    switch (status) {
+        case MessageRequestObserverInterface::Status::SUCCESS:
+        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR:
+        case MessageRequestObserverInterface::Status::CANCELED:
+        case MessageRequestObserverInterface::Status::THROTTLED:
+            return true;
+        case MessageRequestObserverInterface::Status::PENDING:
+        case MessageRequestObserverInterface::Status::NOT_CONNECTED:
+        case MessageRequestObserverInterface::Status::NOT_SYNCHRONIZED:
+        case MessageRequestObserverInterface::Status::TIMEDOUT:
+        case MessageRequestObserverInterface::Status::PROTOCOL_ERROR:
+        case MessageRequestObserverInterface::Status::INTERNAL_ERROR:
+        case MessageRequestObserverInterface::Status::REFUSED:
+        case MessageRequestObserverInterface::Status::INVALID_AUTH:
+            return false;
+    }
+
+    return false;
+}
+
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

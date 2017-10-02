@@ -45,11 +45,13 @@ public:
      * @param errorDescription Additional error details for logging and troubleshooting.
      */
     virtual void sendExceptionEncountered(
-        const std::string& unparsedDirective, avs::ExceptionErrorType error, const std::string& errorDescription) = 0;
+        const std::string& unparsedDirective,
+        avs::ExceptionErrorType error,
+        const std::string& errorDescription) = 0;
 };
 
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ASV_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_EXCEPTION_ENCOUNTERED_SENDER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_ASV_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_EXCEPTION_ENCOUNTERED_SENDER_INTERFACE_H_

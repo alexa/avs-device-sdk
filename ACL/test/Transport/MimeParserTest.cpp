@@ -68,14 +68,14 @@ public:
      * Construct the objects we will use across tests.
      */
     void SetUp() override {
-
         m_attachmentManager = std::make_shared<TestableAttachmentManager>();
 
         m_testableMessageObserver = std::make_shared<TestableMessageObserver>();
         m_testableConsumer = std::make_shared<TestableConsumer>();
         m_testableConsumer->setMessageObserver(m_testableMessageObserver);
 
-        m_parser = std::make_shared<MimeParser>(m_testableConsumer.get(), m_attachmentManager, TEST_CONTEXT_ID);
+        m_parser = std::make_shared<MimeParser>(m_testableConsumer, m_attachmentManager);
+        m_parser->setAttachmentContextId(TEST_CONTEXT_ID);
         m_parser->setBoundaryString(MIME_TEST_BOUNDARY_STRING);
     }
 
@@ -87,7 +87,7 @@ public:
      * @param data The MIME string to be parsed.
      * @param numberIterations The number of segments the MIME string is to be broken into, and then fed to the parser.
      */
-    void feedParser(const std::string & data, int numberIterations = 1) {
+    void feedParser(const std::string& data, int numberIterations = 1) {
         // Here we're simulating an ACL stream.  We've got a mime string that we will feed to the mime parser in chunks.
         // If any chunk fails (due to simulated attachment failing to write), we will re-drive it.
 
@@ -103,7 +103,7 @@ public:
             int bytesToFeed = bytesRemaining < writeQuantum ? bytesRemaining : writeQuantum;
 
             if (MimeParser::DataParsedStatus::OK ==
-                    m_parser->feed(const_cast<char*>(&(data.c_str()[numberBytesWritten])), bytesToFeed)) {
+                m_parser->feed(const_cast<char*>(&(data.c_str()[numberBytesWritten])), bytesToFeed)) {
                 numberBytesWritten += bytesToFeed;
             }
 
@@ -161,7 +161,7 @@ TEST_F(MimeParserTest, testDirectiveReceivedMultiWrite) {
  */
 TEST_F(MimeParserTest, testAttachmentReceivedSingleWrite) {
     m_mimeParts.push_back(std::make_shared<TestMimeAttachmentPart>(
-            TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
+        TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
 
     auto mimeString = constructTestMimeString(m_mimeParts, MIME_TEST_BOUNDARY_STRING);
     feedParser(mimeString);
@@ -174,7 +174,7 @@ TEST_F(MimeParserTest, testAttachmentReceivedSingleWrite) {
  */
 TEST_F(MimeParserTest, testAttachmentReceivedMultiWrite) {
     m_mimeParts.push_back(std::make_shared<TestMimeAttachmentPart>(
-            TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
+        TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
 
     auto mimeString = constructTestMimeString(m_mimeParts, MIME_TEST_BOUNDARY_STRING);
     feedParser(mimeString, TEST_MULTI_WRITE_ITERATIONS);
@@ -189,7 +189,7 @@ TEST_F(MimeParserTest, testAttachmentReceivedMultiWrite) {
 TEST_F(MimeParserTest, testDirectiveAndAttachmentReceivedSingleWrite) {
     m_mimeParts.push_back(std::make_shared<TestMimeJsonPart>(TEST_DATA_SIZE, m_testableMessageObserver));
     m_mimeParts.push_back(std::make_shared<TestMimeAttachmentPart>(
-            TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
+        TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
 
     auto mimeString = constructTestMimeString(m_mimeParts, MIME_TEST_BOUNDARY_STRING);
     feedParser(mimeString);
@@ -204,7 +204,7 @@ TEST_F(MimeParserTest, testDirectiveAndAttachmentReceivedSingleWrite) {
 TEST_F(MimeParserTest, testDirectiveAndAttachmentReceivedMultiWrite) {
     m_mimeParts.push_back(std::make_shared<TestMimeJsonPart>(TEST_DATA_SIZE, m_testableMessageObserver));
     m_mimeParts.push_back(std::make_shared<TestMimeAttachmentPart>(
-            TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
+        TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
 
     auto mimeString = constructTestMimeString(m_mimeParts, MIME_TEST_BOUNDARY_STRING);
     feedParser(mimeString, TEST_MULTI_WRITE_ITERATIONS);
@@ -212,11 +212,11 @@ TEST_F(MimeParserTest, testDirectiveAndAttachmentReceivedMultiWrite) {
     validateMimePartsParsedOk();
 }
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

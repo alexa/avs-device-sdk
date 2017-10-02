@@ -65,5 +65,5 @@ void OffsetManager::clear() {
     m_isSeekPointSet = false;
 }
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK

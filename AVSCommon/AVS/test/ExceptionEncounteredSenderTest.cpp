@@ -15,7 +15,6 @@
  * permissions and limitations under the License.
  */
 
-
 #include <memory>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -113,7 +112,7 @@ public:
 
 private:
     /// The Unparsed Directive string to use for this ExceptionEncountered event
-    std::string  m_unparsedDirective;
+    std::string m_unparsedDirective;
 
     /// The Error type to use for this ExceptionEncountered event
     avs::ExceptionErrorType m_error;
@@ -122,10 +121,13 @@ private:
     std::string m_errorDescription;
 };
 
-ExceptionEncounteredEvent::ExceptionEncounteredEvent(const std::string& unparsedDirective,
-        avs::ExceptionErrorType error,
-        const std::string& errorDescription) :
-        m_unparsedDirective{unparsedDirective}, m_error{error}, m_errorDescription{errorDescription} {
+ExceptionEncounteredEvent::ExceptionEncounteredEvent(
+    const std::string& unparsedDirective,
+    avs::ExceptionErrorType error,
+    const std::string& errorDescription) :
+        m_unparsedDirective{unparsedDirective},
+        m_error{error},
+        m_errorDescription{errorDescription} {
 }
 
 void ExceptionEncounteredEvent::send(std::shared_ptr<avs::ExceptionEncounteredSender> exceptionEncounteredSender) {
@@ -135,11 +137,9 @@ void ExceptionEncounteredEvent::send(std::shared_ptr<avs::ExceptionEncounteredSe
 void ExceptionEncounteredEvent::verifyMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) {
     rapidjson::Document document;
     document.Parse(request->getJsonContent().c_str());
-    EXPECT_FALSE(document.HasParseError()) <<
-        "rapidjson detected a parsing error at offset:" <<
-        std::to_string(document.GetErrorOffset()) <<
-        ", error message: " <<
-        GetParseError_En(document.GetParseError());
+    EXPECT_FALSE(document.HasParseError())
+        << "rapidjson detected a parsing error at offset:" << std::to_string(document.GetErrorOffset())
+        << ", error message: " << GetParseError_En(document.GetParseError());
 
     auto context = document.FindMember(MESSAGE_CONTEXT_KEY);
     ASSERT_NE(context, document.MemberEnd());
@@ -173,7 +173,7 @@ void ExceptionEncounteredEvent::verifyMessage(std::shared_ptr<avsCommon::avs::Me
 }
 
 /// Test harness for @c ExceptionEncounteredSender class.
-class ExceptionEncounteredSenderTest: public ::testing::Test {
+class ExceptionEncounteredSenderTest : public ::testing::Test {
 public:
     /// Set up the test harness for running a test.
     void SetUp() override;
@@ -207,16 +207,15 @@ void ExceptionEncounteredSenderTest::SetUp() {
 }
 
 bool ExceptionEncounteredSenderTest::testExceptionEncounteredSucceeds(
-        const std::string& unparsedDirective,
-        avs::ExceptionErrorType error,
-        const std::string& errorDescription) {
+    const std::string& unparsedDirective,
+    avs::ExceptionErrorType error,
+    const std::string& errorDescription) {
     bool done = false;
-    m_exceptionEncounteredEvent = std::make_shared<ExceptionEncounteredEvent>(
-        unparsedDirective, error, errorDescription);
+    m_exceptionEncounteredEvent =
+        std::make_shared<ExceptionEncounteredEvent>(unparsedDirective, error, errorDescription);
 
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
-        .WillOnce(
-            Invoke(m_exceptionEncounteredEvent.get(), &ExceptionEncounteredEvent::verifyMessage));
+        .WillOnce(Invoke(m_exceptionEncounteredEvent.get(), &ExceptionEncounteredEvent::verifyMessage));
     m_exceptionEncounteredEvent->send(m_exceptionEncounteredSender);
     done = true;
     return done;
@@ -228,9 +227,9 @@ bool ExceptionEncounteredSenderTest::testExceptionEncounteredSucceeds(
  */
 TEST_F(ExceptionEncounteredSenderTest, errorTypeUnexpectedInformationReceived) {
     ASSERT_TRUE(testExceptionEncounteredSucceeds(
-                UNPARSED_DIRECTIVE_JSON_STRING,
-                avs::ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED,
-                "The directive sent was malformed"));
+        UNPARSED_DIRECTIVE_JSON_STRING,
+        avs::ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED,
+        "The directive sent was malformed"));
 }
 /*
  * This function sends @c ExceptionErrorType::UNSUPPORTED_OPERATION and verifies that
@@ -238,9 +237,7 @@ TEST_F(ExceptionEncounteredSenderTest, errorTypeUnexpectedInformationReceived) {
  */
 TEST_F(ExceptionEncounteredSenderTest, errorTypeUnexpectedOperation) {
     ASSERT_TRUE(testExceptionEncounteredSucceeds(
-                UNPARSED_DIRECTIVE_JSON_STRING,
-                avs::ExceptionErrorType::UNSUPPORTED_OPERATION,
-                "Operation not supported"));
+        UNPARSED_DIRECTIVE_JSON_STRING, avs::ExceptionErrorType::UNSUPPORTED_OPERATION, "Operation not supported"));
 }
 /*
  * This function sends @c ExceptionErrorType::INTERNAL_ERROR and verifies that
@@ -248,10 +245,8 @@ TEST_F(ExceptionEncounteredSenderTest, errorTypeUnexpectedOperation) {
  */
 TEST_F(ExceptionEncounteredSenderTest, errorTypeInternalError) {
     ASSERT_TRUE(testExceptionEncounteredSucceeds(
-                UNPARSED_DIRECTIVE_JSON_STRING,
-                avs::ExceptionErrorType::INTERNAL_ERROR,
-                "An error occurred with the device"));
+        UNPARSED_DIRECTIVE_JSON_STRING, avs::ExceptionErrorType::INTERNAL_ERROR, "An error occurred with the device"));
 }
-} // namespace test
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

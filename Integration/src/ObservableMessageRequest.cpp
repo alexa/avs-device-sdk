@@ -38,15 +38,16 @@ using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 
 ObservableMessageRequest::ObservableMessageRequest(
-        const std::string & jsonContent,
-        std::shared_ptr<AttachmentReader> attachmentReader) :
+    const std::string& jsonContent,
+    std::shared_ptr<AttachmentReader> attachmentReader) :
         MessageRequest{jsonContent, attachmentReader},
-        m_sendMessageStatus(MessageRequest::Status::PENDING),
+        m_sendMessageStatus(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::PENDING),
         m_sendCompleted{false},
         m_exceptionReceived{false} {
 }
 
-void ObservableMessageRequest::onSendCompleted(MessageRequest::Status sendMessageStatus) {
+void ObservableMessageRequest::sendCompleted(
+    avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status sendMessageStatus) {
     std::lock_guard<std::mutex> lock(m_mutex);
     ACSDK_DEBUG(LX("onSendCompleted").d("status", MessageRequest::statusToString(sendMessageStatus)));
     m_sendMessageStatus = sendMessageStatus;
@@ -54,20 +55,21 @@ void ObservableMessageRequest::onSendCompleted(MessageRequest::Status sendMessag
     m_wakeTrigger.notify_all();
 }
 
-MessageRequest::Status ObservableMessageRequest::getSendMessageStatus() const {
+avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status ObservableMessageRequest::getSendMessageStatus()
+    const {
     std::lock_guard<std::mutex> lock(m_mutex);
     return m_sendMessageStatus;
 }
 
 bool ObservableMessageRequest::waitFor(
-        const MessageRequest::Status sendMessageStatus, const std::chrono::seconds duration) {
+    const avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status sendMessageStatus,
+    const std::chrono::seconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
-    return m_wakeTrigger.wait_for(lock, duration, [this, sendMessageStatus]() {
-        return sendMessageStatus == m_sendMessageStatus;
-    });
+    return m_wakeTrigger.wait_for(
+        lock, duration, [this, sendMessageStatus]() { return sendMessageStatus == m_sendMessageStatus; });
 }
 
-void ObservableMessageRequest::onExceptionReceived(const std::string & exceptionMessage) {
+void ObservableMessageRequest::exceptionReceived(const std::string& exceptionMessage) {
     ACSDK_DEBUG(LX("onExceptionReceived").d("status", exceptionMessage));
     m_exceptionReceived = true;
 }
@@ -80,5 +82,5 @@ bool ObservableMessageRequest::wasExceptionReceived() {
     return m_exceptionReceived;
 }
 
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace integration
+}  // namespace alexaClientSDK

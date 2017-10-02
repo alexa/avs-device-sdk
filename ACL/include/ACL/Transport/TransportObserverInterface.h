@@ -28,7 +28,7 @@ namespace acl {
  * An interface class which allows a derived class to observe a Transport implementation.
  */
 class TransportObserverInterface {
-  public:
+public:
     /**
      * Destructor.
      */
@@ -49,10 +49,9 @@ class TransportObserverInterface {
      * Called when the server asks the client to reconnect
      */
     virtual void onServerSideDisconnect() = 0;
-
 };
 
-} // acl
-} // alexaClientSDK
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_TRANSPORT_OBSERVER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_TRANSPORT_OBSERVER_INTERFACE_H_

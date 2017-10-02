@@ -29,12 +29,12 @@ std::mutex ConsolePrinter::m_mutex;
 ConsolePrinter::ConsolePrinter() : avsCommon::utils::logger::Logger(avsCommon::utils::logger::Level::UNKNOWN) {
 }
 
-void ConsolePrinter::simplePrint(const std::string &stringToPrint) {
+void ConsolePrinter::simplePrint(const std::string& stringToPrint) {
     std::lock_guard<std::mutex> lock{m_mutex};
     std::cout << stringToPrint << std::endl;
 }
 
-void ConsolePrinter::prettyPrint(const std::string &stringToPrint) {
+void ConsolePrinter::prettyPrint(const std::string& stringToPrint) {
     std::lock_guard<std::mutex> lock{m_mutex};
     std::string line(stringToPrint.size() + 16, '#');
     std::cout << line << std::endl;
@@ -43,13 +43,13 @@ void ConsolePrinter::prettyPrint(const std::string &stringToPrint) {
 }
 
 void ConsolePrinter::emit(
-        avsCommon::utils::logger::Level level,
-        std::chrono::system_clock::time_point time,
-        const char *threadMoniker,
-        const char *text) {
+    avsCommon::utils::logger::Level level,
+    std::chrono::system_clock::time_point time,
+    const char* threadMoniker,
+    const char* text) {
     std::lock_guard<std::mutex> lock{m_mutex};
     std::cout << avsCommon::utils::logger::formatLogString(level, time, threadMoniker, text) << std::endl;
 }
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK

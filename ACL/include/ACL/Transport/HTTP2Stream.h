@@ -26,6 +26,7 @@
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/MessageRequest.h>
+#include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
 
 #include "ACL/Transport/CurlEasyHandleWrapper.h"
 #include "ACL/Transport/MimeParser.h"
@@ -42,7 +43,7 @@ class HTTP2Transport;
  */
 class HTTP2Stream {
 public:
-    enum HTTPResponseCodes{
+    enum HTTPResponseCodes {
         /// No HTTP response received.
         NO_RESPONSE_RECEIVED = 0,
         /// HTTP Success with reponse payload.
@@ -57,7 +58,8 @@ public:
      * @param messageConsumer The MessageConsumerInterface which should receive messages from AVS.
      * @param attachmentManager The attachment manager.
      */
-    HTTP2Stream(MessageConsumerInterface *messageConsumer,
+    HTTP2Stream(
+        std::shared_ptr<MessageConsumerInterface> messageConsumer,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager);
 
     /**
@@ -70,8 +72,10 @@ public:
      * @param request The MessageRequest to post
      * @returns true if setup was successful
      */
-    bool initPost(const std::string& url, const std::string& authToken,
-          std::shared_ptr<avsCommon::avs::MessageRequest> request);
+    bool initPost(
+        const std::string& url,
+        const std::string& authToken,
+        std::shared_ptr<avsCommon::avs::MessageRequest> request);
 
     /**
      * Initializes streams that are supposed to perform an HTTP GET
@@ -117,19 +121,19 @@ public:
      *
      * @param status The completion status.
      */
-    void notifyRequestObserver(avsCommon::avs::MessageRequest::Status status);
+    void notifyRequestObserver(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status);
 
     /**
      * Callback that gets executed when data is received from the server
      * See CurlEasyHandleWrapper::CurlCallback for details
      */
-    static size_t writeCallback(char *data, size_t size, size_t nmemb, void *userData);
+    static size_t writeCallback(char* data, size_t size, size_t nmemb, void* userData);
 
     /**
      * Callback that gets executed when HTTP headers are received from the server
      * See CurlEasyHandleWrapper::CurlCallback for details
      */
-    static size_t headerCallback(char *data, size_t size, size_t nmemb, void *userData);
+    static size_t headerCallback(char* data, size_t size, size_t nmemb, void* userData);
 
     /**
      * Callback that gets executed when the server requires data.
@@ -141,7 +145,7 @@ public:
      * @param userData Some user data passed in with CURLOPT_READDATA.
      * @return The amount of bytes read.
      */
-    static size_t readCallback(char *data, size_t size, size_t nmemb, void *userData);
+    static size_t readCallback(char* data, size_t size, size_t nmemb, void* userData);
 
     /**
      * Sets the max amount of time in seconds the stream can take. If not set explicitly there is no timeout.
@@ -161,19 +165,21 @@ public:
     bool setConnectionTimeout(const std::chrono::seconds timeoutSeconds);
 
     /**
-     * Update the paused status of the stream.  This will take actual effect at the next point of usage with respect
-     * to the underlying network library implementation.
-     *
-     * @param isPaused The new value to set the paused state.
+     * Resume network IO for this stream
      */
-    void setPaused(bool isPaused);
+    void resumeNetworkIO();
 
     /**
-     * Queries whether this stream is paused.
-     *
-     * @return Whether the stream is paused or not.
+     * Return whether this stream is blocked on local IO
      */
-    bool isPaused() const;
+    bool isBlockedOnLocalIO() const;
+
+    /**
+     * Set the logical stream ID for this stream.
+     *
+     * @param logicalStreamId The new value for this streams logical stream ID.
+     */
+    void setLogicalStreamId(int logicalStreamId);
 
     /**
      * Get the logical ID of this stream.
@@ -189,7 +195,7 @@ public:
      * @tparam TickPeriod @c std::ratio specifying ticks per second.
      * @param duration Max time the stream may make no progress before @c getHasProgressTimedOut() returns true.
      */
-    template<class TickType, class TickPeriod = std::ratio<1>>
+    template <class TickType, class TickPeriod = std::ratio<1>>
     void setProgressTimeout(std::chrono::duration<TickType, TickPeriod> duration);
 
     /**
@@ -208,12 +214,6 @@ private:
     bool setCommonOptions(const std::string& url, const std::string& authToken);
 
     /**
-     * A static counter to ensure each newly created stream has a different id.  The notion of a streamId is needed
-     * to provide a per-HTTP/2-stream context for any given attachment received from AVS.  AVS can only guarantee that
-     * the identifying 'contentId' for an attachment is unique within a HTTP/2 stream, hence this variable.
-     */
-    static unsigned int m_streamIdCounter;
-    /**
      * The logical id for this particular object instance.  (see note for @c m_streamIdCounter in this class).
      * @note This is NOT the actual HTTP/2 stream id.  Instead, this is an id which this class generates which is
      * guaranteed to be different from the id of other objects of this class.  Also, we make an attempt to emulate
@@ -226,8 +226,14 @@ private:
     MimeParser m_parser;
     /// The current request being sent on this HTTP/2 stream.
     std::shared_ptr<avsCommon::avs::MessageRequest> m_currentRequest;
-    /// A local variable to track if this stream is paused with respect to libcurl management.
-    bool m_isPaused;
+    /// Whether the send operation has completed.
+    bool m_hasSendCompleted;
+    /// Whether send to network is blocked on local reads (i.e. awaiting new data to send).
+    bool m_isNetworkSendBlockedOnLocalRead;
+    /// Whether we have received any data
+    bool m_hasReceiveStarted;
+    /// Whether receive from network is blocked on local writes (i.e. buffer full).
+    bool m_isNetworkReceiveBlockedOnLocalWrite;
     /**
      * The exception message being received from AVS by this stream.  It may be built up over several calls if either
      * the write quanta are small, or if the message is long.
@@ -239,12 +245,12 @@ private:
     std::atomic<std::chrono::steady_clock::rep> m_timeOfLastTransfer;
 };
 
-template<class TickType, class TickPeriod>
+template <class TickType, class TickPeriod>
 void HTTP2Stream::setProgressTimeout(std::chrono::duration<TickType, TickPeriod> duration) {
     m_progressTimeout = std::chrono::duration_cast<std::chrono::steady_clock::duration>(duration).count();
 };
 
-} // acl
-} // alexaClientSDK
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_STREAM_H_
+#endif  // ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_STREAM_H_

@@ -40,8 +40,8 @@ public:
      * @return @c nullptr if the inputs are not defined, else a new instance of @c EndpointHandler.
      */
     static std::shared_ptr<EndpointHandler> create(
-            std::shared_ptr<avsCommon::sdkInterfaces::AVSEndpointAssignerInterface> avsEndpointAssigner,
-            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSEndpointAssignerInterface> avsEndpointAssigner,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
 
     /// @name DirectiveHandlerInterface and CapabilityAgent Functions
     /// @{
@@ -51,7 +51,7 @@ public:
     void handleDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) override;
     void cancelDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) override;
     /// @}
-    
+
 private:
     /**
      * Constructor.
@@ -60,8 +60,8 @@ private:
      * @param exceptionEncounteredSender The interface that sends exceptions.
      */
     EndpointHandler(
-            std::shared_ptr<avsCommon::sdkInterfaces::AVSEndpointAssignerInterface> avsEndpointAssigner,
-            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSEndpointAssignerInterface> avsEndpointAssigner,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
 
     /**
      * Remove the directive (if possible) while invoking callbacks to @c DirectiveHandlerResultInterface.
@@ -71,17 +71,16 @@ private:
      * @param report The report that we will pass to @c setFailed in case @c isFailure is @c true.
      */
     void removeDirectiveGracefully(
-            std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info,
-            bool isFailure = false,
-            const std::string &report = "");
+        std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info,
+        bool isFailure = false,
+        const std::string& report = "");
 
     /// The @c AVSEndpointAssignerInterface used to signal endpoint change.
     std::shared_ptr<avsCommon::sdkInterfaces::AVSEndpointAssignerInterface> m_avsEndpointAssigner;
 };
 
+}  // namespace system
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-} // namespace system
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
-
-#endif // ALEXACLIENTSDK_CAPABILITY_AGENTS_SYSTEM_INCLUDE_SYSTEM_ENDPOINT_HANDLER_H_
+#endif  // ALEXACLIENTSDK_CAPABILITY_AGENTS_SYSTEM_INCLUDE_SYSTEM_ENDPOINT_HANDLER_H_

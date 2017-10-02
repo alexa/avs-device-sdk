@@ -70,7 +70,7 @@ static std::string valueToString(const Value& value) {
  */
 static void mergeDocument(const std::string& path, Value& out, Value& in, Document::AllocatorType& allocator) {
     for (auto inIt = in.MemberBegin(); inIt != in.MemberEnd(); inIt++) {
-        auto outIt =  out.FindMember(inIt->name);
+        auto outIt = out.FindMember(inIt->name);
         if (outIt != out.MemberEnd() && inIt->value != outIt->value) {
             auto memberPath = path + "." + outIt->name.GetString();
             if (outIt->value.IsObject()) {
@@ -78,10 +78,10 @@ static void mergeDocument(const std::string& path, Value& out, Value& in, Docume
                 mergeDocument(memberPath, outIt->value, inIt->value, allocator);
             } else {
                 ACSDK_DEBUG(LX("mergeDocument")
-                        .d("reason", "valueReplaced")
-                        .d("path", memberPath)
-                        .sensitive("old", valueToString(outIt->value))
-                        .sensitive("new", valueToString(inIt->value)));
+                                .d("reason", "valueReplaced")
+                                .d("path", memberPath)
+                                .sensitive("old", valueToString(outIt->value))
+                                .sensitive("new", valueToString(inIt->value)));
                 outIt->value = inIt->value;
             }
         } else {
@@ -90,7 +90,7 @@ static void mergeDocument(const std::string& path, Value& out, Value& in, Docume
     }
 }
 
-bool ConfigurationNode::initialize(const std::vector<std::istream *> &jsonStreams) {
+bool ConfigurationNode::initialize(const std::vector<std::istream*>& jsonStreams) {
     std::lock_guard<std::mutex> lock(m_mutex);
     if (m_root) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "alreadyInitialized"));
@@ -107,9 +107,9 @@ bool ConfigurationNode::initialize(const std::vector<std::istream *> &jsonStream
         overlay.ParseStream(wrapper);
         if (overlay.HasParseError()) {
             ACSDK_ERROR(LX("initializeFailed")
-                    .d("reason", "parseFailure")
-                    .d("offset", overlay.GetErrorOffset())
-                    .d("message", GetParseError_En(overlay.GetParseError())));
+                            .d("reason", "parseFailure")
+                            .d("offset", overlay.GetErrorOffset())
+                            .d("message", GetParseError_En(overlay.GetParseError())));
             m_document.SetObject();
             return false;
         }
@@ -133,11 +133,11 @@ ConfigurationNode ConfigurationNode::getRoot() {
 ConfigurationNode::ConfigurationNode() : m_object{nullptr} {
 }
 
-bool ConfigurationNode::getBool(const std::string& key, bool *out, bool defaultValue) const {
+bool ConfigurationNode::getBool(const std::string& key, bool* out, bool defaultValue) const {
     return getValue(key, out, defaultValue, &Value::IsBool, &Value::GetBool);
 }
 
-bool ConfigurationNode::getInt(const std::string& key, int *out, int defaultValue) const {
+bool ConfigurationNode::getInt(const std::string& key, int* out, int defaultValue) const {
     return getValue(key, out, defaultValue, &Value::IsInt, &Value::GetInt);
 }
 
@@ -154,13 +154,13 @@ bool ConfigurationNode::getString(const std::string& key, const char** out, cons
     return getValue(key, out, defaultValue, &Value::IsString, &Value::GetString);
 }
 
-template<typename Type>
+template <typename Type>
 bool ConfigurationNode::getValue(
-        const std::string& key,
-        Type *out,
-        Type defaultValue,
-        bool (rapidjson::Value::*isType)() const,
-        Type (rapidjson::Value::*getType)() const) const {
+    const std::string& key,
+    Type* out,
+    Type defaultValue,
+    bool (rapidjson::Value::*isType)() const,
+    Type (rapidjson::Value::*getType)() const) const {
     if (key.empty() || !m_object) {
         if (out) {
             *out = defaultValue;
@@ -198,7 +198,7 @@ ConfigurationNode::operator bool() const {
 ConfigurationNode::ConfigurationNode(const rapidjson::Value* object) : m_object{object} {
 }
 
-} // namespace configuration
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace configuration
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

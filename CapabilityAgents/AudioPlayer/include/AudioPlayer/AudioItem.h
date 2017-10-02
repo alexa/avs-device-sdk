@@ -62,7 +62,6 @@ struct AudioItem {
 
         /// Contains values for progress reports.
         struct ProgressReport {
-
             /**
              * Specifies when to send the @c ProgressReportDelayElapsed event to AVS.  @c ProgressReportDelayElapsed
              * must only be sent once at the specified interval.
@@ -90,8 +89,8 @@ struct AudioItem {
     } stream;
 };
 
-} // namespace audioPlayer
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace audioPlayer
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_AUDIO_ITEM_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_AUDIO_ITEM_H_

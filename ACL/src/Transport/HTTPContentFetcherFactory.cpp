@@ -1,0 +1,33 @@
+/*
+ * HTTPContentFetcherFactory.cpp
+ *
+ * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+#include "ACL/Transport/HTTPContentFetcherFactory.h"
+
+#include <AVSCommon/Utils/Memory/Memory.h>
+
+#include "ACL/Transport/LibCurlHttpContentFetcher.h"
+
+namespace alexaClientSDK {
+namespace acl {
+
+std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> HTTPContentFetcherFactory::create(
+    const std::string& url) {
+    return avsCommon::utils::memory::make_unique<LibCurlHttpContentFetcher>(url);
+}
+
+}  // namespace acl
+}  // namespace alexaClientSDK

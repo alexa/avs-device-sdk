@@ -2,8 +2,6 @@ add_definitions("-DACSDK_LOG_MODULE=system")
 
 add_library(AVSSystem SHARED
     "${CMAKE_CURRENT_LIST_DIR}/EndpointHandler.cpp"
-    "${CMAKE_CURRENT_LIST_DIR}/StateSynchronizer.cpp"
-    "${CMAKE_CURRENT_LIST_DIR}/NotifyingMessageRequest.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/UserInactivityMonitor.cpp")
 
 target_include_directories(AVSSystem

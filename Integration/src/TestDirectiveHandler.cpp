@@ -21,7 +21,7 @@ namespace alexaClientSDK {
 namespace integration {
 namespace test {
 
-TestDirectiveHandler::TestDirectiveHandler(avsCommon::avs::DirectiveHandlerConfiguration config) : 
+TestDirectiveHandler::TestDirectiveHandler(avsCommon::avs::DirectiveHandlerConfiguration config) :
         m_configuration{config} {
 }
 
@@ -35,9 +35,8 @@ void TestDirectiveHandler::handleDirectiveImmediately(std::shared_ptr<avsCommon:
 }
 
 void TestDirectiveHandler::preHandleDirective(
-        std::shared_ptr<avsCommon::avs::AVSDirective> directive,
-        std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result)
-{
+    std::shared_ptr<avsCommon::avs::AVSDirective> directive,
+    std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) {
     std::unique_lock<std::mutex> lock(m_mutex);
     TestDirectiveHandler::DirectiveParams dp;
     dp.type = TestDirectiveHandler::DirectiveParams::Type::PREHANDLE;
@@ -89,8 +88,6 @@ avsCommon::avs::DirectiveHandlerConfiguration TestDirectiveHandler::getConfigura
 void TestDirectiveHandler::onDeregistered() {
 }
 
-
-
 TestDirectiveHandler::DirectiveParams TestDirectiveHandler::waitForNext(const std::chrono::seconds duration) {
     DirectiveParams ret;
     std::unique_lock<std::mutex> lock(m_mutex);
@@ -105,6 +102,6 @@ TestDirectiveHandler::DirectiveParams TestDirectiveHandler::waitForNext(const st
 
 TestDirectiveHandler::DirectiveParams::DirectiveParams() : type{Type::UNSET} {
 }
-} // namespace test
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace integration
+}  // namespace alexaClientSDK

@@ -8,6 +8,7 @@ add_subdirectory("AVS")
 add_subdirectory("Utils")
 
 add_library(AVSCommon SHARED
+    AVS/src/AbstractConnection.cpp
     AVS/src/AlexaClientSDKInit.cpp
     AVS/src/Attachment/Attachment.cpp
     AVS/src/Attachment/AttachmentManager.cpp
@@ -26,6 +27,7 @@ add_library(AVSCommon SHARED
     AVS/src/DialogUXStateAggregator.cpp
     Utils/src/Configuration/ConfigurationNode.cpp
     Utils/src/Executor.cpp
+    Utils/src/FileUtils.cpp
     Utils/src/JSONUtils.cpp
     Utils/src/LibcurlUtils.cpp
     Utils/src/Logger/ConsoleLogger.cpp
@@ -38,12 +40,15 @@ add_library(AVSCommon SHARED
     Utils/src/Logger/LoggerUtils.cpp
     Utils/src/Logger/ModuleLogger.cpp
     Utils/src/Logger/ThreadMoniker.cpp
+    Utils/src/Metrics.cpp
     Utils/src/RequiresShutdown.cpp
     Utils/src/StringUtils.cpp
     Utils/src/TaskQueue.cpp
     Utils/src/TaskThread.cpp
+    Utils/src/TimePoint.cpp
     Utils/src/Timer.cpp
     Utils/src/TimeUtils.cpp
+    Utils/src/RetryTimer.cpp
     Utils/src/UUIDGeneration.cpp)
 
 target_include_directories(AVSCommon PUBLIC

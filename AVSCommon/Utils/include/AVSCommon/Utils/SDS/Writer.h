@@ -157,7 +157,9 @@ const std::string SharedDataStream<T>::Writer::TAG = "SdsWriter";
 
 template <typename T>
 SharedDataStream<T>::Writer::Writer(Policy policy, std::shared_ptr<BufferLayout> bufferLayout) :
-        m_policy{policy}, m_bufferLayout{bufferLayout}, m_closed{false} {
+        m_policy{policy},
+        m_bufferLayout{bufferLayout},
+        m_closed{false} {
     // Note - SharedDataStream::createWriter() holds writerEnableMutex while calling this function.
     auto header = m_bufferLayout->getHeader();
     header->isWriterEnabled = true;
@@ -227,9 +229,9 @@ ssize_t SharedDataStream<T>::Writer::write(const void* buf, size_t nWords) {
     memcpy(m_bufferLayout->getData(header->writeStartCursor), buf8, beforeWrap * getWordSize());
     if (afterWrap > 0) {
         memcpy(
-                m_bufferLayout->getData(header->writeStartCursor + beforeWrap),
-                buf8 + beforeWrap * getWordSize(),
-                afterWrap * getWordSize());
+            m_bufferLayout->getData(header->writeStartCursor + beforeWrap),
+            buf8 + beforeWrap * getWordSize(),
+            afterWrap * getWordSize());
     }
 
     // Advance the write cursor.
@@ -287,9 +289,9 @@ std::string SharedDataStream<T>::Writer::errorToString(Error error) {
     }
 }
 
-} // namespace sds
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sds
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_WRITER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_WRITER_H_

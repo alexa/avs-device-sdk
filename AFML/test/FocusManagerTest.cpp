@@ -73,8 +73,7 @@ public:
     /**
      * Constructor.
      */
-    TestClient() :
-        m_focusState(FocusState::NONE), m_focusChangeOccurred(false) {
+    TestClient() : m_focusState(FocusState::NONE), m_focusChangeOccurred(false) {
     }
 
     /**
@@ -98,9 +97,7 @@ public:
      */
     FocusState waitForFocusChange(std::chrono::milliseconds timeout, bool* focusChanged) {
         std::unique_lock<std::mutex> lock(m_mutex);
-        bool success = m_focusChanged.wait_for(lock, timeout, [this] () {
-            return m_focusChangeOccurred;
-        });
+        bool success = m_focusChanged.wait_for(lock, timeout, [this]() { return m_focusChangeOccurred; });
 
         if (!success) {
             *focusChanged = false;
@@ -155,7 +152,9 @@ public:
 };
 
 /// Test fixture for testing FocusManager.
-class FocusManagerTest : public ::testing::Test, public FocusChangeManager {
+class FocusManagerTest
+        : public ::testing::Test
+        , public FocusChangeManager {
 protected:
     /// The FocusManager.
     std::shared_ptr<FocusManager> m_focusManager;
@@ -179,9 +178,8 @@ protected:
 
         FocusManager::ChannelConfiguration contentChannelConfig{CONTENT_CHANNEL_NAME, CONTENT_CHANNEL_PRIORITY};
 
-        std::vector<FocusManager::ChannelConfiguration> channelConfigurations {
-            dialogChannelConfig, alertsChannelConfig, contentChannelConfig
-        };
+        std::vector<FocusManager::ChannelConfiguration> channelConfigurations{
+            dialogChannelConfig, alertsChannelConfig, contentChannelConfig};
 
         m_focusManager = std::make_shared<FocusManager>(channelConfigurations);
 
@@ -215,7 +213,7 @@ TEST_F(FocusManagerTest, acquireLowerPriorityChannelWithOneHigherPriorityChannel
 }
 
 /**
- * Tests acquireChannel with three Channels. The two lowest priority Channels should get Background focus while the 
+ * Tests acquireChannel with three Channels. The two lowest priority Channels should get Background focus while the
  * highest priority Channel should be Foreground focused.
  */
 TEST_F(FocusManagerTest, aquireLowerPriorityChannelWithTwoHigherPriorityChannelsTaken) {
@@ -230,7 +228,7 @@ TEST_F(FocusManagerTest, aquireLowerPriorityChannelWithTwoHigherPriorityChannels
 /**
  * Tests acquireChannel with a high priority Channel while a low priority Channel is already taken. The lower priority
  * Channel should at first be Foreground focused and then get a change to Background focus while the higher priority
- * should be Foreground focused. 
+ * should be Foreground focused.
  */
 TEST_F(FocusManagerTest, acquireHigherPriorityChannelWithOneLowerPriorityChannelTaken) {
     ASSERT_TRUE(m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_ACTIVITY_ID));
@@ -294,7 +292,7 @@ TEST_F(FocusManagerTest, releaseForegroundChannelWhileBackgroundChannelTaken) {
     ASSERT_TRUE(m_focusManager->releaseChannel(DIALOG_CHANNEL_NAME, dialogClient).get());
     assertFocusChange(dialogClient, FocusState::NONE);
     assertFocusChange(contentClient, FocusState::FOREGROUND);
- }
+}
 
 /**
  * Tests stopForegroundActivity with a single Channel. The observer should be notified to stop.
@@ -308,7 +306,7 @@ TEST_F(FocusManagerTest, simpleNonTargetedStop) {
 }
 
 /**
- * Tests stopForegroundActivity with a three active Channels. The Foreground Channel observer should be notified to 
+ * Tests stopForegroundActivity with a three active Channels. The Foreground Channel observer should be notified to
  * stop each time and the next highest priority background Channel should be brought to the foreground each time.
  */
 TEST_F(FocusManagerTest, threeNonTargetedStopsWithThreeActivitiesHappening) {
@@ -334,7 +332,7 @@ TEST_F(FocusManagerTest, threeNonTargetedStopsWithThreeActivitiesHappening) {
 }
 
 /**
- * Tests stopForegroundActivity with a single Channel. The next client to request a different Channel should be given 
+ * Tests stopForegroundActivity with a single Channel. The next client to request a different Channel should be given
  * foreground focus.
  */
 TEST_F(FocusManagerTest, stopForegroundActivityAndAcquireDifferentChannel) {
@@ -349,7 +347,7 @@ TEST_F(FocusManagerTest, stopForegroundActivityAndAcquireDifferentChannel) {
 }
 
 /**
- * Tests stopForegroundActivity with a single Channel. The next client to request the same Channel should be given 
+ * Tests stopForegroundActivity with a single Channel. The next client to request the same Channel should be given
  * foreground focus.
  */
 TEST_F(FocusManagerTest, stopForegroundActivityAndAcquireSameChannel) {
@@ -381,7 +379,7 @@ TEST_F(FocusManagerTest, releaseBackgroundChannelWhileTwoChannelsTaken) {
 }
 
 /**
- * Tests acquireChannel of an already active foreground Channel while another Channel is also active. The original 
+ * Tests acquireChannel of an already active foreground Channel while another Channel is also active. The original
  * observer of the foreground be notified to stop and the new observer of the Channel will be notified that it has
  * Foreground focus. The originally backgrounded Channel should not change focus.
  */
@@ -400,7 +398,9 @@ TEST_F(FocusManagerTest, kickOutActivityOnSameChannelWhileOtherChannelsActive) {
 }
 
 /// Test fixture for testing Channel.
-class ChannelTest : public ::testing::Test, public FocusChangeManager {
+class ChannelTest
+        : public ::testing::Test
+        , public FocusChangeManager {
 protected:
     /// A test client that used to observe Channels.
     std::shared_ptr<TestClient> clientA;
@@ -412,7 +412,6 @@ protected:
     std::shared_ptr<Channel> testChannel;
 
     virtual void SetUp() {
-
         clientA = std::make_shared<TestClient>();
         clientB = std::make_shared<TestClient>();
         testChannel = std::make_shared<Channel>(DIALOG_CHANNEL_PRIORITY);
@@ -457,7 +456,7 @@ TEST_F(ChannelTest, priorityComparison) {
 }
 
 /**
- * Tests that the stopActivity method on Channel works properly and that observers are stopped if the activity id 
+ * Tests that the stopActivity method on Channel works properly and that observers are stopped if the activity id
  * matches the the Channel's activity and doesn't get stopped if the ids don't match.
  */
 TEST_F(ChannelTest, testStopActivity) {
@@ -474,6 +473,6 @@ TEST_F(ChannelTest, testStopActivity) {
     assertFocusChange(clientA, FocusState::NONE);
 }
 
-} // namespace test
-} // namespace afml
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace afml
+}  // namespace alexaClientSDK

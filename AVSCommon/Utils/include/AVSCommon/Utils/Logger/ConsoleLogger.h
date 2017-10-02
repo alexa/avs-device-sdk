@@ -37,11 +37,8 @@ public:
      */
     static Logger& instance();
 
-    void emit(
-            Level level,
-            std::chrono::system_clock::time_point time,
-            const char *threadMoniker,
-            const char *text) override;
+    void emit(Level level, std::chrono::system_clock::time_point time, const char* threadMoniker, const char* text)
+        override;
 
 private:
     /**
@@ -57,9 +54,9 @@ private:
  */
 Logger& getConsoleLogger();
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_CONSOLE_LOGGER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_CONSOLE_LOGGER_H_

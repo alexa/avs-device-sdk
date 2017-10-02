@@ -52,8 +52,8 @@ public:
      * @param args The arguments to call the task with.
      * @returns A @c std::future for the return value of the task.
      */
-    template<typename Task, typename... Args>
-    auto submit(Task task, Args &&... args) -> std::future<decltype(task(args...))>;
+    template <typename Task, typename... Args>
+    auto submit(Task task, Args&&... args) -> std::future<decltype(task(args...))>;
 
     /**
      * Submits a callable type (function, lambda expression, bind expression, or another function object) to the front
@@ -64,8 +64,8 @@ public:
      * @param args The arguments to call the task with.
      * @returns A @c std::future for the return value of the task.
      */
-    template<typename Task, typename... Args>
-    auto submitToFront(Task task, Args &&... args) -> std::future<decltype(task(args...))>;
+    template <typename Task, typename... Args>
+    auto submitToFront(Task task, Args&&... args) -> std::future<decltype(task(args...))>;
 
     /**
      * Wait for any previously submitted tasks to complete.
@@ -86,20 +86,19 @@ private:
     std::unique_ptr<TaskThread> m_taskThread;
 };
 
-
-template<typename Task, typename... Args>
-auto Executor::submit(Task task, Args &&... args) -> std::future<decltype(task(args...))> {
+template <typename Task, typename... Args>
+auto Executor::submit(Task task, Args&&... args) -> std::future<decltype(task(args...))> {
     return m_taskQueue->push(task, std::forward<Args>(args)...);
 }
 
-template<typename Task, typename... Args>
-auto Executor::submitToFront(Task task, Args &&... args) -> std::future<decltype(task(args...))> {
+template <typename Task, typename... Args>
+auto Executor::submitToFront(Task task, Args&&... args) -> std::future<decltype(task(args...))> {
     return m_taskQueue->pushToFront(task, std::forward<Args>(args)...);
 }
 
-} // namespace threading
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace threading
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_THREADING_EXECUTOR_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_THREADING_EXECUTOR_H_

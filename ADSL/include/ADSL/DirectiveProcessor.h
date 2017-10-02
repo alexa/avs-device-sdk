@@ -123,7 +123,9 @@ private:
          * @param processorHandle handle of the @c DirectiveProcessor to forward to the result to.
          * @param directive The @c AVSDirective whose handling result will be specified by this instance.
          */
-        DirectiveHandlerResult(ProcessorHandle processorHandle, std::shared_ptr<avsCommon::avs::AVSDirective> directive);
+        DirectiveHandlerResult(
+            ProcessorHandle processorHandle,
+            std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
         void setCompleted() override;
 
@@ -259,7 +261,7 @@ private:
     static ProcessorHandle m_nextProcessorHandle;
 };
 
-} // namespace adsl
-} // namespace alexaClientSDK
+}  // namespace adsl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_PROCESSOR_H_
+#endif  // ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_PROCESSOR_H_

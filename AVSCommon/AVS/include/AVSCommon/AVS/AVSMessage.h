@@ -80,7 +80,7 @@ public:
      *
      * @return The payload.
      */
-     std::string getPayload() const;
+    std::string getPayload() const;
 
     /**
      * Return a string representation of this @c AVSMessage's header.
@@ -96,8 +96,8 @@ private:
     std::string m_payload;
 };
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_AVS_MESSAGE_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_AVS_MESSAGE_H_

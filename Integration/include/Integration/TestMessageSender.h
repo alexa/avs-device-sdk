@@ -32,26 +32,24 @@ namespace alexaClientSDK {
 namespace integration {
 namespace test {
 
-class TestMessageSender :
-        public avsCommon::sdkInterfaces::MessageSenderInterface,
-        public avsCommon::utils::RequiresShutdown {
+class TestMessageSender
+        : public avsCommon::sdkInterfaces::MessageSenderInterface
+        , public avsCommon::utils::RequiresShutdown {
 public:
     /// Destructor.
     ~TestMessageSender() = default;
 
     void sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
 
-    TestMessageSender (std::shared_ptr<acl::MessageRouterInterface> messageRouter,
-                   bool isEnabled,
-                   std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> connectionStatusObserver,
-                   std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> messageObserver);
+    TestMessageSender(
+        std::shared_ptr<acl::MessageRouterInterface> messageRouter,
+        bool isEnabled,
+        std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> connectionStatusObserver,
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> messageObserver);
 
     class SendParams {
     public:
-        enum class Type {
-            SEND,
-            TIMEOUT
-        };
+        enum class Type { SEND, TIMEOUT };
         Type type;
         std::shared_ptr<avsCommon::avs::MessageRequest> request;
     };
@@ -87,7 +85,6 @@ public:
      */
     void reconnect();
 
-
     /**
      * Set the URL endpoint for the AVS connection.  Calling this function with a new value will cause the
      * current active connection to be closed, and a new one opened to the new endpoint.
@@ -95,8 +92,8 @@ public:
      */
     void setAVSEndpoint(const std::string& avsEndpoint);
 
-        void addConnectionStatusObserver(
-            std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer);
+    void addConnectionStatusObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer);
 
     /**
      * Removes an observer from being notified of connection status changes.
@@ -104,7 +101,7 @@ public:
      * @param observer The observer object to remove.
      */
     void removeConnectionStatusObserver(
-            std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer);
+        std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer);
 
     /**
      * Adds an observer to be notified of message receptions.
@@ -120,12 +117,9 @@ public:
      */
     void removeMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer);
 
-    /**
-     * Synchronizes the internal AVSConnectionManager.
-     */
-    void synchronize();
-
     void doShutdown() override;
+
+    std::shared_ptr<acl::AVSConnectionManager> getConnectionManager() const;
 
 private:
     /// Mutex to protect m_queue.
@@ -138,8 +132,8 @@ private:
     std::shared_ptr<acl::AVSConnectionManager> m_connectionManager;
 };
 
-} // namespace test
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace integration
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_INTEGRATION_TEST_MESSAGE_SENDER_H
+#endif  // ALEXA_CLIENT_SDK_INTEGRATION_TEST_MESSAGE_SENDER_H

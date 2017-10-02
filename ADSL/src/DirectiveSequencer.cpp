@@ -22,6 +22,7 @@
 
 #include <AVSCommon/AVS/ExceptionErrorType.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Metrics.h>
 
 #include "ADSL/DirectiveSequencer.h"
 
@@ -41,9 +42,10 @@ namespace adsl {
 using namespace avsCommon;
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils;
 
 std::unique_ptr<DirectiveSequencerInterface> DirectiveSequencer::create(
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) {
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) {
     if (!exceptionSender) {
         ACSDK_INFO(LX("createFailed").d("reason", "nullptrExceptionSender"));
         return nullptr;
@@ -71,9 +73,9 @@ bool DirectiveSequencer::onDirective(std::shared_ptr<AVSDirective> directive) {
     std::lock_guard<std::mutex> lock(m_mutex);
     if (m_isShuttingDown) {
         ACSDK_WARN(LX("onDirectiveFailed")
-                .d("directive", directive->getHeaderAsString())
-                .d("action", "ignored")
-                .d("reason", "isShuttingDown"));
+                       .d("directive", directive->getHeaderAsString())
+                       .d("action", "ignored")
+                       .d("reason", "isShuttingDown"));
         return false;
     }
     ACSDK_INFO(LX("onDirective").d("directive", directive->getHeaderAsString()));
@@ -83,7 +85,7 @@ bool DirectiveSequencer::onDirective(std::shared_ptr<AVSDirective> directive) {
 }
 
 DirectiveSequencer::DirectiveSequencer(
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) :
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) :
         DirectiveSequencerInterface{"DirectiveSequencer"},
         m_mutex{},
         m_exceptionSender{exceptionSender},
@@ -108,9 +110,7 @@ void DirectiveSequencer::doShutdown() {
 }
 
 void DirectiveSequencer::receivingLoop() {
-    auto wake = [this]() {
-        return !m_receivingQueue.empty() || m_isShuttingDown;
-    };
+    auto wake = [this]() { return !m_receivingQueue.empty() || m_isShuttingDown; };
 
     std::unique_lock<std::mutex> lock(m_mutex);
     while (true) {
@@ -122,7 +122,7 @@ void DirectiveSequencer::receivingLoop() {
     }
 }
 
-void DirectiveSequencer::receiveDirectiveLocked(std::unique_lock<std::mutex> &lock) {
+void DirectiveSequencer::receiveDirectiveLocked(std::unique_lock<std::mutex>& lock) {
     if (m_receivingQueue.empty()) {
         return;
     }
@@ -130,13 +130,17 @@ void DirectiveSequencer::receiveDirectiveLocked(std::unique_lock<std::mutex> &lo
     m_receivingQueue.pop_front();
     lock.unlock();
 
+    if (directive->getName() == "StopCapture" || directive->getName() == "Speak") {
+        ACSDK_METRIC_MSG(TAG, directive, Metrics::Location::ADSL_DEQUEUE);
+    }
+
     bool handled = false;
 
-    /**
-     * Previously it was expected that all directives resulting from a Recognize event
-     * would be tagged with the dialogRequestId of that event.  In practice that is not
-     * the observed behavior.
-     */
+/**
+ * Previously it was expected that all directives resulting from a Recognize event
+ * would be tagged with the dialogRequestId of that event.  In practice that is not
+ * the observed behavior.
+ */
 #ifdef DIALOG_REQUST_ID_IN_ALL_RESPONSE_DIRECTIVES
     if (directive->getDialogRequestId().empty()) {
         handled = m_directiveRouter.handleDirectiveImmediately(directive);
@@ -150,12 +154,10 @@ void DirectiveSequencer::receiveDirectiveLocked(std::unique_lock<std::mutex> &lo
     if (!handled) {
         ACSDK_INFO(LX("sendingExceptionEncountered").d("messageId", directive->getMessageId()));
         m_exceptionSender->sendExceptionEncountered(
-                directive->getUnparsedDirective(),
-                ExceptionErrorType::UNSUPPORTED_OPERATION,
-                "Unsupported operation");
+            directive->getUnparsedDirective(), ExceptionErrorType::UNSUPPORTED_OPERATION, "Unsupported operation");
     }
     lock.lock();
 }
 
-} // namespace directiveSequencer
-} // namespace alexaClientSDK
+}  // namespace adsl
+}  // namespace alexaClientSDK

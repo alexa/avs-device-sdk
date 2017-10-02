@@ -1,5 +1,5 @@
 /*
-* ContextManager.h
+ * ContextManager.h
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
@@ -44,7 +44,7 @@ namespace contextManager {
  * Class manages the requests for getting context from @c ContextRequesters and updating the state from
  * @c StateProviders.
  */
-class ContextManager: public avsCommon::sdkInterfaces::ContextManagerInterface {
+class ContextManager : public avsCommon::sdkInterfaces::ContextManagerInterface {
 public:
     /**
      * Create a new @c ContextManager instance.
@@ -56,12 +56,15 @@ public:
     /// Destructor.
     ~ContextManager() override;
 
-    void setStateProvider(const avsCommon::avs::NamespaceAndName& stateProviderName,
-            std::shared_ptr<avsCommon::sdkInterfaces::StateProviderInterface> stateProvider) override;
+    void setStateProvider(
+        const avsCommon::avs::NamespaceAndName& stateProviderName,
+        std::shared_ptr<avsCommon::sdkInterfaces::StateProviderInterface> stateProvider) override;
 
-    avsCommon::sdkInterfaces::SetStateResult setState(const avsCommon::avs::NamespaceAndName& stateProviderName,
-            const std::string& jsonState, const avsCommon::avs::StateRefreshPolicy& refreshPolicy,
-            const unsigned int stateRequestToken = 0) override;
+    avsCommon::sdkInterfaces::SetStateResult setState(
+        const avsCommon::avs::NamespaceAndName& stateProviderName,
+        const std::string& jsonState,
+        const avsCommon::avs::StateRefreshPolicy& refreshPolicy,
+        const unsigned int stateRequestToken = 0) override;
 
     void getContext(std::shared_ptr<avsCommon::sdkInterfaces::ContextRequesterInterface> contextRequester) override;
 
@@ -86,11 +89,11 @@ private:
          * @param initJsonState The state of the @c StateProviderInterface.
          * @param refreshPolicy The refresh policy of the state of the @c StateProviderInterface.
          */
-        StateInfo(std::shared_ptr<avsCommon::sdkInterfaces::StateProviderInterface> initStateProvider = nullptr,
-                std::string initJsonState = "",
-                avsCommon::avs::StateRefreshPolicy initRefreshPolicy =
-                        avsCommon::avs::StateRefreshPolicy::ALWAYS);
-};
+        StateInfo(
+            std::shared_ptr<avsCommon::sdkInterfaces::StateProviderInterface> initStateProvider = nullptr,
+            std::string initJsonState = "",
+            avsCommon::avs::StateRefreshPolicy initRefreshPolicy = avsCommon::avs::StateRefreshPolicy::ALWAYS);
+    };
 
     /// Constructor.
     ContextManager();
@@ -101,15 +104,17 @@ private:
     void init();
 
     /**
-     * Updates the state and refresh policy of the @c StateProviderInterface. The @c m_stateProviderMutex needs to be acquired
-     * before this function is called.
+     * Updates the state and refresh policy of the @c StateProviderInterface. The @c m_stateProviderMutex needs to be
+     * acquired before this function is called.
      *
      * @param stateProviderName The name of the @c StateProviderInterface whose state is being updated.
      * @param jsonState The state of the @c StateProviderInterface.
      * @param refreshPolicy The refresh policy for the state.
      */
-    avsCommon::sdkInterfaces::SetStateResult updateStateLocked(const avsCommon::avs::NamespaceAndName& stateProviderName,
-            const std::string& jsonState, const avsCommon::avs::StateRefreshPolicy& refreshPolicy);
+    avsCommon::sdkInterfaces::SetStateResult updateStateLocked(
+        const avsCommon::avs::NamespaceAndName& stateProviderName,
+        const std::string& jsonState,
+        const avsCommon::avs::StateRefreshPolicy& refreshPolicy);
 
     /**
      * Requests the @c StateProviderInterfaces for state based on the refreshPolicy.
@@ -127,8 +132,9 @@ private:
      * @param contextRequestError The error to send to the context requesters. If the context is not an empty string,
      * this field is ignored.
      */
-    void sendContextAndClearQueue(const std::string& context,
-            const avsCommon::sdkInterfaces::ContextRequestError& contextRequestError =
+    void sendContextAndClearQueue(
+        const std::string& context,
+        const avsCommon::sdkInterfaces::ContextRequestError& contextRequestError =
             avsCommon::sdkInterfaces::ContextRequestError::BUILD_CONTEXT_ERROR);
 
     /**
@@ -144,8 +150,9 @@ private:
      * @param allocator The rapidjson allocator to use to build the JSON header.
      * @return Header as a JSON object if successful else empty value.
      */
-    rapidjson::Value buildHeader(const avsCommon::avs::NamespaceAndName& namespaceAndName,
-            rapidjson::Document::AllocatorType& allocator);
+    rapidjson::Value buildHeader(
+        const avsCommon::avs::NamespaceAndName& namespaceAndName,
+        rapidjson::Document::AllocatorType& allocator);
 
     /**
      * Builds a JSON state object. The state includes the header and the payload.
@@ -155,8 +162,10 @@ private:
      * @param allocator The rapidjson allocator to use to build the JSON header.
      * @return A state object if successful else empty value.
      */
-    rapidjson::Value buildState(const avsCommon::avs::NamespaceAndName& namespaceAndName,
-            const std::string jsonPayloadValue, rapidjson::Document::AllocatorType& allocator);
+    rapidjson::Value buildState(
+        const avsCommon::avs::NamespaceAndName& namespaceAndName,
+        const std::string jsonPayloadValue,
+        rapidjson::Document::AllocatorType& allocator);
 
     /**
      * Builds the context states from a map of state provider namespace and name to state information provided by each
@@ -215,7 +224,7 @@ private:
     bool m_shutdown;
 };
 
-} // namespace contextManager
-} // namespace alexaClientSDK
+}  // namespace contextManager
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_CONTEXT_MANAGER_INCLUDE_CONTEXT_MANAGER_CONTEXT_MANAGER_H
+#endif  // ALEXA_CLIENT_SDK_CONTEXT_MANAGER_INCLUDE_CONTEXT_MANAGER_CONTEXT_MANAGER_H

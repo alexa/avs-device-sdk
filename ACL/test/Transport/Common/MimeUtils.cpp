@@ -45,30 +45,33 @@ static const std::string MIME_CONTENT_ID_PREFIX_STRING = "Content-ID: ";
 static const std::chrono::seconds WAIT_FOR_DIRECTIVE_TIMEOUT_IN_SECONDS = std::chrono::seconds(10);
 
 TestMimeJsonPart::TestMimeJsonPart(int dataSize, std::shared_ptr<TestableMessageObserver> messageObserver) :
-        m_message{createRandomAlphabetString(dataSize)}, m_messageObserver{messageObserver} {
+        m_message{createRandomAlphabetString(dataSize)},
+        m_messageObserver{messageObserver} {
 }
 
-std::string TestMimeJsonPart::toMimeString(const std::string & boundaryString) {
-    return MIME_BOUNDARY_DASHES + boundaryString + MIME_NEWLINE +
-            MIME_JSON_PREFIX_STRING + MIME_NEWLINE + MIME_NEWLINE +
-            m_message + MIME_NEWLINE;
+std::string TestMimeJsonPart::toMimeString(const std::string& boundaryString) {
+    return MIME_BOUNDARY_DASHES + boundaryString + MIME_NEWLINE + MIME_JSON_PREFIX_STRING + MIME_NEWLINE +
+           MIME_NEWLINE + m_message + MIME_NEWLINE;
 }
 
 bool TestMimeJsonPart::validateMimeParsing() {
     return m_messageObserver->waitForDirective(m_message, WAIT_FOR_DIRECTIVE_TIMEOUT_IN_SECONDS);
 }
 
-TestMimeAttachmentPart::TestMimeAttachmentPart(const std::string & contextId, const std::string contentId,
-        int dataSize, std::shared_ptr<AttachmentManager> attachmentManager) :
-                m_contextId{contextId}, m_contentId{contentId},
-                m_attachmentData{createRandomAlphabetString(dataSize)}, m_attachmentManager{attachmentManager} {
+TestMimeAttachmentPart::TestMimeAttachmentPart(
+    const std::string& contextId,
+    const std::string contentId,
+    int dataSize,
+    std::shared_ptr<AttachmentManager> attachmentManager) :
+        m_contextId{contextId},
+        m_contentId{contentId},
+        m_attachmentData{createRandomAlphabetString(dataSize)},
+        m_attachmentManager{attachmentManager} {
 }
 
-std::string TestMimeAttachmentPart::toMimeString(const std::string & boundaryString) {
-    return MIME_BOUNDARY_DASHES + boundaryString + MIME_NEWLINE +
-            MIME_CONTENT_ID_PREFIX_STRING + m_contentId + MIME_NEWLINE +
-            MIME_ATTACHMENT_PREFIX_STRING + MIME_NEWLINE + MIME_NEWLINE +
-            m_attachmentData + MIME_NEWLINE;
+std::string TestMimeAttachmentPart::toMimeString(const std::string& boundaryString) {
+    return MIME_BOUNDARY_DASHES + boundaryString + MIME_NEWLINE + MIME_CONTENT_ID_PREFIX_STRING + m_contentId +
+           MIME_NEWLINE + MIME_ATTACHMENT_PREFIX_STRING + MIME_NEWLINE + MIME_NEWLINE + m_attachmentData + MIME_NEWLINE;
 }
 
 bool TestMimeAttachmentPart::validateMimeParsing() {
@@ -95,7 +98,8 @@ bool TestMimeAttachmentPart::validateMimeParsing() {
 }
 
 std::string constructTestMimeString(
-        const std::vector<std::shared_ptr<TestMimePart>> & mimeParts, const std::string & boundaryString) {
+    const std::vector<std::shared_ptr<TestMimePart>>& mimeParts,
+    const std::string& boundaryString) {
     std::string mimeString;
 
     for (auto mimePart : mimeParts) {
@@ -108,6 +112,6 @@ std::string constructTestMimeString(
     return mimeString;
 }
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK

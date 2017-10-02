@@ -36,9 +36,7 @@ Executor::~Executor() {
 void Executor::waitForSubmittedTasks() {
     std::promise<void> flushedPromise;
     auto flushedFuture = flushedPromise.get_future();
-    auto task = [this, &flushedPromise]() {
-        flushedPromise.set_value();
-    };
+    auto task = [this, &flushedPromise]() { flushedPromise.set_value(); };
     submit(task);
     flushedFuture.get();
 }
@@ -52,7 +50,7 @@ bool Executor::isShutdown() {
     return m_taskQueue->isShutdown();
 }
 
-} // namespace threading
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace threading
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

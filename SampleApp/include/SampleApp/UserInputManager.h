@@ -51,7 +51,7 @@ private:
     std::shared_ptr<InteractionManager> m_interactionManager;
 };
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_USER_INPUT_MANAGER_H_
+#endif  // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_USER_INPUT_MANAGER_H_

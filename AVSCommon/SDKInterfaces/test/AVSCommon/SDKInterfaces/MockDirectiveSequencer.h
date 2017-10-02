@@ -30,21 +30,20 @@ namespace test {
 class MockDirectiveSequencer : public DirectiveSequencerInterface {
 public:
     MockDirectiveSequencer();
-    MOCK_METHOD1(addDirectiveHandler, bool (std::shared_ptr<DirectiveHandlerInterface> handler));
-    MOCK_METHOD1(removeDirectiveHandler, bool (std::shared_ptr<DirectiveHandlerInterface> handler));
-    MOCK_METHOD1(setDialogRequestId, void (const std::string& dialogRequestId));
-    MOCK_METHOD1(onDirective, bool (std::shared_ptr<avsCommon::avs::AVSDirective> directive));
-    MOCK_METHOD0(doShutdown, void ());
+    MOCK_METHOD1(addDirectiveHandler, bool(std::shared_ptr<DirectiveHandlerInterface> handler));
+    MOCK_METHOD1(removeDirectiveHandler, bool(std::shared_ptr<DirectiveHandlerInterface> handler));
+    MOCK_METHOD1(setDialogRequestId, void(const std::string& dialogRequestId));
+    MOCK_METHOD1(onDirective, bool(std::shared_ptr<avsCommon::avs::AVSDirective> directive));
+    MOCK_METHOD0(doShutdown, void());
 };
-
 
 inline MockDirectiveSequencer::MockDirectiveSequencer() :
         avsCommon::sdkInterfaces::DirectiveSequencerInterface{"MockDirectiveSequencer"} {
 }
 
-} // namespace test
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_TEST_AVS_COMMON_SDK_INTERFACES_MOCK_DIRECTIVE_SEQUENCER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_TEST_AVS_COMMON_SDK_INTERFACES_MOCK_DIRECTIVE_SEQUENCER_H_

@@ -83,8 +83,8 @@ inline std::ostream& operator<<(std::ostream& stream, const PlayerActivity& play
     return stream << playerActivityToString(playerActivity);
 }
 
-} // namespace audioPlayer
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace audioPlayer
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_PLAYER_ACTIVITY_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_PLAYER_ACTIVITY_H_

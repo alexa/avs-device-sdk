@@ -67,18 +67,17 @@ HttpPost::~HttpPost() {
     }
 }
 
-long HttpPost::doPost(const std::string& url,
-        const std::string& data,
-        std::chrono::seconds timeout,
-        std::string& body) {
+long HttpPost::doPost(
+    const std::string& url,
+    const std::string& data,
+    std::chrono::seconds timeout,
+    std::string& body) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
     body.clear();
 
-    if (!setopt(CURLOPT_TIMEOUT, static_cast<long>(timeout.count())) ||
-            !setopt(CURLOPT_URL, url.c_str()) ||
-            !setopt(CURLOPT_POSTFIELDS, data.c_str()) ||
-            !setopt(CURLOPT_WRITEDATA, &body)) {
+    if (!setopt(CURLOPT_TIMEOUT, static_cast<long>(timeout.count())) || !setopt(CURLOPT_URL, url.c_str()) ||
+        !setopt(CURLOPT_POSTFIELDS, data.c_str()) || !setopt(CURLOPT_WRITEDATA, &body)) {
         return HTTP_RESPONSE_CODE_UNDEFINED;
     }
 
@@ -86,9 +85,9 @@ long HttpPost::doPost(const std::string& url,
 
     if (result != CURLE_OK) {
         ACSDK_ERROR(LX("doPostFailed")
-                .d("reason", "curl_easy_performFailed")
-                .d("result", result)
-                .d("error", curl_easy_strerror(result)));
+                        .d("reason", "curl_easy_performFailed")
+                        .d("result", result)
+                        .d("error", curl_easy_strerror(result)));
         body.clear();
         return HTTP_RESPONSE_CODE_UNDEFINED;
     }
@@ -97,10 +96,10 @@ long HttpPost::doPost(const std::string& url,
     result = curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, &responseCode);
     if (result != CURLE_OK) {
         ACSDK_ERROR(LX("doPostFailed")
-                .d("reason", "curl_easy_getinfoFailed")
-                .d("property", "CURLINFO_RESPONSE_CODE")
-                .d("result", result)
-                .d("error", curl_easy_strerror(result)));
+                        .d("reason", "curl_easy_getinfoFailed")
+                        .d("property", "CURLINFO_RESPONSE_CODE")
+                        .d("result", result)
+                        .d("error", curl_easy_strerror(result)));
         body.clear();
         return HTTP_RESPONSE_CODE_UNDEFINED;
     } else {
@@ -109,16 +108,16 @@ long HttpPost::doPost(const std::string& url,
     }
 }
 
-template<typename ParamType>
+template <typename ParamType>
 bool HttpPost::setopt(CURLoption option, ParamType value) {
     auto result = curl_easy_setopt(m_curl, option, value);
     if (result != CURLE_OK) {
         ACSDK_ERROR(LX("setoptFailed")
-                .d("reason", "nullCurlHandle")
-                .d("option", option)
-                .sensitive("value", value)
-                .d("result", result)
-                .d("error", curl_easy_strerror(result)));
+                        .d("reason", "nullCurlHandle")
+                        .d("option", option)
+                        .sensitive("value", value)
+                        .d("result", result)
+                        .d("error", curl_easy_strerror(result)));
         return false;
     }
     return true;
@@ -136,5 +135,5 @@ size_t HttpPost::staticWriteCallbackLocked(char* ptr, size_t size, size_t nmemb,
     return count;
 }
 
-} // namespace Auth
-} // namespace AlexaClientSDK
+}  // namespace authDelegate
+}  // namespace alexaClientSDK

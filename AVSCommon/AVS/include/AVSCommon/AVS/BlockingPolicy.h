@@ -51,7 +51,7 @@ enum class BlockingPolicy {
  * @param policy The policy value to write to the @c ostream as a string.
  * @return The @c ostream that was passed in and written to.
  */
-inline std::ostream& operator << (std::ostream& stream, BlockingPolicy policy) {
+inline std::ostream& operator<<(std::ostream& stream, BlockingPolicy policy) {
     switch (policy) {
         case BlockingPolicy::NON_BLOCKING:
             stream << "NON_BLOCKING";
@@ -66,8 +66,8 @@ inline std::ostream& operator << (std::ostream& stream, BlockingPolicy policy) {
     return stream;
 }
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_BLOCKING_POLICY_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_BLOCKING_POLICY_H_

@@ -25,7 +25,18 @@ namespace capabilityAgents {
 namespace alerts {
 
 /**
- * A Timer class.
+ * A Timer class.  This represents an alert which the user wishes to activate at a point in time relative to the
+ * current time.  This is different from requesting an alert at an absolute point in time.
+ *
+ * Timers may be basic, or named.  If named, they will use custom assets at the point of activation.
+ *
+ * Example of basic timer use:
+ * "Alexa, set a timer for 10 seconds."
+ * 10 seconds later : device will render a simple audio file, local to the device, to alert the user.
+ *
+ * Example of named timer use:
+ * "Alexa, set an egg timer for 10 seconds"
+ * 10 seconds later : Alexa will say something like "Your egg timer is complete".
  */
 class Timer : public Alert {
 public:
@@ -35,16 +46,20 @@ public:
     /**
      * A static function to set the default audio file path for this type of alert.
      *
+     * @note This function should only be called at initialization, before any objects have been instantiated.
+     *
      * @param filePath The path to the audio file.
      */
-    static void setDefaultAudioFilePath(const std::string & filePath);
+    static void setDefaultAudioFilePath(const std::string& filePath);
 
     /**
      * A static function to set the short audio file path for this type of alert.
      *
+     * @note This function should only be called at initialization, before any objects have been instantiated.
+     *
      * @param filePath The path to the audio file.
      */
-    static void setDefaultShortAudioFilePath(const std::string & filePath);
+    static void setDefaultShortAudioFilePath(const std::string& filePath);
 
     std::string getDefaultAudioFilePath() const override;
 
@@ -59,8 +74,8 @@ private:
     static std::string m_defaultShortAudioFilePath;
 };
 
-} // namespace alerts
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace alerts
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_TIMER_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_TIMER_H_

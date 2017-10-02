@@ -37,10 +37,11 @@ public:
      * @param avsMessageId The message ID of an AVS message.
      * @param avsDialogRequestId The dialog request ID of an AVS message, which is optional.
      */
-    AVSMessageHeader(const std::string& avsNamespace,
-                     const std::string& avsName,
-                     const std::string& avsMessageId,
-                     const std::string& avsDialogRequestId = ""):
+    AVSMessageHeader(
+        const std::string& avsNamespace,
+        const std::string& avsName,
+        const std::string& avsMessageId,
+        const std::string& avsDialogRequestId = "") :
             m_namespace{avsNamespace},
             m_name{avsName},
             m_messageId{avsMessageId},
@@ -80,7 +81,7 @@ public:
      *
      * @return A string representation of this @c AVSMessage's header.
      */
-     std::string getAsString() const;
+    std::string getAsString() const;
 
 private:
     /// Namespace of the AVSMessage header.
@@ -93,8 +94,8 @@ private:
     const std::string m_dialogRequestId;
 };
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_AVS_MESSAGE_HEADER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_AVS_MESSAGE_HEADER_H_
