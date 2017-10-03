@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -75,15 +75,17 @@ $(function() {
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a1e496d33169a890c430142b6447ca077">create</a>(PipelineInterface *pipeline, std::shared_ptr&lt; avsCommon::utils::playlistParser::PlaylistParserInterface &gt; playlistParser, const std::string &amp;url)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html">alexaClientSDK::mediaPlayer::UrlSource</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a8ad648280a36f049de03bd98558d16db">handleEndOfStream</a>() override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html">alexaClientSDK::mediaPlayer::UrlSource</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a6e89b94e63348690c5589946e452b9a5">hasAdditionalData</a>() override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html">alexaClientSDK::mediaPlayer::UrlSource</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a71182bb5aab34e342b2ef872e52381e6">onPlaylistParsed</a>(std::string playlistUrl, std::queue&lt; std::string &gt; urls, avsCommon::utils::playlistParser::PlaylistParseResult parseResult) override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html">alexaClientSDK::mediaPlayer::UrlSource</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a4620388e0fde7e7a9f7f03d24981f8a1">preprocess</a>() override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html">alexaClientSDK::mediaPlayer::UrlSource</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a300ab4708a8b1c9f2faa9f3dce2abc1d">isPlaybackRemote</a>() const override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html">alexaClientSDK::mediaPlayer::UrlSource</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a5b6c82a26b1fba054e0d2e985fbec58c">onPlaylistEntryParsed</a>(int requestId, std::string url, avsCommon::utils::playlistParser::PlaylistParseResult parseResult) override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html">alexaClientSDK::mediaPlayer::UrlSource</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a4620388e0fde7e7a9f7f03d24981f8a1">preprocess</a>() override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html">alexaClientSDK::mediaPlayer::UrlSource</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>terminate</b>() override (defined in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html">alexaClientSDK::mediaPlayer::UrlSource</a>)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html">alexaClientSDK::mediaPlayer::UrlSource</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html#a9930eca43e330858b3df227d78030e42">~PlaylistParserObserverInterface</a>()=default</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html">alexaClientSDK::avsCommon::utils::playlistParser::PlaylistParserObserverInterface</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html#a95c787c015d44fb6409f0a050424cc0d">~SourceInterface</a>()=default</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html">alexaClientSDK::mediaPlayer::SourceInterface</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -16,6 +16,5 @@ var searchData=
   ['directiveroutertest',['DirectiveRouterTest',['../classalexa_client_s_d_k_1_1adsl_1_1test_1_1_directive_router_test.html',1,'alexaClientSDK::adsl::test']]],
   ['directivesequencer',['DirectiveSequencer',['../classalexa_client_s_d_k_1_1adsl_1_1_directive_sequencer.html',1,'alexaClientSDK::adsl']]],
   ['directivesequencerinterface',['DirectiveSequencerInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
-  ['directivesequencertest',['DirectiveSequencerTest',['../classalexa_client_s_d_k_1_1adsl_1_1test_1_1_directive_sequencer_test.html',1,'alexaClientSDK::adsl::test']]],
-  ['dummyplaylistparser',['DummyPlaylistParser',['../classalexa_client_s_d_k_1_1playlist_parser_1_1_dummy_playlist_parser.html',1,'alexaClientSDK::playlistParser']]]
+  ['directivesequencertest',['DirectiveSequencerTest',['../classalexa_client_s_d_k_1_1adsl_1_1test_1_1_directive_sequencer_test.html',1,'alexaClientSDK::adsl::test']]]
 ];

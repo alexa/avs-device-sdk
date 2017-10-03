@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_directive_handler_1_1_directive_params.html" title="alexaClientSDK::integration\l::test::TestDirectiveHandler\l::DirectiveParams" alt="" coords="5,5,190,57"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html" title="alexaClientSDK::capability\lAgents::alerts::renderer\l::RendererObserverInterface" alt="" coords="5,61,196,113"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html" title="alexaClientSDK::capability\lAgents::alerts::Alert" alt="" coords="244,68,422,107"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alarm.html" title="alexaClientSDK::capability\lAgents::alerts::Alarm" alt="" coords="470,5,648,44"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_reminder.html" title="alexaClientSDK::capability\lAgents::alerts::Reminder" alt="" coords="470,68,648,107"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_timer.html" title="alexaClientSDK::capability\lAgents::alerts::Timer" alt="" coords="470,131,648,169"/>
 </map>

@@ -1,7 +1,7 @@
 <map id="alexaClientSDK::acl::AVSConnectionManager" name="alexaClientSDK::acl::AVSConnectionManager">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message. " alt="" coords="22,5,234,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_endpoint_assigner_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AVSEndpointAssigner\lInterface" alt="" coords="5,81,251,133"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_synchronizer_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::StateSynchronizer\lObserverInterface" alt="" coords="16,157,240,209"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface.html" title="alexaClientSDK::acl\l::MessageRouterObserverInterface" alt="" coords="13,233,243,272"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="30,296,227,335"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_abstract_connection.html" title="alexaClientSDK::avsCommon\l::avs::AbstractConnection" alt="" coords="30,5,227,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message. " alt="" coords="22,68,234,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_endpoint_assigner_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AVSEndpointAssigner\lInterface" alt="" coords="5,144,251,196"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface.html" title="alexaClientSDK::acl\l::MessageRouterObserverInterface" alt="" coords="13,220,243,259"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="30,283,227,321"/>
 </map>

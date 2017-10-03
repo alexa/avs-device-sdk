@@ -1,6 +1,7 @@
 <map id="alexaClientSDK::acl::TransportObserverInterface" name="alexaClientSDK::acl::TransportObserverInterface">
 <area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router.html" title="alexaClientSDK::acl\l::MessageRouter" alt="" coords="279,36,418,75"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_transport_observer.html" title="alexaClientSDK::acl\l::transport::test::MockTransport\lObserver" alt="" coords="245,99,451,151"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1_post_connect_synchronizer.html" title="alexaClientSDK::acl\l::PostConnectSynchronizer" alt="" coords="257,99,440,137"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_transport_observer.html" title="alexaClientSDK::acl\l::transport::test::MockTransport\lObserver" alt="" coords="245,161,451,213"/>
 <area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_message_router.html" title="alexaClientSDK::acl\l::HTTP2MessageRouter" alt="" coords="518,5,683,44"/>
 <area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_router.html" title="alexaClientSDK::acl\l::test::TestableMessageRouter" alt="" coords="499,68,701,107"/>
 </map>

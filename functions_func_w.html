@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -65,15 +65,16 @@ $(function() {
 
 <h3><a id="index_w"></a>- w -</h3><ul>
 <li>wait()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits_1_1_condition_variable.html#a9b410f55c3cf4e1c7fb9ea6239418622">alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits::ConditionVariable</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_curl_multi_handle_wrapper.html#a5024e9d328f2b9c5cef6e38feb149dad">alexaClientSDK::acl::CurlMultiHandleWrapper</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits_1_1_condition_variable.html#a9aca4904adaf654d9b56a76e3e327940">alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits::ConditionVariable</a>
 , <a class="el" href="class_observer.html#a423c6e995b7c4c7a645ab86ea2860038">Observer</a>
 </li>
 <li>wait_for()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits_1_1_condition_variable.html#a3c112807761728626fc87f030d5fb457">alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits::ConditionVariable</a>
 </li>
 <li>waitFor()
-: <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_connection_status_observer.html#af271694342b86822a3604f24b57185e0">alexaClientSDK::integration::ConnectionStatusObserver</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_observable_message_request.html#a4a57852538f330623e4598658435ead0">alexaClientSDK::integration::ObservableMessageRequest</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_connection_status_observer.html#a24ee171afb56413da4b86b6cbed2101e">alexaClientSDK::integration::ConnectionStatusObserver</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_observable_message_request.html#aae1d6b169d5df0239204eab2ead7bede">alexaClientSDK::integration::ObservableMessageRequest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_connection_observer.html#af768c2c37b8f6e7dc20ec484cceb4a7e">alexaClientSDK::sampleApp::ConnectionObserver</a>
 , <a class="el" href="class_auth_delegate_test.html#ade72abdf4d34bcd1bee7764ae46f8f9c">AuthDelegateTest</a>
 </li>
@@ -89,10 +90,13 @@ $(function() {
 <li>waitForFocusChange()
 : <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client.html#a3f3a4f900ef3cfc03de1c977595cb070">alexaClientSDK::afml::test::TestClient</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a6646a049e46ffcdd2b59b152c6ad0145">alexaClientSDK::integration::test::SpeechSynthesizerTest</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html#abf34360f669de979952fd033f4679225">alexaClientSDK::integration::test::TestClient</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html#aba5c00f8edd0afb6f367fa1c98f4a722">alexaClientSDK::integration::test::TestClient</a>
 </li>
 <li>waitForInactive()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_timer_test.html#a04239c746be9f4a32c449f18faf1d412">alexaClientSDK::avsCommon::utils::timing::test::TimerTest</a>
+</li>
+<li>waitForNCallbacks()
+: <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_test_parser_observer.html#add320ce2f9d39fe63bd160b9f631177d">alexaClientSDK::playlistParser::test::TestParserObserver</a>
 </li>
 <li>waitForNDetections()
 : <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1test_key_word_observer.html#ab852f36546503524cc533537a1b0ab5c">alexaClientSDK::kwd::test::testKeyWordObserver</a>
@@ -102,8 +106,12 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_directive_handler.html#ac9fa434657ad5842af2ce9fe46a386a0">alexaClientSDK::integration::test::TestDirectiveHandler</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_exception_encountered_sender.html#ad2f27c283916cfcee7c0fdf8ccf8a783">alexaClientSDK::integration::test::TestExceptionEncounteredSender</a>
 </li>
+<li>waitForPause()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#abe623490e8836dbf261a10ce2790e839">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>
+</li>
 <li>waitForPlay()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#afcbf6fa3142b980dc9cd8eccfd6a69c2">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#a99777c1b251a750e0489b72d3c9d0f7b">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#afcbf6fa3142b980dc9cd8eccfd6a69c2">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
 </li>
 <li>waitForPlaybackFinished()
 : <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_player_observer.html#a1db3dd2ad7cb4d354ece2f1a2c85fbe5">alexaClientSDK::mediaPlayer::test::MockPlayerObserver</a>
@@ -117,18 +125,16 @@ $(function() {
 <li>waitForPlaybackStarted()
 : <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_player_observer.html#a99a7cbf19e7db28f746bd9f5c0887078">alexaClientSDK::mediaPlayer::test::MockPlayerObserver</a>
 </li>
-<li>waitForPlaylistParsed()
-: <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_test_parser_observer.html#a4f5e1a2bcc060214d3d16c45d315dcf0">alexaClientSDK::playlistParser::test::TestParserObserver</a>
-</li>
-<li>waitForState()
-: <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_state_synchronizer_observer.html#a7fd7480272d9d686a759936d72e13a0d">alexaClientSDK::integration::test::TestStateSynchronizerObserver</a>
+<li>waitForResume()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#ae32f76f93203d97427555b3f2fd7edf5">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>
 </li>
 <li>waitForStateChange()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_test_observer.html#a0782c3efd96349694a190ea6472579f1">alexaClientSDK::avsCommon::test::TestObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1test_state_observer.html#a61f481e6fa52bf85f4a2c1f995f1b5d8">alexaClientSDK::kwd::test::testStateObserver</a>
 </li>
 <li>waitForStop()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#a6a200f7e0a880e88431a44a518e6938c">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#a2876058be3f073983510499b286a0584">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#a6a200f7e0a880e88431a44a518e6938c">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
 </li>
 <li>waitForSubmittedTasks()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_executor.html#a43fafcae113b6a3c985260e8edefcedd">alexaClientSDK::avsCommon::utils::threading::Executor</a>
@@ -143,22 +149,33 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#a2e8ca3ab0feae2a3a1120f92a69669e4">alexaClientSDK::adsl::test::MockDirectiveHandler</a>
 </li>
 <li>waitUntilPlaybackFinished()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#a7bb11b0c0bf65416ee5218c078c2d184">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#a093df6ba994787375f9a82df2a688476">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#a7bb11b0c0bf65416ee5218c078c2d184">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
+</li>
+<li>waitUntilPlaybackPaused()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#a9b24e62c66980eb31997a1e11e79395f">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>
+</li>
+<li>waitUntilPlaybackResumed()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#a0564357763c88396a5367d48ebca6fac">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>
 </li>
 <li>waitUntilPlaybackStarted()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#a689551ce5baa5ac4055ed7c565137a5e">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#ad40d19db09eef36e555287b030bc021b">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#a689551ce5baa5ac4055ed7c565137a5e">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
 </li>
 <li>waitUntilPreHandling()
 : <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#a79b77cd37732843891b8162aa457880a">alexaClientSDK::adsl::test::MockDirectiveHandler</a>
 </li>
 <li>wakeOnAcquireChannel()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#aa5faaedf27b6ec8b1c0a2f9daf32748d">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html#a95935e9d99758ffad062d1d2c33db8c0">alexaClientSDK::capabilityAgents::audioPlayer::test::AudioPlayerTest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#aa5faaedf27b6ec8b1c0a2f9daf32748d">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
 </li>
 <li>wakeOnReleaseChannel()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a5fd05e9e7dbd62eb86c1c8a9f5ea5daa">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html#a5ae9d038c90ec3cdb03db520b90e0f77">alexaClientSDK::capabilityAgents::audioPlayer::test::AudioPlayerTest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a5fd05e9e7dbd62eb86c1c8a9f5ea5daa">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
 </li>
 <li>wakeOnSendMessage()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a2825b97ca1147339091ab27a4b0ddd0f">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html#a89a1fbb6068fad2162ae685f6862931e">alexaClientSDK::capabilityAgents::audioPlayer::test::AudioPlayerTest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a2825b97ca1147339091ab27a4b0ddd0f">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
 </li>
 <li>wakeOnSetCompleted()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#acd25163750619a465fffff945a2a698e">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
@@ -167,7 +184,8 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a827e0d13eb5d96c9a69f1829c5829b82">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
 </li>
 <li>wakeOnSetState()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a8d481264cb0d44afe31afc61b7c55cfa">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html#a3971a04bf069b15edcc2e320ab6dec62">alexaClientSDK::capabilityAgents::audioPlayer::test::AudioPlayerTest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a8d481264cb0d44afe31afc61b7c55cfa">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
 </li>
 <li>wasExceptionReceived()
 : <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_observable_message_request.html#afcba5c537e217f95a0d7a2dbfaf96147">alexaClientSDK::integration::ObservableMessageRequest</a>
@@ -192,7 +210,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

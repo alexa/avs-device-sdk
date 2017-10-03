@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structstd_1_1hash_3_01alexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name_01_4.html" title="std::hash\&lt; alexaClientSDK\l::avsCommon::avs::NamespaceAnd\lName \&gt;" alt="" coords="5,5,239,57"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html" title="alexaClientSDK::certified\lSender::MessageStorageInterface" alt="" coords="5,5,230,44"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html" title="alexaClientSDK::certified\lSender::SQLiteMessageStorage" alt="" coords="278,5,491,44"/>
 </map>

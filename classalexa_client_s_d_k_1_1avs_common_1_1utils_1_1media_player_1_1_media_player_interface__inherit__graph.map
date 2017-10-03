@@ -1,5 +1,6 @@
 <map id="alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface" name="alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html" title="alexaClientSDK::capability\lAgents::speechSynthesizer\l::test::MockMediaPlayer" alt="" coords="275,5,458,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html" title="alexaClientSDK::integration\l::test::TestMediaPlayer" alt="" coords="275,81,459,120"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="269,144,465,183"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html" title="alexaClientSDK::capability\lAgents::audioPlayer::test\l::MockMediaPlayer" alt="" coords="278,5,456,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html" title="alexaClientSDK::capability\lAgents::speechSynthesizer\l::test::MockMediaPlayer" alt="" coords="275,81,458,133"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html" title="alexaClientSDK::integration\l::test::TestMediaPlayer" alt="" coords="275,157,459,196"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="269,220,465,259"/>
 </map>

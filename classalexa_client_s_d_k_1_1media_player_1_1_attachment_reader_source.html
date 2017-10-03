@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -91,13 +91,11 @@ Collaboration diagram for alexaClientSDK::mediaPlayer::AttachmentReaderSource:</
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:abe0f6246476aa9dfbdbbdf75ae786743"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_attachment_reader_source.html">AttachmentReaderSource</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_attachment_reader_source.html#abe0f6246476aa9dfbdbbdf75ae786743">create</a> (<a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pipeline_interface.html">PipelineInterface</a> *pipeline, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html">avsCommon::avs::attachment::AttachmentReader</a> &gt; attachmentReader)</td></tr>
-<tr class="separator:abe0f6246476aa9dfbdbbdf75ae786743"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Overridden SourceInterface methods.</div></td></tr>
+<tr class="memitem:a0dbb878575a8bbfc56d78297ff12e043"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_attachment_reader_source.html#a0dbb878575a8bbfc56d78297ff12e043">isPlaybackRemote</a> () const override</td></tr>
+<tr class="separator:a0dbb878575a8bbfc56d78297ff12e043"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html">alexaClientSDK::mediaPlayer::BaseStreamSource</a></td></tr>
 <tr class="memitem:a9c01ae6967784c851abce5c18e4cdc69 inherit pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a9c01ae6967784c851abce5c18e4cdc69">BaseStreamSource</a> (<a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pipeline_interface.html">PipelineInterface</a> *pipeline)</td></tr>
 <tr class="separator:a9c01ae6967784c851abce5c18e4cdc69 inherit pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -110,6 +108,14 @@ Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_source_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_source_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html">alexaClientSDK::mediaPlayer::SourceInterface</a></td></tr>
 <tr class="memitem:a95c787c015d44fb6409f0a050424cc0d inherit pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_source_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html#a95c787c015d44fb6409f0a050424cc0d">~SourceInterface</a> ()=default</td></tr>
 <tr class="separator:a95c787c015d44fb6409f0a050424cc0d inherit pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_source_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:abe0f6246476aa9dfbdbbdf75ae786743"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_attachment_reader_source.html">AttachmentReaderSource</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_attachment_reader_source.html#abe0f6246476aa9dfbdbbdf75ae786743">create</a> (<a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pipeline_interface.html">PipelineInterface</a> *pipeline, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html">avsCommon::avs::attachment::AttachmentReader</a> &gt; attachmentReader)</td></tr>
+<tr class="separator:abe0f6246476aa9dfbdbbdf75ae786743"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html">alexaClientSDK::mediaPlayer::BaseStreamSource</a></td></tr>
 <tr class="memitem:a13af43e36ef24de5f9746b6391f0bfd0 inherit pro_methods_classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a13af43e36ef24de5f9746b6391f0bfd0">init</a> ()</td></tr>
 <tr class="separator:a13af43e36ef24de5f9746b6391f0bfd0 inherit pro_methods_classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -172,15 +178,44 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a0dbb878575a8bbfc56d78297ff12e043"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0dbb878575a8bbfc56d78297ff12e043">&#9670;&nbsp;</a></span>isPlaybackRemote()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::mediaPlayer::AttachmentReaderSource::isPlaybackRemote </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Indicates whether a source is local or remote from the perspective of the <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html">MediaPlayer</a> (e.g. playing out of the SDS is local, playing a URL is remote).</p>
+<dl class="section return"><dt>Returns</dt><dd>A boolean indicating whether the source is from a remote or local source </dd></dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html#ab26b1c54c75a9e0f840e4a27670a66a6">alexaClientSDK::mediaPlayer::SourceInterface</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/MediaPlayer/include/MediaPlayer/<a class="el" href="_attachment_reader_source_8h_source.html">AttachmentReaderSource.h</a></li>
-<li>/Users/kcecka/projects/avs-cpp-sdk/MediaPlayer/src/AttachmentReaderSource.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/MediaPlayer/include/MediaPlayer/<a class="el" href="_attachment_reader_source_8h_source.html">AttachmentReaderSource.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/MediaPlayer/src/AttachmentReaderSource.cpp</li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

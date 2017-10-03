@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -88,7 +88,8 @@ Inheritance diagram for alexaClientSDK::capabilityAgents::aip::AudioInputProcess
 <area shape="rect" id="node5" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::StateProvider\lInterface" alt="" coords="18,157,215,209"/>
 <area shape="rect" id="node6" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextRequester\lInterface" alt="" coords="5,233,228,285"/>
 <area shape="rect" id="node7" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer. " alt="" coords="290,188,493,240"/>
-<area shape="rect" id="node8" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="293,264,490,303"/>
+<area shape="rect" id="node8" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::MessageRequest\lObserverInterface" alt="" coords="281,264,501,316"/>
+<area shape="rect" id="node9" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="293,340,490,379"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -102,7 +103,8 @@ Collaboration diagram for alexaClientSDK::capabilityAgents::aip::AudioInputProce
 <area shape="rect" id="node5" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::StateProvider\lInterface" alt="" coords="18,157,215,209"/>
 <area shape="rect" id="node6" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextRequester\lInterface" alt="" coords="5,233,228,285"/>
 <area shape="rect" id="node7" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer. " alt="" coords="290,188,493,240"/>
-<area shape="rect" id="node8" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="293,264,490,303"/>
+<area shape="rect" id="node8" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::MessageRequest\lObserverInterface" alt="" coords="281,264,501,316"/>
+<area shape="rect" id="node9" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="293,340,490,379"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -113,13 +115,36 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <tr class="memdesc:a4dc706ff9be6b151c9fab1ae07b43ba2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias to the <code>AudioInputProcessorObserverInterface</code> for brevity. <br /></td></tr>
 <tr class="separator:a4dc706ff9be6b151c9fab1ae07b43ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::DialogUXStateObserverInterface</a></td></tr>
-<tr class="memitem:a728a1ce41f6997d23f740e452dc5e066 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066">DialogUXState</a> { <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066aa5daf7f2ebbba4975d61dab1c40188c7">DialogUXState::IDLE</a>, 
+<tr class="memitem:a728a1ce41f6997d23f740e452dc5e066 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066">DialogUXState</a> { <br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066aa5daf7f2ebbba4975d61dab1c40188c7">DialogUXState::IDLE</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066ac0ff938e396e72c225bd66562b80a77e">DialogUXState::LISTENING</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066a18004389aa6f827c608aad2441a2bc53">DialogUXState::THINKING</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066addee564b336f5de690b746eb04e62114">DialogUXState::SPEAKING</a>
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066addee564b336f5de690b746eb04e62114">DialogUXState::SPEAKING</a>, 
+<br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066a2c616b2713e2e0aed04b4c4752c88133">DialogUXState::FINISHED</a>
+<br />
  }<tr class="memdesc:a728a1ce41f6997d23f740e452dc5e066"><td class="mdescLeft">&#160;</td><td class="mdescRight">The different dialog specific AVS UX states.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066">More...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:a728a1ce41f6997d23f740e452dc5e066 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::MessageRequestObserverInterface</a></td></tr>
+<tr class="memitem:a29e40517f71dfc83e3159a8f0f489d7b inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7b">Status</a> { <br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bac69f06e1a9b016d133907b4e5f5864d2">Status::PENDING</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bad0749aaba8b833466dfcbb0428e4f89c">Status::SUCCESS</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bad91be9b5ceb9fe0af02b9b02413eccf8">Status::NOT_CONNECTED</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7ba48aed7ecac60ad92d2006b58f16f483b">Status::NOT_SYNCHRONIZED</a>, 
+<br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bac5b306a30b21dec5abcb84067152687a">Status::TIMEDOUT</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7ba23f149f0f9ae9ed9e0119e7209178a5d">Status::PROTOCOL_ERROR</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bae8c0c70879b5895c615677261d64a1ee">Status::INTERNAL_ERROR</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7ba6a701b3f16c45b9d96fec4ac97805d9c">Status::SERVER_INTERNAL_ERROR</a>, 
+<br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7ba392253eaea22aafdb199bc238bafc082">Status::REFUSED</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bad4539bffb6062bdcbd7e7cc1b1228926">Status::CANCELED</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bad56f03cea4fb854fa3000896bfd66fe3">Status::THROTTLED</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7baabd298f8599f681c645d152c354f24de">Status::INVALID_AUTH</a>
+<br />
+ }</td></tr>
+<tr class="separator:a29e40517f71dfc83e3159a8f0f489d7b inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -141,6 +166,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:abe0314472d4d57d404b6da8888643cf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a598061d219ec34b7b3cc6b6a8650f93e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a598061d219ec34b7b3cc6b6a8650f93e">onContextFailure</a> (const <a class="el" href="_context_requester_interface_8h.html#a8ec2f2403294717c740bfacf5c62d018">avsCommon::sdkInterfaces::ContextRequestError</a> error) override</td></tr>
 <tr class="separator:a598061d219ec34b7b3cc6b6a8650f93e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">MessageRequestObserverInterface Functions</div></td></tr>
+<tr class="memitem:a093fa10358a5754ce3ca205b2ae0bf52"><td class="memItemLeft" align="right" valign="top"><a id="a093fa10358a5754ce3ca205b2ae0bf52"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>onSendCompleted</b> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7b">avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status</a> status) override</td></tr>
+<tr class="separator:a093fa10358a5754ce3ca205b2ae0bf52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a509001408419ff468e442c7be5d4b9b1"><td class="memItemLeft" align="right" valign="top"><a id="a509001408419ff468e442c7be5d4b9b1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>onExceptionReceived</b> (const std::string &amp;exceptionMessage) override</td></tr>
+<tr class="separator:a509001408419ff468e442c7be5d4b9b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">CapabilityAgent/DirectiveHandlerInterface Functions</div></td></tr>
 <tr class="memitem:a43e0d411e60f4a714ef453aa2d2098e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a43e0d411e60f4a714ef453aa2d2098e9">handleDirectiveImmediately</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_directive.html">avsCommon::avs::AVSDirective</a> &gt; directive) override</td></tr>
 <tr class="separator:a43e0d411e60f4a714ef453aa2d2098e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -786,7 +818,7 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
       </table>
 </div><div class="memdoc">
 <p>This function asks the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a></code> to send a Recognize Event to AVS and start streaming from <code>audioProvider</code>, which transitions it to the <code>RECOGNIZING</code> state. This function can be called in any state except <code>BUSY</code>, however the flags in <code><a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">AudioProvider</a></code> will dictate whether the call is allowed to override an ongoing Recognize Event. If the flags do not allow an override, no event will be sent, no state change will occur, and the function will fail.</p>
-<dl class="section note"><dt>Note</dt><dd>This function will not pass the audio stream to <code>MessageSenderInterface</code> to start streaming if the the start index or any subsequent data has already expired from the buffer. In addition, it is assumed that <code>MessageSenderInterface</code> will stop streaming immediately if it detects an overrun, and notify AIP of this condition (through a <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_message_request.html">MessageRequest</a></code> callback). These requirements ensure that the <code>begin</code> and <code>keywordEnd</code> indices will remain accurate for the actual audio samples sent to AVS.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function will not pass the audio stream to <code>MessageSenderInterface</code> to start streaming if the the start index or any subsequent data has already expired from the buffer. In addition, it is assumed that <code>MessageSenderInterface</code> will stop streaming immediately if it detects an overrun, and notify AIP of this condition (through a <code>MessageRequest</code> callback). These requirements ensure that the <code>begin</code> and <code>keywordEnd</code> indices will remain accurate for the actual audio samples sent to AVS.</dd></dl>
 <p>False-wakeword detection in the cloud will be used when all of the following requirements are met:</p>
 <ul>
 <li><code>initiator == Initiator::WAKEWORD</code> </li>
@@ -874,14 +906,14 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/CapabilityAgents/AIP/include/AIP/<a class="el" href="_audio_input_processor_8h_source.html">AudioInputProcessor.h</a></li>
-<li>/Users/kcecka/projects/avs-cpp-sdk/CapabilityAgents/AIP/src/AudioInputProcessor.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/CapabilityAgents/AIP/include/AIP/<a class="el" href="_audio_input_processor_8h_source.html">AudioInputProcessor.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/CapabilityAgents/AIP/src/AudioInputProcessor.cpp</li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

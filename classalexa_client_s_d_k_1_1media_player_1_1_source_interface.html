@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -96,6 +96,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a41ad7357d98f2efc7b520b33cbb9be4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cd97cedd9cc6e8d1822f84bb74facf3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html#a1cd97cedd9cc6e8d1822f84bb74facf3">preprocess</a> ()=0</td></tr>
 <tr class="separator:a1cd97cedd9cc6e8d1822f84bb74facf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab26b1c54c75a9e0f840e4a27670a66a6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html#ab26b1c54c75a9e0f840e4a27670a66a6">isPlaybackRemote</a> () const =0</td></tr>
+<tr class="separator:ab26b1c54c75a9e0f840e4a27670a66a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c237e682828c6421084a4ad217f7e0f"><td class="memItemLeft" align="right" valign="top"><a id="a0c237e682828c6421084a4ad217f7e0f"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>terminate</b> ()=0</td></tr>
+<tr class="separator:a0c237e682828c6421084a4ad217f7e0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface to request operations on an audio source. </p>
@@ -185,6 +190,35 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ab26b1c54c75a9e0f840e4a27670a66a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab26b1c54c75a9e0f840e4a27670a66a6">&#9670;&nbsp;</a></span>isPlaybackRemote()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool alexaClientSDK::mediaPlayer::SourceInterface::isPlaybackRemote </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Indicates whether a source is local or remote from the perspective of the <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html">MediaPlayer</a> (e.g. playing out of the SDS is local, playing a URL is remote).</p>
+<dl class="section return"><dt>Returns</dt><dd>A boolean indicating whether the source is from a remote or local source </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a300ab4708a8b1c9f2faa9f3dce2abc1d">alexaClientSDK::mediaPlayer::UrlSource</a>, and <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_attachment_reader_source.html#a0dbb878575a8bbfc56d78297ff12e043">alexaClientSDK::mediaPlayer::AttachmentReaderSource</a>.</p>
+
+</div>
+</div>
 <a id="a1cd97cedd9cc6e8d1822f84bb74facf3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1cd97cedd9cc6e8d1822f84bb74facf3">&#9670;&nbsp;</a></span>preprocess()</h2>
 
@@ -214,13 +248,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/MediaPlayer/include/MediaPlayer/<a class="el" href="_source_interface_8h_source.html">SourceInterface.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/MediaPlayer/include/MediaPlayer/<a class="el" href="_source_interface_8h_source.html">SourceInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

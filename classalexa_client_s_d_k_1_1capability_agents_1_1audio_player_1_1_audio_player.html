@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -130,8 +130,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>handleDirectiveImmedi
 <tr class="separator:a67a1e05c5ebd425f0b1c16a86e19b726"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae8e915c6b2acff5f639c47f6a66ea6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#aae8e915c6b2acff5f639c47f6a66ea6a">onPlaybackFinished</a> () override</td></tr>
 <tr class="separator:aae8e915c6b2acff5f639c47f6a66ea6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3797969e9e30f80e6c2f0a5fe00a4ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#af3797969e9e30f80e6c2f0a5fe00a4ec">onPlaybackError</a> (std::string error) override</td></tr>
-<tr class="separator:af3797969e9e30f80e6c2f0a5fe00a4ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbb3c822a7a448584db0c1598ddc568c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#adbb3c822a7a448584db0c1598ddc568c">onPlaybackError</a> (const avsCommon::utils::mediaPlayer::ErrorType &amp;type, std::string error) override</td></tr>
+<tr class="separator:adbb3c822a7a448584db0c1598ddc568c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fa388dc7aa5cea12670fc421bb0d9db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#a7fa388dc7aa5cea12670fc421bb0d9db">onPlaybackPaused</a> () override</td></tr>
 <tr class="separator:a7fa388dc7aa5cea12670fc421bb0d9db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a079fc8c58c8597f1cc53b04a5c3634c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#a079fc8c58c8597f1cc53b04a5c3634c2">onPlaybackResumed</a> () override</td></tr>
@@ -517,8 +517,8 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 
 </div>
 </div>
-<a id="af3797969e9e30f80e6c2f0a5fe00a4ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3797969e9e30f80e6c2f0a5fe00a4ec">&#9670;&nbsp;</a></span>onPlaybackError()</h2>
+<a id="adbb3c822a7a448584db0c1598ddc568c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbb3c822a7a448584db0c1598ddc568c">&#9670;&nbsp;</a></span>onPlaybackError()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -529,9 +529,19 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
         <tr>
           <td class="memname">void alexaClientSDK::capabilityAgents::audioPlayer::AudioPlayer::onPlaybackError </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>error</em></td><td>)</td>
+          <td class="paramtype">const avsCommon::utils::mediaPlayer::ErrorType &amp;&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>error</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -541,9 +551,16 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 </table>
 </div><div class="memdoc">
 <p>This is an indication to the observer that the <code>MediaPlayer</code> encountered an error. Errors can occur during playback.</p>
-<dl class="section note"><dt>Note</dt><dd>The observer has to return soon. Otherwise this could block the <code>MediaPlayer</code> from processing other signals or playback. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The observer has to return soon. Otherwise this could block the <code>MediaPlayer</code> from processing other signals or playback.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>The AVS error to report to AVS </td></tr>
+    <tr><td class="paramname">error</td><td>The message to report to AVS </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a3ffccd5f49d6f4c9663420ab331736d4">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a>.</p>
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#af58531530e1331b147baeee684662421">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a>.</p>
 
 </div>
 </div>
@@ -737,14 +754,14 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/CapabilityAgents/AudioPlayer/include/AudioPlayer/<a class="el" href="_audio_player_8h_source.html">AudioPlayer.h</a></li>
-<li>/Users/kcecka/projects/avs-cpp-sdk/CapabilityAgents/AudioPlayer/src/<a class="el" href="_audio_player_8cpp.html">AudioPlayer.cpp</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/CapabilityAgents/AudioPlayer/include/AudioPlayer/<a class="el" href="_audio_player_8h_source.html">AudioPlayer.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/CapabilityAgents/AudioPlayer/src/<a class="el" href="_audio_player_8cpp.html">AudioPlayer.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

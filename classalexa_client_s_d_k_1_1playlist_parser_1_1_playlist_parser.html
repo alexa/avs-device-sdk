@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -66,16 +66,14 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classalexa_client_s_d_k_1_1playlist_parser_1_1_playlist_parser-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">alexaClientSDK::playlistParser::PlaylistParser Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><code>#include &lt;<a class="el" href="_playlist_parser_8h_source.html">PlaylistParser.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for alexaClientSDK::playlistParser::PlaylistParser:</div>
 <div class="dyncontent">
@@ -95,49 +93,40 @@ Collaboration diagram for alexaClientSDK::playlistParser::PlaylistParser:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a130a88d4ecc0e5a2631dd97e96c85be9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_playlist_parser.html#a130a88d4ecc0e5a2631dd97e96c85be9">~PlaylistParser</a> ()</td></tr>
-<tr class="separator:a130a88d4ecc0e5a2631dd97e96c85be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90da413442eacf68f2c54f9c37f07ffd"><td class="memItemLeft" align="right" valign="top"><a id="a90da413442eacf68f2c54f9c37f07ffd"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>parsePlaylist</b> (const std::string &amp;url, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html">avsCommon::utils::playlistParser::PlaylistParserObserverInterface</a> &gt; observer) override</td></tr>
-<tr class="separator:a90da413442eacf68f2c54f9c37f07ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e2513c1816b1a56174a1124bf3982ed"><td class="memItemLeft" align="right" valign="top"><a id="a9e2513c1816b1a56174a1124bf3982ed"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>parsePlaylist</b> (std::string url, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html">avsCommon::utils::playlistParser::PlaylistParserObserverInterface</a> &gt; observer, std::vector&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface.html#a740ba431010fcb299ba2b193a9edc484">PlaylistType</a> &gt; playlistTypesToNotBeParsed=std::vector&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface.html#a740ba431010fcb299ba2b193a9edc484">PlaylistType</a> &gt;()) override</td></tr>
+<tr class="separator:a9e2513c1816b1a56174a1124bf3982ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface.html">alexaClientSDK::avsCommon::utils::playlistParser::PlaylistParserInterface</a></td></tr>
 <tr class="memitem:adfe1bc8eaa08643ea84764c6de19d74c inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface.html#adfe1bc8eaa08643ea84764c6de19d74c">~PlaylistParserInterface</a> ()=default</td></tr>
 <tr class="separator:adfe1bc8eaa08643ea84764c6de19d74c inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3dfe21a6520f38af05ca7ee70a1eb20 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface.html#ac3dfe21a6520f38af05ca7ee70a1eb20">parsePlaylist</a> (const std::string &amp;url, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html">PlaylistParserObserverInterface</a> &gt; observer)=0</td></tr>
-<tr class="separator:ac3dfe21a6520f38af05ca7ee70a1eb20 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfa98c53574b849ed706beeaa645577e inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface.html#abfa98c53574b849ed706beeaa645577e">parsePlaylist</a> (std::string url, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html">PlaylistParserObserverInterface</a> &gt; observer, std::vector&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface.html#a740ba431010fcb299ba2b193a9edc484">PlaylistType</a> &gt; playlistTypesToNotBeParsed=std::vector&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface.html#a740ba431010fcb299ba2b193a9edc484">PlaylistType</a> &gt;())=0</td></tr>
+<tr class="separator:abfa98c53574b849ed706beeaa645577e inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a005693fa11a7ff70f437a9cce5c94dc3"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_playlist_parser.html">PlaylistParser</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_playlist_parser.html#a005693fa11a7ff70f437a9cce5c94dc3">create</a> ()</td></tr>
-<tr class="separator:a005693fa11a7ff70f437a9cce5c94dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0329ddc8ad3779f8b14ffafbb52b217"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_playlist_parser.html">PlaylistParser</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_playlist_parser.html#ae0329ddc8ad3779f8b14ffafbb52b217">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_factory_interface.html">avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface</a> &gt; contentFetcherFactory)</td></tr>
+<tr class="separator:ae0329ddc8ad3779f8b14ffafbb52b217"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:adcde7e43272697ed0edb4d30cb7153cc"><td class="memItemLeft" align="right" valign="top"><a id="adcde7e43272697ed0edb4d30cb7153cc"></a>
+static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_playlist_parser.html#adcde7e43272697ed0edb4d30cb7153cc">START_FAILURE</a> = 0</td></tr>
+<tr class="memdesc:adcde7e43272697ed0edb4d30cb7153cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">A return value that indicates a failure to start the playlist parsing. <br /></td></tr>
+<tr class="separator:adcde7e43272697ed0edb4d30cb7153cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_types_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface.html">alexaClientSDK::avsCommon::utils::playlistParser::PlaylistParserInterface</a></td></tr>
+<tr class="memitem:a740ba431010fcb299ba2b193a9edc484 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface"><td class="memItemLeft" align="right" valign="top"><a id="a740ba431010fcb299ba2b193a9edc484"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface.html#a740ba431010fcb299ba2b193a9edc484">PlaylistType</a> { <b>M3U</b>, 
+<b>M3U8</b>, 
+<b>PLS</b>
+ }<tr class="memdesc:a740ba431010fcb299ba2b193a9edc484"><td class="mdescLeft">&#160;</td><td class="mdescRight">The different types of playlists that are currently supported. <br /></td></tr>
+</td></tr>
+<tr class="separator:a740ba431010fcb299ba2b193a9edc484 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This implementation of the <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_playlist_parser.html">PlaylistParser</a> uses the Totem Playlist Parser library. </p><dl class="section see"><dt>See also</dt><dd><a href="https://github.com/GNOME/totem-pl-parser">https://github.com/GNOME/totem-pl-parser</a> </dd>
-<dd>
-<a href="https://developer.gnome.org/totem-pl-parser/stable/TotemPlParser.html">https://developer.gnome.org/totem-pl-parser/stable/TotemPlParser.html</a>.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>For the playlist parser to function properly, a main event loop needs to be running. If there is no main event loop the signals related to parsing playlist will not be called. </dd></dl>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a130a88d4ecc0e5a2631dd97e96c85be9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a130a88d4ecc0e5a2631dd97e96c85be9">&#9670;&nbsp;</a></span>~PlaylistParser()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::playlistParser::PlaylistParser::~PlaylistParser </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Destructor. </p>
-
-</div>
-</div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a005693fa11a7ff70f437a9cce5c94dc3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a005693fa11a7ff70f437a9cce5c94dc3">&#9670;&nbsp;</a></span>create()</h2>
+<a id="ae0329ddc8ad3779f8b14ffafbb52b217"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0329ddc8ad3779f8b14ffafbb52b217">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -148,7 +137,8 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_playlist_parser.html">PlaylistParser</a> &gt; alexaClientSDK::playlistParser::PlaylistParser::create </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_factory_interface.html">avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>contentFetcherFactory</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -158,20 +148,26 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Creates an instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_playlist_parser.html">PlaylistParser</a></code>.</p>
-<dl class="section return"><dt>Returns</dt><dd>An instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_playlist_parser.html">PlaylistParser</a></code> if successful else a <code>nullptr</code>. </dd></dl>
+<p>Creates a new <code><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_playlist_parser.html">PlaylistParser</a></code> instance.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">contentFetcherFactory</td><td>A factory that can create <code>HTTPContentFetcherInterfaces</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <code>std::unique_ptr</code> to a new <code><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_playlist_parser.html">PlaylistParser</a></code> if successful or <code>nullptr</code> otherwise. </dd></dl>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/PlaylistParser/include/PlaylistParser/<a class="el" href="_playlist_parser_8h_source.html">PlaylistParser.h</a></li>
-<li>/Users/kcecka/projects/avs-cpp-sdk/PlaylistParser/src/PlaylistParser.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/PlaylistParser/include/PlaylistParser/<a class="el" href="_playlist_parser_8h_source.html">PlaylistParser.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/PlaylistParser/src/PlaylistParser.cpp</li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

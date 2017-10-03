@@ -1,0 +1,5 @@
+<map id="alexaClientSDK::avsCommon::sdkInterfaces::HTTPContentFetcherInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::HTTPContentFetcherInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_lib_curl_http_content_fetcher.html" title="alexaClientSDK::acl\l::LibCurlHttpContentFetcher" alt="" coords="312,5,499,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_content_fetcher.html" title="A mock content fetcher. " alt="" coords="308,68,504,107"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_mock_content_fetcher.html" title="A mock content fetcher. " alt="" coords="295,131,516,169"/>
+</map>

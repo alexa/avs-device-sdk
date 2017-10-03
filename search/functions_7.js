@@ -14,8 +14,7 @@ var searchData=
   ['help',['help',['../classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a1d6993408ccf75e07b9a1574691664f9',1,'alexaClientSDK::sampleApp::InteractionManager']]],
   ['holdtoggled',['holdToggled',['../classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#ad0eb39434852467b718b75ee9c386d63',1,'alexaClientSDK::sampleApp::InteractionManager']]],
   ['http2messagerouter',['HTTP2MessageRouter',['../classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_message_router.html#af37cb419574a95523f203a94b9ae3063',1,'alexaClientSDK::acl::HTTP2MessageRouter']]],
-  ['http2stream',['HTTP2Stream',['../classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a45e535cc616d3b346d520690a05e665f',1,'alexaClientSDK::acl::HTTP2Stream']]],
+  ['http2stream',['HTTP2Stream',['../classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a2d4c6ff352ecbb6273442d6e4f3809eb',1,'alexaClientSDK::acl::HTTP2Stream']]],
   ['http2streampool',['HTTP2StreamPool',['../classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream_pool.html#a5897e5d9b74197a96f448d17a9972c49',1,'alexaClientSDK::acl::HTTP2StreamPool']]],
-  ['http2transport',['HTTP2Transport',['../classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html#a8ae9a04c164e14c66e8200dac2c1ea4d',1,'alexaClientSDK::acl::HTTP2Transport']]],
   ['httppost',['HttpPost',['../classalexa_client_s_d_k_1_1auth_delegate_1_1_http_post.html#a8987dedc8da7e8235009eb158e46b479',1,'alexaClientSDK::authDelegate::HttpPost']]]
 ];

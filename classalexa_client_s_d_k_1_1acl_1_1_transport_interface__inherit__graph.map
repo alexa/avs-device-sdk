@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::acl::TransportInterface" name="alexaClientSDK::acl::TransportInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html" title="alexaClientSDK::acl\l::HTTP2Transport" alt="" coords="226,5,365,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_transport.html" title="alexaClientSDK::acl\l::transport::test::MockTransport" alt="" coords="192,68,399,107"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html" title="alexaClientSDK::acl\l::HTTP2Transport" alt="" coords="471,5,610,44"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_transport.html" title="alexaClientSDK::acl\l::transport::test::MockTransport" alt="" coords="437,68,644,107"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="5,37,202,76"/>
 </map>

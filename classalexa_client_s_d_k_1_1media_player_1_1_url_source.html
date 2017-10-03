@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -94,14 +94,20 @@ Collaboration diagram for alexaClientSDK::mediaPlayer::UrlSource:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a71182bb5aab34e342b2ef872e52381e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a71182bb5aab34e342b2ef872e52381e6">onPlaylistParsed</a> (std::string playlistUrl, std::queue&lt; std::string &gt; urls, avsCommon::utils::playlistParser::PlaylistParseResult parseResult) override</td></tr>
-<tr class="separator:a71182bb5aab34e342b2ef872e52381e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b6c82a26b1fba054e0d2e985fbec58c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a5b6c82a26b1fba054e0d2e985fbec58c">onPlaylistEntryParsed</a> (int requestId, std::string url, avsCommon::utils::playlistParser::PlaylistParseResult parseResult) override</td></tr>
+<tr class="separator:a5b6c82a26b1fba054e0d2e985fbec58c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e89b94e63348690c5589946e452b9a5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a6e89b94e63348690c5589946e452b9a5">hasAdditionalData</a> () override</td></tr>
 <tr class="separator:a6e89b94e63348690c5589946e452b9a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ad648280a36f049de03bd98558d16db"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a8ad648280a36f049de03bd98558d16db">handleEndOfStream</a> () override</td></tr>
 <tr class="separator:a8ad648280a36f049de03bd98558d16db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4620388e0fde7e7a9f7f03d24981f8a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a4620388e0fde7e7a9f7f03d24981f8a1">preprocess</a> () override</td></tr>
 <tr class="separator:a4620388e0fde7e7a9f7f03d24981f8a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Overridden StreamSourceInterface methods.</div></td></tr>
+<tr class="memitem:a300ab4708a8b1c9f2faa9f3dce2abc1d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a300ab4708a8b1c9f2faa9f3dce2abc1d">isPlaybackRemote</a> () const override</td></tr>
+<tr class="separator:a300ab4708a8b1c9f2faa9f3dce2abc1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae520dc3afe5dcd8118b2a9c591db13b7"><td class="memItemLeft" align="right" valign="top"><a id="ae520dc3afe5dcd8118b2a9c591db13b7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>terminate</b> () override</td></tr>
+<tr class="separator:ae520dc3afe5dcd8118b2a9c591db13b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_source_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_source_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html">alexaClientSDK::mediaPlayer::SourceInterface</a></td></tr>
 <tr class="memitem:a95c787c015d44fb6409f0a050424cc0d inherit pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_source_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html#a95c787c015d44fb6409f0a050424cc0d">~SourceInterface</a> ()=default</td></tr>
 <tr class="separator:a95c787c015d44fb6409f0a050424cc0d inherit pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_source_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -225,8 +231,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a71182bb5aab34e342b2ef872e52381e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71182bb5aab34e342b2ef872e52381e6">&#9670;&nbsp;</a></span>onPlaylistParsed()</h2>
+<a id="a300ab4708a8b1c9f2faa9f3dce2abc1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a300ab4708a8b1c9f2faa9f3dce2abc1d">&#9670;&nbsp;</a></span>isPlaybackRemote()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -235,16 +241,45 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void alexaClientSDK::mediaPlayer::UrlSource::onPlaylistParsed </td>
+          <td class="memname">bool alexaClientSDK::mediaPlayer::UrlSource::isPlaybackRemote </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>playlistUrl</em>, </td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Indicates whether a source is local or remote from the perspective of the <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html">MediaPlayer</a> (e.g. playing out of the SDS is local, playing a URL is remote).</p>
+<dl class="section return"><dt>Returns</dt><dd>A boolean indicating whether the source is from a remote or local source </dd></dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html#ab26b1c54c75a9e0f840e4a27670a66a6">alexaClientSDK::mediaPlayer::SourceInterface</a>.</p>
+
+</div>
+</div>
+<a id="a5b6c82a26b1fba054e0d2e985fbec58c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b6c82a26b1fba054e0d2e985fbec58c">&#9670;&nbsp;</a></span>onPlaylistEntryParsed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::mediaPlayer::UrlSource::onPlaylistEntryParsed </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>requestId</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::queue&lt; std::string &gt;&#160;</td>
-          <td class="paramname"><em>urls</em>, </td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -264,17 +299,17 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Notification that the playlist parsing has been completed.</p>
+<p>Notification that an entry has been parsed.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">playlistUrl</td><td>The playlist that was parsed. </td></tr>
-    <tr><td class="paramname">urls</td><td>A list of the urls extracted from the playlist. </td></tr>
+    <tr><td class="paramname">requestId</td><td>The id of the callback to connect this callback to an original request. </td></tr>
+    <tr><td class="paramname">url</td><td>An entry that has been extracted. </td></tr>
     <tr><td class="paramname">parseResult</td><td>The result of parsing the playlist. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html#a8f1cafdd0f9bc90cdadb201cbec353e4">alexaClientSDK::avsCommon::utils::playlistParser::PlaylistParserObserverInterface</a>.</p>
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html#a555dcff67746c599f8a5ad3f86d01e4b">alexaClientSDK::avsCommon::utils::playlistParser::PlaylistParserObserverInterface</a>.</p>
 
 </div>
 </div>
@@ -307,14 +342,14 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/MediaPlayer/include/MediaPlayer/<a class="el" href="_url_source_8h_source.html">UrlSource.h</a></li>
-<li>/Users/kcecka/projects/avs-cpp-sdk/MediaPlayer/src/UrlSource.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/MediaPlayer/include/MediaPlayer/<a class="el" href="_url_source_8h_source.html">UrlSource.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/MediaPlayer/src/UrlSource.cpp</li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

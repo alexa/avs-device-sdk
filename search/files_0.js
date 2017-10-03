@@ -7,6 +7,7 @@ var searchData=
   ['audioinputprocessortest_2ecpp',['AudioInputProcessorTest.cpp',['../_audio_input_processor_test_8cpp.html',1,'']]],
   ['audioplayer_2ecpp',['AudioPlayer.cpp',['../_audio_player_8cpp.html',1,'']]],
   ['audioplayerintegrationtest_2ecpp',['AudioPlayerIntegrationTest.cpp',['../_audio_player_integration_test_8cpp.html',1,'']]],
+  ['audioplayertest_2ecpp',['AudioPlayerTest.cpp',['../_audio_player_test_8cpp.html',1,'']]],
   ['authobserverinterface_2eh',['AuthObserverInterface.h',['../_auth_observer_interface_8h.html',1,'']]],
   ['avsconnectionmanagertest_2ecpp',['AVSConnectionManagerTest.cpp',['../_a_v_s_connection_manager_test_8cpp.html',1,'']]]
 ];

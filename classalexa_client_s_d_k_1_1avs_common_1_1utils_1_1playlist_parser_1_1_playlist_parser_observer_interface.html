@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -88,8 +88,8 @@ Inheritance diagram for alexaClientSDK::avsCommon::utils::playlistParser::Playli
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9930eca43e330858b3df227d78030e42"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html#a9930eca43e330858b3df227d78030e42">~PlaylistParserObserverInterface</a> ()=default</td></tr>
 <tr class="separator:a9930eca43e330858b3df227d78030e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f1cafdd0f9bc90cdadb201cbec353e4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html#a8f1cafdd0f9bc90cdadb201cbec353e4">onPlaylistParsed</a> (std::string playlistUrl, std::queue&lt; std::string &gt; urls, PlaylistParseResult parseResult)=0</td></tr>
-<tr class="separator:a8f1cafdd0f9bc90cdadb201cbec353e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a555dcff67746c599f8a5ad3f86d01e4b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html#a555dcff67746c599f8a5ad3f86d01e4b">onPlaylistEntryParsed</a> (int requestId, std::string url, PlaylistParseResult parseResult)=0</td></tr>
+<tr class="separator:a555dcff67746c599f8a5ad3f86d01e4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An observer of the playlist parser. </p>
@@ -121,8 +121,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8f1cafdd0f9bc90cdadb201cbec353e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f1cafdd0f9bc90cdadb201cbec353e4">&#9670;&nbsp;</a></span>onPlaylistParsed()</h2>
+<a id="a555dcff67746c599f8a5ad3f86d01e4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a555dcff67746c599f8a5ad3f86d01e4b">&#9670;&nbsp;</a></span>onPlaylistEntryParsed()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,16 +131,16 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void alexaClientSDK::avsCommon::utils::playlistParser::PlaylistParserObserverInterface::onPlaylistParsed </td>
+          <td class="memname">virtual void alexaClientSDK::avsCommon::utils::playlistParser::PlaylistParserObserverInterface::onPlaylistEntryParsed </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>playlistUrl</em>, </td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>requestId</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::queue&lt; std::string &gt;&#160;</td>
-          <td class="paramname"><em>urls</em>, </td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -160,28 +160,28 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Notification that the playlist parsing has been completed.</p>
+<p>Notification that an entry has been parsed.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">playlistUrl</td><td>The playlist that was parsed. </td></tr>
-    <tr><td class="paramname">urls</td><td>A list of the urls extracted from the playlist. </td></tr>
+    <tr><td class="paramname">requestId</td><td>The id of the callback to connect this callback to an original request. </td></tr>
+    <tr><td class="paramname">url</td><td>An entry that has been extracted. </td></tr>
     <tr><td class="paramname">parseResult</td><td>The result of parsing the playlist. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_test_parser_observer.html#ae1d7889ee7293064a75857ba3bf6e1c0">alexaClientSDK::playlistParser::test::TestParserObserver</a>, and <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a71182bb5aab34e342b2ef872e52381e6">alexaClientSDK::mediaPlayer::UrlSource</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_test_parser_observer.html#a2dd8a780d6bec3b152b49b339c6c9417">alexaClientSDK::playlistParser::test::TestParserObserver</a>, and <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a5b6c82a26b1fba054e0d2e985fbec58c">alexaClientSDK::mediaPlayer::UrlSource</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/AVSCommon/Utils/include/AVSCommon/Utils/PlaylistParser/<a class="el" href="_playlist_parser_observer_interface_8h_source.html">PlaylistParserObserverInterface.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/AVSCommon/Utils/include/AVSCommon/Utils/PlaylistParser/<a class="el" href="_playlist_parser_observer_interface_8h_source.html">PlaylistParserObserverInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

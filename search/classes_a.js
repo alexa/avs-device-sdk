@@ -1,11 +1,9 @@
 var searchData=
 [
-  ['logentry',['LogEntry',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html',1,'alexaClientSDK::avsCommon::utils::logger']]],
-  ['logentrybuffer',['LogEntryBuffer',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_buffer.html',1,'alexaClientSDK::avsCommon::utils::logger']]],
-  ['logentrystream',['LogEntryStream',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_stream.html',1,'alexaClientSDK::avsCommon::utils::logger']]],
-  ['logentrystreamtest',['LogEntryStreamTest',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_log_entry_stream_test.html',1,'alexaClientSDK::avsCommon::utils::logger::test']]],
-  ['logger',['Logger',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html',1,'alexaClientSDK::avsCommon::utils::logger']]],
-  ['loggersinkmanager',['LoggerSinkManager',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger_sink_manager.html',1,'alexaClientSDK::avsCommon::utils::logger']]],
-  ['loggertest',['LoggerTest',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_logger_test.html',1,'alexaClientSDK::avsCommon::utils::logger::test']]],
-  ['loglevelobserverinterface',['LogLevelObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_level_observer_interface.html',1,'alexaClientSDK::avsCommon::utils::logger']]]
+  ['keyworddetectorstateobserverinterface',['KeyWordDetectorStateObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_detector_state_observer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
+  ['keywordobserver',['KeywordObserver',['../classalexa_client_s_d_k_1_1sample_app_1_1_keyword_observer.html',1,'alexaClientSDK::sampleApp']]],
+  ['keywordobserverinterface',['KeyWordObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_observer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
+  ['kittaiconfiguration',['KittAiConfiguration',['../structalexa_client_s_d_k_1_1kwd_1_1_kitt_ai_key_word_detector_1_1_kitt_ai_configuration.html',1,'alexaClientSDK::kwd::KittAiKeyWordDetector']]],
+  ['kittaikeyworddetector',['KittAiKeyWordDetector',['../classalexa_client_s_d_k_1_1kwd_1_1_kitt_ai_key_word_detector.html',1,'alexaClientSDK::kwd']]],
+  ['kittaikeywordtest',['KittAiKeyWordTest',['../classalexa_client_s_d_k_1_1kwd_1_1test_1_1_kitt_ai_key_word_test.html',1,'alexaClientSDK::kwd::test']]]
 ];

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -93,6 +93,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:abe911179bf1433ad674099ed7528d6d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c0d851a10fc641cfa474ba9f6ea8f7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a3c0d851a10fc641cfa474ba9f6ea8f7b">removeConnectionObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface</a> &gt; observer)</td></tr>
 <tr class="separator:a3c0d851a10fc641cfa474ba9f6ea8f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24d1c376d8545acb72c67950d395e947"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a24d1c376d8545acb72c67950d395e947">addSettingObserver</a> (const std::string &amp;key, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_single_setting_observer_interface.html">avsCommon::sdkInterfaces::SingleSettingObserverInterface</a> &gt; observer)</td></tr>
+<tr class="separator:a24d1c376d8545acb72c67950d395e947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbb637c207d72ddb2a4ca598c7d8998b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#afbb637c207d72ddb2a4ca598c7d8998b">removeSettingObserver</a> (const std::string &amp;key, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_single_setting_observer_interface.html">avsCommon::sdkInterfaces::SingleSettingObserverInterface</a> &gt; observer)</td></tr>
+<tr class="separator:afbb637c207d72ddb2a4ca598c7d8998b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43d0a29373c9e304b4deafd06742aea9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a43d0a29373c9e304b4deafd06742aea9">changeSetting</a> (const std::string &amp;key, const std::string &amp;value)</td></tr>
+<tr class="separator:a43d0a29373c9e304b4deafd06742aea9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3996adb71ca75dba55e14fa01656197"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#af3996adb71ca75dba55e14fa01656197">sendDefaultSettings</a> ()</td></tr>
+<tr class="separator:af3996adb71ca75dba55e14fa01656197"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa597072632174957d60137295a4f6b07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_controller_interface.html">avsCommon::sdkInterfaces::PlaybackControllerInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#aa597072632174957d60137295a4f6b07">getPlaybackControllerInterface</a> () const</td></tr>
+<tr class="separator:aa597072632174957d60137295a4f6b07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff3d42ce0832903567575745ce1a3b5d"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#aff3d42ce0832903567575745ce1a3b5d">notifyOfWakeWord</a> (<a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">capabilityAgents::aip::AudioProvider</a> wakeWordAudioProvider, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html#a6b73c95dbde8b184f8b3176ff9a3f3f1">avsCommon::avs::AudioInputStream::Index</a> beginIndex, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html#a6b73c95dbde8b184f8b3176ff9a3f3f1">avsCommon::avs::AudioInputStream::Index</a> endIndex, std::string keyword)</td></tr>
 <tr class="separator:aff3d42ce0832903567575745ce1a3b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa22b06aa7d928641e7d1554bb71eef98"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#aa22b06aa7d928641e7d1554bb71eef98">notifyOfTapToTalk</a> (<a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">capabilityAgents::aip::AudioProvider</a> tapToTalkAudioProvider, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html#a6b73c95dbde8b184f8b3176ff9a3f3f1">avsCommon::avs::AudioInputStream::Index</a> beginIndex=<a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#abb047001df08cb55a45d7a7144b16bc8">INVALID_INDEX</a>)</td></tr>
@@ -106,8 +116,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a98f87bb0e95bb01878666201f74bbdf3"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html">DefaultClient</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a98f87bb0e95bb01878666201f74bbdf3">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; speakMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; audioMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; alertsMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_delegate_interface.html">avsCommon::sdkInterfaces::AuthDelegateInterface</a> &gt; authDelegate, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html">capabilityAgents::alerts::storage::AlertStorageInterface</a> &gt; alertStorage, std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html">avsCommon::sdkInterfaces::DialogUXStateObserverInterface</a> &gt;&gt; alexaDialogStateObservers, std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface</a> &gt;&gt; connectionObservers)</td></tr>
-<tr class="separator:a98f87bb0e95bb01878666201f74bbdf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69b057ba654049e4bf35bb923b4d502e"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html">DefaultClient</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a69b057ba654049e4bf35bb923b4d502e">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; speakMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; audioMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; alertsMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_delegate_interface.html">avsCommon::sdkInterfaces::AuthDelegateInterface</a> &gt; authDelegate, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html">capabilityAgents::alerts::storage::AlertStorageInterface</a> &gt; alertStorage, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_storage_interface.html">capabilityAgents::settings::SettingsStorageInterface</a> &gt; settingsStorage, std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html">avsCommon::sdkInterfaces::DialogUXStateObserverInterface</a> &gt;&gt; alexaDialogStateObservers, std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface</a> &gt;&gt; connectionObservers)</td></tr>
+<tr class="separator:a69b057ba654049e4bf35bb923b4d502e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -188,6 +198,78 @@ static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
+<a id="a24d1c376d8545acb72c67950d395e947"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24d1c376d8545acb72c67950d395e947">&#9670;&nbsp;</a></span>addSettingObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::defaultClient::DefaultClient::addSettingObserver </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_single_setting_observer_interface.html">avsCommon::sdkInterfaces::SingleSettingObserverInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>observer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Adds an observer to a single setting to be notified of that setting change.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The name of the setting. </td></tr>
+    <tr><td class="paramname">observer</td><td>The settings observer to be added. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a43d0a29373c9e304b4deafd06742aea9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43d0a29373c9e304b4deafd06742aea9">&#9670;&nbsp;</a></span>changeSetting()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::defaultClient::DefaultClient::changeSetting </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calls the changeSetting function of Settings object.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The name of the setting to be changed. </td></tr>
+    <tr><td class="paramname">value</td><td>The value of the setting to be set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aebd2650ed80af8822c0942653ac9c949"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aebd2650ed80af8822c0942653ac9c949">&#9670;&nbsp;</a></span>connect()</h2>
 
@@ -203,7 +285,7 @@ static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="e
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Connects the client to AVS. Note that users should first wait for the authorization state to be set to REFRESHED before calling this function. After this call, users can observe the state of the connection asynchronously by using a connectionObserver that was passed in to the <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a98f87bb0e95bb01878666201f74bbdf3">create()</a> function.</p>
+<p>Connects the client to AVS. Note that users should first wait for the authorization state to be set to REFRESHED before calling this function. After this call, users can observe the state of the connection asynchronously by using a connectionObserver that was passed in to the <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a69b057ba654049e4bf35bb923b4d502e">create()</a> function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">avsEndpoint</td><td>An optional parameter to the AVS URL to connect to. This is defaulted to the North American endpoint. </td></tr>
@@ -213,8 +295,8 @@ static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
-<a id="a98f87bb0e95bb01878666201f74bbdf3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98f87bb0e95bb01878666201f74bbdf3">&#9670;&nbsp;</a></span>create()</h2>
+<a id="a69b057ba654049e4bf35bb923b4d502e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69b057ba654049e4bf35bb923b4d502e">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -251,6 +333,12 @@ static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="e
           <td></td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html">capabilityAgents::alerts::storage::AlertStorageInterface</a> &gt;&#160;</td>
           <td class="paramname"><em>alertStorage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_storage_interface.html">capabilityAgents::settings::SettingsStorageInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>settingsStorage</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -307,7 +395,27 @@ static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="e
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Disconnects the client from AVS if it is connected. After the call, users can observer the state of the connection asynchronously by using a connectionObserver that was passed in to the <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a98f87bb0e95bb01878666201f74bbdf3">create()</a> function. </p>
+<p>Disconnects the client from AVS if it is connected. After the call, users can observer the state of the connection asynchronously by using a connectionObserver that was passed in to the <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a69b057ba654049e4bf35bb923b4d502e">create()</a> function. </p>
+
+</div>
+</div>
+<a id="aa597072632174957d60137295a4f6b07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa597072632174957d60137295a4f6b07">&#9670;&nbsp;</a></span>getPlaybackControllerInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_controller_interface.html">avsCommon::sdkInterfaces::PlaybackControllerInterface</a> &amp; alexaClientSDK::defaultClient::DefaultClient::getPlaybackControllerInterface </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the interface to the PlaybackController</p>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the PlaybackControllerInterface</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The reference returned by this function is only valid during the lifetime of the <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html">DefaultClient</a> instance. </dd></dl>
 
 </div>
 </div>
@@ -495,6 +603,60 @@ static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
+<a id="afbb637c207d72ddb2a4ca598c7d8998b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbb637c207d72ddb2a4ca598c7d8998b">&#9670;&nbsp;</a></span>removeSettingObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::defaultClient::DefaultClient::removeSettingObserver </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_single_setting_observer_interface.html">avsCommon::sdkInterfaces::SingleSettingObserverInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>observer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Removes an observer to a single setting to be notified of that setting change.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The name of the setting. </td></tr>
+    <tr><td class="paramname">observer</td><td>The settings observer to remove. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af3996adb71ca75dba55e14fa01656197"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3996adb71ca75dba55e14fa01656197">&#9670;&nbsp;</a></span>sendDefaultSettings()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::defaultClient::DefaultClient::sendDefaultSettings </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sends the default settings set by the user to the AVS after connection is established. </p>
+
+</div>
+</div>
 <a id="af0495ae10305b4e8af7e0191f66e10eb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af0495ae10305b4e8af7e0191f66e10eb">&#9670;&nbsp;</a></span>stopForegroundActivity()</h2>
 
@@ -514,14 +676,14 @@ static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/ApplicationUtilities/DefaultClient/include/DefaultClient/<a class="el" href="_default_client_8h_source.html">DefaultClient.h</a></li>
-<li>/Users/kcecka/projects/avs-cpp-sdk/ApplicationUtilities/DefaultClient/src/DefaultClient.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/ApplicationUtilities/DefaultClient/include/DefaultClient/<a class="el" href="_default_client_8h_source.html">DefaultClient.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/ApplicationUtilities/DefaultClient/src/DefaultClient.cpp</li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

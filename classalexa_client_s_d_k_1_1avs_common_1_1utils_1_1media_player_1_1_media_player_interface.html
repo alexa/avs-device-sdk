@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,9 +79,10 @@ Inheritance diagram for alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlay
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface_inherit__map">
-<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html" title="alexaClientSDK::capability\lAgents::speechSynthesizer\l::test::MockMediaPlayer" alt="" coords="275,5,458,57"/>
-<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html" title="alexaClientSDK::integration\l::test::TestMediaPlayer" alt="" coords="275,81,459,120"/>
-<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="269,144,465,183"/>
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html" title="alexaClientSDK::capability\lAgents::audioPlayer::test\l::MockMediaPlayer" alt="" coords="278,5,456,57"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html" title="alexaClientSDK::capability\lAgents::speechSynthesizer\l::test::MockMediaPlayer" alt="" coords="275,81,458,133"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html" title="alexaClientSDK::integration\l::test::TestMediaPlayer" alt="" coords="275,157,459,196"/>
+<area shape="rect" id="node5" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="269,220,465,259"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -105,8 +106,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa3dc008a6c4d2b79da4d30d8ae82432b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb22095833dc3e9967fdb45c289332bd"><td class="memItemLeft" align="right" valign="top">virtual MediaPlayerStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#afb22095833dc3e9967fdb45c289332bd">resume</a> ()=0</td></tr>
 <tr class="separator:afb22095833dc3e9967fdb45c289332bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31a4f64754a231a7041fba9b5c27d32b"><td class="memItemLeft" align="right" valign="top">virtual int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a31a4f64754a231a7041fba9b5c27d32b">getOffsetInMilliseconds</a> ()=0</td></tr>
-<tr class="separator:a31a4f64754a231a7041fba9b5c27d32b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa036356cea35577b0d5555a91a71b2b3"><td class="memItemLeft" align="right" valign="top">virtual std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#aa036356cea35577b0d5555a91a71b2b3">getOffset</a> ()=0</td></tr>
+<tr class="separator:aa036356cea35577b0d5555a91a71b2b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a612495025a57c1bab88e8be5f7c0bbf4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a612495025a57c1bab88e8be5f7c0bbf4">setObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a> &gt; playerObserver)=0</td></tr>
 <tr class="separator:a612495025a57c1bab88e8be5f7c0bbf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -140,8 +141,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a31a4f64754a231a7041fba9b5c27d32b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31a4f64754a231a7041fba9b5c27d32b">&#9670;&nbsp;</a></span>getOffsetInMilliseconds()</h2>
+<a id="aa036356cea35577b0d5555a91a71b2b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa036356cea35577b0d5555a91a71b2b3">&#9670;&nbsp;</a></span>getOffset()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -150,7 +151,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual int64_t alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::getOffsetInMilliseconds </td>
+          <td class="memname">virtual std::chrono::milliseconds alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::getOffset </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -163,9 +164,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Returns the offset, in milliseconds, of the media stream.</p>
-<dl class="section return"><dt>Returns</dt><dd>If a stream is playing, the offset in milliseconds that the stream has been playing, if there is no stream playing it returns <code>-1</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If a stream is playing, the offset in milliseconds that the stream has been playing, if there is no stream playing it returns <code>MEDIA_PLAYER_INVALID_OFFSET</code>. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#a5a20c190023f20c4b6bedbc15838930e">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a4fb2802491ca78b8aadada78dc70817a">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#af653a8c6ab2001001aac137e539656f4">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a976b479c26caac171222041882379807">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
 
 </div>
 </div>
@@ -287,7 +288,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#aefaea85e4c7d0fcf5e94f44bcf6841e9">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>, <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#a271e75fecb39b734cafb9f1260611e79">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a2f63842abe4e76381bbf67598413aa33">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#ab7fd1bd59994ef595566edb960c66b46">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#aefaea85e4c7d0fcf5e94f44bcf6841e9">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>, <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#a271e75fecb39b734cafb9f1260611e79">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a2f63842abe4e76381bbf67598413aa33">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
 
 </div>
 </div>
@@ -314,7 +315,18 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>TODO ACSDK-423: Implement setOffset behavior. </p>
+<p>Set the offset for playback. A seek will be performed to the offset at the next <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a39e55afe1f90c135f767824ea9e7de56">play()</a></code> command.</p>
+<p>The following situations will reset the offset: </p><h1>A seek attempt is made (ie. via <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a39e55afe1f90c135f767824ea9e7de56">play()</a>).</h1>
+<h1>A new source is set.</h1>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">offset</td><td>The offset in milliseconds to seek to.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>SUCCESS</code> if the offset was successfully set, and FAILURE for any error. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#a0a2f8210d219f2817b24e09c5dbaa93c">alexaClientSDK::mediaPlayer::MediaPlayer</a>.</p>
 
 </div>
 </div>
@@ -468,13 +480,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/<a class="el" href="_media_player_interface_8h_source.html">MediaPlayerInterface.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/<a class="el" href="_media_player_interface_8h_source.html">MediaPlayerInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -89,8 +89,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae6332383bc135c8efa45e04504e0d75b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4870ebdf747afb53bbf51727c768a7e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#ae4870ebdf747afb53bbf51727c768a7e">setObserver</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">capabilityAgents::alerts::renderer::RendererObserverInterface</a> *observer)=0</td></tr>
 <tr class="separator:ae4870ebdf747afb53bbf51727c768a7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26bec3fb1fe79d96d6a737e8c6579606"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#a26bec3fb1fe79d96d6a737e8c6579606">start</a> (const std::string &amp;localAudioFilePath, const std::vector&lt; std::string &gt; &amp;urls=std::vector&lt; std::string &gt;(), int loopCount=0, std::chrono::milliseconds loopPauseInMilliseconds=std::chrono::milliseconds(0))=0</td></tr>
-<tr class="separator:a26bec3fb1fe79d96d6a737e8c6579606"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07832d05d29406a2e2c8151400b97480"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#a07832d05d29406a2e2c8151400b97480">start</a> (const std::string &amp;localAudioFilePath, const std::vector&lt; std::string &gt; &amp;urls=std::vector&lt; std::string &gt;(), int loopCount=0, std::chrono::milliseconds loopPause=std::chrono::milliseconds{0})=0</td></tr>
+<tr class="separator:a07832d05d29406a2e2c8151400b97480"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42a7207451067b22a45ce5f697763d17"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#a42a7207451067b22a45ce5f697763d17">stop</a> ()=0</td></tr>
 <tr class="separator:a42a7207451067b22a45ce5f697763d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -159,8 +159,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a26bec3fb1fe79d96d6a737e8c6579606"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26bec3fb1fe79d96d6a737e8c6579606">&#9670;&nbsp;</a></span>start()</h2>
+<a id="a07832d05d29406a2e2c8151400b97480"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07832d05d29406a2e2c8151400b97480">&#9670;&nbsp;</a></span>start()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -190,7 +190,7 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::chrono::milliseconds&#160;</td>
-          <td class="paramname"><em>loopPauseInMilliseconds</em> = <code>std::chrono::milliseconds(0)</code>&#160;</td>
+          <td class="paramname"><em>loopPause</em> = <code>std::chrono::milliseconds{0}</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -218,7 +218,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#ad04833d827ed73fb86004b19c786aadd">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a47ee9084aff98257af76acd77e79d4a6">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer</a>.</p>
 
 </div>
 </div>
@@ -251,13 +251,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/CapabilityAgents/Alerts/include/Alerts/Renderer/<a class="el" href="_renderer_interface_8h_source.html">RendererInterface.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/CapabilityAgents/Alerts/include/Alerts/Renderer/<a class="el" href="_renderer_interface_8h_source.html">RendererInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -64,8 +64,12 @@ $(function() {
 &#160;
 
 <h3><a id="index_i"></a>- i -</h3><ul>
+<li>infoRead()
+: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_curl_multi_handle_wrapper.html#aa2955d1240d125c9cdaffe3e52790493">alexaClientSDK::acl::CurlMultiHandleWrapper</a>
+</li>
 <li>init()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1test_1_1_attachment_reader_test.html#a8ea49da4f799ffe88bdce2842535c7a8">alexaClientSDK::avsCommon::avs::test::AttachmentReaderTest</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_object.html#a5ce2543cb7ed1fe728b49b5cba868f21">alexaClientSDK::acl::PostConnectObject</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1test_1_1_attachment_reader_test.html#a8ea49da4f799ffe88bdce2842535c7a8">alexaClientSDK::avsCommon::avs::test::AttachmentReaderTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1test_1_1_attachment_writer_test.html#a626ed39bb9f60298c7533cf85541d265">alexaClientSDK::avsCommon::avs::test::AttachmentWriterTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html#aef95512e19fc4a1dc40c0fc9ab06f9d2">alexaClientSDK::avsCommon::utils::logger::Logger</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout.html#adcf85e7fafca0028f4bc55313f923c65">alexaClientSDK::avsCommon::utils::sds::SharedDataStream&lt; T &gt;::BufferLayout&lt; T &gt;</a>
@@ -77,6 +81,7 @@ $(function() {
 <li>initialize()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_alexa_client_s_d_k_init.html#ac819fd7ef992889caa14efaf10ee75a7">alexaClientSDK::avsCommon::avs::initialization::AlexaClientSDKInit</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html#accc2fef41c574f70c61264a5242fc72d">alexaClientSDK::avsCommon::utils::configuration::ConfigurationNode</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#ac84870980822d662729375c522eca50c">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a>
 </li>
 <li>initPost()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a4a1bf5b8f907d6e2a4b11b99d830254e">alexaClientSDK::acl::HTTP2Stream</a>
@@ -100,6 +105,12 @@ $(function() {
 <li>isActive()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer.html#afad001227f3958b85377f9e023fcc085">alexaClientSDK::avsCommon::utils::timing::Timer</a>
 </li>
+<li>isAlertActive()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#a5958b4cce598b42dead134d2bb61333b">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a>
+</li>
+<li>isBlockedOnLocalIO()
+: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#ad63e4c9eebf9e80df5deffdaa97186d9">alexaClientSDK::acl::HTTP2Stream</a>
+</li>
 <li>isByteswappingRequired()
 : <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_abstract_keyword_detector.html#a551aa63df26601c02ebc941422d8413a">alexaClientSDK::kwd::AbstractKeywordDetector</a>
 </li>
@@ -107,9 +118,10 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_directive_handler_1_1_directive_params.html#a853e2f879162679774dc2bcd4edebfc9">alexaClientSDK::integration::test::TestDirectiveHandler::DirectiveParams</a>
 </li>
 <li>isConnected()
-: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html#a0dfc5087dc3c20694886d7d278c4668c">alexaClientSDK::acl::AVSConnectionManager</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html#abdfbe27be40332e251dd2b39c8ad5489">alexaClientSDK::acl::AVSConnectionManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html#adc89a703cd10ce48ced6cdf6fc053b6a">alexaClientSDK::acl::HTTP2Transport</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a60baae3ab3469c7b858b3297540b5988">alexaClientSDK::acl::TransportInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_abstract_connection.html#a0238c3189eda5bc72886a4d277a84f98">alexaClientSDK::avsCommon::avs::AbstractConnection</a>
 </li>
 <li>isEnabled()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html#a7fd85ac9cefa09f8fc123e12a5e92265">alexaClientSDK::acl::AVSConnectionManager</a>
@@ -127,10 +139,19 @@ $(function() {
 <li>isOpen()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a516c8b651de78002150bf61d9a525a5d">alexaClientSDK::capabilityAgents::alerts::storage::AlertStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html#a041abeefbbd0556d9bc9da655d76f28a">alexaClientSDK::capabilityAgents::alerts::storage::SQLiteAlertStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_storage_interface.html#a131546c11e40d93a592138690b3cfb8a">alexaClientSDK::capabilityAgents::settings::SettingsStorageInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_s_q_lite_setting_storage.html#a84283a8e31c6cba95475ce19411ffc5d">alexaClientSDK::capabilityAgents::settings::SQLiteSettingStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html#a0d8f9b66c166e7c259c30782bbdd79d2">alexaClientSDK::certifiedSender::MessageStorageInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html#a89af28a4fb3261765200a344ac0b1944">alexaClientSDK::certifiedSender::SQLiteMessageStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#aef7e3ed22f280d927ae9fa924151e4dc">alexaClientSDK::mediaPlayer::BaseStreamSource</a>
 </li>
-<li>isPaused()
-: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#addc1ae59a4965ae913ba091f4fa5c442">alexaClientSDK::acl::HTTP2Stream</a>
+<li>isPastDue()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a1f68930bde94f645d111a73098b1a3ef">alexaClientSDK::capabilityAgents::alerts::Alert</a>
+</li>
+<li>isPlaybackRemote()
+: <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_attachment_reader_source.html#a0dbb878575a8bbfc56d78297ff12e043">alexaClientSDK::mediaPlayer::AttachmentReaderSource</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html#ab26b1c54c75a9e0f840e4a27670a66a6">alexaClientSDK::mediaPlayer::SourceInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a300ab4708a8b1c9f2faa9f3dce2abc1d">alexaClientSDK::mediaPlayer::UrlSource</a>
 </li>
 <li>isPreHandle()
 : <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_directive_handler_1_1_directive_params.html#a25d9874a6d611fed1297f5d0b7404495">alexaClientSDK::integration::test::TestDirectiveHandler::DirectiveParams</a>
@@ -140,6 +161,15 @@ $(function() {
 </li>
 <li>isResultPresent()
 : <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_sensory_keyword_test.html#ab126a9488b88e6ec3deaf98163894e86">alexaClientSDK::kwd::test::SensoryKeywordTest</a>
+</li>
+<li>isSeekable()
+: <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_offset_manager.html#a08956403596c65732765cbb096642789">alexaClientSDK::mediaPlayer::OffsetManager</a>
+</li>
+<li>isSeekPointSet()
+: <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_offset_manager.html#ae0f81e342df6a659ed744808737b1604">alexaClientSDK::mediaPlayer::OffsetManager</a>
+</li>
+<li>isServerStatus()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#ace3d91a2acefc88812b0ec15cd1ffcd5">alexaClientSDK::avsCommon::avs::MessageRequest</a>
 </li>
 <li>isShutdown()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#af9352626109735aba40b5fb310913355">alexaClientSDK::avsCommon::utils::RequiresShutdown</a>
@@ -154,14 +184,14 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_directive_handler_1_1_directive_params.html#aeccced36637b348e1aafd70e89be4a3f">alexaClientSDK::integration::test::TestDirectiveHandler::DirectiveParams</a>
 </li>
 <li>isValid()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_statement.html#aca57f257951ddc26e66599538433d15e">alexaClientSDK::capabilityAgents::alerts::storage::SQLiteStatement</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_statement.html#afe141a216dd4e00ec7a9a6c5c9963de5">alexaClientSDK::storage::sqliteStorage::SQLiteStatement</a>
 </li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

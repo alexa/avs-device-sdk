@@ -1,12 +1,14 @@
-<map id="/Users/kcecka/projects/avs&#45;cpp&#45;sdk/CapabilityAgents" name="/Users/kcecka/projects/avs&#45;cpp&#45;sdk/CapabilityAgents">
-<area shape="rect" id="node2" href="dir_cc045affa42b6b559da6861739bda652.html" title="AIP" alt="" coords="496,27,568,75"/>
-<area shape="rect" id="node7" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="279,123,380,171"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000050_000009.html" title="2" alt="" coords="396,125,403,139"/>
-<area shape="rect" id="node3" href="dir_6a3d888c77d91a2c06c3ff7a43c42895.html" title="Alerts" alt="" coords="400,27,472,75"/>
-<area shape="rect" id="node4" href="dir_9dde9d78e15cabfb8e2b222ee9474f52.html" title="AudioPlayer" alt="" coords="283,27,376,75"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000092_000009.html" title="3" alt="" coords="334,97,341,111"/>
-<area shape="rect" id="node5" href="dir_097c79eef3239c0772ccd3b4f7a59e99.html" title="SpeechSynthesizer" alt="" coords="123,27,259,75"/>
-<area shape="rect" id="node6" href="dir_5c34f9d308a00f77f2da80e40fcb7b22.html" title="System" alt="" coords="27,27,99,75"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000101_000009.html" title="1" alt="" coords="259,119,266,132"/>
-<area shape="rect" id="clust1" href="dir_7cf910bd1d7603f12ef47ff650cec893.html" alt="" coords="16,16,725,85"/>
+<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/CapabilityAgents" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/CapabilityAgents">
+<area shape="rect" id="node2" href="dir_cc045affa42b6b559da6861739bda652.html" title="AIP" alt="" coords="749,27,821,75"/>
+<area shape="rect" id="node9" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="532,123,633,171"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000084_000009.html" title="2" alt="" coords="649,125,657,139"/>
+<area shape="rect" id="node3" href="dir_6a3d888c77d91a2c06c3ff7a43c42895.html" title="Alerts" alt="" coords="653,27,725,75"/>
+<area shape="rect" id="node4" href="dir_9dde9d78e15cabfb8e2b222ee9474f52.html" title="AudioPlayer" alt="" coords="536,27,629,75"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000093_000009.html" title="3" alt="" coords="587,97,595,111"/>
+<area shape="rect" id="node5" href="dir_7b6c89f8529a936fe9cff738852cb883.html" title="PlaybackController" alt="" coords="379,27,512,75"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000098_000009.html" title="1" alt="" coords="534,98,542,112"/>
+<area shape="rect" id="node6" href="dir_7b2f53332397a9531c02a7761b07578b.html" title="Settings" alt="" coords="283,27,355,75"/>
+<area shape="rect" id="node7" href="dir_097c79eef3239c0772ccd3b4f7a59e99.html" title="SpeechSynthesizer" alt="" coords="123,27,259,75"/>
+<area shape="rect" id="node8" href="dir_5c34f9d308a00f77f2da80e40fcb7b22.html" title="System" alt="" coords="27,27,99,75"/>
+<area shape="rect" id="clust1" href="dir_7cf910bd1d7603f12ef47ff650cec893.html" alt="" coords="16,16,979,85"/>
 </map>

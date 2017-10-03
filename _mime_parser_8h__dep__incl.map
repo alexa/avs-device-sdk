@@ -1,8 +1,8 @@
-<map id="/Users/kcecka/projects/avs&#45;cpp&#45;sdk/ACL/include/ACL/Transport/MimeParser.h" name="/Users/kcecka/projects/avs&#45;cpp&#45;sdk/ACL/include/ACL/Transport/MimeParser.h">
-<area shape="rect" id="node2" href="$_h_t_t_p2_stream_8h_source.html" title="/Users/kcecka/projects\l/avs&#45;cpp&#45;sdk/ACL/include\l/ACL/Transport/HTTP2Stream.h" alt="" coords="288,105,499,157"/>
-<area shape="rect" id="node3" href="$_h_t_t_p2_stream_pool_8h_source.html" title="/Users/kcecka/projects\l/avs&#45;cpp&#45;sdk/ACL/include\l/ACL/Transport/HTTP2StreamPool.h" alt="" coords="148,205,386,257"/>
-<area shape="rect" id="node4" href="$_h_t_t_p2_transport_8h_source.html" title="/Users/kcecka/projects\l/avs&#45;cpp&#45;sdk/ACL/include\l/ACL/Transport/HTTP2Transport.h" alt="" coords="5,305,230,357"/>
-<area shape="rect" id="node6" href="$_h_t_t_p2_stream_test_8cpp.html" title="/Users/kcecka/projects\l/avs&#45;cpp&#45;sdk/ACL/test\l/Transport/HTTP2StreamTest.cpp" alt="" coords="410,205,631,257"/>
-<area shape="rect" id="node7" href="$_mime_parser_test_8cpp.html" title="/Users/kcecka/projects\l/avs&#45;cpp&#45;sdk/ACL/test\l/Transport/MimeParserTest.cpp" alt="" coords="654,205,861,257"/>
-<area shape="rect" id="node5" href="$_h_t_t_p2_stream_pool_test_8cpp.html" title="/Users/kcecka/projects\l/avs&#45;cpp&#45;sdk/ACL/test\l/Transport/HTTP2StreamPoolTest.cpp" alt="" coords="69,405,316,457"/>
+<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/ACL/include/ACL/Transport/MimeParser.h" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/ACL/include/ACL/Transport/MimeParser.h">
+<area shape="rect" id="node2" href="$_h_t_t_p2_stream_8h_source.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/include/ACL/Transport\l/HTTP2Stream.h" alt="" coords="256,119,468,184"/>
+<area shape="rect" id="node3" href="$_h_t_t_p2_stream_pool_8h_source.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/include/ACL/Transport\l/HTTP2StreamPool.h" alt="" coords="149,232,361,297"/>
+<area shape="rect" id="node4" href="$_h_t_t_p2_transport_8h_source.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/include/ACL/Transport\l/HTTP2Transport.h" alt="" coords="5,345,217,411"/>
+<area shape="rect" id="node6" href="$_h_t_t_p2_stream_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/test/Transport\l/HTTP2StreamTest.cpp" alt="" coords="385,232,552,297"/>
+<area shape="rect" id="node7" href="$_mime_parser_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/test/Transport\l/MimeParserTest.cpp" alt="" coords="577,232,744,297"/>
+<area shape="rect" id="node5" href="$_h_t_t_p2_stream_pool_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/test/Transport\l/HTTP2StreamPoolTest.cpp" alt="" coords="90,459,277,524"/>
 </map>

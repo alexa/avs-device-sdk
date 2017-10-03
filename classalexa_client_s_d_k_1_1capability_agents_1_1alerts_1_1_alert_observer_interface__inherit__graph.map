@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::capabilityAgents::alerts::AlertObserverInterface" name="alexaClientSDK::capabilityAgents::alerts::AlertObserverInterface">
 <area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html" title="alexaClientSDK::capability\lAgents::alerts::AlertsCapabilityAgent" alt="" coords="298,5,535,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_alert_observer.html" title="alexaClientSDK::integration\l::test::TestAlertObserver" alt="" coords="324,68,509,107"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html" title="alexaClientSDK::capability\lAgents::alerts::AlertScheduler" alt="" coords="318,68,515,107"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_alert_observer.html" title="alexaClientSDK::integration\l::test::TestAlertObserver" alt="" coords="324,131,509,169"/>
 </map>

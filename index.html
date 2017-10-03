@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -65,94 +65,114 @@ $(function() {
 <div class="title">What is the Alexa Voice Service (AVS)? </div>  </div>
 </div><!--header-->
 <div class="contents">
-  <div class="textblock"><p>An SDK for devices to interface with the Alexa Voice Service and add intelligent voice control to any connected device. Visit us at <a href="https://developer.amazon.com/avs/sdk">developer.amazon.com/avs/sdk</a>.</p>
-  <h3>What is the Alexa Voice Service (AVS)?</h3>
-  <p>The Alexa Voice Service (AVS) enables developers to integrate Alexa directly into their products, bringing the convenience of voice control to any connected device. AVS provides developers with access to a suite of resources to quickly and easily build Alexa-enabled products, including APIs, hardware development kits, software development kits, and documentation.</p>
-  <p><a href="https://developer.amazon.com/alexa-voice-service">Learn more »</a></p>
-  <h3>Overview of the AVS Device SDK</h3>
-  <p>The AVS Device SDK provides C++-based (11 or later) libraries that leverage the AVS API to create device software for Alexa-enabled products. It is modular and abstracted, providing components for handling discrete functions such as speech capture, audio processing, and communications, with each component exposing the APIs that you can use and customize for your integration. It also includes a sample app, which demonstrates the interactions with AVS.</p>
-  <h3>Get Started</h3>
-  <p>You can set up the SDK on the following platforms:</p><ul>
-  <li><a href="https://github.com/alexa/avs-device-sdk/wiki/Linux-Quick-Start-Guide">Linux or macOS</a></li>
-  <li><a href="https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide">Raspberry Pi</a> (Raspbian Jessie)</li>
-  </ul>
-  <h3>Learn More About The AVS Device SDK</h3>
-  <p><a href="https://youtu.be/F5DixCPJYo8">Watch this tutorial</a> to learn about the how this SDK works and the set up process.</p>
+<div class="textblock"><p>The Alexa Voice Service (AVS) enables developers to integrate Alexa directly into their products, bringing the convenience of voice control to any connected device. AVS provides developers with access to a suite of resources to quickly and easily build Alexa-enabled products, including APIs, hardware development kits, software development kits, and documentation.</p>
+<p><a href="https://developer.amazon.com/alexa-voice-service">Learn more »</a></p>
+<h3>Overview of the AVS Device SDK</h3>
+<p>The AVS Device SDK provides C++-based (11 or later) libraries that leverage the AVS API to create device software for Alexa-enabled products. It is modular and abstracted, providing components for handling discrete functions such as speech capture, audio processing, and communications, with each component exposing the APIs that you can use and customize for your integration. It also includes a sample app, which demonstrates the interactions with AVS.</p>
+<h3>Get Started</h3>
+<p>You can set up the SDK on the following platforms:</p><ul>
+<li><a href="https://github.com/alexa/avs-device-sdk/wiki/Linux-Quick-Start-Guide">Linux or macOS</a></li>
+<li><a href="https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide">Raspberry Pi</a> (Raspbian Jessie)</li>
+</ul>
+<p>Or if you prefer, you can start with our <a href="https://alexa.github.io/avs-device-sdk/">SDK API Documentation</a>.</p>
+<h3>Learn More About The AVS Device SDK</h3>
+<p><a href="https://youtu.be/F5DixCPJYo8">Watch this tutorial</a> to learn about the how this SDK works and the set up process.</p>
 
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/F5DixCPJYo8" frameborder="0" allowfullscreen></iframe>
-
-  <h3>SDK Architecture</h3>
-  <p>This diagram illustrates the data flows between components that comprise the AVS Device SDK for C++.</p>
-  <div class="image">
-  <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/Alexa_Device_SDK_Architecture.png" alt="SDK Architecture Diagram"/ width="80%" height="80%">
-  </div>
-  <p><b>Audio Signal Processor (ASP)</b> - Third-party software that applies signal processing algorithms to both input and output audio channels. The applied algorithms are designed to produce clean audio data and include, but are not limited to acoustic echo cancellation (AEC), beam forming (fixed or adaptive), voice activity detection (VAD), and dynamic range compression (DRC). If a multi-microphone array is present, the ASP constructs and outputs a single audio stream for the array.</p>
-  <p><b>Shared Data Stream (SDS)</b> - A single producer, multi-consumer buffer that allows for the transport of any type of data between a single writer and one or more readers. SDS performs two key tasks:</p>
-  <ol type="1">
-  <li>It passes audio data between the audio front end (or Audio Signal Processor), the wake word engine, and the Alexa Communications Library (ACL) before sending to AVS</li>
-  <li>It passes data attachments sent by AVS to specific capability agents via the ACL</li>
-  </ol>
-  <p>SDS is implemented atop a ring buffer on a product-specific memory segment (or user-specified), which allows it to be used for in-process or interprocess communication. Keep in mind, the writer and reader(s) may be in different threads or processes.</p>
-  <p><b>Wake Word Engine (WWE)</b> - Software that spots wake words in an input stream. It is comprised of two binary interfaces. The first handles wake word spotting (or detection), and the second handles specific wake word models (in this case "Alexa"). Depending on your implementation, the WWE may run on the system on a chip (SOC) or dedicated chip, like a digital signal processor (DSP).</p>
-  <p><b>Audio Input Processor (AIP)</b> - Handles audio input that is sent to AVS via the ACL. These include on-device microphones, remote microphones, an other audio input sources.</p>
-  <p>The AIP also includes the logic to switch between different audio input sources. Only one audio input source can be sent to AVS at a given time.</p>
-  <p><b>Alexa Communications Library (ACL)</b> - Serves as the main communications channel between a client and AVS. The ACL performs two key functions:</p>
-  <ol type="1">
-  <li>Establishes and maintains long-lived persistent connections with AVS. ACL adheres to the messaging specification detailed in <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/docs/managing-an-http-2-connection">Managing an HTTP/2 Connection with AVS</a>.</li>
-  <li>Provides message sending and receiving capabilities, which includes support JSON-formatted text, and binary audio content. For additional information, see <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/docs/avs-http2-requests">Structuring an HTTP/2 Request to AVS</a>.</li>
-  </ol>
-  <p><b>Alexa Directive Sequencer Library (ADSL)</b>: Manages the order and sequence of directives from AVS, as detailed in the <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/interaction-model#channels">AVS Interaction Model</a>. This component manages the lifecycle of each directive, and informs the Directive Handler (which may or may not be a Capability Agent) to handle the message.</p>
-  <p><b>Activity Focus Manager Library (AFML)</b>: Provides centralized management of audiovisual focus for the device. Focus is based on channels, as detailed in the <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/interaction-model#channels">AVS Interaction Model</a>, which are used to govern the prioritization of audiovisual inputs and outputs.</p>
-  <p>Channels can either be in the foreground or background. At any given time, only one channel can be in the foreground and have focus. If multiple channels are active, you need to respect the following priority order: Dialog &gt; Alerts &gt; Content. When a channel that is in the foreground becomes inactive, the next active channel in the priority order moves into the foreground.</p>
-  <p>Focus management is not specific to Capability Agents or Directive Handlers, and can be used by non-Alexa related agents as well. This allows all agents using the AFML to have a consistent focus across a device.</p>
-  <p><b>Capability Agents</b>: Handle Alexa-driven interactions; specifically directives and events. Each capability agent corresponds to a specific interface exposed by the AVS API. These interfaces include:</p>
-  <ul>
-  <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechrecognizer">SpeechRecognizer</a> - The interface for speech capture.</li>
-  <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechsynthesizer">SpeechSynthesizer</a> - The interface for Alexa speech output.</li>
-  <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/alerts">Alerts</a> - The interface for setting, stopping, and deleting timers and alarms.</li>
-  <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/audioplayer">AudioPlayer</a> - The interface for managing and controlling audio playback.</li>
-  <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/notifications">Notifications</a> - The interface for displaying notifications indicators.</li>
-  <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/playbackcontroller">PlaybackController</a> - The interface for navigating a playback queue via GUI or buttons.</li>
-  <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speaker">Speaker</a> - The interface for volume control, including mute and unmute.</li>
-  <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system">System</a> - The interface for communicating product status/state to AVS.</li>
-  <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/templateruntime">TemplateRuntime</a> - The interface for rendering visual metadata.</li>
-  </ul>
-  <h3>Important Considerations</h3>
-  <ul>
-  <li>Review the AVS <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/support/terms-and-agreements">Terms &amp; Agreements</a>.</li>
-  <li>The earcons associated with the sample project are for <b>prototyping purposes</b> only. For implementation and design guidance for commercial products, please see <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/content/designing-for-the-alexa-voice-service">Designing for AVS</a> and <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/content/alexa-voice-service-ux-design-guidelines">AVS UX Guidelines</a>.</li>
-  <li>Please use the contact information below to-<ul>
-  <li><a href="http://www.sensory.com/support/contact/us-sales/">Contact Sensory</a> for information on TrulyHandsFree licensing.</li>
-  <li><a href="mailto:snowboy@kitt.ai">Contact KITT.AI</a> for information on SnowBoy licensing.</li>
-  </ul>
-  </li>
-  <li><b>IMPORTANT</b>: The Sensory wake word engine referenced in this document is time-limited: code linked against it will stop working when the library expires. The library included in this repository will, at all times, have an expiration date that is at least 120 days in the future. See <a href="https://github.com/Sensory/alexa-rpi#license">Sensory's GitHub</a>page for more information.</li>
-  </ul>
-<h3>Release Notes and Known Issues</h3>
-<p><b>Note</b>: Features, updates, and resolved issues from previous releases are available to view in https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md "CHANGELOG.md".</p>
-<p>v1.0.2 released 8/23/2017:</p><ul>
-<li><b>Features</b><ul>
-<li>Native components for the following capability agents are included in this release: <code>Alerts</code>, <code>AudioPlayer</code>, <code>SpeechRecognizer</code>, <code>SpeechSynthesizer</code>, and <code>System</code></li>
-<li>Supports iHeartRadio</li>
-<li>Includes a sample application to demonstrate interactions with AVS</li>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/F5DixCPJYo8" frameborder="0" allowfullscreen></iframe>
+<h3>SDK Architecture</h3>
+<p>This diagram illustrates the data flows between components that comprise the AVS Device SDK for C++.</p>
+<div class="image">
+<img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/Alexa_Device_SDK_Architecture.png" alt="SDK Architecture Diagram"/ width="70%" height="70%">
+</div>
+<p><b>Audio Signal Processor (ASP)</b> - Third-party software that applies signal processing algorithms to both input and output audio channels. The applied algorithms are designed to produce clean audio data and include, but are not limited to acoustic echo cancellation (AEC), beam forming (fixed or adaptive), voice activity detection (VAD), and dynamic range compression (DRC). If a multi-microphone array is present, the ASP constructs and outputs a single audio stream for the array.</p>
+<p><b>Shared Data Stream (SDS)</b> - A single producer, multi-consumer buffer that allows for the transport of any type of data between a single writer and one or more readers. SDS performs two key tasks:</p>
+<ol type="1">
+<li>It passes audio data between the audio front end (or Audio Signal Processor), the wake word engine, and the Alexa Communications Library (ACL) before sending to AVS</li>
+<li>It passes data attachments sent by AVS to specific capability agents via the ACL</li>
+</ol>
+<p>SDS is implemented atop a ring buffer on a product-specific memory segment (or user-specified), which allows it to be used for in-process or interprocess communication. Keep in mind, the writer and reader(s) may be in different threads or processes.</p>
+<p><b>Wake Word Engine (WWE)</b> - Software that spots wake words in an input stream. It is comprised of two binary interfaces. The first handles wake word spotting (or detection), and the second handles specific wake word models (in this case "Alexa"). Depending on your implementation, the WWE may run on the system on a chip (SOC) or dedicated chip, like a digital signal processor (DSP).</p>
+<p><b>Audio Input Processor (AIP)</b> - Handles audio input that is sent to AVS via the ACL. These include on-device microphones, remote microphones, an other audio input sources.</p>
+<p>The AIP also includes the logic to switch between different audio input sources. Only one audio input source can be sent to AVS at a given time.</p>
+<p><b>Alexa Communications Library (ACL)</b> - Serves as the main communications channel between a client and AVS. The ACL performs two key functions:</p>
+<ol type="1">
+<li>Establishes and maintains long-lived persistent connections with AVS. ACL adheres to the messaging specification detailed in <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/docs/managing-an-http-2-connection">Managing an HTTP/2 Connection with AVS</a>.</li>
+<li>Provides message sending and receiving capabilities, which includes support JSON-formatted text, and binary audio content. For additional information, see <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/docs/avs-http2-requests">Structuring an HTTP/2 Request to AVS</a>.</li>
+</ol>
+<p><b>Alexa Directive Sequencer Library (ADSL)</b>: Manages the order and sequence of directives from AVS, as detailed in the <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/interaction-model#channels">AVS Interaction Model</a>. This component manages the lifecycle of each directive, and informs the Directive Handler (which may or may not be a Capability Agent) to handle the message.</p>
+<p><b>Activity Focus Manager Library (AFML)</b>: Provides centralized management of audiovisual focus for the device. Focus is based on channels, as detailed in the <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/interaction-model#channels">AVS Interaction Model</a>, which are used to govern the prioritization of audiovisual inputs and outputs.</p>
+<p>Channels can either be in the foreground or background. At any given time, only one channel can be in the foreground and have focus. If multiple channels are active, you need to respect the following priority order: Dialog &gt; Alerts &gt; Content. When a channel that is in the foreground becomes inactive, the next active channel in the priority order moves into the foreground.</p>
+<p>Focus management is not specific to Capability Agents or Directive Handlers, and can be used by non-Alexa related agents as well. This allows all agents using the AFML to have a consistent focus across a device.</p>
+<p><b>Capability Agents</b>: Handle Alexa-driven interactions; specifically directives and events. Each capability agent corresponds to a specific interface exposed by the AVS API. These interfaces include:</p>
+<ul>
+<li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechrecognizer">SpeechRecognizer</a> - The interface for speech capture.</li>
+<li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechsynthesizer">SpeechSynthesizer</a> - The interface for Alexa speech output.</li>
+<li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/alerts">Alerts</a> - The interface for setting, stopping, and deleting timers and alarms.</li>
+<li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/audioplayer">AudioPlayer</a> - The interface for managing and controlling audio playback.</li>
+<li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/notifications">Notifications</a> - The interface for displaying notifications indicators.</li>
+<li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/playbackcontroller">PlaybackController</a> - The interface for navigating a playback queue via GUI or buttons.</li>
+<li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speaker">Speaker</a> - The interface for volume control, including mute and unmute.</li>
+<li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system">System</a> - The interface for communicating product status/state to AVS.</li>
+<li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/templateruntime">TemplateRuntime</a> - The interface for rendering visual metadata.</li>
+</ul>
+<h3>Important Considerations</h3>
+<ul>
+<li>Review the AVS <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/support/terms-and-agreements">Terms &amp; Agreements</a>.</li>
+<li>The earcons associated with the sample project are for <b>prototyping purposes</b> only. For implementation and design guidance for commercial products, please see <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/content/designing-for-the-alexa-voice-service">Designing for AVS</a> and <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/content/alexa-voice-service-ux-design-guidelines">AVS UX Guidelines</a>.</li>
+<li>Please use the contact information below to-<ul>
+<li><a href="http://www.sensory.com/support/contact/us-sales/">Contact Sensory</a> for information on TrulyHandsFree licensing.</li>
+<li><a href="#" onclick="location.href='mai'+'lto:'+'sno'+'wb'+'oy@'+'ki'+'tt.'+'ai'; return false;">Contact KITT.AI</a> for information on SnowBoy licensing.</li>
 </ul>
 </li>
-<li><b>Known Issues</b><ul>
-<li>Native components for the following capability agents are <b>not</b> included in this release: <code>PlaybackController</code>, <code>Speaker</code>, <code>Settings</code>, <code>TemplateRuntime</code>, and <code>Notifications</code></li>
-<li>Amazon Music, TuneIn, SiriusXM, and audio books are not supported in v1.0.1</li>
-<li>The <code>AlertsCapabilityAgent</code> satisfies the <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/timers-and-alarms-conceptual-overview">AVS specification</a> except for sending retrospective events. For example, sending <code>AlertStarted</code> for an Alert which rendered when there was no internet connection.</li>
+<li><b>IMPORTANT</b>: The Sensory wake word engine referenced in this document is time-limited: code linked against it will stop working when the library expires. The library included in this repository will, at all times, have an expiration date that is at least 120 days in the future. See <a href="https://github.com/Sensory/alexa-rpi#license">Sensory's GitHub</a>page for more information.</li>
+</ul>
+<h3>Release Notes and Known Issues</h3>
+<p><b>Note</b>: Features, updates, and resolved issues from previous releases are available to view in https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md "CHANGELOG.md".</p>
+<p>v1.1 released 10/02/2017:</p>
+<p><b>Enhancements</b></p>
+<ul>
+<li>The SDK now supports TuneIn, Audible, Pandora, SiriusXM, Kindle Books, and Amazon Music.</li>
+<li>Added a capability agent for Settings, which allows a client to notify Alexa of locale changes.</li>
+<li>Added a capability agent for PlaybackController, which exposes these transport controls: play, pause, next, and previous.</li>
+<li>Added <code>PlaylistParser</code>, which is used to parse m3u and pls formatted playlists.</li>
+<li>Added new unit tests for <code>AudioPlayer</code>.</li>
+<li>Refactored the Alerts capability agent to support named timers and reminders.</li>
+</ul>
+<p><b>Bug Fixes</b></p>
+<ul>
+<li>Bug fix to address AIP getting stuck in the <code>LISTENING</code> or <code>THINKING</code> state and refusing user input during a network outage.</li>
+<li>Bug fix for the sample app crashing when it runs for more than 5 minutes following a network disconnect.</li>
+<li>Bug fix for user utterances being ignored after long Alexa TTS.</li>
+<li>Bug fix for GStreamer errors that appear on <code>SampleApp</code> exit that result from accessing the pipeline before it has been setup.</li>
+<li>Fix crash when playing URLs one after another.</li>
+<li>Bug fix for overrun in <code>AlertsRenderer</code>.</li>
+<li>SampleApp crashing when issuing "Alexa skip" command with iHeartRadio. (<a href="https://github.com/alexa/avs-device-sdk/issues/153">https://github.com/alexa/avs-device-sdk/issues/153</a>)</li>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/127"><code>HTTP2Transport</code> network thread triggering a join on itself.</a></li>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/67"><code>HTTP2Stream</code> request handling truncating exception messages.</a></li>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/138"><code>AudioPlayer</code> was attempting an incorrect state transition from <code>STOPPED</code> to <code>PLAYING</code> through a <code>playbackResumed</code>.</a></li>
+</ul>
+<p><b>Known Issues</b></p>
+<ul>
+<li>Native components for the following capability agents are <b>not</b> included in this release: <code>Speaker</code>, <code>TemplateRuntime</code>, and <code>Notifications</code></li>
 <li><code>ACL</code>'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed.</li>
 <li>When an <code>AttachmentReader</code> does not deliver data for prolonged periods, <code>MediaPlayer</code> may not resume playing the delayed audio.</li>
 <li>Without the refresh token in the JSON file, the sample app crashes on start up.</li>
-<li>Any connection loss during the <code>Listening</code> state keeps the app stuck in this state, unless the ongoing interaction is manually stopped by the user. </li>
-</ul>
-</li>
+<li>Alerts do not play after restarting the device.</li>
+<li>Alexa's responses are cut off by about half a second when asking "What's up" or barging into an active alarm to ask the time.</li>
+<li>Switching from Kindle to Amazon Music after pausing and resuming Kindle doesn't work.</li>
+<li>Pause/resume on Amazon Music causes entire song to start over.</li>
+<li>Stuck in listening state if <code>ExpectSpeech</code> comes in when the microphone has been turned off.</li>
+<li>Pausing and resuming Pandora causes stuttering, looped audio.</li>
+<li>Audible features are not fully supported.</li>
+<li><code>Recognize</code> event after regaining network connection and during an alarm going off can cause client to get stuck in <code>Recognizing</code> state.</li>
+<li>Three Alerts integration tests fail: <code>handleMultipleTimersWithLocalStop</code>, <code>AlertsTest.UserLongUnrelatedBargeInOnActiveTimer</code>, <code>AlertsTest.handleOneTimerWithVocalStop</code></li>
+<li><code>MediaPlayerTest.testSetOffsetSeekableSource</code> unit test fails intermittently on Linux. </li>
 </ul>
 </div></div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

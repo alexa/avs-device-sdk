@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -76,12 +76,19 @@ $(function() {
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html#a9c6720222f1f5d788706f4337beea6dc">connect</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html">alexaClientSDK::integration::test::AVSCommunication</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html#ab8a3311625888fecdb58adda5e847ce8">create</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html">alexaClientSDK::integration::test::AVSCommunication</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html#a7d80306e14666e846fe91b8cdef60fd5">disconnect</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html">alexaClientSDK::integration::test::AVSCommunication</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html#a23f5e73973e32f3ed1f156d4be4cbe85">sendEvent</a>(const std::string &amp;jsonContent, MessageRequest::Status expectedStatus, std::chrono::seconds timeout, std::shared_ptr&lt; avsCommon::avs::attachment::AttachmentReader &gt; attachmentReader=nullptr)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html">alexaClientSDK::integration::test::AVSCommunication</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html#a540f6df643b2c59105edb764cb6debcd">doShutdown</a>() override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html">alexaClientSDK::integration::test::AVSCommunication</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html#a68b61a854e170629b0a2e2f23db911bb">getConnectionStatusObserver</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html">alexaClientSDK::integration::test::AVSCommunication</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#af9352626109735aba40b5fb310913355">isShutdown</a>() const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a745cd4dc404db52f7d0afbf838454fac">name</a>() const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#aae7174ed932ae1413460255238c4422b">RequiresShutdown</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html#ae6abf7b0889d56e89f49e005e3d2b72a">sendEvent</a>(const std::string &amp;jsonContent, avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status expectedStatus, std::chrono::seconds timeout, std::shared_ptr&lt; avsCommon::avs::attachment::AttachmentReader &gt; attachmentReader=nullptr)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html">alexaClientSDK::integration::test::AVSCommunication</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a350a147e52eb3ad3c1326e6639861066">shutdown</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a649b80d77e4e6f66e218ee3bfc71823b">~RequiresShutdown</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

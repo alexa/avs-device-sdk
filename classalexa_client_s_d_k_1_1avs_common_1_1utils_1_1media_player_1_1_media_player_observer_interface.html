@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -94,8 +94,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aeeff65e2ca9303f9d17643cc81f412f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c38f5315e35952357523f57c6a06039"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a5c38f5315e35952357523f57c6a06039">onPlaybackFinished</a> ()=0</td></tr>
 <tr class="separator:a5c38f5315e35952357523f57c6a06039"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ffccd5f49d6f4c9663420ab331736d4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a3ffccd5f49d6f4c9663420ab331736d4">onPlaybackError</a> (std::string error)=0</td></tr>
-<tr class="separator:a3ffccd5f49d6f4c9663420ab331736d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af58531530e1331b147baeee684662421"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#af58531530e1331b147baeee684662421">onPlaybackError</a> (const ErrorType &amp;type, std::string error)=0</td></tr>
+<tr class="separator:af58531530e1331b147baeee684662421"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8777b573e90d77cd9d27bb36f43ca4c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#af8777b573e90d77cd9d27bb36f43ca4c">onPlaybackPaused</a> ()</td></tr>
 <tr class="separator:af8777b573e90d77cd9d27bb36f43ca4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4eace3922ad0ad564fed73c289abbfd7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a4eace3922ad0ad564fed73c289abbfd7">onPlaybackResumed</a> ()</td></tr>
@@ -193,8 +193,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a3ffccd5f49d6f4c9663420ab331736d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ffccd5f49d6f4c9663420ab331736d4">&#9670;&nbsp;</a></span>onPlaybackError()</h2>
+<a id="af58531530e1331b147baeee684662421"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af58531530e1331b147baeee684662421">&#9670;&nbsp;</a></span>onPlaybackError()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -205,9 +205,19 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual void alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::onPlaybackError </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>error</em></td><td>)</td>
+          <td class="paramtype">const ErrorType &amp;&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>error</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -217,9 +227,16 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>This is an indication to the observer that the <code>MediaPlayer</code> encountered an error. Errors can occur during playback.</p>
-<dl class="section note"><dt>Note</dt><dd>The observer has to return soon. Otherwise this could block the <code>MediaPlayer</code> from processing other signals or playback. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The observer has to return soon. Otherwise this could block the <code>MediaPlayer</code> from processing other signals or playback.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>The AVS error to report to AVS </td></tr>
+    <tr><td class="paramname">error</td><td>The message to report to AVS </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_player_observer.html#ad979ba40b2cd3a1db992757f4324490a">alexaClientSDK::mediaPlayer::test::MockPlayerObserver</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html#acde95df84c6bba7e2f38f8624fce8240">alexaClientSDK::capabilityAgents::speechSynthesizer::SpeechSynthesizer</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#af3797969e9e30f80e6c2f0a5fe00a4ec">alexaClientSDK::capabilityAgents::audioPlayer::AudioPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a7a9716598f754aef275ab49c6097d9a2">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_player_observer.html#a7b751ebd6ea1453006c68e365ee17fa2">alexaClientSDK::mediaPlayer::test::MockPlayerObserver</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html#a11f8f2e16145d5133e47d42fddc1a01e">alexaClientSDK::capabilityAgents::speechSynthesizer::SpeechSynthesizer</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#adbb3c822a7a448584db0c1598ddc568c">alexaClientSDK::capabilityAgents::audioPlayer::AudioPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a619f4b2680db597301484f5283e39de3">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer</a>.</p>
 
 </div>
 </div>
@@ -340,13 +357,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/<a class="el" href="_media_player_observer_interface_8h_source.html">MediaPlayerObserverInterface.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/<a class="el" href="_media_player_observer_interface_8h_source.html">MediaPlayerObserverInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

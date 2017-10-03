@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /Users/kcecka/projects/avs-cpp-sdk/ACL/test/Transport/HTTP2StreamPoolTest.cpp File Reference</title>
+<title>AlexaClientSDK: /Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/ACL/test/Transport/HTTP2StreamPoolTest.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -80,41 +80,46 @@ $(function() {
 <code>#include &lt;ACL/Transport/HTTP2StreamPool.h&gt;</code><br />
 <code>#include &lt;ACL/Transport/HTTP2Transport.h&gt;</code><br />
 <code>#include &lt;AVSCommon/AVS/Initialization/AlexaClientSDKInit.h&gt;</code><br />
+<code>#include &lt;AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h&gt;</code><br />
 <code>#include &quot;Common/Common.h&quot;</code><br />
 <code>#include &quot;TestableConsumer.h&quot;</code><br />
 <code>#include &quot;MockMessageRequest.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for HTTP2StreamPoolTest.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_h_t_t_p2_stream_pool_test_8cpp__incl.png" border="0" usemap="#_2_users_2kcecka_2projects_2avs-cpp-sdk_2_a_c_l_2test_2_transport_2_h_t_t_p2_stream_pool_test_8cpp" alt=""/></div>
-<map name="_2_users_2kcecka_2projects_2avs-cpp-sdk_2_a_c_l_2test_2_transport_2_h_t_t_p2_stream_pool_test_8cpp" id="_2_users_2kcecka_2projects_2avs-cpp-sdk_2_a_c_l_2test_2_transport_2_h_t_t_p2_stream_pool_test_8cpp">
-<area shape="rect" id="node6" href="_h_t_t_p2_stream_pool_8h_source.html" title="ACL/Transport/HTTP2Stream\lPool.h" alt="" coords="1966,179,2162,217"/>
-<area shape="rect" id="node33" href="_h_t_t_p2_transport_8h_source.html" title="ACL/Transport/HTTP2Transport.h" alt="" coords="1553,105,1775,131"/>
-<area shape="rect" id="node45" href="_alexa_client_s_d_k_init_8h_source.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="194,352,398,391"/>
-<area shape="rect" id="node46" href="_a_c_l_2test_2_transport_2_common_2_common_8h_source.html" title="Common/Common.h" alt="" coords="2906,619,3051,644"/>
-<area shape="rect" id="node47" href="_testable_consumer_8h_source.html" title="TestableConsumer.h" alt="" coords="593,359,735,384"/>
-<area shape="rect" id="node49" href="_mock_message_request_8h_source.html" title="MockMessageRequest.h" alt="" coords="2495,705,2663,731"/>
-<area shape="rect" id="node9" href="_attachment_manager_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="961,439,1162,477"/>
-<area shape="rect" id="node25" href="_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_message_request_8h_source.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1874,792,2123,817"/>
-<area shape="rect" id="node26" href="_h_t_t_p2_stream_8h_source.html" title="ACL/Transport/HTTP2Stream.h" alt="" coords="2016,272,2224,297"/>
-<area shape="rect" id="node32" href="_message_consumer_interface_8h_source.html" title="ACL/Transport/MessageConsumer\lInterface.h" alt="" coords="1845,439,2072,477"/>
-<area shape="rect" id="node11" href="_attachment_manager_interface_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="1099,525,1307,564"/>
-<area shape="rect" id="node14" href="_attachment_8h_source.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="662,612,863,651"/>
-<area shape="rect" id="node15" href="_attachment_reader_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="598,872,799,911"/>
-<area shape="rect" id="node17" href="_attachment_writer_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="990,699,1191,737"/>
-<area shape="rect" id="node18" href="_in_process_s_d_s_8h_source.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="499,699,661,737"/>
-<area shape="rect" id="node20" href="_shared_data_stream_8h_source.html" title="SharedDataStream.h" alt="" coords="600,792,747,817"/>
-<area shape="rect" id="node22" href="_logger_utils_8h_source.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="840,959,1016,997"/>
-<area shape="rect" id="node23" href="_buffer_layout_8h_source.html" title="BufferLayout.h" alt="" coords="874,879,982,904"/>
-<area shape="rect" id="node24" href="_reader_8h_source.html" title="Reader.h" alt="" coords="498,879,574,904"/>
-<area shape="rect" id="node27" href="_curl_easy_handle_wrapper_8h_source.html" title="ACL/Transport/CurlEasyHandle\lWrapper.h" alt="" coords="2715,352,2922,391"/>
-<area shape="rect" id="node28" href="_mime_parser_8h.html" title="ACL/Transport/MimeParser.h" alt="" coords="1325,359,1518,384"/>
-<area shape="rect" id="node39" href="_auth_delegate_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="2350,785,2541,824"/>
-<area shape="rect" id="node42" href="_transport_interface_8h_source.html" title="ACL/Transport/TransportInterface.h" alt="" coords="1723,705,1954,731"/>
-<area shape="rect" id="node43" href="_transport_observer_interface_8h_source.html" title="ACL/Transport/TransportObserver\lInterface.h" alt="" coords="1133,265,1355,304"/>
-<area shape="rect" id="node40" href="_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="2539,872,2730,911"/>
-<area shape="rect" id="node44" href="_connection_status_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="760,352,1008,391"/>
-<area shape="rect" id="node48" href="_message_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="542,439,738,477"/>
+<div class="center"><img src="_h_t_t_p2_stream_pool_test_8cpp__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_a_c_l_2test_2_transport_2_h_t_t_p2_stream_pool_test_8cpp" alt=""/></div>
+<map name="_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_a_c_l_2test_2_transport_2_h_t_t_p2_stream_pool_test_8cpp" id="_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_a_c_l_2test_2_transport_2_h_t_t_p2_stream_pool_test_8cpp">
+<area shape="rect" id="node6" href="_h_t_t_p2_stream_pool_8h_source.html" title="ACL/Transport/HTTP2Stream\lPool.h" alt="" coords="679,192,876,231"/>
+<area shape="rect" id="node17" href="_message_request_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="2995,452,3242,491"/>
+<area shape="rect" id="node23" href="_h_t_t_p2_transport_8h_source.html" title="ACL/Transport/HTTP2Transport.h" alt="" coords="2067,119,2288,144"/>
+<area shape="rect" id="node45" href="_alexa_client_s_d_k_init_8h_source.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="145,192,349,231"/>
+<area shape="rect" id="node46" href="_a_c_l_2test_2_transport_2_common_2_common_8h_source.html" title="Common/Common.h" alt="" coords="3468,119,3612,144"/>
+<area shape="rect" id="node47" href="_testable_consumer_8h_source.html" title="TestableConsumer.h" alt="" coords="71,372,214,397"/>
+<area shape="rect" id="node49" href="_mock_message_request_8h_source.html" title="MockMessageRequest.h" alt="" coords="3048,285,3216,311"/>
+<area shape="rect" id="node9" href="_attachment_manager_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="830,452,1031,491"/>
+<area shape="rect" id="node15" href="_message_request_8h_source.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="2134,372,2383,397"/>
+<area shape="rect" id="node18" href="_h_t_t_p2_stream_8h_source.html" title="ACL/Transport/HTTP2Stream.h" alt="" coords="1257,285,1465,311"/>
+<area shape="rect" id="node22" href="_message_consumer_interface_8h_source.html" title="ACL/Transport/MessageConsumer\lInterface.h" alt="" coords="1157,452,1384,491"/>
+<area shape="rect" id="node11" href="_attachment_manager_interface_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="901,539,1109,577"/>
+<area shape="rect" id="node14" href="_attachment_reader_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1264,625,1466,664"/>
+<area shape="rect" id="node19" href="_curl_easy_handle_wrapper_8h_source.html" title="ACL/Transport/CurlEasyHandle\lWrapper.h" alt="" coords="1903,365,2110,404"/>
+<area shape="rect" id="node20" href="_mime_parser_8h.html" title="ACL/Transport/MimeParser.h" alt="" coords="1069,372,1262,397"/>
+<area shape="rect" id="node30" href="_auth_delegate_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="3295,539,3486,577"/>
+<area shape="rect" id="node32" href="_context_manager_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="2343,452,2534,491"/>
+<area shape="rect" id="node37" href="_curl_multi_handle_wrapper_8h_source.html" title="ACL/Transport/CurlMultiHandle\lWrapper.h" alt="" coords="2710,365,2916,404"/>
+<area shape="rect" id="node38" href="_post_connect_object_8h_source.html" title="ACL/Transport/PostConnect\lObject.h" alt="" coords="1953,192,2140,231"/>
+<area shape="rect" id="node40" href="_post_connect_observer_interface_8h_source.html" title="ACL/Transport/PostConnect\lObserverInterface.h" alt="" coords="1641,279,1828,317"/>
+<area shape="rect" id="node41" href="_post_connect_send_message_interface_8h_source.html" title="ACL/Transport/PostConnect\lSendMessageInterface.h" alt="" coords="1953,279,2140,317"/>
+<area shape="rect" id="node42" href="_transport_interface_8h_source.html" title="ACL/Transport/TransportInterface.h" alt="" coords="2165,285,2395,311"/>
+<area shape="rect" id="node43" href="_transport_observer_interface_8h_source.html" title="ACL/Transport/TransportObserver\lInterface.h" alt="" coords="467,279,690,317"/>
+<area shape="rect" id="node31" href="_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="3295,625,3486,664"/>
+<area shape="rect" id="node33" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2924,539,3119,577"/>
+<area shape="rect" id="node34" href="_state_provider_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="2118,539,2309,577"/>
+<area shape="rect" id="node35" href="_state_refresh_policy_8h_source.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="2333,539,2545,577"/>
+<area shape="rect" id="node36" href="_namespace_and_name_8h_source.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="2671,539,2900,577"/>
+<area shape="rect" id="node39" href="_requires_shutdown_8h_source.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1641,365,1829,404"/>
+<area shape="rect" id="node44" href="_connection_status_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="289,365,537,404"/>
+<area shape="rect" id="node48" href="_message_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="71,452,268,491"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -335,7 +340,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -75,13 +75,18 @@ $(function() {
 </li>
 <li>MessageRequest()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#aa5bbcf730a46b24366f202d6ebe94ae8">alexaClientSDK::avsCommon::avs::MessageRequest</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_message_request.html#acad5e784fc438aab73b8d46950f0cc87">alexaClientSDK::capabilityAgents::aip::MessageRequest</a>
 </li>
 <li>MessageRouter()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router.html#a8eb0a4d29c54adb83f8bd01e097c7736">alexaClientSDK::acl::MessageRouter</a>
 </li>
+<li>MessageRouterInterface()
+: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router_interface.html#a2933fb5847d1dc2d1bc44b11434b0aff">alexaClientSDK::acl::MessageRouterInterface</a>
+</li>
 <li>messageSent()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_state_synchronizer.html#ac6624d2b83e7e55f7fff410c4dcac4c0">alexaClientSDK::capabilityAgents::system::StateSynchronizer</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html#ae5633790be5aff1da0dc84d1e43ddf35">alexaClientSDK::capabilityAgents::playbackController::PlaybackController</a>
+</li>
+<li>MessageStorageTest()
+: <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_message_storage_test.html#a460ecf26d486026ff477f75a6aca13e9">alexaClientSDK::certifiedSender::test::MessageStorageTest</a>
 </li>
 <li>microphoneOff()
 : <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html#af8001ce51b81bb4ff7c859c24844cfd4">alexaClientSDK::sampleApp::UIManager</a>
@@ -90,7 +95,7 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a356e9835464e65ee60ce67ff8d95c304">alexaClientSDK::sampleApp::InteractionManager</a>
 </li>
 <li>MimeParser()
-: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_mime_parser.html#ac591d9ce96f9f923ab2f81b4936f849a">alexaClientSDK::acl::MimeParser</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_mime_parser.html#a5acf68cfe75b01a0e7a70a081c8266ff">alexaClientSDK::acl::MimeParser</a>
 </li>
 <li>MockAttachmentReader()
 : <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_attachment_reader.html#a8d1754f42738089d84535915ad453335">alexaClientSDK::mediaPlayer::test::MockAttachmentReader</a>
@@ -117,7 +122,8 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_logger.html#a61876ac7434c605a01993e39234d4689">alexaClientSDK::avsCommon::utils::logger::test::MockLogger</a>
 </li>
 <li>MockMediaPlayer()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#a74a2b32429af89c43d119c0874f2436e">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#afe68fbecbc56ec93e24bd95ee9f9541c">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#a74a2b32429af89c43d119c0874f2436e">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
 </li>
 <li>MockMessageRequest()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_request.html#a090441cdeba5eb833b0af9e2db88a6f4">alexaClientSDK::acl::test::MockMessageRequest</a>
@@ -128,21 +134,31 @@ $(function() {
 <li>mockOnDeregistered()
 : <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#a4f4cf92260add9d5e8678f8129a541ee">alexaClientSDK::adsl::test::MockDirectiveHandler</a>
 </li>
+<li>mockPause()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#a7326bb144107416b186b0087963c93d4">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>
+</li>
 <li>mockPlay()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#a0f9fedfa4e35c33f2d4679a56940b93c">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#ad5be6be1dd3258fc99a498112a102ed3">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#a0f9fedfa4e35c33f2d4679a56940b93c">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
 </li>
 <li>mockPreHandleDirective()
 : <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#a224760285e07d158a4f27147f6120596">alexaClientSDK::adsl::test::MockDirectiveHandler</a>
+</li>
+<li>mockResume()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#a195336c419a505a492c7e0a6ebbd6201">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>
 </li>
 <li>MockStateProvider()
 : <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html#afaa51370dfd7cea456f6cdaf4c34f335">alexaClientSDK::contextManager::test::MockStateProvider</a>
 </li>
 <li>mockStop()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#a25d092962c30dadcf467a8238f1ee0e6">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#a6da49386baa21bfe6366cf86d37858f4">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#a25d092962c30dadcf467a8238f1ee0e6">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
 </li>
 <li>modify()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a534b5dcd3676ee798f90cf29d95442d8">alexaClientSDK::capabilityAgents::alerts::storage::AlertStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html#a80bcc3996d5941e2e8b94a58258d4edc">alexaClientSDK::capabilityAgents::alerts::storage::SQLiteAlertStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_storage_interface.html#a3f6f22b72b70c6bbaa3c0b82525dfef1">alexaClientSDK::capabilityAgents::settings::SettingsStorageInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_s_q_lite_setting_storage.html#aba638be0e81ee32e311028ac587dc0d2">alexaClientSDK::capabilityAgents::settings::SQLiteSettingStorage</a>
 </li>
 <li>ModuleLogger()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_module_logger.html#afcf548f38f0c06d1fc70fb3eb55702ff">alexaClientSDK::avsCommon::utils::logger::ModuleLogger</a>
@@ -152,7 +168,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -93,10 +93,14 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::DialogUXStateO
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a728a1ce41f6997d23f740e452dc5e066"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066">DialogUXState</a> { <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066aa5daf7f2ebbba4975d61dab1c40188c7">DialogUXState::IDLE</a>, 
+<tr class="memitem:a728a1ce41f6997d23f740e452dc5e066"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066">DialogUXState</a> { <br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066aa5daf7f2ebbba4975d61dab1c40188c7">DialogUXState::IDLE</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066ac0ff938e396e72c225bd66562b80a77e">DialogUXState::LISTENING</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066a18004389aa6f827c608aad2441a2bc53">DialogUXState::THINKING</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066addee564b336f5de690b746eb04e62114">DialogUXState::SPEAKING</a>
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066addee564b336f5de690b746eb04e62114">DialogUXState::SPEAKING</a>, 
+<br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066a2c616b2713e2e0aed04b4c4752c88133">DialogUXState::FINISHED</a>
+<br />
  }<tr class="memdesc:a728a1ce41f6997d23f740e452dc5e066"><td class="mdescLeft">&#160;</td><td class="mdescRight">The different dialog specific AVS UX states.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066">More...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:a728a1ce41f6997d23f740e452dc5e066"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,6 +149,8 @@ Static Public Member Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="a728a1ce41f6997d23f740e452dc5e066a18004389aa6f827c608aad2441a2bc53"></a>THINKING&#160;</td><td class="fielddoc"><p>A customer request has been completed and no more input is accepted. In this state, Alexa is waiting for a response from AVS. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a728a1ce41f6997d23f740e452dc5e066addee564b336f5de690b746eb04e62114"></a>SPEAKING&#160;</td><td class="fielddoc"><p>Alexa is responding to a request with speech. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a728a1ce41f6997d23f740e452dc5e066a2c616b2713e2e0aed04b4c4752c88133"></a>FINISHED&#160;</td><td class="fielddoc"><p>Alexa has finished processing a SPEAK directive. In this state there are no notifications triggered. If the SPEAK directive is part of a speech burst UX moves back to the SPEAKING state. If it was the last SPEAK directive after timeout the UX state moves to the IDLE state. </p>
 </td></tr>
 </table>
 
@@ -248,13 +254,13 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_dialog_u_x_state_observer_interface_8h_source.html">DialogUXStateObserverInterface.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_dialog_u_x_state_observer_interface_8h_source.html">DialogUXStateObserverInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

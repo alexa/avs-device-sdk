@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -91,6 +91,22 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a97f3351d465d285730f8e6b83ba6d152"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a930687cff8b71627b402f02effa957b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a930687cff8b71627b402f02effa957b3">stopForegroundActivity</a> ()</td></tr>
 <tr class="separator:a930687cff8b71627b402f02effa957b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d8b6646a3f508f09b6244bb839538ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a7d8b6646a3f508f09b6244bb839538ee">playbackPlay</a> ()</td></tr>
+<tr class="separator:a7d8b6646a3f508f09b6244bb839538ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb300f1aa1e3fe031c18d16579858172"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#adb300f1aa1e3fe031c18d16579858172">playbackPause</a> ()</td></tr>
+<tr class="separator:adb300f1aa1e3fe031c18d16579858172"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49ea3646bd4dcf21f510542c4bef3c6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a49ea3646bd4dcf21f510542c4bef3c6f">playbackNext</a> ()</td></tr>
+<tr class="separator:a49ea3646bd4dcf21f510542c4bef3c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac57e3dfb62530c3b3a7dcd32c21878e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#ac57e3dfb62530c3b3a7dcd32c21878e6">playbackPrevious</a> ()</td></tr>
+<tr class="separator:ac57e3dfb62530c3b3a7dcd32c21878e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74defd705f2b03e617148b2bcdcf4d37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a74defd705f2b03e617148b2bcdcf4d37">settings</a> ()</td></tr>
+<tr class="separator:a74defd705f2b03e617148b2bcdcf4d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd0202ff30ed270b9757246702735d95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#acd0202ff30ed270b9757246702735d95">locale</a> ()</td></tr>
+<tr class="separator:acd0202ff30ed270b9757246702735d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af52ad2225b6b368bc929f1062a923690"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#af52ad2225b6b368bc929f1062a923690">errorValue</a> ()</td></tr>
+<tr class="separator:af52ad2225b6b368bc929f1062a923690"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42549ad226adfc2caa04b7c8992b1556"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a42549ad226adfc2caa04b7c8992b1556">changeSetting</a> (const std::string &amp;key, const std::string &amp;value)</td></tr>
+<tr class="separator:a42549ad226adfc2caa04b7c8992b1556"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class manages most of the user interaction by taking in commands and notifying the DefaultClient and the userInterface (the view) accordingly. </p>
@@ -167,6 +183,53 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a42549ad226adfc2caa04b7c8992b1556"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42549ad226adfc2caa04b7c8992b1556">&#9670;&nbsp;</a></span>changeSetting()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::changeSetting </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Should be called when setting value is selected by the user. </p>
+
+</div>
+</div>
+<a id="af52ad2225b6b368bc929f1062a923690"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af52ad2225b6b368bc929f1062a923690">&#9670;&nbsp;</a></span>errorValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::errorValue </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Should be called whenever a user presses invalid option. </p>
+
+</div>
+</div>
 <a id="a1d6993408ccf75e07b9a1574691664f9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1d6993408ccf75e07b9a1574691664f9">&#9670;&nbsp;</a></span>help()</h2>
 
@@ -203,6 +266,24 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="acd0202ff30ed270b9757246702735d95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd0202ff30ed270b9757246702735d95">&#9670;&nbsp;</a></span>locale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::locale </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Should be called whenever a user requests 'LOCALE' change. </p>
+
+</div>
+</div>
 <a id="a356e9835464e65ee60ce67ff8d95c304"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a356e9835464e65ee60ce67ff8d95c304">&#9670;&nbsp;</a></span>microphoneToggle()</h2>
 
@@ -218,6 +299,96 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Toggles the microphone state if the Sample App was built with wakeword. When the microphone is turned off, the app enters a privacy mode in which it stops recording audio data from the microphone, thus disabling Alexa waking up due to wake word. Note however that hold-to-talk and tap-to-talk modes will still work by recording microphone data temporarily until a user initiated interacion is complete. If this app was built without wakeword then this will do nothing as the microphone is already off. </p>
+
+</div>
+</div>
+<a id="a49ea3646bd4dcf21f510542c4bef3c6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49ea3646bd4dcf21f510542c4bef3c6f">&#9670;&nbsp;</a></span>playbackNext()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::playbackNext </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Should be called whenever a user presses 'NEXT' for playback. </p>
+
+</div>
+</div>
+<a id="adb300f1aa1e3fe031c18d16579858172"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb300f1aa1e3fe031c18d16579858172">&#9670;&nbsp;</a></span>playbackPause()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::playbackPause </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Should be called whenever a user presses 'PAUSE' for playback. </p>
+
+</div>
+</div>
+<a id="a7d8b6646a3f508f09b6244bb839538ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d8b6646a3f508f09b6244bb839538ee">&#9670;&nbsp;</a></span>playbackPlay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::playbackPlay </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Should be called whenever a user presses 'PLAY' for playback. </p>
+
+</div>
+</div>
+<a id="ac57e3dfb62530c3b3a7dcd32c21878e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac57e3dfb62530c3b3a7dcd32c21878e6">&#9670;&nbsp;</a></span>playbackPrevious()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::playbackPrevious </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Should be called whenever a user presses 'PREVIOUS' for playback. </p>
+
+</div>
+</div>
+<a id="a74defd705f2b03e617148b2bcdcf4d37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74defd705f2b03e617148b2bcdcf4d37">&#9670;&nbsp;</a></span>settings()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::settings </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Should be called whenever a user presses 'SETTINGS' for settings options. </p>
 
 </div>
 </div>
@@ -258,14 +429,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/SampleApp/include/SampleApp/<a class="el" href="_interaction_manager_8h_source.html">InteractionManager.h</a></li>
-<li>/Users/kcecka/projects/avs-cpp-sdk/SampleApp/src/InteractionManager.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/SampleApp/include/SampleApp/<a class="el" href="_interaction_manager_8h_source.html">InteractionManager.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/SampleApp/src/InteractionManager.cpp</li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

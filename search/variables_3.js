@@ -2,6 +2,7 @@ var searchData=
 [
   ['dataavailableconditionvariable',['dataAvailableConditionVariable',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout_1_1_header.html#a5fa2be9899e3da6e70a690f97e1b2a5a',1,'alexaClientSDK::avsCommon::utils::sds::SharedDataStream::BufferLayout::Header']]],
   ['dataavailablemutex',['dataAvailableMutex',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout_1_1_header.html#a5f863e3b405335d5050bdcbcfb809de8',1,'alexaClientSDK::avsCommon::utils::sds::SharedDataStream::BufferLayout::Header']]],
+  ['datastream',['dataStream',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_h_t_t_p_content.html#a737edfbef98804dd6f1e8e42c8b59360',1,'alexaClientSDK::avsCommon::utils::HTTPContent']]],
   ['default_5fdone_5ftimeout_5fms',['DEFAULT_DONE_TIMEOUT_MS',['../classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#a0ddf224875c9453bab9e1f8cdcc76fe3',1,'alexaClientSDK::adsl::test::MockDirectiveHandler']]],
   ['default_5fhandling_5ftime_5fms',['DEFAULT_HANDLING_TIME_MS',['../classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#a727fc850a0d58acfe6a1f29f908044a8',1,'alexaClientSDK::adsl::test::MockDirectiveHandler']]],
   ['default_5ftimeout',['DEFAULT_TIMEOUT',['../_sensory_keyword_detector_test_8cpp.html#a6ad359af899514845c1307098ba64681',1,'alexaClientSDK::kwd::test']]],

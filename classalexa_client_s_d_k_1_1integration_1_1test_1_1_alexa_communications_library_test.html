@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -77,15 +77,11 @@ $(function() {
 Inheritance diagram for alexaClientSDK::integration::test::AlexaCommunicationsLibraryTest:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_communications_library_test__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_communications_library_test_inherit__map" alt="Inheritance graph"/></div>
-<map name="alexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_communications_library_test_inherit__map" id="alexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_communications_library_test_inherit__map">
-</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for alexaClientSDK::integration::test::AlexaCommunicationsLibraryTest:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_communications_library_test__coll__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_communications_library_test_coll__map" alt="Collaboration graph"/></div>
-<map name="alexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_communications_library_test_coll__map" id="alexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_communications_library_test_coll__map">
-</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -102,9 +98,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>connect</b> ()</td></
 <tr class="memitem:a7619736e84f98af264ddd606c166ad56"><td class="memItemLeft" align="right" valign="top"><a id="a7619736e84f98af264ddd606c166ad56"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>disconnect</b> ()</td></tr>
 <tr class="separator:a7619736e84f98af264ddd606c166ad56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28497c80abe130de9d23430ead65e1f3"><td class="memItemLeft" align="right" valign="top"><a id="a28497c80abe130de9d23430ead65e1f3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>sendEvent</b> (const std::string &amp;jsonContent, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#a381a605e0dbbeda10e2ad3a784e81a8a">MessageRequest::Status</a> expectedStatus, std::chrono::seconds timeout, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html">avsCommon::avs::attachment::AttachmentReader</a> &gt; attachmentReader=nullptr)</td></tr>
-<tr class="separator:a28497c80abe130de9d23430ead65e1f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59c5a49b4c7608d0d68f4dafe476ca40"><td class="memItemLeft" align="right" valign="top"><a id="a59c5a49b4c7608d0d68f4dafe476ca40"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>sendEvent</b> (const std::string &amp;jsonContent, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7b">avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status</a> expectedStatus, std::chrono::seconds timeout, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html">avsCommon::avs::attachment::AttachmentReader</a> &gt; attachmentReader=nullptr)</td></tr>
+<tr class="separator:a59c5a49b4c7608d0d68f4dafe476ca40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97796d2e7d47cc7145fccf5a0cf40e0a"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html">InProcessAttachmentReader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_communications_library_test.html#a97796d2e7d47cc7145fccf5a0cf40e0a">createAttachmentReader</a> (const std::string &amp;fileName)</td></tr>
 <tr class="separator:a97796d2e7d47cc7145fccf5a0cf40e0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf00e7c8099041a54661bbde4dd42701"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_communications_library_test.html#abf00e7c8099041a54661bbde4dd42701">sendRandomEvent</a> ()</td></tr>
@@ -118,6 +114,9 @@ std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1
 <tr class="memitem:abdf92041983d90477e6aff45698493f3"><td class="memItemLeft" align="right" valign="top"><a id="abdf92041983d90477e6aff45698493f3"></a>
 std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1auth_delegate_1_1_auth_delegate.html">AuthDelegate</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_authDelegate</b></td></tr>
 <tr class="separator:abdf92041983d90477e6aff45698493f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bada2005064a236215f57dac96f1cb4"><td class="memItemLeft" align="right" valign="top"><a id="a5bada2005064a236215f57dac96f1cb4"></a>
+std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">contextManager::ContextManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_contextManager</b></td></tr>
+<tr class="separator:a5bada2005064a236215f57dac96f1cb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78b5982de7458d8ef4470ba249cd3a1a"><td class="memItemLeft" align="right" valign="top"><a id="a78b5982de7458d8ef4470ba249cd3a1a"></a>
 std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_connection_status_observer.html">ConnectionStatusObserver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_connectionStatusObserver</b></td></tr>
 <tr class="separator:a78b5982de7458d8ef4470ba249cd3a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -189,13 +188,13 @@ std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_a_v_s
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/Integration/test/<a class="el" href="_alexa_communications_library_test_8cpp.html">AlexaCommunicationsLibraryTest.cpp</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/Integration/test/<a class="el" href="_alexa_communications_library_test_8cpp.html">AlexaCommunicationsLibraryTest.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

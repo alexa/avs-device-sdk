@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /Users/kcecka/projects/avs-cpp-sdk/Integration/test/NetworkIntegrationTests.cpp File Reference</title>
+<title>AlexaClientSDK: /Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/Integration/test/NetworkIntegrationTests.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -81,6 +81,7 @@ $(function() {
 <code>#include &lt;gtest/gtest.h&gt;</code><br />
 <code>#include &lt;ACL/AVSConnectionManager.h&gt;</code><br />
 <code>#include &lt;ACL/Transport/HTTP2MessageRouter.h&gt;</code><br />
+<code>#include &lt;ContextManager/ContextManager.h&gt;</code><br />
 <code>#include &lt;AVSCommon/AVS/MessageRequest.h&gt;</code><br />
 <code>#include &lt;AuthDelegate/AuthDelegate.h&gt;</code><br />
 <code>#include &lt;AVSCommon/AVS/Initialization/AlexaClientSDKInit.h&gt;</code><br />
@@ -92,40 +93,40 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for NetworkIntegrationTests.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_network_integration_tests_8cpp__incl.png" border="0" usemap="#_2_users_2kcecka_2projects_2avs-cpp-sdk_2_integration_2test_2_network_integration_tests_8cpp" alt=""/></div>
-<map name="_2_users_2kcecka_2projects_2avs-cpp-sdk_2_integration_2test_2_network_integration_tests_8cpp" id="_2_users_2kcecka_2projects_2avs-cpp-sdk_2_integration_2test_2_network_integration_tests_8cpp">
-<area shape="rect" id="node7" href="_a_v_s_connection_manager_8h_source.html" title="ACL/AVSConnectionManager.h" alt="" coords="2075,192,2282,217"/>
-<area shape="rect" id="node13" href="_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_message_request_8h_source.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1194,445,1443,471"/>
-<area shape="rect" id="node27" href="_h_t_t_p2_message_router_8h_source.html" title="ACL/Transport/HTTP2Message\lRouter.h" alt="" coords="875,105,1082,144"/>
-<area shape="rect" id="node34" href="_auth_delegate_8h_source.html" title="AuthDelegate/AuthDelegate.h" alt="" coords="2296,359,2494,384"/>
-<area shape="rect" id="node38" href="_alexa_client_s_d_k_init_8h_source.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="4489,352,4693,391"/>
-<area shape="rect" id="node39" href="_logger_8h_source.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="3287,265,3463,304"/>
-<area shape="rect" id="node46" href="_auth_observer_8h_source.html" title="Integration/AuthObserver.h" alt="" coords="4067,359,4248,384"/>
-<area shape="rect" id="node47" href="_connection_status_observer_8h_source.html" title="Integration/ConnectionStatus\lObserver.h" alt="" coords="4271,352,4465,391"/>
-<area shape="rect" id="node49" href="_json_header_8h_source.html" title="Integration/JsonHeader.h" alt="" coords="3639,112,3809,137"/>
-<area shape="rect" id="node50" href="_observable_message_request_8h_source.html" title="Integration/ObservableMessage\lRequest.h" alt="" coords="2670,352,2880,391"/>
-<area shape="rect" id="node15" href="_a_v_s_endpoint_assigner_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/AVSEndpointAssignerInterface.h" alt="" coords="1872,265,2090,304"/>
-<area shape="rect" id="node16" href="_connection_status_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="2117,439,2365,477"/>
-<area shape="rect" id="node18" href="_message_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="2592,265,2789,304"/>
-<area shape="rect" id="node19" href="_message_sender_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1174,352,1365,391"/>
-<area shape="rect" id="node20" href="_state_synchronizer_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/StateSynchronizerObserverInterface.h" alt="" coords="2317,265,2569,304"/>
-<area shape="rect" id="node21" href="_requires_shutdown_8h_source.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1983,352,2171,391"/>
-<area shape="rect" id="node22" href="_message_router_interface_8h_source.html" title="ACL/Transport/MessageRouter\lInterface.h" alt="" coords="947,265,1152,304"/>
-<area shape="rect" id="node25" href="_message_router_observer_interface_8h_source.html" title="ACL/Transport/MessageRouter\lObserverInterface.h" alt="" coords="1440,352,1645,391"/>
-<area shape="rect" id="node14" href="_attachment_reader_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1446,525,1647,564"/>
-<area shape="rect" id="node24" href="_executor_8h_source.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="445,352,640,391"/>
-<area shape="rect" id="node26" href="_transport_interface_8h_source.html" title="ACL/Transport/TransportInterface.h" alt="" coords="766,359,997,384"/>
-<area shape="rect" id="node28" href="_attachment_manager_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="1342,265,1543,304"/>
-<area shape="rect" id="node29" href="_message_router_8h_source.html" title="ACL/Transport/MessageRouter.h" alt="" coords="871,192,1087,217"/>
-<area shape="rect" id="node33" href="_message_consumer_interface_8h_source.html" title="ACL/Transport/MessageConsumer\lInterface.h" alt="" coords="43,265,269,304"/>
-<area shape="rect" id="node31" href="_auth_delegate_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="1569,439,1759,477"/>
-<area shape="rect" id="node32" href="_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="2637,525,2827,564"/>
-<area shape="rect" id="node37" href="_http_post_interface_8h_source.html" title="AuthDelegate/HttpPostInterface.h" alt="" coords="2523,445,2743,471"/>
-<area shape="rect" id="node41" href="_configuration_node_8h_source.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="3005,352,3219,391"/>
-<area shape="rect" id="node42" href="_level_8h_source.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="3441,439,3617,477"/>
-<area shape="rect" id="node43" href="_log_entry_8h_source.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="3816,352,3992,391"/>
-<area shape="rect" id="node44" href="_log_level_observer_interface_8h_source.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="3344,352,3541,391"/>
-<area shape="rect" id="node45" href="_sink_observer_interface_8h_source.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="3565,352,3741,391"/>
+<div class="center"><img src="_network_integration_tests_8cpp__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_integration_2test_2_network_integration_tests_8cpp" alt=""/></div>
+<map name="_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_integration_2test_2_network_integration_tests_8cpp" id="_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_integration_2test_2_network_integration_tests_8cpp">
+<area shape="rect" id="node7" href="_a_v_s_connection_manager_8h_source.html" title="ACL/AVSConnectionManager.h" alt="" coords="1768,212,1975,237"/>
+<area shape="rect" id="node15" href="_message_request_8h_source.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1636,472,1885,497"/>
+<area shape="rect" id="node24" href="_h_t_t_p2_message_router_8h_source.html" title="ACL/Transport/HTTP2Message\lRouter.h" alt="" coords="2956,119,3163,157"/>
+<area shape="rect" id="node31" href="_context_manager_8h_source.html" title="ContextManager/ContextManager.h" alt="" coords="3681,299,3913,324"/>
+<area shape="rect" id="node43" href="_auth_delegate_8h_source.html" title="AuthDelegate/AuthDelegate.h" alt="" coords="2423,385,2621,411"/>
+<area shape="rect" id="node45" href="_alexa_client_s_d_k_init_8h_source.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="302,205,506,244"/>
+<area shape="rect" id="node46" href="_logger_8h_source.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="146,379,322,417"/>
+<area shape="rect" id="node47" href="_auth_observer_8h_source.html" title="Integration/AuthObserver.h" alt="" coords="683,385,863,411"/>
+<area shape="rect" id="node48" href="_connection_status_observer_8h_source.html" title="Integration/ConnectionStatus\lObserver.h" alt="" coords="938,379,1131,417"/>
+<area shape="rect" id="node49" href="_json_header_8h_source.html" title="Integration/JsonHeader.h" alt="" coords="3485,125,3655,151"/>
+<area shape="rect" id="node50" href="_observable_message_request_8h_source.html" title="Integration/ObservableMessage\lRequest.h" alt="" coords="448,379,658,417"/>
+<area shape="rect" id="node13" href="_abstract_connection_8h_source.html" title="AVSCommon/AVS/AbstractConnection.h" alt="" coords="1255,385,1517,411"/>
+<area shape="rect" id="node14" href="_connection_status_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="1162,465,1410,504"/>
+<area shape="rect" id="node18" href="_a_v_s_endpoint_assigner_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/AVSEndpointAssignerInterface.h" alt="" coords="2784,292,3002,331"/>
+<area shape="rect" id="node19" href="_message_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="1637,292,1834,331"/>
+<area shape="rect" id="node20" href="_message_sender_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1744,379,1935,417"/>
+<area shape="rect" id="node21" href="_requires_shutdown_8h_source.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2010,379,2197,417"/>
+<area shape="rect" id="node22" href="_message_router_interface_8h_source.html" title="ACL/Transport/MessageRouter\lInterface.h" alt="" coords="2402,292,2608,331"/>
+<area shape="rect" id="node23" href="_message_router_observer_interface_8h_source.html" title="ACL/Transport/MessageRouter\lObserverInterface.h" alt="" coords="2746,379,2952,417"/>
+<area shape="rect" id="node16" href="_attachment_reader_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1732,552,1934,591"/>
+<area shape="rect" id="node17" href="_message_request_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1462,552,1708,591"/>
+<area shape="rect" id="node25" href="_attachment_manager_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="3135,292,3336,331"/>
+<area shape="rect" id="node27" href="_message_router_8h_source.html" title="ACL/Transport/MessageRouter.h" alt="" coords="2806,212,3022,237"/>
+<area shape="rect" id="node30" href="_message_consumer_interface_8h_source.html" title="ACL/Transport/MessageConsumer\lInterface.h" alt="" coords="4641,292,4868,331"/>
+<area shape="rect" id="node28" href="_auth_delegate_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="2862,465,3052,504"/>
+<area shape="rect" id="node29" href="_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="2255,552,2446,591"/>
+<area shape="rect" id="node38" href="_context_manager_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="4052,379,4243,417"/>
+<area shape="rect" id="node39" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="3666,465,3861,504"/>
+<area shape="rect" id="node40" href="_state_provider_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="3936,465,4127,504"/>
+<area shape="rect" id="node41" href="_state_refresh_policy_8h_source.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="4151,465,4363,504"/>
+<area shape="rect" id="node42" href="_namespace_and_name_8h_source.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="3413,465,3642,504"/>
+<area shape="rect" id="node44" href="_http_post_interface_8h_source.html" title="AuthDelegate/HttpPostInterface.h" alt="" coords="2364,472,2584,497"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -332,7 +333,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

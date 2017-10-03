@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -115,8 +115,10 @@ avsCommon::utils::mediaPlayer::MediaPlayerStatus&#160;</td><td class="memItemRig
 <tr class="separator:ae00393c7aa4f4f0419ffc393bebf00e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7348e9604a83b11196ecddf494dec86"><td class="memItemLeft" align="right" valign="top">avsCommon::utils::mediaPlayer::MediaPlayerStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#ac7348e9604a83b11196ecddf494dec86">resume</a> () override</td></tr>
 <tr class="separator:ac7348e9604a83b11196ecddf494dec86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a20c190023f20c4b6bedbc15838930e"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#a5a20c190023f20c4b6bedbc15838930e">getOffsetInMilliseconds</a> () override</td></tr>
-<tr class="separator:a5a20c190023f20c4b6bedbc15838930e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af653a8c6ab2001001aac137e539656f4"><td class="memItemLeft" align="right" valign="top">std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#af653a8c6ab2001001aac137e539656f4">getOffset</a> () override</td></tr>
+<tr class="separator:af653a8c6ab2001001aac137e539656f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a2f8210d219f2817b24e09c5dbaa93c"><td class="memItemLeft" align="right" valign="top">avsCommon::utils::mediaPlayer::MediaPlayerStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#a0a2f8210d219f2817b24e09c5dbaa93c">setOffset</a> (std::chrono::milliseconds offset) override</td></tr>
+<tr class="separator:a0a2f8210d219f2817b24e09c5dbaa93c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a271e75fecb39b734cafb9f1260611e79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#a271e75fecb39b734cafb9f1260611e79">setObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a> &gt; observer) override</td></tr>
 <tr class="separator:a271e75fecb39b734cafb9f1260611e79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Overridden PipelineInterface methods.</div></td></tr>
@@ -137,13 +139,11 @@ avsCommon::utils::mediaPlayer::MediaPlayerStatus&#160;</td><td class="memItemRig
 <tr class="separator:a6ea8410b0e942e263e7b534f88b30ee3 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a863f7a1d8fe9ef77ead9f9a70e533ffd inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface"><td class="memItemLeft" align="right" valign="top">virtual MediaPlayerStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a863f7a1d8fe9ef77ead9f9a70e533ffd">setSource</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html">avsCommon::avs::attachment::AttachmentReader</a> &gt; attachmentReader)=0</td></tr>
 <tr class="separator:a863f7a1d8fe9ef77ead9f9a70e533ffd inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b75cc675041653fc26c5e07b7083f33 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface"><td class="memItemLeft" align="right" valign="top">virtual MediaPlayerStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a6b75cc675041653fc26c5e07b7083f33">setOffset</a> (std::chrono::milliseconds offset)</td></tr>
-<tr class="separator:a6b75cc675041653fc26c5e07b7083f33 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ad1cf0d69cdeb8046dc012dc4485900cb"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html">MediaPlayer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#ad1cf0d69cdeb8046dc012dc4485900cb">create</a> ()</td></tr>
-<tr class="separator:ad1cf0d69cdeb8046dc012dc4485900cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfee5aab5e1d98c231e8f9ee88a15df8"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html">MediaPlayer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#adfee5aab5e1d98c231e8f9ee88a15df8">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_factory_interface.html">avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface</a> &gt; contentFetcherFactory=nullptr)</td></tr>
+<tr class="separator:adfee5aab5e1d98c231e8f9ee88a15df8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class that handles creation of audio pipeline and playing of audio data. </p>
@@ -167,8 +167,8 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad1cf0d69cdeb8046dc012dc4485900cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1cf0d69cdeb8046dc012dc4485900cb">&#9670;&nbsp;</a></span>create()</h2>
+<a id="adfee5aab5e1d98c231e8f9ee88a15df8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfee5aab5e1d98c231e8f9ee88a15df8">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -179,7 +179,8 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html">MediaPlayer</a> &gt; alexaClientSDK::mediaPlayer::MediaPlayer::create </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_factory_interface.html">avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>contentFetcherFactory</em> = <code>nullptr</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -190,6 +191,12 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Creates an instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html">MediaPlayer</a></code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">contentFetcherFactory</td><td>Used to create objects that can fetch remote HTTP content. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>An instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html">MediaPlayer</a></code> if successful else a <code>nullptr</code>. </dd></dl>
 
 </div>
@@ -252,8 +259,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5a20c190023f20c4b6bedbc15838930e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a20c190023f20c4b6bedbc15838930e">&#9670;&nbsp;</a></span>getOffsetInMilliseconds()</h2>
+<a id="af653a8c6ab2001001aac137e539656f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af653a8c6ab2001001aac137e539656f4">&#9670;&nbsp;</a></span>getOffset()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -262,7 +269,7 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int64_t alexaClientSDK::mediaPlayer::MediaPlayer::getOffsetInMilliseconds </td>
+          <td class="memname">std::chrono::milliseconds alexaClientSDK::mediaPlayer::MediaPlayer::getOffset </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -275,9 +282,9 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Returns the offset, in milliseconds, of the media stream.</p>
-<dl class="section return"><dt>Returns</dt><dd>If a stream is playing, the offset in milliseconds that the stream has been playing, if there is no stream playing it returns <code>-1</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If a stream is playing, the offset in milliseconds that the stream has been playing, if there is no stream playing it returns <code>MEDIA_PLAYER_INVALID_OFFSET</code>. </dd></dl>
 
-<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a31a4f64754a231a7041fba9b5c27d32b">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface</a>.</p>
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#aa036356cea35577b0d5555a91a71b2b3">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface</a>.</p>
 
 </div>
 </div>
@@ -537,6 +544,35 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a0a2f8210d219f2817b24e09c5dbaa93c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a2f8210d219f2817b24e09c5dbaa93c">&#9670;&nbsp;</a></span>setOffset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">MediaPlayerStatus alexaClientSDK::mediaPlayer::MediaPlayer::setOffset </td>
+          <td>(</td>
+          <td class="paramtype">std::chrono::milliseconds&#160;</td>
+          <td class="paramname"><em>offset</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function is a setter, storing <code>offset</code> to be consumed internally by <code><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#aef8c4efd980ba7d185a4079d3c7bedaf">play()</a></code>. The function will always return MediaPlayerStatus::SUCCESS. </p>
+
+<p>Reimplemented from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a6b75cc675041653fc26c5e07b7083f33">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface</a>.</p>
+
+</div>
+</div>
 <a id="a1b20efddb45b45a9347a75be8f7f05ad"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1b20efddb45b45a9347a75be8f7f05ad">&#9670;&nbsp;</a></span>setSource() <span class="overload">[1/2]</span></h2>
 
@@ -652,14 +688,14 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/MediaPlayer/include/MediaPlayer/<a class="el" href="_media_player_8h_source.html">MediaPlayer.h</a></li>
-<li>/Users/kcecka/projects/avs-cpp-sdk/MediaPlayer/src/MediaPlayer.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/MediaPlayer/include/MediaPlayer/<a class="el" href="_media_player_8h_source.html">MediaPlayer.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/MediaPlayer/src/MediaPlayer.cpp</li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

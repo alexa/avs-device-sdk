@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -113,28 +113,33 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onAlertStateChange</b
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html">alexaClientSDK::capabilityAgents::alerts::AlertObserverInterface</a></td></tr>
 <tr class="memitem:a0ceb2f80d92998fad4842437760dfad9 inherit pub_types_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9">State</a> { <br />
-&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9a17130e6c806885e23770df1519b18eb7">State::STARTED</a>, 
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9a2baa69eafc7204f3bd8648eba580c489">State::READY</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9a17130e6c806885e23770df1519b18eb7">State::STARTED</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9a09d4d696b4e935115b9313e3c412509a">State::STOPPED</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9adbd414f9aaabb67e8430e9520f604a79">State::SNOOZED</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9a8f7afecbc8fbc4cd0f50a57d1172482e">State::COMPLETED</a>, 
 <br />
-&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9a560bb2d9ea9002aa8c70a4462ca6c304">State::PAST_DUE</a>, 
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9a8f7afecbc8fbc4cd0f50a57d1172482e">State::COMPLETED</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9a560bb2d9ea9002aa8c70a4462ca6c304">State::PAST_DUE</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9aa72d9c6d4fab6a8bb2fcc8fe3f7dff13">State::FOCUS_ENTERED_FOREGROUND</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9a8f2c39a6e3871da5c682a37a792a6b05">State::FOCUS_ENTERED_BACKGROUND</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9abb1ca97ec761fc37101737ba0aa2e7c5">State::ERROR</a>
+<br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9abb1ca97ec761fc37101737ba0aa2e7c5">State::ERROR</a>
 <br />
  }</td></tr>
 <tr class="separator:a0ceb2f80d92998fad4842437760dfad9 inherit pub_types_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html">alexaClientSDK::capabilityAgents::alerts::AlertObserverInterface</a></td></tr>
+<tr class="memitem:aee93aef91a98c0b7aacff47e9b84278d inherit pub_static_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#aee93aef91a98c0b7aacff47e9b84278d">stateToString</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9">State</a> state)</td></tr>
+<tr class="separator:aee93aef91a98c0b7aacff47e9b84278d inherit pub_static_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/kcecka/projects/avs-cpp-sdk/Integration/include/Integration/<a class="el" href="_test_alert_observer_8h_source.html">TestAlertObserver.h</a></li>
-<li>/Users/kcecka/projects/avs-cpp-sdk/Integration/src/TestAlertObserver.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/Integration/include/Integration/<a class="el" href="_test_alert_observer_8h_source.html">TestAlertObserver.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/Integration/src/TestAlertObserver.cpp</li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.0.2 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

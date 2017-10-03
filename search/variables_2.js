@@ -7,6 +7,7 @@ var searchData=
   ['channel_5fname',['CHANNEL_NAME',['../_audio_input_processor_test_8cpp.html#a7b0178804a7ab40cabf8d9921e488c94',1,'alexaClientSDK::capabilityAgents::aip::test::CHANNEL_NAME()'],['../_audio_player_8cpp.html#af3702644873921bd62088226e22ddb70',1,'alexaClientSDK::capabilityAgents::audioPlayer::CHANNEL_NAME()']]],
   ['cid_5fprefix',['CID_PREFIX',['../_audio_player_8cpp.html#ae52735632827b71d30afe29ee71816cd',1,'alexaClientSDK::capabilityAgents::audioPlayer']]],
   ['cleanedup',['cleanedUp',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_slow_destructor.html#a07979eee77ed35a781f070d60ded077f',1,'alexaClientSDK::avsCommon::utils::threading::test::SlowDestructor']]],
+  ['clear_5fall_5fpayload_5ftest',['CLEAR_ALL_PAYLOAD_TEST',['../_audio_player_test_8cpp.html#a30b30ebbe48aef1da7e3a6bb6d343d15',1,'alexaClientSDK::capabilityAgents::audioPlayer::test']]],
   ['clear_5fqueue',['CLEAR_QUEUE',['../_audio_player_8cpp.html#ac2bd5b1c6ace49d997edff961f29a31b',1,'alexaClientSDK::capabilityAgents::audioPlayer']]],
   ['clienta',['clientA',['../classalexa_client_s_d_k_1_1afml_1_1test_1_1_channel_test.html#a5754aba8d73c2511fec1f53efb407d1e',1,'alexaClientSDK::afml::test::ChannelTest']]],
   ['clientb',['clientB',['../classalexa_client_s_d_k_1_1afml_1_1test_1_1_channel_test.html#a881aa0b69c1d233ba69bfb6894e8ff87',1,'alexaClientSDK::afml::test::ChannelTest']]],
@@ -19,8 +20,8 @@ var searchData=
   ['content_5fchannel_5fname',['CONTENT_CHANNEL_NAME',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a665ff812ec1ce4cdc68ae409673ad0be',1,'alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface::CONTENT_CHANNEL_NAME()'],['../_audio_player_integration_test_8cpp.html#a833e6f7167f43f8f16f18b802812b8b1',1,'alexaClientSDK::integration::test::CONTENT_CHANNEL_NAME()']]],
   ['content_5fchannel_5fpriority',['CONTENT_CHANNEL_PRIORITY',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a63c396d5a7adaa78db5eccf9cb11224b',1,'alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface::CONTENT_CHANNEL_PRIORITY()'],['../_audio_player_integration_test_8cpp.html#ad4f11b02e98c3f0e239162d235b7ef9c',1,'alexaClientSDK::integration::test::CONTENT_CHANNEL_PRIORITY()']]],
   ['contentclient',['contentClient',['../classalexa_client_s_d_k_1_1afml_1_1test_1_1_focus_manager_test.html#afb72b434809188f6d5656bd39dd021bf',1,'alexaClientSDK::afml::test::FocusManagerTest']]],
+  ['contenttype',['contentType',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_h_t_t_p_content.html#ad14f07f84965752da9fb63518011f840',1,'alexaClientSDK::avsCommon::utils::HTTPContent']]],
   ['ct_5ffirst_5frecognize_5fevent_5fjson',['CT_FIRST_RECOGNIZE_EVENT_JSON',['../_alexa_directive_sequencer_library_test_8cpp.html#ab1e5786d428a14e56e8a94f1c6826ef7',1,'alexaClientSDK::integration::test']]],
-  ['ct_5ffirst_5frecognize_5fevent_5fjson_5fnear',['CT_FIRST_RECOGNIZE_EVENT_JSON_NEAR',['../_alexa_directive_sequencer_library_test_8cpp.html#a6baef30d2c3f07922df2e58d352bac9f',1,'alexaClientSDK::integration::test']]],
   ['ct_5frecognize_5fevent_5fjson',['CT_RECOGNIZE_EVENT_JSON',['../_alexa_communications_library_test_8cpp.html#ac7445673aa38b452ab8bf3b5ce0a75d3',1,'alexaClientSDK::integration::test']]],
   ['ct_5fsecond_5frecognize_5fevent_5fjson',['CT_SECOND_RECOGNIZE_EVENT_JSON',['../_alexa_directive_sequencer_library_test_8cpp.html#a16a7006db0e1d2943c9adeeefe041c81',1,'alexaClientSDK::integration::test']]]
 ];
