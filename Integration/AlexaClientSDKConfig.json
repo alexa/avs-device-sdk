@@ -23,6 +23,6 @@
     },
 
    "certifiedSender":{ 
-        "databaseFilePath":"{SDK_CERTIFIED_SENDER_DATABASE_FILE_PATH}"
+        "databaseFilePath":"${SDK_CERTIFIED_SENDER_DATABASE_FILE_PATH}"
     }
  }
