@@ -89,7 +89,6 @@ v1.1 released 10/02/2017:
 
 **Enhancements**
 
-* The SDK now supports TuneIn, Audible, Pandora, SiriusXM, Kindle Books, and Amazon Music.
 * Added a capability agent for Settings, which allows a client to notify Alexa of locale changes.
 * Added a capability agent for PlaybackController, which exposes these transport controls: play, pause, next, and previous.
 * Added `PlaylistParser`, which is used to parse m3u and pls formatted playlists.
