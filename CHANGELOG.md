@@ -2,7 +2,6 @@
 
 ### [1.1.0] - 2017-10-02
 * **Enhancements**
-  * The SDK now supports TuneIn, Audible, Pandora, SiriusXM, Kindle Books, and Amazon Music.
   * Better GStreamer error reporting. MediaPlayer used to only report   `MEDIA_ERROR_UNKNOWN`, now reports more specific errors as defined in `ErrorType.h`.
   * Codebase has been formatted for easier reading.
   * `DirectiveRouter::removeDirectiveHandler()` signature changed and now returns a bool indicating if given handler should be successfully removed or not.
