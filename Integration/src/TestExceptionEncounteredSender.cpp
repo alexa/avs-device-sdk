@@ -69,16 +69,16 @@ std::shared_ptr<avsCommon::avs::AVSDirective> TestExceptionEncounteredSender::pa
     std::string messageId;
     std::string dialogRequestId;
 
-    if (!jsonUtils::lookupStringValue(rawJSON, JSON_MESSAGE_DIRECTIVE_KEY, &directiveJSON) ||
-        !jsonUtils::lookupStringValue(directiveJSON, JSON_MESSAGE_HEADER_KEY, &headerJSON) ||
-        !jsonUtils::lookupStringValue(directiveJSON, JSON_MESSAGE_PAYLOAD_KEY, &payloadJSON) ||
-        !jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_NAMESPACE_KEY, &nameSpace) ||
-        !jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_NAME_KEY, &name) ||
-        !jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_MESSAGE_ID_KEY, &messageId)) {
+    if (!jsonUtils::retrieveValue(rawJSON, JSON_MESSAGE_DIRECTIVE_KEY, &directiveJSON) ||
+        !jsonUtils::retrieveValue(directiveJSON, JSON_MESSAGE_HEADER_KEY, &headerJSON) ||
+        !jsonUtils::retrieveValue(directiveJSON, JSON_MESSAGE_PAYLOAD_KEY, &payloadJSON) ||
+        !jsonUtils::retrieveValue(headerJSON, JSON_MESSAGE_NAMESPACE_KEY, &nameSpace) ||
+        !jsonUtils::retrieveValue(headerJSON, JSON_MESSAGE_NAME_KEY, &name) ||
+        !jsonUtils::retrieveValue(headerJSON, JSON_MESSAGE_MESSAGE_ID_KEY, &messageId)) {
         return nullptr;
     }
 
-    jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_NAMESPACE_KEY, &dialogRequestId);
+    jsonUtils::retrieveValue(headerJSON, JSON_MESSAGE_NAMESPACE_KEY, &dialogRequestId);
 
     auto header = std::make_shared<avsCommon::avs::AVSMessageHeader>(nameSpace, name, messageId, dialogRequestId);
     return avsCommon::avs::AVSDirective::create(rawJSON, header, payloadJSON, attachmentManager, "");

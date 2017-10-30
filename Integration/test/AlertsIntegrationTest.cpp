@@ -15,7 +15,7 @@
  * permissions and limitations under the License.
  */
 
-/// @file SpeechSynthesizerIntegrationTest.cpp
+/// @file AlertsIntegrationTest.cpp
 #include <gtest/gtest.h>
 #include <string>
 #include <future>
@@ -27,7 +27,6 @@
 #include <iostream>
 
 #include "ACL/Transport/HTTP2MessageRouter.h"
-#include "ACL/Transport/HTTPContentFetcherFactory.h"
 #include "ACL/Transport/PostConnectSynchronizer.h"
 #include "ADSL/DirectiveSequencer.h"
 #include "ADSL/MessageInterpreter.h"
@@ -44,6 +43,7 @@
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h"
 #include "AVSCommon/AVS/BlockingPolicy.h"
 #include "AVSCommon/Utils/JSON/JSONUtils.h"
+#include "AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h"
 #include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
@@ -294,7 +294,8 @@ protected:
         PostConnectObject::init(m_contextManager);
 
 #ifdef GSTREAMER_MEDIA_PLAYER
-        m_speakMediaPlayer = MediaPlayer::create(std::make_shared<HTTPContentFetcherFactory>());
+        m_speakMediaPlayer =
+            MediaPlayer::create(std::make_shared<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory>());
 #else
         m_speakMediaPlayer = std::make_shared<TestMediaPlayer>();
 #endif
@@ -394,13 +395,15 @@ protected:
 
     void TearDown() override {
         disconnect();
-        m_alertsAgent->onLocalStop();
-        m_alertsAgent->removeAllAlerts();
-        m_certifiedSender->shutdown();
         m_AudioInputProcessor->shutdown();
-        m_alertsAgent->shutdown();
-        m_speechSynthesizer->shutdown();
         m_directiveSequencer->shutdown();
+        m_speechSynthesizer->shutdown();
+        if (m_alertsAgent) {
+            m_alertsAgent->onLocalStop();
+            m_alertsAgent->removeAllAlerts();
+            m_alertsAgent->shutdown();
+        }
+        m_certifiedSender->shutdown();
         m_avsConnectionManager->shutdown();
         AlexaClientSDKInit::uninitialize();
     }
@@ -428,9 +431,9 @@ protected:
         std::string eventString;
         std::string eventHeader;
         std::string eventName;
-        jsonUtils::lookupStringValue(sendParams.request->getJsonContent(), JSON_MESSAGE_EVENT_KEY, &eventString);
-        jsonUtils::lookupStringValue(eventString, JSON_MESSAGE_HEADER_KEY, &eventHeader);
-        jsonUtils::lookupStringValue(eventHeader, JSON_MESSAGE_NAME_KEY, &eventName);
+        jsonUtils::retrieveValue(sendParams.request->getJsonContent(), JSON_MESSAGE_EVENT_KEY, &eventString);
+        jsonUtils::retrieveValue(eventString, JSON_MESSAGE_HEADER_KEY, &eventHeader);
+        jsonUtils::retrieveValue(eventHeader, JSON_MESSAGE_NAME_KEY, &eventName);
         return eventName;
     }
 
@@ -665,7 +668,7 @@ TEST_F(AlertsTest, handleMultipleTimersWithLocalStop) {
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 
     // Locally stop the alarm.
-    m_alertsAgent->onLocalStop();
+    m_focusManager->stopForegroundActivity();
 
     // AlertStopped Event is sent.
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -683,7 +686,7 @@ TEST_F(AlertsTest, handleMultipleTimersWithLocalStop) {
     std::this_thread::sleep_for(std::chrono::milliseconds(600));
 
     // Locally stop the second alarm.
-    m_alertsAgent->onLocalStop();
+    m_focusManager->stopForegroundActivity();
 
     // AlertStopped Event is sent.
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -1110,24 +1113,24 @@ TEST_F(AlertsTest, UserLongUnrelatedBargeInOnActiveTimer) {
 
     // Speech is handled.
     sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    if (getSentEventName(sendParams) == NAME_ALERT_ENTERED_FOREGROUND) {
-        sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    }
     ASSERT_TRUE(checkSentEventName(sendStartedParams, NAME_SPEECH_STARTED));
-    sendFinishedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED));
 
-    // For each speak directive that results from "what's up", the alert losses and gains foreground.
-    for (int i = 0; i < 4; i++) {
-        sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-        ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_ENTERED_FOREGROUND));
+    sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    ASSERT_TRUE(checkSentEventName(sendStartedParams, NAME_SPEECH_FINISHED));
+    sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    ASSERT_TRUE(checkSentEventName(sendStartedParams, NAME_ALERT_ENTERED_FOREGROUND));
+    sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
 
-        sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-        ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_ENTERED_BACKGROUND));
+    ASSERT_TRUE(checkSentEventName(sendStartedParams, NAME_ALERT_ENTERED_BACKGROUND));
+
+    while (checkSentEventName(sendStartedParams, NAME_ALERT_ENTERED_BACKGROUND)) {
         sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         ASSERT_TRUE(checkSentEventName(sendStartedParams, NAME_SPEECH_STARTED));
-        sendFinishedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-        ASSERT_TRUE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED));
+        sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        ASSERT_TRUE(checkSentEventName(sendStartedParams, NAME_SPEECH_FINISHED));
+        sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        ASSERT_TRUE(checkSentEventName(sendStartedParams, NAME_ALERT_ENTERED_FOREGROUND));
+        sendStartedParams = m_avsConnectionManager->waitForNext(SHORT_TIMEOUT_DURATION);
     }
 
     std::this_thread::sleep_for(std::chrono::milliseconds(600));
@@ -1135,14 +1138,8 @@ TEST_F(AlertsTest, UserLongUnrelatedBargeInOnActiveTimer) {
     // Locally stop the alarm.
     m_alertsAgent->onLocalStop();
 
-    sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    if (getSentEventName(sendParams) == NAME_ALERT_ENTERED_FOREGROUND) {
-        // AlertStopped Event is sent
-        sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-        ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STOPPED));
-    } else {
-        ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STOPPED));
-    }
+    sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    ASSERT_TRUE(checkSentEventName(sendStartedParams, NAME_ALERT_STOPPED));
 
     // Low priority Test client gets back permission to the test channel
     EXPECT_EQ(
@@ -1272,18 +1269,13 @@ TEST_F(AlertsTest, handleOneTimerWithVocalStop) {
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendParams, NAME_DELETE_ALERT_SUCCEEDED));
 
-    // Allow time for alert events to be sent.
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
-    if (getSentEventName(sendParams) == NAME_ALERT_ENTERED_FOREGROUND) {
-        // AlertStopped Event is sent
-        sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-        ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STOPPED));
-    } else {
-        ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STOPPED));
-    }
-
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STOPPED));
+
+    ASSERT_EQ(
+        m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state,
+        AlertObserverInterface::State::FOCUS_ENTERED_BACKGROUND);
+    ASSERT_EQ(m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state, AlertObserverInterface::State::STOPPED);
 
     // Low priority Test client gets back permission to the test channel
     EXPECT_EQ(

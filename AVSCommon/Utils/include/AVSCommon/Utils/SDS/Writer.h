@@ -270,6 +270,12 @@ void SharedDataStream<T>::Writer::close() {
     }
     if (header->isWriterEnabled) {
         header->isWriterEnabled = false;
+
+        std::unique_lock<Mutex> dataAvailableLock(header->dataAvailableMutex);
+
+        header->hasWriterBeenClosed = true;
+
+        header->dataAvailableConditionVariable.notify_all();
     }
     m_closed = true;
 }

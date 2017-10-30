@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_LIBCURL_HTTP_CONTENT_FETCHER_H_
-#define ALEXA_CLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_LIBCURL_HTTP_CONTENT_FETCHER_H_
+#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_LIBCURL_HTTP_CONTENT_FETCHER_H_
+#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_LIBCURL_HTTP_CONTENT_FETCHER_H_
 
 #include <atomic>
 #include <future>
@@ -24,11 +24,12 @@
 #include <thread>
 
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterface.h>
-
-#include "ACL/Transport/CurlEasyHandleWrapper.h"
+#include <AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h>
 
 namespace alexaClientSDK {
-namespace acl {
+namespace avsCommon {
+namespace utils {
+namespace libcurlUtils {
 
 /**
  * A class used to retrieve content from remote URLs
@@ -62,7 +63,7 @@ private:
     std::string m_url;
 
     /// A libcurl wrapper.
-    acl::CurlEasyHandleWrapper m_curlWrapper;
+    CurlEasyHandleWrapper m_curlWrapper;
 
     /// A promise to the caller of @c getContent() that the HTTP status code will be set.
     std::promise<long> m_statusCodePromise;
@@ -103,7 +104,9 @@ private:
     std::atomic_flag m_hasObjectBeenUsed;
 };
 
-}  // namespace acl
+}  // namespace libcurlUtils
+}  // namespace utils
+}  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_LIBCURL_HTTP_CONTENT_FETCHER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_LIBCURL_HTTP_CONTENT_FETCHER_H_

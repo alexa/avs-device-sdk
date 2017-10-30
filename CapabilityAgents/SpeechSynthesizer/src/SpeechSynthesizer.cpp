@@ -219,23 +219,50 @@ void SpeechSynthesizer::onContextFailure(const ContextRequestError error) {
     // default no-op
 }
 
-void SpeechSynthesizer::onPlaybackStarted() {
-    ACSDK_DEBUG9(LX("onPlaybackStarted"));
+void SpeechSynthesizer::onPlaybackStarted(SourceId id) {
+    ACSDK_DEBUG9(LX("onPlaybackStarted").d("callbackSourceId", id));
     ACSDK_METRIC_IDS(TAG, "SpeechStarted", "", "", Metrics::Location::SPEECH_SYNTHESIZER_RECEIVE);
-
-    m_executor.submit([this]() { executePlaybackStarted(); });
+    if (id != m_mediaSourceId) {
+        ACSDK_ERROR(LX("queueingExecutePlaybackStartedFailed")
+                        .d("reason", "mismatchSourceId")
+                        .d("callbackSourceId", id)
+                        .d("sourceId", m_mediaSourceId));
+        m_executor.submit([this] {
+            executePlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "executePlaybackStartedFailed");
+        });
+    } else {
+        m_executor.submit([this]() { executePlaybackStarted(); });
+    }
 }
 
-void SpeechSynthesizer::onPlaybackFinished() {
-    ACSDK_DEBUG9(LX("onPlaybackFinished"));
+void SpeechSynthesizer::onPlaybackFinished(SourceId id) {
+    ACSDK_DEBUG9(LX("onPlaybackFinished").d("callbackSourceId", id));
     ACSDK_METRIC_IDS(TAG, "SpeechFinished", "", "", Metrics::Location::SPEECH_SYNTHESIZER_RECEIVE);
 
-    m_executor.submit([this]() { executePlaybackFinished(); });
+    if (id != m_mediaSourceId) {
+        ACSDK_ERROR(LX("queueingExecutePlaybackFinishedFailed")
+                        .d("reason", "mismatchSourceId")
+                        .d("callbackSourceId", id)
+                        .d("sourceId", m_mediaSourceId));
+        m_executor.submit([this] {
+            executePlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "executePlaybackFinishedFailed");
+        });
+    } else {
+        m_executor.submit([this]() { executePlaybackFinished(); });
+    }
 }
 
-void SpeechSynthesizer::onPlaybackError(const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error) {
-    ACSDK_DEBUG9(LX("onPlaybackError"));
+void SpeechSynthesizer::onPlaybackError(
+    SourceId id,
+    const avsCommon::utils::mediaPlayer::ErrorType& type,
+    std::string error) {
+    ACSDK_DEBUG9(LX("onPlaybackError").d("callbackSourceId", id));
     m_executor.submit([this, type, error]() { executePlaybackError(type, error); });
+}
+
+void SpeechSynthesizer::onPlaybackStopped(SourceId id) {
+    ACSDK_DEBUG9(LX("onPlaybackStopped").d("callbackSourceId", id));
+    onPlaybackFinished(id);
 }
 
 SpeechSynthesizer::SpeakDirectiveInfo::SpeakDirectiveInfo(std::shared_ptr<DirectiveInfo> directiveInfo) :
@@ -261,6 +288,7 @@ SpeechSynthesizer::SpeechSynthesizer(
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender) :
         CapabilityAgent{NAMESPACE, exceptionSender},
         RequiresShutdown{"SpeechSynthesizer"},
+        m_mediaSourceId{MediaPlayerInterface::ERROR},
         m_speechPlayer{mediaPlayer},
         m_messageSender{messageSender},
         m_focusManager{focusManager},
@@ -452,12 +480,14 @@ void SpeechSynthesizer::executeCancel(std::shared_ptr<DirectiveInfo> info) {
         return;
     }
     std::unique_lock<std::mutex> lock(m_mutex);
-    m_desiredState = SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED;
-    if (SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING == m_currentState) {
-        lock.unlock();
-        m_currentInfo->sendPlaybackFinishedMessage = false;
-        m_currentInfo->sendCompletedMessage = false;
-        stopPlaying();
+    if (SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED != m_desiredState) {
+        m_desiredState = SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED;
+        if (SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING == m_currentState) {
+            lock.unlock();
+            m_currentInfo->sendPlaybackFinishedMessage = false;
+            m_currentInfo->sendCompletedMessage = false;
+            stopPlaying();
+        }
     }
 }
 
@@ -493,8 +523,16 @@ void SpeechSynthesizer::executeProvideState(
         ACSDK_ERROR(LX("executeProvideStateFailed").d("reason", "currentInfoIsNull"));
         return;
     } else if (SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING == state) {
+        // We should never be in the PLAYING state without a valid m_mediaSourceId.
+        if (MediaPlayerInterface::ERROR == m_mediaSourceId) {
+            ACSDK_ERROR(LX("executeProvideStateGetOffsetFailed")
+                            .d("reason", "invalidMediaSourceId")
+                            .d("mediaSourceId", m_mediaSourceId));
+            return;
+        }
+
         offsetInMilliseconds =
-            std::chrono::duration_cast<std::chrono::milliseconds>(m_speechPlayer->getOffset()).count();
+            std::chrono::duration_cast<std::chrono::milliseconds>(m_speechPlayer->getOffset(m_mediaSourceId)).count();
         refreshPolicy = StateRefreshPolicy::ALWAYS;
         speakDirectiveToken = m_currentInfo->token;
     } else if (m_currentInfo) {
@@ -568,6 +606,7 @@ void SpeechSynthesizer::executePlaybackFinished() {
             executeHandleAfterValidation(m_speakInfoQueue.front());
         }
     }
+    resetMediaSourceId();
 }
 
 void SpeechSynthesizer::executePlaybackError(const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error) {
@@ -583,6 +622,7 @@ void SpeechSynthesizer::executePlaybackError(const avsCommon::utils::mediaPlayer
     releaseForegroundFocus();
     sendExceptionEncounteredAndReportFailed(m_currentInfo, avsCommon::avs::ExceptionErrorType::INTERNAL_ERROR, error);
     resetCurrentInfo();
+    resetMediaSourceId();
 }
 
 std::string SpeechSynthesizer::buildState(std::string& token, int64_t offsetInMilliseconds) const {
@@ -624,28 +664,22 @@ std::string SpeechSynthesizer::buildPayload(std::string& token) {
 
 void SpeechSynthesizer::startPlaying() {
     ACSDK_DEBUG9(LX("startPlaying"));
-    m_speechPlayer->setSource(std::move(m_currentInfo->attachmentReader));
-    auto mediaPlayerStatus = m_speechPlayer->play();
-    switch (mediaPlayerStatus) {
-        case MediaPlayerStatus::SUCCESS:
-        case MediaPlayerStatus::PENDING:
-            break;
-        case MediaPlayerStatus::FAILURE:
-            executePlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "playFailed");
-            break;
+    m_mediaSourceId = m_speechPlayer->setSource(std::move(m_currentInfo->attachmentReader));
+    if (MediaPlayerInterface::ERROR == m_mediaSourceId) {
+        ACSDK_ERROR(LX("startPlayingFailed").d("reason", "setSourceFailed"));
+        executePlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "playFailed");
+    } else if (!m_speechPlayer->play(m_mediaSourceId)) {
+        executePlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "playFailed");
     }
 }
 
 void SpeechSynthesizer::stopPlaying() {
     ACSDK_DEBUG9(LX("stopPlaying"));
-    auto mediaPlayerStatus = m_speechPlayer->stop();
-    switch (mediaPlayerStatus) {
-        case MediaPlayerStatus::SUCCESS:
-        case MediaPlayerStatus::PENDING:
-            break;
-        case MediaPlayerStatus::FAILURE:
-            executePlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "stopFailed");
-            break;
+    if (MediaPlayerInterface::ERROR == m_mediaSourceId) {
+        ACSDK_ERROR(LX("stopPlayingFailed").d("reason", "invalidMediaSourceId").d("mediaSourceId", m_mediaSourceId));
+        executePlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "stopFailed");
+    } else if (!m_speechPlayer->stop(m_mediaSourceId)) {
+        executePlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "stopFailed");
     }
 }
 
@@ -785,6 +819,10 @@ void SpeechSynthesizer::addToDirectiveQueue(std::shared_ptr<SpeakDirectiveInfo> 
         ACSDK_DEBUG9(LX("addToDirectiveQueue").d("queueSize", m_speakInfoQueue.size()));
         m_speakInfoQueue.push_back(speakInfo);
     }
+}
+
+void SpeechSynthesizer::resetMediaSourceId() {
+    m_mediaSourceId = MediaPlayerInterface::ERROR;
 }
 
 }  // namespace speechSynthesizer

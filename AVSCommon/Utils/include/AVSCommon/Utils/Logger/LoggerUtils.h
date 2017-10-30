@@ -155,6 +155,17 @@ std::string formatLogString(
     const char* threadMoniker,
     const char* text);
 
+/**
+ * Stream out an array of bytes as a hex dump.
+ *
+ * @param stream The stream to render to.
+ * @param prefix A prefix added to each row.
+ * @param width The number of bytes to output per row.
+ * @param data The bytes to render.
+ * @param size The number of bytes to render.
+ */
+void dumpBytesToStream(std::ostream& stream, const char* prefix, size_t width, const unsigned char* data, size_t size);
+
 }  // namespace logger
 }  // namespace utils
 }  // namespace avsCommon

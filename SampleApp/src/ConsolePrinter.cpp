@@ -24,22 +24,31 @@
 namespace alexaClientSDK {
 namespace sampleApp {
 
-std::mutex ConsolePrinter::m_mutex;
+std::shared_ptr<std::mutex> ConsolePrinter::m_globalMutex = std::make_shared<std::mutex>();
 
-ConsolePrinter::ConsolePrinter() : avsCommon::utils::logger::Logger(avsCommon::utils::logger::Level::UNKNOWN) {
+ConsolePrinter::ConsolePrinter() :
+        avsCommon::utils::logger::Logger(avsCommon::utils::logger::Level::UNKNOWN),
+        m_mutex(m_globalMutex) {
 }
 
 void ConsolePrinter::simplePrint(const std::string& stringToPrint) {
-    std::lock_guard<std::mutex> lock{m_mutex};
+    auto mutex = m_globalMutex;
+    if (!mutex) {
+        return;
+    }
+
+    std::lock_guard<std::mutex> lock{*mutex};
     std::cout << stringToPrint << std::endl;
 }
 
 void ConsolePrinter::prettyPrint(const std::string& stringToPrint) {
-    std::lock_guard<std::mutex> lock{m_mutex};
-    std::string line(stringToPrint.size() + 16, '#');
-    std::cout << line << std::endl;
-    std::cout << "#       " << stringToPrint << "       #" << std::endl;
-    std::cout << line << std::endl;
+    const std::string line(stringToPrint.size() + 16, '#');
+    std::ostringstream oss;
+    oss << line << std::endl;
+    oss << "#       " << stringToPrint << "       #" << std::endl;
+    oss << line << std::endl;
+
+    simplePrint(oss.str());
 }
 
 void ConsolePrinter::emit(
@@ -47,7 +56,7 @@ void ConsolePrinter::emit(
     std::chrono::system_clock::time_point time,
     const char* threadMoniker,
     const char* text) {
-    std::lock_guard<std::mutex> lock{m_mutex};
+    std::lock_guard<std::mutex> lock{*m_mutex};
     std::cout << avsCommon::utils::logger::formatLogString(level, time, threadMoniker, text) << std::endl;
 }
 

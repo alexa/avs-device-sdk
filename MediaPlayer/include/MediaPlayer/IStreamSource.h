@@ -63,8 +63,12 @@ private:
     /// @name Overridden SourceInterface methods.
     /// @{
     bool isPlaybackRemote() const override;
+    bool hasAdditionalData() override;
+    /// @}
 
-    void terminate() override{};
+    /// @name RequiresShutdown Functions
+    /// @{
+    void doShutdown() override{};
     /// @}
 
     /// @name Overridden BaseStreamSource methods.

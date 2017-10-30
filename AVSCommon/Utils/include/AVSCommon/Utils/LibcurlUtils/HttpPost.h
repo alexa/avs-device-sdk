@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_HTTP_POST_H_
-#define ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_HTTP_POST_H_
+#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_HTTP_POST_H_
+#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_HTTP_POST_H_
 
 #include <chrono>
 #include <curl/curl.h>
@@ -25,10 +25,12 @@
 #include <mutex>
 #include <string>
 
-#include "AuthDelegate/HttpPostInterface.h"
+#include "AVSCommon/Utils/LibcurlUtils/HttpPostInterface.h"
 
 namespace alexaClientSDK {
-namespace authDelegate {
+namespace avsCommon {
+namespace utils {
+namespace libcurlUtils {
 
 /// LIBCURL based implementation of HttpPostInterface.
 class HttpPost : public HttpPostInterface {
@@ -109,7 +111,9 @@ private:
     std::string m_bodyAccumulator;
 };
 
-}  // namespace authDelegate
+}  // namespace libcurlUtils
+}  // namespace utils
+}  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_HTTP_POST_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_HTTP_POST_H_

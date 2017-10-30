@@ -35,7 +35,10 @@ public:
      * An enum class to allow configuration of the type of reader.
      */
     enum class Policy {
-        /// A read of n bytes will not return until n bytes are available, or a timeout occurs.
+        /**
+         * A read of n bytes will not return until a number of bytes, equal to or less than n, are available,
+         * or a timeout occurs.
+         */
         BLOCKING,
         /// A read of n bytes will return immediately, whether n bytes were available or not.
         NON_BLOCKING

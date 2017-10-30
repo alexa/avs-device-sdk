@@ -296,17 +296,15 @@ public:
     void sendRandomEvent() {
         std::shared_ptr<InProcessAttachmentReader> attachmentReader;
         std::string eventJson = SYNCHRONIZE_STATE_JSON;
+        auto status = avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT;
 
         if (rand() % 2) {
             eventJson = CT_RECOGNIZE_EVENT_JSON;
             attachmentReader = createAttachmentReader(g_inputPath + "/" + RECOGNIZE_AUDIO_FILE_NAME);
+            status = avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS;
         }
 
-        sendEvent(
-            eventJson,
-            avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
-            std::chrono::seconds(40),
-            attachmentReader);
+        sendEvent(eventJson, status, std::chrono::seconds(40), attachmentReader);
     }
 
     std::shared_ptr<AuthObserver> m_authObserver;
@@ -335,7 +333,7 @@ TEST_F(AlexaCommunicationsLibraryTest, testConnectAndDisconnect) {
 TEST_F(AlexaCommunicationsLibraryTest, testSendEvent) {
     sendEvent(
         SYNCHRONIZE_STATE_JSON,
-        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT,
         std::chrono::seconds(10));
 }
 
@@ -432,7 +430,7 @@ TEST_F(AlexaCommunicationsLibraryTest, testReceiveDirectiveOnDownchannel) {
     auto attachmentReader = createAttachmentReader(g_inputPath + "/" + SILENCE_AUDIO_FILE_NAME);
     sendEvent(
         NF_RECOGNIZE_EVENT_JSON,
-        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT,
         std::chrono::seconds(10),
         attachmentReader);
 
@@ -455,7 +453,7 @@ TEST_F(AlexaCommunicationsLibraryTest, testPersistentConnection) {
         << "Connection changed after a response was received";
     sendEvent(
         CT_RECOGNIZE_EVENT_JSON,
-        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT,
         std::chrono::seconds(10),
         attachmentReader);
 }

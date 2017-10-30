@@ -58,7 +58,14 @@ public:
 
 private:
     /// Used to serialize access to std::cout.
-    static std::mutex m_mutex;
+    static std::shared_ptr<std::mutex> m_globalMutex;
+
+    /**
+     * Holding a shared pointer to the mutex
+     * to make sure the mutex is not already destroyed
+     * when called from global's destructor
+     */
+    std::shared_ptr<std::mutex> m_mutex;
 };
 
 }  // namespace sampleApp

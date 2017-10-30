@@ -14,20 +14,21 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-
-#include "ACL/Transport/HTTPContentFetcherFactory.h"
-
+#include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
+#include <AVSCommon/Utils/LibcurlUtils/LibCurlHttpContentFetcher.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
 
-#include "ACL/Transport/LibCurlHttpContentFetcher.h"
-
 namespace alexaClientSDK {
-namespace acl {
+namespace avsCommon {
+namespace utils {
+namespace libcurlUtils {
 
 std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> HTTPContentFetcherFactory::create(
     const std::string& url) {
     return avsCommon::utils::memory::make_unique<LibCurlHttpContentFetcher>(url);
 }
 
-}  // namespace acl
+}  // namespace libcurlUtils
+}  // namespace utils
+}  // namespace avsCommon
 }  // namespace alexaClientSDK

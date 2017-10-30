@@ -54,6 +54,9 @@ public:
      */
     void remove(const RequiresShutdown* object);
 
+    /// Constructor
+    ShutdownMonitor();
+
     /// Destructor.
     ~ShutdownMonitor();
 
@@ -66,6 +69,9 @@ private:
 
     /// The @c RequiredShutdown objects being tracked.
     Objects m_objects;
+
+    // a @c Logger instance to be used on the destructor
+    alexaClientSDK::avsCommon::utils::logger::ModuleLogger m_destructorLogger;
 };
 
 void ShutdownMonitor::add(const RequiresShutdown* object) {
@@ -92,15 +98,21 @@ void ShutdownMonitor::remove(const RequiresShutdown* object) {
     }
 }
 
+ShutdownMonitor::ShutdownMonitor() : m_destructorLogger(ACSDK_STRINGIFY(ACSDK_LOG_MODULE)) {
+}
+
 ShutdownMonitor::~ShutdownMonitor() {
     std::lock_guard<std::mutex> lock(m_mutex);
-    // TODO: can't use logger here since it may have already been destroyed.  Revisit whether there's a good
-    // way to defer logger destruction until after ~ShutdownMonitor() (ACSDK-445).
+
     for (auto object : m_objects) {
         if (!object->isShutdown()) {
-            std::cerr << "WARNING: shutdown() not called on " << object->name() << "." << std::endl;
+            m_destructorLogger.log(
+                alexaClientSDK::avsCommon::utils::logger::Level::WARN,
+                LX("ShutdownMonitor").d("reason", "no shutdown() call").d("name: ", object->name()));
         }
-        std::cerr << "WARNING: " << object->name() << " was never deleted." << std::endl;
+        m_destructorLogger.log(
+            alexaClientSDK::avsCommon::utils::logger::Level::WARN,
+            LX("ShutdownMonitor").d("reason", "never deleted").d("name", object->name()));
     }
 }
 

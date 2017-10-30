@@ -48,7 +48,8 @@ static const std::string TAG("CertifiedSender");
 CertifiedSender::CertifiedMessageRequest::CertifiedMessageRequest(const std::string& jsonContent, int dbId) :
         MessageRequest{jsonContent},
         m_responseReceived{false},
-        m_dbId{dbId} {
+        m_dbId{dbId},
+        m_isShuttingDown{false} {
 }
 
 void CertifiedSender::CertifiedMessageRequest::exceptionReceived(const std::string& exceptionMessage) {
@@ -70,13 +71,23 @@ void CertifiedSender::CertifiedMessageRequest::sendCompleted(
 
 MessageRequestObserverInterface::Status CertifiedSender::CertifiedMessageRequest::waitForCompletion() {
     std::unique_lock<std::mutex> lock(m_mutex);
-    m_cv.wait(lock, [this]() { return m_responseReceived; });
+    m_cv.wait(lock, [this]() { return m_isShuttingDown || m_responseReceived; });
+
+    if (m_isShuttingDown) {
+        return MessageRequestObserverInterface::Status::TIMEDOUT;
+    }
 
     return m_sendMessageStatus;
 }
 
 int CertifiedSender::CertifiedMessageRequest::getDbId() {
     return m_dbId;
+}
+
+void CertifiedSender::CertifiedMessageRequest::shutdown() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_isShuttingDown = true;
+    m_cv.notify_all();
 }
 
 std::shared_ptr<CertifiedSender> CertifiedSender::create(
@@ -114,6 +125,9 @@ CertifiedSender::CertifiedSender(
 CertifiedSender::~CertifiedSender() {
     std::unique_lock<std::mutex> lock(m_mutex);
     m_isShuttingDown = true;
+    if (m_currentMessage) {
+        m_currentMessage->shutdown();
+    }
     lock.unlock();
 
     m_workerThreadCV.notify_one();
@@ -157,6 +171,8 @@ void CertifiedSender::mainloop() {
     while (true) {
         std::unique_lock<std::mutex> lock(m_mutex);
 
+        m_currentMessage.reset();
+
         if ((!m_isConnected || m_messagesToSend.empty()) && !m_isShuttingDown) {
             m_workerThreadCV.wait(
                 lock, [this]() { return ((m_isConnected && !m_messagesToSend.empty()) || m_isShuttingDown); });
@@ -167,23 +183,33 @@ void CertifiedSender::mainloop() {
             return;
         }
 
-        auto message = m_messagesToSend.front();
+        m_currentMessage = m_messagesToSend.front();
 
         lock.unlock();
 
         // We have a message to send - send it!
-        m_messageSender->sendMessage(message);
+        m_messageSender->sendMessage(m_currentMessage);
 
-        auto status = message->waitForCompletion();
+        auto status = m_currentMessage->waitForCompletion();
 
         if (MessageRequest::isServerStatus(status)) {
             lock.lock();
 
-            if (!m_storage->erase(message->getDbId())) {
+            if (!m_storage->erase(m_currentMessage->getDbId())) {
                 ACSDK_ERROR(LX("mainloop : could not erase message from storage."));
             }
 
-            m_messagesToSend.pop();
+            m_messagesToSend.pop_front();
+            lock.unlock();
+        } else {
+            // If we couldn't send the message ok, let's push a fresh instance to the front of the deque.  This allows
+            // ACL to continue interacting with the old instance (for example, if it is involved in a complex flow
+            // of exception / onCompleted handling), and allows us to safely try sending the new instance.
+            lock.lock();
+            m_messagesToSend.pop_front();
+            m_messagesToSend.push_front(std::make_shared<CertifiedMessageRequest>(
+                m_currentMessage->getJsonContent(), m_currentMessage->getDbId()));
+            lock.unlock();
         }
     }
 }
@@ -220,7 +246,7 @@ bool CertifiedSender::executeSendJSONMessage(std::string jsonMessage) {
         return false;
     }
 
-    m_messagesToSend.push(std::make_shared<CertifiedMessageRequest>(jsonMessage, messageId));
+    m_messagesToSend.push_back(std::make_shared<CertifiedMessageRequest>(jsonMessage, messageId));
 
     lock.unlock();
 

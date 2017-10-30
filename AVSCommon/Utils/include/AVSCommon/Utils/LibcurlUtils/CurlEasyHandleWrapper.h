@@ -15,15 +15,17 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_CURL_EASY_HANDLE_WRAPPER_H_
-#define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_CURL_EASY_HANDLE_WRAPPER_H_
+#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_CURL_EASY_HANDLE_WRAPPER_H_
+#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_CURL_EASY_HANDLE_WRAPPER_H_
 
 #include <chrono>
 #include <curl/curl.h>
 #include <string>
 
 namespace alexaClientSDK {
-namespace acl {
+namespace avsCommon {
+namespace utils {
+namespace libcurlUtils {
 
 /**
  * Class to allocate and configure a curl easy handle
@@ -209,7 +211,9 @@ private:
     curl_httppost* m_post;
 };
 
-}  // namespace acl
+}  // namespace libcurlUtils
+}  // namespace utils
+}  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_CURL_EASY_HANDLE_WRAPPER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_CURL_EASY_HANDLE_WRAPPER_H_

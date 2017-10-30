@@ -48,14 +48,14 @@ public:
 private:
     void onLogLevelChanged(Level level) override;
 
-    void onSinkChanged(Logger& sink) override;
+    void onSinkChanged(const std::shared_ptr<Logger>& sink) override;
 
     /// flag to determine if the m_sink's logLevel is to be used
     bool m_useSinkLogLevel;
 
 protected:
     /// The @c Logger to forward logs to.
-    std::atomic<Logger*> m_sink;
+    std::shared_ptr<Logger> m_sink;
 };
 
 }  // namespace logger

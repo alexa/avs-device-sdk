@@ -15,13 +15,16 @@
  * permissions and limitations under the License.
  */
 
+#include <cctype>
+
+#include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include "SampleApp/UserInputManager.h"
 #include "SampleApp/ConsolePrinter.h"
 
-#include <cctype>
-
 namespace alexaClientSDK {
 namespace sampleApp {
+
+using namespace avsCommon::sdkInterfaces;
 
 static const char HOLD = 'h';
 static const char TAP = 't';
@@ -34,10 +37,18 @@ static const char PAUSE = '2';
 static const char NEXT = '3';
 static const char PREVIOUS = '4';
 static const char SETTINGS = 'c';
+static const char SPEAKER_CONTROL = 'p';
 
 enum class SettingsValues : char { LOCALE = '1' };
 
 static const std::unordered_map<char, std::string> LOCALE_VALUES({{'1', "en-US"}, {'2', "en-GB"}, {'3', "de-DE"}});
+
+static const std::unordered_map<char, SpeakerInterface::Type> SPEAKER_TYPES({{'1', SpeakerInterface::Type::AVS_SYNCED},
+                                                                             {'2', SpeakerInterface::Type::LOCAL}});
+
+static const int8_t INCREASE_VOLUME = 10;
+
+static const int8_t DECREASE_VOLUME = -10;
 
 std::unique_ptr<UserInputManager> UserInputManager::create(std::shared_ptr<InteractionManager> interactionManager) {
     if (!interactionManager) {
@@ -61,6 +72,7 @@ void UserInputManager::run() {
         std::cin >> x;
         x = ::tolower(x);
         if (x == QUIT) {
+            m_interactionManager->shutdown();
             return;
         } else if (x == INFO) {
             m_interactionManager->help();
@@ -98,11 +110,41 @@ void UserInputManager::run() {
                     }
                     break;
                 }
-                default:
-                    m_interactionManager->errorValue();
-                    break;
+                    m_interactionManager->help();
             }
-            m_interactionManager->help();
+        } else if (x == SPEAKER_CONTROL) {
+            m_interactionManager->speakerControl();
+            char speakerChoice;
+            std::cin >> speakerChoice;
+            if (SPEAKER_TYPES.count(speakerChoice) == 0) {
+                m_interactionManager->errorValue();
+            } else {
+                m_interactionManager->volumeControl();
+                SpeakerInterface::Type speaker = SPEAKER_TYPES.at(speakerChoice);
+                char volume;
+                while (std::cin >> volume && volume != 'q') {
+                    switch (volume) {
+                        case '1':
+                            m_interactionManager->adjustVolume(speaker, INCREASE_VOLUME);
+                            break;
+                        case '2':
+                            m_interactionManager->adjustVolume(speaker, DECREASE_VOLUME);
+                            break;
+                        case '3':
+                            m_interactionManager->setMute(speaker, true);
+                            break;
+                        case '4':
+                            m_interactionManager->setMute(speaker, false);
+                            break;
+                        case 'i':
+                            m_interactionManager->volumeControl();
+                            break;
+                        default:
+                            m_interactionManager->errorValue();
+                            break;
+                    }
+                }
+            }
         }
     }
 }

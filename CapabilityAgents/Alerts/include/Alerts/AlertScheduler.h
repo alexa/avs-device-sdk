@@ -152,6 +152,18 @@ private:
     void executeOnAlertStateChange(std::string alertToken, State state, std::string reason);
 
     /**
+     * A utility function which wraps the executor submission to notify our observer.
+     *
+     * @param alertToken The AVS token identifying the alert.
+     * @param state The state of the alert.
+     * @param reason The reason the the state changed, if applicable.
+     */
+    void notifyObserver(
+        const std::string& alertToken,
+        AlertObserverInterface::State state,
+        const std::string& reason = "");
+
+    /**
      * A handler function which will be called by our internal executor when a managed alert changes state.
      *
      * @param alertToken The AVS token identifying the alert.

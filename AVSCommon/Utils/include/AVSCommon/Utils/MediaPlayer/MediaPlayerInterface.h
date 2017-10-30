@@ -24,152 +24,206 @@
 #include <memory>
 
 #include "AVSCommon/AVS/Attachment/AttachmentReader.h"
-#include "MediaPlayerObserverInterface.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
 namespace mediaPlayer {
 
-/**
- * An enum class used to specify the status of an operation performed by the @c MediaPlayer.
- */
-enum class MediaPlayerStatus {
-    /// The operation was successful.
-    SUCCESS,
-
-    /// The operation is pending. If there is an error, it may be notified via onPlaybackError.
-    PENDING,
-
-    /// An error was encountered and the operation failed.
-    FAILURE
-};
-
 /// Represents offset returned when MediaPlayer is in an invalid state.
 static const std::chrono::milliseconds MEDIA_PLAYER_INVALID_OFFSET{-1};
 
+/// Forward-declare the observer class.
+class MediaPlayerObserverInterface;
+
 /**
- * A MediaPlayer allows for sourcing, playback control, navigation, and querying the state of media content.
+ * A @c MediaPlayerInterface allows for sourcing, playback control, navigation, and querying the state of media content.
+ * A @c MediaPlayerInterface implementation must only handle one source at a time.
+ *
+ * Each playback controlling API call (i.e. @c play(), @c pause(), @c stop(),  @c resume()) which returns @c true will
+ * result in a callback to the observer. If @c false is returned from these calls, no callback will occur. Callbacks
+ * should not be made on the caller's thread prior to returning from a call.
+ *
+ * An implementation can call @c onPlaybackError() at any time.  If an @c onPlaybackError() callback occurs while a
+ * plaback controlling API call is waiting for a callback, the original callback must not be made, and the
+ * implementation should rever to a stopped state.  Any subsequent operations after an @c onPlaybackError() callback
+ * must be preceded by a new @c setSource() call.
+ *
+ * Implementations must make a call to @c onPlaybackStopped() with the previous @c SourceId when a new source is
+ * set if the previous source was in a non-stopped state. Any calls to a @c MediaPlayerInterface after an @c
+ * onPlaybackStopped() call will fail, as the MediaPlayer has "reset" its state.
+ *
+ * @c note A @c MediaPlayerInterface implementation must be able to support the various audio formats listed at:
+ * https://developer.amazon.com/docs/alexa-voice-service/recommended-media-support.html.
  */
 class MediaPlayerInterface {
 public:
+    /// A type that identifies which source is currently being operated on.
+    using SourceId = uint64_t;
+
+    /// An @c SourceId used to represent an error from calls to @c setSource().
+    static const SourceId ERROR = 0;
+
     /**
      * Destructor.
      */
     virtual ~MediaPlayerInterface() = default;
 
     /**
-     * Set the source to play. The source should be set before issuing @c play or @c stop.
+     * Set an @c AttachmentReader source to play. The source should be set before making calls to any of the playback
+     * control APIs. If any source was set prior to this call, that source will be discarded.
      *
-     * The @c MediaPlayer can handle only one source at a time.
+     * @note A @c MediaPlayerInterface implementation must handle only one source at a time. An implementation must call
+     * @c MediaPlayerObserverInterface::onPlaybackStopped() with the previous source's id if there was a source set.
      *
      * @param attachmentReader Object with which to read an incoming audio attachment.
      *
-     * @return @c SUCCESS if the source was set successfully else @c FAILURE. If setSource is called when audio is
-     * currently playing, the playing audio will be stopped and the source set to the new value. If there is an error
-     * stopping the player, this will return @c FAILURE.
+     * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
+     *     returned if the source failed to be set.
      */
-    virtual MediaPlayerStatus setSource(
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) = 0;
+    virtual SourceId setSource(std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) = 0;
 
     /**
-     * Set the source to play. The source should be set before issuing @c play or @c stop.
+     * Set a url source to play. The source should be set before making calls to any of the playback control APIs. If
+     * any source was set prior to this call, that source will be discarded.
      *
-     * The @c MediaPlayer can handle only one source at a time.
+     * @note A @c MediaPlayerInterface implementation must handle only one source at a time. An implementation must call
+     * @c MediaPlayerObserverInterface::onPlaybackStopped() with the previous source's id if there was a source set.
      *
      * @param url The url to set as the source.
      *
-     * @return @c SUCCESS if the source was set successfully else @c FAILURE. If setSource is called when audio is
-     * currently playing, the playing audio will be stopped and the source set to the new value. If there is an error
-     * stopping the player, this will return @c FAILURE.
+     * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
+     *     returned if the source failed to be set.
      */
-    virtual MediaPlayerStatus setSource(const std::string& url) = 0;
+    virtual SourceId setSource(const std::string& url) = 0;
 
     /**
-     * Set the source to play. The source should be set before issuing @c play or @c stop.
+     * Set an @c istream source to play. The source should be set before making calls to any of the playback control
+     * APIs. If any source was set prior to this call, that source will be discarded.
      *
-     * The @c MediaPlayer can handle only one source at a time.
+     * @note A @c MediaPlayerInterface implementation must handle only one source at a time. An implementation must call
+     * @c MediaPlayerObserverInterface::onPlaybackStopped() with the previous source's id if there was a source set.
      *
-     * @param stream Object with which to read an incoming audio stream.
+     * @param stream Object from which to read an incoming audio stream.
      * @param repeat Whether the audio stream should be played in a loop until stopped.
      *
-     * @return @c SUCCESS if the the source was set successfully else @c FAILURE. If setSource is called when audio is
-     * currently playing, the playing audio will be stopped and the source set to the new value. If there is an error
-     * stopping the player, this will return @c FAILURE.
+     * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
+     * returned if the source failed to be set.
      */
-    virtual MediaPlayerStatus setSource(std::shared_ptr<std::istream> stream, bool repeat) = 0;
+    virtual SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) = 0;
+
+    /**
+     * Starts playing audio specified by the @c setSource() call.
+     *
+     * The source must be set before issuing @c play().
+     *
+     * If @c play() is called
+     * @li without making a @c setSource(), @c false will be returned.
+     * @li when audio is already playing, @c false will be returned.
+     * @li after a play() call has already been made but no callback or return code has been issued
+     *     yet, @c false will be returned.
+     *
+     * If the id does not match the id of the active source, then @c false will be returned.
+     * If the @c play() succeeded, @c true will be returned.
+     * When @c true is returned, a callback will be made to either @c MediaPlayerObserverInterface::onPlaybackStarted()
+     * or to @c MediaPlayerObserverInterface::onPlaybackError().
+     *
+     * @param id The id of the source on which to operate.
+     *
+     * @return @c true if the call succeeded, in which case a callback will be made, or @c false otherwise.
+     */
+    virtual bool play(SourceId id) = 0;
+
+    /**
+     * Stops playing the audio specified by the @c setSource() call.
+     *
+     * The source must be set before issuing @c stop().
+     *
+     * Once @c stop() has been called, subsequent @c play() calls will fail.
+     * If @c stop() is called when audio has already stopped, @c false will be returned.
+     * If the id does not match the id of the active source, then @c false will be returned.
+     * If the @c stop() succeeded, @c true will be returned.
+     * When @c true is returned, a callback will be made to either @c MediaPlayerObserverInterface::onPlaybackStopped()
+     * or to @c MediaPlayerObserverInterface::onPlaybackError().
+     *
+     * @param id The id of the source on which to operate.
+     *
+     * @return @c true if the call succeeded, in which case a callback will be made, or @c false otherwise.
+     */
+    virtual bool stop(SourceId id) = 0;
+
+    /**
+     * Pauses playing audio specified by the @c setSource() call.
+     *
+     * The source must be set before issuing @c pause().
+     * If @c pause() is called
+     * @li without making a @c setSource(), @c false will be returned.
+     * @li when audio is not starting/resuming/playing, @c false will be returned.
+     * @li when a play() or resume() call has already been made, but no callback has been issued
+     *     yet for those functions, the audio stream will pause without playing any audio.  Implementations must call
+     *     both @c MediaPlayerObserverInterface::onPlaybackStarted() /
+     *     @c MediaPlayerObserverInterface::onPlaybackResumed and @c MediaPlayerObserverInterface::onPlaybackPaused()
+     *     in this scenario, as both the @c play() / @c resume() and the @c pause() are required to have corresponding
+     *     callbacks.
+     *
+     * If the id does not match the id of the active source, then @c false will be returned.
+     * If the @c pause() succeeded, @c true will be returned.
+     * When @c true is returned, a callback will be made to either @c MediaPlayerObserverInterface::onPlaybackPaused()
+     * or to @c MediaPlayerObserverInterface::onPlaybackError().
+     *
+     * @param id The id of the source on which to operate.
+     *
+     * @return @c true if the call succeeded, in which case a callback will be made, or @c false otherwise.
+     */
+    virtual bool pause(SourceId id) = 0;
+
+    /**
+     * Resumes playing the paused audio specified by the @c setSource() call.
+     *
+     * The source must be set before issuing @c resume().
+     * If @c resume() is called
+     * @li without making a @c setSource(), @c false will be returned.
+     * @li when audio is already playing, @c false will be returned.
+     * @li when audio is not paused, @c false will be returned.
+     * @li after a resume() call has already been made but no callback or return code has been issued yet, @c false will
+     *     be returned.
+     *
+     * If the id does not match the id of the active source, then @c false will be returned.
+     * If the @c resume() succeeded, @c true will be returned.
+     * When @c true is returned, a callback will be made to either @c MediaPlayerObserverInterface::onPlaybackResumed()
+     * or to @c MediaPlayerObserverInterface::onPlaybackError().
+     *
+     * @param id The id of the source on which to operate.
+     *
+     * @return @c true if the call succeeded, in which case a callback will be made, or @c false otherwise.
+     */
+    virtual bool resume(SourceId id) = 0;
+
+    /**
+     * Returns the offset, in milliseconds, of the media source.
+     * If the id does not match the id of the active source, then @c MEDIA_PLAYER_INVALID_OFFSET will be returned.
+     *
+     * @param id The id of the source on which to operate.
+     *
+     * @return If the specified source is playing, the offset in milliseconds that the source has been playing. If the
+     * specified source is not playing, @c MEDIA_PLAYER_INVALID_OFFSET will be returned.
+     */
+    virtual std::chrono::milliseconds getOffset(SourceId id) = 0;
 
     /**
      * Set the offset for playback. A seek will be performed to the offset at the next @c play() command.
+     * If the id does not match the id of the active source, then @c false will be returned.
      *
      * The following situations will reset the offset:
-     * # A seek attempt is made (ie. via play()).
-     * # A new source is set.
+     * @li A seek attempt is made (ie. via @c play()).
+     * @li A new source is set.
      *
+     * @param id The id of the source on which to operate.
      * @param offset The offset in milliseconds to seek to.
      *
-     * @return @c SUCCESS if the offset was successfully set, and FAILURE for any error.
+     * @return @c true if the offset was successfully set, and @c false for any error.
      */
-    virtual MediaPlayerStatus setOffset(std::chrono::milliseconds offset) {
-        return MediaPlayerStatus::FAILURE;
-    }
-
-    /**
-     * Start playing audio. The source should be set before issuing @c play. If @c play is called without
-     * setting source, it will return an error. If @c play is called when audio is already playing,
-     * there is no effect. Status returned will be @c SUCCESS.
-     * If @c play is called again after @c stop on the same source, then the audio plays from the beginning.
-     *
-     * @return @c SUCCESS if the state transition to play was successful. If state transition is pending then it returns
-     * @c PENDING and the state transition status is notified via @c onPlaybackStarted or @c onPlaybackError. If state
-     * transition was unsuccessful, returns @c FAILURE.
-     */
-    virtual MediaPlayerStatus play() = 0;
-
-    /**
-     * Stop playing the audio. Once audio has been stopped, starting playback again will start from the beginning.
-     * The source should be set before issuing @c stop. If @c stop is called without setting source, it will
-     * return an error.
-     * If @c stop is called when audio has already stopped, there is no effect. Status returned will be @c SUCCESS.
-     *
-     * @return @c SUCCESS if the state transition to stop was successful. If state transition is pending then it returns
-     * @c PENDING and the state transition status is notified via @c onPlaybackStarted or @c onPlaybackError. If state
-     * transition was unsuccessful, returns @c FAILURE.
-     */
-    virtual MediaPlayerStatus stop() = 0;
-
-    /**
-     * Pause playing the audio. Once audio has been paused, calling @c resume() will start the audio.
-     * The source should be set before issuing @c pause. If @c pause is called without setting source, it will
-     * return an error.
-     * Calling @c pause will only have an effect when audio is currently playing. Calling @c pause in all other states
-     * will have no effect, and result in a return of @c FAILURE.
-     *
-     * @return @c SUCCESS if the state transition to pause was successful. If state transition is pending then it
-     * returns
-     * @c PENDING and the state transition status is notified via @c onPlaybackPaused or @c onPlaybackError. If state
-     * transition was unsuccessful, returns @c FAILURE.
-     */
-    virtual MediaPlayerStatus pause() = 0;
-
-    /**
-     * Resume playing the paused audio. The source should be set before issuing @c resume. If @c resume is called
-     * without setting source, it will return an error. Calling @c resume will only have an effect when audio is
-     * currently paused. Calling @c resume in other states will have no effect, and result in a return of @c FAILURE.
-     *
-     * @return @c SUCCESS if the state transition to play was successful. If state transition is pending then it returns
-     * @c PENDING and the state transition status is notified via @c onPlaybackResumed or @c onPlaybackError. If state
-     * transition was unsuccessful, returns @c FAILURE.
-     */
-    virtual MediaPlayerStatus resume() = 0;
-
-    /**
-     * Returns the offset, in milliseconds, of the media stream.
-     *
-     * @return If a stream is playing, the offset in milliseconds that the stream has been playing,
-     * if there is no stream playing it returns @c MEDIA_PLAYER_INVALID_OFFSET.
-     */
-    virtual std::chrono::milliseconds getOffset() = 0;
+    virtual bool setOffset(SourceId id, std::chrono::milliseconds offset) = 0;
 
     /**
      * Sets an observer to be notified when playback state changes.

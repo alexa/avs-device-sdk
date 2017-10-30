@@ -37,6 +37,9 @@ public:
         /// The message was successfully sent.
         SUCCESS,
 
+        /// The message was successfully sent but the HTTPReponse had no content.
+        SUCCESS_NO_CONTENT,
+
         /// The send failed because AVS was not connected.
         NOT_CONNECTED,
 

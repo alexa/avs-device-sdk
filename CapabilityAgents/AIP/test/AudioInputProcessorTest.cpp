@@ -746,6 +746,10 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
                     return avsCommon::sdkInterfaces::SetStateResult::SUCCESS;
                 })));
     } else {
+        // Enforce the sequence; setState needs to be called before getContext, otherwise ContextManager will not
+        // include the new state in the context for this recognize.
+        InSequence dummy;
+
         EXPECT_CALL(*m_mockContextManager, setState(RECOGNIZER_STATE, _, avsCommon::avs::StateRefreshPolicy::NEVER, 0))
             .WillOnce(DoAll(Invoke(m_recognizeEvent.get(), &RecognizeEvent::verifyJsonState), InvokeWithoutArgs([] {
                                 return avsCommon::sdkInterfaces::SetStateResult::SUCCESS;
@@ -1686,6 +1690,16 @@ TEST_F(AudioInputProcessorTest, focusChangedBackground) {
 /// release the channel and go back to @c State::IDLE.
 TEST_F(AudioInputProcessorTest, focusChangedNone) {
     ASSERT_TRUE(testFocusChange(avsCommon::avs::FocusState::NONE));
+}
+
+/// Test that the @c AudioInputProcessor correctly transitions to @c State::IDLE
+/// if @c Status::TIMEDOUT is received
+TEST_F(AudioInputProcessorTest, resetStateOnTimeOut) {
+    ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::TAP, 0));
+
+    EXPECT_CALL(*m_mockFocusManager, releaseChannel(CHANNEL_NAME, _));
+    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::IDLE));
+    m_audioInputProcessor->onSendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::TIMEDOUT);
 }
 
 }  // namespace test

@@ -51,7 +51,7 @@ static const std::string JSON_MESSAGE_DIALOG_REQUEST_ID_STRING = "dialogRequestI
 static const std::string JSON_MESSAGE_PAYLOAD_STRING = "payload";
 
 /// The directive key in the JSON content of an AVS message
-static const std::string DIRECTIVE_TEST = "directive";
+static const std::string DIRECTIVE_KEY = "directive";
 /// The namespace in AVS message.
 static const std::string NAMESPACE_TEST = "SpeechSynthesizer";
 /// The name field in AVS message.
@@ -63,10 +63,19 @@ static const std::string DIALOG_REQUEST_ID_TEST = "dialogRequestIdTest";
 /// The payload in AVS message.
 static const std::string PAYLOAD_TEST = R"({"url":"cid:testCID","format":"testFormat","token":"testToken"})";
 
-/// An invalid JSON string for testing.
-static const std::string INVALID_JSON = "invalidTestJSON";
-/// An invalid AVS directive JSON.
-static const std::string INVALID_DIRECTIVE = R"({
+/// A random text to test the output value modification.
+static const std::string OUTPUT_DEFAULT_TEXT_STRING = "defaultString";
+/// A random integer to test the output value modification.
+static const int OUTPUT_DEFAULT_INT_VALUE = 42;
+/// Expected string value.
+static const std::string EXPECTED_STRING_VALUE = "expectedValue";
+/// Expected int value.
+static const int EXPECTED_INT_VALUE = 123;
+/// Expected int value converted to a string.
+static const std::string EXPECTED_INT_VALUE_STRINGIFIED = "123";
+
+/// An invalid AVS directive JSON.``
+static const std::string EMPTY_DIRECTIVE = R"({
             "directive": {
                           }
         })";
@@ -86,140 +95,137 @@ static const std::string SPEAK_DIRECTIVE = R"({
 })";
 // clang-format on
 
-/// The JSON key used in @c int64Json().
-static const std::string INT64_KEY = "anInt64";
+/// The JSON key used in value reading tests.
+static const std::string VALUE_KEY = "anInt64";
 
-/// A JSON key *not* used in @c int64Json().
-static const std::string INT64_MISSING_KEY = "missingKey";
+/// A JSON key *not* used in value reading tests.
+static const std::string MISSING_KEY = "missingKey";
 
-/// A JSON value which does not convert to an int64.
-static const std::string NOT_AN_INT64 = R"("not a number")";
-
-/// A JSON value which does convert to an int64.
-static const std::string AN_INT64_STRING = "3147483647";
-
-/// The int64 conversion of AN_INT64_STRING.
-static const int64_t AN_INT64 = 3147483647;
+/// An invalid JSON string for testing.
+static const std::string INVALID_JSON = "invalidTestJSON";
+/// A valid JSON string with scalar string value.
+static const std::string VALID_JSON_STRING_VALUE =
+    R"({")" + VALUE_KEY + R"(":")" + EXPECTED_STRING_VALUE + R"("})";
+/// A valid JSON string with integer value.
+static const std::string VALID_JSON_INTEGER_VALUE =
+    R"({")" + VALUE_KEY + R"(":)" + EXPECTED_INT_VALUE_STRINGIFIED + R"(})";
 
 /// A double.
 static const double A_DOUBLE = 1.0;
 
-/// A function to generate JSON containing the key @c INT64_KEY with the provided @c value.
-static const std::string int64Json(const std::string& value) {
-    return R"({")" + INT64_KEY + R"(": )" + value + R"(})";
-}
+/// A bool used for construction of rapidjson::Value objects.
+static const bool A_BOOL = false;
 
 /// A valid string JSON Value.
 static const std::string STRING_VALUE = "stringValue";
 
 /// A valid empty string JSON Value.
-static const std::string STRING_VALUE_EMPTY = "{}";
-
-/// A non-existent key.
-static const std::string MISSING_KEY = "missingKey";
+static const std::string STRING_VALUE_EMPTY_JSON_OBJECT = "{}";
 
 /// Define test fixture for testing AVSMessage.
 class JSONUtilTest : public ::testing::Test {};
 
-// TODO: Refactor unit tests when lookUpXXX functions are removed. ACSDK-382
 /**
- * Test with invalid JSON format, it should not crash the AVSMessage.
+ * Tests retrieveValue(const std::string jsonString, const std::string& key, T* value)
+ * with T = std::string for getting child object as a string.
  */
-TEST_F(JSONUtilTest, invalidJson) {
+TEST_F(JSONUtilTest, validJsonChildObjectAsString) {
     std::string value;
-    ASSERT_FALSE(jsonUtils::lookupStringValue(INVALID_JSON, DIRECTIVE_TEST, &value));
-    ASSERT_TRUE(value.empty());
+    ASSERT_TRUE(jsonUtils::retrieveValue(EMPTY_DIRECTIVE, DIRECTIVE_KEY, &value));
+    ASSERT_EQ(value, STRING_VALUE_EMPTY_JSON_OBJECT);
 }
 
 /**
- * Test with invalid directive, it should not crash the AVSMessage and return the empty.
+ * Tests retrieveValue(const std::string jsonString, const std::string& key, T* value)
+ * with T = std::string for getting value of a scalar string.
  */
-TEST_F(JSONUtilTest, invalidDirective) {
+TEST_F(JSONUtilTest, validJsonScalarString) {
     std::string value;
-    ASSERT_TRUE(jsonUtils::lookupStringValue(INVALID_DIRECTIVE, DIRECTIVE_TEST, &value));
-    ASSERT_EQ(value, "{}");
-
-    ASSERT_FALSE(jsonUtils::lookupStringValue(value, NAMESPACE_TEST, &value));
-    ASSERT_EQ(value, "{}");
+    ASSERT_TRUE(jsonUtils::retrieveValue(VALID_JSON_STRING_VALUE, VALUE_KEY, &value));
+    ASSERT_EQ(value, EXPECTED_STRING_VALUE);
 }
 
 /**
- * Test extracting header with valid AVS directive.
+ * Tests retrieveValue(const std::string jsonString, const std::string& key, T* value)
+ * with T = int64 for getting an integer value.
  */
-TEST_F(JSONUtilTest, extractHeaderFromValidDirective) {
-    std::string jsonContent;
-    std::string value;
-
-    ASSERT_TRUE(jsonUtils::lookupStringValue(SPEAK_DIRECTIVE, DIRECTIVE_TEST, &jsonContent));
-
-    ASSERT_TRUE(jsonUtils::lookupStringValue(jsonContent, JSON_MESSAGE_HEADER_STRING, &jsonContent));
-
-    jsonUtils::lookupStringValue(jsonContent, JSON_MESSAGE_NAMESPACE_STRING, &value);
-    EXPECT_EQ(value, NAMESPACE_TEST);
-
-    jsonUtils::lookupStringValue(jsonContent, JSON_MESSAGE_NAME_STRING, &value);
-    EXPECT_EQ(value, NAME_TEST);
-
-    jsonUtils::lookupStringValue(jsonContent, JSON_MESSAGE_ID_STRING, &value);
-    EXPECT_EQ(value, MESSAGE_ID_TEST);
-
-    jsonUtils::lookupStringValue(jsonContent, JSON_MESSAGE_DIALOG_REQUEST_ID_STRING, &value);
-    EXPECT_EQ(value, DIALOG_REQUEST_ID_TEST);
+TEST_F(JSONUtilTest, validJsonInteger) {
+    int64_t value = OUTPUT_DEFAULT_INT_VALUE;
+    ASSERT_TRUE(jsonUtils::retrieveValue(VALID_JSON_INTEGER_VALUE, VALUE_KEY, &value));
+    ASSERT_EQ(value, EXPECTED_INT_VALUE);
 }
 
 /**
- * Test extracting payload with valid AVS directive.
+ * Tests retrieveValue(const std::string jsonString, const std::string& key, T* value)
+ * with T = int64 and an invalid JSON. Returns false.
  */
-TEST_F(JSONUtilTest, extractPayloadFromValidDirective) {
-    std::string jsonContent;
-    std::string value;
-    std::string payload;
-
-    ASSERT_TRUE(jsonUtils::lookupStringValue(SPEAK_DIRECTIVE, DIRECTIVE_TEST, &jsonContent));
-
-    ASSERT_TRUE(jsonUtils::lookupStringValue(jsonContent, JSON_MESSAGE_PAYLOAD_STRING, &payload));
-
-    ASSERT_EQ(payload, PAYLOAD_TEST);
+TEST_F(JSONUtilTest, retrieveValueStringBasedInt64FromInvalidJSON) {
+    int64_t value = OUTPUT_DEFAULT_INT_VALUE;
+    ASSERT_FALSE(retrieveValue(INVALID_JSON, VALUE_KEY, &value));
+    ASSERT_EQ(value, OUTPUT_DEFAULT_INT_VALUE);
 }
 
 /**
- * Test failure to extract an int64.
+ * Tests retrieveValue(const std::string jsonString, const std::string& key, T* value)
+ * with T = std::string and an invalid JSON. Returns false.
  */
-TEST_F(JSONUtilTest, extractValidInt64Failures) {
-    int64_t expected = 0;
+TEST_F(JSONUtilTest, retrieveValueStringBasedStringFromInvalidJSON) {
+    std::string value = OUTPUT_DEFAULT_TEXT_STRING;
+    ASSERT_FALSE(retrieveValue(INVALID_JSON, VALUE_KEY, &value));
+    ASSERT_EQ(value, OUTPUT_DEFAULT_TEXT_STRING);
+}
+
+/**
+ * Tests retrieveValue(const std::string jsonString, const std::string& key, T* value)
+ * with T = int64 and an incorrect key. Returns false.
+ */
+TEST_F(JSONUtilTest, retrieveValueStringBasedWithIncorrectKey) {
+    int64_t value = OUTPUT_DEFAULT_INT_VALUE;
+    ASSERT_FALSE(retrieveValue(VALID_JSON_INTEGER_VALUE, MISSING_KEY, &value));
+    ASSERT_EQ(value, OUTPUT_DEFAULT_INT_VALUE);
+}
+
+/**
+ * Tests retrieveValue(const std::string jsonString, const std::string& key, T* value)
+ * with T = int64 and a null output param. Returns false.
+ */
+TEST_F(JSONUtilTest, retrieveValueStringBasedWithNull) {
+    int64_t* value = nullptr;
+    ASSERT_FALSE(retrieveValue(VALID_JSON_INTEGER_VALUE, VALUE_KEY, value));
+}
+
+/**
+ * Tests retrieveValue(const rapidjson::Value& jsonNode, const std::string& key, T* value)
+ * with T = int64 and a value of invalid type. Returns false.
+ */
+TEST_F(JSONUtilTest, retrieveValueDocumentBasedWithInvalidValueType) {
+    Document doc;
+    doc.Parse(VALID_JSON_STRING_VALUE);
     int64_t value;
-
-    // Verify lookup fails with a null value pointer.
-    EXPECT_FALSE(jsonUtils::lookupInt64Value(int64Json(std::to_string(expected)), INT64_KEY, nullptr));
-
-    // Verify lookup fails with invalid json.
-    EXPECT_FALSE(jsonUtils::lookupInt64Value(INVALID_JSON, INT64_KEY, &value));
-
-    // Verify lookup fails with incorrect key.
-    EXPECT_FALSE(jsonUtils::lookupInt64Value(int64Json(std::to_string(expected)), INT64_MISSING_KEY, &value));
-
-    // Verify lookup fails with non-numeric value.
-    EXPECT_FALSE(jsonUtils::lookupInt64Value(int64Json(NOT_AN_INT64), INT64_KEY, &value));
+    ASSERT_FALSE(retrieveValue(doc, VALUE_KEY, &value));
 }
 
 /**
- * Test extracting min int64.
+ * Tests retrieveValue(const rapidjson::Value& jsonNode, const std::string& key, T* value)
+ * with T = int64 and a null output param. Returns false.
  */
-TEST_F(JSONUtilTest, extractMinInt64) {
-    int64_t expected = std::numeric_limits<int64_t>::min();
-    int64_t value;
-    ASSERT_TRUE(jsonUtils::lookupInt64Value(int64Json(std::to_string(expected)), INT64_KEY, &value));
-    ASSERT_EQ(value, expected);
+TEST_F(JSONUtilTest, retrieveValueDocumentBasedWithNull) {
+    Document doc;
+    doc.Parse(VALID_JSON_INTEGER_VALUE);
+    int64_t* value = nullptr;
+    ASSERT_FALSE(retrieveValue(doc, VALUE_KEY, value));
 }
 
 /**
- * Test extracting max int64.
+ * Tests retrieveValue(const rapidjson::Value& jsonNode, const std::string& key, T* value)
+ * with T = int64 and a valid value. Returns true and obtains the correct value.
  */
-TEST_F(JSONUtilTest, extractMaxInt64) {
-    int64_t expected = std::numeric_limits<int64_t>::max();
+TEST_F(JSONUtilTest, retrieveValueDocumentBasedWithValidInt64) {
+    Document doc;
+    doc.Parse(VALID_JSON_INTEGER_VALUE);
     int64_t value;
-    ASSERT_TRUE(jsonUtils::lookupInt64Value(int64Json(std::to_string(expected)), INT64_KEY, &value));
-    ASSERT_EQ(value, expected);
+    ASSERT_TRUE(retrieveValue(doc, VALUE_KEY, &value));
+    ASSERT_EQ(value, EXPECTED_INT_VALUE);
 }
 
 /**
@@ -238,7 +244,7 @@ TEST_F(JSONUtilTest, findNodeKeyExists) {
     Document doc;
     doc.Parse(SPEAK_DIRECTIVE);
     Value::ConstMemberIterator iterator;
-    ASSERT_TRUE(findNode(doc, DIRECTIVE_TEST, &iterator));
+    ASSERT_TRUE(findNode(doc, DIRECTIVE_KEY, &iterator));
     ASSERT_NE(iterator, doc.MemberEnd());
 }
 
@@ -278,68 +284,6 @@ TEST_F(JSONUtilTest, parseJSONInvalidJSON) {
 }
 
 /**
- * Tests retrieveValue(const rapidjson::Value& jsonNode, const std::string& key, T* value)
- * with T = int64 and a invalid value. Returns false.
- */
-TEST_F(JSONUtilTest, retrieveValueDocumentBasedWithInvalidValue) {
-    Document doc;
-    doc.Parse(int64Json(NOT_AN_INT64));
-    int64_t value;
-    ASSERT_FALSE(retrieveValue(doc, INT64_KEY, &value));
-}
-
-/**
- * Tests retrieveValue(const rapidjson::Value& jsonNode, const std::string& key, T* value)
- * with T = int64 and a null output param. Returns false.
- */
-TEST_F(JSONUtilTest, retrieveValueDocumentBasedWithNull) {
-    Document doc;
-    doc.Parse(int64Json(AN_INT64_STRING));
-    int64_t* value = nullptr;
-    ASSERT_FALSE(retrieveValue(doc, INT64_KEY, value));
-}
-
-/**
- * Tests retrieveValue(const rapidjson::Value& jsonNode, const std::string& key, T* value)
- * with T = int64 and a valid value. Returns true and obtains the correct value.
- */
-TEST_F(JSONUtilTest, retrieveValueDocumentBasedWithValidInt64) {
-    Document doc;
-    doc.Parse(int64Json(AN_INT64_STRING));
-    int64_t value;
-    ASSERT_TRUE(retrieveValue(doc, INT64_KEY, &value));
-    ASSERT_EQ(value, AN_INT64);
-}
-
-/**
- * Tests retrieveValue(const std::string jsonString, const std::string& key, T* value)
- * with T = int64 and a valid value. Returns true and obtains the correct value.
- */
-TEST_F(JSONUtilTest, retrieveValueStringBasedWithValidValue) {
-    int64_t value;
-    ASSERT_TRUE(retrieveValue(int64Json(AN_INT64_STRING), INT64_KEY, &value));
-    ASSERT_EQ(value, AN_INT64);
-}
-
-/**
- * Tests retrieveValue(const std::string jsonString, const std::string& key, T* value)
- * with T = int64 and a invalid value. Returns false.
- */
-TEST_F(JSONUtilTest, retrieveValueStringBasedWithInvalidValue) {
-    int64_t value;
-    ASSERT_FALSE(retrieveValue(int64Json(NOT_AN_INT64), INT64_KEY, &value));
-}
-
-/**
- * Tests retrieveValue(const std::string jsonString, const std::string& key, T* value)
- * with T = int64 and a null output param. Returns false.
- */
-TEST_F(JSONUtilTest, retrieveValueStringBasedWithNull) {
-    int64_t* value = nullptr;
-    ASSERT_FALSE(retrieveValue(int64Json(AN_INT64_STRING), INT64_KEY, value));
-}
-
-/**
  * Tests convertToValue<std::string> with Value of rapidjson::Type::kStringType. Returns
  * true and contains the correct value.
  */
@@ -359,7 +303,7 @@ TEST_F(JSONUtilTest, convertToStringValueWithObject) {
     rapidjson::Value emptyObject(kObjectType);
     std::string actual;
     ASSERT_TRUE(convertToValue(emptyObject, &actual));
-    ASSERT_EQ(STRING_VALUE_EMPTY, actual);
+    ASSERT_EQ(STRING_VALUE_EMPTY_JSON_OBJECT, actual);
 }
 
 /**
@@ -387,7 +331,7 @@ TEST_F(JSONUtilTest, convertToStringValueWithNullOutputParam) {
  * Tests convertToValue<int64_t> with valid int64_6. Returns true and contains the correct value.
  */
 TEST_F(JSONUtilTest, convertToInt64ValueWithInt64) {
-    rapidjson::Value expected(AN_INT64);
+    rapidjson::Value expected(EXPECTED_INT_VALUE);
     int64_t actual;
     ASSERT_TRUE(convertToValue(expected, &actual));
     ASSERT_EQ(expected.GetInt64(), actual);
@@ -407,9 +351,40 @@ TEST_F(JSONUtilTest, convertToInt64ValueWithDouble) {
  * Returns false.
  */
 TEST_F(JSONUtilTest, convertToInt64ValueWithNullOutputParam) {
-    rapidjson::Value node(AN_INT64);
+    rapidjson::Value node(EXPECTED_INT_VALUE);
     int64_t* value = nullptr;
     ASSERT_FALSE(convertToValue(node, value));
+}
+
+// Bool
+
+/**
+ * Tests convertToValue<bool> with null output param.
+ * Returns false.
+ */
+TEST_F(JSONUtilTest, convertToBoolValueWithNullOutputParam) {
+    rapidjson::Value node(A_BOOL);
+    bool* value = nullptr;
+    ASSERT_FALSE(convertToValue(node, value));
+}
+
+/**
+ * Tests convertToValue<bool> with a nonbool. Returns false.
+ */
+TEST_F(JSONUtilTest, convertToBoolValueWithNonBool) {
+    rapidjson::Value expected(A_DOUBLE);
+    bool actual;
+    ASSERT_FALSE(convertToValue(expected, &actual));
+}
+
+/**
+ * Tests convertToValue<bool> with valid bool. Returns true and contains the correct value.
+ */
+TEST_F(JSONUtilTest, convertToBoolValueWithBool) {
+    rapidjson::Value expected(A_BOOL);
+    bool actual;
+    ASSERT_TRUE(convertToValue(expected, &actual));
+    ASSERT_EQ(expected.GetBool(), actual);
 }
 
 }  // namespace test

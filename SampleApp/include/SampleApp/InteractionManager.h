@@ -20,8 +20,12 @@
 
 #include <memory>
 
+#include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 #include <DefaultClient/DefaultClient.h>
 
+#include "GuiRenderer.h"
 #include "PortAudioMicrophoneWrapper.h"
 #include "UIManager.h"
 
@@ -32,7 +36,9 @@ namespace sampleApp {
  * This class manages most of the user interaction by taking in commands and notifying the DefaultClient and the
  * userInterface (the view) accordingly.
  */
-class InteractionManager {
+class InteractionManager
+        : public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
+        , public avsCommon::utils::RequiresShutdown {
 public:
     /**
      * Constructor.
@@ -119,6 +125,32 @@ public:
      */
     void changeSetting(const std::string& key, const std::string& value);
 
+    /**
+     * Should be called whenever a users requests 'SPEAKER_CONTROL' for speaker control.
+     */
+    void speakerControl();
+
+    /**
+     * Should be called after a user selects a speaker.
+     */
+    void volumeControl();
+
+    /**
+     * Should be called after a user wishes to modify the volume.
+     */
+    void adjustVolume(avsCommon::sdkInterfaces::SpeakerInterface::Type type, int8_t delta);
+
+    /**
+     * Should be called after a user wishes to set mute.
+     */
+    void setMute(avsCommon::sdkInterfaces::SpeakerInterface::Type type, bool mute);
+
+    /**
+     * UXDialogObserverInterface methods
+     */
+
+    void onDialogUXStateChanged(DialogUXState newState) override;
+
 private:
     /// The default SDK client.
     std::shared_ptr<defaultClient::DefaultClient> m_client;
@@ -151,6 +183,11 @@ private:
      * An internal executor that performs execution of callable objects passed to it sequentially but asynchronously.
      */
     avsCommon::utils::threading::Executor m_executor;
+
+    /// @name RequiresShutdown Functions
+    /// @{
+    void doShutdown() override;
+    /// @}
 };
 
 }  // namespace sampleApp

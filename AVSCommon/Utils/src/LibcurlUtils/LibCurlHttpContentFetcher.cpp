@@ -14,15 +14,15 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-
-#include "ACL/Transport/LibCurlHttpContentFetcher.h"
-
-#include <ACL/Transport/CurlEasyHandleWrapper.h>
+#include <AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h>
+#include <AVSCommon/Utils/LibcurlUtils/LibCurlHttpContentFetcher.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
 #include <AVSCommon/Utils/SDS/InProcessSDS.h>
 
 namespace alexaClientSDK {
-namespace acl {
+namespace avsCommon {
+namespace utils {
+namespace libcurlUtils {
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("LibCurlHttpContentFetcher");
@@ -203,5 +203,7 @@ LibCurlHttpContentFetcher::~LibCurlHttpContentFetcher() {
     }
 }
 
-}  // namespace acl
+}  // namespace libcurlUtils
+}  // namespace utils
+}  // namespace avsCommon
 }  // namespace alexaClientSDK

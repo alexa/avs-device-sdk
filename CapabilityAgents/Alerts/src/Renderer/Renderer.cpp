@@ -17,7 +17,6 @@
 
 #include "Alerts/Renderer/Renderer.h"
 
-//#include "Alerts/Storage/AlertStorageInterface.h"
 #include "AVSCommon/Utils/Logger/Logger.h"
 
 #include <fstream>
@@ -40,6 +39,16 @@ static const std::string TAG("Renderer");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+/**
+ * Local utility function to evaluate if a sourceId returned from the MediaPlayer is ok.
+ *
+ * @param sourceId The sourceId being tested.
+ * @return Whether the sourceId is ok or not.
+ */
+static bool isSourceIdOk(MediaPlayerInterface::SourceId sourceId) {
+    return sourceId != MediaPlayerInterface::ERROR;
+}
+
 std::shared_ptr<Renderer> Renderer::create(std::shared_ptr<MediaPlayerInterface> mediaPlayer) {
     if (!mediaPlayer) {
         ACSDK_ERROR(LX("createFailed").m("mediaPlayer parameter was nullptr."));
@@ -51,7 +60,7 @@ std::shared_ptr<Renderer> Renderer::create(std::shared_ptr<MediaPlayerInterface>
     return renderer;
 }
 
-void Renderer::setObserver(RendererObserverInterface* observer) {
+void Renderer::setObserver(std::shared_ptr<RendererObserverInterface> observer) {
     m_executor.submit([this, observer]() { executeSetObserver(observer); });
 }
 
@@ -84,16 +93,23 @@ void Renderer::stop() {
     m_executor.submit([this]() { executeStop(); });
 }
 
-void Renderer::onPlaybackStarted() {
-    m_executor.submit([this]() { executeOnPlaybackStarted(); });
+void Renderer::onPlaybackStarted(SourceId sourceId) {
+    m_executor.submit([this, sourceId]() { executeOnPlaybackStarted(sourceId); });
 }
 
-void Renderer::onPlaybackFinished() {
-    m_executor.submit([this]() { executeOnPlaybackFinished(); });
+void Renderer::onPlaybackStopped(SourceId sourceId) {
+    m_executor.submit([this, sourceId]() { executeOnPlaybackStopped(sourceId); });
 }
 
-void Renderer::onPlaybackError(const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error) {
-    m_executor.submit([this, type, error]() { executeOnPlaybackError(type, error); });
+void Renderer::onPlaybackFinished(SourceId sourceId) {
+    m_executor.submit([this, sourceId]() { executeOnPlaybackFinished(sourceId); });
+}
+
+void Renderer::onPlaybackError(
+    SourceId sourceId,
+    const avsCommon::utils::mediaPlayer::ErrorType& type,
+    std::string error) {
+    m_executor.submit([this, sourceId, type, error]() { executeOnPlaybackError(sourceId, type, error); });
 }
 
 Renderer::Renderer(std::shared_ptr<MediaPlayerInterface> mediaPlayer) :
@@ -102,11 +118,11 @@ Renderer::Renderer(std::shared_ptr<MediaPlayerInterface> mediaPlayer) :
         m_nextUrlIndexToRender{0},
         m_loopCount{0},
         m_loopPause{std::chrono::milliseconds{0}},
-        m_isRendering{false},
         m_isStopping{false} {
+    resetSourceId();
 }
 
-void Renderer::executeSetObserver(RendererObserverInterface* observer) {
+void Renderer::executeSetObserver(std::shared_ptr<RendererObserverInterface> observer) {
     ACSDK_DEBUG1(LX("executeSetObserver"));
     m_observer = observer;
 }
@@ -141,37 +157,74 @@ void Renderer::executeStart(
             return;
         }
         ACSDK_DEBUG9(LX("executeStart").d("setSource", m_localAudioFilePath));
-        m_mediaPlayer->setSource(std::move(is), true);
+        m_currentSourceId = m_mediaPlayer->setSource(std::move(is), true);
     } else {
         m_nextUrlIndexToRender = 0;
         ACSDK_DEBUG9(LX("executeStart").d("setSource", m_nextUrlIndexToRender));
-        m_mediaPlayer->setSource(m_urls[m_nextUrlIndexToRender++]);
+        m_currentSourceId = m_mediaPlayer->setSource(m_urls[m_nextUrlIndexToRender++]);
     }
 
-    m_mediaPlayer->play();
+    ACSDK_INFO(LX("executeStart").d("m_currentSourceId", m_currentSourceId));
+
+    if (!isSourceIdOk(m_currentSourceId)) {
+        ACSDK_ERROR(
+            LX("executeStartFailed").d("m_currentSourceId", m_currentSourceId).m("SourceId response was invalid."));
+        return;
+    }
+
+    if (!m_mediaPlayer->play(m_currentSourceId)) {
+        ACSDK_ERROR(
+            LX("executeStartFailed").d("m_currentSourceId", m_currentSourceId).m("MediaPlayer play request failed."));
+        resetSourceId();
+    }
 }
 
 void Renderer::executeStop() {
     ACSDK_DEBUG1(LX("executeStop"));
-    m_isStopping = true;
-    if (m_isRendering) {
-        m_mediaPlayer->stop();
-    } else if (m_observer) {
-        m_observer->onRendererStateChange(RendererObserverInterface::State::STOPPED);
+    if (m_mediaPlayer->stop(m_currentSourceId)) {
+        m_isStopping = true;
+    } else {
+        std::string errorMessage = "mediaPlayer stop request failed.";
+        ACSDK_ERROR(LX("executeStopFailed").d("SourceId", m_currentSourceId).m(errorMessage));
+        notifyObserver(RendererObserverInterface::State::ERROR, errorMessage);
     }
 }
 
-void Renderer::executeOnPlaybackStarted() {
-    ACSDK_DEBUG1(LX("executeOnPlaybackStarted"));
-    m_isRendering = true;
-
-    if (m_observer) {
-        m_observer->onRendererStateChange(RendererObserverInterface::State::STARTED);
+void Renderer::executeOnPlaybackStarted(SourceId sourceId) {
+    ACSDK_DEBUG1(LX("executeOnPlaybackStarted").d("sourceId", sourceId));
+    if (m_currentSourceId != sourceId) {
+        ACSDK_DEBUG9(LX("executeOnPlaybackStarted")
+                         .d("m_currentSourceId", m_currentSourceId)
+                         .m("Ignoring - different from expected source id."));
+        return;
     }
+
+    notifyObserver(RendererObserverInterface::State::STARTED);
 }
 
-void Renderer::executeOnPlaybackFinished() {
-    ACSDK_DEBUG1(LX("executeOnPlaybackFinished"));
+void Renderer::executeOnPlaybackStopped(SourceId sourceId) {
+    ACSDK_DEBUG1(LX("executeOnPlaybackStopped").d("sourceId", sourceId));
+    if (m_currentSourceId != sourceId) {
+        ACSDK_DEBUG9(LX("executeOnPlaybackStopped")
+                         .d("m_currentSourceId", m_currentSourceId)
+                         .m("Ignoring - different from expected source id."));
+        return;
+    }
+
+    resetSourceId();
+    notifyObserver(RendererObserverInterface::State::STOPPED);
+    m_observer = nullptr;
+}
+
+void Renderer::executeOnPlaybackFinished(SourceId sourceId) {
+    ACSDK_DEBUG1(LX("executeOnPlaybackFinished").d("sourceId", sourceId));
+    if (m_currentSourceId != sourceId) {
+        ACSDK_DEBUG9(LX("executeOnPlaybackFinished")
+                         .d("m_currentSourceId", m_currentSourceId)
+                         .m("Ignoring - different from expected source id."));
+        return;
+    }
+
     if (!m_isStopping && !m_urls.empty()) {
         // see if we need to reset the loop, and invoke the pause between loops.
         if (m_nextUrlIndexToRender >= static_cast<int>(m_urls.size()) && m_loopCount > 0) {
@@ -186,27 +239,62 @@ void Renderer::executeOnPlaybackFinished() {
         // play the next url in the list
         if (m_nextUrlIndexToRender < static_cast<int>(m_urls.size())) {
             ACSDK_DEBUG9(LX("executeonPlaybackFinished").d("setSource", m_nextUrlIndexToRender));
-            m_mediaPlayer->setSource(m_urls[m_nextUrlIndexToRender++]);
-            m_mediaPlayer->play();
+
+            std::string url = m_urls[m_nextUrlIndexToRender++];
+            m_currentSourceId = m_mediaPlayer->setSource(url);
+            if (!isSourceIdOk(m_currentSourceId)) {
+                std::string errorMessage = "SourceId response from setSource was invalid.";
+                ACSDK_ERROR(LX("executeonPlaybackFinishedFailed")
+                                .d("SourceId", m_currentSourceId)
+                                .d("url", url)
+                                .m(errorMessage));
+                notifyObserver(RendererObserverInterface::State::ERROR, errorMessage);
+                return;
+            }
+            if (!m_mediaPlayer->play(m_currentSourceId)) {
+                std::string errorMessage = "MediaPlayer was unable to play next media item.";
+                ACSDK_ERROR(LX("executeonPlaybackFinishedFailed")
+                                .d("SourceId", m_currentSourceId)
+                                .d("url", url)
+                                .m(errorMessage));
+                notifyObserver(RendererObserverInterface::State::ERROR, errorMessage);
+                return;
+            }
 
             return;
         }
     }
 
-    m_isRendering = false;
+    resetSourceId();
+    notifyObserver(RendererObserverInterface::State::STOPPED);
+    m_observer = nullptr;
+}
 
+void Renderer::executeOnPlaybackError(
+    SourceId sourceId,
+    const avsCommon::utils::mediaPlayer::ErrorType& type,
+    const std::string& error) {
+    ACSDK_DEBUG1(LX("executeOnPlaybackError").d("sourceId", sourceId).d("type", type).d("error", error));
+    if (m_currentSourceId != sourceId) {
+        ACSDK_DEBUG9(LX("executeOnPlaybackError")
+                         .d("m_currentSourceId", m_currentSourceId)
+                         .m("Ignoring - different from expected source id."));
+        return;
+    }
+
+    resetSourceId();
+    notifyObserver(RendererObserverInterface::State::ERROR, error);
+    m_observer = nullptr;
+}
+
+void Renderer::notifyObserver(RendererObserverInterface::State state, const std::string& message) {
     if (m_observer) {
-        m_observer->onRendererStateChange(RendererObserverInterface::State::STOPPED);
+        m_observer->onRendererStateChange(state, message);
     }
 }
 
-void Renderer::executeOnPlaybackError(const avsCommon::utils::mediaPlayer::ErrorType& type, const std::string& error) {
-    ACSDK_DEBUG1(LX("executeOnPlaybackError").d("type", type).d("error", error));
-    m_isRendering = false;
-
-    if (m_observer) {
-        m_observer->onRendererStateChange(RendererObserverInterface::State::ERROR, error);
-    }
+void Renderer::resetSourceId() {
+    m_currentSourceId = MediaPlayerInterface::ERROR;
 }
 
 }  // namespace renderer

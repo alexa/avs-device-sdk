@@ -20,6 +20,7 @@
 
 #include "Alerts/Renderer/RendererObserverInterface.h"
 
+#include <memory>
 #include <string>
 #include <vector>
 #include <chrono>
@@ -45,7 +46,8 @@ public:
      *
      * @param observer The observer.
      */
-    virtual void setObserver(capabilityAgents::alerts::renderer::RendererObserverInterface* observer) = 0;
+    virtual void setObserver(
+        std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer) = 0;
 
     /**
      * Start rendering.  This api takes two sets of parameters - a local audio file, and a vector of urls.

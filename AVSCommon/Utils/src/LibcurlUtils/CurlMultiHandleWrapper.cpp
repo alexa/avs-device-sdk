@@ -15,12 +15,13 @@
  * permissions and limitations under the License.
  */
 
+#include <AVSCommon/Utils/LibcurlUtils/CurlMultiHandleWrapper.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
-#include "ACL/Transport/CurlMultiHandleWrapper.h"
-
 namespace alexaClientSDK {
-namespace acl {
+namespace avsCommon {
+namespace utils {
+namespace libcurlUtils {
 
 using namespace alexaClientSDK::avsCommon::utils;
 
@@ -47,7 +48,7 @@ CurlMultiHandleWrapper::~CurlMultiHandleWrapper() {
     bool shouldCleanup = true;
     for (auto streamHandle : m_streamHandles) {
         auto result = curl_multi_remove_handle(m_handle, streamHandle);
-        if (result != CURLE_OK) {
+        if (result != CURLM_OK) {
             ACSDK_ERROR(LX("curlMultiRemoveHandleFailed").d("error", curl_multi_strerror(result)));
             shouldCleanup = false;
         }
@@ -88,7 +89,7 @@ CURLMcode CurlMultiHandleWrapper::removeHandle(CURL* handle) {
 
 CURLMcode CurlMultiHandleWrapper::perform(int* runningHandles) {
     auto result = curl_multi_perform(m_handle, runningHandles);
-    if (result != CURLE_OK && result != CURLM_CALL_MULTI_PERFORM) {
+    if (result != CURLM_OK && result != CURLM_CALL_MULTI_PERFORM) {
         ACSDK_ERROR(LX("curlMultiPerformFailed").d("error", curl_multi_strerror(result)));
     }
     return result;
@@ -96,7 +97,7 @@ CURLMcode CurlMultiHandleWrapper::perform(int* runningHandles) {
 
 CURLMcode CurlMultiHandleWrapper::wait(std::chrono::milliseconds timeout, int* countHandlesUpdated) {
     auto result = curl_multi_wait(m_handle, NULL, 0, timeout.count(), countHandlesUpdated);
-    if (result != CURLE_OK) {
+    if (result != CURLM_OK) {
         ACSDK_ERROR(LX("curlMultiWaitFailed").d("error", curl_multi_strerror(result)));
     }
     return result;
@@ -109,5 +110,7 @@ CURLMsg* CurlMultiHandleWrapper::infoRead(int* messagesInQueue) {
 CurlMultiHandleWrapper::CurlMultiHandleWrapper(CURLM* handle) : m_handle{handle} {
 }
 
-}  // namespace acl
+}  // namespace libcurlUtils
+}  // namespace utils
+}  // namespace avsCommon
 }  // namespace alexaClientSDK

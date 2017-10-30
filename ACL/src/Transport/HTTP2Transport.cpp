@@ -56,20 +56,16 @@ const static std::string AVS_EVENT_URL_PATH_EXTENSION = "/v20160207/events";
 const static std::string AVS_PING_URL_PATH_EXTENSION = "/ping";
 /// Timeout for curl_multi_wait
 const static std::chrono::milliseconds WAIT_FOR_ACTIVITY_TIMEOUT(100);
-/// Timeout for curl_multi_wait while all HTTP/2 streams are blocked.
-const static std::chrono::milliseconds WAIT_FOR_ACTIVITY_WHILE_STREAMS_BLOCKED_TIMEOUT(10);
-/// 1 minute in milliseconds
-const static int MS_PER_MIN = 60000;
-/// Timeout before we send a ping
-const static int PING_TIMEOUT_MS = MS_PER_MIN * 5;
-/// Number of times we timeout waiting for activity before sending a ping
-const static int NUM_TIMEOUTS_BEFORE_PING = (PING_TIMEOUT_MS / WAIT_FOR_ACTIVITY_TIMEOUT.count());
+/// Timeout for curl_multi_wait while all HTTP/2 event streams are paused.
+const static std::chrono::milliseconds WAIT_FOR_ACTIVITY_WHILE_STREAMS_PAUSED_TIMEOUT(10);
+/// Inactivity timeout before we send a ping
+const static std::chrono::minutes INACTIVITY_TIMEOUT = std::chrono::minutes(5);
 /// The maximum time a ping should take in seconds
 const static long PING_RESPONSE_TIMEOUT_SEC = 30;
 /// Connection timeout
-static const std::chrono::seconds ESTABLISH_CONNECTION_TIMEOUT = std::chrono::seconds{60};
+static const std::chrono::seconds ESTABLISH_CONNECTION_TIMEOUT = std::chrono::seconds(60);
 /// Timeout for transmission of data on a given stream
-static const std::chrono::seconds STREAM_PROGRESS_TIMEOUT = std::chrono::seconds{30};
+static const std::chrono::seconds STREAM_PROGRESS_TIMEOUT = std::chrono::seconds(30);
 
 #ifdef ACSDK_OPENSSL_MIN_VER_REQUIRED
 /**
@@ -206,7 +202,7 @@ bool HTTP2Transport::connect() {
     // connected state and can queue messages to send.
     m_postConnectObject->addObserver(shared_from_this());
 
-    m_multi = CurlMultiHandleWrapper::create();
+    m_multi = avsCommon::utils::libcurlUtils::CurlMultiHandleWrapper::create();
     if (!m_multi) {
         ACSDK_ERROR(LX("connectFailed").d("reason", "curlMultiHandleWrapperCreateFailed"));
         return false;
@@ -347,7 +343,7 @@ void HTTP2Transport::networkLoop() {
      * at least 1 transfer active (the downchannel).
      */
     int numTransfersLeft = 1;
-    int timeouts = 0;
+    auto inactivityTimerStart = std::chrono::steady_clock::now();
     while (numTransfersLeft && !isStopping()) {
         auto result = m_multi->perform(&numTransfersLeft);
         if (CURLM_CALL_MULTI_PERFORM == result) {
@@ -371,21 +367,21 @@ void HTTP2Transport::networkLoop() {
         auto multiWaitTimeout = WAIT_FOR_ACTIVITY_TIMEOUT;
 
         size_t numberEventStreams = 0;
-        size_t numberBlockedStreams = 0;
+        size_t numberPausedStreams = 0;
         for (auto entry : m_activeStreams) {
             auto stream = entry.second;
             if (isEventStream(stream)) {
                 numberEventStreams++;
-                if (entry.second->isBlockedOnLocalIO()) {
-                    numberBlockedStreams++;
+                if (entry.second->isPaused()) {
+                    numberPausedStreams++;
                 }
             }
         }
-        bool blockedOnLocalIO = numberBlockedStreams > 0 && (numberBlockedStreams == numberEventStreams);
+        bool paused = numberPausedStreams > 0 && (numberPausedStreams == numberEventStreams);
 
         auto before = std::chrono::time_point<std::chrono::steady_clock>::max();
-        if (blockedOnLocalIO) {
-            multiWaitTimeout = WAIT_FOR_ACTIVITY_WHILE_STREAMS_BLOCKED_TIMEOUT;
+        if (paused) {
+            multiWaitTimeout = WAIT_FOR_ACTIVITY_WHILE_STREAMS_PAUSED_TIMEOUT;
             before = std::chrono::steady_clock::now();
         }
 
@@ -406,41 +402,39 @@ void HTTP2Transport::networkLoop() {
         // are full-duplex - so activity may have occurred on the other side. Therefore, if our intent is
         // to pause ACL to give attachment readers time to catch up with written data, we must perform a local
         // sleep of our own.
-        if (blockedOnLocalIO) {
+        if (paused) {
             auto after = std::chrono::steady_clock::now();
             auto elapsed = after - before;
             auto remaining = multiWaitTimeout - elapsed;
 
             // sanity check that remainingMs is valid before performing a sleep.
-            if (remaining.count() > 0 && remaining <= WAIT_FOR_ACTIVITY_WHILE_STREAMS_BLOCKED_TIMEOUT) {
+            if (remaining.count() > 0 && remaining <= WAIT_FOR_ACTIVITY_WHILE_STREAMS_PAUSED_TIMEOUT) {
                 std::this_thread::sleep_for(remaining);
             }
         }
 
-        // un-pause the streams so that progress may be made in the next invocation of @c m_multi->perform().
-        for (auto stream : m_activeStreams) {
-            stream.second->resumeNetworkIO();
-        }
-
         /**
-         * If no transfers were updated then @c m_multi->wait() would have waited WAIT_FOR_ACTIVITY_TIMEOUT_MS
-         * milliseconds. Increment a counter every time this happens, when the counter reaches:
-         * MINUTES_TO_MILLISECONDS * 5 / WAIT_FOR_ACTIVITY_TIMEOUT_MS
-         * we have waited 5 minutes with an idle connection. In this case send a ping.
-         * We clear the counter once there is an activity on any transfer.
+         * If some transfers were updated then reset the start of the inactivity timer to now.  Otherwise,
+         * if the INACTIVITY_TIMEOUT has been reached send a ping to AVS so verify connectivity.
          */
-        if (0 == numTransfersUpdated) {
-            timeouts++;
-            if (timeouts >= NUM_TIMEOUTS_BEFORE_PING) {
+        auto now = std::chrono::steady_clock::now();
+        if (numTransfersUpdated != 0) {
+            inactivityTimerStart = now;
+        } else {
+            auto elapsed = now - inactivityTimerStart;
+            if (elapsed >= INACTIVITY_TIMEOUT) {
                 if (!sendPing()) {
                     ACSDK_ERROR(LX("networkLoopStopping").d("reason", "sendPingFailed"));
                     setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
                     break;
                 }
-                timeouts = 0;
+                inactivityTimerStart = now;
             }
-        } else {
-            timeouts = 0;
+        }
+
+        // un-pause the streams so that progress may be made in the next invocation of @c m_multi->perform().
+        for (auto stream : m_activeStreams) {
+            stream.second->unPause();
         }
     }
 
@@ -526,11 +520,11 @@ void HTTP2Transport::cleanupFinishedStreams() {
         int messagesLeft = 0;
         message = m_multi->infoRead(&messagesLeft);
         if (message && CURLMSG_DONE == message->msg) {
-            if (m_downchannelStream->getCurlHandle() == message->easy_handle) {
+            if (m_downchannelStream && m_downchannelStream->getCurlHandle() == message->easy_handle) {
                 if (!isStopping()) {
                     notifyObserversOnServerSideDisconnect();
                 }
-                setIsStopping(ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT);
+                releaseDownchannelStream();
                 continue;
             }
 
@@ -585,9 +579,13 @@ void HTTP2Transport::processNextOutgoingMessage() {
     }
     auto authToken = m_authDelegate->getAuthToken();
     if (authToken.empty()) {
+        ACSDK_DEBUG0(LX("processNextOutgoingMessageFailed")
+                         .d("reason", "invalidAuth")
+                         .sensitive("jsonContext", request->getJsonContent()));
         request->sendCompleted(MessageRequestObserverInterface::Status::INVALID_AUTH);
         return;
     }
+    ACSDK_DEBUG0(LX("processNextOutgoingMessage").sensitive("jsonContent", request->getJsonContent()));
     auto url = m_avsEndpoint + AVS_EVENT_URL_PATH_EXTENSION;
     std::shared_ptr<HTTP2Stream> stream = m_streamPool.createPostStream(url, authToken, request, m_messageConsumer);
     // note : if the stream is nullptr, the stream pool already called sendCompleted on the MessageRequest.
@@ -721,6 +719,7 @@ bool HTTP2Transport::enqueueRequest(std::shared_ptr<MessageRequest> request, boo
     std::lock_guard<std::mutex> lock(m_mutex);
     if (!m_isStopping) {
         if (ignoreConnectState || m_isConnected) {
+            ACSDK_DEBUG9(LX("enqueueRequest").sensitive("jsonContent", request->getJsonContent()));
             m_requestQueue.push_back(request);
             return true;
         } else {

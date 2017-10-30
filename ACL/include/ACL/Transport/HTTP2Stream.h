@@ -25,12 +25,20 @@
 #include <string>
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
 
-#include "ACL/Transport/CurlEasyHandleWrapper.h"
 #include "ACL/Transport/MimeParser.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
+
+/// Whether or not curl logs should be emitted.
+#ifdef ACSDK_EMIT_SENSITIVE_LOGS
+
+#define ACSDK_EMIT_CURL_LOGS
+#include <fstream>
+
+#endif
 
 namespace alexaClientSDK {
 namespace acl {
@@ -165,14 +173,14 @@ public:
     bool setConnectionTimeout(const std::chrono::seconds timeoutSeconds);
 
     /**
-     * Resume network IO for this stream
+     * Un-pend all transfers for this stream
      */
-    void resumeNetworkIO();
+    void unPause();
 
     /**
-     * Return whether this stream is blocked on local IO
+     * Return whether this stream has pending transfers.
      */
-    bool isBlockedOnLocalIO() const;
+    bool isPaused() const;
 
     /**
      * Set the logical stream ID for this stream.
@@ -214,6 +222,45 @@ private:
     bool setCommonOptions(const std::string& url, const std::string& authToken);
 
     /**
+     * Helper function for calling @c curl_easy_setopt and checking the result.
+     *
+     * @param option The option parameter to pass through to curl_easy_setopt.
+     * @param optionName The name of the option to be set (for logging)
+     * @param param The param option to pass through to curl_easy_setopt.
+     * @return @c true of the operation was successful.
+     */
+    template <typename ParamType>
+    bool setopt(CURLoption option, const char* optionName, ParamType param);
+
+    /**
+     * Initialize capturing this streams activities in a log file.
+     */
+    void initStreamLog();
+
+#ifdef ACSDK_EMIT_CURL_LOGS
+
+    /**
+     * Callback that is invoked when @c libcurl has debug information to provide.
+     *
+     * @param handle @c libcurl handle of the transfer being reported upon.
+     * @param type The type of data being reported.
+     * @param data Pointer to the data being provided.
+     * @param size Size (in bytes) of the data being reported.
+     * @param user User pointer used to pass which HTTP2Stream is being reported on.
+     * @return Always returns zero.
+     */
+    static int debugFunction(CURL* handle, curl_infotype type, char* data, size_t size, void* user);
+
+    /// File to log the stream I/O to
+    std::unique_ptr<std::ofstream> m_streamLog;
+    /// File to dump data streamed in
+    std::unique_ptr<std::ofstream> m_streamInDump;
+    /// File to dump data streamed out
+    std::unique_ptr<std::ofstream> m_streamOutDump;
+
+#endif  // ACSDK_EMIT_CURL_LOGS
+
+    /**
      * The logical id for this particular object instance.  (see note for @c m_streamIdCounter in this class).
      * @note This is NOT the actual HTTP/2 stream id.  Instead, this is an id which this class generates which is
      * guaranteed to be different from the id of other objects of this class.  Also, we make an attempt to emulate
@@ -221,19 +268,13 @@ private:
      */
     unsigned int m_logicalStreamId;
     /// The underlying curl easy handle.
-    CurlEasyHandleWrapper m_transfer;
+    avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper m_transfer;
     /// An DirectiveParser instance used to parse multipart MIME messages.
     MimeParser m_parser;
     /// The current request being sent on this HTTP/2 stream.
     std::shared_ptr<avsCommon::avs::MessageRequest> m_currentRequest;
-    /// Whether the send operation has completed.
-    bool m_hasSendCompleted;
-    /// Whether send to network is blocked on local reads (i.e. awaiting new data to send).
-    bool m_isNetworkSendBlockedOnLocalRead;
-    /// Whether we have received any data
-    bool m_hasReceiveStarted;
-    /// Whether receive from network is blocked on local writes (i.e. buffer full).
-    bool m_isNetworkReceiveBlockedOnLocalWrite;
+    /// Whether this stream has any paused transfers.
+    bool m_isPaused;
     /**
      * The exception message being received from AVS by this stream.  It may be built up over several calls if either
      * the write quanta are small, or if the message is long.

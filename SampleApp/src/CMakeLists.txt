@@ -4,6 +4,7 @@ add_executable(SampleApp
     InteractionManager.cpp 
     UserInputManager.cpp
     ConsolePrinter.cpp
+    GuiRenderer.cpp
     UIManager.cpp
     KeywordObserver.cpp
     ConnectionObserver.cpp

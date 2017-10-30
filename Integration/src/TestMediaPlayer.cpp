@@ -15,6 +15,8 @@
  * permissions and limitations under the License.
  */
 
+#include <atomic>
+
 #include "Integration/TestMediaPlayer.h"
 
 namespace alexaClientSDK {
@@ -23,6 +25,9 @@ namespace test {
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("TestMediaPlayer");
+
+/// A counter used to increment the source id when a new source is set.
+static std::atomic<avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId> g_sourceId{0};
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -34,63 +39,69 @@ static const std::string TAG("TestMediaPlayer");
 TestMediaPlayer::~TestMediaPlayer() {
 }
 
-avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::setSource(
+avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::setSource(
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
     m_attachmentReader = std::move(attachmentReader);
-    return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
+    return ++g_sourceId;
 }
 
-avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::setSource(
+avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::setSource(
     std::shared_ptr<std::istream> stream,
     bool repeat) {
     m_istream = stream;
-    return avsCommon::utils::mediaPlayer::MediaPlayerStatus::PENDING;
+    return ++g_sourceId;
 }
 
-avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::setSource(const std::string& url) {
-    return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
+avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::setSource(const std::string& url) {
+    return ++g_sourceId;
 }
 
-avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::play() {
+bool TestMediaPlayer::play(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) {
     if (m_observer) {
-        m_observer->onPlaybackStarted();
+        m_observer->onPlaybackStarted(id);
         m_playbackFinished = true;
         m_timer = std::unique_ptr<avsCommon::utils::timing::Timer>(new avsCommon::utils::timing::Timer);
         // Wait 600 milliseconds before sending onPlaybackFinished.
-        m_timer->start(std::chrono::milliseconds(600), [this] {
+        m_timer->start(std::chrono::milliseconds(600), [this, id] {
             if (m_playbackFinished) {
-                m_observer->onPlaybackFinished();
+                m_observer->onPlaybackFinished(id);
                 m_playbackFinished = false;
             }
         });
-        return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
+        return true;
     } else {
-        return avsCommon::utils::mediaPlayer::MediaPlayerStatus::FAILURE;
+        return false;
     }
 }
 
-avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::stop() {
+bool TestMediaPlayer::stop(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) {
     if (m_observer && m_playbackFinished) {
-        m_observer->onPlaybackFinished();
+        m_observer->onPlaybackStopped(id);
         m_playbackFinished = false;
-        return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
+        return true;
     } else {
-        return avsCommon::utils::mediaPlayer::MediaPlayerStatus::FAILURE;
+        return false;
     }
 }
 
 // TODO Add implementation
-avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::pause() {
-    return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
+bool TestMediaPlayer::pause(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) {
+    return true;
 }
 
 // TODO Add implementation
-avsCommon::utils::mediaPlayer::MediaPlayerStatus TestMediaPlayer::resume() {
-    return avsCommon::utils::mediaPlayer::MediaPlayerStatus::SUCCESS;
+bool TestMediaPlayer::resume(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) {
+    return true;
 }
 
-std::chrono::milliseconds TestMediaPlayer::getOffset() {
+std::chrono::milliseconds TestMediaPlayer::getOffset(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) {
     return std::chrono::milliseconds::zero();
+}
+
+bool TestMediaPlayer::setOffset(
+    avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id,
+    std::chrono::milliseconds offset) {
+    return true;
 }
 
 void TestMediaPlayer::setObserver(

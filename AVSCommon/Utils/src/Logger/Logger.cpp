@@ -56,6 +56,18 @@ void Logger::setLevel(Level level) {
         m_level = level;
         notifyObserversOnLogLevelChanged();
     }
+#ifndef ACSDK_DEBUG_LOG_ENABLED
+    if (m_level <= Level::DEBUG0) {
+        // Log without ACSDK_* macros to avoid recursive invocation of constructor.
+        log(Level::WARN,
+            LogEntry("Logger", "debugLogLevelSpecifiedWhenDebugLogsCompiledOut")
+                .d("level", m_level)
+                .m("\n"
+                   "\nWARNING: By default DEBUG logs are compiled out of RELEASE builds."
+                   "\nRebuld with the cmake parameter -DCMAKE_BUILD_TYPE=DEBUG to enable debug logs."
+                   "\n"));
+    }
+#endif
 }
 
 void Logger::addLogLevelObserver(LogLevelObserverInterface* observer) {

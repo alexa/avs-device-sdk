@@ -1138,6 +1138,73 @@ TEST_F(SharedDataStreamTest, concurrencyMultipleSds) {
     ASSERT_EQ(caWords.get(), TEST_SIZE_WORDS);
 }
 
+/// This tests that a @c Reader closes if a @c Writer is attached and closed before writing anything
+TEST_F(SharedDataStreamTest, writerClosedBeforeWriting) {
+    static const size_t WORDSIZE = 2;
+    static const size_t WORDCOUNT = 2;
+    static const size_t MAXREADERS = 2;
+    static const std::chrono::milliseconds READ_TIMEOUT{100};
+    // explicitly set the time for closing the writer to be less than the READ_TIMEOUT
+    static const std::chrono::milliseconds CLOSE_WRITER_AFTER_READ{50};
+
+    // Initialize an sds.
+    size_t bufferSize = Sds::calculateBufferSize(WORDCOUNT, WORDSIZE, MAXREADERS);
+    auto buffer = std::make_shared<Sds::Buffer>(bufferSize);
+    auto sds = Sds::create(buffer, WORDSIZE, MAXREADERS);
+    ASSERT_NE(sds, nullptr);
+
+    uint8_t readBuf[WORDSIZE * WORDCOUNT * 2];
+
+    // Create blocking reader.
+    std::shared_ptr<Sds::Reader> blocking = sds->createReader(Sds::Reader::Policy::BLOCKING);
+    ASSERT_NE(blocking, nullptr);
+
+    // Attach a writer.
+    auto writer = sds->createWriter(Sds::Writer::Policy::NONBLOCKABLE);
+    ASSERT_NE(writer, nullptr);
+
+    // Close the writer before reader times out
+    auto writerCloseThread = std::async(std::launch::async, [&writer]() {
+        std::this_thread::sleep_for(CLOSE_WRITER_AFTER_READ);
+        writer->close();
+        return true;
+    });
+
+    auto error = blocking->read(readBuf, WORDCOUNT, READ_TIMEOUT);
+
+    // Ensure that the reader did not timeout
+    ASSERT_EQ(error, Sds::Reader::Error::CLOSED);
+}
+
+/// This tests that a @c Reader closes if a @c Writer is attached and closed before the @c Reader is first attached
+TEST_F(SharedDataStreamTest, writerClosedBeforeAttachingReader) {
+    static const size_t WORDSIZE = 2;
+    static const size_t WORDCOUNT = 2;
+    static const size_t MAXREADERS = 2;
+
+    // Initialize an sds.
+    size_t bufferSize = Sds::calculateBufferSize(WORDCOUNT, WORDSIZE, MAXREADERS);
+    auto buffer = std::make_shared<Sds::Buffer>(bufferSize);
+    auto sds = Sds::create(buffer, WORDSIZE, MAXREADERS);
+    ASSERT_NE(sds, nullptr);
+
+    uint8_t readBuf[WORDSIZE * WORDCOUNT * 2];
+
+    auto writer = sds->createWriter(Sds::Writer::Policy::NONBLOCKABLE);
+    ASSERT_NE(writer, nullptr);
+
+    // Close the writer before creating reader
+    writer->close();
+
+    // Create blocking reader.
+    auto blocking = sds->createReader(Sds::Reader::Policy::BLOCKING);
+    ASSERT_NE(blocking, nullptr);
+
+    auto error = blocking->read(readBuf, WORDCOUNT);
+
+    ASSERT_EQ(error, Sds::Reader::Error::CLOSED);
+}
+
 }  // namespace test
 }  // namespace sds
 }  // namespace utils

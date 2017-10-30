@@ -101,6 +101,18 @@ char convertLevelToChar(Level level);
  */
 Level convertNameToLevel(const std::string& name);
 
+/**
+ * Write a log severity @c Level value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param level The @c Level value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, Level level) {
+    stream << convertLevelToName(level);
+    return stream;
+}
+
 }  // namespace logger
 }  // namespace utils
 }  // namespace avsCommon

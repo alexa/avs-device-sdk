@@ -274,11 +274,12 @@ ssize_t SharedDataStream<T>::Reader::read(void* buf, size_t nWords, std::chrono:
         return Error::OVERRUN;
     }
 
-    // Figure out how much we can actually copy.
     std::unique_lock<Mutex> lock(header->dataAvailableMutex, std::defer_lock);
     if (Policy::BLOCKING == m_policy) {
         lock.lock();
     }
+
+    // Figure out how much we can actually copy.
     size_t wordsAvailable = tell(Reference::BEFORE_WRITER);
     if (0 == wordsAvailable) {
         if (header->writeEndCursor > 0 && !header->isWriterEnabled) {
@@ -286,18 +287,27 @@ ssize_t SharedDataStream<T>::Reader::read(void* buf, size_t nWords, std::chrono:
         } else if (Policy::NONBLOCKING == m_policy) {
             return Error::WOULDBLOCK;
         } else if (Policy::BLOCKING == m_policy) {
+            // Condition for returning from read: the Writer has been closed or there is data to read
+            auto predicate = [this, header] {
+                return header->hasWriterBeenClosed || tell(Reference::BEFORE_WRITER) > 0;
+            };
+
             if (std::chrono::milliseconds::zero() == timeout) {
-                header->dataAvailableConditionVariable.wait(
-                    lock, [this] { return tell(Reference::BEFORE_WRITER) > 0; });
+                header->dataAvailableConditionVariable.wait(lock, predicate);
             } else {
-                if (!header->dataAvailableConditionVariable.wait_for(
-                        lock, timeout, [this] { return tell(Reference::BEFORE_WRITER) > 0; })) {
+                if (!header->dataAvailableConditionVariable.wait_for(lock, timeout, predicate)) {
                     return Error::TIMEDOUT;
                 }
             }
         }
         wordsAvailable = tell(Reference::BEFORE_WRITER);
+
+        // If there is still no data, the writer has closed in the interim
+        if (0 == wordsAvailable) {
+            return Error::CLOSED;
+        }
     }
+
     if (Policy::BLOCKING == m_policy) {
         lock.unlock();
     }

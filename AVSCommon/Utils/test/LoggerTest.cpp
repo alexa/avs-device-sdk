@@ -170,8 +170,8 @@ void TestLogger::emit(
  * Function for ACSDK_* macros to use to get the @c Logger to use.
  * @return The @c Logger to use.
  */
-Logger& getLoggerTestLogger() {
-    static test::TestLogger testLogger;
+std::shared_ptr<Logger> getLoggerTestLogger() {
+    static std::shared_ptr<Logger> testLogger = std::make_shared<test::TestLogger>();
     return testLogger;
 }
 
@@ -203,7 +203,7 @@ MockModuleLogger::MockModuleLogger() : ModuleLogger(ACSDK_STRINGIFY(ACSDK_LOG_SI
 
 MockModuleLogger::~MockModuleLogger() {
     LoggerSinkManager::instance().removeSinkObserver(this);
-    m_sink.load()->removeLogLevelObserver(this);
+    m_sink->removeLogLevelObserver(this);
 }
 
 /**
@@ -229,7 +229,7 @@ protected:
 
 void LoggerTest::SetUp() {
     // make sure getLoggerTestLogger() is used as sink
-    LoggerSinkManager::instance().changeSinkLogger(getLoggerTestLogger());
+    LoggerSinkManager::instance().initialize(getLoggerTestLogger());
 }
 
 void LoggerTest::TearDown() {
@@ -581,11 +581,11 @@ TEST_F(LoggerTest, testSensitiveDataSuppressed) {
  */
 TEST_F(LoggerTest, testModuleLoggerObserver) {
     MockModuleLogger mockModuleLogger;
-    getLoggerTestLogger().setLevel(Level::WARN);
+    getLoggerTestLogger()->setLevel(Level::WARN);
     ASSERT_EQ(mockModuleLogger.getLogLevel(), Level::WARN);
     mockModuleLogger.setLevel(Level::CRITICAL);
     ASSERT_EQ(mockModuleLogger.getLogLevel(), Level::CRITICAL);
-    getLoggerTestLogger().setLevel(Level::NONE);
+    getLoggerTestLogger()->setLevel(Level::NONE);
     ASSERT_EQ(mockModuleLogger.getLogLevel(), Level::CRITICAL);
 }
 
@@ -597,7 +597,7 @@ TEST_F(LoggerTest, testMultipleModuleLoggerObservers) {
     MockModuleLogger mockModuleLogger2;
     MockModuleLogger mockModuleLogger3;
 
-    getLoggerTestLogger().setLevel(Level::WARN);
+    getLoggerTestLogger()->setLevel(Level::WARN);
     ASSERT_EQ(mockModuleLogger1.getLogLevel(), Level::WARN);
     ASSERT_EQ(mockModuleLogger2.getLogLevel(), Level::WARN);
     ASSERT_EQ(mockModuleLogger3.getLogLevel(), Level::WARN);
@@ -607,7 +607,7 @@ TEST_F(LoggerTest, testMultipleModuleLoggerObservers) {
     ASSERT_EQ(mockModuleLogger2.getLogLevel(), Level::WARN);
     ASSERT_EQ(mockModuleLogger3.getLogLevel(), Level::WARN);
 
-    getLoggerTestLogger().setLevel(Level::NONE);
+    getLoggerTestLogger()->setLevel(Level::NONE);
     ASSERT_EQ(mockModuleLogger1.getLogLevel(), Level::CRITICAL);
     ASSERT_EQ(mockModuleLogger2.getLogLevel(), Level::NONE);
     ASSERT_EQ(mockModuleLogger3.getLogLevel(), Level::NONE);
@@ -620,9 +620,10 @@ TEST_F(LoggerTest, testMultipleModuleLoggerObservers) {
 TEST_F(LoggerTest, testChangeSinkLogger) {
     g_log = MockLogger::create();
     std::shared_ptr<MockLogger> sink1 = MockLogger::create();
+    std::shared_ptr<Logger> sink1Logger = sink1;
 
     // reset loglevel to INFO
-    getLoggerTestLogger().setLevel(Level::INFO);
+    getLoggerTestLogger()->setLevel(Level::INFO);
 
     // ModuleLoggers uses TestLogger as sink, so there shouldn't be any message
     // sent to sink1
@@ -631,13 +632,13 @@ TEST_F(LoggerTest, testChangeSinkLogger) {
     ASSERT_EQ(sink1->m_lastText.find(TEST_MESSAGE_STRING), std::string::npos);
 
     // change to use sink1, now log message should be sent to sink1
-    LoggerSinkManager::instance().changeSinkLogger(*sink1);
+    LoggerSinkManager::instance().initialize(sink1Logger);
     ACSDK_INFO(LX(TEST_MESSAGE_STRING_1));
     ASSERT_NE(g_log->m_lastText.find(TEST_MESSAGE_STRING), std::string::npos);
     ASSERT_NE(sink1->m_lastText.find(TEST_MESSAGE_STRING_1), std::string::npos);
 
     // reset to the default sink to avoid messing up with subsequent tests
-    LoggerSinkManager::instance().changeSinkLogger(getLoggerTestLogger());
+    LoggerSinkManager::instance().initialize(getLoggerTestLogger());
 }
 
 }  // namespace test

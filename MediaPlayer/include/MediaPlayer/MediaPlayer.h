@@ -31,8 +31,9 @@
 #include <gst/app/gstappsrc.h>
 
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
-#include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
+#include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
 #include <AVSCommon/Utils/PlaylistParser/PlaylistParserInterface.h>
 
 #include "MediaPlayer/OffsetManager.h"
@@ -42,22 +43,28 @@
 namespace alexaClientSDK {
 namespace mediaPlayer {
 
+typedef std::vector<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::TagKeyValueType> VectorOfTags;
+
 /**
  * Class that handles creation of audio pipeline and playing of audio data.
  */
 class MediaPlayer
         : public avsCommon::utils::mediaPlayer::MediaPlayerInterface
+        , public avsCommon::sdkInterfaces::SpeakerInterface
         , private PipelineInterface {
 public:
     /**
      * Creates an instance of the @c MediaPlayer.
      *
      * @param contentFetcherFactory Used to create objects that can fetch remote HTTP content.
+     * @param type The type used to categorize the speaker for volume control.
      * @return An instance of the @c MediaPlayer if successful else a @c nullptr.
      */
     static std::shared_ptr<MediaPlayer> create(
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory =
-            nullptr);
+            nullptr,
+        avsCommon::sdkInterfaces::SpeakerInterface::Type type =
+            avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SYNCED);
 
     /**
      * Destructor.
@@ -66,27 +73,30 @@ public:
 
     /// @name Overridden MediaPlayerInterface methods.
     /// @{
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) override;
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(std::shared_ptr<std::istream> stream, bool repeat)
-        override;
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(const std::string& url) override;
+    SourceId setSource(std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) override;
+    SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) override;
+    SourceId setSource(const std::string& url) override;
 
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus play() override;
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus stop() override;
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus pause() override;
+    bool play(SourceId id) override;
+    bool stop(SourceId id) override;
+    bool pause(SourceId id) override;
     /**
      * To resume playback after a pause, call @c resume. Calling @c play
      * will reset the pipeline and source, and will not resume playback.
      */
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus resume() override;
-    std::chrono::milliseconds getOffset() override;
-    /**
-     * This function is a setter, storing @c offset to be consumed internally by @c play().
-     * The function will always return MediaPlayerStatus::SUCCESS.
-     */
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus setOffset(std::chrono::milliseconds offset) override;
+    bool resume(SourceId id) override;
+    std::chrono::milliseconds getOffset(SourceId id) override;
+    bool setOffset(SourceId id, std::chrono::milliseconds offset) override;
     void setObserver(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) override;
+    /// @}
+
+    /// @name Overridden SpeakerInterface methods.
+    /// @{
+    bool setVolume(int8_t volume) override;
+    bool adjustVolume(int8_t volume) override;
+    bool setMute(bool mute) override;
+    bool getSpeakerSettings(avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings) override;
+    avsCommon::sdkInterfaces::SpeakerInterface::Type getSpeakerType() override;
     /// @}
 
     /// @name Overridden PipelineInterface methods.
@@ -105,11 +115,12 @@ private:
      * @li @c appsrc The appsrc element is used as the source to which audio data is provided.
      * @li @c decoder Decodebin is used as the decoder element to decode audio.
      * @li @c converter An audio-converter is used to convert between audio formats.
+     * @li @c volume The volume element is used as a volume control.
      * @li @c audioSink Sink for the audio.
      * @li @c pipeline The pipeline is a bin consisting of the @c appsrc, the @c decoder, the @c converter, and the
      * @c audioSink.
      *
-     * The data flow through the elements is appsrc -> decoder -> converter -> audioSink.
+     * The data flow through the elements is appsrc -> decoder -> converter -> volume -> audioSink.
      */
     struct AudioPipeline {
         /// The source element.
@@ -120,6 +131,9 @@ private:
 
         /// The converter element.
         GstElement* converter;
+
+        /// The volume element.
+        GstElement* volume;
 
         /// The sink element.
         GstElement* audioSink;
@@ -132,6 +146,7 @@ private:
                 appsrc{nullptr},
                 decoder{nullptr},
                 converter{nullptr},
+                volume{nullptr},
                 audioSink{nullptr},
                 pipeline{nullptr} {};
     };
@@ -140,9 +155,11 @@ private:
      * Constructor.
      *
      * @param contentFetcherFactory Used to create objects that can fetch remote HTTP content.
+     * @param type The type used to categorize the speaker for volume control.
      */
     MediaPlayer(
-        std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory);
+        std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
+        avsCommon::sdkInterfaces::SpeakerInterface::Type type);
 
     /**
      * Initializes GStreamer and starts a main event loop on a new thread.
@@ -180,7 +197,7 @@ private:
      */
     void tearDownTransientPipelineElements();
 
-    /*
+    /**
      * Resets the @c AudioPipeline.
      */
     void resetPipeline();
@@ -228,85 +245,133 @@ private:
     gboolean handleBusMessage(GstMessage* message);
 
     /**
-     * Worker thread handler for setting the source of audio to play.
+     * Gather all stream tags found into a vector of tags.
      *
-     * @param promise A promise to fulfill with a @ MediaPlayerStatus value once the source has been set
-     * (or the operation failed).
-     * @param reader The @c AttachmentReader with which to receive the audio to play.
+     * @param message The message posted on the bus.
+     * @return Vector of stream tags.
      */
-    void handleSetAttachmentReaderSource(
-        std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader);
+    std::unique_ptr<const VectorOfTags> collectTags(GstMessage* message);
 
-    void handleSetSource(std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus> promise, std::string url);
+    /**
+     * Send tags that are found in the stream to the observer.
+     *
+     * @param vectorOfTags Vector containing tags that are found in the stream.
+     */
+    void sendStreamTagsToObserver(std::unique_ptr<const VectorOfTags> vectorOfTags);
 
     /**
      * Worker thread handler for setting the source of audio to play.
      *
-     * @param promise A promise to fulfill with a @ MediaPlayerStatus value once the source has been set
-     * (or the operation failed).
-     * @param stream The source from which to receive the audio to play.
+     * @param reader The @c AttachmentReader with which to receive the audio to play.
+     * @param promise A promise to fulfill with a @c SourceId value once the source has been set.
      */
-    void handleSetIStreamSource(
-        std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise,
-        std::shared_ptr<std::istream> stream,
-        bool repeat);
+    void handleSetAttachmentReaderSource(
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader,
+        std::promise<SourceId>* promise);
+
+    /**
+     * Worker thread handler for setting the source of audio to play.
+     *
+     * @param url The url to set as the source.
+     * @param promise A promise to fulfill with a @c SourceId value once the source has been set.
+     */
+    void handleSetSource(std::string url, std::promise<SourceId>* promise);
+
+    /**
+     * Worker thread handler for setting the source of audio to play.
+     *
+     * @param stream The source from which to receive the audio to play.
+     * @param repeat Whether the audio stream should be played in a loop until stopped.
+     * @param promise A promise to fulfill with a @ SourceId value once the source has been set.
+     */
+    void handleSetIStreamSource(std::shared_ptr<std::istream> stream, bool repeat, std::promise<SourceId>* promise);
+
+    /**
+     * Worker thread handler for setting the volume.
+     *
+     * @param promise The promise to be set indicating the success of the operation.
+     * @param volume The absolute volume.
+     */
+    void handleSetVolume(std::promise<bool>* promise, int8_t volume);
+
+    /**
+     * Worker thread handler for adjusting the volume.
+     *
+     * @param promise The promise to be set indicating the success of the operation.
+     * @param delta The volume change.
+     */
+    void handleAdjustVolume(std::promise<bool>* promise, int8_t delta);
+
+    /**
+     * Worker thread handler for setting the mute.
+     *
+     * @param promise The promise to be set indicating the success of the operation.
+     * @param mute The mute setting. True for mute and false for unmute.
+     */
+    void handleSetMute(std::promise<bool>* promise, bool mute);
+
+    /**
+     * Worker thread handler for getting the @c SpeakerSettings.
+     *
+     * @param promise The promise to be set indicating the success of the operation.
+     * @param settings The current @c SpeakerSettings.
+     */
+    void handleGetSpeakerSettings(
+        std::promise<bool>* promise,
+        avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings);
 
     /**
      * Worker thread handler for starting playback of the current audio source.
      *
-     * @param promise A promise to fulfill with a @c MediaPlayerStatus value once playback has been initiated
+     * @param id The @c SourceId that the caller is expecting to be handled.
+     * @param promise A promise to fulfill with a @c bool value once playback has been initiated
      * (or the operation has failed).
      */
-    void handlePlay(std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise);
+    void handlePlay(SourceId id, std::promise<bool>* promise);
 
     /**
      * Worker thread handler for stopping audio playback.
      *
-     * @param promise A promise to fulfill with a @c MediaPlayerStatus once playback stop has been initiated
+     * @param id The @c SourceId that the caller is expecting to be handled.
+     * @param promise A promise to fulfill with a @c bool once playback stop has been initiated
      * (or the operation has failed).
      */
-    void handleStop(std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise);
-
-    /**
-     * Actually trigger a stop of audio playback.
-     *
-     * @return The status of the operation.
-     */
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus doStop();
+    void handleStop(SourceId id, std::promise<bool>* promise);
 
     /**
      * Worker thread handler for pausing playback of the current audio source.
      *
-     * @param promise A promise to fulfill with a @c MediaPlayerStatus value once playback has been paused
+     * @param id The @c SourceId that the caller is expecting to be handled.
+     * @param promise A promise to fulfill with a @c bool value once playback has been paused
      * (or the operation has failed).
      */
-    void handlePause(std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise);
+    void handlePause(SourceId id, std::promise<bool>* promise);
 
     /**
      * Worker thread handler for resume playback of the current audio source.
      *
-     * @param promise A promise to fulfill with a @c MediaPlayerStatus value once playback has been resumed
+     * @param id The @c SourceId that the caller is expecting to be handled.
+     * @param promise A promise to fulfill with a @c bool value once playback has been resumed
      * (or the operation has failed).
      */
-    void handleResume(std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise);
+    void handleResume(SourceId id, std::promise<bool>* promise);
 
     /**
      * Worker thread handler for getting the current playback position.
      *
+     * @param id The @c SourceId that the caller is expecting to be handled.
      * @param promise A promise to fulfill with the offset once the value has been determined.
      */
-    void handleGetOffset(std::promise<std::chrono::milliseconds>* promise);
+    void handleGetOffset(SourceId id, std::promise<std::chrono::milliseconds>* promise);
 
     /**
      * Worker thread handler for setting the playback position.
      *
-     * @param promise A promise to fulfill with a @c MediaPlayerStatus value once the offset has been set.
+     * @param id The @c SourceId that the caller is expecting to be handled.
+     * @param promise A promise to fulfill with a @c bool value once the offset has been set.
      * @param offset The offset to start playing from.
      */
-    void handleSetOffset(
-        std::promise<avsCommon::utils::mediaPlayer::MediaPlayerStatus>* promise,
-        std::chrono::milliseconds offset);
+    void handleSetOffset(SourceId id, std::promise<bool>* promise, std::chrono::milliseconds offset);
 
     /**
      * Worker thread handler for setting the observer.
@@ -337,6 +402,11 @@ private:
      * Sends the playback resumed notification to the observer.
      */
     void sendPlaybackResumed();
+
+    /**
+     * Sends the playback stopped notification to the observer.
+     */
+    void sendPlaybackStopped();
 
     /**
      * Sends the playback error notification to the observer.
@@ -381,6 +451,8 @@ private:
      */
     bool seek();
 
+    bool validateSourceAndId(SourceId id);
+
     /// An instance of the @c OffsetManager.
     OffsetManager m_offsetManager;
 
@@ -389,6 +461,9 @@ private:
 
     /// An instance of the @c AudioPipeline.
     AudioPipeline m_pipeline;
+
+    /// The Speaker type.
+    avsCommon::sdkInterfaces::SpeakerInterface::Type m_speakerType;
 
     /// Main event loop.
     GMainLoop* m_mainLoop;
@@ -419,6 +494,21 @@ private:
 
     /// @c SourceInterface instance set to the appropriate source.
     std::shared_ptr<SourceInterface> m_source;
+
+    /// The current source id.
+    SourceId m_currentId;
+
+    /// Flag to indicate whether a play is currently pending a callback.
+    bool m_playPending;
+
+    /// Flag to indicate whether a pause is currently pending a callback.
+    bool m_pausePending;
+
+    /// Flag to indicate whether a resume is currently pending a callback.
+    bool m_resumePending;
+
+    /// Flag to indicate whether a pause should happen immediately.
+    bool m_pauseImmediately;
 };
 
 }  // namespace mediaPlayer

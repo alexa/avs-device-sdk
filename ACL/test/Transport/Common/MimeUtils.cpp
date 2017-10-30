@@ -42,16 +42,29 @@ static const std::string MIME_ATTACHMENT_PREFIX_STRING = "Content-Type: applicat
 /// The MIME prefix for a content id header.
 static const std::string MIME_CONTENT_ID_PREFIX_STRING = "Content-ID: ";
 /// Our default timeout when validating if a MIME part was received by another object.
-static const std::chrono::seconds WAIT_FOR_DIRECTIVE_TIMEOUT_IN_SECONDS = std::chrono::seconds(10);
+static const std::chrono::seconds WAIT_FOR_DIRECTIVE_TIMEOUT_IN_SECONDS = std::chrono::seconds(1);
 
-TestMimeJsonPart::TestMimeJsonPart(int dataSize, std::shared_ptr<TestableMessageObserver> messageObserver) :
+TestMimeJsonPart::TestMimeJsonPart(
+    const std::string& boundaryString,
+    int dataSize,
+    std::shared_ptr<TestableMessageObserver> messageObserver) :
         m_message{createRandomAlphabetString(dataSize)},
         m_messageObserver{messageObserver} {
+    m_mimeString = MIME_JSON_PREFIX_STRING + MIME_NEWLINE + MIME_NEWLINE + m_message + MIME_NEWLINE +
+                   MIME_BOUNDARY_DASHES + boundaryString;
 }
 
-std::string TestMimeJsonPart::toMimeString(const std::string& boundaryString) {
-    return MIME_BOUNDARY_DASHES + boundaryString + MIME_NEWLINE + MIME_JSON_PREFIX_STRING + MIME_NEWLINE +
-           MIME_NEWLINE + m_message + MIME_NEWLINE;
+TestMimeJsonPart::TestMimeJsonPart(
+    const std::string& mimeString,
+    const std::string& message,
+    std::shared_ptr<TestableMessageObserver> messageObserver) :
+        m_message{message},
+        m_messageObserver{messageObserver},
+        m_mimeString{mimeString} {
+}
+
+std::string TestMimeJsonPart::getMimeString() const {
+    return m_mimeString;
 }
 
 bool TestMimeJsonPart::validateMimeParsing() {
@@ -59,6 +72,7 @@ bool TestMimeJsonPart::validateMimeParsing() {
 }
 
 TestMimeAttachmentPart::TestMimeAttachmentPart(
+    const std::string& boundaryString,
     const std::string& contextId,
     const std::string contentId,
     int dataSize,
@@ -67,11 +81,13 @@ TestMimeAttachmentPart::TestMimeAttachmentPart(
         m_contentId{contentId},
         m_attachmentData{createRandomAlphabetString(dataSize)},
         m_attachmentManager{attachmentManager} {
+    m_mimeString = MIME_CONTENT_ID_PREFIX_STRING + m_contentId + MIME_NEWLINE + MIME_ATTACHMENT_PREFIX_STRING +
+                   MIME_NEWLINE + MIME_NEWLINE + m_attachmentData + MIME_NEWLINE + MIME_BOUNDARY_DASHES +
+                   boundaryString;
 }
 
-std::string TestMimeAttachmentPart::toMimeString(const std::string& boundaryString) {
-    return MIME_BOUNDARY_DASHES + boundaryString + MIME_NEWLINE + MIME_CONTENT_ID_PREFIX_STRING + m_contentId +
-           MIME_NEWLINE + MIME_ATTACHMENT_PREFIX_STRING + MIME_NEWLINE + MIME_NEWLINE + m_attachmentData + MIME_NEWLINE;
+std::string TestMimeAttachmentPart::getMimeString() const {
+    return m_mimeString;
 }
 
 bool TestMimeAttachmentPart::validateMimeParsing() {
@@ -100,14 +116,14 @@ bool TestMimeAttachmentPart::validateMimeParsing() {
 std::string constructTestMimeString(
     const std::vector<std::shared_ptr<TestMimePart>>& mimeParts,
     const std::string& boundaryString) {
-    std::string mimeString;
+    std::string mimeString = MIME_NEWLINE + MIME_BOUNDARY_DASHES + boundaryString;
 
     for (auto mimePart : mimeParts) {
-        mimeString += mimePart->toMimeString(boundaryString);
+        mimeString += MIME_NEWLINE + mimePart->getMimeString();
     }
 
     // The final mime part needs the closing double dashes.
-    mimeString += MIME_BOUNDARY_DASHES + boundaryString + MIME_BOUNDARY_DASHES + MIME_NEWLINE;
+    mimeString += MIME_BOUNDARY_DASHES;
 
     return mimeString;
 }

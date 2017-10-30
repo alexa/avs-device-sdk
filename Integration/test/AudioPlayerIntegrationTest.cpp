@@ -27,7 +27,6 @@
 #include <iostream>
 
 #include "ACL/Transport/HTTP2MessageRouter.h"
-#include "ACL/Transport/HTTPContentFetcherFactory.h"
 #include "ACL/Transport/PostConnectObject.h"
 #include "ADSL/DirectiveSequencer.h"
 #include "ADSL/MessageInterpreter.h"
@@ -42,6 +41,7 @@
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h"
 #include "AVSCommon/AVS/BlockingPolicy.h"
 #include "AVSCommon/Utils/JSON/JSONUtils.h"
+#include "AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h"
 #include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
@@ -299,7 +299,8 @@ protected:
         PostConnectObject::init(m_contextManager);
 
 #ifdef GSTREAMER_MEDIA_PLAYER
-        m_speakMediaPlayer = MediaPlayer::create(std::make_shared<HTTPContentFetcherFactory>());
+        m_speakMediaPlayer =
+            MediaPlayer::create(std::make_shared<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory>());
 #else
         m_speakMediaPlayer = std::make_shared<TestMediaPlayer>();
 #endif
@@ -363,7 +364,8 @@ protected:
         m_speechSynthesizer->addObserver(m_speechSynthesizerObserver);
 
 #ifdef GSTREAMER_MEDIA_PLAYER
-        m_contentMediaPlayer = MediaPlayer::create(std::make_shared<HTTPContentFetcherFactory>());
+        m_contentMediaPlayer =
+            MediaPlayer::create(std::make_shared<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory>());
 #else
         m_contentMediaPlayer = std::make_shared<TestMediaPlayer>();
 #endif
@@ -417,9 +419,9 @@ protected:
         std::string eventString;
         std::string eventHeader;
         std::string eventName;
-        jsonUtils::lookupStringValue(sendParams.request->getJsonContent(), JSON_MESSAGE_EVENT_KEY, &eventString);
-        jsonUtils::lookupStringValue(eventString, JSON_MESSAGE_HEADER_KEY, &eventHeader);
-        jsonUtils::lookupStringValue(eventHeader, JSON_MESSAGE_NAME_KEY, &eventName);
+        jsonUtils::retrieveValue(sendParams.request->getJsonContent(), JSON_MESSAGE_EVENT_KEY, &eventString);
+        jsonUtils::retrieveValue(eventString, JSON_MESSAGE_HEADER_KEY, &eventHeader);
+        jsonUtils::retrieveValue(eventHeader, JSON_MESSAGE_NAME_KEY, &eventName);
         return eventName;
     }
 
@@ -552,16 +554,27 @@ TEST_F(AudioPlayerTest, SingASong) {
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendParams, NAME_RECOGNIZE));
 
-    // PlaybackStarted
+    bool playbackFinishedFound = false;
+    bool playbackNearlyFinishedFound = false;
+    bool playbackStartedFound = false;
+
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendParams, NAME_PLAYBACK_STARTED));
-
-    // PlaybackNearlyFinished
-    sendParams = m_avsConnectionManager->waitForNext(SONG_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendParams, NAME_PLAYBACK_NEARLY_FINISHED));
-
-    sendParams = m_avsConnectionManager->waitForNext(SONG_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendParams, NAME_PLAYBACK_FINISHED));
+    while (TestMessageSender::SendParams::Type::TIMEOUT != sendParams.type && !playbackFinishedFound) {
+        if (checkSentEventName(sendParams, NAME_PLAYBACK_STARTED)) {
+            playbackStartedFound = true;
+            sendParams = m_avsConnectionManager->waitForNext(SONG_TIMEOUT_DURATION);
+        } else if (checkSentEventName(sendParams, NAME_PLAYBACK_NEARLY_FINISHED)) {
+            playbackNearlyFinishedFound = true;
+            sendParams = m_avsConnectionManager->waitForNext(SONG_TIMEOUT_DURATION);
+        } else if (checkSentEventName(sendParams, NAME_PLAYBACK_FINISHED)) {
+            playbackFinishedFound = true;
+        } else {
+            sendParams = m_avsConnectionManager->waitForNext(SONG_TIMEOUT_DURATION);
+        }
+    }
+    ASSERT_TRUE(playbackStartedFound);
+    ASSERT_TRUE(playbackNearlyFinishedFound);
+    ASSERT_TRUE(playbackFinishedFound);
 
     state = m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged);
     ASSERT_TRUE(focusChanged);
@@ -617,12 +630,27 @@ TEST_F(AudioPlayerTest, FlashBriefing) {
            !checkSentEventName(sendParams, NAME_SPEECH_STARTED) &&
            !checkSentEventName(sendParams, NAME_PLAYBACK_STOPPED)) {
         hasFlashbriefingItems = true;
-        ASSERT_TRUE(checkSentEventName(sendParams, NAME_PLAYBACK_STARTED));
-        sendParams = m_avsConnectionManager->waitForNext(SONG_TIMEOUT_DURATION);
-        ASSERT_TRUE(checkSentEventName(sendParams, NAME_PLAYBACK_NEARLY_FINISHED));
-        sendParams = m_avsConnectionManager->waitForNext(SONG_TIMEOUT_DURATION);
-        ASSERT_TRUE(checkSentEventName(sendParams, NAME_PLAYBACK_FINISHED));
-        sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        bool playbackFinishedFound = false;
+        bool playbackNearlyFinishedFound = false;
+        bool playbackStartedFound = false;
+
+        while (TestMessageSender::SendParams::Type::TIMEOUT != sendParams.type && !playbackFinishedFound) {
+            if (checkSentEventName(sendParams, NAME_PLAYBACK_STARTED)) {
+                playbackStartedFound = true;
+                sendParams = m_avsConnectionManager->waitForNext(SONG_TIMEOUT_DURATION);
+            } else if (checkSentEventName(sendParams, NAME_PLAYBACK_NEARLY_FINISHED)) {
+                playbackNearlyFinishedFound = true;
+                sendParams = m_avsConnectionManager->waitForNext(SONG_TIMEOUT_DURATION);
+            } else if (checkSentEventName(sendParams, NAME_PLAYBACK_FINISHED)) {
+                playbackFinishedFound = true;
+                sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+            } else {
+                sendParams = m_avsConnectionManager->waitForNext(SONG_TIMEOUT_DURATION);
+            }
+        }
+        ASSERT_TRUE(playbackStartedFound);
+        ASSERT_TRUE(playbackNearlyFinishedFound);
+        ASSERT_TRUE(playbackFinishedFound);
     }
 
     if (hasFlashbriefingItems) {

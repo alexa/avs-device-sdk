@@ -546,9 +546,9 @@ protected:
             std::string eventString;
             std::string eventHeader;
             std::string eventName;
-            jsonUtils::lookupStringValue(sendParams.request->getJsonContent(), "event", &eventString);
-            jsonUtils::lookupStringValue(eventString, "header", &eventHeader);
-            jsonUtils::lookupStringValue(eventHeader, "name", &eventName);
+            jsonUtils::retrieveValue(sendParams.request->getJsonContent(), "event", &eventString);
+            jsonUtils::retrieveValue(eventString, "header", &eventHeader);
+            jsonUtils::retrieveValue(eventHeader, "name", &eventName);
             if (eventName == expectedName) {
                 return true;
             } else {

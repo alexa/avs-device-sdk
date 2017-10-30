@@ -67,7 +67,11 @@ private:
     bool isOpen() override;
     void close() override;
     gboolean handleReadData() override;
-    void terminate() override{};
+    /// @}
+
+    /// @name RequiresShutdown Functions
+    /// @{
+    void doShutdown() override{};
     /// @}
 
 private:

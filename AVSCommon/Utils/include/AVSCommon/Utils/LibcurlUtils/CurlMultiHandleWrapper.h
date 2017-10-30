@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_CURL_MULTI_HANDLE_WRAPPER_H_
-#define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_CURL_MULTI_HANDLE_WRAPPER_H_
+#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_CURL_MULTI_HANDLE_WRAPPER_H_
+#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_CURL_MULTI_HANDLE_WRAPPER_H_
 
 #include <chrono>
 #include <curl/curl.h>
@@ -24,7 +24,9 @@
 #include <unordered_set>
 
 namespace alexaClientSDK {
-namespace acl {
+namespace avsCommon {
+namespace utils {
+namespace libcurlUtils {
 
 /**
  * This class wraps a @c libcurl @c multi @c handle as a C++ object.
@@ -111,7 +113,9 @@ private:
     std::unordered_set<CURL*> m_streamHandles;
 };
 
-}  // namespace acl
+}  // namespace libcurlUtils
+}  // namespace utils
+}  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_CURL_MULTI_HANDLE_WRAPPER_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_CURL_MULTI_HANDLE_WRAPPER_H_

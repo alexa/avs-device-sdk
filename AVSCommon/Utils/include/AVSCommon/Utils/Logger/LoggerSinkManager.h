@@ -56,13 +56,16 @@ public:
     void removeSinkObserver(SinkObserverInterface* observer);
 
     /**
-     * Change the sink logger managed by the manager.
+     * Initialize the sink logger managed by the manager.
+     * This function can be called only before any other threads in the process have been created by the
+     * program.
      *
      * @param sink The new @c Logger to forward logs to.
      *
-     * @note It is up to the application to serialize calls to changeSinkLogger.
+     * @note If this function is not called, the default sink logger
+     * will be the one returned by get<ACSDK_LOG_SINK>Logger().
      */
-    void changeSinkLogger(Logger& sink);
+    void initialize(const std::shared_ptr<Logger>& sink);
 
 private:
     /**
@@ -77,7 +80,7 @@ private:
     std::vector<SinkObserverInterface*> m_sinkObservers;
 
     /// The @c Logger to forward logs to.
-    std::atomic<Logger*> m_sink;
+    std::shared_ptr<Logger> m_sink;
 };
 
 }  // namespace logger

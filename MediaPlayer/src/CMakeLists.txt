@@ -5,6 +5,7 @@ add_library(MediaPlayer SHARED
     ErrorTypeConversion.cpp
     IStreamSource.cpp
     MediaPlayer.cpp
+    Normalizer.cpp
     OffsetManager.cpp
     UrlSource.cpp)
 

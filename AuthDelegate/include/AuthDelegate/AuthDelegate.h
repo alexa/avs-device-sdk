@@ -28,8 +28,7 @@
 
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
-
-#include "AuthDelegate/HttpPostInterface.h"
+#include <AVSCommon/Utils/LibcurlUtils/HttpPostInterface.h>
 
 namespace alexaClientSDK {
 namespace authDelegate {
@@ -65,7 +64,8 @@ public:
      *     @c nullptr is undefined.
      * @return If successful, returns a new AuthDelegate, otherwise @c nullptr.
      */
-    static std::unique_ptr<AuthDelegate> create(std::unique_ptr<HttpPostInterface> httpPost);
+    static std::unique_ptr<AuthDelegate> create(
+        std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost);
 
     /**
      * Deleted copy constructor
@@ -96,7 +96,7 @@ private:
      *
      * @param httpPost Instance that implement HttpPostInterface. Must not be @c nullptr, or the behavior is undefined.
      */
-    AuthDelegate(std::unique_ptr<HttpPostInterface> httpPost);
+    AuthDelegate(std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost);
 
     /**
      * init() is used by create() to perform initialization after construction but before returning the
@@ -228,7 +228,7 @@ private:
      * HTTP/POST client with which to make @c LWA requests.
      * Access is not synchronized because it is only accessed by @c m_refreshAndNotifyThread.
      */
-    std::unique_ptr<HttpPostInterface> m_HttpPost;
+    std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> m_HttpPost;
 };
 
 }  // namespace authDelegate

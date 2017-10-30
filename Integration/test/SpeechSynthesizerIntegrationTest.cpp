@@ -27,7 +27,6 @@
 #include <iostream>
 
 #include "ACL/Transport/HTTP2MessageRouter.h"
-#include "ACL/Transport/HTTPContentFetcherFactory.h"
 #include "ACL/Transport/PostConnectObject.h"
 #include "ADSL/DirectiveSequencer.h"
 #include "ADSL/MessageInterpreter.h"
@@ -38,6 +37,7 @@
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h"
 #include "AVSCommon/AVS/BlockingPolicy.h"
 #include "AVSCommon/Utils/JSON/JSONUtils.h"
+#include "AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h"
 #include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
@@ -348,7 +348,8 @@ protected:
         ASSERT_EQ(m_testClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION), FocusState::FOREGROUND);
 
 #ifdef GSTREAMER_MEDIA_PLAYER
-        m_mediaPlayer = MediaPlayer::create(std::make_shared<HTTPContentFetcherFactory>());
+        m_mediaPlayer =
+            MediaPlayer::create(std::make_shared<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory>());
 #else
         m_mediaPlayer = std::make_shared<TestMediaPlayer>();
 #endif
@@ -493,9 +494,9 @@ protected:
             std::string eventString;
             std::string eventHeader;
             std::string eventName;
-            jsonUtils::lookupStringValue(sendParams.request->getJsonContent(), JSON_MESSAGE_EVENT_KEY, &eventString);
-            jsonUtils::lookupStringValue(eventString, JSON_MESSAGE_HEADER_KEY, &eventHeader);
-            jsonUtils::lookupStringValue(eventHeader, JSON_MESSAGE_NAME_KEY, &eventName);
+            jsonUtils::retrieveValue(sendParams.request->getJsonContent(), JSON_MESSAGE_EVENT_KEY, &eventString);
+            jsonUtils::retrieveValue(eventString, JSON_MESSAGE_HEADER_KEY, &eventHeader);
+            jsonUtils::retrieveValue(eventHeader, JSON_MESSAGE_NAME_KEY, &eventName);
             return eventName == expectedName;
         }
         return false;

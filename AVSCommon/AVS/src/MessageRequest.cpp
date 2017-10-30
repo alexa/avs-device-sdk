@@ -103,6 +103,8 @@ std::string MessageRequest::statusToString(MessageRequestObserverInterface::Stat
             return "PENDING";
         case MessageRequestObserverInterface::Status::SUCCESS:
             return "SUCCESS";
+        case MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT:
+            return "SUCCESS_NO_CONTENT";
         case MessageRequestObserverInterface::Status::NOT_CONNECTED:
             return "NOT_CONNECTED";
         case MessageRequestObserverInterface::Status::NOT_SYNCHRONIZED:
@@ -131,6 +133,7 @@ std::string MessageRequest::statusToString(MessageRequestObserverInterface::Stat
 bool MessageRequest::isServerStatus(MessageRequestObserverInterface::Status status) {
     switch (status) {
         case MessageRequestObserverInterface::Status::SUCCESS:
+        case MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT:
         case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR:
         case MessageRequestObserverInterface::Status::CANCELED:
         case MessageRequestObserverInterface::Status::THROTTLED:

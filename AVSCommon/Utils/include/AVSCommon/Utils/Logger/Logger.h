@@ -264,7 +264,7 @@ bool Logger::shouldLog(Level level) const {
  *
  * @return The @c Logger that logs should be sent to.
  */
-Logger& ACSDK_GET_SINK_LOGGER();
+std::shared_ptr<Logger> ACSDK_GET_SINK_LOGGER();
 
 }  // namespace logger
 }  // namespace utils
@@ -302,12 +302,25 @@ inline Logger& ACSDK_GET_LOGGER_FUNCTION() {
 
 #else  // ACSDK_LOG_MODULE
 
+namespace alexaClientSDK {
+namespace avsCommon {
+namespace utils {
+namespace logger {
+
 /**
- * Macro to define the function that ACSDK_<LEVEL> macros will send logs to.
+ * Inline method to get the function that ACSDK_<LEVEL> macros will send logs to.
  * In this case @c ACSDK_LOG_MODULE was not defined, so logs are sent to the @c Logger returned by
  * @c get<ACSDK_LOG_SINK>Logger().
  */
-#define ACSDK_GET_LOGGER_FUNCTION ACSDK_GET_SINK_LOGGER
+inline Logger& ACSDK_GET_LOGGER_FUNCTION() {
+    static std::shared_ptr<Logger> logger = ACSDK_GET_SINK_LOGGER();
+    return *logger;
+}
+
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
 #endif
 

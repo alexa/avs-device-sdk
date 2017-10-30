@@ -31,6 +31,7 @@
 
 using namespace alexaClientSDK::authDelegate;
 using namespace alexaClientSDK::authDelegate::test;
+using namespace alexaClientSDK::avsCommon::utils::libcurlUtils;
 
 using namespace ::testing;
 using namespace alexaClientSDK::avsCommon::avs::initialization;

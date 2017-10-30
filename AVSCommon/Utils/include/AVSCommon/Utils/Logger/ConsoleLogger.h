@@ -35,7 +35,7 @@ public:
      *
      * @return The one and only @c ConsoleLogger instance.
      */
-    static Logger& instance();
+    static std::shared_ptr<Logger> instance();
 
     void emit(Level level, std::chrono::system_clock::time_point time, const char* threadMoniker, const char* text)
         override;
@@ -45,6 +45,8 @@ private:
      * Constructor.
      */
     ConsoleLogger();
+
+    std::mutex m_coutMutex;
 };
 
 /**
@@ -52,7 +54,7 @@ private:
  *
  * @return The singleton instance of @c ConsoleLogger.
  */
-Logger& getConsoleLogger();
+std::shared_ptr<Logger> getConsoleLogger();
 
 }  // namespace logger
 }  // namespace utils

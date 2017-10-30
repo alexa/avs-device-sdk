@@ -66,9 +66,6 @@ void DialogUXStateAggregator::onStateChanged(AudioInputProcessorObserverInterfac
     m_executor.submit([this, state]() {
         switch (state) {
             case AudioInputProcessorObserverInterface::State::IDLE:
-                if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState) {
-                    return;
-                }
                 setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
                 return;
             case AudioInputProcessorObserverInterface::State::RECOGNIZING:

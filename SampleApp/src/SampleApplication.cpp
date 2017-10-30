@@ -24,11 +24,12 @@
 #elif KWD_SENSORY
 #include <Sensory/SensoryKeywordDetector.h>
 #endif
-#include <ACL/Transport/HTTPContentFetcherFactory.h>
 #include <Alerts/Storage/SQLiteAlertStorage.h>
 #include <Settings/SQLiteSettingStorage.h>
 #include <AuthDelegate/AuthDelegate.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
+#include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
+#include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/Logger/LoggerSinkManager.h>
 #include <MediaPlayer/MediaPlayer.h>
 
@@ -56,6 +57,15 @@ static const std::chrono::seconds AMOUNT_OF_AUDIO_DATA_IN_BUFFER = std::chrono::
 
 /// The size of the ring buffer.
 static const size_t BUFFER_SIZE_IN_SAMPLES = (SAMPLE_RATE_HZ)*AMOUNT_OF_AUDIO_DATA_IN_BUFFER.count();
+
+/// Key for the root node value containing configuration values for SampleApp.
+static const std::string SAMPLE_APP_CONFIG_KEY("sampleApp");
+
+/// Key for the endpoint value under the @c SAMPLE_APP_CONFIG_KEY configuration node.
+static const std::string ENDPOINT_KEY("endpoint");
+
+/// Default AVS endpoint to connect to.
+static const std::string DEFAULT_ENDPOINT("https://avs-alexa-na.amazon.com");
 
 #ifdef KWD_KITTAI
 /// The sensitivity of the Kitt.ai engine.
@@ -97,16 +107,6 @@ static alexaClientSDK::avsCommon::utils::logger::Level getLogLevelFromUserInput(
     return alexaClientSDK::avsCommon::utils::logger::convertNameToLevel(userInputLogLevel);
 }
 
-/**
- * The interface used to display messages in the console.
- *
- * TODO: g_consolePrinter is a static/global because it is passed by reference to changeSinkLogger() below,
- * which keeps a reference to it for the lifetime of the logging system.  If the logging system is refactoroed to
- * use shared_ptrs (ACSDK-445), the ConsolePrinter can be instantiated as shared_ptr class member and passed to
- * LoggerSinkManager.
- */
-static alexaClientSDK::sampleApp::ConsolePrinter g_consolePrinter;
-
 std::unique_ptr<SampleApplication> SampleApplication::create(
     const std::string& pathToConfig,
     const std::string& pathToInputFolder,
@@ -131,6 +131,9 @@ bool SampleApplication::initialize(
      * Set up the SDK logging system to write to the SampleApp's ConsolePrinter.  Also adjust the logging level
      * if requested.
      */
+    std::shared_ptr<alexaClientSDK::avsCommon::utils::logger::Logger> consolePrinter =
+        std::make_shared<alexaClientSDK::sampleApp::ConsolePrinter>();
+
     if (!logLevel.empty()) {
         auto logLevelValue = getLogLevelFromUserInput(logLevel);
         if (alexaClientSDK::avsCommon::utils::logger::Level::UNKNOWN == logLevelValue) {
@@ -146,9 +149,9 @@ bool SampleApplication::initialize(
         alexaClientSDK::sampleApp::ConsolePrinter::simplePrint(
             "Running app with log level: " +
             alexaClientSDK::avsCommon::utils::logger::convertLevelToName(logLevelValue));
-        g_consolePrinter.setLevel(logLevelValue);
+        consolePrinter->setLevel(logLevelValue);
     }
-    alexaClientSDK::avsCommon::utils::logger::LoggerSinkManager::instance().changeSinkLogger(g_consolePrinter);
+    alexaClientSDK::avsCommon::utils::logger::LoggerSinkManager::instance().initialize(consolePrinter);
 
     /*
      * This is a required step upon startup of the SDK before any modules are created. For that reason, it is being
@@ -164,29 +167,50 @@ bool SampleApplication::initialize(
         return false;
     }
 
-    auto httpContentFetcherFactory = std::make_shared<acl::HTTPContentFetcherFactory>();
+    auto config = alexaClientSDK::avsCommon::utils::configuration::ConfigurationNode::getRoot();
+
+    auto httpContentFetcherFactory = std::make_shared<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory>();
 
     /*
      * Creating the media players. Here, the default GStreamer based MediaPlayer is being created. However, any
      * MediaPlayer that follows the specified MediaPlayerInterface can work.
      */
-    auto speakMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(httpContentFetcherFactory);
+    auto speakMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
+        httpContentFetcherFactory, avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SYNCED);
     if (!speakMediaPlayer) {
         alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Failed to create media player for speech!");
         return false;
     }
 
-    auto audioMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(httpContentFetcherFactory);
+    auto audioMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
+        httpContentFetcherFactory, avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SYNCED);
     if (!audioMediaPlayer) {
         alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Failed to create media player for content!");
         return false;
     }
 
-    auto alertsMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(httpContentFetcherFactory);
+    /*
+     * The ALERTS speaker type will cause volume control to be independent and localized. By assigning this type,
+     * Alerts volume/mute changes will not be in sync with AVS. No directives or events will be associated with volume
+     * control.
+     */
+    auto alertsMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
+        httpContentFetcherFactory, avsCommon::sdkInterfaces::SpeakerInterface::Type::LOCAL);
     if (!alertsMediaPlayer) {
         alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Failed to create media player for alerts!");
         return false;
     }
+
+    /*
+     * Create Speaker interfaces to control the volume. For the SDK, the MediaPlayer happens to also provide
+     * volume control functionality, but this does not have to be case.
+     */
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker =
+        std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface>(speakMediaPlayer);
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker =
+        std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface>(audioMediaPlayer);
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker =
+        std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface>(alertsMediaPlayer);
 
     // Creating the alert storage object to be used for rendering and storing alerts.
     auto alertStorage = std::make_shared<alexaClientSDK::capabilityAgents::alerts::storage::SQLiteAlertStorage>();
@@ -225,6 +249,9 @@ bool SampleApplication::initialize(
             speakMediaPlayer,
             audioMediaPlayer,
             alertsMediaPlayer,
+            speakSpeaker,
+            audioSpeaker,
+            alertsSpeaker,
             authDelegate,
             alertStorage,
             settingsStorage,
@@ -246,7 +273,10 @@ bool SampleApplication::initialize(
         return false;
     }
 
-    client->connect();
+    std::string endpoint;
+    config[SAMPLE_APP_CONFIG_KEY].getString(ENDPOINT_KEY, &endpoint, DEFAULT_ENDPOINT);
+
+    client->connect(endpoint);
 
     if (!connectionObserver->waitFor(avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED)) {
         alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Failed to connect to AVS!");
@@ -256,6 +286,9 @@ bool SampleApplication::initialize(
     client->addSettingObserver("locale", userInterfaceManager);
     // Send default settings set by the user to AVS.
     client->sendDefaultSettings();
+
+    client->addSpeakerManagerObserver(userInterfaceManager);
+
     /*
      * Creating the buffer (Shared Data Stream) that will hold user audio data. This is the main input into the SDK.
      */
@@ -376,6 +409,8 @@ bool SampleApplication::initialize(
     auto interactionManager = std::make_shared<alexaClientSDK::sampleApp::InteractionManager>(
         client, micWrapper, userInterfaceManager, holdToTalkAudioProvider, tapToTalkAudioProvider);
 #endif
+
+    client->addAlexaDialogStateObserver(interactionManager);
 
     // Creating the input observer.
     m_userInputManager = alexaClientSDK::sampleApp::UserInputManager::create(interactionManager);

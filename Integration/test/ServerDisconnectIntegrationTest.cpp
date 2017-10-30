@@ -302,7 +302,7 @@ TEST_F(ServerDisconnectIntegrationTest, testSendEvent) {
 
     ASSERT_TRUE(m_firstAvsCommunication->sendEvent(
         SYNCHRONIZE_STATE_JSON,
-        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT,
         std::chrono::seconds(TIMEOUT_FOR_SEND_IN_SECONDS)));
     m_firstAvsCommunication->disconnect();
 
@@ -312,7 +312,7 @@ TEST_F(ServerDisconnectIntegrationTest, testSendEvent) {
 
     ASSERT_TRUE(m_secondAvsCommunication->sendEvent(
         SYNCHRONIZE_STATE_JSON,
-        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
+        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT,
         std::chrono::seconds(TIMEOUT_FOR_SEND_IN_SECONDS)));
     m_secondAvsCommunication->disconnect();
 }

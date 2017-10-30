@@ -34,7 +34,7 @@
 
 #include "AVSCommon/SDKInterfaces/AuthDelegateInterface.h"
 #include "AVSCommon/SDKInterfaces/ContextManagerInterface.h"
-#include "ACL/Transport/CurlMultiHandleWrapper.h"
+#include "AVSCommon/Utils/LibcurlUtils/CurlMultiHandleWrapper.h"
 #include "ACL/Transport/HTTP2Stream.h"
 #include "ACL/Transport/HTTP2StreamPool.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
@@ -337,7 +337,7 @@ private:
     std::shared_ptr<HTTP2Stream> m_pingStream;
 
     /// Represents a CURL multi handle.
-    std::unique_ptr<CurlMultiHandleWrapper> m_multi;
+    std::unique_ptr<avsCommon::utils::libcurlUtils::CurlMultiHandleWrapper> m_multi;
 
     /// The list of streams that either do not have HTTP response headers, or have outstanding response data.
     std::map<CURL*, std::shared_ptr<HTTP2Stream>> m_activeStreams;

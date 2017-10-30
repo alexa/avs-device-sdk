@@ -22,14 +22,14 @@
 #include <gmock/gmock.h>
 #include <string>
 
-#include "AuthDelegate/HttpPostInterface.h"
+#include "AVSCommon/Utils/LibcurlUtils/HttpPostInterface.h"
 
 namespace alexaClientSDK {
 namespace authDelegate {
 namespace test {
 
 /// Mock HttpPostInterface class
-class MockHttpPost : public HttpPostInterface {
+class MockHttpPost : public avsCommon::utils::libcurlUtils::HttpPostInterface {
 public:
     MOCK_METHOD4(
         doPost,

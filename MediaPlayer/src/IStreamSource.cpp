@@ -54,7 +54,7 @@ std::unique_ptr<IStreamSource> IStreamSource::create(
 };
 
 IStreamSource::IStreamSource(PipelineInterface* pipeline, std::shared_ptr<std::istream> stream, bool repeat) :
-        BaseStreamSource{pipeline},
+        BaseStreamSource{pipeline, "IStreamSource"},
         m_stream{stream},
         m_repeat{repeat} {};
 
@@ -64,6 +64,15 @@ IStreamSource::~IStreamSource() {
 
 bool IStreamSource::isPlaybackRemote() const {
     return false;
+}
+
+bool IStreamSource::hasAdditionalData() {
+    if (!m_repeat) {
+        return false;
+    }
+    m_stream->clear();
+    m_stream->seekg(0);
+    return true;
 }
 
 bool IStreamSource::isOpen() {
@@ -109,7 +118,7 @@ gboolean IStreamSource::handleReadData() {
         ACSDK_WARN(LX("readFailed").d("bad", m_stream->bad()).d("eof", m_stream->eof()));
     } else {
         size = m_stream->gcount();
-        ACSDK_DEBUG9(LX("read").d("size", size).d("eof", m_stream->eof()));
+        ACSDK_DEBUG9(LX("read").d("size", size).d("pos", m_stream->tellg()).d("eof", m_stream->eof()));
     }
 
     gst_buffer_unmap(buffer, &info);

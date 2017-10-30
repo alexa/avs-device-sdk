@@ -190,7 +190,8 @@ void PostConnectSynchronizer::onContextFailure(const ContextRequestError error) 
 
 void PostConnectSynchronizer::onSendCompleted(MessageRequestObserverInterface::Status status) {
     ACSDK_DEBUG(LX("onSendCompleted").d("status", avsCommon::avs::MessageRequest::statusToString(status)));
-    if (status == MessageRequestObserverInterface::Status::SUCCESS) {
+    if (status == MessageRequestObserverInterface::Status::SUCCESS ||
+        status == MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT) {
         {
             std::lock_guard<std::mutex> lock{m_mutex};
             m_isPostConnected = true;

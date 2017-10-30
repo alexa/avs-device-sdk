@@ -278,7 +278,7 @@ void AudioInputProcessor::handleStopCaptureDirective(std::shared_ptr<DirectiveIn
 
 void AudioInputProcessor::handleExpectSpeechDirective(std::shared_ptr<DirectiveInfo> info) {
     int64_t timeout;
-    bool found = avsCommon::utils::json::jsonUtils::lookupInt64Value(
+    bool found = avsCommon::utils::json::jsonUtils::retrieveValue(
         info->directive->getPayload(), "timeoutInMilliseconds", &timeout);
 
     if (!found) {
@@ -454,17 +454,17 @@ bool AudioInputProcessor::executeRecognize(
     // Note that we're preparing to send a Recognize event.
     m_preparingToSend = true;
 
-    //  Start assembling the context; we'll service the callback after assembling our Recognize event.
-    m_contextManager->getContext(shared_from_this());
-
-    // Stop the ExpectSpeech timer so we don't get a timeout.
-    m_expectingSpeechTimer.stop();
-
     // Update state if we're changing wakewords.
     if (!keyword.empty() && m_wakeword != keyword) {
         m_wakeword = keyword;
         executeProvideState();
     }
+
+    //  Start assembling the context; we'll service the callback after assembling our Recognize event.
+    m_contextManager->getContext(shared_from_this());
+
+    // Stop the ExpectSpeech timer so we don't get a timeout.
+    m_expectingSpeechTimer.stop();
 
     // Record provider as the last-used AudioProvider so it can be used in the event of an ExpectSpeech directive.
     m_lastAudioProvider = provider;
@@ -744,6 +744,14 @@ void AudioInputProcessor::onExceptionReceived(const std::string& exceptionMessag
 }
 
 void AudioInputProcessor::onSendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status) {
+    ACSDK_DEBUG(LX("onSendCompleted").d("status", avsCommon::avs::MessageRequest::statusToString(status)));
+
+    if (status == avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS ||
+        status == avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::PENDING) {
+        return;
+    }
+    ACSDK_DEBUG(LX("resetState").d("dueToStatus", avsCommon::avs::MessageRequest::statusToString(status)));
+    resetState();
 }
 
 }  // namespace aip

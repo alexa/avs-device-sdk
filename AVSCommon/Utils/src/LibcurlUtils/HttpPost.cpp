@@ -15,13 +15,14 @@
  * permissions and limitations under the License.
  */
 
+#include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
-#include "AuthDelegate/HttpPost.h"
-
 namespace alexaClientSDK {
-namespace authDelegate {
+namespace avsCommon {
+namespace utils {
+namespace libcurlUtils {
 
 using namespace alexaClientSDK::avsCommon::utils;
 
@@ -135,5 +136,7 @@ size_t HttpPost::staticWriteCallbackLocked(char* ptr, size_t size, size_t nmemb,
     return count;
 }
 
-}  // namespace authDelegate
+}  // namespace libcurlUtils
+}  // namespace utils
+}  // namespace avsCommon
 }  // namespace alexaClientSDK

@@ -13,8 +13,10 @@ target_link_libraries(DefaultClient
     AIP 
     Alerts
     PlaybackController
+    SpeakerManager
     SpeechSynthesizer
     Settings
+    TemplateRuntime
     AudioPlayer
     AVSSystem
     ContextManager)

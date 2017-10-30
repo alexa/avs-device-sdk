@@ -29,7 +29,12 @@ add_library(AVSCommon SHARED
     Utils/src/Executor.cpp
     Utils/src/FileUtils.cpp
     Utils/src/JSONUtils.cpp
-    Utils/src/LibcurlUtils.cpp
+    Utils/src/LibcurlUtils/CurlEasyHandleWrapper.cpp
+    Utils/src/LibcurlUtils/CurlMultiHandleWrapper.cpp
+    Utils/src/LibcurlUtils/HTTPContentFetcherFactory.cpp
+    Utils/src/LibcurlUtils/HttpPost.cpp
+    Utils/src/LibcurlUtils/LibCurlHttpContentFetcher.cpp
+    Utils/src/LibcurlUtils/LibcurlUtils.cpp
     Utils/src/Logger/ConsoleLogger.cpp
     Utils/src/Logger/Level.cpp
     Utils/src/Logger/LogEntry.cpp

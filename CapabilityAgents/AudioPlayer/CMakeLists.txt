@@ -4,4 +4,4 @@ project(AudioPlayer LANGUAGES CXX)
 include(../../build/BuildDefaults.cmake)
 
 add_subdirectory("src")
-add_subdirectory("test")
+acsdk_add_test_subdirectory_if_allowed()

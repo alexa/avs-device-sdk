@@ -59,7 +59,7 @@ AttachmentReaderSource::~AttachmentReaderSource() {
 AttachmentReaderSource::AttachmentReaderSource(
     PipelineInterface* pipeline,
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader) :
-        BaseStreamSource{pipeline},
+        BaseStreamSource{pipeline, "AttachmentReaderSource"},
         m_reader{reader} {};
 
 bool AttachmentReaderSource::isPlaybackRemote() const {

@@ -22,18 +22,19 @@
 
 #include <gtest/gtest.h>
 
-#include <curl/curl.h>
-#include <ACL/Transport/HTTP2Stream.h>
 #include "ACL/Transport/MessageConsumerInterface.h"
+#include <ACL/Transport/HTTP2Stream.h>
 #include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
+#include <curl/curl.h>
 
 #include "Common/TestableAttachmentManager.h"
 
-#include "TestableConsumer.h"
-#include "MockMessageRequest.h"
 #include "Common/Common.h"
 #include "Common/MimeUtils.h"
 #include "Common/TestableMessageObserver.h"
+#include "MockMessageRequest.h"
+#include "TestableConsumer.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -42,11 +43,23 @@ namespace test {
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs::attachment;
 
+/// String to identify log entries originating from this file.
+static const std::string TAG("TestableMessageObserver");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
 /// The size of the data for directive and attachments we will use.
 static const int TEST_DATA_SIZE = 100;
-/// The number of segments that the MIME string will be broken into during simple testing.
+/// The number of segments that the MIME string will be broken into during
+/// simple testing.
 static const int TEST_MULTI_WRITE_ITERATIONS = 4;
-/// An upper bound that the feedParser logic may use to ensure we don't loop infinitely.
+/// An upper bound that the feedParser logic may use to ensure we don't loop
+/// infinitely.
 static const int TEST_MULTI_MAX_ITERATIONS = 100;
 /// A test context id.
 static const std::string TEST_CONTEXT_ID = "TEST_CONTEXT_ID";
@@ -58,6 +71,19 @@ static const std::string TEST_CONTENT_ID_02 = "TEST_CONTENT_ID_02";
 static const std::string TEST_CONTENT_ID_03 = "TEST_CONTENT_ID_03";
 /// A test boundary string, copied from a real interaction with AVS.
 static const std::string MIME_TEST_BOUNDARY_STRING = "84109348-943b-4446-85e6-e73eda9fac43";
+/// The newline characters that MIME parsers expect.
+static const std::string MIME_NEWLINE = "\r\n";
+/// The double dashes which may occur before and after a boundary string.
+static const std::string MIME_BOUNDARY_DASHES = "--";
+
+static const std::string TEST_MESSAGE =
+    "{\"directive\":{\"header\":{\"namespace\":\"SpeechRecognizer\",\"name\":"
+    "\"StopCapture\",\"messageId\":\"4e5612af-e05c-4611-8910-1e23f47ffb41\"},"
+    "\"payload\":{}}}";
+
+static const std::string TEST_MIME_TEXT = "Content-Type: application/json" + MIME_NEWLINE + MIME_NEWLINE +
+                                          TEST_MESSAGE + MIME_NEWLINE + MIME_BOUNDARY_DASHES +
+                                          MIME_TEST_BOUNDARY_STRING;
 
 /**
  * Our GTest class.
@@ -80,16 +106,19 @@ public:
     }
 
     /**
-     * A utility function to feed data into our MimeParser object.  A result of this function is that the MimeParser
-     * object will route Directives and Attachments to the appropriate objects as they are broken out of the
+     * A utility function to feed data into our MimeParser object.  A result of
+     * this function is that the MimeParser object will route Directives and
+     * Attachments to the appropriate objects as they are broken out of the
      * aggregate MIME string.
      *
      * @param data The MIME string to be parsed.
-     * @param numberIterations The number of segments the MIME string is to be broken into, and then fed to the parser.
+     * @param numberIterations The number of segments the MIME string is to be
+     * broken into, and then fed to the parser.
      */
     void feedParser(const std::string& data, int numberIterations = 1) {
-        // Here we're simulating an ACL stream.  We've got a mime string that we will feed to the mime parser in chunks.
-        // If any chunk fails (due to simulated attachment failing to write), we will re-drive it.
+        // Here we're simulating an ACL stream.  We've got a mime string that we
+        // will feed to the mime parser in chunks. If any chunk fails (due to
+        // simulated attachment failing to write), we will re-drive it.
 
         int writeQuantum = data.length();
         if (numberIterations > 1) {
@@ -112,7 +141,8 @@ public:
     }
 
     /**
-     * A utility function to validate that each MimePart we're tracking was received ok at its expected destination.
+     * A utility function to validate that each MimePart we're tracking was
+     * received ok at its expected destination.
      */
     void validateMimePartsParsedOk() {
         for (auto mimePart : m_mimeParts) {
@@ -133,10 +163,12 @@ public:
 };
 
 /**
- * Test feeding a MIME string to the parser in a single pass which only contains a JSON message.
+ * Test feeding a MIME string to the parser in a single pass which only contains
+ * a JSON message.
  */
 TEST_F(MimeParserTest, testDirectiveReceivedSingleWrite) {
-    m_mimeParts.push_back(std::make_shared<TestMimeJsonPart>(TEST_DATA_SIZE, m_testableMessageObserver));
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(MIME_TEST_BOUNDARY_STRING, TEST_DATA_SIZE, m_testableMessageObserver));
 
     auto mimeString = constructTestMimeString(m_mimeParts, MIME_TEST_BOUNDARY_STRING);
     feedParser(mimeString);
@@ -145,10 +177,12 @@ TEST_F(MimeParserTest, testDirectiveReceivedSingleWrite) {
 }
 
 /**
- * Test feeding a MIME string to the parser in multiple passes which only contains a JSON message.
+ * Test feeding a MIME string to the parser in multiple passes which only
+ * contains a JSON message.
  */
 TEST_F(MimeParserTest, testDirectiveReceivedMultiWrite) {
-    m_mimeParts.push_back(std::make_shared<TestMimeJsonPart>(TEST_DATA_SIZE, m_testableMessageObserver));
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(MIME_TEST_BOUNDARY_STRING, TEST_DATA_SIZE, m_testableMessageObserver));
 
     auto mimeString = constructTestMimeString(m_mimeParts, MIME_TEST_BOUNDARY_STRING);
     feedParser(mimeString, TEST_MULTI_WRITE_ITERATIONS);
@@ -157,11 +191,12 @@ TEST_F(MimeParserTest, testDirectiveReceivedMultiWrite) {
 }
 
 /**
- * Test feeding a MIME string to the parser in a single pass which only contains a binary attachment message.
+ * Test feeding a MIME string to the parser in a single pass which only contains
+ * a binary attachment message.
  */
 TEST_F(MimeParserTest, testAttachmentReceivedSingleWrite) {
     m_mimeParts.push_back(std::make_shared<TestMimeAttachmentPart>(
-        TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
+        MIME_TEST_BOUNDARY_STRING, TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
 
     auto mimeString = constructTestMimeString(m_mimeParts, MIME_TEST_BOUNDARY_STRING);
     feedParser(mimeString);
@@ -170,11 +205,12 @@ TEST_F(MimeParserTest, testAttachmentReceivedSingleWrite) {
 }
 
 /**
- * Test feeding a MIME string to the parser in multiple passes which only contains a binary attachment message.
+ * Test feeding a MIME string to the parser in multiple passes which only
+ * contains a binary attachment message.
  */
 TEST_F(MimeParserTest, testAttachmentReceivedMultiWrite) {
     m_mimeParts.push_back(std::make_shared<TestMimeAttachmentPart>(
-        TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
+        MIME_TEST_BOUNDARY_STRING, TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
 
     auto mimeString = constructTestMimeString(m_mimeParts, MIME_TEST_BOUNDARY_STRING);
     feedParser(mimeString, TEST_MULTI_WRITE_ITERATIONS);
@@ -183,13 +219,14 @@ TEST_F(MimeParserTest, testAttachmentReceivedMultiWrite) {
 }
 
 /**
- * Test feeding a MIME string to the parser in a single pass which contains a JSON message followed by
- * a binary attachment message.
+ * Test feeding a MIME string to the parser in a single pass which contains a
+ * JSON message followed by a binary attachment message.
  */
 TEST_F(MimeParserTest, testDirectiveAndAttachmentReceivedSingleWrite) {
-    m_mimeParts.push_back(std::make_shared<TestMimeJsonPart>(TEST_DATA_SIZE, m_testableMessageObserver));
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(MIME_TEST_BOUNDARY_STRING, TEST_DATA_SIZE, m_testableMessageObserver));
     m_mimeParts.push_back(std::make_shared<TestMimeAttachmentPart>(
-        TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
+        MIME_TEST_BOUNDARY_STRING, TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
 
     auto mimeString = constructTestMimeString(m_mimeParts, MIME_TEST_BOUNDARY_STRING);
     feedParser(mimeString);
@@ -198,16 +235,34 @@ TEST_F(MimeParserTest, testDirectiveAndAttachmentReceivedSingleWrite) {
 }
 
 /**
- * Test feeding a MIME string to the parser in multiple passes which contains a JSON message followed by
- * a binary attachment message.
+ * Test feeding a MIME string to the parser in multiple passes which contains a
+ * JSON message followed by a binary attachment message.
  */
 TEST_F(MimeParserTest, testDirectiveAndAttachmentReceivedMultiWrite) {
-    m_mimeParts.push_back(std::make_shared<TestMimeJsonPart>(TEST_DATA_SIZE, m_testableMessageObserver));
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(MIME_TEST_BOUNDARY_STRING, TEST_DATA_SIZE, m_testableMessageObserver));
     m_mimeParts.push_back(std::make_shared<TestMimeAttachmentPart>(
-        TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
+        MIME_TEST_BOUNDARY_STRING, TEST_CONTEXT_ID, TEST_CONTENT_ID_01, TEST_DATA_SIZE, m_attachmentManager));
 
     auto mimeString = constructTestMimeString(m_mimeParts, MIME_TEST_BOUNDARY_STRING);
     feedParser(mimeString, TEST_MULTI_WRITE_ITERATIONS);
+
+    validateMimePartsParsedOk();
+}
+
+/**
+ * Test providing a mime part as text.
+ */
+TEST_F(MimeParserTest, testExplicitMimeText) {
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(MIME_TEST_BOUNDARY_STRING, TEST_DATA_SIZE, m_testableMessageObserver));
+    m_mimeParts.push_back(std::make_shared<TestMimeJsonPart>(TEST_MIME_TEXT, TEST_MESSAGE, m_testableMessageObserver));
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(MIME_TEST_BOUNDARY_STRING, TEST_DATA_SIZE, m_testableMessageObserver));
+
+    auto mimeString = constructTestMimeString(m_mimeParts, MIME_TEST_BOUNDARY_STRING);
+    ACSDK_INFO(LX("testDuplicateBoundary").d("mimeString", mimeString));
+    feedParser(mimeString);
 
     validateMimePartsParsedOk();
 }

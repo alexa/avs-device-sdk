@@ -34,6 +34,7 @@
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/PlaybackControllerInterface.h>
 #include <AVSCommon/SDKInterfaces/SingleSettingObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <CertifiedSender/CertifiedSender.h>
 #include <CertifiedSender/SQLiteMessageStorage.h>
@@ -41,6 +42,8 @@
 #include <Settings/SettingsStorageInterface.h>
 #include <Settings/Settings.h>
 #include <Settings/SettingsUpdatedEventSender.h>
+#include <SpeakerManager/SpeakerManager.h>
+#include <TemplateRuntime/TemplateRuntime.h>
 
 namespace alexaClientSDK {
 namespace defaultClient {
@@ -61,6 +64,9 @@ public:
      * @param speakMediaPlayer The media player to use to play Alexa speech from.
      * @param audioMediaPlayer The media player to use to play Alexa audio content from.
      * @param alertsMediaPlayer The media player to use to play alerts from.
+     * @param speakSpeaker The speaker to control volume of Alexa speech.
+     * @param audioSpeaker The speaker to control volume of Alexa audio content.
+     * @param alertsSpeaker The speaker to control volume of alerts.
      * @param authDelegate The component that provides the client with valid LWA authorization.
      * @Param alertStorage The storage interface that will be used to store alerts.
      * @param alexaDialogStateObservers Observers that can be used to be notified of Alexa dialog related UX state
@@ -76,6 +82,9 @@ public:
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
         std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
@@ -142,6 +151,36 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer);
 
     /**
+     * Adds an observer to be notified of alert state changes.
+     *
+     * @param observer The observer to add.
+     */
+    void addAlertsObserver(std::shared_ptr<capabilityAgents::alerts::AlertObserverInterface> observer);
+
+    /**
+     * Removes an observer to be notified of alert state changes.
+     *
+     * @param observer The observer to remove.
+     */
+    void removeAlertsObserver(std::shared_ptr<capabilityAgents::alerts::AlertObserverInterface> observer);
+
+    /**
+     * Adds an observer to be notified when a TemplateRuntime directive is received.
+     *
+     * @param observer The observer to add.
+     */
+    void addTemplateRuntimeObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface> observer);
+
+    /**
+     * Removes an observer to be notified when a TemplateRuntime directive is received.
+     *
+     * @param observer The observer to remove.
+     */
+    void removeTemplateRuntimeObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface> observer);
+
+    /**
      * Adds an observer to a single setting to be notified of that setting change.
      *
      * @param key The name of the setting.
@@ -182,6 +221,28 @@ public:
      * @note The reference returned by this function is only valid during the lifetime of the DefaultClient instance.
      */
     avsCommon::sdkInterfaces::PlaybackControllerInterface& getPlaybackControllerInterface() const;
+
+    /**
+     * Adds a SpeakerManagerObserver to be alerted when the volume and mute changes.
+     *
+     * @param observer The observer to be notified upon volume and mute changes.
+     */
+    void addSpeakerManagerObserver(std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerObserverInterface> observer);
+
+    /**
+     * Removes a SpeakerManagerObserver from being alerted when the volume and mute changes.
+     *
+     * @param observer The observer to be notified upon volume and mute changes.
+     */
+    void removeSpeakerManagerObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerObserverInterface> observer);
+
+    /**
+     * Get a shared_ptr to the SpeakerManager.
+     *
+     * @return shared_ptr to the SpeakerManager.
+     */
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> getSpeakerManager();
 
     /**
      * Begins a wake word initiated Alexa interaction.
@@ -228,6 +289,15 @@ public:
     std::future<bool> notifyOfHoldToTalkEnd();
 
     /**
+     * Ends a tap to talk interaction by forcing the client to stop streaming audio data to the cloud and ending any
+     * currently ongoing recognize interactions.
+     *
+     * @return A future indicating whether audio streaming was successfully stopped. This can be false if this was
+     * called in the wrong state.
+     */
+    std::future<bool> notifyOfTapToTalkEnd();
+
+    /**
      * Destructor.
      */
     ~DefaultClient();
@@ -239,6 +309,9 @@ private:
      * @param speakMediaPlayer The media player to use to play Alexa speech from.
      * @param audioMediaPlayer The media player to use to play Alexa audio content from.
      * @param alertsMediaPlayer The media player to use to play alerts from.
+     * @param speakSpeaker The speaker to control volume of Alexa speech.
+     * @param audioSpeaker The speaker to control volume of Alexa audio content.
+     * @param alertsSpeaker The speaker to control volume of alerts.
      * @param authDelegate The component that provides the client with valid LWA authorization.
      * @Param alertStorage The storage interface that will be used to store alerts.
      * @param alexaDialogStateObservers Observers that can be used to be notified of Alexa dialog related UX state
@@ -250,6 +323,9 @@ private:
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
         std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
@@ -293,6 +369,12 @@ private:
 
     /// The settings object.
     std::shared_ptr<capabilityAgents::settings::Settings> m_settings;
+
+    /// The speakerManager. Used for controlling the volume and mute settings of @c SpeakerInterface objects.
+    std::shared_ptr<capabilityAgents::speakerManager::SpeakerManager> m_speakerManager;
+
+    /// The TemplateRuntime capability agent.
+    std::shared_ptr<capabilityAgents::templateRuntime::TemplateRuntime> m_templateRuntime;
 };
 
 }  // namespace defaultClient

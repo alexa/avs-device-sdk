@@ -98,7 +98,7 @@ bool SQLiteSettingStorage::open(const std::string& filePath) {
     }
 
     if (!fileExists(filePath)) {
-        ACSDK_ERROR(LX("openFailed").d("reason", "FileAlreadyExists").d("FilePath", filePath));
+        ACSDK_DEBUG(LX("openFailed").d("reason", "FileDoesNotExist").d("FilePath", filePath));
         return false;
     }
 

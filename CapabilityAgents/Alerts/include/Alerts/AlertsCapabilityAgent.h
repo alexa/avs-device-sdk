@@ -184,12 +184,6 @@ private:
     void executeHandleDirectiveImmediately(std::shared_ptr<DirectiveInfo> info);
 
     /**
-     * A handler function which will be called by our internal executor when we are de-registered from
-     * receiving directives.
-     */
-    void executeOnDeregistered();
-
-    /**
      * A handler function which will be called by our internal executor when the connection status changes.
      *
      * @param status The connection status.

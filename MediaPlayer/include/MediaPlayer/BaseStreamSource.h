@@ -36,8 +36,9 @@ public:
      * Constructor.
      *
      * @param pipeline The @c PipelineInterface through which the source of the @c AudioPipeline may be set.
+     * @param className The name of the class to be passed to @c RequiresShutdown.
      */
-    BaseStreamSource(PipelineInterface* pipeline);
+    BaseStreamSource(PipelineInterface* pipeline, const std::string& className);
 
     ~BaseStreamSource() override;
 

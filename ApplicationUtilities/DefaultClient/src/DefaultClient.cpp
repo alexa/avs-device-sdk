@@ -44,6 +44,9 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
     std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
     std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
@@ -56,6 +59,9 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             speakMediaPlayer,
             audioMediaPlayer,
             alertsMediaPlayer,
+            speakSpeaker,
+            audioSpeaker,
+            alertsSpeaker,
             authDelegate,
             alertStorage,
             settingsStorage,
@@ -71,6 +77,9 @@ bool DefaultClient::initialize(
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
     std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
     std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
@@ -298,6 +307,27 @@ bool DefaultClient::initialize(
     }
 
     /*
+     * Creating the SpeakerManager Capability Agent - This component is the Capability Agent that implements the
+     * Speaker interface of AVS.
+     */
+    m_speakerManager = capabilityAgents::speakerManager::SpeakerManager::create(
+        {speakSpeaker, audioSpeaker, alertsSpeaker}, contextManager, m_connectionManager, exceptionSender);
+    if (!m_speakerManager) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSpeakerManager"));
+        return false;
+    }
+
+    /*
+     * Creating the TemplateRuntime Capability Agent - This component is the Capability Agent that implements the
+     * TemplateRuntime interface of AVS.
+     */
+    m_templateRuntime = capabilityAgents::templateRuntime::TemplateRuntime::create(m_audioPlayer, exceptionSender);
+    if (!m_templateRuntime) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateTemplateRuntimeCapabilityAgent"));
+        return false;
+    }
+
+    /*
      * Creating the Endpoint Handler - This component is responsible for handling directives from AVS instructing the
      * client to change the endpoint to connect to.
      */
@@ -352,6 +382,19 @@ bool DefaultClient::initialize(
         return false;
     }
 
+    if (!m_directiveSequencer->addDirectiveHandler(m_speakerManager)) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterDirectiveHandler")
+                        .d("directiveHandler", "SpeakerManager"));
+        return false;
+    }
+
+    if (!m_directiveSequencer->addDirectiveHandler(m_templateRuntime)) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterDirectiveHandler")
+                        .d("directiveHandler", "TemplateRuntime"));
+        return false;
+    }
     return true;
 }
 
@@ -388,6 +431,24 @@ void DefaultClient::removeConnectionObserver(
     m_connectionManager->removeConnectionStatusObserver(observer);
 }
 
+void DefaultClient::addAlertsObserver(std::shared_ptr<capabilityAgents::alerts::AlertObserverInterface> observer) {
+    m_alertsCapabilityAgent->addObserver(observer);
+}
+
+void DefaultClient::removeAlertsObserver(std::shared_ptr<capabilityAgents::alerts::AlertObserverInterface> observer) {
+    m_alertsCapabilityAgent->removeObserver(observer);
+}
+
+void DefaultClient::addTemplateRuntimeObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface> observer) {
+    m_templateRuntime->addObserver(observer);
+}
+
+void DefaultClient::removeTemplateRuntimeObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface> observer) {
+    m_templateRuntime->removeObserver(observer);
+}
+
 void DefaultClient::addSettingObserver(
     const std::string& key,
     std::shared_ptr<avsCommon::sdkInterfaces::SingleSettingObserverInterface> observer) {
@@ -410,6 +471,20 @@ void DefaultClient::sendDefaultSettings() {
 
 avsCommon::sdkInterfaces::PlaybackControllerInterface& DefaultClient::getPlaybackControllerInterface() const {
     return *m_playbackController;
+}
+
+void DefaultClient::addSpeakerManagerObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerObserverInterface> observer) {
+    m_speakerManager->addSpeakerManagerObserver(observer);
+}
+
+void DefaultClient::removeSpeakerManagerObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerObserverInterface> observer) {
+    m_speakerManager->removeSpeakerManagerObserver(observer);
+}
+
+std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> DefaultClient::getSpeakerManager() {
+    return m_speakerManager;
 }
 
 std::future<bool> DefaultClient::notifyOfWakeWord(
@@ -435,9 +510,19 @@ std::future<bool> DefaultClient::notifyOfHoldToTalkEnd() {
     return m_audioInputProcessor->stopCapture();
 }
 
+std::future<bool> DefaultClient::notifyOfTapToTalkEnd() {
+    return m_audioInputProcessor->stopCapture();
+}
+
 DefaultClient::~DefaultClient() {
     if (m_directiveSequencer) {
         m_directiveSequencer->shutdown();
+    }
+    if (m_speakerManager) {
+        m_speakerManager->shutdown();
+    }
+    if (m_templateRuntime) {
+        m_templateRuntime->shutdown();
     }
     if (m_audioInputProcessor) {
         m_audioInputProcessor->shutdown();

@@ -143,16 +143,6 @@ bool findNode(
     return true;
 }
 
-// TODO: ACSDK-382  Remove and replace references with the template retrieveValue function
-bool lookupStringValue(const std::string& jsonContent, const std::string& key, std::string* value) {
-    return retrieveValue(jsonContent, key, value);
-}
-
-// TODO: ACSDK-382 Remove and replace references with the template retrieveValue function
-bool lookupInt64Value(const std::string& jsonContent, const std::string& key, int64_t* value) {
-    return retrieveValue(jsonContent, key, value);
-}
-
 // Overloads of convertToValue
 
 bool convertToValue(const rapidjson::Value& documentNode, std::string* value) {
@@ -193,6 +183,22 @@ bool convertToValue(const rapidjson::Value& documentNode, int64_t* value) {
     }
 
     *value = documentNode.GetInt64();
+
+    return true;
+}
+
+bool convertToValue(const rapidjson::Value& documentNode, bool* value) {
+    if (!value) {
+        ACSDK_ERROR(LX("convertToBoolValueFailed").d("reason", "nullValue"));
+        return false;
+    }
+
+    if (!documentNode.IsBool()) {
+        ACSDK_ERROR(LX("convertToBoolValueFailed").d("reason", "invalidValue").d("expectedValue", "Bool"));
+        return false;
+    }
+
+    *value = documentNode.GetBool();
 
     return true;
 }

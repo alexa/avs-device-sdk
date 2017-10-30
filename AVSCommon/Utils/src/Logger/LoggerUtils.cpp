@@ -15,10 +15,12 @@
  * permissions and limitations under the License.
  */
 
+#include <cstdio>
+#include <iomanip>
+#include <iostream>
+
 #include "AVSCommon/Utils/Logger/LoggerUtils.h"
 #include "AVSCommon/Utils/Logger/Logger.h"
-
-#include <cstdio>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -145,6 +147,50 @@ std::string formatLogString(
                  << MILLIS_AND_THREAD_SEPARATOR << threadMoniker << THREAD_AND_LEVEL_SEPARATOR
                  << convertLevelToChar(level) << LEVEL_AND_TEXT_SEPARATOR << text;
     return stringToEmit.str();
+}
+
+void dumpBytesToStream(std::ostream& stream, const char* prefix, size_t width, const unsigned char* data, size_t size) {
+    std::ios incomingFormat(nullptr);
+    incomingFormat.copyfmt(stream);
+
+    stream << std::hex << std::right << std::setfill('0');
+
+    for (size_t ix = 0; ix < size; ix += width) {
+        // Output byte offset for this row.
+        stream << prefix << std::setw(8) << ix;
+        stream << " : ";
+
+        // Output bytes for this row in hex.
+        auto columnLimit = ix + width;
+        auto byteLimit = columnLimit < size ? columnLimit : size;
+        for (size_t iy = ix; iy < columnLimit; iy++) {
+            if (iy < byteLimit) {
+                stream << std::setw(2) << static_cast<unsigned int>(data[iy]);
+            } else {
+                stream << "  ";
+            }
+            // Split the output in to 4 byte (8 hex digit) wide columns.
+            if ((iy < columnLimit - 1) && (iy & 0x03) == 0x03) {
+                stream << " ";
+            }
+        }
+
+        stream << " : ";
+
+        // Output bytes as visible characters.
+        for (size_t iy = ix; iy < byteLimit; iy++) {
+            auto ch = data[iy];
+            if (std::isprint(ch)) {
+                stream << ch;
+            } else {
+                stream << '.';
+            }
+        }
+
+        stream << std::endl;
+    }
+
+    stream.copyfmt(incomingFormat);
 }
 
 }  // namespace logger

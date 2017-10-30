@@ -108,7 +108,7 @@ void EndpointHandler::handleDirective(std::shared_ptr<avsCommon::avs::Capability
         return;
     }
     std::string newEndpoint;
-    if (!jsonUtils::lookupStringValue(info->directive->getPayload(), ENDPOINT_PAYLOAD_KEY, &newEndpoint)) {
+    if (!jsonUtils::retrieveValue(info->directive->getPayload(), ENDPOINT_PAYLOAD_KEY, &newEndpoint)) {
         ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "payloadMissingEndpointKey"));
         removeDirectiveGracefully(info, true, "payloadMissingEndpointKey");
     } else {

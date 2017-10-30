@@ -400,12 +400,14 @@ protected:
      * @param eventNameSpace Namespace if the Name of the event to send.
      * @param dialogRequestID DialogRequestID to use to send the event.
      * @param token Token to be added to the event payload.
+     * @param expectedStatus MessageRequest status to expect after sending the event
      */
     void sendEventWithToken(
         const std::string& eventName,
         const std::string& eventNameSpace,
         const std::string& dialogRequestID,
-        std::string token) {
+        std::string token,
+        MessageRequestObserverInterface::Status expectedStatus) {
         rapidjson::Document payload(rapidjson::kObjectType);
         payload.AddMember(TOKEN_KEY, token, payload.GetAllocator());
 
@@ -414,11 +416,7 @@ protected:
         ASSERT_TRUE(payload.Accept(writer));
 
         auto event = buildJsonEventString(eventNameSpace, eventName, dialogRequestID, buffer.GetString());
-        sendEvent(
-            event.second,
-            nullptr,
-            avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
-            std::chrono::seconds(SEND_EVENT_TIMEOUT_DURATION));
+        sendEvent(event.second, nullptr, expectedStatus, std::chrono::seconds(SEND_EVENT_TIMEOUT_DURATION));
     }
 
     /// Object to monitor the status of the authorization to communicate with @c AVS.
@@ -465,10 +463,9 @@ bool getToken(TestDirectiveHandler::DirectiveParams params, std::string& returnT
     std::string directiveString;
     std::string directivePayload;
     std::string directiveToken;
-    jsonUtils::lookupStringValue(
-        params.directive->getUnparsedDirective(), JSON_MESSAGE_DIRECTIVE_KEY, &directiveString);
-    jsonUtils::lookupStringValue(directiveString, JSON_MESSAGE_PAYLOAD_KEY, &directivePayload);
-    return jsonUtils::lookupStringValue(directivePayload, JSON_MESSAGE_TOKEN_KEY, &returnToken);
+    jsonUtils::retrieveValue(params.directive->getUnparsedDirective(), JSON_MESSAGE_DIRECTIVE_KEY, &directiveString);
+    jsonUtils::retrieveValue(directiveString, JSON_MESSAGE_PAYLOAD_KEY, &directivePayload);
+    return jsonUtils::retrieveValue(directivePayload, JSON_MESSAGE_TOKEN_KEY, &returnToken);
 }
 
 /**
@@ -675,6 +672,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithoutADialogRequestID)
     // Send audio of "Set a timer for 5 seconds" that will prompt a Speak.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
     std::string file = inputPath + RECOGNIZE_TIMER_AUDIO_FILE_NAME;
+
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
@@ -697,7 +695,13 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithoutADialogRequestID)
                 ASSERT_TRUE(prehandleSpeakFound);
                 ASSERT_TRUE(getToken(params, token));
                 // Send speechFinished to prompt the cloud to send setAlert which does not have a DialogRequestID.
-                sendEventWithToken(NAME_SPEECH_FINISHED, NAMESPACE_SPEECH_SYNTHESIZER, FIRST_DIALOG_REQUEST_ID, token);
+
+                sendEventWithToken(
+                    NAME_SPEECH_FINISHED,
+                    NAMESPACE_SPEECH_SYNTHESIZER,
+                    FIRST_DIALOG_REQUEST_ID,
+                    token,
+                    MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT);
             }
         } else {
             ASSERT_EQ(params.directive->getName(), NAME_SET_ALERT);
@@ -713,9 +717,13 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithoutADialogRequestID)
         params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     }
     ASSERT_TRUE(handleAlertFound);
-
     // Send setAlertFailed to clean up the alert on the cloud side.
-    sendEventWithToken(NAME_SET_ALERT_FAILED, NAMESPACE_ALERTS, FIRST_DIALOG_REQUEST_ID, token);
+    sendEventWithToken(
+        NAME_SET_ALERT_FAILED,
+        NAMESPACE_ALERTS,
+        FIRST_DIALOG_REQUEST_ID,
+        token,
+        MessageRequestObserverInterface::Status::SUCCESS);
 
     params = directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     while (!params.isTimeout()) {
@@ -1117,7 +1125,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, getAttachmentWithContentId) {
 
     auto directive = params.directive;
     std::string payloadUrl;
-    jsonUtils::lookupStringValue(directive->getPayload(), "url", &payloadUrl);
+    jsonUtils::retrieveValue(directive->getPayload(), "url", &payloadUrl);
     ASSERT_TRUE(!payloadUrl.empty());
 
     auto stringIndex = payloadUrl.find(":");

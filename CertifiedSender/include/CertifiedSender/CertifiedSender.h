@@ -27,8 +27,8 @@
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
+#include <deque>
 #include <memory>
-#include <queue>
 
 namespace alexaClientSDK {
 namespace certifiedSender {
@@ -120,6 +120,11 @@ private:
          */
         int getDbId();
 
+        /**
+         * A function that allows early exit of the message sending logic.
+         */
+        void shutdown();
+
     private:
         /// The status of whether the message was sent to AVS ok.
         avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status m_sendMessageStatus;
@@ -131,6 +136,8 @@ private:
         std::condition_variable m_cv;
         /// The database id associated with this @c MessageRequest.
         int m_dbId;
+        /// A control so we may allow the message to stop waiting to be sent.
+        bool m_isShuttingDown;
     };
 
     /**
@@ -193,10 +200,13 @@ private:
     bool m_isConnected;
 
     /// Our queue of requests that should be sent.
-    std::queue<std::shared_ptr<CertifiedMessageRequest>> m_messagesToSend;
+    std::deque<std::shared_ptr<CertifiedMessageRequest>> m_messagesToSend;
 
     /// The entity which actually sends the messages to AVS.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
+
+    /// The message currently being sent.
+    std::shared_ptr<CertifiedMessageRequest> m_currentMessage;
 
     // The connection object we are observing.
     std::shared_ptr<avsCommon::avs::AbstractConnection> m_connection;

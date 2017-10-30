@@ -20,14 +20,24 @@
 
 #include "MediaPlayer/PipelineInterface.h"
 
+#include <AVSCommon/Utils/RequiresShutdown.h>
+
 namespace alexaClientSDK {
 namespace mediaPlayer {
 
 /**
  * Interface to request operations on an audio source.
  */
-class SourceInterface {
+class SourceInterface : public avsCommon::utils::RequiresShutdown {
 public:
+    /**
+     * Constructor, which also constructs RequiresShutdown.
+     *
+     * @param className The name of the class to be passed to @c RequiresShutdown.
+     */
+    SourceInterface(const std::string& className) : RequiresShutdown(className) {
+    }
+
     /**
      * Destructor.
      */
@@ -62,11 +72,6 @@ public:
      * @return A boolean indicating whether the source is from a remote or local source
      */
     virtual bool isPlaybackRemote() const = 0;
-
-    /*
-     * Indicates that this source should no longer try to play any audio.
-     */
-    virtual void terminate() = 0;
 };
 
 }  // namespace mediaPlayer

@@ -63,6 +63,7 @@ UrlSource::UrlSource(
     PipelineInterface* pipeline,
     std::shared_ptr<PlaylistParserInterface> playlistParser,
     const std::string& url) :
+        SourceInterface("UrlSource"),
         m_url{url},
         m_playlistParser{playlistParser},
         m_hasReceivedAPlaylistCallback{false},
@@ -174,12 +175,19 @@ void UrlSource::onPlaylistEntryParsed(
     }
 }
 
-void UrlSource::terminate() {
-    ACSDK_DEBUG9(LX("terminateCalled"));
-    std::lock_guard<std::mutex> lock{m_mutex};
+void UrlSource::doShutdown() {
+    ACSDK_DEBUG9(LX("shutdownCalled"));
+    std::unique_lock<std::mutex> lock{m_mutex};
+    auto ptr = m_playlistParser;
     if (m_isValid) {
         m_isValid = false;
     }
+    m_playlistParser.reset();
+    /*
+     * Make sure the m_playlistParser pointer is reset while not holding the lock to avoid potential deadlocks.
+     */
+    lock.unlock();
+    ptr.reset();
 }
 
 }  // namespace mediaPlayer

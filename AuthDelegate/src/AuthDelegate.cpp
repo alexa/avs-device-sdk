@@ -25,10 +25,10 @@
 
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
+#include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "AuthDelegate/AuthDelegate.h"
-#include "AuthDelegate/HttpPost.h"
 
 namespace alexaClientSDK {
 namespace authDelegate {
@@ -215,10 +215,11 @@ static std::chrono::steady_clock::time_point calculateTimeToRetry(int retryCount
 }
 
 std::unique_ptr<AuthDelegate> AuthDelegate::create() {
-    return AuthDelegate::create(HttpPost::create());
+    return AuthDelegate::create(avsCommon::utils::libcurlUtils::HttpPost::create());
 }
 
-std::unique_ptr<AuthDelegate> AuthDelegate::create(std::unique_ptr<HttpPostInterface> httpPost) {
+std::unique_ptr<AuthDelegate> AuthDelegate::create(
+    std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost) {
     if (!avsCommon::avs::initialization::AlexaClientSDKInit::isInitialized()) {
         ACSDK_ERROR(LX("createFailed").d("reason", "sdkNotInitialized"));
         return nullptr;
@@ -230,7 +231,7 @@ std::unique_ptr<AuthDelegate> AuthDelegate::create(std::unique_ptr<HttpPostInter
     return nullptr;
 }
 
-AuthDelegate::AuthDelegate(std::unique_ptr<HttpPostInterface> httpPost) :
+AuthDelegate::AuthDelegate(std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost) :
         m_authState{AuthObserverInterface::State::UNINITIALIZED},
         m_authError{AuthObserverInterface::Error::NO_ERROR},
         m_isStopping{false},
@@ -384,7 +385,7 @@ AuthObserverInterface::Error AuthDelegate::handleLwaResponse(long code, const st
         return AuthObserverInterface::Error::UNKNOWN_ERROR;
     }
 
-    if (HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK == code) {
+    if (avsCommon::utils::libcurlUtils::HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK == code) {
         std::string authToken;
         std::string refreshToken;
         uint64_t expiresInSeconds = 0;

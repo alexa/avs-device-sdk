@@ -31,34 +31,31 @@ namespace logger {
 /// Configuration key for DefaultLogger settings
 static const std::string CONFIG_KEY_DEFAULT_LOGGER = "consoleLogger";
 
-Logger& ConsoleLogger::instance() {
-    static ConsoleLogger singleConsoletLogger;
+std::shared_ptr<Logger> ConsoleLogger::instance() {
+    static std::shared_ptr<Logger> singleConsoletLogger = std::shared_ptr<ConsoleLogger>(new ConsoleLogger);
+
     return singleConsoletLogger;
 }
-
-/// Mutex to serialize output of log lines to @c std::cout.
-static std::mutex g_coutMutex;
 
 void ConsoleLogger::emit(
     Level level,
     std::chrono::system_clock::time_point time,
     const char* threadMoniker,
     const char* text) {
-    std::lock_guard<std::mutex> lock(g_coutMutex);
+    std::lock_guard<std::mutex> lock(m_coutMutex);
     std::cout << formatLogString(level, time, threadMoniker, text) << std::endl;
 }
 
-ConsoleLogger::ConsoleLogger() :
+ConsoleLogger::ConsoleLogger() : Logger(Level::UNKNOWN) {
 #ifdef DEBUG
-        Logger(Level::DEBUG0)
+    setLevel(Level::DEBUG0);
 #else
-        Logger(Level::INFO)
+    setLevel(Level::INFO);
 #endif  // DEBUG
-{
     init(configuration::ConfigurationNode::getRoot()[CONFIG_KEY_DEFAULT_LOGGER]);
 }
 
-Logger& getConsoleLogger() {
+std::shared_ptr<Logger> getConsoleLogger() {
     return ConsoleLogger::instance();
 }
 

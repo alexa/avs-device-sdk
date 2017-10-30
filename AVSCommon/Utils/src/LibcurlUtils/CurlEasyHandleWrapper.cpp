@@ -17,13 +17,14 @@
 
 #include <iostream>
 
+#include <AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
-#include "ACL/Transport/CurlEasyHandleWrapper.h"
-
 namespace alexaClientSDK {
-namespace acl {
+namespace avsCommon {
+namespace utils {
+namespace libcurlUtils {
 
 using namespace alexaClientSDK::avsCommon::utils;
 
@@ -123,7 +124,7 @@ bool CurlEasyHandleWrapper::addHTTPHeader(const std::string& header) {
 
 bool CurlEasyHandleWrapper::addPostHeader(const std::string& header) {
     m_postHeaders = curl_slist_append(m_postHeaders, header.c_str());
-    if (!m_requestHeaders) {
+    if (!m_postHeaders) {
         ACSDK_ERROR(LX("addPostHeaderFailed").d("reason", "curlFailure").d("method", "curl_slist_append"));
         ACSDK_DEBUG(LX("addPostHeaderFailed").d("header", header));
         return false;
@@ -343,7 +344,7 @@ void CurlEasyHandleWrapper::cleanupResources() {
 }
 
 bool CurlEasyHandleWrapper::setDefaultOptions() {
-    if (libcurlUtils::prepareForTLS(m_handle)) {
+    if (prepareForTLS(m_handle)) {
         return true;
     }
     curl_easy_cleanup(m_handle);
@@ -351,5 +352,7 @@ bool CurlEasyHandleWrapper::setDefaultOptions() {
     return false;
 }
 
-}  // namespace acl
+}  // namespace libcurlUtils
+}  // namespace utils
+}  // namespace avsCommon
 }  // namespace alexaClientSDK

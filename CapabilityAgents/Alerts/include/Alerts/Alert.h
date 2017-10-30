@@ -27,6 +27,7 @@
 #include <AVSCommon/Utils/Timing/TimePoint.h>
 
 #include <map>
+#include <memory>
 #include <mutex>
 #include <string>
 #include <unordered_map>
@@ -51,7 +52,9 @@ class SQLiteAlertStorage;
  * example, rather than also query rendering state.  An alert object in an 'active' state implies the user
  * perceivable rendering is occurring (whether that means audible, visual, or other perceivable stimulus).
  */
-class Alert : public renderer::RendererObserverInterface {
+class Alert
+        : public renderer::RendererObserverInterface
+        , public std::enable_shared_from_this<Alert> {
 public:
     /**
      * An enum class which captures the state an alert object can be in.

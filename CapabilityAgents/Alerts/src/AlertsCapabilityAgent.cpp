@@ -18,9 +18,9 @@
 #include "Alerts/AlertsCapabilityAgent.h"
 
 #include "Alerts/Alarm.h"
+#include "Alerts/Reminder.h"
 #include "Alerts/Storage/SQLiteAlertStorage.h"
 #include "Alerts/Timer.h"
-#include "Alerts/Reminder.h"
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/File/FileUtils.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
@@ -219,14 +219,14 @@ void AlertsCapabilityAgent::handleDirectiveImmediately(std::shared_ptr<avsCommon
 }
 
 void AlertsCapabilityAgent::preHandleDirective(std::shared_ptr<DirectiveInfo> info) {
-    if (!info) {
-        ACSDK_ERROR(LX("preHandleDirectiveFailed").d("reason", "info is nullptr."));
-    }
-    m_executor.submit([this, info]() { executeHandleDirectiveImmediately(info); });
+    // intentional no-op.
 }
 
 void AlertsCapabilityAgent::handleDirective(std::shared_ptr<DirectiveInfo> info) {
-    // intentional no-op.
+    if (!info) {
+        ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "info is nullptr."));
+    }
+    m_executor.submit([this, info]() { executeHandleDirectiveImmediately(info); });
 }
 
 void AlertsCapabilityAgent::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
@@ -234,7 +234,7 @@ void AlertsCapabilityAgent::cancelDirective(std::shared_ptr<DirectiveInfo> info)
 }
 
 void AlertsCapabilityAgent::onDeregistered() {
-    m_executor.submit([this]() { executeOnDeregistered(); });
+    // intentional no-op.
 }
 
 void AlertsCapabilityAgent::onConnectionStatusChanged(const Status status, const ChangedReason reason) {
@@ -242,6 +242,7 @@ void AlertsCapabilityAgent::onConnectionStatusChanged(const Status status, const
 }
 
 void AlertsCapabilityAgent::onFocusChanged(avsCommon::avs::FocusState focusState) {
+    ACSDK_DEBUG9(LX("onFocusChanged").d("focusState", focusState));
     m_executor.submit([this, focusState]() { executeOnFocusChanged(focusState); });
 }
 
@@ -249,6 +250,7 @@ void AlertsCapabilityAgent::onAlertStateChange(
     const std::string& alertToken,
     AlertObserverInterface::State state,
     const std::string& reason) {
+    ACSDK_DEBUG9(LX("onAlertStateChange").d("alertToken", alertToken).d("state", state).d("reason", reason));
     m_executor.submit([this, alertToken, state, reason]() { executeOnAlertStateChange(alertToken, state, reason); });
 }
 
@@ -275,6 +277,7 @@ void AlertsCapabilityAgent::removeAllAlerts() {
 }
 
 void AlertsCapabilityAgent::onLocalStop() {
+    ACSDK_DEBUG9(LX("onLocalStop"));
     m_executor.submitToFront([this]() { executeOnLocalStop(); });
 }
 
@@ -410,6 +413,7 @@ bool AlertsCapabilityAgent::handleSetAlert(
     const std::shared_ptr<avsCommon::avs::AVSDirective>& directive,
     const rapidjson::Document& payload,
     std::string* alertToken) {
+    ACSDK_DEBUG9(LX("handleSetAlert"));
     std::string alertType;
     if (!retrieveValue(payload, KEY_TYPE, &alertType)) {
         std::string errorMessage = "Alert type not specified for SetAlert";
@@ -463,6 +467,7 @@ bool AlertsCapabilityAgent::handleDeleteAlert(
     const std::shared_ptr<avsCommon::avs::AVSDirective>& directive,
     const rapidjson::Document& payload,
     std::string* alertToken) {
+    ACSDK_DEBUG9(LX("handleDeleteAlert"));
     if (!retrieveValue(payload, DIRECTIVE_PAYLOAD_TOKEN_KEY, alertToken)) {
         ACSDK_ERROR(LX("handleDeleteAlertFailed").m("Could not find token in the payload."));
         return false;
@@ -518,10 +523,12 @@ void AlertsCapabilityAgent::sendProcessingDirectiveException(
 }
 
 void AlertsCapabilityAgent::acquireChannel() {
+    ACSDK_DEBUG9(LX("acquireChannel"));
     m_focusManager->acquireChannel(FocusManagerInterface::ALERTS_CHANNEL_NAME, shared_from_this(), ACTIVITY_ID);
 }
 
 void AlertsCapabilityAgent::releaseChannel() {
+    ACSDK_DEBUG9(LX("releaseChannel"));
     if (m_alertScheduler.getFocusState() != FocusState::NONE) {
         m_focusManager->releaseChannel(FocusManagerInterface::ALERTS_CHANNEL_NAME, shared_from_this());
     }
@@ -557,11 +564,6 @@ void AlertsCapabilityAgent::executeHandleDirectiveImmediately(std::shared_ptr<Di
             sendEvent(DELETE_ALERT_FAILED_EVENT_NAME, alertToken, true);
         }
     }
-}
-
-void AlertsCapabilityAgent::executeOnDeregistered() {
-    ACSDK_DEBUG1(LX("executeOnDeregistered"));
-    m_alertScheduler.clearData();
 }
 
 void AlertsCapabilityAgent::executeOnConnectionStatusChanged(const Status status, const ChangedReason reason) {

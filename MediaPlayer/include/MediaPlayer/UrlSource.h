@@ -71,7 +71,11 @@ public:
     /// @name Overridden StreamSourceInterface methods.
     /// @{
     bool isPlaybackRemote() const override;
-    void terminate() override;
+    /// @}
+
+    /// @name RequiresShutdown Functions
+    /// @{
+    void doShutdown() override;
     /// @}
 
 private:

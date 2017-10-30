@@ -45,23 +45,27 @@ public:
     // Destructor.
     ~TestMediaPlayer();
 
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(
+    avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId setSource(
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) override;
 
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(std::shared_ptr<std::istream> stream, bool repeat)
+    avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId setSource(
+        std::shared_ptr<std::istream> stream,
+        bool repeat) override;
+
+    avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId setSource(const std::string& url) override;
+
+    bool play(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) override;
+
+    bool stop(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) override;
+
+    bool pause(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) override;
+
+    bool resume(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) override;
+
+    std::chrono::milliseconds getOffset(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) override;
+
+    bool setOffset(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id, std::chrono::milliseconds offset)
         override;
-
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus setSource(const std::string& url) override;
-
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus play() override;
-
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus stop() override;
-
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus pause() override;
-
-    avsCommon::utils::mediaPlayer::MediaPlayerStatus resume() override;
-
-    std::chrono::milliseconds getOffset() override;
 
     void setObserver(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) override;

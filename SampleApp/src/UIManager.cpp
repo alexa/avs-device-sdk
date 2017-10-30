@@ -15,6 +15,8 @@
  * permissions and limitations under the License.
  */
 
+#include <sstream>
+
 #include "SampleApp/UIManager.h"
 
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
@@ -23,6 +25,8 @@
 
 namespace alexaClientSDK {
 namespace sampleApp {
+
+using namespace avsCommon::sdkInterfaces;
 
 static const std::string ALEXA_WELCOME_MESSAGE =
     "                  #    #     #  #####      #####  ######  #    #              \n"
@@ -67,6 +71,8 @@ static const std::string HELP_MESSAGE =
     "|       Press '4' for a 'PREVIOUS' button press.                             |\n"
     "| Settings:                                                                  |\n"
     "|       Press 'c' followed by Enter at any time to see the settings screen.  |\n"
+    "| Speaker Control:                                                           |\n"
+    "|       Press 'p' followed by Enter at any time to adjust speaker settings.  |\n"
     "| Info:                                                                      |\n"
     "|       Press 'i' followed by Enter at any time to see the help screen.      |\n"
     "| Quit:                                                                      |\n"
@@ -87,6 +93,28 @@ static const std::string LOCALE_MESSAGE =
     "| Press '1' followed by Enter to change the language to US English.          |\n"
     "| Press '2' followed by Enter to change the language to UK English.          |\n"
     "| Press '3' followed by Enter to change the language to German.              |\n"
+    "+----------------------------------------------------------------------------+\n";
+
+static const std::string SPEAKER_CONTROL_MESSAGE =
+    "+----------------------------------------------------------------------------+\n"
+    "|                          Speaker Options:                                  |\n"
+    "|                                                                            |\n"
+    "| Press '1' followed by Enter to modify AVS_SYNCED typed speakers.           |\n"
+    "|       AVS_SYNCED Speakers Control Volume For: Speech, Content.             |\n"
+    "| Press '2' followed by Enter to modify LOCAL typed speakers.                |\n"
+    "|       LOCAL Speakers Control Volume For: Alerts.                           |\n"
+    "+----------------------------------------------------------------------------+\n";
+
+static const std::string VOLUME_CONTROL_MESSAGE =
+    "+----------------------------------------------------------------------------+\n"
+    "|                          Volume Options:                                   |\n"
+    "|                                                                            |\n"
+    "| Press '1' followed by Enter to increase the volume.                        |\n"
+    "| Press '2' followed by Enter to decrease the volume.                        |\n"
+    "| Press '3' followed by Enter to mute the volume.                            |\n"
+    "| Press '4' followed by Enter to unmute the volume.                          |\n"
+    "| Press 'i' to display this help screen.                                     |\n"
+    "| Press 'q' to exit Volume Control Mode.                                     |\n"
     "+----------------------------------------------------------------------------+\n";
 
 void UIManager::onDialogUXStateChanged(DialogUXState state) {
@@ -110,9 +138,21 @@ void UIManager::onConnectionStatusChanged(const Status status, const ChangedReas
 }
 
 void UIManager::onSettingChanged(const std::string& key, const std::string& value) {
-    m_executor.submit([this, key, value]() {
+    m_executor.submit([key, value]() {
         std::string msg = key + " set to " + value;
         ConsolePrinter::prettyPrint(msg);
+    });
+}
+
+void UIManager::onSpeakerSettingsChanged(
+    const SpeakerManagerObserverInterface::Source& source,
+    const SpeakerInterface::Type& type,
+    const SpeakerInterface::SpeakerSettings& settings) {
+    m_executor.submit([source, type, settings]() {
+        std::ostringstream oss;
+        oss << "SOURCE:" << source << " TYPE:" << type << " VOLUME:" << static_cast<int>(settings.volume)
+            << " MUTE:" << settings.mute;
+        ConsolePrinter::prettyPrint(oss.str());
     });
 }
 
@@ -130,6 +170,14 @@ void UIManager::printSettingsScreen() {
 
 void UIManager::printLocaleScreen() {
     m_executor.submit([]() { ConsolePrinter::simplePrint(LOCALE_MESSAGE); });
+}
+
+void UIManager::printSpeakerControlScreen() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint(SPEAKER_CONTROL_MESSAGE); });
+}
+
+void UIManager::printVolumeControlScreen() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint(VOLUME_CONTROL_MESSAGE); });
 }
 
 void UIManager::printErrorScreen() {

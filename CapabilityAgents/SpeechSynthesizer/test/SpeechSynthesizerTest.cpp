@@ -30,6 +30,7 @@
 #include <AVSCommon/SDKInterfaces/MockDirectiveSequencer.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h>
 
 #include "SpeechSynthesizer/SpeechSynthesizer.h"
 
@@ -45,6 +46,7 @@ using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::test;
 using namespace avsCommon::utils::mediaPlayer;
+using namespace avsCommon::utils::mediaPlayer::test;
 using namespace ::testing;
 
 /// Plenty of time for a test to complete.
@@ -159,223 +161,6 @@ public:
         createReader,
         std::unique_ptr<AttachmentReader>(const std::string& attachmentId, AttachmentReader::Policy policy));
 };
-
-class MockMediaPlayer : public MediaPlayerInterface {
-public:
-    /// Constructor.
-    MockMediaPlayer();
-
-    /// Destructor.
-    ~MockMediaPlayer();
-
-    /**
-     * Creates an instance of the @c MockMediaPlayer.
-     *
-     * @return An instance of the @c MockMediaPlayer.
-     */
-    static std::shared_ptr<NiceMock<MockMediaPlayer>> create();
-
-    // 'override' commented out to avoid needless warnings generated because MOCK_METHOD* does not use it.
-    void setObserver(
-        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) /*override*/;
-
-    MOCK_METHOD1(
-        setSource,
-        MediaPlayerStatus(std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader));
-    MOCK_METHOD2(setSource, MediaPlayerStatus(std::shared_ptr<std::istream> stream, bool repeat));
-#ifdef __clang__
-// Remove warnings when compiling with clang.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Woverloaded-virtual"
-    MOCK_METHOD1(setSource, MediaPlayerStatus(const std::string& url));
-#pragma clang diagnostic pop
-#else
-    MOCK_METHOD1(setSource, MediaPlayerStatus(const std::string& url));
-#endif
-    MOCK_METHOD0(play, MediaPlayerStatus());
-    MOCK_METHOD0(stop, MediaPlayerStatus());
-    MOCK_METHOD0(pause, MediaPlayerStatus());
-    MOCK_METHOD0(resume, MediaPlayerStatus());
-    MOCK_METHOD0(getOffset, std::chrono::milliseconds());
-
-    /**
-     * This is a mock method which will signal to @c waitForPlay to send the play started notification to the observer.
-     *
-     * @return @c SUCCESS.
-     */
-    MediaPlayerStatus mockPlay();
-
-    /**
-     * This is a mock method which will signal to @c waitForStop to send the play finished notification to the observer.
-     *
-     * @return @c SUCCESS.
-     */
-    MediaPlayerStatus mockStop();
-
-    /**
-     * Waits for play to be called. It notifies the observer that play has started.
-     *
-     * @param duration Time to wait for a play to be called before notifying observer that an error occurred.
-     * @return @c true if play was called within the timeout duration else @c false.
-     */
-    bool waitForPlay(const std::chrono::milliseconds duration = std::chrono::milliseconds(200));
-
-    /**
-     * Waits for stop to be called. It notifies the observer that play has finished.
-     *
-     * @param duration Time to wait for a stop to be called before notifying observer that an error occurred.
-     * @return @c true if stop was called within the timeout duration else @c false.
-     */
-    bool waitForStop(const std::chrono::milliseconds duration = std::chrono::milliseconds(200));
-
-    /**
-     * Waits for the promise @c m_wakePlayPromise to be fulfilled and the future to be notified of call to @c play.
-     *
-     * @param timeout The duration to wait for the future to be ready.
-     * @return @c true if @c play was called within the @c timeout else @c false.
-     */
-    bool waitUntilPlaybackStarted(std::chrono::milliseconds timeout = std::chrono::milliseconds(200));
-
-    /**
-     * Waits for the promise @c m_wakeStopPromise to be fulfilled and the future to be notified of call to @c stop.
-     *
-     * @param timeout The duration to wait for the future to be ready.
-     * @return @c true if @c stop was called within the @c timeout else @c false.
-     */
-    bool waitUntilPlaybackFinished(std::chrono::milliseconds timeout = std::chrono::milliseconds(200));
-
-    /// Condition variable to wake the @ waitForPlay.
-    std::condition_variable m_wakeTriggerPlay;
-
-    /// Condition variable to wake the @ waitForStop.
-    std::condition_variable m_wakeTriggerStop;
-
-    /// mutex to protect @c m_play, @c m_stop and @c m_shutdown.
-    std::mutex m_mutex;
-
-    /// Flag to indicate @c play was called.
-    bool m_play;
-
-    /// Flag to indicate @c stop was called.
-    bool m_stop;
-
-    /// Flag to indicate when MockMediaPlayer is shutting down.
-    bool m_shutdown;
-
-    /// Thread to run @c waitForPlay asynchronously.
-    std::thread m_playThread;
-
-    /// Thread to run @c waitForStop asynchronously.
-    std::thread m_stopThread;
-
-    /// Promise to be fulfilled when @c play is called.
-    std::promise<void> m_wakePlayPromise;
-
-    /// Future to notify when @c play is called.
-    std::future<void> m_wakePlayFuture;
-
-    /// Promise to be fulfilled when @c stop is called.
-    std::promise<void> m_wakeStopPromise;
-
-    /// Future to notify when @c stop is called.
-    std::future<void> m_wakeStopFuture;
-
-    /// The player observer to be notified of the media player state changes.
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> m_playerObserver;
-};
-
-std::shared_ptr<NiceMock<MockMediaPlayer>> MockMediaPlayer::create() {
-    auto result = std::make_shared<NiceMock<MockMediaPlayer>>();
-    ON_CALL(*result.get(), play()).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockPlay));
-    ON_CALL(*result.get(), stop()).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockStop));
-    return result;
-}
-
-MockMediaPlayer::MockMediaPlayer() :
-        m_play{false},
-        m_stop{false},
-        m_shutdown{false},
-        m_wakePlayPromise{},
-        m_wakePlayFuture{m_wakePlayPromise.get_future()},
-        m_wakeStopPromise{},
-        m_wakeStopFuture{m_wakeStopPromise.get_future()},
-        m_playerObserver{nullptr} {
-}
-
-MockMediaPlayer::~MockMediaPlayer() {
-    {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        m_shutdown = true;
-    }
-    m_wakeTriggerPlay.notify_all();
-    m_wakeTriggerStop.notify_all();
-
-    if (m_playThread.joinable()) {
-        m_playThread.join();
-    }
-    if (m_stopThread.joinable()) {
-        m_stopThread.join();
-    }
-}
-
-void MockMediaPlayer::setObserver(
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) {
-    m_playerObserver = playerObserver;
-}
-
-MediaPlayerStatus MockMediaPlayer::mockPlay() {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_playThread = std::thread(&MockMediaPlayer::waitForPlay, this, std::chrono::milliseconds(50));
-    m_play = true;
-    m_wakeTriggerPlay.notify_one();
-    return MediaPlayerStatus::SUCCESS;
-}
-
-MediaPlayerStatus MockMediaPlayer::mockStop() {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_stopThread = std::thread(&MockMediaPlayer::waitForStop, this, std::chrono::milliseconds(50));
-    m_stop = true;
-    m_wakeTriggerStop.notify_one();
-    return MediaPlayerStatus::SUCCESS;
-}
-
-bool MockMediaPlayer::waitForPlay(const std::chrono::milliseconds duration) {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    if (!m_wakeTriggerPlay.wait_for(lock, duration, [this]() { return (m_play || m_shutdown); })) {
-        if (m_playerObserver) {
-            m_playerObserver->onPlaybackError(ErrorType::MEDIA_ERROR_UNKNOWN, "waitForPlay timed out");
-        }
-        return false;
-    }
-    m_wakePlayPromise.set_value();
-    if (m_playerObserver) {
-        m_playerObserver->onPlaybackStarted();
-    }
-    return true;
-}
-
-bool MockMediaPlayer::waitForStop(const std::chrono::milliseconds duration) {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    if (!m_wakeTriggerPlay.wait_for(lock, duration, [this]() { return (m_stop || m_shutdown); })) {
-        if (m_playerObserver) {
-            m_playerObserver->onPlaybackError(ErrorType::MEDIA_ERROR_UNKNOWN, "waitForStop timed out");
-        }
-        return false;
-    }
-    m_wakeStopPromise.set_value();
-    if (m_playerObserver) {
-        m_playerObserver->onPlaybackFinished();
-    }
-    return true;
-}
-
-bool MockMediaPlayer::waitUntilPlaybackStarted(std::chrono::milliseconds timeout) {
-    return m_wakePlayFuture.wait_for(timeout) == std::future_status::ready;
-}
-
-bool MockMediaPlayer::waitUntilPlaybackFinished(std::chrono::milliseconds timeout) {
-    return m_wakeStopFuture.wait_for(timeout) == std::future_status::ready;
-}
 
 class SpeechSynthesizerTest : public ::testing::Test {
 public:
@@ -564,10 +349,13 @@ TEST_F(SpeechSynthesizerTest, testCallingHandleImmediately) {
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
     EXPECT_CALL(
-        *(m_mockSpeechPlayer.get()), setSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+        *(m_mockSpeechPlayer.get()),
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
         .Times(AtLeast(1));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), play()).Times(AtLeast(1));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset()).Times(1).WillOnce(Return(OFFSET_IN_CHRONO_MILLISECONDS_TEST));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(AtLeast(1));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
+        .Times(1)
+        .WillOnce(Return(OFFSET_IN_CHRONO_MILLISECONDS_TEST));
     EXPECT_CALL(
         *(m_mockContextManager.get()),
         setState(NAMESPACE_AND_NAME_SPEECH_STATE, PLAYING_STATE_TEST, StateRefreshPolicy::ALWAYS, 0))
@@ -601,10 +389,13 @@ TEST_F(SpeechSynthesizerTest, testCallingHandle) {
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
     EXPECT_CALL(
-        *(m_mockSpeechPlayer.get()), setSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+        *(m_mockSpeechPlayer.get()),
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
         .Times(AtLeast(1));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), play()).Times(AtLeast(1));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset()).Times(1).WillOnce(Return(OFFSET_IN_CHRONO_MILLISECONDS_TEST));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(AtLeast(1));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
+        .Times(1)
+        .WillOnce(Return(OFFSET_IN_CHRONO_MILLISECONDS_TEST));
     EXPECT_CALL(
         *(m_mockContextManager.get()),
         setState(NAMESPACE_AND_NAME_SPEECH_STATE, PLAYING_STATE_TEST, StateRefreshPolicy::ALWAYS, 0))
@@ -661,10 +452,13 @@ TEST_F(SpeechSynthesizerTest, testCallingCancelAfterHandle) {
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
     EXPECT_CALL(
-        *(m_mockSpeechPlayer.get()), setSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+        *(m_mockSpeechPlayer.get()),
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
         .Times(AtLeast(1));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), play()).Times(AtLeast(1));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset()).Times(1).WillOnce(Return(OFFSET_IN_CHRONO_MILLISECONDS_TEST));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(AtLeast(1));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
+        .Times(1)
+        .WillOnce(Return(OFFSET_IN_CHRONO_MILLISECONDS_TEST));
     EXPECT_CALL(
         *(m_mockContextManager.get()),
         setState(NAMESPACE_AND_NAME_SPEECH_STATE, PLAYING_STATE_TEST, StateRefreshPolicy::ALWAYS, 0))
@@ -702,7 +496,7 @@ TEST_F(SpeechSynthesizerTest, testCallingCancelAfterHandle) {
  * Call @c provideState and expect that setState is called.
  */
 TEST_F(SpeechSynthesizerTest, testCallingProvideStateWhenNotPlaying) {
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset()).Times(0);
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_)).Times(0);
     EXPECT_CALL(
         *(m_mockContextManager.get()),
         setState(NAMESPACE_AND_NAME_SPEECH_STATE, IDLE_STATE_TEST, StateRefreshPolicy::NEVER, PROVIDE_STATE_TOKEN_TEST))
@@ -730,10 +524,11 @@ TEST_F(SpeechSynthesizerTest, testCallingProvideStateWhenPlaying) {
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
     EXPECT_CALL(
-        *(m_mockSpeechPlayer.get()), setSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+        *(m_mockSpeechPlayer.get()),
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
         .Times(AtLeast(1));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), play()).Times(AtLeast(1));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset())
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(AtLeast(1));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
         .Times(AtLeast(1))
         .WillRepeatedly(Return(OFFSET_IN_CHRONO_MILLISECONDS_TEST));
     EXPECT_CALL(
@@ -794,10 +589,13 @@ TEST_F(SpeechSynthesizerTest, testBargeInWhilePlaying) {
         .Times(AtLeast(1))
         .WillRepeatedly(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
     EXPECT_CALL(
-        *(m_mockSpeechPlayer.get()), setSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+        *(m_mockSpeechPlayer.get()),
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
         .Times(AtLeast(1));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), play()).Times(AtLeast(1));
-    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset()).Times(1).WillOnce(Return(OFFSET_IN_CHRONO_MILLISECONDS_TEST));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(AtLeast(1));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
+        .Times(1)
+        .WillOnce(Return(OFFSET_IN_CHRONO_MILLISECONDS_TEST));
     EXPECT_CALL(
         *(m_mockContextManager.get()),
         setState(NAMESPACE_AND_NAME_SPEECH_STATE, PLAYING_STATE_TEST, StateRefreshPolicy::ALWAYS, 0))

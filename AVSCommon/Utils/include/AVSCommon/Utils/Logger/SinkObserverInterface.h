@@ -36,7 +36,7 @@ public:
      *
      * @param sink The updated sink @c Logger
      */
-    virtual void onSinkChanged(Logger& sink) = 0;
+    virtual void onSinkChanged(const std::shared_ptr<Logger>& sink) = 0;
 };
 
 }  // namespace logger

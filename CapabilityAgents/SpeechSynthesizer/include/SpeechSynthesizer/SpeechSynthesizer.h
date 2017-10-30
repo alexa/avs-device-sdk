@@ -114,11 +114,13 @@ public:
 
     void onContextFailure(const avsCommon::sdkInterfaces::ContextRequestError error) override;
 
-    void onPlaybackStarted() override;
+    void onPlaybackStarted(SourceId id) override;
 
-    void onPlaybackFinished() override;
+    void onPlaybackFinished(SourceId id) override;
 
-    void onPlaybackError(const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error) override;
+    void onPlaybackError(SourceId id, const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error) override;
+
+    void onPlaybackStopped(SourceId id) override;
 
 private:
     /**
@@ -406,6 +408,19 @@ private:
      * @param messageId The @c messageId to remove.
      */
     void removeSpeakDirectiveInfo(const std::string& messageId);
+
+    /**
+     * Reset the @c m_mediaSourceId once the @c MediaPlayer finishes with playback or
+     * when @c MediaPlayer returns an error.
+     */
+    void resetMediaSourceId();
+
+    /**
+     * Id to identify the specific source when making calls to MediaPlayerInterface.
+     * If this is modified or retrieved from methods that are not protected by the executor
+     * then additional locking will be needed.
+     */
+    avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId m_mediaSourceId;
 
     /// MediaPlayerInterface instance to send audio attachments to
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_speechPlayer;

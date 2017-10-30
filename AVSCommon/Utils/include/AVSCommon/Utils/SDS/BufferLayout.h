@@ -45,7 +45,7 @@ public:
     static const uint32_t MAGIC_NUMBER = 0x53445348;
 
     /// Version of this header layout.
-    static const uint32_t VERSION = 0;
+    static const uint32_t VERSION = 1;
 
     /**
      * The constructor only initializes a shared pointer to the provided buffer.  Attaching and/or initializing is
@@ -113,6 +113,9 @@ public:
 
         /// This field indicates whether there is an enabled (not closed) @c Writer.
         AtomicBool isWriterEnabled;
+
+        /// This field indicates that a @c Writer had at one point been enabled and then closed.
+        AtomicBool hasWriterBeenClosed;
 
         /**
          * This mutex is used to protect creation of the writer.  In particular, it is locked when attempting to add
@@ -493,6 +496,7 @@ bool SharedDataStream<T>::BufferLayout::init(size_t wordSize, size_t maxReaders)
     header->wordSize = wordSize;
     header->maxReaders = maxReaders;
     header->isWriterEnabled = false;
+    header->hasWriterBeenClosed = false;
     header->writeStartCursor = 0;
     header->writeEndCursor = 0;
     header->oldestUnconsumedCursor = 0;

@@ -42,7 +42,8 @@ static const std::string TAG("BaseStreamSource");
 /// The interval to wait (in milliseconds) between successive attempts to read audio data when none is available.
 static const guint RETRY_INTERVALS_MILLISECONDS[] = {0, 10, 10, 10, 20, 20, 50, 100};
 
-BaseStreamSource::BaseStreamSource(PipelineInterface* pipeline) :
+BaseStreamSource::BaseStreamSource(PipelineInterface* pipeline, const std::string& className) :
+        SourceInterface(className),
         m_pipeline{pipeline},
         m_sourceId{0},
         m_sourceRetryCount{0},

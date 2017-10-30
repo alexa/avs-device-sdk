@@ -671,15 +671,18 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
     }
 
     int boundParam = 1;
+    auto token = alert->m_token;
+    auto iso8601 = alert->getScheduledTime_ISO_8601();
+    auto assetId = alert->getBackgroundAssetId();
     if (!statement.bindIntParameter(boundParam++, id) ||
-        !statement.bindStringParameter(boundParam++, alert->m_token) ||
+        !statement.bindStringParameter(boundParam++, token) ||
         !statement.bindIntParameter(boundParam++, alertType) ||
         !statement.bindIntParameter(boundParam++, alertState) ||
         !statement.bindInt64Parameter(boundParam++, alert->getScheduledTime_Unix()) ||
-        !statement.bindStringParameter(boundParam++, alert->getScheduledTime_ISO_8601()) ||
+        !statement.bindStringParameter(boundParam++, iso8601) ||
         !statement.bindIntParameter(boundParam++, alert->getLoopCount()) ||
         !statement.bindIntParameter(boundParam++, alert->getLoopPause().count()) ||
-        !statement.bindStringParameter(boundParam, alert->getBackgroundAssetId())) {
+        !statement.bindStringParameter(boundParam, assetId)) {
         ACSDK_ERROR(LX("storeFailed").m("Could not bind parameter."));
         return false;
     }
@@ -831,7 +834,6 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
     std::string token;
     int type = 0;
     int state = 0;
-    int64_t scheduledTime_Unix = 0;
     std::string scheduledTime_ISO_8601;
     int loopCount = 0;
     int loopPauseInMilliseconds = 0;
@@ -857,8 +859,6 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
                 type = statement.getColumnInt(i);
             } else if ("state" == columnName) {
                 state = statement.getColumnInt(i);
-            } else if ("scheduled_time_unix" == columnName) {
-                scheduledTime_Unix = statement.getColumnInt64(i);
             } else if ("scheduled_time_iso_8601" == columnName) {
                 scheduledTime_ISO_8601 = statement.getColumnText(i);
             } else if ("asset_loop_count" == columnName) {
@@ -970,9 +970,10 @@ bool SQLiteAlertStorage::modify(std::shared_ptr<Alert> alert) {
     }
 
     int boundParam = 1;
+    auto iso8601 = alert->getScheduledTime_ISO_8601();
     if (!statement.bindIntParameter(boundParam++, alertState) ||
         !statement.bindInt64Parameter(boundParam++, alert->getScheduledTime_Unix()) ||
-        !statement.bindStringParameter(boundParam++, alert->getScheduledTime_ISO_8601()) ||
+        !statement.bindStringParameter(boundParam++, iso8601) ||
         !statement.bindIntParameter(boundParam++, alert->m_dbId)) {
         ACSDK_ERROR(LX("modifyFailed").m("Could not bind a parameter."));
         return false;

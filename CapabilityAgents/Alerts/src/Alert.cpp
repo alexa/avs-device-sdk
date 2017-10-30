@@ -283,6 +283,7 @@ void Alert::reset() {
 }
 
 void Alert::activate() {
+    ACSDK_DEBUG9(LX("activate"));
     std::unique_lock<std::mutex> lock(m_mutex);
 
     if (Alert::State::ACTIVATING == m_state || Alert::State::ACTIVE == m_state) {
@@ -305,6 +306,7 @@ void Alert::activate() {
 }
 
 void Alert::deactivate(StopReason reason) {
+    ACSDK_DEBUG9(LX("deactivate").d("reason", reason));
     std::unique_lock<std::mutex> lock(m_mutex);
     auto rendererCopy = m_renderer;
 
@@ -466,6 +468,7 @@ Alert::AssetConfiguration Alert::getAssetConfiguration() const {
 }
 
 void Alert::startRenderer() {
+    ACSDK_DEBUG9(LX("startRenderer"));
     std::vector<std::string> urls;
 
     std::unique_lock<std::mutex> lock(m_mutex);
@@ -488,7 +491,7 @@ void Alert::startRenderer() {
 
     lock.unlock();
 
-    rendererCopy->setObserver(this);
+    rendererCopy->setObserver(shared_from_this());
     rendererCopy->start(fileName, urls, loopCount, loopPause);
 }
 

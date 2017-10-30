@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP_CONTENT_FETCHER_FACTORY_H_
-#define ALEXA_CLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP_CONTENT_FETCHER_FACTORY_H_
+#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_HTTP_CONTENT_FETCHER_FACTORY_H_
+#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_HTTP_CONTENT_FETCHER_FACTORY_H_
 
 #include <memory>
 #include <string>
@@ -25,7 +25,9 @@
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
 
 namespace alexaClientSDK {
-namespace acl {
+namespace avsCommon {
+namespace utils {
+namespace libcurlUtils {
 
 /**
  * A class that produces @c HTTPContentFetchers.
@@ -35,7 +37,9 @@ public:
     std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> create(const std::string& url) override;
 };
 
-}  // namespace acl
+}  // namespace libcurlUtils
+}  // namespace utils
+}  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP_CONTENT_FETCHER_FACTORY_H_
+#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_HTTP_CONTENT_FETCHER_FACTORY_H_
