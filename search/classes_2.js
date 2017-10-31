@@ -17,11 +17,12 @@ var searchData=
   ['connectionstatusobserverinterface',['ConnectionStatusObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['consolelogger',['ConsoleLogger',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_console_logger.html',1,'alexaClientSDK::avsCommon::utils::logger']]],
   ['consoleprinter',['ConsolePrinter',['../classalexa_client_s_d_k_1_1sample_app_1_1_console_printer.html',1,'alexaClientSDK::sampleApp']]],
+  ['context',['Context',['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_player_observer_interface_1_1_context.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::AudioPlayerObserverInterface']]],
   ['contextinfo',['ContextInfo',['../structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_context_info.html',1,'alexaClientSDK::capabilityAgents::alerts::Alert']]],
   ['contextmanager',['ContextManager',['../classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html',1,'alexaClientSDK::contextManager']]],
   ['contextmanagerinterface',['ContextManagerInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['contextmanagertest',['ContextManagerTest',['../classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_context_manager_test.html',1,'alexaClientSDK::contextManager::test']]],
   ['contextrequesterinterface',['ContextRequesterInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
-  ['curleasyhandlewrapper',['CurlEasyHandleWrapper',['../classalexa_client_s_d_k_1_1acl_1_1_curl_easy_handle_wrapper.html',1,'alexaClientSDK::acl']]],
-  ['curlmultihandlewrapper',['CurlMultiHandleWrapper',['../classalexa_client_s_d_k_1_1acl_1_1_curl_multi_handle_wrapper.html',1,'alexaClientSDK::acl']]]
+  ['curleasyhandlewrapper',['CurlEasyHandleWrapper',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html',1,'alexaClientSDK::avsCommon::utils::libcurlUtils']]],
+  ['curlmultihandlewrapper',['CurlMultiHandleWrapper',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_multi_handle_wrapper.html',1,'alexaClientSDK::avsCommon::utils::libcurlUtils']]]
 ];

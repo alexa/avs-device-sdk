@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,6 +67,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -134,6 +135,12 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_shared_data_stream_test.html">alexaClientSDK::avsCommon::utils::sds::test::SharedDataStreamTest</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The test harness for the tests below.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_shared_data_stream_test.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
+<tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
@@ -213,12 +220,20 @@ Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_shared_data_stream_test_8cpp.html#a937c01905be6e79740b86ce2fcf92889">alexaClientSDK::avsCommon::utils::sds::test::TEST_F</a> (SharedDataStreamTest, concurrencyMultipleSds)</td></tr>
 <tr class="memdesc:a937c01905be6e79740b86ce2fcf92889"><td class="mdescLeft">&#160;</td><td class="mdescRight">This tests a <code>Writer</code> from one SDS streaming to a <code>Reader</code> from a different SDS, usig a shared <code>Buffer</code>. <br /></td></tr>
 <tr class="separator:a937c01905be6e79740b86ce2fcf92889"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a472f4e9dd35fa0ed04daa1c86c1aec5e"><td class="memItemLeft" align="right" valign="top"><a id="a472f4e9dd35fa0ed04daa1c86c1aec5e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_shared_data_stream_test_8cpp.html#a472f4e9dd35fa0ed04daa1c86c1aec5e">alexaClientSDK::avsCommon::utils::sds::test::TEST_F</a> (SharedDataStreamTest, writerClosedBeforeWriting)</td></tr>
+<tr class="memdesc:a472f4e9dd35fa0ed04daa1c86c1aec5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This tests that a <code>Reader</code> closes if a <code>Writer</code> is attached and closed before writing anything. <br /></td></tr>
+<tr class="separator:a472f4e9dd35fa0ed04daa1c86c1aec5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8b3c472a28b7b4a2703560720f72ae0"><td class="memItemLeft" align="right" valign="top"><a id="aa8b3c472a28b7b4a2703560720f72ae0"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_shared_data_stream_test_8cpp.html#aa8b3c472a28b7b4a2703560720f72ae0">alexaClientSDK::avsCommon::utils::sds::test::TEST_F</a> (SharedDataStreamTest, writerClosedBeforeAttachingReader)</td></tr>
+<tr class="memdesc:aa8b3c472a28b7b4a2703560720f72ae0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This tests that a <code>Reader</code> closes if a <code>Writer</code> is attached and closed before the <code>Reader</code> is first attached. <br /></td></tr>
+<tr class="separator:aa8b3c472a28b7b4a2703560720f72ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

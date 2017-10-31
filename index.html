@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -71,8 +71,12 @@ $(function() {
 <p>The AVS Device SDK provides C++-based (11 or later) libraries that leverage the AVS API to create device software for Alexa-enabled products. It is modular and abstracted, providing components for handling discrete functions such as speech capture, audio processing, and communications, with each component exposing the APIs that you can use and customize for your integration. It also includes a sample app, which demonstrates the interactions with AVS.</p>
 <h3>Get Started</h3>
 <p>You can set up the SDK on the following platforms:</p><ul>
-<li><a href="https://github.com/alexa/avs-device-sdk/wiki/Linux-Quick-Start-Guide">Linux or macOS</a></li>
-<li><a href="https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide">Raspberry Pi</a> (Raspbian Jessie)</li>
+<li><b>Updated</b> - <a href="https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide">Raspberry Pi</a> (Raspbian Stretch)</li>
+<li><b>New</b> - <a href="https://github.com/alexa/avs-device-sdk/wiki/macOS-Quick-Start-Guide">macOS</a></li>
+<li><a href="https://github.com/alexa/avs-device-sdk/wiki/Linux-Quick-Start-Guide">Linux</a></li>
+</ul>
+<p>You can also prototype with a third party development kit</p><ul>
+<li><a href="https://github.com/xmos/vocalfusion-avs-setup">xCORE VocalFusion 4-Mic Kit from XMOS</a></li>
 </ul>
 <p>Or if you prefer, you can start with our <a href="https://alexa.github.io/avs-device-sdk/">SDK API Documentation</a>.</p>
 <h3>Learn More About The AVS Device SDK</h3>
@@ -82,7 +86,7 @@ $(function() {
 <h3>SDK Architecture</h3>
 <p>This diagram illustrates the data flows between components that comprise the AVS Device SDK for C++.</p>
 <div class="image">
-<img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/Alexa_Device_SDK_Architecture.png" alt="SDK Architecture Diagram"/ width="70%" height="70%">
+<img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/Alexa_Device_SDK_Architecture.png" alt="SDK Architecture Diagram" width="70%" height="70%"/>
 </div>
 <p><b>Audio Signal Processor (ASP)</b> - Third-party software that applies signal processing algorithms to both input and output audio channels. The applied algorithms are designed to produce clean audio data and include, but are not limited to acoustic echo cancellation (AEC), beam forming (fixed or adaptive), voice activity detection (VAD), and dynamic range compression (DRC). If a multi-microphone array is present, the ASP constructs and outputs a single audio stream for the array.</p>
 <p><b>Shared Data Stream (SDS)</b> - A single producer, multi-consumer buffer that allows for the transport of any type of data between a single writer and one or more readers. SDS performs two key tasks:</p>
@@ -127,52 +131,47 @@ $(function() {
 <li><b>IMPORTANT</b>: The Sensory wake word engine referenced in this document is time-limited: code linked against it will stop working when the library expires. The library included in this repository will, at all times, have an expiration date that is at least 120 days in the future. See <a href="https://github.com/Sensory/alexa-rpi#license">Sensory's GitHub</a>page for more information.</li>
 </ul>
 <h3>Release Notes and Known Issues</h3>
-<p><b>Note</b>: Features, updates, and resolved issues from previous releases are available to view in <a href="https://github.com/alexa/avs-device-sdk/blob/master/CHANGELOG.md"> CHANGELOG.md</a>.</p>
-<p>v1.1 released 10/02/2017:</p>
+<p><b>Note</b>: Features, updates, and resolved issues from previous releases are available to view in https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md "CHANGELOG.md".</p>
+<p>v1.2 released 10/31/2017:</p>
 <p><b>Enhancements</b></p>
 <ul>
-<li>The SDK now supports TuneIn, Audible, Pandora, SiriusXM, Kindle Books, and Amazon Music.</li>
-<li>Added a capability agent for Settings, which allows a client to notify Alexa of locale changes.</li>
-<li>Added a capability agent for PlaybackController, which exposes these transport controls: play, pause, next, and previous.</li>
-<li>Added <code>PlaylistParser</code>, which is used to parse m3u and pls formatted playlists.</li>
-<li>Added new unit tests for <code>AudioPlayer</code>.</li>
-<li>Refactored the Alerts capability agent to support named timers and reminders.</li>
+<li>Updated MediaPlayer to solve stability issues</li>
+<li>All capability agents were refined to work with the updated MediaPlayer</li>
+<li>Added the TemplateRuntime capability agent</li>
+<li>Added the SpeakerManager capability agent</li>
+<li>Added a configuration option ("sampleApp":"endpoint") that allows the endpoint that SampleApp connects to to be specified without changing code or rebuilding</li>
+<li>Added very verbose capture of libcurl debug information</li>
+<li>Added an observer interface to observer audio state changes from AudioPlayer</li>
+<li>Added support for StreamMetadataExtracted Event. Stream tags found in the stream are represented in JSON and sent to AVS</li>
+<li>Added to the SampleApp a simple GuiRenderer as an observer to the TemplateRuntime Capability Agent</li>
+<li>Moved shared libcurl functionality to AVSCommon/Utils</li>
+<li>Added a CMake option to exclude tests from the "make all" build. Use "cmake &lt;absolute-path-to-source&gt;
+-DACSDK_EXCLUDE_TEST_FROM_ALL=ON" to enable it. When this option is enabled "make unit" and "make integration" still could be used to build and run the tests</li>
 </ul>
 <p><b>Bug Fixes</b></p>
 <ul>
-<li>Bug fix to address AIP getting stuck in the <code>LISTENING</code> or <code>THINKING</code> state and refusing user input during a network outage.</li>
-<li>Bug fix for the sample app crashing when it runs for more than 5 minutes following a network disconnect.</li>
-<li>Bug fix for user utterances being ignored after long Alexa TTS.</li>
-<li>Bug fix for GStreamer errors that appear on <code>SampleApp</code> exit that result from accessing the pipeline before it has been setup.</li>
-<li>Fix crash when playing URLs one after another.</li>
-<li>Bug fix for overrun in <code>AlertsRenderer</code>.</li>
-<li>SampleApp crashing when issuing "Alexa skip" command with iHeartRadio. (<a href="https://github.com/alexa/avs-device-sdk/issues/153">https://github.com/alexa/avs-device-sdk/issues/153</a>)</li>
-<li><a href="https://github.com/alexa/avs-device-sdk/issues/127"><code>HTTP2Transport</code> network thread triggering a join on itself.</a></li>
-<li><a href="https://github.com/alexa/avs-device-sdk/issues/67"><code>HTTP2Stream</code> request handling truncating exception messages.</a></li>
-<li><a href="https://github.com/alexa/avs-device-sdk/issues/138"><code>AudioPlayer</code> was attempting an incorrect state transition from <code>STOPPED</code> to <code>PLAYING</code> through a <code>playbackResumed</code>.</a></li>
+<li>Previously scheduled alerts now play following a restart</li>
+<li>General stability fixes</li>
+<li>Bug fix for CertifiedSender blocking forever if the network goes down while it's trying to send a message to AVS</li>
+<li>Fixes for known issue of Alerts integration tests fail: AlertsTest.UserLongUnrelatedBargeInOnActiveTimer and AlertsTest.handleOneTimerWithVocalStop</li>
+<li>Attempting to end a tap-to-talk interaction with the tap-to-talk button wouldn't work</li>
+<li>SharedDataStream could encounter a race condition due to a combination of a blocking Reader and a Writer closing before writing any data</li>
+<li>Bug-fix for the ordering of notifications within alerts scheduling. This fixes the issue where a local-stop on an alert would also stop a subsequent alert if it were to begin without delay</li>
 </ul>
 <p><b>Known Issues</b></p>
 <ul>
-<li>Native components for the following capability agents are <b>not</b> included in this release: <code>Speaker</code>, <code>TemplateRuntime</code>, and <code>Notifications</code></li>
-<li><code>ACL</code>'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed.</li>
-<li>When an <code>AttachmentReader</code> does not deliver data for prolonged periods, <code>MediaPlayer</code> may not resume playing the delayed audio.</li>
-<li>Without the refresh token in the JSON file, the sample app crashes on start up.</li>
-<li>Alerts do not play after restarting the device.</li>
-<li>Alexa's responses are cut off by about half a second when asking "What's up" or barging into an active alarm to ask the time.</li>
-<li>Switching from Kindle to Amazon Music after pausing and resuming Kindle doesn't work.</li>
-<li>Pause/resume on Amazon Music causes entire song to start over.</li>
-<li>Stuck in listening state if <code>ExpectSpeech</code> comes in when the microphone has been turned off.</li>
-<li>Pausing and resuming Pandora causes stuttering, looped audio.</li>
-<li>Audible features are not fully supported.</li>
-<li><code>Recognize</code> event after regaining network connection and during an alarm going off can cause client to get stuck in <code>Recognizing</code> state.</li>
-<li>Three Alerts integration tests fail: <code>handleMultipleTimersWithLocalStop</code>, <code>AlertsTest.UserLongUnrelatedBargeInOnActiveTimer</code>, <code>AlertsTest.handleOneTimerWithVocalStop</code></li>
-<li><code>MediaPlayerTest.testSetOffsetSeekableSource</code> unit test fails intermittently on Linux. </li>
+<li>Capability agent for Notifications is not included in this release</li>
+<li>Inconsistent playback behavior when resuming content ("Alexa, pause." / "Alexa, resume."). Specifically, handling playback offsets, which causes the content to play from the start. This behavior is also occasionally seen with "Next" / "Previous" as well</li>
+<li><code>ACL</code>'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed</li>
+<li>Music playback failures may result in an error Text to Speech being rendered repeatedly</li>
+<li>Reminders and named timers don't sound when there is no connection</li>
+<li>GUI cards don't show for Kindle </li>
 </ul>
 </div></div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

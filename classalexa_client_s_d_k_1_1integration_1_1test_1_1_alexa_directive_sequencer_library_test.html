@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>alexaClientSDK</b></li><li class="navelem"><b>integration</b></li><li class="navelem"><b>test</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>integration</b></li><li class="navelem"><b>test</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -104,8 +104,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>TearDown</b> () overr
 <tr class="separator:a4f5943bf9b12d241c91cbe9074c73349"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf98fd2abcc23d1ca79e2497c8d5fb16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html#acf98fd2abcc23d1ca79e2497c8d5fb16">assertExceptionWithName</a> (const std::string name)</td></tr>
 <tr class="separator:acf98fd2abcc23d1ca79e2497c8d5fb16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44f1d831144164c9a13fa2960c7492f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html#a44f1d831144164c9a13fa2960c7492f9">sendEventWithToken</a> (const std::string &amp;eventName, const std::string &amp;eventNameSpace, const std::string &amp;dialogRequestID, std::string token)</td></tr>
-<tr class="separator:a44f1d831144164c9a13fa2960c7492f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5ac02b405ce92f11390e7110e7e1b0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html#aa5ac02b405ce92f11390e7110e7e1b0d">sendEventWithToken</a> (const std::string &amp;eventName, const std::string &amp;eventNameSpace, const std::string &amp;dialogRequestID, std::string token, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7b">MessageRequestObserverInterface::Status</a> expectedStatus)</td></tr>
+<tr class="separator:aa5ac02b405ce92f11390e7110e7e1b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -297,8 +297,8 @@ std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1
 
 </div>
 </div>
-<a id="a44f1d831144164c9a13fa2960c7492f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a44f1d831144164c9a13fa2960c7492f9">&#9670;&nbsp;</a></span>sendEventWithToken()</h2>
+<a id="aa5ac02b405ce92f11390e7110e7e1b0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5ac02b405ce92f11390e7110e7e1b0d">&#9670;&nbsp;</a></span>sendEventWithToken()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -328,7 +328,13 @@ std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>token</em>&#160;</td>
+          <td class="paramname"><em>token</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7b">MessageRequestObserverInterface::Status</a>&#160;</td>
+          <td class="paramname"><em>expectedStatus</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -349,6 +355,7 @@ std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1
     <tr><td class="paramname">eventNameSpace</td><td>Namespace if the Name of the event to send. </td></tr>
     <tr><td class="paramname">dialogRequestID</td><td>DialogRequestID to use to send the event. </td></tr>
     <tr><td class="paramname">token</td><td>Token to be added to the event payload. </td></tr>
+    <tr><td class="paramname">expectedStatus</td><td>MessageRequest status to expect after sending the event </td></tr>
   </table>
   </dd>
 </dl>
@@ -471,7 +478,7 @@ std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,12 +61,14 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>alexaClientSDK</b></li><li class="navelem"><b>avsCommon</b></li><li class="navelem"><b>utils</b></li><li class="navelem"><b>mediaPlayer</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>avsCommon</b></li><li class="navelem"><b>utils</b></li><li class="navelem"><b>mediaPlayer</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -79,40 +81,57 @@ Inheritance diagram for alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlay
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface_inherit__map">
-<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html" title="alexaClientSDK::capability\lAgents::audioPlayer::test\l::MockMediaPlayer" alt="" coords="278,5,456,57"/>
-<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html" title="alexaClientSDK::capability\lAgents::speechSynthesizer\l::test::MockMediaPlayer" alt="" coords="275,81,458,133"/>
-<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html" title="alexaClientSDK::integration\l::test::TestMediaPlayer" alt="" coords="275,157,459,196"/>
-<area shape="rect" id="node5" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="269,220,465,259"/>
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html" title="A mock MediaPlayer for unit tests. " alt="" coords="269,5,466,57"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html" title="alexaClientSDK::integration\l::test::TestMediaPlayer" alt="" coords="275,81,459,120"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="269,144,465,183"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a97b83ae4aaeabff7bb8a796a8a018623"><td class="memItemLeft" align="right" valign="top"><a id="a97b83ae4aaeabff7bb8a796a8a018623"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a> = uint64_t</td></tr>
+<tr class="memdesc:a97b83ae4aaeabff7bb8a796a8a018623"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type that identifies which source is currently being operated on. <br /></td></tr>
+<tr class="separator:a97b83ae4aaeabff7bb8a796a8a018623"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a6ea8410b0e942e263e7b534f88b30ee3"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a6ea8410b0e942e263e7b534f88b30ee3">~MediaPlayerInterface</a> ()=default</td></tr>
 <tr class="separator:a6ea8410b0e942e263e7b534f88b30ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a863f7a1d8fe9ef77ead9f9a70e533ffd"><td class="memItemLeft" align="right" valign="top">virtual MediaPlayerStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a863f7a1d8fe9ef77ead9f9a70e533ffd">setSource</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html">avsCommon::avs::attachment::AttachmentReader</a> &gt; attachmentReader)=0</td></tr>
-<tr class="separator:a863f7a1d8fe9ef77ead9f9a70e533ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6df36422c7caadefdd438f4c938ed7e4"><td class="memItemLeft" align="right" valign="top">virtual MediaPlayerStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a6df36422c7caadefdd438f4c938ed7e4">setSource</a> (const std::string &amp;url)=0</td></tr>
-<tr class="separator:a6df36422c7caadefdd438f4c938ed7e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af938277a89ad00f5d4b1884dee16080f"><td class="memItemLeft" align="right" valign="top">virtual MediaPlayerStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#af938277a89ad00f5d4b1884dee16080f">setSource</a> (std::shared_ptr&lt; std::istream &gt; stream, bool repeat)=0</td></tr>
-<tr class="separator:af938277a89ad00f5d4b1884dee16080f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b75cc675041653fc26c5e07b7083f33"><td class="memItemLeft" align="right" valign="top">virtual MediaPlayerStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a6b75cc675041653fc26c5e07b7083f33">setOffset</a> (std::chrono::milliseconds offset)</td></tr>
-<tr class="separator:a6b75cc675041653fc26c5e07b7083f33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39e55afe1f90c135f767824ea9e7de56"><td class="memItemLeft" align="right" valign="top">virtual MediaPlayerStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a39e55afe1f90c135f767824ea9e7de56">play</a> ()=0</td></tr>
-<tr class="separator:a39e55afe1f90c135f767824ea9e7de56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7034677f0614203a26f31475f16e324"><td class="memItemLeft" align="right" valign="top">virtual MediaPlayerStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ac7034677f0614203a26f31475f16e324">stop</a> ()=0</td></tr>
-<tr class="separator:ac7034677f0614203a26f31475f16e324"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3dc008a6c4d2b79da4d30d8ae82432b"><td class="memItemLeft" align="right" valign="top">virtual MediaPlayerStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#aa3dc008a6c4d2b79da4d30d8ae82432b">pause</a> ()=0</td></tr>
-<tr class="separator:aa3dc008a6c4d2b79da4d30d8ae82432b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb22095833dc3e9967fdb45c289332bd"><td class="memItemLeft" align="right" valign="top">virtual MediaPlayerStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#afb22095833dc3e9967fdb45c289332bd">resume</a> ()=0</td></tr>
-<tr class="separator:afb22095833dc3e9967fdb45c289332bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa036356cea35577b0d5555a91a71b2b3"><td class="memItemLeft" align="right" valign="top">virtual std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#aa036356cea35577b0d5555a91a71b2b3">getOffset</a> ()=0</td></tr>
-<tr class="separator:aa036356cea35577b0d5555a91a71b2b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5675853d7fdca900796b2c2620eab2f"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ae5675853d7fdca900796b2c2620eab2f">setSource</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html">avsCommon::avs::attachment::AttachmentReader</a> &gt; attachmentReader)=0</td></tr>
+<tr class="separator:ae5675853d7fdca900796b2c2620eab2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fe6f656a096c01daebb65b90b747c3a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a0fe6f656a096c01daebb65b90b747c3a">setSource</a> (const std::string &amp;url)=0</td></tr>
+<tr class="separator:a0fe6f656a096c01daebb65b90b747c3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4d8ade64d85d3de92aebd209af8c037"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ad4d8ade64d85d3de92aebd209af8c037">setSource</a> (std::shared_ptr&lt; std::istream &gt; stream, bool repeat)=0</td></tr>
+<tr class="separator:ad4d8ade64d85d3de92aebd209af8c037"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bd648268d8afaf23312dad7e21238ad"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a> id)=0</td></tr>
+<tr class="separator:a2bd648268d8afaf23312dad7e21238ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a422503c5051d68fdab1485b74c0c33a1"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a422503c5051d68fdab1485b74c0c33a1">stop</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a> id)=0</td></tr>
+<tr class="separator:a422503c5051d68fdab1485b74c0c33a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7352a3ad1c63e92bf19455f3abdd0e76"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a7352a3ad1c63e92bf19455f3abdd0e76">pause</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a> id)=0</td></tr>
+<tr class="separator:a7352a3ad1c63e92bf19455f3abdd0e76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bddbef99754845f428924d7b8883eb8"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a> id)=0</td></tr>
+<tr class="separator:a1bddbef99754845f428924d7b8883eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f1e46a268eebc25fb35f733752f3a72"><td class="memItemLeft" align="right" valign="top">virtual std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a9f1e46a268eebc25fb35f733752f3a72">getOffset</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a> id)=0</td></tr>
+<tr class="separator:a9f1e46a268eebc25fb35f733752f3a72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50214573e049be49cd5d6e57fea98e25"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a50214573e049be49cd5d6e57fea98e25">setOffset</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a> id, std::chrono::milliseconds offset)=0</td></tr>
+<tr class="separator:a50214573e049be49cd5d6e57fea98e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a612495025a57c1bab88e8be5f7c0bbf4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a612495025a57c1bab88e8be5f7c0bbf4">setObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a> &gt; playerObserver)=0</td></tr>
 <tr class="separator:a612495025a57c1bab88e8be5f7c0bbf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a94e049f4cbbd174ef8e6c15387dd85ea"><td class="memItemLeft" align="right" valign="top"><a id="a94e049f4cbbd174ef8e6c15387dd85ea"></a>
+static const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a94e049f4cbbd174ef8e6c15387dd85ea">ERROR</a> = 0</td></tr>
+<tr class="memdesc:a94e049f4cbbd174ef8e6c15387dd85ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">An <code>SourceId</code> used to represent an error from calls to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ae5675853d7fdca900796b2c2620eab2f">setSource()</a></code>. <br /></td></tr>
+<tr class="separator:a94e049f4cbbd174ef8e6c15387dd85ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A MediaPlayer allows for sourcing, playback control, navigation, and querying the state of media content. </p>
+<div class="textblock"><p>A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> allows for sourcing, playback control, navigation, and querying the state of media content. A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> implementation must only handle one source at a time.</p>
+<p>Each playback controlling API call (i.e. <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code>, <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a7352a3ad1c63e92bf19455f3abdd0e76">pause()</a></code>, <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a422503c5051d68fdab1485b74c0c33a1">stop()</a></code>, <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a></code>) which returns <code>true</code> will result in a callback to the observer. If <code>false</code> is returned from these calls, no callback will occur. Callbacks should not be made on the caller's thread prior to returning from a call.</p>
+<p>An implementation can call <code>onPlaybackError()</code> at any time. If an <code>onPlaybackError()</code> callback occurs while a plaback controlling API call is waiting for a callback, the original callback must not be made, and the implementation should rever to a stopped state. Any subsequent operations after an <code>onPlaybackError()</code> callback must be preceded by a new <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ae5675853d7fdca900796b2c2620eab2f">setSource()</a></code> call.</p>
+<p>Implementations must make a call to <code>onPlaybackStopped()</code> with the previous <code>SourceId</code> when a new source is set if the previous source was in a non-stopped state. Any calls to a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> after an <code>onPlaybackStopped()</code> call will fail, as the MediaPlayer has "reset" its state.</p>
+<p><code>note</code> A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> implementation must be able to support the various audio formats listed at: <a href="https://developer.amazon.com/docs/alexa-voice-service/recommended-media-support.html">https://developer.amazon.com/docs/alexa-voice-service/recommended-media-support.html</a>. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6ea8410b0e942e263e7b534f88b30ee3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6ea8410b0e942e263e7b534f88b30ee3">&#9670;&nbsp;</a></span>~MediaPlayerInterface()</h2>
@@ -141,8 +160,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa036356cea35577b0d5555a91a71b2b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa036356cea35577b0d5555a91a71b2b3">&#9670;&nbsp;</a></span>getOffset()</h2>
+<a id="a9f1e46a268eebc25fb35f733752f3a72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f1e46a268eebc25fb35f733752f3a72">&#9670;&nbsp;</a></span>getOffset()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -153,7 +172,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual std::chrono::milliseconds alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::getOffset </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -163,15 +183,21 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Returns the offset, in milliseconds, of the media stream.</p>
-<dl class="section return"><dt>Returns</dt><dd>If a stream is playing, the offset in milliseconds that the stream has been playing, if there is no stream playing it returns <code>MEDIA_PLAYER_INVALID_OFFSET</code>. </dd></dl>
+<p>Returns the offset, in milliseconds, of the media source. If the id does not match the id of the active source, then <code>MEDIA_PLAYER_INVALID_OFFSET</code> will be returned.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The id of the source on which to operate.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If the specified source is playing, the offset in milliseconds that the source has been playing. If the specified source is not playing, <code>MEDIA_PLAYER_INVALID_OFFSET</code> will be returned. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#af653a8c6ab2001001aac137e539656f4">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a976b479c26caac171222041882379807">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#ae9b262d5eae687beaa30d9dc7e28d4e8">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a375ef850b9e3270467f971595a1c6382">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
 
 </div>
 </div>
-<a id="aa3dc008a6c4d2b79da4d30d8ae82432b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3dc008a6c4d2b79da4d30d8ae82432b">&#9670;&nbsp;</a></span>pause()</h2>
+<a id="a7352a3ad1c63e92bf19455f3abdd0e76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7352a3ad1c63e92bf19455f3abdd0e76">&#9670;&nbsp;</a></span>pause()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -180,9 +206,10 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual MediaPlayerStatus alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::pause </td>
+          <td class="memname">virtual bool alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::pause </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -192,15 +219,27 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Pause playing the audio. Once audio has been paused, calling <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#afb22095833dc3e9967fdb45c289332bd">resume()</a></code> will start the audio. The source should be set before issuing <code>pause</code>. If <code>pause</code> is called without setting source, it will return an error. Calling <code>pause</code> will only have an effect when audio is currently playing. Calling <code>pause</code> in all other states will have no effect, and result in a return of <code>FAILURE</code>.</p>
-<dl class="section return"><dt>Returns</dt><dd><code>SUCCESS</code> if the state transition to pause was successful. If state transition is pending then it returns <code>PENDING</code> and the state transition status is notified via <code>onPlaybackPaused</code> or <code>onPlaybackError</code>. If state transition was unsuccessful, returns <code>FAILURE</code>. </dd></dl>
+<p>Pauses playing audio specified by the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ae5675853d7fdca900796b2c2620eab2f">setSource()</a></code> call.</p>
+<p>The source must be set before issuing <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a7352a3ad1c63e92bf19455f3abdd0e76">pause()</a></code>. If <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a7352a3ad1c63e92bf19455f3abdd0e76">pause()</a></code> is called </p><ul>
+<li>without making a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ae5675853d7fdca900796b2c2620eab2f">setSource()</a></code>, <code>false</code> will be returned. </li>
+<li>when audio is not starting/resuming/playing, <code>false</code> will be returned. </li>
+<li>when a <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a> or <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a> call has already been made, but no callback has been issued yet for those functions, the audio stream will pause without playing any audio. Implementations must call both <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a25607163a8c28c9f08259fe56d721c06">MediaPlayerObserverInterface::onPlaybackStarted()</a></code> / <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab7d30a70d577310176aa85fbaefb7a1b">MediaPlayerObserverInterface::onPlaybackResumed</a></code> and <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a5e278a3c0e6bf2ffe6d99386d366e40f">MediaPlayerObserverInterface::onPlaybackPaused()</a></code> in this scenario, as both the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code> / <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a></code> and the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a7352a3ad1c63e92bf19455f3abdd0e76">pause()</a></code> are required to have corresponding callbacks.</li>
+</ul>
+<p>If the id does not match the id of the active source, then <code>false</code> will be returned. If the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a7352a3ad1c63e92bf19455f3abdd0e76">pause()</a></code> succeeded, <code>true</code> will be returned. When <code>true</code> is returned, a callback will be made to either <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a5e278a3c0e6bf2ffe6d99386d366e40f">MediaPlayerObserverInterface::onPlaybackPaused()</a></code> or to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aa14478d88e372c90e077bc68c6d6f919">MediaPlayerObserverInterface::onPlaybackError()</a></code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The id of the source on which to operate.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the call succeeded, in which case a callback will be made, or <code>false</code> otherwise. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#ae00393c7aa4f4f0419ffc393bebf00e4">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#abf035d1ff2c2790960462f84e65922c2">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#aeeb3334b462899a3bab9bb41e9f2f69e">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a23ab9a699969fbfb02d43399a3664b27">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
 
 </div>
 </div>
-<a id="a39e55afe1f90c135f767824ea9e7de56"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39e55afe1f90c135f767824ea9e7de56">&#9670;&nbsp;</a></span>play()</h2>
+<a id="a2bd648268d8afaf23312dad7e21238ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bd648268d8afaf23312dad7e21238ad">&#9670;&nbsp;</a></span>play()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -209,9 +248,10 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual MediaPlayerStatus alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::play </td>
+          <td class="memname">virtual bool alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::play </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -221,15 +261,28 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Start playing audio. The source should be set before issuing <code>play</code>. If <code>play</code> is called without setting source, it will return an error. If <code>play</code> is called when audio is already playing, there is no effect. Status returned will be <code>SUCCESS</code>. If <code>play</code> is called again after <code>stop</code> on the same source, then the audio plays from the beginning.</p>
-<dl class="section return"><dt>Returns</dt><dd><code>SUCCESS</code> if the state transition to play was successful. If state transition is pending then it returns <code>PENDING</code> and the state transition status is notified via <code>onPlaybackStarted</code> or <code>onPlaybackError</code>. If state transition was unsuccessful, returns <code>FAILURE</code>. </dd></dl>
+<p>Starts playing audio specified by the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ae5675853d7fdca900796b2c2620eab2f">setSource()</a></code> call.</p>
+<p>The source must be set before issuing <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code>.</p>
+<p>If <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code> is called </p><ul>
+<li>without making a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ae5675853d7fdca900796b2c2620eab2f">setSource()</a></code>, <code>false</code> will be returned. </li>
+<li>when audio is already playing, <code>false</code> will be returned. </li>
+<li>after a <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a> call has already been made but no callback or return code has been issued yet, <code>false</code> will be returned.</li>
+</ul>
+<p>If the id does not match the id of the active source, then <code>false</code> will be returned. If the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code> succeeded, <code>true</code> will be returned. When <code>true</code> is returned, a callback will be made to either <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a25607163a8c28c9f08259fe56d721c06">MediaPlayerObserverInterface::onPlaybackStarted()</a></code> or to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aa14478d88e372c90e077bc68c6d6f919">MediaPlayerObserverInterface::onPlaybackError()</a></code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The id of the source on which to operate.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the call succeeded, in which case a callback will be made, or <code>false</code> otherwise. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#aef8c4efd980ba7d185a4079d3c7bedaf">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#af1db21a46c9b81a3b10b8a51044b8e0e">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#a6e3f97c24a5ee8cf5ad698de4ff70362">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#ac483a28357da39a4b8daa0bd4bc990ac">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
 
 </div>
 </div>
-<a id="afb22095833dc3e9967fdb45c289332bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb22095833dc3e9967fdb45c289332bd">&#9670;&nbsp;</a></span>resume()</h2>
+<a id="a1bddbef99754845f428924d7b8883eb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1bddbef99754845f428924d7b8883eb8">&#9670;&nbsp;</a></span>resume()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -238,9 +291,10 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual MediaPlayerStatus alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::resume </td>
+          <td class="memname">virtual bool alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::resume </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -250,10 +304,23 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Resume playing the paused audio. The source should be set before issuing <code>resume</code>. If <code>resume</code> is called without setting source, it will return an error. Calling <code>resume</code> will only have an effect when audio is currently paused. Calling <code>resume</code> in other states will have no effect, and result in a return of <code>FAILURE</code>.</p>
-<dl class="section return"><dt>Returns</dt><dd><code>SUCCESS</code> if the state transition to play was successful. If state transition is pending then it returns <code>PENDING</code> and the state transition status is notified via <code>onPlaybackResumed</code> or <code>onPlaybackError</code>. If state transition was unsuccessful, returns <code>FAILURE</code>. </dd></dl>
+<p>Resumes playing the paused audio specified by the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ae5675853d7fdca900796b2c2620eab2f">setSource()</a></code> call.</p>
+<p>The source must be set before issuing <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a></code>. If <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a></code> is called </p><ul>
+<li>without making a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ae5675853d7fdca900796b2c2620eab2f">setSource()</a></code>, <code>false</code> will be returned. </li>
+<li>when audio is already playing, <code>false</code> will be returned. </li>
+<li>when audio is not paused, <code>false</code> will be returned. </li>
+<li>after a <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a> call has already been made but no callback or return code has been issued yet, <code>false</code> will be returned.</li>
+</ul>
+<p>If the id does not match the id of the active source, then <code>false</code> will be returned. If the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a></code> succeeded, <code>true</code> will be returned. When <code>true</code> is returned, a callback will be made to either <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab7d30a70d577310176aa85fbaefb7a1b">MediaPlayerObserverInterface::onPlaybackResumed()</a></code> or to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aa14478d88e372c90e077bc68c6d6f919">MediaPlayerObserverInterface::onPlaybackError()</a></code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The id of the source on which to operate.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the call succeeded, in which case a callback will be made, or <code>false</code> otherwise. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#ac7348e9604a83b11196ecddf494dec86">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a26435603f94939984606747c6cf37260">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#afd6e7598a71b9a91409fc683b7886e9b">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a77ca651efc58f4ca18941cfae559afe3">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
 
 </div>
 </div>
@@ -288,12 +355,12 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#ab7fd1bd59994ef595566edb960c66b46">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#aefaea85e4c7d0fcf5e94f44bcf6841e9">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>, <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#a271e75fecb39b734cafb9f1260611e79">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a2f63842abe4e76381bbf67598413aa33">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#a271e75fecb39b734cafb9f1260611e79">alexaClientSDK::mediaPlayer::MediaPlayer</a>, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a2f63842abe4e76381bbf67598413aa33">alexaClientSDK::integration::test::TestMediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#aab0abe413a9d6de1f9643a54f25c6b07">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>.</p>
 
 </div>
 </div>
-<a id="a6b75cc675041653fc26c5e07b7083f33"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b75cc675041653fc26c5e07b7083f33">&#9670;&nbsp;</a></span>setOffset()</h2>
+<a id="a50214573e049be49cd5d6e57fea98e25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50214573e049be49cd5d6e57fea98e25">&#9670;&nbsp;</a></span>setOffset()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -302,36 +369,49 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual MediaPlayerStatus alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::setOffset </td>
+          <td class="memname">virtual bool alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::setOffset </td>
           <td>(</td>
-          <td class="paramtype">std::chrono::milliseconds&#160;</td>
-          <td class="paramname"><em>offset</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a>&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::chrono::milliseconds&#160;</td>
+          <td class="paramname"><em>offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set the offset for playback. A seek will be performed to the offset at the next <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a39e55afe1f90c135f767824ea9e7de56">play()</a></code> command.</p>
-<p>The following situations will reset the offset: </p><h1>A seek attempt is made (ie. via <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a39e55afe1f90c135f767824ea9e7de56">play()</a>).</h1>
-<h1>A new source is set.</h1>
+<p>Set the offset for playback. A seek will be performed to the offset at the next <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code> command. If the id does not match the id of the active source, then <code>false</code> will be returned.</p>
+<p>The following situations will reset the offset: </p><ul>
+<li>A seek attempt is made (ie. via <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code>). </li>
+<li>A new source is set.</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">id</td><td>The id of the source on which to operate. </td></tr>
     <tr><td class="paramname">offset</td><td>The offset in milliseconds to seek to.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><code>SUCCESS</code> if the offset was successfully set, and FAILURE for any error. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the offset was successfully set, and <code>false</code> for any error. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#a0a2f8210d219f2817b24e09c5dbaa93c">alexaClientSDK::mediaPlayer::MediaPlayer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#aa7fec95d2ede88cd9502a10c6dfc565a">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a4c9d68d9e79d3acba71f4818438b9eef">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
 
 </div>
 </div>
-<a id="a863f7a1d8fe9ef77ead9f9a70e533ffd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a863f7a1d8fe9ef77ead9f9a70e533ffd">&#9670;&nbsp;</a></span>setSource() <span class="overload">[1/3]</span></h2>
+<a id="ae5675853d7fdca900796b2c2620eab2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5675853d7fdca900796b2c2620eab2f">&#9670;&nbsp;</a></span>setSource() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -340,7 +420,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual MediaPlayerStatus alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::setSource </td>
+          <td class="memname">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a> alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::setSource </td>
           <td>(</td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html">avsCommon::avs::attachment::AttachmentReader</a> &gt;&#160;</td>
           <td class="paramname"><em>attachmentReader</em></td><td>)</td>
@@ -353,20 +433,22 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set the source to play. The source should be set before issuing <code>play</code> or <code>stop</code>.</p>
-<p>The <code>MediaPlayer</code> can handle only one source at a time.</p>
+<p>Set an <code>AttachmentReader</code> source to play. The source should be set before making calls to any of the playback control APIs. If any source was set prior to this call, that source will be discarded.</p>
+<dl class="section note"><dt>Note</dt><dd>A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> implementation must handle only one source at a time. An implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab494787a945bd49bbd2299edd8eb5e64">MediaPlayerObserverInterface::onPlaybackStopped()</a></code> with the previous source's id if there was a source set.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">attachmentReader</td><td>Object with which to read an incoming audio attachment.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><code>SUCCESS</code> if the source was set successfully else <code>FAILURE</code>. If setSource is called when audio is currently playing, the playing audio will be stopped and the source set to the new value. If there is an error stopping the player, this will return <code>FAILURE</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The <code>SourceId</code> that represents the source being handled as a result of this call. <code>ERROR</code> will be returned if the source failed to be set. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#abbe103127621a51b6fe9951e4097ad69">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>.</p>
 
 </div>
 </div>
-<a id="a6df36422c7caadefdd438f4c938ed7e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6df36422c7caadefdd438f4c938ed7e4">&#9670;&nbsp;</a></span>setSource() <span class="overload">[2/3]</span></h2>
+<a id="a0fe6f656a096c01daebb65b90b747c3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fe6f656a096c01daebb65b90b747c3a">&#9670;&nbsp;</a></span>setSource() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -375,7 +457,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual MediaPlayerStatus alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::setSource </td>
+          <td class="memname">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a> alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::setSource </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>url</em></td><td>)</td>
@@ -388,22 +470,22 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set the source to play. The source should be set before issuing <code>play</code> or <code>stop</code>.</p>
-<p>The <code>MediaPlayer</code> can handle only one source at a time.</p>
+<p>Set a url source to play. The source should be set before making calls to any of the playback control APIs. If any source was set prior to this call, that source will be discarded.</p>
+<dl class="section note"><dt>Note</dt><dd>A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> implementation must handle only one source at a time. An implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab494787a945bd49bbd2299edd8eb5e64">MediaPlayerObserverInterface::onPlaybackStopped()</a></code> with the previous source's id if there was a source set.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">url</td><td>The url to set as the source.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><code>SUCCESS</code> if the source was set successfully else <code>FAILURE</code>. If setSource is called when audio is currently playing, the playing audio will be stopped and the source set to the new value. If there is an error stopping the player, this will return <code>FAILURE</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The <code>SourceId</code> that represents the source being handled as a result of this call. <code>ERROR</code> will be returned if the source failed to be set. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#ae302858b924dc8600e5a10a754d299a2">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#ab24cc092176ee12b3c34015aabbf14c1">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#af5afcdadaee6797ef843e9b9cf569cc3">alexaClientSDK::mediaPlayer::MediaPlayer</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#a8d64b29f090ab28e42f529c8453b0aff">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#ad0961bfb240ad780429ac385cf1e169f">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
 
 </div>
 </div>
-<a id="af938277a89ad00f5d4b1884dee16080f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af938277a89ad00f5d4b1884dee16080f">&#9670;&nbsp;</a></span>setSource() <span class="overload">[3/3]</span></h2>
+<a id="ad4d8ade64d85d3de92aebd209af8c037"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4d8ade64d85d3de92aebd209af8c037">&#9670;&nbsp;</a></span>setSource() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -412,7 +494,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual MediaPlayerStatus alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::setSource </td>
+          <td class="memname">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a> alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::setSource </td>
           <td>(</td>
           <td class="paramtype">std::shared_ptr&lt; std::istream &gt;&#160;</td>
           <td class="paramname"><em>stream</em>, </td>
@@ -435,23 +517,23 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set the source to play. The source should be set before issuing <code>play</code> or <code>stop</code>.</p>
-<p>The <code>MediaPlayer</code> can handle only one source at a time.</p>
+<p>Set an <code>istream</code> source to play. The source should be set before making calls to any of the playback control APIs. If any source was set prior to this call, that source will be discarded.</p>
+<dl class="section note"><dt>Note</dt><dd>A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> implementation must handle only one source at a time. An implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab494787a945bd49bbd2299edd8eb5e64">MediaPlayerObserverInterface::onPlaybackStopped()</a></code> with the previous source's id if there was a source set.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stream</td><td>Object with which to read an incoming audio stream. </td></tr>
+    <tr><td class="paramname">stream</td><td>Object from which to read an incoming audio stream. </td></tr>
     <tr><td class="paramname">repeat</td><td>Whether the audio stream should be played in a loop until stopped.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><code>SUCCESS</code> if the the source was set successfully else <code>FAILURE</code>. If setSource is called when audio is currently playing, the playing audio will be stopped and the source set to the new value. If there is an error stopping the player, this will return <code>FAILURE</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The <code>SourceId</code> that represents the source being handled as a result of this call. <code>ERROR</code> will be returned if the source failed to be set. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#a1b20efddb45b45a9347a75be8f7f05ad">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#aa14488d1af1e434c7e4de23e90d81ce6">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#ae12328090c57d8e1434c2732cbb5acf0">alexaClientSDK::mediaPlayer::MediaPlayer</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#ab4d021df9f83f549e2857bf6f6c46304">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#ad94bfc69253d7e9dc386df9b2970c055">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
 
 </div>
 </div>
-<a id="ac7034677f0614203a26f31475f16e324"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7034677f0614203a26f31475f16e324">&#9670;&nbsp;</a></span>stop()</h2>
+<a id="a422503c5051d68fdab1485b74c0c33a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a422503c5051d68fdab1485b74c0c33a1">&#9670;&nbsp;</a></span>stop()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -460,9 +542,10 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual MediaPlayerStatus alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::stop </td>
+          <td class="memname">virtual bool alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::stop </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -472,10 +555,18 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Stop playing the audio. Once audio has been stopped, starting playback again will start from the beginning. The source should be set before issuing <code>stop</code>. If <code>stop</code> is called without setting source, it will return an error. If <code>stop</code> is called when audio has already stopped, there is no effect. Status returned will be <code>SUCCESS</code>.</p>
-<dl class="section return"><dt>Returns</dt><dd><code>SUCCESS</code> if the state transition to stop was successful. If state transition is pending then it returns <code>PENDING</code> and the state transition status is notified via <code>onPlaybackStarted</code> or <code>onPlaybackError</code>. If state transition was unsuccessful, returns <code>FAILURE</code>. </dd></dl>
+<p>Stops playing the audio specified by the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ae5675853d7fdca900796b2c2620eab2f">setSource()</a></code> call.</p>
+<p>The source must be set before issuing <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a422503c5051d68fdab1485b74c0c33a1">stop()</a></code>.</p>
+<p>Once <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a422503c5051d68fdab1485b74c0c33a1">stop()</a></code> has been called, subsequent <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code> calls will fail. If <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a422503c5051d68fdab1485b74c0c33a1">stop()</a></code> is called when audio has already stopped, <code>false</code> will be returned. If the id does not match the id of the active source, then <code>false</code> will be returned. If the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a422503c5051d68fdab1485b74c0c33a1">stop()</a></code> succeeded, <code>true</code> will be returned. When <code>true</code> is returned, a callback will be made to either <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab494787a945bd49bbd2299edd8eb5e64">MediaPlayerObserverInterface::onPlaybackStopped()</a></code> or to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aa14478d88e372c90e077bc68c6d6f919">MediaPlayerObserverInterface::onPlaybackError()</a></code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The id of the source on which to operate.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the call succeeded, in which case a callback will be made, or <code>false</code> otherwise. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#a56c3be9e651bb31e2084293db4d617e0">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a34f9ce483a869c3f4b3ad473cb4a36dc">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#af8e1300838fcd41cef9a9bf2d18b5e9a">alexaClientSDK::mediaPlayer::MediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a582f2329c16f66f87e159a09bd15677a">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
 
 </div>
 </div>
@@ -486,7 +577,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

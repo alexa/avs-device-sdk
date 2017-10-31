@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -65,7 +65,42 @@ $(function() {
 <div class="title">ChangeLog </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h3>[1.1.0] - 2017-10-02</h3>
+<div class="textblock"><h3>[1.2.0] - 2017-10-27</h3>
+<ul>
+<li><b>Enhancements</b><ul>
+<li>Updated MediaPlayer to solve stability issues</li>
+<li>All capability agents were refined to work with the updated MediaPlayer</li>
+<li>Added the TemplateRuntime capability agent</li>
+<li>Added the SpeakerManager capability agent</li>
+<li>Added a configuration option ("sampleApp":"endpoint") that allows the endpoint that SampleApp connects to to be specified without changing code or rebuilding</li>
+<li>Added very verbose capture of libcurl debug information</li>
+<li>Added an observer interface to observer audio state changes from AudioPlayer</li>
+<li>Added support for StreamMetadataExtracted Event. Stream tags found in the stream are represented in JSON and sent to AVS</li>
+<li>Added to the SampleApp a simple GuiRenderer as an observer to the TemplateRuntime Capability Agent</li>
+<li>Moved shared libcurl functionality to AVSCommon/Utils</li>
+<li>Added a CMake option to exclude tests from the "make all" build. Use "cmake &lt;absolute-path-to-source&gt;  
+  -DACSDK_EXCLUDE_TEST_FROM_ALL=ON" to enable it. When this option is enabled "make unit" and "make integration" still could be used to build and run the tests</li>
+</ul>
+</li>
+<li><b>Bug fixes</b>:<ul>
+<li>Previously scheduled alerts now play following a restart</li>
+<li>General stability fixes</li>
+<li>Bug fix for CertifiedSender blocking forever if the network goes down while it's trying to send a message to AVS</li>
+<li>Fixes for known issue of Alerts integration tests fail: AlertsTest.UserLongUnrelatedBargeInOnActiveTimer and AlertsTest.handleOneTimerWithVocalStop</li>
+<li>Attempting to end a tap-to-talk interaction with the tap-to-talk button wouldn't work</li>
+<li>SharedDataStream could encounter a race condition due to a combination of a blocking Reader and a Writer closing before writing any data</li>
+<li>Bug-fix for the ordering of notifications within alerts scheduling. This fixes the issue where a local-stop on an alert would also stop a subsequent alert if it were to begin without delay</li>
+</ul>
+</li>
+<li><b>Known Issues</b></li>
+<li>Capability agent for Notifications is not included in this release</li>
+<li>Inconsistent playback behavior when resuming content ("Alexa, pause." / "Alexa, resume."). Specifically, handling playback offsets, which causes the content to play from the start. This behavior is also occasionally seen with "Next" / "Previous".</li>
+<li><code>ACL</code>'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed.</li>
+<li>Music playback failures may result in an error Text to Speech being rendered repeatedly</li>
+<li>Reminders and named timers don't sound when there is no connection</li>
+<li>GUI cards don't show for Kindle</li>
+</ul>
+<h3>[1.1.0] - 2017-10-02</h3>
 <ul>
 <li><b>Enhancements</b><ul>
 <li>Better GStreamer error reporting. MediaPlayer used to only report <code>MEDIA_ERROR_UNKNOWN</code>, now reports more specific errors as defined in <code><a class="el" href="_error_type_8h_source.html">ErrorType.h</a></code>.</li>
@@ -129,7 +164,22 @@ $(function() {
 <li>Bug fix for <code>jsonArrayExist</code> incorrectly parsing JSON when trying to locate array children.</li>
 <li>Bug fix for ADSL test failures with <code>sendDirectiveWithoutADialogRequestId</code>.</li>
 <li>Bug fix for <code>SpeechSynthesizer</code> showing the wrong UX state when a burst of <code>Speak</code> directives are received.</li>
-<li>Bug fix for recursive loop in <code>AudioPlayer.Stop</code>.</li>
+<li>Bug fix for recursive loop in <code>AudioPlayer.Stop</code>. <blockquote class="doxtable">
+<blockquote class="doxtable">
+<blockquote class="doxtable">
+<blockquote class="doxtable">
+<blockquote class="doxtable">
+<blockquote class="doxtable">
+<blockquote class="doxtable">
+<p>3553854... Updated CHANGELOG.md and README.md for 1.1 </p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</li>
 </ul>
 </li>
 </ul>
@@ -364,7 +414,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

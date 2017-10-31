@@ -1,5 +1,10 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_detector_state_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::KeyWordDetector\lStateObserverInterface" alt="" coords="5,31,226,83"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1kwd_1_1test_1_1_mock_state_observer.html" title="A test observer that mocks out the KeyWordDetectorStateObserverInterface#onStateChanged() call..." alt="" coords="274,5,449,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1kwd_1_1test_1_1test_state_observer.html" title="A test observer that mocks out the KeyWordDetectorStateObserverInterface#onStateChanged() call..." alt="" coords="279,68,444,107"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lInterface" alt="" coords="6,72,222,124"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html" title="A mock MediaPlayer for unit tests. " alt="" coords="270,5,467,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html" title="alexaClientSDK::integration\l::test::TestMediaPlayer" alt="" coords="277,81,461,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="271,145,467,184"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1media_player_1_1_pipeline_interface.html" title="alexaClientSDK::mediaPlayer\l::PipelineInterface" alt="" coords="16,148,212,187"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerInterface" alt="" coords="5,215,222,253"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_speaker.html" title="alexaClientSDK::capability\lAgents::speakerManager\l::test::MockSpeaker" alt="" coords="280,208,458,260"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_speaker_interface.html" title="alexaClientSDK::capability\lAgents::speakerManager\l::test::MockSpeakerInterface" alt="" coords="273,284,464,336"/>
 </map>

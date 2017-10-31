@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['basestreamsource',['BaseStreamSource',['../classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a9c01ae6967784c851abce5c18e4cdc69',1,'alexaClientSDK::mediaPlayer::BaseStreamSource']]],
+  ['basestreamsource',['BaseStreamSource',['../classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a4db86450ab72d8a25ff3bcda3c7f606c',1,'alexaClientSDK::mediaPlayer::BaseStreamSource']]],
   ['begin',['begin',['../classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a8bcf02cc8b71361a7b67afe8e04159aa',1,'alexaClientSDK::sampleApp::InteractionManager']]],
   ['bindint64parameter',['bindInt64Parameter',['../classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_statement.html#ac827b027ab1d0a5e71da64a1a9936fe7',1,'alexaClientSDK::storage::sqliteStorage::SQLiteStatement']]],
   ['bindintparameter',['bindIntParameter',['../classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_statement.html#adc95362d23ccb132f554c3fbfa4d8a51',1,'alexaClientSDK::storage::sqliteStorage::SQLiteStatement']]],

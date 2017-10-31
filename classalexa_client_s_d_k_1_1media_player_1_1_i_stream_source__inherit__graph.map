@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::mediaPlayer::IStreamSource" name="alexaClientSDK::mediaPlayer::IStreamSource">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html" title="alexaClientSDK::mediaPlayer\l::BaseStreamSource" alt="" coords="5,92,202,131"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html" title="alexaClientSDK::mediaPlayer\l::SourceInterface" alt="" coords="5,5,202,44"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html" title="alexaClientSDK::mediaPlayer\l::BaseStreamSource" alt="" coords="6,179,202,217"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html" title="alexaClientSDK::mediaPlayer\l::SourceInterface" alt="" coords="6,92,202,131"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="5,5,202,44"/>
 </map>

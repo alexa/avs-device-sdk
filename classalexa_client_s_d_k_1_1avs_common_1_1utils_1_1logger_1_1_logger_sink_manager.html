@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>alexaClientSDK</b></li><li class="navelem"><b>avsCommon</b></li><li class="navelem"><b>utils</b></li><li class="navelem"><b>logger</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger_sink_manager.html">LoggerSinkManager</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>avsCommon</b></li><li class="navelem"><b>utils</b></li><li class="navelem"><b>logger</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger_sink_manager.html">LoggerSinkManager</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -82,8 +82,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a968910822f6b7ab844ebc2fb91a40853"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a400bbb733ab7b287dd0d7abe9b5605aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger_sink_manager.html#a400bbb733ab7b287dd0d7abe9b5605aa">removeSinkObserver</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_sink_observer_interface.html">SinkObserverInterface</a> *observer)</td></tr>
 <tr class="separator:a400bbb733ab7b287dd0d7abe9b5605aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a267fda86664d5802fdb4d65c83eda92c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger_sink_manager.html#a267fda86664d5802fdb4d65c83eda92c">changeSinkLogger</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html">Logger</a> &amp;sink)</td></tr>
-<tr class="separator:a267fda86664d5802fdb4d65c83eda92c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34ace00656c08503c7025c902c8162df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger_sink_manager.html#a34ace00656c08503c7025c902c8162df">initialize</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html">Logger</a> &gt; &amp;sink)</td></tr>
+<tr class="separator:a34ace00656c08503c7025c902c8162df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -118,29 +118,29 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a267fda86664d5802fdb4d65c83eda92c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a267fda86664d5802fdb4d65c83eda92c">&#9670;&nbsp;</a></span>changeSinkLogger()</h2>
+<a id="a34ace00656c08503c7025c902c8162df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34ace00656c08503c7025c902c8162df">&#9670;&nbsp;</a></span>initialize()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void alexaClientSDK::avsCommon::utils::logger::LoggerSinkManager::changeSinkLogger </td>
+          <td class="memname">void alexaClientSDK::avsCommon::utils::logger::LoggerSinkManager::initialize </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html">Logger</a> &amp;&#160;</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html">Logger</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>sink</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Change the sink logger managed by the manager.</p>
+<p>Initialize the sink logger managed by the manager. This function can be called only before any other threads in the process have been created by the program.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">sink</td><td>The new <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html">Logger</a></code> to forward logs to.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>It is up to the application to serialize calls to changeSinkLogger. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If this function is not called, the default sink logger will be the one returned by get&lt;ACSDK_LOG_SINK&gt;Logger(). </dd></dl>
 
 </div>
 </div>
@@ -204,7 +204,7 @@ Static Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

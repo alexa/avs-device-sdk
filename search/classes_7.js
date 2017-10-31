@@ -12,9 +12,9 @@ var searchData=
   ['http2streamtest',['HTTP2StreamTest',['../classalexa_client_s_d_k_1_1acl_1_1test_1_1_h_t_t_p2_stream_test.html',1,'alexaClientSDK::acl::test']]],
   ['http2transport',['HTTP2Transport',['../classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html',1,'alexaClientSDK::acl']]],
   ['httpcontent',['HTTPContent',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_h_t_t_p_content.html',1,'alexaClientSDK::avsCommon::utils']]],
-  ['httpcontentfetcherfactory',['HTTPContentFetcherFactory',['../classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p_content_fetcher_factory.html',1,'alexaClientSDK::acl']]],
+  ['httpcontentfetcherfactory',['HTTPContentFetcherFactory',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_content_fetcher_factory.html',1,'alexaClientSDK::avsCommon::utils::libcurlUtils']]],
   ['httpcontentfetcherinterface',['HTTPContentFetcherInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['httpcontentfetcherinterfacefactoryinterface',['HTTPContentFetcherInterfaceFactoryInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_factory_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
-  ['httppost',['HttpPost',['../classalexa_client_s_d_k_1_1auth_delegate_1_1_http_post.html',1,'alexaClientSDK::authDelegate']]],
-  ['httppostinterface',['HttpPostInterface',['../classalexa_client_s_d_k_1_1auth_delegate_1_1_http_post_interface.html',1,'alexaClientSDK::authDelegate']]]
+  ['httppost',['HttpPost',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post.html',1,'alexaClientSDK::avsCommon::utils::libcurlUtils']]],
+  ['httppostinterface',['HttpPostInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post_interface.html',1,'alexaClientSDK::avsCommon::utils::libcurlUtils']]]
 ];

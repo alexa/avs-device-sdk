@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1hold_to_talk_button.html" title="alexaClientSDK::integration\l::test::holdToTalkButton" alt="" coords="5,5,190,44"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_storage_interface.html" title="alexaClientSDK::capability\lAgents::settings::SettingsStorage\lInterface" alt="" coords="5,5,224,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_s_q_lite_setting_storage.html" title="alexaClientSDK::capability\lAgents::settings::SQLiteSetting\lStorage" alt="" coords="272,5,478,57"/>
 </map>

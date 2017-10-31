@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,7 +73,7 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html#a6b73c95dbde8b184f8b3176ff9a3f3f1">alexaClientSDK::avsCommon::utils::sds::SharedDataStream&lt; T &gt;</a>
 </li>
 <li>infoRead()
-: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_curl_multi_handle_wrapper.html#aa2955d1240d125c9cdaffe3e52790493">alexaClientSDK::acl::CurlMultiHandleWrapper</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_multi_handle_wrapper.html#ab1c8254f01e990ad80c9882e1ba4dd95">alexaClientSDK::avsCommon::utils::libcurlUtils::CurlMultiHandleWrapper</a>
 </li>
 <li>init()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_object.html#a5ce2543cb7ed1fe728b49b5cba868f21">alexaClientSDK::acl::PostConnectObject</a>
@@ -89,6 +89,7 @@ $(function() {
 <li>initialize()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_alexa_client_s_d_k_init.html#ac819fd7ef992889caa14efaf10ee75a7">alexaClientSDK::avsCommon::avs::initialization::AlexaClientSDKInit</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html#accc2fef41c574f70c61264a5242fc72d">alexaClientSDK::avsCommon::utils::configuration::ConfigurationNode</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger_sink_manager.html#a34ace00656c08503c7025c902c8162df">alexaClientSDK::avsCommon::utils::logger::LoggerSinkManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#ac84870980822d662729375c522eca50c">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a>
 </li>
 <li>initPost()
@@ -104,7 +105,7 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#aef89c7355025daa3808a8913510a5303">alexaClientSDK::mediaPlayer::BaseStreamSource</a>
 </li>
 <li>instance()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_console_logger.html#a014c6ed632a85a7bff9506bac480be8a">alexaClientSDK::avsCommon::utils::logger::ConsoleLogger</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_console_logger.html#ab92751342dadbc4ab2dbc3c6a189243c">alexaClientSDK::avsCommon::utils::logger::ConsoleLogger</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger_sink_manager.html#a9679f5c38ade00e786d6696d375acf19">alexaClientSDK::avsCommon::utils::logger::LoggerSinkManager</a>
 </li>
 <li>InteractionManager()
@@ -122,9 +123,6 @@ $(function() {
 </li>
 <li>isAlertActive()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#a5958b4cce598b42dead134d2bb61333b">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a>
-</li>
-<li>isBlockedOnLocalIO()
-: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#ad63e4c9eebf9e80df5deffdaa97186d9">alexaClientSDK::acl::HTTP2Stream</a>
 </li>
 <li>isByteswappingRequired()
 : <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_abstract_keyword_detector.html#a551aa63df26601c02ebc941422d8413a">alexaClientSDK::kwd::AbstractKeywordDetector</a>
@@ -162,6 +160,9 @@ $(function() {
 </li>
 <li>isPastDue()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a1f68930bde94f645d111a73098b1a3ef">alexaClientSDK::capabilityAgents::alerts::Alert</a>
+</li>
+<li>isPaused()
+: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#addc1ae59a4965ae913ba091f4fa5c442">alexaClientSDK::acl::HTTP2Stream</a>
 </li>
 <li>isPlaybackRemote()
 : <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_attachment_reader_source.html#a0dbb878575a8bbfc56d78297ff12e043">alexaClientSDK::mediaPlayer::AttachmentReaderSource</a>
@@ -209,7 +210,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

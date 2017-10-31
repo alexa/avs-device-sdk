@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::mediaPlayer::MediaPlayer" name="alexaClientSDK::mediaPlayer::MediaPlayer">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lInterface" alt="" coords="5,5,221,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1_pipeline_interface.html" title="alexaClientSDK::mediaPlayer\l::PipelineInterface" alt="" coords="15,81,211,120"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lInterface" alt="" coords="6,5,222,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerInterface" alt="" coords="5,81,222,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1media_player_1_1_pipeline_interface.html" title="alexaClientSDK::mediaPlayer\l::PipelineInterface" alt="" coords="16,144,212,183"/>
 </map>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>alexaClientSDK</b></li><li class="navelem"><b>acl</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_synchronizer.html">PostConnectSynchronizer</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>acl</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_synchronizer.html">PostConnectSynchronizer</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -151,18 +151,20 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a29e40517f71dfc83e3159a8f0f489d7b inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7b">Status</a> { <br />
 &#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bac69f06e1a9b016d133907b4e5f5864d2">Status::PENDING</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bad0749aaba8b833466dfcbb0428e4f89c">Status::SUCCESS</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7ba042270fa18f5daa4cb749ebcfdd58897">Status::SUCCESS_NO_CONTENT</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bad91be9b5ceb9fe0af02b9b02413eccf8">Status::NOT_CONNECTED</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7ba48aed7ecac60ad92d2006b58f16f483b">Status::NOT_SYNCHRONIZED</a>, 
 <br />
-&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bac5b306a30b21dec5abcb84067152687a">Status::TIMEDOUT</a>, 
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7ba48aed7ecac60ad92d2006b58f16f483b">Status::NOT_SYNCHRONIZED</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bac5b306a30b21dec5abcb84067152687a">Status::TIMEDOUT</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7ba23f149f0f9ae9ed9e0119e7209178a5d">Status::PROTOCOL_ERROR</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bae8c0c70879b5895c615677261d64a1ee">Status::INTERNAL_ERROR</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7ba6a701b3f16c45b9d96fec4ac97805d9c">Status::SERVER_INTERNAL_ERROR</a>, 
 <br />
-&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7ba392253eaea22aafdb199bc238bafc082">Status::REFUSED</a>, 
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7ba6a701b3f16c45b9d96fec4ac97805d9c">Status::SERVER_INTERNAL_ERROR</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7ba392253eaea22aafdb199bc238bafc082">Status::REFUSED</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bad4539bffb6062bdcbd7e7cc1b1228926">Status::CANCELED</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7bad56f03cea4fb854fa3000896bfd66fe3">Status::THROTTLED</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7baabd298f8599f681c645d152c354f24de">Status::INVALID_AUTH</a>
+<br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7baabd298f8599f681c645d152c354f24de">Status::INVALID_AUTH</a>
 <br />
  }</td></tr>
 <tr class="separator:a29e40517f71dfc83e3159a8f0f489d7b inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -476,7 +478,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

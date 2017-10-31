@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,6 +67,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
@@ -84,6 +85,7 @@ $(function() {
 <code>#include &lt;rapidjson/error/en.h&gt;</code><br />
 <code>#include &lt;rapidjson/stringbuffer.h&gt;</code><br />
 <code>#include &lt;rapidjson/writer.h&gt;</code><br />
+<code>#include &lt;AVSCommon/Utils/Logger/ConsoleLogger.h&gt;</code><br />
 <code>#include &lt;AVSCommon/Utils/JSON/JSONUtils.h&gt;</code><br />
 <code>#include &lt;AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h&gt;</code><br />
 <code>#include &lt;AVSCommon/AVS/Attachment/AttachmentManagerInterface.h&gt;</code><br />
@@ -93,54 +95,63 @@ $(function() {
 <code>#include &lt;AVSCommon/SDKInterfaces/MockDirectiveSequencer.h&gt;</code><br />
 <code>#include &lt;AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h&gt;</code><br />
 <code>#include &lt;AVSCommon/AVS/Attachment/AttachmentManager.h&gt;</code><br />
+<code>#include &lt;AVSCommon/Utils/Memory/Memory.h&gt;</code><br />
+<code>#include &lt;AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h&gt;</code><br />
 <code>#include &quot;AudioPlayer/AudioPlayer.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AudioPlayerTest.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_audio_player_test_8cpp__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_capability_agents_2_audio_player_2test_2_audio_player_test_8cpp" alt=""/></div>
 <map name="_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_capability_agents_2_audio_player_2test_2_audio_player_test_8cpp" id="_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_capability_agents_2_audio_player_2test_2_audio_player_test_8cpp">
-<area shape="rect" id="node12" href="_j_s_o_n_utils_8h_source.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="94,292,264,331"/>
-<area shape="rect" id="node18" href="_mock_exception_encountered_sender_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="1374,119,1618,157"/>
-<area shape="rect" id="node21" href="_attachment_manager_interface_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="2720,205,2928,244"/>
-<area shape="rect" id="node27" href="_mock_context_manager_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockContextManager.h" alt="" coords="1642,119,1833,157"/>
-<area shape="rect" id="node30" href="_mock_focus_manager_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockFocusManager.h" alt="" coords="1159,119,1350,157"/>
-<area shape="rect" id="node32" href="_mock_message_sender_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockMessageSender.h" alt="" coords="1857,119,2047,157"/>
-<area shape="rect" id="node34" href="_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveSequencer.h" alt="" coords="2123,119,2314,157"/>
-<area shape="rect" id="node37" href="_mock_directive_handler_result_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveHandlerResult.h" alt="" coords="2338,119,2542,157"/>
-<area shape="rect" id="node39" href="_attachment_manager_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="2669,119,2870,157"/>
-<area shape="rect" id="node41" href="_audio_player_8h_source.html" title="AudioPlayer/AudioPlayer.h" alt="" coords="896,125,1075,151"/>
-<area shape="rect" id="node14" href="_logger_utils_8h_source.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="473,379,649,417"/>
-<area shape="rect" id="node15" href="_logger_8h_source.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="996,465,1172,504"/>
-<area shape="rect" id="node19" href="_exception_encountered_sender_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="1251,292,1517,331"/>
-<area shape="rect" id="node20" href="_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="1273,379,1495,417"/>
-<area shape="rect" id="node22" href="_attachment_8h_source.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="2863,292,3065,331"/>
-<area shape="rect" id="node23" href="_attachment_reader_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="2794,379,2995,417"/>
-<area shape="rect" id="node25" href="_attachment_writer_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="3122,379,3323,417"/>
-<area shape="rect" id="node26" href="_in_process_s_d_s_8h_source.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="2556,379,2718,417"/>
-<area shape="rect" id="node28" href="_context_manager_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1599,205,1790,244"/>
-<area shape="rect" id="node29" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="1641,292,1836,331"/>
-<area shape="rect" id="node31" href="_focus_manager_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="754,292,945,331"/>
-<area shape="rect" id="node33" href="_message_sender_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1866,205,2057,244"/>
-<area shape="rect" id="node35" href="_directive_sequencer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="2271,205,2476,244"/>
-<area shape="rect" id="node36" href="_requires_shutdown_8h_source.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2449,292,2637,331"/>
-<area shape="rect" id="node38" href="_directive_handler_result_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="1910,292,2135,331"/>
-<area shape="rect" id="node42" href="_capability_agent_8h_source.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="1382,205,1575,244"/>
-<area shape="rect" id="node43" href="_error_types_8h_source.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="881,205,1090,244"/>
-<area shape="rect" id="node44" href="_media_player_interface_8h_source.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="969,292,1178,331"/>
-<area shape="rect" id="node45" href="_executor_8h_source.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="536,292,731,331"/>
-<area shape="rect" id="node46" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h_source.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="288,292,462,331"/>
-<area shape="rect" id="node47" href="_audio_item_8h_source.html" title="AudioItem.h" alt="" coords="1114,212,1206,237"/>
-<area shape="rect" id="node48" href="_clear_behavior_8h_source.html" title="ClearBehavior.h" alt="" coords="589,212,705,237"/>
-<area shape="rect" id="node49" href="_play_behavior_8h_source.html" title="PlayBehavior.h" alt="" coords="454,212,564,237"/>
-<area shape="rect" id="node50" href="_player_activity_8h_source.html" title="PlayerActivity.h" alt="" coords="319,212,430,237"/>
+<area shape="rect" id="node12" href="_console_logger_8h_source.html" title="AVSCommon/Utils/Logger\l/ConsoleLogger.h" alt="" coords="43,379,219,417"/>
+<area shape="rect" id="node15" href="_j_s_o_n_utils_8h_source.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="1052,292,1222,331"/>
+<area shape="rect" id="node18" href="_mock_exception_encountered_sender_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="3147,119,3392,157"/>
+<area shape="rect" id="node20" href="_attachment_manager_interface_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="485,205,693,244"/>
+<area shape="rect" id="node24" href="_mock_context_manager_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockContextManager.h" alt="" coords="2881,119,3071,157"/>
+<area shape="rect" id="node26" href="_mock_focus_manager_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockFocusManager.h" alt="" coords="2451,119,2642,157"/>
+<area shape="rect" id="node28" href="_mock_message_sender_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockMessageSender.h" alt="" coords="2666,119,2857,157"/>
+<area shape="rect" id="node30" href="_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveSequencer.h" alt="" coords="3415,119,3606,157"/>
+<area shape="rect" id="node33" href="_mock_directive_handler_result_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveHandlerResult.h" alt="" coords="3630,119,3834,157"/>
+<area shape="rect" id="node35" href="_attachment_manager_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="669,119,870,157"/>
+<area shape="rect" id="node37" href="_memory_8h_source.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="2635,205,2818,244"/>
+<area shape="rect" id="node39" href="_mock_media_player_8h_source.html" title="AVSCommon/Utils/MediaPlayer\l/MockMediaPlayer.h" alt="" coords="2168,119,2376,157"/>
+<area shape="rect" id="node41" href="_audio_player_8h_source.html" title="AudioPlayer/AudioPlayer.h" alt="" coords="1928,125,2107,151"/>
+<area shape="rect" id="node13" href="_logger_8h_source.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="745,465,921,504"/>
+<area shape="rect" id="node17" href="_logger_utils_8h_source.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="796,379,972,417"/>
+<area shape="rect" id="node19" href="_exception_encountered_sender_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2711,292,2977,331"/>
+<area shape="rect" id="node21" href="_attachment_8h_source.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="477,292,678,331"/>
+<area shape="rect" id="node22" href="_attachment_reader_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="519,379,721,417"/>
+<area shape="rect" id="node23" href="_attachment_writer_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="294,379,495,417"/>
+<area shape="rect" id="node25" href="_context_manager_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="3107,205,3298,244"/>
+<area shape="rect" id="node27" href="_focus_manager_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="1863,292,2054,331"/>
+<area shape="rect" id="node29" href="_message_sender_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2893,205,3083,244"/>
+<area shape="rect" id="node31" href="_directive_sequencer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="3563,205,3768,244"/>
+<area shape="rect" id="node32" href="_requires_shutdown_8h_source.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="3350,292,3538,331"/>
+<area shape="rect" id="node34" href="_directive_handler_result_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="3001,292,3226,331"/>
+<area shape="rect" id="node40" href="_media_player_interface_8h_source.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1246,292,1455,331"/>
+<area shape="rect" id="node42" href="_capability_agent_8h_source.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="2369,205,2562,244"/>
+<area shape="rect" id="node43" href="_player_activity_8h_source.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="1684,212,1908,237"/>
+<area shape="rect" id="node44" href="_audio_player_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerInterface.h" alt="" coords="2319,292,2510,331"/>
+<area shape="rect" id="node45" href="_error_types_8h_source.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="1529,292,1738,331"/>
+<area shape="rect" id="node46" href="_media_player_observer_interface_8h_source.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="1342,205,1559,244"/>
+<area shape="rect" id="node47" href="_executor_8h_source.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2100,205,2295,244"/>
+<area shape="rect" id="node48" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h_source.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="804,292,978,331"/>
+<area shape="rect" id="node49" href="_audio_item_8h_source.html" title="AudioItem.h" alt="" coords="1932,212,2025,237"/>
+<area shape="rect" id="node50" href="_clear_behavior_8h_source.html" title="ClearBehavior.h" alt="" coords="1050,212,1166,237"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_test_audio_player_observer.html">alexaClientSDK::capabilityAgents::audioPlayer::test::TestAudioPlayerObserver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">alexaClientSDK::capabilityAgents::audioPlayer::test::AudioPlayerTest</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
+<tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -154,10 +165,6 @@ Functions</h2></td></tr>
 static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a6c318c0080f7f5b95f85001499165172">alexaClientSDK::capabilityAgents::audioPlayer::test::WAIT_TIMEOUT</a> (1000)</td></tr>
 <tr class="memdesc:a6c318c0080f7f5b95f85001499165172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plenty of time for a test to complete. <br /></td></tr>
 <tr class="separator:a6c318c0080f7f5b95f85001499165172"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bd63dfb342f5a1876cae631c47cdad0"><td class="memItemLeft" align="right" valign="top"><a id="a9bd63dfb342f5a1876cae631c47cdad0"></a>
-static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a9bd63dfb342f5a1876cae631c47cdad0">alexaClientSDK::capabilityAgents::audioPlayer::test::DEFAULT_TIME</a> (50)</td></tr>
-<tr class="memdesc:a9bd63dfb342f5a1876cae631c47cdad0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default time parameter. <br /></td></tr>
-<tr class="separator:a9bd63dfb342f5a1876cae631c47cdad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b2a78c6eac558bcf522b42cc212a928"><td class="memItemLeft" align="right" valign="top"><a id="a8b2a78c6eac558bcf522b42cc212a928"></a>
 static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a8b2a78c6eac558bcf522b42cc212a928">alexaClientSDK::capabilityAgents::audioPlayer::test::CHANNEL_NAME</a> (&quot;Content&quot;)</td></tr>
 <tr class="memdesc:a8b2a78c6eac558bcf522b42cc212a928"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the <code>FocusManager</code> channel used by the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code>. <br /></td></tr>
@@ -270,8 +277,30 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 <tr class="separator:af89538e6dfcd2b72133c96bf5984cb04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4efe42d8cb08901ee5aee9dd30dd3c6b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a4efe42d8cb08901ee5aee9dd30dd3c6b">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testOnBufferRefilled)</td></tr>
 <tr class="separator:a4efe42d8cb08901ee5aee9dd30dd3c6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ddcb33e90d2e039a8fbd66b6dfd7ac4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a5ddcb33e90d2e039a8fbd66b6dfd7ac4">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testOnTags)</td></tr>
+<tr class="separator:a5ddcb33e90d2e039a8fbd66b6dfd7ac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1a3742b7a0ce49598b1c901f33438ef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ae1a3742b7a0ce49598b1c901f33438ef">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testCancelDirective)</td></tr>
 <tr class="separator:ae1a3742b7a0ce49598b1c901f33438ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e9667fe63fb40ef4c972f1d8240cef2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a2e9667fe63fb40ef4c972f1d8240cef2">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangeToNoneInIdleState)</td></tr>
+<tr class="separator:a2e9667fe63fb40ef4c972f1d8240cef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae38342429564518238ab19b472250d67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ae38342429564518238ab19b472250d67">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangeToForegroundInIdleState)</td></tr>
+<tr class="separator:ae38342429564518238ab19b472250d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa119b58f535134c5e9cc5a992f7f1b6a"><td class="memItemLeft" align="right" valign="top"><a id="aa119b58f535134c5e9cc5a992f7f1b6a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</b> (AudioPlayerTest, DISABLED_testFocusChangeFromForegroundToBackgroundInIdleState)</td></tr>
+<tr class="separator:aa119b58f535134c5e9cc5a992f7f1b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3adeaeca6083422a6ebc8d0f7379f86"><td class="memItemLeft" align="right" valign="top"><a id="ac3adeaeca6083422a6ebc8d0f7379f86"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</b> (AudioPlayerTest, DISABLED_testFocusChangeFromNoneToBackgroundInIdleState)</td></tr>
+<tr class="separator:ac3adeaeca6083422a6ebc8d0f7379f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45cfb86fa4a1f300055e3afdf602fc36"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a45cfb86fa4a1f300055e3afdf602fc36">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangesInPlayingState)</td></tr>
+<tr class="separator:a45cfb86fa4a1f300055e3afdf602fc36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ae2c38309a8b0edbacff4d589f71bf8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a0ae2c38309a8b0edbacff4d589f71bf8">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangesInStoppedState)</td></tr>
+<tr class="separator:a0ae2c38309a8b0edbacff4d589f71bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fcf71a93bbecf8cca0095d0ac893060"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a6fcf71a93bbecf8cca0095d0ac893060">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangesInPausedState)</td></tr>
+<tr class="separator:a6fcf71a93bbecf8cca0095d0ac893060"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4c4c5d4bad06e4ea3049561cb6d971f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#aa4c4c5d4bad06e4ea3049561cb6d971f">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangesInBufferUnderrunState)</td></tr>
+<tr class="separator:aa4c4c5d4bad06e4ea3049561cb6d971f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a2eafa27acb5a6254b99ae79f015016"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a1a2eafa27acb5a6254b99ae79f015016">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangeToBackgroundBeforeOnPlaybackStarted)</td></tr>
+<tr class="separator:a1a2eafa27acb5a6254b99ae79f015016"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -340,6 +369,54 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a02bcd60401e6985a5b7f9fac9f60d76e">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_NAME_KEY</a> = &quot;name&quot;</td></tr>
 <tr class="memdesc:a02bcd60401e6985a5b7f9fac9f60d76e"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the name section of a message. <br /></td></tr>
 <tr class="separator:a02bcd60401e6985a5b7f9fac9f60d76e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49495e8cba4b22e56b0a2c9a79c971bd"><td class="memItemLeft" align="right" valign="top"><a id="a49495e8cba4b22e56b0a2c9a79c971bd"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a49495e8cba4b22e56b0a2c9a79c971bd">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_PAYLOAD_KEY</a> = &quot;payload&quot;</td></tr>
+<tr class="memdesc:a49495e8cba4b22e56b0a2c9a79c971bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the payload section of a message. <br /></td></tr>
+<tr class="separator:a49495e8cba4b22e56b0a2c9a79c971bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad537facc101788656c5ee24172245805"><td class="memItemLeft" align="right" valign="top"><a id="ad537facc101788656c5ee24172245805"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ad537facc101788656c5ee24172245805">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_KEY</a> = &quot;metadata&quot;</td></tr>
+<tr class="memdesc:ad537facc101788656c5ee24172245805"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the metadata section of a message. <br /></td></tr>
+<tr class="separator:ad537facc101788656c5ee24172245805"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59bb45ac7a3e97b64c2a3ac1a53e1eb3"><td class="memItemLeft" align="right" valign="top"><a id="a59bb45ac7a3e97b64c2a3ac1a53e1eb3"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a59bb45ac7a3e97b64c2a3ac1a53e1eb3">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_STRING_KEY</a> = &quot;StringKey&quot;</td></tr>
+<tr class="memdesc:a59bb45ac7a3e97b64c2a3ac1a53e1eb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "string" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="separator:a59bb45ac7a3e97b64c2a3ac1a53e1eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd071bdefa0f1e29ab836e1500415b25"><td class="memItemLeft" align="right" valign="top"><a id="abd071bdefa0f1e29ab836e1500415b25"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#abd071bdefa0f1e29ab836e1500415b25">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_STRING_VALUE</a> = &quot;StringValue&quot;</td></tr>
+<tr class="memdesc:abd071bdefa0f1e29ab836e1500415b25"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "string" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="separator:abd071bdefa0f1e29ab836e1500415b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57dfbe54042915c21f4f81db2dff9296"><td class="memItemLeft" align="right" valign="top"><a id="a57dfbe54042915c21f4f81db2dff9296"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a57dfbe54042915c21f4f81db2dff9296">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_UINT_KEY</a> = &quot;UintKey&quot;</td></tr>
+<tr class="memdesc:a57dfbe54042915c21f4f81db2dff9296"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "uint" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="separator:a57dfbe54042915c21f4f81db2dff9296"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab088eebdf26a62d011106ad2c8c959d5"><td class="memItemLeft" align="right" valign="top"><a id="ab088eebdf26a62d011106ad2c8c959d5"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ab088eebdf26a62d011106ad2c8c959d5">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_UINT_VALUE</a> = &quot;12345&quot;</td></tr>
+<tr class="memdesc:ab088eebdf26a62d011106ad2c8c959d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "uint" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="separator:ab088eebdf26a62d011106ad2c8c959d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9894a1e8851994016d1202721fc8890"><td class="memItemLeft" align="right" valign="top"><a id="ad9894a1e8851994016d1202721fc8890"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ad9894a1e8851994016d1202721fc8890">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_INT_KEY</a> = &quot;IntKey&quot;</td></tr>
+<tr class="memdesc:ad9894a1e8851994016d1202721fc8890"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "int" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="separator:ad9894a1e8851994016d1202721fc8890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64e0fa95e0e0d6b43629c41c6cc78a19"><td class="memItemLeft" align="right" valign="top"><a id="a64e0fa95e0e0d6b43629c41c6cc78a19"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a64e0fa95e0e0d6b43629c41c6cc78a19">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_INT_VALUE</a> = &quot;67890&quot;</td></tr>
+<tr class="memdesc:a64e0fa95e0e0d6b43629c41c6cc78a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "int" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="separator:a64e0fa95e0e0d6b43629c41c6cc78a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a016909d31592288fcc386a4d146c835b"><td class="memItemLeft" align="right" valign="top"><a id="a016909d31592288fcc386a4d146c835b"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a016909d31592288fcc386a4d146c835b">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_DOUBLE_KEY</a> = &quot;DoubleKey&quot;</td></tr>
+<tr class="memdesc:a016909d31592288fcc386a4d146c835b"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "double" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="separator:a016909d31592288fcc386a4d146c835b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7e8e74f3aeb4e1cfc331b58298c5e94"><td class="memItemLeft" align="right" valign="top"><a id="ae7e8e74f3aeb4e1cfc331b58298c5e94"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ae7e8e74f3aeb4e1cfc331b58298c5e94">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_DOUBLE_VALUE</a> = &quot;3.14&quot;</td></tr>
+<tr class="memdesc:ae7e8e74f3aeb4e1cfc331b58298c5e94"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "double" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="separator:ae7e8e74f3aeb4e1cfc331b58298c5e94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2743e078f09221d1903da32625e5b184"><td class="memItemLeft" align="right" valign="top"><a id="a2743e078f09221d1903da32625e5b184"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a2743e078f09221d1903da32625e5b184">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_BOOLEAN_KEY</a> = &quot;BooleanKey&quot;</td></tr>
+<tr class="memdesc:a2743e078f09221d1903da32625e5b184"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "boolean" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="separator:a2743e078f09221d1903da32625e5b184"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03d7f46d0cbd8e7083f752e47f2510cb"><td class="memItemLeft" align="right" valign="top"><a id="a03d7f46d0cbd8e7083f752e47f2510cb"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a03d7f46d0cbd8e7083f752e47f2510cb">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_BOOLEAN_VALUE</a> = &quot;true&quot;</td></tr>
+<tr class="memdesc:a03d7f46d0cbd8e7083f752e47f2510cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "boolean" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="separator:a03d7f46d0cbd8e7083f752e47f2510cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d14175b35ff3e584a1168c49478d50f"><td class="memItemLeft" align="right" valign="top"><a id="a9d14175b35ff3e584a1168c49478d50f"></a>
 static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a9d14175b35ff3e584a1168c49478d50f">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_STARTED_NAME</a> = &quot;PlaybackStarted&quot;</td></tr>
 <tr class="memdesc:a9d14175b35ff3e584a1168c49478d50f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackStarted event. <br /></td></tr>
@@ -384,6 +461,10 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a2033b4d5b9f1ee8f4b067bb591d96263">alexaClientSDK::capabilityAgents::audioPlayer::test::PROGRESS_REPORT_INTERVAL_ELAPSED_NAME</a> = &quot;ProgressReportIntervalElapsed&quot;</td></tr>
 <tr class="memdesc:a2033b4d5b9f1ee8f4b067bb591d96263"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of ProgressReportIntervalElapsed event. <br /></td></tr>
 <tr class="separator:a2033b4d5b9f1ee8f4b067bb591d96263"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5403467dd717a0428f2bad5905cda74"><td class="memItemLeft" align="right" valign="top"><a id="ad5403467dd717a0428f2bad5905cda74"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ad5403467dd717a0428f2bad5905cda74">alexaClientSDK::capabilityAgents::audioPlayer::test::STREAM_METADATA_EXTRACTED_NAME</a> = &quot;StreamMetadataExtracted&quot;</td></tr>
+<tr class="memdesc:ad5403467dd717a0428f2bad5905cda74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="separator:ad5403467dd717a0428f2bad5905cda74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -413,7 +494,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="file_a9def914be472fd64bee2c4a88cf7b671"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a9def914be472fd64bee2c4a88cf7b671">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a9def914be472fd64bee2c4a88cf7b671">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -442,7 +523,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_aae5f192bc692d15bbf4ebc338938ebc0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_aae5f192bc692d15bbf4ebc338938ebc0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_aae5f192bc692d15bbf4ebc338938ebc0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -471,7 +552,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_a75f62935102782136e3458367c9d9b75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a75f62935102782136e3458367c9d9b75">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a75f62935102782136e3458367c9d9b75">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -500,7 +581,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_a259ae6eb6c88d9f4a9e6f6c5c202302e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a259ae6eb6c88d9f4a9e6f6c5c202302e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a259ae6eb6c88d9f4a9e6f6c5c202302e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -529,7 +610,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_ae6781b2a2789e7a94ca784235a144969"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ae6781b2a2789e7a94ca784235a144969">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_ae6781b2a2789e7a94ca784235a144969">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -554,12 +635,11 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
       </table>
 </div><div class="memdoc">
 <p>Test transition from Stopped to Playing after issuing second Play directive </p>
-<p>send a second Play directive </p>
 
 </div>
 </div>
 <a id="file_a8669563f323833eadb94d8f044fc247a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a8669563f323833eadb94d8f044fc247a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a8669563f323833eadb94d8f044fc247a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -588,7 +668,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_af181a439d33a6e7f62ec1f596c17ba8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_af181a439d33a6e7f62ec1f596c17ba8b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_af181a439d33a6e7f62ec1f596c17ba8b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -617,7 +697,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_a15acc54fc02ad894351cd89d3dcb7615"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a15acc54fc02ad894351cd89d3dcb7615">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a15acc54fc02ad894351cd89d3dcb7615">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -646,7 +726,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_a827b9c6652a34aedcecd3556511a19f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a827b9c6652a34aedcecd3556511a19f8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a827b9c6652a34aedcecd3556511a19f8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -675,7 +755,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_a2312b0f99c9c5f0fd2a0785f74a8e7b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a2312b0f99c9c5f0fd2a0785f74a8e7b4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a2312b0f99c9c5f0fd2a0785f74a8e7b4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -704,7 +784,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_ab9c4f4dba21f182a34567166a6da12c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ab9c4f4dba21f182a34567166a6da12c3">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_ab9c4f4dba21f182a34567166a6da12c3">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -733,7 +813,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_a4e85e7d9c06880a902e50886569857b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a4e85e7d9c06880a902e50886569857b6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a4e85e7d9c06880a902e50886569857b6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -762,7 +842,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_af89538e6dfcd2b72133c96bf5984cb04"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_af89538e6dfcd2b72133c96bf5984cb04">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_af89538e6dfcd2b72133c96bf5984cb04">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -791,7 +871,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_a4efe42d8cb08901ee5aee9dd30dd3c6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a4efe42d8cb08901ee5aee9dd30dd3c6b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a4efe42d8cb08901ee5aee9dd30dd3c6b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -819,8 +899,37 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 
 </div>
 </div>
+<a id="file_a5ddcb33e90d2e039a8fbd66b6dfd7ac4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a5ddcb33e90d2e039a8fbd66b6dfd7ac4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/23]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testOnTags&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test <code>onTags</code> and expect valid JSON. Build a vector of tags and pass to <a class="el" href="class_observer.html" title="Simple implementation of the AuthDelegateObserverInterface. ">Observer</a> (onTags). <a class="el" href="class_observer.html" title="Simple implementation of the AuthDelegateObserverInterface. ">Observer</a> will use the vector of tags and build a valid JSON object "StreamMetadataExtracted Event". This JSON object is verified in verifyTags. </p>
+
+</div>
+</div>
 <a id="file_ae1a3742b7a0ce49598b1c901f33438ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ae1a3742b7a0ce49598b1c901f33438ef">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_ae1a3742b7a0ce49598b1c901f33438ef">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/23]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -845,6 +954,209 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
       </table>
 </div><div class="memdoc">
 <p>Test <code>cancelDirective</code> Expect the <code>handleDirective</code> call to the cancelled directive returns false </p>
+
+</div>
+</div>
+<a id="file_a2e9667fe63fb40ef4c972f1d8240cef2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a2e9667fe63fb40ef4c972f1d8240cef2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/23]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testFocusChangeToNoneInIdleState&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test focus change to None in IDLE state Expect nothing to happen </p>
+
+</div>
+</div>
+<a id="file_ae38342429564518238ab19b472250d67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_ae38342429564518238ab19b472250d67">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/23]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testFocusChangeToForegroundInIdleState&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test focus change to Foreground in IDLE state Expect a PlaybackFailedEvent </p>
+
+</div>
+</div>
+<a id="file_a45cfb86fa4a1f300055e3afdf602fc36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a45cfb86fa4a1f300055e3afdf602fc36">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/23]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testFocusChangesInPlayingState&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test focus changes in PLAYING state Expect to pause when switching to BACKGROUND and to stop when switching to NONE </p>
+
+</div>
+</div>
+<a id="file_a0ae2c38309a8b0edbacff4d589f71bf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a0ae2c38309a8b0edbacff4d589f71bf8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/23]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testFocusChangesInStoppedState&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test focus changes in STOPPED state Expect a PlaybackFailedEvent when attempting to switch to FOREGROUND </p>
+
+</div>
+</div>
+<a id="file_a6fcf71a93bbecf8cca0095d0ac893060"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a6fcf71a93bbecf8cca0095d0ac893060">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/23]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testFocusChangesInPausedState&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test focus changes in PAUSED state Expect to resume when switching to FOREGROUND, expect nothing when switching to BACKGROUND, expect stop when switching to NONE </p>
+
+</div>
+</div>
+<a id="file_aa4c4c5d4bad06e4ea3049561cb6d971f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_aa4c4c5d4bad06e4ea3049561cb6d971f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/23]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testFocusChangesInBufferUnderrunState&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test focus changes in BUFFER_UNDERRUN state Expect nothing to happen when switching to FOREGROUND, expect to pause when switching to BACKGROUND, expect to stop when switching to NONE </p>
+
+</div>
+</div>
+<a id="file_a1a2eafa27acb5a6254b99ae79f015016"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a1a2eafa27acb5a6254b99ae79f015016">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/23]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testFocusChangeToBackgroundBeforeOnPlaybackStarted&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test an immediate focus change to background after play() has been called Expect that pause() is called when <code>AudioPlayer</code> is pushed into background </p>
 
 </div>
 </div>
@@ -923,7 +1235,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;{&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;token\&quot;:\&quot;\&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;offsetInMilliseconds\&quot;:&quot;</span> + std::to_string(0) + <span class="stringliteral">&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;playerActivity\&quot;:\&quot;&quot;</span> + <a class="code" href="_audio_player_test_8cpp.html#a030f54294320bd2ac40153f5260d5540">IDLE_STATE</a> + <span class="stringliteral">&quot;\&quot;&quot;</span></div><div class="line">    <span class="stringliteral">&quot;}&quot;</span></div><div class="ttc" id="_audio_player_test_8cpp_html_a030f54294320bd2ac40153f5260d5540"><div class="ttname"><a href="_audio_player_test_8cpp.html#a030f54294320bd2ac40153f5260d5540">alexaClientSDK::capabilityAgents::audioPlayer::test::IDLE_STATE</a></div><div class="ttdeci">static const std::string IDLE_STATE</div><div class="ttdoc">The IDLE state of the AudioPlayer. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:131</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;{&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;token\&quot;:\&quot;\&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;offsetInMilliseconds\&quot;:&quot;</span> + std::to_string(0) + <span class="stringliteral">&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;playerActivity\&quot;:\&quot;&quot;</span> + <a class="code" href="_audio_player_test_8cpp.html#a030f54294320bd2ac40153f5260d5540">IDLE_STATE</a> + <span class="stringliteral">&quot;\&quot;&quot;</span></div><div class="line">    <span class="stringliteral">&quot;}&quot;</span></div><div class="ttc" id="_audio_player_test_8cpp_html_a030f54294320bd2ac40153f5260d5540"><div class="ttname"><a href="_audio_player_test_8cpp.html#a030f54294320bd2ac40153f5260d5540">alexaClientSDK::capabilityAgents::audioPlayer::test::IDLE_STATE</a></div><div class="ttdeci">static const std::string IDLE_STATE</div><div class="ttdoc">The IDLE state of the AudioPlayer. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:133</div></div>
 </div><!-- fragment -->
 <p>The expected state when the <code>AudioPlayer</code> is not handling any directive. </p>
 
@@ -933,7 +1245,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

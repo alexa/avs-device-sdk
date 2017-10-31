@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>alexaClientSDK</b></li><li class="navelem"><b>acl</b></li><li class="navelem"><b>test</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_json_part.html">TestMimeJsonPart</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>acl</b></li><li class="navelem"><b>test</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_json_part.html">TestMimeJsonPart</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -93,18 +93,20 @@ Collaboration diagram for alexaClientSDK::acl::test::TestMimeJsonPart:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8832507d39c40f73906f0ae0788e6c7b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_json_part.html#a8832507d39c40f73906f0ae0788e6c7b">TestMimeJsonPart</a> (int dataSize, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_observer.html">TestableMessageObserver</a> &gt; messageObserver)</td></tr>
-<tr class="separator:a8832507d39c40f73906f0ae0788e6c7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec6c15ea1e46db0915b681f5a359d7ea"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_json_part.html#aec6c15ea1e46db0915b681f5a359d7ea">toMimeString</a> (const std::string &amp;boundaryString) override</td></tr>
-<tr class="separator:aec6c15ea1e46db0915b681f5a359d7ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0149b4fc6e2a6a420e7e7a2b7bff6ad5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_json_part.html#a0149b4fc6e2a6a420e7e7a2b7bff6ad5">TestMimeJsonPart</a> (const std::string &amp;boundaryString, int dataSize, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_observer.html">TestableMessageObserver</a> &gt; messageObserver)</td></tr>
+<tr class="separator:a0149b4fc6e2a6a420e7e7a2b7bff6ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae85ac57bf8af84b026a8f5d5c7141e73"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_json_part.html#ae85ac57bf8af84b026a8f5d5c7141e73">TestMimeJsonPart</a> (const std::string &amp;mimeString, const std::string &amp;message, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_observer.html">TestableMessageObserver</a> &gt; messageObserver)</td></tr>
+<tr class="separator:ae85ac57bf8af84b026a8f5d5c7141e73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace94f986776e9aa551a75c912a8adae8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_json_part.html#ace94f986776e9aa551a75c912a8adae8">getMimeString</a> () const override</td></tr>
+<tr class="separator:ace94f986776e9aa551a75c912a8adae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab09e188e7ac7b9e50546357ae48e4261"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_json_part.html#ab09e188e7ac7b9e50546357ae48e4261">validateMimeParsing</a> () override</td></tr>
 <tr class="separator:ab09e188e7ac7b9e50546357ae48e4261"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A utility class to test a JSON MIME part, which our SDK interprets as Directives. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a8832507d39c40f73906f0ae0788e6c7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8832507d39c40f73906f0ae0788e6c7b">&#9670;&nbsp;</a></span>TestMimeJsonPart()</h2>
+<a id="a0149b4fc6e2a6a420e7e7a2b7bff6ad5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0149b4fc6e2a6a420e7e7a2b7bff6ad5">&#9670;&nbsp;</a></span>TestMimeJsonPart() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -112,6 +114,12 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">alexaClientSDK::acl::test::TestMimeJsonPart::TestMimeJsonPart </td>
           <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>boundaryString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>dataSize</em>, </td>
         </tr>
@@ -131,6 +139,7 @@ Public Member Functions</h2></td></tr>
 <p>Constructor.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">boundaryString</td><td>The boundary string for the MIME text. </td></tr>
     <tr><td class="paramname">dataSize</td><td>The size of the directive string to be generated and tested. </td></tr>
     <tr><td class="paramname">messageObserver</td><td>The object which will expect to receive the directive string once parsed elsewhere. </td></tr>
   </table>
@@ -139,9 +148,52 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ae85ac57bf8af84b026a8f5d5c7141e73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae85ac57bf8af84b026a8f5d5c7141e73">&#9670;&nbsp;</a></span>TestMimeJsonPart() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acl::test::TestMimeJsonPart::TestMimeJsonPart </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>mimeString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_observer.html">TestableMessageObserver</a> &gt;&#160;</td>
+          <td class="paramname"><em>messageObserver</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constructor.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mimeString</td><td>The mime string for this part, including a leading boundary </td></tr>
+    <tr><td class="paramname">message</td><td>The size of the directive string to be generated and tested. </td></tr>
+    <tr><td class="paramname">messageObserver</td><td>The object which will expect to receive the directive string once parsed elsewhere. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aec6c15ea1e46db0915b681f5a359d7ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec6c15ea1e46db0915b681f5a359d7ea">&#9670;&nbsp;</a></span>toMimeString()</h2>
+<a id="ace94f986776e9aa551a75c912a8adae8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace94f986776e9aa551a75c912a8adae8">&#9670;&nbsp;</a></span>getMimeString()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -150,11 +202,10 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string alexaClientSDK::acl::test::TestMimeJsonPart::toMimeString </td>
+          <td class="memname">std::string alexaClientSDK::acl::test::TestMimeJsonPart::getMimeString </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>boundaryString</em></td><td>)</td>
-          <td></td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -172,7 +223,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The generated MIME string. </dd></dl>
 
-<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_part.html#a21897c899533e119f1ece2f79fccc4ef">alexaClientSDK::acl::test::TestMimePart</a>.</p>
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_part.html#a2be5fd22e2bf7a88ed1893d97c3c0950">alexaClientSDK::acl::test::TestMimePart</a>.</p>
 
 </div>
 </div>
@@ -213,7 +264,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

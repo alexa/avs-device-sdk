@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>alexaClientSDK</b></li><li class="navelem"><b>acl</b></li><li class="navelem"><b>test</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_part.html">TestMimePart</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>acl</b></li><li class="navelem"><b>test</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_part.html">TestMimePart</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -86,16 +86,16 @@ Inheritance diagram for alexaClientSDK::acl::test::TestMimePart:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a21897c899533e119f1ece2f79fccc4ef"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_part.html#a21897c899533e119f1ece2f79fccc4ef">toMimeString</a> (const std::string &amp;boundaryString)=0</td></tr>
-<tr class="separator:a21897c899533e119f1ece2f79fccc4ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2be5fd22e2bf7a88ed1893d97c3c0950"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_part.html#a2be5fd22e2bf7a88ed1893d97c3c0950">getMimeString</a> () const =0</td></tr>
+<tr class="separator:a2be5fd22e2bf7a88ed1893d97c3c0950"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a1c64579ff5e06acd9bbdbb748eb3eb"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_part.html#a5a1c64579ff5e06acd9bbdbb748eb3eb">validateMimeParsing</a> ()=0</td></tr>
 <tr class="separator:a5a1c64579ff5e06acd9bbdbb748eb3eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Utility class to abstract the notion of testing a MIME part. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a21897c899533e119f1ece2f79fccc4ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21897c899533e119f1ece2f79fccc4ef">&#9670;&nbsp;</a></span>toMimeString()</h2>
+<a id="a2be5fd22e2bf7a88ed1893d97c3c0950"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2be5fd22e2bf7a88ed1893d97c3c0950">&#9670;&nbsp;</a></span>getMimeString()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -104,11 +104,10 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::string alexaClientSDK::acl::test::TestMimePart::toMimeString </td>
+          <td class="memname">virtual std::string alexaClientSDK::acl::test::TestMimePart::getMimeString </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>boundaryString</em></td><td>)</td>
-          <td></td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -126,7 +125,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The generated MIME string. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_attachment_part.html#a7e294b84ab09df352ca445efccff75ff">alexaClientSDK::acl::test::TestMimeAttachmentPart</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_json_part.html#aec6c15ea1e46db0915b681f5a359d7ea">alexaClientSDK::acl::test::TestMimeJsonPart</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_attachment_part.html#abb15ef020de8b080087e5f62578db345">alexaClientSDK::acl::test::TestMimeAttachmentPart</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_json_part.html#ace94f986776e9aa551a75c912a8adae8">alexaClientSDK::acl::test::TestMimeJsonPart</a>.</p>
 
 </div>
 </div>
@@ -166,7 +165,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

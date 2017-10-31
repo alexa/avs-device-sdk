@@ -12,6 +12,8 @@ var searchData=
   ['sds_5fwords',['SDS_WORDS',['../_h_t_t_p2_stream_test_8cpp.html#a1d235abb08e8aec103279812b2cd142d',1,'alexaClientSDK::acl::test::SDS_WORDS()'],['../_audio_input_processor_test_8cpp.html#aa1d00c590012233559bb63ce979fa36b',1,'alexaClientSDK::capabilityAgents::aip::test::SDS_WORDS()']]],
   ['sds_5fwordsize',['SDS_WORDSIZE',['../_h_t_t_p2_stream_test_8cpp.html#ab9f22d81a2dfb6db3fa1cf1c669dabd3',1,'alexaClientSDK::acl::test::SDS_WORDSIZE()'],['../_audio_input_processor_test_8cpp.html#a4b99ab932fb3a6ce83fbf0ce95b14d32',1,'alexaClientSDK::capabilityAgents::aip::test::SDS_WORDSIZE()']]],
   ['sensitivity',['sensitivity',['../structalexa_client_s_d_k_1_1kwd_1_1_kitt_ai_key_word_detector_1_1_kitt_ai_configuration.html#abb7f07a0329326597720c716b0ea5ee4',1,'alexaClientSDK::kwd::KittAiKeyWordDetector::KittAiConfiguration']]],
+  ['set_5fmute',['SET_MUTE',['../_speaker_manager_constants_8h.html#a7a63f026180439fda2630f389c1781f8',1,'alexaClientSDK::capabilityAgents::speakerManager']]],
+  ['set_5fvolume',['SET_VOLUME',['../_speaker_manager_constants_8h.html#a81953ffb207e01a40f6f361b4a87ddc1',1,'alexaClientSDK::capabilityAgents::speakerManager']]],
   ['settings_5fconfig_5fjson',['SETTINGS_CONFIG_JSON',['../_settings_test_8cpp.html#ad54c7a005fa0d522533fcfec4baa588d',1,'alexaClientSDK::capabilityAgents::settings::test']]],
   ['settings_5fkey',['SETTINGS_KEY',['../_settings_test_8cpp.html#a9d6cc95ce145af4aa8eeb71e8abf64e9',1,'alexaClientSDK::capabilityAgents::settings::test']]],
   ['settings_5fnamespace',['SETTINGS_NAMESPACE',['../_settings_test_8cpp.html#aaf123afd851219928528d1a4ecdb572a',1,'alexaClientSDK::capabilityAgents::settings::test']]],
@@ -29,6 +31,7 @@ var searchData=
   ['stop',['STOP',['../_audio_player_8cpp.html#af197b6e0cae492ed0d3b4d1c89e4fb84',1,'alexaClientSDK::capabilityAgents::audioPlayer']]],
   ['stop_5fcapture',['STOP_CAPTURE',['../_audio_input_processor_test_8cpp.html#aab2c834bb15b8f31f4a15c4074662631',1,'alexaClientSDK::capabilityAgents::aip::test']]],
   ['stream',['stream',['../structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html#a9225e5d2a1e9d361877d68148225729b',1,'alexaClientSDK::capabilityAgents::aip::AudioProvider']]],
+  ['stream_5fmetadata_5fextracted_5fname',['STREAM_METADATA_EXTRACTED_NAME',['../_audio_player_test_8cpp.html#ad5403467dd717a0428f2bad5905cda74',1,'alexaClientSDK::capabilityAgents::audioPlayer::test']]],
   ['stutter_5fduration_5fkey',['STUTTER_DURATION_KEY',['../_audio_player_8cpp.html#a580a4df5e5a8224003ad003ac6b94412',1,'alexaClientSDK::capabilityAgents::audioPlayer']]],
   ['synchronize_5fstate_5fjson',['SYNCHRONIZE_STATE_JSON',['../_alexa_communications_library_test_8cpp.html#a19bf08f26421f10a84eed65a12e4170c',1,'alexaClientSDK::integration::test']]]
 ];

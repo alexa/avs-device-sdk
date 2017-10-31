@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>alexaClientSDK</b></li><li class="navelem"><b>avsCommon</b></li><li class="navelem"><b>utils</b></li><li class="navelem"><b>sds</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html">SharedDataStream</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout.html">BufferLayout</a></li><li class="navelem"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout_1_1_header.html">Header</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>avsCommon</b></li><li class="navelem"><b>utils</b></li><li class="navelem"><b>sds</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html">SharedDataStream</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout.html">BufferLayout</a></li><li class="navelem"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout_1_1_header.html">Header</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -101,6 +101,10 @@ Public Attributes</h2></td></tr>
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html#a7e74a95e35563f73905e92df325efdc8">AtomicBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout_1_1_header.html#a7d20cf514389959e2146ab6fd5cb77b0">isWriterEnabled</a></td></tr>
 <tr class="memdesc:a7d20cf514389959e2146ab6fd5cb77b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This field indicates whether there is an enabled (not closed) <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html">Writer</a></code>. <br /></td></tr>
 <tr class="separator:a7d20cf514389959e2146ab6fd5cb77b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaadd2deb30c743dc1eed8d18f1e517b1"><td class="memItemLeft" align="right" valign="top"><a id="aaadd2deb30c743dc1eed8d18f1e517b1"></a>
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html#a7e74a95e35563f73905e92df325efdc8">AtomicBool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout_1_1_header.html#aaadd2deb30c743dc1eed8d18f1e517b1">hasWriterBeenClosed</a></td></tr>
+<tr class="memdesc:aaadd2deb30c743dc1eed8d18f1e517b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This field indicates that a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html">Writer</a></code> had at one point been enabled and then closed. <br /></td></tr>
+<tr class="separator:aaadd2deb30c743dc1eed8d18f1e517b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b185df3e26ad8ab5492f374922db7c3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html#ac73c9c4758f1d9b3e685e196deb34cc3">Mutex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout_1_1_header.html#a0b185df3e26ad8ab5492f374922db7c3">writerEnableMutex</a></td></tr>
 <tr class="separator:a0b185df3e26ad8ab5492f374922db7c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a407440e50d08e9a229a44dca345c5f06"><td class="memItemLeft" align="right" valign="top"><a id="a407440e50d08e9a229a44dca345c5f06"></a>
@@ -344,7 +348,7 @@ template&lt;typename T &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

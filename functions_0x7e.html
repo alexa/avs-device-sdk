@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -88,6 +88,12 @@ $(function() {
 <li>~AudioInputProcessorObserverInterface()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_input_processor_observer_interface.html#ad9c286e9116b3532f717007a6605773c">alexaClientSDK::avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface</a>
 </li>
+<li>~AudioPlayerInterface()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_player_interface.html#a8b53305a62572c554c7f5b409e07cce2">alexaClientSDK::avsCommon::sdkInterfaces::AudioPlayerInterface</a>
+</li>
+<li>~AudioPlayerObserverInterface()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_player_observer_interface.html#a4761140ec1a5c44a6e1e22741eb19dbd">alexaClientSDK::avsCommon::sdkInterfaces::AudioPlayerObserverInterface</a>
+</li>
 <li>~AuthDelegate()
 : <a class="el" href="classalexa_client_s_d_k_1_1auth_delegate_1_1_auth_delegate.html#a73ab9b05f2c5e642d6d0672f4a629dec">alexaClientSDK::authDelegate::AuthDelegate</a>
 </li>
@@ -128,10 +134,10 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html#a761877550e7024ecd44aea4ca306b877">alexaClientSDK::avsCommon::sdkInterfaces::ContextRequesterInterface</a>
 </li>
 <li>~CurlEasyHandleWrapper()
-: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_curl_easy_handle_wrapper.html#abf572cab9a8d6f82857177eae4776b04">alexaClientSDK::acl::CurlEasyHandleWrapper</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a127f38827a4c4befe4f60a3fc5dbeea0">alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper</a>
 </li>
 <li>~CurlMultiHandleWrapper()
-: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_curl_multi_handle_wrapper.html#aaf31f1f1d0c33e7793b64ebb8ab24983">alexaClientSDK::acl::CurlMultiHandleWrapper</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_multi_handle_wrapper.html#af058965dfce7ff32d732f734bce3befc">alexaClientSDK::avsCommon::utils::libcurlUtils::CurlMultiHandleWrapper</a>
 </li>
 <li>~DefaultClient()
 : <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a16c25234762babfe8ee6cc4a94f03214">alexaClientSDK::defaultClient::DefaultClient</a>
@@ -176,10 +182,10 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_factory_interface.html#aa3590d3382375a413b763513540dbefc">alexaClientSDK::avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface</a>
 </li>
 <li>~HttpPost()
-: <a class="el" href="classalexa_client_s_d_k_1_1auth_delegate_1_1_http_post.html#a648b8e15a2c5035a5a17458ff0288b17">alexaClientSDK::authDelegate::HttpPost</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post.html#aab9eb4c293b3afdae757ef2441c9bb23">alexaClientSDK::avsCommon::utils::libcurlUtils::HttpPost</a>
 </li>
 <li>~HttpPostInterface()
-: <a class="el" href="classalexa_client_s_d_k_1_1auth_delegate_1_1_http_post_interface.html#af9916832f0bd1839d9f2f0fe02808f00">alexaClientSDK::authDelegate::HttpPostInterface</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post_interface.html#af639e49be5f37abc547ce1d48ed795fc">alexaClientSDK::avsCommon::utils::libcurlUtils::HttpPostInterface</a>
 </li>
 <li>~InProcessAttachmentReader()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html#af59a125f17a94c39e9e8daa0f1eb95db">alexaClientSDK::avsCommon::avs::attachment::InProcessAttachmentReader</a>
@@ -233,8 +239,7 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#ad84fbd231ce40ba502fbd7dca38b8944">alexaClientSDK::adsl::test::MockDirectiveHandler</a>
 </li>
 <li>~MockMediaPlayer()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_mock_media_player.html#a841b25b208e49266a1372cd9cb57410d">alexaClientSDK::capabilityAgents::audioPlayer::test::MockMediaPlayer</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_media_player.html#acc48329bb5e12698889d39a042039433">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockMediaPlayer</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#a1f62dae2dedca1ebce7531959276d78b">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>
 </li>
 <li>~MockModuleLogger()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_module_logger.html#aae00fbf975d063fa919a24c19b9e9d03">alexaClientSDK::avsCommon::utils::logger::test::MockModuleLogger</a>
@@ -308,6 +313,12 @@ $(function() {
 <li>~TaskThread()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_task_thread.html#af2c81a140fced1746c1fa112f02fa709">alexaClientSDK::avsCommon::utils::threading::TaskThread</a>
 </li>
+<li>~TemplateRuntime()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html#ad56e4a644e8335ffdace8a2a1d43f3e2">alexaClientSDK::capabilityAgents::templateRuntime::TemplateRuntime</a>
+</li>
+<li>~TemplateRuntimeObserverInterface()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface.html#a1c176f309a29dfc503768f6650727746">alexaClientSDK::avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface</a>
+</li>
 <li>~TestMessageSender()
 : <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender.html#a9b4ae093a5b975efb2a46d03ef79ef06">alexaClientSDK::integration::test::TestMessageSender</a>
 </li>
@@ -328,7 +339,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

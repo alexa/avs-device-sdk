@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>alexaClientSDK</b></li><li class="navelem"><b>acl</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html">HTTP2Stream</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>acl</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html">HTTP2Stream</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -107,10 +107,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae082da53c9879e5b5059287efaba6b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fcf5ee4e262fb8d50f02d3348816a51"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a2fcf5ee4e262fb8d50f02d3348816a51">setConnectionTimeout</a> (const std::chrono::seconds timeoutSeconds)</td></tr>
 <tr class="separator:a2fcf5ee4e262fb8d50f02d3348816a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad72290b4c422bb1587099816e9f0a906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#ad72290b4c422bb1587099816e9f0a906">resumeNetworkIO</a> ()</td></tr>
-<tr class="separator:ad72290b4c422bb1587099816e9f0a906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad63e4c9eebf9e80df5deffdaa97186d9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#ad63e4c9eebf9e80df5deffdaa97186d9">isBlockedOnLocalIO</a> () const</td></tr>
-<tr class="separator:ad63e4c9eebf9e80df5deffdaa97186d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a591bc204231365aea785afcdccbe206d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a591bc204231365aea785afcdccbe206d">unPause</a> ()</td></tr>
+<tr class="separator:a591bc204231365aea785afcdccbe206d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addc1ae59a4965ae913ba091f4fa5c442"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#addc1ae59a4965ae913ba091f4fa5c442">isPaused</a> () const</td></tr>
+<tr class="separator:addc1ae59a4965ae913ba091f4fa5c442"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32fd59c375c62f78cc628241c27aac34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a32fd59c375c62f78cc628241c27aac34">setLogicalStreamId</a> (int logicalStreamId)</td></tr>
 <tr class="separator:a32fd59c375c62f78cc628241c27aac34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8406f875bac909ee4727d9b4ca7a8b27"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a8406f875bac909ee4727d9b4ca7a8b27">getLogicalStreamId</a> () const</td></tr>
@@ -314,7 +314,7 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Callback that gets executed when HTTP headers are received from the server See <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_curl_easy_handle_wrapper.html#a2ebbcc20e0015b9121f342361a6d64e9">CurlEasyHandleWrapper::CurlCallback</a> for details </p>
+<p>Callback that gets executed when HTTP headers are received from the server See CurlEasyHandleWrapper::CurlCallback for details </p>
 
 </div>
 </div>
@@ -399,21 +399,21 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad63e4c9eebf9e80df5deffdaa97186d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad63e4c9eebf9e80df5deffdaa97186d9">&#9670;&nbsp;</a></span>isBlockedOnLocalIO()</h2>
+<a id="addc1ae59a4965ae913ba091f4fa5c442"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addc1ae59a4965ae913ba091f4fa5c442">&#9670;&nbsp;</a></span>isPaused()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool alexaClientSDK::acl::HTTP2Stream::isBlockedOnLocalIO </td>
+          <td class="memname">bool alexaClientSDK::acl::HTTP2Stream::isPaused </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Return whether this stream is blocked on local IO </p>
+<p>Return whether this stream has pending transfers. </p>
 
 </div>
 </div>
@@ -538,24 +538,6 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad72290b4c422bb1587099816e9f0a906"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad72290b4c422bb1587099816e9f0a906">&#9670;&nbsp;</a></span>resumeNetworkIO()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void alexaClientSDK::acl::HTTP2Stream::resumeNetworkIO </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Resume network IO for this stream </p>
-
-</div>
-</div>
 <a id="a2fcf5ee4e262fb8d50f02d3348816a51"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2fcf5ee4e262fb8d50f02d3348816a51">&#9670;&nbsp;</a></span>setConnectionTimeout()</h2>
 
@@ -667,6 +649,24 @@ template&lt;class TickType , class TickPeriod &gt; </div>
 
 </div>
 </div>
+<a id="a591bc204231365aea785afcdccbe206d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a591bc204231365aea785afcdccbe206d">&#9670;&nbsp;</a></span>unPause()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::acl::HTTP2Stream::unPause </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Un-pend all transfers for this stream </p>
+
+</div>
+</div>
 <a id="a273bed83d02a494fe2cb6c81cd2f48de"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a273bed83d02a494fe2cb6c81cd2f48de">&#9670;&nbsp;</a></span>writeCallback()</h2>
 
@@ -712,7 +712,7 @@ template&lt;class TickType , class TickPeriod &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Callback that gets executed when data is received from the server See <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_curl_easy_handle_wrapper.html#a2ebbcc20e0015b9121f342361a6d64e9">CurlEasyHandleWrapper::CurlCallback</a> for details </p>
+<p>Callback that gets executed when data is received from the server See CurlEasyHandleWrapper::CurlCallback for details </p>
 <p>If we get an HTTP 200 response code then we're getting a MIME multipart payload. For all other response codes we're getting a JSON string without multipart headers.</p>
 
 </div>
@@ -725,7 +725,7 @@ template&lt;class TickType , class TickPeriod &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

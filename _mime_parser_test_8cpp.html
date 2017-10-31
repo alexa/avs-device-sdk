@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,6 +67,8 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -76,49 +78,50 @@ $(function() {
 <div class="textblock"><code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;random&gt;</code><br />
 <code>#include &lt;gtest/gtest.h&gt;</code><br />
-<code>#include &lt;curl/curl.h&gt;</code><br />
-<code>#include &lt;ACL/Transport/HTTP2Stream.h&gt;</code><br />
 <code>#include &quot;ACL/Transport/MessageConsumerInterface.h&quot;</code><br />
+<code>#include &lt;ACL/Transport/HTTP2Stream.h&gt;</code><br />
 <code>#include &lt;AVSCommon/SDKInterfaces/MessageObserverInterface.h&gt;</code><br />
+<code>#include &lt;AVSCommon/Utils/Logger/Logger.h&gt;</code><br />
+<code>#include &lt;curl/curl.h&gt;</code><br />
 <code>#include &quot;Common/TestableAttachmentManager.h&quot;</code><br />
-<code>#include &quot;TestableConsumer.h&quot;</code><br />
-<code>#include &quot;MockMessageRequest.h&quot;</code><br />
 <code>#include &quot;Common/Common.h&quot;</code><br />
 <code>#include &quot;Common/MimeUtils.h&quot;</code><br />
 <code>#include &quot;Common/TestableMessageObserver.h&quot;</code><br />
+<code>#include &quot;MockMessageRequest.h&quot;</code><br />
+<code>#include &quot;TestableConsumer.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for MimeParserTest.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_mime_parser_test_8cpp__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_a_c_l_2test_2_transport_2_mime_parser_test_8cpp" alt=""/></div>
 <map name="_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_a_c_l_2test_2_transport_2_mime_parser_test_8cpp" id="_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_a_c_l_2test_2_transport_2_mime_parser_test_8cpp">
-<area shape="rect" id="node6" href="_h_t_t_p2_stream_8h_source.html" title="ACL/Transport/HTTP2Stream.h" alt="" coords="687,125,894,151"/>
-<area shape="rect" id="node42" href="_message_consumer_interface_8h_source.html" title="ACL/Transport/MessageConsumer\lInterface.h" alt="" coords="197,292,424,331"/>
-<area shape="rect" id="node43" href="_message_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="2976,379,3173,417"/>
-<area shape="rect" id="node44" href="_testable_attachment_manager_8h_source.html" title="Common/TestableAttachment\lManager.h" alt="" coords="2039,119,2235,157"/>
-<area shape="rect" id="node45" href="_testable_consumer_8h_source.html" title="TestableConsumer.h" alt="" coords="2511,212,2654,237"/>
-<area shape="rect" id="node46" href="_mock_message_request_8h_source.html" title="MockMessageRequest.h" alt="" coords="1132,559,1300,584"/>
-<area shape="rect" id="node48" href="_a_c_l_2test_2_transport_2_common_2_common_8h_source.html" title="Common/Common.h" alt="" coords="3298,472,3443,497"/>
-<area shape="rect" id="node49" href="_mime_utils_8h_source.html" title="Common/MimeUtils.h" alt="" coords="2703,212,2852,237"/>
-<area shape="rect" id="node50" href="_testable_message_observer_8h_source.html" title="TestableMessageObserver.h" alt="" coords="2814,299,3004,324"/>
-<area shape="rect" id="node11" href="_attachment_manager_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="2271,292,2473,331"/>
-<area shape="rect" id="node35" href="_message_request_8h_source.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="954,639,1203,664"/>
-<area shape="rect" id="node37" href="_message_request_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1086,712,1333,751"/>
-<area shape="rect" id="node38" href="_curl_easy_handle_wrapper_8h_source.html" title="ACL/Transport/CurlEasyHandle\lWrapper.h" alt="" coords="470,205,677,244"/>
-<area shape="rect" id="node39" href="_mime_parser_8h.html" title="ACL/Transport/MimeParser.h" alt="" coords="1726,212,1919,237"/>
-<area shape="rect" id="node13" href="_attachment_manager_interface_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="1539,379,1747,417"/>
-<area shape="rect" id="node14" href="_attachment_8h_source.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="1542,465,1743,504"/>
-<area shape="rect" id="node15" href="_attachment_reader_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1357,712,1558,751"/>
-<area shape="rect" id="node17" href="_attachment_writer_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="1685,552,1886,591"/>
-<area shape="rect" id="node18" href="_in_process_s_d_s_8h_source.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1988,552,2150,591"/>
-<area shape="rect" id="node21" href="_shared_data_stream_8h_source.html" title="SharedDataStream.h" alt="" coords="1996,639,2143,664"/>
-<area shape="rect" id="node23" href="_logger_utils_8h_source.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1924,799,2100,837"/>
-<area shape="rect" id="node30" href="_buffer_layout_8h_source.html" title="BufferLayout.h" alt="" coords="2227,719,2335,744"/>
-<area shape="rect" id="node31" href="_reader_8h_source.html" title="Reader.h" alt="" coords="1937,719,2012,744"/>
-<area shape="rect" id="node34" href="_writer_8h_source.html" title="Writer.h" alt="" coords="2036,719,2103,744"/>
-<area shape="rect" id="node24" href="_logger_8h_source.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1861,885,2037,924"/>
-<area shape="rect" id="node26" href="_configuration_node_8h_source.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1597,972,1811,1011"/>
-<area shape="rect" id="node28" href="_level_8h_source.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="2440,972,2616,1011"/>
-<area shape="rect" id="node29" href="_log_entry_8h_source.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2037,972,2213,1011"/>
+<area shape="rect" id="node5" href="_message_consumer_interface_8h_source.html" title="ACL/Transport/MessageConsumer\lInterface.h" alt="" coords="227,292,454,331"/>
+<area shape="rect" id="node6" href="_h_t_t_p2_stream_8h_source.html" title="ACL/Transport/HTTP2Stream.h" alt="" coords="2132,125,2340,151"/>
+<area shape="rect" id="node31" href="_message_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="3179,379,3376,417"/>
+<area shape="rect" id="node32" href="_logger_8h_source.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1070,379,1246,417"/>
+<area shape="rect" id="node44" href="_testable_attachment_manager_8h_source.html" title="Common/TestableAttachment\lManager.h" alt="" coords="2731,119,2928,157"/>
+<area shape="rect" id="node45" href="_a_c_l_2test_2_transport_2_common_2_common_8h_source.html" title="Common/Common.h" alt="" coords="2624,212,2768,237"/>
+<area shape="rect" id="node46" href="_mime_utils_8h_source.html" title="Common/MimeUtils.h" alt="" coords="2966,212,3115,237"/>
+<area shape="rect" id="node47" href="_testable_message_observer_8h_source.html" title="TestableMessageObserver.h" alt="" coords="3344,299,3534,324"/>
+<area shape="rect" id="node48" href="_mock_message_request_8h_source.html" title="MockMessageRequest.h" alt="" coords="1668,385,1836,411"/>
+<area shape="rect" id="node50" href="_testable_consumer_8h_source.html" title="TestableConsumer.h" alt="" coords="425,212,568,237"/>
+<area shape="rect" id="node11" href="_attachment_manager_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="2699,292,2901,331"/>
+<area shape="rect" id="node22" href="_curl_easy_handle_wrapper_8h_source.html" title="AVSCommon/Utils/LibcurlUtils\l/CurlEasyHandleWrapper.h" alt="" coords="2299,205,2499,244"/>
+<area shape="rect" id="node24" href="_message_request_8h_source.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="2112,472,2361,497"/>
+<area shape="rect" id="node26" href="_message_request_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1640,552,1886,591"/>
+<area shape="rect" id="node27" href="_mime_parser_8h.html" title="ACL/Transport/MimeParser.h" alt="" coords="1937,212,2130,237"/>
+<area shape="rect" id="node13" href="_attachment_manager_interface_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="2744,379,2952,417"/>
+<area shape="rect" id="node14" href="_attachment_8h_source.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="3179,465,3381,504"/>
+<area shape="rect" id="node15" href="_attachment_reader_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="2699,552,2901,591"/>
+<area shape="rect" id="node17" href="_attachment_writer_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="3518,552,3720,591"/>
+<area shape="rect" id="node18" href="_in_process_s_d_s_8h_source.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="3230,552,3392,591"/>
+<area shape="rect" id="node21" href="_shared_data_stream_8h_source.html" title="SharedDataStream.h" alt="" coords="3026,645,3172,671"/>
+<area shape="rect" id="node34" href="_configuration_node_8h_source.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="949,552,1163,591"/>
+<area shape="rect" id="node36" href="_level_8h_source.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1339,552,1515,591"/>
+<area shape="rect" id="node37" href="_log_entry_8h_source.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="643,465,819,504"/>
+<area shape="rect" id="node42" href="_log_level_observer_interface_8h_source.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1296,465,1493,504"/>
+<area shape="rect" id="node43" href="_sink_observer_interface_8h_source.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="843,465,1019,504"/>
+<area shape="rect" id="node38" href="_log_entry_stream_8h_source.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="139,552,315,591"/>
+<area shape="rect" id="node40" href="_log_entry_buffer_8h_source.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="139,639,315,677"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -127,8 +130,23 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mime_parser_test.html">alexaClientSDK::acl::test::MimeParserTest</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
+<tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(TAG, event)</td></tr>
+<tr class="separator:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ae3097ff743cb6df71d34cca4bc8e6a08"><td class="memItemLeft" align="right" valign="top"><a id="ae3097ff743cb6df71d34cca4bc8e6a08"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#ae3097ff743cb6df71d34cca4bc8e6a08">alexaClientSDK::acl::test::TAG</a> (&quot;TestableMessageObserver&quot;)</td></tr>
+<tr class="memdesc:ae3097ff743cb6df71d34cca4bc8e6a08"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file. <br /></td></tr>
+<tr class="separator:ae3097ff743cb6df71d34cca4bc8e6a08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae80ea723d2baf9c07baf199a4c641a61"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#ae80ea723d2baf9c07baf199a4c641a61">alexaClientSDK::acl::test::TEST_F</a> (MimeParserTest, testDirectiveReceivedSingleWrite)</td></tr>
 <tr class="separator:ae80ea723d2baf9c07baf199a4c641a61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a063d0f4fd3a52e6d128ecb8c86c966a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#a063d0f4fd3a52e6d128ecb8c86c966a5">alexaClientSDK::acl::test::TEST_F</a> (MimeParserTest, testDirectiveReceivedMultiWrite)</td></tr>
@@ -141,6 +159,8 @@ Functions</h2></td></tr>
 <tr class="separator:ae6bd64237104884c73b471323e325961"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2de8dc15744fdc3b2613faa1679f1c4b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#a2de8dc15744fdc3b2613faa1679f1c4b">alexaClientSDK::acl::test::TEST_F</a> (MimeParserTest, testDirectiveAndAttachmentReceivedMultiWrite)</td></tr>
 <tr class="separator:a2de8dc15744fdc3b2613faa1679f1c4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb95c61966b386a2db8408603fa93872"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#abb95c61966b386a2db8408603fa93872">alexaClientSDK::acl::test::TEST_F</a> (MimeParserTest, testExplicitMimeText)</td></tr>
+<tr class="separator:abb95c61966b386a2db8408603fa93872"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top"><a id="a3c04138a5bfe5d72780bb7e82a18e627"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, char **argv)</td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,13 +171,9 @@ Variables</h2></td></tr>
 static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#a1aa146788a021054c8ad7ee6d62734d2">alexaClientSDK::acl::test::TEST_DATA_SIZE</a> = 100</td></tr>
 <tr class="memdesc:a1aa146788a021054c8ad7ee6d62734d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The size of the data for directive and attachments we will use. <br /></td></tr>
 <tr class="separator:a1aa146788a021054c8ad7ee6d62734d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b24df032402ef2f36663f552e0261ae"><td class="memItemLeft" align="right" valign="top"><a id="a6b24df032402ef2f36663f552e0261ae"></a>
-static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#a6b24df032402ef2f36663f552e0261ae">alexaClientSDK::acl::test::TEST_MULTI_WRITE_ITERATIONS</a> = 4</td></tr>
-<tr class="memdesc:a6b24df032402ef2f36663f552e0261ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of segments that the MIME string will be broken into during simple testing. <br /></td></tr>
+<tr class="memitem:a6b24df032402ef2f36663f552e0261ae"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#a6b24df032402ef2f36663f552e0261ae">alexaClientSDK::acl::test::TEST_MULTI_WRITE_ITERATIONS</a> = 4</td></tr>
 <tr class="separator:a6b24df032402ef2f36663f552e0261ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec8ac7b5315f038f8777f89b78740bd8"><td class="memItemLeft" align="right" valign="top"><a id="aec8ac7b5315f038f8777f89b78740bd8"></a>
-static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#aec8ac7b5315f038f8777f89b78740bd8">alexaClientSDK::acl::test::TEST_MULTI_MAX_ITERATIONS</a> = 100</td></tr>
-<tr class="memdesc:aec8ac7b5315f038f8777f89b78740bd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">An upper bound that the feedParser logic may use to ensure we don't loop infinitely. <br /></td></tr>
+<tr class="memitem:aec8ac7b5315f038f8777f89b78740bd8"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#aec8ac7b5315f038f8777f89b78740bd8">alexaClientSDK::acl::test::TEST_MULTI_MAX_ITERATIONS</a> = 100</td></tr>
 <tr class="separator:aec8ac7b5315f038f8777f89b78740bd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a894fabe753ed9dbd51a094d929ee82e6"><td class="memItemLeft" align="right" valign="top"><a id="a894fabe753ed9dbd51a094d929ee82e6"></a>
 static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#a894fabe753ed9dbd51a094d929ee82e6">alexaClientSDK::acl::test::TEST_CONTEXT_ID</a> = &quot;TEST_CONTEXT_ID&quot;</td></tr>
@@ -179,10 +195,48 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#a0636d45a690ccba54f09ab1085a8a2b2">alexaClientSDK::acl::test::MIME_TEST_BOUNDARY_STRING</a> = &quot;84109348-943b-4446-85e6-e73eda9fac43&quot;</td></tr>
 <tr class="memdesc:a0636d45a690ccba54f09ab1085a8a2b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">A test boundary string, copied from a real interaction with AVS. <br /></td></tr>
 <tr class="separator:a0636d45a690ccba54f09ab1085a8a2b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b3aeba2b0134ac3c4c4f8174df654fe"><td class="memItemLeft" align="right" valign="top"><a id="a0b3aeba2b0134ac3c4c4f8174df654fe"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#a0b3aeba2b0134ac3c4c4f8174df654fe">alexaClientSDK::acl::test::MIME_NEWLINE</a> = &quot;\r\n&quot;</td></tr>
+<tr class="memdesc:a0b3aeba2b0134ac3c4c4f8174df654fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The newline characters that MIME parsers expect. <br /></td></tr>
+<tr class="separator:a0b3aeba2b0134ac3c4c4f8174df654fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea68eae82cb74612eea324cda8279157"><td class="memItemLeft" align="right" valign="top"><a id="aea68eae82cb74612eea324cda8279157"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_mime_parser_test_8cpp.html#aea68eae82cb74612eea324cda8279157">alexaClientSDK::acl::test::MIME_BOUNDARY_DASHES</a> = &quot;--&quot;</td></tr>
+<tr class="memdesc:aea68eae82cb74612eea324cda8279157"><td class="mdescLeft">&#160;</td><td class="mdescRight">The double dashes which may occur before and after a boundary string. <br /></td></tr>
+<tr class="separator:aea68eae82cb74612eea324cda8279157"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab781bcbd16b303cc83eea04225b9ded0"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>alexaClientSDK::acl::test::TEST_MESSAGE</b></td></tr>
+<tr class="separator:ab781bcbd16b303cc83eea04225b9ded0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92fcc91734158c9dee888548dc7f4b55"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>alexaClientSDK::acl::test::TEST_MIME_TEXT</b></td></tr>
+<tr class="separator:a92fcc91734158c9dee888548dc7f4b55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8bc9ca8e55a0ebf538e46e28bf26262">&#9670;&nbsp;</a></span>LX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LX</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">event</td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(TAG, event)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create a LogEntry using this file's TAG and the specified event string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">The</td><td>event string for this <code>LogEntry</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="file_ae80ea723d2baf9c07baf199a4c641a61"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ae80ea723d2baf9c07baf199a4c641a61">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_ae80ea723d2baf9c07baf199a4c641a61">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -211,7 +265,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_a063d0f4fd3a52e6d128ecb8c86c966a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a063d0f4fd3a52e6d128ecb8c86c966a5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a063d0f4fd3a52e6d128ecb8c86c966a5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -240,7 +294,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_a69ffd692d89df2fa012562c98d812ec6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a69ffd692d89df2fa012562c98d812ec6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a69ffd692d89df2fa012562c98d812ec6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -269,7 +323,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_abd83fa916bb9637342e82c4a81fc34b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_abd83fa916bb9637342e82c4a81fc34b5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_abd83fa916bb9637342e82c4a81fc34b5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -298,7 +352,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_ae6bd64237104884c73b471323e325961"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ae6bd64237104884c73b471323e325961">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_ae6bd64237104884c73b471323e325961">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -327,7 +381,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 </div>
 </div>
 <a id="file_a2de8dc15744fdc3b2613faa1679f1c4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a2de8dc15744fdc3b2613faa1679f1c4b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a2de8dc15744fdc3b2613faa1679f1c4b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -355,11 +409,134 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 
 </div>
 </div>
+<a id="file_abb95c61966b386a2db8408603fa93872"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_abb95c61966b386a2db8408603fa93872">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acl::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mime_parser_test.html">MimeParserTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testExplicitMimeText&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test providing a mime part as text. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="file_ab781bcbd16b303cc83eea04225b9ded0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_ab781bcbd16b303cc83eea04225b9ded0">&#9670;&nbsp;</a></span>TEST_MESSAGE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acl::test::TEST_MESSAGE</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;{\&quot;directive\&quot;:{\&quot;header\&quot;:{\&quot;namespace\&quot;:\&quot;SpeechRecognizer\&quot;,\&quot;name\&quot;:&quot;</span></div><div class="line">    <span class="stringliteral">&quot;\&quot;StopCapture\&quot;,\&quot;messageId\&quot;:\&quot;4e5612af-e05c-4611-8910-1e23f47ffb41\&quot;},&quot;</span></div><div class="line">    <span class="stringliteral">&quot;\&quot;payload\&quot;:{}}}&quot;</span></div></div><!-- fragment -->
+</div>
+</div>
+<a id="file_a92fcc91734158c9dee888548dc7f4b55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a92fcc91734158c9dee888548dc7f4b55">&#9670;&nbsp;</a></span>TEST_MIME_TEXT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acl::test::TEST_MIME_TEXT</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= <span class="stringliteral">&quot;Content-Type: application/json&quot;</span> + <a class="code" href="_mime_parser_test_8cpp.html#a0b3aeba2b0134ac3c4c4f8174df654fe">MIME_NEWLINE</a> + <a class="code" href="_mime_parser_test_8cpp.html#a0b3aeba2b0134ac3c4c4f8174df654fe">MIME_NEWLINE</a> +</div><div class="line">                                          TEST_MESSAGE + <a class="code" href="_mime_parser_test_8cpp.html#a0b3aeba2b0134ac3c4c4f8174df654fe">MIME_NEWLINE</a> + <a class="code" href="_mime_parser_test_8cpp.html#aea68eae82cb74612eea324cda8279157">MIME_BOUNDARY_DASHES</a> +</div><div class="line">                                          <a class="code" href="_mime_parser_test_8cpp.html#a0636d45a690ccba54f09ab1085a8a2b2">MIME_TEST_BOUNDARY_STRING</a></div><div class="ttc" id="_mime_parser_test_8cpp_html_a0636d45a690ccba54f09ab1085a8a2b2"><div class="ttname"><a href="_mime_parser_test_8cpp.html#a0636d45a690ccba54f09ab1085a8a2b2">alexaClientSDK::acl::test::MIME_TEST_BOUNDARY_STRING</a></div><div class="ttdeci">static const std::string MIME_TEST_BOUNDARY_STRING</div><div class="ttdoc">A test boundary string, copied from a real interaction with AVS. </div><div class="ttdef"><b>Definition:</b> MimeParserTest.cpp:73</div></div>
+<div class="ttc" id="_mime_parser_test_8cpp_html_a0b3aeba2b0134ac3c4c4f8174df654fe"><div class="ttname"><a href="_mime_parser_test_8cpp.html#a0b3aeba2b0134ac3c4c4f8174df654fe">alexaClientSDK::acl::test::MIME_NEWLINE</a></div><div class="ttdeci">static const std::string MIME_NEWLINE</div><div class="ttdoc">The newline characters that MIME parsers expect. </div><div class="ttdef"><b>Definition:</b> MimeParserTest.cpp:75</div></div>
+<div class="ttc" id="_mime_parser_test_8cpp_html_aea68eae82cb74612eea324cda8279157"><div class="ttname"><a href="_mime_parser_test_8cpp.html#aea68eae82cb74612eea324cda8279157">alexaClientSDK::acl::test::MIME_BOUNDARY_DASHES</a></div><div class="ttdeci">static const std::string MIME_BOUNDARY_DASHES</div><div class="ttdoc">The double dashes which may occur before and after a boundary string. </div><div class="ttdef"><b>Definition:</b> MimeParserTest.cpp:77</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="file_aec8ac7b5315f038f8777f89b78740bd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_aec8ac7b5315f038f8777f89b78740bd8">&#9670;&nbsp;</a></span>TEST_MULTI_MAX_ITERATIONS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int alexaClientSDK::acl::test::TEST_MULTI_MAX_ITERATIONS = 100</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>An upper bound that the feedParser logic may use to ensure we don't loop infinitely. </p>
+
+</div>
+</div>
+<a id="file_a6b24df032402ef2f36663f552e0261ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a6b24df032402ef2f36663f552e0261ae">&#9670;&nbsp;</a></span>TEST_MULTI_WRITE_ITERATIONS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int alexaClientSDK::acl::test::TEST_MULTI_WRITE_ITERATIONS = 4</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The number of segments that the MIME string will be broken into during simple testing. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

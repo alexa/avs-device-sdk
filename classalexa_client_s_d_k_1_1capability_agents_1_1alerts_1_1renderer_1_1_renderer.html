@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>alexaClientSDK</b></li><li class="navelem"><b>capabilityAgents</b></li><li class="navelem"><b>alerts</b></li><li class="navelem"><b>renderer</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html">Renderer</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>capabilityAgents</b></li><li class="navelem"><b>alerts</b></li><li class="navelem"><b>renderer</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html">Renderer</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -96,37 +96,66 @@ Collaboration diagram for alexaClientSDK::capabilityAgents::alerts::renderer::Re
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5955d848304b543c25aa958cb94bae14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a5955d848304b543c25aa958cb94bae14">setObserver</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">RendererObserverInterface</a> *observer) override</td></tr>
-<tr class="separator:a5955d848304b543c25aa958cb94bae14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab292575783bb7f041b57418230bfd2b7"><td class="memItemLeft" align="right" valign="top"><a id="ab292575783bb7f041b57418230bfd2b7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setObserver</b> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">RendererObserverInterface</a> &gt; observer) override</td></tr>
+<tr class="separator:ab292575783bb7f041b57418230bfd2b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47ee9084aff98257af76acd77e79d4a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a47ee9084aff98257af76acd77e79d4a6">start</a> (const std::string &amp;localAudioFilePath, const std::vector&lt; std::string &gt; &amp;urls=std::vector&lt; std::string &gt;(), int loopCount=0, std::chrono::milliseconds loopPause=std::chrono::milliseconds{0}) override</td></tr>
 <tr class="separator:a47ee9084aff98257af76acd77e79d4a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25f151b98ebebba6f785bd4edd1410fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a25f151b98ebebba6f785bd4edd1410fe">stop</a> () override</td></tr>
 <tr class="separator:a25f151b98ebebba6f785bd4edd1410fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1aefe6ee07d9adcc47109056c8fa86f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a1aefe6ee07d9adcc47109056c8fa86f6">onPlaybackStarted</a> () override</td></tr>
-<tr class="separator:a1aefe6ee07d9adcc47109056c8fa86f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b17c37a1c9d35991f328369a359dbf9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a0b17c37a1c9d35991f328369a359dbf9">onPlaybackFinished</a> () override</td></tr>
-<tr class="separator:a0b17c37a1c9d35991f328369a359dbf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a619f4b2680db597301484f5283e39de3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a619f4b2680db597301484f5283e39de3">onPlaybackError</a> (const avsCommon::utils::mediaPlayer::ErrorType &amp;type, std::string error) override</td></tr>
-<tr class="separator:a619f4b2680db597301484f5283e39de3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a625c513933bd3f76db04608b7d9de7bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a625c513933bd3f76db04608b7d9de7bb">onPlaybackStarted</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId) override</td></tr>
+<tr class="separator:a625c513933bd3f76db04608b7d9de7bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd2aae5c1736f6533f46d74fc1fc023d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#acd2aae5c1736f6533f46d74fc1fc023d">onPlaybackStopped</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId) override</td></tr>
+<tr class="separator:acd2aae5c1736f6533f46d74fc1fc023d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbc7ca860d5b5b71632e8dbd9c11ea25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#adbc7ca860d5b5b71632e8dbd9c11ea25">onPlaybackFinished</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId) override</td></tr>
+<tr class="separator:adbc7ca860d5b5b71632e8dbd9c11ea25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac04164215b2b78ad95a45c2914cb298b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#ac04164215b2b78ad95a45c2914cb298b">onPlaybackError</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId, const avsCommon::utils::mediaPlayer::ErrorType &amp;type, std::string error) override</td></tr>
+<tr class="separator:ac04164215b2b78ad95a45c2914cb298b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html">alexaClientSDK::capabilityAgents::alerts::renderer::RendererInterface</a></td></tr>
 <tr class="memitem:ae6332383bc135c8efa45e04504e0d75b inherit pub_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#ae6332383bc135c8efa45e04504e0d75b">~RendererInterface</a> ()=default</td></tr>
 <tr class="separator:ae6332383bc135c8efa45e04504e0d75b inherit pub_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafa4aed9ce60d2e8b18b537d71ccd598 inherit pub_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#aafa4aed9ce60d2e8b18b537d71ccd598">setObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">capabilityAgents::alerts::renderer::RendererObserverInterface</a> &gt; observer)=0</td></tr>
+<tr class="separator:aafa4aed9ce60d2e8b18b537d71ccd598 inherit pub_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a></td></tr>
 <tr class="memitem:a98a4b7578480d29f86b2d7868080200e inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a98a4b7578480d29f86b2d7868080200e">~MediaPlayerObserverInterface</a> ()=default</td></tr>
 <tr class="separator:a98a4b7578480d29f86b2d7868080200e inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8777b573e90d77cd9d27bb36f43ca4c inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#af8777b573e90d77cd9d27bb36f43ca4c">onPlaybackPaused</a> ()</td></tr>
-<tr class="separator:af8777b573e90d77cd9d27bb36f43ca4c inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4eace3922ad0ad564fed73c289abbfd7 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a4eace3922ad0ad564fed73c289abbfd7">onPlaybackResumed</a> ()</td></tr>
-<tr class="separator:a4eace3922ad0ad564fed73c289abbfd7 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a380b0b7575ed1864375db6c00f43ec19 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a380b0b7575ed1864375db6c00f43ec19">onBufferUnderrun</a> ()</td></tr>
-<tr class="separator:a380b0b7575ed1864375db6c00f43ec19 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee349b977e49b7d2d6b431d50ec3de48 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aee349b977e49b7d2d6b431d50ec3de48">onBufferRefilled</a> ()</td></tr>
-<tr class="separator:aee349b977e49b7d2d6b431d50ec3de48 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e278a3c0e6bf2ffe6d99386d366e40f inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a5e278a3c0e6bf2ffe6d99386d366e40f">onPlaybackPaused</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> id)</td></tr>
+<tr class="separator:a5e278a3c0e6bf2ffe6d99386d366e40f inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7d30a70d577310176aa85fbaefb7a1b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab7d30a70d577310176aa85fbaefb7a1b">onPlaybackResumed</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> id)</td></tr>
+<tr class="separator:ab7d30a70d577310176aa85fbaefb7a1b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1ae57581049a9f9748212b987c786b2 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ac1ae57581049a9f9748212b987c786b2">onBufferUnderrun</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> id)</td></tr>
+<tr class="separator:ac1ae57581049a9f9748212b987c786b2 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a133528a237ec1fc90418ebc06a76b637 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a133528a237ec1fc90418ebc06a76b637">onBufferRefilled</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> id)</td></tr>
+<tr class="separator:a133528a237ec1fc90418ebc06a76b637 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a060c3a8c3100dae206bc991709cc0b17 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a060c3a8c3100dae206bc991709cc0b17">onTags</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> id, std::unique_ptr&lt; const VectorOfTags &gt; vectorOfTags)</td></tr>
+<tr class="separator:a060c3a8c3100dae206bc991709cc0b17 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a5c7b116f6e600369b1056fa644ef5242"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html">Renderer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a5c7b116f6e600369b1056fa644ef5242">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; mediaPlayer)</td></tr>
 <tr class="separator:a5c7b116f6e600369b1056fa644ef5242"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_types_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a></td></tr>
+<tr class="memitem:ab8bd9f2e13a80beba778f9effcf768f9 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top"><a id="ab8bd9f2e13a80beba778f9effcf768f9"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab8bd9f2e13a80beba778f9effcf768f9">TagType</a> { <br />
+&#160;&#160;<b>STRING</b>, 
+<b>UINT</b>, 
+<b>INT</b>, 
+<b>DOUBLE</b>, 
+<br />
+&#160;&#160;<b>BOOLEAN</b>
+<br />
+ }<tr class="memdesc:ab8bd9f2e13a80beba778f9effcf768f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The different types of metadata "stream tags". <br /></td></tr>
+</td></tr>
+<tr class="separator:ab8bd9f2e13a80beba778f9effcf768f9 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6a5305efc05863a6c2d49a2f40551f7 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top"><a id="ad6a5305efc05863a6c2d49a2f40551f7"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> = <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">MediaPlayerInterface::SourceId</a></td></tr>
+<tr class="memdesc:ad6a5305efc05863a6c2d49a2f40551f7 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type that identifies which source is currently being operated on. <br /></td></tr>
+<tr class="separator:ad6a5305efc05863a6c2d49a2f40551f7 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa78c5d6cb74fc05e7abbe8201fd02ad inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top"><a id="aaa78c5d6cb74fc05e7abbe8201fd02ad"></a>
+typedef std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface_1_1_tag_key_value_type.html">TagKeyValueType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>VectorOfTags</b></td></tr>
+<tr class="separator:aaa78c5d6cb74fc05e7abbe8201fd02ad inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An implementation of an alert renderer. This class is thread-safe. </p>
@@ -165,8 +194,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a619f4b2680db597301484f5283e39de3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a619f4b2680db597301484f5283e39de3">&#9670;&nbsp;</a></span>onPlaybackError()</h2>
+<a id="ac04164215b2b78ad95a45c2914cb298b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac04164215b2b78ad95a45c2914cb298b">&#9670;&nbsp;</a></span>onPlaybackError()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -177,6 +206,12 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::onPlaybackError </td>
           <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a>&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const avsCommon::utils::mediaPlayer::ErrorType &amp;&#160;</td>
           <td class="paramname"><em>type</em>, </td>
         </tr>
@@ -199,21 +234,22 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>This is an indication to the observer that the <code>MediaPlayer</code> encountered an error. Errors can occur during playback.</p>
-<dl class="section note"><dt>Note</dt><dd>The observer has to return soon. Otherwise this could block the <code>MediaPlayer</code> from processing other signals or playback.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The observer must quickly return from this callback. Failure to do so could block the <code>MediaPlayer</code> from further processing.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">type</td><td>The AVS error to report to AVS </td></tr>
-    <tr><td class="paramname">error</td><td>The message to report to AVS </td></tr>
+    <tr><td class="paramname">id</td><td>The id of the source to which this callback corresponds to. </td></tr>
+    <tr><td class="paramname">type</td><td>The type of error encountered by the <code>MediaPlayerInterface</code>. </td></tr>
+    <tr><td class="paramname">error</td><td>The error encountered by the <code>MediaPlayerInterface</code>. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#af58531530e1331b147baeee684662421">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a>.</p>
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aa14478d88e372c90e077bc68c6d6f919">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a>.</p>
 
 </div>
 </div>
-<a id="a0b17c37a1c9d35991f328369a359dbf9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b17c37a1c9d35991f328369a359dbf9">&#9670;&nbsp;</a></span>onPlaybackFinished()</h2>
+<a id="adbc7ca860d5b5b71632e8dbd9c11ea25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbc7ca860d5b5b71632e8dbd9c11ea25">&#9670;&nbsp;</a></span>onPlaybackFinished()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -224,7 +260,8 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::onPlaybackFinished </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -234,15 +271,21 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This is an indication to the observer that the <code>MediaPlayer</code> has starting finished the audio data.</p>
-<dl class="section note"><dt>Note</dt><dd>The observer has to return soon. Otherwise this could block the <code>MediaPlayer</code> from processing other signals or playback. </dd></dl>
+<p>This is an indication to the observer that the <code>MediaPlayer</code> finished the source.</p>
+<dl class="section note"><dt>Note</dt><dd>The observer must quickly return to quickly from this callback. Failure to do so could block the <code>MediaPlayer</code> from further processing.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The id of the source to which this callback corresponds to. </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a5c38f5315e35952357523f57c6a06039">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a>.</p>
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a869f85684130a8815f43e828c5968edc">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a>.</p>
 
 </div>
 </div>
-<a id="a1aefe6ee07d9adcc47109056c8fa86f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1aefe6ee07d9adcc47109056c8fa86f6">&#9670;&nbsp;</a></span>onPlaybackStarted()</h2>
+<a id="a625c513933bd3f76db04608b7d9de7bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a625c513933bd3f76db04608b7d9de7bb">&#9670;&nbsp;</a></span>onPlaybackStarted()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -253,7 +296,8 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::onPlaybackStarted </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -263,15 +307,15 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This is an indication to the observer that the <code>MediaPlayer</code> has starting playing the audio data.</p>
-<dl class="section note"><dt>Note</dt><dd>The observer has to return soon. Otherwise this could block the <code>MediaPlayer</code> from processing other signals or playback. </dd></dl>
+<p>This is an indication to the observer that the <code>MediaPlayer</code> has started playing the source specified by the id.</p>
+<dl class="section note"><dt>Note</dt><dd>The observer must quickly return to quickly from this callback. Failure to do so could block the <code>MediaPlayer</code> from further processing. </dd></dl>
 
-<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aeeff65e2ca9303f9d17643cc81f412f5">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a>.</p>
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a25607163a8c28c9f08259fe56d721c06">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a>.</p>
 
 </div>
 </div>
-<a id="a5955d848304b543c25aa958cb94bae14"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5955d848304b543c25aa958cb94bae14">&#9670;&nbsp;</a></span>setObserver()</h2>
+<a id="acd2aae5c1736f6533f46d74fc1fc023d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd2aae5c1736f6533f46d74fc1fc023d">&#9670;&nbsp;</a></span>onPlaybackStopped()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -280,10 +324,10 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::setObserver </td>
+          <td class="memname">void alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::onPlaybackStopped </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">RendererObserverInterface</a> *&#160;</td>
-          <td class="paramname"><em>observer</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -293,15 +337,16 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Set an observer on the renderer. Note that the observer type is a raw pointer, and thus it is expected that this object will outlive its observer.</p>
+<p>This is an indication to the observer that the <code>MediaPlayer</code> has stopped the source.</p>
+<dl class="section note"><dt>Note</dt><dd>The observer must quickly return from this callback. Failure to do so could block the <code>MediaPlayer</code> from further processing.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">observer</td><td>The observer. </td></tr>
+    <tr><td class="paramname">id</td><td>The id of the source to which this callback corresponds to. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#ae4870ebdf747afb53bbf51727c768a7e">alexaClientSDK::capabilityAgents::alerts::renderer::RendererInterface</a>.</p>
+<p>Reimplemented from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab494787a945bd49bbd2299edd8eb5e64">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a>.</p>
 
 </div>
 </div>
@@ -404,7 +449,7 @@ Static Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.1.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>
