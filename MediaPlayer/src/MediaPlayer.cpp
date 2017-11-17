@@ -533,6 +533,14 @@ bool MediaPlayer::init() {
 }
 
 bool MediaPlayer::setupPipeline() {
+    m_pipeline.decodedQueue = gst_element_factory_make("queue", "decodedQueue");
+    // Do not send signals or messages. Let the decoder buffer messages dictate application logic.
+    g_object_set(m_pipeline.decodedQueue, "silent", TRUE, NULL);
+    if (!m_pipeline.decodedQueue) {
+        ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createQueueElementFailed"));
+        return false;
+    }
+
     m_pipeline.converter = gst_element_factory_make("audioconvert", "converter");
     if (!m_pipeline.converter) {
         ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createConverterElementFailed"));
@@ -561,11 +569,17 @@ bool MediaPlayer::setupPipeline() {
     m_busWatchId = gst_bus_add_watch(bus, &MediaPlayer::onBusMessage, this);
     gst_object_unref(bus);
 
-    // Link only the volume, converter, and sink here. Src will be linked in respective source files.
+    // Link only the queue, converter, volume, and sink here. Src will be linked in respective source files.
     gst_bin_add_many(
-        GST_BIN(m_pipeline.pipeline), m_pipeline.converter, m_pipeline.volume, m_pipeline.audioSink, nullptr);
+        GST_BIN(m_pipeline.pipeline),
+        m_pipeline.decodedQueue,
+        m_pipeline.converter,
+        m_pipeline.volume,
+        m_pipeline.audioSink,
+        nullptr);
 
-    if (!gst_element_link_many(m_pipeline.converter, m_pipeline.volume, m_pipeline.audioSink, nullptr)) {
+    if (!gst_element_link_many(
+            m_pipeline.decodedQueue, m_pipeline.converter, m_pipeline.volume, m_pipeline.audioSink, nullptr)) {
         ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createVolumeToConverterToSinkLinkFailed"));
         return false;
     }
@@ -611,6 +625,7 @@ void MediaPlayer::resetPipeline() {
     m_pipeline.pipeline = nullptr;
     m_pipeline.appsrc = nullptr;
     m_pipeline.decoder = nullptr;
+    m_pipeline.decodedQueue = nullptr;
     m_pipeline.converter = nullptr;
     m_pipeline.volume = nullptr;
     m_pipeline.audioSink = nullptr;
@@ -698,8 +713,7 @@ void MediaPlayer::onPadAdded(GstElement* decoder, GstPad* pad, gpointer pointer)
 
 void MediaPlayer::handlePadAdded(std::promise<void>* promise, GstElement* decoder, GstPad* pad) {
     ACSDK_DEBUG9(LX("handlePadAddedSignalCalled"));
-    GstElement* converter = m_pipeline.converter;
-    gst_element_link(decoder, converter);
+    gst_element_link(decoder, m_pipeline.decodedQueue);
     promise->set_value();
 }
 
@@ -907,7 +921,7 @@ void MediaPlayer::handleSetAttachmentReaderSource(
 
     /*
      * Once the source pad for the decoder has been added, the decoder emits the pad-added signal. Connect the signal
-     * to the callback which performs the linking of the decoder source pad to the converter sink pad.
+     * to the callback which performs the linking of the decoder source pad to decodedQueue sink pad.
      */
     if (!g_signal_connect(m_pipeline.decoder, "pad-added", G_CALLBACK(onPadAdded), this)) {
         ACSDK_ERROR(LX("handleSetAttachmentReaderSourceFailed").d("reason", "connectPadAddedSignalFailed"));
@@ -938,7 +952,7 @@ void MediaPlayer::handleSetIStreamSource(
 
     /*
      * Once the source pad for the decoder has been added, the decoder emits the pad-added signal. Connect the signal
-     * to the callback which performs the linking of the decoder source pad to the converter sink pad.
+     * to the callback which performs the linking of the decoder source pad to the decodedQueue sink pad.
      */
     if (!g_signal_connect(m_pipeline.decoder, "pad-added", G_CALLBACK(onPadAdded), this)) {
         ACSDK_ERROR(LX("handleSetIStreamSourceFailed").d("reason", "connectPadAddedSignalFailed"));
@@ -966,7 +980,7 @@ void MediaPlayer::handleSetSource(std::string url, std::promise<MediaPlayer::Sou
      * The first pad that is added may not be the correct stream (ie may be a video stream), and will fail.
      *
      * Once the source pad for the decoder has been added, the decoder emits the pad-added signal. Connect the signal
-     * to the callback which performs the linking of the decoder source pad to the converter sink pad.
+     * to the callback which performs the linking of the decoder source pad to the decodedQueue sink pad.
      */
     if (!g_signal_connect(m_pipeline.decoder, "pad-added", G_CALLBACK(onPadAdded), this)) {
         ACSDK_ERROR(LX("handleSetSourceForUrlFailed").d("reason", "connectPadAddedSignalFailed"));

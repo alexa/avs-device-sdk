@@ -169,6 +169,7 @@ HTTP2Transport::HTTP2Transport(
         m_isNetworkThreadRunning{false},
         m_isConnected{false},
         m_isStopping{false},
+        m_disconnectedSent{false},
         m_postConnectObject{postConnectObject} {
     m_observers.insert(observer);
 
@@ -700,9 +701,10 @@ void HTTP2Transport::setIsConnectedFalse() {
     auto disconnectReason = ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR;
     {
         std::lock_guard<std::mutex> lock(m_mutex);
-        if (!m_isConnected) {
+        if (m_disconnectedSent) {
             return;
         }
+        m_disconnectedSent = true;
         m_isConnected = false;
         disconnectReason = m_disconnectReason;
     }
@@ -775,7 +777,7 @@ void HTTP2Transport::notifyObserversOnServerSideDisconnect() {
     lock.unlock();
 
     for (auto observer : observers) {
-        observer->onServerSideDisconnect();
+        observer->onServerSideDisconnect(shared_from_this());
     }
 }
 
@@ -785,7 +787,7 @@ void HTTP2Transport::notifyObserversOnDisconnect(ConnectionStatusObserverInterfa
     lock.unlock();
 
     for (auto observer : observers) {
-        observer->onDisconnected(reason);
+        observer->onDisconnected(shared_from_this(), reason);
     }
 }
 
@@ -795,7 +797,7 @@ void HTTP2Transport::notifyObserversOnConnected() {
     lock.unlock();
 
     for (auto observer : observers) {
-        observer->onConnected();
+        observer->onConnected(shared_from_this());
     }
 }
 

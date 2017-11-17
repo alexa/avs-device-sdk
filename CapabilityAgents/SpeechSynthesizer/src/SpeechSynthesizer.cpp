@@ -620,9 +620,19 @@ void SpeechSynthesizer::executePlaybackError(const avsCommon::utils::mediaPlayer
     }
     m_waitOnStateChange.notify_one();
     releaseForegroundFocus();
-    sendExceptionEncounteredAndReportFailed(m_currentInfo, avsCommon::avs::ExceptionErrorType::INTERNAL_ERROR, error);
     resetCurrentInfo();
     resetMediaSourceId();
+    {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        while (!m_speakInfoQueue.empty()) {
+            auto speakInfo = m_speakInfoQueue.front();
+            m_speakInfoQueue.pop_front();
+            lock.unlock();
+            sendExceptionEncounteredAndReportFailed(
+                speakInfo, avsCommon::avs::ExceptionErrorType::INTERNAL_ERROR, error);
+            lock.lock();
+        }
+    }
 }
 
 std::string SpeechSynthesizer::buildState(std::string& token, int64_t offsetInMilliseconds) const {

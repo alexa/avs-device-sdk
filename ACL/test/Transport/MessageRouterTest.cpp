@@ -39,7 +39,7 @@ TEST_F(MessageRouterTest, getConnectionStatusReturnsConnectedAfterConnectionEsta
 }
 
 TEST_F(MessageRouterTest, getConnectionStatusReturnsConnectedAfterDisconnected) {
-    m_router->onDisconnected(ConnectionStatusObserverInterface::ChangedReason::ACL_DISABLED);
+    m_router->onDisconnected(m_mockTransport, ConnectionStatusObserverInterface::ChangedReason::ACL_DISABLED);
     ASSERT_EQ(m_router->getConnectionStatus().first, ConnectionStatusObserverInterface::Status::DISCONNECTED);
 }
 
@@ -74,7 +74,7 @@ TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfTransportDis
 
     auto reason = ConnectionStatusObserverInterface::ChangedReason::ACL_DISABLED;
     disconnectMockTransport(m_mockTransport.get());
-    m_router->onDisconnected(reason);
+    m_router->onDisconnected(m_mockTransport, reason);
 
     // wait for the result to propagate by scheduling a task on the client executor
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
@@ -179,7 +179,7 @@ TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
     m_router->setMockTransport(newTransport);
 
     // Reset the MessageRouterObserver, there should be no interactions with the observer
-    m_router->onServerSideDisconnect();
+    m_router->onServerSideDisconnect(oldTransport);
 
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
@@ -191,7 +191,7 @@ TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
 
     // mock the new transports connection
     connectMockTransport(newTransport.get());
-    m_router->onConnected();
+    m_router->onConnected(newTransport);
 
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
@@ -203,7 +203,7 @@ TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
 
     // mock the old transport disconnecting completely
     disconnectMockTransport(oldTransport.get());
-    m_router->onDisconnected(ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
+    m_router->onDisconnected(oldTransport, ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
 
     auto messageRequest = createMessageRequest();
 

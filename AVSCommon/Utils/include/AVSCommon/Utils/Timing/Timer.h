@@ -367,6 +367,7 @@ void Timer::callTask(
                 break;
         }
     }
+    m_stopping = false;
     m_running = false;
 }
 

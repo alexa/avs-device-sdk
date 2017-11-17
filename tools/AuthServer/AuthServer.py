@@ -16,6 +16,7 @@
 from flask import Flask, redirect, request
 import requests
 import json
+import commentjson
 
 from os.path import abspath, isfile, dirname
 import sys
@@ -47,6 +48,9 @@ amazonLwaApiHeaders = {'Content-Type': 'application/x-www-form-urlencoded'}
 # Default configuration filename, to be filled by CMake
 defaultConfigFilename = "${SDK_CONFIG_FILE_TARGET}"
 
+# Default string for refresh token in configuration file.
+defaultRefreshTokenString = "{SDK_CONFIG_REFRESH_TOKEN}"
+
 # JSON keys for config file
 CLIENT_ID = 'clientId'
 CLIENT_SECRET = 'clientSecret'
@@ -71,12 +75,13 @@ if not isfile(configFilename):
 
 try:
     configFile = open(configFilename,'r')
+
 except IOError:
     print 'File "' + configFilename + '" not found!'
     sys.exit(1)
 else:
     with configFile:
-        configData = json.load(configFile)
+        configData = commentjson.load(configFile)
         if not configData.has_key(authDelegateKey):
             print 'The config file "' + \
                     configFilename + \
@@ -110,6 +115,10 @@ if authDelegateDict.has_key(REFRESH_TOKEN):
             amazonLwaApiUrl,
             data=urlencode(postData),
             headers=amazonLwaApiHeaders)
+    defaultRefreshTokenString = authDelegateDict[REFRESH_TOKEN];
+    if defaultRefreshTokenString == "":
+        print 'Refresh token in the file cannot be empty. Please enter {SDK_CONFIG_REFRESH_TOKEN} in the refresh token'
+        sys.exit(0)
     if 200 == tokenRefreshRequest.status_code:
         print 'You have a valid refresh token already in the file.' 
         sys.exit(0)
@@ -159,7 +168,7 @@ def get_refresh_token():
                 '<br/>' + shutdown()
     authDelegateDict['refreshToken'] = tokenRequest.json()['refresh_token']
     try:
-        configFile = open(configFilename,'w')
+        configFile = open(configFilename,'r')
     except IOError:
         print 'File "' + configFilename + '" cannot be opened!'
         return '<h1>The file "' + \
@@ -168,8 +177,15 @@ def get_refresh_token():
                 shutdown() + \
                 '</h1>'
     else:
-        with configFile:
-            json.dump(configData, configFile, indent=4, separators=(',',':'))
-        return '<h1>The file is written successfully.<br/>' + shutdown() + '</h1>'
+        fileContent = configFile.read()
+        if defaultRefreshTokenString not in fileContent:
+            print '"{defaultRefreshTokenString} not in {configFilename}"'
+            return '<h1>' + defaultRefreshTokenString + ' string not present in ' + configFilename + \
+                    ' please check the file ' + shutdown() + '</h1>'
+        else:
+            configFile = open(configFilename,'w')
+            fileContent = fileContent.replace(defaultRefreshTokenString, tokenRequest.json()['refresh_token'])
+            configFile.write(fileContent)
+            return '<h1>The file is written successfully.<br/>' + shutdown() + '</h1>'
     
 app.run(host='127.0.0.1',port='3000')

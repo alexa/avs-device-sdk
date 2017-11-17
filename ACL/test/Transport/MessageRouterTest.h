@@ -120,7 +120,7 @@ public:
 
     void setupStateToConnected() {
         setupStateToPending();
-        m_router->onConnected();
+        m_router->onConnected(m_mockTransport);
         connectMockTransport(m_mockTransport.get());
     }
 

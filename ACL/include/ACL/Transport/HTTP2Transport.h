@@ -363,6 +363,9 @@ private:
     /// Whether or not the @c networkLoop is stopping. Serialized by @c m_mutex.
     bool m_isStopping;
 
+    /// Whether or not the onDisconnected() notification has been sent. Serialized by @c m_mutex.
+    bool m_disconnectedSent;
+
     /// Queue of @c MessageRequest instances to send. Serialized by @c m_mutex.
     std::deque<std::shared_ptr<avsCommon::avs::MessageRequest>> m_requestQueue;
 

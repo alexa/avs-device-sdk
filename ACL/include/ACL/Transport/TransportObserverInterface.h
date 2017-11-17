@@ -36,19 +36,27 @@ public:
 
     /**
      * Called when a connection to AVS is established.
+     *
+     * @param transport The transport that has connected.
      */
-    virtual void onConnected() = 0;
+    virtual void onConnected(std::shared_ptr<TransportInterface> transport) = 0;
 
     /**
      * Called when we disconnect from AVS.
+     *
+     * @param transport The transport that is no longer connected (or attempting to connect).
      * @param reason The reason that we disconnected.
      */
-    virtual void onDisconnected(avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) = 0;
+    virtual void onDisconnected(
+        std::shared_ptr<TransportInterface> transport,
+        avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) = 0;
 
     /**
      * Called when the server asks the client to reconnect
+     *
+     * @param transport The transport that has received the disconnect request.
      */
-    virtual void onServerSideDisconnect() = 0;
+    virtual void onServerSideDisconnect(std::shared_ptr<TransportInterface> transport) = 0;
 };
 
 }  // namespace acl

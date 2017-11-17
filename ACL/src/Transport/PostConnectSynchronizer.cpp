@@ -240,16 +240,18 @@ void PostConnectSynchronizer::notifyObservers() {
     }
 }
 
-void PostConnectSynchronizer::onServerSideDisconnect() {
+void PostConnectSynchronizer::onServerSideDisconnect(std::shared_ptr<TransportInterface> transport) {
     ACSDK_DEBUG(LX("onServerSideDisconnect()"));
     doShutdown();
 }
 
-void PostConnectSynchronizer::onConnected() {
+void PostConnectSynchronizer::onConnected(std::shared_ptr<TransportInterface> transport) {
     ACSDK_DEBUG(LX("onConnected()"));
 }
 
-void PostConnectSynchronizer::onDisconnected(ConnectionStatusObserverInterface::ChangedReason reason) {
+void PostConnectSynchronizer::onDisconnected(
+    std::shared_ptr<TransportInterface> transport,
+    ConnectionStatusObserverInterface::ChangedReason reason) {
     ACSDK_DEBUG(LX("onDisconnected()"));
     doShutdown();
 }

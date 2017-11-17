@@ -74,11 +74,13 @@ public:
 
     void setObserver(std::shared_ptr<MessageRouterObserverInterface> observer) override;
 
-    void onConnected() override;
+    void onConnected(std::shared_ptr<TransportInterface> transport) override;
 
-    void onDisconnected(avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
+    void onDisconnected(
+        std::shared_ptr<TransportInterface> transport,
+        avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
 
-    void onServerSideDisconnect() override;
+    void onServerSideDisconnect(std::shared_ptr<TransportInterface> transport) override;
 
     void consumeMessage(const std::string& contextId, const std::string& message) override;
 

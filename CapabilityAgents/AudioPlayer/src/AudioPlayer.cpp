@@ -598,8 +598,13 @@ void AudioPlayer::executeOnFocusChanged(FocusState newFocus) {
                 case PlayerActivity::STOPPED:
                 case PlayerActivity::FINISHED:
                     // We see a focus change to foreground in these states if we are starting to play a new song.
-                    ACSDK_DEBUG1(LX("executeOnFocusChanged").d("action", "playNextItem"));
-                    playNextItem();
+                    if (!m_audioItems.empty()) {
+                        ACSDK_DEBUG1(LX("executeOnFocusChanged").d("action", "playNextItem"));
+                        playNextItem();
+                    } else {
+                        ACSDK_DEBUG1(LX("executeOnFocusChanged").d("action", "releaseChannel"));
+                        m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
+                    }
                     return;
                 case PlayerActivity::PAUSED: {
                     // A focus change to foreground when paused means we should resume the current song.
@@ -784,7 +789,12 @@ void AudioPlayer::executeOnPlaybackError(SourceId id, const ErrorType& type, std
     }
 
     sendPlaybackFailedEvent(m_token, type, error);
-    executeStop();
+
+    /*
+     * There's no need to call stop() here as the MediaPlayer has already stopped due to the playback error.  Instead,
+     * call executeOnPlaybackStopped() so that the states in AudioPlayer are reset properly.
+     */
+    executeOnPlaybackStopped(m_sourceId);
 }
 
 void AudioPlayer::executeOnPlaybackPaused(SourceId id) {

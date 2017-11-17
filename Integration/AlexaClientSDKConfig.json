@@ -1,28 +1,78 @@
  {
     "authDelegate":{
+        // The Client Secret of the Product from developer.amazon.com
         "clientSecret":"${SDK_CONFIG_CLIENT_SECRET}",
+        // Unique device serial number. e.g. 123456
         "deviceSerialNumber":"${SDK_CONFIG_DEVICE_SERIAL_NUMBER}",
-        "refreshToken":"${SDK_CONFIG_REFRESH_TOKEN}",
+        // Refresh Token populated by running AuthServer.py
+        "refreshToken":"{SDK_CONFIG_REFRESH_TOKEN}",
+        // The Client ID of the Product from developer.amazon.com
         "clientId":"${SDK_CONFIG_CLIENT_ID}",
+        // Product ID from developer.amazon.com
         "productId":"${SDK_CONFIG_PRODUCT_ID}"
      },
-
    "alertsCapabilityAgent":{
+        // Path to Alerts database file. e.g. /home/ubuntu/Build/alerts.db
+        // Note: The directory specified must be valid.
+        // The database file (alerts.db) will be created by SampleApp, do not create it yourself.
+        // The database file should only be used for alerts (don't use it for other components of SDK)
         "databaseFilePath":"${SDK_SQLITE_DATABASE_FILE_PATH}",
+        // Path to default Alarm sound file. e.g. /home/ubuntu/alert_sounds/alarm_normal.mp3
+        // Note: The audio file must exist and be a valid file.
         "alarmSoundFilePath":"${SDK_ALARM_DEFAULT_SOUND_FILE_PATH}",
+        // Path to short Alarm sound file. e.g. /home/ubuntu/alert_sounds/alarm_short.wav
+        // Note: The audio file must exist and be a valid file.
         "alarmShortSoundFilePath":"${SDK_ALARM_SHORT_SOUND_FILE_PATH}",
+        // Path to default timer sound file. e.g. /home/ubuntu/alert_sounds/timer_normal.mp3
+        // Note: The audio file must exist and be a valid file.
         "timerSoundFilePath":"${SDK_TIMER_DEFAULT_SOUND_FILE_PATH}",
+        // Path to short timer sound file. e.g. /home/ubuntu/alert_sounds/timer_short.wav
+        // Note: The audio file must exist and be a valid file.
         "timerShortSoundFilePath":"${SDK_TIMER_SHORT_SOUND_FILE_PATH}"
    },
-
    "settings":{
+        // Path to Settings database file. e.g. /home/ubuntu/Build/settings.db
+        // Note: The directory specified must be valid.
+        // The database file (settings.db) will be created by SampleApp, do not create it yourself.
+        // The database file should only be used for settings (don't use it for other components of SDK)
         "databaseFilePath":"${SDK_SQLITE_SETTINGS_DATABASE_FILE_PATH}",
         "defaultAVSClientSettings":{
+            // Default language for Alexa.
+            // See https://developer.amazon.com/docs/alexa-voice-service/settings.html#settingsupdated for valid values.
             "locale":"${SETTING_LOCALE_VALUE}"
           }
     },
-
    "certifiedSender":{ 
-        "databaseFilePath":"{SDK_CERTIFIED_SENDER_DATABASE_FILE_PATH}"
+        // Path to Certified Sender database file. e.g. /home/ubuntu/Build/certifiedsender.db
+        // Note: The directory specified must be valid.
+        // The database file (certifiedsender.db) will be created by SampleApp, do not create it yourself.
+        // The database file should only be used for certifiedSender (don't use it for other components of SDK)
+        "databaseFilePath":"${SDK_CERTIFIED_SENDER_DATABASE_FILE_PATH}"
     }
  }
+
+
+// Notes for logging
+// The log levels are supported to debug when SampleApp is not working as expected.
+// There are 14 levels of logging with DEBUG9 providing the highest level of logging and CRITICAL providing
+// the lowest level of logging i.e. if DEBUG9 is specified while running the SampleApp, all the logs at DEBUG9 and
+// below are displayed, whereas if CRITICAL is specified, only logs of CRITICAL are displayed.
+// The 14 levels are:
+// DEBUG9, DEBUG8, DEBUG7, DEBUG6, DEBUG5, DEBUG4, DEBUG3, DEBUG2, DEBUG1, DEBUG0, INFO, WARN, ERROR, CRTITICAL.
+
+// To selectively see the logging for a particular module, you can specify logging level in this json file.
+// Some examples are:
+// To only see logs of level INFO and below for ACL and MediaPlayer modules,
+// -  grep for ACSDK_LOG_MODULE in source folder. Find the log module for ACL and MediaPlayer.
+// -  Put the following in json:
+
+// "acl":{
+//  "logLevel":"INFO"
+// },
+// "mediaPlayer":{
+//  "logLevel":"INFO"
+// }
+
+// To enable DEBUG, build with cmake option -DCMAKE_BUILD_TYPE=DEBUG. By default it is built with RELEASE build.
+// And run the SampleApp similar to the following command.
+// e.g. TZ=UTC ./SampleApp /home/ubuntu/.../AlexaClientSDKConfig.json /home/ubuntu/KittAiModels/ DEBUG9"

@@ -162,6 +162,11 @@ MimeParser::DataParsedStatus MimeParser::writeDataToAttachment(const char* buffe
 void MimeParser::partDataCallback(const char* buffer, size_t size, void* userData) {
     MimeParser* parser = static_cast<MimeParser*>(userData);
 
+    if (MimeParser::DataParsedStatus::INCOMPLETE == parser->m_dataParsedStatus) {
+        ACSDK_DEBUG9(LX("partDataCallbackIgnored").d("reason", "attachmentWriterFullBuffer"));
+        return;
+    }
+
     if (parser->m_dataParsedStatus != MimeParser::DataParsedStatus::OK) {
         ACSDK_ERROR(
             LX("partDataCallbackFailed").d("reason", "mimeParsingError").d("status", parser->m_dataParsedStatus));
@@ -170,7 +175,7 @@ void MimeParser::partDataCallback(const char* buffer, size_t size, void* userDat
 
     // If we've already processed any of this part in a previous incomplete iteration, let's not process it twice.
     if (!parser->shouldProcessBytes(size)) {
-        ACSDK_DEBUG(LX("partDataCallbackSkipped").d("reason", "bytesAlreadyProcessed"));
+        ACSDK_DEBUG9(LX("partDataCallbackSkipped").d("reason", "bytesAlreadyProcessed"));
         parser->updateCurrentByteProgress(size);
         parser->m_dataParsedStatus = MimeParser::DataParsedStatus::OK;
         return;
@@ -304,6 +309,7 @@ MimeParser::DataParsedStatus MimeParser::feed(char* data, size_t length) {
     }
 
     // Initialize this before all the feed() callbacks happen (since this persists from previous call).
+    m_currentByteProgress = 0;
     m_dataParsedStatus = DataParsedStatus::OK;
 
     m_multipartReader.feed(data, length);
@@ -350,7 +356,7 @@ void MimeParser::setAttachmentWriterBufferFull(bool isFull) {
     if (isFull == m_isAttachmentWriterBufferFull) {
         return;
     }
-    ACSDK_DEBUG0(LX("setAttachmentWriterBufferFull").d("full", isFull));
+    ACSDK_DEBUG9(LX("setAttachmentWriterBufferFull").d("full", isFull));
     m_isAttachmentWriterBufferFull = isFull;
 }
 

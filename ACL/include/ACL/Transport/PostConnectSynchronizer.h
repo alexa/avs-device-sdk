@@ -60,9 +60,11 @@ public:
     void onContextAvailable(const std::string& jsonContext) override;
     void onContextFailure(const avsCommon::sdkInterfaces::ContextRequestError error) override;
 
-    void onServerSideDisconnect() override;
-    void onConnected() override;
-    void onDisconnected(avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
+    void onServerSideDisconnect(std::shared_ptr<TransportInterface> transport) override;
+    void onConnected(std::shared_ptr<TransportInterface> transport) override;
+    void onDisconnected(
+        std::shared_ptr<TransportInterface> transport,
+        avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
 
     void addObserver(std::shared_ptr<PostConnectObserverInterface> observer) override;
     void removeObserver(std::shared_ptr<PostConnectObserverInterface> observer) override;

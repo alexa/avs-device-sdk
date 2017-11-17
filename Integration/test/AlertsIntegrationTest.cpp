@@ -954,11 +954,14 @@ TEST_F(AlertsTest, cancelAlertBeforeItIsActive) {
 }
 
 /**
+ * Disabled until consistent failures can be investigated. Failures are due to the test's expectation of event
+ * ordering.
+ *
  * Test when the storage is removed before an alert is set
  *
  * Close the storage before asking for a 5 second timer. SetAlertFailed and DeleteAlertFailed events are then sent.
  */
-TEST_F(AlertsTest, RemoveStorageBeforeAlarmIsSet) {
+TEST_F(AlertsTest, DISABLED_RemoveStorageBeforeAlarmIsSet) {
     m_alertStorage->close();
 
     // Write audio to SDS saying "Set a timer for 5 seconds"

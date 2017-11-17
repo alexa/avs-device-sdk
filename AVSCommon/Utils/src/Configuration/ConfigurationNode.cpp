@@ -104,7 +104,7 @@ bool ConfigurationNode::initialize(const std::vector<std::istream*>& jsonStreams
         }
         IStreamWrapper wrapper(*jsonStream);
         Document overlay(&m_document.GetAllocator());
-        overlay.ParseStream(wrapper);
+        overlay.ParseStream<kParseCommentsFlag>(wrapper);
         if (overlay.HasParseError()) {
             ACSDK_ERROR(LX("initializeFailed")
                             .d("reason", "parseFailure")

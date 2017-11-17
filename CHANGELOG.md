@@ -1,5 +1,17 @@
 ## ChangeLog  
-  
+
+### [1.2.1] - 2017-11-16
+
+* **Enhancements**  
+  * Added comments to `AlexaClientSDKConfig.json`. These descriptions provide additional guidance for what is expected for each field.  
+  * Enabled pause and resume controls for Pandora.  
+
+* **Bug Fixes**  
+  * Bug fix for [issue #329](https://github.com/alexa/avs-device-sdk/issues/329) - `HTTP2Transport` instances no longer leak when `SERVER_SIDE_DISCONNECT` is encountered.  
+  * Bug fix for [issue #189](https://github.com/alexa/avs-device-sdk/issues/189) - Fixed a race condition in the `Timer` class that sometimes caused `SpeechSynthesizer` to get stuck in the "Speaking" state.
+  * Bug fix for a race condition that caused `SpeechSynthesizer` to ignore subsequent `Speak` directives.  
+  * Bug fix for corrupted mime attachments.
+
 ### [1.2.0] - 2017-10-27  
 * **Enhancements**  
   * Updated MediaPlayer to solve stability issues  
@@ -14,7 +26,7 @@
   * Moved shared libcurl functionality to AVSCommon/Utils  
   * Added a CMake option to exclude tests from the "make all" build. Use "cmake <absolute-path-to-source>  
   -DACSDK_EXCLUDE_TEST_FROM_ALL=ON" to enable it. When this option is enabled "make unit" and "make integration" still could be used to build and run the tests  
-  
+
 * **Bug fixes**:  
   * Previously scheduled alerts now play following a restart  
   * General stability fixes  
@@ -23,9 +35,9 @@
   * Attempting to end a tap-to-talk interaction with the tap-to-talk button wouldn't work  
   * SharedDataStream could encounter a race condition due to a combination of a blocking Reader and a Writer closing before writing any data  
   * Bug-fix for the ordering of notifications within alerts scheduling. This fixes the issue where a local-stop on an alert would also stop a subsequent alert if it were to begin without delay  
-  
+
 * **Known Issues**  
-  
+
 * Capability agent for Notifications is not included in this release  
 * Inconsistent playback behavior when resuming content ("Alexa, pause." / "Alexa, resume."). Specifically, handling playback offsets, which causes the content to play from the start. This behavior is also occasionally seen with "Next" /  
 "Previous".  
@@ -33,7 +45,7 @@
 * Music playback failures may result in an error Text to Speech being rendered repeatedly  
 * Reminders and named timers don't sound when there is no connection  
 * GUI cards don't show for Kindle  
-  
+
 ### [1.1.0] - 2017-10-02  
 * **Enhancements**  
   * Better GStreamer error reporting. MediaPlayer used to only report   `MEDIA_ERROR_UNKNOWN`, now reports more specific errors as defined in `ErrorType.h`.  
@@ -50,7 +62,7 @@
   * Added `AudioPlayer` unit tests.  
   * Added teardown for all Integration tests except Alerts.  
   * Implemented PlaylistParser.  
-  
+
 * **Bug fixes**:  
   * AIP getting stuck in `LISTENING` or `THINKING` and refusing user input on network outage.  
   * SampleApp crashing if running for 5 minutes after network disconnect.  
@@ -63,9 +75,9 @@
   * [`HTTP2Transport` network thread triggering a join on itself.](https://github.com/alexa/avs-device-sdk/issues/127)  
   * [`HTTP2Stream` request handling truncating exception messages.](https://github.com/alexa/avs-device-sdk/issues/67)  
   * [`AudioPlayer` was attempting an incorrect state transition from `STOPPED` to `PLAYING` through a `playbackResumed`.](https://github.com/alexa/avs-device-sdk/issues/138)  
-  
+
 * **Known Issues**  
-  
+
 * Native components for the following capability agents are **not** included in this release: `Speaker`, `TemplateRuntime`, and `Notifications`  
 * `ACL`'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed.  
 * When an `AttachmentReader` does not deliver data for prolonged periods, `MediaPlayer` may not resume playing the delayed audio.  
@@ -80,12 +92,12 @@
 * `Recognize` event after regaining network connection and during an alarm going off can cause client to get stuck in `Recognizing` state.  
 * Three Alerts integration tests fail: `handleMultipleTimersWithLocalStop`, `AlertsTest.UserLongUnrelatedBargeInOnActiveTimer`, `AlertsTest.handleOneTimerWithVocalStop`  
 * `MediaPlayerTest.testSetOffsetSeekableSource` unit test fails intermittently on Linux.  
-  
+
 ### [1.0.3] - 2017-09-19  
 * **Enhancements**  
   * Implemented `setOffSet` in `MediaPlayer`.  
   * [Updated `LoggerUtils.cpp`](https://github.com/alexa/avs-device-sdk/issues/77).  
-  
+
 * **Bug Fixes**  
   * [Bug fix to address incorrect stop behavior caused when Audio Focus is set to `NONE` and released](https://github.com/alexa/avs-device-sdk/issues/129).  
   * Bug fix for intermittent failure in `handleMultipleConsecutiveSpeaks`.  
@@ -94,12 +106,12 @@
   * Bug fix for `SpeechSynthesizer` showing the wrong UX state when a burst of `Speak` directives are received.  
   * Bug fix for recursive loop in `AudioPlayer.Stop`.  
 >>>>>>> 3553854... Updated CHANGELOG.md and README.md for 1.1  
-  
+
 ### [1.0.2] - 2017-08-23  
 * Removed code from AIP which propagates ExpectSpeech initiator strings to subsequent Recognize events.  This code will be re-introduced when AVS starts sending initiator strings.  
-  
+
 ### [1.0.1] - 2017-08-17  
-  
+
 * Added a fix to the sample app so that the `StateSynchronization` event is the first that gets sent to AVS.  
 * Added a `POST_CONNECTED` enum to `ConnectionStatusObserver`.  
 * `StateSychronizer` now automatically sends a `StateSynchronization` event when it receives a notification that `ACL` is `CONNECTED`.  
@@ -116,9 +128,9 @@
   * `AudioPlayer` sending `PlaybackPaused` during flash briefing.  
   * Long Delay playing live stations on iHeartRadio.  
   * Teardown warnings at the end of integration tests.  
-  
+
 ### [1.0.0] - 2017-08-07  
-  
+
 * Added `AudioPlayer` capability agent.  
   * Supports iHeartRadio.  
 * `StateSynchronizer` has been updated to better enforce that `System.SynchronizeState` is the first Event sent on a connection to AVS.  
@@ -146,9 +158,9 @@
   * `Tests`:  
     * `SpeechSynthesizer` unit tests hang on some older versions of GCC due to a tear down issue in the test suite  
     * Intermittent Alerts integration test failures caused by rigidness in expected behavior in the tests  
-  
+
 ### [0.6.0] - 2017-07-14  
-  
+
 * Added a sample app that leverages the SDK.  
 * Added `Alerts` capability agent.  
 * Added the `DefaultClient` class.  
@@ -175,9 +187,9 @@
   * `Tests`:  
     * `SpeechSynthesizer` unit tests hang on some older versions of GCC due to a tear down issue in the test suite  
     * Intermittent Alerts integration test failures caused by rigidness in expected behavior in the tests  
-  
+
 ### [0.5.0] - 2017-06-23  
-  
+
 * Updated most SDK components to use new logging abstraction.  
 * Added a `getConfiguration()` method to `DirectiveHandlerInterface` to register capability agents with Directive Sequencer.  
 * Added `ACL` stream processing with pause and redrive.  
@@ -188,9 +200,9 @@
 * Fixes for the following GitHub issues:  
   * [MessageRequest callbacks never triggered if disconnected](https://github.com/alexa/alexa-client-sdk/issues/21)  
   * [AttachmentReader::read() returns ReadStatus::CLOSED if an AttachmentWriter has not been created yet](https://github.com/alexa/alexa-client-sdk/issues/25)  
-  
+
 ### [0.4.1] - 2017-06-09  
-  
+
 * Implemented Sensory wake word detector functionality.  
 * Removed the need for a `std::recursive_mutex` in `MessageRouter`.  
 * Added `AIP` unit tests.  
@@ -214,13 +226,13 @@
   * [HTTP2Transport race may lead to deadlock](https://github.com/alexa/alexa-client-sdk/issues/10)  
   * [Crash in HTTP2Transport::cleanupFinishedStreams()](https://github.com/alexa/alexa-client-sdk/issues/17)  
   * [The attachment writer interface should take a `const void*` instead of `void*`](https://github.com/alexa/alexa-client-sdk/issues/24)  
-  
+
 ### [0.4.0] - 2017-05-31 (patch)  
-  
+
 * Added `AuthServer`, an authorization server implementation used to retrieve refresh tokens from LWA.  
-  
+
 ### [0.4.0] - 2017-05-24  
-  
+
 * Added `SpeechSynthesizer`, an implementation of the `SpeechRecognizer` capability agent.  
 * Implemented a reference `MediaPlayer` based on [GStreamer](https://gstreamer.freedesktop.org/) for audio playback.  
 * Added `MediaPlayerInterface` that allows you to implement your own media player.  
@@ -230,9 +242,9 @@
 * Known Issues:  
   * `ACL`'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed.  
   * When an `AttachmentReader` does not deliver data for prolonged periods `MediaPlayer` may not resume playing the delayed audio.  
-  
+
 ### [0.3.0] - 2017-05-17  
-  
+
 * Added the `CapabilityAgent` base class that is used to build capability agent implementations.  
 * Added `ContextManager`, a component that allows multiple capability agents to store and access state. These Events include `Context`, which is used to communicate the state of each capability agent to AVS in the following Events:  
   * [`Recognize`](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechrecognizer#recognize)  
@@ -247,9 +259,9 @@
 * Added WakeWord Detector (WWD), which recognizes keywords in audio streams. [0.3.0] implements a wrapper for KITT.ai.  
 * Added a new implementation of `AttachmentManager` and associated classes for use with SDS.  
 * Updated `ACL` to support asynchronously sending audio to AVS.  
-  
+
 ### [0.2.1] - 2017-05-03  
-  
+
 * Replaced the configuration file `AuthDelegate.config` with `AlexaClientSDKConfig.json`.  
 * Added the ability to specify a `CURLOPT_CAPATH` value to be used when libcurl is used by ACL and AuthDelegate.  See See Appendix C in the README for details.  
 * Changes to ADSL interfaces:  
@@ -262,18 +274,18 @@
   * ACL and AuthDelegate now require TLSv1.2.  
   * `onDirective()` now sends `ExceptionEncountered` for unhandled directives.  
   * `DirectiveSequencer::shutdown()` no longer sends `ExceptionEncountered()` for queued directives.  
-  
+
 ### [0.2.0] - 2017-03-27 (patch)  
-  
+
 * Added memory profiling for ACL and ADSL.  See Appendix A in the README.  
 * Added a command to build the API documentation.  
-  
+
 ### [0.2.0] - 2017-03-09  
-  
+
 * Added `Alexa Directive Sequencer Library` (ADSL) and `Alexa Focus Manager Library` (AMFL).  
 * CMake build types and options have been updated.  
 * Documentation for libcurl optimization included.  
-  
+
 ### [0.1.0] - 2017-02-10  
-  
+
 * Initial release of the `Alexa Communications Library` (ACL), a component which manages network connectivity with AVS, and `AuthDelegate`, a component which handles user authorization with AVS.  

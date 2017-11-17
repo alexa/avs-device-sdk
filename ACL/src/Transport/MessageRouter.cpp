@@ -112,7 +112,7 @@ void MessageRouter::setAVSEndpoint(const std::string& avsEndpoint) {
     }
 }
 
-void MessageRouter::onConnected() {
+void MessageRouter::onConnected(std::shared_ptr<TransportInterface> transport) {
     std::unique_lock<std::mutex> lock{m_connectionMutex};
     if (m_isEnabled) {
         setConnectionStatusLocked(
@@ -121,45 +121,34 @@ void MessageRouter::onConnected() {
     }
 }
 
-void MessageRouter::onDisconnected(ConnectionStatusObserverInterface::ChangedReason reason) {
+void MessageRouter::onDisconnected(
+    std::shared_ptr<TransportInterface> transport,
+    ConnectionStatusObserverInterface::ChangedReason reason) {
     std::lock_guard<std::mutex> lock{m_connectionMutex};
-    if (ConnectionStatusObserverInterface::Status::CONNECTED == m_connectionStatus) {
-        // Reset m_activeTransport of it is not longer connected.
-        if (m_activeTransport && !m_activeTransport->isConnected()) {
-            safelyResetActiveTransportLocked();
-        }
 
-        // Trim m_transports to just those transports still connected.  Also build list of disconnected transports.
-        std::vector<std::shared_ptr<TransportInterface>> connected;
-        std::vector<std::shared_ptr<TransportInterface>> disconnected;
-        for (auto transport : m_transports) {
-            if (transport->isConnected()) {
-                connected.push_back(transport);
-            } else {
-                disconnected.push_back(transport);
-            }
-        }
-        m_transports.clear();
-        std::swap(m_transports, connected);
-
-        // Release all the disconnected transports.
-        for (auto transport : disconnected) {
+    for (auto it = m_transports.begin(); it != m_transports.end(); it++) {
+        if (*it == transport) {
+            m_transports.erase(it);
             safelyReleaseTransport(transport);
+            break;
         }
+    }
 
+    if (transport == m_activeTransport) {
+        m_activeTransport.reset();
         // Update status.  If transitioning to PENDING, also initiate the reconnect.
-        if (m_isEnabled) {
-            if (!m_activeTransport) {
+        if (ConnectionStatusObserverInterface::Status::CONNECTED == m_connectionStatus) {
+            if (m_isEnabled) {
                 setConnectionStatusLocked(ConnectionStatusObserverInterface::Status::PENDING, reason);
                 createActiveTransportLocked();
+            } else if (m_transports.empty()) {
+                setConnectionStatusLocked(ConnectionStatusObserverInterface::Status::DISCONNECTED, reason);
             }
-        } else if (m_transports.empty()) {
-            setConnectionStatusLocked(ConnectionStatusObserverInterface::Status::DISCONNECTED, reason);
         }
     }
 }
 
-void MessageRouter::onServerSideDisconnect() {
+void MessageRouter::onServerSideDisconnect(std::shared_ptr<TransportInterface> transport) {
     std::unique_lock<std::mutex> lock{m_connectionMutex};
     if (m_isEnabled) {
         setConnectionStatusLocked(

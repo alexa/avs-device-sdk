@@ -114,13 +114,16 @@ private:
      * The @c AudioPipeline consists of the following elements:
      * @li @c appsrc The appsrc element is used as the source to which audio data is provided.
      * @li @c decoder Decodebin is used as the decoder element to decode audio.
+     * @li @c decodedQueue A queue is used to store the decoded data.
      * @li @c converter An audio-converter is used to convert between audio formats.
      * @li @c volume The volume element is used as a volume control.
      * @li @c audioSink Sink for the audio.
      * @li @c pipeline The pipeline is a bin consisting of the @c appsrc, the @c decoder, the @c converter, and the
      * @c audioSink.
      *
-     * The data flow through the elements is appsrc -> decoder -> converter -> volume -> audioSink.
+     * The data flow through the elements is appsrc -> decoder -> decodedQueue -> converter -> volume -> audioSink.
+     * Ideally we would want to use playsink or playbin directly to automate as much as possible. However, this
+     * causes problems with multiple pipelines and volume settings in pulse audio. Pending further investigation.
      */
     struct AudioPipeline {
         /// The source element.
@@ -128,6 +131,9 @@ private:
 
         /// The decoder element.
         GstElement* decoder;
+
+        /// A queue for decoded elements.
+        GstElement* decodedQueue;
 
         /// The converter element.
         GstElement* converter;
@@ -145,6 +151,7 @@ private:
         AudioPipeline() :
                 appsrc{nullptr},
                 decoder{nullptr},
+                decodedQueue{nullptr},
                 converter{nullptr},
                 volume{nullptr},
                 audioSink{nullptr},
