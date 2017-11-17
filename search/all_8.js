@@ -56,5 +56,6 @@ var searchData=
   ['isunset',['isUnset',['../classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_directive_handler_1_1_directive_params.html#aeccced36637b348e1aafd70e89be4a3f',1,'alexaClientSDK::integration::test::TestDirectiveHandler::DirectiveParams']]],
   ['isvalid',['isValid',['../classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_statement.html#afe141a216dd4e00ec7a9a6c5c9963de5',1,'alexaClientSDK::storage::sqliteStorage::SQLiteStatement']]],
   ['iswriterenabled',['isWriterEnabled',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout_1_1_header.html#a7d20cf514389959e2146ab6fd5cb77b0',1,'alexaClientSDK::avsCommon::utils::sds::SharedDataStream::BufferLayout::Header']]],
-  ['iterations',['ITERATIONS',['../_timer_test_8cpp.html#a320ae161b21653ceee410825abce1743',1,'alexaClientSDK::avsCommon::utils::timing::test']]]
+  ['iterations',['ITERATIONS',['../_timer_test_8cpp.html#a320ae161b21653ceee410825abce1743',1,'alexaClientSDK::avsCommon::utils::timing::test']]],
+  ['issue_5ftemplate',['issue_template',['../md___users_erikhopf_sdk-folder_sdk-source_avs-device-sdk_issue_template.html',1,'']]]
 ];

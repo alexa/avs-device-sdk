@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['need_20help_3f',['Need help?',['../md___users_sdy__a_v_s__c_p_p__s_d_k_github_alexa-client-sdk__c_o_n_t_r_i_b_u_t_i_n_g.html',1,'']]],
+  ['need_20help_3f',['Need help?',['../md___users_erikhopf_sdk-folder_sdk-source_avs-device-sdk__c_o_n_t_r_i_b_u_t_i_n_g.html',1,'']]],
   ['name',['name',['../structalexa_client_s_d_k_1_1afml_1_1_focus_manager_1_1_channel_configuration.html#a50432bb46625ce0be8ebdeb25e2dccfd',1,'alexaClientSDK::afml::FocusManager::ChannelConfiguration::name()'],['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html#aff09826e461210a45d436ac1ad8fc3bd',1,'alexaClientSDK::avsCommon::avs::NamespaceAndName::name()'],['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a745cd4dc404db52f7d0afbf838454fac',1,'alexaClientSDK::avsCommon::utils::RequiresShutdown::name()']]],
   ['name_5fclear_5fall',['NAME_CLEAR_ALL',['../_audio_player_test_8cpp.html#a3bd133a63c4b0c396757b2d8e4dff579',1,'alexaClientSDK::capabilityAgents::audioPlayer::test']]],
   ['name_5fclearqueue',['NAME_CLEARQUEUE',['../_audio_player_test_8cpp.html#a44a3e5b75195bb5cdf895bb79f7c5813',1,'alexaClientSDK::capabilityAgents::audioPlayer::test']]],

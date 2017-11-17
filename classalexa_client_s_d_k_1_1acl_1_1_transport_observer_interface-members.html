@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.0</span>
+   &#160;<span id="projectnumber">1.2.1</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -72,15 +72,15 @@ $(function() {
 
 <p>This is the complete list of members for <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html">alexaClientSDK::acl::TransportObserverInterface</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html#a4ef7c2dbbef7c6411641a61b70b2613d">onConnected</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html">alexaClientSDK::acl::TransportObserverInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html#ae6d05abe831d703b7a79fd04a1d595d6">onDisconnected</a>(avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html">alexaClientSDK::acl::TransportObserverInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html#af4c3dea8da78707c55d4ff380594a6d0">onServerSideDisconnect</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html">alexaClientSDK::acl::TransportObserverInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html#a5adb2af4447ad523403bd7e129842180">onConnected</a>(std::shared_ptr&lt; TransportInterface &gt; transport)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html">alexaClientSDK::acl::TransportObserverInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html#af22dbaf21ba585e9613eaa5d0ad936e4">onDisconnected</a>(std::shared_ptr&lt; TransportInterface &gt; transport, avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html">alexaClientSDK::acl::TransportObserverInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html#a86cd49779bc0cce6196687fde3cf357f">onServerSideDisconnect</a>(std::shared_ptr&lt; TransportInterface &gt; transport)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html">alexaClientSDK::acl::TransportObserverInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html#aa2c5b8d95f069a175c933276278f52df">~TransportObserverInterface</a>()=default</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html">alexaClientSDK::acl::TransportObserverInterface</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

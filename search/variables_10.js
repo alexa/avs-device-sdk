@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['read_5fsize_5fseed',['READ_SIZE_SEED',['../_mime_parser_fuzz_test_8cpp.html#a2cc69e4f1fc47a5541b2ff2e583a6d7f',1,'alexaClientSDK::acl::test']]],
   ['reader',['reader',['../structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream.html#a5346f880cf8eb01921c68ef32e688780',1,'alexaClientSDK::capabilityAgents::audioPlayer::AudioItem::Stream']]],
   ['readerenablemutex',['readerEnableMutex',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout_1_1_header.html#a1b9d6c856b9dc14fa7346decab31d84b',1,'alexaClientSDK::avsCommon::utils::sds::SharedDataStream::BufferLayout::Header']]],
   ['recognize_5faudio_5ffile_5fname',['RECOGNIZE_AUDIO_FILE_NAME',['../_alexa_communications_library_test_8cpp.html#a13dccd3ced6fc14505751409900f0638',1,'alexaClientSDK::integration::test']]],

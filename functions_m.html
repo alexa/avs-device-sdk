@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.0</span>
+   &#160;<span id="projectnumber">1.2.1</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -78,6 +78,7 @@ $(function() {
 </li>
 <li>m_attachmentManager
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_h_t_t_p2_stream_test.html#aadaf9a02b0f11d711bc4bad40e36abab">alexaClientSDK::acl::test::HTTP2StreamTest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mime_parser_fuzz_test.html#a2eae8f3161a9d17764e962d0cf0a00b9">alexaClientSDK::acl::test::MimeParserFuzzTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mime_parser_test.html#a0e611da2d5517cf321d4961c33e54874">alexaClientSDK::acl::test::MimeParserTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_directive_processor_test.html#a285e4366baacbdc5334cb1b8d8acb622">alexaClientSDK::adsl::test::DirectiveProcessorTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_directive_router_test.html#ada1ab24b39a25c4660887c7f1ab6fd74">alexaClientSDK::adsl::test::DirectiveRouterTest</a>
@@ -200,6 +201,9 @@ $(function() {
 </li>
 <li>m_expectedMessages
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html#a6bb0aa3f2f4fdb10e9b311982b63a091">alexaClientSDK::capabilityAgents::audioPlayer::test::AudioPlayerTest</a>
+</li>
+<li>m_failed
+: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mime_parser_fuzz_test.html#abb0ac0438f2e75fd88b05836b5ecdb12">alexaClientSDK::acl::test::MimeParserFuzzTest</a>
 </li>
 <li>m_firstAvsCommunication
 : <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_server_disconnect_integration_test.html#aaf0602a8e6cdee283e99ee84c1a3e66b">alexaClientSDK::integration::test::ServerDisconnectIntegrationTest</a>
@@ -378,7 +382,8 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#aaf378d80b86c6e08f403361047c1fbec">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>
 </li>
 <li>m_parser
-: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mime_parser_test.html#a4c4f3cc04080825117e1d3527c9104ff">alexaClientSDK::acl::test::MimeParserTest</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mime_parser_fuzz_test.html#a0b6d255ee793a84c481824c5e4b4a661">alexaClientSDK::acl::test::MimeParserFuzzTest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mime_parser_test.html#a4c4f3cc04080825117e1d3527c9104ff">alexaClientSDK::acl::test::MimeParserTest</a>
 </li>
 <li>m_pattern
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html#adc127a356c60b02e45967b91147b5fa6">alexaClientSDK::capabilityAgents::aip::test::AudioInputProcessorTest</a>
@@ -623,6 +628,12 @@ $(function() {
 <li>m_wakeStopFuture
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#a59ac022ae733c2fdc26276a24c19d96a">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>
 </li>
+<li>m_wakeStoppedFuture
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#ad8750c73d0be12fe96d73eb2ab42803f">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
+</li>
+<li>m_wakeStoppedPromise
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a69d4da54c0f499e753903164673e53c6">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
+</li>
 <li>m_wakeStopPromise
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#afce7f344b26eb1a5b1434c06edd66214">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>
 </li>
@@ -787,7 +798,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

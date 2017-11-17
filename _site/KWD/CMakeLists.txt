@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+project(KWD LANGUAGES CXX)
+
+add_subdirectory("src")
+acsdk_add_test_subdirectory_if_allowed()
+
+if(AMAZON_KEY_WORD_DETECTOR)
+    add_subdirectory("Amazon")
+endif()
+if(KITTAI_KEY_WORD_DETECTOR)
+    add_subdirectory("KittAi")
+endif()
+if(SENSORY_KEY_WORD_DETECTOR)
+    add_subdirectory("Sensory")
+endif()

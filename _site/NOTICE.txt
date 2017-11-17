@@ -1,0 +1,75 @@
+AVS Device SDK
+Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+***************************
+AVS DEVICE SDK COMPONENTS
+***************************
+
+The following AVS Device SDK components are licensed under the Apache
+License, Version 2.0 (the "License"):
+
+- Activity Focus Manager Library (AFML)
+- Alerts Capability Agent
+- Alexa Communications Library (ACL)
+- Alexa Directive Sequencer Library (ADSL)
+- Audio Input Processor (AIP) / Speech Recognizer Capability Agent
+- AudioPlayer Capability Agent
+- Certified Sender
+- Context Manager
+- Default Client
+- Key Word Detector (KWD)
+- Media Player
+- Playback Controller Capability Agent
+- Playlist Parser
+- Sample App
+- Settings Capability Agent
+- Speaker Manager Capability Agent
+- Speech Synthesizer Capability Agent
+- Storage
+- System Capability Agent
+- Template Runtime Capability Agent
+
+You may not use this file except in compliance with the License. A copy of
+the License is located at
+
+    http://aws.amazon.com/apache2.0/
+
+or in the "license" file accompanying this file. This file is distributed on
+an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+or implied. See the License for the specific language governing permissions and
+limitations under the License.
+
+******************
+ALEXA AUDIO ASSETS
+******************
+
+Copyright 2017 Amazon.com, Inc. or its affiliates (“Amazon”).
+All Rights Reserved.
+
+These materials are licensed to you as "Alexa Materials" under the Alexa Voice
+Service Agreement, which is currently available at
+https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/support/terms-and-agreements.
+
+**********************
+THIRD PARTY COMPONENTS
+**********************
+
+This software includes third party software subject to the following
+copyrights:
+
+- JSON parsing for C++ from RapidJSON - Copyright (C) 2015 THL A29 Limited,
+a Tencent company, and Milo Yip.
+
+- Multipart parsing for MIME messages from multipart-parser -
+Copyright (c) 2010 Hongli Lai
+
+- C++ test framework from Google Test - Copyright 2008, Google Inc.
+
+- Extension for writing and using C++ mock classes from Google Mock -
+Copyright 2008, Google Inc.
+
+NOTE: Other license terms may apply to certain, identified software files
+contained within or distributed with the accompanying software if such terms
+are included in the directory containing the accompanying software. Such
+other license terms will then apply in lieu of the terms of the software
+license above.

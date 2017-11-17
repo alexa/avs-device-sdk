@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.0</span>
+   &#160;<span id="projectnumber">1.2.1</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -77,11 +77,15 @@ $(function() {
 Inheritance diagram for alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test_inherit__map" alt="Inheritance graph"/></div>
+<map name="alexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test_inherit__map" id="alexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test_inherit__map">
+</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test__coll__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test_coll__map" alt="Collaboration graph"/></div>
+<map name="alexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test_coll__map" id="alexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test_coll__map">
+</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -104,6 +108,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>TearDown</b> () overr
 <tr class="separator:a827e0d13eb5d96c9a69f1829c5829b82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2825b97ca1147339091ab27a4b0ddd0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a2825b97ca1147339091ab27a4b0ddd0f">wakeOnSendMessage</a> ()</td></tr>
 <tr class="separator:a2825b97ca1147339091ab27a4b0ddd0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a081c5473f23847ea57e587aa2be6c163"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a081c5473f23847ea57e587aa2be6c163">wakeOnStopped</a> ()</td></tr>
+<tr class="separator:a081c5473f23847ea57e587aa2be6c163"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -179,6 +185,14 @@ std::promise&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a
 std::future&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a1808daad49675f03909e897cfb0389db">m_wakeSendMessageFuture</a></td></tr>
 <tr class="memdesc:a1808daad49675f03909e897cfb0389db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Future to notify when <code>sendMessage</code> is called. <br /></td></tr>
 <tr class="separator:a1808daad49675f03909e897cfb0389db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69d4da54c0f499e753903164673e53c6"><td class="memItemLeft" align="right" valign="top"><a id="a69d4da54c0f499e753903164673e53c6"></a>
+std::promise&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a69d4da54c0f499e753903164673e53c6">m_wakeStoppedPromise</a></td></tr>
+<tr class="memdesc:a69d4da54c0f499e753903164673e53c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Promise to be fulfilled when <code>stop</code> is called. <br /></td></tr>
+<tr class="separator:a69d4da54c0f499e753903164673e53c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8750c73d0be12fe96d73eb2ab42803f"><td class="memItemLeft" align="right" valign="top"><a id="ad8750c73d0be12fe96d73eb2ab42803f"></a>
+std::future&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#ad8750c73d0be12fe96d73eb2ab42803f">m_wakeStoppedFuture</a></td></tr>
+<tr class="memdesc:ad8750c73d0be12fe96d73eb2ab42803f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Future to notify when <code>stop</code> is called. <br /></td></tr>
+<tr class="separator:ad8750c73d0be12fe96d73eb2ab42803f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80acec3b6843e3ecbb16f00ecd3acc21"><td class="memItemLeft" align="right" valign="top"><a id="a80acec3b6843e3ecbb16f00ecd3acc21"></a>
 std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_exception_encountered_sender.html">MockExceptionEncounteredSender</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a80acec3b6843e3ecbb16f00ecd3acc21">m_mockExceptionSender</a></td></tr>
 <tr class="memdesc:a80acec3b6843e3ecbb16f00ecd3acc21"><td class="mdescLeft">&#160;</td><td class="mdescRight">An exception sender used to send exception encountered events to AVS. <br /></td></tr>
@@ -300,14 +314,32 @@ std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_
 
 </div>
 </div>
+<a id="a081c5473f23847ea57e587aa2be6c163"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a081c5473f23847ea57e587aa2be6c163">&#9670;&nbsp;</a></span>wakeOnStopped()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest::wakeOnStopped </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Fulfills the <code>m_wakeStoppedPromise</code>. This is invoked in response to a <code>stop</code> call. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/CapabilityAgents/SpeechSynthesizer/test/SpeechSynthesizerTest.cpp</li>
+<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/CapabilityAgents/SpeechSynthesizer/test/SpeechSynthesizerTest.cpp</li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>
