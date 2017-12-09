@@ -27,7 +27,7 @@ var searchData=
   ['speakermanagertest',['SpeakerManagerTest',['../classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_speaker_manager_test.html',1,'alexaClientSDK::capabilityAgents::speakerManager::test']]],
   ['speakersettings',['SpeakerSettings',['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface_1_1_speaker_settings.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface']]],
   ['speechsynthesizer',['SpeechSynthesizer',['../classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html',1,'alexaClientSDK::capabilityAgents::speechSynthesizer']]],
-  ['speechsynthesizerobserver',['SpeechSynthesizerObserver',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_synthesizer_observer.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
+  ['speechsynthesizerobserverinterface',['SpeechSynthesizerObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_synthesizer_observer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['speechsynthesizertest',['SpeechSynthesizerTest',['../classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html',1,'alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest'],['../classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html',1,'alexaClientSDK::integration::test::SpeechSynthesizerTest']]],
   ['sqlitealertstorage',['SQLiteAlertStorage',['../classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html',1,'alexaClientSDK::capabilityAgents::alerts::storage']]],
   ['sqlitemessagestorage',['SQLiteMessageStorage',['../classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html',1,'alexaClientSDK::certifiedSender']]],
@@ -37,5 +37,8 @@ var searchData=
   ['stateproviderinterface',['StateProviderInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['statesynchronizerobserverinterface',['StateSynchronizerObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_synchronizer_observer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['storedmessage',['StoredMessage',['../structalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface_1_1_stored_message.html',1,'alexaClientSDK::certifiedSender::MessageStorageInterface']]],
-  ['stream',['Stream',['../structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream.html',1,'alexaClientSDK::capabilityAgents::audioPlayer::AudioItem']]]
+  ['stream',['Stream',['../structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream.html',1,'alexaClientSDK::capabilityAgents::audioPlayer::AudioItem']]],
+  ['streambuf',['Streambuf',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1stream_1_1_streambuf.html',1,'alexaClientSDK::avsCommon::utils::stream']]],
+  ['streambuftest',['StreambufTest',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1test_1_1_streambuf_test.html',1,'alexaClientSDK::avsCommon::utils::test']]],
+  ['streamfunctionstest',['StreamFunctionsTest',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1test_1_1_stream_functions_test.html',1,'alexaClientSDK::avsCommon::utils::test']]]
 ];

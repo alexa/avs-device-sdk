@@ -1,6 +1,6 @@
 <map id="alexaClientSDK::avsCommon::avs::DialogUXStateAggregator" name="alexaClientSDK::avsCommon::avs::DialogUXStateAggregator">
 <area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_input_processor_observer_interface.html" title="A state observer for an AudioInputProcessor. " alt="" coords="5,5,245,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_synthesizer_observer.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeechSynthesizer\lObserver" alt="" coords="10,81,240,133"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_synthesizer_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeechSynthesizer\lObserverInterface" alt="" coords="10,81,240,133"/>
 <area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::MessageObserver\lInterface" alt="" coords="13,157,237,209"/>
 <area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ConnectionStatus\lObserverInterface" alt="" coords="15,233,235,285"/>
 </map>

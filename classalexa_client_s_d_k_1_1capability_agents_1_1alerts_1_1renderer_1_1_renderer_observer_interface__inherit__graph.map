@@ -1,6 +1,7 @@
 <map id="alexaClientSDK::capabilityAgents::alerts::renderer::RendererObserverInterface" name="alexaClientSDK::capabilityAgents::alerts::renderer::RendererObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html" title="alexaClientSDK::capability\lAgents::alerts::Alert" alt="" coords="244,68,422,107"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alarm.html" title="alexaClientSDK::capability\lAgents::alerts::Alarm" alt="" coords="470,5,648,44"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_reminder.html" title="alexaClientSDK::capability\lAgents::alerts::Reminder" alt="" coords="470,68,648,107"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_timer.html" title="alexaClientSDK::capability\lAgents::alerts::Timer" alt="" coords="470,131,648,169"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html" title="alexaClientSDK::capability\lAgents::alerts::Alert" alt="" coords="244,100,422,139"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alarm.html" title="alexaClientSDK::capability\lAgents::alerts::Alarm" alt="" coords="480,5,658,44"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_reminder.html" title="alexaClientSDK::capability\lAgents::alerts::Reminder" alt="" coords="480,68,658,107"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert.html" title="alexaClientSDK::capability\lAgents::alerts::test::MockAlert" alt="" coords="470,131,669,169"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_timer.html" title="alexaClientSDK::capability\lAgents::alerts::Timer" alt="" coords="480,193,658,232"/>
 </map>

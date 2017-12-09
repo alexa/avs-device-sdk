@@ -1,8 +1,24 @@
-<map id="/Users/erikhopf/sdk&#45;folder/sdk&#45;source/avs&#45;device&#45;sdk/SampleApp" name="/Users/erikhopf/sdk&#45;folder/sdk&#45;source/avs&#45;device&#45;sdk/SampleApp">
-<area shape="rect" id="node2" href="dir_db613c36c14f3946188c6043fb421073.html" title="include" alt="" coords="123,27,195,75"/>
-<area shape="rect" id="node4" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="60,123,161,171"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000175_000009.html" title="4" alt="" coords="135,103,142,116"/>
-<area shape="rect" id="node3" href="dir_61b1a6e3bf15e9a2bd54138c91885410.html" title="src" alt="" coords="27,27,99,75"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000177_000009.html" title="1" alt="" coords="94,95,102,109"/>
-<area shape="rect" id="clust1" href="dir_69fa8d0f4fee2820ffc8601fbf428b42.html" alt="" coords="16,16,320,85"/>
+<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/SampleApp" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/SampleApp">
+<area shape="rect" id="node2" href="dir_db613c36c14f3946188c6043fb421073.html" title="include" alt="" coords="210,123,282,171"/>
+<area shape="rect" id="node4" href="dir_748b5abbb33df61eda67007924a1a0cb.html" title="ApplicationUtilities" alt="" coords="5,219,135,267"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000185_000030.html" title="2" alt="" coords="130,211,138,224"/>
+<area shape="rect" id="node7" href="dir_9d34932954f3d83257e5e12e3f421a72.html" title="MediaPlayer" alt="" coords="282,219,378,267"/>
+<area shape="rect" id="edge12-headlabel" href="dir_000185_000174.html" title="1" alt="" coords="299,192,307,206"/>
+<area shape="rect" id="node8" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="244,411,345,459"/>
+<area shape="rect" id="edge13-headlabel" href="dir_000185_000009.html" title="17" alt="" coords="288,385,303,398"/>
+<area shape="rect" id="node3" href="dir_61b1a6e3bf15e9a2bd54138c91885410.html" title="src" alt="" coords="155,27,227,75"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000187_000185.html" title="17" alt="" coords="223,96,238,109"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000187_000030.html" title="1" alt="" coords="98,201,106,214"/>
+<area shape="rect" id="node5" href="dir_7cf910bd1d7603f12ef47ff650cec893.html" title="CapabilityAgents" alt="" coords="97,315,219,363"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000187_000083.html" title="2" alt="" coords="168,291,175,304"/>
+<area shape="rect" id="node6" href="dir_0d29adff17bb6696e11bfddeba1f84e1.html" title="AuthDelegate" alt="" coords="363,123,465,171"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000187_000041.html" title="1" alt="" coords="346,103,353,117"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000187_000174.html" title="1" alt="" coords="329,193,337,206"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000187_000009.html" title="8" alt="" coords="344,399,351,413"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000030_000083.html" title="16" alt="" coords="122,288,137,302"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000030_000009.html" title="16" alt="" coords="221,405,235,418"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000083_000009.html" title="219" alt="" coords="239,386,261,400"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000041_000009.html" title="13" alt="" coords="321,393,336,407"/>
+<area shape="rect" id="edge14-headlabel" href="dir_000174_000009.html" title="30" alt="" coords="303,388,318,401"/>
+<area shape="rect" id="clust1" href="dir_69fa8d0f4fee2820ffc8601fbf428b42.html" alt="" coords="145,16,353,181"/>
 </map>

@@ -1,0 +1,11 @@
+<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/SampleApp/include/SampleApp/UIManager.h" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/SampleApp/include/SampleApp/UIManager.h">
+<area shape="rect" id="node2" href="$_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="5,119,236,157"/>
+<area shape="rect" id="node4" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="259,119,507,157"/>
+<area shape="rect" id="node6" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="449,205,640,244"/>
+<area shape="rect" id="node8" href="$_single_setting_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SingleSettingObserverInterface.h" alt="" coords="902,119,1123,157"/>
+<area shape="rect" id="node9" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="664,205,855,244"/>
+<area shape="rect" id="node10" href="$_speaker_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerObserverInterface.h" alt="" coords="582,119,827,157"/>
+<area shape="rect" id="node11" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1147,119,1342,157"/>
+<area shape="rect" id="node14" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1443,205,1638,244"/>
+<area shape="rect" id="node18" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="1266,292,1460,331"/>
+</map>

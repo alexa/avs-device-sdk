@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>acl</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html">HTTP2Transport</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html">acl</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html">HTTP2Transport</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -106,8 +106,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7771489e6c281faa0317613065c5ed31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc89a703cd10ce48ced6cdf6fc053b6a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html#adc89a703cd10ce48ced6cdf6fc053b6a">isConnected</a> () override</td></tr>
 <tr class="separator:adc89a703cd10ce48ced6cdf6fc053b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a087074505bf9ff666d1fa6c88508148e"><td class="memItemLeft" align="right" valign="top"><a id="a087074505bf9ff666d1fa6c88508148e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>onPostConnected</b> () override</td></tr>
+<tr class="memitem:a087074505bf9ff666d1fa6c88508148e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html#a087074505bf9ff666d1fa6c88508148e">onPostConnected</a> () override</td></tr>
 <tr class="separator:a087074505bf9ff666d1fa6c88508148e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4b9bc0348bc8b23491e8bd4facb7afd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html#ad4b9bc0348bc8b23491e8bd4facb7afd">sendPostConnectMessage</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">avsCommon::avs::MessageRequest</a> &gt; request) override</td></tr>
 <tr class="separator:ad4b9bc0348bc8b23491e8bd4facb7afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,9 +122,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onPostConnected</b> (
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td></tr>
 <tr class="memitem:aae7174ed932ae1413460255238c4422b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#aae7174ed932ae1413460255238c4422b">RequiresShutdown</a> (const std::string &amp;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a745cd4dc404db52f7d0afbf838454fac">name</a>)</td></tr>
 <tr class="separator:aae7174ed932ae1413460255238c4422b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a649b80d77e4e6f66e218ee3bfc71823b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memItemLeft" align="right" valign="top"><a id="a649b80d77e4e6f66e218ee3bfc71823b"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a649b80d77e4e6f66e218ee3bfc71823b">~RequiresShutdown</a> ()</td></tr>
-<tr class="memdesc:a649b80d77e4e6f66e218ee3bfc71823b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="memitem:a649b80d77e4e6f66e218ee3bfc71823b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a649b80d77e4e6f66e218ee3bfc71823b">~RequiresShutdown</a> ()</td></tr>
+<tr class="memdesc:a649b80d77e4e6f66e218ee3bfc71823b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a649b80d77e4e6f66e218ee3bfc71823b">More...</a><br /></td></tr>
 <tr class="separator:a649b80d77e4e6f66e218ee3bfc71823b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a745cd4dc404db52f7d0afbf838454fac inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a745cd4dc404db52f7d0afbf838454fac">name</a> () const</td></tr>
 <tr class="separator:a745cd4dc404db52f7d0afbf838454fac inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,6 +131,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="separator:a350a147e52eb3ad3c1326e6639861066 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9352626109735aba40b5fb310913355 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#af9352626109735aba40b5fb310913355">isShutdown</a> () const</td></tr>
 <tr class="separator:af9352626109735aba40b5fb310913355 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface.html">alexaClientSDK::acl::PostConnectObserverInterface</a></td></tr>
+<tr class="memitem:af16a8d9af8081c14a8611231aafbc500 inherit pub_methods_classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface.html#af16a8d9af8081c14a8611231aafbc500">~PostConnectObserverInterface</a> ()=default</td></tr>
+<tr class="separator:af16a8d9af8081c14a8611231aafbc500 inherit pub_methods_classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1acl_1_1_post_connect_send_message_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1acl_1_1_post_connect_send_message_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_send_message_interface.html">alexaClientSDK::acl::PostConnectSendMessageInterface</a></td></tr>
 <tr class="memitem:af5b7925ceb04a6218c6dda13bd112601 inherit pub_methods_classalexa_client_s_d_k_1_1acl_1_1_post_connect_send_message_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_send_message_interface.html#af5b7925ceb04a6218c6dda13bd112601">~PostConnectSendMessageInterface</a> ()=default</td></tr>
 <tr class="separator:af5b7925ceb04a6218c6dda13bd112601 inherit pub_methods_classalexa_client_s_d_k_1_1acl_1_1_post_connect_send_message_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -255,7 +256,7 @@ Additional Inherited Members</h2></td></tr>
 <p>A function that creates a <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html">HTTP2Transport</a> object.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">authDelegate</td><td>The AuthDelegate implementation. </td></tr>
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1auth_delegate.html">authDelegate</a></td><td>The AuthDelegate implementation. </td></tr>
     <tr><td class="paramname">avsEndpoint</td><td>The URL for the AVS endpoint of this object. </td></tr>
     <tr><td class="paramname">messageConsumer</td><td>The <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_consumer_interface.html">MessageConsumerInterface</a> to pass messages to. </td></tr>
     <tr><td class="paramname">attachmentManager</td><td>The attachment manager that manages the attachments. </td></tr>
@@ -321,6 +322,33 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>If the object is currently connected to AVS. </dd></dl>
 
 <p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a60baae3ab3469c7b858b3297540b5988">alexaClientSDK::acl::TransportInterface</a>.</p>
+
+</div>
+</div>
+<a id="a087074505bf9ff666d1fa6c88508148e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a087074505bf9ff666d1fa6c88508148e">&#9670;&nbsp;</a></span>onPostConnected()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::acl::HTTP2Transport::onPostConnected </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface.html#a752c76e1e70296f50bb5b553e12691a4">alexaClientSDK::acl::PostConnectObserverInterface</a>.</p>
 
 </div>
 </div>
@@ -421,14 +449,14 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/ACL/include/ACL/Transport/<a class="el" href="_h_t_t_p2_transport_8h_source.html">HTTP2Transport.h</a></li>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/ACL/src/Transport/HTTP2Transport.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/ACL/include/ACL/Transport/<a class="el" href="_h_t_t_p2_transport_8h_source.html">HTTP2Transport.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/ACL/src/Transport/<a class="el" href="_h_t_t_p2_transport_8cpp.html">HTTP2Transport.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

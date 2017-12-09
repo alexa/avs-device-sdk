@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>acl</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html">TransportDefines</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html">acl</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html">TransportDefines</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -72,6 +72,8 @@ $(function() {
 <div class="title">alexaClientSDK::acl::TransportDefines Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_transport_defines_8h_source.html">TransportDefines.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for alexaClientSDK::acl::TransportDefines:</div>
 <div class="dyncontent">
@@ -86,27 +88,95 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a8d64112c5e72cd00671ebbd81557296d"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a8d64112c5e72cd00671ebbd81557296d">RETRY_TABLE</a> []</td></tr>
 <tr class="memdesc:a8d64112c5e72cd00671ebbd81557296d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Table with the retry times on subsequent retries.  <a href="#a8d64112c5e72cd00671ebbd81557296d">More...</a><br /></td></tr>
 <tr class="separator:a8d64112c5e72cd00671ebbd81557296d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e66790357d2b8cdeca1a7e010c27a06"><td class="memItemLeft" align="right" valign="top"><a id="a3e66790357d2b8cdeca1a7e010c27a06"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a3e66790357d2b8cdeca1a7e010c27a06">RETRY_TABLE_SIZE</a> = (sizeof(<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a8d64112c5e72cd00671ebbd81557296d">RETRY_TABLE</a>) / sizeof(<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a8d64112c5e72cd00671ebbd81557296d">RETRY_TABLE</a>[0]))</td></tr>
-<tr class="memdesc:a3e66790357d2b8cdeca1a7e010c27a06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the retry table. <br /></td></tr>
+<tr class="memitem:a3e66790357d2b8cdeca1a7e010c27a06"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a3e66790357d2b8cdeca1a7e010c27a06">RETRY_TABLE_SIZE</a> = (sizeof(<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a8d64112c5e72cd00671ebbd81557296d">RETRY_TABLE</a>) / sizeof(<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a8d64112c5e72cd00671ebbd81557296d">RETRY_TABLE</a>[0]))</td></tr>
+<tr class="memdesc:a3e66790357d2b8cdeca1a7e010c27a06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the retry table.  <a href="#a3e66790357d2b8cdeca1a7e010c27a06">More...</a><br /></td></tr>
 <tr class="separator:a3e66790357d2b8cdeca1a7e010c27a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6307223806a2bd15dd0da0ea0a6838c7"><td class="memItemLeft" align="right" valign="top"><a id="a6307223806a2bd15dd0da0ea0a6838c7"></a>
-static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a6307223806a2bd15dd0da0ea0a6838c7">RETRY_RANDOMIZATION_FACTOR</a> = 0.5</td></tr>
-<tr class="memdesc:a6307223806a2bd15dd0da0ea0a6838c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Randomization used in the computation of retry times. <br /></td></tr>
-<tr class="separator:a6307223806a2bd15dd0da0ea0a6838c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab865da5c8ff8ed283f5482b6897f54c6"><td class="memItemLeft" align="right" valign="top"><a id="ab865da5c8ff8ed283f5482b6897f54c6"></a>
-static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#ab865da5c8ff8ed283f5482b6897f54c6">RETRY_DECREASE_FACTOR</a> = 1 / (<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a6307223806a2bd15dd0da0ea0a6838c7">TransportDefines::RETRY_RANDOMIZATION_FACTOR</a> + 1)</td></tr>
-<tr class="memdesc:ab865da5c8ff8ed283f5482b6897f54c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lower bound of the interval to distribute the retry duration. <br /></td></tr>
-<tr class="separator:ab865da5c8ff8ed283f5482b6897f54c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c1c990ecd59f1ccf55173557f474edd"><td class="memItemLeft" align="right" valign="top"><a id="a2c1c990ecd59f1ccf55173557f474edd"></a>
-static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a2c1c990ecd59f1ccf55173557f474edd">RETRY_INCREASE_FACTOR</a> = (<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a6307223806a2bd15dd0da0ea0a6838c7">TransportDefines::RETRY_RANDOMIZATION_FACTOR</a> + 1)</td></tr>
-<tr class="memdesc:a2c1c990ecd59f1ccf55173557f474edd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Upper bound of the interval to distribute the retry duration. <br /></td></tr>
-<tr class="separator:a2c1c990ecd59f1ccf55173557f474edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc72d2306a35f7acf0ddfeb066119909"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#adc72d2306a35f7acf0ddfeb066119909">RETRY_RANDOMIZATION_PERCENTAGE</a> = 50</td></tr>
+<tr class="memdesc:adc72d2306a35f7acf0ddfeb066119909"><td class="mdescLeft">&#160;</td><td class="mdescRight">Randomization used in the computation of retry times.  <a href="#adc72d2306a35f7acf0ddfeb066119909">More...</a><br /></td></tr>
+<tr class="separator:adc72d2306a35f7acf0ddfeb066119909"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e66175883dba938fcd81e4c9cdb2ea0"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a1e66175883dba938fcd81e4c9cdb2ea0">RETRY_DECREASE_PERCENTAGE</a></td></tr>
+<tr class="memdesc:a1e66175883dba938fcd81e4c9cdb2ea0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lower bound of the interval to distribute the retry duration.  <a href="#a1e66175883dba938fcd81e4c9cdb2ea0">More...</a><br /></td></tr>
+<tr class="separator:a1e66175883dba938fcd81e4c9cdb2ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06ba778d9aca5120de4bf8d6ca3b0d7d"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a06ba778d9aca5120de4bf8d6ca3b0d7d">RETRY_INCREASE_PERCENTAGE</a> = 100 + <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#adc72d2306a35f7acf0ddfeb066119909">TransportDefines::RETRY_RANDOMIZATION_PERCENTAGE</a></td></tr>
+<tr class="memdesc:a06ba778d9aca5120de4bf8d6ca3b0d7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Upper bound of the interval to distribute the retry duration.  <a href="#a06ba778d9aca5120de4bf8d6ca3b0d7d">More...</a><br /></td></tr>
+<tr class="separator:a06ba778d9aca5120de4bf8d6ca3b0d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a601fde894452853b71f066e9d350e1e7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_retry_timer.html">avsCommon::utils::RetryTimer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a601fde894452853b71f066e9d350e1e7">RETRY_TIMER</a></td></tr>
 <tr class="memdesc:a601fde894452853b71f066e9d350e1e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retry Timer Object for transport.  <a href="#a601fde894452853b71f066e9d350e1e7">More...</a><br /></td></tr>
 <tr class="separator:a601fde894452853b71f066e9d350e1e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a1e66175883dba938fcd81e4c9cdb2ea0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e66175883dba938fcd81e4c9cdb2ea0">&#9670;&nbsp;</a></span>RETRY_DECREASE_PERCENTAGE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int alexaClientSDK::acl::TransportDefines::RETRY_DECREASE_PERCENTAGE</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    (100 * 100) / (<a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#adc72d2306a35f7acf0ddfeb066119909">TransportDefines::RETRY_RANDOMIZATION_PERCENTAGE</a> + 100)</div></div><!-- fragment -->
+<p>Lower bound of the interval to distribute the retry duration. </p>
+
+</div>
+</div>
+<a id="a06ba778d9aca5120de4bf8d6ca3b0d7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06ba778d9aca5120de4bf8d6ca3b0d7d">&#9670;&nbsp;</a></span>RETRY_INCREASE_PERCENTAGE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int alexaClientSDK::acl::TransportDefines::RETRY_INCREASE_PERCENTAGE = 100 + <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#adc72d2306a35f7acf0ddfeb066119909">TransportDefines::RETRY_RANDOMIZATION_PERCENTAGE</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Upper bound of the interval to distribute the retry duration. </p>
+
+</div>
+</div>
+<a id="adc72d2306a35f7acf0ddfeb066119909"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc72d2306a35f7acf0ddfeb066119909">&#9670;&nbsp;</a></span>RETRY_RANDOMIZATION_PERCENTAGE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int alexaClientSDK::acl::TransportDefines::RETRY_RANDOMIZATION_PERCENTAGE = 50</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Randomization used in the computation of retry times. </p>
+
+</div>
+</div>
 <a id="a8d64112c5e72cd00671ebbd81557296d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8d64112c5e72cd00671ebbd81557296d">&#9670;&nbsp;</a></span>RETRY_TABLE</h2>
 
@@ -128,6 +198,30 @@ static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    250,    </div><div class="line">    1000,   </div><div class="line">    3000,   </div><div class="line">    5000,   </div><div class="line">    10000,  </div><div class="line">    20000,  </div><div class="line">}</div></div><!-- fragment -->
 <p>Table with the retry times on subsequent retries. </p>
+
+</div>
+</div>
+<a id="a3e66790357d2b8cdeca1a7e010c27a06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e66790357d2b8cdeca1a7e010c27a06">&#9670;&nbsp;</a></span>RETRY_TABLE_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int alexaClientSDK::acl::TransportDefines::RETRY_TABLE_SIZE = (sizeof(<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a8d64112c5e72cd00671ebbd81557296d">RETRY_TABLE</a>) / sizeof(<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a8d64112c5e72cd00671ebbd81557296d">RETRY_TABLE</a>[0]))</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Size of the retry table. </p>
 
 </div>
 </div>
@@ -157,14 +251,14 @@ static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/ACL/include/ACL/Transport/<a class="el" href="_transport_defines_8h_source.html">TransportDefines.h</a></li>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/ACL/src/Transport/TransportDefines.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/ACL/include/ACL/Transport/<a class="el" href="_transport_defines_8h_source.html">TransportDefines.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/ACL/src/Transport/<a class="el" href="_transport_defines_8cpp.html">TransportDefines.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

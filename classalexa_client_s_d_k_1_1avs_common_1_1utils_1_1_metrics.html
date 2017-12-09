@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>avsCommon</b></li><li class="navelem"><b>utils</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_metrics.html">Metrics</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common.html">avsCommon</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html">utils</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_metrics.html">Metrics</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -73,17 +73,19 @@ $(function() {
 <div class="title">alexaClientSDK::avsCommon::utils::Metrics Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_metrics_8h_source.html">Metrics.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a8c28be1da20606a37e7a56d54ad1bb63"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_metrics.html#a8c28be1da20606a37e7a56d54ad1bb63">Location</a> { <br />
-&#160;&#160;<b>ADSL_ENQUEUE</b>, 
-<b>ADSL_DEQUEUE</b>, 
-<b>SPEECH_SYNTHESIZER_RECEIVE</b>, 
-<b>AIP_RECEIVE</b>, 
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_metrics.html#a8c28be1da20606a37e7a56d54ad1bb63a9c3531b6c551c76c0cb7952c30d51b48">ADSL_ENQUEUE</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_metrics.html#a8c28be1da20606a37e7a56d54ad1bb63ac7581f42a7593e6a3ba1cdca39335037">ADSL_DEQUEUE</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_metrics.html#a8c28be1da20606a37e7a56d54ad1bb63a30ff5900a1b6924746320cf7c7dad2a7">SPEECH_SYNTHESIZER_RECEIVE</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_metrics.html#a8c28be1da20606a37e7a56d54ad1bb63aa8ab0920250391c5538d99b3aaf8b6ba">AIP_RECEIVE</a>, 
 <br />
-&#160;&#160;<b>AIP_SEND</b>, 
-<b>BUILDING_MESSAGE</b>
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_metrics.html#a8c28be1da20606a37e7a56d54ad1bb63aefe952dae6de8dcd44ebe58a3972f4e1">AIP_SEND</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_metrics.html#a8c28be1da20606a37e7a56d54ad1bb63a7c582148143ef80aa65f7e17737d9f46">BUILDING_MESSAGE</a>
 <br />
  }</td></tr>
 <tr class="separator:a8c28be1da20606a37e7a56d54ad1bb63"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -108,6 +110,14 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Enum indicating the location where the metric message was issued </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a8c28be1da20606a37e7a56d54ad1bb63a9c3531b6c551c76c0cb7952c30d51b48"></a>ADSL_ENQUEUE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a8c28be1da20606a37e7a56d54ad1bb63ac7581f42a7593e6a3ba1cdca39335037"></a>ADSL_DEQUEUE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a8c28be1da20606a37e7a56d54ad1bb63a30ff5900a1b6924746320cf7c7dad2a7"></a>SPEECH_SYNTHESIZER_RECEIVE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a8c28be1da20606a37e7a56d54ad1bb63aa8ab0920250391c5538d99b3aaf8b6ba"></a>AIP_RECEIVE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a8c28be1da20606a37e7a56d54ad1bb63aefe952dae6de8dcd44ebe58a3972f4e1"></a>AIP_SEND&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a8c28be1da20606a37e7a56d54ad1bb63a7c582148143ef80aa65f7e17737d9f46"></a>BUILDING_MESSAGE&#160;</td><td class="fielddoc"></td></tr>
+</table>
 
 </div>
 </div>
@@ -229,14 +239,14 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/<a class="el" href="_metrics_8h_source.html">Metrics.h</a></li>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/AVSCommon/Utils/src/Metrics.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/AVSCommon/Utils/include/AVSCommon/Utils/<a class="el" href="_metrics_8h_source.html">Metrics.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/AVSCommon/Utils/src/<a class="el" href="_metrics_8cpp.html">Metrics.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

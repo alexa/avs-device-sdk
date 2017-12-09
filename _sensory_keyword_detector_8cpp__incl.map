@@ -1,0 +1,22 @@
+<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/KWD/Sensory/src/SensoryKeywordDetector.cpp" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/KWD/Sensory/src/SensoryKeywordDetector.cpp">
+<area shape="rect" id="node3" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1325,772,1501,811"/>
+<area shape="rect" id="node21" href="$_sensory_keyword_detector_8h.html" title="Sensory/SensoryKeywordDetector.h" alt="" coords="664,119,899,144"/>
+<area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1100,859,1314,897"/>
+<area shape="rect" id="node13" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1700,945,1876,984"/>
+<area shape="rect" id="node14" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1388,859,1564,897"/>
+<area shape="rect" id="node19" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1690,859,1886,897"/>
+<area shape="rect" id="node20" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="849,859,1025,897"/>
+<area shape="rect" id="node15" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1295,945,1471,984"/>
+<area shape="rect" id="node17" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1295,1032,1471,1071"/>
+<area shape="rect" id="node24" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="42,279,264,304"/>
+<area shape="rect" id="node25" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="708,365,906,404"/>
+<area shape="rect" id="node37" href="$_key_word_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordObserverInterface.h" alt="" coords="520,272,717,311"/>
+<area shape="rect" id="node38" href="$_key_word_detector_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordDetectorStateObserver\lInterface.h" alt="" coords="741,265,957,317"/>
+<area shape="rect" id="node39" href="$_abstract_keyword_detector_8h.html" title="KWD/AbstractKeywordDetector.h" alt="" coords="399,192,617,217"/>
+<area shape="rect" id="node26" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1059,452,1221,491"/>
+<area shape="rect" id="node28" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="604,539,751,564"/>
+<area shape="rect" id="node31" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="927,685,1103,724"/>
+<area shape="rect" id="node32" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="785,612,893,637"/>
+<area shape="rect" id="node33" href="$_reader_8h.html" title="Reader.h" alt="" coords="494,612,570,637"/>
+<area shape="rect" id="node36" href="$_writer_8h.html" title="Writer.h" alt="" coords="644,612,711,637"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="alexaClientSDK::avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title="alexaClientSDK::avsCommon\l::avs::DialogUXStateAggregator" alt="" coords="304,5,515,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_speech_synthesizer_observer.html" title="alexaClientSDK::integration\l::test::TestSpeechSynthesizerObserver" alt="" coords="284,68,535,107"/>
+</map>

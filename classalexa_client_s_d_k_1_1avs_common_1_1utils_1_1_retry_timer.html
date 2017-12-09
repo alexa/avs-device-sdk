@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>avsCommon</b></li><li class="navelem"><b>utils</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_retry_timer.html">RetryTimer</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common.html">avsCommon</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html">utils</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_retry_timer.html">RetryTimer</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -79,10 +79,10 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a60e749735d593639e2538477fe052b3d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_retry_timer.html#a60e749735d593639e2538477fe052b3d">RetryTimer</a> (int *retryTable, int retrySize)</td></tr>
 <tr class="separator:a60e749735d593639e2538477fe052b3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a816e4b1befb45de08e1ab2bbf613c7d2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_retry_timer.html#a816e4b1befb45de08e1ab2bbf613c7d2">RetryTimer</a> (int *retryTable, int retrySize, double randomizationFactor)</td></tr>
-<tr class="separator:a816e4b1befb45de08e1ab2bbf613c7d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3a63e468da365aa937b2d7662f8502c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_retry_timer.html#aa3a63e468da365aa937b2d7662f8502c">RetryTimer</a> (int *retryTable, int retrySize, double decreaseFactor, double increaseFactor)</td></tr>
-<tr class="separator:aa3a63e468da365aa937b2d7662f8502c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1488c181c3460c21b10dd19f871778e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_retry_timer.html#a1488c181c3460c21b10dd19f871778e1">RetryTimer</a> (int *retryTable, int retrySize, int randomizationPercentage)</td></tr>
+<tr class="separator:a1488c181c3460c21b10dd19f871778e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ef3543320623a51a46d8626b7b54f9a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_retry_timer.html#a6ef3543320623a51a46d8626b7b54f9a">RetryTimer</a> (int *retryTable, int retrySize, int decreasePercentage, int increasePercentage)</td></tr>
+<tr class="separator:a6ef3543320623a51a46d8626b7b54f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af585e87ec55eb999ce55e12820804421"><td class="memItemLeft" align="right" valign="top">std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_retry_timer.html#af585e87ec55eb999ce55e12820804421">calculateTimeToRetry</a> (int retryCount)</td></tr>
 <tr class="separator:af585e87ec55eb999ce55e12820804421"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -125,8 +125,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a816e4b1befb45de08e1ab2bbf613c7d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a816e4b1befb45de08e1ab2bbf613c7d2">&#9670;&nbsp;</a></span>RetryTimer() <span class="overload">[2/3]</span></h2>
+<a id="a1488c181c3460c21b10dd19f871778e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1488c181c3460c21b10dd19f871778e1">&#9670;&nbsp;</a></span>RetryTimer() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -146,8 +146,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>randomizationFactor</em>&#160;</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>randomizationPercentage</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -161,15 +161,15 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">retryTable</td><td>The table with entries for retry times. </td></tr>
     <tr><td class="paramname">retrySize</td><td>The size of the retry table. </td></tr>
-    <tr><td class="paramname">randomizationFactor</td><td>The randomization factor to be used while computing the distribution range around the retry time. </td></tr>
+    <tr><td class="paramname">randomizationPercentage</td><td>The randomization percentage to be used while computing the distribution range around the retry time. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="aa3a63e468da365aa937b2d7662f8502c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3a63e468da365aa937b2d7662f8502c">&#9670;&nbsp;</a></span>RetryTimer() <span class="overload">[3/3]</span></h2>
+<a id="a6ef3543320623a51a46d8626b7b54f9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ef3543320623a51a46d8626b7b54f9a">&#9670;&nbsp;</a></span>RetryTimer() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -189,14 +189,14 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>decreaseFactor</em>, </td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>decreasePercentage</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>increaseFactor</em>&#160;</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>increasePercentage</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -210,8 +210,8 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">retryTable</td><td>The table with entries for retry times. </td></tr>
     <tr><td class="paramname">retrySize</td><td>The size of the retry table. </td></tr>
-    <tr><td class="paramname">decreaseFactor</td><td>The lower bound of the retry time duration. </td></tr>
-    <tr><td class="paramname">increaseFactor</td><td>upper bound of the retry time duration. </td></tr>
+    <tr><td class="paramname">decreasePercentage</td><td>The lower bound of the retry time duration. </td></tr>
+    <tr><td class="paramname">increasePercentage</td><td>The upper bound of the retry time duration. </td></tr>
   </table>
   </dd>
 </dl>
@@ -246,14 +246,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/<a class="el" href="_retry_timer_8h_source.html">RetryTimer.h</a></li>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/AVSCommon/Utils/src/RetryTimer.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/AVSCommon/Utils/include/AVSCommon/Utils/<a class="el" href="_retry_timer_8h_source.html">RetryTimer.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/AVSCommon/Utils/src/<a class="el" href="_retry_timer_8cpp.html">RetryTimer.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

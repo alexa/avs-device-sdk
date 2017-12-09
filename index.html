@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -55,7 +55,7 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0"
+<iframe src="javascript:void(0)" frameborder="0" 
         name="MSearchResults" id="MSearchResults">
 </iframe>
 </div>
@@ -78,14 +78,14 @@ $(function() {
 <p>You can also prototype with a third party development kit</p><ul>
 <li><a href="https://github.com/xmos/vocalfusion-avs-setup">xCORE VocalFusion 4-Mic Kit from XMOS</a></li>
 </ul>
+<p>Or if you prefer, you can start with our <a href="https://alexa.github.io/avs-device-sdk/">SDK API Documentation</a>.</p>
 <h3>Learn More About The AVS Device SDK</h3>
 <p><a href="https://youtu.be/F5DixCPJYo8">Watch this tutorial</a> to learn about the how this SDK works and the set up process.</p>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/F5DixCPJYo8" frameborder="0" allowfullscreen></iframe>
+<p><a href="https://www.youtube.com/watch?v=F5DixCPJYo8"></a></p>
 <h3>SDK Architecture</h3>
 <p>This diagram illustrates the data flows between components that comprise the AVS Device SDK for C++.</p>
 <div class="image">
-<img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/Alexa_Device_SDK_Architecture.png" alt="SDK Architecture Diagram" width="70%" height="70%"/>
+<img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/Alexa_Device_SDK_Architecture.png" alt="SDK Architecture Diagram"/>
 </div>
 <p><b>Audio Signal Processor (ASP)</b> - Third-party software that applies signal processing algorithms to both input and output audio channels. The applied algorithms are designed to produce clean audio data and include, but are not limited to acoustic echo cancellation (AEC), beam forming (fixed or adaptive), voice activity detection (VAD), and dynamic range compression (DRC). If a multi-microphone array is present, the ASP constructs and outputs a single audio stream for the array.</p>
 <p><b>Shared Data Stream (SDS)</b> - A single producer, multi-consumer buffer that allows for the transport of any type of data between a single writer and one or more readers. SDS performs two key tasks:</p>
@@ -131,24 +131,63 @@ $(function() {
 </ul>
 <h3>Release Notes and Known Issues</h3>
 <p><b>Note</b>: Features, updates, and resolved issues from previous releases are available to view in https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md "CHANGELOG.md".</p>
-<p>v1.2.1 released 11/16/2017:</p>
-<p><b>Enhancements</b></p>
-<ul>
-<li>Added comments to <code>AlexaClientSDKConfig.json</code>. These descriptions provide additional guidance for what is expected for each field.</li>
-<li>Enabled pause and resume controls for Pandora.</li>
+<p>v1.3.0 released 12/08/2017:</p>
+<p><b>Enhancements</b></p><ul>
+<li>ContextManager now passes the namespace/name of the desired state to StateProviderInterface::provideState(). This is helpful when a single StateProvider object provides multiple states, and needs to know which one ContextManager is asking for.</li>
+<li>The mime parser was hardened against duplicate boundaries.</li>
+<li>Added functionality to add and remove AudioPlayer observers to the DefaultClient.</li>
+<li>Unit tests for Alerts were added.</li>
+<li>Added en-IN, en-CA and ja-JP to the SampleApp locale selection menu.</li>
+<li>Added default alert and timer audio data to the SDK SampleApp. There is no longer a requirement to download these audio files and configure them in the json configuration file.</li>
+<li>Added support in SDS Reader and AttachmentReader for seeking into the future. This allows a reader to move to an index which has not yet arrived in the SDS and poll/block until it arrives.</li>
+<li>Added support for blocking Writers in the SharedDataStream class.</li>
+<li>Changed the default status code sent by MessageRequestObserverInterface::onSendCompleted() to SERVER_OTHER_ERROR, and mapped HTTP code 500 to SERVER_INTERNAL_ERROR_V2.</li>
+<li>Added support for parsing stream duration out of playlists.</li>
+<li>Added a configuration option ("sampleApp":"displayCardsSupported") that allows the displaying of display cards to be enabled or disabled.</li>
+<li>Named Timers and Reminders have been updated to fall back to the on-device background audio sound when cloud urls cannot be accessed or rendered.</li>
 </ul>
-<p><b>Bug Fixes</b></p>
-<ul>
-<li>Bug fix for <a href="https://github.com/alexa/avs-device-sdk/issues/329">issue #329</a> - <code>HTTP2Transport</code> instances no longer leak when <code>SERVER_SIDE_DISCONNECT</code> is encountered.</li>
-<li>Bug fix for <a href="https://github.com/alexa/avs-device-sdk/issues/189">issue #189</a> - Fixed a race condition in the <code>Timer</code> class that sometimes caused <code>SpeechSynthesizer</code> to get stuck in the "Speaking" state.</li>
-<li>Bug fix for a race condition that caused <code>SpeechSynthesizer</code> to ignore subsequent <code>Speak</code> directives.</li>
-<li>Bug fix for corrupted mime attachments. </li>
+<p><b>Bug Fixes</b></p><ul>
+<li>Removed floating point dependencies from core SDK libraries.</li>
+<li>Fixed bug in SpeechSynthesizer where it's erroneously calling stop more than once.</li>
+<li>Fixed an issue in ContentFetcher where it could hang during destruction until an active GET request completed.</li>
+<li>Fixed a couple of parsing bugs in LibCurlHttpContentFetcher related to case-sensitivity and mime-type handling.</li>
+<li>Fixed a bug where MediaPlayerObserverInterface::onPlaybackResumed() wasn't being called after resuming from a pause with a pending play/resume.</li>
+<li>Fixed a bug in LibCurlContentFetcher where it could error out if data is written to the SDS faster than it is consumed.</li>
+<li>The GStreamer-based MediaPlayer reference implementation now uses the ACL HTTP configured client.<ul>
+<li>An API change has been made to MediaPlayerInterface::setSource(). This method now takes in an optional offset as well to allow for immediately streaming to the offset if possible.</li>
+<li>Next and Previous buttons now work with Audible.</li>
+<li>Pandora resume stuttering is addressed.</li>
+<li>Pausing and resuming Amazon music no longer seeks back to the beginning of the song.</li>
+</ul>
+</li>
+<li>libcurl CURLOPT_NOSIGNAL option is set to 1 (<a href="https://curl.haxx.se/libcurl/c/CURLOPT_NOSIGNAL.html">https://curl.haxx.se/libcurl/c/CURLOPT_NOSIGNAL.html</a>) to avoid crashes observed in SampleApp.</li>
+<li>Fixed the timing of the PlaybackReportIntervalEvent and PlaybackReportDelayEvent as specified in the directives.</li>
+<li>Fixed potential deadlocks in MediaPlayer during shutdown related to queued callbacks.</li>
+<li>Fixed a crash in MediaPlayer that could occur if the network is disconnected during playback.</li>
+<li>Fixed a bug where music could keep playing while Alexa is speaking.</li>
+<li>Fixed a bug which was causing problems with pause/resume and next/previous with Amazon Music.</li>
+<li>Fixed a bug where music could briefly start playing between speaks.</li>
+<li>Fixed a bug where HLS playlists would stop streaming after the initial playlist had been played to completion.</li>
+<li>Fixed a bug where Audible playback could not advance to the next chapter.</li>
+<li>Fixed some occurrences of SDK entering the IDLE state during the transition between Listening and Speaking states.</li>
+<li>Fixed a bug where PlaybackFinished events were not reporting the correct offset.<ul>
+<li>An API change has been made to MediaPlayerInterface::getOffset(). This method is now required to return the final offset when called after playback has stopped.</li>
+</ul>
+</li>
+<li>Fixed a problem where AIP was erroneously resetting its state upon getting a cancelDirective() callback.</li>
+</ul>
+<p><b>Known Issues</b></p><ul>
+<li>Capability agent for Notifications is not included in this release.</li>
+<li><code>ACL</code>'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed.</li>
+<li>GUI cards don't show for Kindle.</li>
+<li>The new SpeechSynthesizerState state values GAINING_FOCUS and LOSING_FOCUS were added as part of a work-around. The will likely be removed in subsequent releases.</li>
+<li>With the gstreamer-based MediaPlayer, after muting and unmuting, the next item starts playing rather than continuing with the current item. </li>
 </ul>
 </div></div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

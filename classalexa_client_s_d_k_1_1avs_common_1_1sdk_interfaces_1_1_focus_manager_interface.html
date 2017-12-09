@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>avsCommon</b></li><li class="navelem"><b>sdkInterfaces</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">FocusManagerInterface</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common.html">avsCommon</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html">sdkInterfaces</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">FocusManagerInterface</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -87,9 +87,8 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerIn
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a02a609d44d349193d726d9e35704660b"><td class="memItemLeft" align="right" valign="top"><a id="a02a609d44d349193d726d9e35704660b"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a02a609d44d349193d726d9e35704660b">~FocusManagerInterface</a> ()=default</td></tr>
-<tr class="memdesc:a02a609d44d349193d726d9e35704660b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="memitem:a02a609d44d349193d726d9e35704660b"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a02a609d44d349193d726d9e35704660b">~FocusManagerInterface</a> ()=default</td></tr>
+<tr class="memdesc:a02a609d44d349193d726d9e35704660b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a02a609d44d349193d726d9e35704660b">More...</a><br /></td></tr>
 <tr class="separator:a02a609d44d349193d726d9e35704660b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af22bf571ff0b23bd5dcfb8470f0d5de7"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#af22bf571ff0b23bd5dcfb8470f0d5de7">acquireChannel</a> (const std::string &amp;channelName, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html">avsCommon::sdkInterfaces::ChannelObserverInterface</a> &gt; channelObserver, const std::string &amp;activityId)=0</td></tr>
 <tr class="separator:af22bf571ff0b23bd5dcfb8470f0d5de7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -100,29 +99,23 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:ad394dd6b26126ab84a82a1ef864f8ddf"><td class="memItemLeft" align="right" valign="top"><a id="ad394dd6b26126ab84a82a1ef864f8ddf"></a>
-static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#ad394dd6b26126ab84a82a1ef864f8ddf">DIALOG_CHANNEL_NAME</a> = &quot;Dialog&quot;</td></tr>
-<tr class="memdesc:ad394dd6b26126ab84a82a1ef864f8ddf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Dialog Channel name. <br /></td></tr>
+<tr class="memitem:ad394dd6b26126ab84a82a1ef864f8ddf"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#ad394dd6b26126ab84a82a1ef864f8ddf">DIALOG_CHANNEL_NAME</a> = &quot;Dialog&quot;</td></tr>
+<tr class="memdesc:ad394dd6b26126ab84a82a1ef864f8ddf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Dialog Channel name.  <a href="#ad394dd6b26126ab84a82a1ef864f8ddf">More...</a><br /></td></tr>
 <tr class="separator:ad394dd6b26126ab84a82a1ef864f8ddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a645398e7765774df256d3b8240b3b245"><td class="memItemLeft" align="right" valign="top"><a id="a645398e7765774df256d3b8240b3b245"></a>
-static constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a645398e7765774df256d3b8240b3b245">DIALOG_CHANNEL_PRIORITY</a> = 100</td></tr>
-<tr class="memdesc:a645398e7765774df256d3b8240b3b245"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default dialog Channel priority. <br /></td></tr>
+<tr class="memitem:a645398e7765774df256d3b8240b3b245"><td class="memItemLeft" align="right" valign="top">static constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a645398e7765774df256d3b8240b3b245">DIALOG_CHANNEL_PRIORITY</a> = 100</td></tr>
+<tr class="memdesc:a645398e7765774df256d3b8240b3b245"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default dialog Channel priority.  <a href="#a645398e7765774df256d3b8240b3b245">More...</a><br /></td></tr>
 <tr class="separator:a645398e7765774df256d3b8240b3b245"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54ffb1e5b6d078447de94c40750d4799"><td class="memItemLeft" align="right" valign="top"><a id="a54ffb1e5b6d078447de94c40750d4799"></a>
-static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a54ffb1e5b6d078447de94c40750d4799">ALERTS_CHANNEL_NAME</a> = &quot;Alerts&quot;</td></tr>
-<tr class="memdesc:a54ffb1e5b6d078447de94c40750d4799"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Alerts Channel name. <br /></td></tr>
+<tr class="memitem:a54ffb1e5b6d078447de94c40750d4799"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a54ffb1e5b6d078447de94c40750d4799">ALERTS_CHANNEL_NAME</a> = &quot;Alerts&quot;</td></tr>
+<tr class="memdesc:a54ffb1e5b6d078447de94c40750d4799"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Alerts Channel name.  <a href="#a54ffb1e5b6d078447de94c40750d4799">More...</a><br /></td></tr>
 <tr class="separator:a54ffb1e5b6d078447de94c40750d4799"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90da34134c7308e4776a4620fa597479"><td class="memItemLeft" align="right" valign="top"><a id="a90da34134c7308e4776a4620fa597479"></a>
-static constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a90da34134c7308e4776a4620fa597479">ALERTS_CHANNEL_PRIORITY</a> = 200</td></tr>
-<tr class="memdesc:a90da34134c7308e4776a4620fa597479"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Alerts Channel priority. <br /></td></tr>
+<tr class="memitem:a90da34134c7308e4776a4620fa597479"><td class="memItemLeft" align="right" valign="top">static constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a90da34134c7308e4776a4620fa597479">ALERTS_CHANNEL_PRIORITY</a> = 200</td></tr>
+<tr class="memdesc:a90da34134c7308e4776a4620fa597479"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Alerts Channel priority.  <a href="#a90da34134c7308e4776a4620fa597479">More...</a><br /></td></tr>
 <tr class="separator:a90da34134c7308e4776a4620fa597479"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a665ff812ec1ce4cdc68ae409673ad0be"><td class="memItemLeft" align="right" valign="top"><a id="a665ff812ec1ce4cdc68ae409673ad0be"></a>
-static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a665ff812ec1ce4cdc68ae409673ad0be">CONTENT_CHANNEL_NAME</a> = &quot;Content&quot;</td></tr>
-<tr class="memdesc:a665ff812ec1ce4cdc68ae409673ad0be"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Content Channel name. <br /></td></tr>
+<tr class="memitem:a665ff812ec1ce4cdc68ae409673ad0be"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a665ff812ec1ce4cdc68ae409673ad0be">CONTENT_CHANNEL_NAME</a> = &quot;Content&quot;</td></tr>
+<tr class="memdesc:a665ff812ec1ce4cdc68ae409673ad0be"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Content Channel name.  <a href="#a665ff812ec1ce4cdc68ae409673ad0be">More...</a><br /></td></tr>
 <tr class="separator:a665ff812ec1ce4cdc68ae409673ad0be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63c396d5a7adaa78db5eccf9cb11224b"><td class="memItemLeft" align="right" valign="top"><a id="a63c396d5a7adaa78db5eccf9cb11224b"></a>
-static constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a63c396d5a7adaa78db5eccf9cb11224b">CONTENT_CHANNEL_PRIORITY</a> = 300</td></tr>
-<tr class="memdesc:a63c396d5a7adaa78db5eccf9cb11224b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Content Channel priority. <br /></td></tr>
+<tr class="memitem:a63c396d5a7adaa78db5eccf9cb11224b"><td class="memItemLeft" align="right" valign="top">static constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a63c396d5a7adaa78db5eccf9cb11224b">CONTENT_CHANNEL_PRIORITY</a> = 300</td></tr>
+<tr class="memdesc:a63c396d5a7adaa78db5eccf9cb11224b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Content Channel priority.  <a href="#a63c396d5a7adaa78db5eccf9cb11224b">More...</a><br /></td></tr>
 <tr class="separator:a63c396d5a7adaa78db5eccf9cb11224b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -131,7 +124,35 @@ static constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"
 <p>release Channel - clients should call the <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#aac5971dc19973db85716773e4a9c2f9b">releaseChannel()</a> method, passing in the name of the Channel and the observer of the Channel they wish to release.</p>
 <p>stop foreground Channel - clients should call the stopForegroundActivitiy() method.</p>
 <p>All of these methods will notify the observer of the Channel of focus changes via an asynchronous callback to the <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html">ChannelObserverInterface</a>##onFocusChanged() method, at which point the client should make a user observable change based on the focus it receives. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a02a609d44d349193d726d9e35704660b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02a609d44d349193d726d9e35704660b">&#9670;&nbsp;</a></span>~FocusManagerInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface::~FocusManagerInterface </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Destructor. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="af22bf571ff0b23bd5dcfb8470f0d5de7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af22bf571ff0b23bd5dcfb8470f0d5de7">&#9670;&nbsp;</a></span>acquireChannel()</h2>
 
@@ -261,14 +282,159 @@ static constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a54ffb1e5b6d078447de94c40750d4799"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54ffb1e5b6d078447de94c40750d4799">&#9670;&nbsp;</a></span>ALERTS_CHANNEL_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr const char* alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface::ALERTS_CHANNEL_NAME = &quot;Alerts&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default Alerts Channel name. </p>
+
+</div>
+</div>
+<a id="a90da34134c7308e4776a4620fa597479"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90da34134c7308e4776a4620fa597479">&#9670;&nbsp;</a></span>ALERTS_CHANNEL_PRIORITY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr unsigned int alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface::ALERTS_CHANNEL_PRIORITY = 200</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default Alerts Channel priority. </p>
+
+</div>
+</div>
+<a id="a665ff812ec1ce4cdc68ae409673ad0be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a665ff812ec1ce4cdc68ae409673ad0be">&#9670;&nbsp;</a></span>CONTENT_CHANNEL_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr const char* alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface::CONTENT_CHANNEL_NAME = &quot;Content&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default Content Channel name. </p>
+
+</div>
+</div>
+<a id="a63c396d5a7adaa78db5eccf9cb11224b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63c396d5a7adaa78db5eccf9cb11224b">&#9670;&nbsp;</a></span>CONTENT_CHANNEL_PRIORITY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr unsigned int alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface::CONTENT_CHANNEL_PRIORITY = 300</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default Content Channel priority. </p>
+
+</div>
+</div>
+<a id="ad394dd6b26126ab84a82a1ef864f8ddf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad394dd6b26126ab84a82a1ef864f8ddf">&#9670;&nbsp;</a></span>DIALOG_CHANNEL_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr const char* alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface::DIALOG_CHANNEL_NAME = &quot;Dialog&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default Dialog Channel name. </p>
+
+</div>
+</div>
+<a id="a645398e7765774df256d3b8240b3b245"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a645398e7765774df256d3b8240b3b245">&#9670;&nbsp;</a></span>DIALOG_CHANNEL_PRIORITY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr unsigned int alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface::DIALOG_CHANNEL_PRIORITY = 100</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default dialog Channel priority. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_focus_manager_interface_8h_source.html">FocusManagerInterface.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_focus_manager_interface_8h_source.html">FocusManagerInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

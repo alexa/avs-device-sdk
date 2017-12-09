@@ -1,0 +1,37 @@
+<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/CapabilityAgents/SpeechSynthesizer/src/SpeechSynthesizer.cpp" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/CapabilityAgents/SpeechSynthesizer/src/SpeechSynthesizer.cpp">
+<area shape="rect" id="node5" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="528,465,704,504"/>
+<area shape="rect" id="node20" href="$_metrics_8h.html" title="AVSCommon/Utils/Metrics.h" alt="" coords="880,472,1069,497"/>
+<area shape="rect" id="node23" href="$_speech_synthesizer_8h.html" title="SpeechSynthesizer/Speech\lSynthesizer.h" alt="" coords="2642,119,2827,157"/>
+<area shape="rect" id="node11" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="880,552,1093,591"/>
+<area shape="rect" id="node15" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="152,645,328,684"/>
+<area shape="rect" id="node16" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="528,552,704,591"/>
+<area shape="rect" id="node18" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="5,552,202,591"/>
+<area shape="rect" id="node19" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="328,552,504,591"/>
+<area shape="rect" id="node17" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="520,645,696,684"/>
+<area shape="rect" id="node21" href="$_a_v_s_message_8h.html" title="AVSCommon/AVS/AVSMessage.h" alt="" coords="2850,559,3075,584"/>
+<area shape="rect" id="node22" href="$_a_v_s_message_header_8h.html" title="AVSMessageHeader.h" alt="" coords="2920,652,3075,677"/>
+<area shape="rect" id="node26" href="$_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="3902,472,4125,497"/>
+<area shape="rect" id="node27" href="$_attachment_manager_interface_8h.html" title="Attachment/AttachmentManager\lInterface.h" alt="" coords="3150,552,3362,591"/>
+<area shape="rect" id="node28" href="$_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="3713,205,3906,244"/>
+<area shape="rect" id="node31" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2873,292,3138,331"/>
+<area shape="rect" id="node37" href="$_dialog_u_x_state_aggregator_8h.html" title="AVSCommon/AVS/DialogUXState\lAggregator.h" alt="" coords="2201,465,2423,504"/>
+<area shape="rect" id="node40" href="$_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="1218,552,1448,591"/>
+<area shape="rect" id="node42" href="$_speech_synthesizer_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeechSynthesizerObserverInterface.h" alt="" coords="1472,552,1730,591"/>
+<area shape="rect" id="node43" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2581,552,2776,591"/>
+<area shape="rect" id="node44" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="3299,205,3490,244"/>
+<area shape="rect" id="node45" href="$_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="4151,205,4355,244"/>
+<area shape="rect" id="node46" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="3437,552,3624,591"/>
+<area shape="rect" id="node47" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="4535,205,4726,244"/>
+<area shape="rect" id="node48" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2823,205,3014,244"/>
+<area shape="rect" id="node49" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="3061,465,3269,504"/>
+<area shape="rect" id="node50" href="$_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="2670,379,2887,417"/>
+<area shape="rect" id="node30" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="3395,379,3624,417"/>
+<area shape="rect" id="node32" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="4458,292,4651,331"/>
+<area shape="rect" id="node33" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="3162,292,3358,331"/>
+<area shape="rect" id="node34" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="3432,292,3623,331"/>
+<area shape="rect" id="node35" href="$_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="4040,292,4231,331"/>
+<area shape="rect" id="node36" href="$_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="3952,379,4176,417"/>
+<area shape="rect" id="node38" href="$_audio_input_processor_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioInputProcessorObserver\lInterface.h" alt="" coords="2505,639,2708,691"/>
+<area shape="rect" id="node39" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="1754,552,2003,591"/>
+<area shape="rect" id="node41" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="2077,552,2274,591"/>
+</map>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/CapabilityAgents/AudioPlayer/test/AudioPlayerTest.cpp File Reference</title>
+<title>AlexaClientSDK: /Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/CapabilityAgents/AudioPlayer/test/AudioPlayerTest.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -85,59 +85,59 @@ $(function() {
 <code>#include &lt;rapidjson/error/en.h&gt;</code><br />
 <code>#include &lt;rapidjson/stringbuffer.h&gt;</code><br />
 <code>#include &lt;rapidjson/writer.h&gt;</code><br />
-<code>#include &lt;AVSCommon/Utils/Logger/ConsoleLogger.h&gt;</code><br />
-<code>#include &lt;AVSCommon/Utils/JSON/JSONUtils.h&gt;</code><br />
-<code>#include &lt;AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h&gt;</code><br />
-<code>#include &lt;AVSCommon/AVS/Attachment/AttachmentManagerInterface.h&gt;</code><br />
-<code>#include &lt;AVSCommon/SDKInterfaces/MockContextManager.h&gt;</code><br />
-<code>#include &lt;AVSCommon/SDKInterfaces/MockFocusManager.h&gt;</code><br />
-<code>#include &lt;AVSCommon/SDKInterfaces/MockMessageSender.h&gt;</code><br />
-<code>#include &lt;AVSCommon/SDKInterfaces/MockDirectiveSequencer.h&gt;</code><br />
-<code>#include &lt;AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h&gt;</code><br />
-<code>#include &lt;AVSCommon/AVS/Attachment/AttachmentManager.h&gt;</code><br />
-<code>#include &lt;AVSCommon/Utils/Memory/Memory.h&gt;</code><br />
-<code>#include &lt;AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h&gt;</code><br />
-<code>#include &quot;AudioPlayer/AudioPlayer.h&quot;</code><br />
+<code>#include &lt;<a class="el" href="_console_logger_8h_source.html">AVSCommon/Utils/Logger/ConsoleLogger.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_exception_encountered_sender_8h_source.html">AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_attachment_manager_interface_8h_source.html">AVSCommon/AVS/Attachment/AttachmentManagerInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_context_manager_8h_source.html">AVSCommon/SDKInterfaces/MockContextManager.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_focus_manager_8h_source.html">AVSCommon/SDKInterfaces/MockFocusManager.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_message_sender_8h_source.html">AVSCommon/SDKInterfaces/MockMessageSender.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h_source.html">AVSCommon/SDKInterfaces/MockDirectiveSequencer.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_directive_handler_result_8h_source.html">AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_attachment_manager_8h_source.html">AVSCommon/AVS/Attachment/AttachmentManager.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_memory_8h_source.html">AVSCommon/Utils/Memory/Memory.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_media_player_8h_source.html">AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="_audio_player_8h_source.html">AudioPlayer/AudioPlayer.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AudioPlayerTest.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_audio_player_test_8cpp__incl.png" border="0" usemap="#_2_users_2erikhopf_2sdk-folder_2sdk-source_2avs-device-sdk_2_capability_agents_2_audio_player_2test_2_audio_player_test_8cpp" alt=""/></div>
-<map name="_2_users_2erikhopf_2sdk-folder_2sdk-source_2avs-device-sdk_2_capability_agents_2_audio_player_2test_2_audio_player_test_8cpp" id="_2_users_2erikhopf_2sdk-folder_2sdk-source_2avs-device-sdk_2_capability_agents_2_audio_player_2test_2_audio_player_test_8cpp">
-<area shape="rect" id="node12" href="_console_logger_8h_source.html" title="AVSCommon/Utils/Logger\l/ConsoleLogger.h" alt="" coords="43,379,219,417"/>
-<area shape="rect" id="node15" href="_j_s_o_n_utils_8h_source.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="1052,292,1222,331"/>
-<area shape="rect" id="node18" href="_mock_exception_encountered_sender_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="3147,119,3392,157"/>
-<area shape="rect" id="node20" href="_attachment_manager_interface_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="485,205,693,244"/>
-<area shape="rect" id="node24" href="_mock_context_manager_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockContextManager.h" alt="" coords="2881,119,3071,157"/>
-<area shape="rect" id="node26" href="_mock_focus_manager_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockFocusManager.h" alt="" coords="2451,119,2642,157"/>
-<area shape="rect" id="node28" href="_mock_message_sender_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockMessageSender.h" alt="" coords="2666,119,2857,157"/>
-<area shape="rect" id="node30" href="_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveSequencer.h" alt="" coords="3415,119,3606,157"/>
-<area shape="rect" id="node33" href="_mock_directive_handler_result_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveHandlerResult.h" alt="" coords="3630,119,3834,157"/>
-<area shape="rect" id="node35" href="_attachment_manager_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="669,119,870,157"/>
-<area shape="rect" id="node37" href="_memory_8h_source.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="2635,205,2818,244"/>
-<area shape="rect" id="node39" href="_mock_media_player_8h_source.html" title="AVSCommon/Utils/MediaPlayer\l/MockMediaPlayer.h" alt="" coords="2168,119,2376,157"/>
-<area shape="rect" id="node41" href="_audio_player_8h_source.html" title="AudioPlayer/AudioPlayer.h" alt="" coords="1928,125,2107,151"/>
-<area shape="rect" id="node13" href="_logger_8h_source.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="745,465,921,504"/>
-<area shape="rect" id="node17" href="_logger_utils_8h_source.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="796,379,972,417"/>
-<area shape="rect" id="node19" href="_exception_encountered_sender_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2711,292,2977,331"/>
-<area shape="rect" id="node21" href="_attachment_8h_source.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="477,292,678,331"/>
-<area shape="rect" id="node22" href="_attachment_reader_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="519,379,721,417"/>
-<area shape="rect" id="node23" href="_attachment_writer_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="294,379,495,417"/>
-<area shape="rect" id="node25" href="_context_manager_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="3107,205,3298,244"/>
-<area shape="rect" id="node27" href="_focus_manager_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="1863,292,2054,331"/>
-<area shape="rect" id="node29" href="_message_sender_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2893,205,3083,244"/>
-<area shape="rect" id="node31" href="_directive_sequencer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="3563,205,3768,244"/>
-<area shape="rect" id="node32" href="_requires_shutdown_8h_source.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="3350,292,3538,331"/>
-<area shape="rect" id="node34" href="_directive_handler_result_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="3001,292,3226,331"/>
-<area shape="rect" id="node40" href="_media_player_interface_8h_source.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1246,292,1455,331"/>
-<area shape="rect" id="node42" href="_capability_agent_8h_source.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="2369,205,2562,244"/>
-<area shape="rect" id="node43" href="_player_activity_8h_source.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="1684,212,1908,237"/>
-<area shape="rect" id="node44" href="_audio_player_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerInterface.h" alt="" coords="2319,292,2510,331"/>
-<area shape="rect" id="node45" href="_error_types_8h_source.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="1529,292,1738,331"/>
-<area shape="rect" id="node46" href="_media_player_observer_interface_8h_source.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="1342,205,1559,244"/>
-<area shape="rect" id="node47" href="_executor_8h_source.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2100,205,2295,244"/>
-<area shape="rect" id="node48" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h_source.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="804,292,978,331"/>
-<area shape="rect" id="node49" href="_audio_item_8h_source.html" title="AudioItem.h" alt="" coords="1932,212,2025,237"/>
-<area shape="rect" id="node50" href="_clear_behavior_8h_source.html" title="ClearBehavior.h" alt="" coords="1050,212,1166,237"/>
+<div class="center"><img src="_audio_player_test_8cpp__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_capability_agents_2_audio_player_2test_2_audio_player_test_8cpp" alt=""/></div>
+<map name="_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_capability_agents_2_audio_player_2test_2_audio_player_test_8cpp" id="_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_capability_agents_2_audio_player_2test_2_audio_player_test_8cpp">
+<area shape="rect" id="node12" href="_console_logger_8h.html" title="AVSCommon/Utils/Logger\l/ConsoleLogger.h" alt="" coords="472,379,648,417"/>
+<area shape="rect" id="node15" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="763,292,933,331"/>
+<area shape="rect" id="node18" href="_mock_exception_encountered_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="3148,119,3393,157"/>
+<area shape="rect" id="node20" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="189,292,397,331"/>
+<area shape="rect" id="node24" href="_mock_context_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockContextManager.h" alt="" coords="2882,119,3073,157"/>
+<area shape="rect" id="node26" href="_mock_focus_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockFocusManager.h" alt="" coords="2453,119,2643,157"/>
+<area shape="rect" id="node28" href="_mock_message_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockMessageSender.h" alt="" coords="2238,119,2429,157"/>
+<area shape="rect" id="node30" href="_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveSequencer.h" alt="" coords="2667,119,2858,157"/>
+<area shape="rect" id="node33" href="_mock_directive_handler_result_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveHandlerResult.h" alt="" coords="3416,119,3621,157"/>
+<area shape="rect" id="node35" href="_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="359,205,561,244"/>
+<area shape="rect" id="node37" href="_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="3590,205,3773,244"/>
+<area shape="rect" id="node39" href="_mock_media_player_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MockMediaPlayer.h" alt="" coords="1954,119,2163,157"/>
+<area shape="rect" id="node41" href="_audio_player_8h.html" title="AudioPlayer/AudioPlayer.h" alt="" coords="1613,125,1792,151"/>
+<area shape="rect" id="node13" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="699,465,875,504"/>
+<area shape="rect" id="node17" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="997,379,1173,417"/>
+<area shape="rect" id="node19" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2231,292,2497,331"/>
+<area shape="rect" id="node21" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="145,379,346,417"/>
+<area shape="rect" id="node22" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="371,465,573,504"/>
+<area shape="rect" id="node23" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="94,465,295,504"/>
+<area shape="rect" id="node25" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="2819,205,3010,244"/>
+<area shape="rect" id="node27" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="2521,292,2711,331"/>
+<area shape="rect" id="node29" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2502,205,2693,244"/>
+<area shape="rect" id="node31" href="_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="2735,292,2940,331"/>
+<area shape="rect" id="node32" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1717,379,1905,417"/>
+<area shape="rect" id="node34" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="3014,292,3239,331"/>
+<area shape="rect" id="node40" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1464,292,1672,331"/>
+<area shape="rect" id="node42" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="1864,205,2056,244"/>
+<area shape="rect" id="node43" href="_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="1173,212,1398,237"/>
+<area shape="rect" id="node44" href="_audio_player_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerInterface.h" alt="" coords="1249,379,1439,417"/>
+<area shape="rect" id="node45" href="_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="1746,292,1955,331"/>
+<area shape="rect" id="node46" href="_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="1522,205,1739,244"/>
+<area shape="rect" id="node47" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2131,205,2325,244"/>
+<area shape="rect" id="node48" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="1025,292,1199,331"/>
+<area shape="rect" id="node49" href="_audio_item_8h.html" title="AudioItem.h" alt="" coords="1056,212,1149,237"/>
+<area shape="rect" id="node50" href="_clear_behavior_8h.html" title="ClearBehavior.h" alt="" coords="814,212,930,237"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -153,317 +153,270 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents.html">alexaClientSDK::capabilityAgents</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html">alexaClientSDK::capabilityAgents::audioPlayer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html">alexaClientSDK::capabilityAgents::audioPlayer::test</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(TAG, event)</td></tr>
+<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_example_auth_delegate_client_8cpp.html#adc8c4903d8b224bfaa986afb88575adb">TAG</a>, event)</td></tr>
 <tr class="separator:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a6c318c0080f7f5b95f85001499165172"><td class="memItemLeft" align="right" valign="top"><a id="a6c318c0080f7f5b95f85001499165172"></a>
-static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a6c318c0080f7f5b95f85001499165172">alexaClientSDK::capabilityAgents::audioPlayer::test::WAIT_TIMEOUT</a> (1000)</td></tr>
-<tr class="memdesc:a6c318c0080f7f5b95f85001499165172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plenty of time for a test to complete. <br /></td></tr>
+<tr class="memitem:a6c318c0080f7f5b95f85001499165172"><td class="memItemLeft" align="right" valign="top">static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a6c318c0080f7f5b95f85001499165172">alexaClientSDK::capabilityAgents::audioPlayer::test::WAIT_TIMEOUT</a> (1000)</td></tr>
+<tr class="memdesc:a6c318c0080f7f5b95f85001499165172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plenty of time for a test to complete.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a6c318c0080f7f5b95f85001499165172">More...</a><br /></td></tr>
 <tr class="separator:a6c318c0080f7f5b95f85001499165172"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b2a78c6eac558bcf522b42cc212a928"><td class="memItemLeft" align="right" valign="top"><a id="a8b2a78c6eac558bcf522b42cc212a928"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a8b2a78c6eac558bcf522b42cc212a928">alexaClientSDK::capabilityAgents::audioPlayer::test::CHANNEL_NAME</a> (&quot;Content&quot;)</td></tr>
-<tr class="memdesc:a8b2a78c6eac558bcf522b42cc212a928"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the <code>FocusManager</code> channel used by the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code>. <br /></td></tr>
+<tr class="memitem:a8b2a78c6eac558bcf522b42cc212a928"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a8b2a78c6eac558bcf522b42cc212a928">alexaClientSDK::capabilityAgents::audioPlayer::test::CHANNEL_NAME</a> (&quot;Content&quot;)</td></tr>
+<tr class="memdesc:a8b2a78c6eac558bcf522b42cc212a928"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the <code>FocusManager</code> channel used by the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code>.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a8b2a78c6eac558bcf522b42cc212a928">More...</a><br /></td></tr>
 <tr class="separator:a8b2a78c6eac558bcf522b42cc212a928"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0db37ae6b8b37ef2f1e6a921e5904af7"><td class="memItemLeft" align="right" valign="top"><a id="a0db37ae6b8b37ef2f1e6a921e5904af7"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a0db37ae6b8b37ef2f1e6a921e5904af7">alexaClientSDK::capabilityAgents::audioPlayer::test::FOCUS_MANAGER_ACTIVITY_ID</a> (&quot;AudioPlayer.Play&quot;)</td></tr>
-<tr class="memdesc:a0db37ae6b8b37ef2f1e6a921e5904af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The activity Id used with the <code>FocusManager</code> by <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code>. <br /></td></tr>
+<tr class="memitem:a0db37ae6b8b37ef2f1e6a921e5904af7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a0db37ae6b8b37ef2f1e6a921e5904af7">alexaClientSDK::capabilityAgents::audioPlayer::test::FOCUS_MANAGER_ACTIVITY_ID</a> (&quot;AudioPlayer.Play&quot;)</td></tr>
+<tr class="memdesc:a0db37ae6b8b37ef2f1e6a921e5904af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The activity Id used with the <code>FocusManager</code> by <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code>.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a0db37ae6b8b37ef2f1e6a921e5904af7">More...</a><br /></td></tr>
 <tr class="separator:a0db37ae6b8b37ef2f1e6a921e5904af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac232bebbf0be301f293f1de51c08a16a"><td class="memItemLeft" align="right" valign="top"><a id="ac232bebbf0be301f293f1de51c08a16a"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ac232bebbf0be301f293f1de51c08a16a">alexaClientSDK::capabilityAgents::audioPlayer::test::NAMESPACE_AUDIO_PLAYER</a> (&quot;AudioPlayer&quot;)</td></tr>
-<tr class="memdesc:ac232bebbf0be301f293f1de51c08a16a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace for <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a>. <br /></td></tr>
+<tr class="memitem:ac232bebbf0be301f293f1de51c08a16a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ac232bebbf0be301f293f1de51c08a16a">alexaClientSDK::capabilityAgents::audioPlayer::test::NAMESPACE_AUDIO_PLAYER</a> (&quot;AudioPlayer&quot;)</td></tr>
+<tr class="memdesc:ac232bebbf0be301f293f1de51c08a16a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace for <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a>.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ac232bebbf0be301f293f1de51c08a16a">More...</a><br /></td></tr>
 <tr class="separator:ac232bebbf0be301f293f1de51c08a16a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af91d16bfae42fabd594e8759f6c0281f"><td class="memItemLeft" align="right" valign="top"><a id="af91d16bfae42fabd594e8759f6c0281f"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#af91d16bfae42fabd594e8759f6c0281f">alexaClientSDK::capabilityAgents::audioPlayer::test::NAME_PLAY</a> (&quot;Play&quot;)</td></tr>
-<tr class="memdesc:af91d16bfae42fabd594e8759f6c0281f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name for <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a> Play directive. <br /></td></tr>
+<tr class="memitem:af91d16bfae42fabd594e8759f6c0281f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#af91d16bfae42fabd594e8759f6c0281f">alexaClientSDK::capabilityAgents::audioPlayer::test::NAME_PLAY</a> (&quot;Play&quot;)</td></tr>
+<tr class="memdesc:af91d16bfae42fabd594e8759f6c0281f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name for <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a> Play directive.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#af91d16bfae42fabd594e8759f6c0281f">More...</a><br /></td></tr>
 <tr class="separator:af91d16bfae42fabd594e8759f6c0281f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1276a326ab08b47fd6289cdd22c4371d"><td class="memItemLeft" align="right" valign="top"><a id="a1276a326ab08b47fd6289cdd22c4371d"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a1276a326ab08b47fd6289cdd22c4371d">alexaClientSDK::capabilityAgents::audioPlayer::test::NAME_STOP</a> (&quot;Stop&quot;)</td></tr>
-<tr class="memdesc:a1276a326ab08b47fd6289cdd22c4371d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name for <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a> Stop directive. <br /></td></tr>
+<tr class="memitem:a1276a326ab08b47fd6289cdd22c4371d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a1276a326ab08b47fd6289cdd22c4371d">alexaClientSDK::capabilityAgents::audioPlayer::test::NAME_STOP</a> (&quot;Stop&quot;)</td></tr>
+<tr class="memdesc:a1276a326ab08b47fd6289cdd22c4371d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name for <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a> Stop directive.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a1276a326ab08b47fd6289cdd22c4371d">More...</a><br /></td></tr>
 <tr class="separator:a1276a326ab08b47fd6289cdd22c4371d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44a3e5b75195bb5cdf895bb79f7c5813"><td class="memItemLeft" align="right" valign="top"><a id="a44a3e5b75195bb5cdf895bb79f7c5813"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a44a3e5b75195bb5cdf895bb79f7c5813">alexaClientSDK::capabilityAgents::audioPlayer::test::NAME_CLEARQUEUE</a> (&quot;ClearQueue&quot;)</td></tr>
-<tr class="memdesc:a44a3e5b75195bb5cdf895bb79f7c5813"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name for <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a> ClearQueue directive. <br /></td></tr>
+<tr class="memitem:a44a3e5b75195bb5cdf895bb79f7c5813"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a44a3e5b75195bb5cdf895bb79f7c5813">alexaClientSDK::capabilityAgents::audioPlayer::test::NAME_CLEARQUEUE</a> (&quot;ClearQueue&quot;)</td></tr>
+<tr class="memdesc:a44a3e5b75195bb5cdf895bb79f7c5813"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name for <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a> ClearQueue directive.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a44a3e5b75195bb5cdf895bb79f7c5813">More...</a><br /></td></tr>
 <tr class="separator:a44a3e5b75195bb5cdf895bb79f7c5813"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c24739b4780e4af4297121f214cea8a"><td class="memItemLeft" align="right" valign="top"><a id="a3c24739b4780e4af4297121f214cea8a"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a3c24739b4780e4af4297121f214cea8a">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_ID_TEST</a> (&quot;MessageId_Test&quot;)</td></tr>
-<tr class="memdesc:a3c24739b4780e4af4297121f214cea8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message Id for testing. <br /></td></tr>
+<tr class="memitem:a3c24739b4780e4af4297121f214cea8a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a3c24739b4780e4af4297121f214cea8a">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_ID_TEST</a> (&quot;MessageId_Test&quot;)</td></tr>
+<tr class="memdesc:a3c24739b4780e4af4297121f214cea8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message Id for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a3c24739b4780e4af4297121f214cea8a">More...</a><br /></td></tr>
 <tr class="separator:a3c24739b4780e4af4297121f214cea8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a900788583ca2ad8ce4240c4caf7e4627"><td class="memItemLeft" align="right" valign="top"><a id="a900788583ca2ad8ce4240c4caf7e4627"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a900788583ca2ad8ce4240c4caf7e4627">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_ID_TEST_2</a> (&quot;MessageId_Test2&quot;)</td></tr>
-<tr class="memdesc:a900788583ca2ad8ce4240c4caf7e4627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Another message Id for testing. <br /></td></tr>
+<tr class="memitem:a900788583ca2ad8ce4240c4caf7e4627"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a900788583ca2ad8ce4240c4caf7e4627">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_ID_TEST_2</a> (&quot;MessageId_Test2&quot;)</td></tr>
+<tr class="memdesc:a900788583ca2ad8ce4240c4caf7e4627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Another message Id for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a900788583ca2ad8ce4240c4caf7e4627">More...</a><br /></td></tr>
 <tr class="separator:a900788583ca2ad8ce4240c4caf7e4627"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ec4f88157a3eecf13f4bb1c0aa47776"><td class="memItemLeft" align="right" valign="top"><a id="a6ec4f88157a3eecf13f4bb1c0aa47776"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a6ec4f88157a3eecf13f4bb1c0aa47776">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAY_REQUEST_ID_TEST</a> (&quot;PlayRequestId_Test&quot;)</td></tr>
-<tr class="memdesc:a6ec4f88157a3eecf13f4bb1c0aa47776"><td class="mdescLeft">&#160;</td><td class="mdescRight">PlayRequestId for testing. <br /></td></tr>
+<tr class="memitem:a6ec4f88157a3eecf13f4bb1c0aa47776"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a6ec4f88157a3eecf13f4bb1c0aa47776">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAY_REQUEST_ID_TEST</a> (&quot;PlayRequestId_Test&quot;)</td></tr>
+<tr class="memdesc:a6ec4f88157a3eecf13f4bb1c0aa47776"><td class="mdescLeft">&#160;</td><td class="mdescRight">PlayRequestId for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a6ec4f88157a3eecf13f4bb1c0aa47776">More...</a><br /></td></tr>
 <tr class="separator:a6ec4f88157a3eecf13f4bb1c0aa47776"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10416d82ceb64ad10d2f413a88d5f748"><td class="memItemLeft" align="right" valign="top"><a id="a10416d82ceb64ad10d2f413a88d5f748"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a10416d82ceb64ad10d2f413a88d5f748">alexaClientSDK::capabilityAgents::audioPlayer::test::CONTEXT_ID_TEST</a> (&quot;ContextId_Test&quot;)</td></tr>
-<tr class="memdesc:a10416d82ceb64ad10d2f413a88d5f748"><td class="mdescLeft">&#160;</td><td class="mdescRight">Context ID for testing. <br /></td></tr>
+<tr class="memitem:a10416d82ceb64ad10d2f413a88d5f748"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a10416d82ceb64ad10d2f413a88d5f748">alexaClientSDK::capabilityAgents::audioPlayer::test::CONTEXT_ID_TEST</a> (&quot;ContextId_Test&quot;)</td></tr>
+<tr class="memdesc:a10416d82ceb64ad10d2f413a88d5f748"><td class="mdescLeft">&#160;</td><td class="mdescRight">Context ID for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a10416d82ceb64ad10d2f413a88d5f748">More...</a><br /></td></tr>
 <tr class="separator:a10416d82ceb64ad10d2f413a88d5f748"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3115a6791051de10ebdac7e9d41733d"><td class="memItemLeft" align="right" valign="top"><a id="ae3115a6791051de10ebdac7e9d41733d"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ae3115a6791051de10ebdac7e9d41733d">alexaClientSDK::capabilityAgents::audioPlayer::test::CONTEXT_ID_TEST_2</a> (&quot;ContextId_Test2&quot;)</td></tr>
-<tr class="memdesc:ae3115a6791051de10ebdac7e9d41733d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Context ID for testing. <br /></td></tr>
+<tr class="memitem:ae3115a6791051de10ebdac7e9d41733d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ae3115a6791051de10ebdac7e9d41733d">alexaClientSDK::capabilityAgents::audioPlayer::test::CONTEXT_ID_TEST_2</a> (&quot;ContextId_Test2&quot;)</td></tr>
+<tr class="memdesc:ae3115a6791051de10ebdac7e9d41733d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Context ID for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ae3115a6791051de10ebdac7e9d41733d">More...</a><br /></td></tr>
 <tr class="separator:ae3115a6791051de10ebdac7e9d41733d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7a6215222654270b60ee689d9eaa2a7"><td class="memItemLeft" align="right" valign="top"><a id="ad7a6215222654270b60ee689d9eaa2a7"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ad7a6215222654270b60ee689d9eaa2a7">alexaClientSDK::capabilityAgents::audioPlayer::test::TOKEN_TEST</a> (&quot;Token_Test&quot;)</td></tr>
-<tr class="memdesc:ad7a6215222654270b60ee689d9eaa2a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Token for testing. <br /></td></tr>
+<tr class="memitem:ad7a6215222654270b60ee689d9eaa2a7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ad7a6215222654270b60ee689d9eaa2a7">alexaClientSDK::capabilityAgents::audioPlayer::test::TOKEN_TEST</a> (&quot;Token_Test&quot;)</td></tr>
+<tr class="memdesc:ad7a6215222654270b60ee689d9eaa2a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Token for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ad7a6215222654270b60ee689d9eaa2a7">More...</a><br /></td></tr>
 <tr class="separator:ad7a6215222654270b60ee689d9eaa2a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a763513e680515653e65cb695f162b261"><td class="memItemLeft" align="right" valign="top"><a id="a763513e680515653e65cb695f162b261"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a763513e680515653e65cb695f162b261">alexaClientSDK::capabilityAgents::audioPlayer::test::PREV_TOKEN_TEST</a> (&quot;Prev_Token_Test&quot;)</td></tr>
-<tr class="memdesc:a763513e680515653e65cb695f162b261"><td class="mdescLeft">&#160;</td><td class="mdescRight">Previous token for testing. <br /></td></tr>
+<tr class="memitem:a763513e680515653e65cb695f162b261"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a763513e680515653e65cb695f162b261">alexaClientSDK::capabilityAgents::audioPlayer::test::PREV_TOKEN_TEST</a> (&quot;Prev_Token_Test&quot;)</td></tr>
+<tr class="memdesc:a763513e680515653e65cb695f162b261"><td class="mdescLeft">&#160;</td><td class="mdescRight">Previous token for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a763513e680515653e65cb695f162b261">More...</a><br /></td></tr>
 <tr class="separator:a763513e680515653e65cb695f162b261"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add0c8e567f6cf19280edc3360d075559"><td class="memItemLeft" align="right" valign="top"><a id="add0c8e567f6cf19280edc3360d075559"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#add0c8e567f6cf19280edc3360d075559">alexaClientSDK::capabilityAgents::audioPlayer::test::FORMAT_TEST</a> (&quot;AUDIO_MPEG&quot;)</td></tr>
-<tr class="memdesc:add0c8e567f6cf19280edc3360d075559"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format of the audio. <br /></td></tr>
+<tr class="memitem:add0c8e567f6cf19280edc3360d075559"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#add0c8e567f6cf19280edc3360d075559">alexaClientSDK::capabilityAgents::audioPlayer::test::FORMAT_TEST</a> (&quot;AUDIO_MPEG&quot;)</td></tr>
+<tr class="memdesc:add0c8e567f6cf19280edc3360d075559"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format of the audio.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#add0c8e567f6cf19280edc3360d075559">More...</a><br /></td></tr>
 <tr class="separator:add0c8e567f6cf19280edc3360d075559"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5101c2c8ec2e065af652f1fb96059e27"><td class="memItemLeft" align="right" valign="top"><a id="a5101c2c8ec2e065af652f1fb96059e27"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a5101c2c8ec2e065af652f1fb96059e27">alexaClientSDK::capabilityAgents::audioPlayer::test::URL_TEST</a> (&quot;cid:Test&quot;)</td></tr>
-<tr class="memdesc:a5101c2c8ec2e065af652f1fb96059e27"><td class="mdescLeft">&#160;</td><td class="mdescRight">URL for testing. <br /></td></tr>
+<tr class="memitem:a5101c2c8ec2e065af652f1fb96059e27"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a5101c2c8ec2e065af652f1fb96059e27">alexaClientSDK::capabilityAgents::audioPlayer::test::URL_TEST</a> (&quot;cid:Test&quot;)</td></tr>
+<tr class="memdesc:a5101c2c8ec2e065af652f1fb96059e27"><td class="mdescLeft">&#160;</td><td class="mdescRight">URL for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a5101c2c8ec2e065af652f1fb96059e27">More...</a><br /></td></tr>
 <tr class="separator:a5101c2c8ec2e065af652f1fb96059e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a435a475842affb438dd1dc78e9f1c970"><td class="memItemLeft" align="right" valign="top"><a id="a435a475842affb438dd1dc78e9f1c970"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a435a475842affb438dd1dc78e9f1c970">alexaClientSDK::capabilityAgents::audioPlayer::test::NAME_ENQUEUE</a> (&quot;ENQUEUE&quot;)</td></tr>
-<tr class="memdesc:a435a475842affb438dd1dc78e9f1c970"><td class="mdescLeft">&#160;</td><td class="mdescRight">ENQUEUE playBehavior. <br /></td></tr>
+<tr class="memitem:a435a475842affb438dd1dc78e9f1c970"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a435a475842affb438dd1dc78e9f1c970">alexaClientSDK::capabilityAgents::audioPlayer::test::NAME_ENQUEUE</a> (&quot;ENQUEUE&quot;)</td></tr>
+<tr class="memdesc:a435a475842affb438dd1dc78e9f1c970"><td class="mdescLeft">&#160;</td><td class="mdescRight">ENQUEUE playBehavior.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a435a475842affb438dd1dc78e9f1c970">More...</a><br /></td></tr>
 <tr class="separator:a435a475842affb438dd1dc78e9f1c970"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bd133a63c4b0c396757b2d8e4dff579"><td class="memItemLeft" align="right" valign="top"><a id="a3bd133a63c4b0c396757b2d8e4dff579"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a3bd133a63c4b0c396757b2d8e4dff579">alexaClientSDK::capabilityAgents::audioPlayer::test::NAME_CLEAR_ALL</a> (&quot;CLEAR_ALL&quot;)</td></tr>
-<tr class="memdesc:a3bd133a63c4b0c396757b2d8e4dff579"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLEAR_ALL clearBehavior. <br /></td></tr>
+<tr class="memitem:adcf76f4625d9959e224dfc291151369f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#adcf76f4625d9959e224dfc291151369f">alexaClientSDK::capabilityAgents::audioPlayer::test::NAME_REPLACE_ALL</a> (&quot;REPLACE_ALL&quot;)</td></tr>
+<tr class="memdesc:adcf76f4625d9959e224dfc291151369f"><td class="mdescLeft">&#160;</td><td class="mdescRight">REPLACE_ALL playBehavior.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#adcf76f4625d9959e224dfc291151369f">More...</a><br /></td></tr>
+<tr class="separator:adcf76f4625d9959e224dfc291151369f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bd133a63c4b0c396757b2d8e4dff579"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a3bd133a63c4b0c396757b2d8e4dff579">alexaClientSDK::capabilityAgents::audioPlayer::test::NAME_CLEAR_ALL</a> (&quot;CLEAR_ALL&quot;)</td></tr>
+<tr class="memdesc:a3bd133a63c4b0c396757b2d8e4dff579"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLEAR_ALL clearBehavior.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a3bd133a63c4b0c396757b2d8e4dff579">More...</a><br /></td></tr>
 <tr class="separator:a3bd133a63c4b0c396757b2d8e4dff579"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73efbfac632698a0f6b9cdfced92948c"><td class="memItemLeft" align="right" valign="top"><a id="a73efbfac632698a0f6b9cdfced92948c"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a73efbfac632698a0f6b9cdfced92948c">alexaClientSDK::capabilityAgents::audioPlayer::test::AUDIO_ITEM_ID</a> (&quot;testID&quot;)</td></tr>
-<tr class="memdesc:a73efbfac632698a0f6b9cdfced92948c"><td class="mdescLeft">&#160;</td><td class="mdescRight">audioItemId for testing. <br /></td></tr>
-<tr class="separator:a73efbfac632698a0f6b9cdfced92948c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69c1a136f9f7e9640ade2056843022bc"><td class="memItemLeft" align="right" valign="top"><a id="a69c1a136f9f7e9640ade2056843022bc"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a69c1a136f9f7e9640ade2056843022bc">alexaClientSDK::capabilityAgents::audioPlayer::test::FINISHED_STATE</a> (&quot;FINISHED&quot;)</td></tr>
-<tr class="memdesc:a69c1a136f9f7e9640ade2056843022bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>FINISHED</code> state of the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code>. <br /></td></tr>
+<tr class="memitem:ae7486e83a7bc3d94461b62cb3f370811"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ae7486e83a7bc3d94461b62cb3f370811">alexaClientSDK::capabilityAgents::audioPlayer::test::AUDIO_ITEM_ID_1</a> (&quot;testID1&quot;)</td></tr>
+<tr class="memdesc:ae7486e83a7bc3d94461b62cb3f370811"><td class="mdescLeft">&#160;</td><td class="mdescRight">audioItemId for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ae7486e83a7bc3d94461b62cb3f370811">More...</a><br /></td></tr>
+<tr class="separator:ae7486e83a7bc3d94461b62cb3f370811"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e71beec46dc26208e1c2ca59e7873c3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a3e71beec46dc26208e1c2ca59e7873c3">alexaClientSDK::capabilityAgents::audioPlayer::test::AUDIO_ITEM_ID_2</a> (&quot;testID2&quot;)</td></tr>
+<tr class="separator:a3e71beec46dc26208e1c2ca59e7873c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69c1a136f9f7e9640ade2056843022bc"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a69c1a136f9f7e9640ade2056843022bc">alexaClientSDK::capabilityAgents::audioPlayer::test::FINISHED_STATE</a> (&quot;FINISHED&quot;)</td></tr>
+<tr class="memdesc:a69c1a136f9f7e9640ade2056843022bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>FINISHED</code> state of the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code>.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a69c1a136f9f7e9640ade2056843022bc">More...</a><br /></td></tr>
 <tr class="separator:a69c1a136f9f7e9640ade2056843022bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad04884d6a66295a661e129c1107abc8d"><td class="memItemLeft" align="right" valign="top"><a id="ad04884d6a66295a661e129c1107abc8d"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ad04884d6a66295a661e129c1107abc8d">alexaClientSDK::capabilityAgents::audioPlayer::test::EXPIRY_TEST</a> (&quot;481516234248151623421088&quot;)</td></tr>
-<tr class="memdesc:ad04884d6a66295a661e129c1107abc8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ExpiryTime for testing. Needs to be in ISO 8601 format. <br /></td></tr>
+<tr class="memitem:ad04884d6a66295a661e129c1107abc8d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ad04884d6a66295a661e129c1107abc8d">alexaClientSDK::capabilityAgents::audioPlayer::test::EXPIRY_TEST</a> (&quot;481516234248151623421088&quot;)</td></tr>
+<tr class="memdesc:ad04884d6a66295a661e129c1107abc8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ExpiryTime for testing. Needs to be in ISO 8601 format.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ad04884d6a66295a661e129c1107abc8d">More...</a><br /></td></tr>
 <tr class="separator:ad04884d6a66295a661e129c1107abc8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3730ace1566ff49bb092d5bc8b0f0f7e"><td class="memItemLeft" align="right" valign="top"><a id="a3730ace1566ff49bb092d5bc8b0f0f7e"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a3730ace1566ff49bb092d5bc8b0f0f7e">alexaClientSDK::capabilityAgents::audioPlayer::test::TAG</a> (&quot;AudioPlayerTest&quot;)</td></tr>
-<tr class="memdesc:a3730ace1566ff49bb092d5bc8b0f0f7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file. <br /></td></tr>
+<tr class="memitem:a3730ace1566ff49bb092d5bc8b0f0f7e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a3730ace1566ff49bb092d5bc8b0f0f7e">alexaClientSDK::capabilityAgents::audioPlayer::test::TAG</a> (&quot;AudioPlayerTest&quot;)</td></tr>
+<tr class="memdesc:a3730ace1566ff49bb092d5bc8b0f0f7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a3730ace1566ff49bb092d5bc8b0f0f7e">More...</a><br /></td></tr>
 <tr class="separator:a3730ace1566ff49bb092d5bc8b0f0f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9def914be472fd64bee2c4a88cf7b671"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a9def914be472fd64bee2c4a88cf7b671">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testCreateWithNullPointers)</td></tr>
+<tr class="memitem:a9def914be472fd64bee2c4a88cf7b671"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a9def914be472fd64bee2c4a88cf7b671">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testCreateWithNullPointers)</td></tr>
 <tr class="separator:a9def914be472fd64bee2c4a88cf7b671"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae5f192bc692d15bbf4ebc338938ebc0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#aae5f192bc692d15bbf4ebc338938ebc0">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromIdleToPlaying)</td></tr>
+<tr class="memitem:aae5f192bc692d15bbf4ebc338938ebc0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#aae5f192bc692d15bbf4ebc338938ebc0">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromIdleToPlaying)</td></tr>
 <tr class="separator:aae5f192bc692d15bbf4ebc338938ebc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75f62935102782136e3458367c9d9b75"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a75f62935102782136e3458367c9d9b75">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromPlayingToStopped)</td></tr>
+<tr class="memitem:a75f62935102782136e3458367c9d9b75"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a75f62935102782136e3458367c9d9b75">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromPlayingToStopped)</td></tr>
 <tr class="separator:a75f62935102782136e3458367c9d9b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a259ae6eb6c88d9f4a9e6f6c5c202302e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a259ae6eb6c88d9f4a9e6f6c5c202302e">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromPlayingToStoppedWithClear)</td></tr>
+<tr class="memitem:a259ae6eb6c88d9f4a9e6f6c5c202302e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a259ae6eb6c88d9f4a9e6f6c5c202302e">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromPlayingToStoppedWithClear)</td></tr>
 <tr class="separator:a259ae6eb6c88d9f4a9e6f6c5c202302e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6781b2a2789e7a94ca784235a144969"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ae6781b2a2789e7a94ca784235a144969">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromStoppedToPlaying)</td></tr>
+<tr class="memitem:ae6781b2a2789e7a94ca784235a144969"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ae6781b2a2789e7a94ca784235a144969">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromStoppedToPlaying)</td></tr>
 <tr class="separator:ae6781b2a2789e7a94ca784235a144969"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8669563f323833eadb94d8f044fc247a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a8669563f323833eadb94d8f044fc247a">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromPlayingToPaused)</td></tr>
+<tr class="memitem:a8669563f323833eadb94d8f044fc247a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a8669563f323833eadb94d8f044fc247a">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromPlayingToPaused)</td></tr>
 <tr class="separator:a8669563f323833eadb94d8f044fc247a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af181a439d33a6e7f62ec1f596c17ba8b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#af181a439d33a6e7f62ec1f596c17ba8b">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromPausedToStopped)</td></tr>
+<tr class="memitem:af181a439d33a6e7f62ec1f596c17ba8b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#af181a439d33a6e7f62ec1f596c17ba8b">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromPausedToStopped)</td></tr>
 <tr class="separator:af181a439d33a6e7f62ec1f596c17ba8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15acc54fc02ad894351cd89d3dcb7615"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a15acc54fc02ad894351cd89d3dcb7615">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testResumeAfterPaused)</td></tr>
+<tr class="memitem:a15acc54fc02ad894351cd89d3dcb7615"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a15acc54fc02ad894351cd89d3dcb7615">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testResumeAfterPaused)</td></tr>
 <tr class="separator:a15acc54fc02ad894351cd89d3dcb7615"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a827b9c6652a34aedcecd3556511a19f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a827b9c6652a34aedcecd3556511a19f8">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testCallingProvideStateWhenIdle)</td></tr>
+<tr class="memitem:a827b9c6652a34aedcecd3556511a19f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a827b9c6652a34aedcecd3556511a19f8">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testCallingProvideStateWhenIdle)</td></tr>
 <tr class="separator:a827b9c6652a34aedcecd3556511a19f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2312b0f99c9c5f0fd2a0785f74a8e7b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a2312b0f99c9c5f0fd2a0785f74a8e7b4">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testOnPlaybackError)</td></tr>
+<tr class="memitem:a2312b0f99c9c5f0fd2a0785f74a8e7b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a2312b0f99c9c5f0fd2a0785f74a8e7b4">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testOnPlaybackError)</td></tr>
 <tr class="separator:a2312b0f99c9c5f0fd2a0785f74a8e7b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9c4f4dba21f182a34567166a6da12c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ab9c4f4dba21f182a34567166a6da12c3">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testOnPlaybackPaused)</td></tr>
+<tr class="memitem:ab9c4f4dba21f182a34567166a6da12c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ab9c4f4dba21f182a34567166a6da12c3">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testOnPlaybackPaused)</td></tr>
 <tr class="separator:ab9c4f4dba21f182a34567166a6da12c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e85e7d9c06880a902e50886569857b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a4e85e7d9c06880a902e50886569857b6">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testOnPlaybackResumed)</td></tr>
+<tr class="memitem:a4e85e7d9c06880a902e50886569857b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a4e85e7d9c06880a902e50886569857b6">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testOnPlaybackResumed)</td></tr>
 <tr class="separator:a4e85e7d9c06880a902e50886569857b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af89538e6dfcd2b72133c96bf5984cb04"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#af89538e6dfcd2b72133c96bf5984cb04">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testOnBufferUnderrun)</td></tr>
+<tr class="memitem:af89538e6dfcd2b72133c96bf5984cb04"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#af89538e6dfcd2b72133c96bf5984cb04">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testOnBufferUnderrun)</td></tr>
 <tr class="separator:af89538e6dfcd2b72133c96bf5984cb04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4efe42d8cb08901ee5aee9dd30dd3c6b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a4efe42d8cb08901ee5aee9dd30dd3c6b">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testOnBufferRefilled)</td></tr>
+<tr class="memitem:a4efe42d8cb08901ee5aee9dd30dd3c6b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a4efe42d8cb08901ee5aee9dd30dd3c6b">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testOnBufferRefilled)</td></tr>
 <tr class="separator:a4efe42d8cb08901ee5aee9dd30dd3c6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ddcb33e90d2e039a8fbd66b6dfd7ac4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a5ddcb33e90d2e039a8fbd66b6dfd7ac4">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testOnTags)</td></tr>
+<tr class="memitem:a5ddcb33e90d2e039a8fbd66b6dfd7ac4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a5ddcb33e90d2e039a8fbd66b6dfd7ac4">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testOnTags)</td></tr>
 <tr class="separator:a5ddcb33e90d2e039a8fbd66b6dfd7ac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1a3742b7a0ce49598b1c901f33438ef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ae1a3742b7a0ce49598b1c901f33438ef">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testCancelDirective)</td></tr>
+<tr class="memitem:ae1a3742b7a0ce49598b1c901f33438ef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ae1a3742b7a0ce49598b1c901f33438ef">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testCancelDirective)</td></tr>
 <tr class="separator:ae1a3742b7a0ce49598b1c901f33438ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e9667fe63fb40ef4c972f1d8240cef2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a2e9667fe63fb40ef4c972f1d8240cef2">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangeToNoneInIdleState)</td></tr>
+<tr class="memitem:a2e9667fe63fb40ef4c972f1d8240cef2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a2e9667fe63fb40ef4c972f1d8240cef2">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangeToNoneInIdleState)</td></tr>
 <tr class="separator:a2e9667fe63fb40ef4c972f1d8240cef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac638a4a44eeef41a1089184a8f6dec0c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ac638a4a44eeef41a1089184a8f6dec0c">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, DISABLED_testFocusChangeToForegroundInIdleState)</td></tr>
+<tr class="memitem:ac638a4a44eeef41a1089184a8f6dec0c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ac638a4a44eeef41a1089184a8f6dec0c">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, DISABLED_testFocusChangeToForegroundInIdleState)</td></tr>
 <tr class="separator:ac638a4a44eeef41a1089184a8f6dec0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa119b58f535134c5e9cc5a992f7f1b6a"><td class="memItemLeft" align="right" valign="top"><a id="aa119b58f535134c5e9cc5a992f7f1b6a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</b> (AudioPlayerTest, DISABLED_testFocusChangeFromForegroundToBackgroundInIdleState)</td></tr>
+<tr class="memitem:aa119b58f535134c5e9cc5a992f7f1b6a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#aa119b58f535134c5e9cc5a992f7f1b6a">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, DISABLED_testFocusChangeFromForegroundToBackgroundInIdleState)</td></tr>
 <tr class="separator:aa119b58f535134c5e9cc5a992f7f1b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3adeaeca6083422a6ebc8d0f7379f86"><td class="memItemLeft" align="right" valign="top"><a id="ac3adeaeca6083422a6ebc8d0f7379f86"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</b> (AudioPlayerTest, DISABLED_testFocusChangeFromNoneToBackgroundInIdleState)</td></tr>
+<tr class="memitem:ac3adeaeca6083422a6ebc8d0f7379f86"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ac3adeaeca6083422a6ebc8d0f7379f86">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, DISABLED_testFocusChangeFromNoneToBackgroundInIdleState)</td></tr>
 <tr class="separator:ac3adeaeca6083422a6ebc8d0f7379f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45cfb86fa4a1f300055e3afdf602fc36"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a45cfb86fa4a1f300055e3afdf602fc36">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangesInPlayingState)</td></tr>
+<tr class="memitem:a45cfb86fa4a1f300055e3afdf602fc36"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a45cfb86fa4a1f300055e3afdf602fc36">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangesInPlayingState)</td></tr>
 <tr class="separator:a45cfb86fa4a1f300055e3afdf602fc36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af587a0d9c5a381a5c9978da57d186a6d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#af587a0d9c5a381a5c9978da57d186a6d">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, DISABLED_testFocusChangesInStoppedState)</td></tr>
+<tr class="memitem:af587a0d9c5a381a5c9978da57d186a6d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#af587a0d9c5a381a5c9978da57d186a6d">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, DISABLED_testFocusChangesInStoppedState)</td></tr>
 <tr class="separator:af587a0d9c5a381a5c9978da57d186a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fcf71a93bbecf8cca0095d0ac893060"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a6fcf71a93bbecf8cca0095d0ac893060">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangesInPausedState)</td></tr>
+<tr class="memitem:a6fcf71a93bbecf8cca0095d0ac893060"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a6fcf71a93bbecf8cca0095d0ac893060">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangesInPausedState)</td></tr>
 <tr class="separator:a6fcf71a93bbecf8cca0095d0ac893060"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4c4c5d4bad06e4ea3049561cb6d971f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#aa4c4c5d4bad06e4ea3049561cb6d971f">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangesInBufferUnderrunState)</td></tr>
+<tr class="memitem:aa4c4c5d4bad06e4ea3049561cb6d971f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#aa4c4c5d4bad06e4ea3049561cb6d971f">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangesInBufferUnderrunState)</td></tr>
 <tr class="separator:aa4c4c5d4bad06e4ea3049561cb6d971f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a2eafa27acb5a6254b99ae79f015016"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a1a2eafa27acb5a6254b99ae79f015016">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangeToBackgroundBeforeOnPlaybackStarted)</td></tr>
+<tr class="memitem:a1a2eafa27acb5a6254b99ae79f015016"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a1a2eafa27acb5a6254b99ae79f015016">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testFocusChangeToBackgroundBeforeOnPlaybackStarted)</td></tr>
 <tr class="separator:a1a2eafa27acb5a6254b99ae79f015016"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d720fd760e0024fe4caeb58a19d889b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a0d720fd760e0024fe4caeb58a19d889b">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F</a> (AudioPlayerTest, testPlayAfterOnPlaybackError)</td></tr>
+<tr class="separator:a0d720fd760e0024fe4caeb58a19d889b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:af4dfe4c022767c74abcc111cfb0fc276"><td class="memItemLeft" align="right" valign="top"><a id="af4dfe4c022767c74abcc111cfb0fc276"></a>
-static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#af4dfe4c022767c74abcc111cfb0fc276">alexaClientSDK::capabilityAgents::audioPlayer::test::NAMESPACE_AND_NAME_PLAYBACK_STATE</a> {NAMESPACE_AUDIO_PLAYER, &quot;PlaybackState&quot;}</td></tr>
-<tr class="memdesc:af4dfe4c022767c74abcc111cfb0fc276"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>NamespaceAndName</code> to send to the <code>ContextManager</code>. <br /></td></tr>
+<tr class="memitem:af4dfe4c022767c74abcc111cfb0fc276"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#af4dfe4c022767c74abcc111cfb0fc276">alexaClientSDK::capabilityAgents::audioPlayer::test::NAMESPACE_AND_NAME_PLAYBACK_STATE</a> {NAMESPACE_AUDIO_PLAYER, &quot;PlaybackState&quot;}</td></tr>
+<tr class="memdesc:af4dfe4c022767c74abcc111cfb0fc276"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>NamespaceAndName</code> to send to the <code>ContextManager</code>.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#af4dfe4c022767c74abcc111cfb0fc276">More...</a><br /></td></tr>
 <tr class="separator:af4dfe4c022767c74abcc111cfb0fc276"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a833f023a66176c0ef65120dc3c1130"><td class="memItemLeft" align="right" valign="top"><a id="a5a833f023a66176c0ef65120dc3c1130"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a5a833f023a66176c0ef65120dc3c1130">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYING_STATE</a> {&quot;PLAYING&quot;}</td></tr>
-<tr class="memdesc:a5a833f023a66176c0ef65120dc3c1130"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>PLAYING</code> state of the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code>. <br /></td></tr>
+<tr class="memitem:a5a833f023a66176c0ef65120dc3c1130"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a5a833f023a66176c0ef65120dc3c1130">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYING_STATE</a> {&quot;PLAYING&quot;}</td></tr>
+<tr class="memdesc:a5a833f023a66176c0ef65120dc3c1130"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>PLAYING</code> state of the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code>.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a5a833f023a66176c0ef65120dc3c1130">More...</a><br /></td></tr>
 <tr class="separator:a5a833f023a66176c0ef65120dc3c1130"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a030f54294320bd2ac40153f5260d5540"><td class="memItemLeft" align="right" valign="top"><a id="a030f54294320bd2ac40153f5260d5540"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a030f54294320bd2ac40153f5260d5540">alexaClientSDK::capabilityAgents::audioPlayer::test::IDLE_STATE</a> {&quot;IDLE&quot;}</td></tr>
-<tr class="memdesc:a030f54294320bd2ac40153f5260d5540"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>IDLE</code> state of the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code>. <br /></td></tr>
+<tr class="memitem:a030f54294320bd2ac40153f5260d5540"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a030f54294320bd2ac40153f5260d5540">alexaClientSDK::capabilityAgents::audioPlayer::test::IDLE_STATE</a> {&quot;IDLE&quot;}</td></tr>
+<tr class="memdesc:a030f54294320bd2ac40153f5260d5540"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>IDLE</code> state of the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code>.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a030f54294320bd2ac40153f5260d5540">More...</a><br /></td></tr>
 <tr class="separator:a030f54294320bd2ac40153f5260d5540"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a230131386220b01caca0a6ebb93531bb"><td class="memItemLeft" align="right" valign="top"><a id="a230131386220b01caca0a6ebb93531bb"></a>
-static const long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a230131386220b01caca0a6ebb93531bb">alexaClientSDK::capabilityAgents::audioPlayer::test::OFFSET_IN_MILLISECONDS_TEST</a> {100}</td></tr>
-<tr class="memdesc:a230131386220b01caca0a6ebb93531bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The offset in milliseconds returned by the mock media player. <br /></td></tr>
+<tr class="memitem:a230131386220b01caca0a6ebb93531bb"><td class="memItemLeft" align="right" valign="top">static const long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a230131386220b01caca0a6ebb93531bb">alexaClientSDK::capabilityAgents::audioPlayer::test::OFFSET_IN_MILLISECONDS_TEST</a> {100}</td></tr>
+<tr class="memdesc:a230131386220b01caca0a6ebb93531bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The offset in milliseconds returned by the mock media player.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a230131386220b01caca0a6ebb93531bb">More...</a><br /></td></tr>
 <tr class="separator:a230131386220b01caca0a6ebb93531bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a546aff17d222596ecd39fdf88677076a"><td class="memItemLeft" align="right" valign="top"><a id="a546aff17d222596ecd39fdf88677076a"></a>
-static const long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a546aff17d222596ecd39fdf88677076a">alexaClientSDK::capabilityAgents::audioPlayer::test::PROGRESS_REPORT_DELAY</a> {200}</td></tr>
-<tr class="memdesc:a546aff17d222596ecd39fdf88677076a"><td class="mdescLeft">&#160;</td><td class="mdescRight">progressReportDelayInMilliseconds for testing. <br /></td></tr>
+<tr class="memitem:a546aff17d222596ecd39fdf88677076a"><td class="memItemLeft" align="right" valign="top">static const long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a546aff17d222596ecd39fdf88677076a">alexaClientSDK::capabilityAgents::audioPlayer::test::PROGRESS_REPORT_DELAY</a> {200}</td></tr>
+<tr class="memdesc:a546aff17d222596ecd39fdf88677076a"><td class="mdescLeft">&#160;</td><td class="mdescRight">progressReportDelayInMilliseconds for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a546aff17d222596ecd39fdf88677076a">More...</a><br /></td></tr>
 <tr class="separator:a546aff17d222596ecd39fdf88677076a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d122447f1d1beb330948b097f6f3349"><td class="memItemLeft" align="right" valign="top"><a id="a4d122447f1d1beb330948b097f6f3349"></a>
-static const long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a4d122447f1d1beb330948b097f6f3349">alexaClientSDK::capabilityAgents::audioPlayer::test::PROGRESS_REPORT_INTERVAL</a> {100}</td></tr>
-<tr class="memdesc:a4d122447f1d1beb330948b097f6f3349"><td class="mdescLeft">&#160;</td><td class="mdescRight">progressReportIntervalInMilliseconds for testing. <br /></td></tr>
+<tr class="memitem:a4d122447f1d1beb330948b097f6f3349"><td class="memItemLeft" align="right" valign="top">static const long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a4d122447f1d1beb330948b097f6f3349">alexaClientSDK::capabilityAgents::audioPlayer::test::PROGRESS_REPORT_INTERVAL</a> {100}</td></tr>
+<tr class="memdesc:a4d122447f1d1beb330948b097f6f3349"><td class="mdescLeft">&#160;</td><td class="mdescRight">progressReportIntervalInMilliseconds for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a4d122447f1d1beb330948b097f6f3349">More...</a><br /></td></tr>
 <tr class="separator:a4d122447f1d1beb330948b097f6f3349"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcfcf67ae9ffbcb77291913255f50cef"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#afcfcf67ae9ffbcb77291913255f50cef">alexaClientSDK::capabilityAgents::audioPlayer::test::ENQUEUE_PAYLOAD_TEST</a></td></tr>
-<tr class="memdesc:afcfcf67ae9ffbcb77291913255f50cef"><td class="mdescLeft">&#160;</td><td class="mdescRight">A payload for testing.  <a href="_audio_player_test_8cpp.html#afcfcf67ae9ffbcb77291913255f50cef">More...</a><br /></td></tr>
+<tr class="memitem:afcfcf67ae9ffbcb77291913255f50cef"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#afcfcf67ae9ffbcb77291913255f50cef">alexaClientSDK::capabilityAgents::audioPlayer::test::ENQUEUE_PAYLOAD_TEST</a></td></tr>
+<tr class="memdesc:afcfcf67ae9ffbcb77291913255f50cef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Payloads for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#afcfcf67ae9ffbcb77291913255f50cef">More...</a><br /></td></tr>
 <tr class="separator:afcfcf67ae9ffbcb77291913255f50cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5046b4edfa7cdcf440892d0db2720750"><td class="memItemLeft" align="right" valign="top"><a id="a5046b4edfa7cdcf440892d0db2720750"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a5046b4edfa7cdcf440892d0db2720750">alexaClientSDK::capabilityAgents::audioPlayer::test::EMPTY_PAYLOAD_TEST</a> = &quot;{}&quot;</td></tr>
-<tr class="memdesc:a5046b4edfa7cdcf440892d0db2720750"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty payload for testing. <br /></td></tr>
+<tr class="memitem:ad109760f2ac6013b348255b854e9125e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ad109760f2ac6013b348255b854e9125e">alexaClientSDK::capabilityAgents::audioPlayer::test::REPLACE_ALL_PAYLOAD_TEST</a></td></tr>
+<tr class="separator:ad109760f2ac6013b348255b854e9125e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5046b4edfa7cdcf440892d0db2720750"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a5046b4edfa7cdcf440892d0db2720750">alexaClientSDK::capabilityAgents::audioPlayer::test::EMPTY_PAYLOAD_TEST</a> = &quot;{}&quot;</td></tr>
+<tr class="memdesc:a5046b4edfa7cdcf440892d0db2720750"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty payload for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a5046b4edfa7cdcf440892d0db2720750">More...</a><br /></td></tr>
 <tr class="separator:a5046b4edfa7cdcf440892d0db2720750"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30b30ebbe48aef1da7e3a6bb6d343d15"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a30b30ebbe48aef1da7e3a6bb6d343d15">alexaClientSDK::capabilityAgents::audioPlayer::test::CLEAR_ALL_PAYLOAD_TEST</a></td></tr>
-<tr class="memdesc:a30b30ebbe48aef1da7e3a6bb6d343d15"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLEAR_ALL payload for testing.  <a href="_audio_player_test_8cpp.html#a30b30ebbe48aef1da7e3a6bb6d343d15">More...</a><br /></td></tr>
+<tr class="memitem:a30b30ebbe48aef1da7e3a6bb6d343d15"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a30b30ebbe48aef1da7e3a6bb6d343d15">alexaClientSDK::capabilityAgents::audioPlayer::test::CLEAR_ALL_PAYLOAD_TEST</a></td></tr>
+<tr class="memdesc:a30b30ebbe48aef1da7e3a6bb6d343d15"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLEAR_ALL payload for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a30b30ebbe48aef1da7e3a6bb6d343d15">More...</a><br /></td></tr>
 <tr class="separator:a30b30ebbe48aef1da7e3a6bb6d343d15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6776d07c598d963fcd94d7512052c985"><td class="memItemLeft" align="right" valign="top"><a id="a6776d07c598d963fcd94d7512052c985"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a6776d07c598d963fcd94d7512052c985">alexaClientSDK::capabilityAgents::audioPlayer::test::TOKEN_KEY</a> = &quot;token&quot;</td></tr>
-<tr class="memdesc:a6776d07c598d963fcd94d7512052c985"><td class="mdescLeft">&#160;</td><td class="mdescRight">Token JSON key. <br /></td></tr>
+<tr class="memitem:a6776d07c598d963fcd94d7512052c985"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a6776d07c598d963fcd94d7512052c985">alexaClientSDK::capabilityAgents::audioPlayer::test::TOKEN_KEY</a> = &quot;token&quot;</td></tr>
+<tr class="memdesc:a6776d07c598d963fcd94d7512052c985"><td class="mdescLeft">&#160;</td><td class="mdescRight">Token JSON key.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a6776d07c598d963fcd94d7512052c985">More...</a><br /></td></tr>
 <tr class="separator:a6776d07c598d963fcd94d7512052c985"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f23c1febfe4b4ff38ab60073e91d194"><td class="memItemLeft" align="right" valign="top"><a id="a2f23c1febfe4b4ff38ab60073e91d194"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a2f23c1febfe4b4ff38ab60073e91d194">alexaClientSDK::capabilityAgents::audioPlayer::test::OFFSET_KEY</a> = &quot;offsetInMilliseconds&quot;</td></tr>
-<tr class="memdesc:a2f23c1febfe4b4ff38ab60073e91d194"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset JSON key. <br /></td></tr>
+<tr class="memitem:a2f23c1febfe4b4ff38ab60073e91d194"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a2f23c1febfe4b4ff38ab60073e91d194">alexaClientSDK::capabilityAgents::audioPlayer::test::OFFSET_KEY</a> = &quot;offsetInMilliseconds&quot;</td></tr>
+<tr class="memdesc:a2f23c1febfe4b4ff38ab60073e91d194"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset JSON key.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a2f23c1febfe4b4ff38ab60073e91d194">More...</a><br /></td></tr>
 <tr class="separator:a2f23c1febfe4b4ff38ab60073e91d194"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e57b076d546930541ee2fb8bc3644a5"><td class="memItemLeft" align="right" valign="top"><a id="a5e57b076d546930541ee2fb8bc3644a5"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a5e57b076d546930541ee2fb8bc3644a5">alexaClientSDK::capabilityAgents::audioPlayer::test::ACTIVITY_KEY</a> = &quot;playerActivity&quot;</td></tr>
-<tr class="memdesc:a5e57b076d546930541ee2fb8bc3644a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Player activity JSON key. <br /></td></tr>
+<tr class="memitem:a5e57b076d546930541ee2fb8bc3644a5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a5e57b076d546930541ee2fb8bc3644a5">alexaClientSDK::capabilityAgents::audioPlayer::test::ACTIVITY_KEY</a> = &quot;playerActivity&quot;</td></tr>
+<tr class="memdesc:a5e57b076d546930541ee2fb8bc3644a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Player activity JSON key.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a5e57b076d546930541ee2fb8bc3644a5">More...</a><br /></td></tr>
 <tr class="separator:a5e57b076d546930541ee2fb8bc3644a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03be8713bad301999bacd9f99d139732"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a03be8713bad301999bacd9f99d139732">alexaClientSDK::capabilityAgents::audioPlayer::test::IDLE_STATE_TEST</a></td></tr>
-<tr class="memdesc:a03be8713bad301999bacd9f99d139732"><td class="mdescLeft">&#160;</td><td class="mdescRight">The expected state when the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code> is not handling any directive.  <a href="_audio_player_test_8cpp.html#a03be8713bad301999bacd9f99d139732">More...</a><br /></td></tr>
+<tr class="memitem:a03be8713bad301999bacd9f99d139732"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a03be8713bad301999bacd9f99d139732">alexaClientSDK::capabilityAgents::audioPlayer::test::IDLE_STATE_TEST</a></td></tr>
+<tr class="memdesc:a03be8713bad301999bacd9f99d139732"><td class="mdescLeft">&#160;</td><td class="mdescRight">The expected state when the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code> is not handling any directive.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a03be8713bad301999bacd9f99d139732">More...</a><br /></td></tr>
 <tr class="separator:a03be8713bad301999bacd9f99d139732"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bec3430f116808b2ca60972398df39e"><td class="memItemLeft" align="right" valign="top"><a id="a8bec3430f116808b2ca60972398df39e"></a>
-static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a8bec3430f116808b2ca60972398df39e">alexaClientSDK::capabilityAgents::audioPlayer::test::PROVIDE_STATE_TOKEN_TEST</a> {1}</td></tr>
-<tr class="memdesc:a8bec3430f116808b2ca60972398df39e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide State Token for testing. <br /></td></tr>
+<tr class="memitem:a8bec3430f116808b2ca60972398df39e"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a8bec3430f116808b2ca60972398df39e">alexaClientSDK::capabilityAgents::audioPlayer::test::PROVIDE_STATE_TOKEN_TEST</a> {1}</td></tr>
+<tr class="memdesc:a8bec3430f116808b2ca60972398df39e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide State Token for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a8bec3430f116808b2ca60972398df39e">More...</a><br /></td></tr>
 <tr class="separator:a8bec3430f116808b2ca60972398df39e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89fcaa4ec9e30431a416f43ab3d24355"><td class="memItemLeft" align="right" valign="top"><a id="a89fcaa4ec9e30431a416f43ab3d24355"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a89fcaa4ec9e30431a416f43ab3d24355">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_EVENT_KEY</a> = &quot;event&quot;</td></tr>
-<tr class="memdesc:a89fcaa4ec9e30431a416f43ab3d24355"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the event section of a message. <br /></td></tr>
+<tr class="memitem:a89fcaa4ec9e30431a416f43ab3d24355"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a89fcaa4ec9e30431a416f43ab3d24355">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_EVENT_KEY</a> = &quot;event&quot;</td></tr>
+<tr class="memdesc:a89fcaa4ec9e30431a416f43ab3d24355"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the event section of a message.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a89fcaa4ec9e30431a416f43ab3d24355">More...</a><br /></td></tr>
 <tr class="separator:a89fcaa4ec9e30431a416f43ab3d24355"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a106a5b3ce714488e6f9758eb6016afdc"><td class="memItemLeft" align="right" valign="top"><a id="a106a5b3ce714488e6f9758eb6016afdc"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a106a5b3ce714488e6f9758eb6016afdc">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_HEADER_KEY</a> = &quot;header&quot;</td></tr>
-<tr class="memdesc:a106a5b3ce714488e6f9758eb6016afdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the header section of a message. <br /></td></tr>
+<tr class="memitem:a106a5b3ce714488e6f9758eb6016afdc"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a106a5b3ce714488e6f9758eb6016afdc">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_HEADER_KEY</a> = &quot;header&quot;</td></tr>
+<tr class="memdesc:a106a5b3ce714488e6f9758eb6016afdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the header section of a message.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a106a5b3ce714488e6f9758eb6016afdc">More...</a><br /></td></tr>
 <tr class="separator:a106a5b3ce714488e6f9758eb6016afdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02bcd60401e6985a5b7f9fac9f60d76e"><td class="memItemLeft" align="right" valign="top"><a id="a02bcd60401e6985a5b7f9fac9f60d76e"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a02bcd60401e6985a5b7f9fac9f60d76e">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_NAME_KEY</a> = &quot;name&quot;</td></tr>
-<tr class="memdesc:a02bcd60401e6985a5b7f9fac9f60d76e"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the name section of a message. <br /></td></tr>
+<tr class="memitem:a02bcd60401e6985a5b7f9fac9f60d76e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a02bcd60401e6985a5b7f9fac9f60d76e">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_NAME_KEY</a> = &quot;name&quot;</td></tr>
+<tr class="memdesc:a02bcd60401e6985a5b7f9fac9f60d76e"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the name section of a message.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a02bcd60401e6985a5b7f9fac9f60d76e">More...</a><br /></td></tr>
 <tr class="separator:a02bcd60401e6985a5b7f9fac9f60d76e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49495e8cba4b22e56b0a2c9a79c971bd"><td class="memItemLeft" align="right" valign="top"><a id="a49495e8cba4b22e56b0a2c9a79c971bd"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a49495e8cba4b22e56b0a2c9a79c971bd">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_PAYLOAD_KEY</a> = &quot;payload&quot;</td></tr>
-<tr class="memdesc:a49495e8cba4b22e56b0a2c9a79c971bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the payload section of a message. <br /></td></tr>
+<tr class="memitem:a49495e8cba4b22e56b0a2c9a79c971bd"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a49495e8cba4b22e56b0a2c9a79c971bd">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_PAYLOAD_KEY</a> = &quot;payload&quot;</td></tr>
+<tr class="memdesc:a49495e8cba4b22e56b0a2c9a79c971bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the payload section of a message.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a49495e8cba4b22e56b0a2c9a79c971bd">More...</a><br /></td></tr>
 <tr class="separator:a49495e8cba4b22e56b0a2c9a79c971bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad537facc101788656c5ee24172245805"><td class="memItemLeft" align="right" valign="top"><a id="ad537facc101788656c5ee24172245805"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ad537facc101788656c5ee24172245805">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_KEY</a> = &quot;metadata&quot;</td></tr>
-<tr class="memdesc:ad537facc101788656c5ee24172245805"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the metadata section of a message. <br /></td></tr>
+<tr class="memitem:ad537facc101788656c5ee24172245805"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ad537facc101788656c5ee24172245805">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_KEY</a> = &quot;metadata&quot;</td></tr>
+<tr class="memdesc:ad537facc101788656c5ee24172245805"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the metadata section of a message.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ad537facc101788656c5ee24172245805">More...</a><br /></td></tr>
 <tr class="separator:ad537facc101788656c5ee24172245805"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59bb45ac7a3e97b64c2a3ac1a53e1eb3"><td class="memItemLeft" align="right" valign="top"><a id="a59bb45ac7a3e97b64c2a3ac1a53e1eb3"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a59bb45ac7a3e97b64c2a3ac1a53e1eb3">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_STRING_KEY</a> = &quot;StringKey&quot;</td></tr>
-<tr class="memdesc:a59bb45ac7a3e97b64c2a3ac1a53e1eb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "string" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="memitem:a59bb45ac7a3e97b64c2a3ac1a53e1eb3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a59bb45ac7a3e97b64c2a3ac1a53e1eb3">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_STRING_KEY</a> = &quot;StringKey&quot;</td></tr>
+<tr class="memdesc:a59bb45ac7a3e97b64c2a3ac1a53e1eb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "string" type field in metadata section of StreamMetadataExtracted event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a59bb45ac7a3e97b64c2a3ac1a53e1eb3">More...</a><br /></td></tr>
 <tr class="separator:a59bb45ac7a3e97b64c2a3ac1a53e1eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd071bdefa0f1e29ab836e1500415b25"><td class="memItemLeft" align="right" valign="top"><a id="abd071bdefa0f1e29ab836e1500415b25"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#abd071bdefa0f1e29ab836e1500415b25">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_STRING_VALUE</a> = &quot;StringValue&quot;</td></tr>
-<tr class="memdesc:abd071bdefa0f1e29ab836e1500415b25"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "string" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="memitem:abd071bdefa0f1e29ab836e1500415b25"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#abd071bdefa0f1e29ab836e1500415b25">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_STRING_VALUE</a> = &quot;StringValue&quot;</td></tr>
+<tr class="memdesc:abd071bdefa0f1e29ab836e1500415b25"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "string" type field in metadata section of StreamMetadataExtracted event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#abd071bdefa0f1e29ab836e1500415b25">More...</a><br /></td></tr>
 <tr class="separator:abd071bdefa0f1e29ab836e1500415b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57dfbe54042915c21f4f81db2dff9296"><td class="memItemLeft" align="right" valign="top"><a id="a57dfbe54042915c21f4f81db2dff9296"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a57dfbe54042915c21f4f81db2dff9296">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_UINT_KEY</a> = &quot;UintKey&quot;</td></tr>
-<tr class="memdesc:a57dfbe54042915c21f4f81db2dff9296"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "uint" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="memitem:a57dfbe54042915c21f4f81db2dff9296"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a57dfbe54042915c21f4f81db2dff9296">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_UINT_KEY</a> = &quot;UintKey&quot;</td></tr>
+<tr class="memdesc:a57dfbe54042915c21f4f81db2dff9296"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "uint" type field in metadata section of StreamMetadataExtracted event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a57dfbe54042915c21f4f81db2dff9296">More...</a><br /></td></tr>
 <tr class="separator:a57dfbe54042915c21f4f81db2dff9296"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab088eebdf26a62d011106ad2c8c959d5"><td class="memItemLeft" align="right" valign="top"><a id="ab088eebdf26a62d011106ad2c8c959d5"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ab088eebdf26a62d011106ad2c8c959d5">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_UINT_VALUE</a> = &quot;12345&quot;</td></tr>
-<tr class="memdesc:ab088eebdf26a62d011106ad2c8c959d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "uint" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="memitem:ab088eebdf26a62d011106ad2c8c959d5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ab088eebdf26a62d011106ad2c8c959d5">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_UINT_VALUE</a> = &quot;12345&quot;</td></tr>
+<tr class="memdesc:ab088eebdf26a62d011106ad2c8c959d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "uint" type field in metadata section of StreamMetadataExtracted event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ab088eebdf26a62d011106ad2c8c959d5">More...</a><br /></td></tr>
 <tr class="separator:ab088eebdf26a62d011106ad2c8c959d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9894a1e8851994016d1202721fc8890"><td class="memItemLeft" align="right" valign="top"><a id="ad9894a1e8851994016d1202721fc8890"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ad9894a1e8851994016d1202721fc8890">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_INT_KEY</a> = &quot;IntKey&quot;</td></tr>
-<tr class="memdesc:ad9894a1e8851994016d1202721fc8890"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "int" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="memitem:ad9894a1e8851994016d1202721fc8890"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ad9894a1e8851994016d1202721fc8890">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_INT_KEY</a> = &quot;IntKey&quot;</td></tr>
+<tr class="memdesc:ad9894a1e8851994016d1202721fc8890"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "int" type field in metadata section of StreamMetadataExtracted event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ad9894a1e8851994016d1202721fc8890">More...</a><br /></td></tr>
 <tr class="separator:ad9894a1e8851994016d1202721fc8890"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64e0fa95e0e0d6b43629c41c6cc78a19"><td class="memItemLeft" align="right" valign="top"><a id="a64e0fa95e0e0d6b43629c41c6cc78a19"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a64e0fa95e0e0d6b43629c41c6cc78a19">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_INT_VALUE</a> = &quot;67890&quot;</td></tr>
-<tr class="memdesc:a64e0fa95e0e0d6b43629c41c6cc78a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "int" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="memitem:a64e0fa95e0e0d6b43629c41c6cc78a19"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a64e0fa95e0e0d6b43629c41c6cc78a19">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_INT_VALUE</a> = &quot;67890&quot;</td></tr>
+<tr class="memdesc:a64e0fa95e0e0d6b43629c41c6cc78a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "int" type field in metadata section of StreamMetadataExtracted event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a64e0fa95e0e0d6b43629c41c6cc78a19">More...</a><br /></td></tr>
 <tr class="separator:a64e0fa95e0e0d6b43629c41c6cc78a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a016909d31592288fcc386a4d146c835b"><td class="memItemLeft" align="right" valign="top"><a id="a016909d31592288fcc386a4d146c835b"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a016909d31592288fcc386a4d146c835b">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_DOUBLE_KEY</a> = &quot;DoubleKey&quot;</td></tr>
-<tr class="memdesc:a016909d31592288fcc386a4d146c835b"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "double" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="memitem:a016909d31592288fcc386a4d146c835b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a016909d31592288fcc386a4d146c835b">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_DOUBLE_KEY</a> = &quot;DoubleKey&quot;</td></tr>
+<tr class="memdesc:a016909d31592288fcc386a4d146c835b"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "double" type field in metadata section of StreamMetadataExtracted event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a016909d31592288fcc386a4d146c835b">More...</a><br /></td></tr>
 <tr class="separator:a016909d31592288fcc386a4d146c835b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7e8e74f3aeb4e1cfc331b58298c5e94"><td class="memItemLeft" align="right" valign="top"><a id="ae7e8e74f3aeb4e1cfc331b58298c5e94"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ae7e8e74f3aeb4e1cfc331b58298c5e94">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_DOUBLE_VALUE</a> = &quot;3.14&quot;</td></tr>
-<tr class="memdesc:ae7e8e74f3aeb4e1cfc331b58298c5e94"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "double" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="memitem:ae7e8e74f3aeb4e1cfc331b58298c5e94"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ae7e8e74f3aeb4e1cfc331b58298c5e94">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_DOUBLE_VALUE</a> = &quot;3.14&quot;</td></tr>
+<tr class="memdesc:ae7e8e74f3aeb4e1cfc331b58298c5e94"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "double" type field in metadata section of StreamMetadataExtracted event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ae7e8e74f3aeb4e1cfc331b58298c5e94">More...</a><br /></td></tr>
 <tr class="separator:ae7e8e74f3aeb4e1cfc331b58298c5e94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2743e078f09221d1903da32625e5b184"><td class="memItemLeft" align="right" valign="top"><a id="a2743e078f09221d1903da32625e5b184"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a2743e078f09221d1903da32625e5b184">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_BOOLEAN_KEY</a> = &quot;BooleanKey&quot;</td></tr>
-<tr class="memdesc:a2743e078f09221d1903da32625e5b184"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "boolean" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="memitem:a2743e078f09221d1903da32625e5b184"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a2743e078f09221d1903da32625e5b184">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_BOOLEAN_KEY</a> = &quot;BooleanKey&quot;</td></tr>
+<tr class="memdesc:a2743e078f09221d1903da32625e5b184"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "boolean" type field in metadata section of StreamMetadataExtracted event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a2743e078f09221d1903da32625e5b184">More...</a><br /></td></tr>
 <tr class="separator:a2743e078f09221d1903da32625e5b184"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03d7f46d0cbd8e7083f752e47f2510cb"><td class="memItemLeft" align="right" valign="top"><a id="a03d7f46d0cbd8e7083f752e47f2510cb"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a03d7f46d0cbd8e7083f752e47f2510cb">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_BOOLEAN_VALUE</a> = &quot;true&quot;</td></tr>
-<tr class="memdesc:a03d7f46d0cbd8e7083f752e47f2510cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "boolean" type field in metadata section of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="memitem:a03d7f46d0cbd8e7083f752e47f2510cb"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a03d7f46d0cbd8e7083f752e47f2510cb">alexaClientSDK::capabilityAgents::audioPlayer::test::MESSAGE_METADATA_BOOLEAN_VALUE</a> = &quot;true&quot;</td></tr>
+<tr class="memdesc:a03d7f46d0cbd8e7083f752e47f2510cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "boolean" type field in metadata section of StreamMetadataExtracted event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a03d7f46d0cbd8e7083f752e47f2510cb">More...</a><br /></td></tr>
 <tr class="separator:a03d7f46d0cbd8e7083f752e47f2510cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d14175b35ff3e584a1168c49478d50f"><td class="memItemLeft" align="right" valign="top"><a id="a9d14175b35ff3e584a1168c49478d50f"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a9d14175b35ff3e584a1168c49478d50f">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_STARTED_NAME</a> = &quot;PlaybackStarted&quot;</td></tr>
-<tr class="memdesc:a9d14175b35ff3e584a1168c49478d50f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackStarted event. <br /></td></tr>
+<tr class="memitem:a9d14175b35ff3e584a1168c49478d50f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a9d14175b35ff3e584a1168c49478d50f">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_STARTED_NAME</a> = &quot;PlaybackStarted&quot;</td></tr>
+<tr class="memdesc:a9d14175b35ff3e584a1168c49478d50f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackStarted event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a9d14175b35ff3e584a1168c49478d50f">More...</a><br /></td></tr>
 <tr class="separator:a9d14175b35ff3e584a1168c49478d50f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe8588cbb10e9e979a9c49718225debb"><td class="memItemLeft" align="right" valign="top"><a id="abe8588cbb10e9e979a9c49718225debb"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#abe8588cbb10e9e979a9c49718225debb">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_NEARLY_FINISHED_NAME</a> = &quot;PlaybackNearlyFinished&quot;</td></tr>
-<tr class="memdesc:abe8588cbb10e9e979a9c49718225debb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackNearlyFinished event. <br /></td></tr>
+<tr class="memitem:abe8588cbb10e9e979a9c49718225debb"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#abe8588cbb10e9e979a9c49718225debb">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_NEARLY_FINISHED_NAME</a> = &quot;PlaybackNearlyFinished&quot;</td></tr>
+<tr class="memdesc:abe8588cbb10e9e979a9c49718225debb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackNearlyFinished event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#abe8588cbb10e9e979a9c49718225debb">More...</a><br /></td></tr>
 <tr class="separator:abe8588cbb10e9e979a9c49718225debb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec24dfda6ca7c329516d4c47ec3b9ab1"><td class="memItemLeft" align="right" valign="top"><a id="aec24dfda6ca7c329516d4c47ec3b9ab1"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#aec24dfda6ca7c329516d4c47ec3b9ab1">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_FINISHED_NAME</a> = &quot;PlaybackFinished&quot;</td></tr>
-<tr class="memdesc:aec24dfda6ca7c329516d4c47ec3b9ab1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackFinished event. <br /></td></tr>
+<tr class="memitem:aec24dfda6ca7c329516d4c47ec3b9ab1"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#aec24dfda6ca7c329516d4c47ec3b9ab1">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_FINISHED_NAME</a> = &quot;PlaybackFinished&quot;</td></tr>
+<tr class="memdesc:aec24dfda6ca7c329516d4c47ec3b9ab1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackFinished event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#aec24dfda6ca7c329516d4c47ec3b9ab1">More...</a><br /></td></tr>
 <tr class="separator:aec24dfda6ca7c329516d4c47ec3b9ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc59dca60db62dc8ab8ae83287636f6c"><td class="memItemLeft" align="right" valign="top"><a id="abc59dca60db62dc8ab8ae83287636f6c"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#abc59dca60db62dc8ab8ae83287636f6c">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_STOPPED_NAME</a> = &quot;PlaybackStopped&quot;</td></tr>
-<tr class="memdesc:abc59dca60db62dc8ab8ae83287636f6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackStopped event. <br /></td></tr>
+<tr class="memitem:abc59dca60db62dc8ab8ae83287636f6c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#abc59dca60db62dc8ab8ae83287636f6c">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_STOPPED_NAME</a> = &quot;PlaybackStopped&quot;</td></tr>
+<tr class="memdesc:abc59dca60db62dc8ab8ae83287636f6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackStopped event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#abc59dca60db62dc8ab8ae83287636f6c">More...</a><br /></td></tr>
 <tr class="separator:abc59dca60db62dc8ab8ae83287636f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61204287efb4940ac349889e0037b544"><td class="memItemLeft" align="right" valign="top"><a id="a61204287efb4940ac349889e0037b544"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a61204287efb4940ac349889e0037b544">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_PAUSED_NAME</a> = &quot;PlaybackPaused&quot;</td></tr>
-<tr class="memdesc:a61204287efb4940ac349889e0037b544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackPaused event. <br /></td></tr>
+<tr class="memitem:a61204287efb4940ac349889e0037b544"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a61204287efb4940ac349889e0037b544">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_PAUSED_NAME</a> = &quot;PlaybackPaused&quot;</td></tr>
+<tr class="memdesc:a61204287efb4940ac349889e0037b544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackPaused event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a61204287efb4940ac349889e0037b544">More...</a><br /></td></tr>
 <tr class="separator:a61204287efb4940ac349889e0037b544"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9dc3f7d9ffc1d41aeb5826cd3b6cdfea"><td class="memItemLeft" align="right" valign="top"><a id="a9dc3f7d9ffc1d41aeb5826cd3b6cdfea"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a9dc3f7d9ffc1d41aeb5826cd3b6cdfea">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_FAILED_NAME</a> = &quot;PlaybackFailed&quot;</td></tr>
-<tr class="memdesc:a9dc3f7d9ffc1d41aeb5826cd3b6cdfea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackFailed event. <br /></td></tr>
+<tr class="memitem:a9dc3f7d9ffc1d41aeb5826cd3b6cdfea"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a9dc3f7d9ffc1d41aeb5826cd3b6cdfea">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_FAILED_NAME</a> = &quot;PlaybackFailed&quot;</td></tr>
+<tr class="memdesc:a9dc3f7d9ffc1d41aeb5826cd3b6cdfea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackFailed event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a9dc3f7d9ffc1d41aeb5826cd3b6cdfea">More...</a><br /></td></tr>
 <tr class="separator:a9dc3f7d9ffc1d41aeb5826cd3b6cdfea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77b22003d208bfde79e55ffb3ed2a5ad"><td class="memItemLeft" align="right" valign="top"><a id="a77b22003d208bfde79e55ffb3ed2a5ad"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a77b22003d208bfde79e55ffb3ed2a5ad">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_RESUMED_NAME</a> = &quot;PlaybackResumed&quot;</td></tr>
-<tr class="memdesc:a77b22003d208bfde79e55ffb3ed2a5ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackResumed event. <br /></td></tr>
+<tr class="memitem:a77b22003d208bfde79e55ffb3ed2a5ad"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a77b22003d208bfde79e55ffb3ed2a5ad">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_RESUMED_NAME</a> = &quot;PlaybackResumed&quot;</td></tr>
+<tr class="memdesc:a77b22003d208bfde79e55ffb3ed2a5ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackResumed event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a77b22003d208bfde79e55ffb3ed2a5ad">More...</a><br /></td></tr>
 <tr class="separator:a77b22003d208bfde79e55ffb3ed2a5ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa992f9122b7f424f6182d4ac1f47448"><td class="memItemLeft" align="right" valign="top"><a id="aaa992f9122b7f424f6182d4ac1f47448"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#aaa992f9122b7f424f6182d4ac1f47448">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_STUTTER_STARTED_NAME</a> = &quot;PlaybackStutterStarted&quot;</td></tr>
-<tr class="memdesc:aaa992f9122b7f424f6182d4ac1f47448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackStutterStarted event. <br /></td></tr>
+<tr class="memitem:aaa992f9122b7f424f6182d4ac1f47448"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#aaa992f9122b7f424f6182d4ac1f47448">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_STUTTER_STARTED_NAME</a> = &quot;PlaybackStutterStarted&quot;</td></tr>
+<tr class="memdesc:aaa992f9122b7f424f6182d4ac1f47448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackStutterStarted event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#aaa992f9122b7f424f6182d4ac1f47448">More...</a><br /></td></tr>
 <tr class="separator:aaa992f9122b7f424f6182d4ac1f47448"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5d3ccfb9d926198f4b14c81551af3f0"><td class="memItemLeft" align="right" valign="top"><a id="af5d3ccfb9d926198f4b14c81551af3f0"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#af5d3ccfb9d926198f4b14c81551af3f0">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_STUTTER_FINISHED_NAME</a> = &quot;PlaybackStutterFinished&quot;</td></tr>
-<tr class="memdesc:af5d3ccfb9d926198f4b14c81551af3f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackStutterFinished event. <br /></td></tr>
+<tr class="memitem:af5d3ccfb9d926198f4b14c81551af3f0"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#af5d3ccfb9d926198f4b14c81551af3f0">alexaClientSDK::capabilityAgents::audioPlayer::test::PLAYBACK_STUTTER_FINISHED_NAME</a> = &quot;PlaybackStutterFinished&quot;</td></tr>
+<tr class="memdesc:af5d3ccfb9d926198f4b14c81551af3f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of PlaybackStutterFinished event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#af5d3ccfb9d926198f4b14c81551af3f0">More...</a><br /></td></tr>
 <tr class="separator:af5d3ccfb9d926198f4b14c81551af3f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ec3c1d67944418a3229a0b8e5550e04"><td class="memItemLeft" align="right" valign="top"><a id="a5ec3c1d67944418a3229a0b8e5550e04"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a5ec3c1d67944418a3229a0b8e5550e04">alexaClientSDK::capabilityAgents::audioPlayer::test::PROGRESS_REPORT_DELAY_ELAPSED_NAME</a> = &quot;ProgressReportDelayElapsed&quot;</td></tr>
-<tr class="memdesc:a5ec3c1d67944418a3229a0b8e5550e04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of ProgressReportDelayElapsed event. <br /></td></tr>
+<tr class="memitem:a5ec3c1d67944418a3229a0b8e5550e04"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a5ec3c1d67944418a3229a0b8e5550e04">alexaClientSDK::capabilityAgents::audioPlayer::test::PROGRESS_REPORT_DELAY_ELAPSED_NAME</a> = &quot;ProgressReportDelayElapsed&quot;</td></tr>
+<tr class="memdesc:a5ec3c1d67944418a3229a0b8e5550e04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of ProgressReportDelayElapsed event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a5ec3c1d67944418a3229a0b8e5550e04">More...</a><br /></td></tr>
 <tr class="separator:a5ec3c1d67944418a3229a0b8e5550e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2033b4d5b9f1ee8f4b067bb591d96263"><td class="memItemLeft" align="right" valign="top"><a id="a2033b4d5b9f1ee8f4b067bb591d96263"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#a2033b4d5b9f1ee8f4b067bb591d96263">alexaClientSDK::capabilityAgents::audioPlayer::test::PROGRESS_REPORT_INTERVAL_ELAPSED_NAME</a> = &quot;ProgressReportIntervalElapsed&quot;</td></tr>
-<tr class="memdesc:a2033b4d5b9f1ee8f4b067bb591d96263"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of ProgressReportIntervalElapsed event. <br /></td></tr>
+<tr class="memitem:a2033b4d5b9f1ee8f4b067bb591d96263"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a2033b4d5b9f1ee8f4b067bb591d96263">alexaClientSDK::capabilityAgents::audioPlayer::test::PROGRESS_REPORT_INTERVAL_ELAPSED_NAME</a> = &quot;ProgressReportIntervalElapsed&quot;</td></tr>
+<tr class="memdesc:a2033b4d5b9f1ee8f4b067bb591d96263"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of ProgressReportIntervalElapsed event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a2033b4d5b9f1ee8f4b067bb591d96263">More...</a><br /></td></tr>
 <tr class="separator:a2033b4d5b9f1ee8f4b067bb591d96263"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5403467dd717a0428f2bad5905cda74"><td class="memItemLeft" align="right" valign="top"><a id="ad5403467dd717a0428f2bad5905cda74"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_test_8cpp.html#ad5403467dd717a0428f2bad5905cda74">alexaClientSDK::capabilityAgents::audioPlayer::test::STREAM_METADATA_EXTRACTED_NAME</a> = &quot;StreamMetadataExtracted&quot;</td></tr>
-<tr class="memdesc:ad5403467dd717a0428f2bad5905cda74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of StreamMetadataExtracted event. <br /></td></tr>
+<tr class="memitem:ad5403467dd717a0428f2bad5905cda74"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ad5403467dd717a0428f2bad5905cda74">alexaClientSDK::capabilityAgents::audioPlayer::test::STREAM_METADATA_EXTRACTED_NAME</a> = &quot;StreamMetadataExtracted&quot;</td></tr>
+<tr class="memdesc:ad5403467dd717a0428f2bad5905cda74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of StreamMetadataExtracted event.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ad5403467dd717a0428f2bad5905cda74">More...</a><br /></td></tr>
 <tr class="separator:ad5403467dd717a0428f2bad5905cda74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -478,7 +431,7 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">event</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(TAG, event)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_example_auth_delegate_client_8cpp.html#adc8c4903d8b224bfaa986afb88575adb">TAG</a>, event)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -492,764 +445,11 @@ static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a c
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="file_a9def914be472fd64bee2c4a88cf7b671"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a9def914be472fd64bee2c4a88cf7b671">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testCreateWithNullPointers&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test create() with nullptrs </p>
-
-</div>
-</div>
-<a id="file_aae5f192bc692d15bbf4ebc338938ebc0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_aae5f192bc692d15bbf4ebc338938ebc0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testTransitionFromIdleToPlaying&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test transition from Idle to Playing </p>
-
-</div>
-</div>
-<a id="file_a75f62935102782136e3458367c9d9b75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a75f62935102782136e3458367c9d9b75">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testTransitionFromPlayingToStopped&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test transition from Playing to Stopped with Stop Directive </p>
-
-</div>
-</div>
-<a id="file_a259ae6eb6c88d9f4a9e6f6c5c202302e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a259ae6eb6c88d9f4a9e6f6c5c202302e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testTransitionFromPlayingToStoppedWithClear&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test transition from Playing to Stopped with ClearQueue.CLEAR_ALL Directive </p>
-
-</div>
-</div>
-<a id="file_ae6781b2a2789e7a94ca784235a144969"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ae6781b2a2789e7a94ca784235a144969">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testTransitionFromStoppedToPlaying&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test transition from Stopped to Playing after issuing second Play directive </p>
-
-</div>
-</div>
-<a id="file_a8669563f323833eadb94d8f044fc247a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a8669563f323833eadb94d8f044fc247a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testTransitionFromPlayingToPaused&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test transition from Playing to Paused when focus changes to Dialog channel </p>
-
-</div>
-</div>
-<a id="file_af181a439d33a6e7f62ec1f596c17ba8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_af181a439d33a6e7f62ec1f596c17ba8b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testTransitionFromPausedToStopped&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test transition from Paused to Stopped on ClearQueue.CLEAR_ALL directive </p>
-
-</div>
-</div>
-<a id="file_a15acc54fc02ad894351cd89d3dcb7615"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a15acc54fc02ad894351cd89d3dcb7615">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testResumeAfterPaused&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test transition from Paused to Playing after resume </p>
-
-</div>
-</div>
-<a id="file_a827b9c6652a34aedcecd3556511a19f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a827b9c6652a34aedcecd3556511a19f8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testCallingProvideStateWhenIdle&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test <code>provideState</code> while IDLE </p>
-
-</div>
-</div>
-<a id="file_a2312b0f99c9c5f0fd2a0785f74a8e7b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a2312b0f99c9c5f0fd2a0785f74a8e7b4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testOnPlaybackError&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test <code>onPlaybackError</code> and expect a PlaybackFailed message </p>
-
-</div>
-</div>
-<a id="file_ab9c4f4dba21f182a34567166a6da12c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ab9c4f4dba21f182a34567166a6da12c3">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testOnPlaybackPaused&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test <code>onPlaybackPaused</code> and expect a PlaybackPaused message </p>
-
-</div>
-</div>
-<a id="file_a4e85e7d9c06880a902e50886569857b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a4e85e7d9c06880a902e50886569857b6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testOnPlaybackResumed&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test <code>onPlaybackResumed</code> and expect a PlaybackResumed message </p>
-
-</div>
-</div>
-<a id="file_af89538e6dfcd2b72133c96bf5984cb04"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_af89538e6dfcd2b72133c96bf5984cb04">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testOnBufferUnderrun&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test <code>onBufferUnderrun</code> and expect a PlaybackStutterStarted message </p>
-
-</div>
-</div>
-<a id="file_a4efe42d8cb08901ee5aee9dd30dd3c6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a4efe42d8cb08901ee5aee9dd30dd3c6b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testOnBufferRefilled&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test <code>onBufferRefilled</code> and expect a PlaybackStutterFinished message </p>
-
-</div>
-</div>
-<a id="file_a5ddcb33e90d2e039a8fbd66b6dfd7ac4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a5ddcb33e90d2e039a8fbd66b6dfd7ac4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testOnTags&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test <code>onTags</code> and expect valid JSON. Build a vector of tags and pass to <a class="el" href="class_observer.html" title="Simple implementation of the AuthDelegateObserverInterface. ">Observer</a> (onTags). <a class="el" href="class_observer.html" title="Simple implementation of the AuthDelegateObserverInterface. ">Observer</a> will use the vector of tags and build a valid JSON object "StreamMetadataExtracted Event". This JSON object is verified in verifyTags. </p>
-
-</div>
-</div>
-<a id="file_ae1a3742b7a0ce49598b1c901f33438ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ae1a3742b7a0ce49598b1c901f33438ef">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testCancelDirective&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test <code>cancelDirective</code> Expect the <code>handleDirective</code> call to the cancelled directive returns false </p>
-
-</div>
-</div>
-<a id="file_a2e9667fe63fb40ef4c972f1d8240cef2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a2e9667fe63fb40ef4c972f1d8240cef2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testFocusChangeToNoneInIdleState&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test focus change to None in IDLE state Expect nothing to happen </p>
-
-</div>
-</div>
-<a id="file_ac638a4a44eeef41a1089184a8f6dec0c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ac638a4a44eeef41a1089184a8f6dec0c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DISABLED_testFocusChangeToForegroundInIdleState&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>DISABLE this test because the behavior has been changed such that we no longer expect a PlaybackFailedEvent</p>
-<p>Test focus change to Foreground in IDLE state Expect a PlaybackFailedEvent </p>
-
-</div>
-</div>
-<a id="file_a45cfb86fa4a1f300055e3afdf602fc36"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a45cfb86fa4a1f300055e3afdf602fc36">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testFocusChangesInPlayingState&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test focus changes in PLAYING state Expect to pause when switching to BACKGROUND and to stop when switching to NONE </p>
-
-</div>
-</div>
-<a id="file_af587a0d9c5a381a5c9978da57d186a6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_af587a0d9c5a381a5c9978da57d186a6d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DISABLED_testFocusChangesInStoppedState&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<ul>
-<li>DISABLE this test because the behavior has been changed such that we no longer expect a PlaybackFailedEvent</li>
-</ul>
-<p>Test focus changes in STOPPED state Expect a PlaybackFailedEvent when attempting to switch to FOREGROUND </p>
-
-</div>
-</div>
-<a id="file_a6fcf71a93bbecf8cca0095d0ac893060"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a6fcf71a93bbecf8cca0095d0ac893060">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testFocusChangesInPausedState&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test focus changes in PAUSED state Expect to resume when switching to FOREGROUND, expect nothing when switching to BACKGROUND, expect stop when switching to NONE </p>
-
-</div>
-</div>
-<a id="file_aa4c4c5d4bad06e4ea3049561cb6d971f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_aa4c4c5d4bad06e4ea3049561cb6d971f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testFocusChangesInBufferUnderrunState&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test focus changes in BUFFER_UNDERRUN state Expect nothing to happen when switching to FOREGROUND, expect to pause when switching to BACKGROUND, expect to stop when switching to NONE </p>
-
-</div>
-</div>
-<a id="file_a1a2eafa27acb5a6254b99ae79f015016"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a1a2eafa27acb5a6254b99ae79f015016">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::audioPlayer::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testFocusChangeToBackgroundBeforeOnPlaybackStarted&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test an immediate focus change to background after play() has been called Expect that pause() is called when <code>AudioPlayer</code> is pushed into background </p>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="file_a30b30ebbe48aef1da7e3a6bb6d343d15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a30b30ebbe48aef1da7e3a6bb6d343d15">&#9670;&nbsp;</a></span>CLEAR_ALL_PAYLOAD_TEST</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string alexaClientSDK::capabilityAgents::audioPlayer::test::CLEAR_ALL_PAYLOAD_TEST</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;{&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;clearBehavior\&quot;:\&quot;&quot;</span> + <a class="code" href="_audio_player_test_8cpp.html#a3bd133a63c4b0c396757b2d8e4dff579">NAME_CLEAR_ALL</a> + <span class="stringliteral">&quot;\&quot;&quot;</span></div><div class="line">    <span class="stringliteral">&quot;}&quot;</span></div><div class="ttc" id="_audio_player_test_8cpp_html_a3bd133a63c4b0c396757b2d8e4dff579"><div class="ttname"><a href="_audio_player_test_8cpp.html#a3bd133a63c4b0c396757b2d8e4dff579">alexaClientSDK::capabilityAgents::audioPlayer::test::NAME_CLEAR_ALL</a></div><div class="ttdeci">static const std::string NAME_CLEAR_ALL(&quot;CLEAR_ALL&quot;)</div><div class="ttdoc">CLEAR_ALL clearBehavior. </div></div>
-</div><!-- fragment -->
-<p>CLEAR_ALL payload for testing. </p>
-
-</div>
-</div>
-<a id="file_afcfcf67ae9ffbcb77291913255f50cef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_afcfcf67ae9ffbcb77291913255f50cef">&#9670;&nbsp;</a></span>ENQUEUE_PAYLOAD_TEST</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string alexaClientSDK::capabilityAgents::audioPlayer::test::ENQUEUE_PAYLOAD_TEST</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">        <span class="stringliteral">&quot;{&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;playBehavior\&quot;:\&quot;&quot;</span> + <a class="code" href="_audio_player_test_8cpp.html#a435a475842affb438dd1dc78e9f1c970">NAME_ENQUEUE</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;audioItem\&quot;: {&quot;</span></div><div class="line">                <span class="stringliteral">&quot;\&quot;audioItemId\&quot;:\&quot;&quot;</span> + <a class="code" href="_audio_player_test_8cpp.html#a73efbfac632698a0f6b9cdfced92948c">AUDIO_ITEM_ID</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">                <span class="stringliteral">&quot;\&quot;stream\&quot;: {&quot;</span></div><div class="line">                    <span class="stringliteral">&quot;\&quot;url\&quot;:\&quot;&quot;</span> + <a class="code" href="_audio_player_test_8cpp.html#a5101c2c8ec2e065af652f1fb96059e27">URL_TEST</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">                    <span class="stringliteral">&quot;\&quot;streamFormat\&quot;:\&quot;&quot;</span> + <a class="code" href="_audio_player_test_8cpp.html#add0c8e567f6cf19280edc3360d075559">FORMAT_TEST</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">                    <span class="stringliteral">&quot;\&quot;offsetInMilliseconds\&quot;:&quot;</span> + std::to_string(OFFSET_IN_MILLISECONDS_TEST) + <span class="stringliteral">&quot;,&quot;</span></div><div class="line">                    <span class="stringliteral">&quot;\&quot;expiryTime\&quot;:\&quot;&quot;</span> + <a class="code" href="_audio_player_test_8cpp.html#ad04884d6a66295a661e129c1107abc8d">EXPIRY_TEST</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">                    <span class="stringliteral">&quot;\&quot;progressReport\&quot;: {&quot;</span></div><div class="line">                        <span class="stringliteral">&quot;\&quot;progressReportDelayInMilliseconds\&quot;:&quot;</span> + std::to_string(PROGRESS_REPORT_DELAY) + <span class="stringliteral">&quot;,&quot;</span></div><div class="line">                        <span class="stringliteral">&quot;\&quot;progressReportIntervalInMilliseconds\&quot;:&quot;</span> + std::to_string(PROGRESS_REPORT_INTERVAL) +</div><div class="line">                    <span class="stringliteral">&quot;},&quot;</span></div><div class="line">                    <span class="stringliteral">&quot;\&quot;token\&quot;:\&quot;&quot;</span> + <a class="code" href="_audio_player_test_8cpp.html#ad7a6215222654270b60ee689d9eaa2a7">TOKEN_TEST</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">                    <span class="stringliteral">&quot;\&quot;expectedPreviousToken\&quot;:\&quot;\&quot;&quot;</span></div><div class="line">                <span class="stringliteral">&quot;}&quot;</span></div><div class="line">            <span class="stringliteral">&quot;}&quot;</span></div><div class="line">        <span class="stringliteral">&quot;}&quot;</span></div><div class="ttc" id="_audio_player_test_8cpp_html_ad04884d6a66295a661e129c1107abc8d"><div class="ttname"><a href="_audio_player_test_8cpp.html#ad04884d6a66295a661e129c1107abc8d">alexaClientSDK::capabilityAgents::audioPlayer::test::EXPIRY_TEST</a></div><div class="ttdeci">static const std::string EXPIRY_TEST(&quot;481516234248151623421088&quot;)</div><div class="ttdoc">ExpiryTime for testing. Needs to be in ISO 8601 format. </div></div>
-<div class="ttc" id="_audio_player_test_8cpp_html_a73efbfac632698a0f6b9cdfced92948c"><div class="ttname"><a href="_audio_player_test_8cpp.html#a73efbfac632698a0f6b9cdfced92948c">alexaClientSDK::capabilityAgents::audioPlayer::test::AUDIO_ITEM_ID</a></div><div class="ttdeci">static const std::string AUDIO_ITEM_ID(&quot;testID&quot;)</div><div class="ttdoc">audioItemId for testing. </div></div>
-<div class="ttc" id="_audio_player_test_8cpp_html_a435a475842affb438dd1dc78e9f1c970"><div class="ttname"><a href="_audio_player_test_8cpp.html#a435a475842affb438dd1dc78e9f1c970">alexaClientSDK::capabilityAgents::audioPlayer::test::NAME_ENQUEUE</a></div><div class="ttdeci">static const std::string NAME_ENQUEUE(&quot;ENQUEUE&quot;)</div><div class="ttdoc">ENQUEUE playBehavior. </div></div>
-<div class="ttc" id="_audio_player_test_8cpp_html_a5101c2c8ec2e065af652f1fb96059e27"><div class="ttname"><a href="_audio_player_test_8cpp.html#a5101c2c8ec2e065af652f1fb96059e27">alexaClientSDK::capabilityAgents::audioPlayer::test::URL_TEST</a></div><div class="ttdeci">static const std::string URL_TEST(&quot;cid:Test&quot;)</div><div class="ttdoc">URL for testing. </div></div>
-<div class="ttc" id="_audio_player_test_8cpp_html_ad7a6215222654270b60ee689d9eaa2a7"><div class="ttname"><a href="_audio_player_test_8cpp.html#ad7a6215222654270b60ee689d9eaa2a7">alexaClientSDK::capabilityAgents::audioPlayer::test::TOKEN_TEST</a></div><div class="ttdeci">static const std::string TOKEN_TEST(&quot;Token_Test&quot;)</div><div class="ttdoc">Token for testing. </div></div>
-<div class="ttc" id="_audio_player_test_8cpp_html_add0c8e567f6cf19280edc3360d075559"><div class="ttname"><a href="_audio_player_test_8cpp.html#add0c8e567f6cf19280edc3360d075559">alexaClientSDK::capabilityAgents::audioPlayer::test::FORMAT_TEST</a></div><div class="ttdeci">static const std::string FORMAT_TEST(&quot;AUDIO_MPEG&quot;)</div><div class="ttdoc">Format of the audio. </div></div>
-</div><!-- fragment -->
-<p>A payload for testing. </p>
-
-</div>
-</div>
-<a id="file_a03be8713bad301999bacd9f99d139732"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a03be8713bad301999bacd9f99d139732">&#9670;&nbsp;</a></span>IDLE_STATE_TEST</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string alexaClientSDK::capabilityAgents::audioPlayer::test::IDLE_STATE_TEST</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;{&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;token\&quot;:\&quot;\&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;offsetInMilliseconds\&quot;:&quot;</span> + std::to_string(0) + <span class="stringliteral">&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;playerActivity\&quot;:\&quot;&quot;</span> + <a class="code" href="_audio_player_test_8cpp.html#a030f54294320bd2ac40153f5260d5540">IDLE_STATE</a> + <span class="stringliteral">&quot;\&quot;&quot;</span></div><div class="line">    <span class="stringliteral">&quot;}&quot;</span></div><div class="ttc" id="_audio_player_test_8cpp_html_a030f54294320bd2ac40153f5260d5540"><div class="ttname"><a href="_audio_player_test_8cpp.html#a030f54294320bd2ac40153f5260d5540">alexaClientSDK::capabilityAgents::audioPlayer::test::IDLE_STATE</a></div><div class="ttdeci">static const std::string IDLE_STATE</div><div class="ttdoc">The IDLE state of the AudioPlayer. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:133</div></div>
-</div><!-- fragment -->
-<p>The expected state when the <code>AudioPlayer</code> is not handling any directive. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

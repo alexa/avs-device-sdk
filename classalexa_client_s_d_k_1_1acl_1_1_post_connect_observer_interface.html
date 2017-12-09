@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>acl</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface.html">PostConnectObserverInterface</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html">acl</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface.html">PostConnectObserverInterface</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -72,6 +72,8 @@ $(function() {
 <div class="title">alexaClientSDK::acl::PostConnectObserverInterface Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_post_connect_observer_interface_8h_source.html">PostConnectObserverInterface.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for alexaClientSDK::acl::PostConnectObserverInterface:</div>
 <div class="dyncontent">
@@ -83,18 +85,73 @@ Inheritance diagram for alexaClientSDK::acl::PostConnectObserverInterface:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a752c76e1e70296f50bb5b553e12691a4"><td class="memItemLeft" align="right" valign="top"><a id="a752c76e1e70296f50bb5b553e12691a4"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onPostConnected</b> ()=0</td></tr>
+<tr class="memitem:af16a8d9af8081c14a8611231aafbc500"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface.html#af16a8d9af8081c14a8611231aafbc500">~PostConnectObserverInterface</a> ()=default</td></tr>
+<tr class="separator:af16a8d9af8081c14a8611231aafbc500"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a752c76e1e70296f50bb5b553e12691a4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface.html#a752c76e1e70296f50bb5b553e12691a4">onPostConnected</a> ()=0</td></tr>
 <tr class="separator:a752c76e1e70296f50bb5b553e12691a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="af16a8d9af8081c14a8611231aafbc500"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af16a8d9af8081c14a8611231aafbc500">&#9670;&nbsp;</a></span>~PostConnectObserverInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual alexaClientSDK::acl::PostConnectObserverInterface::~PostConnectObserverInterface </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a752c76e1e70296f50bb5b553e12691a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a752c76e1e70296f50bb5b553e12691a4">&#9670;&nbsp;</a></span>onPostConnected()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::acl::PostConnectObserverInterface::onPostConnected </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html#a087074505bf9ff666d1fa6c88508148e">alexaClientSDK::acl::HTTP2Transport</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/ACL/include/ACL/Transport/<a class="el" href="_post_connect_observer_interface_8h_source.html">PostConnectObserverInterface.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/ACL/include/ACL/Transport/<a class="el" href="_post_connect_observer_interface_8h_source.html">PostConnectObserverInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

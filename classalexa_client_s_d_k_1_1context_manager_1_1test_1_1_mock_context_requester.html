@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>contextManager</b></li><li class="navelem"><b>test</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_context_requester.html">MockContextRequester</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager_1_1test.html">test</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_context_requester.html">MockContextRequester</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -94,9 +94,11 @@ Collaboration diagram for alexaClientSDK::contextManager::test::MockContextReque
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9a7754c4f81c300b8870e8ee32aebe08"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_context_requester.html#a9a7754c4f81c300b8870e8ee32aebe08">MockContextRequester</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a> &gt; contextManager)</td></tr>
 <tr class="separator:a9a7754c4f81c300b8870e8ee32aebe08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7d9c8e30197bc4e39f65ea2c71f76b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_context_requester.html#ab7d9c8e30197bc4e39f65ea2c71f76b0">~MockContextRequester</a> ()</td></tr>
+<tr class="separator:ab7d9c8e30197bc4e39f65ea2c71f76b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa05dc0ca14a532dc4448635a435a0108"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_context_requester.html#aa05dc0ca14a532dc4448635a435a0108">onContextAvailable</a> (const std::string &amp;context) override</td></tr>
 <tr class="separator:aa05dc0ca14a532dc4448635a435a0108"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a706b59635b704a3275fec8029ed65544"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_context_requester.html#a706b59635b704a3275fec8029ed65544">onContextFailure</a> (const <a class="el" href="_context_requester_interface_8h.html#a8ec2f2403294717c740bfacf5c62d018">ContextRequestError</a> error) override</td></tr>
+<tr class="memitem:a706b59635b704a3275fec8029ed65544"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_context_requester.html#a706b59635b704a3275fec8029ed65544">onContextFailure</a> (const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a8ec2f2403294717c740bfacf5c62d018">ContextRequestError</a> error) override</td></tr>
 <tr class="separator:a706b59635b704a3275fec8029ed65544"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdfc8b46e39d6890b4464885de4224b9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_context_requester.html#afdfc8b46e39d6890b4464885de4224b9">waitForContext</a> (const std::chrono::milliseconds duration=std::chrono::milliseconds(200))</td></tr>
 <tr class="separator:afdfc8b46e39d6890b4464885de4224b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -134,10 +136,27 @@ Static Public Member Functions</h2></td></tr>
 <p>Constructor</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">contextManager</td><td>Pointer to an instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code>. </td></tr>
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>Pointer to an instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code>. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ab7d9c8e30197bc4e39f65ea2c71f76b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7d9c8e30197bc4e39f65ea2c71f76b0">&#9670;&nbsp;</a></span>~MockContextRequester()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::contextManager::test::MockContextRequester::~MockContextRequester </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -168,7 +187,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Creates an instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_context_requester.html">MockContextRequester</a></code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">contextManager</td><td>Pointer to an instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code>. </td></tr>
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>Pointer to an instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -243,7 +262,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void alexaClientSDK::contextManager::test::MockContextRequester::onContextFailure </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="_context_requester_interface_8h.html#a8ec2f2403294717c740bfacf5c62d018">ContextRequestError</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a8ec2f2403294717c740bfacf5c62d018">ContextRequestError</a>&#160;</td>
           <td class="paramname"><em>error</em></td><td>)</td>
           <td></td>
         </tr>
@@ -254,7 +273,7 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The contextManager calls this if it is unable to process a <code>getContext</code> request successfully.</p>
+<p>The <a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a> calls this if it is unable to process a <code>getContext</code> request successfully.</p>
 <dl class="section note"><dt>Note</dt><dd>The <code>ContextRequester</code> should perform minimum processing and return quickly. Otherwise it will block the processing of updating the of other <code>ContextProviders</code>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -320,13 +339,13 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/ContextManager/test/ContextManagerTest.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/ContextManager/test/<a class="el" href="_context_manager_test_8cpp.html">ContextManagerTest.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

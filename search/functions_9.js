@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['keywordobserver',['KeywordObserver',['../classalexa_client_s_d_k_1_1sample_app_1_1_keyword_observer.html#ae178d55cc1c8b5bd122e6ab8d5ed6bd4',1,'alexaClientSDK::sampleApp::KeywordObserver']]]
+  ['jsonarrayexists',['jsonArrayExists',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#a64a4d58e058d6eeed808fed28bda5ef9',1,'alexaClientSDK::avsCommon::utils::json::jsonUtils']]]
 ];

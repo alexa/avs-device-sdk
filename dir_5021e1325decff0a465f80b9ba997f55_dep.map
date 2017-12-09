@@ -1,8 +1,13 @@
-<map id="/Users/erikhopf/sdk&#45;folder/sdk&#45;source/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon" name="/Users/erikhopf/sdk&#45;folder/sdk&#45;source/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon">
-<area shape="rect" id="node2" href="dir_304e5c5f242f015339c8e1473ae913b8.html" title="SDKInterfaces" alt="" coords="37,61,144,109"/>
-<area shape="rect" id="node3" href="dir_80711c2a226d5fced33fce22558d3784.html" title="AVS" alt="" coords="55,157,127,205"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000057_000010.html" title="1" alt="" coords="86,131,94,145"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000010_000057.html" title="3" alt="" coords="88,122,95,135"/>
-<area shape="rect" id="clust2" href="dir_5021e1325decff0a465f80b9ba997f55.html" alt="" coords="27,51,280,120"/>
-<area shape="rect" id="clust1" href="dir_17341252d14ec499eb3e1f7903ffcdf5.html" title="include" alt="" coords="16,16,291,131"/>
+<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon">
+<area shape="rect" id="node2" href="dir_304e5c5f242f015339c8e1473ae913b8.html" title="SDKInterfaces" alt="" coords="37,90,144,138"/>
+<area shape="rect" id="node3" href="dir_80711c2a226d5fced33fce22558d3784.html" title="AVS" alt="" coords="301,90,373,138"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000063_000010.html" title="13" alt="" coords="321,64,336,77"/>
+<area shape="rect" id="node4" href="dir_49dd3d9ac5586189aa170bac46425b9c.html" title="Utils" alt="" coords="301,186,373,234"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000063_000065.html" title="2" alt="" coords="281,187,288,201"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000010_000063.html" title="18" alt="" coords="112,72,127,86"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000010_000065.html" title="34" alt="" coords="329,161,344,174"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000065_000063.html" title="3" alt="" coords="139,149,147,162"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000065_000010.html" title="4" alt="" coords="334,151,342,164"/>
+<area shape="rect" id="clust2" href="dir_5021e1325decff0a465f80b9ba997f55.html" alt="" coords="27,80,280,149"/>
+<area shape="rect" id="clust1" href="dir_17341252d14ec499eb3e1f7903ffcdf5.html" title="include" alt="" coords="16,45,291,160"/>
 </map>

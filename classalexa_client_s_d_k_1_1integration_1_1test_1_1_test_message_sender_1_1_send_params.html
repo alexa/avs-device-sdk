@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>integration</b></li><li class="navelem"><b>test</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender.html">TestMessageSender</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html">SendParams</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1integration.html">integration</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html">test</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender.html">TestMessageSender</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html">SendParams</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -73,31 +73,87 @@ $(function() {
 <div class="title">alexaClientSDK::integration::test::TestMessageSender::SendParams Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_test_message_sender_8h_source.html">TestMessageSender.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a54c389020d1074712ead473e1fa859ed"><td class="memItemLeft" align="right" valign="top"><a id="a54c389020d1074712ead473e1fa859ed"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>Type</b> { <b>SEND</b>, 
-<b>TIMEOUT</b>
+<tr class="memitem:a54c389020d1074712ead473e1fa859ed"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html#a54c389020d1074712ead473e1fa859ed">Type</a> { <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html#a54c389020d1074712ead473e1fa859eda548e51fa67d541384e9585adf0db95dc">Type::SEND</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html#a54c389020d1074712ead473e1fa859eda070a0fb40f6c308ab544b227660aadff">Type::TIMEOUT</a>
  }</td></tr>
 <tr class="separator:a54c389020d1074712ead473e1fa859ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a9fcee0be8a517010c0b2dd44f4e00834"><td class="memItemLeft" align="right" valign="top"><a id="a9fcee0be8a517010c0b2dd44f4e00834"></a>
-Type&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
+<tr class="memitem:a9fcee0be8a517010c0b2dd44f4e00834"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html#a54c389020d1074712ead473e1fa859ed">Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html#a9fcee0be8a517010c0b2dd44f4e00834">type</a></td></tr>
 <tr class="separator:a9fcee0be8a517010c0b2dd44f4e00834"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1544f28df3dca5fc0d9d8a946e88e1a4"><td class="memItemLeft" align="right" valign="top"><a id="a1544f28df3dca5fc0d9d8a946e88e1a4"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">avsCommon::avs::MessageRequest</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>request</b></td></tr>
+<tr class="memitem:a1544f28df3dca5fc0d9d8a946e88e1a4"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">avsCommon::avs::MessageRequest</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html#a1544f28df3dca5fc0d9d8a946e88e1a4">request</a></td></tr>
 <tr class="separator:a1544f28df3dca5fc0d9d8a946e88e1a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a54c389020d1074712ead473e1fa859ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54c389020d1074712ead473e1fa859ed">&#9670;&nbsp;</a></span>Type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html#a54c389020d1074712ead473e1fa859ed">alexaClientSDK::integration::test::TestMessageSender::SendParams::Type</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a54c389020d1074712ead473e1fa859eda548e51fa67d541384e9585adf0db95dc"></a>SEND&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a54c389020d1074712ead473e1fa859eda070a0fb40f6c308ab544b227660aadff"></a>TIMEOUT&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a1544f28df3dca5fc0d9d8a946e88e1a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1544f28df3dca5fc0d9d8a946e88e1a4">&#9670;&nbsp;</a></span>request</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">avsCommon::avs::MessageRequest</a>&gt; alexaClientSDK::integration::test::TestMessageSender::SendParams::request</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9fcee0be8a517010c0b2dd44f4e00834"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fcee0be8a517010c0b2dd44f4e00834">&#9670;&nbsp;</a></span>type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html#a54c389020d1074712ead473e1fa859ed">Type</a> alexaClientSDK::integration::test::TestMessageSender::SendParams::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/Integration/include/Integration/<a class="el" href="_test_message_sender_8h_source.html">TestMessageSender.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/Integration/include/Integration/<a class="el" href="_test_message_sender_8h_source.html">TestMessageSender.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>avsCommon</b></li><li class="navelem"><b>sdkInterfaces</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">ContextManagerInterface</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common.html">avsCommon</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html">sdkInterfaces</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">ContextManagerInterface</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -90,7 +90,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3ede58328f4e906456194eeb4f3addce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5030ea1bc4ae86dffc6b9316d37f446c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#a5030ea1bc4ae86dffc6b9316d37f446c">setStateProvider</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">avs::NamespaceAndName</a> &amp;namespaceAndName, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html">StateProviderInterface</a> &gt; stateProvider)=0</td></tr>
 <tr class="separator:a5030ea1bc4ae86dffc6b9316d37f446c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0352bd7b5f2b12bb6fc9dc46930a0b8"><td class="memItemLeft" align="right" valign="top">virtual SetStateResult&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#af0352bd7b5f2b12bb6fc9dc46930a0b8">setState</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">avs::NamespaceAndName</a> &amp;namespaceAndName, const std::string &amp;jsonState, const avs::StateRefreshPolicy &amp;refreshPolicy, const unsigned int stateRequestToken=0)=0</td></tr>
+<tr class="memitem:af0352bd7b5f2b12bb6fc9dc46930a0b8"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a10a3cb8dea046c68b6cd5b82c0bedbdb">SetStateResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#af0352bd7b5f2b12bb6fc9dc46930a0b8">setState</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">avs::NamespaceAndName</a> &amp;namespaceAndName, const std::string &amp;jsonState, const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6dceaef43ef22e8f83382c0072f0cd7c">avs::StateRefreshPolicy</a> &amp;refreshPolicy, const unsigned int stateRequestToken=0)=0</td></tr>
 <tr class="separator:af0352bd7b5f2b12bb6fc9dc46930a0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa82b99382e47e65b06e55fe6e9cd522a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#aa82b99382e47e65b06e55fe6e9cd522a">getContext</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html">ContextRequesterInterface</a> &gt; contextRequester)=0</td></tr>
 <tr class="separator:aa82b99382e47e65b06e55fe6e9cd522a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -168,7 +168,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual SetStateResult alexaClientSDK::avsCommon::sdkInterfaces::ContextManagerInterface::setState </td>
+          <td class="memname">virtual <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a10a3cb8dea046c68b6cd5b82c0bedbdb">SetStateResult</a> alexaClientSDK::avsCommon::sdkInterfaces::ContextManagerInterface::setState </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">avs::NamespaceAndName</a> &amp;&#160;</td>
           <td class="paramname"><em>namespaceAndName</em>, </td>
@@ -182,7 +182,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const avs::StateRefreshPolicy &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6dceaef43ef22e8f83382c0072f0cd7c">avs::StateRefreshPolicy</a> &amp;&#160;</td>
           <td class="paramname"><em>refreshPolicy</em>, </td>
         </tr>
         <tr>
@@ -267,13 +267,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_context_manager_interface_8h_source.html">ContextManagerInterface.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_context_manager_interface_8h_source.html">ContextManagerInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

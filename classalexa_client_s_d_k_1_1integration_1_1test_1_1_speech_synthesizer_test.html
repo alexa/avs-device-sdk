@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>integration</b></li><li class="navelem"><b>test</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1integration.html">integration</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html">test</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -77,21 +77,16 @@ $(function() {
 Inheritance diagram for alexaClientSDK::integration::test::SpeechSynthesizerTest:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test_inherit__map" alt="Inheritance graph"/></div>
-<map name="alexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test_inherit__map" id="alexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test_inherit__map">
-</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for alexaClientSDK::integration::test::SpeechSynthesizerTest:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test__coll__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test_coll__map" alt="Collaboration graph"/></div>
-<map name="alexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test_coll__map" id="alexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test_coll__map">
-</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a680e90fd16b144a23928071b1011a608"><td class="memItemLeft" align="right" valign="top"><a id="a680e90fd16b144a23928071b1011a608"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>SetUp</b> () override</td></tr>
+<tr class="memitem:a680e90fd16b144a23928071b1011a608"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a680e90fd16b144a23928071b1011a608">SetUp</a> () override</td></tr>
 <tr class="separator:a680e90fd16b144a23928071b1011a608"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2497d9369d23e36b31d2fe451a1d45ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a2497d9369d23e36b31d2fe451a1d45ef">sendEvent</a> (const std::string &amp;jsonContent, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html">avsCommon::avs::attachment::AttachmentReader</a> &gt; attachmentReader, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7b">avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status</a> expectedStatus, std::chrono::seconds timeout)</td></tr>
 <tr class="separator:a2497d9369d23e36b31d2fe451a1d45ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -99,86 +94,101 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>SetUp</b> () 
 <tr class="separator:aa16bb40e5ec1c037f8af1b9a14a2522a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a559a84de4bec6317e267b53138d297f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a559a84de4bec6317e267b53138d297f5">setupMessageWithAttachmentAndSend</a> (const std::string &amp;json, std::string &amp;file, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7b">avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status</a> expectedStatus, std::chrono::seconds timeout)</td></tr>
 <tr class="separator:a559a84de4bec6317e267b53138d297f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6646a049e46ffcdd2b59b152c6ad0145"><td class="memItemLeft" align="right" valign="top">FocusState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a6646a049e46ffcdd2b59b152c6ad0145">waitForFocusChange</a> (std::chrono::milliseconds timeout)</td></tr>
+<tr class="memitem:a6646a049e46ffcdd2b59b152c6ad0145"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">FocusState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a6646a049e46ffcdd2b59b152c6ad0145">waitForFocusChange</a> (std::chrono::milliseconds timeout)</td></tr>
 <tr class="separator:a6646a049e46ffcdd2b59b152c6ad0145"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e48e4ec1025a301af2c3b6a4ac5173f"><td class="memItemLeft" align="right" valign="top"><a id="a6e48e4ec1025a301af2c3b6a4ac5173f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>TearDown</b> () override</td></tr>
+<tr class="memitem:a6e48e4ec1025a301af2c3b6a4ac5173f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a6e48e4ec1025a301af2c3b6a4ac5173f">TearDown</a> () override</td></tr>
 <tr class="separator:a6e48e4ec1025a301af2c3b6a4ac5173f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac180d0ef2e3eb38b960f8d1ff0f445d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#ac180d0ef2e3eb38b960f8d1ff0f445d2">connect</a> ()</td></tr>
 <tr class="separator:ac180d0ef2e3eb38b960f8d1ff0f445d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:accc92ed0f4ceb8579c03e6f5c38b5a74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#accc92ed0f4ceb8579c03e6f5c38b5a74">disconnect</a> ()</td></tr>
 <tr class="separator:accc92ed0f4ceb8579c03e6f5c38b5a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a510b9b91704422741fea021445c65473"><td class="memItemLeft" align="right" valign="top"><a id="a510b9b91704422741fea021445c65473"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>checkSentEventName</b> (<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html">TestMessageSender::SendParams</a> sendParams, std::string expectedName)</td></tr>
+<tr class="memitem:a510b9b91704422741fea021445c65473"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a510b9b91704422741fea021445c65473">checkSentEventName</a> (<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html">TestMessageSender::SendParams</a> sendParams, std::string expectedName)</td></tr>
 <tr class="separator:a510b9b91704422741fea021445c65473"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a1d43717ebe9233634fe2ce4888428a7b"><td class="memItemLeft" align="right" valign="top"><a id="a1d43717ebe9233634fe2ce4888428a7b"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_auth_observer.html">AuthObserver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_authObserver</b></td></tr>
+<tr class="memitem:a1d43717ebe9233634fe2ce4888428a7b"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_auth_observer.html">AuthObserver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a1d43717ebe9233634fe2ce4888428a7b">m_authObserver</a></td></tr>
 <tr class="separator:a1d43717ebe9233634fe2ce4888428a7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b97fa2b3958263807f9fbabe184b656"><td class="memItemLeft" align="right" valign="top"><a id="a9b97fa2b3958263807f9fbabe184b656"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1auth_delegate_1_1_auth_delegate.html">AuthDelegate</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_authDelegate</b></td></tr>
+<tr class="memitem:a9b97fa2b3958263807f9fbabe184b656"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1auth_delegate_1_1_auth_delegate.html">AuthDelegate</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a9b97fa2b3958263807f9fbabe184b656">m_authDelegate</a></td></tr>
 <tr class="separator:a9b97fa2b3958263807f9fbabe184b656"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b0801c3b6fd89e64ff41ec1b487e624"><td class="memItemLeft" align="right" valign="top"><a id="a7b0801c3b6fd89e64ff41ec1b487e624"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_connection_status_observer.html">ConnectionStatusObserver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_connectionStatusObserver</b></td></tr>
+<tr class="memitem:a7b0801c3b6fd89e64ff41ec1b487e624"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_connection_status_observer.html">ConnectionStatusObserver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a7b0801c3b6fd89e64ff41ec1b487e624">m_connectionStatusObserver</a></td></tr>
 <tr class="separator:a7b0801c3b6fd89e64ff41ec1b487e624"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3aba54be716c328b94ab32fa99e1d09d"><td class="memItemLeft" align="right" valign="top"><a id="a3aba54be716c328b94ab32fa99e1d09d"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router.html">MessageRouter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_messageRouter</b></td></tr>
+<tr class="memitem:a3aba54be716c328b94ab32fa99e1d09d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router.html">MessageRouter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a3aba54be716c328b94ab32fa99e1d09d">m_messageRouter</a></td></tr>
 <tr class="separator:a3aba54be716c328b94ab32fa99e1d09d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22d30c92f1fad22bbd512f95f0831741"><td class="memItemLeft" align="right" valign="top"><a id="a22d30c92f1fad22bbd512f95f0831741"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender.html">TestMessageSender</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_avsConnectionManager</b></td></tr>
+<tr class="memitem:a22d30c92f1fad22bbd512f95f0831741"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender.html">TestMessageSender</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a22d30c92f1fad22bbd512f95f0831741">m_avsConnectionManager</a></td></tr>
 <tr class="separator:a22d30c92f1fad22bbd512f95f0831741"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d7b0a728e91b437c87b4ef5fefc1d4d"><td class="memItemLeft" align="right" valign="top"><a id="a7d7b0a728e91b437c87b4ef5fefc1d4d"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_exception_encountered_sender.html">TestExceptionEncounteredSender</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_exceptionEncounteredSender</b></td></tr>
+<tr class="memitem:a7d7b0a728e91b437c87b4ef5fefc1d4d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_exception_encountered_sender.html">TestExceptionEncounteredSender</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a7d7b0a728e91b437c87b4ef5fefc1d4d">m_exceptionEncounteredSender</a></td></tr>
 <tr class="separator:a7d7b0a728e91b437c87b4ef5fefc1d4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab16f83c2494f261efa2222e57b1e18da"><td class="memItemLeft" align="right" valign="top"><a id="ab16f83c2494f261efa2222e57b1e18da"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_directive_handler.html">TestDirectiveHandler</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_directiveHandler</b></td></tr>
+<tr class="memitem:ab16f83c2494f261efa2222e57b1e18da"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_directive_handler.html">TestDirectiveHandler</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#ab16f83c2494f261efa2222e57b1e18da">m_directiveHandler</a></td></tr>
 <tr class="separator:ab16f83c2494f261efa2222e57b1e18da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3de2a4bae42658a0efa9ff9ae281a633"><td class="memItemLeft" align="right" valign="top"><a id="a3de2a4bae42658a0efa9ff9ae281a633"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">DirectiveSequencerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_directiveSequencer</b></td></tr>
+<tr class="memitem:a3de2a4bae42658a0efa9ff9ae281a633"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">DirectiveSequencerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a3de2a4bae42658a0efa9ff9ae281a633">m_directiveSequencer</a></td></tr>
 <tr class="separator:a3de2a4bae42658a0efa9ff9ae281a633"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6edf356ce4b2ecfe8b30833210454088"><td class="memItemLeft" align="right" valign="top"><a id="a6edf356ce4b2ecfe8b30833210454088"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_message_interpreter.html">MessageInterpreter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_messageInterpreter</b></td></tr>
+<tr class="memitem:a6edf356ce4b2ecfe8b30833210454088"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_message_interpreter.html">MessageInterpreter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a6edf356ce4b2ecfe8b30833210454088">m_messageInterpreter</a></td></tr>
 <tr class="separator:a6edf356ce4b2ecfe8b30833210454088"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1651fbb00c31742c30a20fdadcedc2a6"><td class="memItemLeft" align="right" valign="top"><a id="a1651fbb00c31742c30a20fdadcedc2a6"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_contextManager</b></td></tr>
+<tr class="memitem:a1651fbb00c31742c30a20fdadcedc2a6"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a1651fbb00c31742c30a20fdadcedc2a6">m_contextManager</a></td></tr>
 <tr class="separator:a1651fbb00c31742c30a20fdadcedc2a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2439e52fd70a298a70a107f9fc9c7db9"><td class="memItemLeft" align="right" valign="top"><a id="a2439e52fd70a298a70a107f9fc9c7db9"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_speech_synthesizer_observer.html">TestSpeechSynthesizerObserver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_speechSynthesizerObserver</b></td></tr>
+<tr class="memitem:a2439e52fd70a298a70a107f9fc9c7db9"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_speech_synthesizer_observer.html">TestSpeechSynthesizerObserver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a2439e52fd70a298a70a107f9fc9c7db9">m_speechSynthesizerObserver</a></td></tr>
 <tr class="separator:a2439e52fd70a298a70a107f9fc9c7db9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1165b93928b817a64562e7529bc62a64"><td class="memItemLeft" align="right" valign="top"><a id="a1165b93928b817a64562e7529bc62a64"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_speechSynthesizer</b></td></tr>
+<tr class="memitem:a1165b93928b817a64562e7529bc62a64"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a1165b93928b817a64562e7529bc62a64">m_speechSynthesizer</a></td></tr>
 <tr class="separator:a1165b93928b817a64562e7529bc62a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a505f350e280aa9c2ed73349f8fec8d74"><td class="memItemLeft" align="right" valign="top"><a id="a505f350e280aa9c2ed73349f8fec8d74"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager.html">avsCommon::avs::attachment::AttachmentManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_attachmentManager</b></td></tr>
+<tr class="memitem:a7a9113caf3e28b3426ab4185d94aaa62"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">avsCommon::avs::DialogUXStateAggregator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a7a9113caf3e28b3426ab4185d94aaa62">m_dialogUXStateAggregator</a></td></tr>
+<tr class="separator:a7a9113caf3e28b3426ab4185d94aaa62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a505f350e280aa9c2ed73349f8fec8d74"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager.html">avsCommon::avs::attachment::AttachmentManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a505f350e280aa9c2ed73349f8fec8d74">m_attachmentManager</a></td></tr>
 <tr class="separator:a505f350e280aa9c2ed73349f8fec8d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61b625eb837f495c8064191cdfc2d367"><td class="memItemLeft" align="right" valign="top"><a id="a61b625eb837f495c8064191cdfc2d367"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_client_message_handler.html">ClientMessageHandler</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_clientMessageHandler</b></td></tr>
+<tr class="memitem:a61b625eb837f495c8064191cdfc2d367"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_client_message_handler.html">ClientMessageHandler</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a61b625eb837f495c8064191cdfc2d367">m_clientMessageHandler</a></td></tr>
 <tr class="separator:a61b625eb837f495c8064191cdfc2d367"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d5095a21f21cb73c2b03ad93e7446d4"><td class="memItemLeft" align="right" valign="top"><a id="a0d5095a21f21cb73c2b03ad93e7446d4"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html">FocusManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_focusManager</b></td></tr>
+<tr class="memitem:a0d5095a21f21cb73c2b03ad93e7446d4"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html">FocusManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a0d5095a21f21cb73c2b03ad93e7446d4">m_focusManager</a></td></tr>
 <tr class="separator:a0d5095a21f21cb73c2b03ad93e7446d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac842740c879d2f78be4c1e3f173287dc"><td class="memItemLeft" align="right" valign="top"><a id="ac842740c879d2f78be4c1e3f173287dc"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html">TestClient</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_testClient</b></td></tr>
+<tr class="memitem:ac842740c879d2f78be4c1e3f173287dc"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html">TestClient</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#ac842740c879d2f78be4c1e3f173287dc">m_testClient</a></td></tr>
 <tr class="separator:ac842740c879d2f78be4c1e3f173287dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a461cc35435d6142307c8687b7b0177b1"><td class="memItemLeft" align="right" valign="top"><a id="a461cc35435d6142307c8687b7b0177b1"></a>
-FocusState&#160;</td><td class="memItemRight" valign="bottom"><b>m_focusState</b></td></tr>
+<tr class="memitem:a461cc35435d6142307c8687b7b0177b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">FocusState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a461cc35435d6142307c8687b7b0177b1">m_focusState</a></td></tr>
 <tr class="separator:a461cc35435d6142307c8687b7b0177b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbfa0a2760f91b13ca4e07983a5e7823"><td class="memItemLeft" align="right" valign="top"><a id="acbfa0a2760f91b13ca4e07983a5e7823"></a>
-std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>m_mutex</b></td></tr>
+<tr class="memitem:acbfa0a2760f91b13ca4e07983a5e7823"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#acbfa0a2760f91b13ca4e07983a5e7823">m_mutex</a></td></tr>
 <tr class="separator:acbfa0a2760f91b13ca4e07983a5e7823"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a5c9f47b2c05ea9dedd3a5ce3b0635a"><td class="memItemLeft" align="right" valign="top"><a id="a0a5c9f47b2c05ea9dedd3a5ce3b0635a"></a>
-std::condition_variable&#160;</td><td class="memItemRight" valign="bottom"><b>m_focusChanged</b></td></tr>
+<tr class="memitem:a0a5c9f47b2c05ea9dedd3a5ce3b0635a"><td class="memItemLeft" align="right" valign="top">std::condition_variable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a0a5c9f47b2c05ea9dedd3a5ce3b0635a">m_focusChanged</a></td></tr>
 <tr class="separator:a0a5c9f47b2c05ea9dedd3a5ce3b0635a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74528f7aefced8d31e0fc9878e871b23"><td class="memItemLeft" align="right" valign="top"><a id="a74528f7aefced8d31e0fc9878e871b23"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_focusChangeOccurred</b></td></tr>
+<tr class="memitem:a74528f7aefced8d31e0fc9878e871b23"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a74528f7aefced8d31e0fc9878e871b23">m_focusChangeOccurred</a></td></tr>
 <tr class="separator:a74528f7aefced8d31e0fc9878e871b23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae35ecb13f0d9b576912e973a47d12331"><td class="memItemLeft" align="right" valign="top"><a id="ae35ecb13f0d9b576912e973a47d12331"></a>
-std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html">TestMediaPlayer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_mediaPlayer</b></td></tr>
+<tr class="memitem:ae35ecb13f0d9b576912e973a47d12331"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html">TestMediaPlayer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#ae35ecb13f0d9b576912e973a47d12331">m_mediaPlayer</a></td></tr>
 <tr class="separator:ae35ecb13f0d9b576912e973a47d12331"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a510b9b91704422741fea021445c65473"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a510b9b91704422741fea021445c65473">&#9670;&nbsp;</a></span>checkSentEventName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::integration::test::SpeechSynthesizerTest::checkSentEventName </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html">TestMessageSender::SendParams</a>&#160;</td>
+          <td class="paramname"><em>sendParams</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>expectedName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ac180d0ef2e3eb38b960f8d1ff0f445d2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac180d0ef2e3eb38b960f8d1ff0f445d2">&#9670;&nbsp;</a></span>connect()</h2>
 
@@ -285,6 +295,31 @@ std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a680e90fd16b144a23928071b1011a608"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a680e90fd16b144a23928071b1011a608">&#9670;&nbsp;</a></span>SetUp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::integration::test::SpeechSynthesizerTest::SetUp </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -397,6 +432,31 @@ std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1
 
 </div>
 </div>
+<a id="a6e48e4ec1025a301af2c3b6a4ac5173f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e48e4ec1025a301af2c3b6a4ac5173f">&#9670;&nbsp;</a></span>TearDown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::integration::test::SpeechSynthesizerTest::TearDown </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a6646a049e46ffcdd2b59b152c6ad0145"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6646a049e46ffcdd2b59b152c6ad0145">&#9670;&nbsp;</a></span>waitForFocusChange()</h2>
 
@@ -407,7 +467,7 @@ std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">FocusState alexaClientSDK::integration::test::SpeechSynthesizerTest::waitForFocusChange </td>
+          <td class="memname"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">FocusState</a> alexaClientSDK::integration::test::SpeechSynthesizerTest::waitForFocusChange </td>
           <td>(</td>
           <td class="paramtype">std::chrono::milliseconds&#160;</td>
           <td class="paramname"><em>timeout</em></td><td>)</td>
@@ -432,14 +492,499 @@ std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1integration_1
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a505f350e280aa9c2ed73349f8fec8d74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a505f350e280aa9c2ed73349f8fec8d74">&#9670;&nbsp;</a></span>m_attachmentManager</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager.html">avsCommon::avs::attachment::AttachmentManager</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_attachmentManager</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9b97fa2b3958263807f9fbabe184b656"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b97fa2b3958263807f9fbabe184b656">&#9670;&nbsp;</a></span>m_authDelegate</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1auth_delegate_1_1_auth_delegate.html">AuthDelegate</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_authDelegate</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1d43717ebe9233634fe2ce4888428a7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d43717ebe9233634fe2ce4888428a7b">&#9670;&nbsp;</a></span>m_authObserver</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_auth_observer.html">AuthObserver</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_authObserver</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a22d30c92f1fad22bbd512f95f0831741"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22d30c92f1fad22bbd512f95f0831741">&#9670;&nbsp;</a></span>m_avsConnectionManager</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender.html">TestMessageSender</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_avsConnectionManager</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a61b625eb837f495c8064191cdfc2d367"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61b625eb837f495c8064191cdfc2d367">&#9670;&nbsp;</a></span>m_clientMessageHandler</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_client_message_handler.html">ClientMessageHandler</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_clientMessageHandler</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7b0801c3b6fd89e64ff41ec1b487e624"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b0801c3b6fd89e64ff41ec1b487e624">&#9670;&nbsp;</a></span>m_connectionStatusObserver</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_connection_status_observer.html">ConnectionStatusObserver</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_connectionStatusObserver</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1651fbb00c31742c30a20fdadcedc2a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1651fbb00c31742c30a20fdadcedc2a6">&#9670;&nbsp;</a></span>m_contextManager</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_contextManager</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7a9113caf3e28b3426ab4185d94aaa62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a9113caf3e28b3426ab4185d94aaa62">&#9670;&nbsp;</a></span>m_dialogUXStateAggregator</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">avsCommon::avs::DialogUXStateAggregator</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_dialogUXStateAggregator</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab16f83c2494f261efa2222e57b1e18da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab16f83c2494f261efa2222e57b1e18da">&#9670;&nbsp;</a></span>m_directiveHandler</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_directive_handler.html">TestDirectiveHandler</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_directiveHandler</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3de2a4bae42658a0efa9ff9ae281a633"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3de2a4bae42658a0efa9ff9ae281a633">&#9670;&nbsp;</a></span>m_directiveSequencer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">DirectiveSequencerInterface</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_directiveSequencer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7d7b0a728e91b437c87b4ef5fefc1d4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d7b0a728e91b437c87b4ef5fefc1d4d">&#9670;&nbsp;</a></span>m_exceptionEncounteredSender</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_exception_encountered_sender.html">TestExceptionEncounteredSender</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_exceptionEncounteredSender</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0a5c9f47b2c05ea9dedd3a5ce3b0635a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a5c9f47b2c05ea9dedd3a5ce3b0635a">&#9670;&nbsp;</a></span>m_focusChanged</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::condition_variable alexaClientSDK::integration::test::SpeechSynthesizerTest::m_focusChanged</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a74528f7aefced8d31e0fc9878e871b23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74528f7aefced8d31e0fc9878e871b23">&#9670;&nbsp;</a></span>m_focusChangeOccurred</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::integration::test::SpeechSynthesizerTest::m_focusChangeOccurred</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0d5095a21f21cb73c2b03ad93e7446d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d5095a21f21cb73c2b03ad93e7446d4">&#9670;&nbsp;</a></span>m_focusManager</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html">FocusManager</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_focusManager</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a461cc35435d6142307c8687b7b0177b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a461cc35435d6142307c8687b7b0177b1">&#9670;&nbsp;</a></span>m_focusState</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">FocusState</a> alexaClientSDK::integration::test::SpeechSynthesizerTest::m_focusState</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae35ecb13f0d9b576912e973a47d12331"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae35ecb13f0d9b576912e973a47d12331">&#9670;&nbsp;</a></span>m_mediaPlayer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html">TestMediaPlayer</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_mediaPlayer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6edf356ce4b2ecfe8b30833210454088"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6edf356ce4b2ecfe8b30833210454088">&#9670;&nbsp;</a></span>m_messageInterpreter</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_message_interpreter.html">MessageInterpreter</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_messageInterpreter</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3aba54be716c328b94ab32fa99e1d09d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aba54be716c328b94ab32fa99e1d09d">&#9670;&nbsp;</a></span>m_messageRouter</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router.html">MessageRouter</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_messageRouter</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acbfa0a2760f91b13ca4e07983a5e7823"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbfa0a2760f91b13ca4e07983a5e7823">&#9670;&nbsp;</a></span>m_mutex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex alexaClientSDK::integration::test::SpeechSynthesizerTest::m_mutex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1165b93928b817a64562e7529bc62a64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1165b93928b817a64562e7529bc62a64">&#9670;&nbsp;</a></span>m_speechSynthesizer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_speechSynthesizer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2439e52fd70a298a70a107f9fc9c7db9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2439e52fd70a298a70a107f9fc9c7db9">&#9670;&nbsp;</a></span>m_speechSynthesizerObserver</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_speech_synthesizer_observer.html">TestSpeechSynthesizerObserver</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_speechSynthesizerObserver</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac842740c879d2f78be4c1e3f173287dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac842740c879d2f78be4c1e3f173287dc">&#9670;&nbsp;</a></span>m_testClient</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html">TestClient</a>&gt; alexaClientSDK::integration::test::SpeechSynthesizerTest::m_testClient</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/Integration/test/<a class="el" href="_speech_synthesizer_integration_test_8cpp.html">SpeechSynthesizerIntegrationTest.cpp</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/Integration/test/<a class="el" href="_speech_synthesizer_integration_test_8cpp.html">SpeechSynthesizerIntegrationTest.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

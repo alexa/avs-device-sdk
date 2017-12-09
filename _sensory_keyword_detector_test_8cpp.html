@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/KWD/Sensory/test/SensoryKeywordDetectorTest.cpp File Reference</title>
+<title>AlexaClientSDK: /Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/KWD/Sensory/test/SensoryKeywordDetectorTest.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -81,36 +81,36 @@ $(function() {
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;thread&gt;</code><br />
 <code>#include &lt;gtest/gtest.h&gt;</code><br />
-<code>#include &lt;AVSCommon/SDKInterfaces/KeyWordObserverInterface.h&gt;</code><br />
-<code>#include &lt;AVSCommon/SDKInterfaces/KeyWordDetectorStateObserverInterface.h&gt;</code><br />
-<code>#include &lt;AVSCommon/AVS/AudioInputStream.h&gt;</code><br />
-<code>#include &lt;AVSCommon/Utils/SDS/SharedDataStream.h&gt;</code><br />
-<code>#include &quot;Sensory/SensoryKeywordDetector.h&quot;</code><br />
+<code>#include &lt;<a class="el" href="_key_word_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/KeyWordObserverInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_key_word_detector_state_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/KeyWordDetectorStateObserverInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_audio_input_stream_8h_source.html">AVSCommon/AVS/AudioInputStream.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_shared_data_stream_8h_source.html">AVSCommon/Utils/SDS/SharedDataStream.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="_sensory_keyword_detector_8h_source.html">Sensory/SensoryKeywordDetector.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for SensoryKeywordDetectorTest.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_sensory_keyword_detector_test_8cpp__incl.png" border="0" usemap="#_2_users_2erikhopf_2sdk-folder_2sdk-source_2avs-device-sdk_2_k_w_d_2_sensory_2test_2_sensory_keyword_detector_test_8cpp" alt=""/></div>
-<map name="_2_users_2erikhopf_2sdk-folder_2sdk-source_2avs-device-sdk_2_k_w_d_2_sensory_2test_2_sensory_keyword_detector_test_8cpp" id="_2_users_2erikhopf_2sdk-folder_2sdk-source_2avs-device-sdk_2_k_w_d_2_sensory_2test_2_sensory_keyword_detector_test_8cpp">
-<area shape="rect" id="node9" href="_key_word_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/KeyWordObserverInterface.h" alt="" coords="764,272,961,311"/>
-<area shape="rect" id="node11" href="_audio_input_stream_8h_source.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="1373,365,1571,404"/>
-<area shape="rect" id="node17" href="_shared_data_stream_8h_source.html" title="SharedDataStream.h" alt="" coords="673,539,820,564"/>
-<area shape="rect" id="node37" href="_key_word_detector_state_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/KeyWordDetectorStateObserver\lInterface.h" alt="" coords="985,265,1201,317"/>
-<area shape="rect" id="node38" href="_sensory_keyword_detector_8h_source.html" title="Sensory/SensoryKeywordDetector.h" alt="" coords="1122,119,1358,144"/>
-<area shape="rect" id="node12" href="_in_process_s_d_s_8h_source.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1568,452,1730,491"/>
-<area shape="rect" id="node20" href="_logger_utils_8h_source.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="875,685,1051,724"/>
-<area shape="rect" id="node33" href="_buffer_layout_8h_source.html" title="BufferLayout.h" alt="" coords="907,612,1015,637"/>
-<area shape="rect" id="node34" href="_reader_8h_source.html" title="Reader.h" alt="" coords="564,612,639,637"/>
-<area shape="rect" id="node36" href="_writer_8h_source.html" title="Writer.h" alt="" coords="713,612,780,637"/>
-<area shape="rect" id="node21" href="_logger_8h_source.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1189,772,1365,811"/>
-<area shape="rect" id="node23" href="_configuration_node_8h_source.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="397,859,611,897"/>
-<area shape="rect" id="node25" href="_level_8h_source.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1481,945,1657,984"/>
-<area shape="rect" id="node26" href="_log_entry_8h_source.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1189,859,1365,897"/>
-<area shape="rect" id="node31" href="_log_level_observer_interface_8h_source.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1491,859,1688,897"/>
-<area shape="rect" id="node32" href="_sink_observer_interface_8h_source.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="989,859,1165,897"/>
-<area shape="rect" id="node27" href="_log_entry_stream_8h_source.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1117,945,1293,984"/>
-<area shape="rect" id="node29" href="_log_entry_buffer_8h_source.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="144,1032,320,1071"/>
+<div class="center"><img src="_sensory_keyword_detector_test_8cpp__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_k_w_d_2_sensory_2test_2_sensory_keyword_detector_test_8cpp" alt=""/></div>
+<map name="_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_k_w_d_2_sensory_2test_2_sensory_keyword_detector_test_8cpp" id="_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_k_w_d_2_sensory_2test_2_sensory_keyword_detector_test_8cpp">
+<area shape="rect" id="node9" href="_key_word_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordObserverInterface.h" alt="" coords="764,272,961,311"/>
+<area shape="rect" id="node11" href="_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="1373,365,1571,404"/>
+<area shape="rect" id="node17" href="_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="673,539,820,564"/>
+<area shape="rect" id="node37" href="_key_word_detector_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordDetectorStateObserver\lInterface.h" alt="" coords="985,265,1201,317"/>
+<area shape="rect" id="node38" href="_sensory_keyword_detector_8h.html" title="Sensory/SensoryKeywordDetector.h" alt="" coords="1122,119,1358,144"/>
+<area shape="rect" id="node12" href="_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1568,452,1730,491"/>
+<area shape="rect" id="node20" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="875,685,1051,724"/>
+<area shape="rect" id="node33" href="_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="907,612,1015,637"/>
+<area shape="rect" id="node34" href="_reader_8h.html" title="Reader.h" alt="" coords="564,612,639,637"/>
+<area shape="rect" id="node36" href="_writer_8h.html" title="Writer.h" alt="" coords="713,612,780,637"/>
+<area shape="rect" id="node21" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1189,772,1365,811"/>
+<area shape="rect" id="node23" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="397,859,611,897"/>
+<area shape="rect" id="node25" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1481,945,1657,984"/>
+<area shape="rect" id="node26" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1189,859,1365,897"/>
+<area shape="rect" id="node31" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1491,859,1688,897"/>
+<area shape="rect" id="node32" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="989,859,1165,897"/>
+<area shape="rect" id="node27" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1117,945,1293,984"/>
+<area shape="rect" id="node29" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="144,1032,320,1071"/>
 <area shape="rect" id="node40" href="_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1509,279,1731,304"/>
-<area shape="rect" id="node41" href="_abstract_keyword_detector_8h_source.html" title="KWD/AbstractKeywordDetector.h" alt="" coords="1131,192,1349,217"/>
+<area shape="rect" id="node41" href="_abstract_keyword_detector_8h.html" title="KWD/AbstractKeywordDetector.h" alt="" coords="1131,192,1349,217"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -133,126 +133,109 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1kwd"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html">alexaClientSDK::kwd</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1kwd_1_1test"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html">alexaClientSDK::kwd::test</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:af83b78b3eac344caa86dd9a1d3025ffe"><td class="memItemLeft" align="right" valign="top"><a id="af83b78b3eac344caa86dd9a1d3025ffe"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#af83b78b3eac344caa86dd9a1d3025ffe">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, invalidStream)</td></tr>
-<tr class="memdesc:af83b78b3eac344caa86dd9a1d3025ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests that we don't get back a valid detector if an invalid stream is passed in. <br /></td></tr>
+<tr class="memitem:af83b78b3eac344caa86dd9a1d3025ffe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#af83b78b3eac344caa86dd9a1d3025ffe">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, invalidStream)</td></tr>
+<tr class="memdesc:af83b78b3eac344caa86dd9a1d3025ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests that we don't get back a valid detector if an invalid stream is passed in.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#af83b78b3eac344caa86dd9a1d3025ffe">More...</a><br /></td></tr>
 <tr class="separator:af83b78b3eac344caa86dd9a1d3025ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa969c62743dbfef482fa2c14e2647470"><td class="memItemLeft" align="right" valign="top"><a id="aa969c62743dbfef482fa2c14e2647470"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#aa969c62743dbfef482fa2c14e2647470">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, incompatibleEndianness)</td></tr>
-<tr class="memdesc:aa969c62743dbfef482fa2c14e2647470"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests that we don't get back a valid detector if an invalid endianness is passed in. <br /></td></tr>
+<tr class="memitem:aa969c62743dbfef482fa2c14e2647470"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#aa969c62743dbfef482fa2c14e2647470">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, incompatibleEndianness)</td></tr>
+<tr class="memdesc:aa969c62743dbfef482fa2c14e2647470"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests that we don't get back a valid detector if an invalid endianness is passed in.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#aa969c62743dbfef482fa2c14e2647470">More...</a><br /></td></tr>
 <tr class="separator:aa969c62743dbfef482fa2c14e2647470"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0801f0b31d7dcddcde7027f6c6b371aa"><td class="memItemLeft" align="right" valign="top"><a id="a0801f0b31d7dcddcde7027f6c6b371aa"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a0801f0b31d7dcddcde7027f6c6b371aa">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForOneObserver)</td></tr>
-<tr class="memdesc:a0801f0b31d7dcddcde7027f6c6b371aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests that we get back the expected number of keywords for the four_alexa.wav file for one keyword observer. <br /></td></tr>
+<tr class="memitem:a0801f0b31d7dcddcde7027f6c6b371aa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a0801f0b31d7dcddcde7027f6c6b371aa">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForOneObserver)</td></tr>
+<tr class="memdesc:a0801f0b31d7dcddcde7027f6c6b371aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests that we get back the expected number of keywords for the four_alexa.wav file for one keyword observer.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a0801f0b31d7dcddcde7027f6c6b371aa">More...</a><br /></td></tr>
 <tr class="separator:a0801f0b31d7dcddcde7027f6c6b371aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d7b5ebb3deed6895e30746bd55c4ba4"><td class="memItemLeft" align="right" valign="top"><a id="a7d7b5ebb3deed6895e30746bd55c4ba4"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a7d7b5ebb3deed6895e30746bd55c4ba4">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForTwoObservers)</td></tr>
-<tr class="memdesc:a7d7b5ebb3deed6895e30746bd55c4ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests that we get back the expected number of keywords for the four_alexa.wav file for two keyword observers. <br /></td></tr>
+<tr class="memitem:a7d7b5ebb3deed6895e30746bd55c4ba4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a7d7b5ebb3deed6895e30746bd55c4ba4">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForTwoObservers)</td></tr>
+<tr class="memdesc:a7d7b5ebb3deed6895e30746bd55c4ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests that we get back the expected number of keywords for the four_alexa.wav file for two keyword observers.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a7d7b5ebb3deed6895e30746bd55c4ba4">More...</a><br /></td></tr>
 <tr class="separator:a7d7b5ebb3deed6895e30746bd55c4ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a45b8df7c6a46ed7b74db4d1f610205"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a8a45b8df7c6a46ed7b74db4d1f610205">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileForOneObserver)</td></tr>
+<tr class="memitem:a8a45b8df7c6a46ed7b74db4d1f610205"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a8a45b8df7c6a46ed7b74db4d1f610205">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileForOneObserver)</td></tr>
 <tr class="separator:a8a45b8df7c6a46ed7b74db4d1f610205"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d20074f4cbc020a0210c8d18dbbef5c"><td class="memItemLeft" align="right" valign="top"><a id="a0d20074f4cbc020a0210c8d18dbbef5c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a0d20074f4cbc020a0210c8d18dbbef5c">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, getActiveState)</td></tr>
-<tr class="memdesc:a0d20074f4cbc020a0210c8d18dbbef5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests that the detector state changes to ACTIVE when the detector is initialized properly. <br /></td></tr>
+<tr class="memitem:a0d20074f4cbc020a0210c8d18dbbef5c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a0d20074f4cbc020a0210c8d18dbbef5c">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, getActiveState)</td></tr>
+<tr class="memdesc:a0d20074f4cbc020a0210c8d18dbbef5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests that the detector state changes to ACTIVE when the detector is initialized properly.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a0d20074f4cbc020a0210c8d18dbbef5c">More...</a><br /></td></tr>
 <tr class="separator:a0d20074f4cbc020a0210c8d18dbbef5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae26263120bafe6ba2a68ed22b2159fd9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#ae26263120bafe6ba2a68ed22b2159fd9">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, getStreamClosedState)</td></tr>
+<tr class="memitem:ae26263120bafe6ba2a68ed22b2159fd9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#ae26263120bafe6ba2a68ed22b2159fd9">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, getStreamClosedState)</td></tr>
 <tr class="separator:ae26263120bafe6ba2a68ed22b2159fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e96b1e7238cc8341c97c30c5a925f9c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a2e96b1e7238cc8341c97c30c5a925f9c">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileWithRandomDataAtBeginning)</td></tr>
+<tr class="memitem:a2e96b1e7238cc8341c97c30c5a925f9c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a2e96b1e7238cc8341c97c30c5a925f9c">alexaClientSDK::kwd::test::TEST_F</a> (SensoryKeywordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileWithRandomDataAtBeginning)</td></tr>
 <tr class="separator:a2e96b1e7238cc8341c97c30c5a925f9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top"><a id="a3c04138a5bfe5d72780bb7e82a18e627"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, char **argv)</td></tr>
+<tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:af14bd7c5da0f53186d0bad2bf353da47"><td class="memItemLeft" align="right" valign="top"><a id="af14bd7c5da0f53186d0bad2bf353da47"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#af14bd7c5da0f53186d0bad2bf353da47">alexaClientSDK::kwd::test::MODEL_FILE</a> = &quot;/SensoryModels/spot-alexa-rpi-31000.snsr&quot;</td></tr>
-<tr class="memdesc:af14bd7c5da0f53186d0bad2bf353da47"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the Alexa model file for Sensory. <br /></td></tr>
+<tr class="memitem:af14bd7c5da0f53186d0bad2bf353da47"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#af14bd7c5da0f53186d0bad2bf353da47">alexaClientSDK::kwd::test::MODEL_FILE</a> = &quot;/SensoryModels/spot-alexa-rpi-31000.snsr&quot;</td></tr>
+<tr class="memdesc:af14bd7c5da0f53186d0bad2bf353da47"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the Alexa model file for Sensory.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#af14bd7c5da0f53186d0bad2bf353da47">More...</a><br /></td></tr>
 <tr class="separator:af14bd7c5da0f53186d0bad2bf353da47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29dff1e4eb8e21a2ecc3682e3c5a8bdc"><td class="memItemLeft" align="right" valign="top"><a id="a29dff1e4eb8e21a2ecc3682e3c5a8bdc"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a29dff1e4eb8e21a2ecc3682e3c5a8bdc">alexaClientSDK::kwd::test::KEYWORD</a> = &quot;alexa&quot;</td></tr>
-<tr class="memdesc:a29dff1e4eb8e21a2ecc3682e3c5a8bdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The keyword that Sensory emits for the above model file. <br /></td></tr>
+<tr class="memitem:a29dff1e4eb8e21a2ecc3682e3c5a8bdc"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a29dff1e4eb8e21a2ecc3682e3c5a8bdc">alexaClientSDK::kwd::test::KEYWORD</a> = &quot;alexa&quot;</td></tr>
+<tr class="memdesc:a29dff1e4eb8e21a2ecc3682e3c5a8bdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The keyword that Sensory emits for the above model file.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a29dff1e4eb8e21a2ecc3682e3c5a8bdc">More...</a><br /></td></tr>
 <tr class="separator:a29dff1e4eb8e21a2ecc3682e3c5a8bdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abca096b7665de28e4dc2916dd8c74ce7"><td class="memItemLeft" align="right" valign="top"><a id="abca096b7665de28e4dc2916dd8c74ce7"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#abca096b7665de28e4dc2916dd8c74ce7">alexaClientSDK::kwd::test::FOUR_ALEXAS_AUDIO_FILE</a> = &quot;/four_alexa.wav&quot;</td></tr>
-<tr class="memdesc:abca096b7665de28e4dc2916dd8c74ce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of a test audio file. <br /></td></tr>
+<tr class="memitem:abca096b7665de28e4dc2916dd8c74ce7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#abca096b7665de28e4dc2916dd8c74ce7">alexaClientSDK::kwd::test::FOUR_ALEXAS_AUDIO_FILE</a> = &quot;/four_alexa.wav&quot;</td></tr>
+<tr class="memdesc:abca096b7665de28e4dc2916dd8c74ce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of a test audio file.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#abca096b7665de28e4dc2916dd8c74ce7">More...</a><br /></td></tr>
 <tr class="separator:abca096b7665de28e4dc2916dd8c74ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18e4a7fbfeb01517e2e79c297ae3f73b"><td class="memItemLeft" align="right" valign="top"><a id="a18e4a7fbfeb01517e2e79c297ae3f73b"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a18e4a7fbfeb01517e2e79c297ae3f73b">alexaClientSDK::kwd::test::ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE</a> = &quot;/alexa_stop_alexa_joke.wav&quot;</td></tr>
-<tr class="memdesc:a18e4a7fbfeb01517e2e79c297ae3f73b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of a test audio file. <br /></td></tr>
+<tr class="memitem:a18e4a7fbfeb01517e2e79c297ae3f73b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a18e4a7fbfeb01517e2e79c297ae3f73b">alexaClientSDK::kwd::test::ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE</a> = &quot;/alexa_stop_alexa_joke.wav&quot;</td></tr>
+<tr class="memdesc:a18e4a7fbfeb01517e2e79c297ae3f73b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of a test audio file.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a18e4a7fbfeb01517e2e79c297ae3f73b">More...</a><br /></td></tr>
 <tr class="separator:a18e4a7fbfeb01517e2e79c297ae3f73b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e4e62f0f7da1153ae0cc33b4c08a16c"><td class="memItemLeft" align="right" valign="top"><a id="a3e4e62f0f7da1153ae0cc33b4c08a16c"></a>
-static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a3e4e62f0f7da1153ae0cc33b4c08a16c">alexaClientSDK::kwd::test::SAMPLES_PER_MS</a> = 16</td></tr>
-<tr class="memdesc:a3e4e62f0f7da1153ae0cc33b4c08a16c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of samples per millisecond, assuming a sample rate of 16 kHz. <br /></td></tr>
+<tr class="memitem:a3e4e62f0f7da1153ae0cc33b4c08a16c"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a3e4e62f0f7da1153ae0cc33b4c08a16c">alexaClientSDK::kwd::test::SAMPLES_PER_MS</a> = 16</td></tr>
+<tr class="memdesc:a3e4e62f0f7da1153ae0cc33b4c08a16c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of samples per millisecond, assuming a sample rate of 16 kHz.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a3e4e62f0f7da1153ae0cc33b4c08a16c">More...</a><br /></td></tr>
 <tr class="separator:a3e4e62f0f7da1153ae0cc33b4c08a16c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03ced8888e6f82d0e6abcc833064d026"><td class="memItemLeft" align="right" valign="top"><a id="a03ced8888e6f82d0e6abcc833064d026"></a>
-static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a03ced8888e6f82d0e6abcc833064d026">alexaClientSDK::kwd::test::MARGIN</a> = std::chrono::milliseconds(250)</td></tr>
-<tr class="memdesc:a03ced8888e6f82d0e6abcc833064d026"><td class="mdescLeft">&#160;</td><td class="mdescRight">The margin in milliseconds for testing indices of keyword detections. <br /></td></tr>
+<tr class="memitem:a03ced8888e6f82d0e6abcc833064d026"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a03ced8888e6f82d0e6abcc833064d026">alexaClientSDK::kwd::test::MARGIN</a> = std::chrono::milliseconds(250)</td></tr>
+<tr class="memdesc:a03ced8888e6f82d0e6abcc833064d026"><td class="mdescLeft">&#160;</td><td class="mdescRight">The margin in milliseconds for testing indices of keyword detections.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a03ced8888e6f82d0e6abcc833064d026">More...</a><br /></td></tr>
 <tr class="separator:a03ced8888e6f82d0e6abcc833064d026"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9b22b3df86a60a6dbb8d06e0ba89f66"><td class="memItemLeft" align="right" valign="top"><a id="ad9b22b3df86a60a6dbb8d06e0ba89f66"></a>
-static const AudioInputStream::Index&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#ad9b22b3df86a60a6dbb8d06e0ba89f66">alexaClientSDK::kwd::test::MARGIN_IN_SAMPLES</a> = MARGIN.count() * SAMPLES_PER_MS</td></tr>
-<tr class="memdesc:ad9b22b3df86a60a6dbb8d06e0ba89f66"><td class="mdescLeft">&#160;</td><td class="mdescRight">The margin in samples for testing indices of keyword detections. <br /></td></tr>
+<tr class="memitem:ad9b22b3df86a60a6dbb8d06e0ba89f66"><td class="memItemLeft" align="right" valign="top">static const AudioInputStream::Index&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#ad9b22b3df86a60a6dbb8d06e0ba89f66">alexaClientSDK::kwd::test::MARGIN_IN_SAMPLES</a> = MARGIN.count() * SAMPLES_PER_MS</td></tr>
+<tr class="memdesc:ad9b22b3df86a60a6dbb8d06e0ba89f66"><td class="mdescLeft">&#160;</td><td class="mdescRight">The margin in samples for testing indices of keyword detections.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#ad9b22b3df86a60a6dbb8d06e0ba89f66">More...</a><br /></td></tr>
 <tr class="separator:ad9b22b3df86a60a6dbb8d06e0ba89f66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15d6a8e95c80fb57eeb45610247e840f"><td class="memItemLeft" align="right" valign="top"><a id="a15d6a8e95c80fb57eeb45610247e840f"></a>
-static const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a15d6a8e95c80fb57eeb45610247e840f">alexaClientSDK::kwd::test::NUM_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE</a> = 4</td></tr>
-<tr class="memdesc:a15d6a8e95c80fb57eeb45610247e840f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of "Alexa" keywords in the four_alexa.wav file. <br /></td></tr>
+<tr class="memitem:a15d6a8e95c80fb57eeb45610247e840f"><td class="memItemLeft" align="right" valign="top">static const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a15d6a8e95c80fb57eeb45610247e840f">alexaClientSDK::kwd::test::NUM_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE</a> = 4</td></tr>
+<tr class="memdesc:a15d6a8e95c80fb57eeb45610247e840f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of "Alexa" keywords in the four_alexa.wav file.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a15d6a8e95c80fb57eeb45610247e840f">More...</a><br /></td></tr>
 <tr class="separator:a15d6a8e95c80fb57eeb45610247e840f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66f162853d4f985b4b796ba29432840e"><td class="memItemLeft" align="right" valign="top"><a id="a66f162853d4f985b4b796ba29432840e"></a>
-std::vector&lt; AudioInputStream::Index &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a66f162853d4f985b4b796ba29432840e">alexaClientSDK::kwd::test::BEGIN_INDICES_OF_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE</a> = {7520, 39680, 58880, 77120}</td></tr>
-<tr class="memdesc:a66f162853d4f985b4b796ba29432840e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The approximate begin indices of the four "Alexa" keywords in the four_alexa.wav file. <br /></td></tr>
+<tr class="memitem:a66f162853d4f985b4b796ba29432840e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; AudioInputStream::Index &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a66f162853d4f985b4b796ba29432840e">alexaClientSDK::kwd::test::BEGIN_INDICES_OF_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE</a> = {7520, 39680, 58880, 77120}</td></tr>
+<tr class="memdesc:a66f162853d4f985b4b796ba29432840e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The approximate begin indices of the four "Alexa" keywords in the four_alexa.wav file.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a66f162853d4f985b4b796ba29432840e">More...</a><br /></td></tr>
 <tr class="separator:a66f162853d4f985b4b796ba29432840e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89c0345a29b9b5b1ba2ad7a5a0c0f4ea"><td class="memItemLeft" align="right" valign="top"><a id="a89c0345a29b9b5b1ba2ad7a5a0c0f4ea"></a>
-static const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a89c0345a29b9b5b1ba2ad7a5a0c0f4ea">alexaClientSDK::kwd::test::NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE</a> = 2</td></tr>
-<tr class="memdesc:a89c0345a29b9b5b1ba2ad7a5a0c0f4ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of "Alexa" keywords in the alexa_stop_alexa_joke.wav file. <br /></td></tr>
+<tr class="memitem:a89c0345a29b9b5b1ba2ad7a5a0c0f4ea"><td class="memItemLeft" align="right" valign="top">static const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a89c0345a29b9b5b1ba2ad7a5a0c0f4ea">alexaClientSDK::kwd::test::NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE</a> = 2</td></tr>
+<tr class="memdesc:a89c0345a29b9b5b1ba2ad7a5a0c0f4ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of "Alexa" keywords in the alexa_stop_alexa_joke.wav file.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a89c0345a29b9b5b1ba2ad7a5a0c0f4ea">More...</a><br /></td></tr>
 <tr class="separator:a89c0345a29b9b5b1ba2ad7a5a0c0f4ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad309866637057b1bbec36d6f8948b87"><td class="memItemLeft" align="right" valign="top"><a id="aad309866637057b1bbec36d6f8948b87"></a>
-std::vector&lt; AudioInputStream::Index &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#aad309866637057b1bbec36d6f8948b87">alexaClientSDK::kwd::test::BEGIN_INDICES_OF_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE</a> = {8000, 38240}</td></tr>
-<tr class="memdesc:aad309866637057b1bbec36d6f8948b87"><td class="mdescLeft">&#160;</td><td class="mdescRight">The approximate begin indices of the two "Alexa" keywords in the alexa_stop_alexa_joke.wav file. <br /></td></tr>
+<tr class="memitem:aad309866637057b1bbec36d6f8948b87"><td class="memItemLeft" align="right" valign="top">std::vector&lt; AudioInputStream::Index &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#aad309866637057b1bbec36d6f8948b87">alexaClientSDK::kwd::test::BEGIN_INDICES_OF_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE</a> = {8000, 38240}</td></tr>
+<tr class="memdesc:aad309866637057b1bbec36d6f8948b87"><td class="mdescLeft">&#160;</td><td class="mdescRight">The approximate begin indices of the two "Alexa" keywords in the alexa_stop_alexa_joke.wav file.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#aad309866637057b1bbec36d6f8948b87">More...</a><br /></td></tr>
 <tr class="separator:aad309866637057b1bbec36d6f8948b87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac76fc1017615776ec0b7c5bd28cea62a"><td class="memItemLeft" align="right" valign="top">static const avsCommon::utils::AudioFormat::Encoding&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#ac76fc1017615776ec0b7c5bd28cea62a">alexaClientSDK::kwd::test::COMPATIBLE_ENCODING</a></td></tr>
-<tr class="memdesc:ac76fc1017615776ec0b7c5bd28cea62a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The compatible encoding for Sensory.  <a href="_sensory_keyword_detector_test_8cpp.html#ac76fc1017615776ec0b7c5bd28cea62a">More...</a><br /></td></tr>
+<tr class="memitem:ac76fc1017615776ec0b7c5bd28cea62a"><td class="memItemLeft" align="right" valign="top">static const avsCommon::utils::AudioFormat::Encoding&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#ac76fc1017615776ec0b7c5bd28cea62a">alexaClientSDK::kwd::test::COMPATIBLE_ENCODING</a></td></tr>
+<tr class="memdesc:ac76fc1017615776ec0b7c5bd28cea62a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The compatible encoding for Sensory.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#ac76fc1017615776ec0b7c5bd28cea62a">More...</a><br /></td></tr>
 <tr class="separator:ac76fc1017615776ec0b7c5bd28cea62a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad457b45b883ed3618063503cce8233d5"><td class="memItemLeft" align="right" valign="top">static const avsCommon::utils::AudioFormat::Endianness&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#ad457b45b883ed3618063503cce8233d5">alexaClientSDK::kwd::test::COMPATIBLE_ENDIANNESS</a></td></tr>
-<tr class="memdesc:ad457b45b883ed3618063503cce8233d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The compatible endianness for Sensory.  <a href="_sensory_keyword_detector_test_8cpp.html#ad457b45b883ed3618063503cce8233d5">More...</a><br /></td></tr>
+<tr class="memitem:ad457b45b883ed3618063503cce8233d5"><td class="memItemLeft" align="right" valign="top">static const avsCommon::utils::AudioFormat::Endianness&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#ad457b45b883ed3618063503cce8233d5">alexaClientSDK::kwd::test::COMPATIBLE_ENDIANNESS</a></td></tr>
+<tr class="memdesc:ad457b45b883ed3618063503cce8233d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The compatible endianness for Sensory.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#ad457b45b883ed3618063503cce8233d5">More...</a><br /></td></tr>
 <tr class="separator:ad457b45b883ed3618063503cce8233d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9820adc1f824cd86cddeb5b8ec8867b1"><td class="memItemLeft" align="right" valign="top"><a id="a9820adc1f824cd86cddeb5b8ec8867b1"></a>
-static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a9820adc1f824cd86cddeb5b8ec8867b1">alexaClientSDK::kwd::test::COMPATIBLE_SAMPLE_RATE</a> = 16000</td></tr>
-<tr class="memdesc:a9820adc1f824cd86cddeb5b8ec8867b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The compatible sample rate for Sensory. <br /></td></tr>
+<tr class="memitem:a9820adc1f824cd86cddeb5b8ec8867b1"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a9820adc1f824cd86cddeb5b8ec8867b1">alexaClientSDK::kwd::test::COMPATIBLE_SAMPLE_RATE</a> = 16000</td></tr>
+<tr class="memdesc:a9820adc1f824cd86cddeb5b8ec8867b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The compatible sample rate for Sensory.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a9820adc1f824cd86cddeb5b8ec8867b1">More...</a><br /></td></tr>
 <tr class="separator:a9820adc1f824cd86cddeb5b8ec8867b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0c4a26f451ca38acde8d28876db9a23"><td class="memItemLeft" align="right" valign="top"><a id="ac0c4a26f451ca38acde8d28876db9a23"></a>
-static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#ac0c4a26f451ca38acde8d28876db9a23">alexaClientSDK::kwd::test::COMPATIBLE_SAMPLE_SIZE_IN_BITS</a> = 16</td></tr>
-<tr class="memdesc:ac0c4a26f451ca38acde8d28876db9a23"><td class="mdescLeft">&#160;</td><td class="mdescRight">The compatible bits per sample for Sensory. <br /></td></tr>
+<tr class="memitem:ac0c4a26f451ca38acde8d28876db9a23"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#ac0c4a26f451ca38acde8d28876db9a23">alexaClientSDK::kwd::test::COMPATIBLE_SAMPLE_SIZE_IN_BITS</a> = 16</td></tr>
+<tr class="memdesc:ac0c4a26f451ca38acde8d28876db9a23"><td class="mdescLeft">&#160;</td><td class="mdescRight">The compatible bits per sample for Sensory.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#ac0c4a26f451ca38acde8d28876db9a23">More...</a><br /></td></tr>
 <tr class="separator:ac0c4a26f451ca38acde8d28876db9a23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af29d45876d2277765601e0a95c5bbde6"><td class="memItemLeft" align="right" valign="top"><a id="af29d45876d2277765601e0a95c5bbde6"></a>
-static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#af29d45876d2277765601e0a95c5bbde6">alexaClientSDK::kwd::test::COMPATIBLE_NUM_CHANNELS</a> = 1</td></tr>
-<tr class="memdesc:af29d45876d2277765601e0a95c5bbde6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The compatible number of channels for Sensory. <br /></td></tr>
+<tr class="memitem:af29d45876d2277765601e0a95c5bbde6"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#af29d45876d2277765601e0a95c5bbde6">alexaClientSDK::kwd::test::COMPATIBLE_NUM_CHANNELS</a> = 1</td></tr>
+<tr class="memdesc:af29d45876d2277765601e0a95c5bbde6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The compatible number of channels for Sensory.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#af29d45876d2277765601e0a95c5bbde6">More...</a><br /></td></tr>
 <tr class="separator:af29d45876d2277765601e0a95c5bbde6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ad359af899514845c1307098ba64681"><td class="memItemLeft" align="right" valign="top"><a id="a6ad359af899514845c1307098ba64681"></a>
-static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensory_keyword_detector_test_8cpp.html#a6ad359af899514845c1307098ba64681">alexaClientSDK::kwd::test::DEFAULT_TIMEOUT</a> = std::chrono::milliseconds(4000)</td></tr>
-<tr class="memdesc:a6ad359af899514845c1307098ba64681"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout for expected callbacks. <br /></td></tr>
+<tr class="memitem:a6ad359af899514845c1307098ba64681"><td class="memItemLeft" align="right" valign="top">static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a6ad359af899514845c1307098ba64681">alexaClientSDK::kwd::test::DEFAULT_TIMEOUT</a> = std::chrono::milliseconds(4000)</td></tr>
+<tr class="memdesc:a6ad359af899514845c1307098ba64681"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout for expected callbacks.  <a href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a6ad359af899514845c1307098ba64681">More...</a><br /></td></tr>
 <tr class="separator:a6ad359af899514845c1307098ba64681"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="file_a8a45b8df7c6a46ed7b74db4d1f610205"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a8a45b8df7c6a46ed7b74db4d1f610205">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/3]</span></h2>
+<a id="a3c04138a5bfe5d72780bb7e82a18e627"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c04138a5bfe5d72780bb7e82a18e627">&#9670;&nbsp;</a></span>main()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">alexaClientSDK::kwd::test::TEST_F </td>
+          <td class="memname">int main </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_sensory_keyword_test.html">SensoryKeywordTest</a>&#160;</td>
-          <td class="paramname">, </td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileForOneObserver&#160;</td>
-          <td class="paramname">&#160;</td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>argv</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -261,114 +244,6 @@ static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="e
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Tests that we get back the expected number of keywords for the alexa_stop_alexa_joke.wav file for one keyword observer. </p>
-
-</div>
-</div>
-<a id="file_ae26263120bafe6ba2a68ed22b2159fd9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ae26263120bafe6ba2a68ed22b2159fd9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::kwd::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_sensory_keyword_test.html">SensoryKeywordTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getStreamClosedState&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Tests that the stream is closed and that the detector state changes to STREAM_CLOSED when we close the only writer of the SDS passed in and all keyword detections have occurred. </p>
-
-</div>
-</div>
-<a id="file_a2e96b1e7238cc8341c97c30c5a925f9c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a2e96b1e7238cc8341c97c30c5a925f9c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::kwd::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_sensory_keyword_test.html">SensoryKeywordTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileWithRandomDataAtBeginning&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Tests that we get back the expected number of keywords for the alexa_stop_alexa_joke.wav file for one keyword observer even when SDS has other data prior to the audio file in it. This tests that the reference point that the Sensory wrapper uses is working as expected. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="file_ac76fc1017615776ec0b7c5bd28cea62a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ac76fc1017615776ec0b7c5bd28cea62a">&#9670;&nbsp;</a></span>COMPATIBLE_ENCODING</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const avsCommon::utils::AudioFormat::Encoding alexaClientSDK::kwd::test::COMPATIBLE_ENCODING</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    avsCommon::utils::AudioFormat::Encoding::LPCM</div></div><!-- fragment -->
-<p>The compatible encoding for Sensory. </p>
-
-</div>
-</div>
-<a id="file_ad457b45b883ed3618063503cce8233d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ad457b45b883ed3618063503cce8233d5">&#9670;&nbsp;</a></span>COMPATIBLE_ENDIANNESS</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const avsCommon::utils::AudioFormat::Endianness alexaClientSDK::kwd::test::COMPATIBLE_ENDIANNESS</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    avsCommon::utils::AudioFormat::Endianness::LITTLE</div></div><!-- fragment -->
-<p>The compatible endianness for Sensory. </p>
 
 </div>
 </div>
@@ -376,7 +251,7 @@ static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

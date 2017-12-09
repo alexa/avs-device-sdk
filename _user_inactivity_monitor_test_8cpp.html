@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/CapabilityAgents/System/test/UserInactivityMonitorTest.cpp File Reference</title>
+<title>AlexaClientSDK: /Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/CapabilityAgents/System/test/UserInactivityMonitorTest.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -78,50 +78,50 @@ $(function() {
 <code>#include &lt;rapidjson/document.h&gt;</code><br />
 <code>#include &lt;rapidjson/stringbuffer.h&gt;</code><br />
 <code>#include &lt;rapidjson/writer.h&gt;</code><br />
-<code>#include &lt;AVSCommon/AVS/MessageRequest.h&gt;</code><br />
-<code>#include &lt;AVSCommon/AVS/Attachment/MockAttachmentManager.h&gt;</code><br />
-<code>#include &lt;AVSCommon/SDKInterfaces/MockMessageSender.h&gt;</code><br />
-<code>#include &lt;AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h&gt;</code><br />
-<code>#include &lt;AVSCommon/Utils/JSON/JSONUtils.h&gt;</code><br />
-<code>#include &lt;ADSL/DirectiveSequencer.h&gt;</code><br />
-<code>#include &quot;System/UserInactivityMonitor.h&quot;</code><br />
+<code>#include &lt;<a class="el" href="_message_request_8h_source.html">AVSCommon/AVS/MessageRequest.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_attachment_manager_8h_source.html">AVSCommon/AVS/Attachment/MockAttachmentManager.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_message_sender_8h_source.html">AVSCommon/SDKInterfaces/MockMessageSender.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_exception_encountered_sender_8h_source.html">AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_directive_sequencer_8h_source.html">ADSL/DirectiveSequencer.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="_user_inactivity_monitor_8h_source.html">System/UserInactivityMonitor.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for UserInactivityMonitorTest.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_user_inactivity_monitor_test_8cpp__incl.png" border="0" usemap="#_2_users_2erikhopf_2sdk-folder_2sdk-source_2avs-device-sdk_2_capability_agents_2_system_2test_2_user_inactivity_monitor_test_8cpp" alt=""/></div>
-<map name="_2_users_2erikhopf_2sdk-folder_2sdk-source_2avs-device-sdk_2_capability_agents_2_system_2test_2_user_inactivity_monitor_test_8cpp" id="_2_users_2erikhopf_2sdk-folder_2sdk-source_2avs-device-sdk_2_capability_agents_2_system_2test_2_user_inactivity_monitor_test_8cpp">
-<area shape="rect" id="node6" href="_message_request_8h_source.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="949,632,1198,657"/>
-<area shape="rect" id="node15" href="_mock_attachment_manager_8h_source.html" title="AVSCommon/AVS/Attachment\l/MockAttachmentManager.h" alt="" coords="413,539,614,577"/>
-<area shape="rect" id="node21" href="_mock_message_sender_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockMessageSender.h" alt="" coords="146,452,337,491"/>
-<area shape="rect" id="node23" href="_mock_exception_encountered_sender_8h_source.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="602,365,847,404"/>
-<area shape="rect" id="node26" href="_j_s_o_n_utils_8h_source.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="2865,132,3035,171"/>
-<area shape="rect" id="node29" href="_directive_sequencer_8h_source.html" title="ADSL/DirectiveSequencer.h" alt="" coords="1834,139,2020,164"/>
-<area shape="rect" id="node44" href="_user_inactivity_monitor_8h_source.html" title="System/UserInactivityMonitor.h" alt="" coords="3061,292,3265,317"/>
-<area shape="rect" id="node11" href="_attachment_reader_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="665,799,866,837"/>
-<area shape="rect" id="node14" href="_message_request_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1046,712,1293,751"/>
-<area shape="rect" id="node17" href="_attachment_manager_interface_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="667,625,875,664"/>
-<area shape="rect" id="node18" href="_attachment_8h_source.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="669,712,870,751"/>
-<area shape="rect" id="node20" href="_attachment_writer_8h_source.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="387,799,589,837"/>
-<area shape="rect" id="node22" href="_message_sender_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="638,539,829,577"/>
-<area shape="rect" id="node24" href="_exception_encountered_sender_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2102,452,2368,491"/>
-<area shape="rect" id="node25" href="_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="2142,539,2365,577"/>
-<area shape="rect" id="node27" href="_logger_utils_8h_source.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="3586,539,3762,577"/>
-<area shape="rect" id="node28" href="_logger_8h_source.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="3566,712,3742,751"/>
-<area shape="rect" id="node33" href="_directive_sequencer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="973,365,1177,404"/>
-<area shape="rect" id="node40" href="_directive_processor_8h_source.html" title="ADSL/DirectiveProcessor.h" alt="" coords="1772,219,1954,244"/>
-<area shape="rect" id="node41" href="_directive_router_8h_source.html" title="ADSL/DirectiveRouter.h" alt="" coords="1533,292,1695,317"/>
-<area shape="rect" id="node34" href="_a_v_s_directive_8h_source.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="1033,545,1256,571"/>
-<area shape="rect" id="node35" href="_directive_handler_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="1216,452,1406,491"/>
-<area shape="rect" id="node39" href="_requires_shutdown_8h_source.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2838,625,3026,664"/>
-<area shape="rect" id="node36" href="_directive_handler_configuration_8h_source.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="1583,539,1815,577"/>
-<area shape="rect" id="node38" href="_namespace_and_name_8h_source.html" title="NamespaceAndName.h" alt="" coords="1666,632,1828,657"/>
-<area shape="rect" id="node43" href="_handler_and_policy_8h_source.html" title="AVSCommon/AVS/HandlerAnd\lPolicy.h" alt="" coords="1253,365,1457,404"/>
-<area shape="rect" id="node45" href="_capability_agent_8h_source.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="2520,365,2713,404"/>
-<area shape="rect" id="node49" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h_source.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="3093,365,3267,404"/>
-<area shape="rect" id="node50" href="_user_activity_notifier_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/UserActivityNotifierInterface.h" alt="" coords="3291,365,3491,404"/>
-<area shape="rect" id="node46" href="_channel_observer_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="2728,452,2921,491"/>
-<area shape="rect" id="node47" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2677,539,2873,577"/>
-<area shape="rect" id="node48" href="_state_provider_interface_8h_source.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="2945,452,3136,491"/>
+<div class="center"><img src="_user_inactivity_monitor_test_8cpp__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_capability_agents_2_system_2test_2_user_inactivity_monitor_test_8cpp" alt=""/></div>
+<map name="_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_capability_agents_2_system_2test_2_user_inactivity_monitor_test_8cpp" id="_2_users_2sdy_2_a_v_s___c_p_p___s_d_k_2github_2alexa-client-sdk_2_capability_agents_2_system_2test_2_user_inactivity_monitor_test_8cpp">
+<area shape="rect" id="node6" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="193,619,442,644"/>
+<area shape="rect" id="node15" href="_mock_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/MockAttachmentManager.h" alt="" coords="638,525,840,564"/>
+<area shape="rect" id="node21" href="_mock_message_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockMessageSender.h" alt="" coords="250,439,441,477"/>
+<area shape="rect" id="node23" href="_mock_exception_encountered_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="618,352,862,391"/>
+<area shape="rect" id="node26" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="2388,119,2558,157"/>
+<area shape="rect" id="node29" href="_directive_sequencer_8h.html" title="ADSL/DirectiveSequencer.h" alt="" coords="1768,125,1955,151"/>
+<area shape="rect" id="node44" href="_user_inactivity_monitor_8h.html" title="System/UserInactivityMonitor.h" alt="" coords="2846,279,3050,304"/>
+<area shape="rect" id="node11" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="183,785,385,824"/>
+<area shape="rect" id="node14" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="43,699,290,737"/>
+<area shape="rect" id="node17" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="655,612,863,651"/>
+<area shape="rect" id="node18" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="699,699,901,737"/>
+<area shape="rect" id="node20" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="409,785,610,824"/>
+<area shape="rect" id="node22" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="250,525,441,564"/>
+<area shape="rect" id="node24" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2260,439,2525,477"/>
+<area shape="rect" id="node25" href="_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="2214,525,2437,564"/>
+<area shape="rect" id="node27" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="3169,439,3345,477"/>
+<area shape="rect" id="node28" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="3068,699,3244,737"/>
+<area shape="rect" id="node33" href="_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="989,352,1193,391"/>
+<area shape="rect" id="node40" href="_directive_processor_8h.html" title="ADSL/DirectiveProcessor.h" alt="" coords="1684,205,1866,231"/>
+<area shape="rect" id="node41" href="_directive_router_8h.html" title="ADSL/DirectiveRouter.h" alt="" coords="1372,279,1535,304"/>
+<area shape="rect" id="node34" href="_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="1255,532,1478,557"/>
+<area shape="rect" id="node35" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="1287,439,1478,477"/>
+<area shape="rect" id="node39" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1038,612,1226,651"/>
+<area shape="rect" id="node36" href="_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="1654,525,1887,564"/>
+<area shape="rect" id="node38" href="_namespace_and_name_8h.html" title="NamespaceAndName.h" alt="" coords="2561,619,2724,644"/>
+<area shape="rect" id="node43" href="_handler_and_policy_8h.html" title="AVSCommon/AVS/HandlerAnd\lPolicy.h" alt="" coords="1279,352,1484,391"/>
+<area shape="rect" id="node45" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="2668,352,2861,391"/>
+<area shape="rect" id="node49" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="2300,352,2474,391"/>
+<area shape="rect" id="node50" href="_user_activity_notifier_interface_8h.html" title="AVSCommon/SDKInterfaces\l/UserActivityNotifierInterface.h" alt="" coords="3169,352,3370,391"/>
+<area shape="rect" id="node46" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="2903,439,3095,477"/>
+<area shape="rect" id="node47" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2798,699,2994,737"/>
+<area shape="rect" id="node48" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="2613,525,2804,564"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -136,264 +136,51 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents.html">alexaClientSDK::capabilityAgents</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1system"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system.html">alexaClientSDK::capabilityAgents::system</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html">alexaClientSDK::capabilityAgents::system::test</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a4b84384ed24936c9d808f6c0ebefed0e"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_user_inactivity_monitor_test_8cpp.html#a4b84384ed24936c9d808f6c0ebefed0e">alexaClientSDK::capabilityAgents::system::test::checkMessageRequest</a> (std::shared_ptr&lt; MessageRequest &gt; messageRequest)</td></tr>
+<tr class="memitem:a4b84384ed24936c9d808f6c0ebefed0e"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#a4b84384ed24936c9d808f6c0ebefed0e">alexaClientSDK::capabilityAgents::system::test::checkMessageRequest</a> (std::shared_ptr&lt; MessageRequest &gt; messageRequest)</td></tr>
 <tr class="separator:a4b84384ed24936c9d808f6c0ebefed0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a430fba4f39cf2de2cf688b72a433cb89"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_user_inactivity_monitor_test_8cpp.html#a430fba4f39cf2de2cf688b72a433cb89">alexaClientSDK::capabilityAgents::system::test::checkMessageRequestAndReleaseTrigger</a> (std::shared_ptr&lt; MessageRequest &gt; messageRequest)</td></tr>
+<tr class="memitem:a430fba4f39cf2de2cf688b72a433cb89"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#a430fba4f39cf2de2cf688b72a433cb89">alexaClientSDK::capabilityAgents::system::test::checkMessageRequestAndReleaseTrigger</a> (std::shared_ptr&lt; MessageRequest &gt; messageRequest)</td></tr>
 <tr class="separator:a430fba4f39cf2de2cf688b72a433cb89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace5b8bd2b6f9b270bf96fe79e1e23e6a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_user_inactivity_monitor_test_8cpp.html#ace5b8bd2b6f9b270bf96fe79e1e23e6a">alexaClientSDK::capabilityAgents::system::test::TEST_F</a> (UserInactivityMonitorTest, createSuccessfully)</td></tr>
+<tr class="memitem:ace5b8bd2b6f9b270bf96fe79e1e23e6a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#ace5b8bd2b6f9b270bf96fe79e1e23e6a">alexaClientSDK::capabilityAgents::system::test::TEST_F</a> (UserInactivityMonitorTest, createSuccessfully)</td></tr>
 <tr class="separator:ace5b8bd2b6f9b270bf96fe79e1e23e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8a6f44689961eaa891fb51dd6d89b3d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_user_inactivity_monitor_test_8cpp.html#ad8a6f44689961eaa891fb51dd6d89b3d">alexaClientSDK::capabilityAgents::system::test::TEST_F</a> (UserInactivityMonitorTest, createWithError)</td></tr>
+<tr class="memitem:ad8a6f44689961eaa891fb51dd6d89b3d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#ad8a6f44689961eaa891fb51dd6d89b3d">alexaClientSDK::capabilityAgents::system::test::TEST_F</a> (UserInactivityMonitorTest, createWithError)</td></tr>
 <tr class="separator:ad8a6f44689961eaa891fb51dd6d89b3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b497707b9b299a410e3c39255d60540"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_user_inactivity_monitor_test_8cpp.html#a0b497707b9b299a410e3c39255d60540">alexaClientSDK::capabilityAgents::system::test::TEST_F</a> (UserInactivityMonitorTest, handleDirectiveProperly)</td></tr>
+<tr class="memitem:a0b497707b9b299a410e3c39255d60540"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#a0b497707b9b299a410e3c39255d60540">alexaClientSDK::capabilityAgents::system::test::TEST_F</a> (UserInactivityMonitorTest, handleDirectiveProperly)</td></tr>
 <tr class="separator:a0b497707b9b299a410e3c39255d60540"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad560d8cdae222c23a5d7b57b677dd79b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_user_inactivity_monitor_test_8cpp.html#ad560d8cdae222c23a5d7b57b677dd79b">alexaClientSDK::capabilityAgents::system::test::TEST_F</a> (UserInactivityMonitorTest, sendMultipleReports)</td></tr>
+<tr class="memitem:ad560d8cdae222c23a5d7b57b677dd79b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#ad560d8cdae222c23a5d7b57b677dd79b">alexaClientSDK::capabilityAgents::system::test::TEST_F</a> (UserInactivityMonitorTest, sendMultipleReports)</td></tr>
 <tr class="separator:ad560d8cdae222c23a5d7b57b677dd79b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38d73c5b062e3fd1f541d2766617eeae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_user_inactivity_monitor_test_8cpp.html#a38d73c5b062e3fd1f541d2766617eeae">alexaClientSDK::capabilityAgents::system::test::TEST_F</a> (UserInactivityMonitorTest, sendMultipleReportsWithReset)</td></tr>
+<tr class="memitem:a38d73c5b062e3fd1f541d2766617eeae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#a38d73c5b062e3fd1f541d2766617eeae">alexaClientSDK::capabilityAgents::system::test::TEST_F</a> (UserInactivityMonitorTest, sendMultipleReportsWithReset)</td></tr>
 <tr class="separator:a38d73c5b062e3fd1f541d2766617eeae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:af299909463b7a84a3f96b0e9621e9083"><td class="memItemLeft" align="right" valign="top"><a id="af299909463b7a84a3f96b0e9621e9083"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_user_inactivity_monitor_test_8cpp.html#af299909463b7a84a3f96b0e9621e9083">alexaClientSDK::capabilityAgents::system::test::USER_INACTIVITY_RESET_NAMESPACE</a> = &quot;System&quot;</td></tr>
-<tr class="memdesc:af299909463b7a84a3f96b0e9621e9083"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a string for the namespace we are testing for. <br /></td></tr>
+<tr class="memitem:af299909463b7a84a3f96b0e9621e9083"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#af299909463b7a84a3f96b0e9621e9083">alexaClientSDK::capabilityAgents::system::test::USER_INACTIVITY_RESET_NAMESPACE</a> = &quot;System&quot;</td></tr>
+<tr class="memdesc:af299909463b7a84a3f96b0e9621e9083"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a string for the namespace we are testing for.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#af299909463b7a84a3f96b0e9621e9083">More...</a><br /></td></tr>
 <tr class="separator:af299909463b7a84a3f96b0e9621e9083"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed336d5e8f3a4e5680a6429f63021423"><td class="memItemLeft" align="right" valign="top"><a id="aed336d5e8f3a4e5680a6429f63021423"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_user_inactivity_monitor_test_8cpp.html#aed336d5e8f3a4e5680a6429f63021423">alexaClientSDK::capabilityAgents::system::test::USER_INACTIVITY_RESET_NAME</a> = &quot;ResetUserInactivity&quot;</td></tr>
-<tr class="memdesc:aed336d5e8f3a4e5680a6429f63021423"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a string for the correct name the endpointing directive uses. <br /></td></tr>
+<tr class="memitem:aed336d5e8f3a4e5680a6429f63021423"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#aed336d5e8f3a4e5680a6429f63021423">alexaClientSDK::capabilityAgents::system::test::USER_INACTIVITY_RESET_NAME</a> = &quot;ResetUserInactivity&quot;</td></tr>
+<tr class="memdesc:aed336d5e8f3a4e5680a6429f63021423"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a string for the correct name the endpointing directive uses.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#aed336d5e8f3a4e5680a6429f63021423">More...</a><br /></td></tr>
 <tr class="separator:aed336d5e8f3a4e5680a6429f63021423"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3169b7eff770f3217732bddb44d4689"><td class="memItemLeft" align="right" valign="top"><a id="ac3169b7eff770f3217732bddb44d4689"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_user_inactivity_monitor_test_8cpp.html#ac3169b7eff770f3217732bddb44d4689">alexaClientSDK::capabilityAgents::system::test::USER_INACTIVITY_MESSAGE_ID</a> = &quot;ABC123DEF&quot;</td></tr>
-<tr class="memdesc:ac3169b7eff770f3217732bddb44d4689"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the string for the message ID used in the directive. <br /></td></tr>
+<tr class="memitem:ac3169b7eff770f3217732bddb44d4689"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#ac3169b7eff770f3217732bddb44d4689">alexaClientSDK::capabilityAgents::system::test::USER_INACTIVITY_MESSAGE_ID</a> = &quot;ABC123DEF&quot;</td></tr>
+<tr class="memdesc:ac3169b7eff770f3217732bddb44d4689"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the string for the message ID used in the directive.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#ac3169b7eff770f3217732bddb44d4689">More...</a><br /></td></tr>
 <tr class="separator:ac3169b7eff770f3217732bddb44d4689"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe0bf8c78c569abf9751743a71c8ab62"><td class="memItemLeft" align="right" valign="top"><a id="afe0bf8c78c569abf9751743a71c8ab62"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>alexaClientSDK::capabilityAgents::system::test::USER_INACTIVITY_PAYLOAD_KEY</b> = &quot;inactiveTimeInSeconds&quot;</td></tr>
+<tr class="memitem:afe0bf8c78c569abf9751743a71c8ab62"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#afe0bf8c78c569abf9751743a71c8ab62">alexaClientSDK::capabilityAgents::system::test::USER_INACTIVITY_PAYLOAD_KEY</a> = &quot;inactiveTimeInSeconds&quot;</td></tr>
 <tr class="separator:afe0bf8c78c569abf9751743a71c8ab62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf6cd2862d47c94e6a9d9468c95fbec3"><td class="memItemLeft" align="right" valign="top"><a id="adf6cd2862d47c94e6a9d9468c95fbec3"></a>
-static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><b>alexaClientSDK::capabilityAgents::system::test::USER_INACTIVITY_REPORT_PERIOD</b> {20}</td></tr>
+<tr class="memitem:adf6cd2862d47c94e6a9d9468c95fbec3"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#adf6cd2862d47c94e6a9d9468c95fbec3">alexaClientSDK::capabilityAgents::system::test::USER_INACTIVITY_REPORT_PERIOD</a> {20}</td></tr>
 <tr class="separator:adf6cd2862d47c94e6a9d9468c95fbec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="file_a4b84384ed24936c9d808f6c0ebefed0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a4b84384ed24936c9d808f6c0ebefed0e">&#9670;&nbsp;</a></span>checkMessageRequest()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool alexaClientSDK::capabilityAgents::system::test::checkMessageRequest </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">MessageRequest</a> &gt;&#160;</td>
-          <td class="paramname"><em>messageRequest</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Check if message request has errors.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">messageRequest</td><td>The message requests to be checked. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if parsing the JSON has error, otherwise <code>false</code>. </dd></dl>
-
-</div>
-</div>
-<a id="file_a430fba4f39cf2de2cf688b72a433cb89"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a430fba4f39cf2de2cf688b72a433cb89">&#9670;&nbsp;</a></span>checkMessageRequestAndReleaseTrigger()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool alexaClientSDK::capabilityAgents::system::test::checkMessageRequestAndReleaseTrigger </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">MessageRequest</a> &gt;&#160;</td>
-          <td class="paramname"><em>messageRequest</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Check if message request has errors.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">messageRequest</td><td>The message requests to be checked. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if parsing the JSON has error, otherwise <code>false</code>. </dd></dl>
-
-</div>
-</div>
-<a id="file_ace5b8bd2b6f9b270bf96fe79e1e23e6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ace5b8bd2b6f9b270bf96fe79e1e23e6a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/5]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::system::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_user_inactivity_monitor_test.html">UserInactivityMonitorTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">createSuccessfully&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This case tests if <code>UserInactivityMonitor</code> basic create function works properly </p>
-
-</div>
-</div>
-<a id="file_ad8a6f44689961eaa891fb51dd6d89b3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ad8a6f44689961eaa891fb51dd6d89b3d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/5]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::system::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_user_inactivity_monitor_test.html">UserInactivityMonitorTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">createWithError&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This case tests if possible <code>nullptr</code> parameters passed to <code>UserInactivityMonitor::create</code> are handled properly. </p>
-
-</div>
-</div>
-<a id="file_a0b497707b9b299a410e3c39255d60540"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a0b497707b9b299a410e3c39255d60540">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/5]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::system::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_user_inactivity_monitor_test.html">UserInactivityMonitorTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">handleDirectiveProperly&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This case tests if a directive is handled properly. </p>
-
-</div>
-</div>
-<a id="file_ad560d8cdae222c23a5d7b57b677dd79b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_ad560d8cdae222c23a5d7b57b677dd79b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/5]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::system::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_user_inactivity_monitor_test.html">UserInactivityMonitorTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">sendMultipleReports&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This case tests if multiple requests are being sent up to AVS. </p>
-
-</div>
-</div>
-<a id="file_a38d73c5b062e3fd1f541d2766617eeae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a38d73c5b062e3fd1f541d2766617eeae">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/5]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::system::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_user_inactivity_monitor_test.html">UserInactivityMonitorTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">sendMultipleReportsWithReset&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This case tests if multiple requests are being sent up to AVS with a reset during the process. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.0</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -65,7 +65,79 @@ $(function() {
 <div class="title">ChangeLog </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h3>[1.2.0] - 2017-10-27</h3>
+<div class="textblock"><h3>[1.3.0] - 2017-12-08</h3>
+<ul>
+<li><b>Enhancements</b><ul>
+<li>ContextManager now passes the namespace/name of the desired state to StateProviderInterface::provideState(). This is helpful when a single StateProvider object provides multiple states, and needs to know which one ContextManager is asking for.</li>
+<li>The mime parser was hardened against duplicate boundaries.</li>
+<li>Added functionality to add and remove AudioPlayer observers to the DefaultClient.</li>
+<li>Unit tests for Alerts were added.</li>
+<li>Added en-IN, en-CA and ja-JP to the SampleApp locale selection menu.</li>
+<li>Added default alert and timer audio data to the SDK SampleApp. There is no longer a requirement to download these audio files and configure them in the json configuration file.</li>
+<li>Added support in SDS Reader and AttachmentReader for seeking into the future. This allows a reader to move to an index which has not yet arrived in the SDS and poll/block until it arrives.</li>
+<li>Added support for blocking Writers in the SharedDataStream class.</li>
+<li>Changed the default status code sent by MessageRequestObserverInterface::onSendCompleted() to SERVER_OTHER_ERROR, and mapped HTTP code 500 to SERVER_INTERNAL_ERROR_V2.</li>
+<li>Added support for parsing stream duration out of playlists.</li>
+<li>Added a configuration option ("sampleApp":"displayCardsSupported") that allows the displaying of display cards to be enabled or disabled.</li>
+<li>Named Timers and Reminders have been updated to fall back to the on-device background audio sound when cloud urls cannot be accessed or rendered.</li>
+</ul>
+</li>
+<li><b>Bug Fixes</b><ul>
+<li>Removed floating point dependencies from core SDK libraries.</li>
+<li>Fixed bug in SpeechSynthesizer where it's erroneously calling stop more than once.</li>
+<li>Fixed an issue in ContentFetcher where it could hang during destruction until an active GET request completed.</li>
+<li>Fixed a couple of parsing bugs in LibCurlHttpContentFetcher related to case-sensitivity and mime-type handling.</li>
+<li>Fixed a bug where MediaPlayerObserverInterface::onPlaybackResumed() wasn't being called after resuming from a pause with a pending play/resume.</li>
+<li>Fixed a bug in LibCurlContentFetcher where it could error out if data is written to the SDS faster than it is consumed.</li>
+<li>The GStreamer-based MediaPlayer reference implementation now uses the ACL HTTP configured client.<ul>
+<li>An API change has been made to MediaPlayerInterface::setSource(). This method now takes in an optional offset as well to allow for immediately streaming to the offset if possible.</li>
+<li>Next and Previous buttons now work with Audible.</li>
+<li>Pandora resume stuttering is addressed.</li>
+<li>Pausing and resuming Amazon music no longer seeks back to the beginning of the song.</li>
+</ul>
+</li>
+<li>libcurl CURLOPT_NOSIGNAL option is set to 1 (<a href="https://curl.haxx.se/libcurl/c/CURLOPT_NOSIGNAL.html">https://curl.haxx.se/libcurl/c/CURLOPT_NOSIGNAL.html</a>) to avoid crashes observed in SampleApp.</li>
+<li>Fixed the timing of the PlaybackReportIntervalEvent and PlaybackReportDelayEvent as specified in the directives.</li>
+<li>Fixed potential deadlocks in MediaPlayer during shutdown related to queued callbacks.</li>
+<li>Fixed a crash in MediaPlayer that could occur if the network is disconnected during playback.</li>
+<li>Fixed a bug where music could keep playing while Alexa is speaking.</li>
+<li>Fixed a bug which was causing problems with pause/resume and next/previous with Amazon Music.</li>
+<li>Fixed a bug where music could briefly start playing between speaks.</li>
+<li>Fixed a bug where HLS playlists would stop streaming after the initial playlist had been played to completion.</li>
+<li>Fixed a bug where Audible playback could not advance to the next chapter.</li>
+<li>Fixed some occurrences of SDK entering the IDLE state during the transition between Listening and Speaking states.</li>
+<li>Fixed a bug where PlaybackFinished events were not reporting the correct offset.<ul>
+<li>An API change has been made to MediaPlayerInterface::getOffset(). This method is now required to return the final offset when called after playback has stopped.</li>
+</ul>
+</li>
+<li>Fixed a problem where AIP was erroneously resetting its state upon getting a cancelDirective() callback.</li>
+</ul>
+</li>
+<li><b>Known Issues</b><ul>
+<li>Capability agent for Notifications is not included in this release.</li>
+<li><code>ACL</code>'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed.</li>
+<li>GUI cards don't show for Kindle.</li>
+<li>The new SpeechSynthesizerState state values GAINING_FOCUS and LOSING_FOCUS were added as part of a work-around. The will likely be removed in subsequent releases.</li>
+<li>With the gstreamer-based MediaPlayer, after muting and unmuting, the next item starts playing rather than continuing with the current item.</li>
+</ul>
+</li>
+</ul>
+<h3>[1.2.1] - 2017-11-16</h3>
+<ul>
+<li><b>Enhancements</b><ul>
+<li>Added comments to <code>AlexaClientSDKConfig.json</code>. These descriptions provide additional guidance for what is expected for each field.</li>
+<li>Enabled pause and resume controls for Pandora.</li>
+</ul>
+</li>
+<li><b>Bug Fixes</b><ul>
+<li>Bug fix for <a href="https://github.com/alexa/avs-device-sdk/issues/329">issue #329</a> - <code>HTTP2Transport</code> instances no longer leak when <code>SERVER_SIDE_DISCONNECT</code> is encountered.</li>
+<li>Bug fix for <a href="https://github.com/alexa/avs-device-sdk/issues/189">issue #189</a> - Fixed a race condition in the <code>Timer</code> class that sometimes caused <code>SpeechSynthesizer</code> to get stuck in the "Speaking" state.</li>
+<li>Bug fix for a race condition that caused <code>SpeechSynthesizer</code> to ignore subsequent <code>Speak</code> directives.</li>
+<li>Bug fix for corrupted mime attachments.</li>
+</ul>
+</li>
+</ul>
+<h3>[1.2.0] - 2017-10-27</h3>
 <ul>
 <li><b>Enhancements</b><ul>
 <li>Updated MediaPlayer to solve stability issues</li>
@@ -78,7 +150,7 @@ $(function() {
 <li>Added support for StreamMetadataExtracted Event. Stream tags found in the stream are represented in JSON and sent to AVS</li>
 <li>Added to the SampleApp a simple GuiRenderer as an observer to the TemplateRuntime Capability Agent</li>
 <li>Moved shared libcurl functionality to AVSCommon/Utils</li>
-<li>Added a CMake option to exclude tests from the "make all" build. Use "cmake &lt;absolute-path-to-source&gt;  
+<li>Added a CMake option to exclude tests from the "make all" build. Use "cmake &lt;absolute-path-to-source&gt;
   -DACSDK_EXCLUDE_TEST_FROM_ALL=ON" to enable it. When this option is enabled "make unit" and "make integration" still could be used to build and run the tests</li>
 </ul>
 </li>
@@ -103,7 +175,7 @@ $(function() {
 <h3>[1.1.0] - 2017-10-02</h3>
 <ul>
 <li><b>Enhancements</b><ul>
-<li>Better GStreamer error reporting. MediaPlayer used to only report <code>MEDIA_ERROR_UNKNOWN</code>, now reports more specific errors as defined in <code><a class="el" href="_error_type_8h_source.html">ErrorType.h</a></code>.</li>
+<li>Better GStreamer error reporting. MediaPlayer used to only report <code>MEDIA_ERROR_UNKNOWN</code>, now reports more specific errors as defined in <code><a class="el" href="_error_type_8h.html">ErrorType.h</a></code>.</li>
 <li>Codebase has been formatted for easier reading.</li>
 <li><code>DirectiveRouter::removeDirectiveHandler()</code> signature changed and now returns a bool indicating if given handler should be successfully removed or not.</li>
 <li>Cleanup of raw and shared pointers in the creation of <code>Transport</code> objects.</li>
@@ -171,7 +243,7 @@ $(function() {
 <blockquote class="doxtable">
 <blockquote class="doxtable">
 <blockquote class="doxtable">
-<p>3553854... Updated CHANGELOG.md and README.md for 1.1 </p>
+<p>3553854... Updated <a class="el" href="_c_h_a_n_g_e_l_o_g_8md.html">CHANGELOG.md</a> and <a class="el" href="_r_e_a_d_m_e_8md.html">README.md</a> for 1.1 </p>
 </blockquote>
 </blockquote>
 </blockquote>
@@ -339,7 +411,7 @@ $(function() {
 </ul>
 <h3>[0.4.0] - 2017-05-31 (patch)</h3>
 <ul>
-<li>Added <code>AuthServer</code>, an authorization server implementation used to retrieve refresh tokens from LWA.</li>
+<li>Added <code><a class="el" href="namespace_auth_server.html">AuthServer</a></code>, an authorization server implementation used to retrieve refresh tokens from LWA.</li>
 </ul>
 <h3>[0.4.0] - 2017-05-24</h3>
 <ul>
@@ -383,7 +455,7 @@ $(function() {
 <li>Changes to ADSL interfaces:<ul>
 <li>The [0.2.0] interface for registering directive handlers (<code>DirectiveSequencer::setDirectiveHandlers()</code>) was problematic because it canceled the ongoing processing of directives and dropped further directives until it completed. The revised API makes the operation immediate without canceling or dropping any handling. However, it does create the possibility that <code>DirectiveHandlerInterface</code> methods <code>preHandleDirective()</code> and <code>handleDirective()</code> may be called on different handlers for the same directive.</li>
 <li><code>DirectiveSequencerInterface::setDirectiveHandlers()</code> was replaced by <code>addDirectiveHandlers()</code> and <code>removeDirectiveHandlers()</code>.</li>
-<li><code>DirectiveHandlerInterface::shutdown()</code> was replaced with <code>onDeregistered()</code>.</li>
+<li><code><a class="el" href="namespace_auth_server.html#a44a37005c847e1d50bcfc24315fd50ff">DirectiveHandlerInterface::shutdown()</a></code> was replaced with <code>onDeregistered()</code>.</li>
 <li><code>DirectiveHandlerInterface::preHandleDirective()</code> now takes a <code>std::unique_ptr</code> instead of a <code>std::shared_ptr</code> to <code>DirectiveHandlerResultInterface</code>.</li>
 <li><code>DirectiveHandlerInterface::handleDirective()</code> now returns a bool indicating if the handler recognizes the <code>messageId</code>.</li>
 </ul>
@@ -391,7 +463,7 @@ $(function() {
 <li>Bug fixes:<ul>
 <li>ACL and AuthDelegate now require TLSv1.2.</li>
 <li><code>onDirective()</code> now sends <code>ExceptionEncountered</code> for unhandled directives.</li>
-<li><code>DirectiveSequencer::shutdown()</code> no longer sends <code>ExceptionEncountered()</code> for queued directives.</li>
+<li><code><a class="el" href="namespace_auth_server.html#a44a37005c847e1d50bcfc24315fd50ff">DirectiveSequencer::shutdown()</a></code> no longer sends <code>ExceptionEncountered()</code> for queued directives.</li>
 </ul>
 </li>
 </ul>
@@ -414,7 +486,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

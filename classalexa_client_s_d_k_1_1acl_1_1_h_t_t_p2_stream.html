@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>acl</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html">HTTP2Stream</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html">acl</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html">HTTP2Stream</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -79,9 +79,14 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a253d72adc131452317aba4863a3c6ea5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5">HTTPResponseCodes</a> { <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5a2e8b43686fb259701beba62c8536f5ef">NO_RESPONSE_RECEIVED</a> = 0, 
+<tr class="memitem:a253d72adc131452317aba4863a3c6ea5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5">HTTPResponseCodes</a> { <br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5a2e8b43686fb259701beba62c8536f5ef">NO_RESPONSE_RECEIVED</a> = 0, 
 <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5a6d8ad7c0d644b6c01414ce8c62abdadb">SUCCESS_OK</a> = 200, 
-<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5a0206a26b042f61dfcc47f0d00b639c2c">SUCCESS_NO_CONTENT</a> = 204
+<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5a0206a26b042f61dfcc47f0d00b639c2c">SUCCESS_NO_CONTENT</a> = 204, 
+<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5a17658eb4b9f1987526760ad57cf6fa14">BAD_REQUEST</a> = 400, 
+<br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5a1b65ffd773ce3da00580697303a183fe">SERVER_INTERNAL_ERROR</a> = 500
+<br />
  }</td></tr>
 <tr class="separator:a253d72adc131452317aba4863a3c6ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -150,6 +155,10 @@ Static Public Member Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="a253d72adc131452317aba4863a3c6ea5a6d8ad7c0d644b6c01414ce8c62abdadb"></a>SUCCESS_OK&#160;</td><td class="fielddoc"><p>HTTP Success with reponse payload. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a253d72adc131452317aba4863a3c6ea5a0206a26b042f61dfcc47f0d00b639c2c"></a>SUCCESS_NO_CONTENT&#160;</td><td class="fielddoc"><p>HTTP Succcess with no response payload. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a253d72adc131452317aba4863a3c6ea5a17658eb4b9f1987526760ad57cf6fa14"></a>BAD_REQUEST&#160;</td><td class="fielddoc"><p>HTTP code for invalid request by user. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a253d72adc131452317aba4863a3c6ea5a1b65ffd773ce3da00580697303a183fe"></a>SERVER_INTERNAL_ERROR&#160;</td><td class="fielddoc"><p>HTTP code for internal error by server which didn't fulfill the request. </p>
 </td></tr>
 </table>
 
@@ -718,14 +727,14 @@ template&lt;class TickType , class TickPeriod &gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/ACL/include/ACL/Transport/<a class="el" href="_h_t_t_p2_stream_8h_source.html">HTTP2Stream.h</a></li>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/ACL/src/Transport/HTTP2Stream.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/ACL/include/ACL/Transport/<a class="el" href="_h_t_t_p2_stream_8h_source.html">HTTP2Stream.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/ACL/src/Transport/<a class="el" href="_h_t_t_p2_stream_8cpp.html">HTTP2Stream.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

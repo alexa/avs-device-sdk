@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>contextManager</b></li><li class="navelem"><b>test</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html">MockStateProvider</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager_1_1test.html">test</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html">MockStateProvider</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -74,16 +74,16 @@ $(function() {
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html#aae724f0b6fb11575b27b335bde62cf4f">create</a>(std::shared_ptr&lt; ContextManager &gt; contextManager, const NamespaceAndName &amp;namespaceAndName, const std::string &amp;state, const StateRefreshPolicy &amp;refreshPolicy, const std::chrono::milliseconds delayTime)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html">alexaClientSDK::contextManager::test::MockStateProvider</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html#aed970cedc61f0ad3a24405c083db5072">doProvideState</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html">alexaClientSDK::contextManager::test::MockStateProvider</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>getCurrentstateRequestToken</b>() (defined in <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html">alexaClientSDK::contextManager::test::MockStateProvider</a>)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html">alexaClientSDK::contextManager::test::MockStateProvider</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html#a50d192b628dc851223fb6bc771862ad8">getCurrentstateRequestToken</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html">alexaClientSDK::contextManager::test::MockStateProvider</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html#afaa51370dfd7cea456f6cdaf4c34f335">MockStateProvider</a>(std::shared_ptr&lt; ContextManager &gt; contextManager, const NamespaceAndName &amp;namespaceAndName, const std::string &amp;state, const StateRefreshPolicy &amp;refreshPolicy, const std::chrono::milliseconds delayTime)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html">alexaClientSDK::contextManager::test::MockStateProvider</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html#aeab8ef8f4d19212645f8dd25720325d9">provideState</a>(unsigned int currentstateRequestToken) override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html">alexaClientSDK::contextManager::test::MockStateProvider</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>~MockStateProvider</b>() (defined in <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html">alexaClientSDK::contextManager::test::MockStateProvider</a>)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html">alexaClientSDK::contextManager::test::MockStateProvider</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html#a78a98ac6558b3dca13d9534ac0d65174">provideState</a>(const NamespaceAndName &amp;stateProviderName, unsigned int currentstateRequestToken) override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html">alexaClientSDK::contextManager::test::MockStateProvider</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html#adb8e8ade8f2ea67142e4271d37bc6b84">~MockStateProvider</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html">alexaClientSDK::contextManager::test::MockStateProvider</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html#a005d5be73f5a0b6d3306e37fb324249f">~StateProviderInterface</a>()=default</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::StateProviderInterface</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

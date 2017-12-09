@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>avsCommon</b></li><li class="navelem"><b>sdkInterfaces</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html">SpeakerManagerObserverInterface</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common.html">avsCommon</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html">sdkInterfaces</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html">SpeakerManagerObserverInterface</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -87,9 +87,9 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::SpeakerManager
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a38d6a50cc5799f07612827e1a163babb"><td class="memItemLeft" align="right" valign="top"><a id="a38d6a50cc5799f07612827e1a163babb"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html#a38d6a50cc5799f07612827e1a163babb">Source</a> { <b>DIRECTIVE</b>, 
-<b>LOCAL_API</b>
- }<tr class="memdesc:a38d6a50cc5799f07612827e1a163babb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the source of the call is from an AVS Directive or through a Local API call. <br /></td></tr>
+<tr class="memitem:a38d6a50cc5799f07612827e1a163babb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html#a38d6a50cc5799f07612827e1a163babb">Source</a> { <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html#a38d6a50cc5799f07612827e1a163babba31e340aa5b97f6d91317dff3a239cc5e">Source::DIRECTIVE</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html#a38d6a50cc5799f07612827e1a163babba72cc8b4c3036490c66ab2fde91b3ced2">Source::LOCAL_API</a>
+ }<tr class="memdesc:a38d6a50cc5799f07612827e1a163babb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the source of the call is from an AVS Directive or through a Local API call.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html#a38d6a50cc5799f07612827e1a163babb">More...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:a38d6a50cc5799f07612827e1a163babb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -101,7 +101,36 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This interface is for observing changes to speakers that are made by the <code>SpeakerManager</code>.</p>
 <p>Observers of the SpeakerManager are notified using the SpeakerManagers internal thread. The callback function must exit as quickly as possible and perform minimal calculations. Not doing so can cause delays in the <code>SpeakerManager</code>. No other SpeakerManager methods which utilize that thread must be called from this callback. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a38d6a50cc5799f07612827e1a163babb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38d6a50cc5799f07612827e1a163babb">&#9670;&nbsp;</a></span>Source</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html#a38d6a50cc5799f07612827e1a163babb">alexaClientSDK::avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Indicates whether the source of the call is from an AVS Directive or through a Local API call. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a38d6a50cc5799f07612827e1a163babba31e340aa5b97f6d91317dff3a239cc5e"></a>DIRECTIVE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a38d6a50cc5799f07612827e1a163babba72cc8b4c3036490c66ab2fde91b3ced2"></a>LOCAL_API&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="accea65fdb7d41482e0c7ff98fd17016d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#accea65fdb7d41482e0c7ff98fd17016d">&#9670;&nbsp;</a></span>onSpeakerSettingsChanged()</h2>
 
@@ -156,13 +185,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_speaker_manager_observer_interface_8h_source.html">SpeakerManagerObserverInterface.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_speaker_manager_observer_interface_8h_source.html">SpeakerManagerObserverInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

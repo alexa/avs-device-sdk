@@ -1,6 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_factory_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::HTTPContentFetcher\lInterfaceFactoryInterface" alt="" coords="5,75,247,127"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_content_fetcher_factory.html" title="alexaClientSDK::avsCommon\l::utils::libcurlUtils::\lHTTPContentFetcherFactory" alt="" coords="310,5,507,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_content_fetcher_factory.html" title="A mock factory that creates mock content fetchers. " alt="" coords="295,81,521,120"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_mock_content_fetcher_factory.html" title="A mock factory that creates mock content fetchers. " alt="" coords="298,144,519,196"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_global_settings_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::GlobalSettings\lObserverInterface" alt="" coords="5,44,208,96"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_updated_event_sender.html" title="alexaClientSDK::capability\lAgents::settings::SettingsUpdated\lEventSender" alt="" coords="256,5,478,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1test_1_1_mock_global_settings_observer.html" title="alexaClientSDK::capability\lAgents::settings::test\l::MockGlobalSettingsObserver" alt="" coords="266,81,468,133"/>
 </map>

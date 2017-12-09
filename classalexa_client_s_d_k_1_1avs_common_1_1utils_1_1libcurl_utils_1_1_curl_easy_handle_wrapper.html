@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.2.1</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><b>avsCommon</b></li><li class="navelem"><b>utils</b></li><li class="navelem"><b>libcurlUtils</b></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html">CurlEasyHandleWrapper</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common.html">avsCommon</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html">utils</a></li><li class="navelem"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html">libcurlUtils</a></li><li class="navelem"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html">CurlEasyHandleWrapper</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -95,11 +95,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a33550beee4b5eef59c38afdd60ee84f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab57976eddbdc9a43754d95179117b775"><td class="memItemLeft" align="right" valign="top">CURL *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ab57976eddbdc9a43754d95179117b775">getCurlHandle</a> ()</td></tr>
 <tr class="separator:ab57976eddbdc9a43754d95179117b775"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad39e3db5b3495f88cbb6e9e86f910130"><td class="memItemLeft" align="right" valign="top"><a id="ad39e3db5b3495f88cbb6e9e86f910130"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>addHTTPHeader</b> (const std::string &amp;header)</td></tr>
+<tr class="memitem:ad39e3db5b3495f88cbb6e9e86f910130"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ad39e3db5b3495f88cbb6e9e86f910130">addHTTPHeader</a> (const std::string &amp;header)</td></tr>
 <tr class="separator:ad39e3db5b3495f88cbb6e9e86f910130"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29f38d8cc80e03c239b835d22a1cb71a"><td class="memItemLeft" align="right" valign="top"><a id="a29f38d8cc80e03c239b835d22a1cb71a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>addPostHeader</b> (const std::string &amp;header)</td></tr>
+<tr class="memitem:a29f38d8cc80e03c239b835d22a1cb71a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a29f38d8cc80e03c239b835d22a1cb71a">addPostHeader</a> (const std::string &amp;header)</td></tr>
 <tr class="separator:a29f38d8cc80e03c239b835d22a1cb71a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeeec32f86c5e6d8ca2dbab3dddc147de"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#aeeec32f86c5e6d8ca2dbab3dddc147de">setURL</a> (const std::string &amp;url)</td></tr>
 <tr class="separator:aeeec32f86c5e6d8ca2dbab3dddc147de"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -214,6 +212,42 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>addPostHeader</b> (co
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ad39e3db5b3495f88cbb6e9e86f910130"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad39e3db5b3495f88cbb6e9e86f910130">&#9670;&nbsp;</a></span>addHTTPHeader()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper::addHTTPHeader </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>header</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a29f38d8cc80e03c239b835d22a1cb71a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29f38d8cc80e03c239b835d22a1cb71a">&#9670;&nbsp;</a></span>addPostHeader()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper::addPostHeader </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>header</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ab57976eddbdc9a43754d95179117b775"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab57976eddbdc9a43754d95179117b775">&#9670;&nbsp;</a></span>getCurlHandle()</h2>
 
@@ -549,14 +583,14 @@ CURL post form </li>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/<a class="el" href="_curl_easy_handle_wrapper_8h_source.html">CurlEasyHandleWrapper.h</a></li>
-<li>/Users/erikhopf/sdk-folder/sdk-source/avs-device-sdk/AVSCommon/Utils/src/LibcurlUtils/CurlEasyHandleWrapper.cpp</li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/<a class="el" href="_curl_easy_handle_wrapper_8h_source.html">CurlEasyHandleWrapper.h</a></li>
+<li>/Users/sdy/AVS_CPP_SDK/github/alexa-client-sdk/AVSCommon/Utils/src/LibcurlUtils/<a class="el" href="_curl_easy_handle_wrapper_8cpp.html">CurlEasyHandleWrapper.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.2.1 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.3.0 - Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

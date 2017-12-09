@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['missing_5frequired_5fproperty',['MISSING_REQUIRED_PROPERTY',['../classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#ae9d9bccbd753f88f8f747cfc31fbbfc7a435178e2250f29b0e0fbcd3c56611bd1',1,'alexaClientSDK::capabilityAgents::alerts::Alert']]]
+  ['kget',['kGET',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#af99f8694e53fbfa4fd3e291f53f7ef55ae0bd139e3b8411576d1407e0600756d0',1,'alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper']]],
+  ['kpost',['kPOST',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#af99f8694e53fbfa4fd3e291f53f7ef55a5596742061fc631cdf6bf2a6fa954df3',1,'alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper']]]
 ];
