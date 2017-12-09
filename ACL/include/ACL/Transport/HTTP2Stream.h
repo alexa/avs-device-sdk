@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_STREAM_H_
-#define ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_STREAM_H_
+#ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2STREAM_H_
+#define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2STREAM_H_
 
 #include <atomic>
 #include <chrono>
@@ -57,7 +57,11 @@ public:
         /// HTTP Success with reponse payload.
         SUCCESS_OK = 200,
         /// HTTP Succcess with no response payload.
-        SUCCESS_NO_CONTENT = 204
+        SUCCESS_NO_CONTENT = 204,
+        /// HTTP code for invalid request by user.
+        BAD_REQUEST = 400,
+        /// HTTP code for internal error by server which didn't fulfill the request.
+        SERVER_INTERNAL_ERROR = 500
     };
 
     /**
@@ -294,4 +298,4 @@ void HTTP2Stream::setProgressTimeout(std::chrono::duration<TickType, TickPeriod>
 }  // namespace acl
 }  // namespace alexaClientSDK
 
-#endif  // ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_STREAM_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2STREAM_H_

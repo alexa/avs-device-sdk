@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AUTH_DELEGATE_TEST_MOCK_AUTH_OBSERVER_H_
-#define ALEXA_CLIENT_SDK_AUTH_DELEGATE_TEST_MOCK_AUTH_OBSERVER_H_
+#ifndef ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_MOCKAUTHOBSERVER_H_
+#define ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_MOCKAUTHOBSERVER_H_
 
 #include <gmock/gmock.h>
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
@@ -35,4 +35,4 @@ public:
 }  // namespace authDelegate
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AUTH_DELEGATE_TEST_MOCK_AUTH_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_MOCKAUTHOBSERVER_H_

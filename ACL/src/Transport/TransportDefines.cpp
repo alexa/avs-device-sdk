@@ -34,19 +34,21 @@ int TransportDefines::RETRY_TABLE[] = {
 int TransportDefines::RETRY_TABLE_SIZE = (sizeof(RETRY_TABLE) / sizeof(RETRY_TABLE[0]));
 
 /// Randomization used in the computation of retry times.
-double TransportDefines::RETRY_RANDOMIZATION_FACTOR = 0.5;
+int TransportDefines::RETRY_RANDOMIZATION_PERCENTAGE = 50;
 
-double TransportDefines::RETRY_DECREASE_FACTOR = 1 / (TransportDefines::RETRY_RANDOMIZATION_FACTOR + 1);
+/// Lower bound of the interval to distribute the retry duration.
+int TransportDefines::RETRY_DECREASE_PERCENTAGE =
+    (100 * 100) / (TransportDefines::RETRY_RANDOMIZATION_PERCENTAGE + 100);
 
 /// Upper bound of the interval to distribute the retry duration.
-double TransportDefines::RETRY_INCREASE_FACTOR = (TransportDefines::RETRY_RANDOMIZATION_FACTOR + 1);
+int TransportDefines::RETRY_INCREASE_PERCENTAGE = 100 + TransportDefines::RETRY_RANDOMIZATION_PERCENTAGE;
 
 /// Retry Timer object.
 avsCommon::utils::RetryTimer TransportDefines::RETRY_TIMER(
     TransportDefines::RETRY_TABLE,
     TransportDefines::RETRY_TABLE_SIZE,
-    TransportDefines::RETRY_DECREASE_FACTOR,
-    TransportDefines::RETRY_INCREASE_FACTOR);
+    TransportDefines::RETRY_DECREASE_PERCENTAGE,
+    TransportDefines::RETRY_INCREASE_PERCENTAGE);
 
 }  // namespace acl
 }  // namespace alexaClientSDK

@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_TEST_AVS_COMMON_UTILS_MEDIA_PLAYER_MOCK_MEDIA_PLAYER_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_TEST_AVS_COMMON_UTILS_MEDIA_PLAYER_MOCK_MEDIA_PLAYER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_TEST_AVSCOMMON_UTILS_MEDIAPLAYER_MOCKMEDIAPLAYER_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_TEST_AVSCOMMON_UTILS_MEDIAPLAYER_MOCKMEDIAPLAYER_H_
 
 #include "AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h"
 #include <gmock/gmock.h>
@@ -54,9 +54,12 @@ public:
     MOCK_METHOD1(
         attachmentSetSource,
         SourceId(std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader));
-    SourceId setSource(const std::string& url) /*override*/;
+    SourceId setSource(
+        const std::string& url,
+        std::chrono::milliseconds offset = std::chrono::milliseconds::zero()) /*override*/;
     MOCK_METHOD2(streamSetSource, SourceId(std::shared_ptr<std::istream> stream, bool repeat));
     SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) /*override*/;
+    void doShutdown() /*override*/;
     MOCK_METHOD1(urlSetSource, SourceId(const std::string& url));
 
     MOCK_METHOD1(play, bool(SourceId));
@@ -64,7 +67,6 @@ public:
     MOCK_METHOD1(pause, bool(SourceId));
     MOCK_METHOD1(resume, bool(SourceId));
     MOCK_METHOD1(getOffset, std::chrono::milliseconds(SourceId));
-    MOCK_METHOD2(setOffset, bool(SourceId, std::chrono::milliseconds offset));
 
     /**
      * This is a mock method which will generate a new SourceId.
@@ -265,4 +267,4 @@ public:
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_TEST_AVS_COMMON_UTILS_MEDIA_PLAYER_MOCK_MEDIA_PLAYER_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_TEST_AVSCOMMON_UTILS_MEDIAPLAYER_MOCKMEDIAPLAYER_H_

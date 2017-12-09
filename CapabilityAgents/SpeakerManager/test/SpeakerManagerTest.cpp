@@ -175,9 +175,6 @@ public:
     /// CleanUp and reset the SpeakerManager.
     void cleanUp();
 
-    /// Function to wait for @c m_wakeSetStateFuture to be set.
-    SetStateResult wakeOnSetState();
-
     /// Function to wait for @c m_wakeSetCompleteFuture to be set.
     void wakeOnSetCompleted();
 
@@ -186,19 +183,11 @@ public:
 
     /// A constructor which initializes the promises and futures needed for the test class.
     SpeakerManagerTest() :
-            m_wakeSetStatePromise{},
-            m_wakeSetStateFuture{m_wakeSetStatePromise.get_future()},
             m_wakeSetCompletedPromise{},
             m_wakeSetCompletedFuture{m_wakeSetCompletedPromise.get_future()} {
     }
 
 protected:
-    /// Promise to test setState calls.
-    std::promise<void> m_wakeSetStatePromise;
-
-    /// Future to test setState calls.
-    std::future<void> m_wakeSetStateFuture;
-
     /// Promise to synchronize directive handling through setCompleted.
     std::promise<void> m_wakeSetCompletedPromise;
 
@@ -242,11 +231,6 @@ void SpeakerManagerTest::TearDown() {
     }
 }
 
-SetStateResult SpeakerManagerTest::wakeOnSetState() {
-    m_wakeSetStatePromise.set_value();
-    return SetStateResult::SUCCESS;
-}
-
 void SpeakerManagerTest::wakeOnSetCompleted() {
     m_wakeSetCompletedPromise.set_value();
 }
@@ -261,6 +245,21 @@ std::set<SpeakerInterface::Type> SpeakerManagerTest::getUniqueTypes(
         types.insert(speaker->getSpeakerType());
     }
     return types;
+}
+
+/// Helper function to generate the VolumeState in JSON for the ContextManager.
+std::string generateVolumeStateJson(SpeakerInterface::SpeakerSettings settings) {
+    rapidjson::Document state(rapidjson::kObjectType);
+    state.AddMember(VOLUME_KEY, settings.volume, state.GetAllocator());
+    state.AddMember(MUTED_KEY, settings.mute, state.GetAllocator());
+
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    if (!state.Accept(writer)) {
+        return "";
+    }
+
+    return buffer.GetString();
 }
 
 /**
@@ -309,21 +308,19 @@ TEST_F(SpeakerManagerTest, testNoSpeakers) {
 }
 
 /**
- * Tests that the SpeakerManager successfully registers itself with the ContextManager at constructor time, and
- * successfully deregisters itself with the ContextManager during shutdown.
+ * Tests that the SpeakerManager initially provides the state at constructor time.
  */
-TEST_F(SpeakerManagerTest, testContextManagerSetStateProvider) {
-    EXPECT_CALL(*m_mockContextManager, setStateProvider(_, NotNull())).Times(Exactly(1));
-    EXPECT_CALL(*m_mockContextManager, setStateProvider(_, IsNull())).Times(Exactly(1));
+TEST_F(SpeakerManagerTest, testContextManagerSetStateConstructor) {
+    EXPECT_CALL(
+        *m_mockContextManager,
+        setState(VOLUME_STATE, generateVolumeStateJson(DEFAULT_SETTINGS), StateRefreshPolicy::NEVER, _))
+        .Times(Exactly(1));
     auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SYNCED);
     speaker->DelegateToReal();
 
     std::vector<std::shared_ptr<SpeakerInterface>> speakers{speaker};
     m_speakerManager =
         SpeakerManager::create(speakers, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
-
-    m_speakerManager->shutdown();
-    m_speakerManager.reset();
 }
 
 /*
@@ -523,63 +520,6 @@ TEST_F(SpeakerManagerTest, testGetConfiguration) {
 }
 
 /**
- * Tests provideState with 1 general speaker. SpeakerManager will only provide state of AVS_SYNCED speakers.
- */
-TEST_F(SpeakerManagerTest, testProvideStateGeneralSpeaker) {
-    auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SYNCED);
-    speaker->DelegateToReal();
-
-    m_speakerManager =
-        SpeakerManager::create({speaker}, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
-
-    rapidjson::Document state(rapidjson::kObjectType);
-    state.AddMember(VOLUME_KEY, DEFAULT_SETTINGS.volume, state.GetAllocator());
-    state.AddMember(MUTED_KEY, DEFAULT_SETTINGS.mute, state.GetAllocator());
-
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    ASSERT_TRUE(state.Accept(writer));
-
-    EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, buffer.GetString(), StateRefreshPolicy::ALWAYS, _))
-        .Times(Exactly(1))
-        .WillOnce(InvokeWithoutArgs(this, &SpeakerManagerTest::wakeOnSetState));
-
-    m_speakerManager->provideState(0);
-    m_wakeSetStateFuture.wait_for(TIMEOUT);
-}
-
-/**
- * Tests provideState with 1 AVS_SYNCED and 1 non-AVS_SYNCED speaker. SpeakerManager will only provide state of
- * AVS_SYNCED speakers.
- */
-TEST_F(SpeakerManagerTest, testProvideStateGeneralAndNonGeneralSpeaker) {
-    auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SYNCED);
-    speaker->DelegateToReal();
-
-    auto speaker2 = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::LOCAL);
-    speaker2->DelegateToReal();
-    speaker2->setVolume(AVS_SET_VOLUME_MAX);
-
-    m_speakerManager =
-        SpeakerManager::create({speaker, speaker2}, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
-
-    rapidjson::Document state(rapidjson::kObjectType);
-    state.AddMember(VOLUME_KEY, DEFAULT_SETTINGS.volume, state.GetAllocator());
-    state.AddMember(MUTED_KEY, DEFAULT_SETTINGS.mute, state.GetAllocator());
-
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    ASSERT_TRUE(state.Accept(writer));
-
-    EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, buffer.GetString(), StateRefreshPolicy::ALWAYS, _))
-        .Times(Exactly(1))
-        .WillOnce(InvokeWithoutArgs(this, &SpeakerManagerTest::wakeOnSetState));
-
-    m_speakerManager->provideState(0);
-    m_wakeSetStateFuture.wait_for(TIMEOUT);
-}
-
-/**
  * Test that adding a null observer does not cause any errors in the SpeakerManager.
  */
 TEST_F(SpeakerManagerTest, testAddNullObserver) {
@@ -663,12 +603,12 @@ INSTANTIATE_TEST_CASE_P(
             SpeakerInterface::Type::LOCAL
         }));
     // clang-format off
+
 /**
  * Parameterized test for setVolume. One event should be sent if an AVS_SYNCED typed speaker is modified.
  */
 TEST_P(SpeakerManagerTest, testSetVolume) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers;
-    int eventsSent = 0;
 
     for (auto& typeOfSpeaker : GetParam()) {
         auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(typeOfSpeaker);
@@ -677,21 +617,20 @@ TEST_P(SpeakerManagerTest, testSetVolume) {
         speakers.push_back(speaker);
     }
 
-    auto uniqueTypes = getUniqueTypes(speakers);
-
-    if (uniqueTypes.count(SpeakerInterface::Type::AVS_SYNCED)) {
-        eventsSent = 1;
-    }
-    EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(eventsSent));
-
     m_speakerManager =
         SpeakerManager::create(speakers, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
 
     SpeakerInterface::SpeakerSettings expectedSettings{AVS_SET_VOLUME_MAX, UNMUTE};
     m_speakerManager->addSpeakerManagerObserver(m_observer);
 
-    for (auto type : uniqueTypes) {
+    for (auto type : getUniqueTypes(speakers)) {
         EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(SpeakerManagerObserverInterface::Source::LOCAL_API, type, expectedSettings)).Times(Exactly(1));
+        if (SpeakerInterface::Type::AVS_SYNCED == type) {
+            EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(1));
+            EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, _, StateRefreshPolicy::NEVER, _)).Times(AnyNumber());
+            EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, generateVolumeStateJson(expectedSettings), StateRefreshPolicy::NEVER, _)).Times(Exactly(1));
+        }
+
         std::future<bool> future = m_speakerManager->setVolume(type, AVS_SET_VOLUME_MAX);
         ASSERT_TRUE(future.get());
     }
@@ -702,7 +641,6 @@ TEST_P(SpeakerManagerTest, testSetVolume) {
  */
 TEST_P(SpeakerManagerTest, testAdjustVolume) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers;
-    int eventsSent = 0;
 
     for (auto& typeOfSpeaker : GetParam()) {
         auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(typeOfSpeaker);
@@ -711,13 +649,6 @@ TEST_P(SpeakerManagerTest, testAdjustVolume) {
         speakers.push_back(speaker);
     }
 
-    auto uniqueTypes = getUniqueTypes(speakers);
-
-    if (uniqueTypes.count(SpeakerInterface::Type::AVS_SYNCED)) {
-        eventsSent = 1;
-    }
-    EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(eventsSent));
-
     m_speakerManager =
         SpeakerManager::create(speakers, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
 
@@ -725,8 +656,14 @@ TEST_P(SpeakerManagerTest, testAdjustVolume) {
     SpeakerInterface::SpeakerSettings expectedSettings{AVS_SET_VOLUME_MIN, UNMUTE};
     m_speakerManager->addSpeakerManagerObserver(m_observer);
 
-    for (auto type : uniqueTypes) {
+    for (auto type : getUniqueTypes(speakers)) {
         EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(SpeakerManagerObserverInterface::Source::LOCAL_API, type, expectedSettings)).Times(Exactly(1));
+        if (SpeakerInterface::Type::AVS_SYNCED == type) {
+            EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(1));
+            EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, _, StateRefreshPolicy::NEVER, _)).Times(AnyNumber());
+            EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, generateVolumeStateJson(expectedSettings), StateRefreshPolicy::NEVER, _)).Times(Exactly(1));
+        }
+
         std::future<bool> future = m_speakerManager->adjustVolume(type, AVS_ADJUST_VOLUME_MIN);
         ASSERT_TRUE(future.get());
     }
@@ -737,7 +674,6 @@ TEST_P(SpeakerManagerTest, testAdjustVolume) {
  */
 TEST_P(SpeakerManagerTest, testSetMute) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers;
-    int eventsSent = 0;
 
     for (auto& typeOfSpeaker : GetParam()) {
         auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(typeOfSpeaker);
@@ -746,21 +682,20 @@ TEST_P(SpeakerManagerTest, testSetMute) {
         speakers.push_back(speaker);
     }
 
-    auto uniqueTypes = getUniqueTypes(speakers);
-
-    if (uniqueTypes.count(SpeakerInterface::Type::AVS_SYNCED)) {
-        eventsSent = 1;
-    }
-    EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(eventsSent));
-
     m_speakerManager =
         SpeakerManager::create(speakers, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
 
     SpeakerInterface::SpeakerSettings expectedSettings{DEFAULT_SETTINGS.volume, MUTE};
     m_speakerManager->addSpeakerManagerObserver(m_observer);
 
-    for (auto type : uniqueTypes) {
+    for (auto type : getUniqueTypes(speakers)) {
         EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(SpeakerManagerObserverInterface::Source::LOCAL_API, type, expectedSettings)).Times(Exactly(1));
+        if (SpeakerInterface::Type::AVS_SYNCED == type) {
+            EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(1));
+            EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, _, StateRefreshPolicy::NEVER, _)).Times(AnyNumber());
+            EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, generateVolumeStateJson(expectedSettings), StateRefreshPolicy::NEVER, _)).Times(Exactly(1));
+        }
+
         std::future<bool> future = m_speakerManager->setMute(type, MUTE);
         ASSERT_TRUE(future.get());
     }
@@ -775,7 +710,8 @@ TEST_P(SpeakerManagerTest, testGetSpeakerSettings) {
     for (auto& typeOfSpeaker : GetParam()) {
         auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(typeOfSpeaker);
         speaker->DelegateToReal();
-        EXPECT_CALL(*speaker, getSpeakerSettings(_)).Times(Exactly(1));
+        // There are other calls to getSpeakerSettings(), such as when we initially provide the Context.
+        EXPECT_CALL(*speaker, getSpeakerSettings(_)).Times(AtLeast(1));
         speakers.push_back(speaker);
     }
 
@@ -804,6 +740,7 @@ TEST_P(SpeakerManagerTest, testGetSpeakerSettings) {
 TEST_P(SpeakerManagerTest, testSetVolumeDirective) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers;
     int eventsSent = 0;
+    SpeakerInterface::SpeakerSettings expectedSettings{AVS_SET_VOLUME_MAX, UNMUTE};
 
     // Create Speaker objects.
     for (auto& typeOfSpeaker : GetParam()) {
@@ -826,10 +763,12 @@ TEST_P(SpeakerManagerTest, testSetVolumeDirective) {
     if (uniqueTypes.count(SpeakerInterface::Type::AVS_SYNCED)) {
         eventsSent = 1;
 
-        SpeakerInterface::SpeakerSettings expectedSettings{AVS_SET_VOLUME_MAX, UNMUTE};
         EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(SpeakerManagerObserverInterface::Source::DIRECTIVE, SpeakerInterface::Type::AVS_SYNCED, expectedSettings)).Times(Exactly(1));
+        EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, _, StateRefreshPolicy::NEVER, _)).Times(AnyNumber());
+        EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, generateVolumeStateJson(expectedSettings), StateRefreshPolicy::NEVER, _)).Times(Exactly(1));
     } else {
         EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(_, _, _)).Times(Exactly(0));
+        EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, _, StateRefreshPolicy::NEVER, _)).Times(Exactly(0));
     }
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(eventsSent));
     EXPECT_CALL(*(m_mockDirectiveHandlerResult.get()), setCompleted())
@@ -859,6 +798,7 @@ TEST_P(SpeakerManagerTest, testSetVolumeDirective) {
 TEST_P(SpeakerManagerTest, testAdjustVolumeDirective) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers;
     int eventsSent = 0;
+    SpeakerInterface::SpeakerSettings expectedSettings{AVS_SET_VOLUME_MAX, UNMUTE};
 
     // Create Speaker objects.
     for (auto& typeOfSpeaker : GetParam()) {
@@ -881,10 +821,12 @@ TEST_P(SpeakerManagerTest, testAdjustVolumeDirective) {
     if (uniqueTypes.count(SpeakerInterface::Type::AVS_SYNCED)) {
         eventsSent = 1;
 
-        SpeakerInterface::SpeakerSettings expectedSettings{AVS_SET_VOLUME_MAX, UNMUTE};
         EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(SpeakerManagerObserverInterface::Source::DIRECTIVE, SpeakerInterface::Type::AVS_SYNCED, expectedSettings)).Times(Exactly(1));
+        EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, _, StateRefreshPolicy::NEVER, _)).Times(AnyNumber());
+        EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, generateVolumeStateJson(expectedSettings), StateRefreshPolicy::NEVER, _)).Times(Exactly(1));
     } else {
         EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(_, _, _)).Times(Exactly(0));
+        EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, _, StateRefreshPolicy::NEVER, _)).Times(Exactly(0));
     }
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(eventsSent));
     EXPECT_CALL(*(m_mockDirectiveHandlerResult.get()), setCompleted())
@@ -914,6 +856,7 @@ TEST_P(SpeakerManagerTest, testAdjustVolumeDirective) {
 TEST_P(SpeakerManagerTest, testSetMuteDirective) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers;
     int eventsSent = 0;
+    SpeakerInterface::SpeakerSettings expectedSettings{DEFAULT_SETTINGS.volume, MUTE};
 
     // Create Speaker objects.
     for (auto& typeOfSpeaker : GetParam()) {
@@ -935,10 +878,12 @@ TEST_P(SpeakerManagerTest, testSetMuteDirective) {
     if (uniqueTypes.count(SpeakerInterface::Type::AVS_SYNCED)) {
         eventsSent = 1;
 
-        SpeakerInterface::SpeakerSettings expectedSettings{DEFAULT_SETTINGS.volume, MUTE};
         EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(SpeakerManagerObserverInterface::Source::DIRECTIVE, SpeakerInterface::Type::AVS_SYNCED, expectedSettings)).Times(Exactly(1));
+        EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, _, StateRefreshPolicy::NEVER, _)).Times(AnyNumber());
+        EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, generateVolumeStateJson(expectedSettings), StateRefreshPolicy::NEVER, _)).Times(Exactly(1));
     } else {
         EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(_, _, _)).Times(Exactly(0));
+        EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, _, StateRefreshPolicy::NEVER, _)).Times(Exactly(0));
     }
 
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(eventsSent));

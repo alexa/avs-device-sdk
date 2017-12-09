@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_SPEECH_SYNTHESIZER_INCLUDE_SPEECH_SYNTHESIZER_SPEECH_SYNTHESIZER_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_SPEECH_SYNTHESIZER_INCLUDE_SPEECH_SYNTHESIZER_SPEECH_SYNTHESIZER_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SPEECHSYNTHESIZER_INCLUDE_SPEECHSYNTHESIZER_SPEECHSYNTHESIZER_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SPEECHSYNTHESIZER_INCLUDE_SPEECHSYNTHESIZER_SPEECHSYNTHESIZER_H_
 
 #include <memory>
 #include <mutex>
@@ -26,12 +26,14 @@
 
 #include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
+#include <AVSCommon/AVS/DialogUXStateAggregator.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
-#include <AVSCommon/SDKInterfaces/SpeechSynthesizerObserver.h>
+#include <AVSCommon/SDKInterfaces/SpeechSynthesizerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
@@ -48,12 +50,13 @@ namespace speechSynthesizer {
  */
 class SpeechSynthesizer
         : public avsCommon::avs::CapabilityAgent
+        , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
         , public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface
         , public avsCommon::utils::RequiresShutdown
         , public std::enable_shared_from_this<SpeechSynthesizer> {
 public:
-    /// Alias to the @c SpeechSynthesizerObserver for brevity.
-    using SpeechSynthesizerObserver = avsCommon::sdkInterfaces::SpeechSynthesizerObserver;
+    /// Alias to the @c SpeechSynthesizerObserverInterface for brevity.
+    using SpeechSynthesizerObserverInterface = avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface;
 
     /**
      * Create a new @c SpeechSynthesizer instance.
@@ -75,7 +78,10 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
+        std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator);
+
+    void onDialogUXStateChanged(DialogUXState newState) override;
 
     avsCommon::avs::DirectiveHandlerConfiguration getConfiguration() const override;
 
@@ -84,17 +90,17 @@ public:
      *
      * @param observer The observer to add.
      */
-    void addObserver(std::shared_ptr<SpeechSynthesizerObserver> observer);
+    void addObserver(std::shared_ptr<SpeechSynthesizerObserverInterface> observer);
 
     /**
      * Remove an observer from the SpeechSynthesizer.
      *
      * @note This is a synchronous call which can not be made by an observer callback.  Attempting to call
-     *     @c removeObserver() from @c SpeechSynthesizerObserver::onStateChanged() will result in a deadlock.
+     *     @c removeObserver() from @c SpeechSynthesizerObserverInterface::onStateChanged() will result in a deadlock.
      *
      * @param observer The observer to remove.
      */
-    void removeObserver(std::shared_ptr<SpeechSynthesizerObserver> observer);
+    void removeObserver(std::shared_ptr<SpeechSynthesizerObserverInterface> observer);
 
     void onDeregistered() override;
 
@@ -108,7 +114,8 @@ public:
 
     void onFocusChanged(avsCommon::avs::FocusState newFocus) override;
 
-    void provideState(const unsigned int stateRequestToken) override;
+    void provideState(const avsCommon::avs::NamespaceAndName& stateProviderName, const unsigned int stateRequestToken)
+        override;
 
     void onContextAvailable(const std::string& jsonContext) override;
 
@@ -252,7 +259,7 @@ private:
      * @param stateRequestToken The token to pass through when setting the state.
      */
     void executeProvideState(
-        const SpeechSynthesizerObserver::SpeechSynthesizerState& state,
+        const SpeechSynthesizerObserverInterface::SpeechSynthesizerState& state,
         const unsigned int& stateRequestToken);
 
     /**
@@ -271,6 +278,15 @@ private:
      * @param error Text describing the nature of the error.
      */
     void executePlaybackError(const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error);
+
+    /**
+     * This function is called whenever the AVS UX dialog state of the system changes. This function will block
+     * processing of other state changes, so any implementation of this should return quickly.
+     *
+     * @param newState The new dialog specific AVS UX state.
+     */
+    void executeOnDialogUXStateChanged(
+        avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState);
 
     /**
      * Builds the JSON state to be updated in the @c ContextManager.
@@ -300,13 +316,15 @@ private:
     void stopPlaying();
 
     /**
-     * Set the current state of the @c SpeechSynthesizer. It updates the @c ContextManager with the new state and send
-     * an event with the updated state to AVS.
-     * @c m_mutex must be acquired before calling this function.
+     * Set the current state of the @c SpeechSynthesizer. The method updates the
+     * @c ContextManager with the new state and send an event with the updated state to AVS where applicable.
+     * @c m_mutex must be acquired before calling this function. All observers will be notified of a new state
+     * regardless of @c provideState value.
      *
      * @param newState The new state of the @c SpeechSynthesizer.
+     * @param provideState If true ContextManager will be updated with the new state.
      */
-    void setCurrentStateLocked(SpeechSynthesizerObserver::SpeechSynthesizerState newState);
+    void setCurrentStateLocked(SpeechSynthesizerObserverInterface::SpeechSynthesizerState newState);
 
     /**
      * Set the desired state the @c SpeechSynthesizer needs to transition to based on the @c newFocus.
@@ -437,20 +455,20 @@ private:
     /// The @c AttachmentManager used to read attachments.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> m_attachmentManager;
 
-    /// The set of @c SpeechSynthesizerObserver instances to notify of state changes.
-    std::unordered_set<std::shared_ptr<SpeechSynthesizerObserver>> m_observers;
+    /// The set of @c SpeechSynthesizerObserverInterface instances to notify of state changes.
+    std::unordered_set<std::shared_ptr<SpeechSynthesizerObserverInterface>> m_observers;
 
     /**
      * The current state of the @c SpeechSynthesizer. @c m_mutex must be acquired before reading or writing the
      * @c m_currentState.
      */
-    SpeechSynthesizerObserver::SpeechSynthesizerState m_currentState;
+    SpeechSynthesizerObserverInterface::SpeechSynthesizerState m_currentState;
 
     /**
      * The state the @c SpeechSynthesizer must transition to. @c m_mutex must be acquired before reading or writing
      * the @c m_desiredState.
      */
-    SpeechSynthesizerObserver::SpeechSynthesizerState m_desiredState;
+    SpeechSynthesizerObserverInterface::SpeechSynthesizerState m_desiredState;
 
     /// The current focus acquired by the @c SpeechSynthesizer.
     avsCommon::avs::FocusState m_currentFocus;
@@ -460,6 +478,9 @@ private:
 
     /// Mutex to serialize access to m_currentState, m_desiredState, and m_waitOnStateChange.
     std::mutex m_mutex;
+
+    /// A flag to keep track of if @c SpeechSynthesizer has called @c Stop() already or not.
+    bool m_isAlreadyStopping;
 
     /// Condition variable to wake @c onFocusChanged() once the state transition to desired state is complete.
     std::condition_variable m_waitOnStateChange;
@@ -479,6 +500,10 @@ private:
     /// Serializes access to @c m_speakInfoQueue
     std::mutex m_speakInfoQueueMutex;
 
+    /// This flag indicates whether the initial dialog UX State has been received.
+    bool m_initialDialogUXStateReceived;
+    /// @}
+
     /**
      * @c Executor which queues up operations from asynchronous API calls.
      *
@@ -492,4 +517,4 @@ private:
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_SPEECH_SYNTHESIZER_INCLUDE_SPEECH_SYNTHESIZER_SPEECH_SYNTHESIZER_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SPEECHSYNTHESIZER_INCLUDE_SPEECHSYNTHESIZER_SPEECHSYNTHESIZER_H_

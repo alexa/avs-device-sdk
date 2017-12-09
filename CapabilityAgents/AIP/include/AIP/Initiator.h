@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_INITIATOR_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_INITIATOR_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AIP_INCLUDE_AIP_INITIATOR_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AIP_INCLUDE_AIP_INITIATOR_H_
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -56,4 +56,4 @@ inline std::string initiatorToString(Initiator initiator) {
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_INITIATOR_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AIP_INCLUDE_AIP_INITIATOR_H_

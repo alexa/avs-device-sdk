@@ -173,6 +173,13 @@ void InProcessAttachmentReader::close(ClosePoint closePoint) {
     }
 }
 
+bool InProcessAttachmentReader::seek(uint64_t offset) {
+    if (m_reader) {
+        return m_reader->seek(offset);
+    }
+    return false;
+}
+
 }  // namespace attachment
 }  // namespace avs
 }  // namespace avsCommon

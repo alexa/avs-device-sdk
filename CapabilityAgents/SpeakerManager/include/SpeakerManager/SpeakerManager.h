@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXACLIENTSDK_CAPABILITY_AGENTS_SPEAKER_MANAGER_INCLUDE_SPEAKER_MANAGER_SPEAKER_MANAGER_H_
-#define ALEXACLIENTSDK_CAPABILITY_AGENTS_SPEAKER_MANAGER_INCLUDE_SPEAKER_MANAGER_SPEAKER_MANAGER_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SPEAKERMANAGER_INCLUDE_SPEAKERMANAGER_SPEAKERMANAGER_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SPEAKERMANAGER_INCLUDE_SPEAKERMANAGER_SPEAKERMANAGER_H_
 
 #include <future>
 #include <map>
@@ -95,7 +95,6 @@ public:
     void preHandleDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) override;
     void handleDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) override;
     void cancelDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) override;
-    void provideState(const unsigned int stateRequestToken) override;
     /// @}
 
     // @name RequiresShutdown Functions
@@ -177,11 +176,15 @@ private:
         avsCommon::avs::ExceptionErrorType type);
 
     /**
-     * Internal function to provide the state (Context). This runs on a worker thread.
+     * Internal function to update the state of the ContextManager.
      *
-     * @param stateRequestToken A token representing the request.
+     * @param type The Speaker Type that is being updated.
+     * @param settings The SpeakerSettings to update the ContextManager with.
+     * @return Whether the ContextManager was successfully updated.
      */
-    void executeProvideState(unsigned int stateRequestToken);
+    bool updateContextManager(
+        const avsCommon::sdkInterfaces::SpeakerInterface::Type& type,
+        const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings);
 
     /**
      * Sends <Volume/Mute>Changed events to AVS. The events are identical except for the name.
@@ -254,6 +257,21 @@ private:
         avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings);
 
     /**
+     * Internal function to send events and notify observers when settings have changed.
+     * This runs on a worker thread.
+     *
+     * @param settings The new settings.
+     * @param eventName The event name to send.
+     * @param source Whether the call is from AVS or locally.
+     * @param type The Speaker type.
+     */
+    void executeNotifySettingsChanged(
+        const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings,
+        const std::string& eventName,
+        const avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source& source,
+        const avsCommon::sdkInterfaces::SpeakerInterface::Type& type);
+
+    /**
      * Internal function to notify the observer when a @c SpeakerSettings change has occurred.
      *
      * @param source. This indicates the origin of the call.
@@ -299,4 +317,4 @@ private:
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
 
-#endif  // ALEXACLIENTSDK_CAPABILITY_AGENTS_SPEAKER_MANAGER_INCLUDE_SPEAKER_MANAGER_SPEAKER_MANAGER_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SPEAKERMANAGER_INCLUDE_SPEAKERMANAGER_SPEAKERMANAGER_H_

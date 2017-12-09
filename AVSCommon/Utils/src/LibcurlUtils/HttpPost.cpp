@@ -59,6 +59,13 @@ bool HttpPost::init() {
     if (!setopt(CURLOPT_WRITEFUNCTION, staticWriteCallbackLocked)) {
         return false;
     }
+    /*
+     * The documentation from libcurl recommends setting CURLOPT_NOSIGNAL to 1 for multi-threaded applications.
+     * https://curl.haxx.se/libcurl/c/threadsafe.html
+     */
+    if (!setopt(CURLOPT_NOSIGNAL, 1)) {
+        return false;
+    }
     return true;
 }
 

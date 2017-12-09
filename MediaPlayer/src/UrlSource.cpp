@@ -152,7 +152,8 @@ bool UrlSource::isPlaybackRemote() const {
 void UrlSource::onPlaylistEntryParsed(
     int requestId,
     std::string url,
-    avsCommon::utils::playlistParser::PlaylistParseResult parseResult) {
+    avsCommon::utils::playlistParser::PlaylistParseResult parseResult,
+    std::chrono::milliseconds duration) {
     std::lock_guard<std::mutex> lock{m_mutex};
     switch (parseResult) {
         ACSDK_DEBUG9(LX("onPlaylistParsed").d("parseResult", parseResult));

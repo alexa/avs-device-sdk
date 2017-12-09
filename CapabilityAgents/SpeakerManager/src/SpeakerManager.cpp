@@ -85,11 +85,6 @@ std::shared_ptr<SpeakerManager> SpeakerManager::create(
     auto speakerManager = std::shared_ptr<SpeakerManager>(
         new SpeakerManager(speakers, contextManager, messageSender, exceptionEncounteredSender));
 
-    // TODO: Remove SpeakerManager as a StateProvider: https://issues.labcollab.net/browse/ACSDK-651.
-    if (speakerManager) {
-        contextManager->setStateProvider(VOLUME_STATE, speakerManager);
-    }
-
     return speakerManager;
 }
 
@@ -110,6 +105,15 @@ SpeakerManager::SpeakerManager(
     ACSDK_DEBUG(LX("mapCreated")
                     .d("numAvsSynced", m_speakerMap.count(SpeakerInterface::Type::AVS_SYNCED))
                     .d("numLocal", m_speakerMap.count(SpeakerInterface::Type::LOCAL)));
+
+    // If we have at least one AVS_SYNCED speaker, update the Context initially.
+    const auto type = SpeakerInterface::Type::AVS_SYNCED;
+    if (m_speakerMap.count(type)) {
+        SpeakerInterface::SpeakerSettings settings;
+        if (!validateSpeakerSettingsConsistency(type, &settings) || !updateContextManager(type, settings)) {
+            ACSDK_ERROR(LX("initialUpdateContextManagerFailed"));
+        }
+    }
 }
 
 DirectiveHandlerConfiguration SpeakerManager::getConfiguration() const {
@@ -123,7 +127,6 @@ DirectiveHandlerConfiguration SpeakerManager::getConfiguration() const {
 void SpeakerManager::doShutdown() {
     m_executor.shutdown();
     m_messageSender.reset();
-    m_contextManager->setStateProvider(VOLUME_STATE, nullptr);
     m_contextManager.reset();
     m_observers.clear();
     for (auto typeAndSpeaker : m_speakerMap) {
@@ -414,19 +417,17 @@ bool SpeakerManager::validateSpeakerSettingsConsistency(
     return consistent;
 }
 
-void SpeakerManager::provideState(unsigned int stateRequestToken) {
-    ACSDK_DEBUG9(LX("provideStateCalled"));
-    m_executor.submit([this, stateRequestToken] { executeProvideState(stateRequestToken); });
-}
+bool SpeakerManager::updateContextManager(
+    const SpeakerInterface::Type& type,
+    const SpeakerInterface::SpeakerSettings& settings) {
+    ACSDK_DEBUG9(LX("updateContextManagerCalled").d("speakerType", type));
 
-void SpeakerManager::executeProvideState(unsigned int stateRequestToken) {
-    ACSDK_DEBUG9(LX("executeProvideStateCalled"));
-    SpeakerInterface::SpeakerSettings settings;
-
-    // All initialized speakers controlled by directives should have the same state.
-    if (!validateSpeakerSettingsConsistency(SpeakerInterface::Type::AVS_SYNCED, &settings)) {
-        ACSDK_ERROR(LX("executeProvideStateFailed").d("reason", "speakerSettingsInconsistent"));
-        return;
+    if (SpeakerInterface::Type::AVS_SYNCED != type) {
+        ACSDK_DEBUG(LX("updateContextManagerSkipped")
+                        .d("reason", "typeMismatch")
+                        .d("expected", SpeakerInterface::Type::AVS_SYNCED)
+                        .d("actual", type));
+        return false;
     }
 
     rapidjson::Document state(rapidjson::kObjectType);
@@ -436,13 +437,17 @@ void SpeakerManager::executeProvideState(unsigned int stateRequestToken) {
     rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     if (!state.Accept(writer)) {
-        return;
+        ACSDK_ERROR(LX("updateContextManagerFailed").d("reason", "writeToBufferFailed"));
+        return false;
     }
 
     if (SetStateResult::SUCCESS !=
-        m_contextManager->setState(VOLUME_STATE, buffer.GetString(), StateRefreshPolicy::ALWAYS, stateRequestToken)) {
-        ACSDK_ERROR(LX("executeProvideStateFailed").d("reason", "contextManagerSetStateFailed"));
+        m_contextManager->setState(VOLUME_STATE, buffer.GetString(), StateRefreshPolicy::NEVER)) {
+        ACSDK_ERROR(LX("updateContextManagerFailed").d("reason", "contextManagerSetStateFailed"));
+        return false;
     }
+
+    return true;
 }
 
 std::future<bool> SpeakerManager::setVolume(SpeakerInterface::Type type, int8_t volume, bool forceNoNotifications) {
@@ -484,17 +489,12 @@ bool SpeakerManager::executeSetVolume(
         return false;
     }
 
+    updateContextManager(type, settings);
+
     if (forceNoNotifications) {
         ACSDK_INFO(LX("executeSetVolume").m("Skipping sending notifications").d("reason", "forceNoNotifications"));
     } else {
-        executeNotifyObserver(source, type, settings);
-
-        if (SpeakerInterface::Type::AVS_SYNCED == type) {
-            // Only send event if working with AVS_SYNCED types.
-            executeSendSpeakerSettingsChangedEvent(VOLUME_CHANGED, settings);
-        } else {
-            ACSDK_INFO(LX("executeSetVolumeEventNotSent").d("reason", "typeMismatch").d("type", type));
-        }
+        executeNotifySettingsChanged(settings, VOLUME_CHANGED, source, type);
     }
     return true;
 }
@@ -546,17 +546,12 @@ bool SpeakerManager::executeAdjustVolume(
 
     ACSDK_DEBUG(LX("executeAdjustVolumeSuccess").d("newVolume", (int)settings.volume));
 
+    updateContextManager(type, settings);
+
     if (forceNoNotifications) {
         ACSDK_INFO(LX("executeAdjustVolume").m("Skipping sending notifications").d("reason", "forceNoNotifications"));
     } else {
-        executeNotifyObserver(source, type, settings);
-
-        if (SpeakerInterface::Type::AVS_SYNCED == type) {
-            // Only send event if dealing with AVS_SYNCED.
-            executeSendSpeakerSettingsChangedEvent(VOLUME_CHANGED, settings);
-        } else {
-            ACSDK_INFO(LX("executeAdjustVolumeEventNotSent").d("reason", "typeMismatch").d("type", type));
-        }
+        executeNotifySettingsChanged(settings, VOLUME_CHANGED, source, type);
     }
 
     return true;
@@ -601,19 +596,30 @@ bool SpeakerManager::executeSetMute(
         return false;
     }
 
+    updateContextManager(type, settings);
+
     if (forceNoNotifications) {
         ACSDK_INFO(LX("executeSetMute").m("Skipping sending notifications").d("reason", "forceNoNotifications"));
     } else {
-        executeNotifyObserver(source, type, settings);
-        if (SpeakerInterface::Type::AVS_SYNCED == type) {
-            // Only send event if AVS_SYNCED.
-            executeSendSpeakerSettingsChangedEvent(MUTE_CHANGED, settings);
-        } else {
-            ACSDK_INFO(LX("executeSetMuteEventNotSent").d("reason", "typeMismatch").d("type", type));
-        }
+        executeNotifySettingsChanged(settings, MUTE_CHANGED, source, type);
     }
 
     return true;
+}
+
+void SpeakerManager::executeNotifySettingsChanged(
+    const SpeakerInterface::SpeakerSettings& settings,
+    const std::string& eventName,
+    const SpeakerManagerObserverInterface::Source& source,
+    const SpeakerInterface::Type& type) {
+    executeNotifyObserver(source, type, settings);
+
+    // Only send an event if the AVS_SYNCED settings changed.
+    if (SpeakerInterface::Type::AVS_SYNCED == type) {
+        executeSendSpeakerSettingsChangedEvent(eventName, settings);
+    } else {
+        ACSDK_INFO(LX("eventNotSent").d("reason", "typeMismatch").d("speakerType", type));
+    }
 }
 
 void SpeakerManager::executeNotifyObserver(

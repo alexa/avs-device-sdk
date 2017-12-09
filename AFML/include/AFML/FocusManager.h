@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_FOCUS_MANAGER_H_
-#define ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_FOCUS_MANAGER_H_
+#ifndef ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_FOCUSMANAGER_H_
+#define ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_FOCUSMANAGER_H_
 
 #include <mutex>
 #include <set>
@@ -218,14 +218,19 @@ private:
     /// Set of currently observed Channels ordered by Channel priority.
     std::set<std::shared_ptr<Channel>, ChannelPtrComparator> m_activeChannels;
 
-    /// An internal executor that performs execution of callable objects passed to it sequentially but asynchronously.
-    avsCommon::utils::threading::Executor m_executor;
-
     /// Mutex used to lock m_activeChannels and Channels' activity ids.
     std::mutex m_mutex;
+
+    /**
+     * @c Executor which queues up operations from asynchronous API calls.
+     *
+     * @note This declaration needs to come *after* the Executor Thread Variables so that the thread shuts down
+     *     before the Executor Thread Variables are destroyed.
+     */
+    avsCommon::utils::threading::Executor m_executor;
 };
 
 }  // namespace afml
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_FOCUS_MANAGER_H_
+#endif  // ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_FOCUSMANAGER_H_

@@ -23,26 +23,12 @@ namespace capabilityAgents {
 namespace alerts {
 
 /// Definition for static class data member.
-std::string Alarm::m_defaultAudioFilePath;
-/// Definition for static class data member.
-std::string Alarm::m_defaultShortAudioFilePath;
-/// Definition for static class data member.
 const std::string Alarm::TYPE_NAME = "ALARM";
 
-void Alarm::setDefaultAudioFilePath(const std::string& filePath) {
-    m_defaultAudioFilePath = filePath;
-}
-
-void Alarm::setDefaultShortAudioFilePath(const std::string& filePath) {
-    m_defaultShortAudioFilePath = filePath;
-}
-
-std::string Alarm::getDefaultAudioFilePath() const {
-    return m_defaultAudioFilePath;
-}
-
-std::string Alarm::getDefaultShortAudioFilePath() const {
-    return m_defaultShortAudioFilePath;
+Alarm::Alarm(
+    std::function<std::unique_ptr<std::istream>()> defaultAudioFactory,
+    std::function<std::unique_ptr<std::istream>()> shortAudioFactory) :
+        Alert(defaultAudioFactory, shortAudioFactory) {
 }
 
 std::string Alarm::getTypeName() const {

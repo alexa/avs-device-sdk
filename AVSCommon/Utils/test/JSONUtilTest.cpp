@@ -1,5 +1,5 @@
 /*
- * AVSMessageTest.cpp
+ * JSONUtilTest.cpp
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
@@ -15,7 +15,7 @@
  * permissions and limitations under the License.
  */
 
-/// @file AVSMessageTest.cpp
+/// @file JSONUtilTest.cpp
 
 #include <memory>
 #include <map>
@@ -103,12 +103,16 @@ static const std::string MISSING_KEY = "missingKey";
 
 /// An invalid JSON string for testing.
 static const std::string INVALID_JSON = "invalidTestJSON";
+
+// clang-format off
 /// A valid JSON string with scalar string value.
-static const std::string VALID_JSON_STRING_VALUE =
-    R"({")" + VALUE_KEY + R"(":")" + EXPECTED_STRING_VALUE + R"("})";
+static const std::string VALID_JSON_STRING_VALUE = R"({")" + VALUE_KEY + R"(":")" + EXPECTED_STRING_VALUE + R"("})";
+
 /// A valid JSON string with integer value.
-static const std::string VALID_JSON_INTEGER_VALUE =
-    R"({")" + VALUE_KEY + R"(":)" + EXPECTED_INT_VALUE_STRINGIFIED + R"(})";
+static const std::string VALID_JSON_INTEGER_VALUE = R"({")"
+    + VALUE_KEY + R"(":)" + EXPECTED_INT_VALUE_STRINGIFIED + R"(})";
+
+// clang-format on
 
 /// A double.
 static const double A_DOUBLE = 1.0;
@@ -355,8 +359,6 @@ TEST_F(JSONUtilTest, convertToInt64ValueWithNullOutputParam) {
     int64_t* value = nullptr;
     ASSERT_FALSE(convertToValue(node, value));
 }
-
-// Bool
 
 /**
  * Tests convertToValue<bool> with null output param.

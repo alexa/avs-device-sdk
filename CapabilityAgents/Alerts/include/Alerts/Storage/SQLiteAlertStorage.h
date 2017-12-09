@@ -15,12 +15,14 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_STORAGE_SQLITE_ALERT_STORAGE_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_STORAGE_SQLITE_ALERT_STORAGE_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_STORAGE_SQLITEALERTSTORAGE_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_STORAGE_SQLITEALERTSTORAGE_H_
 
 #include "Alerts/Storage/AlertStorageInterface.h"
 
 #include <sqlite3.h>
+
+#include <AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -38,7 +40,8 @@ public:
     /**
      * Constructor.
      */
-    SQLiteAlertStorage();
+    SQLiteAlertStorage(
+        const std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface>& alertsAudioFactory);
 
     bool createDatabase(const std::string& filePath) override;
 
@@ -90,6 +93,9 @@ private:
 
     /// The sqlite database handle.
     sqlite3* m_dbHandle;
+
+    /// A member that stores a factory that produces audio streams for alerts.
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> m_alertsAudioFactory;
 };
 
 }  // namespace storage
@@ -97,4 +103,4 @@ private:
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_STORAGE_SQLITE_ALERT_STORAGE_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_STORAGE_SQLITEALERTSTORAGE_H_

@@ -15,8 +15,10 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_STATE_PROVIDER_INTERFACE_H
-#define ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_STATE_PROVIDER_INTERFACE_H
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_STATEPROVIDERINTERFACE_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_STATEPROVIDERINTERFACE_H_
+
+#include "AVSCommon/AVS/NamespaceAndName.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -40,13 +42,14 @@ public:
      * @c provideState request. The @c stateProviderInterface must use the same token when it updates its state via the
      * @c setState call.
      *
+     * @param stateProviderName The name of the state provider.
      * @param stateRequestToken The token to use in the @c setState call.
      */
-    virtual void provideState(const unsigned int stateRequestToken) = 0;
+    virtual void provideState(const avs::NamespaceAndName& stateProviderName, const unsigned int stateRequestToken) = 0;
 };
 
 }  // namespace sdkInterfaces
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_STATE_PROVIDER_INTERFACE_H
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_STATEPROVIDERINTERFACE_H_

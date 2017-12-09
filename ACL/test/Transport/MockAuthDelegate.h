@@ -14,8 +14,8 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_AUTH_DELEGATE_H_
-#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_AUTH_DELEGATE_H_
+#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKAUTHDELEGATE_H_
+#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKAUTHDELEGATE_H_
 
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 
@@ -41,4 +41,4 @@ public:
 }  // namespace acl
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_AUTH_DELEGATE_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKAUTHDELEGATE_H_

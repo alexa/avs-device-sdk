@@ -18,8 +18,8 @@
 /**
  * @file
  */
-#ifndef ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_MIME_PARSER_H_
-#define ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_MIME_PARSER_H_
+#ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MIMEPARSER_H_
+#define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MIMEPARSER_H_
 
 #include <cstddef>
 #include <memory>
@@ -243,4 +243,4 @@ inline std::ostream& operator<<(std::ostream& stream, MimeParser::DataParsedStat
 }  // namespace acl
 }  // namespace alexaClientSDK
 
-#endif  // ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_MIME_PARSER_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MIMEPARSER_H_

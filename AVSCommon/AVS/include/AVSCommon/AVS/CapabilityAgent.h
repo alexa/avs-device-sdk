@@ -15,9 +15,10 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_CAPABILITY_AGENT_H
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_CAPABILITY_AGENT_H
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_CAPABILITYAGENT_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_CAPABILITYAGENT_H_
 
+#include <atomic>
 #include <unordered_map>
 #include <string>
 #include <memory>
@@ -77,7 +78,8 @@ public:
 
     void onFocusChanged(FocusState newFocus) override;
 
-    void provideState(const unsigned int stateRequestToken) override;
+    void provideState(const avsCommon::avs::NamespaceAndName& stateProviderName, const unsigned int stateRequestToken)
+        override;
 
     void onContextAvailable(const std::string& jsonContext) override;
 
@@ -120,6 +122,9 @@ protected:
 
         /// @c DirectiveHandlerResultInterface.
         std::shared_ptr<sdkInterfaces::DirectiveHandlerResultInterface> result;
+
+        /// Flag to indicate whether the directive is cancelled.
+        std::atomic<bool> isCancelled;
     };
 
     /**
@@ -233,4 +238,4 @@ private:
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_CAPABILITY_AGENT_H
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_CAPABILITYAGENT_H_

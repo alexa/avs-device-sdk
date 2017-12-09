@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_ROUTER_H_
-#define ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_ROUTER_H_
+#ifndef ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVEROUTER_H_
+#define ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVEROUTER_H_
 
 #include <set>
 #include <unordered_map>
@@ -64,6 +64,15 @@ public:
      * @return Whether or not the handler was invoked.
      */
     bool handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
+
+    /**
+     * Check if the directive handler's blocking policy is HANDLE_IMMEDIATELY for this directive, if so invoke @c
+     * handleDirectiveImmediately() on the handler registered for the given @c AVSDirective.
+     *
+     * @param directive The directive to be handled immediately.
+     * @return Whether or not the handler was invoked.
+     */
+    bool handleDirectiveWithPolicyHandleImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
     /**
      * Invoke @c preHandleDirective() on the handler registered for the given @c AVSDirective.
@@ -202,4 +211,4 @@ private:
 }  // namespace adsl
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_ROUTER_H_
+#endif  // ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVEROUTER_H_

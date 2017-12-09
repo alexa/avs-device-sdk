@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_WRITER_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_WRITER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_WRITER_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_WRITER_H_
 
 #include <cstdint>
 #include <cstddef>
@@ -40,7 +40,7 @@ namespace sds {
  *
  * @note This class is primarily intended to be used from a single thread.  The @c Writer as a whole is thread-safe in
  * the sense that @c Writer and @c Readers can all live in different threads, but individual member functions of a
- * @c Reader instance should not be called from multiple threads except where specifically noted in function
+ * @c Writer instance should not be called from multiple threads except where specifically noted in function
  * documentation below.
  */
 template <typename T>
@@ -61,8 +61,23 @@ public:
         /**
          * An @c ALL_OR_NOTHING @c Writer will either write all the data provided if it can do so without overwriting
          * unconsumed data, or it will return @c Error::WOULDBLOCK without writing any data at all.
+         *
+         * @note: If there are no @c Readers attached, data can be written to a @c ShardDataStream until it fills up,
+         *     but it will then stop accepting data from an @c ALL_OR_NOTHING @c Writer until a @c Reader attaches and
+         *     consumes some of the data.  However, there is a corner case where a @c Reader is attached, but has
+         *     @c seek()ed into the future.  In this scenario, all data written until the @c Writer catches up with the
+         *     @c Reader will never be consumed, so the @c SharedDataStream will allow an @c ALL_OR_NOTHING @c Writer to
+         *     continue writing new data (and discarding old data) until it reaches the index the @c Reader is waiting
+         *     for.
          */
-        ALL_OR_NOTHING
+        ALL_OR_NOTHING,
+        /**
+         * A @c BLOCKING @c Writer will wait for up to the specified timeout (or forever if `(timeout == 0)`) for space
+         * to become available.  As soon as at least one word can be written, the @c Writer will write as many words as
+         * it can without overwriting unconsumed data, and return the number of words written.  If no space becomes
+         * available in the specified timeout, a @c BLOCKING @c Writer will return @c Error::TIMEDOUT.
+         */
+        BLOCKING
     };
 
     /**
@@ -77,7 +92,9 @@ public:
             /// Returned when policy is @c Policy::ALL_OR_NOTHING and the @c write() would overwrrite unconsumed data.
             WOULDBLOCK = -1,
             /// Returned when a @c write() parameter is invalid.
-            INVALID = -2
+            INVALID = -2,
+            /// Returned when policy is @c Policy::BLOCKING and no space becomes available before the specified timeout.
+            TIMEDOUT = -3,
         };
     };
 
@@ -97,12 +114,19 @@ public:
      *
      * @param buf A buffer to copy the data from.
      * @param nWords The maximum number of @c wordSize words to copy.
+     * @param timeout The maximum time to wait (if @c policy is @c BLOCKING) for space to write into.  If this parameter
+     *     is zero, there is no timeout and blocking writes will wait forever.  If @c policy is not @C BLOCKING, this
+     *     parameter is ignored.
      * @return The number of @c wordSize words copied, or zero if the stream has closed, or a
      *     negative @c Error code if the stream is still open, but no data could be written.
      *
      * @note A stream is closed for the @c Writer if @c Writer::close() has been called.
+     *
+     * @warning If @c policy is @c BLOCKING and @c timeout is 0, this function will only unblock when a @c Reader
+     *     @c read()s some data or @c seek()s forward.  Applications which use this combination of parameters must use
+     *     @c Readers to drain some data from the @c SharedDataStream if they need to unblock the @c Writer.
      */
-    ssize_t write(const void* buf, size_t nWords);
+    ssize_t write(const void* buf, size_t nWords, std::chrono::milliseconds timeout = std::chrono::milliseconds(0));
 
     /**
      * This function reports the current position of the @c Writer in the stream.
@@ -172,7 +196,7 @@ SharedDataStream<T>::Writer::~Writer() {
 }
 
 template <typename T>
-ssize_t SharedDataStream<T>::Writer::write(const void* buf, size_t nWords) {
+ssize_t SharedDataStream<T>::Writer::write(const void* buf, size_t nWords, std::chrono::milliseconds timeout) {
     if (nullptr == buf) {
         logger::acsdkError(logger::LogEntry(TAG, "writeFailed").d("reason", "nullBuffer"));
         return Error::INVALID;
@@ -188,44 +212,95 @@ ssize_t SharedDataStream<T>::Writer::write(const void* buf, size_t nWords) {
         return Error::CLOSED;
     }
 
-    // Don't try to write more data than we can fit in the circular buffer.
-    if (nWords > m_bufferLayout->getDataSize()) {
-        switch (m_policy) {
-            case Policy::NONBLOCKABLE:
-                nWords = m_bufferLayout->getDataSize();
-                break;
-            case Policy::ALL_OR_NOTHING:
-                return Error::WOULDBLOCK;
-        }
-    }
-
-    Index writeEnd = header->writeStartCursor + nWords;
+    auto wordsToCopy = nWords;
+    auto buf8 = static_cast<const uint8_t*>(buf);
     std::unique_lock<Mutex> backwardSeekLock(header->backwardSeekMutex, std::defer_lock);
-    if (Policy::ALL_OR_NOTHING == m_policy) {
-        backwardSeekLock.lock();
+    Index writeEnd = header->writeStartCursor + nWords;
 
-        // Note - this check must be performed while locked to prevent a reader from backwards-seeking into the write
-        // region between here and the writeEndCursor update below.
-        if ((writeEnd - header->oldestUnconsumedCursor) > m_bufferLayout->getDataSize()) {
-            return Error::WOULDBLOCK;
-        }
+    switch (m_policy) {
+        case Policy::NONBLOCKABLE:
+            // For NONBLOCKABLE, we can truncate the write if it won't fit in the buffer.
+            if (nWords > m_bufferLayout->getDataSize()) {
+                wordsToCopy = nWords = m_bufferLayout->getDataSize();
+                writeEnd = header->writeStartCursor + nWords;
+            }
+            break;
+        case Policy::ALL_OR_NOTHING:
+            // For ALL_OR_NOTHING, we can't overwrite readers, and we can't truncate, but we might be able to discard
+            // bytes that overflow if oldestUnconsumedCursor is in the future (e.g. there are readers waiting for future
+            // data which has not been written yet).
+
+            // Note - this check must be performed while locked to prevent a reader from backwards-seeking into the
+            // write region between here and the writeEndCursor update below.
+            backwardSeekLock.lock();
+            if ((writeEnd >= header->oldestUnconsumedCursor) &&
+                ((writeEnd - header->oldestUnconsumedCursor) > m_bufferLayout->getDataSize())) {
+                return Error::WOULDBLOCK;
+            }
+            break;
+        case Policy::BLOCKING:
+            // For BLOCKING, we need to wait until there is room for at least one word.
+
+            // Condition for returning from write: there is space for a write.
+            auto predicate = [this, header] {
+                return (header->writeStartCursor < header->oldestUnconsumedCursor) ||
+                       (header->writeStartCursor - header->oldestUnconsumedCursor) < m_bufferLayout->getDataSize();
+            };
+
+            // Note - this check must be performed while locked to prevent a reader from backwards-seeking into the
+            // write region between here and the writeEndCursor update below.
+            backwardSeekLock.lock();
+
+            // Wait for space to become available.
+            if (std::chrono::milliseconds::zero() == timeout) {
+                header->spaceAvailableConditionVariable.wait(backwardSeekLock, predicate);
+            } else if (!header->spaceAvailableConditionVariable.wait_for(backwardSeekLock, timeout, predicate)) {
+                return Error::TIMEDOUT;
+            }
+
+            // Figure out how much space we have.
+            auto spaceAvailable = m_bufferLayout->getDataSize();
+            if (header->writeStartCursor >= header->oldestUnconsumedCursor) {
+                auto wordsToOverrun =
+                    m_bufferLayout->getDataSize() - (header->writeStartCursor - header->oldestUnconsumedCursor);
+                if (wordsToOverrun < spaceAvailable) {
+                    spaceAvailable = wordsToOverrun;
+                }
+            }
+
+            // For BLOCKING, we can truncate the write if it won't fit in the buffer.
+            if (spaceAvailable < nWords) {
+                wordsToCopy = nWords = spaceAvailable;
+                writeEnd = header->writeStartCursor + nWords;
+            }
+
+            break;
     }
 
     header->writeEndCursor = writeEnd;
 
-    if (Policy::ALL_OR_NOTHING == m_policy) {
+    // We've updated our end cursor, so we no longer need to hold off backward seeks.
+    if (backwardSeekLock) {
         backwardSeekLock.unlock();
+    }
+
+    if (Policy::ALL_OR_NOTHING == m_policy) {
+        // If we have more data than the SDS can hold and we're not going to be overwriting oldestUnconsumedCursor, we
+        // can safely discard the initial data and just leave the trailing data in the buffer.
+        if (wordsToCopy > m_bufferLayout->getDataSize()) {
+            wordsToCopy = m_bufferLayout->getDataSize();
+            buf8 += (nWords - wordsToCopy) * getWordSize();
+        }
     }
 
     // Split it across the wrap.
     size_t beforeWrap = m_bufferLayout->wordsUntilWrap(header->writeStartCursor);
-    if (beforeWrap > nWords) {
-        beforeWrap = nWords;
+    if (beforeWrap > wordsToCopy) {
+        beforeWrap = wordsToCopy;
     }
-    size_t afterWrap = nWords - beforeWrap;
+    size_t afterWrap = wordsToCopy - beforeWrap;
 
     // Copy the two segments.
-    auto buf8 = static_cast<const uint8_t*>(buf);
     memcpy(m_bufferLayout->getData(header->writeStartCursor), buf8, beforeWrap * getWordSize());
     if (afterWrap > 0) {
         memcpy(
@@ -288,11 +363,17 @@ size_t SharedDataStream<T>::Writer::getWordSize() const {
 template <typename T>
 std::string SharedDataStream<T>::Writer::errorToString(Error error) {
     switch (error) {
+        case Error::CLOSED:
+            return "CLOSED";
         case Error::WOULDBLOCK:
             return "WOULDBLOCK";
         case Error::INVALID:
             return "INVALID";
+        case Error::TIMEDOUT:
+            return "TIMEDOUT";
     }
+    logger::acsdkError(logger::LogEntry(TAG, "errorToStringFailed").d("reason", "invalidError").d("error", error));
+    return "(unknown error " + to_string(error) + ")";
 }
 
 }  // namespace sds
@@ -300,4 +381,4 @@ std::string SharedDataStream<T>::Writer::errorToString(Error error) {
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_WRITER_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_WRITER_H_

@@ -21,13 +21,13 @@ namespace alexaClientSDK {
 namespace integration {
 namespace test {
 
-using avsCommon::sdkInterfaces::SpeechSynthesizerObserver;
+using avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface;
 
 TestSpeechSynthesizerObserver::TestSpeechSynthesizerObserver() :
-        m_state(SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED) {
+        m_state(SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED) {
 }
 
-void TestSpeechSynthesizerObserver::onStateChanged(SpeechSynthesizerObserver::SpeechSynthesizerState state) {
+void TestSpeechSynthesizerObserver::onStateChanged(SpeechSynthesizerObserverInterface::SpeechSynthesizerState state) {
     std::unique_lock<std::mutex> lock(m_mutex);
     m_state = state;
     m_queue.push_back(state);
@@ -35,16 +35,16 @@ void TestSpeechSynthesizerObserver::onStateChanged(SpeechSynthesizerObserver::Sp
 }
 
 bool TestSpeechSynthesizerObserver::checkState(
-    const SpeechSynthesizerObserver::SpeechSynthesizerState expectedState,
+    const SpeechSynthesizerObserverInterface::SpeechSynthesizerState expectedState,
     const std::chrono::seconds duration) {
     // Pull the front of the state queue
-    SpeechSynthesizerObserver::SpeechSynthesizerState hold = waitForNext(duration);
+    SpeechSynthesizerObserverInterface::SpeechSynthesizerState hold = waitForNext(duration);
     return hold == expectedState;
 }
 
-SpeechSynthesizerObserver::SpeechSynthesizerState TestSpeechSynthesizerObserver::waitForNext(
+SpeechSynthesizerObserverInterface::SpeechSynthesizerState TestSpeechSynthesizerObserver::waitForNext(
     const std::chrono::seconds duration) {
-    SpeechSynthesizerObserver::SpeechSynthesizerState ret;
+    SpeechSynthesizerObserverInterface::SpeechSynthesizerState ret;
     std::unique_lock<std::mutex> lock(m_mutex);
     if (!m_wakeTrigger.wait_for(lock, duration, [this]() { return !m_queue.empty(); })) {
         return m_state;
@@ -54,7 +54,7 @@ SpeechSynthesizerObserver::SpeechSynthesizerState TestSpeechSynthesizerObserver:
     return ret;
 }
 
-SpeechSynthesizerObserver::SpeechSynthesizerState TestSpeechSynthesizerObserver::getCurrentState() {
+SpeechSynthesizerObserverInterface::SpeechSynthesizerState TestSpeechSynthesizerObserver::getCurrentState() {
     return m_state;
 }
 

@@ -14,6 +14,7 @@ target_include_directories(SampleApp PUBLIC
     "${SampleApp_SOURCE_DIR}/include"
     "${MediaPlayer_SOURCE_DIR}/include"
     "${DefaultClient_SOURCE_DIR}/include"
+    "${AudioResources_SOURCE_DIR}/include"
     "${PORTAUDIO_INCLUDE_DIR}")
 
 target_link_libraries(SampleApp 

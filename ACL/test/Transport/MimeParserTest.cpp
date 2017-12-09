@@ -75,15 +75,41 @@ static const std::string MIME_TEST_BOUNDARY_STRING = "84109348-943b-4446-85e6-e7
 static const std::string MIME_NEWLINE = "\r\n";
 /// The double dashes which may occur before and after a boundary string.
 static const std::string MIME_BOUNDARY_DASHES = "--";
-
+/// The test boundary string with the preceding dashes.
+static const std::string BOUNDARY = MIME_BOUNDARY_DASHES + MIME_TEST_BOUNDARY_STRING;
+/// A complete boundary, including the CRLF prefix
+static const std::string BOUNDARY_LINE = MIME_NEWLINE + BOUNDARY;
+/// Header line without prefix or suffix CRLF.
+static const std::string HEADER_LINE = "Content-Type: application/json";
+/// JSON payload.
 static const std::string TEST_MESSAGE =
     "{\"directive\":{\"header\":{\"namespace\":\"SpeechRecognizer\",\"name\":"
     "\"StopCapture\",\"messageId\":\"4e5612af-e05c-4611-8910-1e23f47ffb41\"},"
     "\"payload\":{}}}";
 
-static const std::string TEST_MIME_TEXT = "Content-Type: application/json" + MIME_NEWLINE + MIME_NEWLINE +
-                                          TEST_MESSAGE + MIME_NEWLINE + MIME_BOUNDARY_DASHES +
-                                          MIME_TEST_BOUNDARY_STRING;
+// The following *_LINES definitions are raw mime text for various test parts. Each one assumes that
+// it will be prefixed by a boundary and a CRLF. These get concatenated by constructTestMimeString()
+// which provides an initiating boundary and CRLF, and which also inserts a CRLF between each part
+// that is added. Leaving out the terminal CRLFs here allows constructTestMimeString() to append a
+// pair of dashes to the boundary terminating the last part. Those final dashes are the standard
+// syntax for the end of a sequence of mime parts.
+
+/// Normal section with header, test message and terminating boundary
+/// @note assumes previous terminating boundary and CRLF in the mime stream that this is appended to.
+static const std::string NORMAL_LINES = HEADER_LINE + MIME_NEWLINE + MIME_NEWLINE + TEST_MESSAGE + BOUNDARY_LINE;
+/// Normal section preceded by a duplicate boundary (one CRLF between boundaries)
+/// @note assumes previous terminating boundary and CRLF in the mime stream that this is appended to.
+static const std::string DUPLICATE_BOUNDARY_LINES = BOUNDARY + MIME_NEWLINE + NORMAL_LINES;
+/// Normal section preceded by a duplicate boundary and CRLF (two CRLFs between boundaries)
+/// @note assumes previous terminating boundary and CRLF in the mime stream that this is appended to.
+static const std::string CRLF_DUPLICATE_BOUNDARY_LINES = BOUNDARY_LINE + MIME_NEWLINE + NORMAL_LINES;
+/// Normal section preceded by triplicate boundaries (one CRLF between boundaries)
+/// @note assumes previous terminating boundary and CRLF in the mime stream that this is appended to.
+static const std::string TRIPLICATE_BOUNDARY_LINES = BOUNDARY + MIME_NEWLINE + BOUNDARY + MIME_NEWLINE + NORMAL_LINES;
+/// Normal section preceded by triplicate boundaries with trailing CRLF (two CRLFs between boundaries)
+/// @note assumes previous terminating boundary and CRLF in the mime stream that this is appended to.
+static const std::string CRLF_TRIPLICATE_BOUNDARY_LINES =
+    BOUNDARY_LINE + MIME_NEWLINE + BOUNDARY_LINE + MIME_NEWLINE + NORMAL_LINES;
 
 /**
  * Our GTest class.
@@ -106,7 +132,7 @@ public:
     }
 
     /**
-     * A utility function to feed data into our MimeParser object.  A result of
+     * A utility function to feed data into our MimeParser object. A result of
      * this function is that the MimeParser object will route Directives and
      * Attachments to the appropriate objects as they are broken out of the
      * aggregate MIME string.
@@ -116,7 +142,7 @@ public:
      * broken into, and then fed to the parser.
      */
     void feedParser(const std::string& data, int numberIterations = 1) {
-        // Here we're simulating an ACL stream.  We've got a mime string that we
+        // Here we're simulating an ACL stream. We've got a mime string that we
         // will feed to the mime parser in chunks. If any chunk fails (due to
         // simulated attachment failing to write), we will re-drive it.
 
@@ -251,18 +277,36 @@ TEST_F(MimeParserTest, testDirectiveAndAttachmentReceivedMultiWrite) {
 }
 
 /**
- * Test providing a mime part as text.
+ * Test feeding mime text including duplicate boundaries that we want to just skip over.
  */
-TEST_F(MimeParserTest, testExplicitMimeText) {
+TEST_F(MimeParserTest, testDuplicateBounaries) {
     m_mimeParts.push_back(
         std::make_shared<TestMimeJsonPart>(MIME_TEST_BOUNDARY_STRING, TEST_DATA_SIZE, m_testableMessageObserver));
-    m_mimeParts.push_back(std::make_shared<TestMimeJsonPart>(TEST_MIME_TEXT, TEST_MESSAGE, m_testableMessageObserver));
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(MIME_TEST_BOUNDARY_STRING, TEST_DATA_SIZE, m_testableMessageObserver));
+    m_mimeParts.push_back(std::make_shared<TestMimeJsonPart>(NORMAL_LINES, TEST_MESSAGE, m_testableMessageObserver));
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(MIME_TEST_BOUNDARY_STRING, TEST_DATA_SIZE, m_testableMessageObserver));
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(DUPLICATE_BOUNDARY_LINES, TEST_MESSAGE, m_testableMessageObserver));
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(MIME_TEST_BOUNDARY_STRING, TEST_DATA_SIZE, m_testableMessageObserver));
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(CRLF_DUPLICATE_BOUNDARY_LINES, TEST_MESSAGE, m_testableMessageObserver));
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(MIME_TEST_BOUNDARY_STRING, TEST_DATA_SIZE, m_testableMessageObserver));
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(TRIPLICATE_BOUNDARY_LINES, TEST_MESSAGE, m_testableMessageObserver));
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(MIME_TEST_BOUNDARY_STRING, TEST_DATA_SIZE, m_testableMessageObserver));
+    m_mimeParts.push_back(
+        std::make_shared<TestMimeJsonPart>(CRLF_TRIPLICATE_BOUNDARY_LINES, TEST_MESSAGE, m_testableMessageObserver));
     m_mimeParts.push_back(
         std::make_shared<TestMimeJsonPart>(MIME_TEST_BOUNDARY_STRING, TEST_DATA_SIZE, m_testableMessageObserver));
 
     auto mimeString = constructTestMimeString(m_mimeParts, MIME_TEST_BOUNDARY_STRING);
-    ACSDK_INFO(LX("testDuplicateBoundary").d("mimeString", mimeString));
-    feedParser(mimeString);
+    ACSDK_INFO(LX("testDuplicateBoundaries").d("mimeString", mimeString));
+    feedParser(mimeString, TEST_MULTI_WRITE_ITERATIONS);
 
     validateMimePartsParsedOk();
 }

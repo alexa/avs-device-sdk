@@ -228,7 +228,7 @@ TEST_F(MessageStorageTest, testDatabaseClear) {
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     if (argc < 2) {
-        std::cerr << "USAGE: MessageStorageTest <path_to_test_directory_location>" << std::endl;
+        std::cerr << "USAGE: " << std::string(argv[0]) << " <path_to_test_directory_location>" << std::endl;
         return 1;
     } else {
         alexaClientSDK::certifiedSender::test::g_dbTestFilePath =

@@ -17,6 +17,7 @@ from flask import Flask, redirect, request
 import requests
 import json
 import commentjson
+import re
 
 from os.path import abspath, isfile, dirname
 import sys
@@ -47,9 +48,6 @@ amazonLwaApiHeaders = {'Content-Type': 'application/x-www-form-urlencoded'}
 
 # Default configuration filename, to be filled by CMake
 defaultConfigFilename = "${SDK_CONFIG_FILE_TARGET}"
-
-# Default string for refresh token in configuration file.
-defaultRefreshTokenString = "{SDK_CONFIG_REFRESH_TOKEN}"
 
 # JSON keys for config file
 CLIENT_ID = 'clientId'
@@ -116,9 +114,6 @@ if authDelegateDict.has_key(REFRESH_TOKEN):
             data=urlencode(postData),
             headers=amazonLwaApiHeaders)
     defaultRefreshTokenString = authDelegateDict[REFRESH_TOKEN];
-    if defaultRefreshTokenString == "":
-        print 'Refresh token in the file cannot be empty. Please enter {SDK_CONFIG_REFRESH_TOKEN} in the refresh token'
-        sys.exit(0)
     if 200 == tokenRefreshRequest.status_code:
         print 'You have a valid refresh token already in the file.' 
         sys.exit(0)
@@ -127,7 +122,9 @@ if authDelegateDict.has_key(REFRESH_TOKEN):
                 str(tokenRefreshRequest.status_code) + \
                 ('. This might be due to a bad refresh token or bad client data. '
                 'We will continue with getting a refresh token, discarding the one in the file.\n')
-
+else:
+    print 'Missing key: "' + REFRESH_TOKEN
+    sys.exit(0)
 # The top page redirects to LWA page.
 @app.route('/')
 def index():
@@ -173,19 +170,25 @@ def get_refresh_token():
         print 'File "' + configFilename + '" cannot be opened!'
         return '<h1>The file "' + \
                 configFilename + \
-                '" cannot be opened, please check if the file is open elsewere.<br/>' + \
+                '" cannot be opened, please check if the file is open elsewhere.<br/>' + \
                 shutdown() + \
                 '</h1>'
     else:
         fileContent = configFile.read()
-        if defaultRefreshTokenString not in fileContent:
-            print '"{defaultRefreshTokenString} not in {configFilename}"'
-            return '<h1>' + defaultRefreshTokenString + ' string not present in ' + configFilename + \
-                    ' please check the file ' + shutdown() + '</h1>'
-        else:
+        try:
             configFile = open(configFilename,'w')
-            fileContent = fileContent.replace(defaultRefreshTokenString, tokenRequest.json()['refresh_token'])
-            configFile.write(fileContent)
-            return '<h1>The file is written successfully.<br/>' + shutdown() + '</h1>'
+        except IOError:
+            print 'File "' + configFilename + '" cannot be opened!'
+            return '<h1>The file "' + \
+                    configFilename + \
+                    '" cannot be opened, please check if the file is open elsewhere.<br/>' + \
+                    shutdown() + \
+                    '</h1>'
+        replaceWith = '\n\t\t\"refreshToken\":' + '\"' + tokenRequest.json()['refresh_token'] + '\",'
+        stringToFind = r"\s*\"\s*{}\s*\"\s*:\s*\"\s*".format(REFRESH_TOKEN) + \
+                        re.escape(defaultRefreshTokenString) + r"\s*\"\s*,"
+        fileContent = re.sub(stringToFind, replaceWith, fileContent)
+        configFile.write(fileContent)
+        return '<h1>The file is written successfully.<br/>' + shutdown() + '</h1>'
     
 app.run(host='127.0.0.1',port='3000')

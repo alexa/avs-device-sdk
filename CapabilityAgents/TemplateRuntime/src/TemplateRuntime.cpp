@@ -75,13 +75,6 @@ std::shared_ptr<TemplateRuntime> TemplateRuntime::create(
 
 void TemplateRuntime::handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) {
     ACSDK_DEBUG9(LX("handleDirectiveImmediately"));
-    /*
-     * We are calling preHandleDirective() here so that when we do add a new policy type in ADSL,
-     * we don't need to make any more changes.
-     *
-     * TODO - ACSDK-685 is created to track this change in ADSL and possible changes in
-     * TemplateRuntime CA.
-     */
     preHandleDirective(std::make_shared<DirectiveInfo>(directive, nullptr));
 }
 
@@ -112,8 +105,8 @@ void TemplateRuntime::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
 DirectiveHandlerConfiguration TemplateRuntime::getConfiguration() const {
     ACSDK_DEBUG9(LX("getConfiguration"));
     DirectiveHandlerConfiguration configuration;
-    configuration[TEMPLATE] = BlockingPolicy::NON_BLOCKING;
-    configuration[PLAYER_INFO] = BlockingPolicy::NON_BLOCKING;
+    configuration[TEMPLATE] = BlockingPolicy::HANDLE_IMMEDIATELY;
+    configuration[PLAYER_INFO] = BlockingPolicy::HANDLE_IMMEDIATELY;
     return configuration;
 }
 

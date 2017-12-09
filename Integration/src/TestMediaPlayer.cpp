@@ -52,7 +52,9 @@ avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::s
     return ++g_sourceId;
 }
 
-avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::setSource(const std::string& url) {
+avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::setSource(
+    const std::string& url,
+    std::chrono::milliseconds offset) {
     return ++g_sourceId;
 }
 
@@ -98,16 +100,11 @@ std::chrono::milliseconds TestMediaPlayer::getOffset(avsCommon::utils::mediaPlay
     return std::chrono::milliseconds::zero();
 }
 
-bool TestMediaPlayer::setOffset(
-    avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id,
-    std::chrono::milliseconds offset) {
-    return true;
-}
-
 void TestMediaPlayer::setObserver(
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) {
     m_observer = playerObserver;
 }
+
 }  // namespace test
 }  // namespace integration
 }  // namespace alexaClientSDK

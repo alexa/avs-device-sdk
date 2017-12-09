@@ -731,7 +731,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     m_recognizeEvent = std::make_shared<RecognizeEvent>(audioProvider, initiator, begin, keywordEnd, keyword);
     if (keyword.empty()) {
         EXPECT_CALL(*m_mockContextManager, getContext(_)).WillOnce(InvokeWithoutArgs([this] {
-            m_audioInputProcessor->provideState(STATE_REQUEST_TOKEN);
+            m_audioInputProcessor->provideState(STOP_CAPTURE, STATE_REQUEST_TOKEN);
         }));
         EXPECT_CALL(
             *m_mockContextManager,
@@ -1365,7 +1365,11 @@ TEST_F(AudioInputProcessorTest, recognizeWakewordWithoutKeyword) {
  * index.
  */
 TEST_F(AudioInputProcessorTest, recognizeWakewordWithBadBegin) {
-    avsCommon::avs::AudioInputStream::Index begin = SDS_WORDS + 1;
+    // Write data until the sds wraps, which will make 0 an invalid index.
+    for (size_t written = 0; written <= SDS_WORDS; written += PATTERN_WORDS) {
+        EXPECT_EQ(m_writer->write(m_pattern.data(), m_pattern.size()), static_cast<ssize_t>(m_pattern.size()));
+    }
+    avsCommon::avs::AudioInputStream::Index begin = 0;
     auto end = AudioInputProcessor::INVALID_INDEX;
     EXPECT_TRUE(testRecognizeFails(*m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT));
 }

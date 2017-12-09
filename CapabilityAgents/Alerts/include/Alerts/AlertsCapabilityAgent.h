@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_ALERTS_CAPABILITY_AGENT_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_ALERTS_CAPABILITY_AGENT_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_ALERTSCAPABILITYAGENT_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_ALERTSCAPABILITYAGENT_H_
 
 #include "Alerts/AlertObserverInterface.h"
 #include "Alerts/Alert.h"
@@ -25,6 +25,7 @@
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/AVS/FocusState.h>
+#include <AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
@@ -64,6 +65,7 @@ public:
      * @param contextManager An interface to which this object will send context updates as alert states change.
      * @param exceptionEncounteredSender An interface which allows ExceptionEncountered Events to be sent to AVS.
      * @param alertStorage An interface to store, load, modify and delete Alerts.
+     * @param alertsAudioFactory A provider of audio streams specific to Alerts.
      * @param alertRenderer An alert renderer, which Alerts will use to generate user-perceivable effects when active.
      * @return A pointer to an object of this type, or nullptr if there were problems during construction.
      */
@@ -74,6 +76,7 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<storage::AlertStorageInterface> alertStorage,
+        std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alertsAudioFactory,
         std::shared_ptr<renderer::RendererInterface> alertRenderer);
 
     avsCommon::avs::DirectiveHandlerConfiguration getConfiguration() const override;
@@ -132,6 +135,7 @@ private:
      * @param contextManager An interface to which this object will send context updates as stored alerts change.
      * @param exceptionEncounteredSender An interface which allows ExceptionEncountered messages to be sent to AVS.
      * @param alertStorage An interface to store, load, modify and delete Alerts.
+     * @param alertsAudioFactory A provider of audio streams specific to Alerts.
      * @param alertRenderer An alert renderer, which Alerts will use to generate user-perceivable effects when active.
      */
     AlertsCapabilityAgent(
@@ -141,6 +145,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<storage::AlertStorageInterface> alertStorage,
+        std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alertsAudioFactory,
         std::shared_ptr<renderer::RendererInterface> alertRenderer);
 
     void doShutdown() override;
@@ -149,13 +154,6 @@ private:
      * Initializes this object.
      */
     bool initialize();
-
-    /**
-     * Initializes the default sounds for this object.
-     *
-     * @param configurationRoot The configuration object parsed during SDK initialization.
-     */
-    bool initializeDefaultSounds(const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
 
     /**
      * Initializes the alerts for this object.
@@ -348,6 +346,9 @@ private:
 
     /// @}
 
+    /// This member contains a factory to provide unique audio streams for the various alerts.
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> m_alertsAudioFactory;
+
     /**
      * The @c Executor which queues up operations from asynchronous API calls.
      *
@@ -361,4 +362,4 @@ private:
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_ALERTS_CAPABILITY_AGENT_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_ALERTSCAPABILITYAGENT_H_

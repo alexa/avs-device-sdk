@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_ASR_PROFILE_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_ASR_PROFILE_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AIP_INCLUDE_AIP_ASRPROFILE_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AIP_INCLUDE_AIP_ASRPROFILE_H_
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -61,4 +61,4 @@ inline std::ostream& operator<<(std::ostream& stream, ASRProfile profile) {
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_ASR_PROFILE_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AIP_INCLUDE_AIP_ASRPROFILE_H_

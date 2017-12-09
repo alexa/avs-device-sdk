@@ -8,6 +8,9 @@ add_subdirectory("AVS")
 add_subdirectory("Utils")
 
 add_library(AVSCommon SHARED
+    AVS/src/AVSDirective.cpp
+    AVS/src/AVSMessage.cpp
+    AVS/src/AVSMessageHeader.cpp
     AVS/src/AbstractConnection.cpp
     AVS/src/AlexaClientSDKInit.cpp
     AVS/src/Attachment/Attachment.cpp
@@ -15,16 +18,13 @@ add_library(AVSCommon SHARED
     AVS/src/Attachment/InProcessAttachment.cpp
     AVS/src/Attachment/InProcessAttachmentReader.cpp
     AVS/src/Attachment/InProcessAttachmentWriter.cpp
-    AVS/src/AVSDirective.cpp
-    AVS/src/AVSMessage.cpp
-    AVS/src/AVSMessageHeader.cpp
     AVS/src/CapabilityAgent.cpp
+    AVS/src/DialogUXStateAggregator.cpp
     AVS/src/EventBuilder.cpp
     AVS/src/ExceptionEncounteredSender.cpp
     AVS/src/HandlerAndPolicy.cpp
     AVS/src/MessageRequest.cpp
     AVS/src/NamespaceAndName.cpp
-    AVS/src/DialogUXStateAggregator.cpp
     Utils/src/Configuration/ConfigurationNode.cpp
     Utils/src/Executor.cpp
     Utils/src/FileUtils.cpp
@@ -47,13 +47,15 @@ add_library(AVSCommon SHARED
     Utils/src/Logger/ThreadMoniker.cpp
     Utils/src/Metrics.cpp
     Utils/src/RequiresShutdown.cpp
+    Utils/src/RetryTimer.cpp
+    Utils/src/Stream/StreamFunctions.cpp
+    Utils/src/Stream/Streambuf.cpp
     Utils/src/StringUtils.cpp
     Utils/src/TaskQueue.cpp
     Utils/src/TaskThread.cpp
     Utils/src/TimePoint.cpp
-    Utils/src/Timer.cpp
     Utils/src/TimeUtils.cpp
-    Utils/src/RetryTimer.cpp
+    Utils/src/Timer.cpp
     Utils/src/UUIDGeneration.cpp)
 
 target_include_directories(AVSCommon PUBLIC

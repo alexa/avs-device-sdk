@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_PLAYLIST_PARSER_INCLUDE_PLAYLIST_PARSER_PLAYLIST_PARSER_H_
-#define ALEXA_CLIENT_SDK_PLAYLIST_PARSER_INCLUDE_PLAYLIST_PARSER_PLAYLIST_PARSER_H_
+#ifndef ALEXA_CLIENT_SDK_PLAYLISTPARSER_INCLUDE_PLAYLISTPARSER_PLAYLISTPARSER_H_
+#define ALEXA_CLIENT_SDK_PLAYLISTPARSER_INCLUDE_PLAYLISTPARSER_PLAYLISTPARSER_H_
 
 #include <deque>
 #include <memory>
@@ -25,6 +25,7 @@
 #include <AVSCommon/AVS/Attachment/AttachmentReader.h>
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
 #include <AVSCommon/Utils/PlaylistParser/PlaylistParserInterface.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
 namespace alexaClientSDK {
@@ -33,7 +34,9 @@ namespace playlistParser {
 /**
  *
  */
-class PlaylistParser : public avsCommon::utils::playlistParser::PlaylistParserInterface {
+class PlaylistParser
+        : public avsCommon::utils::playlistParser::PlaylistParserInterface
+        , public avsCommon::utils::RequiresShutdown {
 public:
     /**
      * Creates a new @c PlaylistParser instance.
@@ -52,7 +55,23 @@ public:
     /// A return value that indicates a failure to start the playlist parsing.
     static const int START_FAILURE = 0;
 
+    void doShutdown() override;
+
 private:
+    /// A struct to contain a URL encountered in a playlist and metadata surrounding it.
+    struct UrlAndInfo {
+        std::string url;
+        std::chrono::milliseconds length;
+    };
+
+    /// A struct used to encapsulate information retrieved from an M3U playlist.
+    struct M3UContent {
+        std::vector<UrlAndInfo> childrenUrls;
+        bool endlistTagPresent;
+        bool streamInfTagPresent;
+        M3UContent() : endlistTagPresent{false}, streamInfTagPresent{false} {};
+    };
+
     /**
      * Constructor.
      *
@@ -79,9 +98,9 @@ private:
      * Parses an M3U playlist and returns the "children" URLs in the order they appeared in the playlist.
      *
      * @param content The content to parse.
-     * @return A vector of URLs in the order they appeared in the playlist.
+     * @return A vector of URLs and their relevant metadata in the order they appeared in the playlist.
      */
-    static std::vector<std::string> parseM3UContent(const std::string& playlistURL, const std::string& content);
+    static M3UContent parseM3UContent(const std::string& playlistURL, const std::string& content);
 
     /**
      * Parses an PLS playlist and returns the "children" URLs in the order they appeared in the playlist.
@@ -142,8 +161,20 @@ private:
         std::string relativePath,
         std::string* absoluteURL);
 
+    /**
+     * Used to parse the time length out of a playlist entry metadata line that starts with #EXTINF.
+     *
+     * @param line The line to parse.
+     * @return The time length of the entry or @c PlaylistParserObserverInterface::INVALID_DURATION if the time length
+     * was unable to be parsed.
+     */
+    static std::chrono::milliseconds parseRuntime(std::string line);
+
     /// Used to retrieve content from URLs
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> m_contentFetcherFactory;
+
+    /// Used to indicate that a shutdown is occurring.
+    std::atomic<bool> m_shuttingDown;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.
@@ -157,4 +188,4 @@ private:
 }  // namespace playlistParser
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_PLAYLIST_PARSER_INCLUDE_PLAYLIST_PARSER_PLAYLIST_PARSER_H_
+#endif  // ALEXA_CLIENT_SDK_PLAYLISTPARSER_INCLUDE_PLAYLISTPARSER_PLAYLISTPARSER_H_

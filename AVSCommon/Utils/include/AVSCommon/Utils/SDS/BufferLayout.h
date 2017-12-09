@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_BUFFER_LAYOUT_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_BUFFER_LAYOUT_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_BUFFERLAYOUT_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_BUFFERLAYOUT_H_
 
 #include <cstdint>
 #include <cstddef>
@@ -45,7 +45,7 @@ public:
     static const uint32_t MAGIC_NUMBER = 0x53445348;
 
     /// Version of this header layout.
-    static const uint32_t VERSION = 1;
+    static const uint32_t VERSION = 2;
 
     /**
      * The constructor only initializes a shared pointer to the provided buffer.  Attaching and/or initializing is
@@ -102,6 +102,12 @@ public:
 
         /// This field contains the mutex used by @c dataAvailableConditionVariable.
         Mutex dataAvailableMutex;
+
+        /**
+         * This field contains the condition variable used to notify @c Writers that space is available.  Note that
+         * this condition variable does not have a dedicated mutex; the condition is protected by backwardSeekMutex.
+         */
+        ConditionVariable spaceAvailableConditionVariable;
 
         /**
          * This field contains a mutex used to temporarily hold off @c Readers from seeking backwards in the buffer
@@ -548,7 +554,7 @@ bool SharedDataStream<T>::BufferLayout::attach() {
         logger::acsdkError(logger::LogEntry(TAG, "attachFailed")
                                .d("reason", "bufferMaxUsersExceeded")
                                .d("numUsers", header->referenceCount)
-                               .d("maxNumUsers", std::numeric_limits<decltype(header->referenceCount)>::max));
+                               .d("maxNumUsers", std::numeric_limits<decltype(header->referenceCount)>::max()));
         return false;
     }
     ++header->referenceCount;
@@ -617,6 +623,8 @@ void SharedDataStream<T>::BufferLayout::updateOldestUnconsumedCursor() {
 
 template <typename T>
 void SharedDataStream<T>::BufferLayout::updateOldestUnconsumedCursorLocked() {
+    auto header = getHeader();
+
     // Note: as an optimization, we could skip this function if Writer policy is nonblockable (ACSDK-251).
 
     // The only barrier to a blocking writer overrunning a reader is oldestUnconsumedCursor, so we have to be careful
@@ -624,21 +632,26 @@ void SharedDataStream<T>::BufferLayout::updateOldestUnconsumedCursorLocked() {
     // without moving oldestUnconsumedCursor.  Note that readers can continue to read while we are looping; it means
     // oldest may not be completely accurate, but it will always be older than the readers because they are reading
     // away from it.  Also note that backwards seeks (which would break the invariant) are prevented with a mutex which
-    // is held while this function is called.
-    auto header = getHeader();
-    Index oldest = header->writeStartCursor;
+    // is held while this function is called.  Also note that all read cursors may be in the future, so we start with
+    // an unlimited barrier and work back from there.
+    Index oldest = std::numeric_limits<Index>::max();
     for (size_t id = 0; id < header->maxReaders; ++id) {
         // Note that this code is calling isReaderEnabled() without holding readerEnableMutex.  On the surface, this
         // appears to be a race condition because a reader may be disabled and/or re-enabled before the subsequent code
         // reads the cursor, but it turns out to be safe because:
         // - if a reader is enabled, its cursor is valid
-        // - if a reader becomes disabled, its cursor doesn't change
+        // - if a reader becomes disabled, its cursor moves to writeCursor (which will never be the oldest)
         // - if a reader becomes re-enabled, its cursor defaults to writeCursor (which will never be the oldest)
         // - if a reader is created that wants to be at an older index, it gets there by doing a backward seek (which
         //   is locked when this function is called)
         if (isReaderEnabled(id) && getReaderCursorArray()[id] < oldest) {
             oldest = getReaderCursorArray()[id];
         }
+    }
+
+    // If no barrier was found, block at the write cursor so that we retain data until a reader comes along to read it.
+    if (std::numeric_limits<Index>::max() == oldest) {
+        oldest = header->writeStartCursor;
     }
 
     // Now that we've measured the oldest cursor, we can safely update oldestUnconsumedCursor with no risk of an
@@ -649,6 +662,10 @@ void SharedDataStream<T>::BufferLayout::updateOldestUnconsumedCursorLocked() {
     // ('oldestUnconsumedCursor') if it is older than it needs to be.
     if (oldest > header->oldestUnconsumedCursor) {
         header->oldestUnconsumedCursor = oldest;
+
+        // Notify the writer(s).
+        // Note: as an optimization, we could skip this if there are no blocking writers (ACSDK-251).
+        header->spaceAvailableConditionVariable.notify_all();
     }
 }
 
@@ -709,4 +726,4 @@ bool SharedDataStream<T>::BufferLayout::isAttached() const {
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_BUFFER_LAYOUT_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_BUFFERLAYOUT_H_

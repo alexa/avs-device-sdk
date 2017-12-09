@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_GUI_RENDERER_H_
-#define ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_GUI_RENDERER_H_
+#ifndef ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_GUIRENDERER_H_
+#define ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_GUIRENDERER_H_
 
 #include <AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h>
 
@@ -24,7 +24,7 @@ namespace alexaClientSDK {
 namespace sampleApp {
 
 /**
- * A simple class that implments the TemplateRuntimeObserverInterface.  Instead of rendering the
+ * A simple class that implements the TemplateRuntimeObserverInterface.  Instead of rendering the
  * display cards, this class will print out some useful information (e.g. JSON payload)
  * when the renderTemplateCard or renderPlayerInfoCard callbacks are called.
  *
@@ -44,4 +44,4 @@ public:
 }  // namespace sampleApp
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_GUI_RENDERER_H_
+#endif  // ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_GUIRENDERER_H_

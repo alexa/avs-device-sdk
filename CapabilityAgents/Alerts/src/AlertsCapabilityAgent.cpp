@@ -57,14 +57,6 @@ static const std::string DIRECTIVE_NAME_DELETE_ALERT = "DeleteAlert";
 static const std::string ALERTS_CAPABILITY_AGENT_CONFIGURATION_ROOT_KEY = "alertsCapabilityAgent";
 /// The key in our config file to find the database file path.
 static const std::string ALERTS_CAPABILITY_AGENT_DB_FILE_PATH_KEY = "databaseFilePath";
-/// The key in our config file to find the alarm default sound file path.
-static const std::string ALERTS_CAPABILITY_AGENT_ALARM_AUDIO_FILE_PATH_KEY = "alarmSoundFilePath";
-/// The key in our config file to find the alarm short sound file path.
-static const std::string ALERTS_CAPABILITY_AGENT_ALARM_SHORT_AUDIO_FILE_PATH_KEY = "alarmShortSoundFilePath";
-/// The key in our config file to find the timer default sound file path.
-static const std::string ALERTS_CAPABILITY_AGENT_TIMER_AUDIO_FILE_PATH_KEY = "timerSoundFilePath";
-/// The key in our config file to find the timer short sound file path.
-static const std::string ALERTS_CAPABILITY_AGENT_TIMER_SHORT_AUDIO_FILE_PATH_KEY = "timerShortSoundFilePath";
 
 /// The value of the SetAlertSucceeded Event name.
 static const std::string SET_ALERT_SUCCEEDED_EVENT_NAME = "SetAlertSucceeded";
@@ -185,6 +177,7 @@ std::shared_ptr<AlertsCapabilityAgent> AlertsCapabilityAgent::create(
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
     std::shared_ptr<storage::AlertStorageInterface> alertStorage,
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alertsAudioFactory,
     std::shared_ptr<renderer::RendererInterface> alertRenderer) {
     auto alertsCA = std::shared_ptr<AlertsCapabilityAgent>(new AlertsCapabilityAgent(
         messageSender,
@@ -193,6 +186,7 @@ std::shared_ptr<AlertsCapabilityAgent> AlertsCapabilityAgent::create(
         contextManager,
         exceptionEncounteredSender,
         alertStorage,
+        alertsAudioFactory,
         alertRenderer));
 
     if (!alertsCA->initialize()) {
@@ -288,6 +282,7 @@ AlertsCapabilityAgent::AlertsCapabilityAgent(
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
     std::shared_ptr<storage::AlertStorageInterface> alertStorage,
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alertsAudioFactory,
     std::shared_ptr<renderer::RendererInterface> alertRenderer) :
         CapabilityAgent("Alerts", exceptionEncounteredSender),
         RequiresShutdown("AlertsCapabilityAgent"),
@@ -296,7 +291,8 @@ AlertsCapabilityAgent::AlertsCapabilityAgent(
         m_focusManager{focusManager},
         m_contextManager{contextManager},
         m_isConnected{false},
-        m_alertScheduler{alertStorage, alertRenderer, ALERT_PAST_DUE_CUTOFF_MINUTES} {
+        m_alertScheduler{alertStorage, alertRenderer, ALERT_PAST_DUE_CUTOFF_MINUTES},
+        m_alertsAudioFactory{alertsAudioFactory} {
 }
 
 void AlertsCapabilityAgent::doShutdown() {
@@ -317,82 +313,12 @@ bool AlertsCapabilityAgent::initialize() {
         return false;
     }
 
-    if (!initializeDefaultSounds(configurationRoot)) {
-        ACSDK_ERROR(LX("initializeFailed").m("Could not initialize default sounds."));
-        return false;
-    }
-
     if (!initializeAlerts(configurationRoot)) {
         ACSDK_ERROR(LX("initializeFailed").m("Could not initialize alerts."));
         return false;
     }
 
     updateContextManager();
-
-    return true;
-}
-
-bool AlertsCapabilityAgent::initializeDefaultSounds(const ConfigurationNode& configurationRoot) {
-    std::string alarmAudioFilePath;
-    std::string alarmShortAudioFilePath;
-    std::string timerAudioFilePath;
-    std::string timerShortAudioFilePath;
-
-    if (!configurationRoot.getString(ALERTS_CAPABILITY_AGENT_ALARM_AUDIO_FILE_PATH_KEY, &alarmAudioFilePath) ||
-        alarmAudioFilePath.empty()) {
-        ACSDK_ERROR(LX("initializeDefaultSoundsFailed").m("could not read alarm audio file path."));
-        return false;
-    }
-
-    if (!fileExists(alarmAudioFilePath)) {
-        ACSDK_ERROR(LX("initializeDefaultSoundsFailed").m("could not open alarm audio file."));
-        return false;
-    }
-
-    if (!configurationRoot.getString(
-            ALERTS_CAPABILITY_AGENT_ALARM_SHORT_AUDIO_FILE_PATH_KEY, &alarmShortAudioFilePath) ||
-        alarmShortAudioFilePath.empty()) {
-        ACSDK_ERROR(LX("initializeDefaultSoundsFailed").m("could not read alarm short audio file path."));
-        return false;
-    }
-
-    if (!fileExists(alarmAudioFilePath)) {
-        ACSDK_ERROR(LX("initializeDefaultSoundsFailed").m("could not open alarm short audio file."));
-        return false;
-    }
-
-    if (!configurationRoot.getString(ALERTS_CAPABILITY_AGENT_TIMER_AUDIO_FILE_PATH_KEY, &timerAudioFilePath) ||
-        timerAudioFilePath.empty()) {
-        ACSDK_ERROR(LX("initializeDefaultSoundsFailed").m("could not read timer audio file path."));
-        return false;
-    }
-
-    if (!fileExists(alarmAudioFilePath)) {
-        ACSDK_ERROR(LX("initializeDefaultSoundsFailed").m("could not open timer audio file."));
-        return false;
-    }
-
-    if (!configurationRoot.getString(
-            ALERTS_CAPABILITY_AGENT_TIMER_SHORT_AUDIO_FILE_PATH_KEY, &timerShortAudioFilePath) ||
-        timerShortAudioFilePath.empty()) {
-        ACSDK_ERROR(LX("initializeDefaultSoundsFailed").m("could not read timer short audio file path."));
-        return false;
-    }
-
-    if (!fileExists(alarmAudioFilePath)) {
-        ACSDK_ERROR(LX("initializeDefaultSoundsFailed").m("could not open timer short audio file."));
-        return false;
-    }
-
-    Alarm::setDefaultAudioFilePath(alarmAudioFilePath);
-    Alarm::setDefaultShortAudioFilePath(alarmShortAudioFilePath);
-
-    Timer::setDefaultAudioFilePath(timerAudioFilePath);
-    Timer::setDefaultShortAudioFilePath(timerShortAudioFilePath);
-
-    // until AVS specifies otherwise, we will use the alert sound files for reminder defaults.
-    Reminder::setDefaultAudioFilePath(alarmAudioFilePath);
-    Reminder::setDefaultShortAudioFilePath(alarmShortAudioFilePath);
 
     return true;
 }
@@ -425,11 +351,12 @@ bool AlertsCapabilityAgent::handleSetAlert(
     std::shared_ptr<Alert> parsedAlert;
 
     if (Alarm::TYPE_NAME == alertType) {
-        parsedAlert = std::make_shared<Alarm>();
+        parsedAlert = std::make_shared<Alarm>(m_alertsAudioFactory->alarmDefault(), m_alertsAudioFactory->alarmShort());
     } else if (Timer::TYPE_NAME == alertType) {
-        parsedAlert = std::make_shared<Timer>();
+        parsedAlert = std::make_shared<Timer>(m_alertsAudioFactory->timerDefault(), m_alertsAudioFactory->timerShort());
     } else if (Reminder::TYPE_NAME == alertType) {
-        parsedAlert = std::make_shared<Reminder>();
+        parsedAlert =
+            std::make_shared<Reminder>(m_alertsAudioFactory->reminderDefault(), m_alertsAudioFactory->reminderShort());
     }
 
     if (!parsedAlert) {

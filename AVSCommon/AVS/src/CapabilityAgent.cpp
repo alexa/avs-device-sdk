@@ -59,7 +59,8 @@ CapabilityAgent::DirectiveInfo::DirectiveInfo(
     std::shared_ptr<AVSDirective> directiveIn,
     std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> resultIn) :
         directive{directiveIn},
-        result{std::move(resultIn)} {
+        result{std::move(resultIn)},
+        isCancelled{false} {
 }
 
 void CapabilityAgent::preHandleDirective(
@@ -102,6 +103,11 @@ void CapabilityAgent::cancelDirective(const std::string& messageId) {
         ACSDK_ERROR(LX("cancelDirectiveFailed").d("reason", "messageIdNotFound").d("messageId", messageId));
         return;
     }
+    /*
+     * We mark this directive as cancelled so the @c CapabilityAgent can use this flag to handle directives that've
+     * already been handled, but are not yet complete.
+     */
+    info->isCancelled = true;
     cancelDirective(info);
 }
 
@@ -119,7 +125,7 @@ void CapabilityAgent::onFocusChanged(FocusState) {
     // default no-op
 }
 
-void CapabilityAgent::provideState(const unsigned int) {
+void CapabilityAgent::provideState(const avsCommon::avs::NamespaceAndName& stateProviderName, const unsigned int) {
     // default no-op
 }
 

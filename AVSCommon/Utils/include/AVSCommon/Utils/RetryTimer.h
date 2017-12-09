@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_RETRY_TIMER_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_RETRY_TIMER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_RETRYTIMER_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_RETRYTIMER_H_
 
 #include <chrono>
 
@@ -43,20 +43,20 @@ public:
      *
      * @param retryTable The table with entries for retry times.
      * @param retrySize The size of the retry table.
-     * @param randomizationFactor The randomization factor to be used while computing the distribution range around the
-     * retry time.
+     * @param randomizationPercentage The randomization percentage to be used while computing the distribution range
+     * around the retry time.
      */
-    RetryTimer(int* retryTable, int retrySize, double randomizationFactor);
+    RetryTimer(int* retryTable, int retrySize, int randomizationPercentage);
 
     /**
      * Constructor.
      *
      * @param retryTable The table with entries for retry times.
      * @param retrySize The size of the retry table.
-     * @param decreaseFactor The lower bound of the retry time duration.
-     * @param increaseFactor upper bound of the retry time duration.
+     * @param decreasePercentage The lower bound of the retry time duration.
+     * @param increasePercentage The upper bound of the retry time duration.
      */
-    RetryTimer(int* retryTable, int retrySize, double decreaseFactor, double increaseFactor);
+    RetryTimer(int* retryTable, int retrySize, int decreasePercentage, int increasePercentage);
 
     /**
      * Method to return a randomized delay in milliseconds when threads are waiting on an event.
@@ -74,14 +74,14 @@ private:
     int m_RetrySize;
 
     /// Lower bound of the retry time duration range.
-    double m_RetryDecreaseFactor;
+    int m_RetryDecreasePercentage;
 
     /// Upper bound of the retry time duration range.
-    double m_RetryIncreaseFactor;
+    int m_RetryIncreasePercentage;
 };
 
 }  // namespace utils
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_RETRY_TIMER_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_RETRYTIMER_H_

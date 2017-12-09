@@ -47,6 +47,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
     std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
     std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
@@ -62,6 +63,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             speakSpeaker,
             audioSpeaker,
             alertsSpeaker,
+            audioFactory,
             authDelegate,
             alertStorage,
             settingsStorage,
@@ -80,6 +82,7 @@ bool DefaultClient::initialize(
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
     std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
     std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
@@ -87,6 +90,11 @@ bool DefaultClient::initialize(
         alexaDialogStateObservers,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
         connectionObservers) {
+    if (!audioFactory) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullAudioFactory"));
+        return false;
+    }
+
     if (!speakMediaPlayer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullSpeakMediaPlayer"));
         return false;
@@ -238,7 +246,13 @@ bool DefaultClient::initialize(
      * interface of AVS.
      */
     m_speechSynthesizer = capabilityAgents::speechSynthesizer::SpeechSynthesizer::create(
-        speakMediaPlayer, m_connectionManager, m_focusManager, contextManager, attachmentManager, exceptionSender);
+        speakMediaPlayer,
+        m_connectionManager,
+        m_focusManager,
+        contextManager,
+        attachmentManager,
+        exceptionSender,
+        m_dialogUXStateAggregator);
     if (!m_speechSynthesizer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSpeechSynthesizer"));
         return false;
@@ -268,6 +282,7 @@ bool DefaultClient::initialize(
         contextManager,
         exceptionSender,
         alertStorage,
+        audioFactory->alerts(),
         capabilityAgents::alerts::renderer::Renderer::create(alertsMediaPlayer));
     if (!m_alertsCapabilityAgent) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateAlertsCapabilityAgent"));
@@ -399,7 +414,9 @@ bool DefaultClient::initialize(
 }
 
 void DefaultClient::connect(const std::string& avsEndpoint) {
-    m_connectionManager->setAVSEndpoint(avsEndpoint);
+    if (!avsEndpoint.empty()) {
+        m_connectionManager->setAVSEndpoint(avsEndpoint);
+    }
     m_connectionManager->enable();
 }
 
@@ -437,6 +454,16 @@ void DefaultClient::addAlertsObserver(std::shared_ptr<capabilityAgents::alerts::
 
 void DefaultClient::removeAlertsObserver(std::shared_ptr<capabilityAgents::alerts::AlertObserverInterface> observer) {
     m_alertsCapabilityAgent->removeObserver(observer);
+}
+
+void DefaultClient::addAudioPlayerObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer) {
+    m_audioPlayer->addObserver(observer);
+}
+
+void DefaultClient::removeAudioPlayerObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer) {
+    m_audioPlayer->removeObserver(observer);
 }
 
 void DefaultClient::addTemplateRuntimeObserver(

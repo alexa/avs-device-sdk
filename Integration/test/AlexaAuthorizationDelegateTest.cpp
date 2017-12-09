@@ -114,7 +114,7 @@ TEST_F(AlexaAuthorizationDelegateTest, invalidRefreshTokenWithUnrecoverableError
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     if (argc < 2) {
-        std::cerr << "USAGE: AlexaAuthorizationDelegateTest <path to AlexaClientSDKConfig.json>" << std::endl;
+        std::cerr << "USAGE: " << std::string(argv[0]) << " <path to AlexaClientSDKConfig.json>" << std::endl;
         return 1;
     } else {
         g_configPath = std::string(argv[1]);

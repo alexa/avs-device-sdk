@@ -36,7 +36,7 @@ Executor::~Executor() {
 void Executor::waitForSubmittedTasks() {
     std::promise<void> flushedPromise;
     auto flushedFuture = flushedPromise.get_future();
-    auto task = [this, &flushedPromise]() { flushedPromise.set_value(); };
+    auto task = [&flushedPromise]() { flushedPromise.set_value(); };
     submit(task);
     flushedFuture.get();
 }

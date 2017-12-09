@@ -54,7 +54,7 @@ CertifiedSender::CertifiedMessageRequest::CertifiedMessageRequest(const std::str
 
 void CertifiedSender::CertifiedMessageRequest::exceptionReceived(const std::string& exceptionMessage) {
     std::lock_guard<std::mutex> lock(m_mutex);
-    m_sendMessageStatus = MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR;
+    m_sendMessageStatus = MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2;
     m_responseReceived = true;
     m_cv.notify_all();
 }

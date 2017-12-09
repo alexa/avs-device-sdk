@@ -291,7 +291,7 @@ public:
     }
     ~testStateProvider() {
     }
-    void provideState(const unsigned int stateRequestToken) override {
+    void provideState(const NamespaceAndName& nsname, const unsigned int stateRequestToken) override {
         std::ostringstream context;
         context << R"({)"
                    R"("volume":)"
@@ -1819,7 +1819,7 @@ TEST_F(AudioInputProcessorTest, audioWithoutAnyTrigger) {
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     if (argc < 3) {
-        std::cerr << "USAGE: AudioInputProcessorTest <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder>"
+        std::cerr << "USAGE: " << std::string(argv[0]) << " <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder>"
                   << std::endl;
         return 1;
 

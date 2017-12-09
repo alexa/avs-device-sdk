@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_HANDLER_AND_POLICY_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_HANDLER_AND_POLICY_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_HANDLERANDPOLICY_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_HANDLERANDPOLICY_H_
 
 #include <memory>
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
@@ -82,4 +82,4 @@ bool operator!=(const HandlerAndPolicy& lhs, const HandlerAndPolicy& rhs);
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_HANDLER_AND_POLICY_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_HANDLERANDPOLICY_H_

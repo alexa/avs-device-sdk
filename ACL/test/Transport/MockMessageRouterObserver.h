@@ -14,8 +14,8 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_MESSAGE_ROUTER_OBSERVER_H_
-#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_MESSAGE_ROUTER_OBSERVER_H_
+#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKMESSAGEROUTEROBSERVER_H_
+#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKMESSAGEROUTEROBSERVER_H_
 
 #include "ACL/Transport/MessageRouterObserverInterface.h"
 
@@ -87,4 +87,4 @@ private:
 }  // namespace acl
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_MESSAGE_ROUTER_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKMESSAGEROUTEROBSERVER_H_

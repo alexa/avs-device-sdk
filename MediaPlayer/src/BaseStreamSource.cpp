@@ -51,6 +51,7 @@ BaseStreamSource::BaseStreamSource(PipelineInterface* pipeline, const std::strin
         m_handleEnoughDataFunction{[this]() { return handleEnoughData(); }},
         m_needDataHandlerId{0},
         m_enoughDataHandlerId{0},
+        m_seekDataHandlerId{0},
         m_needDataCallbackId{0},
         m_enoughDataCallbackId{0} {
 }
@@ -59,6 +60,7 @@ BaseStreamSource::~BaseStreamSource() {
     ACSDK_DEBUG9(LX("~BaseStreamSource"));
     g_signal_handler_disconnect(m_pipeline->getAppSrc(), m_needDataHandlerId);
     g_signal_handler_disconnect(m_pipeline->getAppSrc(), m_enoughDataHandlerId);
+    g_signal_handler_disconnect(m_pipeline->getAppSrc(), m_seekDataHandlerId);
     {
         std::lock_guard<std::mutex> lock(m_callbackIdMutex);
         if (m_needDataCallbackId && !g_source_remove(m_needDataCallbackId)) {
@@ -77,7 +79,7 @@ bool BaseStreamSource::init() {
         ACSDK_ERROR(LX("initFailed").d("reason", "createSourceElementFailed"));
         return false;
     }
-    gst_app_src_set_stream_type(appsrc, GST_APP_STREAM_TYPE_STREAM);
+    gst_app_src_set_stream_type(appsrc, GST_APP_STREAM_TYPE_SEEKABLE);
 
     auto decoder = gst_element_factory_make("decodebin", "decoder");
     if (!decoder) {
@@ -127,6 +129,15 @@ bool BaseStreamSource::init() {
         ACSDK_ERROR(LX("initFailed").d("reason", "connectEnoughDataSignalFailed"));
         return false;
     }
+    /*
+     * When the appsrc needs to seek to a position, it emits the signal seek-data. Connect the seek-data signal to the
+     * onSeekData callback which handles seeking to the appropriate position.
+     */
+    m_seekDataHandlerId = g_signal_connect(appsrc, "seek-data", G_CALLBACK(onSeekData), this);
+    if (0 == m_seekDataHandlerId) {
+        ACSDK_ERROR(LX("initFailed").d("reason", "connectSeekDataSignalFailed"));
+        return false;
+    }
 
     m_pipeline->setAppSrc(appsrc);
     m_pipeline->setDecoder(decoder);
@@ -149,6 +160,7 @@ void BaseStreamSource::signalEndOfData() {
                         .d("reason", "gstAppSrcEndOfStreamFailed")
                         .d("result", gst_flow_get_name(flowRet)));
     }
+    ACSDK_DEBUG9(LX("gstAppSrcEndOfStreamSuccess"));
     close();
     clearOnReadDataHandler();
 }
@@ -243,6 +255,10 @@ gboolean BaseStreamSource::handleEnoughData() {
     m_enoughDataCallbackId = 0;
     uninstallOnReadDataHandler();
     return false;
+}
+
+gboolean BaseStreamSource::onSeekData(GstElement* pipeline, guint64 offset, gpointer pointer) {
+    return static_cast<BaseStreamSource*>(pointer)->handleSeekData(offset);
 }
 
 gboolean BaseStreamSource::onReadData(gpointer pointer) {

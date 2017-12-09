@@ -422,7 +422,7 @@ TEST_F(SettingsTest, openAndCloseDatabaseTest) {
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     if (argc < 1) {
-        std::cerr << "USAGE: SettingsTest " << std::endl;
+        std::cerr << "USAGE: " << std::string(argv[0]) << std::endl;
         return 1;
     }
     return RUN_ALL_TESTS();

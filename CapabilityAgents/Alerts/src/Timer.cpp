@@ -23,26 +23,12 @@ namespace capabilityAgents {
 namespace alerts {
 
 /// Definition for static class data member.
-std::string Timer::m_defaultAudioFilePath;
-/// Definition for static class data member.
-std::string Timer::m_defaultShortAudioFilePath;
-/// Definition for static class data member.
 const std::string Timer::TYPE_NAME = "TIMER";
 
-void Timer::setDefaultAudioFilePath(const std::string& filePath) {
-    m_defaultAudioFilePath = filePath;
-}
-
-void Timer::setDefaultShortAudioFilePath(const std::string& filePath) {
-    m_defaultShortAudioFilePath = filePath;
-}
-
-std::string Timer::getDefaultAudioFilePath() const {
-    return m_defaultAudioFilePath;
-}
-
-std::string Timer::getDefaultShortAudioFilePath() const {
-    return m_defaultShortAudioFilePath;
+Timer::Timer(
+    std::function<std::unique_ptr<std::istream>()> defaultAudioFactory,
+    std::function<std::unique_ptr<std::istream>()> shortAudioFactory) :
+        Alert(defaultAudioFactory, shortAudioFactory) {
 }
 
 std::string Timer::getTypeName() const {

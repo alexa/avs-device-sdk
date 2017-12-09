@@ -93,6 +93,9 @@ static const std::string LOCALE_MESSAGE =
     "| Press '1' followed by Enter to change the language to US English.          |\n"
     "| Press '2' followed by Enter to change the language to UK English.          |\n"
     "| Press '3' followed by Enter to change the language to German.              |\n"
+    "| Press '4' followed by Enter to change the language to Indian English.      |\n"
+    "| Press '5' followed by Enter to change the language to Canadian English.    |\n"
+    "| Press '6' followed by Enter to change the language to Japanese.            |\n"
     "+----------------------------------------------------------------------------+\n";
 
 static const std::string SPEAKER_CONTROL_MESSAGE =

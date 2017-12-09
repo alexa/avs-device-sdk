@@ -571,7 +571,7 @@ TEST_F(KittAiKeyWordTest, getStreamClosedState) {
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     if (argc < 2) {
-        std::cerr << "USAGE: KittAiKeyWordDetectorTest <path_to_inputs_folder>" << std::endl;
+        std::cerr << "USAGE: " << std::string(argv[0]) << " <path_to_inputs_folder>" << std::endl;
         return 1;
     } else {
         alexaClientSDK::kwd::test::inputsDirPath = std::string(argv[1]);

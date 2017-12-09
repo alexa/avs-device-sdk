@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_PROCESSOR_H_
-#define ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_PROCESSOR_H_
+#ifndef ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVEPROCESSOR_H_
+#define ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVEPROCESSOR_H_
 
 #include <condition_variable>
 #include <deque>
@@ -264,4 +264,4 @@ private:
 }  // namespace adsl
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_PROCESSOR_H_
+#endif  // ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVEPROCESSOR_H_

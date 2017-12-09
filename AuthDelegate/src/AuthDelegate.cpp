@@ -179,39 +179,31 @@ static std::chrono::steady_clock::time_point calculateTimeToRetry(int retryCount
      * @see https://images-na.ssl-images-amazon.com/images/G/01/mwsportal/
      * doc/en_US/offamazonpayments/LoginAndPayWithAmazonIntegrationGuide.pdf
      */
-    static const int retryBackoffTimes[] = {
-        0,      // Retry 1:  0.00s range with 0.5 randomization: [ 0.0s.  0.0s]
-        1000,   // Retry 2:  1.00s range with 0.5 randomization: [ 0.5s,  1.5s]
-        2000,   // Retry 3:  2.00s range with 0.5 randomization: [ 1.0s,  3.0s]
-        4000,   // Retry 4:  5.00s range with 0.5 randomization: [ 2.0s,  6.0s]
-        10000,  // Retry 5: 10.00s range with 0.5 randomization: [ 5.0s, 15.0s]
-        30000,  // Retry 6: 20.00s range with 0.5 randomization: [15.0s, 45.0s]
-        60000,  // Retry 7: 60.00s range with 0.5 randomization: [30.0s, 90.0s]
+    static int retryBackoffTimes[] = {
+        0,      // Retry 1:  0.00s range with 50% randomization: [ 0.0s.  0.0s]
+        1000,   // Retry 2:  1.00s range with 50% randomization: [ 0.5s,  1.5s]
+        2000,   // Retry 3:  2.00s range with 50% randomization: [ 1.0s,  3.0s]
+        4000,   // Retry 4:  4.00s range with 50% randomization: [ 2.0s,  6.0s]
+        10000,  // Retry 5: 10.00s range with 50% randomization: [ 5.0s, 15.0s]
+        30000,  // Retry 6: 30.00s range with 50% randomization: [15.0s, 45.0s]
+        60000,  // Retry 7: 60.00s range with 50% randomization: [30.0s, 90.0s]
     };
-    /// Scale of range (relative to table entry) to select a random value from.
-    static const double RETRY_RANDOMIZATION_FACTOR = 0.5;
-    /// Factor to multiply table value by when selecting low end of random values.
-    static const double RETRY_DECREASE_FACTOR = 1 - RETRY_RANDOMIZATION_FACTOR;
-    /// Factor to multiply table value by when selecting high end of random values.
-    static const double RETRY_INCREASE_FACTOR = 1 + RETRY_RANDOMIZATION_FACTOR;
 
-    // Cap count to the size of the table
-    static const int retryTableSize = (sizeof(retryBackoffTimes) / sizeof(retryBackoffTimes[0]));
-    if (retryCount < 0) {
-        retryCount = 0;
-    } else if (retryCount >= retryTableSize) {
-        retryCount = retryTableSize - 1;
-    }
+    /// Percent of range (relative to table entry) to select a random value from.
+    static int RETRY_RANDOMIZATION_PERCENTAGE = 50;
+    /// Percentage decrease to the table value when selecting low end of random values.
+    static int RETRY_DECREASE_PERCENTAGE = 100 - RETRY_RANDOMIZATION_PERCENTAGE;
+    /// Percentage increase to the table value when selecting high end of random values.
+    static int RETRY_INCREASE_PERCENTAGE = 100 + RETRY_RANDOMIZATION_PERCENTAGE;
 
-    // Calculate randomized interval to the next retry.
-    std::mt19937 generator(static_cast<unsigned>(std::time(nullptr)));
-    std::uniform_int_distribution<int> distribution(
-        static_cast<int>(retryBackoffTimes[retryCount] * RETRY_DECREASE_FACTOR),
-        static_cast<int>(retryBackoffTimes[retryCount] * RETRY_INCREASE_FACTOR));
-    auto delayMs = std::chrono::milliseconds(distribution(generator));
-    ACSDK_DEBUG(LX("calculatedTimeToRetry").d("delayMs", delayMs.count()));
+    // Cap count to the size of the table.
+    static int retryTableSize = (sizeof(retryBackoffTimes) / sizeof(retryBackoffTimes[0]));
 
-    return std::chrono::steady_clock::now() + delayMs;
+    // Retry Timer Object.
+    avsCommon::utils::RetryTimer RETRY_TIMER(
+        retryBackoffTimes, retryTableSize, RETRY_DECREASE_PERCENTAGE, RETRY_INCREASE_PERCENTAGE);
+
+    return std::chrono::steady_clock::now() + RETRY_TIMER.calculateTimeToRetry(retryCount);
 }
 
 std::unique_ptr<AuthDelegate> AuthDelegate::create() {

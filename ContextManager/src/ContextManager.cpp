@@ -202,7 +202,7 @@ void ContextManager::requestStatesLocked(std::unique_lock<std::mutex>& stateProv
         if (StateRefreshPolicy::ALWAYS == stateInfo->refreshPolicy) {
             m_pendingOnStateProviders.insert(it->first);
             stateProviderLock.unlock();
-            stateInfo->stateProvider->provideState(curStateReqToken);
+            stateInfo->stateProvider->provideState(it->first, curStateReqToken);
             stateProviderLock.lock();
         }
     }

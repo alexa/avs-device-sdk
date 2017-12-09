@@ -158,6 +158,27 @@ bool DirectiveRouter::handleDirectiveImmediately(std::shared_ptr<avsCommon::avs:
     return true;
 }
 
+bool DirectiveRouter::handleDirectiveWithPolicyHandleImmediately(
+    std::shared_ptr<avsCommon::avs::AVSDirective> directive) {
+    std::unique_lock<std::mutex> lock(m_mutex);
+    auto handlerAndPolicy = getHandlerAndPolicyLocked(directive);
+    if (!handlerAndPolicy) {
+        ACSDK_WARN(LX("handleDirectiveWithPolicyHandleImmediatelyFailed")
+                       .d("messageId", directive->getMessageId())
+                       .d("reason", "noHandlerRegistered"));
+        return false;
+    }
+    if (BlockingPolicy::HANDLE_IMMEDIATELY != handlerAndPolicy.policy) {
+        return false;
+    }
+    ACSDK_INFO(LX("handleDirectiveWithPolicyHandleImmediately")
+                   .d("messageId", directive->getMessageId())
+                   .d("action", "calling"));
+    HandlerCallScope scope(lock, this, handlerAndPolicy.handler);
+    handlerAndPolicy.handler->handleDirectiveImmediately(directive);
+    return true;
+}
+
 bool DirectiveRouter::preHandleDirective(
     std::shared_ptr<avsCommon::avs::AVSDirective> directive,
     std::unique_ptr<DirectiveHandlerResultInterface> result) {

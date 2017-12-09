@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_READER_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_READER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_ATTACHMENTREADER_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_ATTACHMENTREADER_H_
 
 #include <chrono>
 #include <cstddef>
@@ -94,6 +94,15 @@ public:
         std::chrono::milliseconds timeoutMs = std::chrono::milliseconds(0)) = 0;
 
     /**
+     * The seek function.
+     *
+     * @param offset The offset to seek to within the @c Attachment.
+     * @return @c true if the specified position points at unexpired data, or @c false otherwise. Note that it is valid
+     * to seek into a future index that has not been written to yet.
+     */
+    virtual bool seek(uint64_t offset) = 0;
+
+    /**
      * The close function.  An implementation will take care of any resource management when a reader no longer
      * needs to use an attachment.
      *
@@ -107,4 +116,4 @@ public:
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_READER_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_ATTACHMENTREADER_H_

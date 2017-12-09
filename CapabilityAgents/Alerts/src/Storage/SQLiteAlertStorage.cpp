@@ -299,7 +299,7 @@ static bool alertExistsByAlertId(sqlite3* dbHandle, int alertId) {
     return countValue > 0;
 }
 
-SQLiteAlertStorage::SQLiteAlertStorage() : m_dbHandle{nullptr} {
+    SQLiteAlertStorage::SQLiteAlertStorage(const std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> &alertsAudioFactory) : m_dbHandle{nullptr}, m_alertsAudioFactory{alertsAudioFactory} {
 }
 
 /**
@@ -872,11 +872,11 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
 
         std::shared_ptr<Alert> alert;
         if (ALERT_EVENT_TYPE_ALARM == type) {
-            alert = std::make_shared<Alarm>();
+            alert = std::make_shared<Alarm>(m_alertsAudioFactory->alarmDefault(), m_alertsAudioFactory->alarmShort());
         } else if (ALERT_EVENT_TYPE_TIMER == type) {
-            alert = std::make_shared<Timer>();
+            alert = std::make_shared<Timer>(m_alertsAudioFactory->timerDefault(), m_alertsAudioFactory->timerShort());
         } else if (ALERT_EVENT_TYPE_REMINDER == type) {
-            alert = std::make_shared<Reminder>();
+            alert = std::make_shared<Reminder>(m_alertsAudioFactory->reminderDefault(), m_alertsAudioFactory->reminderShort());
         } else {
             ACSDK_ERROR(LX("loadHelperFailed")
                     .m("Could not instantiate an alert object.")

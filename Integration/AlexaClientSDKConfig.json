@@ -5,7 +5,7 @@
         // Unique device serial number. e.g. 123456
         "deviceSerialNumber":"${SDK_CONFIG_DEVICE_SERIAL_NUMBER}",
         // Refresh Token populated by running AuthServer.py
-        "refreshToken":"{SDK_CONFIG_REFRESH_TOKEN}",
+        "refreshToken":"${SDK_CONFIG_REFRESH_TOKEN}",
         // The Client ID of the Product from developer.amazon.com
         "clientId":"${SDK_CONFIG_CLIENT_ID}",
         // Product ID from developer.amazon.com
@@ -16,19 +16,7 @@
         // Note: The directory specified must be valid.
         // The database file (alerts.db) will be created by SampleApp, do not create it yourself.
         // The database file should only be used for alerts (don't use it for other components of SDK)
-        "databaseFilePath":"${SDK_SQLITE_DATABASE_FILE_PATH}",
-        // Path to default Alarm sound file. e.g. /home/ubuntu/alert_sounds/alarm_normal.mp3
-        // Note: The audio file must exist and be a valid file.
-        "alarmSoundFilePath":"${SDK_ALARM_DEFAULT_SOUND_FILE_PATH}",
-        // Path to short Alarm sound file. e.g. /home/ubuntu/alert_sounds/alarm_short.wav
-        // Note: The audio file must exist and be a valid file.
-        "alarmShortSoundFilePath":"${SDK_ALARM_SHORT_SOUND_FILE_PATH}",
-        // Path to default timer sound file. e.g. /home/ubuntu/alert_sounds/timer_normal.mp3
-        // Note: The audio file must exist and be a valid file.
-        "timerSoundFilePath":"${SDK_TIMER_DEFAULT_SOUND_FILE_PATH}",
-        // Path to short timer sound file. e.g. /home/ubuntu/alert_sounds/timer_short.wav
-        // Note: The audio file must exist and be a valid file.
-        "timerShortSoundFilePath":"${SDK_TIMER_SHORT_SOUND_FILE_PATH}"
+        "databaseFilePath":"${SDK_SQLITE_DATABASE_FILE_PATH}"
    },
    "settings":{
         // Path to Settings database file. e.g. /home/ubuntu/Build/settings.db
@@ -48,6 +36,10 @@
         // The database file (certifiedsender.db) will be created by SampleApp, do not create it yourself.
         // The database file should only be used for certifiedSender (don't use it for other components of SDK)
         "databaseFilePath":"${SDK_CERTIFIED_SENDER_DATABASE_FILE_PATH}"
+    },
+    "sampleApp":{
+        // To specify if the SampleApp supports display cards.
+        "displayCardsSupported":true
     }
  }
 
@@ -58,7 +50,7 @@
 // the lowest level of logging i.e. if DEBUG9 is specified while running the SampleApp, all the logs at DEBUG9 and
 // below are displayed, whereas if CRITICAL is specified, only logs of CRITICAL are displayed.
 // The 14 levels are:
-// DEBUG9, DEBUG8, DEBUG7, DEBUG6, DEBUG5, DEBUG4, DEBUG3, DEBUG2, DEBUG1, DEBUG0, INFO, WARN, ERROR, CRTITICAL.
+// DEBUG9, DEBUG8, DEBUG7, DEBUG6, DEBUG5, DEBUG4, DEBUG3, DEBUG2, DEBUG1, DEBUG0, INFO, WARN, ERROR, CRITICAL.
 
 // To selectively see the logging for a particular module, you can specify logging level in this json file.
 // Some examples are:

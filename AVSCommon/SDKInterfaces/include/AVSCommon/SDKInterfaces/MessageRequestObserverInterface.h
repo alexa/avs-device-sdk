@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_MESSAGE_REQUEST_OBSERVER_INTERFACE_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_MESSAGE_REQUEST_OBSERVER_INTERFACE_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_MESSAGEREQUESTOBSERVERINTERFACE_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_MESSAGEREQUESTOBSERVERINTERFACE_H_
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -55,8 +55,8 @@ public:
         /// The send failed due to an internal error within ACL.
         INTERNAL_ERROR,
 
-        /// The send failed due to an internal error on the server.
-        SERVER_INTERNAL_ERROR,
+        /// The send failed due to an internal error on the server which sends code 500.
+        SERVER_INTERNAL_ERROR_V2,
 
         /// The send failed due to server refusing the request.
         REFUSED,
@@ -68,7 +68,13 @@ public:
         THROTTLED,
 
         /// The access credentials provided to ACL were invalid.
-        INVALID_AUTH
+        INVALID_AUTH,
+
+        /// The send failed due to invalid request sent by the user.
+        BAD_REQUEST,
+
+        /// The send failed due to unknown server error.
+        SERVER_OTHER_ERROR
     };
 
     /*
@@ -91,4 +97,4 @@ public:
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_MESSAGE_REQUEST_OBSERVER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_MESSAGEREQUESTOBSERVERINTERFACE_H_

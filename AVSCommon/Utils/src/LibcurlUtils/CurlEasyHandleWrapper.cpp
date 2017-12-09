@@ -345,6 +345,19 @@ void CurlEasyHandleWrapper::cleanupResources() {
 
 bool CurlEasyHandleWrapper::setDefaultOptions() {
     if (prepareForTLS(m_handle)) {
+        /*
+         * The documentation from libcurl recommends setting CURLOPT_NOSIGNAL to 1 for multi-threaded applications.
+         * https://curl.haxx.se/libcurl/c/threadsafe.html
+         */
+        CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_NOSIGNAL, 1);
+        if (ret != CURLE_OK) {
+            ACSDK_ERROR(LX("setDefaultOptions")
+                            .d("reason", "curlFailure")
+                            .d("method", "curl_easy_setopt")
+                            .d("option", "CURLOPT_NOSIGNAL")
+                            .d("error", curl_easy_strerror(ret)));
+            return false;
+        }
         return true;
     }
     curl_easy_cleanup(m_handle);

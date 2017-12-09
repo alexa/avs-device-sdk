@@ -494,7 +494,7 @@ TEST_F(LoggerTest, verifyThreadMoniker) {
     EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(2);
     ACSDK_INFO(LX("testing threadMoniker (1 of 2)"));
     auto firstThreadMoniker = g_log->m_lastThreadMoniker;
-    std::thread secondThread([this, firstThreadMoniker]() {
+    std::thread secondThread([firstThreadMoniker]() {
         ACSDK_INFO(LX("testing threadMoniker (2 of 2)"));
         ASSERT_NE(firstThreadMoniker, g_log->m_lastThreadMoniker);
     });

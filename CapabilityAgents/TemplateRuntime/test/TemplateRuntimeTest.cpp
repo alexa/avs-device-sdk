@@ -500,7 +500,7 @@ TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveAudioStateUpdate) {
     EXPECT_CALL(*m_mockGui, renderPlayerInfoCard(PLAYERINFO_PAYLOAD, _))
         .Times(Exactly(1))
         .WillOnce(Invoke(
-            [this, &wakePlayPromise, context](
+            [&wakePlayPromise, context](
                 const std::string& jsonPayload, TemplateRuntimeObserverInterface::AudioPlayerInfo audioPlayerInfo) {
                 EXPECT_EQ(audioPlayerInfo.audioPlayerState, avsCommon::avs::PlayerActivity::PLAYING);
                 EXPECT_EQ(audioPlayerInfo.offset, context.offset);
@@ -516,7 +516,7 @@ TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveAudioStateUpdate) {
     EXPECT_CALL(*m_mockGui, renderPlayerInfoCard(PLAYERINFO_PAYLOAD, _))
         .Times(Exactly(1))
         .WillOnce(Invoke(
-            [this, &wakePausePromise, context](
+            [&wakePausePromise, context](
                 const std::string& jsonPayload, TemplateRuntimeObserverInterface::AudioPlayerInfo audioPlayerInfo) {
                 EXPECT_EQ(audioPlayerInfo.audioPlayerState, avsCommon::avs::PlayerActivity::PAUSED);
                 EXPECT_EQ(audioPlayerInfo.offset, context.offset);
@@ -532,7 +532,7 @@ TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveAudioStateUpdate) {
     EXPECT_CALL(*m_mockGui, renderPlayerInfoCard(PLAYERINFO_PAYLOAD, _))
         .Times(Exactly(1))
         .WillOnce(Invoke(
-            [this, &wakeStopPromise, context](
+            [&wakeStopPromise, context](
                 const std::string& jsonPayload, TemplateRuntimeObserverInterface::AudioPlayerInfo audioPlayerInfo) {
                 EXPECT_EQ(audioPlayerInfo.audioPlayerState, avsCommon::avs::PlayerActivity::STOPPED);
                 EXPECT_EQ(audioPlayerInfo.offset, context.offset);
@@ -548,7 +548,7 @@ TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveAudioStateUpdate) {
     EXPECT_CALL(*m_mockGui, renderPlayerInfoCard(PLAYERINFO_PAYLOAD, _))
         .Times(Exactly(1))
         .WillOnce(Invoke(
-            [this, &wakeFinishPromise, context](
+            [&wakeFinishPromise, context](
                 const std::string& jsonPayload, TemplateRuntimeObserverInterface::AudioPlayerInfo audioPlayerInfo) {
                 EXPECT_EQ(audioPlayerInfo.audioPlayerState, avsCommon::avs::PlayerActivity::FINISHED);
                 EXPECT_EQ(audioPlayerInfo.offset, context.offset);

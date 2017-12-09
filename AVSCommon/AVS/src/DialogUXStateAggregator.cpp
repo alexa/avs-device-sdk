@@ -40,7 +40,9 @@ static const std::chrono::milliseconds SHORT_TIMEOUT{200};
 
 DialogUXStateAggregator::DialogUXStateAggregator(std::chrono::milliseconds timeoutForThinkingToIdle) :
         m_currentState{DialogUXStateObserverInterface::DialogUXState::IDLE},
-        m_timeoutForThinkingToIdle{timeoutForThinkingToIdle} {
+        m_timeoutForThinkingToIdle{timeoutForThinkingToIdle},
+        m_speechSynthesizerState{SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED},
+        m_audioInputProcessorState{AudioInputProcessorObserverInterface::State::IDLE} {
 }
 
 void DialogUXStateAggregator::addObserver(std::shared_ptr<DialogUXStateObserverInterface> observer) {
@@ -63,20 +65,24 @@ void DialogUXStateAggregator::removeObserver(std::shared_ptr<DialogUXStateObserv
 }
 
 void DialogUXStateAggregator::onStateChanged(AudioInputProcessorObserverInterface::State state) {
+    m_audioInputProcessorState = state;
+
     m_executor.submit([this, state]() {
         switch (state) {
             case AudioInputProcessorObserverInterface::State::IDLE:
-                setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
+                tryEnterIdleState();
                 return;
             case AudioInputProcessorObserverInterface::State::RECOGNIZING:
+                onActivityStarted();
                 setState(DialogUXStateObserverInterface::DialogUXState::LISTENING);
                 return;
             case AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH:
+                onActivityStarted();
                 setState(DialogUXStateObserverInterface::DialogUXState::LISTENING);
                 return;
             case AudioInputProcessorObserverInterface::State::BUSY:
                 setState(DialogUXStateObserverInterface::DialogUXState::THINKING);
-                if (!m_thinkingToIdleTimer
+                if (!m_thinkingTimeoutTimer
                          .start(
                              m_timeoutForThinkingToIdle,
                              std::bind(&DialogUXStateAggregator::transitionFromThinkingTimedOut, this))
@@ -89,25 +95,22 @@ void DialogUXStateAggregator::onStateChanged(AudioInputProcessorObserverInterfac
     });
 }
 
-void DialogUXStateAggregator::onStateChanged(SpeechSynthesizerObserver::SpeechSynthesizerState state) {
+void DialogUXStateAggregator::onStateChanged(SpeechSynthesizerObserverInterface::SpeechSynthesizerState state) {
+    m_speechSynthesizerState = state;
+
     m_executor.submit([this, state]() {
         switch (state) {
-            case SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING:
+            case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING:
+                onActivityStarted();
                 setState(DialogUXStateObserverInterface::DialogUXState::SPEAKING);
                 return;
-            case SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED:
-                if (DialogUXStateObserverInterface::DialogUXState::SPEAKING != m_currentState) {
-                    return;
-                }
-
-                m_currentState = DialogUXStateObserverInterface::DialogUXState::FINISHED;
-
-                if (!m_multiturnSpeakingToListeningTimer
-                         .start(
-                             SHORT_TIMEOUT, std::bind(&DialogUXStateAggregator::transitionFromSpeakingFinished, this))
-                         .valid()) {
-                    ACSDK_ERROR(LX("failedToStartTimerFromSpeakingFinishedToIdle"));
-                }
+            case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED:
+                tryEnterIdleState();
+                return;
+            case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::LOSING_FOCUS:
+                break;
+            case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS:
+                onActivityStarted();
                 return;
         }
         ACSDK_ERROR(LX("unknownSpeechSynthesizerState"));
@@ -122,8 +125,8 @@ void DialogUXStateAggregator::receive(const std::string& contextId, const std::s
              * or we automatically go to idle after the short timeout (i.e. the directive received isn't related to
              * speech, like a setVolume directive).
              */
-            m_thinkingToIdleTimer.stop();
-            m_thinkingToIdleTimer.start(
+            m_thinkingTimeoutTimer.stop();
+            m_thinkingTimeoutTimer.start(
                 SHORT_TIMEOUT, std::bind(&DialogUXStateAggregator::transitionFromThinkingTimedOut, this));
         }
     });
@@ -156,10 +159,12 @@ void DialogUXStateAggregator::transitionFromThinkingTimedOut() {
     });
 }
 
-void DialogUXStateAggregator::transitionFromSpeakingFinished() {
+void DialogUXStateAggregator::tryEnterIdleStateOnTimer() {
     m_executor.submit([this]() {
-        if (DialogUXStateObserverInterface::DialogUXState::FINISHED == m_currentState) {
-            setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
+        if (m_currentState != sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE &&
+            m_audioInputProcessorState == AudioInputProcessorObserverInterface::State::IDLE &&
+            m_speechSynthesizerState == SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED) {
+            setState(sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE);
         }
     });
 }
@@ -168,11 +173,24 @@ void DialogUXStateAggregator::setState(sdkInterfaces::DialogUXStateObserverInter
     if (newState == m_currentState) {
         return;
     }
-    m_thinkingToIdleTimer.stop();
+    m_thinkingTimeoutTimer.stop();
     m_multiturnSpeakingToListeningTimer.stop();
     ACSDK_DEBUG(LX("setState").d("from", m_currentState).d("to", newState));
     m_currentState = newState;
     notifyObserversOfState();
+}
+
+void DialogUXStateAggregator::tryEnterIdleState() {
+    m_multiturnSpeakingToListeningTimer.stop();
+    if (!m_multiturnSpeakingToListeningTimer
+             .start(SHORT_TIMEOUT, std::bind(&DialogUXStateAggregator::tryEnterIdleStateOnTimer, this))
+             .valid()) {
+        ACSDK_ERROR(LX("failedToStartTryEnterIdleStateTimer"));
+    }
+}
+
+void DialogUXStateAggregator::onActivityStarted() {
+    m_thinkingTimeoutTimer.stop();
 }
 
 }  // namespace avs

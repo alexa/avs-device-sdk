@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_ROUTER_H_
-#define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_ROUTER_H_
+#ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGEROUTER_H_
+#define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGEROUTER_H_
 
 #include <memory>
 #include <mutex>
@@ -54,7 +54,8 @@ public:
      * @param authDelegate An implementation of an AuthDelegate, which will provide valid access tokens with which
      * the MessageRouter can authorize the client to AVS.
      * @param attachmentManager The AttachmentManager, which allows ACL to write attachments received from AVS.
-     * @param avsEndpoint The endpoint to connect to AVS.
+     * @param avsEndpoint The endpoint to connect to AVS.  If empty the "endpoint" value of the "acl" configuration
+     * will be used.  If there no such configuration value a default value will be used instead.
      */
     MessageRouter(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
@@ -225,4 +226,4 @@ protected:
 }  // namespace acl
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGE_ROUTER_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_MESSAGEROUTER_H_

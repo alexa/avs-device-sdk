@@ -15,15 +15,15 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_TEST_SPEECH_SYNTHESIZER_OBSERVER_H_
-#define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_TEST_SPEECH_SYNTHESIZER_OBSERVER_H_
+#ifndef ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TESTSPEECHSYNTHESIZEROBSERVER_H_
+#define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TESTSPEECHSYNTHESIZEROBSERVER_H_
 
 #include <chrono>
 #include <deque>
 #include <mutex>
 #include <condition_variable>
 
-#include <AVSCommon/SDKInterfaces/SpeechSynthesizerObserver.h>
+#include <AVSCommon/SDKInterfaces/SpeechSynthesizerObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace integration {
@@ -32,32 +32,33 @@ namespace test {
 /**
  * Interface for observing a SpeechSynthesizer.
  */
-class TestSpeechSynthesizerObserver : public avsCommon::sdkInterfaces::SpeechSynthesizerObserver {
+class TestSpeechSynthesizerObserver : public avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface {
 public:
     TestSpeechSynthesizerObserver();
 
     ~TestSpeechSynthesizerObserver() = default;
 
-    void onStateChanged(avsCommon::sdkInterfaces::SpeechSynthesizerObserver::SpeechSynthesizerState state) override;
+    void onStateChanged(
+        avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState state) override;
 
     bool checkState(
-        const avsCommon::sdkInterfaces::SpeechSynthesizerObserver::SpeechSynthesizerState expectedState,
+        const avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState expectedState,
         const std::chrono::seconds duration);
 
-    avsCommon::sdkInterfaces::SpeechSynthesizerObserver::SpeechSynthesizerState waitForNext(
+    avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState waitForNext(
         const std::chrono::seconds duration);
 
-    avsCommon::sdkInterfaces::SpeechSynthesizerObserver::SpeechSynthesizerState getCurrentState();
+    avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState getCurrentState();
 
 private:
-    avsCommon::sdkInterfaces::SpeechSynthesizerObserver::SpeechSynthesizerState m_state;
+    avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState m_state;
     std::mutex m_mutex;
     std::condition_variable m_wakeTrigger;
-    std::deque<avsCommon::sdkInterfaces::SpeechSynthesizerObserver::SpeechSynthesizerState> m_queue;
+    std::deque<avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState> m_queue;
 };
 
 }  // namespace test
 }  // namespace integration
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_TEST_SPEECH_SYNTHESIZER_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TESTSPEECHSYNTHESIZEROBSERVER_H_

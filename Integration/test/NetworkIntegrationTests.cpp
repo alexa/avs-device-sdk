@@ -259,7 +259,7 @@ int main(int argc, char** argv) {
         return 1;
     }
     if (argc < 3) {
-        std::cerr << "USAGE: NetworkIntegrationTests <path_to_auth_delgate_config> <Network_Interface_Name>"
+        std::cerr << "USAGE: " << std::string(argv[0]) << "<path_to_AlexaClientSDKConfig.json> <Network_Interface_Name>"
                   << std::endl;
         return 1;
     } else {

@@ -15,6 +15,7 @@ set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${GST_INCLUDE_DIRS}"
      "${AVSCommon_INCLUDE_DIRS}"
      "${AudioPlayer_INCLUDE_DIRS}"
+     "${AudioResources_INCLUDE_DIRS}"
      "${MediaPlayer_SOURCE_DIR}/include"
      "${CONTEXTMANAGER_SOURCE_DIR}/include")
 

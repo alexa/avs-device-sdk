@@ -115,8 +115,8 @@ std::string MessageRequest::statusToString(MessageRequestObserverInterface::Stat
             return "PROTOCOL_ERROR";
         case MessageRequestObserverInterface::Status::INTERNAL_ERROR:
             return "INTERNAL_ERROR";
-        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR:
-            return "SERVER_INTERNAL_ERROR";
+        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2:
+            return "SERVER_INTERNAL_ERROR_V2";
         case MessageRequestObserverInterface::Status::REFUSED:
             return "REFUSED";
         case MessageRequestObserverInterface::Status::CANCELED:
@@ -125,6 +125,10 @@ std::string MessageRequest::statusToString(MessageRequestObserverInterface::Stat
             return "THROTTLED";
         case MessageRequestObserverInterface::Status::INVALID_AUTH:
             return "INVALID_AUTH";
+        case MessageRequestObserverInterface::Status::BAD_REQUEST:
+            return "BAD_REQUEST";
+        case MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR:
+            return "SERVER_OTHER_ERROR";
     }
 
     return "sendMessageStatusToString_UNHANDLED_ERROR";
@@ -134,9 +138,11 @@ bool MessageRequest::isServerStatus(MessageRequestObserverInterface::Status stat
     switch (status) {
         case MessageRequestObserverInterface::Status::SUCCESS:
         case MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT:
-        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR:
+        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2:
         case MessageRequestObserverInterface::Status::CANCELED:
         case MessageRequestObserverInterface::Status::THROTTLED:
+        case MessageRequestObserverInterface::Status::BAD_REQUEST:
+        case MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR:
             return true;
         case MessageRequestObserverInterface::Status::PENDING:
         case MessageRequestObserverInterface::Status::NOT_CONNECTED:

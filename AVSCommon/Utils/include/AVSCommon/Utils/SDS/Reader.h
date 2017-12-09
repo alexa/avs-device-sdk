@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_READER_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_READER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_READER_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_READER_H_
 
 #include <cstdint>
 #include <cstddef>
@@ -132,9 +132,10 @@ public:
     /**
      * This function moves the @c Reader to the specified location in the stream.  If successful, subsequent calls to
      * @c read() will start from the new location.  For this function to succeed, the specified location *must* point
-     * at data which still exists in the buffer; if the specified location points at old data which has already been
-     * overwritten, or new data which has not yet been written, the @c seek() call will fail.  If the @c seek() call
-     * fails, the @c Reader position will remain unchanged.
+     * at data which has not been pushed out of the buffer; if the specified location points at old data which has
+     * already been overwritten, the @c seek() call will fail.  If the specified location points at future data which
+     * does not yet exist in the buffer, the @c seek() call will succeed.  If the @c seek() call fails, the @c Reader
+     * position will remain unchanged.
      *
      * @param offset The position (in @c wordSize words) in the stream, relative to @c reference, to move the @c Reader
      *     to.
@@ -148,6 +149,9 @@ public:
      *
      * @param reference The position in the stream the return value is measured against.
      * @return The @c Reader's position (in @c wordSize words) in the stream relative to @c reference.
+     *
+     * @note For @c Reference::BEFORE_WRITER, if the read cursor points at a location in the future (after the writer),
+     *     then the reader is not before the writer, so this function will return 0.
      */
     Index tell(Reference reference = Reference::ABSOLUTE) const;
 
@@ -242,9 +246,10 @@ SharedDataStream<T>::Reader::Reader(Policy policy, std::shared_ptr<BufferLayout>
 
 template <typename T>
 SharedDataStream<T>::Reader::~Reader() {
-    // Note: It is important that deleted readers do not change their cursor.  This allows
-    // updateOldestUnconsumedCursor() to be thread-safe without holding readerEnableMutex.  See
-    // updateOldestUnconsumedCursor() comments for further explanation.
+    // Note: We can't leave a reader with its cursor in the future; doing so can introduce a race condition in
+    // updateOldestUnconsumedCursor().  See updateOldestUnconsumedCursor() comments for further explanation.
+    seek(0, Reference::BEFORE_WRITER);
+
     std::lock_guard<Mutex> lock(m_bufferLayout->getHeader()->readerEnableMutex);
     m_bufferLayout->disableReaderLocked(m_id);
     m_bufferLayout->updateOldestUnconsumedCursor();
@@ -270,7 +275,8 @@ ssize_t SharedDataStream<T>::Reader::read(void* buf, size_t nWords, std::chrono:
 
     // Initial check for overrun.
     auto header = m_bufferLayout->getHeader();
-    if ((header->writeEndCursor - *m_readerCursor) > m_bufferLayout->getDataSize()) {
+    if ((header->writeEndCursor >= *m_readerCursor) &&
+        (header->writeEndCursor - *m_readerCursor) > m_bufferLayout->getDataSize()) {
         return Error::OVERRUN;
     }
 
@@ -294,10 +300,8 @@ ssize_t SharedDataStream<T>::Reader::read(void* buf, size_t nWords, std::chrono:
 
             if (std::chrono::milliseconds::zero() == timeout) {
                 header->dataAvailableConditionVariable.wait(lock, predicate);
-            } else {
-                if (!header->dataAvailableConditionVariable.wait_for(lock, timeout, predicate)) {
-                    return Error::TIMEDOUT;
-                }
+            } else if (!header->dataAvailableConditionVariable.wait_for(lock, timeout, predicate)) {
+                return Error::TIMEDOUT;
             }
         }
         wordsAvailable = tell(Reference::BEFORE_WRITER);
@@ -400,15 +404,6 @@ bool SharedDataStream<T>::Reader::seek(Index offset, Reference reference) {
         return false;
     }
 
-    // Don't seek to future indices that have not been written yet.
-    if (absolute > *writeStartCursor) {
-        logger::acsdkError(logger::LogEntry(TAG, "seekFailed")
-                               .d("reason", "seekUnwrittenIndices")
-                               .d("position", absolute)
-                               .d("writeStartCursor", writeStartCursor->load()));
-        return false;
-    }
-
     // Per documentation of updateOldestUnconsumedCursor(), don't try to seek backwards while oldestConsumedCursor is
     // being updated.
     bool backward = absolute < *m_readerCursor;
@@ -421,7 +416,7 @@ bool SharedDataStream<T>::Reader::seek(Index offset, Reference reference) {
     // Note: If this is a backward seek, it is important that this check is performed while holding the
     // backwardSeekMutex to prevent a writer from starting to overwrite us between here and the m_readerCursor update
     // below.  If this is not a backward seek, then the mutex is not held.
-    if (*writeEndCursor - absolute > m_bufferLayout->getDataSize()) {
+    if (*writeEndCursor >= absolute && *writeEndCursor - absolute > m_bufferLayout->getDataSize()) {
         logger::acsdkError(logger::LogEntry(TAG, "seekFailed").d("reason", "seekOverwrittenData"));
         return false;
     }
@@ -447,7 +442,7 @@ typename SharedDataStream<T>::Index SharedDataStream<T>::Reader::tell(Reference 
         case Reference::BEFORE_READER:
             return 0;
         case Reference::BEFORE_WRITER:
-            return *writeStartCursor - *m_readerCursor;
+            return (*writeStartCursor >= *m_readerCursor) ? *writeStartCursor - *m_readerCursor : 0;
         case Reference::ABSOLUTE:
             return *m_readerCursor;
     }
@@ -506,6 +501,8 @@ size_t SharedDataStream<T>::Reader::getWordSize() const {
 template <typename T>
 std::string SharedDataStream<T>::Reader::errorToString(Error error) {
     switch (error) {
+        case Error::CLOSED:
+            return "CLOSED";
         case Error::OVERRUN:
             return "OVERRUN";
         case Error::WOULDBLOCK:
@@ -524,4 +521,4 @@ std::string SharedDataStream<T>::Reader::errorToString(Error error) {
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_READER_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_READER_H_

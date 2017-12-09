@@ -1,5 +1,5 @@
 /*
- * SpeechSynthesizerObserver.h
+ * SpeechSynthesizerObserverInterface.h
  *
  * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_SPEECH_SYNTHESIZER_OBSERVER_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_SPEECH_SYNTHESIZER_OBSERVER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_SPEECHSYNTHESIZEROBSERVERINTERFACE_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_SPEECHSYNTHESIZEROBSERVERINTERFACE_H_
 
 #include <iostream>
 
@@ -27,7 +27,7 @@ namespace sdkInterfaces {
 /**
  * Interface for observing a SpeechSynthesizer.
  */
-class SpeechSynthesizerObserver {
+class SpeechSynthesizerObserverInterface {
 public:
     /**
      * This is an enum class used to indicate the state of the @c SpeechSynthesizer.
@@ -37,16 +37,22 @@ public:
         PLAYING,
 
         /// In this state, the @c SpeechSynthesizer is idle and not playing speech.
-        FINISHED
+        FINISHED,
+
+        /// In this state, the @c SpeechSynthesizer is gaining the channel focus while still not playing anything
+        GAINING_FOCUS,
+
+        /// In this state, the @c SpeechSynthesizer is losing the channel focus but not yet considered @c FINISHED
+        LOSING_FOCUS
     };
 
     /**
      * Destructor.
      */
-    virtual ~SpeechSynthesizerObserver() = default;
+    virtual ~SpeechSynthesizerObserverInterface() = default;
 
     /**
-     * Notification that the @c SpeechSynthesizer state has changed.
+     * Notification that the @c SpeechSynthesizer state has changed. Callback functions must return as soon as possible.
      * @param state The new state of the @c speechSynthesizer.
      */
     virtual void onStateChanged(SpeechSynthesizerState state) = 0;
@@ -59,13 +65,21 @@ public:
  * @param state The state value to write to the @c ostream as a string.
  * @return The @c ostream that was passed in and written to.
  */
-inline std::ostream& operator<<(std::ostream& stream, const SpeechSynthesizerObserver::SpeechSynthesizerState state) {
+inline std::ostream& operator<<(
+    std::ostream& stream,
+    const SpeechSynthesizerObserverInterface::SpeechSynthesizerState state) {
     switch (state) {
-        case SpeechSynthesizerObserver::SpeechSynthesizerState::PLAYING:
+        case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING:
             stream << "PLAYING";
             break;
-        case SpeechSynthesizerObserver::SpeechSynthesizerState::FINISHED:
+        case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED:
             stream << "FINISHED";
+            break;
+        case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS:
+            stream << "GAINING_FOCUS";
+            break;
+        case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::LOSING_FOCUS:
+            stream << "LOSING_FOCUS";
             break;
     }
     return stream;
@@ -75,4 +89,4 @@ inline std::ostream& operator<<(std::ostream& stream, const SpeechSynthesizerObs
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_SPEECH_SYNTHESIZER_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_SPEECHSYNTHESIZEROBSERVERINTERFACE_H_

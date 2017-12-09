@@ -14,6 +14,10 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_TEST_EXECUTORTESTUTILS_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_TEST_EXECUTORTESTUTILS_H_
+
 #include <chrono>
 
 namespace alexaClientSDK {
@@ -70,3 +74,5 @@ private:
 }  // namespace utils
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
+
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_TEST_EXECUTORTESTUTILS_H_

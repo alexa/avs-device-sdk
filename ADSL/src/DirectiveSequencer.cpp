@@ -141,14 +141,20 @@ void DirectiveSequencer::receiveDirectiveLocked(std::unique_lock<std::mutex>& lo
  * would be tagged with the dialogRequestId of that event.  In practice that is not
  * the observed behavior.
  */
-#ifdef DIALOG_REQUST_ID_IN_ALL_RESPONSE_DIRECTIVES
+#ifdef DIALOG_REQUEST_ID_IN_ALL_RESPONSE_DIRECTIVES
     if (directive->getDialogRequestId().empty()) {
         handled = m_directiveRouter.handleDirectiveImmediately(directive);
     } else {
-        handled = m_directiveProcessor->onDirective(directive);
+        handled = m_directiveRouter.handleDirectiveWithPolicyHandleImmediately(directive);
+        if (!handled) {
+            handled = m_directiveProcessor->onDirective(directive);
+        }
     }
 #else
-    handled = m_directiveProcessor->onDirective(directive);
+    handled = m_directiveRouter.handleDirectiveWithPolicyHandleImmediately(directive);
+    if (!handled) {
+        handled = m_directiveProcessor->onDirective(directive);
+    }
 #endif
 
     if (!handled) {

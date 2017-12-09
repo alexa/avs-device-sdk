@@ -14,6 +14,8 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+#include <algorithm>
+
 #include <AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibCurlHttpContentFetcher.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
@@ -34,13 +36,16 @@ static const std::string TAG("LibCurlHttpContentFetcher");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+static const std::chrono::milliseconds SLEEP_DURATION_IF_BUFFER_FULL{100};
+
 size_t LibCurlHttpContentFetcher::headerCallback(char* data, size_t size, size_t nmemb, void* userData) {
     if (!userData) {
         ACSDK_ERROR(LX("headerCallback").d("reason", "nullUserDataPointer"));
         return 0;
     }
     std::string line(static_cast<const char*>(data), size * nmemb);
-    if (line.find("HTTP") == 0) {
+    std::transform(line.begin(), line.end(), line.begin(), ::tolower);
+    if (line.find("http") == 0) {
         // To find lines like: "HTTP/1.1 200 OK"
         std::istringstream iss(line);
         std::string httpVersion;
@@ -48,13 +53,18 @@ size_t LibCurlHttpContentFetcher::headerCallback(char* data, size_t size, size_t
         iss >> httpVersion >> statusCode;
         LibCurlHttpContentFetcher* thisObject = static_cast<LibCurlHttpContentFetcher*>(userData);
         thisObject->m_lastStatusCode = statusCode;
-    } else if (line.find("Content-Type") == 0) {
+    } else if (line.find("content-type") == 0) {
         // To find lines like: "Content-Type: audio/x-mpegurl; charset=utf-8"
         std::istringstream iss(line);
         std::string contentTypeBeginning;
         std::string contentType;
         iss >> contentTypeBeginning >> contentType;
-        contentType.pop_back();
+
+        size_t separator = contentType.find(";");
+        if (separator != std::string::npos) {
+            // Remove characters after the separator ;
+            contentType.erase(separator);
+        }
         LibCurlHttpContentFetcher* thisObject = static_cast<LibCurlHttpContentFetcher*>(userData);
         thisObject->m_lastContentType = contentType;
     }
@@ -67,6 +77,10 @@ size_t LibCurlHttpContentFetcher::bodyCallback(char* data, size_t size, size_t n
         return 0;
     }
     LibCurlHttpContentFetcher* thisObject = static_cast<LibCurlHttpContentFetcher*>(userData);
+    if (thisObject->m_shuttingDown) {
+        // In order to properly quit when downloading live content, which block forever when performing a GET request
+        return 0;
+    }
     if (!thisObject->m_bodyCallbackBegan) {
         thisObject->m_bodyCallbackBegan = true;
         thisObject->m_statusCodePromise.set_value(thisObject->m_lastStatusCode);
@@ -74,13 +88,24 @@ size_t LibCurlHttpContentFetcher::bodyCallback(char* data, size_t size, size_t n
     }
     auto streamWriter = thisObject->m_streamWriter;
     if (streamWriter) {
-        avsCommon::avs::attachment::AttachmentWriter::WriteStatus writeStatus =
-            avsCommon::avs::attachment::AttachmentWriter::WriteStatus::OK;
-        auto numBytesWritten = streamWriter->write(data, size * nmemb, &writeStatus);
-        return numBytesWritten;
-    } else {
-        return 0;
+        while (!thisObject->m_shuttingDown) {
+            avsCommon::avs::attachment::AttachmentWriter::WriteStatus writeStatus =
+                avsCommon::avs::attachment::AttachmentWriter::WriteStatus::OK;
+            auto numBytesWritten = streamWriter->write(data, size * nmemb, &writeStatus);
+            switch (writeStatus) {
+                case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::CLOSED:
+                case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:
+                case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::ERROR_INTERNAL:
+                case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::OK:
+                    return numBytesWritten;
+                case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::OK_BUFFER_FULL:
+                    std::this_thread::sleep_for(SLEEP_DURATION_IF_BUFFER_FULL);
+                    continue;
+            }
+        }
     }
+    // To avoid compiler warning
+    return 0;
 }
 
 size_t LibCurlHttpContentFetcher::noopCallback(char* data, size_t size, size_t nmemb, void* userData) {
@@ -90,7 +115,8 @@ size_t LibCurlHttpContentFetcher::noopCallback(char* data, size_t size, size_t n
 LibCurlHttpContentFetcher::LibCurlHttpContentFetcher(const std::string& url) :
         m_url{url},
         m_bodyCallbackBegan{false},
-        m_lastStatusCode{0} {
+        m_lastStatusCode{0},
+        m_shuttingDown{false} {
     m_hasObjectBeenUsed.clear();
 }
 
@@ -198,6 +224,7 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
 }
 
 LibCurlHttpContentFetcher::~LibCurlHttpContentFetcher() {
+    m_shuttingDown = true;
     if (m_thread.joinable()) {
         m_thread.join();
     }

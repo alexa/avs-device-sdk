@@ -150,7 +150,7 @@ TEST_F(UUIDGenerationTest, testMultipleConcurrentRequests) {
     std::unordered_set<std::string> uuidsGenerated;
 
     for (int i = 0; i < no_of_threads; ++i) {
-        auto future = std::async(std::launch::async, [this]() { return generateUUID(); });
+        auto future = std::async(std::launch::async, []() { return generateUUID(); });
         uuidRequesters.push_back(std::move(future));
     }
 

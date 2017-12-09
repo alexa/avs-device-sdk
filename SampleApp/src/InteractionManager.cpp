@@ -38,8 +38,6 @@ InteractionManager::InteractionManager(
         m_isTapOccurring{false},
         m_isMicOn{true} {
     m_micWrapper->startStreamingMicrophoneData();
-    auto guiRenderer = std::make_shared<GuiRenderer>();
-    m_client->addTemplateRuntimeObserver(guiRenderer);
 };
 
 void InteractionManager::begin() {
@@ -176,7 +174,7 @@ void InteractionManager::setMute(avsCommon::sdkInterfaces::SpeakerInterface::Typ
 
 void InteractionManager::onDialogUXStateChanged(DialogUXState state) {
     // reset tap-to-talk state
-    if (DialogUXState::IDLE == state) {
+    if (DialogUXState::LISTENING != state) {
         m_isTapOccurring = false;
     }
 }

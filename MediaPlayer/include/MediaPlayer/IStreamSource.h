@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_ISTREAM_SOURCE_H_
-#define ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_ISTREAM_SOURCE_H_
+#ifndef ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_ISTREAMSOURCE_H_
+#define ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_ISTREAMSOURCE_H_
 
 #include <iostream>
 #include <memory>
@@ -76,6 +76,7 @@ private:
     bool isOpen() override;
     void close() override;
     gboolean handleReadData() override;
+    gboolean handleSeekData(guint64 offset) override;
     /// @}
 
 private:
@@ -89,4 +90,4 @@ private:
 }  // namespace mediaPlayer
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_ISTREAM_SOURCE_H_
+#endif  // ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_ISTREAMSOURCE_H_

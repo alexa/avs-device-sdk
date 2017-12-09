@@ -15,15 +15,16 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERER_INTERFACE_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERER_INTERFACE_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERERINTERFACE_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERERINTERFACE_H_
 
 #include "Alerts/Renderer/RendererObserverInterface.h"
 
+#include <chrono>
+#include <functional>
 #include <memory>
 #include <string>
 #include <vector>
-#include <chrono>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -62,13 +63,14 @@ public:
      *
      * TODO : ACSDK-389 Investigate changing explicit file paths to a std::istream-based interface.
      *
-     * @param localAudioFilePath The file to be rendered.
+     * @param audioFactory A function that produces a unique stream of audio that is used for the default if nothing
+     * else is available.
      * @param urls A container of urls to be rendered per the above description.
      * @param loopCount The number of times the urls should be rendered.
      * @param loopPauseInMilliseconds The number of milliseconds to pause between rendering url sequences.
      */
     virtual void start(
-        const std::string& localAudioFilePath,
+        std::function<std::unique_ptr<std::istream>()> audioFactory,
         const std::vector<std::string>& urls = std::vector<std::string>(),
         int loopCount = 0,
         std::chrono::milliseconds loopPause = std::chrono::milliseconds{0}) = 0;
@@ -84,4 +86,4 @@ public:
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERERINTERFACE_H_

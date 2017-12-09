@@ -35,7 +35,6 @@ std::shared_ptr<NiceMock<MockMediaPlayer>> MockMediaPlayer::create() {
         .WillByDefault(InvokeWithoutArgs(result.get(), &MockMediaPlayer::mockSetSource));
     ON_CALL(*result.get(), streamSetSource(_, _))
         .WillByDefault(InvokeWithoutArgs(result.get(), &MockMediaPlayer::mockSetSource));
-    ON_CALL(*result.get(), setOffset(_, _)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockSetOffset));
     ON_CALL(*result.get(), play(_)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockPlay));
     ON_CALL(*result.get(), stop(_)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockStop));
     ON_CALL(*result.get(), pause(_)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockPause));
@@ -101,7 +100,7 @@ MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
     return attachmentSetSource(attachmentReader);
 }
 
-MediaPlayerInterface::SourceId MockMediaPlayer::setSource(const std::string& url) {
+MediaPlayerInterface::SourceId MockMediaPlayer::setSource(const std::string& url, std::chrono::milliseconds offset) {
     return urlSetSource(url);
 }
 
@@ -276,6 +275,9 @@ bool MockMediaPlayer::waitUntilPlaybackPaused(std::chrono::milliseconds timeout)
 
 bool MockMediaPlayer::waitUntilPlaybackResumed(std::chrono::milliseconds timeout) {
     return m_wakeResumeFuture.wait_for(timeout) == std::future_status::ready;
+}
+
+void MockMediaPlayer::doShutdown() {
 }
 
 }  // namespace test

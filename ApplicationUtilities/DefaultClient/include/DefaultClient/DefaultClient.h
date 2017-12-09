@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_DEFAULT_CLIENT_INCLUDE_DEFAULT_CLIENT_H_
-#define ALEXA_CLIENT_SDK_DEFAULT_CLIENT_INCLUDE_DEFAULT_CLIENT_H_
+#ifndef ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_DEFAULTCLIENT_INCLUDE_DEFAULTCLIENT_DEFAULTCLIENT_H_
+#define ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_DEFAULTCLIENT_INCLUDE_DEFAULTCLIENT_DEFAULTCLIENT_H_
 
 #include <ACL/AVSConnectionManager.h>
 #include <ACL/Transport/MessageRouter.h>
@@ -25,10 +25,12 @@
 #include <AIP/AudioInputProcessor.h>
 #include <AIP/AudioProvider.h>
 #include <Alerts/AlertsCapabilityAgent.h>
+#include <Alerts/Renderer/Renderer.h>
 #include <Alerts/Storage/AlertStorageInterface.h>
-#include <SpeechSynthesizer/SpeechSynthesizer.h>
 #include <AudioPlayer/AudioPlayer.h>
 #include <AVSCommon/AVS/DialogUXStateAggregator.h>
+#include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
+#include <AVSCommon/SDKInterfaces/AudioPlayerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
@@ -39,10 +41,11 @@
 #include <CertifiedSender/CertifiedSender.h>
 #include <CertifiedSender/SQLiteMessageStorage.h>
 #include <PlaybackController/PlaybackController.h>
-#include <Settings/SettingsStorageInterface.h>
 #include <Settings/Settings.h>
+#include <Settings/SettingsStorageInterface.h>
 #include <Settings/SettingsUpdatedEventSender.h>
 #include <SpeakerManager/SpeakerManager.h>
+#include <SpeechSynthesizer/SpeechSynthesizer.h>
 #include <TemplateRuntime/TemplateRuntime.h>
 
 namespace alexaClientSDK {
@@ -67,6 +70,7 @@ public:
      * @param speakSpeaker The speaker to control volume of Alexa speech.
      * @param audioSpeaker The speaker to control volume of Alexa audio content.
      * @param alertsSpeaker The speaker to control volume of alerts.
+     * @param audioFactory The audioFactory is a component that provides unique audio streams.
      * @param authDelegate The component that provides the client with valid LWA authorization.
      * @Param alertStorage The storage interface that will be used to store alerts.
      * @param alexaDialogStateObservers Observers that can be used to be notified of Alexa dialog related UX state
@@ -85,6 +89,7 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
         std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
@@ -98,10 +103,10 @@ public:
      * before calling this function. After this call, users can observe the state of the connection asynchronously by
      * using a connectionObserver that was passed in to the create() function.
      *
-     * @param avsEndpoint An optional parameter to the AVS URL to connect to. This is defaulted to the North American
-     * endpoint.
+     * @param avsEndpoint An optional parameter to the AVS URL to connect to. If empty the "endpoint" value of the
+     * "acl" configuration will be used.  If there no such configuration value a default value will be used instead.
      */
-    void connect(const std::string& avsEndpoint = "https://avs-alexa-na.amazon.com");
+    void connect(const std::string& avsEndpoint = "");
 
     /**
      * Disconnects the client from AVS if it is connected. After the call, users can observer the state of the
@@ -163,6 +168,21 @@ public:
      * @param observer The observer to remove.
      */
     void removeAlertsObserver(std::shared_ptr<capabilityAgents::alerts::AlertObserverInterface> observer);
+
+    /**
+     * Adds an observer to be notified of @c AudioPlayer state changes. This can be used to be be notified of the @c
+     * PlayerActivity of the @c AudioPlayer.
+     *
+     * @param observer The observer to add.
+     */
+    void addAudioPlayerObserver(std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer);
+
+    /**
+     * Removes an observer to be notified of @c AudioPlayer state changes.
+     *
+     * @param observer The observer to remove.
+     */
+    void removeAudioPlayerObserver(std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer);
 
     /**
      * Adds an observer to be notified when a TemplateRuntime directive is received.
@@ -312,6 +332,7 @@ private:
      * @param speakSpeaker The speaker to control volume of Alexa speech.
      * @param audioSpeaker The speaker to control volume of Alexa audio content.
      * @param alertsSpeaker The speaker to control volume of alerts.
+     * @param audioFactory The audioFactory is a component the provides unique audio streams.
      * @param authDelegate The component that provides the client with valid LWA authorization.
      * @Param alertStorage The storage interface that will be used to store alerts.
      * @param alexaDialogStateObservers Observers that can be used to be notified of Alexa dialog related UX state
@@ -326,6 +347,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
         std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
@@ -380,4 +402,4 @@ private:
 }  // namespace defaultClient
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_DEFAULT_CLIENT_INCLUDE_DEFAULT_CLIENT_H_
+#endif  // ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_DEFAULTCLIENT_INCLUDE_DEFAULTCLIENT_DEFAULTCLIENT_H_

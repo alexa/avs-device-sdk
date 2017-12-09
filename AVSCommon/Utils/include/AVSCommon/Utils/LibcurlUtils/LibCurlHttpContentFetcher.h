@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_LIBCURL_HTTP_CONTENT_FETCHER_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_LIBCURL_HTTP_CONTENT_FETCHER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LIBCURLUTILS_LIBCURLHTTPCONTENTFETCHER_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LIBCURLUTILS_LIBCURLHTTPCONTENTFETCHER_H_
 
 #include <atomic>
 #include <future>
@@ -32,7 +32,8 @@ namespace utils {
 namespace libcurlUtils {
 
 /**
- * A class used to retrieve content from remote URLs
+ * A class used to retrieve content from remote URLs. Note that this object will only write to the Attachment while it
+ * remains alive. If the object goes out of scope, writing to the Attachment will abort.
  */
 class LibCurlHttpContentFetcher : public avsCommon::sdkInterfaces::HTTPContentFetcherInterface {
 public:
@@ -94,6 +95,9 @@ private:
      */
     std::string m_lastContentType;
 
+    /// Flag to indicate if a shutdown is occurring.
+    std::atomic<bool> m_shuttingDown;
+
     /**
      * Internal thread that does the curl_easy_perform. The reason for using a thread is that curl_easy_perform may
      * block forever if the URL specified is a live stream.
@@ -109,4 +113,4 @@ private:
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LIBCURLUTILS_LIBCURL_HTTP_CONTENT_FETCHER_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LIBCURLUTILS_LIBCURLHTTPCONTENTFETCHER_H_

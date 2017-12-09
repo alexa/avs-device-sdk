@@ -41,6 +41,9 @@ using namespace avsCommon::utils::mediaPlayer;
 /// String to identify log entries originating from this file.
 static const std::string TAG("AudioPlayer");
 
+/// A link to @c MediaPlayerInterface::ERROR.
+static const AudioPlayer::SourceId ERROR_SOURCE_ID = MediaPlayerInterface::ERROR;
+
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -121,7 +124,9 @@ std::shared_ptr<AudioPlayer> AudioPlayer::create(
     return audioPlayer;
 }
 
-void AudioPlayer::provideState(unsigned int stateRequestToken) {
+void AudioPlayer::provideState(
+    const avsCommon::avs::NamespaceAndName& stateProviderName,
+    unsigned int stateRequestToken) {
     ACSDK_DEBUG(LX("provideState").d("stateRequestToken", stateRequestToken));
     m_executor.submit([this, stateRequestToken] { executeProvideState(true, stateRequestToken); });
 }
@@ -346,8 +351,10 @@ AudioPlayer::AudioPlayer(
         m_attachmentManager{attachmentManager},
         m_currentActivity{PlayerActivity::IDLE},
         m_focus{FocusState::NONE},
+        m_initialOffset{0},
         m_sourceId{MediaPlayerInterface::ERROR},
-        m_offset{std::chrono::milliseconds{std::chrono::milliseconds::zero()}} {
+        m_offset{std::chrono::milliseconds{std::chrono::milliseconds::zero()}},
+        m_isStopCalled{false} {
 }
 
 void AudioPlayer::doShutdown() {
@@ -380,6 +387,7 @@ bool AudioPlayer::parseDirectivePayload(std::shared_ptr<DirectiveInfo> info, rap
 
 void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG1(LX("handlePlayDirective"));
+    ACSDK_DEBUG9(LX("PLAY").d("payload", info->directive->getPayload()));
     rapidjson::Document payload;
     if (!parseDirectivePayload(info, &payload)) {
         return;
@@ -601,12 +609,18 @@ void AudioPlayer::executeOnFocusChanged(FocusState newFocus) {
                     if (!m_audioItems.empty()) {
                         ACSDK_DEBUG1(LX("executeOnFocusChanged").d("action", "playNextItem"));
                         playNextItem();
-                    } else {
-                        ACSDK_DEBUG1(LX("executeOnFocusChanged").d("action", "releaseChannel"));
-                        m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
                     }
+
+                    // If m_audioItems is empty and channel wasn't released, that means we are going to
+                    // play the next item.
+
                     return;
                 case PlayerActivity::PAUSED: {
+                    // AudioPlayer is in the process of stopping.  So there's no need to resume playback for this case.
+                    if (m_isStopCalled) {
+                        ACSDK_DEBUG1(LX("executeOnFocusChanged").d("action", "stoppingAlreadyDoNothing"));
+                        return;
+                    }
                     // A focus change to foreground when paused means we should resume the current song.
                     ACSDK_DEBUG1(LX("executeOnFocusChanged").d("action", "resumeMediaPlayer"));
                     if (!m_mediaPlayer->resume(m_sourceId)) {
@@ -694,9 +708,6 @@ void AudioPlayer::executeOnPlaybackStarted(SourceId id) {
     changeActivity(PlayerActivity::PLAYING);
 
     sendPlaybackStartedEvent();
-
-    // TODO: Once MediaPlayer can notify of nearly finished, send there instead (ACSDK-417).
-    sendPlaybackNearlyFinishedEvent();
 }
 
 void AudioPlayer::executeOnPlaybackStopped(SourceId id) {
@@ -716,6 +727,7 @@ void AudioPlayer::executeOnPlaybackStopped(SourceId id) {
         case PlayerActivity::BUFFER_UNDERRUN:
             changeActivity(PlayerActivity::STOPPED);
             sendPlaybackStoppedEvent();
+            m_isStopCalled = false;
             if (!m_playNextItemAfterStopped || m_audioItems.empty()) {
                 handlePlaybackCompleted();
             } else {
@@ -736,7 +748,7 @@ void AudioPlayer::executeOnPlaybackStopped(SourceId id) {
 }
 
 void AudioPlayer::executeOnPlaybackFinished(SourceId id) {
-    ACSDK_DEBUG1(LX("executeOnPlaybackFinished"));
+    ACSDK_DEBUG1(LX("executeOnPlaybackFinished").d("id", id));
 
     if (id != m_sourceId) {
         ACSDK_ERROR(LX("executeOnPlaybackFinishedFailed")
@@ -749,6 +761,18 @@ void AudioPlayer::executeOnPlaybackFinished(SourceId id) {
     switch (m_currentActivity) {
         case PlayerActivity::PLAYING:
             changeActivity(PlayerActivity::FINISHED);
+
+            /*
+             * We used to send PlaybackNearlyFinished right after we sent PlaybackStarted.  But we found a problem when
+             * we are playing Audible such that after sending PlaybackNearlyFinished, AVS will send us the next item to
+             * start buffering.  But since we don't actually access the url until we finish playing the current chapter,
+             * by the time we open the url, the url has already expired so we got a 403 reponse. To address this
+             * problem, we are sending the PlaybackNearlyFinished event just before we send PlaybackFinished.
+             *
+             * TODO: Once MediaPlayer can notify of nearly finished, send there instead (ACSDK-417).
+             */
+            sendPlaybackNearlyFinishedEvent();
+
             sendPlaybackFinishedEvent();
             if (m_audioItems.empty()) {
                 handlePlaybackCompleted();
@@ -771,9 +795,14 @@ void AudioPlayer::executeOnPlaybackFinished(SourceId id) {
                     .d("m_currentActivity", m_currentActivity));
 }
 
-void AudioPlayer::handlePlaybackCompleted() {
+void AudioPlayer::cancelTimers() {
+    ACSDK_DEBUG(LX("cancelTimers"));
     m_delayTimer.stop();
     m_intervalTimer.stop();
+}
+
+void AudioPlayer::handlePlaybackCompleted() {
+    cancelTimers();
     if (m_focus != avsCommon::avs::FocusState::NONE) {
         m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
     }
@@ -937,6 +966,9 @@ void AudioPlayer::executePlay(PlayBehavior playBehavior, const AudioItem& audioI
 
 void AudioPlayer::playNextItem() {
     ACSDK_DEBUG1(LX("playNextItem").d("m_audioItems.size", m_audioItems.size()));
+    // Cancel any timers that have been started as this is a new item that we
+    // are going to play now.
+    cancelTimers();
     if (m_audioItems.empty()) {
         sendPlaybackFailedEvent(m_token, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "queue is empty");
         ACSDK_ERROR(LX("playNextItemFailed").d("reason", "emptyQueue"));
@@ -948,6 +980,7 @@ void AudioPlayer::playNextItem() {
     m_audioItems.pop_front();
     m_token = item.stream.token;
     m_audioItemId = item.id;
+    m_initialOffset = item.stream.offset;
 
     if (item.stream.reader) {
         m_sourceId = m_mediaPlayer->setSource(std::move(item.stream.reader));
@@ -958,20 +991,14 @@ void AudioPlayer::playNextItem() {
             return;
         }
     } else {
-        m_sourceId = m_mediaPlayer->setSource(item.stream.url);
+        ACSDK_DEBUG9(LX("settingUrlSource").d("offset", item.stream.offset.count()));
+        m_sourceId = m_mediaPlayer->setSource(item.stream.url, item.stream.offset);
         if (MediaPlayerInterface::ERROR == m_sourceId) {
             sendPlaybackFailedEvent(
                 m_token, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "failed to set URL media source");
             ACSDK_ERROR(LX("playNextItemFailed").d("reason", "setSourceFailed").d("type", "URL"));
             return;
         }
-    }
-
-    ACSDK_DEBUG1(LX("playNextItem").d("item.stream.offset", item.stream.offset.count()));
-    if (item.stream.offset.count() && !m_mediaPlayer->setOffset(m_sourceId, item.stream.offset)) {
-        sendPlaybackFailedEvent(m_token, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "failed to set stream offset");
-        ACSDK_ERROR(LX("playNextItemFailed").d("reason", "setOffsetFailed"));
-        return;
     }
 
     if (!m_mediaPlayer->play(m_sourceId)) {
@@ -1011,6 +1038,8 @@ void AudioPlayer::executeStop(bool playNextItem) {
             // Request to stop.
             if (!m_mediaPlayer->stop(m_sourceId)) {
                 ACSDK_ERROR(LX("executeStopFailed").d("reason", "stopFailed"));
+            } else {
+                m_isStopCalled = true;
             }
             return;
     }
@@ -1042,12 +1071,17 @@ void AudioPlayer::changeActivity(PlayerActivity activity) {
     notifyObserver();
 }
 
-void AudioPlayer::sendEventWithTokenAndOffset(const std::string& eventName) {
+void AudioPlayer::sendEventWithTokenAndOffset(const std::string& eventName, std::chrono::milliseconds offset) {
     ACSDK_DEBUG1(LX("sendEventWithTokenAndOffset").d("eventName", eventName));
     rapidjson::Document payload(rapidjson::kObjectType);
     payload.AddMember(TOKEN_KEY, m_token, payload.GetAllocator());
+    // Note: offset is an optional parameter, which defaults to MEDIA_PLAYER_INVALID_OFFSET.  Per documentation, this
+    //     function will use the current MediaPlayer offset is a valid offset was not provided.
+    if (MEDIA_PLAYER_INVALID_OFFSET == offset) {
+        offset = getOffset();
+    }
     payload.AddMember(
-        OFFSET_KEY, std::chrono::duration_cast<std::chrono::milliseconds>(getOffset()).count(), payload.GetAllocator());
+        OFFSET_KEY, std::chrono::duration_cast<std::chrono::milliseconds>(offset).count(), payload.GetAllocator());
 
     rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
@@ -1062,7 +1096,7 @@ void AudioPlayer::sendEventWithTokenAndOffset(const std::string& eventName) {
 }
 
 void AudioPlayer::sendPlaybackStartedEvent() {
-    sendEventWithTokenAndOffset("PlaybackStarted");
+    sendEventWithTokenAndOffset("PlaybackStarted", m_initialOffset);
 }
 
 void AudioPlayer::sendPlaybackNearlyFinishedEvent() {
@@ -1204,7 +1238,8 @@ void AudioPlayer::notifyObserver() {
 }
 
 std::chrono::milliseconds AudioPlayer::getOffset() {
-    if (PlayerActivity::PLAYING == m_currentActivity) {
+    // If the source id is not set, do not ask MediaPlayer for the offset.
+    if (m_sourceId != ERROR_SOURCE_ID) {
         auto offset = m_mediaPlayer->getOffset(m_sourceId);
         if (offset != MEDIA_PLAYER_INVALID_OFFSET) {
             m_offset = offset;

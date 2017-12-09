@@ -34,20 +34,21 @@
 #include "AIP/AudioInputProcessor.h"
 #include "AIP/AudioProvider.h"
 #include "AIP/Initiator.h"
-#include "Alerts/AlertsCapabilityAgent.h"
-#include "Alerts/AlertObserverInterface.h"
-#include "Alerts/Storage/SQLiteAlertStorage.h"
-#include "AuthDelegate/AuthDelegate.h"
 #include "AVSCommon/AVS/Attachment/AttachmentManager.h"
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentReader.h"
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h"
 #include "AVSCommon/AVS/BlockingPolicy.h"
-#include "AVSCommon/Utils/JSON/JSONUtils.h"
-#include "AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h"
+#include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
 #include "AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h"
-#include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
+#include "AVSCommon/Utils/JSON/JSONUtils.h"
+#include "AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h"
 #include "AVSCommon/Utils/Logger/LogEntry.h"
+#include "Alerts/AlertObserverInterface.h"
+#include "Alerts/AlertsCapabilityAgent.h"
+#include "Alerts/Storage/SQLiteAlertStorage.h"
+#include "Audio/AlertsAudioFactory.h"
+#include "AuthDelegate/AuthDelegate.h"
 #include "CertifiedSender/CertifiedSender.h"
 #include "CertifiedSender/SQLiteMessageStorage.h"
 #include "ContextManager/ContextManager.h"
@@ -55,10 +56,10 @@
 #include "Integration/ClientMessageHandler.h"
 #include "Integration/ConnectionStatusObserver.h"
 #include "Integration/ObservableMessageRequest.h"
-#include "Integration/TestMessageSender.h"
+#include "Integration/TestAlertObserver.h"
 #include "Integration/TestDirectiveHandler.h"
 #include "Integration/TestExceptionEncounteredSender.h"
-#include "Integration/TestAlertObserver.h"
+#include "Integration/TestMessageSender.h"
 #include "Integration/TestSpeechSynthesizerObserver.h"
 #include "SpeechSynthesizer/SpeechSynthesizer.h"
 #include "System/UserInactivityMonitor.h"
@@ -352,11 +353,13 @@ protected:
             m_focusManager,
             m_contextManager,
             m_attachmentManager,
-            m_exceptionEncounteredSender);
+            m_exceptionEncounteredSender,
+            m_dialogUXStateAggregator);
         ASSERT_NE(nullptr, m_speechSynthesizer);
         m_directiveSequencer->addDirectiveHandler(m_speechSynthesizer);
         m_speechSynthesizerObserver = std::make_shared<TestSpeechSynthesizerObserver>();
         m_speechSynthesizer->addObserver(m_speechSynthesizerObserver);
+        m_speechSynthesizer->addObserver(m_dialogUXStateAggregator);
 
 #ifdef GSTREAMER_MEDIA_PLAYER
         m_rendererMediaPlayer = MediaPlayer::create(nullptr);
@@ -365,7 +368,9 @@ protected:
 #endif
         m_alertRenderer = renderer::Renderer::create(m_rendererMediaPlayer);
 
-        m_alertStorage = std::make_shared<storage::SQLiteAlertStorage>();
+        auto alertsAudioFactory = std::make_shared<applicationUtilities::resources::audio::AlertsAudioFactory>();
+
+        m_alertStorage = std::make_shared<storage::SQLiteAlertStorage>(alertsAudioFactory);
 
         m_alertObserver = std::make_shared<TestAlertObserver>();
 
@@ -381,6 +386,7 @@ protected:
             m_contextManager,
             m_exceptionEncounteredSender,
             m_alertStorage,
+            alertsAudioFactory,
             m_alertRenderer);
         ASSERT_NE(m_alertsAgent, nullptr);
         m_alertsAgent->addObserver(m_alertObserver);
@@ -881,6 +887,10 @@ TEST_F(AlertsTest, RemoveAllAlertsBeforeAlertIsActive) {
     FocusState state;
     state = m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged);
     ASSERT_TRUE(focusChanged);
+    ASSERT_EQ(state, FocusState::BACKGROUND);
+
+    state = m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged);
+    ASSERT_TRUE(focusChanged);
     ASSERT_EQ(state, FocusState::FOREGROUND);
 
     // SetAlertSucceeded Event is sent
@@ -946,6 +956,10 @@ TEST_F(AlertsTest, cancelAlertBeforeItIsActive) {
     // Low priority Test client gets back permission to the test channel.
     bool focusChanged = false;
     ASSERT_EQ(
+        m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
+
+    focusChanged = false;
+    ASSERT_EQ(
         m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::FOREGROUND);
 
     // AlertStarted Event is not sent.
@@ -954,14 +968,11 @@ TEST_F(AlertsTest, cancelAlertBeforeItIsActive) {
 }
 
 /**
- * Disabled until consistent failures can be investigated. Failures are due to the test's expectation of event
- * ordering.
- *
  * Test when the storage is removed before an alert is set
  *
  * Close the storage before asking for a 5 second timer. SetAlertFailed and DeleteAlertFailed events are then sent.
  */
-TEST_F(AlertsTest, DISABLED_RemoveStorageBeforeAlarmIsSet) {
+TEST_F(AlertsTest, RemoveStorageBeforeAlarmIsSet) {
     m_alertStorage->close();
 
     // Write audio to SDS saying "Set a timer for 5 seconds"
@@ -977,20 +988,30 @@ TEST_F(AlertsTest, DISABLED_RemoveStorageBeforeAlarmIsSet) {
 
     bool focusChanged = false;
     ASSERT_EQ(
+        m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
+    ASSERT_TRUE(focusChanged);
+
+    ASSERT_EQ(
         m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::FOREGROUND);
     ASSERT_TRUE(focusChanged);
+
+    // SetAlertFailed Event is sent
+    sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    ASSERT_TRUE(checkSentEventName(sendParams, NAME_SET_ALERT_FAILED));
+
+    sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    if (checkSentEventName(sendParams, NAME_SPEECH_STARTED)) {
+        sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        if (checkSentEventName(sendParams, NAME_SPEECH_FINISHED)) {
+            sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        }
+    }
+    // DeleteAlertFailed is sent.
+    ASSERT_TRUE(checkSentEventName(sendParams, NAME_DELETE_ALERT_FAILED));
 
     ASSERT_EQ(
         m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
     ASSERT_TRUE(focusChanged);
-
-    // SetAlertSucceeded Event is sent
-    sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendParams, NAME_SET_ALERT_FAILED));
-
-    // AlertStarted Event is sent.
-    sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendParams, NAME_DELETE_ALERT_FAILED));
 
     // Low priority Test client gets back permission to the test channel.
     ASSERT_EQ(
@@ -1072,7 +1093,7 @@ TEST_F(AlertsTest, UserShortUnrelatedBargeInOnActiveTimer) {
  * Set a 5 second timer and wait until it is active. Send a recognize event asking "what's up" and see that the alert
  * goes into the background. When all the speaks are complete, the alert is forgrounded and can be locally stopped.
  */
-TEST_F(AlertsTest, UserLongUnrelatedBargeInOnActiveTimer) {
+TEST_F(AlertsTest, DISABLED_UserLongUnrelatedBargeInOnActiveTimer) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -1293,7 +1314,7 @@ TEST_F(AlertsTest, handleOneTimerWithVocalStop) {
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     if (argc < 3) {
-        std::cerr << "USAGE: AlertsIntegration <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder>"
+        std::cerr << "USAGE: " << std::string(argv[0]) << " <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder>"
                   << std::endl;
         return 1;
 

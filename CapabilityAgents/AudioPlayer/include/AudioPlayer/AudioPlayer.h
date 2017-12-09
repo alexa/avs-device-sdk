@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_AUDIO_PLAYER_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_AUDIO_PLAYER_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_AUDIOPLAYER_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_AUDIOPLAYER_H_
 
 #include <memory>
 
@@ -76,7 +76,8 @@ public:
 
     /// @name StateProviderInterface Functions
     /// @{
-    void provideState(unsigned int stateRequestToken) override;
+    void provideState(const avsCommon::avs::NamespaceAndName& stateProviderName, unsigned int stateRequestToken)
+        override;
     /// @}
 
     /// @name CapabilityAgent/DirectiveHandlerInterface Functions
@@ -241,6 +242,9 @@ private:
     /// Performs necessary cleanup when playback has finished/stopped.
     void handlePlaybackCompleted();
 
+    /// Cancels the timers when playback has stopped/finished.
+    void cancelTimers();
+
     /// @copydoc MediaPlayerObserverInterface::onPlaybackError()
     void executeOnPlaybackError(SourceId id, const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error);
 
@@ -296,8 +300,12 @@ private:
      * function constructs and sends these generic @c AudioPlayer events.
      *
      * @param eventName The name of the event to send.
+     * @param offset The offset to send.  If this parameter is left with its default (invalid) value, the current
+     *     offset from MediaPlayer will be sent.
      */
-    void sendEventWithTokenAndOffset(const std::string& eventName);
+    void sendEventWithTokenAndOffset(
+        const std::string& eventName,
+        std::chrono::milliseconds offset = avsCommon::utils::mediaPlayer::MEDIA_PLAYER_INVALID_OFFSET);
 
     /// Send a @c PlaybackStarted event.
     void sendPlaybackStartedEvent();
@@ -425,6 +433,9 @@ private:
     /// The AudioItemId of the currently (or most recent) playing @c AudioItem.
     std::string m_audioItemId;
 
+    /// The initial offset for the currently (or most recent) playing @c AudioItem.
+    std::chrono::milliseconds m_initialOffset;
+
     /// The id of the currently (or most recently) playing @c MediaPlayer source.
     SourceId m_sourceId;
 
@@ -453,6 +464,12 @@ private:
      */
     bool m_playNextItemAfterStopped;
 
+    /**
+     * A flag which is set when calling @c MediaPlayerInterface::stop(), and cleared in @c executeOnPlaybackStopped().
+     * This flag is used to tell if the @c AudioPlayer is in the process of stopping playback.
+     */
+    bool m_isStopCalled;
+
     /// @}
 
     /**
@@ -468,4 +485,4 @@ private:
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_AUDIO_PLAYER_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_AUDIOPLAYER_H_

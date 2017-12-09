@@ -118,6 +118,8 @@ gboolean AttachmentReaderSource::handleReadData() {
         // Fall through if some data was read.
         case AttachmentReader::ReadStatus::OK:
         case AttachmentReader::ReadStatus::OK_WOULDBLOCK:
+        // Fall through to retry reading later.
+        case AttachmentReader::ReadStatus::OK_TIMEDOUT:
             if (size > 0) {
                 installOnReadDataHandler();
                 auto flowRet = gst_app_src_push_buffer(getAppSrc(), buffer);
@@ -127,14 +129,11 @@ gboolean AttachmentReaderSource::handleReadData() {
                                     .d("error", gst_flow_get_name(flowRet)));
                     break;
                 }
-                return true;
+            } else {
+                gst_buffer_unref(buffer);
+                updateOnReadDataHandler();
             }
-        // Fall through to retry reading later.
-        case AttachmentReader::ReadStatus::OK_TIMEDOUT: {
-            gst_buffer_unref(buffer);
-            updateOnReadDataHandler();
             return true;
-        }
         case AttachmentReader::ReadStatus::ERROR_OVERRUN:
         case AttachmentReader::ReadStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:
         case AttachmentReader::ReadStatus::ERROR_INTERNAL:
@@ -143,9 +142,20 @@ gboolean AttachmentReaderSource::handleReadData() {
             break;
     }
 
+    ACSDK_DEBUG9(LX("handleReadData").d("info", "signalingEndOfData"));
     gst_buffer_unref(buffer);
     signalEndOfData();
     return false;
+}
+
+gboolean AttachmentReaderSource::handleSeekData(guint64 offset) {
+    ACSDK_DEBUG9(LX("handleSeekData").d("offset", offset));
+    if (m_reader) {
+        return m_reader->seek(offset);
+    } else {
+        ACSDK_ERROR(LX("handleSeekDataFailed").d("reason", "nullReader"));
+        return false;
+    }
 }
 
 }  // namespace mediaPlayer

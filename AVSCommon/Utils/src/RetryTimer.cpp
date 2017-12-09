@@ -27,22 +27,22 @@ namespace utils {
 RetryTimer::RetryTimer(int* retryTable, int retrySize) :
         m_RetryTable{retryTable},
         m_RetrySize{retrySize},
-        m_RetryDecreaseFactor{1 / (0.5 + 1)},
-        m_RetryIncreaseFactor{1 + 0.5} {
+        m_RetryDecreasePercentage{(100 * 100) / (100 + 50)},
+        m_RetryIncreasePercentage{100 + 50} {
 }
 
-RetryTimer::RetryTimer(int* retryTable, int retrySize, double randomizationFactor) :
+RetryTimer::RetryTimer(int* retryTable, int retrySize, int randomizationPercentage) :
         m_RetryTable{retryTable},
         m_RetrySize{retrySize},
-        m_RetryDecreaseFactor{1 / (randomizationFactor + 1)},
-        m_RetryIncreaseFactor{1 + randomizationFactor} {
+        m_RetryDecreasePercentage{(100 * 100) / (100 + randomizationPercentage)},
+        m_RetryIncreasePercentage{100 + randomizationPercentage} {
 }
 
-RetryTimer::RetryTimer(int* retryTable, int retrySize, double decreaseFactor, double increaseFactor) :
+RetryTimer::RetryTimer(int* retryTable, int retrySize, int decreasePercentage, int increasePercentage) :
         m_RetryTable{retryTable},
         m_RetrySize{retrySize},
-        m_RetryDecreaseFactor{decreaseFactor},
-        m_RetryIncreaseFactor{increaseFactor} {
+        m_RetryDecreasePercentage{decreasePercentage},
+        m_RetryIncreasePercentage{increasePercentage} {
 }
 
 std::chrono::milliseconds RetryTimer::calculateTimeToRetry(int retryCount) {
@@ -54,8 +54,8 @@ std::chrono::milliseconds RetryTimer::calculateTimeToRetry(int retryCount) {
 
     std::mt19937 generator(static_cast<unsigned>(std::time(nullptr)));
     std::uniform_int_distribution<int> distribution(
-        static_cast<int>(m_RetryTable[retryCount] * m_RetryDecreaseFactor),
-        static_cast<int>(m_RetryTable[retryCount] * m_RetryIncreaseFactor));
+        (m_RetryTable[retryCount] * m_RetryDecreasePercentage) / 100,
+        (m_RetryTable[retryCount] * m_RetryIncreasePercentage) / 100);
     auto delayMs = std::chrono::milliseconds(distribution(generator));
     return delayMs;
 }

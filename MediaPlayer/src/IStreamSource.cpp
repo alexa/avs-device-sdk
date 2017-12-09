@@ -150,5 +150,11 @@ gboolean IStreamSource::handleReadData() {
     return true;
 }
 
+gboolean IStreamSource::handleSeekData(guint64 offset) {
+    m_stream->clear();
+    m_stream->seekg(offset);
+    return true;
+}
+
 }  // namespace mediaPlayer
 }  // namespace alexaClientSDK

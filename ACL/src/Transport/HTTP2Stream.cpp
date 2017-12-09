@@ -435,9 +435,17 @@ void HTTP2Stream::notifyRequestObserver() {
             m_currentRequest->sendCompleted(
                 avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT);
             break;
+        case HTTP2Stream::HTTPResponseCodes::BAD_REQUEST:
+            m_currentRequest->sendCompleted(
+                avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::BAD_REQUEST);
+            break;
+        case HTTP2Stream::HTTPResponseCodes::SERVER_INTERNAL_ERROR:
+            m_currentRequest->sendCompleted(
+                avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2);
+            break;
         default:
             m_currentRequest->sendCompleted(
-                avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR);
+                avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR);
     }
 }
 

@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_ATTACHMENT_READER_SOURCE_H_
-#define ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_ATTACHMENT_READER_SOURCE_H_
+#ifndef ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_ATTACHMENTREADERSOURCE_H_
+#define ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_ATTACHMENTREADERSOURCE_H_
 
 #include <memory>
 
@@ -67,6 +67,7 @@ private:
     bool isOpen() override;
     void close() override;
     gboolean handleReadData() override;
+    gboolean handleSeekData(guint64 offset) override;
     /// @}
 
     /// @name RequiresShutdown Functions
@@ -82,4 +83,4 @@ private:
 }  // namespace mediaPlayer
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_ATTACHMENT_READER_SOURCE_H_
+#endif  // ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_ATTACHMENTREADERSOURCE_H_

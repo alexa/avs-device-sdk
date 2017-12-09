@@ -43,6 +43,9 @@ static const std::string LIBCURLUTILS_CONFIG_KEY = "libcurlUtils";
 /// Key for looking up a configuration value for @c CURLOPT_CAPATH
 static const std::string CAPATH_CONFIG_KEY = "CURLOPT_CAPATH";
 
+/// Key for looking up a configuration value for verifying hosts and peers.
+static const std::string VERIFY_HOSTS_AND_PEERS_CONFIG_KEY = "verifyHostsAndPeers";
+
 /**
  * Set an @c option on a @c libcurl handle to @c value with stringification of @c option name and @c value for logging.
  *
@@ -94,10 +97,24 @@ bool prepareForTLS(CURL* handle) {
         return false;
     }
 
+    auto config = configuration::ConfigurationNode::getRoot()[LIBCURLUTILS_CONFIG_KEY];
+
     std::string caPath;
-    if (configuration::ConfigurationNode::getRoot()[LIBCURLUTILS_CONFIG_KEY].getString(CAPATH_CONFIG_KEY, &caPath)) {
-        return setopt(handle, CURLOPT_CAPATH, caPath.c_str(), "CURLOPT_CAPATH", caPath.c_str());
+    if (config.getString(CAPATH_CONFIG_KEY, &caPath) &&
+        !setopt(handle, CURLOPT_CAPATH, caPath.c_str(), "CURLOPT_CAPATH", caPath.c_str())) {
+        return false;
     }
+
+// Only allow disabling the verification of hosts and peers in debug configurations.
+#ifdef DEBUG
+    bool verifyHostsAndPeers = true;
+    if (config.getBool(VERIFY_HOSTS_AND_PEERS_CONFIG_KEY, &verifyHostsAndPeers) && !verifyHostsAndPeers) {
+        if (!(SETOPT(handle, CURLOPT_SSL_VERIFYPEER, 0L) && SETOPT(handle, CURLOPT_SSL_VERIFYHOST, 0L))) {
+            return false;
+        }
+        ACSDK_WARN(LX("verificationOfHostsAndPeersDisabled"));
+    }
+#endif
 
     return true;
 }

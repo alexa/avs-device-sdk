@@ -306,7 +306,7 @@ public:
 
     ~MockStateProvider();
 
-    void provideState(unsigned int currentstateRequestToken) override;
+    void provideState(const NamespaceAndName& stateProviderName, unsigned int currentstateRequestToken) override;
 
     /**
      * Method for m_doProvideThread. It waits for @c m_delayTime and then calls @c setState with the state @c m_state
@@ -389,7 +389,7 @@ MockStateProvider::~MockStateProvider() {
     }
 }
 
-void MockStateProvider::provideState(unsigned int stateRequestToken) {
+void MockStateProvider::provideState(const NamespaceAndName& stateProviderName, unsigned int stateRequestToken) {
     m_stateRequestToken = stateRequestToken;
     std::lock_guard<std::mutex> lock(m_providerMutex);
     m_provideState = true;

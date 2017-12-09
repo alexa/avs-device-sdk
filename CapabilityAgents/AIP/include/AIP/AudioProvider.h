@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_AUDIO_PROVIDER_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_AUDIO_PROVIDER_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AIP_INCLUDE_AIP_AUDIOPROVIDER_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AIP_INCLUDE_AIP_AUDIOPROVIDER_H_
 
 #include <AVSCommon/AVS/AudioInputStream.h>
 #include <AVSCommon/Utils/AudioFormat.h>
@@ -122,4 +122,4 @@ inline AudioProvider::operator bool() const {
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_CAPABILITY_AGENT_AIP_INCLUDE_AIP_AUDIO_PROVIDER_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AIP_INCLUDE_AIP_AUDIOPROVIDER_H_

@@ -15,8 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MIME_UTILS_H_
-#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MIME_UTILS_H_
+#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_COMMON_MIMEUTILS_H_
+#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_COMMON_MIMEUTILS_H_
 
 #include <memory>
 #include <string>
@@ -159,4 +159,4 @@ std::string constructTestMimeString(
 }  // namespace acl
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MIME_UTILS_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_COMMON_MIMEUTILS_H_

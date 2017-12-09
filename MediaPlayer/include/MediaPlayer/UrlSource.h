@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_URL_SOURCE_H_
-#define ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_URL_SOURCE_H_
+#ifndef ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_URLSOURCE_H_
+#define ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_URLSOURCE_H_
 
 #include <future>
 #include <memory>
@@ -56,7 +56,9 @@ public:
     void onPlaylistEntryParsed(
         int requestId,
         std::string url,
-        avsCommon::utils::playlistParser::PlaylistParseResult parseResult) override;
+        avsCommon::utils::playlistParser::PlaylistParseResult parseResult,
+        std::chrono::milliseconds duration =
+            avsCommon::utils::playlistParser::PlaylistParserObserverInterface::INVALID_DURATION) override;
 
     bool hasAdditionalData() override;
     bool handleEndOfStream() override;
@@ -128,4 +130,4 @@ private:
 }  // namespace mediaPlayer
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_URL_SOURCE_H_
+#endif  // ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_URLSOURCE_H_

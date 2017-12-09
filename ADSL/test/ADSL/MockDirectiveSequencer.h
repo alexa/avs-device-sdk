@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ADSL_TEST_ADSL_MOCK_DIRECTIVE_SEQUENCER_H_
-#define ALEXA_CLIENT_SDK_ADSL_TEST_ADSL_MOCK_DIRECTIVE_SEQUENCER_H_
+#ifndef ALEXA_CLIENT_SDK_ADSL_TEST_ADSL_MOCKDIRECTIVESEQUENCER_H_
+#define ALEXA_CLIENT_SDK_ADSL_TEST_ADSL_MOCKDIRECTIVESEQUENCER_H_
 
 #include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
@@ -58,4 +58,4 @@ inline MockDirectiveSequencer::MockDirectiveSequencer() :
 }  // namespace adsl
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_ADSL_TEST_ADSL_MOCK_DIRECTIVE_SEQUENCER_H_
+#endif  // ALEXA_CLIENT_SDK_ADSL_TEST_ADSL_MOCKDIRECTIVESEQUENCER_H_
