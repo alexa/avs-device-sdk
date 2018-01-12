@@ -40,6 +40,8 @@ public:
         STARTED,
         /// The renderer has stopped rendering due to being stopped via a direct api call.
         STOPPED,
+        /// The renderer has completed rendering, if the renderer was initiated with a finite loop count.
+        COMPLETED,
         /// The renderer has encountered an error.
         ERROR
     };
@@ -74,6 +76,8 @@ inline std::string RendererObserverInterface::stateToString(State state) {
             return "STARTED";
         case State::STOPPED:
             return "STOPPED";
+        case State::COMPLETED:
+            return "COMPLETED";
         case State::ERROR:
             return "ERROR";
     }

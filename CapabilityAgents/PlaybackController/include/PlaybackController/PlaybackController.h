@@ -1,7 +1,7 @@
 /*
  * PlaybackController.h
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextRequesterInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
-#include <AVSCommon/SDKInterfaces/PlaybackControllerInterface.h>
+#include <AVSCommon/SDKInterfaces/PlaybackHandlerInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
@@ -36,25 +36,10 @@ namespace playbackController {
 
 class PlaybackController
         : public avsCommon::sdkInterfaces::ContextRequesterInterface
-        , public avsCommon::sdkInterfaces::PlaybackControllerInterface
+        , public avsCommon::sdkInterfaces::PlaybackHandlerInterface
         , public avsCommon::utils::RequiresShutdown
         , public std::enable_shared_from_this<PlaybackController> {
 public:
-    /// Enumeration class for supported playback buttons.
-    enum class Button {
-        /// Playback Controller 'Play' button.
-        PLAY,
-
-        /// Playback Controller 'Pause' button.
-        PAUSE,
-
-        /// Playback Controller 'Next' button.
-        NEXT,
-
-        /// Playback Controller 'Previous' button.
-        PREVIOUS
-    };
-
     /**
      * Create an instance of @c PlaybackController.
      *
@@ -77,12 +62,9 @@ public:
     void onContextFailure(const avsCommon::sdkInterfaces::ContextRequestError error) override;
     /// @}
 
-    /// @name PlaybackControllerInterface Functions
+    /// @name PlaybackHandlerInterface functions.
     /// @{
-    void playButtonPressed() override;
-    void pauseButtonPressed() override;
-    void nextButtonPressed() override;
-    void previousButtonPressed() override;
+    void onButtonPressed(avsCommon::avs::PlaybackButton button) override;
     /// @}
 
     /**
@@ -92,7 +74,7 @@ public:
      * @param messageStatus The status of submitted @c MessageRequest.
      */
     void messageSent(
-        PlaybackController::Button,
+        avsCommon::avs::PlaybackButton,
         avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status messageStatus);
 
 private:
@@ -112,16 +94,6 @@ private:
     /// @}
 
     /**
-     * Process the Button pressed.
-     *
-     * This function is intended to be called by the interfaces in @c PlaybackControllerInterface to signal a Button is
-     * pressed.
-     *
-     * @param The @c Button pressed.
-     */
-    void buttonPressed(Button button);
-
-    /**
      * @name Executor Thread Variables
      *
      * These member variables are only accessed by functions in the @c m_executor worker thread, and do not require any
@@ -136,7 +108,7 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
 
     /// The queue for storing buttons pressed.
-    std::queue<Button> m_buttons;
+    std::queue<avsCommon::avs::PlaybackButton> m_buttons;
     /// @}
 
     /// The @c Executor which queues up operations from asynchronous API calls to the @c PlaybackControllerInterface.

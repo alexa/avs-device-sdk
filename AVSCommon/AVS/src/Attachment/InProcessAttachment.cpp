@@ -1,7 +1,7 @@
 /*
  * InProcessAttachment.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,14 +35,15 @@ InProcessAttachment::InProcessAttachment(const std::string& id, std::unique_ptr<
     }
 }
 
-std::unique_ptr<AttachmentWriter> InProcessAttachment::createWriter() {
+std::unique_ptr<AttachmentWriter> InProcessAttachment::createWriter(
+    InProcessAttachmentWriter::SDSTypeWriter::Policy policy) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
     if (m_hasCreatedWriter) {
         return nullptr;
     }
 
-    auto writer = InProcessAttachmentWriter::create(m_sds);
+    auto writer = InProcessAttachmentWriter::create(m_sds, policy);
     if (writer) {
         m_hasCreatedWriter = true;
     }

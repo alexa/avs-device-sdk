@@ -1,7 +1,7 @@
 /*
  * MessageRequest.cpp
  *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -96,43 +96,6 @@ void MessageRequest::removeObserver(
 }
 
 using namespace avsCommon::sdkInterfaces;
-
-std::string MessageRequest::statusToString(MessageRequestObserverInterface::Status status) {
-    switch (status) {
-        case MessageRequestObserverInterface::Status::PENDING:
-            return "PENDING";
-        case MessageRequestObserverInterface::Status::SUCCESS:
-            return "SUCCESS";
-        case MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT:
-            return "SUCCESS_NO_CONTENT";
-        case MessageRequestObserverInterface::Status::NOT_CONNECTED:
-            return "NOT_CONNECTED";
-        case MessageRequestObserverInterface::Status::NOT_SYNCHRONIZED:
-            return "NOT_SYNCHRONIZED";
-        case MessageRequestObserverInterface::Status::TIMEDOUT:
-            return "TIMEDOUT";
-        case MessageRequestObserverInterface::Status::PROTOCOL_ERROR:
-            return "PROTOCOL_ERROR";
-        case MessageRequestObserverInterface::Status::INTERNAL_ERROR:
-            return "INTERNAL_ERROR";
-        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2:
-            return "SERVER_INTERNAL_ERROR_V2";
-        case MessageRequestObserverInterface::Status::REFUSED:
-            return "REFUSED";
-        case MessageRequestObserverInterface::Status::CANCELED:
-            return "CANCELED";
-        case MessageRequestObserverInterface::Status::THROTTLED:
-            return "THROTTLED";
-        case MessageRequestObserverInterface::Status::INVALID_AUTH:
-            return "INVALID_AUTH";
-        case MessageRequestObserverInterface::Status::BAD_REQUEST:
-            return "BAD_REQUEST";
-        case MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR:
-            return "SERVER_OTHER_ERROR";
-    }
-
-    return "sendMessageStatusToString_UNHANDLED_ERROR";
-}
 
 bool MessageRequest::isServerStatus(MessageRequestObserverInterface::Status status) {
     switch (status) {

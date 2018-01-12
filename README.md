@@ -1,3 +1,6 @@
+### IMPORTANT NOTE
+If you are updating from v1.x to v1.4, you must update your `AlexaClientSDKConfig.json` to include a Notifications database. An updated sample is available in the quickstart guides for Ubuntu Linux, Raspberry Pi, macOS, and Generic Linux.
+
 ### What is the Alexa Voice Service (AVS)?
 
 The Alexa Voice Service (AVS) enables developers to integrate Alexa directly into their products, bringing the convenience of voice control to any connected device. AVS provides developers with access to a suite of resources to quickly and easily build Alexa-enabled products, including APIs, hardware development kits, software development kits, and documentation.
@@ -11,12 +14,14 @@ The AVS Device SDK provides C++-based (11 or later) libraries that leverage the 
 ### Get Started
 
 You can set up the SDK on the following platforms:
-* **Updated** - [Raspberry Pi](https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide) (Raspbian Stretch)
-* **New** - [macOS](https://github.com/alexa/avs-device-sdk/wiki/macOS-Quick-Start-Guide)
-* [Linux](https://github.com/alexa/avs-device-sdk/wiki/Linux-Quick-Start-Guide)
+* [Ubuntu Linux](https://github.com/alexa/avs-device-sdk/wiki/Ubuntu-Linux-Quick-Start-Guide)
+* [Raspberry Pi](https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide) (Raspbian Stretch)
+* [macOS](https://github.com/alexa/avs-device-sdk/wiki/macOS-Quick-Start-Guide)
+* [Generic Linux](https://github.com/alexa/avs-device-sdk/wiki/Linux-Quick-Start-Guide)
 
-You can also prototype with a third party development kit
-* [xCORE VocalFusion 4-Mic Kit from XMOS](https://github.com/xmos/vocalfusion-avs-setup)
+You can also prototype with a third party development kit:
+* [xCORE VocalFusion 4-Mic Kit](https://github.com/xmos/vocalfusion-avs-setup)
+* [NXP PICO-PI-IMX7D 2-Mic Kit](https://www.nxp.com/docs/en/user-guide/Quick-Start-Guide-for-Arrow-AVS-kit.pdf)
 
 Or if you prefer, you can start with our [SDK API Documentation](https://alexa.github.io/avs-device-sdk/).
 
@@ -86,51 +91,29 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 
 **Note**: Features, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
-v1.3.0 released 12/08/2017:
+v1.4.0 released 01/12/2018:
 
 **Enhancements**
-* ContextManager now passes the namespace/name of the desired state to StateProviderInterface::provideState().  This is helpful when a single StateProvider object provides multiple states, and needs to know which one ContextManager is asking for.
-* The mime parser was hardened against duplicate boundaries.
-* Added functionality to add and remove AudioPlayer observers to the DefaultClient.
-* Unit tests for Alerts were added.
-* Added en-IN, en-CA and ja-JP to the SampleApp locale selection menu.
-* Added default alert and timer audio data to the SDK SampleApp.  There is no longer a requirement to download these audio files and configure them in the json configuration file.
-* Added support in SDS Reader and AttachmentReader for seeking into the future.  This allows a reader to move to an index which has not yet arrived in the SDS and poll/block until it arrives.
-* Added support for blocking Writers in the SharedDataStream class.
-* Changed the default status code sent by MessageRequestObserverInterface::onSendCompleted() to SERVER_OTHER_ERROR, and mapped HTTP code 500 to SERVER_INTERNAL_ERROR_V2.
-* Added support for parsing stream duration out of playlists.
-* Added a configuration option ("sampleApp":"displayCardsSupported") that allows the displaying of display cards to be enabled or disabled.
-* Named Timers and Reminders have been updated to fall back to the on-device background audio sound when cloud urls cannot be accessed or rendered.
+* Added the Notifications Capability Agent. This allows a client to receive notification indicators from Alexa.
+* Added support for the `SoftwareInfo` event. This code is triggered in the `SampleApp` by providing a positive decimal integer as the "firmwareVersion" value in "sampleApp" object of the `AlexaClientSDKConfig.json`. The reported firmware version can be updated after starting the `SampleApp` by calling `SoftwareInfoSender::setFirmwareVersion()`. This code path can be exercised in the `SampleApp` with the new command: `f`.
+* Added unit tests for Alerts.
+* The GStreamer-based pipeline allows for the configuration of `MediaPlayer` output based on information provided in `Config`.
+* Playlist streaming now uses a `BLOCKING` writer, which improves streaming efficiency.
 
 **Bug Fixes**
-* Removed floating point dependencies from core SDK libraries.
-* Fixed bug in SpeechSynthesizer where it's erroneously calling stop more than once.
-* Fixed an issue in ContentFetcher where it could hang during destruction until an active GET request completed.
-* Fixed a couple of parsing bugs in LibCurlHttpContentFetcher related to case-sensitivity and mime-type handling.
-* Fixed a bug where MediaPlayerObserverInterface::onPlaybackResumed() wasn't being called after resuming from a pause with a pending play/resume.
-* Fixed a bug in LibCurlContentFetcher where it could error out if data is written to the SDS faster than it is consumed.
-* The GStreamer-based MediaPlayer reference implementation now uses the ACL HTTP configured client.
-  * An API change has been made to MediaPlayerInterface::setSource(). This method now takes in an optional offset as well to allow for immediately streaming to the offset if possible.
-  * Next and Previous buttons now work with Audible.
-  * Pandora resume stuttering is addressed.
-  * Pausing and resuming Amazon music no longer seeks back to the beginning of the song.
-* libcurl CURLOPT_NOSIGNAL option is set to 1 (https://curl.haxx.se/libcurl/c/CURLOPT_NOSIGNAL.html) to avoid crashes  observed in SampleApp.
-* Fixed the timing of the PlaybackReportIntervalEvent and PlaybackReportDelayEvent as specified in the directives.
-* Fixed potential deadlocks in MediaPlayer during shutdown related to queued callbacks.
-* Fixed a crash in MediaPlayer that could occur if the network is disconnected during playback.
-* Fixed a bug where music could keep playing while Alexa is speaking.
-* Fixed a bug which was causing problems with pause/resume and next/previous with Amazon Music.
-* Fixed a bug where music could briefly start playing between speaks.
-* Fixed a bug where HLS playlists would stop streaming after the initial playlist had been played to completion.
-* Fixed a bug where Audible playback could not advance to the next chapter.
-* Fixed some occurrences of SDK entering the IDLE state during the transition between Listening and Speaking states.
-* Fixed a bug where PlaybackFinished events were not reporting the correct offset.
-  * An API change has been made to MediaPlayerInterface::getOffset().  This method is now required to return the final offset when called after playback has stopped.
-* Fixed a problem where AIP was erroneously resetting its state upon getting a cancelDirective() callback.
+* Fixed bug where `SpeechSynthesizer` would not stop playback when a state change timeout was encountered.
+* Fixed the `SampleApplication` destructor to avoid segfaults if the object is not constructed correctly.
+* Fixed bug where `AudioPlayer` would erroneously call `executeStop()` in `cancelDirective()`.
+* [Issue 396](https://github.com/alexa/avs-device-sdk/issues/396) - Fixed bug for compilation error with GCC7 in `AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h`
+* [Issue 384](https://github.com/alexa/avs-device-sdk/issues/384) - Fixed bug that caused `AuthServer.py` to crash.
+* Fixed bug where a long delay was encountered after pausing and resuming a large Audible chapter.
+* Fixed bug that caused named timers and reminders to loop for an additional `loopCount` .
+* Fixed memory corruption bug in `MessageInterpreter`.
+* Fixed illegal memory accesses in `MediaPlayer` logging.
 
 **Known Issues**
-* Capability agent for Notifications is not included in this release.
-* `ACL`'s asynchronous receipt of audio attachments may manage resources poorly in scenarios where attachments are received but not consumed.
-* GUI cards don't show for Kindle.
-* The new SpeechSynthesizerState state values GAINING_FOCUS and LOSING_FOCUS were added as part of a work-around.  The will likely be removed in subsequent releases.
-* With the gstreamer-based MediaPlayer, after muting and unmuting, the next item starts playing rather than continuing with the current item.
+* The `ACL` may encounter issues if audio attachments are received but not consumed.
+* Display Cards for Kindle don't render.
+* If using the GStreamer-based `MediaPlayer` implementation, after muting and un-muting an audio item, the next item in the queue will begin playing rather than continuing playback of the originally muted audio item.
+* `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
+* Music playback doesn't immediately stop when a user barges-in on iHeartRadio.

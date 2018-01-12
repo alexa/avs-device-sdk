@@ -1,7 +1,7 @@
 /*
  * AudioPlayerIntegrationTest.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -55,6 +55,8 @@
 #include "Integration/TestDirectiveHandler.h"
 #include "Integration/TestExceptionEncounteredSender.h"
 #include "Integration/TestSpeechSynthesizerObserver.h"
+#include "PlaybackController/PlaybackController.h"
+#include "PlaybackController/PlaybackRouter.h"
 #include "SpeechSynthesizer/SpeechSynthesizer.h"
 #include "System/UserInactivityMonitor.h"
 
@@ -82,6 +84,7 @@ using namespace sdkInterfaces;
 using namespace avsCommon::utils::sds;
 using namespace avsCommon::utils::json;
 using namespace capabilityAgents::aip;
+using namespace capabilityAgents::playbackController;
 using namespace afml;
 using namespace capabilityAgents::speechSynthesizer;
 using namespace capabilityAgents::system;
@@ -298,6 +301,9 @@ protected:
         ASSERT_NE(nullptr, m_contextManager);
         PostConnectObject::init(m_contextManager);
 
+        m_playbackController = PlaybackController::create(m_contextManager, m_avsConnectionManager);
+        m_playbackRouter = PlaybackRouter::create(m_playbackController);
+
 #ifdef GSTREAMER_MEDIA_PLAYER
         m_speakMediaPlayer =
             MediaPlayer::create(std::make_shared<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory>());
@@ -379,7 +385,8 @@ protected:
             m_focusManager,
             m_contextManager,
             m_attachmentManager,
-            m_exceptionEncounteredSender);
+            m_exceptionEncounteredSender,
+            m_playbackRouter);
         ASSERT_NE(nullptr, m_audioPlayer);
         m_directiveSequencer->addDirectiveHandler(m_audioPlayer);
 
@@ -503,6 +510,8 @@ protected:
     std::shared_ptr<MessageRouter> m_messageRouter;
     std::shared_ptr<TestMessageSender> m_avsConnectionManager;
     std::shared_ptr<TestExceptionEncounteredSender> m_exceptionEncounteredSender;
+    std::shared_ptr<PlaybackController> m_playbackController;
+    std::shared_ptr<PlaybackRouter> m_playbackRouter;
     std::shared_ptr<TestDirectiveHandler> m_directiveHandler;
     std::shared_ptr<DirectiveSequencerInterface> m_directiveSequencer;
     std::shared_ptr<MessageInterpreter> m_messageInterpreter;

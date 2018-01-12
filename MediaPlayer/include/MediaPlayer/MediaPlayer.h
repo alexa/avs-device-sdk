@@ -131,6 +131,8 @@ private:
      * @li @c decodedQueue A queue is used to store the decoded data.
      * @li @c converter An audio-converter is used to convert between audio formats.
      * @li @c volume The volume element is used as a volume control.
+     * @li @c resampler The optional resampler element is used to convert to a specified format
+     * @li @c caps The optional caps element is used to specify the resampler format
      * @li @c audioSink Sink for the audio.
      * @li @c pipeline The pipeline is a bin consisting of the @c appsrc, the @c decoder, the @c converter, and the
      * @c audioSink.
@@ -154,6 +156,12 @@ private:
 
         /// The volume element.
         GstElement* volume;
+
+        /// The resampler element.
+        GstElement* resample;
+
+        /// The capabilities element.
+        GstElement* caps;
 
         /// The sink element.
         GstElement* audioSink;
@@ -542,9 +550,6 @@ private:
 
     /// Flag to indicate whether a pause should happen immediately.
     bool m_pauseImmediately;
-
-    /// Flag to indicate whether a onErrorCallback is currently pending.
-    std::atomic<bool> m_onErrorPending;
 
     /// Stream offset before we teardown the pipeline
     std::chrono::milliseconds m_offsetBeforeTeardown;

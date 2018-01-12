@@ -1,7 +1,7 @@
 /*
  * SpeechSynthesizer.h
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -156,6 +156,9 @@ private:
 
         /// The @c AttachmentReader from which to read speech audio.
         std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader;
+
+        /// A flag to indicate if an event needs to be sent to AVS on playback started.
+        bool sendPlaybackStartedMessage;
 
         /// A flag to indicate if an event needs to be sent to AVS on playback finished.
         bool sendPlaybackFinishedMessage;

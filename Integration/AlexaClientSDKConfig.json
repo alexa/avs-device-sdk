@@ -37,6 +37,13 @@
         // The database file should only be used for certifiedSender (don't use it for other components of SDK)
         "databaseFilePath":"${SDK_CERTIFIED_SENDER_DATABASE_FILE_PATH}"
     },
+    "notifications":{ 
+        // Path to Notifications database file. e.g. /home/ubuntu/Build/notifications.db
+        // Note: The directory specified must be valid.
+        // The database file (notifications.db) will be created by SampleApp, do not create it yourself.
+        // The database file should only be used for notifications (don't use it for other components of SDK)
+        "databaseFilePath":"${SDK_NOTIFICATIONS_DATABASE_FILE_PATH}"
+    },
     "sampleApp":{
         // To specify if the SampleApp supports display cards.
         "displayCardsSupported":true

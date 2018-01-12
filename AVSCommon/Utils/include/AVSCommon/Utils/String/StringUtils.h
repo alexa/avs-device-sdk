@@ -19,6 +19,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_STRING_STRINGUTILS_H_
 
 #include <string>
+#include <vector>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -44,6 +45,15 @@ bool stringToInt(const std::string& str, int* result);
  * @return @c true If the string was parsed as an integer, otherwise @c false.
  */
 bool stringToInt(const char* str, int* result);
+
+/**
+ * A utility function to convert a vector of bytes to a printable string.  For example, the vector {1, 2, 3} will return
+ * the string "0x01 0x02 0x03"
+ *
+ * @param byteVector a vector of bytes
+ * @return a string of the hex values of each byte printed.
+ */
+std::string byteVectorToString(const std::vector<uint8_t>& byteVector);
 
 }  // namespace string
 }  // namespace utils

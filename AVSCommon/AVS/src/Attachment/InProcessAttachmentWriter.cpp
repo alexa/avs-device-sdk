@@ -1,7 +1,7 @@
 /*
  * InProcessAttachmentWriter.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,8 +35,10 @@ static const std::string TAG("InProcessAttachmentWriter");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-std::unique_ptr<InProcessAttachmentWriter> InProcessAttachmentWriter::create(std::shared_ptr<SDSType> sds) {
-    auto writer = std::unique_ptr<InProcessAttachmentWriter>(new InProcessAttachmentWriter(sds));
+std::unique_ptr<InProcessAttachmentWriter> InProcessAttachmentWriter::create(
+    std::shared_ptr<SDSType> sds,
+    SDSTypeWriter::Policy policy) {
+    auto writer = std::unique_ptr<InProcessAttachmentWriter>(new InProcessAttachmentWriter(sds, policy));
 
     if (!writer->m_writer) {
         ACSDK_ERROR(LX("createFailed").d("reason", "could not create instance"));
@@ -46,19 +48,23 @@ std::unique_ptr<InProcessAttachmentWriter> InProcessAttachmentWriter::create(std
     return writer;
 }
 
-InProcessAttachmentWriter::InProcessAttachmentWriter(std::shared_ptr<SDSType> sds) {
+InProcessAttachmentWriter::InProcessAttachmentWriter(std::shared_ptr<SDSType> sds, SDSTypeWriter::Policy policy) {
     if (!sds) {
         ACSDK_ERROR(LX("constructorFailed").d("reason", "SDS parameter is nullptr"));
         return;
     }
-    m_writer = sds->createWriter(SDSTypeWriter::Policy::ALL_OR_NOTHING);
+    m_writer = sds->createWriter(policy);
 }
 
 InProcessAttachmentWriter::~InProcessAttachmentWriter() {
     close();
 }
 
-std::size_t InProcessAttachmentWriter::write(const void* buff, std::size_t numBytes, WriteStatus* writeStatus) {
+std::size_t InProcessAttachmentWriter::write(
+    const void* buff,
+    std::size_t numBytes,
+    WriteStatus* writeStatus,
+    std::chrono::milliseconds timeout) {
     if (!writeStatus) {
         ACSDK_ERROR(LX("writeFailed").d("reason", "writeStatus is nullptr"));
         return 0;
@@ -86,7 +92,7 @@ std::size_t InProcessAttachmentWriter::write(const void* buff, std::size_t numBy
 
     std::size_t bytesWritten = 0;
     auto numWords = numBytes / wordSize;
-    auto writeResult = m_writer->write(buff, numWords);
+    auto writeResult = m_writer->write(buff, numWords, timeout);
 
     /*
      * Convert SDS return code accordingly:
@@ -107,6 +113,10 @@ std::size_t InProcessAttachmentWriter::write(const void* buff, std::size_t numBy
             case SDSType::Writer::Error::INVALID:
                 ACSDK_ERROR(LX("AttachmentWriter has generated an internal error."));
                 *writeStatus = WriteStatus::ERROR_INTERNAL;
+                break;
+            case SDSType::Writer::Error::TIMEDOUT:
+                ACSDK_DEBUG9(LX("AttachmentWriter has timed out while attempting a write."));
+                *writeStatus = WriteStatus::TIMEDOUT;
                 break;
         }
 

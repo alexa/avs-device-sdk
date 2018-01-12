@@ -42,7 +42,11 @@ public:
         std::shared_ptr<avsCommon::utils::sds::InProcessSDS> dummySDS,
         std::unique_ptr<avsCommon::avs::attachment::AttachmentWriter> writer);
 
-    std::size_t write(const void* buf, std::size_t numBytes, WriteStatus* writeStatus) override;
+    std::size_t write(
+        const void* buf,
+        std::size_t numBytes,
+        WriteStatus* writeStatus,
+        std::chrono::milliseconds timeout) override;
 
     void close() override;
 

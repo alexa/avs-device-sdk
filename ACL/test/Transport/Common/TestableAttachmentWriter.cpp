@@ -33,7 +33,11 @@ TestableAttachmentWriter::TestableAttachmentWriter(
         m_hasWriteBeenInvoked{false} {
 }
 
-std::size_t TestableAttachmentWriter::write(const void* buf, std::size_t numBytes, WriteStatus* writeStatus) {
+std::size_t TestableAttachmentWriter::write(
+    const void* buf,
+    std::size_t numBytes,
+    WriteStatus* writeStatus,
+    std::chrono::milliseconds timeout) {
     bool simulatePause = false;
 
     if (!m_hasWriteBeenInvoked) {

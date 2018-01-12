@@ -1,7 +1,7 @@
 /*
  * UIManager.cpp
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 #include "SampleApp/UIManager.h"
 
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
+#include "AVSCommon/Utils/SDKVersion.h"
 
 #include "SampleApp/ConsolePrinter.h"
 
@@ -28,6 +29,9 @@ namespace sampleApp {
 
 using namespace avsCommon::sdkInterfaces;
 
+static const std::string VERSION = avsCommon::utils::sdkVersion::getCurrentVersion();
+
+// clang-format off
 static const std::string ALEXA_WELCOME_MESSAGE =
     "                  #    #     #  #####      #####  ######  #    #              \n"
     "                 # #   #     # #     #    #     # #     # #   #               \n"
@@ -43,8 +47,9 @@ static const std::string ALEXA_WELCOME_MESSAGE =
     "       #####  #    # # ## # #    # #      #####     #     # #    # #    #     \n"
     "            # ###### #    # #####  #      #         ####### #####  #####      \n"
     "      #     # #    # #    # #      #      #         #     # #      #          \n"
-    "       #####  #    # #    # #      ###### ######    #     # #      #          \n";
-
+    "       #####  #    # #    # #      ###### ######    #     # #      #          \n\n"
+    "       SDK Version " + VERSION + "\n";
+// clang-format on
 static const std::string HELP_MESSAGE =
     "+----------------------------------------------------------------------------+\n"
     "|                                  Options:                                  |\n"
@@ -73,6 +78,9 @@ static const std::string HELP_MESSAGE =
     "|       Press 'c' followed by Enter at any time to see the settings screen.  |\n"
     "| Speaker Control:                                                           |\n"
     "|       Press 'p' followed by Enter at any time to adjust speaker settings.  |\n"
+    "| Firmware Version:                                                          |\n"
+    "|       Press 'f' followed by Enter at any time to report a different        |\n"
+    "|       firmware version.                                                    |\n"
     "| Info:                                                                      |\n"
     "|       Press 'i' followed by Enter at any time to see the help screen.      |\n"
     "| Quit:                                                                      |\n"
@@ -106,6 +114,13 @@ static const std::string SPEAKER_CONTROL_MESSAGE =
     "|       AVS_SYNCED Speakers Control Volume For: Speech, Content.             |\n"
     "| Press '2' followed by Enter to modify LOCAL typed speakers.                |\n"
     "|       LOCAL Speakers Control Volume For: Alerts.                           |\n"
+    "+----------------------------------------------------------------------------+\n";
+
+static const std::string FIRMWARE_CONTROL_MESSAGE =
+    "+----------------------------------------------------------------------------+\n"
+    "|                          Firmware Version:                                 |\n"
+    "|                                                                            |\n"
+    "| Enter a positive decimal integer followed by enter.                        |\n"
     "+----------------------------------------------------------------------------+\n";
 
 static const std::string VOLUME_CONTROL_MESSAGE =
@@ -159,6 +174,14 @@ void UIManager::onSpeakerSettingsChanged(
     });
 }
 
+void UIManager::onSetIndicator(avsCommon::avs::IndicatorState state) {
+    m_executor.submit([state]() {
+        std::ostringstream oss;
+        oss << "NOTIFICATION INDICATOR STATE: " << state;
+        ConsolePrinter::prettyPrint(oss.str());
+    });
+}
+
 void UIManager::printWelcomeScreen() {
     m_executor.submit([]() { ConsolePrinter::simplePrint(ALEXA_WELCOME_MESSAGE); });
 }
@@ -177,6 +200,10 @@ void UIManager::printLocaleScreen() {
 
 void UIManager::printSpeakerControlScreen() {
     m_executor.submit([]() { ConsolePrinter::simplePrint(SPEAKER_CONTROL_MESSAGE); });
+}
+
+void UIManager::printFirmwareVersionControlScreen() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint(FIRMWARE_CONTROL_MESSAGE); });
 }
 
 void UIManager::printVolumeControlScreen() {

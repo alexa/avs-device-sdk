@@ -124,6 +124,17 @@ void PlaylistParser::doDepthFirstSearch(
     while (!urlsToParse.empty() && !m_shuttingDown) {
         auto urlAndInfo = urlsToParse.front();
         urlsToParse.pop_front();
+        if (urlAndInfo.length != INVALID_DURATION) {
+            // This is a media URL and not a playlist
+            ACSDK_DEBUG9(LX("foundNonPlaylistURL"));
+            observer->onPlaylistEntryParsed(
+                id,
+                urlAndInfo.url,
+                urlsToParse.empty() ? avsCommon::utils::playlistParser::PlaylistParseResult::SUCCESS
+                                    : avsCommon::utils::playlistParser::PlaylistParseResult::STILL_ONGOING,
+                urlAndInfo.length);
+            continue;
+        }
         auto contentFetcher = m_contentFetcherFactory->create(urlAndInfo.url);
         auto httpContent = contentFetcher->getContent(
             avsCommon::sdkInterfaces::HTTPContentFetcherInterface::FetchOptions::CONTENT_TYPE);
@@ -464,10 +475,13 @@ std::chrono::milliseconds PlaylistParser::parseRuntime(std::string line) {
     // from here, we should be reading numbers or a '.' only, so the fractional part of the seconds
     auto stringFromHereOnwards = line.substr(runner);
     std::istringstream iss(stringFromHereOnwards);
-    unsigned int seconds;
+    int seconds;
     char nextChar;
     iss >> seconds;
     if (!iss) {
+        return INVALID_DURATION;
+    }
+    if (seconds < 0) {
         return INVALID_DURATION;
     }
     std::chrono::milliseconds duration = std::chrono::seconds(seconds);

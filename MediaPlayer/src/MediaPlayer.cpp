@@ -17,6 +17,7 @@
 
 #include <cmath>
 #include <cstring>
+#include <unordered_map>
 
 #include <AVSCommon/AVS/Attachment/AttachmentReader.h>
 #include <AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h>
@@ -42,9 +43,20 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::utils::memory;
+using namespace avsCommon::utils::configuration;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("MediaPlayer");
+
+static const std::string MEDIAPLAYER_CONFIGURATION_ROOT_KEY = "gstreamerMediaPlayer";
+/// The key in our config file to find the output conversion type.
+static const std::string MEDIAPLAYER_OUTPUT_CONVERSION_ROOT_KEY = "outputConversion";
+/// The acceptable conversion keys to find in the config file
+/// Key strings are mapped to gstreamer capabilities documented here:
+/// https://gstreamer.freedesktop.org/documentation/design/mediatype-audio-raw.html
+static const std::unordered_map<std::string, int> MEDIAPLAYER_ACCEPTED_KEYS = {{"rate", G_TYPE_INT},
+                                                                               {"format", G_TYPE_STRING},
+                                                                               {"channels", G_TYPE_INT}};
 
 /// A counter used to increment the source id when a new source is set.
 static MediaPlayer::SourceId g_id{0};
@@ -509,8 +521,7 @@ MediaPlayer::MediaPlayer(
         m_playPending{false},
         m_pausePending{false},
         m_resumePending{false},
-        m_pauseImmediately{false},
-        m_onErrorPending{false} {
+        m_pauseImmediately{false} {
 }
 
 bool MediaPlayer::init() {
@@ -561,6 +572,65 @@ bool MediaPlayer::setupPipeline() {
         return false;
     }
 
+    GstCaps* caps = gst_caps_new_empty_simple("audio/x-raw");
+    if (!caps) {
+        ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createCapabilityStructFailed"));
+        return false;
+    }
+
+    m_pipeline.resample = nullptr;
+    m_pipeline.caps = nullptr;
+
+    // Check to see if user has specified an output configuration
+    auto configurationRoot =
+        ConfigurationNode::getRoot()[MEDIAPLAYER_CONFIGURATION_ROOT_KEY][MEDIAPLAYER_OUTPUT_CONVERSION_ROOT_KEY];
+    if (configurationRoot) {
+        std::string value;
+
+        // Search for output configuration keys
+        for (auto& it : MEDIAPLAYER_ACCEPTED_KEYS) {
+            if (!configurationRoot.getString(it.first, &value) || value.empty()) {
+                continue;
+            }
+
+            // Found key, add it to capability struct
+            switch (it.second) {
+                case G_TYPE_INT:
+                    gst_caps_set_simple(caps, it.first.c_str(), it.second, std::stoi(value), NULL);
+                    break;
+                case G_TYPE_STRING:
+                    gst_caps_set_simple(caps, it.first.c_str(), it.second, value.c_str(), NULL);
+                    break;
+            }
+        }
+
+        // Add resample logic if configuration found
+        if (!gst_caps_is_empty(caps)) {
+            ACSDK_INFO(LX("outputConversion").d("string", gst_caps_to_string(caps)));
+
+            m_pipeline.resample = gst_element_factory_make("audioresample", "resample");
+            if (!m_pipeline.resample) {
+                ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createResampleElementFailed"));
+                return false;
+            }
+
+            m_pipeline.caps = gst_element_factory_make("capsfilter", "caps");
+            if (!m_pipeline.caps) {
+                ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createCapabilityElementFailed"));
+                return false;
+            }
+
+            g_object_set(G_OBJECT(m_pipeline.caps), "caps", caps, NULL);
+        } else {
+            ACSDK_INFO(LX("invalidOutputConversion").d("string", gst_caps_to_string(caps)));
+        }
+    } else {
+        ACSDK_INFO(LX("noOutputConversion"));
+    }
+
+    // clean up caps object
+    gst_caps_unref(caps);
+
     /*
      * Certain music sources, specifically Audible, were unable to play properly. With Audible, frames were getting
      * dropped and the audio would play very choppily. For example, in a 10 second chunk, seconds 1-5 would play
@@ -589,10 +659,32 @@ bool MediaPlayer::setupPipeline() {
         m_pipeline.audioSink,
         nullptr);
 
-    if (!gst_element_link_many(
-            m_pipeline.decodedQueue, m_pipeline.converter, m_pipeline.volume, m_pipeline.audioSink, nullptr)) {
-        ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createVolumeToConverterToSinkLinkFailed"));
-        return false;
+    if (m_pipeline.resample != nullptr && m_pipeline.caps != nullptr) {
+        // Set up pipeline with the resampler
+        gst_bin_add_many(GST_BIN(m_pipeline.pipeline), m_pipeline.resample, m_pipeline.caps, nullptr);
+
+        if (!gst_element_link_many(
+                m_pipeline.decodedQueue,
+                m_pipeline.converter,
+                m_pipeline.volume,
+                m_pipeline.resample,
+                m_pipeline.caps,
+                nullptr)) {
+            ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createVolumeToConverterLinkFailed"));
+            return false;
+        }
+
+        if (!gst_element_link_filtered(m_pipeline.caps, m_pipeline.audioSink, caps)) {
+            ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createFilteredLinkFailed"));
+            return false;
+        }
+    } else {
+        // No output format specified, set up a normal pipeline
+        if (!gst_element_link_many(
+                m_pipeline.decodedQueue, m_pipeline.converter, m_pipeline.volume, m_pipeline.audioSink, nullptr)) {
+            ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createResampleToSinkLinkFailed"));
+            return false;
+        }
     }
 
     return true;
@@ -640,6 +732,8 @@ void MediaPlayer::resetPipeline() {
     m_pipeline.decodedQueue = nullptr;
     m_pipeline.converter = nullptr;
     m_pipeline.volume = nullptr;
+    m_pipeline.resample = nullptr;
+    m_pipeline.caps = nullptr;
     m_pipeline.audioSink = nullptr;
 }
 
@@ -710,19 +804,13 @@ guint MediaPlayer::queueCallback(const std::function<gboolean()>* callback) {
 }
 
 void MediaPlayer::onError() {
-    ACSDK_DEBUG9(LX("onError").d("m_onErrorPending", m_onErrorPending ? "true" : "false"));
+    ACSDK_DEBUG9(LX("onError"));
     /*
      * Instead of calling the queueCallback, we are calling g_idle_add here directly here because we want this callback
      * to be non-blocking.  To do this, we are creating a static callback function with the this pointer passed in as
-     * a parameter.  Also, we want to check if there's a onErrorCallback that's pending, if there is, don't need to
-     * add the callback to the main loop queue.
-     *
-     * TODO - Need to investigate if there's a better solution than this.
+     * a parameter.
      */
-    if (!m_onErrorPending) {
-        m_onErrorPending = true;
-        g_idle_add(reinterpret_cast<GSourceFunc>(&onErrorCallback), this);
-    }
+    g_idle_add(reinterpret_cast<GSourceFunc>(&onErrorCallback), this);
 }
 
 void MediaPlayer::doShutdown() {
@@ -785,7 +873,8 @@ void MediaPlayer::saveOffsetBeforeTeardown() {
 }
 
 gboolean MediaPlayer::handleBusMessage(GstMessage* message) {
-    ACSDK_DEBUG9(LX("messageReceived").d("messageType", gst_message_type_get_name(GST_MESSAGE_TYPE(message))));
+    ACSDK_DEBUG9(
+        LX("messageReceived").d("type", GST_MESSAGE_TYPE_NAME(message)).d("source", GST_MESSAGE_SRC_NAME(message)));
     switch (GST_MESSAGE_TYPE(message)) {
         case GST_MESSAGE_EOS:
             /*
@@ -797,30 +886,25 @@ gboolean MediaPlayer::handleBusMessage(GstMessage* message) {
             std::this_thread::sleep_for(SLEEP_AFTER_END_OF_AUDIO);
             if (GST_MESSAGE_SRC(message) == GST_OBJECT_CAST(m_pipeline.pipeline)) {
                 if (!m_source->handleEndOfStream()) {
-                    alexaClientSDK::avsCommon::utils::logger::LogEntry* errorDescription =
-                        &(LX("handleBusMessageFailed").d("reason", "sourceHandleEndOfStreamFailed"));
-                    ACSDK_ERROR(*errorDescription);
-                    sendPlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, errorDescription->c_str());
+                    const std::string errorMessage{"reason=sourceHandleEndOfStreamFailed"};
+                    ACSDK_ERROR(LX("handleBusMessageFailed").m(errorMessage));
+                    sendPlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, errorMessage);
                     break;
                 }
 
                 // Continue playback if there is additional data.
                 if (m_source->hasAdditionalData()) {
                     if (GST_STATE_CHANGE_FAILURE == gst_element_set_state(m_pipeline.pipeline, GST_STATE_NULL)) {
-                        alexaClientSDK::avsCommon::utils::logger::LogEntry* errorDescription =
-                            &(LX("continuingPlaybackFailed").d("reason", "setPiplineToNullFailed"));
-
-                        ACSDK_ERROR(*errorDescription);
-                        sendPlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, errorDescription->c_str());
+                        const std::string errorMessage{"reason=setPipelineToNullFailed"};
+                        ACSDK_ERROR(LX("continuingPlaybackFailed").m(errorMessage));
+                        sendPlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, errorMessage);
                         break;
                     }
 
                     if (GST_STATE_CHANGE_FAILURE == gst_element_set_state(m_pipeline.pipeline, GST_STATE_PLAYING)) {
-                        alexaClientSDK::avsCommon::utils::logger::LogEntry* errorDescription =
-                            &(LX("continuingPlaybackFailed").d("reason", "setPiplineToPlayingFailed"));
-
-                        ACSDK_ERROR(*errorDescription);
-                        sendPlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, errorDescription->c_str());
+                        const std::string errorMessage{"reason=setPipelineToPlayingFailed"};
+                        ACSDK_ERROR(LX("continuingPlaybackFailed").m(errorMessage));
+                        sendPlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, errorMessage);
                         break;
                     }
                 } else {
@@ -1122,12 +1206,12 @@ void MediaPlayer::handlePlay(SourceId id, std::promise<bool>* promise) {
                     .d("startingState", gst_element_state_get_name(startingState))
                     .d("stateReturn", gst_element_state_change_return_get_name(stateChange)));
 
-    alexaClientSDK::avsCommon::utils::logger::LogEntry* errorDescription;
     switch (stateChange) {
-        case GST_STATE_CHANGE_FAILURE:
-            errorDescription = &(LX("handlePlayFailed").d("reason", "gstElementSetStateFailure"));
-            ACSDK_ERROR(*errorDescription);
-            sendPlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, errorDescription->c_str());
+        case GST_STATE_CHANGE_FAILURE: {
+            const std::string errorMessage{"reason=gstElementSetStateFailure"};
+            ACSDK_ERROR(LX("handlePlayFailed").m(errorMessage));
+            sendPlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, errorMessage);
+        }
             return;
         default:
             if (m_urlConverter) {
@@ -1479,7 +1563,6 @@ gboolean MediaPlayer::onErrorCallback(gpointer pointer) {
     ACSDK_DEBUG9(LX("onErrorCallback"));
     auto mediaPlayer = static_cast<MediaPlayer*>(pointer);
     mediaPlayer->sendPlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "streamingError");
-    mediaPlayer->m_onErrorPending = false;
     return false;
 }
 

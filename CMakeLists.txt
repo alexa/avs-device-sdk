@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 # Set project information
-project(AlexaClientSDK VERSION 1.3.0 LANGUAGES CXX)
+project(AlexaClientSDK VERSION 1.4.0 LANGUAGES CXX)
 set(PROJECT_BRIEF "A cross-platform, modular SDK for interacting with the Alexa Voice Service")
 
 include(build/BuildDefaults.cmake)
@@ -9,6 +9,13 @@ include(tools/Testing.cmake)
 
 # Set variables for target install and .pc pkg-config file
 include(build/cmake/PrepareInstall.cmake)
+
+
+configure_file (
+	"${PROJECT_SOURCE_DIR}/AVSCommon/Utils/include/AVSCommon/Utils/SDKVersion.h.in"
+	"${PROJECT_SOURCE_DIR}/AVSCommon/Utils/include/AVSCommon/Utils/SDKVersion.h"
+	)
+
 
 # Alexa Client SDK targets.
 add_subdirectory("ThirdParty")

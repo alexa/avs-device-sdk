@@ -1,7 +1,7 @@
 /*
  * InteractionManager.cpp
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -122,23 +122,31 @@ void InteractionManager::stopForegroundActivity() {
 }
 
 void InteractionManager::playbackPlay() {
-    m_executor.submit([this]() { m_client->getPlaybackControllerInterface().playButtonPressed(); });
+    m_executor.submit([this]() { m_client->getPlaybackRouter()->playButtonPressed(); });
 }
 
 void InteractionManager::playbackPause() {
-    m_executor.submit([this]() { m_client->getPlaybackControllerInterface().pauseButtonPressed(); });
+    m_executor.submit([this]() { m_client->getPlaybackRouter()->pauseButtonPressed(); });
 }
 
 void InteractionManager::playbackNext() {
-    m_executor.submit([this]() { m_client->getPlaybackControllerInterface().nextButtonPressed(); });
+    m_executor.submit([this]() { m_client->getPlaybackRouter()->nextButtonPressed(); });
 }
 
 void InteractionManager::playbackPrevious() {
-    m_executor.submit([this]() { m_client->getPlaybackControllerInterface().previousButtonPressed(); });
+    m_executor.submit([this]() { m_client->getPlaybackRouter()->previousButtonPressed(); });
 }
 
 void InteractionManager::speakerControl() {
     m_executor.submit([this]() { m_userInterface->printSpeakerControlScreen(); });
+}
+
+void InteractionManager::firmwareVersionControl() {
+    m_executor.submit([this]() { m_userInterface->printFirmwareVersionControlScreen(); });
+}
+
+void InteractionManager::setFirmwareVersion(avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion) {
+    m_executor.submit([this, firmwareVersion]() { m_client->setFirmwareVersion(firmwareVersion); });
 }
 
 void InteractionManager::volumeControl() {

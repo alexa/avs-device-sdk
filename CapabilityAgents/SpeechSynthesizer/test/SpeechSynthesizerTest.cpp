@@ -1,7 +1,7 @@
 /*
  * SpeechSynthesizerTest.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -50,7 +50,11 @@ using namespace avsCommon::utils::mediaPlayer::test;
 using namespace ::testing;
 
 /// Plenty of time for a test to complete.
-static std::chrono::milliseconds WAIT_TIMEOUT(1000);
+static const std::chrono::milliseconds WAIT_TIMEOUT(1000);
+
+/// Time to wait for state change timeout.  This should be set to be longer than STATE_CHANGE_TIMEOUT in
+/// SpeechSynthesizer.
+static const std::chrono::milliseconds STATE_CHANGE_TIMEOUT(10000);
 
 /// The name of the @c FocusManager channel used by the @c SpeechSynthesizer.
 static const std::string CHANNEL_NAME("Dialog");
@@ -156,7 +160,9 @@ class MockAttachmentManager : public AttachmentManagerInterface {
 public:
     MOCK_CONST_METHOD2(generateAttachmentId, std::string(const std::string&, const std::string&));
     MOCK_METHOD1(setAttachmentTimeoutMinutes, bool(std::chrono::minutes timeoutMinutes));
-    MOCK_METHOD1(createWriter, std::unique_ptr<AttachmentWriter>(const std::string& attachmentId));
+    MOCK_METHOD2(
+        createWriter,
+        std::unique_ptr<AttachmentWriter>(const std::string& attachmentId, utils::sds::WriterPolicy policy));
     MOCK_METHOD2(
         createReader,
         std::unique_ptr<AttachmentReader>(const std::string& attachmentId, AttachmentReader::Policy policy));
@@ -511,7 +517,7 @@ TEST_F(SpeechSynthesizerTest, testCallingCancelAfterHandle) {
     m_wakeSetStateFuture = m_wakeSetStatePromise.get_future();
     ASSERT_TRUE(std::future_status::ready == m_wakeSendMessageFuture.wait_for(WAIT_TIMEOUT));
     m_speechSynthesizer->CapabilityAgent::cancelDirective(MESSAGE_ID_TEST);
-    ASSERT_TRUE(m_mockSpeechPlayer->waitUntilPlaybackFinished());
+    ASSERT_TRUE(m_mockSpeechPlayer->waitUntilPlaybackStopped());
     ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
     ASSERT_TRUE(std::future_status::ready == m_wakeReleaseChannelFuture.wait_for(WAIT_TIMEOUT));
 }
@@ -591,7 +597,7 @@ TEST_F(SpeechSynthesizerTest, testCallingProvideStateWhenPlaying) {
     m_speechSynthesizer->provideState(NAMESPACE_AND_NAME_SPEECH_STATE, PROVIDE_STATE_TOKEN_TEST);
     ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
     m_speechSynthesizer->CapabilityAgent::cancelDirective(MESSAGE_ID_TEST);
-    ASSERT_TRUE(m_mockSpeechPlayer->waitUntilPlaybackFinished());
+    ASSERT_TRUE(m_mockSpeechPlayer->waitUntilPlaybackStopped());
     ASSERT_TRUE(std::future_status::ready == m_wakeReleaseChannelFuture.wait_for(WAIT_TIMEOUT));
 }
 
@@ -651,7 +657,7 @@ TEST_F(SpeechSynthesizerTest, testBargeInWhilePlaying) {
     ASSERT_TRUE(std::future_status::ready == m_wakeSendMessageFuture.wait_for(WAIT_TIMEOUT));
     m_speechSynthesizer->handleDirectiveImmediately(directive2);
     m_speechSynthesizer->CapabilityAgent::cancelDirective(MESSAGE_ID_TEST);
-    ASSERT_TRUE(m_mockSpeechPlayer->waitUntilPlaybackFinished());
+    ASSERT_TRUE(m_mockSpeechPlayer->waitUntilPlaybackStopped());
     ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
     ASSERT_TRUE(std::future_status::ready == m_wakeReleaseChannelFuture.wait_for(WAIT_TIMEOUT));
     ASSERT_TRUE(std::future_status::ready == m_wakeAcquireChannelFuture.wait_for(WAIT_TIMEOUT));
@@ -854,6 +860,72 @@ TEST_F(SpeechSynthesizerTest, testMediaPlayerFailedToStop) {
     m_wakeSetStatePromise = std::promise<void>();
     m_wakeSetStateFuture = m_wakeSetStatePromise.get_future();
     ASSERT_TRUE(m_mockSpeechPlayer->waitUntilPlaybackStarted());
+}
+
+/**
+ * Testing SpeechSynthesizer will call stop() if the SpeechSynthesizer experienced a state change timeout to PLAYING
+ * state.
+ */
+TEST_F(SpeechSynthesizerTest, testSetStateTimeout) {
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
+        NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
+    std::shared_ptr<AVSDirective> directive =
+        AVSDirective::create("", avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, CONTEXT_ID_TEST);
+
+    EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _, FOCUS_MANAGER_ACTIVITY_ID))
+        .Times(AtLeast(1))
+        .WillRepeatedly(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
+    EXPECT_CALL(
+        *(m_mockSpeechPlayer.get()),
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+        .Times(AtLeast(1));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(1).WillOnce(Return(true));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
+        .Times(AtLeast(1))
+        .WillRepeatedly(Return(OFFSET_IN_CHRONO_MILLISECONDS_TEST));
+    EXPECT_CALL(*(m_mockExceptionSender.get()), sendExceptionEncountered(_, _, _)).Times(1);
+    EXPECT_CALL(
+        *(m_mockContextManager.get()),
+        setState(NAMESPACE_AND_NAME_SPEECH_STATE, PLAYING_STATE_TEST, StateRefreshPolicy::ALWAYS, 0))
+        .Times(AtLeast(1))
+        .WillRepeatedly(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnSetState));
+    EXPECT_CALL(
+        *(m_mockContextManager.get()),
+        setState(NAMESPACE_AND_NAME_SPEECH_STATE, FINISHED_STATE_TEST, StateRefreshPolicy::NEVER, 0))
+        .Times(AtLeast(1))
+        .WillRepeatedly(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnSetState));
+    EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(_)).Times(0);
+    EXPECT_CALL(*(m_mockFocusManager.get()), releaseChannel(CHANNEL_NAME, _))
+        .Times(AtLeast(1))
+        .WillRepeatedly(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnReleaseChannel));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), stop(_)).Times(1).WillOnce(Return(true));
+    EXPECT_CALL(*(m_mockDirHandlerResult.get()), setFailed(_))
+        .Times(1)
+        .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnSetFailed));
+
+    // Send Speak directive and getting focus and wait until state change timeout.
+    m_speechSynthesizer->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirHandlerResult));
+    m_speechSynthesizer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
+    ASSERT_TRUE(std::future_status::ready == m_wakeAcquireChannelFuture.wait_for(WAIT_TIMEOUT));
+    m_wakeAcquireChannelPromise = std::promise<void>();
+    m_wakeAcquireChannelFuture = m_wakeAcquireChannelPromise.get_future();
+    m_speechSynthesizer->onFocusChanged(FocusState::FOREGROUND);
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetFailedFuture.wait_for(STATE_CHANGE_TIMEOUT));
+
+    // Upon getting onPlaybackedStarted, expect state to be updated, but SpeechStarted event will not be sent.
+    m_speechSynthesizer->onPlaybackStarted(m_mockSpeechPlayer->getCurrentSourceId());
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    m_wakeSetStatePromise = std::promise<void>();
+    m_wakeSetStateFuture = m_wakeSetStatePromise.get_future();
+
+    // Upon getting onPlaybackStopped, expect state to be updated, but SpeechFinished event will not be sent.
+    m_speechSynthesizer->onPlaybackStopped(m_mockSpeechPlayer->getCurrentSourceId());
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    m_wakeSetStatePromise = std::promise<void>();
+    m_wakeSetStateFuture = m_wakeSetStatePromise.get_future();
+
+    ASSERT_TRUE(std::future_status::ready == m_wakeReleaseChannelFuture.wait_for(WAIT_TIMEOUT));
+    m_speechSynthesizer->onFocusChanged(FocusState::BACKGROUND);
 }
 
 }  // namespace test

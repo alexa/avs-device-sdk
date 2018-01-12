@@ -161,6 +161,16 @@ private:
      */
     void resetSourceId();
 
+    /**
+     * Utility function to handle the rendering of the next url, with respect to @c m_loopCount and
+     * @c m_nextUrlIndexToRender.  If all urls within a loop have completed, and there are further loops to render,
+     * this function will also perform a sleep for the @c m_loopPause duration.
+     *
+     * @return @c true if there are more urls to render, and the next one has been successfully sent to the
+     * @c m_mediaPlayer to be played.  Returns @c false otherwise.
+     */
+    bool renderNextUrl();
+
     /// @}
 
     /**

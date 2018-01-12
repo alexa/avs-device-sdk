@@ -1,7 +1,7 @@
 /*
  * MediaPlayerInterface.h
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@
 #include <memory>
 
 #include "AVSCommon/AVS/Attachment/AttachmentReader.h"
-#include "AVSCommon/Utils/RequiresShutdown.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -64,13 +63,6 @@ public:
 
     /// An @c SourceId used to represent an error from calls to @c setSource().
     static const SourceId ERROR = 0;
-
-    /**
-     * Constructor.
-     *
-     * @param name The name of the class or object which requires shutdown calls.  Used in log messages when problems
-     *    are detected in shutdown or destruction sequences.
-     */
 
     /**
      * Destructor.

@@ -22,6 +22,8 @@
 
 #include "AVSCommon/Utils/Logger/ConsoleLogger.h"
 #include "AVSCommon/Utils/Logger/LoggerUtils.h"
+#include "AVSCommon/Utils/Logger/ThreadMoniker.h"
+#include "AVSCommon/Utils/SDKVersion.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -33,7 +35,6 @@ static const std::string CONFIG_KEY_DEFAULT_LOGGER = "consoleLogger";
 
 std::shared_ptr<Logger> ConsoleLogger::instance() {
     static std::shared_ptr<Logger> singleConsoletLogger = std::shared_ptr<ConsoleLogger>(new ConsoleLogger);
-
     return singleConsoletLogger;
 }
 
@@ -53,6 +54,12 @@ ConsoleLogger::ConsoleLogger() : Logger(Level::UNKNOWN) {
     setLevel(Level::INFO);
 #endif  // DEBUG
     init(configuration::ConfigurationNode::getRoot()[CONFIG_KEY_DEFAULT_LOGGER]);
+    std::string currentVersionLogEntry("sdkVersion: " + avsCommon::utils::sdkVersion::getCurrentVersion());
+    emit(
+        alexaClientSDK::avsCommon::utils::logger::Level::INFO,
+        std::chrono::system_clock::now(),
+        ThreadMoniker::getThisThreadMoniker().c_str(),
+        currentVersionLogEntry.c_str());
 }
 
 std::shared_ptr<Logger> getConsoleLogger() {

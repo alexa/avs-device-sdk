@@ -1,7 +1,7 @@
 /*
- * UrlContentToAttachmentConverter.h
+ * UrlToAttachmentConverter.h
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_PLAYLIST_PARSER_INCLUDE_PLAYLIST_PARSER_URL_TO_ATTACHMENT_CONVERTER_H_
-#define ALEXA_CLIENT_SDK_PLAYLIST_PARSER_INCLUDE_PLAYLIST_PARSER_URL_TO_ATTACHMENT_CONVERTER_H_
+#ifndef ALEXA_CLIENT_SDK_PLAYLISTPARSER_INCLUDE_PLAYLISTPARSER_URLTOATTACHMENTCONVERTER_H_
+#define ALEXA_CLIENT_SDK_PLAYLISTPARSER_INCLUDE_PLAYLISTPARSER_URLTOATTACHMENTCONVERTER_H_
 
 #include <memory>
 
@@ -144,14 +144,8 @@ private:
 
     /// @}
 
-    /// A promise to fulfill once streaming begins.
-    std::promise<std::chrono::milliseconds> m_startStreamingPointPromise;
-
-    /// A future which will hold the point at which streaming began.
-    std::shared_future<std::chrono::milliseconds> m_startStreamingPointFuture;
-
     /// The initial desired offset from which streaming should begin.
-    std::chrono::milliseconds m_desiredStreamPoint;
+    const std::chrono::milliseconds m_desiredStreamPoint;
 
     /// Used to retrieve content from URLs
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> m_contentFetcherFactory;
@@ -167,20 +161,43 @@ private:
     /// The observer to be notified of errors.
     std::shared_ptr<ErrorObserverInterface> m_observer;
 
+    /// Used to serialize access to m_observer.
+    std::mutex m_mutex;
+
     /// Flag to indicate if a shutdown is occurring.
     std::atomic<bool> m_shuttingDown;
+
+    /**
+     * @name @c onPlaylistEntryParsed Callback Variables
+     *
+     * These member variables are only accessed by @c onPlaylistEntryParsed callback functions that is called
+     * in a single thread in PlaylistParser or after the @c m_playlistParser is shutdown, and do not require any
+     * synchronization.
+     */
+    /// @{
+    /// A promise to fulfill once streaming begins.
+    std::promise<std::chrono::milliseconds> m_startStreamingPointPromise;
+
+    /// A future which will hold the point at which streaming began.
+    std::shared_future<std::chrono::milliseconds> m_startStreamingPointFuture;
 
     /// A counter to indicate the current running total of durations found in playlist entries.
     std::chrono::milliseconds m_runningTotal;
 
     /// Indicates whether streaming has begun.
     bool m_startedStreaming;
+    /// @}
 
     /**
-     * Used to serialize access to private members across callbacks. This mutex protects access to m_desiredStreamPoint,
-     * m_startedStreaming, m_startStreamingPointPromise, m_runningTotal, and m_observer.
+     * @name Executor Thread Variables
+     *
+     * These member variables are only accessed by functions in the @c m_executor worker thread, and do not require any
+     * synchronization.
      */
-    std::mutex m_mutex;
+    /// @{
+    /// Indicates whether the stream writer has closed.
+    bool m_streamWriterClosed;
+    /// @}
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.
@@ -194,4 +211,4 @@ private:
 }  // namespace playlistParser
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_PLAYLIST_PARSER_INCLUDE_PLAYLIST_PARSER_URL_TO_ATTACHMENT_CONVERTER_H_
+#endif  // ALEXA_CLIENT_SDK_PLAYLISTPARSER_INCLUDE_PLAYLISTPARSER_URLTOATTACHMENTCONVERTER_H_

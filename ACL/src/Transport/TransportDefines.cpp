@@ -14,6 +14,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+#include <vector>
 
 #include "ACL/Transport/TransportDefines.h"
 
@@ -21,7 +22,7 @@ namespace alexaClientSDK {
 namespace acl {
 
 /// Table with the retry times on subsequent retries.
-int TransportDefines::RETRY_TABLE[] = {
+const std::vector<int> TransportDefines::RETRY_TABLE = {
     250,    // Retry 1:  0.25s
     1000,   // Retry 2:  1.00s
     3000,   // Retry 3:  3.00s
@@ -30,25 +31,8 @@ int TransportDefines::RETRY_TABLE[] = {
     20000,  // Retry 6: 20.00s
 };
 
-/// Size of the retry table.
-int TransportDefines::RETRY_TABLE_SIZE = (sizeof(RETRY_TABLE) / sizeof(RETRY_TABLE[0]));
-
-/// Randomization used in the computation of retry times.
-int TransportDefines::RETRY_RANDOMIZATION_PERCENTAGE = 50;
-
-/// Lower bound of the interval to distribute the retry duration.
-int TransportDefines::RETRY_DECREASE_PERCENTAGE =
-    (100 * 100) / (TransportDefines::RETRY_RANDOMIZATION_PERCENTAGE + 100);
-
-/// Upper bound of the interval to distribute the retry duration.
-int TransportDefines::RETRY_INCREASE_PERCENTAGE = 100 + TransportDefines::RETRY_RANDOMIZATION_PERCENTAGE;
-
 /// Retry Timer object.
-avsCommon::utils::RetryTimer TransportDefines::RETRY_TIMER(
-    TransportDefines::RETRY_TABLE,
-    TransportDefines::RETRY_TABLE_SIZE,
-    TransportDefines::RETRY_DECREASE_PERCENTAGE,
-    TransportDefines::RETRY_INCREASE_PERCENTAGE);
+avsCommon::utils::RetryTimer TransportDefines::RETRY_TIMER(TransportDefines::RETRY_TABLE);
 
 }  // namespace acl
 }  // namespace alexaClientSDK

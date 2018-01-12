@@ -83,6 +83,8 @@ bool CurlEasyHandleWrapper::reset() {
      * causes the next transfer to timeout. As a workaround just cleanup the handle and create a new one
      * if we receive a 204.
      *
+     * This may be related to an older curl version. This workaround is confirmed unneeded for curl 7.55.1
+     *
      * TODO: ACSDK-104 Find a way to re-use all handles, or re-evaluate the easy handle pooling scheme
      */
     if (HTTP_RESPONSE_SUCCESS_NO_CONTENT == responseCode) {

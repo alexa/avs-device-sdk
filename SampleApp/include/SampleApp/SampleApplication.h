@@ -78,6 +78,9 @@ private:
     /// The @c MediaPlayer used by @c Alerts.
     std::shared_ptr<mediaPlayer::MediaPlayer> m_alertsMediaPlayer;
 
+    /// The @c MediaPlayer used by @c NotificationsCapabilityAgent.
+    std::shared_ptr<mediaPlayer::MediaPlayer> m_notificationsMediaPlayer;
+
 #ifdef KWD
     /// The Wakeword Detector which can wake up the client using audio input.
     std::unique_ptr<kwd::AbstractKeywordDetector> m_keywordDetector;

@@ -1,7 +1,7 @@
 /*
  * TestableAttachmentManager.h
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,8 @@ public:
     bool setAttachmentTimeoutMinutes(std::chrono::minutes timeoutMinutes) override;
 
     std::unique_ptr<avsCommon::avs::attachment::AttachmentWriter> createWriter(
-        const std::string& attachmentId) override;
+        const std::string& attachmentId,
+        avsCommon::utils::sds::WriterPolicy policy) override;
 
     std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> createReader(
         const std::string& attachmentId,

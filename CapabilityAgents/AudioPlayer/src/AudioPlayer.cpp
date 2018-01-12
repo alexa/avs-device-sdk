@@ -1,7 +1,7 @@
 /*
  * AudioPlayer.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -96,7 +96,8 @@ std::shared_ptr<AudioPlayer> AudioPlayer::create(
     std::shared_ptr<FocusManagerInterface> focusManager,
     std::shared_ptr<ContextManagerInterface> contextManager,
     std::shared_ptr<AttachmentManagerInterface> attachmentManager,
-    std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender) {
+    std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender,
+    std::shared_ptr<PlaybackRouterInterface> playbackRouter) {
     if (nullptr == mediaPlayer) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullMediaPlayer"));
         return nullptr;
@@ -115,10 +116,13 @@ std::shared_ptr<AudioPlayer> AudioPlayer::create(
     } else if (nullptr == exceptionSender) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullExceptionSender"));
         return nullptr;
+    } else if (nullptr == playbackRouter) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullPlaybackRouter"));
+        return nullptr;
     }
 
-    auto audioPlayer = std::shared_ptr<AudioPlayer>(
-        new AudioPlayer(mediaPlayer, messageSender, focusManager, contextManager, attachmentManager, exceptionSender));
+    auto audioPlayer = std::shared_ptr<AudioPlayer>(new AudioPlayer(
+        mediaPlayer, messageSender, focusManager, contextManager, attachmentManager, exceptionSender, playbackRouter));
     mediaPlayer->setObserver(audioPlayer);
     contextManager->setStateProvider(STATE, audioPlayer);
     return audioPlayer;
@@ -167,7 +171,6 @@ void AudioPlayer::handleDirective(std::shared_ptr<DirectiveInfo> info) {
 void AudioPlayer::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG(LX("cancelDirective").d("name", info->directive->getName()));
     removeDirective(info);
-    m_executor.submit([this] { executeStop(); });
 }
 
 void AudioPlayer::onDeregistered() {
@@ -341,7 +344,8 @@ AudioPlayer::AudioPlayer(
     std::shared_ptr<FocusManagerInterface> focusManager,
     std::shared_ptr<ContextManagerInterface> contextManager,
     std::shared_ptr<AttachmentManagerInterface> attachmentManager,
-    std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender) :
+    std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender,
+    std::shared_ptr<PlaybackRouterInterface> playbackRouter) :
         CapabilityAgent{NAMESPACE, exceptionSender},
         RequiresShutdown{"AudioPlayer"},
         m_mediaPlayer{mediaPlayer},
@@ -349,6 +353,7 @@ AudioPlayer::AudioPlayer(
         m_focusManager{focusManager},
         m_contextManager{contextManager},
         m_attachmentManager{attachmentManager},
+        m_playbackRouter{playbackRouter},
         m_currentActivity{PlayerActivity::IDLE},
         m_focus{FocusState::NONE},
         m_initialOffset{0},
@@ -368,6 +373,7 @@ void AudioPlayer::doShutdown() {
     m_contextManager.reset();
     m_attachmentManager.reset();
     m_audioItems.clear();
+    m_playbackRouter.reset();
 }
 
 bool AudioPlayer::parseDirectivePayload(std::shared_ptr<DirectiveInfo> info, rapidjson::Document* document) {
@@ -705,6 +711,11 @@ void AudioPlayer::executeOnPlaybackStarted(SourceId id) {
         return;
     }
 
+    /*
+     * When @c AudioPlayer is the active player, @c PlaybackController which is
+     * the default playback handler, should handle playback button presses.
+     */
+    m_playbackRouter->switchToDefaultHandler();
     changeActivity(PlayerActivity::PLAYING);
 
     sendPlaybackStartedEvent();

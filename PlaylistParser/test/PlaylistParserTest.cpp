@@ -1,7 +1,7 @@
 /*
  * PlaylistParserTest.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -461,7 +461,7 @@ TEST_F(PlaylistParserTest, testParsingRelativePlaylist) {
  * Tests parsing of an extended M3U/HLS playlist.
  * Calls @c parsePlaylist and expects that the result of the parsing is successful.
  */
-TEST_F(PlaylistParserTest, DISABLED_testParsingHlsPlaylist) {
+TEST_F(PlaylistParserTest, testParsingHlsPlaylist) {
     ASSERT_TRUE(playlistParser->parsePlaylist(TEST_HLS_PLAYLIST_URL, testObserver));
     auto results = testObserver->waitForNCallbacks(TEST_HLS_PLAYLIST_URL_EXPECTED_PARSES);
     ASSERT_EQ(TEST_HLS_PLAYLIST_URL_EXPECTED_PARSES, results.size());
@@ -498,7 +498,7 @@ TEST_F(PlaylistParserTest, testParsingPlsPlaylist) {
  * Tests parsing of a recursive M3U/HLS playlist.
  * Calls @c parsePlaylist and expects that the result of the parsing is successful.
  */
-TEST_F(PlaylistParserTest, DISABLED_testParsingRecursiveHlsPlaylist) {
+TEST_F(PlaylistParserTest, testParsingRecursiveHlsPlaylist) {
     ASSERT_TRUE(playlistParser->parsePlaylist(TEST_HLS_RECURSIVE_PLAYLIST_URL, testObserver));
     auto results = testObserver->waitForNCallbacks(TEST_HLS_RECURSIVE_PLAYLIST_URL_EXPECTED_PARSES);
     ASSERT_EQ(TEST_HLS_RECURSIVE_PLAYLIST_URL_EXPECTED_PARSES, results.size());
@@ -528,7 +528,7 @@ TEST_F(PlaylistParserTest, testNotParsingCertainPlaylistTypes) {
  * Tests parsing of a live stream HLS playlist.
  * Calls @c parsePlaylist and expects that the result of the parsing is successful.
  */
-TEST_F(PlaylistParserTest, DISABLED_testParsingLiveStreamPlaylist) {
+TEST_F(PlaylistParserTest, testParsingLiveStreamPlaylist) {
     ASSERT_TRUE(playlistParser->parsePlaylist(TEST_HLS_LIVE_STREAM_PLAYLIST_URL, testObserver));
     auto results = testObserver->waitForNCallbacks(TEST_HLS_LIVE_STREAM_PLAYLIST_EXPECTED_PARSES);
     ASSERT_EQ(TEST_HLS_LIVE_STREAM_PLAYLIST_EXPECTED_PARSES, results.size());

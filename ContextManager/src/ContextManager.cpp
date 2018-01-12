@@ -1,7 +1,7 @@
 /*
  * ContextManager.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -179,7 +179,7 @@ SetStateResult ContextManager::updateStateLocked(
         stateInfoMappingIt->second->refreshPolicy = refreshPolicy;
         ACSDK_DEBUG(LX("updateStateLocked")
                         .d("action", "updatedState")
-                        .d("state", jsonState)
+                        .sensitive("state", jsonState)
                         .d("namespace", stateProviderName.nameSpace)
                         .d("name", stateProviderName.name));
     }
@@ -322,7 +322,7 @@ void ContextManager::sendContextToRequesters() {
     if (errorBuildingContext) {
         sendContextAndClearQueue("", ContextRequestError::BUILD_CONTEXT_ERROR);
     } else {
-        ACSDK_DEBUG(LX("buildContextSuccessful").d("context", jsonContextBuf.GetString()));
+        ACSDK_DEBUG(LX("buildContextSuccessful").sensitive("context", jsonContextBuf.GetString()));
         sendContextAndClearQueue(jsonContextBuf.GetString());
     }
 }

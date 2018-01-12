@@ -219,49 +219,70 @@ void Renderer::executeOnPlaybackFinished(SourceId sourceId) {
         return;
     }
 
+    RendererObserverInterface::State finalState = RendererObserverInterface::State::STOPPED;
+
     if (!m_isStopping && !m_urls.empty()) {
-        // see if we need to reset the loop, and invoke the pause between loops.
-        if (m_nextUrlIndexToRender >= static_cast<int>(m_urls.size()) && m_loopCount > 0) {
-            if (m_loopPause.count() > 0) {
-                std::this_thread::sleep_for(m_loopPause);
-            }
-
-            m_loopCount--;
-            m_nextUrlIndexToRender = 0;
-        }
-
-        // play the next url in the list
-        if (m_nextUrlIndexToRender < static_cast<int>(m_urls.size())) {
-            ACSDK_DEBUG9(LX("executeonPlaybackFinished").d("setSource", m_nextUrlIndexToRender));
-
-            std::string url = m_urls[m_nextUrlIndexToRender++];
-            m_currentSourceId = m_mediaPlayer->setSource(url);
-            if (!isSourceIdOk(m_currentSourceId)) {
-                std::string errorMessage = "SourceId response from setSource was invalid.";
-                ACSDK_ERROR(LX("executeonPlaybackFinishedFailed")
-                                .d("SourceId", m_currentSourceId)
-                                .d("url", url)
-                                .m(errorMessage));
-                notifyObserver(RendererObserverInterface::State::ERROR, errorMessage);
-                return;
-            }
-            if (!m_mediaPlayer->play(m_currentSourceId)) {
-                std::string errorMessage = "MediaPlayer was unable to play next media item.";
-                ACSDK_ERROR(LX("executeonPlaybackFinishedFailed")
-                                .d("SourceId", m_currentSourceId)
-                                .d("url", url)
-                                .m(errorMessage));
-                notifyObserver(RendererObserverInterface::State::ERROR, errorMessage);
-                return;
-            }
-
+        if (renderNextUrl()) {
             return;
         }
+
+        finalState = RendererObserverInterface::State::COMPLETED;
     }
 
     resetSourceId();
-    notifyObserver(RendererObserverInterface::State::STOPPED);
+    notifyObserver(finalState);
     m_observer = nullptr;
+}
+
+bool Renderer::renderNextUrl() {
+    // sanity check.
+    if (m_urls.empty()) {
+        return false;
+    }
+
+    bool shouldRenderNextUrl = true;
+
+    // If we have completed a loop, then update our counters, and determine what to do next.
+    if (m_nextUrlIndexToRender >= static_cast<int>(m_urls.size())) {
+        ACSDK_DEBUG9(LX("renderNextUrl")
+                         .d("loopCount", m_loopCount)
+                         .d("nextUrlIndex", m_nextUrlIndexToRender)
+                         .m("updating counters."));
+        m_loopCount--;
+        m_nextUrlIndexToRender = 0;
+
+        if (0 == m_loopCount) {
+            shouldRenderNextUrl = false;
+        } else if (m_loopPause.count() > 0) {
+            std::this_thread::sleep_for(m_loopPause);
+        }
+    }
+
+    // If we should continue to the next url, let's kick it off.
+    if (shouldRenderNextUrl) {
+        ACSDK_DEBUG9(LX("renderNextUrl").d("setSource", m_nextUrlIndexToRender));
+
+        std::string url = m_urls[m_nextUrlIndexToRender++];
+        m_currentSourceId = m_mediaPlayer->setSource(url);
+        if (!isSourceIdOk(m_currentSourceId)) {
+            std::string errorMessage = "SourceId response from setSource was invalid.";
+            ACSDK_ERROR(LX("renderNextUrl").d("SourceId", m_currentSourceId).sensitive("url", url).m(errorMessage));
+            notifyObserver(RendererObserverInterface::State::ERROR, errorMessage);
+            return false;
+        }
+        if (!m_mediaPlayer->play(m_currentSourceId)) {
+            std::string errorMessage = "MediaPlayer was unable to play next media item.";
+            ACSDK_ERROR(LX("renderNextUrl").d("SourceId", m_currentSourceId).sensitive("url", url).m(errorMessage));
+            notifyObserver(RendererObserverInterface::State::ERROR, errorMessage);
+            return false;
+        }
+
+        ACSDK_DEBUG9(LX("renderNextUrl").m("Next url started successfully"));
+    } else {
+        ACSDK_DEBUG9(LX("renderNextUrl").m("No more urls to render."));
+    }
+
+    return shouldRenderNextUrl;
 }
 
 void Renderer::executeOnPlaybackError(

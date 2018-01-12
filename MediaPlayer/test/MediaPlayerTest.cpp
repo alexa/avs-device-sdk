@@ -1,7 +1,7 @@
 /*
  * MediaPlayerTest.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -74,20 +74,20 @@ static const std::string FILE_PREFIX("file://");
 /// File length for the MP3 test file.
 static const std::chrono::milliseconds MP3_FILE_LENGTH(2688);
 
-#ifdef URL_TESTS_RESOLVED
-
 // setOffset timing constants.
 
 /// Offset to start playback at.
 static const std::chrono::milliseconds OFFSET(2000);
 
+#ifdef RESOLVED_ACSDK_627
+
 /// Tolerance when setting expectations.
 static const std::chrono::milliseconds TOLERANCE(200);
 
+#endif
+
 /// Padding to add to offsets when necessary.
 static const std::chrono::milliseconds PADDING(10);
-
-#endif
 
 static std::unordered_map<std::string, std::string> urlsToContentTypes;
 
@@ -376,6 +376,16 @@ public:
         const std::chrono::milliseconds duration = std::chrono::milliseconds(5000));
 
     /**
+     * Wait for a playback error message to be received.
+     *
+     * This function waits for a specified number of milliseconds for a message to arrive.
+     * @param id The @c SourceId expected in a callback.
+     * @param duration Number of milliseconds to wait before giving up.
+     * @return true if a message was received within the specified duration, else false.
+     */
+    bool waitForPlaybackError(SourceId id, const std::chrono::milliseconds duration = std::chrono::milliseconds(5000));
+
+    /**
      * Wait for a message to be received.
      * This function waits for a specified number of milliseconds for a message to arrive.
      *
@@ -418,6 +428,7 @@ private:
     /// Trigger to wake up m_wakePlaybackResumed calls.
     std::condition_variable m_wakePlaybackResumed;
     std::condition_variable m_wakePlaybackStopped;
+    std::condition_variable m_wakePlaybackError;
     /// Trigger to wake up m_wakeTags calls.
     std::condition_variable m_wakeTags;
 
@@ -436,6 +447,8 @@ private:
     bool m_playbackResumed;
     /// Flag to set when a playback stopped message is received.
     bool m_playbackStopped;
+    /// Flag to set when a playback error message is received.
+    bool m_playbackError;
     /// Flag to set when a tags message is received.
     bool m_tags;
 
@@ -463,7 +476,8 @@ void MockPlayerObserver::onPlaybackFinished(SourceId id) {
 
 void MockPlayerObserver::onPlaybackError(SourceId id, const ErrorType& type, std::string error) {
     m_lastId = id;
-    ACSDK_ERROR(LX("onPlaybackError").d("type", type).d("error", error));
+    m_playbackError = true;
+    m_wakePlaybackError.notify_all();
 };
 
 void MockPlayerObserver::onPlaybackPaused(SourceId id) {
@@ -530,6 +544,14 @@ bool MockPlayerObserver::waitForPlaybackStopped(SourceId id, const std::chrono::
     return true;
 }
 
+bool MockPlayerObserver::waitForPlaybackError(SourceId id, const std::chrono::milliseconds duration) {
+    std::unique_lock<std::mutex> lock(m_mutex);
+    if (!m_wakePlaybackError.wait_for(lock, duration, [this, id]() { return m_playbackError && id == m_lastId; })) {
+        return false;
+    }
+    return true;
+}
+
 int MockPlayerObserver::getOnPlaybackStartedCallCount() {
     return m_onPlaybackStartedCallCount;
 }
@@ -561,6 +583,10 @@ bool MockPlayerObserver::waitForTags(SourceId id, const std::chrono::millisecond
 class MediaPlayerTest : public ::testing::Test {
 public:
     void SetUp() override;
+
+    void TearDown() override {
+        m_mediaPlayer->shutdown();
+    }
 
     /**
      * Sets the audio source to play.
@@ -625,8 +651,6 @@ TEST_F(MediaPlayerTest, testStartPlayWaitForEnd) {
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(sourceId));
 }
 
-#ifdef URL_TESTS_RESOLVED
-
 /**
  * Set the source of the @c MediaPlayer to a url representing a single audio file. Playback audio till the end.
  * Check whether the playback started and playback finished notifications are received.
@@ -641,13 +665,6 @@ TEST_F(MediaPlayerTest, testStartPlayForUrl) {
 }
 
 /**
- * Set the source of the @c MediaPlayer to an empty url. The return should be a nullptr.
- */
-TEST_F(MediaPlayerTest, testSetSourceEmptyUrl) {
-    ASSERT_EQ(ERROR_SOURCE_ID, m_mediaPlayer->setSource(""));
-}
-
-/**
  * Set the source of the @c MediaPlayer twice consecutively to a url representing a single audio file.
  * Playback audio till the end. Check whether the playback started and playback finished notifications
  * are received.
@@ -658,13 +675,10 @@ TEST_F(MediaPlayerTest, testConsecutiveSetSource) {
     std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);
     m_mediaPlayer->setSource("");
     auto id = m_mediaPlayer->setSource(url_single);
-
     ASSERT_TRUE(m_mediaPlayer->play(id));
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted(id));
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(id));
 }
-
-#endif
 
 /**
  * Plays a second different type of source after one source has finished playing.
@@ -864,7 +878,8 @@ TEST_F(MediaPlayerTest, testGetOffsetWhenPaused) {
     ASSERT_TRUE(m_playerObserver->waitForPlaybackPaused(sourceId));
 
     std::chrono::milliseconds offset = m_mediaPlayer->getOffset(sourceId);
-    ASSERT_TRUE((offset > std::chrono::milliseconds::zero()) && (offset <= MP3_FILE_LENGTH));
+    ASSERT_GE(offset, std::chrono::milliseconds::zero());
+    ASSERT_LE(offset, MP3_FILE_LENGTH);
     ASSERT_NE(MEDIA_PLAYER_INVALID_OFFSET, offset);
 }
 
@@ -957,8 +972,6 @@ TEST_F(MediaPlayerTest, testRecoveryFromPausedReads) {
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(sourceId, std::chrono::milliseconds(20000)));
 }
 
-#ifdef URL_TESTS_RESOLVED
-
 /// Tests playing a dummy playlist
 TEST_F(MediaPlayerTest, testStartPlayWithUrlPlaylistWaitForEnd) {
     MediaPlayer::SourceId sourceId = m_mediaPlayer->setSource(TEST_M3U_PLAYLIST_URL);
@@ -1001,48 +1014,36 @@ TEST_F(MediaPlayerTest, testSetOffsetSeekableSource) {
 /**
  * Test setting the offset outside the bounds of the source. Playback will immediately end.
  */
-TEST_F(MediaPlayerTest, DISABLED_testSetOffsetOutsideBounds) {
+TEST_F(MediaPlayerTest, testSetOffsetOutsideBounds) {
     std::chrono::milliseconds outOfBounds(MP3_FILE_LENGTH + PADDING);
 
     std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);
     auto sourceId = m_mediaPlayer->setSource(url_single, outOfBounds);
     ASSERT_NE(ERROR_SOURCE_ID, sourceId);
-    // ASSERT_TRUE(m_mediaPlayer->setOffset(sourceId, outOfBounds));
 
     ASSERT_TRUE(m_mediaPlayer->play(sourceId));
-    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted(sourceId));
-    auto start = std::chrono::steady_clock::now();
-    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(sourceId));
-
-    std::chrono::milliseconds timeElapsed =
-        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
-    ACSDK_INFO(LX("MediaPlayerTest").d("timeElapsed", timeElapsed.count()));
-
-    // Time elapsed should be zero.
-    ASSERT_TRUE(timeElapsed < std::chrono::milliseconds::zero() + TOLERANCE);
-    ASSERT_EQ(m_playerObserver->getOnPlaybackStartedCallCount(), 1);
-    ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackError(sourceId));
 }
 
+// TODO: ACSDK-828: this test ends up with a shorter playback time than the actual file length.
 /**
  * Test calling setSource resets the offset.
  *
  * Consecutive calls to setSource(const std::string url) without play() cause tests to occasionally fail: ACSDK-508.
  */
-TEST_F(MediaPlayerTest, testSetSourceResetsOffset) {
+TEST_F(MediaPlayerTest, DISABLED_testSetSourceResetsOffset) {
     std::chrono::milliseconds offset(OFFSET);
 
     std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);
     auto sourceId = m_mediaPlayer->setSource(url_single, offset);
-    // ASSERT_NE(ERROR_SOURCE_ID, sourceId);
-    // ASSERT_TRUE(m_mediaPlayer->setOffset(sourceId, offset));
+    ASSERT_NE(ERROR_SOURCE_ID, sourceId);
 
     sourceId = m_mediaPlayer->setSource(url_single);
     ASSERT_NE(ERROR_SOURCE_ID, sourceId);
     // Play, expect full file.
+    auto start = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_mediaPlayer->play(sourceId));
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted(sourceId));
-    auto start = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(sourceId));
 
     std::chrono::milliseconds timeElapsed =
@@ -1054,8 +1055,6 @@ TEST_F(MediaPlayerTest, testSetSourceResetsOffset) {
     ASSERT_EQ(m_playerObserver->getOnPlaybackStartedCallCount(), 1);
     ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
 }
-
-#endif
 
 /**
  * Test consecutive setSource() and play() calls.  Expect the PlaybackStarted and PlaybackFinished will be received
@@ -1387,6 +1386,14 @@ int main(int argc, char** argv) {
             {alexaClientSDK::mediaPlayer::test::FILE_PREFIX + alexaClientSDK::mediaPlayer::test::inputsDirPath +
                  alexaClientSDK::mediaPlayer::test::MP3_FILE_PATH,
              "audio/mpeg"});
+        std::ifstream fileStream(
+            alexaClientSDK::mediaPlayer::test::inputsDirPath + alexaClientSDK::mediaPlayer::test::MP3_FILE_PATH);
+        std::stringstream fileData;
+        fileData << fileStream.rdbuf();
+        alexaClientSDK::mediaPlayer::test::urlsToContent.insert({alexaClientSDK::mediaPlayer::test::FILE_PREFIX +
+                                                                     alexaClientSDK::mediaPlayer::test::inputsDirPath +
+                                                                     alexaClientSDK::mediaPlayer::test::MP3_FILE_PATH,
+                                                                 fileData.str()});
         alexaClientSDK::mediaPlayer::test::urlsToContentTypes.insert(
             {alexaClientSDK::mediaPlayer::test::TEST_M3U_PLAYLIST_URL, "audio/mpegurl"});
         alexaClientSDK::mediaPlayer::test::TEST_M3U_PLAYLIST_CONTENT =

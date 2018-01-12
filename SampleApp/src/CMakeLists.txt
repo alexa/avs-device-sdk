@@ -41,7 +41,8 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
         "-framework Carbon")
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     target_link_libraries(SampleApp
-        rt m pthread asound)
+      rt m pthread asound)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     message(FATAL_ERROR "Windows is unsupported at the moment")  
 endif()
+

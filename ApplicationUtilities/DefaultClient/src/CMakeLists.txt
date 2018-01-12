@@ -6,12 +6,13 @@ add_library(DefaultClient SHARED
 target_include_directories(DefaultClient PUBLIC
     "${DefaultClient_SOURCE_DIR}/include")
 target_link_libraries(DefaultClient 
-    AVSCommon 
-    ACL 
-    ADSL 
+    AVSCommon
+    ACL
+    ADSL
     AFML 
-    AIP 
+    AIP
     Alerts
+    Notifications
     PlaybackController
     SpeakerManager
     SpeechSynthesizer

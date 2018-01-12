@@ -179,7 +179,7 @@ static std::chrono::steady_clock::time_point calculateTimeToRetry(int retryCount
      * @see https://images-na.ssl-images-amazon.com/images/G/01/mwsportal/
      * doc/en_US/offamazonpayments/LoginAndPayWithAmazonIntegrationGuide.pdf
      */
-    static int retryBackoffTimes[] = {
+    const static std::vector<int> retryBackoffTimes = {
         0,      // Retry 1:  0.00s range with 50% randomization: [ 0.0s.  0.0s]
         1000,   // Retry 2:  1.00s range with 50% randomization: [ 0.5s,  1.5s]
         2000,   // Retry 3:  2.00s range with 50% randomization: [ 1.0s,  3.0s]
@@ -189,19 +189,8 @@ static std::chrono::steady_clock::time_point calculateTimeToRetry(int retryCount
         60000,  // Retry 7: 60.00s range with 50% randomization: [30.0s, 90.0s]
     };
 
-    /// Percent of range (relative to table entry) to select a random value from.
-    static int RETRY_RANDOMIZATION_PERCENTAGE = 50;
-    /// Percentage decrease to the table value when selecting low end of random values.
-    static int RETRY_DECREASE_PERCENTAGE = 100 - RETRY_RANDOMIZATION_PERCENTAGE;
-    /// Percentage increase to the table value when selecting high end of random values.
-    static int RETRY_INCREASE_PERCENTAGE = 100 + RETRY_RANDOMIZATION_PERCENTAGE;
-
-    // Cap count to the size of the table.
-    static int retryTableSize = (sizeof(retryBackoffTimes) / sizeof(retryBackoffTimes[0]));
-
     // Retry Timer Object.
-    avsCommon::utils::RetryTimer RETRY_TIMER(
-        retryBackoffTimes, retryTableSize, RETRY_DECREASE_PERCENTAGE, RETRY_INCREASE_PERCENTAGE);
+    avsCommon::utils::RetryTimer RETRY_TIMER(retryBackoffTimes);
 
     return std::chrono::steady_clock::now() + RETRY_TIMER.calculateTimeToRetry(retryCount);
 }

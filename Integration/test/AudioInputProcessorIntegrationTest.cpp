@@ -1,7 +1,7 @@
 /*
- * AudioInputProcessorTest.cpp
+ * AudioInputProcessorIntegrationTest.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -932,7 +932,7 @@ TEST_F(AudioInputProcessorTest, wakeWordMultiturnWithoutUserResponse) {
  * AudioInputProcessor is then observed to send a Recognize event to AVS which responds with a SetMute and Speak
  * directive.
  */
-TEST_F(AudioInputProcessorTest, tapToTalkJoke) {
+TEST_F(AudioInputProcessorTest, DISABLED_tapToTalkJoke) {
     // Signal to the AIP to start recognizing.
     ASSERT_TRUE(m_tapToTalkButton->startRecognizing(m_AudioInputProcessor, m_TapToTalkAudioProvider));
 

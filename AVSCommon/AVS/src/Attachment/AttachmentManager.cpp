@@ -1,7 +1,7 @@
 /*
  * AttachmentManager.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -116,7 +116,9 @@ AttachmentManager::AttachmentManagementDetails& AttachmentManager::getDetailsLoc
     return details;
 }
 
-std::unique_ptr<AttachmentWriter> AttachmentManager::createWriter(const std::string& attachmentId) {
+std::unique_ptr<AttachmentWriter> AttachmentManager::createWriter(
+    const std::string& attachmentId,
+    utils::sds::WriterPolicy policy) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
     auto& details = getDetailsLocked(attachmentId);
@@ -125,7 +127,7 @@ std::unique_ptr<AttachmentWriter> AttachmentManager::createWriter(const std::str
         return nullptr;
     }
 
-    auto writer = details.attachment->createWriter();
+    auto writer = details.attachment->createWriter(policy);
     removeExpiredAttachmentsLocked();
     return writer;
 }

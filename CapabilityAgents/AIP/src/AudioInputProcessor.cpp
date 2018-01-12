@@ -1,7 +1,7 @@
 /*
  * AudioInputProcessor.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -754,13 +754,13 @@ void AudioInputProcessor::onExceptionReceived(const std::string& exceptionMessag
 }
 
 void AudioInputProcessor::onSendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status) {
-    ACSDK_DEBUG(LX("onSendCompleted").d("status", avsCommon::avs::MessageRequest::statusToString(status)));
+    ACSDK_DEBUG(LX("onSendCompleted").d("status", status));
 
     if (status == avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS ||
         status == avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::PENDING) {
         return;
     }
-    ACSDK_DEBUG(LX("resetState").d("dueToStatus", avsCommon::avs::MessageRequest::statusToString(status)));
+    ACSDK_DEBUG(LX("resetState").d("dueToStatus", status));
     resetState();
 }
 

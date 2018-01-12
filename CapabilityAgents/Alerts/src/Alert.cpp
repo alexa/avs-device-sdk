@@ -371,6 +371,12 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
             }
             break;
 
+        case RendererObserverInterface::State::COMPLETED:
+            m_state = State::COMPLETED;
+            shouldNotifyObserver = true;
+            notifyState = AlertObserverInterface::State::COMPLETED;
+            break;
+
         case RendererObserverInterface::State::ERROR:
             // If the renderer failed while handling a url, let's presume there are network issues and render
             // the on-device background audio sound instead.

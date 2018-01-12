@@ -27,7 +27,7 @@
 
 ### Tell us about your OS (Type & version):
 - [ ] Linux
-- [ ] MacOS
+- [ ] MacOS 
 - [ ] Raspbian Stretch
 - [ ] Raspbian Jessy
 - [ ] Other - tell us more:

@@ -1,7 +1,7 @@
 /*
  * DefaultClient.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@
 
 #include "DefaultClient/DefaultClient.h"
 
-#include <ADSL/MessageInterpreter.h>
 #include <ACL/Transport/HTTP2MessageRouter.h>
 #include <ACL/Transport/PostConnectObject.h>
+#include <ADSL/MessageInterpreter.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
-#include <Settings/SettingsUpdatedEventSender.h>
 #include <ContextManager/ContextManager.h>
+#include <Settings/SettingsUpdatedEventSender.h>
 #include <System/EndpointHandler.h>
 #include <System/UserInactivityMonitor.h>
 
@@ -44,31 +44,43 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
+    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> notificationsMediaPlayer,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
     std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
+    std::shared_ptr<capabilityAgents::notifications::NotificationsStorageInterface> notificationsStorage,
     std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
         alexaDialogStateObservers,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
-        connectionObservers) {
+        connectionObservers,
+    avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
+    bool sendSoftwareInfoOnConnected,
+    std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver) {
     std::unique_ptr<DefaultClient> defaultClient(new DefaultClient());
     if (!defaultClient->initialize(
             speakMediaPlayer,
             audioMediaPlayer,
             alertsMediaPlayer,
+            notificationsMediaPlayer,
             speakSpeaker,
             audioSpeaker,
             alertsSpeaker,
+            notificationsSpeaker,
             audioFactory,
             authDelegate,
             alertStorage,
+            notificationsStorage,
             settingsStorage,
             alexaDialogStateObservers,
-            connectionObservers)) {
+            connectionObservers,
+            firmwareVersion,
+            sendSoftwareInfoOnConnected,
+            softwareInfoSenderObserver)) {
         return nullptr;
     }
 
@@ -79,17 +91,23 @@ bool DefaultClient::initialize(
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
+    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> notificationsMediaPlayer,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
     std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
+    std::shared_ptr<capabilityAgents::notifications::NotificationsStorageInterface> notificationsStorage,
     std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
         alexaDialogStateObservers,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
-        connectionObservers) {
+        connectionObservers,
+    avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
+    bool sendSoftwareInfoOnConnected,
+    std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver) {
     if (!audioFactory) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullAudioFactory"));
         return false;
@@ -107,6 +125,11 @@ bool DefaultClient::initialize(
 
     if (!alertsMediaPlayer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullAlertsMediaPlayer"));
+        return false;
+    }
+
+    if (!notificationsMediaPlayer) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullNotificationsMediaPlayer"));
         return false;
     }
 
@@ -172,9 +195,8 @@ bool DefaultClient::initialize(
      * directive sent by AVS. For that reason, the Directive Sequencer and each Capability Agent will need this
      * component.
      */
-    std::shared_ptr<avsCommon::avs::ExceptionEncounteredSender> exceptionSender =
-        avsCommon::avs::ExceptionEncounteredSender::create(m_connectionManager);
-    if (!exceptionSender) {
+    m_exceptionSender = avsCommon::avs::ExceptionEncounteredSender::create(m_connectionManager);
+    if (!m_exceptionSender) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateExceptionSender"));
         return false;
     }
@@ -184,7 +206,7 @@ bool DefaultClient::initialize(
      * directives sent from AVS and forwarding them along to the appropriate Capability Agent that deals with
      * directives in that Namespace/Name.
      */
-    m_directiveSequencer = adsl::DirectiveSequencer::create(exceptionSender);
+    m_directiveSequencer = adsl::DirectiveSequencer::create(m_exceptionSender);
     if (!m_directiveSequencer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateDirectiveSequencer"));
         return false;
@@ -195,7 +217,7 @@ bool DefaultClient::initialize(
      * Directive Sequencer to process. This essentially "glues" together the ACL and ADSL.
      */
     auto messageInterpreter =
-        std::make_shared<adsl::MessageInterpreter>(exceptionSender, m_directiveSequencer, attachmentManager);
+        std::make_shared<adsl::MessageInterpreter>(m_exceptionSender, m_directiveSequencer, attachmentManager);
 
     m_connectionManager->addMessageObserver(messageInterpreter);
 
@@ -216,7 +238,7 @@ bool DefaultClient::initialize(
      * described in the System Interface of AVS.
      */
     auto userInactivityMonitor =
-        capabilityAgents::system::UserInactivityMonitor::create(m_connectionManager, exceptionSender);
+        capabilityAgents::system::UserInactivityMonitor::create(m_connectionManager, m_exceptionSender);
     if (!userInactivityMonitor) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateUserInactivityMonitor"));
         return false;
@@ -232,7 +254,7 @@ bool DefaultClient::initialize(
         contextManager,
         m_focusManager,
         m_dialogUXStateAggregator,
-        exceptionSender,
+        m_exceptionSender,
         userInactivityMonitor);
     if (!m_audioInputProcessor) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateAudioInputProcessor"));
@@ -251,7 +273,7 @@ bool DefaultClient::initialize(
         m_focusManager,
         contextManager,
         attachmentManager,
-        exceptionSender,
+        m_exceptionSender,
         m_dialogUXStateAggregator);
     if (!m_speechSynthesizer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSpeechSynthesizer"));
@@ -261,11 +283,38 @@ bool DefaultClient::initialize(
     m_speechSynthesizer->addObserver(m_dialogUXStateAggregator);
 
     /*
+     * Creating the PlaybackController Capability Agent - This component is the Capability Agent that implements the
+     * PlaybackController interface of AVS.
+     */
+    m_playbackController =
+        capabilityAgents::playbackController::PlaybackController::create(contextManager, m_connectionManager);
+    if (!m_playbackController) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreatePlaybackController"));
+        return false;
+    }
+
+    /*
+     * Creating the PlaybackRouter - This component routes a playback button press to the active handler.
+     * The default handler is @c PlaybackController.
+     */
+    m_playbackRouter = capabilityAgents::playbackController::PlaybackRouter::create(m_playbackController);
+    if (!m_playbackRouter) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreatePlaybackRouter"));
+        return false;
+    }
+
+    /*
      * Creating the Audio Player - This component is the Capability Agent that implements the AudioPlayer
      * interface of AVS.
      */
     m_audioPlayer = capabilityAgents::audioPlayer::AudioPlayer::create(
-        audioMediaPlayer, m_connectionManager, m_focusManager, contextManager, attachmentManager, exceptionSender);
+        audioMediaPlayer,
+        m_connectionManager,
+        m_focusManager,
+        contextManager,
+        attachmentManager,
+        m_exceptionSender,
+        m_playbackRouter);
     if (!m_audioPlayer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateAudioPlayer"));
         return false;
@@ -280,7 +329,7 @@ bool DefaultClient::initialize(
         m_certifiedSender,
         m_focusManager,
         contextManager,
-        exceptionSender,
+        m_exceptionSender,
         alertStorage,
         audioFactory->alerts(),
         capabilityAgents::alerts::renderer::Renderer::create(alertsMediaPlayer));
@@ -294,13 +343,17 @@ bool DefaultClient::initialize(
     addConnectionObserver(m_dialogUXStateAggregator);
 
     /*
-     * Creating the PlaybackController Capability Agent - This component is the Capability Agent that implements the
-     * PlaybackController interface of AVS.
+     * Creating the Notifications Capability Agent - This component is the Capability Agent that implements the
+     * Notifications interface of AVS.
      */
-    m_playbackController =
-        capabilityAgents::playbackController::PlaybackController::create(contextManager, m_connectionManager);
-    if (!m_playbackController) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreatePlaybackController"));
+    m_notificationsCapabilityAgent = capabilityAgents::notifications::NotificationsCapabilityAgent::create(
+        notificationsStorage,
+        capabilityAgents::notifications::NotificationRenderer::create(notificationsMediaPlayer),
+        contextManager,
+        m_exceptionSender,
+        audioFactory->notifications());
+    if (!m_notificationsCapabilityAgent) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateNotificationsCapabilityAgent"));
         return false;
     }
 
@@ -326,7 +379,10 @@ bool DefaultClient::initialize(
      * Speaker interface of AVS.
      */
     m_speakerManager = capabilityAgents::speakerManager::SpeakerManager::create(
-        {speakSpeaker, audioSpeaker, alertsSpeaker}, contextManager, m_connectionManager, exceptionSender);
+        {speakSpeaker, audioSpeaker, alertsSpeaker, notificationsSpeaker},
+        contextManager,
+        m_connectionManager,
+        m_exceptionSender);
     if (!m_speakerManager) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSpeakerManager"));
         return false;
@@ -336,7 +392,7 @@ bool DefaultClient::initialize(
      * Creating the TemplateRuntime Capability Agent - This component is the Capability Agent that implements the
      * TemplateRuntime interface of AVS.
      */
-    m_templateRuntime = capabilityAgents::templateRuntime::TemplateRuntime::create(m_audioPlayer, exceptionSender);
+    m_templateRuntime = capabilityAgents::templateRuntime::TemplateRuntime::create(m_audioPlayer, m_exceptionSender);
     if (!m_templateRuntime) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateTemplateRuntimeCapabilityAgent"));
         return false;
@@ -346,10 +402,27 @@ bool DefaultClient::initialize(
      * Creating the Endpoint Handler - This component is responsible for handling directives from AVS instructing the
      * client to change the endpoint to connect to.
      */
-    auto endpointHandler = capabilityAgents::system::EndpointHandler::create(m_connectionManager, exceptionSender);
+    auto endpointHandler = capabilityAgents::system::EndpointHandler::create(m_connectionManager, m_exceptionSender);
     if (!endpointHandler) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateEndpointHandler"));
         return false;
+    }
+
+    if (firmwareVersion != avsCommon::sdkInterfaces::softwareInfo::INVALID_FIRMWARE_VERSION) {
+        auto tempSender = capabilityAgents::system::SoftwareInfoSender::create(
+            firmwareVersion,
+            sendSoftwareInfoOnConnected,
+            softwareInfoSenderObserver,
+            m_connectionManager,
+            m_connectionManager,
+            m_exceptionSender);
+        if (tempSender) {
+            std::lock_guard<std::mutex> lock(m_softwareInfoSenderMutex);
+            m_softwareInfoSender = tempSender;
+        } else {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSoftwareInfoSender"));
+            return false;
+        }
     }
 
     /*
@@ -408,6 +481,13 @@ bool DefaultClient::initialize(
         ACSDK_ERROR(LX("initializeFailed")
                         .d("reason", "unableToRegisterDirectiveHandler")
                         .d("directiveHandler", "TemplateRuntime"));
+        return false;
+    }
+
+    if (!m_directiveSequencer->addDirectiveHandler(m_notificationsCapabilityAgent)) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterDirectiveHandler")
+                        .d("directiveHandler", "NotificationsCapabilityAgent"));
         return false;
     }
     return true;
@@ -488,6 +568,16 @@ void DefaultClient::removeSettingObserver(
     m_settings->removeSingleSettingObserver(key, observer);
 }
 
+void DefaultClient::addNotificationsObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::NotificationsObserverInterface> observer) {
+    m_notificationsCapabilityAgent->addObserver(observer);
+}
+
+void DefaultClient::removeNotificationsObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::NotificationsObserverInterface> observer) {
+    m_notificationsCapabilityAgent->removeObserver(observer);
+}
+
 void DefaultClient::changeSetting(const std::string& key, const std::string& value) {
     m_settings->changeSetting(key, value);
 }
@@ -496,8 +586,8 @@ void DefaultClient::sendDefaultSettings() {
     m_settings->sendDefaultSettings();
 }
 
-avsCommon::sdkInterfaces::PlaybackControllerInterface& DefaultClient::getPlaybackControllerInterface() const {
-    return *m_playbackController;
+std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> DefaultClient::getPlaybackRouter() const {
+    return m_playbackRouter;
 }
 
 void DefaultClient::addSpeakerManagerObserver(
@@ -512,6 +602,25 @@ void DefaultClient::removeSpeakerManagerObserver(
 
 std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> DefaultClient::getSpeakerManager() {
     return m_speakerManager;
+}
+
+bool DefaultClient::setFirmwareVersion(avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion) {
+    {
+        std::lock_guard<std::mutex> lock(m_softwareInfoSenderMutex);
+
+        if (!m_softwareInfoSender) {
+            m_softwareInfoSender = capabilityAgents::system::SoftwareInfoSender::create(
+                firmwareVersion, true, nullptr, m_connectionManager, m_connectionManager, m_exceptionSender);
+            if (m_softwareInfoSender) {
+                return true;
+            }
+
+            ACSDK_ERROR(LX("setFirmwareVersionFailed").d("reason", "unableToCreateSoftwareInfoSender"));
+            return false;
+        }
+    }
+
+    return m_softwareInfoSender->setFirmwareVersion(firmwareVersion);
 }
 
 std::future<bool> DefaultClient::notifyOfWakeWord(
@@ -566,6 +675,9 @@ DefaultClient::~DefaultClient() {
     if (m_playbackController) {
         m_playbackController->shutdown();
     }
+    if (m_softwareInfoSender) {
+        m_softwareInfoSender->shutdown();
+    }
     if (m_messageRouter) {
         m_messageRouter->shutdown();
     }
@@ -574,6 +686,12 @@ DefaultClient::~DefaultClient() {
     }
     if (m_certifiedSender) {
         m_certifiedSender->shutdown();
+    }
+    if (m_playbackRouter) {
+        m_playbackRouter->shutdown();
+    }
+    if (m_notificationsCapabilityAgent) {
+        m_notificationsCapabilityAgent->shutdown();
     }
 }
 

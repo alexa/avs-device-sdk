@@ -1,7 +1,7 @@
 /*
  * MessageRequest.h
  *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -91,14 +91,6 @@ public:
      * @param observer The observer to be removed from the set.
      */
     void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageRequestObserverInterface> observer);
-
-    /**
-     * Utility function to convert a modern enum class to a string.
-     *
-     * @param status The enum value.
-     * @return The string representation of the incoming value.
-     */
-    static std::string statusToString(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status);
 
     /**
      * A function to evaluate if the given status reflects receipt of the message by the server.

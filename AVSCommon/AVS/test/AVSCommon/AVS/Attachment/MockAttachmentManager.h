@@ -1,7 +1,7 @@
 /*
  * MockAttachmentManager.h
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,7 +36,9 @@ class MockAttachmentManager : public AttachmentManagerInterface {
 public:
     MOCK_CONST_METHOD2(generateAttachmentId, std::string(const std::string& contextId, const std::string& contentId));
     MOCK_METHOD1(setAttachmentTimeoutMinutes, bool(std::chrono::minutes timeoutMinutes));
-    MOCK_METHOD1(createWriter, std::unique_ptr<AttachmentWriter>(const std::string& attachmentId));
+    MOCK_METHOD2(
+        createWriter,
+        std::unique_ptr<AttachmentWriter>(const std::string& attachmentId, utils::sds::WriterPolicy policy));
     MOCK_METHOD2(
         createReader,
         std::unique_ptr<AttachmentReader>(const std::string& attachmentId, AttachmentReader::Policy policy));

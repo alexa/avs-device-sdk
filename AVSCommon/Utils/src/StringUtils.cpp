@@ -17,11 +17,13 @@
 
 #include "AVSCommon/Utils/String/StringUtils.h"
 
-#include "AVSCommon/Utils/Logger/Logger.h"
+#include <iomanip>
+#include <limits>
 
 #include <errno.h>
-#include <limits>
 #include <stdlib.h>
+
+#include "AVSCommon/Utils/Logger/Logger.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -75,6 +77,16 @@ bool stringToInt(const char* str, int* result) {
 
     *result = static_cast<int>(tempResult);
     return true;
+}
+
+std::string byteVectorToString(const std::vector<uint8_t>& byteVector) {
+    std::stringstream ss;
+    bool firstTime = true;
+    for (const auto& byte : byteVector) {
+        ss << std::hex << (firstTime ? "" : " ") << "0x" << std::setfill('0') << std::setw(2) << int(byte) << std::dec;
+        firstTime = false;
+    }
+    return ss.str();
 }
 
 }  // namespace string

@@ -1,7 +1,7 @@
 /*
  * AttachmentManagerInterface.h
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -88,7 +88,9 @@ public:
      * @param attachmentId The id of the @c Attachment.
      * @return An @c AttachmentWriter.
      */
-    virtual std::unique_ptr<AttachmentWriter> createWriter(const std::string& attachmentId) = 0;
+    virtual std::unique_ptr<AttachmentWriter> createWriter(
+        const std::string& attachmentId,
+        avsCommon::utils::sds::WriterPolicy policy = avsCommon::utils::sds::WriterPolicy::ALL_OR_NOTHING) = 0;
 
     /**
      * Returns a pointer to an @c AttachmentReader.

@@ -1,7 +1,7 @@
 /*
  * RetryTimer.h
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_RETRYTIMER_H_
 
 #include <chrono>
+#include <vector>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -34,29 +35,26 @@ public:
      * Constructor.
      *
      * @param retryTable The table with entries for retry times.
-     * @param retrySize The size of the retry table.
      */
-    RetryTimer(int* retryTable, int retrySize);
+    RetryTimer(const std::vector<int>& retryTable);
 
     /**
      * Constructor.
      *
      * @param retryTable The table with entries for retry times.
-     * @param retrySize The size of the retry table.
      * @param randomizationPercentage The randomization percentage to be used while computing the distribution range
      * around the retry time.
      */
-    RetryTimer(int* retryTable, int retrySize, int randomizationPercentage);
+    RetryTimer(const std::vector<int>& retryTable, int randomizationPercentage);
 
     /**
      * Constructor.
      *
      * @param retryTable The table with entries for retry times.
-     * @param retrySize The size of the retry table.
      * @param decreasePercentage The lower bound of the retry time duration.
      * @param increasePercentage The upper bound of the retry time duration.
      */
-    RetryTimer(int* retryTable, int retrySize, int decreasePercentage, int increasePercentage);
+    RetryTimer(const std::vector<int>& retryTable, int decreasePercentage, int increasePercentage);
 
     /**
      * Method to return a randomized delay in milliseconds when threads are waiting on an event.
@@ -64,20 +62,20 @@ public:
      * @param retryCount The number of retries.
      * @return delay in milliseconds.
      */
-    std::chrono::milliseconds calculateTimeToRetry(int retryCount);
+    std::chrono::milliseconds calculateTimeToRetry(int retryCount) const;
 
 private:
     /// Retry table with retry time in milliseconds.
-    int* m_RetryTable;
+    const std::vector<int> m_RetryTable;
 
     /// Size of the retry table.
-    int m_RetrySize;
+    const size_t m_RetrySize;
 
-    /// Lower bound of the retry time duration range.
-    int m_RetryDecreasePercentage;
+    /// The lower bound (as a percentage) for randomizing the next retry time.
+    const int m_RetryDecreasePercentage;
 
-    /// Upper bound of the retry time duration range.
-    int m_RetryIncreasePercentage;
+    /// The upper bound (as a percentage) for randomizing the next retry time.
+    const int m_RetryIncreasePercentage;
 };
 
 }  // namespace utils

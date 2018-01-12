@@ -1,7 +1,7 @@
 /*
  * AttachmentManager.h
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -84,7 +84,9 @@ public:
 
     bool setAttachmentTimeoutMinutes(std::chrono::minutes timeoutMinutes) override;
 
-    std::unique_ptr<AttachmentWriter> createWriter(const std::string& attachmentId) override;
+    std::unique_ptr<AttachmentWriter> createWriter(
+        const std::string& attachmentId,
+        avsCommon::utils::sds::WriterPolicy policy = avsCommon::utils::sds::WriterPolicy::ALL_OR_NOTHING) override;
 
     std::unique_ptr<AttachmentReader> createReader(const std::string& attachmentId, AttachmentReader::Policy policy)
         override;

@@ -25,19 +25,7 @@ namespace acl {
 class TransportDefines {
 public:
     /// Table with the retry times on subsequent retries.
-    static int RETRY_TABLE[];
-
-    /// Size of the retry table.
-    static int RETRY_TABLE_SIZE;
-
-    /// Randomization used in the computation of retry times.
-    static int RETRY_RANDOMIZATION_PERCENTAGE;
-
-    /// Lower bound of the interval to distribute the retry duration.
-    static int RETRY_DECREASE_PERCENTAGE;
-
-    /// Upper bound of the interval to distribute the retry duration.
-    static int RETRY_INCREASE_PERCENTAGE;
+    const static std::vector<int> RETRY_TABLE;
 
     /// Retry Timer Object for transport.
     static avsCommon::utils::RetryTimer RETRY_TIMER;

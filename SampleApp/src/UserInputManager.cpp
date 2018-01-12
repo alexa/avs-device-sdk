@@ -1,7 +1,7 @@
 /*
  * UserInputManager.cpp
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 #include <cctype>
 
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
+#include <AVSCommon/Utils/String/StringUtils.h>
 #include "SampleApp/UserInputManager.h"
 #include "SampleApp/ConsolePrinter.h"
 
@@ -38,6 +39,7 @@ static const char NEXT = '3';
 static const char PREVIOUS = '4';
 static const char SETTINGS = 'c';
 static const char SPEAKER_CONTROL = 'p';
+static const char FIRMWARE_VERSION = 'f';
 
 enum class SettingsValues : char { LOCALE = '1' };
 
@@ -145,6 +147,17 @@ void UserInputManager::run() {
                             break;
                     }
                 }
+            }
+        } else if (x == FIRMWARE_VERSION) {
+            m_interactionManager->firmwareVersionControl();
+            std::string text;
+            std::cin >> text;
+            int version;
+            if (avsCommon::utils::string::stringToInt(text, &version) && version > 0) {
+                m_interactionManager->setFirmwareVersion(
+                    static_cast<avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion>(version));
+            } else {
+                m_interactionManager->errorValue();
             }
         }
     }

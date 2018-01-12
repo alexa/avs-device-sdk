@@ -1,7 +1,7 @@
 /*
  * ObservableMessageRequest.cpp
  *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ ObservableMessageRequest::ObservableMessageRequest(
 void ObservableMessageRequest::sendCompleted(
     avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status sendMessageStatus) {
     std::lock_guard<std::mutex> lock(m_mutex);
-    ACSDK_DEBUG(LX("onSendCompleted").d("status", MessageRequest::statusToString(sendMessageStatus)));
+    ACSDK_DEBUG(LX("onSendCompleted").d("status", sendMessageStatus));
     m_sendMessageStatus = sendMessageStatus;
     m_sendCompleted = true;
     m_wakeTrigger.notify_all();

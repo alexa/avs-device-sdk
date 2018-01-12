@@ -160,10 +160,9 @@ void MessageInterpreter::receive(const std::string& contextId, const std::string
 }
 
 void MessageInterpreter::sendParseValueException(const std::string& key, const std::string& json) {
-    alexaClientSDK::avsCommon::utils::logger::LogEntry* errorDescription =
-        &(LX("messageParsingFailed").d("reason", "valueRetrievalFailed").d("key", key).d("payload", json));
-    ACSDK_ERROR(*errorDescription);
-    sendExceptionEncounteredHelper(m_exceptionEncounteredSender, json, errorDescription->c_str());
+    const std::string errorMessage = "reason=valueRetrievalFailed,key=" + key + ",payload=" + json;
+    ACSDK_ERROR(LX("messageParsingFailed").m(errorMessage));
+    sendExceptionEncounteredHelper(m_exceptionEncounteredSender, json, errorMessage);
 }
 
 }  // namespace adsl

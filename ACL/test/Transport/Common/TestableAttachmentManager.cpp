@@ -1,7 +1,7 @@
 /*
  * TestableAttachmentManager.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,9 @@ bool TestableAttachmentManager::setAttachmentTimeoutMinutes(std::chrono::minutes
     return m_manager->setAttachmentTimeoutMinutes(timeoutMinutes);
 }
 
-std::unique_ptr<AttachmentWriter> TestableAttachmentManager::createWriter(const std::string& attachmentId) {
+std::unique_ptr<AttachmentWriter> TestableAttachmentManager::createWriter(
+    const std::string& attachmentId,
+    avsCommon::utils::sds::WriterPolicy policy) {
     // First, let's create a dummy SDS.  Otherwise we need to intantiate the writer with nullptr, which is
     // probably not a good idea.
     auto buffSize = SDSType::calculateBufferSize(DUMMY_SDS_BUFFER_SIZE);

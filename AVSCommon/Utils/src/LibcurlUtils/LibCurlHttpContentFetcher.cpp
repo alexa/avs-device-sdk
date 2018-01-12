@@ -1,7 +1,7 @@
 /*
  * LibCurlHttpContentFetcher.cpp
  *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,13 +30,17 @@ namespace libcurlUtils {
 static const std::string TAG("LibCurlHttpContentFetcher");
 
 /**
+ * The timeout for a blocking write call to an @c AttachmentWriter. This value may be increased to decrease wakeups but
+ * may also increase latency.
+ */
+static const std::chrono::milliseconds TIMEOUT_FOR_BLOCKING_WRITE = std::chrono::milliseconds(100);
+
+/**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
  * @param The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
-
-static const std::chrono::milliseconds SLEEP_DURATION_IF_BUFFER_FULL{100};
 
 size_t LibCurlHttpContentFetcher::headerCallback(char* data, size_t size, size_t nmemb, void* userData) {
     if (!userData) {
@@ -87,25 +91,41 @@ size_t LibCurlHttpContentFetcher::bodyCallback(char* data, size_t size, size_t n
         thisObject->m_contentTypePromise.set_value(thisObject->m_lastContentType);
     }
     auto streamWriter = thisObject->m_streamWriter;
+    size_t totalBytesWritten = 0;
+
     if (streamWriter) {
-        while (!thisObject->m_shuttingDown) {
+        size_t targetNumBytes = size * nmemb;
+
+        while (totalBytesWritten < targetNumBytes && !thisObject->m_shuttingDown) {
             avsCommon::avs::attachment::AttachmentWriter::WriteStatus writeStatus =
                 avsCommon::avs::attachment::AttachmentWriter::WriteStatus::OK;
-            auto numBytesWritten = streamWriter->write(data, size * nmemb, &writeStatus);
+
+            size_t numBytesWritten = streamWriter->write(
+                data,
+                targetNumBytes - totalBytesWritten,
+                &writeStatus,
+                std::chrono::milliseconds(TIMEOUT_FOR_BLOCKING_WRITE));
+            totalBytesWritten += numBytesWritten;
+            data += numBytesWritten;
+
             switch (writeStatus) {
                 case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::CLOSED:
                 case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:
                 case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::ERROR_INTERNAL:
+                    return totalBytesWritten;
+                case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::TIMEDOUT:
                 case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::OK:
-                    return numBytesWritten;
-                case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::OK_BUFFER_FULL:
-                    std::this_thread::sleep_for(SLEEP_DURATION_IF_BUFFER_FULL);
+                    // might still have bytes to write
                     continue;
+                case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::OK_BUFFER_FULL:
+                    ACSDK_ERROR(LX(__func__).d("unexpected return code", "OK_BUFFER_FULL"));
+                    return 0;
             }
+            ACSDK_ERROR(LX(__func__).m("unexpected writeStatus"));
+            return 0;
         }
     }
-    // To avoid compiler warning
-    return 0;
+    return totalBytesWritten;
 }
 
 size_t LibCurlHttpContentFetcher::noopCallback(char* data, size_t size, size_t nmemb, void* userData) {
@@ -187,7 +207,7 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
         case FetchOptions::ENTIRE_BODY:
             // Using the url as the identifier for the attachment
             stream = std::make_shared<avsCommon::avs::attachment::InProcessAttachment>(m_url);
-            m_streamWriter = stream->createWriter();
+            m_streamWriter = stream->createWriter(sds::WriterPolicy::BLOCKING);
             if (!m_streamWriter) {
                 ACSDK_ERROR(LX("getContentFailed").d("reason", "failedToCreateWriter"));
                 return nullptr;

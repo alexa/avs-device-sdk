@@ -1,7 +1,7 @@
 /*
  * UIManager.h
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/NotificationsObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SingleSettingObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
@@ -37,7 +38,8 @@ class UIManager
         : public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
         , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface
         , public avsCommon::sdkInterfaces::SingleSettingObserverInterface
-        , public avsCommon::sdkInterfaces::SpeakerManagerObserverInterface {
+        , public avsCommon::sdkInterfaces::SpeakerManagerObserverInterface
+        , public avsCommon::sdkInterfaces::NotificationsObserverInterface {
 public:
     void onDialogUXStateChanged(DialogUXState state) override;
 
@@ -51,6 +53,11 @@ public:
         const avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source& source,
         const avsCommon::sdkInterfaces::SpeakerInterface::Type& type,
         const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings) override;
+    /// }
+
+    // @name NotificationsObserverInterface Functions
+    /// @{
+    void onSetIndicator(avsCommon::avs::IndicatorState state) override;
     /// }
 
     /**
@@ -77,6 +84,11 @@ public:
      * Prints the Speaker Control Options screen. This prompts the user to select a @c SpeakerInterface::Type to modify.
      */
     void printSpeakerControlScreen();
+
+    /**
+     * Prints the Firmware Version Control screen. This prompts the user to enter a positive decimal integer.
+     */
+    void printFirmwareVersionControlScreen();
 
     /**
      * Prints the Volume Control Options screen. This gives the user the possible volume control options.

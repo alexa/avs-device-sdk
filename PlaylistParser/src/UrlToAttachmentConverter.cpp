@@ -1,7 +1,7 @@
 /*
- * UrlContentToAttachmentConverter.cpp
+ * UrlToAttachmentConverter.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,6 +26,12 @@ namespace playlistParser {
 static const std::string TAG("UrlContentToAttachmentConverter");
 
 /**
+ * The timeout for a blocking write call to an @c AttachmentWriter. This value may be increased to decrease wakeups but
+ * may also increase latency.
+ */
+static const std::chrono::milliseconds TIMEOUT_FOR_BLOCKING_WRITE = std::chrono::milliseconds(100);
+
+/**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
  * @param The event string for this @c LogEntry.
@@ -36,8 +42,6 @@ static const std::string TAG("UrlContentToAttachmentConverter");
 // Just smaller than the default megabyte size of an Attachment to allow for maximum possible write size at at time
 static const size_t CHUNK_SIZE{avsCommon::avs::attachment::InProcessAttachment::SDS_BUFFER_DEFAULT_SIZE_IN_BYTES -
                                avsCommon::avs::attachment::InProcessAttachment::SDS_BUFFER_DEFAULT_SIZE_IN_BYTES / 4};
-
-static const std::chrono::milliseconds TIME_TO_WAIT_BETWEEN_BLOCKED_WRITES{100};
 
 static const std::chrono::milliseconds UNVALID_DURATION =
     avsCommon::utils::playlistParser::PlaylistParserObserverInterface::INVALID_DURATION;
@@ -75,12 +79,12 @@ UrlContentToAttachmentConverter::UrlContentToAttachmentConverter(
         m_observer{observer},
         m_shuttingDown{false},
         m_runningTotal{0},
-        m_startedStreaming{false} {
+        m_startedStreaming{false},
+        m_streamWriterClosed{false} {
     m_playlistParser = PlaylistParser::create(m_contentFetcherFactory);
     m_startStreamingPointFuture = m_startStreamingPointPromise.get_future();
     m_stream = std::make_shared<avsCommon::avs::attachment::InProcessAttachment>(url);
-    // TODO: ACSDK-825 Switch to using a blocking writer
-    m_streamWriter = m_stream->createWriter();
+    m_streamWriter = m_stream->createWriter(avsCommon::utils::sds::WriterPolicy::BLOCKING);
 }
 
 std::chrono::milliseconds UrlContentToAttachmentConverter::getStartStreamingPoint() {
@@ -88,7 +92,6 @@ std::chrono::milliseconds UrlContentToAttachmentConverter::getStartStreamingPoin
 }
 
 std::chrono::milliseconds UrlContentToAttachmentConverter::getDesiredStreamingPoint() {
-    std::lock_guard<std::mutex> lock{m_mutex};
     return m_desiredStreamPoint;
 }
 
@@ -97,7 +100,6 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(
     std::string url,
     avsCommon::utils::playlistParser::PlaylistParseResult parseResult,
     std::chrono::milliseconds duration) {
-    std::lock_guard<std::mutex> lock{m_mutex};
     if (!m_startedStreaming) {
         if (m_desiredStreamPoint.count() > 0) {
             if (duration == UNVALID_DURATION) {
@@ -122,35 +124,44 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(
             m_executor.submit([this]() {
                 ACSDK_DEBUG9(LX("closingWriter"));
                 m_streamWriter->close();
-                std::lock_guard<std::mutex> lock{m_mutex};
-                if (m_observer) {
-                    m_observer->onError();
+                m_streamWriterClosed = true;
+                std::unique_lock<std::mutex> lock{m_mutex};
+                auto observer = m_observer;
+                lock.unlock();
+                if (observer) {
+                    observer->onError();
                 }
             });
             break;
         case avsCommon::utils::playlistParser::PlaylistParseResult::SUCCESS:
             ACSDK_DEBUG9(LX("onPlaylistEntryParsed").d("status", parseResult));
             m_executor.submit([this, url]() {
-                if (!writeUrlContentIntoStream(url)) {
+                if (!m_streamWriterClosed && !writeUrlContentIntoStream(url)) {
                     ACSDK_ERROR(LX("writeUrlContentToStreamFailed"));
-                    std::lock_guard<std::mutex> lock{m_mutex};
-                    if (m_observer) {
-                        m_observer->onError();
+                    std::unique_lock<std::mutex> lock{m_mutex};
+                    auto observer = m_observer;
+                    lock.unlock();
+                    if (observer) {
+                        observer->onError();
                     }
                 }
                 ACSDK_DEBUG9(LX("closingWriter"));
                 m_streamWriter->close();
+                m_streamWriterClosed = true;
             });
             break;
         case avsCommon::utils::playlistParser::PlaylistParseResult::STILL_ONGOING:
             ACSDK_DEBUG9(LX("onPlaylistEntryParsed").d("status", parseResult));
             m_executor.submit([this, url]() {
-                if (!writeUrlContentIntoStream(url)) {
+                if (!m_streamWriterClosed && !writeUrlContentIntoStream(url)) {
                     ACSDK_ERROR(LX("writeUrlContentToStreamFailed").d("info", "closingWriter"));
                     m_streamWriter->close();
-                    std::lock_guard<std::mutex> lock{m_mutex};
-                    if (m_observer) {
-                        m_observer->onError();
+                    m_streamWriterClosed = true;
+                    std::unique_lock<std::mutex> lock{m_mutex};
+                    auto observer = m_observer;
+                    lock.unlock();
+                    if (observer) {
+                        observer->onError();
                     }
                 }
             });
@@ -225,9 +236,16 @@ bool UrlContentToAttachmentConverter::writeUrlContentIntoStream(std::string url)
 bool UrlContentToAttachmentConverter::writeDataIntoStream(const std::vector<char>& buffer, size_t numBytes) {
     avsCommon::avs::attachment::AttachmentWriter::WriteStatus writeStatus =
         avsCommon::avs::attachment::AttachmentWriter::WriteStatus::OK;
-    while (!m_shuttingDown) {
-        // TODO: ACSDK-825 Switch to using a blocking writer
-        m_streamWriter->write(buffer.data(), numBytes, &writeStatus);
+
+    size_t totalBytesWritten = 0;
+    auto bufferStart = buffer.data();
+    while (totalBytesWritten < numBytes && !m_shuttingDown) {
+        // because we use a BLOCKING writer, we have to keep track of how many bytes are written per write()
+        // and update the buffer pointer accordingly
+        size_t bytesWritten =
+            m_streamWriter->write(bufferStart, numBytes - totalBytesWritten, &writeStatus, TIMEOUT_FOR_BLOCKING_WRITE);
+        bufferStart += bytesWritten;
+        totalBytesWritten += bytesWritten;
         switch (writeStatus) {
             case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::CLOSED:
                 // TODO: ACSDK-827 Replace with just the writeStatus once the << operator is added
@@ -239,11 +257,13 @@ bool UrlContentToAttachmentConverter::writeDataIntoStream(const std::vector<char
             case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::ERROR_INTERNAL:
                 ACSDK_ERROR(LX("writeContentFailed").d("reason", "writeStatusERRORINTERNAL"));
                 return false;
+            case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::TIMEDOUT:
             case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::OK:
-                return true;
-            case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::OK_BUFFER_FULL:
-                std::this_thread::sleep_for(TIME_TO_WAIT_BETWEEN_BLOCKED_WRITES);
+                // might still have bytes to write
                 continue;
+            case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::OK_BUFFER_FULL:
+                ACSDK_ERROR(LX("writeContentFailed").d("unexpected return code", "writeStatusOK_BUFFER_FULL"));
+                return false;
             default:
                 ACSDK_ERROR(LX("writeContentFailed").d("reason", "unknownWriteStatus"));
                 return false;
@@ -262,7 +282,6 @@ void UrlContentToAttachmentConverter::doShutdown() {
     }
     m_shuttingDown = true;
     m_executor.shutdown();
-    m_observer.reset();
     m_playlistParser->shutdown();
     m_playlistParser.reset();
     m_streamWriter.reset();

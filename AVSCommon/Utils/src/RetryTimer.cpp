@@ -1,7 +1,7 @@
 /*
  * RetryTimer.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  * permissions and limitations under the License.
  */
 
-#include <chrono>
 #include <random>
 
 #include "AVSCommon/Utils/RetryTimer.h"
@@ -24,31 +23,31 @@ namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
 
-RetryTimer::RetryTimer(int* retryTable, int retrySize) :
+RetryTimer::RetryTimer(const std::vector<int>& retryTable) :
         m_RetryTable{retryTable},
-        m_RetrySize{retrySize},
+        m_RetrySize{retryTable.size()},
         m_RetryDecreasePercentage{(100 * 100) / (100 + 50)},
         m_RetryIncreasePercentage{100 + 50} {
 }
 
-RetryTimer::RetryTimer(int* retryTable, int retrySize, int randomizationPercentage) :
+RetryTimer::RetryTimer(const std::vector<int>& retryTable, int randomizationPercentage) :
         m_RetryTable{retryTable},
-        m_RetrySize{retrySize},
+        m_RetrySize{retryTable.size()},
         m_RetryDecreasePercentage{(100 * 100) / (100 + randomizationPercentage)},
         m_RetryIncreasePercentage{100 + randomizationPercentage} {
 }
 
-RetryTimer::RetryTimer(int* retryTable, int retrySize, int decreasePercentage, int increasePercentage) :
+RetryTimer::RetryTimer(const std::vector<int>& retryTable, int decreasePercentage, int increasePercentage) :
         m_RetryTable{retryTable},
-        m_RetrySize{retrySize},
+        m_RetrySize{retryTable.size()},
         m_RetryDecreasePercentage{decreasePercentage},
         m_RetryIncreasePercentage{increasePercentage} {
 }
 
-std::chrono::milliseconds RetryTimer::calculateTimeToRetry(int retryCount) {
+std::chrono::milliseconds RetryTimer::calculateTimeToRetry(int retryCount) const {
     if (retryCount < 0) {
         retryCount = 0;
-    } else if (retryCount >= m_RetrySize) {
+    } else if ((size_t)retryCount >= m_RetrySize) {
         retryCount = m_RetrySize - 1;
     }
 

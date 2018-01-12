@@ -64,8 +64,10 @@ public:
      * @param requestId The id of the callback to connect this callback to an original request.
      * @param url An entry that has been extracted.
      * @param parseResult The result of parsing the playlist.
-     * @param durationInSections A duration in seconds of the playlist entry, if it was able to be deduced based on
+     * @param duration A duration in milliseconds of the playlist entry, if it was able to be deduced based on
      * available playlist metadata.
+     *
+     * @note This function is always called from a single thread in PlayListParser.
      */
     virtual void onPlaylistEntryParsed(
         int requestId,

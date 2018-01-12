@@ -1,7 +1,7 @@
 /*
  * PlaybackControllerTest.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,20 +26,20 @@
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
+#include <AVSCommon/SDKInterfaces/MockPlaybackRouter.h>
 
 #include "PlaybackController/PlaybackController.h"
-
-using namespace testing;
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace playbackController {
 namespace test {
 
-using namespace avsCommon::sdkInterfaces::test;
-using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs;
+using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::sdkInterfaces::test;
 using namespace avsCommon::utils::json;
+using namespace testing;
 
 /// String to identify the AVS namespace of the event we send.
 static const std::string PLAYBACK_CONTROLLER_NAMESPACE = "PlaybackController";
@@ -192,6 +192,9 @@ void PlaybackControllerTest::SetUp() {
 
     // initialize m_contextTrigger to success
     m_messageStatus = avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS;
+
+    m_playbackController = PlaybackController::create(m_mockContextManager, m_mockMessageSender);
+    ASSERT_NE(nullptr, m_playbackController);
 }
 
 void PlaybackControllerTest::TearDown() {
@@ -257,44 +260,34 @@ TEST_F(PlaybackControllerTest, createWithError) {
  * This case tests if playButtonPressed will send the correct event message.
  */
 TEST_F(PlaybackControllerTest, playButtonPressed) {
-    m_playbackController = PlaybackController::create(m_mockContextManager, m_mockMessageSender);
-    ASSERT_NE(nullptr, m_playbackController);
-
     PlaybackControllerTest::verifyButtonPressed(
-        [this]() { m_playbackController->playButtonPressed(); }, PLAYBACK_PLAY_NAME);
+        [this]() { m_playbackController->onButtonPressed(PlaybackButton::PLAY); }, PLAYBACK_PLAY_NAME);
 }
 
 /**
  * This case tests if pauseButtonPressed will send the correct event message.
  */
 TEST_F(PlaybackControllerTest, pauseButtonPressed) {
-    m_playbackController = PlaybackController::create(m_mockContextManager, m_mockMessageSender);
     ASSERT_NE(nullptr, m_playbackController);
 
     PlaybackControllerTest::verifyButtonPressed(
-        [this]() { m_playbackController->pauseButtonPressed(); }, PLAYBACK_PAUSE_NAME);
+        [this]() { m_playbackController->onButtonPressed(PlaybackButton::PAUSE); }, PLAYBACK_PAUSE_NAME);
 }
 
 /**
  * This case tests if nextButtonPressed will send the correct event message.
  */
 TEST_F(PlaybackControllerTest, nextButtonPressed) {
-    m_playbackController = PlaybackController::create(m_mockContextManager, m_mockMessageSender);
-    ASSERT_NE(nullptr, m_playbackController);
-
     PlaybackControllerTest::verifyButtonPressed(
-        [this]() { m_playbackController->nextButtonPressed(); }, PLAYBACK_NEXT_NAME);
+        [this]() { m_playbackController->onButtonPressed(PlaybackButton::NEXT); }, PLAYBACK_NEXT_NAME);
 }
 
 /**
  * This case tests if previousButtonPressed will send the correct event message.
  */
 TEST_F(PlaybackControllerTest, previousButtonPressed) {
-    m_playbackController = PlaybackController::create(m_mockContextManager, m_mockMessageSender);
-    ASSERT_NE(nullptr, m_playbackController);
-
     PlaybackControllerTest::verifyButtonPressed(
-        [this]() { m_playbackController->previousButtonPressed(); }, PLAYBACK_PREVIOUS_NAME);
+        [this]() { m_playbackController->onButtonPressed(PlaybackButton::PREVIOUS); }, PLAYBACK_PREVIOUS_NAME);
 }
 
 /**
@@ -304,16 +297,13 @@ TEST_F(PlaybackControllerTest, previousButtonPressed) {
 TEST_F(PlaybackControllerTest, getContextFailure) {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
-    m_playbackController = PlaybackController::create(m_mockContextManager, m_mockMessageSender);
-    ASSERT_NE(nullptr, m_playbackController);
-
     EXPECT_CALL(*m_mockContextManager, getContext(_))
         .WillOnce(Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) {
             checkGetContextAndReleaseTrigger(contextRequester);
         }));
     // queue two button presses
-    m_playbackController->playButtonPressed();
-    m_playbackController->pauseButtonPressed();
+    m_playbackController->onButtonPressed(PlaybackButton::PLAY);
+    m_playbackController->onButtonPressed(PlaybackButton::PAUSE);
     // wait for first call of getContext
     m_contextTrigger.wait_for(exitLock, TEST_RESULT_WAIT_PERIOD);
 
@@ -344,15 +334,12 @@ TEST_F(PlaybackControllerTest, getContextFailure) {
 TEST_F(PlaybackControllerTest, sendMessageFailure) {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
-    m_playbackController = PlaybackController::create(m_mockContextManager, m_mockMessageSender);
-    ASSERT_NE(nullptr, m_playbackController);
-
     m_messageStatus = avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::INTERNAL_ERROR;
     EXPECT_CALL(*m_mockContextManager, getContext(_))
         .WillOnce(Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) {
             checkGetContextAndReleaseTrigger(contextRequester);
         }));
-    m_playbackController->nextButtonPressed();
+    m_playbackController->onButtonPressed(PlaybackButton::NEXT);
     m_contextTrigger.wait_for(exitLock, TEST_RESULT_WAIT_PERIOD);
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
         .WillOnce(Invoke([this](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
@@ -370,15 +357,12 @@ TEST_F(PlaybackControllerTest, sendMessageFailure) {
 TEST_F(PlaybackControllerTest, sendMessageException) {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
-    m_playbackController = PlaybackController::create(m_mockContextManager, m_mockMessageSender);
-    ASSERT_NE(nullptr, m_playbackController);
-
     m_messageStatus = avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::INTERNAL_ERROR;
     EXPECT_CALL(*m_mockContextManager, getContext(_))
         .WillOnce(Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) {
             checkGetContextAndReleaseTrigger(contextRequester);
         }));
-    m_playbackController->nextButtonPressed();
+    m_playbackController->onButtonPressed(PlaybackButton::NEXT);
     m_contextTrigger.wait_for(exitLock, TEST_RESULT_WAIT_PERIOD);
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
         .WillOnce(Invoke([this](std::shared_ptr<avsCommon::avs::MessageRequest> request) {

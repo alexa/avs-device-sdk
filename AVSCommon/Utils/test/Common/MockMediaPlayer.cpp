@@ -1,7 +1,7 @@
 /*
  * MockMediaPlayer.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,6 +26,8 @@ namespace test {
 
 using namespace testing;
 
+const static std::chrono::milliseconds WAIT_LOOP_INTERVAL{1};
+
 std::shared_ptr<NiceMock<MockMediaPlayer>> MockMediaPlayer::create() {
     auto result = std::make_shared<NiceMock<MockMediaPlayer>>();
 
@@ -43,56 +45,9 @@ std::shared_ptr<NiceMock<MockMediaPlayer>> MockMediaPlayer::create() {
     return result;
 }
 
-MockMediaPlayer::MockMediaPlayer() :
-        m_sourceId{ERROR},
-        m_offset{MEDIA_PLAYER_INVALID_OFFSET},
-        m_play{false},
-        m_stop{false},
-        m_pause{false},
-        m_resume{false},
-        m_shutdown{false},
-        m_wakePlayPromise{},
-        m_wakePlayFuture{m_wakePlayPromise.get_future()},
-        m_wakeStopPromise{},
-        m_wakeStopFuture{m_wakeStopPromise.get_future()},
-        m_wakePausePromise{},
-        m_wakePauseFuture{m_wakePausePromise.get_future()},
-        m_playerObserver{nullptr} {
-}
-
-MockMediaPlayer::~MockMediaPlayer() {
-    {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        m_shutdown = true;
-    }
-    m_wakeTriggerPlay.notify_all();
-    m_wakeTriggerStop.notify_all();
-    m_wakeTriggerPause.notify_all();
-    m_wakeTriggerResume.notify_all();
-
-    if (m_playThread.joinable()) {
-        m_playThread.join();
-    }
-    if (m_playThread_2.joinable()) {
-        m_playThread_2.join();
-    }
-    if (m_stopThread.joinable()) {
-        m_stopThread.join();
-    }
-    if (m_pauseThread.joinable()) {
-        m_pauseThread.join();
-    }
-    if (m_pauseThread_2.joinable()) {
-        m_pauseThread_2.join();
-    }
-    if (m_resumeThread.joinable()) {
-        m_resumeThread.join();
-    }
-}
-
-void MockMediaPlayer::setObserver(
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) {
-    m_playerObserver = playerObserver;
+MockMediaPlayer::MockMediaPlayer() : RequiresShutdown{"MockMediaPlayer"}, m_playerObserver{nullptr} {
+    // Create a 'source' for sourceId = 0
+    mockSetSource();
 }
 
 MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
@@ -108,176 +63,256 @@ MediaPlayerInterface::SourceId MockMediaPlayer::setSource(std::shared_ptr<std::i
     return streamSetSource(stream, repeat);
 }
 
-MediaPlayerInterface::SourceId MockMediaPlayer::mockSetSource() {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    return ++m_sourceId;
-}
-
-bool MockMediaPlayer::mockSetOffset(SourceId id, std::chrono::milliseconds offset) {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    EXPECT_NE(id, static_cast<SourceId>(ERROR));
-    EXPECT_EQ(id, m_sourceId);
-    if (ERROR == id || id != m_sourceId) {
-        return false;
-    }
-    m_offset = offset;
-    return true;
-}
-
-bool MockMediaPlayer::mockPlay(SourceId id) {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    EXPECT_NE(id, static_cast<SourceId>(ERROR));
-    EXPECT_EQ(id, m_sourceId);
-    if (ERROR == id || id != m_sourceId) {
-        return false;
-    }
-    if (!m_play) {
-        m_playThread = std::thread(&MockMediaPlayer::waitForPlay, this, DEFAULT_TIME);
-    } else {
-        m_wakePlayPromise = std::promise<void>();
-        m_playThread_2 = std::thread(&MockMediaPlayer::waitForPlay, this, DEFAULT_TIME);
-    }
-
-    m_play = true;
-    m_wakeTriggerPlay.notify_one();
-    return true;
-}
-
-bool MockMediaPlayer::mockStop(SourceId id) {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    EXPECT_NE(id, static_cast<SourceId>(ERROR));
-    EXPECT_EQ(id, m_sourceId);
-    if (ERROR == id || id != m_sourceId) {
-        return false;
-    }
-    if (!m_stop) {
-        m_stopThread = std::thread(&MockMediaPlayer::waitForStop, this, DEFAULT_TIME);
-        m_stop = true;
-        m_wakeTriggerStop.notify_one();
-    }
-
-    return true;
-}
-
-bool MockMediaPlayer::mockPause(SourceId id) {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    EXPECT_NE(id, static_cast<SourceId>(ERROR));
-    EXPECT_EQ(id, m_sourceId);
-    if (ERROR == id || id != m_sourceId) {
-        return false;
-    }
-    if (!m_pause) {
-        m_pauseThread = std::thread(&MockMediaPlayer::waitForPause, this, DEFAULT_TIME);
-    } else {
-        m_wakePausePromise = std::promise<void>();
-        m_pauseThread_2 = std::thread(&MockMediaPlayer::waitForPause, this, DEFAULT_TIME);
-    }
-
-    m_pause = true;
-    m_wakeTriggerPause.notify_one();
-    return true;
-}
-
-bool MockMediaPlayer::mockResume(SourceId id) {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    EXPECT_NE(id, static_cast<SourceId>(ERROR));
-    EXPECT_EQ(id, m_sourceId);
-    if (ERROR == id || id != m_sourceId) {
-        return false;
-    }
-    m_resumeThread = std::thread(&MockMediaPlayer::waitForResume, this, DEFAULT_TIME);
-    m_resume = true;
-    m_wakeTriggerResume.notify_one();
-    return true;
-}
-
-std::chrono::milliseconds MockMediaPlayer::mockGetOffset(SourceId id) {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    EXPECT_NE(id, static_cast<SourceId>(ERROR));
-    EXPECT_EQ(id, m_sourceId);
-    if (ERROR == id || id != m_sourceId) {
-        return MEDIA_PLAYER_INVALID_OFFSET;
-    }
-    return m_offset;
-}
-
-bool MockMediaPlayer::waitForPlay(const std::chrono::milliseconds duration) {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    if (!m_wakeTriggerPlay.wait_for(lock, duration, [this]() { return (m_play || m_shutdown); })) {
-        if (m_playerObserver) {
-            m_playerObserver->onPlaybackError(m_sourceId, ErrorType::MEDIA_ERROR_UNKNOWN, "waitForPlay timed out");
-        }
-        return false;
-    }
-    m_wakePlayPromise.set_value();
-    if (m_playerObserver) {
-        m_playerObserver->onPlaybackStarted(m_sourceId);
-    }
-    return true;
-}
-
-bool MockMediaPlayer::waitForStop(const std::chrono::milliseconds duration) {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    if (!m_wakeTriggerStop.wait_for(lock, duration, [this]() { return (m_stop || m_shutdown); })) {
-        if (m_playerObserver) {
-            m_playerObserver->onPlaybackError(m_sourceId, ErrorType::MEDIA_ERROR_UNKNOWN, "waitForStop timed out");
-        }
-        return false;
-    }
-    m_wakeStopPromise.set_value();
-    if (m_playerObserver) {
-        m_playerObserver->onPlaybackStopped(m_sourceId);
-    }
-    return true;
-}
-
-bool MockMediaPlayer::waitForPause(const std::chrono::milliseconds duration) {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    if (!m_wakeTriggerPause.wait_for(lock, duration, [this]() { return (m_pause || m_shutdown); })) {
-        if (m_playerObserver) {
-            m_playerObserver->onPlaybackError(m_sourceId, ErrorType::MEDIA_ERROR_UNKNOWN, "waitForPause timed out");
-        }
-        return false;
-    }
-    m_wakePausePromise.set_value();
-    if (m_playerObserver) {
-        m_playerObserver->onPlaybackPaused(m_sourceId);
-    }
-    return true;
-}
-
-bool MockMediaPlayer::waitForResume(const std::chrono::milliseconds duration) {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    if (!m_wakeTriggerResume.wait_for(lock, duration, [this]() { return (m_resume || m_shutdown); })) {
-        if (m_playerObserver) {
-            m_playerObserver->onPlaybackError(m_sourceId, ErrorType::MEDIA_ERROR_UNKNOWN, "waitForResume timed out");
-        }
-        return false;
-    }
-    m_wakeResumePromise.set_value();
-    if (m_playerObserver) {
-        m_playerObserver->onPlaybackResumed(m_sourceId);
-    }
-    return true;
-}
-
-bool MockMediaPlayer::waitUntilPlaybackStarted(std::chrono::milliseconds timeout) {
-    return m_wakePlayFuture.wait_for(timeout) == std::future_status::ready;
-}
-
-bool MockMediaPlayer::waitUntilPlaybackFinished(std::chrono::milliseconds timeout) {
-    return m_wakeStopFuture.wait_for(timeout) == std::future_status::ready;
-}
-
-bool MockMediaPlayer::waitUntilPlaybackPaused(std::chrono::milliseconds timeout) {
-    return m_wakePauseFuture.wait_for(timeout) == std::future_status::ready;
-}
-
-bool MockMediaPlayer::waitUntilPlaybackResumed(std::chrono::milliseconds timeout) {
-    return m_wakeResumeFuture.wait_for(timeout) == std::future_status::ready;
+void MockMediaPlayer::setObserver(std::shared_ptr<MediaPlayerObserverInterface> playerObserver) {
+    m_playerObserver = playerObserver;
 }
 
 void MockMediaPlayer::doShutdown() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_playerObserver.reset();
+    m_sources.clear();
+}
+
+MediaPlayerInterface::SourceId MockMediaPlayer::mockSetSource() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    SourceId result = m_sources.size();
+    m_sources.emplace_back(std::make_shared<Source>(this, result));
+    return result;
+}
+
+bool MockMediaPlayer::mockPlay(SourceId sourceId) {
+    auto source = getCurrentSource(sourceId);
+    if (!source) {
+        return false;
+    }
+    source->started.trigger();
+    return true;
+}
+
+bool MockMediaPlayer::mockPause(SourceId sourceId) {
+    auto source = getCurrentSource(sourceId);
+    if (!source) {
+        return false;
+    }
+    source->resumed.resetStateReached();
+    source->paused.trigger();
+    return true;
+}
+
+bool MockMediaPlayer::mockResume(SourceId sourceId) {
+    auto source = getCurrentSource(sourceId);
+    if (!source) {
+        return false;
+    }
+    source->paused.resetStateReached();
+    source->resumed.trigger();
+    return true;
+}
+
+bool MockMediaPlayer::mockStop(SourceId sourceId) {
+    auto source = getCurrentSource(sourceId);
+    if (!source) {
+        return false;
+    }
+    source->stopped.trigger();
+    return true;
+}
+
+bool MockMediaPlayer::mockFinished(SourceId sourceId) {
+    auto source = getCurrentSource(sourceId);
+    if (!source) {
+        return false;
+    }
+    source->finished.trigger();
+    return true;
+}
+
+bool MockMediaPlayer::mockError(SourceId sourceId) {
+    auto source = getCurrentSource(sourceId);
+    if (!source) {
+        return false;
+    }
+    source->error.trigger();
+    return true;
+}
+
+bool MockMediaPlayer::mockSetOffset(SourceId sourceId, std::chrono::milliseconds offset) {
+    auto source = getCurrentSource(sourceId);
+    if (!source) {
+        return false;
+    }
+    std::lock_guard<std::mutex> lock(m_mutex);
+    source->offset = offset;
+    return true;
+}
+
+std::chrono::milliseconds MockMediaPlayer::mockGetOffset(SourceId sourceId) {
+    auto source = getCurrentSource(sourceId);
+    if (!source) {
+        return MEDIA_PLAYER_INVALID_OFFSET;
+    }
+    return source->offset;
+}
+
+bool MockMediaPlayer::waitUntilNextSetSource(const std::chrono::milliseconds timeout) {
+    auto originalSourceId = getCurrentSourceId();
+    auto timeLimit = std::chrono::steady_clock::now() + timeout;
+    while (std::chrono::steady_clock::now() < timeLimit) {
+        if (getCurrentSourceId() != originalSourceId) {
+            return true;
+        }
+        std::this_thread::sleep_for(WAIT_LOOP_INTERVAL);
+    }
+    return false;
+}
+
+bool MockMediaPlayer::waitUntilPlaybackStarted(std::chrono::milliseconds timeout) {
+    return m_sources[getCurrentSourceId()]->started.wait(timeout);
+}
+
+bool MockMediaPlayer::waitUntilPlaybackPaused(std::chrono::milliseconds timeout) {
+    return m_sources[getCurrentSourceId()]->paused.wait(timeout);
+}
+
+bool MockMediaPlayer::waitUntilPlaybackResumed(std::chrono::milliseconds timeout) {
+    return m_sources[getCurrentSourceId()]->resumed.wait(timeout);
+}
+
+bool MockMediaPlayer::waitUntilPlaybackStopped(std::chrono::milliseconds timeout) {
+    return m_sources[getCurrentSourceId()]->stopped.wait(timeout);
+}
+
+bool MockMediaPlayer::waitUntilPlaybackFinished(std::chrono::milliseconds timeout) {
+    return m_sources[getCurrentSourceId()]->finished.wait(timeout);
+}
+
+bool MockMediaPlayer::waitUntilPlaybackError(std::chrono::milliseconds timeout) {
+    return m_sources[getCurrentSourceId()]->error.wait(timeout);
+}
+
+MediaPlayerInterface::SourceId MockMediaPlayer::getCurrentSourceId() {
+    std::unique_lock<std::mutex> lock(m_mutex);
+    return m_sources.size() - 1;
+}
+
+MockMediaPlayer::SourceState::SourceState(
+    Source* source,
+    const std::string& name,
+    std::function<void(std::shared_ptr<observer>, SourceId)> notifyFunction) :
+        m_source{source},
+        m_name{name},
+        m_notifyFunction{notifyFunction},
+        m_stateReached{false},
+        m_shutdown{false} {
+}
+
+MockMediaPlayer::SourceState::~SourceState() {
+    {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_shutdown = true;
+    }
+    m_wake.notify_all();
+    if (m_thread.joinable()) {
+        m_thread.join();
+    }
+}
+
+void MockMediaPlayer::SourceState::trigger() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    if (m_stateReached) {
+        return;
+    }
+    m_thread = std::thread(&MockMediaPlayer::SourceState::notify, this, DEFAULT_TIME);
+    m_stateReached = true;
+    m_wake.notify_all();
+}
+
+void MockMediaPlayer::SourceState::notify(const std::chrono::milliseconds timeout) {
+    std::unique_lock<std::mutex> lock(m_mutex);
+    auto observer = m_source->mockMediaPlayer->m_playerObserver;
+    if (!m_wake.wait_for(lock, timeout, [this]() { return (m_stateReached || m_shutdown); })) {
+        if (observer) {
+            lock.unlock();
+            observer->onPlaybackError(
+                m_source->sourceId, ErrorType::MEDIA_ERROR_UNKNOWN, m_name + ": wait to notify timed out");
+        }
+        return;
+    }
+    if (observer) {
+        m_notifyFunction(observer, m_source->sourceId);
+    }
+    return;
+}
+
+bool MockMediaPlayer::SourceState::wait(const std::chrono::milliseconds timeout) {
+    std::unique_lock<std::mutex> lock(m_mutex);
+    if (!m_wake.wait_for(lock, timeout, [this]() { return (m_stateReached || m_shutdown); })) {
+        return false;
+    }
+    return m_stateReached;
+}
+
+void MockMediaPlayer::SourceState::resetStateReached() {
+    if (m_thread.joinable()) {
+        m_thread.join();
+    }
+    std::unique_lock<std::mutex> lock(m_mutex);
+    m_stateReached = false;
+}
+
+static void notifyPlaybackStarted(
+    std::shared_ptr<MediaPlayerObserverInterface> observer,
+    MediaPlayerInterface::SourceId sourceId) {
+    observer->onPlaybackStarted(sourceId);
+}
+
+static void notifyPlaybackPaused(
+    std::shared_ptr<MediaPlayerObserverInterface> observer,
+    MediaPlayerInterface::SourceId sourceId) {
+    observer->onPlaybackPaused(sourceId);
+}
+
+static void notifyPlaybackResumed(
+    std::shared_ptr<MediaPlayerObserverInterface> observer,
+    MediaPlayerInterface::SourceId sourceId) {
+    observer->onPlaybackResumed(sourceId);
+}
+
+static void notifyPlaybackStopped(
+    std::shared_ptr<MediaPlayerObserverInterface> observer,
+    MediaPlayerInterface::SourceId sourceId) {
+    observer->onPlaybackStopped(sourceId);
+}
+
+static void notifyPlaybackFinished(
+    std::shared_ptr<MediaPlayerObserverInterface> observer,
+    MediaPlayerInterface::SourceId sourceId) {
+    observer->onPlaybackFinished(sourceId);
+}
+
+static void notifyPlaybackError(
+    std::shared_ptr<MediaPlayerObserverInterface> observer,
+    MediaPlayerInterface::SourceId sourceId) {
+    observer->onPlaybackError(sourceId, ErrorType::MEDIA_ERROR_INTERNAL_SERVER_ERROR, "mock error");
+}
+
+MockMediaPlayer::Source::Source(MockMediaPlayer* player, SourceId id) :
+        mockMediaPlayer{player},
+        sourceId{id},
+        offset{MEDIA_PLAYER_INVALID_OFFSET},
+        started{this, "started", notifyPlaybackStarted},
+        paused{this, "paused", notifyPlaybackPaused},
+        resumed{this, "resumed", notifyPlaybackResumed},
+        stopped{this, "stopped", notifyPlaybackStopped},
+        finished{this, "finished", notifyPlaybackFinished},
+        error{this, "error", notifyPlaybackError} {
+}
+
+std::shared_ptr<MockMediaPlayer::Source> MockMediaPlayer::getCurrentSource(SourceId sourceId) {
+    if (ERROR == sourceId || sourceId != getCurrentSourceId()) {
+        return nullptr;
+    }
+    return m_sources[static_cast<size_t>(sourceId)];
 }
 
 }  // namespace test

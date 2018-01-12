@@ -1,7 +1,7 @@
 /*
  * AudioPlayerInterface.h
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ public:
     virtual void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer) = 0;
 
     /**
-     * This function retreive the offset of the current AudioItem the @c AudioPlayer is handling.
+     * This function retrieves the offset of the current AudioItem the @c AudioPlayer is handling.
      * @note This function is blocking.
      *
      * @return This returns the offset in millisecond.
