@@ -15,7 +15,7 @@ The AVS Device SDK provides C++-based (11 or later) libraries that leverage the 
 
 You can set up the SDK on the following platforms:
 * [Ubuntu Linux](https://github.com/alexa/avs-device-sdk/wiki/Ubuntu-Linux-Quick-Start-Guide)
-* [Raspberry Pi](https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide) (Raspbian Stretch)
+* [Raspberry Pi](https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide-with-Script) (Raspbian Stretch)
 * [macOS](https://github.com/alexa/avs-device-sdk/wiki/macOS-Quick-Start-Guide)
 * [Generic Linux](https://github.com/alexa/avs-device-sdk/wiki/Linux-Reference-Guide)
 
