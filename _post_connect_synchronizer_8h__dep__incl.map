@@ -1,6 +1,6 @@
-<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/ACL/include/ACL/Transport/PostConnectSynchronizer.h" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/ACL/include/ACL/Transport/PostConnectSynchronizer.h">
-<area shape="rect" id="node2" href="$_post_connect_object_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/src/Transport\l/PostConnectObject.cpp" alt="" coords="5,119,173,184"/>
-<area shape="rect" id="node3" href="$_post_connect_synchronizer_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/src/Transport\l/PostConnectSynchronizer.cpp" alt="" coords="197,119,400,184"/>
-<area shape="rect" id="node4" href="$_alerts_integration_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/Integration/test/AlertsIntegration\lTest.cpp" alt="" coords="424,119,663,184"/>
-<area shape="rect" id="node5" href="$_server_disconnect_integration_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/Integration/test/ServerDisconnect\lIntegrationTest.cpp" alt="" coords="687,119,934,184"/>
+<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PostConnectSynchronizer.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PostConnectSynchronizer.h">
+<area shape="rect" id="node2" href="$_post_connect_object_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/src\l/Transport/PostConnectObject.cpp" alt="" coords="5,112,231,164"/>
+<area shape="rect" id="node3" href="$_post_connect_synchronizer_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/src\l/Transport/PostConnectSynchronizer.cpp" alt="" coords="254,112,518,164"/>
+<area shape="rect" id="node4" href="$_alerts_integration_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/AlertsIntegrationTest.cpp" alt="" coords="542,112,739,164"/>
+<area shape="rect" id="node5" href="$_server_disconnect_integration_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/ServerDisconnectIntegration\lTest.cpp" alt="" coords="763,105,982,171"/>
 </map>

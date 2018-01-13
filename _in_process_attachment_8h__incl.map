@@ -1,21 +1,22 @@
-<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/InProcessAttachment.h" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/InProcessAttachment.h">
-<area shape="rect" id="node2" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="489,132,690,171"/>
-<area shape="rect" id="node10" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1094,219,1256,257"/>
-<area shape="rect" id="node35" href="$_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="950,132,1156,171"/>
-<area shape="rect" id="node36" href="$_in_process_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h" alt="" coords="725,132,926,171"/>
-<area shape="rect" id="node6" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="489,305,690,344"/>
-<area shape="rect" id="node9" href="$_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="683,219,885,257"/>
-<area shape="rect" id="node13" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1123,312,1269,337"/>
-<area shape="rect" id="node16" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="983,465,1159,504"/>
-<area shape="rect" id="node30" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="1142,392,1250,417"/>
-<area shape="rect" id="node31" href="$_reader_8h.html" title="Reader.h" alt="" coords="1505,392,1580,417"/>
-<area shape="rect" id="node34" href="$_writer_8h.html" title="Writer.h" alt="" coords="1337,392,1404,417"/>
-<area shape="rect" id="node17" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="771,552,947,591"/>
-<area shape="rect" id="node19" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1154,639,1368,677"/>
-<area shape="rect" id="node22" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="331,725,507,764"/>
-<area shape="rect" id="node23" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="603,639,779,677"/>
-<area shape="rect" id="node28" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="280,639,477,677"/>
-<area shape="rect" id="node29" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="853,639,1029,677"/>
-<area shape="rect" id="node24" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="912,725,1088,764"/>
-<area shape="rect" id="node26" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="912,812,1088,851"/>
+<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/InProcessAttachment.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/InProcessAttachment.h">
+<area shape="rect" id="node2" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="831,119,1033,157"/>
+<area shape="rect" id="node10" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1224,205,1386,244"/>
+<area shape="rect" id="node36" href="$_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="1337,119,1543,157"/>
+<area shape="rect" id="node37" href="$_in_process_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h" alt="" coords="1061,119,1262,157"/>
+<area shape="rect" id="node6" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="707,292,909,331"/>
+<area shape="rect" id="node9" href="$_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="985,205,1186,244"/>
+<area shape="rect" id="node35" href="$_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="945,459,1047,484"/>
+<area shape="rect" id="node13" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1273,299,1420,324"/>
+<area shape="rect" id="node16" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1312,452,1488,491"/>
+<area shape="rect" id="node30" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="1230,379,1338,404"/>
+<area shape="rect" id="node31" href="$_reader_8h.html" title="Reader.h" alt="" coords="1644,379,1719,404"/>
+<area shape="rect" id="node34" href="$_writer_8h.html" title="Writer.h" alt="" coords="1508,379,1575,404"/>
+<area shape="rect" id="node17" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="771,539,947,577"/>
+<area shape="rect" id="node19" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="752,625,966,664"/>
+<area shape="rect" id="node22" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="229,712,405,751"/>
+<area shape="rect" id="node23" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="552,625,728,664"/>
+<area shape="rect" id="node28" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="280,625,477,664"/>
+<area shape="rect" id="node29" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1040,625,1216,664"/>
+<area shape="rect" id="node24" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="675,712,851,751"/>
+<area shape="rect" id="node26" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="795,799,971,837"/>
 </map>

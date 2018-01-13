@@ -68,6 +68,7 @@ var searchData=
   ['expected_5fint_5fvalue',['EXPECTED_INT_VALUE',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1test.html#ad51281efe776a9fba387853a42e4ac44',1,'alexaClientSDK::avsCommon::utils::json::test']]],
   ['expected_5fint_5fvalue_5fstringified',['EXPECTED_INT_VALUE_STRINGIFIED',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1test.html#a4519beaf989ce673468046da1ad5c338',1,'alexaClientSDK::avsCommon::utils::json::test']]],
   ['expected_5fstring_5fvalue',['EXPECTED_STRING_VALUE',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1test.html#a4febd2ae975264801537adb0a889bd69',1,'alexaClientSDK::avsCommon::utils::json::test']]],
+  ['expected_5ftimeout',['EXPECTED_TIMEOUT',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#aebb920ac0c99d00599c63722c9fe5c7b',1,'alexaClientSDK::capabilityAgents::notifications::test']]],
   ['expectedprevioustoken',['expectedPreviousToken',['../structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream.html#aaa5487e7eea5cb028eaf647de1508615',1,'alexaClientSDK::capabilityAgents::audioPlayer::AudioItem::Stream']]],
   ['expirytime',['expiryTime',['../structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream.html#ae83a9cb0aba6b332691715115833c63b',1,'alexaClientSDK::capabilityAgents::audioPlayer::AudioItem::Stream']]],
   ['extinf',['EXTINF',['../namespacealexa_client_s_d_k_1_1playlist_parser.html#a15abf8e2c38db64ace8c6779151ea20b',1,'alexaClientSDK::playlistParser']]],

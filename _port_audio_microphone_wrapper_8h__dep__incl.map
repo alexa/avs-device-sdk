@@ -1,10 +1,10 @@
-<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/SampleApp/include/SampleApp/PortAudioMicrophoneWrapper.h" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/SampleApp/include/SampleApp/PortAudioMicrophoneWrapper.h">
-<area shape="rect" id="node2" href="$_interaction_manager_8h.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="377,119,600,184"/>
-<area shape="rect" id="node9" href="$_port_audio_microphone_wrapper_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/src/PortAudioMicrophone\lWrapper.cpp" alt="" coords="624,119,897,184"/>
-<area shape="rect" id="node3" href="$_user_input_manager_8h.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="262,232,480,297"/>
-<area shape="rect" id="node8" href="$_interaction_manager_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="504,232,711,297"/>
-<area shape="rect" id="node4" href="$_sample_application_8h.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="126,345,345,411"/>
-<area shape="rect" id="node7" href="$_user_input_manager_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/src/UserInputManager.cpp" alt="" coords="369,352,648,404"/>
-<area shape="rect" id="node5" href="$main_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="5,459,204,511"/>
-<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="227,459,507,511"/>
+<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/PortAudioMicrophoneWrapper.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/PortAudioMicrophoneWrapper.h">
+<area shape="rect" id="node2" href="$_interaction_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/InteractionManager.h" alt="" coords="318,119,586,171"/>
+<area shape="rect" id="node9" href="$_port_audio_microphone_wrapper_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/PortAudioMicrophoneWrapper.cpp" alt="" coords="611,119,861,171"/>
+<area shape="rect" id="node3" href="$_user_input_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/UserInputManager.h" alt="" coords="196,219,460,271"/>
+<area shape="rect" id="node8" href="$_interaction_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/InteractionManager.cpp" alt="" coords="484,219,671,271"/>
+<area shape="rect" id="node4" href="$_sample_application_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="71,319,337,371"/>
+<area shape="rect" id="node7" href="$_user_input_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/UserInputManager.cpp" alt="" coords="360,319,547,371"/>
+<area shape="rect" id="node5" href="$main_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/main.cpp" alt="" coords="5,419,192,471"/>
+<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/SampleApplication.cpp" alt="" coords="216,419,403,471"/>
 </map>

@@ -1,7 +1,7 @@
-<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/ContextManager/include/ContextManager/ContextManager.h" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/ContextManager/include/ContextManager/ContextManager.h">
-<area shape="rect" id="node13" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1333,119,1524,157"/>
-<area shape="rect" id="node14" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="1119,205,1314,244"/>
-<area shape="rect" id="node17" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1625,205,1816,244"/>
-<area shape="rect" id="node18" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1477,292,1706,331"/>
-<area shape="rect" id="node19" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="1389,205,1601,244"/>
+<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/ContextManager/include/ContextManager/ContextManager.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/ContextManager/include/ContextManager/ContextManager.h">
+<area shape="rect" id="node13" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1333,105,1524,144"/>
+<area shape="rect" id="node14" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="1119,192,1314,231"/>
+<area shape="rect" id="node17" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1625,192,1816,231"/>
+<area shape="rect" id="node18" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1477,279,1706,317"/>
+<area shape="rect" id="node19" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="1389,192,1601,231"/>
 </map>

@@ -2,8 +2,9 @@
 <area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_connection_status_observer.html" title="This class allows us to test ConnectionStatusObserver interaction. " alt="" coords="296,5,490,57"/>
 <area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title="alexaClientSDK::avsCommon\l::avs::DialogUXStateAggregator" alt="" coords="288,81,498,120"/>
 <area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html" title="alexaClientSDK::capability\lAgents::alerts::AlertsCapabilityAgent" alt="" coords="274,144,512,183"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html" title="alexaClientSDK::certified\lSender::CertifiedSender" alt="" coords="309,207,477,245"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1integration_1_1_connection_status_observer.html" title="alexaClientSDK::integration\l::ConnectionStatusObserver" alt="" coords="298,269,487,308"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1sample_app_1_1_connection_observer.html" title="alexaClientSDK::sampleApp\l::ConnectionObserver" alt="" coords="298,332,487,371"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title="alexaClientSDK::sampleApp\l::UIManager" alt="" coords="298,395,487,433"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html" title="alexaClientSDK::capability\lAgents::system::SoftwareInfoSender" alt="" coords="274,207,512,245"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html" title="alexaClientSDK::certified\lSender::CertifiedSender" alt="" coords="309,269,477,308"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1integration_1_1_connection_status_observer.html" title="alexaClientSDK::integration\l::ConnectionStatusObserver" alt="" coords="298,332,487,371"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1sample_app_1_1_connection_observer.html" title="alexaClientSDK::sampleApp\l::ConnectionObserver" alt="" coords="298,395,487,433"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title="alexaClientSDK::sampleApp\l::UIManager" alt="" coords="298,457,487,496"/>
 </map>

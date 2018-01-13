@@ -1,8 +1,8 @@
-<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/SampleApp/include/SampleApp/InteractionManager.h" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/SampleApp/include/SampleApp/InteractionManager.h">
-<area shape="rect" id="node2" href="$_user_input_manager_8h.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="262,119,480,184"/>
-<area shape="rect" id="node7" href="$_interaction_manager_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="504,119,711,184"/>
-<area shape="rect" id="node3" href="$_sample_application_8h.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="126,232,345,297"/>
-<area shape="rect" id="node6" href="$_user_input_manager_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/src/UserInputManager.cpp" alt="" coords="369,239,648,291"/>
-<area shape="rect" id="node4" href="$main_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="5,345,204,397"/>
-<area shape="rect" id="node5" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="227,345,507,397"/>
+<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/InteractionManager.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/InteractionManager.h">
+<area shape="rect" id="node2" href="$_user_input_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/UserInputManager.h" alt="" coords="196,105,460,157"/>
+<area shape="rect" id="node7" href="$_interaction_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/InteractionManager.cpp" alt="" coords="484,105,671,157"/>
+<area shape="rect" id="node3" href="$_sample_application_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="71,205,337,257"/>
+<area shape="rect" id="node6" href="$_user_input_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/UserInputManager.cpp" alt="" coords="360,205,547,257"/>
+<area shape="rect" id="node4" href="$main_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/main.cpp" alt="" coords="5,305,192,357"/>
+<area shape="rect" id="node5" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/SampleApplication.cpp" alt="" coords="216,305,403,357"/>
 </map>

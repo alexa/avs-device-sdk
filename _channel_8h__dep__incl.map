@@ -1,21 +1,21 @@
-<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/AFML/include/AFML/Channel.h" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/AFML/include/AFML/Channel.h">
-<area shape="rect" id="node2" href="$_focus_manager_8h.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/AFML/include/AFML\l/FocusManager.h" alt="" coords="941,119,1112,184"/>
-<area shape="rect" id="node17" href="$_audio_input_processor_integration_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/Integration/test/AudioInput\lProcessorIntegrationTest.cpp" alt="" coords="1565,239,1771,304"/>
-<area shape="rect" id="node20" href="$_channel_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/AFML/src/Channel.cpp" alt="" coords="1446,125,1632,177"/>
-<area shape="rect" id="node3" href="$_focus_manager_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/AFML/src/FocusManager.cpp" alt="" coords="5,245,230,297"/>
-<area shape="rect" id="node4" href="$_focus_manager_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/AFML/test/FocusManagerTest.cpp" alt="" coords="254,245,507,297"/>
-<area shape="rect" id="node5" href="$_default_client_8h.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="531,232,758,311"/>
-<area shape="rect" id="node16" href="$_alerts_integration_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/Integration/test/AlertsIntegration\lTest.cpp" alt="" coords="782,239,1021,304"/>
-<area shape="rect" id="node18" href="$_audio_player_integration_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/Integration/test/AudioPlayer\lIntegrationTest.cpp" alt="" coords="1045,239,1259,304"/>
-<area shape="rect" id="node19" href="$_speech_synthesizer_integration_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/Integration/test/SpeechSynthesizer\lIntegrationTest.cpp" alt="" coords="1284,239,1541,304"/>
-<area shape="rect" id="node6" href="$_default_client_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="281,359,509,424"/>
-<area shape="rect" id="node7" href="$_interaction_manager_8h.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="533,359,756,424"/>
-<area shape="rect" id="node14" href="$_keyword_observer_8h.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="779,359,994,424"/>
-<area shape="rect" id="node8" href="$_user_input_manager_8h.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="332,472,551,537"/>
-<area shape="rect" id="node13" href="$_interaction_manager_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="574,472,781,537"/>
-<area shape="rect" id="node9" href="$_sample_application_8h.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="295,585,514,651"/>
-<area shape="rect" id="node12" href="$_user_input_manager_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/src/UserInputManager.cpp" alt="" coords="538,592,817,644"/>
-<area shape="rect" id="node10" href="$main_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="305,699,503,751"/>
-<area shape="rect" id="node11" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="620,699,900,751"/>
-<area shape="rect" id="node15" href="$_keyword_observer_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="892,479,1167,531"/>
+<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AFML/include/AFML/Channel.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AFML/include/AFML/Channel.h">
+<area shape="rect" id="node2" href="$_focus_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AFML\l/include/AFML/FocusManager.h" alt="" coords="733,105,942,157"/>
+<area shape="rect" id="node17" href="$_audio_input_processor_integration_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="1351,205,1588,271"/>
+<area shape="rect" id="node20" href="$_channel_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AFML\l/src/Channel.cpp" alt="" coords="1262,105,1415,157"/>
+<area shape="rect" id="node3" href="$_focus_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AFML\l/src/FocusManager.cpp" alt="" coords="5,212,165,264"/>
+<area shape="rect" id="node4" href="$_focus_manager_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AFML\l/test/FocusManagerTest.cpp" alt="" coords="190,212,378,264"/>
+<area shape="rect" id="node5" href="$_default_client_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Application\lUtilities/DefaultClient/include\l/DefaultClient/DefaultClient.h" alt="" coords="402,205,595,271"/>
+<area shape="rect" id="node16" href="$_alerts_integration_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/AlertsIntegrationTest.cpp" alt="" coords="619,212,816,264"/>
+<area shape="rect" id="node18" href="$_audio_player_integration_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/AudioPlayerIntegrationTest.cpp" alt="" coords="840,212,1075,264"/>
+<area shape="rect" id="node19" href="$_speech_synthesizer_integration_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="1099,205,1327,271"/>
+<area shape="rect" id="node6" href="$_default_client_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Application\lUtilities/DefaultClient/src\l/DefaultClient.cpp" alt="" coords="158,319,341,384"/>
+<area shape="rect" id="node7" href="$_interaction_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/InteractionManager.h" alt="" coords="364,325,633,377"/>
+<area shape="rect" id="node14" href="$_keyword_observer_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/KeywordObserver.h" alt="" coords="658,325,918,377"/>
+<area shape="rect" id="node8" href="$_user_input_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/UserInputManager.h" alt="" coords="210,432,475,484"/>
+<area shape="rect" id="node13" href="$_interaction_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/InteractionManager.cpp" alt="" coords="499,432,685,484"/>
+<area shape="rect" id="node9" href="$_sample_application_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="210,532,475,584"/>
+<area shape="rect" id="node12" href="$_user_input_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/UserInputManager.cpp" alt="" coords="499,532,685,584"/>
+<area shape="rect" id="node10" href="$main_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/main.cpp" alt="" coords="249,632,436,684"/>
+<area shape="rect" id="node11" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/SampleApplication.cpp" alt="" coords="544,632,731,684"/>
+<area shape="rect" id="node15" href="$_keyword_observer_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/KeywordObserver.cpp" alt="" coords="760,432,947,484"/>
 </map>

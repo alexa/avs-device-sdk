@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['mutex',['Mutex',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_in_process_s_d_s_traits.html#a06611059ea190b04a373c72b967e0893',1,'alexaClientSDK::avsCommon::utils::sds::InProcessSDSTraits::Mutex()'],['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html#ac73c9c4758f1d9b3e685e196deb34cc3',1,'alexaClientSDK::avsCommon::utils::sds::SharedDataStream::Mutex()'],['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits2.html#a432351ae56976ae5dbdc1c1f349fa2ef',1,'alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits2::Mutex()']]]
+  ['index',['Index',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html#a6b73c95dbde8b184f8b3176ff9a3f3f1',1,'alexaClientSDK::avsCommon::utils::sds::SharedDataStream']]],
+  ['indicatorstate',['IndicatorState',['../classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#a98080ab5d94a8f1798b05abe18635442',1,'alexaClientSDK::capabilityAgents::notifications::NotificationsStorageInterface::IndicatorState()'],['../namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a910e2992a7e425dd959d2cf93ddd85ac',1,'alexaClientSDK::capabilityAgents::notifications::test::IndicatorState()']]],
+  ['inprocesssds',['InProcessSDS',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds.html#a269866d267e8991328744c2e662931d2',1,'alexaClientSDK::avsCommon::utils::sds']]]
 ];

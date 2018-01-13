@@ -1,6 +1,7 @@
 <map id="alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface" name="alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface">
 <area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html" title="alexaClientSDK::capability\lAgents::alerts::renderer\l::Renderer" alt="" coords="290,5,468,57"/>
 <area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html" title="alexaClientSDK::capability\lAgents::audioPlayer::AudioPlayer" alt="" coords="269,81,489,120"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html" title="alexaClientSDK::capability\lAgents::speechSynthesizer\l::SpeechSynthesizer" alt="" coords="287,144,470,196"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_player_observer.html" title="alexaClientSDK::mediaPlayer\l::test::MockPlayerObserver" alt="" coords="281,220,477,259"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notification_renderer.html" title="alexaClientSDK::capability\lAgents::notifications::\lNotificationRenderer" alt="" coords="290,144,468,196"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html" title="alexaClientSDK::capability\lAgents::speechSynthesizer\l::SpeechSynthesizer" alt="" coords="287,220,470,272"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_player_observer.html" title="alexaClientSDK::mediaPlayer\l::test::MockPlayerObserver" alt="" coords="281,296,477,335"/>
 </map>

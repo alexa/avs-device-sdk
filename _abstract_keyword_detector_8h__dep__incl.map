@@ -1,10 +1,10 @@
-<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/KWD/include/KWD/AbstractKeywordDetector.h" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/KWD/include/KWD/AbstractKeywordDetector.h">
-<area shape="rect" id="node2" href="$_kitt_ai_key_word_detector_8h.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/KWD/KittAi/include\l/KittAi/KittAiKeyWordDetector.h" alt="" coords="253,119,459,184"/>
-<area shape="rect" id="node5" href="$_sensory_keyword_detector_8h.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/KWD/Sensory/include\l/Sensory/SensoryKeywordDetector.h" alt="" coords="490,119,729,184"/>
-<area shape="rect" id="node8" href="$_abstract_keyword_detector_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/KWD/src/AbstractKeywordDetector.cpp" alt="" coords="754,125,1036,177"/>
-<area shape="rect" id="node9" href="$_abstract_keyword_detector_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/KWD/test/AbstractKeywordDetector\lTest.cpp" alt="" coords="1060,119,1322,184"/>
-<area shape="rect" id="node3" href="$_kitt_ai_key_word_detector_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/KWD/KittAi/src/KittAiKeyWord\lDetector.cpp" alt="" coords="5,232,232,297"/>
-<area shape="rect" id="node4" href="$_kitt_ai_key_word_detector_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/KWD/KittAi/test/KittAiKey\lWordDetectorTest.cpp" alt="" coords="257,232,456,297"/>
-<area shape="rect" id="node6" href="$_sensory_keyword_detector_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/KWD/Sensory/src/SensoryKeyword\lDetector.cpp" alt="" coords="480,232,739,297"/>
-<area shape="rect" id="node7" href="$_sensory_keyword_detector_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/KWD/Sensory/test/SensoryKeyword\lDetectorTest.cpp" alt="" coords="763,232,1027,297"/>
+<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/KWD/include/KWD/AbstractKeywordDetector.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/KWD/include/KWD/AbstractKeywordDetector.h">
+<area shape="rect" id="node2" href="$_kitt_ai_key_word_detector_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/KittAi\l/include/KittAi/KittAiKeyWordDetector.h" alt="" coords="217,105,470,157"/>
+<area shape="rect" id="node5" href="$_sensory_keyword_detector_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/Sensory\l/include/Sensory/SensoryKeywordDetector.h" alt="" coords="494,105,779,157"/>
+<area shape="rect" id="node8" href="$_abstract_keyword_detector_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/src\l/AbstractKeywordDetector.cpp" alt="" coords="803,105,1004,157"/>
+<area shape="rect" id="node9" href="$_abstract_keyword_detector_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/test\l/AbstractKeywordDetectorTest.cpp" alt="" coords="1028,105,1254,157"/>
+<area shape="rect" id="node3" href="$_kitt_ai_key_word_detector_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/KittAi\l/src/KittAiKeyWordDetector.cpp" alt="" coords="5,205,212,257"/>
+<area shape="rect" id="node4" href="$_kitt_ai_key_word_detector_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/KittAi\l/test/KittAiKeyWordDetectorTest.cpp" alt="" coords="236,205,472,257"/>
+<area shape="rect" id="node6" href="$_sensory_keyword_detector_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/Sensory\l/src/SensoryKeywordDetector.cpp" alt="" coords="516,205,739,257"/>
+<area shape="rect" id="node7" href="$_sensory_keyword_detector_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/Sensory\l/test/SensoryKeywordDetectorTest.cpp" alt="" coords="762,205,1013,257"/>
 </map>

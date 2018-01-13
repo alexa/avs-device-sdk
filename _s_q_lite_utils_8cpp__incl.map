@@ -1,14 +1,14 @@
-<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/Storage/SQLiteStorage/src/SQLiteUtils.cpp" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/Storage/SQLiteStorage/src/SQLiteUtils.cpp">
-<area shape="rect" id="node2" href="$_s_q_lite_utils_8h.html" title="SQLiteStorage/SQLiteUtils.h" alt="" coords="435,125,625,151"/>
-<area shape="rect" id="node5" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="185,125,411,151"/>
-<area shape="rect" id="node6" href="$_file_utils_8h.html" title="AVSCommon/Utils/File\l/FileUtils.h" alt="" coords="5,119,161,157"/>
-<area shape="rect" id="node7" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="909,119,1085,157"/>
-<area shape="rect" id="node25" href="$_string_utils_8h.html" title="AVSCommon/Utils/String\l/StringUtils.h" alt="" coords="649,119,819,157"/>
-<area shape="rect" id="node13" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1163,205,1377,244"/>
-<area shape="rect" id="node17" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="495,292,671,331"/>
-<area shape="rect" id="node18" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="838,205,1014,244"/>
-<area shape="rect" id="node23" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="497,205,694,244"/>
-<area shape="rect" id="node24" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1679,205,1855,244"/>
-<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="839,292,1015,331"/>
-<area shape="rect" id="node21" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1058,379,1234,417"/>
+<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/Storage/SQLiteStorage/src/SQLiteUtils.cpp" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/Storage/SQLiteStorage/src/SQLiteUtils.cpp">
+<area shape="rect" id="node2" href="$_s_q_lite_utils_8h.html" title="SQLiteStorage/SQLiteUtils.h" alt="" coords="5,112,196,137"/>
+<area shape="rect" id="node5" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="220,112,445,137"/>
+<area shape="rect" id="node6" href="$_file_utils_8h.html" title="AVSCommon/Utils/File\l/FileUtils.h" alt="" coords="497,105,653,144"/>
+<area shape="rect" id="node7" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="706,105,882,144"/>
+<area shape="rect" id="node25" href="$_string_utils_8h.html" title="AVSCommon/Utils/String\l/StringUtils.h" alt="" coords="1495,279,1664,317"/>
+<area shape="rect" id="node13" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="956,192,1170,231"/>
+<area shape="rect" id="node17" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="305,279,480,317"/>
+<area shape="rect" id="node18" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="706,192,882,231"/>
+<area shape="rect" id="node23" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="434,192,631,231"/>
+<area shape="rect" id="node24" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1245,192,1420,231"/>
+<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="655,279,831,317"/>
+<area shape="rect" id="node21" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1058,365,1234,404"/>
 </map>

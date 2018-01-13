@@ -1,6 +1,6 @@
-<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/AuthDelegate/include/AuthDelegate/AuthDelegate.h" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/AuthDelegate/include/AuthDelegate/AuthDelegate.h">
-<area shape="rect" id="node9" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="616,119,807,157"/>
-<area shape="rect" id="node10" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="730,205,921,244"/>
-<area shape="rect" id="node12" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="291,119,490,157"/>
-<area shape="rect" id="node13" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="5,125,216,151"/>
+<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AuthDelegate/include/AuthDelegate/AuthDelegate.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AuthDelegate/include/AuthDelegate/AuthDelegate.h">
+<area shape="rect" id="node9" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="616,105,807,144"/>
+<area shape="rect" id="node10" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="730,192,921,231"/>
+<area shape="rect" id="node12" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="291,105,490,144"/>
+<area shape="rect" id="node13" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="5,112,216,137"/>
 </map>

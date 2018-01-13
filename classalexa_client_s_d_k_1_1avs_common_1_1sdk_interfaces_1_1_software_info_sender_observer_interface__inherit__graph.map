@@ -1,0 +1,4 @@
+<map id="alexaClientSDK::avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html" title="alexaClientSDK::capability\lAgents::system::SoftwareInfoSender" alt="" coords="287,5,524,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_mock_software_info_sender_observer.html" title="alexaClientSDK::capability\lAgents::system::test::MockSoftware\lInfoSenderObserver" alt="" coords="289,68,522,120"/>
+</map>

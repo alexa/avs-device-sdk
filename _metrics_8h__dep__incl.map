@@ -1,8 +1,8 @@
-<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics.h" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics.h">
-<area shape="rect" id="node2" href="$_directive_sequencer_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ADSL/src/DirectiveSequencer.cpp" alt="" coords="5,125,256,177"/>
-<area shape="rect" id="node3" href="$_message_interpreter_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ADSL/src/MessageInterpreter.cpp" alt="" coords="280,125,531,177"/>
-<area shape="rect" id="node4" href="$_event_builder_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/AVSCommon/AVS/src\l/EventBuilder.cpp" alt="" coords="555,119,736,184"/>
-<area shape="rect" id="node5" href="$_metrics_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/AVSCommon/Utils/src\l/Metrics.cpp" alt="" coords="760,119,941,184"/>
-<area shape="rect" id="node6" href="$_audio_input_processor_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/CapabilityAgents/AIP\l/src/AudioInputProcessor.cpp" alt="" coords="965,119,1160,184"/>
-<area shape="rect" id="node7" href="$_speech_synthesizer_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/CapabilityAgents/SpeechSynthesizer\l/src/SpeechSynthesizer.cpp" alt="" coords="1184,119,1453,184"/>
+<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics.h">
+<area shape="rect" id="node2" href="$_directive_sequencer_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/src/DirectiveSequencer.cpp" alt="" coords="5,119,193,171"/>
+<area shape="rect" id="node3" href="$_message_interpreter_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/src/MessageInterpreter.cpp" alt="" coords="216,119,403,171"/>
+<area shape="rect" id="node4" href="$_event_builder_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/src/EventBuilder.cpp" alt="" coords="427,119,624,171"/>
+<area shape="rect" id="node5" href="$_metrics_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/src/Metrics.cpp" alt="" coords="648,119,846,171"/>
+<area shape="rect" id="node6" href="$_audio_input_processor_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="870,119,1090,171"/>
+<area shape="rect" id="node7" href="$_speech_synthesizer_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/src/SpeechSynthesizer.cpp" alt="" coords="1115,119,1419,171"/>
 </map>

@@ -1,9 +1,9 @@
-<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/CurlMultiHandleWrapper.h" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/CurlMultiHandleWrapper.h">
-<area shape="rect" id="node2" href="$_h_t_t_p2_transport_8h.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/include/ACL/Transport\l/HTTP2Transport.h" alt="" coords="384,132,596,197"/>
-<area shape="rect" id="node8" href="$_curl_multi_handle_wrapper_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/AVSCommon/Utils/src\l/LibcurlUtils/CurlMultiHandleWrapper.cpp" alt="" coords="621,132,885,197"/>
-<area shape="rect" id="node3" href="$_h_t_t_p2_message_router_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/src/Transport\l/HTTP2MessageRouter.cpp" alt="" coords="5,245,191,311"/>
-<area shape="rect" id="node4" href="$_h_t_t_p2_stream_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/src/Transport\l/HTTP2Stream.cpp" alt="" coords="215,245,382,311"/>
-<area shape="rect" id="node5" href="$_h_t_t_p2_transport_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/src/Transport\l/HTTP2Transport.cpp" alt="" coords="407,245,574,311"/>
-<area shape="rect" id="node6" href="$_post_connect_synchronizer_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/src/Transport\l/PostConnectSynchronizer.cpp" alt="" coords="598,245,801,311"/>
-<area shape="rect" id="node7" href="$_h_t_t_p2_stream_pool_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/test/Transport\l/HTTP2StreamPoolTest.cpp" alt="" coords="825,245,1012,311"/>
+<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/CurlMultiHandleWrapper.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/CurlMultiHandleWrapper.h">
+<area shape="rect" id="node2" href="$_h_t_t_p2_transport_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/include\l/ACL/Transport/HTTP2Transport.h" alt="" coords="488,139,713,191"/>
+<area shape="rect" id="node8" href="$_curl_multi_handle_wrapper_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/src/LibcurlUtils\l/CurlMultiHandleWrapper.cpp" alt="" coords="736,132,934,197"/>
+<area shape="rect" id="node3" href="$_h_t_t_p2_message_router_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/src\l/Transport/HTTP2MessageRouter.cpp" alt="" coords="5,245,251,297"/>
+<area shape="rect" id="node4" href="$_h_t_t_p2_stream_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/src\l/Transport/HTTP2Stream.cpp" alt="" coords="276,245,472,297"/>
+<area shape="rect" id="node5" href="$_h_t_t_p2_transport_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/src\l/Transport/HTTP2Transport.cpp" alt="" coords="496,245,705,297"/>
+<area shape="rect" id="node6" href="$_post_connect_synchronizer_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/src\l/Transport/PostConnectSynchronizer.cpp" alt="" coords="728,245,992,297"/>
+<area shape="rect" id="node7" href="$_h_t_t_p2_stream_pool_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/test\l/Transport/HTTP2StreamPoolTest.cpp" alt="" coords="1017,245,1264,297"/>
 </map>

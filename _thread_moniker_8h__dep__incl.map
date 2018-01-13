@@ -1,5 +1,6 @@
-<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h">
-<area shape="rect" id="node2" href="$_h_t_t_p2_stream_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/ACL/src/Transport\l/HTTP2Stream.cpp" alt="" coords="5,119,173,184"/>
-<area shape="rect" id="node3" href="$_logger_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/AVSCommon/Utils/src\l/Logger/Logger.cpp" alt="" coords="197,119,378,184"/>
-<area shape="rect" id="node4" href="$_thread_moniker_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/AVSCommon/Utils/src\l/Logger/ThreadMoniker.cpp" alt="" coords="402,119,587,184"/>
+<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h">
+<area shape="rect" id="node2" href="$_h_t_t_p2_stream_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/src\l/Transport/HTTP2Stream.cpp" alt="" coords="5,119,201,171"/>
+<area shape="rect" id="node3" href="$_console_logger_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/src/Logger/ConsoleLogger.cpp" alt="" coords="225,119,461,171"/>
+<area shape="rect" id="node4" href="$_logger_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/src/Logger/Logger.cpp" alt="" coords="486,119,683,171"/>
+<area shape="rect" id="node5" href="$_thread_moniker_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/src/Logger/ThreadMoniker.cpp" alt="" coords="707,119,942,171"/>
 </map>

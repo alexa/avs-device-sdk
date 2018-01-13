@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['observerinterface',['ObserverInterface',['../classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a4dc706ff9be6b151c9fab1ae07b43ba2',1,'alexaClientSDK::capabilityAgents::aip::AudioInputProcessor']]]
+  ['mutex',['Mutex',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_in_process_s_d_s_traits.html#a06611059ea190b04a373c72b967e0893',1,'alexaClientSDK::avsCommon::utils::sds::InProcessSDSTraits::Mutex()'],['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html#ac73c9c4758f1d9b3e685e196deb34cc3',1,'alexaClientSDK::avsCommon::utils::sds::SharedDataStream::Mutex()'],['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits2.html#a432351ae56976ae5dbdc1c1f349fa2ef',1,'alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits2::Mutex()']]]
 ];

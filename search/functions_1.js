@@ -13,6 +13,7 @@ var searchData=
   ['buildevent',['buildEvent',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#abeb8aa5d5966edbc8603d95ac8f9caea',1,'alexaClientSDK::avsCommon::avs']]],
   ['buildheader',['buildHeader',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a9c2bac3ad7de8a8886020f331002c72d',1,'alexaClientSDK::avsCommon::avs']]],
   ['buildjsoneventstring',['buildJsonEventString',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html#a0141d9d834ebc600e75117d5fc791202',1,'alexaClientSDK::avsCommon::avs::CapabilityAgent::buildJsonEventString()'],['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a5ffb3ba6f9657ec6092520aefd2b7380',1,'alexaClientSDK::avsCommon::avs::buildJsonEventString()']]],
-  ['buttontomessagename',['buttonToMessageName',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1playback_controller.html#a56488b6dd90a7b43e65d9ceb896fd63e',1,'alexaClientSDK::capabilityAgents::playbackController']]],
-  ['bytegenerator',['ByteGenerator',['../classalexa_client_s_d_k_1_1acl_1_1test_1_1_byte_generator.html#a8f84c21476ec5557754f652a2205ea3e',1,'alexaClientSDK::acl::test::ByteGenerator']]]
+  ['buttontomessagename',['buttonToMessageName',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1playback_controller.html#a1f987d0a94675c3bf50446efaee294d1',1,'alexaClientSDK::capabilityAgents::playbackController']]],
+  ['bytegenerator',['ByteGenerator',['../classalexa_client_s_d_k_1_1acl_1_1test_1_1_byte_generator.html#a8f84c21476ec5557754f652a2205ea3e',1,'alexaClientSDK::acl::test::ByteGenerator']]],
+  ['bytevectortostring',['byteVectorToString',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1string.html#a8e9905aba0bab1ca8d423ee2dda1e289',1,'alexaClientSDK::avsCommon::utils::string']]]
 ];

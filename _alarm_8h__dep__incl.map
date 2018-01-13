@@ -1,6 +1,6 @@
-<map id="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/CapabilityAgents/Alerts/include/Alerts/Alarm.h" name="/Users/sdy/AVS_CPP_SDK/github/alexa&#45;client&#45;sdk/CapabilityAgents/Alerts/include/Alerts/Alarm.h">
-<area shape="rect" id="node2" href="$_alarm_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/CapabilityAgents/Alerts\l/src/Alarm.cpp" alt="" coords="5,119,193,184"/>
-<area shape="rect" id="node3" href="$_alerts_capability_agent_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/CapabilityAgents/Alerts\l/src/AlertsCapabilityAgent.cpp" alt="" coords="217,119,416,184"/>
-<area shape="rect" id="node4" href="$_s_q_lite_alert_storage_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/CapabilityAgents/Alerts\l/src/Storage/SQLiteAlertStorage.cpp" alt="" coords="441,119,678,184"/>
-<area shape="rect" id="node5" href="$_alarm_alert_test_8cpp.html" title="/Users/sdy/AVS_CPP\l_SDK/github/alexa&#45;client\l&#45;sdk/CapabilityAgents/Alerts\l/test/AlarmAlertTest.cpp" alt="" coords="701,119,889,184"/>
+<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/CapabilityAgents/Alerts/include/Alerts/Alarm.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/CapabilityAgents/Alerts/include/Alerts/Alarm.h">
+<area shape="rect" id="node2" href="$_alarm_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/Alerts/src/Alarm.cpp" alt="" coords="5,105,223,157"/>
+<area shape="rect" id="node3" href="$_alerts_capability_agent_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/Alerts/src/AlertsCapabilityAgent.cpp" alt="" coords="248,105,485,157"/>
+<area shape="rect" id="node4" href="$_s_q_lite_alert_storage_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/Alerts/src/Storage/SQLiteAlertStorage.cpp" alt="" coords="509,105,784,157"/>
+<area shape="rect" id="node5" href="$_alarm_alert_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/Alerts/test/AlarmAlertTest.cpp" alt="" coords="808,105,1026,157"/>
 </map>
