@@ -20,6 +20,7 @@
 
 #include <istream>
 #include <memory>
+#include <functional>
 
 namespace alexaClientSDK {
 namespace avsCommon {
