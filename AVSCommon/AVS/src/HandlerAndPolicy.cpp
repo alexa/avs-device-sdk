@@ -29,21 +29,22 @@ HandlerAndPolicy::HandlerAndPolicy() : policy{BlockingPolicy::NONE} {
 }
 
 HandlerAndPolicy::HandlerAndPolicy(std::shared_ptr<DirectiveHandlerInterface> handlerIn, BlockingPolicy policyIn) :
-        handler{handlerIn}, policy{policyIn} {
+        handler{handlerIn},
+        policy{policyIn} {
 }
 
-HandlerAndPolicy::operator bool () const {
+HandlerAndPolicy::operator bool() const {
     return handler && (policy != BlockingPolicy::NONE);
 }
 
-bool operator == (const HandlerAndPolicy& lhs, const HandlerAndPolicy& rhs) {
+bool operator==(const HandlerAndPolicy& lhs, const HandlerAndPolicy& rhs) {
     return std::tie(lhs.handler, lhs.policy) == std::tie(rhs.handler, rhs.policy);
 }
 
-bool operator != (const HandlerAndPolicy& lhs, const HandlerAndPolicy& rhs) {
+bool operator!=(const HandlerAndPolicy& lhs, const HandlerAndPolicy& rhs) {
     return !(lhs == rhs);
 }
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

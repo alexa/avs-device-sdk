@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_STATE_REFRESH_POLICY_H
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_STATE_REFRESH_POLICY_H
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_STATEREFRESHPOLICY_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_STATEREFRESHPOLICY_H_
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -34,14 +34,14 @@ enum class StateRefreshPolicy {
     NEVER,
 
     /**
-     * Indicates to the @c ContextManager that the stateProvider needs to be queried and the state refreshed every time it
-     * processes a @c getContext request.
+     * Indicates to the @c ContextManager that the stateProvider needs to be queried and the state refreshed every time
+     * it processes a @c getContext request.
      */
     ALWAYS
 };
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_STATE_REFRESH_POLICY_H
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_STATEREFRESHPOLICY_H_

@@ -47,30 +47,30 @@ void AbstractKeywordDetector::removeKeyWordObserver(std::shared_ptr<KeyWordObser
 }
 
 void AbstractKeywordDetector::addKeyWordDetectorStateObserver(
-        std::shared_ptr<KeyWordDetectorStateObserverInterface> keyWordDetectorStateObserver) {
+    std::shared_ptr<KeyWordDetectorStateObserverInterface> keyWordDetectorStateObserver) {
     std::lock_guard<std::mutex> lock(m_keyWordDetectorStateObserversMutex);
     m_keyWordDetectorStateObservers.insert(keyWordDetectorStateObserver);
 }
 
 void AbstractKeywordDetector::removeKeyWordDetectorStateObserver(
-        std::shared_ptr<KeyWordDetectorStateObserverInterface> keyWordDetectorStateObserver) {
+    std::shared_ptr<KeyWordDetectorStateObserverInterface> keyWordDetectorStateObserver) {
     std::lock_guard<std::mutex> lock(m_keyWordDetectorStateObserversMutex);
     m_keyWordDetectorStateObservers.erase(keyWordDetectorStateObserver);
 }
 
 AbstractKeywordDetector::AbstractKeywordDetector(
-        std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
-        std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers) :
-    m_keyWordObservers{keyWordObservers},
-    m_keyWordDetectorStateObservers{keyWordDetectorStateObservers},
-    m_detectorState{KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED} {
+    std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
+    std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers) :
+        m_keyWordObservers{keyWordObservers},
+        m_keyWordDetectorStateObservers{keyWordDetectorStateObservers},
+        m_detectorState{KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED} {
 }
 
 void AbstractKeywordDetector::notifyKeyWordObservers(
-        std::shared_ptr<AudioInputStream> stream,
-        std::string keyword,
-        AudioInputStream::Index beginIndex,
-        AudioInputStream::Index endIndex) const {
+    std::shared_ptr<AudioInputStream> stream,
+    std::string keyword,
+    AudioInputStream::Index beginIndex,
+    AudioInputStream::Index endIndex) const {
     std::lock_guard<std::mutex> lock(m_keyWordObserversMutex);
     for (auto keyWordObserver : m_keyWordObservers) {
         keyWordObserver->onKeyWordDetected(stream, keyword, beginIndex, endIndex);
@@ -78,24 +78,23 @@ void AbstractKeywordDetector::notifyKeyWordObservers(
 }
 
 void AbstractKeywordDetector::notifyKeyWordDetectorStateObservers(
-        KeyWordDetectorStateObserverInterface::KeyWordDetectorState state) {
+    KeyWordDetectorStateObserverInterface::KeyWordDetectorState state) {
     if (m_detectorState != state) {
         m_detectorState = state;
         std::lock_guard<std::mutex> lock(m_keyWordDetectorStateObserversMutex);
         for (auto keyWordDetectorStateObserver : m_keyWordDetectorStateObservers) {
-            keyWordDetectorStateObserver->onStateChanged(
-                m_detectorState);
+            keyWordDetectorStateObserver->onStateChanged(m_detectorState);
         }
     }
 }
 
 ssize_t AbstractKeywordDetector::readFromStream(
-        std::shared_ptr<avsCommon::avs::AudioInputStream::Reader> reader,
-        std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
-        void * buf,
-        size_t nWords,
-        std::chrono::milliseconds timeout,
-        bool* errorOccurred) {
+    std::shared_ptr<avsCommon::avs::AudioInputStream::Reader> reader,
+    std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+    void* buf,
+    size_t nWords,
+    std::chrono::milliseconds timeout,
+    bool* errorOccurred) {
     if (errorOccurred) {
         *errorOccurred = false;
     }
@@ -103,19 +102,20 @@ ssize_t AbstractKeywordDetector::readFromStream(
     // Stream has been closed
     if (wordsRead == 0) {
         ACSDK_DEBUG(LX("readFromStream").d("event", "streamClosed"));
-        notifyKeyWordDetectorStateObservers(
-            KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED);
+        notifyKeyWordDetectorStateObservers(KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED);
         if (errorOccurred) {
             *errorOccurred = true;
         }
-    // This represents some sort of error with the read() call
+        // This represents some sort of error with the read() call
     } else if (wordsRead < 0) {
         switch (wordsRead) {
             case AudioInputStream::Reader::Error::OVERRUN:
                 ACSDK_ERROR(LX("readFromStreamFailed")
-                        .d("reason", "streamOverrun")
-                        .d("numWordsOverrun",
-                            std::to_string(reader->tell(AudioInputStream::Reader::Reference::BEFORE_WRITER) - stream->getDataSize())));
+                                .d("reason", "streamOverrun")
+                                .d("numWordsOverrun",
+                                   std::to_string(
+                                       reader->tell(AudioInputStream::Reader::Reference::BEFORE_WRITER) -
+                                       stream->getDataSize())));
                 reader->seek(0, AudioInputStream::Reader::Reference::BEFORE_WRITER);
                 break;
             case AudioInputStream::Reader::Error::TIMEDOUT:
@@ -124,12 +124,11 @@ ssize_t AbstractKeywordDetector::readFromStream(
             default:
                 // We should never get this since we are using a Blocking Reader.
                 ACSDK_ERROR(LX("readFromStreamFailed")
-                    .d("reason", "unexpectedError")
-                    // Leave as ssize_t to avoid messiness of casting to enum.
-                    .d("error", wordsRead));
+                                .d("reason", "unexpectedError")
+                                // Leave as ssize_t to avoid messiness of casting to enum.
+                                .d("error", wordsRead));
 
-                notifyKeyWordDetectorStateObservers(
-                    KeyWordDetectorStateObserverInterface::KeyWordDetectorState::ERROR);
+                notifyKeyWordDetectorStateObservers(KeyWordDetectorStateObserverInterface::KeyWordDetectorState::ERROR);
                 if (errorOccurred) {
                     *errorOccurred = true;
                 }
@@ -151,5 +150,5 @@ bool AbstractKeywordDetector::isByteswappingRequired(avsCommon::utils::AudioForm
     return isPlatformLittleEndian != isFormatLittleEndian;
 }
 
-} // namespace kwd
-} // namespace alexaClientSDK
+}  // namespace kwd
+}  // namespace alexaClientSDK

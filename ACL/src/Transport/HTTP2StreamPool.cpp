@@ -32,16 +32,20 @@ static const std::string TAG("HTTP2StreamPool");
 
 using namespace avsCommon::utils;
 
-    HTTP2StreamPool::HTTP2StreamPool(
-        const int maxStreams,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager)
-        : m_numRemovedStreams{0},
-          m_maxStreams{maxStreams},
-          m_attachmentManager{attachmentManager} {
+unsigned int HTTP2StreamPool::m_nextStreamId = 1;
+
+HTTP2StreamPool::HTTP2StreamPool(
+    const int maxStreams,
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager) :
+        m_numAcquiredStreams{0},
+        m_maxStreams{maxStreams},
+        m_attachmentManager{attachmentManager} {
 }
 
-std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createGetStream(const std::string& url, const std::string& authToken,
-        MessageConsumerInterface *messageConsumer) {
+std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createGetStream(
+    const std::string& url,
+    const std::string& authToken,
+    std::shared_ptr<MessageConsumerInterface> messageConsumer) {
     std::shared_ptr<HTTP2Stream> stream = getStream(messageConsumer);
     if (!stream) {
         ACSDK_ERROR(LX("createGetStreamFailed").d("reason", "getStreamFailed"));
@@ -55,65 +59,83 @@ std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createGetStream(const std::string&
     return stream;
 }
 
-std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createPostStream(const std::string& url, const std::string& authToken,
-        std::shared_ptr<avsCommon::avs::MessageRequest> request, MessageConsumerInterface *messageConsumer) {
+std::shared_ptr<HTTP2Stream> HTTP2StreamPool::createPostStream(
+    const std::string& url,
+    const std::string& authToken,
+    std::shared_ptr<avsCommon::avs::MessageRequest> request,
+    std::shared_ptr<MessageConsumerInterface> messageConsumer) {
     std::shared_ptr<HTTP2Stream> stream = getStream(messageConsumer);
     if (!request) {
-        ACSDK_ERROR(LX("createPostStreamFailed").d("reason","nullMessageRequest"));
+        ACSDK_ERROR(LX("createPostStreamFailed").d("reason", "nullMessageRequest"));
         return nullptr;
     }
     if (!stream) {
         ACSDK_ERROR(LX("createPostStreamFailed").d("reason", "getStreamFailed"));
-        request->onSendCompleted(avsCommon::avs::MessageRequest::Status::INTERNAL_ERROR);
+        request->sendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::INTERNAL_ERROR);
         return nullptr;
     }
     if (!stream->initPost(url, authToken, request)) {
         ACSDK_ERROR(LX("createPostStreamFailed").d("reason", "initPostFailed"));
-        request->onSendCompleted(avsCommon::avs::MessageRequest::Status::INTERNAL_ERROR);
+        request->sendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::INTERNAL_ERROR);
         releaseStream(stream);
         return nullptr;
     }
     return stream;
 }
 
-std::shared_ptr<HTTP2Stream> HTTP2StreamPool::getStream(MessageConsumerInterface *messageConsumer) {
-
+std::shared_ptr<HTTP2Stream> HTTP2StreamPool::getStream(std::shared_ptr<MessageConsumerInterface> messageConsumer) {
     if (!messageConsumer) {
         ACSDK_ERROR(LX("getStreamFailed").d("reason", "nullptrMessageConsumer"));
         return nullptr;
     }
     std::lock_guard<std::mutex> lock(m_mutex);
-    if (m_numRemovedStreams >= m_maxStreams) {
+    if (m_numAcquiredStreams >= m_maxStreams) {
+        ACSDK_WARN(LX("getStreamFailed").d("reason", "maxStreamsAlreadyAcquired"));
         return nullptr;
     }
-    m_numRemovedStreams++;
-    if (m_pool.empty()) {
-        return std::make_shared<HTTP2Stream>(messageConsumer, m_attachmentManager);
-    }
 
-    std::shared_ptr<HTTP2Stream> ret = m_pool.back();
-    m_pool.pop_back();
-    return ret;
+    std::shared_ptr<HTTP2Stream> result;
+    if (m_pool.empty()) {
+        result = std::make_shared<HTTP2Stream>(messageConsumer, m_attachmentManager);
+    } else {
+        result = m_pool.back();
+        m_pool.pop_back();
+    }
+    m_numAcquiredStreams++;
+
+    result->setLogicalStreamId(m_nextStreamId);
+    // Increment by two so that these IDs tend to line up with the number at the end of x-amzn-requestId values.
+    m_nextStreamId += 2;
+
+    ACSDK_DEBUG0(
+        LX("getStream").d("streamId", result->getLogicalStreamId()).d("numAcquiredStreams", m_numAcquiredStreams));
+    return result;
 }
 
 void HTTP2StreamPool::releaseStream(std::shared_ptr<HTTP2Stream> stream) {
-    if (!stream){
+    if (!stream) {
         return;
     }
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    //Check to avoid releasing the same stream more than once accidentally
+    // Check to avoid releasing the same stream more than once accidentally
     for (auto item : m_pool) {
         if (item == stream) {
+            ACSDK_ERROR(
+                LX("releaseStreamFailed").d("reason", "alreadyReleased").d("streamId", stream->getLogicalStreamId()));
             return;
         }
     }
 
+    m_numAcquiredStreams--;
+
+    ACSDK_DEBUG0(
+        LX("releaseStream").d("streamId", stream->getLogicalStreamId()).d("numAcquiredStreams", m_numAcquiredStreams));
+
     if (stream->reset()) {
         m_pool.push_back(stream);
     }
-    m_numRemovedStreams--;
 }
 
-} // acl
-} // alexaClientSDK
+}  // namespace acl
+}  // namespace alexaClientSDK

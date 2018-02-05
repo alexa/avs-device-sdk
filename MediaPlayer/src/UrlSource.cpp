@@ -40,9 +40,9 @@ static const std::string TAG("UrlSource");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::shared_ptr<UrlSource> UrlSource::create(
-        PipelineInterface* pipeline,
-        std::shared_ptr<PlaylistParserInterface> playlistParser,
-        const std::string& url) {
+    PipelineInterface* pipeline,
+    std::shared_ptr<PlaylistParserInterface> playlistParser,
+    const std::string& url) {
     if (!pipeline) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullPipeline"));
         return nullptr;
@@ -51,7 +51,7 @@ std::shared_ptr<UrlSource> UrlSource::create(
         ACSDK_ERROR(LX("createFailed").d("reason", "nullPlaylistParser"));
         return nullptr;
     }
-
+    ACSDK_DEBUG9(LX("UrlSourceCreate").sensitive("url", url));
     std::shared_ptr<UrlSource> result(new UrlSource(pipeline, playlistParser, url));
     if (result->init()) {
         return result;
@@ -60,18 +60,25 @@ std::shared_ptr<UrlSource> UrlSource::create(
 }
 
 UrlSource::UrlSource(
-        PipelineInterface* pipeline,
-        std::shared_ptr<PlaylistParserInterface> playlistParser,
-        const std::string& url) :
-            m_url{url},
-            m_playlistParser{playlistParser},
-            m_pipeline{pipeline} {
+    PipelineInterface* pipeline,
+    std::shared_ptr<PlaylistParserInterface> playlistParser,
+    const std::string& url) :
+        SourceInterface("UrlSource"),
+        m_url{url},
+        m_playlistParser{playlistParser},
+        m_hasReceivedAPlaylistCallback{false},
+        m_isValid{true},
+        m_pipeline{pipeline} {
 }
 
 bool UrlSource::init() {
     ACSDK_DEBUG(LX("initCalledForUrlSource"));
-
-    if (!m_playlistParser->parsePlaylist(m_url, shared_from_this())) {
+    /*
+     * The reason we are excluding M3U8 from parsing is because GStreamer is able to handle M3U8 playlists and because
+     * we've had trouble getting GStreamer to play Audible after parsing the Audible playlist into individual URLs that
+     * point to audio. Once we implement our own full HTTP client, this may be removed.
+     */
+    if (!m_playlistParser->parsePlaylist(m_url, shared_from_this(), {PlaylistParserInterface::PlaylistType::M3U8})) {
         ACSDK_ERROR(LX("initFailed").d("reason", "startingParsePlaylistFailed"));
         return false;
     }
@@ -95,30 +102,28 @@ bool UrlSource::init() {
 }
 
 bool UrlSource::hasAdditionalData() {
-    return !m_url.empty();
+    std::lock_guard<std::mutex> lock{m_mutex};
+    if (m_url.empty()) {
+        return false;
+    }
+    g_object_set(m_pipeline->getDecoder(), "uri", m_url.c_str(), NULL);
+    return true;
 }
 
 bool UrlSource::handleEndOfStream() {
-    m_url.clear();
-    // TODO [ACSDK-419] Solidify contract that the parsed Urls will not be empty.
-    while (!m_audioUrlQueue.empty()) {
-        std::string url = m_audioUrlQueue.front();
+    std::lock_guard<std::mutex> lock{m_mutex};
+    if (!m_audioUrlQueue.empty()) {
+        m_url = m_audioUrlQueue.front();
         m_audioUrlQueue.pop();
-        if (url.empty()) {
-            ACSDK_INFO(LX("handleEndOfStream").d("info", "emptyUrlFound"));
-            continue;
-        }
-        m_url = url;
+    } else {
+        m_url.clear();
     }
-
-    if (!m_url.empty()) {
-        g_object_set(m_pipeline->getDecoder(), "uri", m_url.c_str(), NULL);
-     }
     return true;
 }
 
 void UrlSource::preprocess() {
-    m_audioUrlQueue = m_playlistParsedPromise.get_future().get();
+    // Waits until at least one callback has occurred from the PlaylistParser
+    m_playlistParsedPromise.get_future().get();
     /*
      * TODO: Reset the playlistParser in a better place once the thread model of MediaPlayer
      * is simplified [ACSDK-422].
@@ -126,8 +131,7 @@ void UrlSource::preprocess() {
      * This must be called from a thread not in the UrlSource/PlaylistParser loop
      * to prevent a thread from joining itself.
      */
-    m_playlistParser.reset();
-
+    std::lock_guard<std::mutex> lock{m_mutex};
     if (m_audioUrlQueue.empty()) {
         ACSDK_ERROR(LX("preprocess").d("reason", "noValidUrls"));
         return;
@@ -135,20 +139,57 @@ void UrlSource::preprocess() {
     m_url = m_audioUrlQueue.front();
     m_audioUrlQueue.pop();
 
-    g_object_set(m_pipeline->getDecoder(),
-            "uri", m_url.c_str(),
-            "use-buffering", true,
-            NULL);
+    if (!m_isValid) {
+        return;
+    }
+    g_object_set(m_pipeline->getDecoder(), "uri", m_url.c_str(), "use-buffering", true, NULL);
 }
 
-void UrlSource::onPlaylistParsed(std::string initialUrl, std::queue<std::string> urls, PlaylistParseResult parseResult) {
-    ACSDK_DEBUG(LX("onPlaylistParsed").d("parseResult", parseResult).d("numUrlsParsed", urls.size()));
-    // The parse was unrecognized by the parser, could be a single song. Attempt to play.
-    if (urls.size() == 0) {
-        urls.push(initialUrl);
-    }
-    m_playlistParsedPromise.set_value(urls);
-};
+bool UrlSource::isPlaybackRemote() const {
+    return true;
+}
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+void UrlSource::onPlaylistEntryParsed(
+    int requestId,
+    std::string url,
+    avsCommon::utils::playlistParser::PlaylistParseResult parseResult,
+    std::chrono::milliseconds duration) {
+    std::lock_guard<std::mutex> lock{m_mutex};
+    switch (parseResult) {
+        ACSDK_DEBUG9(LX("onPlaylistParsed").d("parseResult", parseResult));
+        case avsCommon::utils::playlistParser::PlaylistParseResult::ERROR:
+            ACSDK_ERROR(LX("parseError").sensitive("url", url));
+            break;
+        case avsCommon::utils::playlistParser::PlaylistParseResult::SUCCESS:
+        case avsCommon::utils::playlistParser::PlaylistParseResult::STILL_ONGOING:
+            ACSDK_DEBUG9(LX("urlParsedSuccessfully").sensitive("url", url));
+            m_audioUrlQueue.push(url);
+            break;
+        default:
+            ACSDK_ERROR(LX("onPlaylistParsedError").d("reason", "unknownParseResult"));
+            break;
+    }
+
+    if (!m_hasReceivedAPlaylistCallback) {
+        m_hasReceivedAPlaylistCallback = true;
+        m_playlistParsedPromise.set_value();
+    }
+}
+
+void UrlSource::doShutdown() {
+    ACSDK_DEBUG9(LX("shutdownCalled"));
+    std::unique_lock<std::mutex> lock{m_mutex};
+    auto ptr = m_playlistParser;
+    if (m_isValid) {
+        m_isValid = false;
+    }
+    m_playlistParser.reset();
+    /*
+     * Make sure the m_playlistParser pointer is reset while not holding the lock to avoid potential deadlocks.
+     */
+    lock.unlock();
+    ptr.reset();
+}
+
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK

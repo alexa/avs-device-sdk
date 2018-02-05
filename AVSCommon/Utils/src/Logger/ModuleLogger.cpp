@@ -25,20 +25,20 @@ namespace utils {
 namespace logger {
 
 void ModuleLogger::emit(
-        Level level,
-        std::chrono::system_clock::time_point time,
-        const char *threadId,
-        const char *text) {
+    Level level,
+    std::chrono::system_clock::time_point time,
+    const char* threadId,
+    const char* text) {
     if (shouldLog(level)) {
-        m_sink.load()->emit(level, time, threadId, text);
+        m_sink->emit(level, time, threadId, text);
     }
 }
 
 void ModuleLogger::setLevel(Level level) {
-    Logger::m_level = level;
+    Logger::setLevel(level);
 
     /*
-     * Once the logLevel of the MoudleLogger has been changed, it should no
+     * Once the logLevel of the ModuleLogger has been changed, it should no
      * longer use the logLevel in the m_sink, hence the flag is cleared here.
      */
     m_useSinkLogLevel = false;
@@ -50,12 +50,12 @@ void ModuleLogger::onLogLevelChanged(Level level) {
     }
 }
 
-void ModuleLogger::onSinkChanged(Logger& logger) {
-    if (m_sink.load()) {
-        m_sink.load()->removeLogLevelObserver(this);
+void ModuleLogger::onSinkChanged(const std::shared_ptr<Logger>& logger) {
+    if (m_sink) {
+        m_sink->removeLogLevelObserver(this);
     }
-    m_sink = &logger;
-    m_sink.load()->addLogLevelObserver(this);
+    m_sink = logger;
+    m_sink->addLogLevelObserver(this);
 }
 
 ModuleLogger::ModuleLogger(const std::string& configKey) :
@@ -80,8 +80,7 @@ ModuleLogger::ModuleLogger(const std::string& configKey) :
     init(configuration::ConfigurationNode::getRoot()[configKey]);
 }
 
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
-
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

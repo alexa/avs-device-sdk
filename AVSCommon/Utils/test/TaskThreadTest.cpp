@@ -26,7 +26,7 @@ namespace utils {
 namespace threading {
 namespace test {
 
-class TaskThreadTest: public ::testing::Test {
+class TaskThreadTest : public ::testing::Test {
 public:
     std::shared_ptr<TaskQueue> createTaskQueue() {
         return std::make_shared<TaskQueue>();
@@ -106,8 +106,8 @@ TEST_F(TaskThreadTest, theTaskThreadIsNotStartedUntilStartIsCalled) {
     queue->shutdown();
 }
 
-} // namespace test
-} // namespace threading
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace threading
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

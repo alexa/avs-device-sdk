@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+#include <AVSCommon/Utils/Logger/Logger.h>
+
 #include "TestableMessageObserver.h"
 
 namespace alexaClientSDK {
@@ -24,14 +26,26 @@ namespace test {
 
 using namespace avsCommon::sdkInterfaces;
 
-void TestableMessageObserver::receive(const std::string &contextId, const std::string &message) {
+/// String to identify log entries originating from this file.
+static const std::string TAG("TestableMessageObserver");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+void TestableMessageObserver::receive(const std::string& contextId, const std::string& message) {
+    ACSDK_INFO(LX("receive").d("message", message));
     std::lock_guard<std::mutex> lock(m_mutex);
     m_receivedDirectives.push_back(message);
     m_cv.notify_all();
 }
 
 bool TestableMessageObserver::waitForDirective(
-        const std::string &directiveMessage, const std::chrono::seconds duration) {
+    const std::string& directiveMessage,
+    const std::chrono::seconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
     return m_cv.wait_for(lock, duration, [this, directiveMessage]() {
         for (auto directive : m_receivedDirectives) {
@@ -39,10 +53,11 @@ bool TestableMessageObserver::waitForDirective(
                 return true;
             }
         }
+        ACSDK_WARN(LX("waitForDirectiveFailed").d("reason", "directiveNotReceived").d("expected", directiveMessage));
         return false;
     });
 }
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK

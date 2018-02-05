@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_IN_PROCESS_SDS_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_IN_PROCESS_SDS_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_INPROCESSSDS_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_INPROCESSSDS_H_
 
 #include <vector>
 #include <mutex>
@@ -49,15 +49,15 @@ struct InProcessSDSTraits {
     using ConditionVariable = std::condition_variable;
 
     /// A unique identifier representing this combination of traits.
-    static constexpr const char * traitsName = "alexaClientSDK::avsCommon::utils::sds::InProcessSDSTraits";
+    static constexpr const char* traitsName = "alexaClientSDK::avsCommon::utils::sds::InProcessSDSTraits";
 };
 
 /// Type alias for a SharedDataStream which works between threads in a single process.
 using InProcessSDS = SharedDataStream<InProcessSDSTraits>;
 
-} // namespace sds
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sds
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_IN_PROCESS_SDS_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_INPROCESSSDS_H_

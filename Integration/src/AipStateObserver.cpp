@@ -22,24 +22,24 @@ namespace integration {
 
 using avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface;
 
-AipStateObserver::AipStateObserver(): m_state(AudioInputProcessorObserverInterface::State::IDLE) {
+AipStateObserver::AipStateObserver() : m_state(AudioInputProcessorObserverInterface::State::IDLE) {
 }
 
 void AipStateObserver::onStateChanged(AudioInputProcessorObserverInterface::State newState) {
-	    std::unique_lock<std::mutex> lock(m_mutex);
-        m_queue.push_back(newState);
-        m_state = newState;
-        m_wakeTrigger.notify_all();
+    std::unique_lock<std::mutex> lock(m_mutex);
+    m_queue.push_back(newState);
+    m_state = newState;
+    m_wakeTrigger.notify_all();
 }
 
 bool AipStateObserver::checkState(
-        const AudioInputProcessorObserverInterface::State expectedState, const std::chrono::seconds duration) {
-	AudioInputProcessorObserverInterface::State hold = waitForNext(duration);
-	return hold == expectedState;
+    const AudioInputProcessorObserverInterface::State expectedState,
+    const std::chrono::seconds duration) {
+    AudioInputProcessorObserverInterface::State hold = waitForNext(duration);
+    return hold == expectedState;
 }
 
-AudioInputProcessorObserverInterface::State AipStateObserver::waitForNext (
-        const std::chrono::seconds duration) {
+AudioInputProcessorObserverInterface::State AipStateObserver::waitForNext(const std::chrono::seconds duration) {
     AudioInputProcessorObserverInterface::State ret;
     std::unique_lock<std::mutex> lock(m_mutex);
     if (!m_wakeTrigger.wait_for(lock, duration, [this]() { return !m_queue.empty(); })) {
@@ -51,5 +51,5 @@ AudioInputProcessorObserverInterface::State AipStateObserver::waitForNext (
     return ret;
 }
 
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace integration
+}  // namespace alexaClientSDK

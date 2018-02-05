@@ -34,7 +34,8 @@ public:
      *
      * @param name of object to log in any messages.
      */
-    Object(const std::string& name) : alexaClientSDK::avsCommon::utils::RequiresShutdown(name), properShutdown{true} {}
+    Object(const std::string& name) : alexaClientSDK::avsCommon::utils::RequiresShutdown(name), properShutdown{true} {
+    }
 
     /// Dummy shutdown function which doesn't do anything.
     void doShutdown() override;
@@ -96,10 +97,10 @@ TEST(RequiresShutdownTest, allTestCases) {
 
     // raw pointer leak that implements and calls proper shutdown function, but doesn't call it
     auto rawPointerLeakNoCallShutdown = new Object("rawPointerLeakNoCallShutdown");
-    (void) rawPointerLeakNoCallShutdown;
+    (void)rawPointerLeakNoCallShutdown;
 }
 
-} // namespace test
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

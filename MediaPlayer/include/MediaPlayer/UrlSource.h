@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_URL_SOURCE_H_
-#define ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_URL_SOURCE_H_
+#ifndef ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_URLSOURCE_H_
+#define ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_URLSOURCE_H_
 
 #include <future>
 #include <memory>
@@ -34,10 +34,10 @@
 namespace alexaClientSDK {
 namespace mediaPlayer {
 
-class UrlSource :
-        public SourceInterface,
-        public avsCommon::utils::playlistParser::PlaylistParserObserverInterface,
-        public std::enable_shared_from_this<UrlSource> {
+class UrlSource
+        : public SourceInterface
+        , public avsCommon::utils::playlistParser::PlaylistParserObserverInterface
+        , public std::enable_shared_from_this<UrlSource> {
 public:
     /**
      * Creates an instance of the @c UrlSource and installs the source within the GStreamer pipeline.
@@ -49,14 +49,16 @@ public:
      * @return An instance of the @c UrlSource if successful else a @c nullptr.
      */
     static std::shared_ptr<UrlSource> create(
-            PipelineInterface* pipeline,
-            std::shared_ptr<avsCommon::utils::playlistParser::PlaylistParserInterface> playlistParser,
-            const std::string& url);
+        PipelineInterface* pipeline,
+        std::shared_ptr<avsCommon::utils::playlistParser::PlaylistParserInterface> playlistParser,
+        const std::string& url);
 
-    void onPlaylistParsed(
-            std::string playlistUrl,
-            std::queue<std::string> urls,
-            avsCommon::utils::playlistParser::PlaylistParseResult parseResult) override;
+    void onPlaylistEntryParsed(
+        int requestId,
+        std::string url,
+        avsCommon::utils::playlistParser::PlaylistParseResult parseResult,
+        std::chrono::milliseconds duration =
+            avsCommon::utils::playlistParser::PlaylistParserObserverInterface::INVALID_DURATION) override;
 
     bool hasAdditionalData() override;
     bool handleEndOfStream() override;
@@ -68,6 +70,16 @@ public:
      */
     void preprocess() override;
 
+    /// @name Overridden StreamSourceInterface methods.
+    /// @{
+    bool isPlaybackRemote() const override;
+    /// @}
+
+    /// @name RequiresShutdown Functions
+    /// @{
+    void doShutdown() override;
+    /// @}
+
 private:
     /**
      * Constructor.
@@ -77,9 +89,9 @@ private:
      * @param url The @c url from which to create the pipeline source from.
      */
     UrlSource(
-            PipelineInterface* pipeline,
-            std::shared_ptr<avsCommon::utils::playlistParser::PlaylistParserInterface> playlistParser,
-            const std::string& url);
+        PipelineInterface* pipeline,
+        std::shared_ptr<avsCommon::utils::playlistParser::PlaylistParserInterface> playlistParser,
+        const std::string& url);
 
     /**
      * Initializes the UrlSource by doing the following:
@@ -91,6 +103,9 @@ private:
      */
     bool init();
 
+    /// A lock to serialize access to m_audioUrlQueue and m_url.
+    std::mutex m_mutex;
+
     /// The url to read audioData from.
     std::string m_url;
 
@@ -100,14 +115,19 @@ private:
     /// A Playlist Parser.
     std::shared_ptr<avsCommon::utils::playlistParser::PlaylistParserInterface> m_playlistParser;
 
-    /// Promise to notify when playlist parsing is complete.
-    std::promise<std::queue<std::string>> m_playlistParsedPromise;
+    /// Indicates if the initial callback has been received from the playlist parser.
+    bool m_hasReceivedAPlaylistCallback;
+
+    /// Promise to notify when at least one url has been returned from playlist parsing.
+    std::promise<void> m_playlistParsedPromise;
+
+    bool m_isValid;
 
     /// The @c PipelineInterface through which the source of the @c AudioPipeline may be set.
     PipelineInterface* m_pipeline;
 };
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_URL_SOURCE_H_
+#endif  // ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_URLSOURCE_H_

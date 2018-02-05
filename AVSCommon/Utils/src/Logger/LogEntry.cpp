@@ -54,7 +54,6 @@ static const std::string BOOL_TRUE = "true";
 /// String for boolean FALSE
 static const std::string BOOL_FALSE = "false";
 
-
 LogEntry::LogEntry(const std::string& source, const char* event) : m_hasMetadata(false) {
     m_stream << source << SECTION_SEPARATOR << event;
 }
@@ -140,7 +139,7 @@ void LogEntry::appendEscapedString(const char* in) {
     }
 }
 
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

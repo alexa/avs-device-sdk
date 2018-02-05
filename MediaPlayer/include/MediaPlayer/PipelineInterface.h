@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_PIPELINE_INTERFACE_H_
-#define ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_PIPELINE_INTERFACE_H_
+#ifndef ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_PIPELINEINTERFACE_H_
+#define ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_PIPELINEINTERFACE_H_
 
 #include <cstdint>
 #include <memory>
@@ -47,7 +47,7 @@ public:
      *
      * @return The appSrc element.
      */
-    virtual GstAppSrc* getAppSrc() const  = 0;
+    virtual GstAppSrc* getAppSrc() const = 0;
 
     /**
      * Sets the decoder element in the @c AudioPipeline
@@ -86,7 +86,7 @@ protected:
     virtual ~PipelineInterface() = default;
 };
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_PIPELINE_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_PIPELINEINTERFACE_H_

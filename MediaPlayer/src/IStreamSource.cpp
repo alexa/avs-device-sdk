@@ -43,9 +43,9 @@ static const std::string TAG("IStreamSource");
 static const unsigned int CHUNK_SIZE(4096);
 
 std::unique_ptr<IStreamSource> IStreamSource::create(
-        PipelineInterface* pipeline,
-        std::shared_ptr<std::istream> stream,
-        bool repeat) {
+    PipelineInterface* pipeline,
+    std::shared_ptr<std::istream> stream,
+    bool repeat) {
     std::unique_ptr<IStreamSource> result(new IStreamSource(pipeline, std::move(stream), repeat));
     if (result->init()) {
         return result;
@@ -53,17 +53,27 @@ std::unique_ptr<IStreamSource> IStreamSource::create(
     return nullptr;
 };
 
-IStreamSource::IStreamSource(PipelineInterface* pipeline, std::shared_ptr<std::istream> stream, bool repeat)
-        :
-        BaseStreamSource{pipeline},
+IStreamSource::IStreamSource(PipelineInterface* pipeline, std::shared_ptr<std::istream> stream, bool repeat) :
+        BaseStreamSource{pipeline, "IStreamSource"},
         m_stream{stream},
-        m_repeat{repeat} {
-};
+        m_repeat{repeat} {};
 
 IStreamSource::~IStreamSource() {
     close();
 }
 
+bool IStreamSource::isPlaybackRemote() const {
+    return false;
+}
+
+bool IStreamSource::hasAdditionalData() {
+    if (!m_repeat) {
+        return false;
+    }
+    m_stream->clear();
+    m_stream->seekg(0);
+    return true;
+}
 
 bool IStreamSource::isOpen() {
     return m_stream != nullptr;
@@ -74,7 +84,6 @@ void IStreamSource::close() {
 }
 
 gboolean IStreamSource::handleReadData() {
-
     if (!isOpen()) {
         ACSDK_ERROR(LX("handleReadDataFailed").d("reason", "attachmentReaderIsNullPtr"));
         return false;
@@ -109,7 +118,7 @@ gboolean IStreamSource::handleReadData() {
         ACSDK_WARN(LX("readFailed").d("bad", m_stream->bad()).d("eof", m_stream->eof()));
     } else {
         size = m_stream->gcount();
-        ACSDK_DEBUG9(LX("read").d("size", size).d("eof", m_stream->eof()));
+        ACSDK_DEBUG9(LX("read").d("size", size).d("pos", m_stream->tellg()).d("eof", m_stream->eof()));
     }
 
     gst_buffer_unmap(buffer, &info);
@@ -122,7 +131,8 @@ gboolean IStreamSource::handleReadData() {
         auto flowRet = gst_app_src_push_buffer(getAppSrc(), buffer);
         if (flowRet != GST_FLOW_OK) {
             ACSDK_ERROR(LX("handleReadDataFailed")
-                    .d("reason", "gstAppSrcPushBufferFailed").d("error", gst_flow_get_name(flowRet)));
+                            .d("reason", "gstAppSrcPushBufferFailed")
+                            .d("error", gst_flow_get_name(flowRet)));
             return false;
         } else {
             return true;
@@ -140,5 +150,11 @@ gboolean IStreamSource::handleReadData() {
     return true;
 }
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+gboolean IStreamSource::handleSeekData(guint64 offset) {
+    m_stream->clear();
+    m_stream->seekg(offset);
+    return true;
+}
+
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK

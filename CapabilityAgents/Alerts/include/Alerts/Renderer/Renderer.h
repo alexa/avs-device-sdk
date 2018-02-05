@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERER_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERER_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERER_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERER_H_
 
 #include "Alerts/Renderer/RendererInterface.h"
 #include "Alerts/Renderer/RendererObserverInterface.h"
@@ -25,7 +25,6 @@
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
 
-#include <mutex>
 #include <string>
 #include <vector>
 
@@ -37,7 +36,9 @@ namespace renderer {
 /**
  * An implementation of an alert renderer.  This class is thread-safe.
  */
-class Renderer : public RendererInterface, public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface {
+class Renderer
+        : public RendererInterface
+        , public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface {
 public:
     /**
      * Creates a @c Renderer.
@@ -46,24 +47,31 @@ public:
      * @return The @c Renderer object.
      */
     static std::shared_ptr<Renderer> create(
-            std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer);
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer);
 
-    void setObserver(RendererObserverInterface* observer) override;
+    void setObserver(std::shared_ptr<RendererObserverInterface> observer) override;
 
-    void start(const std::string & localAudioFilePath,
-               const std::vector<std::string> & urls = std::vector<std::string>(),
-               int loopCount = 0,
-               std::chrono::milliseconds loopPauseInMilliseconds = std::chrono::milliseconds::zero()) override;
+    void start(
+        std::function<std::unique_ptr<std::istream>()> audioFactory,
+        const std::vector<std::string>& urls = std::vector<std::string>(),
+        int loopCount = 0,
+        std::chrono::milliseconds loopPause = std::chrono::milliseconds{0}) override;
 
     void stop() override;
 
-    void onPlaybackStarted() override;
+    void onPlaybackStarted(SourceId sourceId) override;
 
-    void onPlaybackFinished() override;
+    void onPlaybackStopped(SourceId sourceId) override;
 
-    void onPlaybackError(std::string error) override;
+    void onPlaybackFinished(SourceId sourceId) override;
+
+    void onPlaybackError(SourceId sourceId, const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error)
+        override;
 
 private:
+    /// A type that identifies which source is currently being operated on.
+    using SourceId = avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId;
+
     /**
      * Constructor.
      *
@@ -72,49 +80,146 @@ private:
     Renderer(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer);
 
     /**
-     * A utility function to actually start rendering the alert, which the executor may call on its own thread.
+     * @name Executor Thread Functions
+     *
+     * These functions (and only these functions) are called by @c m_executor on a single worker thread.  All other
+     * functions in this class can be called asynchronously, and pass data to the @c Executor thread through parameters
+     * to lambda functions.  No additional synchronization is needed.
      */
-    void executeStart();
+    /// @{
+
+    /*
+     * This function will handle setting an observer.
+     *
+     * @param observer The observer to set.
+     */
+    void executeSetObserver(std::shared_ptr<RendererObserverInterface> observer);
 
     /**
-     * A utility function to actually stop rendering the alert, which the executor may call on its own thread.
+     * This function will start rendering audio for the currently active alert.
+     *
+     * @param audioFactory A function that produces a stream of audio that is used for the default if nothing
+     * else is available.
+     * @param urls A container of urls to be rendered per the above description.
+     * @param loopCount The number of times the urls should be rendered.
+     * @param loopPauseInMilliseconds The number of milliseconds to pause between rendering url sequences.
+     */
+    void executeStart(
+        std::function<std::unique_ptr<std::istream>()> audioFactory,
+        const std::vector<std::string>& urls,
+        int loopCount,
+        std::chrono::milliseconds loopPause);
+
+    /**
+     * This function will stop rendering the currently active alert audio.
      */
     void executeStop();
+
+    /**
+     * This function will handle the playbackStarted callback.
+     *
+     * @param sourceId The sourceId of the media that has started playing.
+     */
+    void executeOnPlaybackStarted(SourceId sourceId);
+
+    /**
+     * This function will handle the playbackStopped callback.
+     *
+     * @param sourceId The sourceId of the media that has stopped playing.
+     */
+    void executeOnPlaybackStopped(SourceId sourceId);
+
+    /**
+     * This function will handle the playbackFinished callback.
+     *
+     * @param sourceId The sourceId of the media that has finished playing.
+     */
+    void executeOnPlaybackFinished(SourceId sourceId);
+
+    /**
+     * This function will handle the playbackError callback.
+     * @param sourceId The sourceId of the media that encountered the error.
+     * @param type The error type.
+     * @param error The error string generated by the @c MediaPlayer.
+     */
+    void executeOnPlaybackError(
+        SourceId sourceId,
+        const avsCommon::utils::mediaPlayer::ErrorType& type,
+        const std::string& error);
+
+    /**
+     * Utility function to handle notifying our observer, if there is one.
+     *
+     * @param state The state to notify the observer of.
+     * @param message The optional message to pass to the observer.
+     */
+    void notifyObserver(RendererObserverInterface::State state, const std::string& message = "");
+
+    /**
+     * Utility function to set our internal sourceId to a non-assigned state, which is best encapsulated in
+     * a function since it is a bit non-intuitive per MediaPlayer's interface.
+     */
+    void resetSourceId();
+
+    /**
+     * Utility function to handle the rendering of the next url, with respect to @c m_loopCount and
+     * @c m_nextUrlIndexToRender.  If all urls within a loop have completed, and there are further loops to render,
+     * this function will also perform a sleep for the @c m_loopPause duration.
+     *
+     * @return @c true if there are more urls to render, and the next one has been successfully sent to the
+     * @c m_mediaPlayer to be played.  Returns @c false otherwise.
+     */
+    bool renderNextUrl();
+
+    /// @}
+
+    /**
+     * @name Executor Thread Variables
+     *
+     * These member variables are only accessed by functions in the @c m_executor worker thread, and do not require any
+     * synchronization.
+     */
+    /// @{
 
     /// The @cMediaPlayerInterface which renders the audio files.
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_mediaPlayer;
 
-    /// Mutex to control access to local variables from the public api, and also the internal executor.
-    std::mutex m_mutex;
-
     /// Our observer.
-    RendererObserverInterface* m_observer;
-
-    /// The local audio file to be rendered.  This should always be set as a fallback resource in case the
-    /// rendering of a url happens to fail (eg. network is down at that time).
-    std::string m_localAudioFilePath;
+    std::shared_ptr<RendererObserverInterface> m_observer;
 
     /// An optional sequence of urls to be rendered.  If the vector is empty, m_localAudioFilePath will be
     /// rendered instead.
     std::vector<std::string> m_urls;
 
+    /// The next url in the url vector to render.
+    int m_nextUrlIndexToRender;
+
     /// The number of times @c m_urls should be rendered.
     int m_loopCount;
 
     /// The time to pause between the rendering of the @c m_urls sequence.
-    std::chrono::milliseconds m_loopPauseInMilliseconds;
+    std::chrono::milliseconds m_loopPause;
 
-    /// A flag to capture if renderer is active.
-    bool m_isRendering;
+    /// A flag to capture if the renderer has been asked to stop by its owner.
+    bool m_isStopping;
 
-    /// The @c Executor which serially and asynchronously handles operations with regard to rendering the alert.
-    /// TODO : ACSDK-388 to update the onPlayback* callback functions to also go through the executor.
+    /// The id associated with the media that our MediaPlayer is currently handling.
+    SourceId m_currentSourceId;
+
+    /// @}
+
+    /**
+     * The @c Executor which queues up operations from asynchronous API calls.
+     *
+     * @note This declaration needs to come *after* the Executor Thread Variables above so that the thread shuts down
+     *     before the Executor Thread Variables are destroyed.
+     */
     avsCommon::utils::threading::Executor m_executor;
 };
 
-} // namespace renderer
-} // namespace alerts
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace renderer
+}  // namespace alerts
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERER_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERER_H_

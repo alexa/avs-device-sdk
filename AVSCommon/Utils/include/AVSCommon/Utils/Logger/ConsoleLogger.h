@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_CONSOLE_LOGGER_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_CONSOLE_LOGGER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_CONSOLELOGGER_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_CONSOLELOGGER_H_
 
 #include "AVSCommon/Utils/Logger/Logger.h"
 
@@ -35,19 +35,18 @@ public:
      *
      * @return The one and only @c ConsoleLogger instance.
      */
-    static Logger& instance();
+    static std::shared_ptr<Logger> instance();
 
-    void emit(
-            Level level,
-            std::chrono::system_clock::time_point time,
-            const char *threadMoniker,
-            const char *text) override;
+    void emit(Level level, std::chrono::system_clock::time_point time, const char* threadMoniker, const char* text)
+        override;
 
 private:
     /**
      * Constructor.
      */
     ConsoleLogger();
+
+    std::mutex m_coutMutex;
 };
 
 /**
@@ -55,11 +54,11 @@ private:
  *
  * @return The singleton instance of @c ConsoleLogger.
  */
-Logger& getConsoleLogger();
+std::shared_ptr<Logger> getConsoleLogger();
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_CONSOLE_LOGGER_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_CONSOLELOGGER_H_

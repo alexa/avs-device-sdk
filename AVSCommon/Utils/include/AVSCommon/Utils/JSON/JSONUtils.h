@@ -14,8 +14,8 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_JSON_JSONUTILS_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_JSON_JSONUTILS_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_JSON_JSONUTILS_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_JSON_JSONUTILS_H_
 
 #include <rapidjson/document.h>
 #include <string>
@@ -45,34 +45,10 @@ inline static std::string getTag() {
  * @param[out] iteratorPtr A pointer to a @c ConstMemberIterator, which will contain the @c Value.
  * @return @c true if the lookup is successful, @c false otherwise.
  */
-bool findNode(const rapidjson::Value& jsonNode, const std::string& key, rapidjson::Value::ConstMemberIterator* iteratorPtr);
-
-/**
- * TODO: ACSDK-382 Remove references of this method with the retrieveValue method.
- * Given a JSON string, this function will look up a particular string value of a direct child
- * node of the logical JSON document.  If the node being looked up is a logical JSON object,
- * then that object will be serialized and placed in the output string parameter.
- *
- * In this initial version of the api, this function will return false if the given key refers to a
- * boolean, number or array.
- *
- * @param jsonContent The JSON string content.
- * @param key The key of the underlying JSON content we wish to acquire the value of.
- * @param[out] value The output parameter which will be assigned the string value.
- * @return @c true if the lookup is successful, @c false otherwise.
- */
-bool lookupStringValue(const std::string& jsonContent, const std::string& key, std::string* value);
-
-/**
- * TODO: ACSDK-382 Replace references of this method with the retrieveValue method.
- * This function is similar to lookupStringValue(), but converts the value to an int64_t
- *
- * @param jsonContent The JSON string content.
- * @param key The key of the underlying JSON content we wish to acquire the value of.
- * @param[out] value The output parameter which will be assigned the int64_t value.
- * @return @c true if the lookup is successful, @c false otherwise.
- */
-bool lookupInt64Value(const std::string& jsonContent, const std::string& key, int64_t* value);
+bool findNode(
+    const rapidjson::Value& jsonNode,
+    const std::string& key,
+    rapidjson::Value::ConstMemberIterator* iteratorPtr);
 
 /**
  * Invoke a rapidjson parse on a JSON string.
@@ -102,14 +78,24 @@ bool convertToValue(const rapidjson::Value& documentNode, std::string* value);
 bool convertToValue(const rapidjson::Value& documentNode, int64_t* value);
 
 /**
+ * Converts a given rapidjson value node to a bool. The node must be Bool type.
+ *
+ * @param documentNode A logical node within a parsed JSON document which rapidjson understands.
+ * @param[out] value The output parameter which will be assigned the bool value.
+ * @return @c true If the node was successfully converted, @c false otherwise.
+ */
+bool convertToValue(const rapidjson::Value& documentNode, bool* value);
+
+/**
  * A template function to find and retrieve a value of type T from a direct child of the
  * provided @c rapidjson::Value object. The type T must have an overload of the function
  * @c convertToValue.
  *
  * @param jsonNode A logical node within a parsed JSON document which rapidjson understands.
  * @param key The key in which to look for the value.
- * @param[out] value The output parameter which will be assigned the value of type T.
- * @return @c true If the node was successfully converted, @c false otherwise.
+ * @param[out] value The output parameter which will be assigned the value of type T if the function
+ * succeeds. No modification is done in case of failure.
+ * @return @c true If the value was successfully retrieved, @c false otherwise.
  */
 template <typename T>
 bool retrieveValue(const rapidjson::Value& jsonNode, const std::string& key, T* value) {
@@ -123,11 +109,7 @@ bool retrieveValue(const rapidjson::Value& jsonNode, const std::string& key, T* 
         return false;
     }
 
-    if (!convertToValue(iterator->value, value)) {
-        return false;
-    }
-
-    return true;
+    return convertToValue(iterator->value, value);
 }
 
 /**
@@ -137,8 +119,9 @@ bool retrieveValue(const rapidjson::Value& jsonNode, const std::string& key, T* 
  *
  * @param jsonString A JSON string.
  * @param key The key in which to look for the value.
- * @param[out] value The output parameter which will be assigned the value of type T.
- * @return @c true If the node was successfully converted, @c false otherwise.
+ * @param[out] value The output parameter which will be assigned the value of type T if the function
+ * succeeds. No modification is done in case of failure.
+ * @return @c true If the value was successfully retrieved, @c false otherwise.
  */
 template <typename T>
 bool retrieveValue(const std::string jsonString, const std::string& key, T* value) {
@@ -163,12 +146,12 @@ bool retrieveValue(const std::string jsonString, const std::string& key, T* valu
  * @param key The name of the array being looked for.
  * @return Whether a child element of array type was found.
  */
-bool jsonArrayExists(const rapidjson::Value & parsedDocument, const std::string & key);
+bool jsonArrayExists(const rapidjson::Value& parsedDocument, const std::string& key);
 
-} // namespace jsonUtils
-} // namespace json
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace jsonUtils
+}  // namespace json
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_JSON_JSONUTILS_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_JSON_JSONUTILS_H_

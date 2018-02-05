@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOGGER_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOGGER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LOGGER_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LOGGER_H_
 
 #include <atomic>
 #include <chrono>
@@ -195,10 +195,10 @@ public:
      * @param text The text of the entry to log.
      */
     virtual void emit(
-            Level level,
-            std::chrono::system_clock::time_point time,
-            const char *threadMoniker,
-            const char *text) = 0;
+        Level level,
+        std::chrono::system_clock::time_point time,
+        const char* threadMoniker,
+        const char* text) = 0;
 
     /**
      * Add an observer to this object.
@@ -206,7 +206,7 @@ public:
      * @param An observer to this class, which will be notified when
      * the logLevel changes.
      */
-    void addLogLevelObserver(LogLevelObserverInterface * observer);
+    void addLogLevelObserver(LogLevelObserverInterface* observer);
 
     /**
      * Remove an observer to this object.
@@ -214,7 +214,7 @@ public:
      * @param An observer to this class that will be removed from the
      * notificaiton of logLevel changes.
      */
-    void removeLogLevelObserver(LogLevelObserverInterface * observer);
+    void removeLogLevelObserver(LogLevelObserverInterface* observer);
 
 protected:
     /**
@@ -234,7 +234,7 @@ private:
     void notifyObserversOnLogLevelChanged();
 
     /// Vector of observers that want to be notified of logLevel changes
-    std::vector<LogLevelObserverInterface *> m_observers;
+    std::vector<LogLevelObserverInterface*> m_observers;
 
     /// This mutex guards access to m_observers
     std::mutex m_observersMutex;
@@ -257,19 +257,19 @@ bool Logger::shouldLog(Level level) const {
 #endif
 
 /// Build the get<type>Logger function name for whatever @c Logger logs will be sent to.
-#define ACSDK_GET_SINK_LOGGER  ACSDK_GET_LOGGER_FUNCTION_NAME(ACSDK_LOG_SINK)
+#define ACSDK_GET_SINK_LOGGER ACSDK_GET_LOGGER_FUNCTION_NAME(ACSDK_LOG_SINK)
 
 /**
  * Get the @c Logger that logs should be sent to.
  *
  * @return The @c Logger that logs should be sent to.
  */
-Logger& ACSDK_GET_SINK_LOGGER();
+std::shared_ptr<Logger> ACSDK_GET_SINK_LOGGER();
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
 #ifdef ACSDK_LOG_MODULE
 
@@ -285,7 +285,7 @@ namespace logger {
  * In this case @c ACSDK_LOG_MODULE was defined and logs will be sent to the @c Logger returned by
  * @c get<ACSDK_LOG_MODULE>Logger().
  */
-#define ACSDK_GET_LOGGER_FUNCTION  ACSDK_GET_LOGGER_FUNCTION_NAME(ACSDK_LOG_MODULE)
+#define ACSDK_GET_LOGGER_FUNCTION ACSDK_GET_LOGGER_FUNCTION_NAME(ACSDK_LOG_MODULE)
 
 /**
  * Inline method to get the logger for the module specified by @c ACSDK_LOG_MODULE.
@@ -295,19 +295,32 @@ inline Logger& ACSDK_GET_LOGGER_FUNCTION() {
     return moduleLogger;
 }
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#else // ACSDK_LOG_MODULE
+#else  // ACSDK_LOG_MODULE
+
+namespace alexaClientSDK {
+namespace avsCommon {
+namespace utils {
+namespace logger {
 
 /**
- * Macro to define the function that ACSDK_<LEVEL> macros will send logs to.
+ * Inline method to get the function that ACSDK_<LEVEL> macros will send logs to.
  * In this case @c ACSDK_LOG_MODULE was not defined, so logs are sent to the @c Logger returned by
  * @c get<ACSDK_LOG_SINK>Logger().
  */
-#define ACSDK_GET_LOGGER_FUNCTION ACSDK_GET_SINK_LOGGER
+inline Logger& ACSDK_GET_LOGGER_FUNCTION() {
+    static std::shared_ptr<Logger> logger = ACSDK_GET_SINK_LOGGER();
+    return *logger;
+}
+
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
 #endif
 
@@ -317,12 +330,12 @@ inline Logger& ACSDK_GET_LOGGER_FUNCTION() {
  * @param level The log level to associate with the log line.
  * @param entry The text (or builder of the text) for the log entry.
  */
-#define ACSDK_LOG(level, entry)                                                                         \
-    do {                                                                                                \
-        auto& loggerInstance = alexaClientSDK::avsCommon::utils::logger::ACSDK_GET_LOGGER_FUNCTION();   \
-        if (loggerInstance.shouldLog(level)) {                                                          \
-            loggerInstance.log(level, entry);                                                           \
-        }                                                                                               \
+#define ACSDK_LOG(level, entry)                                                                       \
+    do {                                                                                              \
+        auto& loggerInstance = alexaClientSDK::avsCommon::utils::logger::ACSDK_GET_LOGGER_FUNCTION(); \
+        if (loggerInstance.shouldLog(level)) {                                                        \
+            loggerInstance.log(level, entry);                                                         \
+        }                                                                                             \
     } while (false)
 
 #ifdef ACSDK_DEBUG_LOG_ENABLED
@@ -415,7 +428,7 @@ inline Logger& ACSDK_GET_LOGGER_FUNCTION() {
  */
 #define ACSDK_DEBUG(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG0, entry)
 
-#else // ACSDK_DEBUG_LOG_ENABLED
+#else  // ACSDK_DEBUG_LOG_ENABLED
 
 /**
  * Compile out a DEBUG9 severity log line.
@@ -505,7 +518,7 @@ inline Logger& ACSDK_GET_LOGGER_FUNCTION() {
  */
 #define ACSDK_DEBUG(entry)
 
-#endif // ACSDK_DEBUG_LOG_ENABLED
+#endif  // ACSDK_DEBUG_LOG_ENABLED
 
 /**
  * Send a INFO severity log line.
@@ -538,6 +551,4 @@ inline Logger& ACSDK_GET_LOGGER_FUNCTION() {
  */
 #define ACSDK_CRITICAL(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::CRITICAL, entry)
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOGGER_H_
-
-
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LOGGER_H_

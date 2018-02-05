@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_IN_PROCESS_ATTACHMENT_READER_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_IN_PROCESS_ATTACHMENT_READER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_INPROCESSATTACHMENTREADER_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_INPROCESSATTACHMENTREADER_H_
 
 #include "AVSCommon/Utils/SDS/InProcessSDS.h"
 #include "AVSCommon/Utils/SDS/Reader.h"
@@ -53,20 +53,25 @@ public:
      *     to @c ABSOLUTE, indicating offset is relative to the very beginning of the Attachment.
      */
     static std::unique_ptr<InProcessAttachmentReader> create(
-            Policy policy,
-            std::shared_ptr<SDSType> sds,
-            SDSTypeIndex offset = 0,
-            SDSTypeReader::Reference reference = SDSTypeReader::Reference::ABSOLUTE);
+        Policy policy,
+        std::shared_ptr<SDSType> sds,
+        SDSTypeIndex offset = 0,
+        SDSTypeReader::Reference reference = SDSTypeReader::Reference::ABSOLUTE);
 
     /**
      * Destructor.
      */
     ~InProcessAttachmentReader();
 
-    std::size_t read(void* buf, std::size_t numBytes, ReadStatus* readStatus,
-                     std::chrono::milliseconds timeoutMs = std::chrono::milliseconds(0)) override;
+    std::size_t read(
+        void* buf,
+        std::size_t numBytes,
+        ReadStatus* readStatus,
+        std::chrono::milliseconds timeoutMs = std::chrono::milliseconds(0)) override;
 
     void close(ClosePoint closePoint = ClosePoint::AFTER_DRAINING_CURRENT_BUFFER) override;
+
+    bool seek(uint64_t offset) override;
 
 private:
     /**
@@ -81,9 +86,9 @@ private:
     std::shared_ptr<SDSTypeReader> m_reader;
 };
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_IN_PROCESS_ATTACHMENT_READER_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_INPROCESSATTACHMENTREADER_H_

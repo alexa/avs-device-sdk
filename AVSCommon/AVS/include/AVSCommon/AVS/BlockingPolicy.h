@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_BLOCKING_POLICY_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_BLOCKING_POLICY_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_BLOCKINGPOLICY_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_BLOCKINGPOLICY_H_
 
 #include <iostream>
 
@@ -39,6 +39,12 @@ enum class BlockingPolicy {
     BLOCKING,
 
     /**
+     * Handling of an @c AVSDirective with this @c BlockingPolicy is done immediately and does NOT block the handling of
+     * subsequent @c AVSDirectives.
+     */
+    HANDLE_IMMEDIATELY,
+
+    /**
      * BlockingPolicy not specified.
      */
     NONE
@@ -51,13 +57,16 @@ enum class BlockingPolicy {
  * @param policy The policy value to write to the @c ostream as a string.
  * @return The @c ostream that was passed in and written to.
  */
-inline std::ostream& operator << (std::ostream& stream, BlockingPolicy policy) {
+inline std::ostream& operator<<(std::ostream& stream, BlockingPolicy policy) {
     switch (policy) {
         case BlockingPolicy::NON_BLOCKING:
             stream << "NON_BLOCKING";
             break;
         case BlockingPolicy::BLOCKING:
             stream << "BLOCKING";
+            break;
+        case BlockingPolicy::HANDLE_IMMEDIATELY:
+            stream << "HANDLE_IMMEDIATELY";
             break;
         case BlockingPolicy::NONE:
             stream << "NONE";
@@ -66,8 +75,8 @@ inline std::ostream& operator << (std::ostream& stream, BlockingPolicy policy) {
     return stream;
 }
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_BLOCKING_POLICY_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_BLOCKINGPOLICY_H_

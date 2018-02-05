@@ -1,7 +1,7 @@
 /*
  * PortAudioMicrophoneWrapper.cpp
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,14 +29,12 @@ static const double SAMPLE_RATE = 16000;
 static const unsigned long PREFERRED_SAMPLES_PER_CALLBACK = paFramesPerBufferUnspecified;
 
 std::unique_ptr<PortAudioMicrophoneWrapper> PortAudioMicrophoneWrapper::create(
-        std::shared_ptr<AudioInputStream> stream) {
+    std::shared_ptr<AudioInputStream> stream) {
     if (!stream) {
         ConsolePrinter::simplePrint("Invalid stream passed to PortAudioMicrophoneWrapper");
         return nullptr;
     }
-    std::unique_ptr<PortAudioMicrophoneWrapper> portAudioMicrophoneWrapper(
-        new PortAudioMicrophoneWrapper(stream)
-    );
+    std::unique_ptr<PortAudioMicrophoneWrapper> portAudioMicrophoneWrapper(new PortAudioMicrophoneWrapper(stream));
     if (!portAudioMicrophoneWrapper->initialize()) {
         ConsolePrinter::simplePrint("Failed to initialize PortAudioMicrophoneWrapper");
         return nullptr;
@@ -44,8 +42,9 @@ std::unique_ptr<PortAudioMicrophoneWrapper> PortAudioMicrophoneWrapper::create(
     return portAudioMicrophoneWrapper;
 }
 
-PortAudioMicrophoneWrapper::PortAudioMicrophoneWrapper(std::shared_ptr<AudioInputStream> stream) : 
-        m_audioInputStream{stream}, m_paStream{nullptr} {
+PortAudioMicrophoneWrapper::PortAudioMicrophoneWrapper(std::shared_ptr<AudioInputStream> stream) :
+        m_audioInputStream{stream},
+        m_paStream{nullptr} {
 }
 
 PortAudioMicrophoneWrapper::~PortAudioMicrophoneWrapper() {
@@ -74,8 +73,7 @@ bool PortAudioMicrophoneWrapper::initialize() {
         SAMPLE_RATE,
         PREFERRED_SAMPLES_PER_CALLBACK,
         PortAudioCallback,
-        this
-    );
+        this);
     if (err != paNoError) {
         ConsolePrinter::simplePrint("Failed to open PortAudio default stream");
         return false;
@@ -104,12 +102,12 @@ bool PortAudioMicrophoneWrapper::stopStreamingMicrophoneData() {
 }
 
 int PortAudioMicrophoneWrapper::PortAudioCallback(
-        const void* inputBuffer,
-        void* outputBuffer,
-        unsigned long numSamples,
-        const PaStreamCallbackTimeInfo* timeInfo,
-        PaStreamCallbackFlags statusFlags,
-        void* userData) {
+    const void* inputBuffer,
+    void* outputBuffer,
+    unsigned long numSamples,
+    const PaStreamCallbackTimeInfo* timeInfo,
+    PaStreamCallbackFlags statusFlags,
+    void* userData) {
     PortAudioMicrophoneWrapper* wrapper = static_cast<PortAudioMicrophoneWrapper*>(userData);
     ssize_t returnCode = wrapper->m_writer->write(inputBuffer, numSamples);
     if (returnCode <= 0) {
@@ -119,6 +117,5 @@ int PortAudioMicrophoneWrapper::PortAudioCallback(
     return paContinue;
 }
 
-
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK

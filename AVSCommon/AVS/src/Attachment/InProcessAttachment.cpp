@@ -1,7 +1,7 @@
 /*
  * InProcessAttachment.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,8 +25,9 @@ namespace attachment {
 
 using namespace alexaClientSDK::avsCommon::utils::memory;
 
-InProcessAttachment::InProcessAttachment(const std::string & id, std::unique_ptr<SDSType> sds) :
-        Attachment(id), m_sds{std::move(sds)} {
+InProcessAttachment::InProcessAttachment(const std::string& id, std::unique_ptr<SDSType> sds) :
+        Attachment(id),
+        m_sds{std::move(sds)} {
     if (!m_sds) {
         auto buffSize = SDSType::calculateBufferSize(SDS_BUFFER_DEFAULT_SIZE_IN_BYTES);
         auto buff = std::make_shared<SDSBufferType>(buffSize);
@@ -34,14 +35,15 @@ InProcessAttachment::InProcessAttachment(const std::string & id, std::unique_ptr
     }
 }
 
-std::unique_ptr<AttachmentWriter> InProcessAttachment::createWriter() {
+std::unique_ptr<AttachmentWriter> InProcessAttachment::createWriter(
+    InProcessAttachmentWriter::SDSTypeWriter::Policy policy) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
     if (m_hasCreatedWriter) {
         return nullptr;
     }
 
-    auto writer = InProcessAttachmentWriter::create(m_sds);
+    auto writer = InProcessAttachmentWriter::create(m_sds, policy);
     if (writer) {
         m_hasCreatedWriter = true;
     }
@@ -64,7 +66,7 @@ std::unique_ptr<AttachmentReader> InProcessAttachment::createReader(AttachmentRe
     return std::move(reader);
 }
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

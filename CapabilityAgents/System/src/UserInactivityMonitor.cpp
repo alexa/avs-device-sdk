@@ -58,10 +58,10 @@ static const std::string INACTIVITY_EVENT_PAYLOAD_KEY = "inactiveTimeInSeconds";
 static const std::string RESET_DIRECTIVE_NAME = "ResetUserInactivity";
 
 void UserInactivityMonitor::removeDirectiveGracefully(
-        std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info,
-        bool isFailure,
-        const std::string &report) {
-    if(info) {
+    std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info,
+    bool isFailure,
+    const std::string& report) {
+    if (info) {
         if (info->result) {
             if (isFailure) {
                 info->result->setFailed(report);
@@ -76,9 +76,9 @@ void UserInactivityMonitor::removeDirectiveGracefully(
 }
 
 std::shared_ptr<UserInactivityMonitor> UserInactivityMonitor::create(
-        std::shared_ptr<MessageSenderInterface> messageSender,
-        std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-        const std::chrono::milliseconds& sendPeriod) {
+    std::shared_ptr<MessageSenderInterface> messageSender,
+    std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+    const std::chrono::milliseconds& sendPeriod) {
     if (!messageSender) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullMessageSender"));
         return nullptr;
@@ -88,22 +88,21 @@ std::shared_ptr<UserInactivityMonitor> UserInactivityMonitor::create(
         return nullptr;
     }
     return std::shared_ptr<UserInactivityMonitor>(
-            new UserInactivityMonitor(messageSender, exceptionEncounteredSender, sendPeriod));
+        new UserInactivityMonitor(messageSender, exceptionEncounteredSender, sendPeriod));
 }
 
 UserInactivityMonitor::UserInactivityMonitor(
-        std::shared_ptr<MessageSenderInterface> messageSender,
-        std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-        const std::chrono::milliseconds& sendPeriod) :
-    CapabilityAgent(USER_INACTIVITY_MONITOR_NAMESPACE, exceptionEncounteredSender),
-    m_messageSender{messageSender},
-    m_lastTimeActive{std::chrono::steady_clock::now()}
-{
+    std::shared_ptr<MessageSenderInterface> messageSender,
+    std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+    const std::chrono::milliseconds& sendPeriod) :
+        CapabilityAgent(USER_INACTIVITY_MONITOR_NAMESPACE, exceptionEncounteredSender),
+        m_messageSender{messageSender},
+        m_lastTimeActive{std::chrono::steady_clock::now()} {
     m_eventTimer.start(
-            sendPeriod,
-            Timer::PeriodType::ABSOLUTE,
-            Timer::FOREVER,
-            std::bind(&UserInactivityMonitor::sendInactivityReport, this));
+        sendPeriod,
+        Timer::PeriodType::ABSOLUTE,
+        Timer::FOREVER,
+        std::bind(&UserInactivityMonitor::sendInactivityReport, this));
 }
 
 void UserInactivityMonitor::sendInactivityReport() {
@@ -121,9 +120,9 @@ void UserInactivityMonitor::sendInactivityReport() {
 
     Document inactivityPayload(kObjectType);
     SizeType payloadKeySize = INACTIVITY_EVENT_PAYLOAD_KEY.length();
-    const Pointer::Token payloadKey[] = {{INACTIVITY_EVENT_PAYLOAD_KEY.c_str(),payloadKeySize, kPointerInvalidIndex}};
-    auto inactiveTime = std::chrono::duration_cast<std::chrono::seconds>(
-            std::chrono::steady_clock::now() - lastTimeActive);
+    const Pointer::Token payloadKey[] = {{INACTIVITY_EVENT_PAYLOAD_KEY.c_str(), payloadKeySize, kPointerInvalidIndex}};
+    auto inactiveTime =
+        std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - lastTimeActive);
     Pointer(payloadKey, 1).Set(inactivityPayload, inactiveTime.count());
     std::string inactivityPayloadString;
     jsonUtils::convertToValue(inactivityPayload, &inactivityPayloadString);
@@ -133,9 +132,8 @@ void UserInactivityMonitor::sendInactivityReport() {
 }
 
 DirectiveHandlerConfiguration UserInactivityMonitor::getConfiguration() const {
-    return DirectiveHandlerConfiguration{{
-            NamespaceAndName{USER_INACTIVITY_MONITOR_NAMESPACE, RESET_DIRECTIVE_NAME},
-            BlockingPolicy::NON_BLOCKING}};
+    return DirectiveHandlerConfiguration{
+        {NamespaceAndName{USER_INACTIVITY_MONITOR_NAMESPACE, RESET_DIRECTIVE_NAME}, BlockingPolicy::NON_BLOCKING}};
 }
 
 void UserInactivityMonitor::handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) {
@@ -168,6 +166,6 @@ void UserInactivityMonitor::onUserActive() {
     }
 }
 
-} // namespace system
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace system
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK

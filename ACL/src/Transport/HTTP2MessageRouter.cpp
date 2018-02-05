@@ -28,24 +28,24 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs::attachment;
 
 HTTP2MessageRouter::HTTP2MessageRouter(
-        std::shared_ptr<AuthDelegateInterface> authDelegate,
-        std::shared_ptr<AttachmentManager> attachmentManager,
-        const std::string& avsEndpoint)
-    : MessageRouter(authDelegate, attachmentManager, avsEndpoint) {
+    std::shared_ptr<AuthDelegateInterface> authDelegate,
+    std::shared_ptr<AttachmentManager> attachmentManager,
+    const std::string& avsEndpoint) :
+        MessageRouter(authDelegate, attachmentManager, avsEndpoint) {
 }
 
 HTTP2MessageRouter::~HTTP2MessageRouter() {
 }
 
 std::shared_ptr<TransportInterface> HTTP2MessageRouter::createTransport(
-        std::shared_ptr<AuthDelegateInterface> authDelegate,
-        std::shared_ptr<AttachmentManager> attachmentManager,
-        const std::string& avsEndpoint,
-        MessageConsumerInterface* messageConsumerInterface,
-        TransportObserverInterface* transportObserverInterface) {
-    return std::make_shared<HTTP2Transport>(authDelegate, avsEndpoint, messageConsumerInterface, attachmentManager,
-            transportObserverInterface);
+    std::shared_ptr<AuthDelegateInterface> authDelegate,
+    std::shared_ptr<AttachmentManager> attachmentManager,
+    const std::string& avsEndpoint,
+    std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
+    std::shared_ptr<TransportObserverInterface> transportObserverInterface) {
+    return HTTP2Transport::create(
+        authDelegate, avsEndpoint, messageConsumerInterface, attachmentManager, transportObserverInterface);
 }
 
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace acl
+}  // namespace alexaClientSDK

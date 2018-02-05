@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_BASE_STREAM_SOURCE_H_
-#define ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_BASE_STREAM_SOURCE_H_
+#ifndef ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_BASESTREAMSOURCE_H_
+#define ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_BASESTREAMSOURCE_H_
 
 #include <memory>
 
@@ -30,16 +30,16 @@
 namespace alexaClientSDK {
 namespace mediaPlayer {
 
-
 class BaseStreamSource : public SourceInterface {
 public:
     /**
      * Constructor.
      *
      * @param pipeline The @c PipelineInterface through which the source of the @c AudioPipeline may be set.
+     * @param className The name of the class to be passed to @c RequiresShutdown.
      */
-    BaseStreamSource(PipelineInterface* pipeline);
-    
+    BaseStreamSource(PipelineInterface* pipeline, const std::string& className);
+
     ~BaseStreamSource() override;
 
     bool hasAdditionalData() override;
@@ -75,6 +75,13 @@ protected:
      * @return @c false if there is an error or end of data from this source, else @c true.
      */
     virtual gboolean handleReadData() = 0;
+
+    /**
+     * Seeks to the appropriate offset. Any data pushed after this should come from the new offset.
+     *
+     * @return @c false if the seek failed, or @c true otherwise.
+     */
+    virtual gboolean handleSeekData(guint64 offset) = 0;
 
     /**
      * Get the AppSrc to which this instance should feed audio data.
@@ -141,6 +148,8 @@ private:
      */
     gboolean handleEnoughData();
 
+    static gboolean onSeekData(GstElement* pipeline, guint64 offset, gpointer source);
+
     /**
      * The callback for reading data from this instance.
      *
@@ -170,6 +179,9 @@ private:
     /// ID of the handler installed to receive enough data signals.
     guint m_enoughDataHandlerId;
 
+    /// ID of the handler installed to receive seek data signals.
+    guint m_seekDataHandlerId;
+
     /// Mutex to serialize access to idle callback IDs.
     std::mutex m_callbackIdMutex;
 
@@ -180,8 +192,7 @@ private:
     guint m_enoughDataCallbackId;
 };
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_BASE_STREAM_SOURCE_H_
-
+#endif  // ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_BASESTREAMSOURCE_H_

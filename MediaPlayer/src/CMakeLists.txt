@@ -2,8 +2,10 @@ add_definitions("-DACSDK_LOG_MODULE=mediaPlayer")
 add_library(MediaPlayer SHARED
     AttachmentReaderSource.cpp
     BaseStreamSource.cpp
+    ErrorTypeConversion.cpp
     IStreamSource.cpp
     MediaPlayer.cpp
+    Normalizer.cpp
     OffsetManager.cpp
     UrlSource.cpp)
 

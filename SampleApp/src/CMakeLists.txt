@@ -4,6 +4,7 @@ add_executable(SampleApp
     InteractionManager.cpp 
     UserInputManager.cpp
     ConsolePrinter.cpp
+    GuiRenderer.cpp
     UIManager.cpp
     KeywordObserver.cpp
     ConnectionObserver.cpp
@@ -13,6 +14,7 @@ target_include_directories(SampleApp PUBLIC
     "${SampleApp_SOURCE_DIR}/include"
     "${MediaPlayer_SOURCE_DIR}/include"
     "${DefaultClient_SOURCE_DIR}/include"
+    "${AudioResources_SOURCE_DIR}/include"
     "${PORTAUDIO_INCLUDE_DIR}")
 
 target_link_libraries(SampleApp 
@@ -39,7 +41,8 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
         "-framework Carbon")
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     target_link_libraries(SampleApp
-        rt m pthread asound)
+      rt m pthread asound)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     message(FATAL_ERROR "Windows is unsupported at the moment")  
 endif()
+

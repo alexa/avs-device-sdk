@@ -40,7 +40,7 @@ void LoggerSinkManager::addSinkObserver(SinkObserverInterface* observer) {
     }
 
     // notify this observer of the current sink right away
-    observer->onSinkChanged(*m_sink);
+    observer->onSinkChanged(m_sink);
 }
 
 void LoggerSinkManager::removeSinkObserver(SinkObserverInterface* observer) {
@@ -48,13 +48,11 @@ void LoggerSinkManager::removeSinkObserver(SinkObserverInterface* observer) {
         return;
     }
     std::lock_guard<std::mutex> lock(m_sinkObserverMutex);
-    m_sinkObservers.erase(
-        std::remove(m_sinkObservers.begin(), m_sinkObservers.end(), observer),
-        m_sinkObservers.end());
+    m_sinkObservers.erase(std::remove(m_sinkObservers.begin(), m_sinkObservers.end(), observer), m_sinkObservers.end());
 }
 
-void LoggerSinkManager::changeSinkLogger(Logger& sink) {
-    if (m_sink == &sink) {
+void LoggerSinkManager::initialize(const std::shared_ptr<Logger>& sink) {
+    if (m_sink == sink) {
         // don't do anything if the sink is the same
         return;
     }
@@ -66,19 +64,18 @@ void LoggerSinkManager::changeSinkLogger(Logger& sink) {
         observersCopy = m_sinkObservers;
     }
 
-    m_sink = &sink;
+    m_sink = sink;
 
     // call the callbacks
     for (auto observer : observersCopy) {
-        observer->onSinkChanged(*m_sink);
+        observer->onSinkChanged(m_sink);
     }
 }
 
-LoggerSinkManager::LoggerSinkManager() :
-    m_sink(&ACSDK_GET_SINK_LOGGER()) {
+LoggerSinkManager::LoggerSinkManager() : m_sink(ACSDK_GET_SINK_LOGGER()) {
 }
 
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

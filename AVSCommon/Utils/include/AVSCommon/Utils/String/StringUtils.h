@@ -15,10 +15,11 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_STRING_STRING_UTILS_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_STRING_STRING_UTILS_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_STRING_STRINGUTILS_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_STRING_STRINGUTILS_H_
 
 #include <string>
+#include <vector>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -33,7 +34,7 @@ namespace string {
  * @param[out] result The resulting integer, if successfully parsed from the string.
  * @return @c true If the string was parsed as an integer, otherwise @c false.
  */
-bool stringToInt(const std::string & str, int* result);
+bool stringToInt(const std::string& str, int* result);
 
 /**
  * A utility function to convert a c-string to an integer.
@@ -45,9 +46,18 @@ bool stringToInt(const std::string & str, int* result);
  */
 bool stringToInt(const char* str, int* result);
 
-} // namespace string
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+/**
+ * A utility function to convert a vector of bytes to a printable string.  For example, the vector {1, 2, 3} will return
+ * the string "0x01 0x02 0x03"
+ *
+ * @param byteVector a vector of bytes
+ * @return a string of the hex values of each byte printed.
+ */
+std::string byteVectorToString(const std::vector<uint8_t>& byteVector);
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_STRING_STRING_UTILS_H_
+}  // namespace string
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
+
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_STRING_STRINGUTILS_H_

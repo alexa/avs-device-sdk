@@ -15,12 +15,14 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_STORAGE_SQLITE_ALERT_STORAGE_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_STORAGE_SQLITE_ALERT_STORAGE_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_STORAGE_SQLITEALERTSTORAGE_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_STORAGE_SQLITEALERTSTORAGE_H_
 
 #include "Alerts/Storage/AlertStorageInterface.h"
 
 #include <sqlite3.h>
+
+#include <AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -38,17 +40,18 @@ public:
     /**
      * Constructor.
      */
-    SQLiteAlertStorage();
+    SQLiteAlertStorage(
+        const std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface>& alertsAudioFactory);
 
-    bool createDatabase(const std::string & filePath) override;
+    bool createDatabase(const std::string& filePath) override;
 
-    bool open(const std::string & filePath) override;
+    bool open(const std::string& filePath) override;
 
     bool isOpen() override;
 
     void close() override;
 
-    bool alertExists(const std::string & token) override;
+    bool alertExists(const std::string& token) override;
 
     bool store(std::shared_ptr<Alert> alert) override;
 
@@ -58,20 +61,46 @@ public:
 
     bool erase(std::shared_ptr<Alert> alert) override;
 
-    bool erase(const std::vector<int> & alertDbIds) override;
+    bool erase(const std::vector<int>& alertDbIds) override;
 
     bool clearDatabase() override;
 
     void printStats(StatLevel level) override;
 
 private:
+    /**
+     * Utility function to migrate an existing V1 Alerts database file to the V2 format.
+     *
+     * The expectation for V2 is that a table with the name 'alerts_v2' exists.
+     *
+     * If this table does not exist, then this function will create it, and the additional tables that V2 expects,
+     * and then load all alerts from the V1 table and save them into the V2 table.
+     *
+     * @param dbHandle A SQLite handle to an open database.
+     * @return Whether the migration was successful.  Returns true by default if the db is already V2.
+     */
+    bool migrateAlertsDbFromV1ToV2();
+
+    /**
+     * A utility function to help us load alerts from different versions of the alerts table.  Currently, versions
+     * 1 and 2 are supported.
+     *
+     * @param dbVersion The version of the database we wish to load from.
+     * @param[out] alertContainer The container where alerts should be stored.
+     * @return Whether the alerts were loaded ok.
+     */
+    bool loadHelper(int dbVersion, std::vector<std::shared_ptr<Alert>>* alertContainer);
+
     /// The sqlite database handle.
     sqlite3* m_dbHandle;
+
+    /// A member that stores a factory that produces audio streams for alerts.
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> m_alertsAudioFactory;
 };
 
-} // namespace storage
-} // namespace alerts
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace storage
+}  // namespace alerts
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_STORAGE_SQLITE_ALERT_STORAGE_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_STORAGE_SQLITEALERTSTORAGE_H_

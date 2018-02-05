@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_ALERT_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_ALERT_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_ALERT_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_ALERT_H_
 
 #include "Alerts/AlertObserverInterface.h"
 #include "Alerts/Renderer/Renderer.h"
@@ -24,9 +24,13 @@
 
 #include <AVSCommon/AVS/FocusState.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
+#include <AVSCommon/Utils/Timing/TimePoint.h>
 
 #include <map>
+#include <memory>
+#include <mutex>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include <rapidjson/document.h>
@@ -48,7 +52,9 @@ class SQLiteAlertStorage;
  * example, rather than also query rendering state.  An alert object in an 'active' state implies the user
  * perceivable rendering is occurring (whether that means audible, visual, or other perceivable stimulus).
  */
-class Alert : public renderer::RendererObserverInterface {
+class Alert
+        : public renderer::RendererObserverInterface
+        , public std::enable_shared_from_this<Alert> {
 public:
     /**
      * An enum class which captures the state an alert object can be in.
@@ -58,9 +64,11 @@ public:
         UNSET,
         /// The alert is set and is expected to become active at some point in the future.
         SET,
-        /// The alert has been activated, but is not yet active.
+        /// The alert is ready to activate, and is waiting for the channel to be acquired.
+        READY,
+        /// Rendering has been initiated, but is not yet perceivable from a user's point of view.
         ACTIVATING,
-        /// The alert is active from a user's point of view.
+        /// Rendering has been initiated, and is perceivable from a user's point of view.
         ACTIVE,
         /// The alert is active, but has been asked to snooze.
         SNOOZING,
@@ -89,6 +97,57 @@ public:
     };
 
     /**
+     * Utility structure to represent a custom asset sent from AVS.
+     */
+    struct Asset {
+        /**
+         * Default Constructor.
+         */
+        Asset() = default;
+
+        /**
+         * Constructor.
+         *
+         * @param id The id of the asset.
+         * @param url The url of the asset.
+         */
+        Asset(const std::string& id, const std::string& url) : id{id}, url{url} {
+        }
+
+        /// The id of the asset.
+        std::string id;
+        /// The url of the asset.
+        std::string url;
+    };
+
+    /*
+     * A utility structure to encapsulate the data reflecting custom assets for an alert.
+     */
+    struct AssetConfiguration {
+        /**
+         * Constructor.
+         */
+        AssetConfiguration() : loopCount{0}, loopPause{std::chrono::milliseconds{0}}, hasRenderingFailed{false} {
+        }
+
+        /// A map of the custom assets, mapping from asset.id to the asset itself.
+        std::unordered_map<std::string, Asset> assets;
+        /**
+         * A vector of the play order of the asset ids.  AVS sends this list in its SetAlert Directive, and to
+         * render the alert, all assets mapping to these ids must be played in sequence.
+         */
+        std::vector<std::string> assetPlayOrderItems;
+        /// The background asset id, if specified by AVS.
+        std::string backgroundAssetId;
+        /// The number of times the sequence of assets should be rendered.
+        int loopCount;
+        /// The pause time, in milliseconds, that should be taken between each loop of asset rendering.
+        std::chrono::milliseconds loopPause;
+        /// A flag to capture if rendering any of these urls failed.
+        bool hasRenderingFailed;
+    };
+
+    /**
      * An enum class which captures the various JSON parse states which may occur.
      */
     enum class ParseFromJsonStatus {
@@ -98,6 +157,31 @@ public:
         MISSING_REQUIRED_PROPERTY,
         /// An invalid value was detected while parsing the JSON.
         INVALID_VALUE
+    };
+
+    /**
+     * Utility struct to allow us to share Context data that can be sent to AVS representing this alert.
+     */
+    struct ContextInfo {
+        /**
+         * Constructor.
+         *
+         * @param token The AVS token identifying this alert.
+         * @param type The type of this alert.
+         * @param scheduledTime_ISO_8601 The time, in ISO-8601 format, when this alert should activate.
+         */
+        ContextInfo(const std::string& token, const std::string& type, const std::string& scheduledTime_ISO_8601) :
+                token{token},
+                type{type},
+                scheduledTime_ISO_8601{scheduledTime_ISO_8601} {
+        }
+
+        /// The AVS token identifying this alert.
+        std::string token;
+        /// The type of this alert.
+        std::string type;
+        /// The time, in ISO-8601 format, when this alert should activate.
+        std::string scheduledTime_ISO_8601;
     };
 
     /**
@@ -125,30 +209,11 @@ public:
     static std::string parseFromJsonStatusToString(Alert::ParseFromJsonStatus parseFromJsonStatus);
 
     /**
-     * A utility struct which allows alert objects to be sorted uniquely by time in STL containers such as sets.
-     */
-    struct TimeComparator {
-        /**
-         * Alerts may have the same time stamp, so let's include the token to ensure unique and consistent ordering.
-         */
-        bool operator () (const std::shared_ptr<Alert>& lhs, const std::shared_ptr<Alert>& rhs) const {
-            if (lhs->m_scheduledTime_Unix == rhs->m_scheduledTime_Unix) {
-                return (lhs->m_token < rhs->m_token);
-            }
-
-            return (lhs->m_scheduledTime_Unix < rhs->m_scheduledTime_Unix);
-        }
-    };
-
-    /**
      * Constructor.
      */
-    Alert();
-
-    /**
-     * Destructor.
-     */
-    virtual ~Alert();
+    Alert(
+        std::function<std::unique_ptr<std::istream>()> defaultAudioFactory,
+        std::function<std::unique_ptr<std::istream>()> shortAudioFactory);
 
     /**
      * Returns a string to identify the type of the class.  Required for persistent storage.
@@ -158,18 +223,27 @@ public:
     virtual std::string getTypeName() const = 0;
 
     /**
-     * Returns the file path for the alert's default audio file.
+     * A function that gets a factory to create a stream to the default audio for an alert.
      *
-     * @return The file path for the alert's default audio file.
+     * @return A factory function that generates a default audio stream.
      */
-    virtual std::string getDefaultAudioFilePath() const = 0;
+    std::function<std::unique_ptr<std::istream>()> getDefaultAudioFactory() const;
 
     /**
-     * Returns the file path for the alert's short (backgrounded) audio file.
+     * A function that gets a factory to create a stream to the short audio for an alert.
      *
-     * @return The file path for the alert's short (backgrounded) audio file.
+     * @return A factory function that generates a short audio stream.
      */
-    virtual std::string getDefaultShortAudioFilePath() const = 0;
+    std::function<std::unique_ptr<std::istream>()> getShortAudioFactory() const;
+
+    /**
+     * Returns the Context data which may be shared with AVS.
+     *
+     * @return The Context data which may be shared with AVS.
+     */
+    Alert::ContextInfo getContextInfo() const;
+
+    void onRendererStateChange(renderer::RendererObserverInterface::State state, const std::string& reason) override;
 
     /**
      * Given a rapidjson pre-parsed Value, parse the fields required for a valid alert.
@@ -178,7 +252,15 @@ public:
      * @param[out] errorMessage An output parameter where a parse error message may be stored.
      * @return The status of the parse.
      */
-    ParseFromJsonStatus parseFromJson(const rapidjson::Value & payload, std::string* errorMessage);
+    ParseFromJsonStatus parseFromJson(const rapidjson::Value& payload, std::string* errorMessage);
+
+    /**
+     * Sets the time when the alert should activate.
+     *
+     * @param time_ISO_8601 The time, in ISO-8601 format, when this alert should activate.
+     * @return Whether the alert was successfully updated.
+     */
+    bool setTime_ISO_8601(const std::string& time_ISO_8601);
 
     /**
      * Set the renderer on the alert.
@@ -196,6 +278,25 @@ public:
     void setObserver(AlertObserverInterface* observer);
 
     /**
+     * Activate the alert.
+     */
+    void activate();
+
+    /**
+     * Deactivate the alert.
+     *
+     * @param reason The reason why the alert is being stopped.
+     */
+    void deactivate(StopReason reason);
+
+    /**
+     * Performs relevant operations to snooze this alarm to the new time provided.
+     *
+     * @param updatedScheduledTime_ISO_8601 The new time for the alarm to occur, in ISO-8601 format.
+     */
+    void snooze(const std::string& updatedScheduledTime_ISO_8601);
+
+    /**
      * Sets the focus state for the alert.
      *
      * @param focusState The focus state.
@@ -211,20 +312,6 @@ public:
      * Sets the alert back to being set to go off in the future.
      */
     void reset();
-
-    /**
-     * Activate the alert.
-     */
-    void activate();
-
-    /**
-     * Deactivate the alert.
-     *
-     * @param reason The reason why the alert is being stopped.
-     */
-    void deActivate(StopReason reason);
-
-    void onRendererStateChange(renderer::RendererObserverInterface::State state, const std::string & reason) override;
 
     /**
      * Returns the AVS token for the alert.
@@ -269,20 +356,73 @@ public:
     int getId() const;
 
     /**
+     * Queries whether the alert is past-due.
+     *
+     * @param currentUnixTime The time with which to compare the activation time of the alert.
+     * @param timeLimitSeconds How long an alert may be late, and still considered valid.
+     * @return If the alert is considered past-due.
+     */
+    bool isPastDue(int64_t currentUnixTime, std::chrono::seconds timeLimit);
+
+    /**
+     * Get the loop count of custom assets.
+     *
+     * @return The loop count of custom assets.
+     */
+    int getLoopCount() const;
+
+    /**
+     * Get the time, in milliseconds, to be paused between custom-asset loop rendering.
+     *
+     * @return The time, in milliseconds, to be paused between custom-asset loop rendering.
+     */
+    std::chrono::milliseconds getLoopPause() const;
+
+    /**
+     * Get the background custom asset id, as specified by AVS.
+     *
+     * @return The background custom asset id, as specified by AVS.
+     */
+    std::string getBackgroundAssetId() const;
+
+    /**
+     * Sets the number of times the custom assets should be looped.
+     *
+     * @param loopCount The number of times the custom assets should be looped.
+     */
+    void setLoopCount(int loopCount);
+
+    /**
+     * Sets the time, in milliseconds, to be paused between custom-asset loop rendering.
+     *
+     * @param ms The time, in milliseconds, to be paused between custom-asset loop rendering.
+     */
+    void setLoopPause(std::chrono::milliseconds pauseDuration);
+
+    /**
+     * Sets the background custom asset id, as specified by AVS.
+     *
+     * @param The background custom asset id, as specified by AVS.
+     */
+    void setBackgroundAssetId(const std::string& backgroundAssetId);
+
+    /**
+     * Returns the utility structure, containing the Context data associated with this alert.
+     *
+     * @return The utility structure, containing the Context data associated with this alert.
+     */
+    AssetConfiguration getAssetConfiguration() const;
+
+    /**
      * A utility function to print the internals of an alert.
      */
     void printDiagnostic();
 
-    /**
-     * Performs relevant operations to snooze this alarm to the new time provided.
-     *
-     * @param updatedScheduledTime_ISO_8601 The new time for the alarm to occur, in ISO-8601 format.
-     */
-    void snooze(const std::string & updatedScheduledTime_ISO_8601);
-
 private:
     /// A friend relationship, since our storage interface needs access to all fields.
     friend class storage::SQLiteAlertStorage;
+
+    std::string getScheduledTime_ISO_8601Locked() const;
 
     /**
      * Utility function to begin the alert's renderer.
@@ -294,37 +434,93 @@ private:
      */
     void onMaxTimerExpiration();
 
+    /// The mutex that enforces thread safety for all member variables.
+    mutable std::mutex m_mutex;
+
     /// The AVS token for the alert.
     std::string m_token;
+    /// A TimePoint reflecting the time when the alert should become active.
+    avsCommon::utils::timing::TimePoint m_timePoint;
+
     /// The database id for the alert.
     int m_dbId;
-    /// The scheduled time for the alert in ISO-8601 format.
-    std::string m_scheduledTime_ISO_8601;
-    /// The scheduled time for the alert in Unix epoch format.
-    /// TODO : ACSDK-392 to investigate updating this to std::chrono types for better portability & robustness.
-    int64_t m_scheduledTime_Unix;
+
+    /// The assets associated with this alert.
+    AssetConfiguration m_assetConfiguration;
+
     /// The state of the alert.
     State m_state;
     /// The render state of the alert.
     renderer::RendererObserverInterface::State m_rendererState;
     /// The reason the alert has been stopped.
     StopReason m_stopReason;
-    /// the AVS-context string for the alert.
-    std::string m_avsContextString;
     /// The current focus state of the alert.
     avsCommon::avs::FocusState m_focusState;
-    /// The renderer for the alert.
-    std::shared_ptr<renderer::RendererInterface> m_renderer;
-    /// The observer of the alert.
-    AlertObserverInterface* m_observer;
     /// A flag to capture if the maximum time timer has expired for this alert.
     bool m_hasTimerExpired;
     /// The timer to ensure this alert is not active longer than a maximum length of time.
     avsCommon::utils::timing::Timer m_maxLengthTimer;
+    /// The observer of the alert.
+    AlertObserverInterface* m_observer;
+    /// The renderer for the alert.
+    std::shared_ptr<renderer::RendererInterface> m_renderer;
+    /// This is the factory that provides a default audio stream.
+    const std::function<std::unique_ptr<std::istream>()> m_defaultAudioFactory;
+    /// This is the factory that provides a short audio stream.
+    const std::function<std::unique_ptr<std::istream>()> m_shortAudioFactory;
 };
 
-} // namespace alerts
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+/**
+ * A utility struct which allows alert objects to be sorted uniquely by time in STL containers such as sets.
+ */
+struct TimeComparator {
+    /**
+     * Alerts may have the same time stamp, so let's include the token to ensure unique and consistent ordering.
+     */
+    bool operator()(const std::shared_ptr<Alert>& lhs, const std::shared_ptr<Alert>& rhs) const {
+        if (lhs->getScheduledTime_Unix() == rhs->getScheduledTime_Unix()) {
+            return (lhs->getToken() < rhs->getToken());
+        }
 
-#endif // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_ALERTS_INCLUDE_ALERTS_ALERT_H_
+        return (lhs->getScheduledTime_Unix() < rhs->getScheduledTime_Unix());
+    }
+};
+
+/**
+ * Write a @c Alert::State value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param state The @c Alert::State value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const Alert::State& state) {
+    return stream << Alert::stateToString(state);
+}
+
+/**
+ * Write a @c Alert::StopReason value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param reason The @c Alert::StopReason value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const Alert::StopReason& reason) {
+    return stream << Alert::stopReasonToString(reason);
+}
+
+/**
+ * Write a @c Alert::ParseFromJsonStatus value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param status The @c Alert::ParseFromJsonStatus value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const Alert::ParseFromJsonStatus& status) {
+    return stream << Alert::parseFromJsonStatusToString(status);
+}
+
+}  // namespace alerts
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
+
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_ALERT_H_

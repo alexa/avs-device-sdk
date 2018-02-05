@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_EXCEPTION_ENCOUNTERED_SENDER_H
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_EXCEPTION_ENCOUNTERED_SENDER_H
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_EXCEPTIONENCOUNTEREDSENDER_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_EXCEPTIONENCOUNTEREDSENDER_H_
 
 #include <memory>
 #include <string>
@@ -62,14 +62,13 @@ private:
      *
      * @param messageSender The object to use for sending events.
      */
-    ExceptionEncounteredSender(
-        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender);
+    ExceptionEncounteredSender(std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender);
 
     /// The object to use for sending events.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
 };
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_EXCEPTION_ENCOUNTERED_SENDER_H
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_EXCEPTIONENCOUNTEREDSENDER_H_

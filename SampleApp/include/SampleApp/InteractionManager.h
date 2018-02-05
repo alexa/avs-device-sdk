@@ -1,7 +1,7 @@
 /*
  * InteractionManager.h
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,11 +15,14 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_INTERACTION_MANAGER_H_
-#define ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_INTERACTION_MANAGER_H_
+#ifndef ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_INTERACTIONMANAGER_H_
+#define ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_INTERACTIONMANAGER_H_
 
 #include <memory>
 
+#include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 #include <DefaultClient/DefaultClient.h>
 
 #include "PortAudioMicrophoneWrapper.h"
@@ -32,19 +35,20 @@ namespace sampleApp {
  * This class manages most of the user interaction by taking in commands and notifying the DefaultClient and the
  * userInterface (the view) accordingly.
  */
-class InteractionManager {
+class InteractionManager
+        : public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
+        , public avsCommon::utils::RequiresShutdown {
 public:
     /**
      * Constructor.
      */
     InteractionManager(
-            std::shared_ptr<defaultClient::DefaultClient> client, 
-            std::shared_ptr<sampleApp::PortAudioMicrophoneWrapper> micWrapper,
-            std::shared_ptr<sampleApp::UIManager> userInterface,
-            capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
-            capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
-            capabilityAgents::aip::AudioProvider wakeWordAudioProvider = 
-                    capabilityAgents::aip::AudioProvider::null());
+        std::shared_ptr<defaultClient::DefaultClient> client,
+        std::shared_ptr<sampleApp::PortAudioMicrophoneWrapper> micWrapper,
+        std::shared_ptr<sampleApp::UIManager> userInterface,
+        capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
+        capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
+        capabilityAgents::aip::AudioProvider wakeWordAudioProvider = capabilityAgents::aip::AudioProvider::null());
 
     /**
      * Begins the interaction between the Sample App and the user. This should only be called at startup.
@@ -59,7 +63,7 @@ public:
     /**
      * Toggles the microphone state if the Sample App was built with wakeword. When the microphone is turned off, the
      * app enters a privacy mode in which it stops recording audio data from the microphone, thus disabling Alexa waking
-     * up due to wake word. Note however that hold-to-talk and tap-to-talk modes will still work by recording 
+     * up due to wake word. Note however that hold-to-talk and tap-to-talk modes will still work by recording
      * microphone data temporarily until a user initiated interacion is complete. If this app was built without wakeword
      * then this will do nothing as the microphone is already off.
      */
@@ -79,6 +83,84 @@ public:
      * Acts as a "stop" button. This stops whatever has foreground focus.
      */
     void stopForegroundActivity();
+
+    /**
+     * Should be called whenever a user presses 'PLAY' for playback.
+     */
+    void playbackPlay();
+
+    /**
+     * Should be called whenever a user presses 'PAUSE' for playback.
+     */
+    void playbackPause();
+
+    /**
+     * Should be called whenever a user presses 'NEXT' for playback.
+     */
+    void playbackNext();
+
+    /**
+     * Should be called whenever a user presses 'PREVIOUS' for playback.
+     */
+    void playbackPrevious();
+
+    /**
+     * Should be called whenever a user presses 'SETTINGS' for settings options.
+     */
+    void settings();
+
+    /**
+     * Should be called whenever a user requests 'LOCALE' change.
+     */
+    void locale();
+
+    /**
+     * Should be called whenever a user presses invalid option.
+     */
+    void errorValue();
+
+    /**
+     * Should be called when setting value is selected by the user.
+     */
+    void changeSetting(const std::string& key, const std::string& value);
+
+    /**
+     * Should be called whenever a users requests 'SPEAKER_CONTROL' for speaker control.
+     */
+    void speakerControl();
+
+    /**
+     * Should be called whenever a users requests to set the firmware version.
+     */
+    void firmwareVersionControl();
+
+    /**
+     * Update the firmware version.
+     *
+     * @param firmwareVersion The new firmware version.
+     */
+    void setFirmwareVersion(avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion);
+
+    /**
+     * Should be called after a user selects a speaker.
+     */
+    void volumeControl();
+
+    /**
+     * Should be called after a user wishes to modify the volume.
+     */
+    void adjustVolume(avsCommon::sdkInterfaces::SpeakerInterface::Type type, int8_t delta);
+
+    /**
+     * Should be called after a user wishes to set mute.
+     */
+    void setMute(avsCommon::sdkInterfaces::SpeakerInterface::Type type, bool mute);
+
+    /**
+     * UXDialogObserverInterface methods
+     */
+
+    void onDialogUXStateChanged(DialogUXState newState) override;
 
 private:
     /// The default SDK client.
@@ -112,9 +194,14 @@ private:
      * An internal executor that performs execution of callable objects passed to it sequentially but asynchronously.
      */
     avsCommon::utils::threading::Executor m_executor;
+
+    /// @name RequiresShutdown Functions
+    /// @{
+    void doShutdown() override;
+    /// @}
 };
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_INTERACTION_MANAGER_H_
+#endif  // ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_INTERACTIONMANAGER_H_

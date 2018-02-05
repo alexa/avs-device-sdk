@@ -17,9 +17,10 @@
  */
 
 #include <ctime>
+#include <chrono>
+#include <random>
 
 #include "AVSCommon/Utils/Timing/TimeUtils.h"
-
 #include "AVSCommon/Utils/Logger/Logger.h"
 #include "AVSCommon/Utils/String/StringUtils.h"
 
@@ -67,33 +68,32 @@ static const std::string ENCODED_TIME_STRING_PLUS_SEPARATOR_STRING = "+";
 /// The offset into an ISO-8601 formatted string where the year begins.
 static const unsigned long ENCODED_TIME_STRING_YEAR_OFFSET = 0;
 /// The offset into an ISO-8601 formatted string where the month begins.
-static const unsigned long ENCODED_TIME_STRING_MONTH_OFFSET =
-        ENCODED_TIME_STRING_YEAR_OFFSET + ENCODED_TIME_STRING_YEAR_STRING_LENGTH +
-        ENCODED_TIME_STRING_DASH_SEPARATOR_STRING.length();
+static const unsigned long ENCODED_TIME_STRING_MONTH_OFFSET = ENCODED_TIME_STRING_YEAR_OFFSET +
+                                                              ENCODED_TIME_STRING_YEAR_STRING_LENGTH +
+                                                              ENCODED_TIME_STRING_DASH_SEPARATOR_STRING.length();
 /// The offset into an ISO-8601 formatted string where the day begins.
-static const unsigned long ENCODED_TIME_STRING_DAY_OFFSET =
-        ENCODED_TIME_STRING_MONTH_OFFSET + ENCODED_TIME_STRING_MONTH_STRING_LENGTH +
-        ENCODED_TIME_STRING_DASH_SEPARATOR_STRING.length();
+static const unsigned long ENCODED_TIME_STRING_DAY_OFFSET = ENCODED_TIME_STRING_MONTH_OFFSET +
+                                                            ENCODED_TIME_STRING_MONTH_STRING_LENGTH +
+                                                            ENCODED_TIME_STRING_DASH_SEPARATOR_STRING.length();
 /// The offset into an ISO-8601 formatted string where the hour begins.
-static const unsigned long ENCODED_TIME_STRING_HOUR_OFFSET =
-        ENCODED_TIME_STRING_DAY_OFFSET + ENCODED_TIME_STRING_DAY_STRING_LENGTH +
-        ENCODED_TIME_STRING_T_SEPARATOR_STRING.length();
+static const unsigned long ENCODED_TIME_STRING_HOUR_OFFSET = ENCODED_TIME_STRING_DAY_OFFSET +
+                                                             ENCODED_TIME_STRING_DAY_STRING_LENGTH +
+                                                             ENCODED_TIME_STRING_T_SEPARATOR_STRING.length();
 /// The offset into an ISO-8601 formatted string where the minute begins.
-static const unsigned long ENCODED_TIME_STRING_MINUTE_OFFSET =
-        ENCODED_TIME_STRING_HOUR_OFFSET + ENCODED_TIME_STRING_HOUR_STRING_LENGTH +
-        ENCODED_TIME_STRING_COLON_SEPARATOR_STRING.length();
+static const unsigned long ENCODED_TIME_STRING_MINUTE_OFFSET = ENCODED_TIME_STRING_HOUR_OFFSET +
+                                                               ENCODED_TIME_STRING_HOUR_STRING_LENGTH +
+                                                               ENCODED_TIME_STRING_COLON_SEPARATOR_STRING.length();
 /// The offset into an ISO-8601 formatted string where the second begins.
-static const unsigned long ENCODED_TIME_STRING_SECOND_OFFSET =
-        ENCODED_TIME_STRING_MINUTE_OFFSET + ENCODED_TIME_STRING_MINUTE_STRING_LENGTH +
-        ENCODED_TIME_STRING_COLON_SEPARATOR_STRING.length();
+static const unsigned long ENCODED_TIME_STRING_SECOND_OFFSET = ENCODED_TIME_STRING_MINUTE_OFFSET +
+                                                               ENCODED_TIME_STRING_MINUTE_STRING_LENGTH +
+                                                               ENCODED_TIME_STRING_COLON_SEPARATOR_STRING.length();
 
 /// The total expected length of an ISO-8601 formatted string.
 static const unsigned long ENCODED_TIME_STRING_EXPECTED_LENGTH =
-        ENCODED_TIME_STRING_SECOND_OFFSET + ENCODED_TIME_STRING_SECOND_STRING_LENGTH +
-        ENCODED_TIME_STRING_PLUS_SEPARATOR_STRING.length() + ENCODED_TIME_STRING_POSTFIX_STRING_LENGTH;
+    ENCODED_TIME_STRING_SECOND_OFFSET + ENCODED_TIME_STRING_SECOND_STRING_LENGTH +
+    ENCODED_TIME_STRING_PLUS_SEPARATOR_STRING.length() + ENCODED_TIME_STRING_POSTFIX_STRING_LENGTH;
 
-bool convert8601TimeStringToUnix(const std::string & timeString, int64_t* unixTime) {
-
+bool convert8601TimeStringToUnix(const std::string& timeString, int64_t* unixTime) {
     // TODO : ACSDK-387 to investigate a simpler and more portable implementation of this logic.
 
     if (!unixTime) {
@@ -114,37 +114,43 @@ bool convert8601TimeStringToUnix(const std::string & timeString, int64_t* unixTi
         return false;
     }
 
-    if (!stringToInt(timeString.substr(ENCODED_TIME_STRING_YEAR_OFFSET, ENCODED_TIME_STRING_YEAR_STRING_LENGTH),
+    if (!stringToInt(
+            timeString.substr(ENCODED_TIME_STRING_YEAR_OFFSET, ENCODED_TIME_STRING_YEAR_STRING_LENGTH),
             &(timeInfo->tm_year))) {
         ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("error parsing year. Input:" + timeString));
         return false;
     }
 
-    if (!stringToInt(timeString.substr(ENCODED_TIME_STRING_MONTH_OFFSET, ENCODED_TIME_STRING_MONTH_STRING_LENGTH),
+    if (!stringToInt(
+            timeString.substr(ENCODED_TIME_STRING_MONTH_OFFSET, ENCODED_TIME_STRING_MONTH_STRING_LENGTH),
             &(timeInfo->tm_mon))) {
         ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("error parsing month. Input:" + timeString));
         return false;
     }
 
-    if (!stringToInt(timeString.substr(ENCODED_TIME_STRING_DAY_OFFSET, ENCODED_TIME_STRING_DAY_STRING_LENGTH),
+    if (!stringToInt(
+            timeString.substr(ENCODED_TIME_STRING_DAY_OFFSET, ENCODED_TIME_STRING_DAY_STRING_LENGTH),
             &(timeInfo->tm_mday))) {
         ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("error parsing day. Input:" + timeString));
         return false;
     }
 
-    if (!stringToInt(timeString.substr(ENCODED_TIME_STRING_HOUR_OFFSET, ENCODED_TIME_STRING_HOUR_STRING_LENGTH),
+    if (!stringToInt(
+            timeString.substr(ENCODED_TIME_STRING_HOUR_OFFSET, ENCODED_TIME_STRING_HOUR_STRING_LENGTH),
             &(timeInfo->tm_hour))) {
         ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("error parsing hour. Input:" + timeString));
         return false;
     }
 
-    if (!stringToInt(timeString.substr(ENCODED_TIME_STRING_MINUTE_OFFSET, ENCODED_TIME_STRING_MINUTE_STRING_LENGTH),
+    if (!stringToInt(
+            timeString.substr(ENCODED_TIME_STRING_MINUTE_OFFSET, ENCODED_TIME_STRING_MINUTE_STRING_LENGTH),
             &(timeInfo->tm_min))) {
         ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("error parsing minute. Input:" + timeString));
         return false;
     }
 
-    if (!stringToInt(timeString.substr(ENCODED_TIME_STRING_SECOND_OFFSET, ENCODED_TIME_STRING_SECOND_STRING_LENGTH),
+    if (!stringToInt(
+            timeString.substr(ENCODED_TIME_STRING_SECOND_OFFSET, ENCODED_TIME_STRING_SECOND_STRING_LENGTH),
             &(timeInfo->tm_sec))) {
         ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("error parsing second. Input:" + timeString));
         return false;
@@ -160,7 +166,6 @@ bool convert8601TimeStringToUnix(const std::string & timeString, int64_t* unixTi
 }
 
 bool getCurrentUnixTime(int64_t* currentTime) {
-
     // TODO : ACSDK-387 to investigate a simpler and more portable implementation of this logic.
 
     if (!currentTime) {
@@ -179,7 +184,7 @@ bool getCurrentUnixTime(int64_t* currentTime) {
     return true;
 }
 
-} // namespace timing
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace timing
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

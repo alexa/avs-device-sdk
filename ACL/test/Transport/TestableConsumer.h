@@ -15,8 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_CONSUMER_H_
-#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_CONSUMER_H_
+#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLECONSUMER_H_
+#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLECONSUMER_H_
 
 #include "ACL/Transport/MessageConsumerInterface.h"
 #include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
@@ -41,7 +41,7 @@ public:
         m_messageObserver = observer;
     }
 
-    void consumeMessage(const std::string & contextId, const std::string & message) override {
+    void consumeMessage(const std::string& contextId, const std::string& message) override {
         if (m_messageObserver) {
             m_messageObserver->receive(contextId, message);
         }
@@ -52,8 +52,8 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> m_messageObserver;
 };
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_CONSUMER_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLECONSUMER_H_

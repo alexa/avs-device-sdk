@@ -66,16 +66,15 @@ static const int KITT_AI_ERROR_DETECTION_RESULT = -1;
 static const int KITT_AI_NO_DETECTION_RESULT = 0;
 
 std::unique_ptr<KittAiKeyWordDetector> KittAiKeyWordDetector::create(
-            std::shared_ptr<AudioInputStream> stream,
-            AudioFormat audioFormat,
-            std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
-            std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>
-                keyWordDetectorStateObservers,
-            const std::string& resourceFilePath,
-            const std::vector<KittAiConfiguration> kittAiConfigurations,
-            float audioGain,
-            bool applyFrontEnd,
-            std::chrono::milliseconds msToPushPerIteration) {
+    std::shared_ptr<AudioInputStream> stream,
+    AudioFormat audioFormat,
+    std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
+    std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers,
+    const std::string& resourceFilePath,
+    const std::vector<KittAiConfiguration> kittAiConfigurations,
+    float audioGain,
+    bool applyFrontEnd,
+    std::chrono::milliseconds msToPushPerIteration) {
     if (!stream) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullStream"));
         return nullptr;
@@ -85,19 +84,16 @@ std::unique_ptr<KittAiKeyWordDetector> KittAiKeyWordDetector::create(
         ACSDK_ERROR(LX("createFailed").d("reason", "endianMismatch"));
         return nullptr;
     }
-    std::unique_ptr<KittAiKeyWordDetector> detector(
-        new KittAiKeyWordDetector(
-            stream,
-            audioFormat,
-            keyWordObservers,
-            keyWordDetectorStateObservers,
-            resourceFilePath,
-            kittAiConfigurations,
-            audioGain,
-            applyFrontEnd,
-            msToPushPerIteration
-        )
-    );
+    std::unique_ptr<KittAiKeyWordDetector> detector(new KittAiKeyWordDetector(
+        stream,
+        audioFormat,
+        keyWordObservers,
+        keyWordDetectorStateObservers,
+        resourceFilePath,
+        kittAiConfigurations,
+        audioGain,
+        applyFrontEnd,
+        msToPushPerIteration));
     if (!detector->init(audioFormat)) {
         ACSDK_ERROR(LX("createFailed").d("reason", "initDetectorFailed"));
         return nullptr;
@@ -113,26 +109,24 @@ KittAiKeyWordDetector::~KittAiKeyWordDetector() {
 }
 
 KittAiKeyWordDetector::KittAiKeyWordDetector(
-        std::shared_ptr<AudioInputStream> stream,
-        avsCommon::utils::AudioFormat audioFormat,
-        std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
-        std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>>
-            keyWordDetectorStateObservers,
-        const std::string& resourceFilePath,
-        const std::vector<KittAiConfiguration> kittAiConfigurations,
-        float audioGain,
-        bool applyFrontEnd,
-        std::chrono::milliseconds msToPushPerIteration) :
-    AbstractKeywordDetector(keyWordObservers, keyWordDetectorStateObservers),
-    m_stream{stream},
-    m_maxSamplesPerPush{(audioFormat.sampleRateHz / HERTZ_PER_KILOHERTZ) * msToPushPerIteration.count()} {
-
+    std::shared_ptr<AudioInputStream> stream,
+    avsCommon::utils::AudioFormat audioFormat,
+    std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
+    std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers,
+    const std::string& resourceFilePath,
+    const std::vector<KittAiConfiguration> kittAiConfigurations,
+    float audioGain,
+    bool applyFrontEnd,
+    std::chrono::milliseconds msToPushPerIteration) :
+        AbstractKeywordDetector(keyWordObservers, keyWordDetectorStateObservers),
+        m_stream{stream},
+        m_maxSamplesPerPush{(audioFormat.sampleRateHz / HERTZ_PER_KILOHERTZ) * msToPushPerIteration.count()} {
     std::stringstream sensitivities;
     std::stringstream modelPaths;
     for (unsigned int i = 0; i < kittAiConfigurations.size(); ++i) {
         modelPaths << kittAiConfigurations.at(i).modelFilePath;
         sensitivities << kittAiConfigurations.at(i).sensitivity;
-        m_detectionResultsToKeyWords[i+1] = kittAiConfigurations.at(i).keyword;
+        m_detectionResultsToKeyWords[i + 1] = kittAiConfigurations.at(i).keyword;
         if (kittAiConfigurations.size() - 1 != i) {
             modelPaths << KITT_DELIMITER;
             sensitivities << KITT_DELIMITER;
@@ -161,37 +155,37 @@ bool KittAiKeyWordDetector::init(avsCommon::utils::AudioFormat audioFormat) {
 bool KittAiKeyWordDetector::isAudioFormatCompatibleWithKittAi(avsCommon::utils::AudioFormat audioFormat) {
     if (audioFormat.numChannels != static_cast<unsigned int>(m_kittAiEngine->NumChannels())) {
         ACSDK_ERROR(LX("isAudioFormatCompatibleWithKittAiFailed")
-                .d("reason", "numChannelsMismatch")
-                .d("kittAiNumChannels", m_kittAiEngine->NumChannels())
-                .d("numChannels", audioFormat.numChannels));
+                        .d("reason", "numChannelsMismatch")
+                        .d("kittAiNumChannels", m_kittAiEngine->NumChannels())
+                        .d("numChannels", audioFormat.numChannels));
         return false;
     }
     if (audioFormat.sampleRateHz != static_cast<unsigned int>(m_kittAiEngine->SampleRate())) {
         ACSDK_ERROR(LX("isAudioFormatCompatibleWithKittAiFailed")
-                .d("reason", "sampleRateMismatch")
-                .d("kittAiSampleRate", m_kittAiEngine->SampleRate())
-                .d("sampleRate", audioFormat.sampleRateHz));
+                        .d("reason", "sampleRateMismatch")
+                        .d("kittAiSampleRate", m_kittAiEngine->SampleRate())
+                        .d("sampleRate", audioFormat.sampleRateHz));
         return false;
     }
     if (audioFormat.sampleSizeInBits != static_cast<unsigned int>(m_kittAiEngine->BitsPerSample())) {
         ACSDK_ERROR(LX("isAudioFormatCompatibleWithKittAiFailed")
-                .d("reason", "sampleSizeInBitsMismatch")
-                .d("kittAiSampleSizeInBits", m_kittAiEngine->BitsPerSample())
-                .d("sampleSizeInBits", audioFormat.sampleSizeInBits));
+                        .d("reason", "sampleSizeInBitsMismatch")
+                        .d("kittAiSampleSizeInBits", m_kittAiEngine->BitsPerSample())
+                        .d("sampleSizeInBits", audioFormat.sampleSizeInBits));
         return false;
     }
     if (audioFormat.endianness != KITT_AI_COMPATIBLE_ENDIANNESS) {
         ACSDK_ERROR(LX("isAudioFormatCompatibleWithKittAiFailed")
-                .d("reason", "endiannessMismatch")
-                .d("kittAiEndianness", KITT_AI_COMPATIBLE_ENDIANNESS)
-                .d("endianness", audioFormat.endianness));
+                        .d("reason", "endiannessMismatch")
+                        .d("kittAiEndianness", KITT_AI_COMPATIBLE_ENDIANNESS)
+                        .d("endianness", audioFormat.endianness));
         return false;
     }
     if (audioFormat.encoding != KITT_AI_COMPATIBLE_ENCODING) {
         ACSDK_ERROR(LX("isAudioFormatCompatibleWithKittAiFailed")
-                .d("reason", "encodingMismatch")
-                .d("kittAiEncoding", KITT_AI_COMPATIBLE_ENCODING)
-                .d("encoding", audioFormat.encoding));
+                        .d("reason", "encodingMismatch")
+                        .d("kittAiEncoding", KITT_AI_COMPATIBLE_ENCODING)
+                        .d("encoding", audioFormat.encoding));
         return false;
     }
     return true;
@@ -204,12 +198,7 @@ void KittAiKeyWordDetector::detectionLoop() {
     while (!m_isShuttingDown) {
         bool didErrorOccur;
         wordsRead = readFromStream(
-                m_streamReader,
-                m_stream,
-                audioDataToPush,
-                m_maxSamplesPerPush,
-                TIMEOUT_FOR_READ_CALLS,
-                &didErrorOccur);
+            m_streamReader, m_stream, audioDataToPush, m_maxSamplesPerPush, TIMEOUT_FOR_READ_CALLS, &didErrorOccur);
         if (didErrorOccur) {
             break;
         } else if (wordsRead > 0) {
@@ -244,8 +233,8 @@ void KittAiKeyWordDetector::detectionLoop() {
                         break;
                     default:
                         ACSDK_ERROR(LX("detectionLoopEnded")
-                                .d("reason", "unexpectedDetectionResult")
-                                .d("detectionResult", detectionResult));
+                                        .d("reason", "unexpectedDetectionResult")
+                                        .d("detectionResult", detectionResult));
                         notifyKeyWordDetectorStateObservers(
                             KeyWordDetectorStateObserverInterface::KeyWordDetectorState::ERROR);
                         didErrorOccur = true;
@@ -260,5 +249,5 @@ void KittAiKeyWordDetector::detectionLoop() {
     m_streamReader->close();
 }
 
-} // namespace kwd
-} // namespace alexaClientSDK
+}  // namespace kwd
+}  // namespace alexaClientSDK

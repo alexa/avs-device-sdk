@@ -24,13 +24,11 @@ namespace integration {
 
 using alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface;
 
-ConnectionStatusObserver::ConnectionStatusObserver(): 
+ConnectionStatusObserver::ConnectionStatusObserver() :
         m_statusChanges({std::make_pair(Status::DISCONNECTED, ChangedReason::ACL_CLIENT_REQUEST)}) {
 }
 
-void ConnectionStatusObserver::onConnectionStatusChanged(
-        const Status connectionStatus,
-        const ChangedReason reason) {
+void ConnectionStatusObserver::onConnectionStatusChanged(const Status connectionStatus, const ChangedReason reason) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_statusChanges.push_back(std::make_pair(connectionStatus, reason));
     m_wakeTrigger.notify_all();
@@ -51,13 +49,11 @@ ConnectionStatusObserverInterface::Status ConnectionStatusObserver::getConnectio
     return m_statusChanges.back().first;
 }
 
-bool ConnectionStatusObserver::waitFor(
-        const Status connectionStatus, const std::chrono::seconds duration) {
+bool ConnectionStatusObserver::waitFor(const Status connectionStatus, const std::chrono::seconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
-    return m_wakeTrigger.wait_for(lock, duration, [this, connectionStatus]() {
-        return m_statusChanges.back().first == connectionStatus;
-    });
+    return m_wakeTrigger.wait_for(
+        lock, duration, [this, connectionStatus]() { return m_statusChanges.back().first == connectionStatus; });
 }
 
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace integration
+}  // namespace alexaClientSDK

@@ -14,8 +14,8 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_INITIALIZATION_ALEXA_CLIENT_SDK_INIT_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_INITIALIZATION_ALEXA_CLIENT_SDK_INIT_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_INITIALIZATION_ALEXACLIENTSDKINIT_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_INITIALIZATION_ALEXACLIENTSDKINIT_H_
 
 #include <atomic>
 #include <iostream>
@@ -53,7 +53,7 @@ public:
      *
      * @return Whether the initialization was successful.
      */
-    static bool initialize(const std::vector<std::istream *> &jsonStreams);
+    static bool initialize(const std::vector<std::istream*>& jsonStreams);
 
     /**
      * Uninitialize the Alexa Client SDK.
@@ -72,8 +72,8 @@ private:
     static std::atomic_int g_isInitialized;
 };
 
-} // namespace initialization
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_INITIALIZATION_ALEXA_CLIENT_SDK_INIT_H_
+}  // namespace initialization
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_INITIALIZATION_ALEXACLIENTSDKINIT_H_

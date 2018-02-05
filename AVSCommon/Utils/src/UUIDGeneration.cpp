@@ -70,28 +70,28 @@ static const size_t BITS_IN_HEX_DIGIT = 4;
  * @return A hex string of length @c numDigits.
  */
 static const std::string generateHexWithReplacement(
-        std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint8_t>& ibe,
-        unsigned int numDigits,
-        uint8_t replacementBits,
-        unsigned short numReplacementBits) {
+    std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint8_t>& ibe,
+    unsigned int numDigits,
+    uint8_t replacementBits,
+    unsigned short numReplacementBits) {
     if (numReplacementBits > MAX_NUM_REPLACEMENT_BITS) {
         ACSDK_ERROR(LX("generateHexWithReplacementFailed")
-                .d("reason", "replacingMoreBitsThanProvided")
-                .d("numReplacementBitsLimit", MAX_NUM_REPLACEMENT_BITS)
-                .d("numReplacementBits", numReplacementBits));
+                        .d("reason", "replacingMoreBitsThanProvided")
+                        .d("numReplacementBitsLimit", MAX_NUM_REPLACEMENT_BITS)
+                        .d("numReplacementBits", numReplacementBits));
         return "";
     }
 
     if (numReplacementBits > (numDigits * BITS_IN_HEX_DIGIT)) {
         ACSDK_ERROR(LX("generateHexWithReplacementFailed")
-                .d("reason", "replacingMoreBitsThanGenerated")
-                .d("numDigitsInBits", numDigits * BITS_IN_HEX_DIGIT)
-                .d("numReplacementBits", numReplacementBits));
+                        .d("reason", "replacingMoreBitsThanGenerated")
+                        .d("numDigitsInBits", numDigits * BITS_IN_HEX_DIGIT)
+                        .d("numReplacementBits", numReplacementBits));
         return "";
     }
 
     // Makes assumption that 1 digit = 4 bits.
-    std::vector<uint8_t> bytes(ceil(numDigits/2.0));
+    std::vector<uint8_t> bytes(ceil(numDigits / 2.0));
     std::generate(bytes.begin(), bytes.end(), std::ref(ibe));
 
     // Replace the specified number of bits from the first byte.
@@ -100,7 +100,7 @@ static const std::string generateHexWithReplacement(
     bytes.at(0) |= replacementBits;
 
     std::ostringstream oss;
-    for (const auto &byte : bytes) {
+    for (const auto& byte : bytes) {
         oss << std::hex << std::setfill('0') << std::setw(2) << static_cast<int>(byte);
     }
 
@@ -120,8 +120,8 @@ static const std::string generateHexWithReplacement(
  * @return A hex string of length @c numDigits.
  */
 static const std::string generateHex(
-        std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint8_t>& ibe,
-        unsigned int numDigits) {
+    std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint8_t>& ibe,
+    unsigned int numDigits) {
     return generateHexWithReplacement(ibe, numDigits, 0, 0);
 }
 
@@ -132,25 +132,24 @@ const std::string generateUUID() {
     std::unique_lock<std::mutex> lock(mutex);
     if (!seeded) {
         std::random_device rd;
-        ibe.seed(rd() +
-                std::chrono::duration_cast<std::chrono::nanoseconds>(
-                        std::chrono::steady_clock::now().time_since_epoch()).count());
+        ibe.seed(
+            rd() +
+            std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch())
+                .count());
         seeded = true;
     }
 
     std::ostringstream uuidText;
-    uuidText << generateHex(ibe, 8) << SEPARATOR <<
-        generateHex(ibe, 4) << SEPARATOR <<
-        generateHexWithReplacement(ibe, 4, UUID_VERSION_VALUE, 4) << SEPARATOR <<
-        generateHexWithReplacement(ibe, 4, UUID_VARIANT_VALUE, 2) << SEPARATOR <<
-        generateHex(ibe, 12);
+    uuidText << generateHex(ibe, 8) << SEPARATOR << generateHex(ibe, 4) << SEPARATOR
+             << generateHexWithReplacement(ibe, 4, UUID_VERSION_VALUE, 4) << SEPARATOR
+             << generateHexWithReplacement(ibe, 4, UUID_VARIANT_VALUE, 2) << SEPARATOR << generateHex(ibe, 12);
 
     lock.unlock();
 
     return uuidText.str();
 }
 
-} // namespace uuidGeneration
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace uuidGeneration
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

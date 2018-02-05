@@ -12,12 +12,22 @@ License, Version 2.0 (the "License"):
 - Alerts Capability Agent
 - Alexa Communications Library (ACL)
 - Alexa Directive Sequencer Library (ADSL)
-- Audio Input Processor (AIP)
+- Audio Input Processor (AIP) / Speech Recognizer Capability Agent
 - AudioPlayer Capability Agent
+- Certified Sender
+- Context Manager
+- Default Client
 - Key Word Detector (KWD)
 - Media Player
+- Playback Controller Capability Agent
+- Playlist Parser
 - Sample App
+- Settings Capability Agent
+- Speaker Manager Capability Agent
 - Speech Synthesizer Capability Agent
+- Storage
+- System Capability Agent
+- Template Runtime Capability Agent
 
 You may not use this file except in compliance with the License. A copy of
 the License is located at

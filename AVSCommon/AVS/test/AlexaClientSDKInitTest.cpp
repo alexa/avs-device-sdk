@@ -87,8 +87,8 @@ TEST(AlexaClientSDKInitTest, uninitialize) {
     AlexaClientSDKInit::uninitialize();
 }
 
-} // namesapce test
-} // namespace initialization
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace initialization
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

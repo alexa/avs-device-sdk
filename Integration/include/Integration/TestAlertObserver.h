@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TEST_ALERT_OBSERVER_H_
-#define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TEST_ALERT_OBSERVER_H_
+#ifndef ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TESTALERTOBSERVER_H_
+#define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TESTALERTOBSERVER_H_
 
 #include <chrono>
 #include <condition_variable>
@@ -34,7 +34,7 @@ using namespace capabilityAgents::alerts;
 
 class TestAlertObserver : public AlertObserverInterface {
 public:
-    void onAlertStateChange(const std::string & alertToken, State state, const std::string & reason) override;
+    void onAlertStateChange(const std::string& alertToken, State state, const std::string& reason) override;
 
     class changedAlert {
     public:
@@ -42,15 +42,16 @@ public:
     };
 
     changedAlert waitForNext(const std::chrono::seconds duration);
+
 private:
     std::mutex m_mutex;
     std::condition_variable m_wakeTrigger;
     std::deque<changedAlert> m_queue;
-    State currentState; 
+    State currentState;
 };
 
-} // namespace test
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace integration
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TEST_ALERT_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TESTALERTOBSERVER_H_

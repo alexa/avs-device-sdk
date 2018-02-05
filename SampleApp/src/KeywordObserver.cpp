@@ -1,7 +1,7 @@
 /*
  * KeywordObserver.cpp
  *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,27 +21,30 @@ namespace alexaClientSDK {
 namespace sampleApp {
 
 KeywordObserver::KeywordObserver(
-        std::shared_ptr<defaultClient::DefaultClient> client, capabilityAgents::aip::AudioProvider audioProvider) : 
-    m_client{client}, m_audioProvider{audioProvider} {            
+    std::shared_ptr<defaultClient::DefaultClient> client,
+    capabilityAgents::aip::AudioProvider audioProvider) :
+        m_client{client},
+        m_audioProvider{audioProvider} {
 }
 
 void KeywordObserver::onKeyWordDetected(
-        std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
-        std::string keyword,
-        avsCommon::avs::AudioInputStream::Index beginIndex,
-        avsCommon::avs::AudioInputStream::Index endIndex) {
+    std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+    std::string keyword,
+    avsCommon::avs::AudioInputStream::Index beginIndex,
+    avsCommon::avs::AudioInputStream::Index endIndex) {
     if (endIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX &&
-            beginIndex == avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX) {
+        beginIndex == avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX) {
         if (m_client) {
             m_client->notifyOfTapToTalk(m_audioProvider, endIndex);
         }
-    } else if (endIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX && 
-            beginIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX) {
+    } else if (
+        endIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX &&
+        beginIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX) {
         if (m_client) {
             m_client->notifyOfWakeWord(m_audioProvider, beginIndex, endIndex, keyword);
         }
     }
 }
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 project(KWD LANGUAGES CXX)
 
 add_subdirectory("src")
-add_subdirectory("test")
+acsdk_add_test_subdirectory_if_allowed()
 
 if(AMAZON_KEY_WORD_DETECTOR)
     add_subdirectory("Amazon")

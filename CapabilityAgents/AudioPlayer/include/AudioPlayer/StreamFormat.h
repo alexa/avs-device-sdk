@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_STREAM_FORMAT_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_STREAM_FORMAT_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_STREAMFORMAT_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_STREAMFORMAT_H_
 
 #include <ostream>
 
@@ -58,7 +58,7 @@ inline std::string streamFormatToString(StreamFormat streamFormat) {
  * @param[out] streamFormat The converted @c StreamFormat.
  * @return @c true if the string converted succesfully, else @c false.
  */
-inline bool stringToStreamFormat(const std::string& text, StreamFormat * streamFormat) {
+inline bool stringToStreamFormat(const std::string& text, StreamFormat* streamFormat) {
     if (nullptr == streamFormat) {
         return false;
     } else if (text == streamFormatToString(StreamFormat::AUDIO_MPEG)) {
@@ -94,8 +94,8 @@ inline bool convertToValue(const rapidjson::Value& documentNode, StreamFormat* s
     return stringToStreamFormat(text, streamFormat);
 }
 
-} // namespace audioPlayer
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace audioPlayer
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_STREAM_FORMAT_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_STREAMFORMAT_H_

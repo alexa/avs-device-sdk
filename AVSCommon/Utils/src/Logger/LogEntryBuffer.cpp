@@ -69,7 +69,7 @@ const char* LogEntryBuffer::c_str() const {
     return m_base;
 }
 
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

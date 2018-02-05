@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_PLAY_BEHAVIOR_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_PLAY_BEHAVIOR_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_PLAYBEHAVIOR_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_PLAYBEHAVIOR_H_
 
 #include <ostream>
 
@@ -67,7 +67,7 @@ inline std::string playBehaviorToString(PlayBehavior playBehavior) {
  * @param[out] playBehavior The converted @c PlayBehavior.
  * @return @c true if the string converted succesfully, else @c false.
  */
-inline bool stringToPlayBehavior(const std::string& text, PlayBehavior * playBehavior) {
+inline bool stringToPlayBehavior(const std::string& text, PlayBehavior* playBehavior) {
     if (nullptr == playBehavior) {
         return false;
     } else if (playBehaviorToString(PlayBehavior::REPLACE_ALL) == text) {
@@ -109,8 +109,8 @@ inline bool convertToValue(const rapidjson::Value& documentNode, PlayBehavior* p
     return stringToPlayBehavior(text, playBehavior);
 }
 
-} // namespace audioPlayer
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace audioPlayer
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_PLAY_BEHAVIOR_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_PLAYBEHAVIOR_H_

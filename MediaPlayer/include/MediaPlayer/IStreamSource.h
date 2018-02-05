@@ -1,7 +1,7 @@
 /*
- * IStreamReaderSource.h
+ * IStreamSource.h
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_ISTREAM_SOURCE_H_
-#define ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_ISTREAM_SOURCE_H_
+#ifndef ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_ISTREAMSOURCE_H_
+#define ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_ISTREAMSOURCE_H_
 
 #include <iostream>
 #include <memory>
@@ -41,9 +41,9 @@ public:
      * @param repeat Whether the stream should be replayed until stopped.
      */
     static std::unique_ptr<IStreamSource> create(
-            PipelineInterface* pipeline,
-            std::shared_ptr<std::istream> stream,
-            bool repeat);
+        PipelineInterface* pipeline,
+        std::shared_ptr<std::istream> stream,
+        bool repeat);
 
     /**
      * Destructor.
@@ -60,11 +60,23 @@ private:
      */
     IStreamSource(PipelineInterface* pipeline, std::shared_ptr<std::istream> stream, bool repeat);
 
+    /// @name Overridden SourceInterface methods.
+    /// @{
+    bool isPlaybackRemote() const override;
+    bool hasAdditionalData() override;
+    /// @}
+
+    /// @name RequiresShutdown Functions
+    /// @{
+    void doShutdown() override{};
+    /// @}
+
     /// @name Overridden BaseStreamSource methods.
     /// @{
     bool isOpen() override;
     void close() override;
     gboolean handleReadData() override;
+    gboolean handleSeekData(guint64 offset) override;
     /// @}
 
 private:
@@ -75,8 +87,7 @@ private:
     bool m_repeat;
 };
 
-} // namespace mediaPlayer
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_MEDIA_PLAYER_INCLUDE_MEDIA_PLAYER_ISTREAM_SOURCE_H_
-
+#endif  // ALEXA_CLIENT_SDK_MEDIAPLAYER_INCLUDE_MEDIAPLAYER_ISTREAMSOURCE_H_

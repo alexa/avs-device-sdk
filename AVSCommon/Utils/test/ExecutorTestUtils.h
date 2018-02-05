@@ -14,6 +14,10 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_TEST_EXECUTORTESTUTILS_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_TEST_EXECUTORTESTUTILS_H_
+
 #include <chrono>
 
 namespace alexaClientSDK {
@@ -54,18 +58,21 @@ public:
  */
 class SimpleObject {
 public:
-    SimpleObject() : m_value{0} { };
-    SimpleObject(int value) : m_value{value} { };
+    SimpleObject() : m_value{0} {};
+    SimpleObject(int value) : m_value{value} {};
 
     int getValue() {
         return m_value;
     }
+
 private:
     int m_value;
 };
 
-} // namespace test
-} // namespace threading
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace threading
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
+
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_TEST_EXECUTORTESTUTILS_H_

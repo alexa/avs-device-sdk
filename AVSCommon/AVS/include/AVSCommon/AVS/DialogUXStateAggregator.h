@@ -15,16 +15,17 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_DIALOG_UX_STATE_AGGREGATOR_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_DIALOG_UX_STATE_AGGREGATOR_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_DIALOGUXSTATEAGGREGATOR_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_DIALOGUXSTATEAGGREGATOR_H_
 
 #include <chrono>
 #include <unordered_set>
 
 #include "AVSCommon/SDKInterfaces/AudioInputProcessorObserverInterface.h"
+#include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include "AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h"
 #include "AVSCommon/SDKInterfaces/MessageObserverInterface.h"
-#include "AVSCommon/SDKInterfaces/SpeechSynthesizerObserver.h"
+#include "AVSCommon/SDKInterfaces/SpeechSynthesizerObserverInterface.h"
 
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
@@ -37,10 +38,11 @@ namespace avs {
  * This class serves as a component to aggregate other observer interfaces into one UX component that notifies
  * observers of AVS dialog specific UX changes based on events that occur within these components.
  */
-class DialogUXStateAggregator : 
-        public sdkInterfaces::AudioInputProcessorObserverInterface,
-        public sdkInterfaces::SpeechSynthesizerObserver,
-        public sdkInterfaces::MessageObserverInterface {
+class DialogUXStateAggregator
+        : public sdkInterfaces::AudioInputProcessorObserverInterface
+        , public sdkInterfaces::SpeechSynthesizerObserverInterface
+        , public sdkInterfaces::MessageObserverInterface
+        , public sdkInterfaces::ConnectionStatusObserverInterface {
 public:
     /**
      * Constructor.
@@ -51,12 +53,12 @@ public:
     DialogUXStateAggregator(std::chrono::milliseconds timeoutForThinkingToIdle = std::chrono::seconds{5});
 
     /**
-     * Adds an observer to be notified of UX state changes. 
+     * Adds an observer to be notified of UX state changes.
      *
-     * @warning The user of this class must make sure that the observer remains valid until the destruction of this 
-     * object as state changes may come in at any time, leading to callbacks to the observer. Failure to do so may 
+     * @warning The user of this class must make sure that the observer remains valid until the destruction of this
+     * object as state changes may come in at any time, leading to callbacks to the observer. Failure to do so may
      * result in crashes when this class attempts to access its observers.
-     * 
+     *
      * @param observer The new observer to notify of UX state changes.
      */
     void addObserver(std::shared_ptr<sdkInterfaces::DialogUXStateObserverInterface> observer);
@@ -75,10 +77,10 @@ public:
 
     void onStateChanged(sdkInterfaces::AudioInputProcessorObserverInterface::State state) override;
 
-    void onStateChanged(sdkInterfaces::SpeechSynthesizerObserver::SpeechSynthesizerState state) override;
+    void onStateChanged(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState state) override;
 
-    void receive(const std::string & contextId, const std::string & message) override;
-    
+    void receive(const std::string& contextId, const std::string& message) override;
+
 private:
     /**
      * Notifies all observers of the current state. This should only be used within the internal executor.
@@ -93,14 +95,29 @@ private:
     void setState(sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState);
 
     /**
+     * Sets the internal state to @c IDLE if both @c SpeechSynthesizer and @c AudioInputProcessor are in idle state.
+     */
+    void tryEnterIdleState();
+
+    /**
      * Transitions the internal state from THINKING to IDLE.
      */
     void transitionFromThinkingTimedOut();
 
     /**
-     * Transitions the internal state after a SPEAKING finishes to IDLE.
+     * Timer callback that makes sure that the state is IDLE if both @c AudioInputProcessor and @c SpeechSynthesizer
+     * are in IDLE state.
      */
-    void transitionFromSpeakingFinished();
+    void tryEnterIdleStateOnTimer();
+
+    void onConnectionStatusChanged(
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
+
+    /**
+     * Called internally when some activity starts: Speech is going to be played or voice recognition is about to start.
+     */
+    void onActivityStarted();
 
     /**
      * @name Executor Thread Variables
@@ -120,7 +137,7 @@ private:
     const std::chrono::milliseconds m_timeoutForThinkingToIdle;
 
     /// A timer to transition out of the THINKING state.
-    avsCommon::utils::timing::Timer m_thinkingToIdleTimer;
+    avsCommon::utils::timing::Timer m_thinkingTimeoutTimer;
 
     /// A timer to transition out of the SPEAKING state for multiturn situations.
     avsCommon::utils::timing::Timer m_multiturnSpeakingToListeningTimer;
@@ -133,10 +150,17 @@ private:
      *     before the Executor Thread Variables are destroyed.
      */
     avsCommon::utils::threading::Executor m_executor;
+
+    /// Contains the current state of the @c SpeechSynthesizer as reported by @c SpeechSynthesizerObserverInterface
+    alexaClientSDK::avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState
+        m_speechSynthesizerState;
+
+    /// Contains the current state of the @c AudioInputProcessor as reported by @c AudioInputProcessorObserverInterface
+    alexaClientSDK::avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State m_audioInputProcessorState;
 };
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_DIALOG_UX_STATE_AGGREGATOR_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_DIALOGUXSTATEAGGREGATOR_H_

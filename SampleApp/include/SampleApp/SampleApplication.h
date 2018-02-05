@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_SAMPLE_APPLICATION_H_
-#define ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_SAMPLE_APPLICATION_H_
+#ifndef ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_SAMPLEAPPLICATION_H_
+#define ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_SAMPLEAPPLICATION_H_
 
 #include "ConsolePrinter.h"
 #include "UserInputManager.h"
@@ -24,6 +24,7 @@
 #ifdef KWD
 #include <KWD/AbstractKeywordDetector.h>
 #endif
+#include <MediaPlayer/MediaPlayer.h>
 
 #include <memory>
 
@@ -43,12 +44,15 @@ public:
      * @return A new @c SampleApplication, or @c nullptr if the operation failed.
      */
     static std::unique_ptr<SampleApplication> create(
-           const std::string& pathToConfig,
-           const std::string& pathToInputFolder,
-           const std::string& logLevel = "");
+        const std::string& pathToConfig,
+        const std::string& pathToInputFolder,
+        const std::string& logLevel = "");
 
     /// Runs the application, blocking until the user asks the application to quit.
     void run();
+
+    /// Destructor which manages the @c SampleApplication shutdown sequence.
+    ~SampleApplication();
 
 private:
     /**
@@ -60,13 +64,22 @@ private:
      *     logging level will be used.
      * @return @c true if initialization succeeded, else @c false.
      */
-    bool initialize(
-           const std::string& pathToConfig,
-           const std::string& pathToInputFolder,
-           const std::string& logLevel);
+    bool initialize(const std::string& pathToConfig, const std::string& pathToInputFolder, const std::string& logLevel);
 
     /// The @c UserInputManager which controls the client.
     std::unique_ptr<UserInputManager> m_userInputManager;
+
+    /// The @c MediaPlayer used by @c SpeechSynthesizer.
+    std::shared_ptr<mediaPlayer::MediaPlayer> m_speakMediaPlayer;
+
+    /// The @c MediaPlayer used by @c AudioPlayer.
+    std::shared_ptr<mediaPlayer::MediaPlayer> m_audioMediaPlayer;
+
+    /// The @c MediaPlayer used by @c Alerts.
+    std::shared_ptr<mediaPlayer::MediaPlayer> m_alertsMediaPlayer;
+
+    /// The @c MediaPlayer used by @c NotificationsCapabilityAgent.
+    std::shared_ptr<mediaPlayer::MediaPlayer> m_notificationsMediaPlayer;
 
 #ifdef KWD
     /// The Wakeword Detector which can wake up the client using audio input.
@@ -74,7 +87,7 @@ private:
 #endif
 };
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_SAMPLE_APPLICATION_H_
+#endif  // ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_SAMPLEAPPLICATION_H_

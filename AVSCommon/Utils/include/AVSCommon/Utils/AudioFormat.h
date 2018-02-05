@@ -18,8 +18,8 @@
 /**
  * @file AudioFormat.h
  */
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_AUDIO_FORMAT_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_AUDIO_FORMAT_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_AUDIOFORMAT_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_AUDIOFORMAT_H_
 
 #include <ostream>
 
@@ -82,7 +82,6 @@ inline std::ostream& operator<<(std::ostream& stream, const AudioFormat::Encodin
     return stream;
 }
 
-
 /**
  * Write an @c Endianness value to an @c ostream as a string.
  *
@@ -102,8 +101,8 @@ inline std::ostream& operator<<(std::ostream& stream, const AudioFormat::Endiann
     return stream;
 }
 
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_AUDIO_FORMAT_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_AUDIOFORMAT_H_

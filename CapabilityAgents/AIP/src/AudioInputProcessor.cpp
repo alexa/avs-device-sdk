@@ -1,7 +1,7 @@
 /*
  * AudioInputProcessor.cpp
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,18 +17,19 @@
 
 #include <sstream>
 
-#include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/AVS/FocusState.h>
+#include <AVSCommon/AVS/MessageRequest.h>
+#include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
+#include <AVSCommon/Utils/Metrics.h>
 
 #include "AIP/AudioInputProcessor.h"
-#include "AIP/MessageRequest.h"
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace aip {
-
+using namespace avsCommon::utils;
 using namespace avsCommon::utils::logger;
 
 /// String to identify log entries originating from this file.
@@ -60,14 +61,14 @@ static const avsCommon::avs::NamespaceAndName EXPECT_SPEECH{NAMESPACE, "ExpectSp
 static const avsCommon::avs::NamespaceAndName RECOGNIZER_STATE{NAMESPACE, "RecognizerState"};
 
 std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
-        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
-        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
-        std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> userActivityNotifier,
-        AudioProvider defaultAudioProvider) {
+    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
+    std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+    std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> userActivityNotifier,
+    AudioProvider defaultAudioProvider) {
     if (!directiveSequencer) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullDirectiveSequencer"));
         return nullptr;
@@ -92,13 +93,13 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
     }
 
     auto aip = std::shared_ptr<AudioInputProcessor>(new AudioInputProcessor(
-            directiveSequencer,
-            messageSender,
-            contextManager,
-            focusManager,
-            exceptionEncounteredSender,
-            userActivityNotifier,
-            defaultAudioProvider));
+        directiveSequencer,
+        messageSender,
+        contextManager,
+        focusManager,
+        exceptionEncounteredSender,
+        userActivityNotifier,
+        defaultAudioProvider));
 
     if (aip) {
         contextManager->setStateProvider(RECOGNIZER_STATE, aip);
@@ -120,7 +121,7 @@ void AudioInputProcessor::addObserver(std::shared_ptr<ObserverInterface> observe
         ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
         return;
     }
-    m_executor.submit([this, observer] () { m_observers.insert(observer); });
+    m_executor.submit([this, observer]() { m_observers.insert(observer); });
 }
 
 void AudioInputProcessor::removeObserver(std::shared_ptr<ObserverInterface> observer) {
@@ -128,22 +129,23 @@ void AudioInputProcessor::removeObserver(std::shared_ptr<ObserverInterface> obse
         ACSDK_ERROR(LX("removeObserverFailed").d("reason", "nullObserver"));
         return;
     }
-    m_executor.submit([this, observer] () { m_observers.erase(observer); }).wait();
+    m_executor.submit([this, observer]() { m_observers.erase(observer); }).wait();
 }
 
 std::future<bool> AudioInputProcessor::recognize(
-        AudioProvider audioProvider,
-        Initiator initiator,
-        avsCommon::avs::AudioInputStream::Index begin,
-        avsCommon::avs::AudioInputStream::Index keywordEnd,
-        std::string keyword) {
+    AudioProvider audioProvider,
+    Initiator initiator,
+    avsCommon::avs::AudioInputStream::Index begin,
+    avsCommon::avs::AudioInputStream::Index keywordEnd,
+    std::string keyword) {
+    ACSDK_METRIC_IDS(TAG, "Recognize", "", "", Metrics::Location::AIP_RECEIVE);
+
     // If no begin index was provided, grab the current index ASAP so that we can start streaming from the time this
     // call was made.
     if (audioProvider.stream && INVALID_INDEX == begin) {
         static const bool startWithNewData = true;
         auto reader = audioProvider.stream->createReader(
-                avsCommon::avs::AudioInputStream::Reader::Policy::NONBLOCKING,
-                startWithNewData);
+            avsCommon::avs::AudioInputStream::Reader::Policy::NONBLOCKING, startWithNewData);
         if (!reader) {
             ACSDK_ERROR(LX("recognizeFailed").d("reason", "createReaderFailed"));
             std::promise<bool> ret;
@@ -152,51 +154,31 @@ std::future<bool> AudioInputProcessor::recognize(
         }
         begin = reader->tell();
     }
-    return m_executor.submit(
-        [this, audioProvider, initiator, begin, keywordEnd, keyword] () {
-            return executeRecognize(audioProvider, initiator, begin, keywordEnd, keyword);
-        }
-    );
+    return m_executor.submit([this, audioProvider, initiator, begin, keywordEnd, keyword]() {
+        return executeRecognize(audioProvider, initiator, begin, keywordEnd, keyword);
+    });
 }
 
 std::future<bool> AudioInputProcessor::stopCapture() {
-    return m_executor.submit(
-        [this] () {
-            return executeStopCapture();
-        }
-    );
+    return m_executor.submit([this]() { return executeStopCapture(); });
 }
 
 std::future<void> AudioInputProcessor::resetState() {
-    return m_executor.submit(
-        [this] () {
-            executeResetState();
-        }
-    );
+    return m_executor.submit([this]() { executeResetState(); });
 }
 
-void AudioInputProcessor::provideState(unsigned int stateRequestToken) {
-    m_executor.submit(
-        [this, stateRequestToken] () {
-            executeProvideState(true, stateRequestToken);
-        }
-    );
+void AudioInputProcessor::provideState(
+    const avsCommon::avs::NamespaceAndName& stateProviderName,
+    unsigned int stateRequestToken) {
+    m_executor.submit([this, stateRequestToken]() { executeProvideState(true, stateRequestToken); });
 }
 
 void AudioInputProcessor::onContextAvailable(const std::string& jsonContext) {
-    m_executor.submit(
-        [this, jsonContext] () {
-            executeOnContextAvailable(jsonContext);
-        }
-    );
+    m_executor.submit([this, jsonContext]() { executeOnContextAvailable(jsonContext); });
 }
 
 void AudioInputProcessor::onContextFailure(const avsCommon::sdkInterfaces::ContextRequestError error) {
-    m_executor.submit(
-        [this, error] () {
-            executeOnContextFailure(error);
-        }
-    );
+    m_executor.submit([this, error]() { executeOnContextFailure(error); });
 }
 
 void AudioInputProcessor::handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive) {
@@ -212,13 +194,13 @@ void AudioInputProcessor::handleDirective(std::shared_ptr<DirectiveInfo> info) {
         return;
     }
     if (info->directive->getName() == STOP_CAPTURE.name) {
+        ACSDK_METRIC_MSG(TAG, info->directive, Metrics::Location::AIP_RECEIVE);
         handleStopCaptureDirective(info);
     } else if (info->directive->getName() == EXPECT_SPEECH.name) {
         handleExpectSpeechDirective(info);
     } else {
         std::string errorMessage =
-                "unexpected directive " +
-                info->directive->getNamespace() + ":" + info->directive->getName();
+            "unexpected directive " + info->directive->getNamespace() + ":" + info->directive->getName();
         m_exceptionEncounteredSender->sendExceptionEncountered(
             info->directive->getUnparsedDirective(),
             avsCommon::avs::ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED,
@@ -227,14 +209,13 @@ void AudioInputProcessor::handleDirective(std::shared_ptr<DirectiveInfo> info) {
             info->result->setFailed(errorMessage);
         }
         ACSDK_ERROR(LX("handleDirectiveFailed")
-                .d("reason", "unknownDirective")
-                .d("namespace", info->directive->getNamespace())
-                .d("name", info->directive->getName()));
+                        .d("reason", "unknownDirective")
+                        .d("namespace", info->directive->getNamespace())
+                        .d("name", info->directive->getName()));
     }
 }
 
 void AudioInputProcessor::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
-    resetState();
     removeDirective(info);
 }
 
@@ -243,30 +224,23 @@ void AudioInputProcessor::onDeregistered() {
 }
 
 void AudioInputProcessor::onFocusChanged(avsCommon::avs::FocusState newFocus) {
-    m_executor.submit(
-        [this, newFocus] () {
-            executeOnFocusChanged(newFocus);
-        }
-    );
+    ACSDK_DEBUG9(LX("onFocusChanged").d("newFocus", newFocus));
+    m_executor.submit([this, newFocus]() { executeOnFocusChanged(newFocus); });
 }
 
 void AudioInputProcessor::onDialogUXStateChanged(
-        avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) {
-    m_executor.submit(
-        [this, newState] () {
-            executeOnDialogUXStateChanged(newState);
-        }
-    );
+    avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) {
+    m_executor.submit([this, newState]() { executeOnDialogUXStateChanged(newState); });
 }
 
 AudioInputProcessor::AudioInputProcessor(
-        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
-        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> userActivityNotifier,
-        AudioProvider defaultAudioProvider) :
+    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+    std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> userActivityNotifier,
+    AudioProvider defaultAudioProvider) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         RequiresShutdown{"AudioInputProcessor"},
         m_directiveSequencer{directiveSequencer},
@@ -294,41 +268,33 @@ void AudioInputProcessor::doShutdown() {
 }
 
 std::future<bool> AudioInputProcessor::expectSpeechTimedOut() {
-    return m_executor.submit(
-        [this] () {
-            return executeExpectSpeechTimedOut();
-        }
-    );
+    return m_executor.submit([this]() { return executeExpectSpeechTimedOut(); });
 }
 
 void AudioInputProcessor::handleStopCaptureDirective(std::shared_ptr<DirectiveInfo> info) {
-    m_executor.submit(
-        [this, info] () {
-            bool stopImmediately = true;
-            executeStopCapture(stopImmediately, info);
-        }
-    );
+    m_executor.submit([this, info]() {
+        bool stopImmediately = true;
+        executeStopCapture(stopImmediately, info);
+    });
 }
 
 void AudioInputProcessor::handleExpectSpeechDirective(std::shared_ptr<DirectiveInfo> info) {
     int64_t timeout;
-    bool found = avsCommon::utils::json::jsonUtils::lookupInt64Value(
-            info->directive->getPayload(),
-            "timeoutInMilliseconds",
-            &timeout);
+    bool found = avsCommon::utils::json::jsonUtils::retrieveValue(
+        info->directive->getPayload(), "timeoutInMilliseconds", &timeout);
 
     if (!found) {
-        static const char * errorMessage = "missing/invalid timeoutInMilliseconds";
+        static const char* errorMessage = "missing/invalid timeoutInMilliseconds";
         m_exceptionEncounteredSender->sendExceptionEncountered(
-                info->directive->getUnparsedDirective(),
-                avsCommon::avs::ExceptionErrorType::UNSUPPORTED_OPERATION,
-                errorMessage);
+            info->directive->getUnparsedDirective(),
+            avsCommon::avs::ExceptionErrorType::UNSUPPORTED_OPERATION,
+            errorMessage);
         if (info->result) {
             info->result->setFailed(errorMessage);
         }
         ACSDK_ERROR(LX("handleExpectSpeechDirectiveFailed")
-                .d("reason", "missingJsonField")
-                .d("field", "timeoutInMilliseconds"));
+                        .d("reason", "missingJsonField")
+                        .d("field", "timeoutInMilliseconds"));
         return;
     }
 
@@ -338,19 +304,17 @@ void AudioInputProcessor::handleExpectSpeechDirective(std::shared_ptr<DirectiveI
      */
     std::string initiator = "";
 
-    m_executor.submit(
-        [this, timeout, initiator, info] () {
-            executeExpectSpeech(std::chrono::milliseconds{timeout}, initiator, info);
-        }
-    );
+    m_executor.submit([this, timeout, initiator, info]() {
+        executeExpectSpeech(std::chrono::milliseconds{timeout}, initiator, info);
+    });
 }
 
 bool AudioInputProcessor::executeRecognize(
-        AudioProvider provider,
-        Initiator initiator,
-        avsCommon::avs::AudioInputStream::Index begin,
-        avsCommon::avs::AudioInputStream::Index end,
-        const std::string& keyword) {
+    AudioProvider provider,
+    Initiator initiator,
+    avsCommon::avs::AudioInputStream::Index begin,
+    avsCommon::avs::AudioInputStream::Index end,
+    const std::string& keyword) {
     // Make sure we have a keyword if this is a wakeword initiator.
     if (Initiator::WAKEWORD == initiator && keyword.empty()) {
         ACSDK_ERROR(LX("executeRecognizeFailed").d("reason", "emptyKeywordWithWakewordInitiator"));
@@ -363,25 +327,25 @@ bool AudioInputProcessor::executeRecognize(
     // Check if we have everything we need to enable false wakeword detection.
     // TODO: Consider relaxing the hard requirement for a full 500ms preroll - ACSDK-276.
     bool falseWakewordDetection =
-            Initiator::WAKEWORD == initiator &&
-            begin != INVALID_INDEX &&
-            begin >= preroll &&
-            end != INVALID_INDEX;
+        Initiator::WAKEWORD == initiator && begin != INVALID_INDEX && begin >= preroll && end != INVALID_INDEX;
 
     // If we will be enabling false wakeword detection, add preroll and build the initiator payload.
     std::ostringstream initiatorPayloadJson;
     // TODO: Consider reworking this code to use RapidJSON - ACSDK-279.
     if (falseWakewordDetection) {
+        // clang-format off
         initiatorPayloadJson
                 << R"("wakeWordIndices":{)"
                        R"("startIndexInSamples":)" << preroll << R"(,)"
                        R"("endIndexInSamples":)" << preroll + end - begin
                 << R"(})";
+        // clang-format on
         begin -= preroll;
     }
 
     // Build the initiator json.
     std::ostringstream initiatorJson;
+    // clang-format off
     initiatorJson
             << R"("initiator":{)"
                    R"("type":")" << initiatorToString(initiator) << R"(",)"
@@ -389,44 +353,44 @@ bool AudioInputProcessor::executeRecognize(
             <<         initiatorPayloadJson.str()
             <<     R"(})"
                R"(})";
+    // clang-format on
 
     return executeRecognize(provider, initiatorJson.str(), begin, keyword);
 }
 
 bool AudioInputProcessor::executeRecognize(
-        AudioProvider provider,
-        const std::string& initiatorJson,
-        avsCommon::avs::AudioInputStream::Index begin,
-        const std::string& keyword) {
+    AudioProvider provider,
+    const std::string& initiatorJson,
+    avsCommon::avs::AudioInputStream::Index begin,
+    const std::string& keyword) {
     if (!provider.stream) {
         ACSDK_ERROR(LX("executeRecognizeFailed").d("reason", "nullAudioInputStream"));
         return false;
     }
 
     if (provider.format.encoding != avsCommon::utils::AudioFormat::Encoding::LPCM) {
-        ACSDK_ERROR(LX("executeRecognizeFailed")
-                .d("reason", "unsupportedEncoding")
-                .d("encoding", provider.format.encoding));
+        ACSDK_ERROR(
+            LX("executeRecognizeFailed").d("reason", "unsupportedEncoding").d("encoding", provider.format.encoding));
         return false;
     } else if (provider.format.endianness != avsCommon::utils::AudioFormat::Endianness::LITTLE) {
         ACSDK_ERROR(LX("executeRecognizeFailed")
-                .d("reason", "unsupportedEndianness")
-                .d("endianness", provider.format.endianness));
+                        .d("reason", "unsupportedEndianness")
+                        .d("endianness", provider.format.endianness));
         return false;
     } else if (provider.format.sampleSizeInBits != 16) {
         ACSDK_ERROR(LX("executeRecognizeFailed")
-                .d("reason", "unsupportedSampleSize")
-                .d("sampleSize", provider.format.sampleSizeInBits));
+                        .d("reason", "unsupportedSampleSize")
+                        .d("sampleSize", provider.format.sampleSizeInBits));
         return false;
     } else if (provider.format.sampleRateHz != 16000) {
         ACSDK_ERROR(LX("executeRecognizeFailed")
-                .d("reason", "unsupportedSampleRate")
-                .d("sampleRate", provider.format.sampleRateHz));
+                        .d("reason", "unsupportedSampleRate")
+                        .d("sampleRate", provider.format.sampleRateHz));
         return false;
     } else if (provider.format.numChannels != 1) {
         ACSDK_ERROR(LX("executeRecognizeFailed")
-                .d("reason", "unsupportedNumChannels")
-                .d("channels", provider.format.numChannels));
+                        .d("reason", "unsupportedNumChannels")
+                        .d("channels", provider.format.numChannels));
         return false;
     }
 
@@ -460,6 +424,7 @@ bool AudioInputProcessor::executeRecognize(
 
     // Assemble the event payload.
     std::ostringstream payload;
+    // clang-format off
     payload << R"({)"
                    R"("profile":")" << provider.profile << R"(",)"
                    R"("format":"AUDIO_L16_RATE_16000_CHANNELS_1")";
@@ -467,20 +432,18 @@ bool AudioInputProcessor::executeRecognize(
         payload << "," << initiatorJson;
     }
     payload << R"(})";
+    // clang-format on
 
     // Set up an attachment reader for the event.
     avsCommon::avs::attachment::InProcessAttachmentReader::SDSTypeIndex offset = 0;
     avsCommon::avs::attachment::InProcessAttachmentReader::SDSTypeReader::Reference reference =
-            avsCommon::avs::attachment::InProcessAttachmentReader::SDSTypeReader::Reference::BEFORE_WRITER;
+        avsCommon::avs::attachment::InProcessAttachmentReader::SDSTypeReader::Reference::BEFORE_WRITER;
     if (INVALID_INDEX != begin) {
         offset = begin;
         reference = avsCommon::avs::attachment::InProcessAttachmentReader::SDSTypeReader::Reference::ABSOLUTE;
     }
     m_reader = avsCommon::avs::attachment::InProcessAttachmentReader::create(
-            avsCommon::avs::attachment::AttachmentReader::Policy::NON_BLOCKING,
-            provider.stream,
-            offset,
-            reference);
+        avsCommon::avs::attachment::AttachmentReader::Policy::NON_BLOCKING, provider.stream, offset, reference);
     if (!m_reader) {
         ACSDK_ERROR(LX("executeRecognizeFailed").d("reason", "Failed to create attachment reader"));
         return false;
@@ -493,17 +456,17 @@ bool AudioInputProcessor::executeRecognize(
     // Note that we're preparing to send a Recognize event.
     m_preparingToSend = true;
 
-    //  Start assembling the context; we'll service the callback after assembling our Recognize event.
-    m_contextManager->getContext(shared_from_this());
-
-    // Stop the ExpectSpeech timer so we don't get a timeout.
-    m_expectingSpeechTimer.stop();
-
     // Update state if we're changing wakewords.
     if (!keyword.empty() && m_wakeword != keyword) {
         m_wakeword = keyword;
         executeProvideState();
     }
+
+    //  Start assembling the context; we'll service the callback after assembling our Recognize event.
+    m_contextManager->getContext(shared_from_this());
+
+    // Stop the ExpectSpeech timer so we don't get a timeout.
+    m_expectingSpeechTimer.stop();
 
     // Record provider as the last-used AudioProvider so it can be used in the event of an ExpectSpeech directive.
     m_lastAudioProvider = provider;
@@ -518,15 +481,13 @@ bool AudioInputProcessor::executeRecognize(
 }
 
 void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContext) {
-    ACSDK_DEBUG(LX("executeOnContextAvailable")
-            .d("jsonContext", jsonContext));
+    ACSDK_DEBUG(LX("executeOnContextAvailable").d("jsonContext", jsonContext));
 
     // Should already be RECOGNIZING if we get here.
     if (m_state != ObserverInterface::State::RECOGNIZING) {
-        ACSDK_ERROR(LX("executeOnContextAvailableFailed")
-                .d("reason", "Not permitted in current state")
-                .d("state", m_state));
-       return;
+        ACSDK_ERROR(
+            LX("executeOnContextAvailableFailed").d("reason", "Not permitted in current state").d("state", m_state));
+        return;
     }
 
     // Should already have a reader.
@@ -554,12 +515,9 @@ void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContex
     // Assemble the MessageRequest.  It will be sent by executeOnFocusChanged when we acquire the channel.
     auto dialogRequestId = avsCommon::utils::uuidGeneration::generateUUID();
     m_directiveSequencer->setDialogRequestId(dialogRequestId);
-    auto msgIdAndJsonEvent = buildJsonEventString(
-            "Recognize",
-            dialogRequestId,
-            m_payload,
-            jsonContext);
-    m_request = std::make_shared<MessageRequest>(shared_from_this(), msgIdAndJsonEvent.second, m_reader);
+    auto msgIdAndJsonEvent = buildJsonEventString("Recognize", dialogRequestId, m_payload, jsonContext);
+    m_request = std::make_shared<avsCommon::avs::MessageRequest>(msgIdAndJsonEvent.second, m_reader);
+    m_request->addObserver(shared_from_this());
 
     // If we already have focus, there won't be a callback to send the message, so send it now.
     if (avsCommon::avs::FocusState::FOREGROUND == m_focusState) {
@@ -599,8 +557,12 @@ void AudioInputProcessor::executeOnFocusChanged(avsCommon::avs::FocusState newFo
 }
 
 bool AudioInputProcessor::executeStopCapture(bool stopImmediately, std::shared_ptr<DirectiveInfo> info) {
+    if (info && info->isCancelled) {
+        ACSDK_DEBUG(LX("stopCaptureIgnored").d("reason", "isCancelled"));
+        return true;
+    }
     if (m_state != ObserverInterface::State::RECOGNIZING) {
-        static const char * errorMessage = "StopCapture only allowed in RECOGNIZING state.";
+        static const char* errorMessage = "StopCapture only allowed in RECOGNIZING state.";
         if (info) {
             if (info->result) {
                 info->result->setFailed(errorMessage);
@@ -608,9 +570,9 @@ bool AudioInputProcessor::executeStopCapture(bool stopImmediately, std::shared_p
             removeDirective(info);
         }
         ACSDK_ERROR(LX("executeStopCaptureFailed")
-                .d("reason", "invalidState")
-                .d("expectedState", "RECOGNIZING")
-                .d("state", m_state));
+                        .d("reason", "invalidState")
+                        .d("expectedState", "RECOGNIZING")
+                        .d("state", m_state));
         return false;
     }
     // Create a lambda to do the StopCapture.
@@ -662,19 +624,23 @@ void AudioInputProcessor::executeResetState() {
 }
 
 bool AudioInputProcessor::executeExpectSpeech(
-        std::chrono::milliseconds timeout, std::string initiator, std::shared_ptr<DirectiveInfo> info) {
-
-    if (m_state != ObserverInterface::State::IDLE && 
-                m_state != ObserverInterface::State::BUSY) {
-        static const char * errorMessage = "ExpectSpeech only allowed in IDLE or BUSY state.";
+    std::chrono::milliseconds timeout,
+    std::string initiator,
+    std::shared_ptr<DirectiveInfo> info) {
+    if (info && info->isCancelled) {
+        ACSDK_DEBUG(LX("expectSpeechIgnored").d("reason", "isCancelled"));
+        return true;
+    }
+    if (m_state != ObserverInterface::State::IDLE && m_state != ObserverInterface::State::BUSY) {
+        static const char* errorMessage = "ExpectSpeech only allowed in IDLE or BUSY state.";
         if (info->result) {
             info->result->setFailed(errorMessage);
         }
         removeDirective(info);
         ACSDK_ERROR(LX("executeExpectSpeechFailed")
-                .d("reason", "invalidState")
-                .d("expectedState", "IDLE/BUSY")
-                .d("state", m_state));
+                        .d("reason", "invalidState")
+                        .d("expectedState", "IDLE/BUSY")
+                        .d("state", m_state));
         return false;
     }
 
@@ -701,14 +667,15 @@ bool AudioInputProcessor::executeExpectSpeech(
 bool AudioInputProcessor::executeExpectSpeechTimedOut() {
     if (m_state != ObserverInterface::State::EXPECTING_SPEECH) {
         ACSDK_ERROR(LX("executeExpectSpeechTimedOutFailure")
-                .d("reason", "invalidState")
-                .d("expectedState", "EXPECTING_SPEECH")
-                .d("state", m_state));
+                        .d("reason", "invalidState")
+                        .d("expectedState", "EXPECTING_SPEECH")
+                        .d("state", m_state));
         return false;
     }
 
     auto msgIdAndJsonEvent = buildJsonEventString("ExpectSpeechTimedOut");
-    auto request = std::make_shared<MessageRequest>(shared_from_this(), msgIdAndJsonEvent.second, m_reader);
+    auto request = std::make_shared<avsCommon::avs::MessageRequest>(msgIdAndJsonEvent.second, m_reader);
+    request->addObserver(shared_from_this());
     m_messageSender->sendMessage(request);
     setState(ObserverInterface::State::IDLE);
     ACSDK_ERROR(LX("executeExpectSpeechFailed").d("reason", "Timed Out"));
@@ -720,20 +687,14 @@ void AudioInputProcessor::executeProvideState(bool sendToken, unsigned int state
     context << R"({"wakeword" : ")" << m_wakeword << R"("})";
     if (sendToken) {
         m_contextManager->setState(
-                RECOGNIZER_STATE,
-                context.str(),
-                avsCommon::avs::StateRefreshPolicy::NEVER,
-                stateRequestToken);
+            RECOGNIZER_STATE, context.str(), avsCommon::avs::StateRefreshPolicy::NEVER, stateRequestToken);
     } else {
-        m_contextManager->setState(
-                RECOGNIZER_STATE,
-                context.str(),
-                avsCommon::avs::StateRefreshPolicy::NEVER);
+        m_contextManager->setState(RECOGNIZER_STATE, context.str(), avsCommon::avs::StateRefreshPolicy::NEVER);
     }
 }
 
 void AudioInputProcessor::executeOnDialogUXStateChanged(
-        avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) {
+    avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) {
     if (!m_initialDialogUXStateReceived) {
         // The initial dialog UX state change call comes from simply registering as an observer; it is not a deliberate
         // change to the dialog state which should interrupt a recognize event.
@@ -762,7 +723,7 @@ void AudioInputProcessor::setState(ObserverInterface::State state) {
 
     ACSDK_DEBUG(LX("setState").d("from", m_state).d("to", state));
     m_state = state;
-    for (auto observer: m_observers) {
+    for (auto observer : m_observers) {
         observer->onStateChanged(m_state);
     }
 }
@@ -776,6 +737,8 @@ void AudioInputProcessor::removeDirective(std::shared_ptr<DirectiveInfo> info) {
 }
 
 void AudioInputProcessor::sendRequestNow() {
+    ACSDK_METRIC_IDS(TAG, "Recognize", "", "", Metrics::Location::AIP_SEND);
+
     m_messageSender->sendMessage(m_request);
     m_request.reset();
     m_preparingToSend = false;
@@ -785,6 +748,22 @@ void AudioInputProcessor::sendRequestNow() {
     }
 }
 
-} // namespace aip
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+void AudioInputProcessor::onExceptionReceived(const std::string& exceptionMessage) {
+    ACSDK_ERROR(LX("onExceptionReceived").d("exception", exceptionMessage));
+    resetState();
+}
+
+void AudioInputProcessor::onSendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status) {
+    ACSDK_DEBUG(LX("onSendCompleted").d("status", status));
+
+    if (status == avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS ||
+        status == avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::PENDING) {
+        return;
+    }
+    ACSDK_DEBUG(LX("resetState").d("dueToStatus", status));
+    resetState();
+}
+
+}  // namespace aip
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK

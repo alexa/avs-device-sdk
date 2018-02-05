@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_DIRECTIVE_HANDLER_CONFIGURATION_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_DIRECTIVE_HANDLER_CONFIGURATION_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_DIRECTIVEHANDLERCONFIGURATION_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_DIRECTIVEHANDLERCONFIGURATION_H_
 
 #include <unordered_map>
 
@@ -28,13 +28,13 @@ namespace avsCommon {
 namespace avs {
 
 /**
- * Map of @c NamespaceAndName values to @c BlockingPolicy with which to register a @c DirectiveHandlerInterface to a @c 
+ * Map of @c NamespaceAndName values to @c BlockingPolicy with which to register a @c DirectiveHandlerInterface to a @c
  * DirectiveSequencer.
  */
 using DirectiveHandlerConfiguration = std::unordered_map<NamespaceAndName, BlockingPolicy>;
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_DIRECTIVE_HANDLER_CONFIGURATION_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_DIRECTIVEHANDLERCONFIGURATION_H_

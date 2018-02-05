@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AUTH_OBSERVER_H_
-#define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AUTH_OBSERVER_H_
+#ifndef ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AUTHOBSERVER_H_
+#define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AUTHOBSERVER_H_
 
 #include <chrono>
 #include <condition_variable>
@@ -36,8 +36,9 @@ public:
             avsCommon::sdkInterfaces::AuthObserverInterface::Error::NO_ERROR) override;
     AuthObserverInterface::State getAuthState() const;
     bool waitFor(
-            const avsCommon::sdkInterfaces::AuthObserverInterface::State,
-            const std::chrono::seconds = std::chrono::seconds(20));
+        const avsCommon::sdkInterfaces::AuthObserverInterface::State,
+        const std::chrono::seconds = std::chrono::seconds(20));
+
 private:
     avsCommon::sdkInterfaces::AuthObserverInterface::State m_authState;
     avsCommon::sdkInterfaces::AuthObserverInterface::Error m_authError;
@@ -45,7 +46,7 @@ private:
     std::condition_variable m_wakeTrigger;
 };
 
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace integration
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AUTH_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AUTHOBSERVER_H_

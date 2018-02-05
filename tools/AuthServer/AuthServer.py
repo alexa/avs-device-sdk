@@ -16,6 +16,8 @@
 from flask import Flask, redirect, request
 import requests
 import json
+import commentjson
+import re
 
 from os.path import abspath, isfile, dirname
 import sys
@@ -47,6 +49,13 @@ amazonLwaApiHeaders = {'Content-Type': 'application/x-www-form-urlencoded'}
 # Default configuration filename, to be filled by CMake
 defaultConfigFilename = "${SDK_CONFIG_FILE_TARGET}"
 
+# JSON keys for config file
+CLIENT_ID = 'clientId'
+CLIENT_SECRET = 'clientSecret'
+PRODUCT_ID = 'productId'
+DEVICE_SERIAL_NUMBER = 'deviceSerialNumber'
+REFRESH_TOKEN = 'refreshToken'
+
 # Read the configuration filename from the command line arguments -if it exists.
 if 2 == len(sys.argv):
     configFilename = abspath(sys.argv[1])
@@ -64,12 +73,13 @@ if not isfile(configFilename):
 
 try:
     configFile = open(configFilename,'r')
+
 except IOError:
     print 'File "' + configFilename + '" not found!'
     sys.exit(1)
 else:
     with configFile:
-        configData = json.load(configFile)
+        configData = commentjson.load(configFile)
         if not configData.has_key(authDelegateKey):
             print 'The config file "' + \
                     configFilename + \
@@ -82,7 +92,7 @@ else:
 
 
 # Check if all required keys are parsed.
-requiredKeys = ['clientId', 'clientSecret', 'deviceTypeId', 'deviceSerialNumber']
+requiredKeys = [CLIENT_ID, CLIENT_SECRET, PRODUCT_ID, DEVICE_SERIAL_NUMBER]
 try:
     missingKey = requiredKeys[map(authDelegateDict.has_key,requiredKeys).index(False)];
     print 'Missing key: "' + missingKey + '". The list of required keys are:'
@@ -93,16 +103,17 @@ except ValueError:
     pass
 
 # Refresh the refresh token to check if it really is a refresh token.
-if authDelegateDict.has_key('refreshToken'):
+if authDelegateDict.has_key(REFRESH_TOKEN):
     postData = {
             'grant_type': 'refresh_token',
-            'refresh_token': authDelegateDict['refreshToken'],
-            'client_id': authDelegateDict['clientId'],
-            'client_secret': authDelegateDict['clientSecret']}
+            'refresh_token': authDelegateDict[REFRESH_TOKEN],
+            'client_id': authDelegateDict[CLIENT_ID],
+            'client_secret': authDelegateDict[CLIENT_SECRET]}
     tokenRefreshRequest = requests.post(
             amazonLwaApiUrl,
             data=urlencode(postData),
             headers=amazonLwaApiHeaders)
+    defaultRefreshTokenString = authDelegateDict[REFRESH_TOKEN];
     if 200 == tokenRefreshRequest.status_code:
         print 'You have a valid refresh token already in the file.' 
         sys.exit(0)
@@ -111,7 +122,9 @@ if authDelegateDict.has_key('refreshToken'):
                 str(tokenRefreshRequest.status_code) + \
                 ('. This might be due to a bad refresh token or bad client data. '
                 'We will continue with getting a refresh token, discarding the one in the file.\n')
-
+else:
+    print 'Missing key: "' + REFRESH_TOKEN
+    sys.exit(0)
 # The top page redirects to LWA page.
 @app.route('/')
 def index():
@@ -119,12 +132,12 @@ def index():
             '{{"productID":"{productId}",'
             '"productInstanceAttributes":'
             '{{"deviceSerialNumber":"{deviceSerialNumber}"}}}}}}').format(
-                    productId=authDelegateDict['deviceTypeId'],
-                    deviceSerialNumber=authDelegateDict['deviceSerialNumber'])
+                    productId=authDelegateDict[PRODUCT_ID],
+                    deviceSerialNumber=authDelegateDict[DEVICE_SERIAL_NUMBER])
     lwaUrl = 'https://www.amazon.com/ap/oa/?' + urlencode({
         'scope': 'alexa:all',
         'scope_data': scopeData,
-        'client_id': authDelegateDict['clientId'],
+        'client_id': authDelegateDict[CLIENT_ID],
         'response_type': 'code',
         'redirect_uri': redirectUri,
         })
@@ -136,8 +149,8 @@ def get_refresh_token():
     postData = {
             'grant_type': 'authorization_code',
             'code': request.args.get('code',''),
-            'client_id': authDelegateDict['clientId'],
-            'client_secret': authDelegateDict['clientSecret'],
+            'client_id': authDelegateDict[CLIENT_ID],
+            'client_secret': authDelegateDict[CLIENT_SECRET],
             'redirect_uri': redirectUri,
             }
     tokenRequest = requests.post(
@@ -152,17 +165,30 @@ def get_refresh_token():
                 '<br/>' + shutdown()
     authDelegateDict['refreshToken'] = tokenRequest.json()['refresh_token']
     try:
-        configFile = open(configFilename,'w')
+        configFile = open(configFilename,'r')
     except IOError:
         print 'File "' + configFilename + '" cannot be opened!'
         return '<h1>The file "' + \
                 configFilename + \
-                '" cannot be opened, please check if the file is open elsewere.<br/>' + \
+                '" cannot be opened, please check if the file is open elsewhere.<br/>' + \
                 shutdown() + \
                 '</h1>'
     else:
-        with configFile:
-            json.dump(configData, configFile, indent=4, separators=(',',':'))
+        fileContent = configFile.read()
+        try:
+            configFile = open(configFilename,'w')
+        except IOError:
+            print 'File "' + configFilename + '" cannot be opened!'
+            return '<h1>The file "' + \
+                    configFilename + \
+                    '" cannot be opened, please check if the file is open elsewhere.<br/>' + \
+                    shutdown() + \
+                    '</h1>'
+        replaceWith = '\n\t\t\"refreshToken\":' + '\"' + tokenRequest.json()['refresh_token'] + '\",'
+        stringToFind = r"\s*\"\s*{}\s*\"\s*:\s*\"\s*".format(REFRESH_TOKEN) + \
+                        re.escape(defaultRefreshTokenString) + r"\s*\"\s*,"
+        fileContent = re.sub(stringToFind, replaceWith, fileContent)
+        configFile.write(fileContent)
         return '<h1>The file is written successfully.<br/>' + shutdown() + '</h1>'
     
-app.run(host='127.0.0.1',port='3000')
+app.run(host='127.0.0.1',port=3000)

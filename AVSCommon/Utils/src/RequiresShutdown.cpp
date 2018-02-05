@@ -44,7 +44,7 @@ public:
      *
      * @param object A pointer to the object to track.
      */
-    void add(const RequiresShutdown * object);
+    void add(const RequiresShutdown* object);
 
     /**
      * Removes a @c RequiresShutdown object from the set of objects being tracked.  This must be called at destruction
@@ -52,7 +52,10 @@ public:
      *
      * @param object A pointer to the object to track.
      */
-    void remove(const RequiresShutdown * object);
+    void remove(const RequiresShutdown* object);
+
+    /// Constructor
+    ShutdownMonitor();
 
     /// Destructor.
     ~ShutdownMonitor();
@@ -62,13 +65,16 @@ private:
     std::mutex m_mutex;
 
     /// Alias to the container type used to hold objects.
-    using Objects = std::unordered_set<const RequiresShutdown *>;
+    using Objects = std::unordered_set<const RequiresShutdown*>;
 
     /// The @c RequiredShutdown objects being tracked.
     Objects m_objects;
+
+    // a @c Logger instance to be used on the destructor
+    alexaClientSDK::avsCommon::utils::logger::ModuleLogger m_destructorLogger;
 };
 
-void ShutdownMonitor::add(const RequiresShutdown * object) {
+void ShutdownMonitor::add(const RequiresShutdown* object) {
     if (nullptr == object) {
         ACSDK_ERROR(LX("addFailed").d("reason", "nullptrObject"));
     }
@@ -82,7 +88,7 @@ void ShutdownMonitor::add(const RequiresShutdown * object) {
     }
 }
 
-void ShutdownMonitor::remove(const RequiresShutdown * object) {
+void ShutdownMonitor::remove(const RequiresShutdown* object) {
     if (nullptr == object) {
         ACSDK_ERROR(LX("removeFailed").d("reason", "nullptrObject"));
     }
@@ -92,15 +98,21 @@ void ShutdownMonitor::remove(const RequiresShutdown * object) {
     }
 }
 
+ShutdownMonitor::ShutdownMonitor() : m_destructorLogger(ACSDK_STRINGIFY(ACSDK_LOG_MODULE)) {
+}
+
 ShutdownMonitor::~ShutdownMonitor() {
     std::lock_guard<std::mutex> lock(m_mutex);
-    // TODO: can't use logger here since it may have already been destroyed.  Revisit whether there's a good
-    // way to defer logger destruction until after ~ShutdownMonitor() (ACSDK-445).
+
     for (auto object : m_objects) {
         if (!object->isShutdown()) {
-            std::cerr << "WARNING: shutdown() not called on " << object->name() << "." << std::endl;
+            m_destructorLogger.log(
+                alexaClientSDK::avsCommon::utils::logger::Level::WARN,
+                LX("ShutdownMonitor").d("reason", "no shutdown() call").d("name: ", object->name()));
         }
-        std::cerr << "WARNING: " << object->name() << " was never deleted." << std::endl;
+        m_destructorLogger.log(
+            alexaClientSDK::avsCommon::utils::logger::Level::WARN,
+            LX("ShutdownMonitor").d("reason", "never deleted").d("name", object->name()));
     }
 }
 
@@ -137,6 +149,6 @@ bool RequiresShutdown::isShutdown() const {
     return m_isShutdown;
 }
 
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

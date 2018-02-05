@@ -15,10 +15,12 @@ set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${GST_INCLUDE_DIRS}"
      "${AVSCommon_INCLUDE_DIRS}"
      "${AudioPlayer_INCLUDE_DIRS}"
+     "${AudioResources_INCLUDE_DIRS}"
      "${MediaPlayer_SOURCE_DIR}/include"
+     "${PlaybackController_SOURCE_DIR}/include"
      "${CONTEXTMANAGER_SOURCE_DIR}/include")
 
-    set(LINK_PATH ACL AuthDelegate AFML ADSL AIP Alerts AudioPlayer AVSSystem ContextManager KWD SpeechSynthesizer Integration gtest gmock)
+    set(LINK_PATH ACL AuthDelegate AFML ADSL AIP Alerts AudioPlayer AVSSystem ContextManager KWD SpeechSynthesizer Integration gtest gmock PlaybackController)
 
     if(KITTAI_KEY_WORD_DETECTOR)
         SET(LINK_PATH ${LINK_PATH} KITTAI)

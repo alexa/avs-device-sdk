@@ -37,9 +37,7 @@ ThreadMoniker::ThreadMoniker() {
     m_moniker = stream.str();
 }
 
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
-
-
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

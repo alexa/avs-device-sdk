@@ -40,14 +40,13 @@ static const std::string TAG("AlexAuthDelegateClient");
 /// Simple implementation of the AuthDelegateObserverInterface.
 class Observer : public AuthObserverInterface {
 public:
-
     /// Construct an Observer, initialized as not authroized.
     Observer() : m_state(AuthObserverInterface::State::UNINITIALIZED) {
     }
 
     void onAuthStateChange(
-            AuthObserverInterface::State newState,
-            AuthObserverInterface::Error error = AuthObserverInterface::Error::NO_ERROR) override {
+        AuthObserverInterface::State newState,
+        AuthObserverInterface::Error error = AuthObserverInterface::Error::NO_ERROR) override {
         if (error == AuthObserverInterface::Error::NO_ERROR) {
             ACSDK_DEBUG(LX("onAuthStateChange").d("newState", newState));
         } else {
@@ -74,7 +73,6 @@ public:
     }
 
 private:
-
     /// Last state from authDelegate
     AuthObserverInterface::State m_state;
 
@@ -118,15 +116,14 @@ int exerciseAuthDelegate() {
 int main(int argc, const char* argv[]) {
     if (argc < 2) {
         ACSDK_ERROR(LX("ExampleAuthDelegateClientFailed")
-                .d("reason", "missingConfigurationFilePath")
-                .d("usage", "ExampleAuthDelegateClient <path-to-SDK-config-file>"));
+                        .d("reason", "missingConfigurationFilePath")
+                        .d("usage", "ExampleAuthDelegateClient <path-to-SDK-config-file>"));
         return EXIT_FAILURE;
     }
     std::ifstream infile(argv[1]);
     if (!infile.good()) {
-        ACSDK_ERROR(LX("ExampleAuthDelegateClientFailed")
-                .d("reason", "openConfigurationFileFailed")
-                .d("path", argv[1]));
+        ACSDK_ERROR(
+            LX("ExampleAuthDelegateClientFailed").d("reason", "openConfigurationFileFailed").d("path", argv[1]));
         return EXIT_FAILURE;
     }
     if (!avsCommon::avs::initialization::AlexaClientSDKInit::initialize({&infile})) {

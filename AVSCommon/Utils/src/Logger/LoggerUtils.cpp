@@ -15,10 +15,12 @@
  * permissions and limitations under the License.
  */
 
+#include <cstdio>
+#include <iomanip>
+#include <iostream>
+
 #include "AVSCommon/Utils/Logger/LoggerUtils.h"
 #include "AVSCommon/Utils/Logger/Logger.h"
-
-#include <cstdio>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -53,63 +55,63 @@ static const char LEVEL_AND_TEXT_SEPARATOR = ' ';
 static const int MILLISECONDS_PER_SECOND = 1000;
 
 void acsdkDebug9(const LogEntry& entry) {
-   logEntry(Level::DEBUG9, entry);
+    logEntry(Level::DEBUG9, entry);
 }
 
 void acsdkDebug8(const LogEntry& entry) {
-   logEntry(Level::DEBUG8, entry);
+    logEntry(Level::DEBUG8, entry);
 }
 
 void acsdkDebug7(const LogEntry& entry) {
-   logEntry(Level::DEBUG7, entry);
+    logEntry(Level::DEBUG7, entry);
 }
 
 void acsdkDebug6(const LogEntry& entry) {
-   logEntry(Level::DEBUG6, entry);
+    logEntry(Level::DEBUG6, entry);
 }
 
 void acsdkDebug5(const LogEntry& entry) {
-   logEntry(Level::DEBUG5, entry);
+    logEntry(Level::DEBUG5, entry);
 }
 
 void acsdkDebug4(const LogEntry& entry) {
-   logEntry(Level::DEBUG4, entry);
+    logEntry(Level::DEBUG4, entry);
 }
 
 void acsdkDebug3(const LogEntry& entry) {
-   logEntry(Level::DEBUG3, entry);
+    logEntry(Level::DEBUG3, entry);
 }
 
 void acsdkDebug2(const LogEntry& entry) {
-   logEntry(Level::DEBUG2, entry);
+    logEntry(Level::DEBUG2, entry);
 }
 
 void acsdkDebug1(const LogEntry& entry) {
-   logEntry(Level::DEBUG1, entry);
+    logEntry(Level::DEBUG1, entry);
 }
 
 void acsdkDebug0(const LogEntry& entry) {
-   logEntry(Level::DEBUG0, entry);
+    logEntry(Level::DEBUG0, entry);
 }
 
 void acsdkDebug(const LogEntry& entry) {
-   logEntry(Level::DEBUG0, entry);
+    logEntry(Level::DEBUG0, entry);
 }
 
 void acsdkInfo(const LogEntry& entry) {
-   logEntry(Level::INFO, entry);
+    logEntry(Level::INFO, entry);
 }
 
 void acsdkWarn(const LogEntry& entry) {
-   logEntry(Level::WARN, entry);
+    logEntry(Level::WARN, entry);
 }
 
 void acsdkError(const LogEntry& entry) {
-   logEntry(Level::ERROR, entry);
+    logEntry(Level::ERROR, entry);
 }
 
 void acsdkCritical(const LogEntry& entry) {
-   logEntry(Level::CRITICAL, entry);
+    logEntry(Level::CRITICAL, entry);
 }
 
 void logEntry(Level level, const LogEntry& entry) {
@@ -118,10 +120,10 @@ void logEntry(Level level, const LogEntry& entry) {
 }
 
 std::string formatLogString(
-        Level level,
-        std::chrono::system_clock::time_point time,
-        const char *threadMoniker,
-        const char *text) {
+    Level level,
+    std::chrono::system_clock::time_point time,
+    const char* threadMoniker,
+    const char* text) {
     bool dateTimeFailure = false;
     bool millisecondFailure = false;
     char dateTimeString[DATE_AND_TIME_STRING_SIZE];
@@ -131,28 +133,67 @@ std::string formatLogString(
         dateTimeFailure = true;
     }
     auto timeMillisPart = static_cast<int>(
-            std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() % 
-                    MILLISECONDS_PER_SECOND);
+        std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() %
+        MILLISECONDS_PER_SECOND);
     char millisString[MILLIS_STRING_SIZE];
     if (std::snprintf(millisString, sizeof(millisString), MILLIS_FORMAT_STRING, timeMillisPart) < 0) {
         millisecondFailure = true;
     }
 
     std::stringstream stringToEmit;
-    stringToEmit
-        << (dateTimeFailure ? "ERROR: strftime() failed.  Date and time not logged." : dateTimeString)
-        << TIME_AND_MILLIS_SEPARATOR
-        << (millisecondFailure ? "ERROR: snprintf() failed.  Milliseconds not logged." : millisString)
-        << MILLIS_AND_THREAD_SEPARATOR
-        << threadMoniker
-        << THREAD_AND_LEVEL_SEPARATOR
-        << convertLevelToChar(level)
-        << LEVEL_AND_TEXT_SEPARATOR
-        << text;
+    stringToEmit << (dateTimeFailure ? "ERROR: strftime() failed.  Date and time not logged." : dateTimeString)
+                 << TIME_AND_MILLIS_SEPARATOR
+                 << (millisecondFailure ? "ERROR: snprintf() failed.  Milliseconds not logged." : millisString)
+                 << MILLIS_AND_THREAD_SEPARATOR << threadMoniker << THREAD_AND_LEVEL_SEPARATOR
+                 << convertLevelToChar(level) << LEVEL_AND_TEXT_SEPARATOR << text;
     return stringToEmit.str();
 }
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+void dumpBytesToStream(std::ostream& stream, const char* prefix, size_t width, const unsigned char* data, size_t size) {
+    std::ios incomingFormat(nullptr);
+    incomingFormat.copyfmt(stream);
+
+    stream << std::hex << std::right << std::setfill('0');
+
+    for (size_t ix = 0; ix < size; ix += width) {
+        // Output byte offset for this row.
+        stream << prefix << std::setw(8) << ix;
+        stream << " : ";
+
+        // Output bytes for this row in hex.
+        auto columnLimit = ix + width;
+        auto byteLimit = columnLimit < size ? columnLimit : size;
+        for (size_t iy = ix; iy < columnLimit; iy++) {
+            if (iy < byteLimit) {
+                stream << std::setw(2) << static_cast<unsigned int>(data[iy]);
+            } else {
+                stream << "  ";
+            }
+            // Split the output in to 4 byte (8 hex digit) wide columns.
+            if ((iy < columnLimit - 1) && (iy & 0x03) == 0x03) {
+                stream << " ";
+            }
+        }
+
+        stream << " : ";
+
+        // Output bytes as visible characters.
+        for (size_t iy = ix; iy < byteLimit; iy++) {
+            auto ch = data[iy];
+            if (std::isprint(ch)) {
+                stream << ch;
+            } else {
+                stream << '.';
+            }
+        }
+
+        stream << std::endl;
+    }
+
+    stream.copyfmt(incomingFormat);
+}
+
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

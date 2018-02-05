@@ -23,14 +23,15 @@
 
 #include "AVSCommon/Utils/Logger/LogEntry.h"
 #include "AVSCommon/Utils/Logger/Logger.h"
+#include "AVSCommon/Utils/Metrics.h"
 #include "AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h"
-
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace avs {
 
 using namespace rapidjson;
+using namespace utils;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("EventBuilder");
@@ -79,11 +80,11 @@ static const std::string EVENT_KEY_STRING = "event";
  * @return A header JSON object if successful else an empty object.
  */
 static Document buildHeader(
-        const std::string &nameSpace,
-        const std::string &eventName,
-        const std::string &dialogRequestIdValue,
-        Document::AllocatorType &allocator,
-        std::string* messageId) {
+    const std::string& nameSpace,
+    const std::string& eventName,
+    const std::string& dialogRequestIdValue,
+    Document::AllocatorType& allocator,
+    std::string* messageId) {
     Document header(kObjectType);
 
     if (!messageId) {
@@ -110,7 +111,7 @@ static Document buildHeader(
  * @param allocator The rapidjson allocator to use to build the JSON header.
  * @return An event JSON object if successful else an empty object.
  */
-static Document buildEvent(Document* header, const std::string &jsonPayloadValue, Document::AllocatorType &allocator) {
+static Document buildEvent(Document* header, const std::string& jsonPayloadValue, Document::AllocatorType& allocator) {
     Document payload(&allocator);
     Document event(kObjectType);
 
@@ -126,29 +127,28 @@ static Document buildEvent(Document* header, const std::string &jsonPayloadValue
 
     event.AddMember(StringRef(HEADER_KEY_STRING), *header, allocator);
     if (!jsonPayloadValue.empty()) {
-            event.AddMember(StringRef(PAYLOAD_KEY_STRING), payload, allocator);
+        event.AddMember(StringRef(PAYLOAD_KEY_STRING), payload, allocator);
     }
 
     return event;
 }
 
 const std::pair<std::string, std::string> buildJsonEventString(
-        const std::string &nameSpace,
-        const std::string &eventName,
-        const std::string &dialogRequestIdValue,
-        const std::string &jsonPayloadValue,
-        const std::string &jsonContext) {
+    const std::string& nameSpace,
+    const std::string& eventName,
+    const std::string& dialogRequestIdValue,
+    const std::string& jsonPayloadValue,
+    const std::string& jsonContext) {
     Document eventAndContext(kObjectType);
-    Document::AllocatorType &allocator = eventAndContext.GetAllocator();
+    Document::AllocatorType& allocator = eventAndContext.GetAllocator();
     const std::pair<std::string, std::string> emptyPair;
 
     if (!jsonContext.empty()) {
         Document context(kObjectType);
         // The context needs to be parsed to convert to a JSON object.
         if (context.Parse(jsonContext).HasParseError()) {
-            ACSDK_DEBUG(LX("buildJsonEventStringFailed")
-                    .d("reason", "parseContextFailed")
-                    .sensitive("context", jsonContext));
+            ACSDK_DEBUG(
+                LX("buildJsonEventStringFailed").d("reason", "parseContextFailed").sensitive("context", jsonContext));
             return emptyPair;
         }
         eventAndContext.CopyFrom(context, allocator);
@@ -157,6 +157,10 @@ const std::pair<std::string, std::string> buildJsonEventString(
     std::string messageId;
     Document header = buildHeader(nameSpace, eventName, dialogRequestIdValue, allocator, &messageId);
     ACSDK_DEBUG(LX("buildJsonEventString").d("messageId", messageId).d("namespace", nameSpace).d("name", eventName));
+
+    if (eventName == "SpeechStarted" || eventName == "SpeechFinished" || eventName == "Recognize") {
+        ACSDK_METRIC_IDS(TAG, eventName, messageId, dialogRequestIdValue, Metrics::Location::BUILDING_MESSAGE);
+    }
 
     Document event = buildEvent(&header, jsonPayloadValue, allocator);
 
@@ -177,6 +181,6 @@ const std::pair<std::string, std::string> buildJsonEventString(
     return std::make_pair(messageId, eventAndContextBuf.GetString());
 }
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

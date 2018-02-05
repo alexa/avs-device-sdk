@@ -69,7 +69,7 @@ public:
      *
      * @param rhs The Channel to compare with this Channel.
      */
-    bool operator > (const Channel& rhs) const;
+    bool operator>(const Channel& rhs) const;
 
     /**
      * Updates the Channel's activity id.
@@ -115,7 +115,7 @@ private:
     std::string m_currentActivityId;
 };
 
-} // namespace afml
-} // namespace alexaClientSDK
+}  // namespace afml
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_CHANNEL_H_
+#endif  // ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_CHANNEL_H_

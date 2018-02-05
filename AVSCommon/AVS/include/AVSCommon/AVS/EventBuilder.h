@@ -15,8 +15,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_EVENT_BUILDER_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_EVENT_BUILDER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_EVENTBUILDER_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_EVENTBUILDER_H_
 
 #include <string>
 #include <utility>
@@ -39,14 +39,14 @@ namespace avs {
  * else a pair of empty strings.
  */
 const std::pair<std::string, std::string> buildJsonEventString(
-        const std::string &nameSpace,
-        const std::string &eventName,
-        const std::string &dialogRequestIdValue = "",
-        const std::string &jsonPayloadValue = "{}",
-        const std::string &jsonContext = "");
+    const std::string& nameSpace,
+    const std::string& eventName,
+    const std::string& dialogRequestIdValue = "",
+    const std::string& jsonPayloadValue = "{}",
+    const std::string& jsonContext = "");
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_EVENT_BUILDER_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_EVENTBUILDER_H_
