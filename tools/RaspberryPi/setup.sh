@@ -181,7 +181,7 @@ then
 
     cd $THIRD_PARTY_PATH
     git clone https://github.com/Kitt-AI/snowboy.git
-    sudo apt-get install libatlas-base-dev
+    sudo apt-get -y install libatlas-base-dev
     
 
     # make the SDK
