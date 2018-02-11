@@ -266,9 +266,9 @@ ctl.!default {
 EOF
 
 cat << EOF > "$START_SCRIPT"
+#!/bin/bash
 cd "$BUILD_PATH/SampleApp/src"
-
-TZ=UTC ./SampleApp "$CONFIG_FILE" "$THIRD_PARTY_PATH/snowboy/resources" DEBUG9
+TZ=UTC ./SampleApp "$CONFIG_FILE" "$THIRD_PARTY_PATH/snowboy/resources" 
 EOF
 
 cat << EOF > "$START_AUTH_SCRIPT"
