@@ -271,6 +271,8 @@ cd "$BUILD_PATH/SampleApp/src"
 TZ=UTC ./SampleApp "$CONFIG_FILE" "$THIRD_PARTY_PATH/snowboy/resources" 
 EOF
 
+chmod +x "$START_SCRIPT"
+
 cat << EOF > "$START_AUTH_SCRIPT"
 cd "$BUILD_PATH"
 python AuthServer/AuthServer.py
@@ -292,6 +294,8 @@ echo " **** Completed Configuration/Build ***"
 
 echo " **** device authentication ***"
 
-startauth.sh
+bash $CURRENT_DIR/startauth.sh
 
 echo " **** Completed device authentication ***"
+
+
