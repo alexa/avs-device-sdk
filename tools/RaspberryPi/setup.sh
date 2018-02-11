@@ -290,3 +290,8 @@ EOF
 
 echo " **** Completed Configuration/Build ***"
 
+echo " **** device authentication ***"
+
+startauth.sh
+
+echo " **** Completed device authentication ***"
