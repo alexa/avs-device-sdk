@@ -1,6 +1,4 @@
 /*
- * AttachmentManager.h
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -86,9 +84,9 @@ public:
 
     std::unique_ptr<AttachmentWriter> createWriter(
         const std::string& attachmentId,
-        avsCommon::utils::sds::WriterPolicy policy = avsCommon::utils::sds::WriterPolicy::ALL_OR_NOTHING) override;
+        utils::sds::WriterPolicy policy = avsCommon::utils::sds::WriterPolicy::ALL_OR_NOTHING) override;
 
-    std::unique_ptr<AttachmentReader> createReader(const std::string& attachmentId, AttachmentReader::Policy policy)
+    std::unique_ptr<AttachmentReader> createReader(const std::string& attachmentId, utils::sds::ReaderPolicy policy)
         override;
 
 private:

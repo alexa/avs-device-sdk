@@ -1,7 +1,5 @@
 /*
- * AudioInputProcessorTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,10 +15,10 @@
 
 /// @file AudioInputProcessorTest.cpp
 
+#include <climits>
+#include <numeric>
 #include <sstream>
 #include <vector>
-#include <numeric>
-#include <climits>
 #include <gtest/gtest.h>
 
 #include <rapidjson/document.h>
@@ -37,12 +35,14 @@
 #include <AVSCommon/SDKInterfaces/MockUserActivityNotifier.h>
 #include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
+#include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
 
 #include "AIP/AudioInputProcessor.h"
 #include "MockObserver.h"
 
 using namespace testing;
+using namespace alexaClientSDK::avsCommon::utils::json;
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -184,7 +184,7 @@ static const std::string END_INDEX_KEY = "endIndexInSamples";
 static const unsigned int STATE_REQUEST_TOKEN = 12345;
 
 /// Value used in the tests for an expect speech initiator.
-static const std::string EXPECT_SPEECH_INITIATOR = R"({opaque:"expectSpeechInitiator"})";
+static const std::string EXPECT_SPEECH_INITIATOR = R"({"opaque":"expectSpeechInitiator"})";
 
 /// JSON key for the timeout field of an expect speech directive.
 static const std::string EXPECT_SPEECH_TIMEOUT_KEY = "timeoutInMilliseconds";
@@ -209,6 +209,15 @@ static const bool VERIFY_TIMEOUT = true;
 
 /// General timeout for tests to fail.
 static const std::chrono::seconds TEST_TIMEOUT(10);
+
+/// JSON value for a ReportEchoSpatialPerceptionData event's name.
+static const std::string ESP_EVENT_NAME = "ReportEchoSpatialPerceptionData";
+
+/// JSON key for the voice energy field of a ReportEchoSpatialPerceptionData event.
+static const std::string ESP_VOICE_ENERGY_KEY = "voiceEnergy";
+
+/// JSON key for the ambient energy field of a ReportEchoSpatialPerceptionData event.
+static const std::string ESP_AMBIENT_ENERGY_KEY = "ambientEnergy";
 
 /// Utility function to parse a JSON document.
 static rapidjson::Document parseJson(const std::string& json) {
@@ -255,7 +264,9 @@ public:
         Initiator initiator,
         avsCommon::avs::AudioInputStream::Index begin = AudioInputProcessor::INVALID_INDEX,
         avsCommon::avs::AudioInputStream::Index keywordEnd = AudioInputProcessor::INVALID_INDEX,
-        std::string keyword = "");
+        std::string keyword = "",
+        std::shared_ptr<std::string> avsInitiator = nullptr,
+        const ESPData& espData = ESPData::EMPTY_ESP_DATA);
 
     /**
      * This function sends a recognize event using the provided @c AudioInputProcessor and the recognize parameters
@@ -279,14 +290,26 @@ public:
         const avsCommon::avs::StateRefreshPolicy&,
         const unsigned int);
 
+    /*
+     * This function verifies that JSON content of a ReportEchoSpatialPerceptionData @c MessageRequest is correct.
+     *
+     * @param request The @c MessageRequest to verify.
+     * @param dialogRequestId The expected dialogRequestId in the @c MessageRequest.
+     */
+    void verifyEspMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request, const std::string& dialogRequestId);
+
     /**
      * This function verifies that JSON content of a recognize @c MessageRequest is correct, and that it has an
      * attachment.
      *
      * @param request The @c MessageRequest to verify.
      * @param pattern Vector of samples holding a test pattern expected from the @c AudioInputStream.
+     * @param dialogRequestId The expected dialogRequestId in the @c MessageRequest.
      */
-    void verifyMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request, const std::vector<Sample>& pattern);
+    void verifyMessage(
+        std::shared_ptr<avsCommon::avs::MessageRequest> request,
+        const std::vector<Sample>& pattern,
+        const std::string& dialogRequestId);
 
     /**
      * Accessor function to get the attachment reader for a verified message.
@@ -311,6 +334,12 @@ private:
     /// The keyword string to use for this recognize event.
     std::string m_keyword;
 
+    /// The initiator that is passed from AVS in a preceding ExpectSpeech.
+    std::shared_ptr<std::string> m_avsInitiator;
+
+    /// The ESP data for this ReportEchoSpatialPerceptionData event.
+    const ESPData m_espData;
+
     /// The attachment reader saved by a call to @c verifyMessage().
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_reader;
 };
@@ -320,16 +349,21 @@ RecognizeEvent::RecognizeEvent(
     Initiator initiator,
     avsCommon::avs::AudioInputStream::Index begin,
     avsCommon::avs::AudioInputStream::Index keywordEnd,
-    std::string keyword) :
+    std::string keyword,
+    std::shared_ptr<std::string> avsInitiator,
+    const ESPData& espData) :
         m_audioProvider{audioProvider},
         m_initiator{initiator},
         m_begin{begin},
         m_keywordEnd{keywordEnd},
-        m_keyword{keyword} {
+        m_keyword{keyword},
+        m_avsInitiator{avsInitiator},
+        m_espData{espData} {
 }
 
 std::future<bool> RecognizeEvent::send(std::shared_ptr<AudioInputProcessor> audioInputProcessor) {
-    auto result = audioInputProcessor->recognize(m_audioProvider, m_initiator, m_begin, m_keywordEnd, m_keyword);
+    auto result =
+        audioInputProcessor->recognize(m_audioProvider, m_initiator, m_begin, m_keywordEnd, m_keyword, m_espData);
     EXPECT_TRUE(result.valid());
     return result;
 }
@@ -343,9 +377,36 @@ void RecognizeEvent::verifyJsonState(
     EXPECT_EQ(getJsonString(document, STATE_WAKEWORD_KEY), m_keyword);
 }
 
+void RecognizeEvent::verifyEspMessage(
+    std::shared_ptr<avsCommon::avs::MessageRequest> request,
+    const std::string& dialogRequestId) {
+    rapidjson::Document document;
+    document.Parse(request->getJsonContent().c_str());
+    EXPECT_FALSE(document.HasParseError())
+        << "rapidjson detected a parsing error at offset:" + std::to_string(document.GetErrorOffset()) +
+               ", error message: " + GetParseError_En(document.GetParseError());
+
+    auto event = document.FindMember(MESSAGE_EVENT_KEY);
+    EXPECT_NE(event, document.MemberEnd());
+
+    auto header = event->value.FindMember(MESSAGE_HEADER_KEY);
+    EXPECT_NE(header, event->value.MemberEnd());
+    auto payload = event->value.FindMember(MESSAGE_PAYLOAD_KEY);
+    EXPECT_NE(payload, event->value.MemberEnd());
+
+    EXPECT_EQ(getJsonString(header->value, MESSAGE_NAMESPACE_KEY), NAMESPACE);
+    EXPECT_EQ(getJsonString(header->value, MESSAGE_NAME_KEY), ESP_EVENT_NAME);
+    EXPECT_NE(getJsonString(header->value, MESSAGE_MESSAGE_ID_KEY), "");
+    EXPECT_EQ(getJsonString(header->value, MESSAGE_DIALOG_REQUEST_ID_KEY), dialogRequestId);
+
+    EXPECT_EQ(std::to_string(getJsonInt64(payload->value, ESP_VOICE_ENERGY_KEY)), m_espData.getVoiceEnergy());
+    EXPECT_EQ(std::to_string(getJsonInt64(payload->value, ESP_AMBIENT_ENERGY_KEY)), m_espData.getAmbientEnergy());
+}
+
 void RecognizeEvent::verifyMessage(
     std::shared_ptr<avsCommon::avs::MessageRequest> request,
-    const std::vector<Sample>& pattern) {
+    const std::vector<Sample>& pattern,
+    const std::string& dialogRequestId) {
     rapidjson::Document document;
     document.Parse(request->getJsonContent().c_str());
     EXPECT_FALSE(document.HasParseError())
@@ -365,7 +426,7 @@ void RecognizeEvent::verifyMessage(
     EXPECT_EQ(getJsonString(header->value, MESSAGE_NAMESPACE_KEY), NAMESPACE);
     EXPECT_EQ(getJsonString(header->value, MESSAGE_NAME_KEY), RECOGNIZE_EVENT_NAME);
     EXPECT_NE(getJsonString(header->value, MESSAGE_MESSAGE_ID_KEY), "");
-    EXPECT_NE(getJsonString(header->value, MESSAGE_DIALOG_REQUEST_ID_KEY), "");
+    EXPECT_EQ(getJsonString(header->value, MESSAGE_DIALOG_REQUEST_ID_KEY), dialogRequestId);
 
     std::ostringstream profile;
     profile << m_audioProvider.profile;
@@ -374,20 +435,27 @@ void RecognizeEvent::verifyMessage(
     auto initiator = payload->value.FindMember(RECOGNIZE_INITIATOR_KEY);
     EXPECT_NE(initiator, payload->value.MemberEnd());
 
-    EXPECT_EQ(getJsonString(initiator->value, INITIATOR_TYPE_KEY), initiatorToString(m_initiator));
-    auto initiatorPayload = initiator->value.FindMember(INITIATOR_PAYLOAD_KEY);
-    EXPECT_NE(initiatorPayload, initiator->value.MemberEnd());
+    if (m_avsInitiator) {
+        std::string initiatorString;
+        EXPECT_TRUE(jsonUtils::convertToValue(initiator->value, &initiatorString));
+        EXPECT_EQ(initiatorString, *m_avsInitiator);
+    } else {
+        EXPECT_EQ(getJsonString(initiator->value, INITIATOR_TYPE_KEY), initiatorToString(m_initiator));
+        auto initiatorPayload = initiator->value.FindMember(INITIATOR_PAYLOAD_KEY);
+        EXPECT_NE(initiatorPayload, initiator->value.MemberEnd());
 
-    if (m_initiator == Initiator::WAKEWORD && m_begin != AudioInputProcessor::INVALID_INDEX &&
-        m_keywordEnd != AudioInputProcessor::INVALID_INDEX) {
-        auto wakeWordIndices = initiatorPayload->value.FindMember(WAKE_WORD_INDICES_KEY);
-        EXPECT_NE(wakeWordIndices, initiatorPayload->value.MemberEnd());
+        if (m_initiator == Initiator::WAKEWORD && m_begin != AudioInputProcessor::INVALID_INDEX &&
+            m_keywordEnd != AudioInputProcessor::INVALID_INDEX) {
+            auto wakeWordIndices = initiatorPayload->value.FindMember(WAKE_WORD_INDICES_KEY);
+            EXPECT_NE(wakeWordIndices, initiatorPayload->value.MemberEnd());
 
-        if (wakeWordIndices != initiatorPayload->value.MemberEnd()) {
-            EXPECT_EQ(getJsonInt64(wakeWordIndices->value, START_INDEX_KEY), static_cast<int64_t>(m_begin));
-            EXPECT_EQ(getJsonInt64(wakeWordIndices->value, END_INDEX_KEY), static_cast<int64_t>(m_keywordEnd));
+            if (wakeWordIndices != initiatorPayload->value.MemberEnd()) {
+                EXPECT_EQ(getJsonInt64(wakeWordIndices->value, START_INDEX_KEY), static_cast<int64_t>(m_begin));
+                EXPECT_EQ(getJsonInt64(wakeWordIndices->value, END_INDEX_KEY), static_cast<int64_t>(m_keywordEnd));
+            }
         }
     }
+
     m_reader = request->getAttachmentReader();
     EXPECT_NE(m_reader, nullptr);
 
@@ -493,7 +561,9 @@ protected:
         avsCommon::avs::AudioInputStream::Index begin = AudioInputProcessor::INVALID_INDEX,
         avsCommon::avs::AudioInputStream::Index keywordEnd = AudioInputProcessor::INVALID_INDEX,
         std::string keyword = "",
-        RecognizeStopPoint stopPoint = RecognizeStopPoint::NONE);
+        RecognizeStopPoint stopPoint = RecognizeStopPoint::NONE,
+        std::shared_ptr<std::string> avsInitiator = nullptr,
+        const ESPData& espData = ESPData::EMPTY_ESP_DATA);
 
     /**
      * Function to call @c AudioInputProcessor::stopCapture() and verify that it succeeds.
@@ -554,15 +624,26 @@ protected:
     bool testExpectSpeechFails(bool withDialogRequestId);
 
     /**
+     * Function to send an ExpectSpeech directive and verify the initiator is handled correctly on the
+     * subsequent Recognize.
+     *
+     * @param withInitiator A flag indicating whether the ExpectSpeech will contain the initiator.
+     * @return @c true if the call succeeds, else @c false.
+     */
+    bool testRecognizeWithExpectSpeechInitiator(bool withInitiator);
+
+    /**
      * Function to construct an @c AVSDirective for the specified namespace/name.
      *
      * @param directive The namespace and name to use for this directive.
      * @param withDialogRequestId A flag indicating whether to include a dialog request ID.
+     * @param withInitiator A flag indicating whether the directive should have an initiator.
      * @return the constructed @c AVSDirective.
      */
     static std::shared_ptr<avsCommon::avs::AVSDirective> createAVSDirective(
         const avsCommon::avs::NamespaceAndName& directive,
-        bool withDialogRequestId);
+        bool withDialogRequestId,
+        bool withInitiator = true);
 
     /**
      * This function verifies that JSON content of an ExpectSpeechTimedOut @c MessageRequest is correct, and that it
@@ -631,6 +712,8 @@ protected:
 
     /// Vector of samples holding a test pattern to feed through the @c AudioInputStream.
     std::vector<Sample> m_pattern;
+
+    std::string m_dialogRequestId;
 };
 
 void AudioInputProcessorTest::SetUp() {
@@ -709,9 +792,12 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     avsCommon::avs::AudioInputStream::Index begin,
     avsCommon::avs::AudioInputStream::Index keywordEnd,
     std::string keyword,
-    RecognizeStopPoint stopPoint) {
+    RecognizeStopPoint stopPoint,
+    std::shared_ptr<std::string> avsInitiator,
+    const ESPData& espData) {
     std::mutex mutex;
     std::condition_variable conditionVariable;
+
     bool done = false;
     bool bargeIn = m_recognizeEvent != nullptr;
 
@@ -727,8 +813,8 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     rapidjson::Writer<rapidjson::StringBuffer> contextWriter(contextBuffer);
     contextDocument.Accept(contextWriter);
     std::string contextJson = contextBuffer.GetString();
-
-    m_recognizeEvent = std::make_shared<RecognizeEvent>(audioProvider, initiator, begin, keywordEnd, keyword);
+    m_recognizeEvent =
+        std::make_shared<RecognizeEvent>(audioProvider, initiator, begin, keywordEnd, keyword, avsInitiator, espData);
     if (keyword.empty()) {
         EXPECT_CALL(*m_mockContextManager, getContext(_)).WillOnce(InvokeWithoutArgs([this] {
             m_audioInputProcessor->provideState(STOP_CAPTURE, STATE_REQUEST_TOKEN);
@@ -774,21 +860,34 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
                 return true;
             }));
     }
-    EXPECT_CALL(*m_mockDirectiveSequencer, setDialogRequestId(_));
-    EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
-        .WillOnce(DoAll(
-            Invoke([this](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
-                m_recognizeEvent->verifyMessage(request, m_pattern);
-            }),
-            InvokeWithoutArgs([&] {
-                if (RecognizeStopPoint::AFTER_SEND == stopPoint) {
-                    EXPECT_TRUE(m_audioInputProcessor->stopCapture().valid());
-                } else if (RecognizeStopPoint::NONE == stopPoint) {
-                    std::lock_guard<std::mutex> lock(mutex);
-                    done = true;
-                    conditionVariable.notify_one();
-                }
-            })));
+    EXPECT_CALL(*m_mockDirectiveSequencer, setDialogRequestId(_))
+        .WillOnce(Invoke([this](const std::string& dialogRequestId) { m_dialogRequestId = dialogRequestId; }));
+    {
+        // Enforce the sequence.
+        InSequence dummy;
+        if (espData.verify()) {
+            EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+                .WillOnce(Invoke([this](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+                    m_recognizeEvent->verifyEspMessage(request, m_dialogRequestId);
+                    m_audioInputProcessor->onSendCompleted(
+                        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS);
+                }));
+        }
+        EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+            .WillOnce(DoAll(
+                Invoke([this](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+                    m_recognizeEvent->verifyMessage(request, m_pattern, m_dialogRequestId);
+                }),
+                InvokeWithoutArgs([&] {
+                    if (RecognizeStopPoint::AFTER_SEND == stopPoint) {
+                        EXPECT_TRUE(m_audioInputProcessor->stopCapture().valid());
+                    } else if (RecognizeStopPoint::NONE == stopPoint) {
+                        std::lock_guard<std::mutex> lock(mutex);
+                        done = true;
+                        conditionVariable.notify_one();
+                    }
+                })));
+    }
     if (stopPoint != RecognizeStopPoint::NONE) {
         EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::BUSY));
         EXPECT_CALL(*m_mockFocusManager, releaseChannel(CHANNEL_NAME, _));
@@ -799,6 +898,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
                 conditionVariable.notify_one();
             }));
     }
+
     auto sentFuture = m_recognizeEvent->send(m_audioInputProcessor);
 
     // If a valid begin index was not provided, load the SDS buffer with the test pattern after recognize() is sent.
@@ -1024,9 +1124,72 @@ bool AudioInputProcessorTest::testExpectSpeechFails(bool withDialogRequestId) {
     }
 }
 
+static bool getInitiatorFromDirective(const std::string directive, std::string* initiator) {
+    std::string event, payload;
+    if (!jsonUtils::retrieveValue(directive, MESSAGE_EVENT_KEY, &event)) {
+        return false;
+    }
+    if (!jsonUtils::retrieveValue(event, MESSAGE_PAYLOAD_KEY, &payload)) {
+        return false;
+    }
+    return jsonUtils::retrieveValue(payload, EXPECT_SPEECH_INITIATOR_KEY, initiator);
+}
+
+bool AudioInputProcessorTest::testRecognizeWithExpectSpeechInitiator(bool withInitiator) {
+    std::mutex mutex;
+    std::condition_variable conditionVariable;
+    bool done = false;
+
+    auto avsDirective = createAVSDirective(EXPECT_SPEECH, true, withInitiator);
+
+    auto result = avsCommon::utils::memory::make_unique<avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult>();
+    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> directiveHandler = m_audioInputProcessor;
+
+    // Parse out message contents and set expectations based on withInitiator value.
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+        .WillOnce(Invoke([&](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+            std::string actualInitiatorString;
+            if (withInitiator) {
+                ASSERT_TRUE(getInitiatorFromDirective(request->getJsonContent(), &actualInitiatorString));
+                ASSERT_EQ(actualInitiatorString, EXPECT_SPEECH_INITIATOR);
+            } else {
+                ASSERT_FALSE(getInitiatorFromDirective(request->getJsonContent(), &actualInitiatorString));
+            }
+            std::lock_guard<std::mutex> lock(mutex);
+            done = true;
+            conditionVariable.notify_one();
+        }));
+
+    rapidjson::Document contextDocument(rapidjson::kObjectType);
+    rapidjson::Value contextArray(rapidjson::kArrayType);
+    contextDocument.AddMember(rapidjson::StringRef(MESSAGE_CONTEXT_KEY), contextArray, contextDocument.GetAllocator());
+    rapidjson::StringBuffer contextBuffer;
+    rapidjson::Writer<rapidjson::StringBuffer> contextWriter(contextBuffer);
+    contextDocument.Accept(contextWriter);
+    std::string contextJson = contextBuffer.GetString();
+
+    // Check for successful Directive handling.
+    EXPECT_CALL(*result, setCompleted());
+    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH));
+    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
+    EXPECT_CALL(*m_mockUserActivityNotifier, onUserActive()).Times(2);
+    EXPECT_CALL(*m_mockContextManager, getContext(_));
+    EXPECT_CALL(*m_mockDirectiveSequencer, setDialogRequestId(_));
+
+    // Set AIP to a sane state.
+    directiveHandler->preHandleDirective(avsDirective, std::move(result));
+    EXPECT_TRUE(directiveHandler->handleDirective(avsDirective->getMessageId()));
+    m_audioInputProcessor->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND);
+    m_audioInputProcessor->onContextAvailable(contextJson);
+
+    std::unique_lock<std::mutex> lock(mutex);
+    return conditionVariable.wait_for(lock, TEST_TIMEOUT, [&done] { return done; });
+}
+
 std::shared_ptr<avsCommon::avs::AVSDirective> AudioInputProcessorTest::createAVSDirective(
     const avsCommon::avs::NamespaceAndName& directive,
-    bool WITH_DIALOG_REQUEST_ID) {
+    bool WITH_DIALOG_REQUEST_ID,
+    bool withInitiator) {
     auto header = std::make_shared<avsCommon::avs::AVSMessageHeader>(
         directive.nameSpace,
         directive.name,
@@ -1044,11 +1207,14 @@ std::shared_ptr<avsCommon::avs::AVSDirective> AudioInputProcessorTest::createAVS
 
     if (EXPECT_SPEECH == directive) {
         rapidjson::Value timeoutInMillisecondsJson(EXPECT_SPEECH_TIMEOUT_IN_MILLISECONDS);
-        rapidjson::Value initiatorJson(rapidjson::StringRef(EXPECT_SPEECH_INITIATOR));
         payloadJson.AddMember(
             rapidjson::StringRef(EXPECT_SPEECH_TIMEOUT_KEY), timeoutInMillisecondsJson, document.GetAllocator());
-        payloadJson.AddMember(
-            rapidjson::StringRef(EXPECT_SPEECH_INITIATOR_KEY), initiatorJson, document.GetAllocator());
+
+        if (withInitiator) {
+            rapidjson::Value initiatorJson(rapidjson::StringRef(EXPECT_SPEECH_INITIATOR));
+            payloadJson.AddMember(
+                rapidjson::StringRef(EXPECT_SPEECH_INITIATOR_KEY), initiatorJson, document.GetAllocator());
+        }
     }
 
     headerJson.AddMember(rapidjson::StringRef(MESSAGE_NAMESPACE_KEY), namespaceJson, document.GetAllocator());
@@ -1423,7 +1589,15 @@ TEST_F(AudioInputProcessorTest, recognizeFarField) {
 TEST_F(AudioInputProcessorTest, recognizeWhileExpectingSpeech) {
     removeDefaultAudioProvider();
     ASSERT_TRUE(testExpectSpeechWaits(WITH_DIALOG_REQUEST_ID, !VERIFY_TIMEOUT));
-    ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::PRESS_AND_HOLD));
+    // Recognize event after an ExpectSpeech results in the ExpectSpeech's initiator being passed back to AVS.
+    ASSERT_TRUE(testRecognizeSucceeds(
+        *m_audioProvider,
+        Initiator::PRESS_AND_HOLD,
+        AudioInputProcessor::INVALID_INDEX,
+        AudioInputProcessor::INVALID_INDEX,
+        "",
+        RecognizeStopPoint::NONE,
+        std::make_shared<std::string>(EXPECT_SPEECH_INITIATOR)));
 }
 
 /**
@@ -1684,6 +1858,29 @@ TEST_F(AudioInputProcessorTest, expectSpeechNoDefaultReadablePrevious) {
     ASSERT_TRUE(testExpectSpeechSucceeds(WITH_DIALOG_REQUEST_ID));
 }
 
+/// This function verifies that the initiator from an ExpectSpeech is passed to a subsequent Recognize.
+TEST_F(AudioInputProcessorTest, expectSpeechWithInitiator) {
+    ASSERT_TRUE(testRecognizeWithExpectSpeechInitiator(true));
+}
+
+/**
+ * This function verifies that if the ExpectSpeech does not have an initiator, no initiator is present in the
+ * subsequent Recognize.
+ */
+TEST_F(AudioInputProcessorTest, expectSpeechWithNoInitiator) {
+    ASSERT_TRUE(testRecognizeWithExpectSpeechInitiator(false));
+}
+
+/**
+ * This function verifies that if the ExpectSpeech times out, the next user initiated Recognize will send the standard
+ * initiator and not the one passed from AVS.
+ */
+TEST_F(AudioInputProcessorTest, expectSpeechWithInitiatorTimedOut) {
+    removeDefaultAudioProvider();
+    ASSERT_TRUE(testExpectSpeechWaits(WITH_DIALOG_REQUEST_ID, VERIFY_TIMEOUT));
+    ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::TAP));
+}
+
 /// This function verifies that a focus change to @c FocusState::BACKGROUND causes the @c AudioInputProcessor to
 /// release the channel and go back to @c State::IDLE.
 TEST_F(AudioInputProcessorTest, focusChangedBackground) {
@@ -1704,6 +1901,32 @@ TEST_F(AudioInputProcessorTest, resetStateOnTimeOut) {
     EXPECT_CALL(*m_mockFocusManager, releaseChannel(CHANNEL_NAME, _));
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::IDLE));
     m_audioInputProcessor->onSendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::TIMEDOUT);
+}
+
+/*
+ * This function verifies that @c AudioInputProcessor::recognize() works with @c Initiator::WAKEWORD, keyword and
+ * valid espData.
+ */
+TEST_F(AudioInputProcessorTest, recognizeWakewordWithESPWithKeyword) {
+    auto begin = AudioInputProcessor::INVALID_INDEX;
+    auto end = AudioInputProcessor::INVALID_INDEX;
+    // note that we are just using a integer instead of a float number, this is to help with JSON verification.
+    ESPData espData("123456789", "987654321");
+    EXPECT_TRUE(testRecognizeSucceeds(
+        *m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT, RecognizeStopPoint::NONE, nullptr, espData));
+}
+
+/*
+ * This function verifies that @c AudioInputProcessor::recognize() works with @c Initiator::WAKEWORD, keyword and
+ * invalid espData.  The ReportEchoSpatialPerceptionData event will not be sent but the Recognize event should still be
+ * sent.
+ */
+TEST_F(AudioInputProcessorTest, recognizeWakewordWithInvalidESPWithKeyword) {
+    auto begin = AudioInputProcessor::INVALID_INDEX;
+    auto end = AudioInputProcessor::INVALID_INDEX;
+    ESPData espData("@#\"", "@#\"");
+    EXPECT_TRUE(testRecognizeSucceeds(
+        *m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT, RecognizeStopPoint::NONE, nullptr, espData));
 }
 
 }  // namespace test

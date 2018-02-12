@@ -1,7 +1,5 @@
 /*
- * AudioFormat.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,6 +38,17 @@ struct AudioFormat {
     };
 
     /**
+     * An enum class to represent layout of audio files for streams with more than one channel.
+     */
+    enum class Layout {
+        /// Non-Interleaved : The L and R are separated in different streams.
+        NON_INTERLEAVED,
+
+        /// Interleaved : The L and R sides of a stereo recording are interleaved.
+        INTERLEAVED
+    };
+
+    /**
      * An enum class used to represent the endianness of audio data.
      */
     enum class Endianness {
@@ -64,6 +73,12 @@ struct AudioFormat {
 
     /// The number of channels.
     unsigned int numChannels;
+
+    /// @c true if the data is signed @c false otherwise.
+    bool dataSigned;
+
+    /// The layout of format for cases where numChannels > 1.
+    Layout layout;
 };
 
 /**

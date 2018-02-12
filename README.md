@@ -1,5 +1,5 @@
 ### IMPORTANT NOTE
-If you are updating from v1.x to v1.4, you must update your `AlexaClientSDKConfig.json` to include a Notifications database. An updated sample is available in the quickstart guides for Ubuntu Linux, Raspberry Pi, macOS, and Generic Linux.
+If you are updating from v1.3 or earlier to v1.5, you must update your `AlexaClientSDKConfig.json` to include a Notifications database. An updated sample is available in the quickstart guides for Ubuntu Linux, Raspberry Pi, macOS, and Generic Linux.
 
 ### What is the Alexa Voice Service (AVS)?
 
@@ -20,12 +20,8 @@ You can set up the SDK on the following platforms:
 * [Generic Linux](https://github.com/alexa/avs-device-sdk/wiki/Linux-Reference-Guide)
 
 You can also prototype with a third party development kit:
-* [Intel Speech Enabling Developer Kit](https://github.com/intel-iot-devkit/avs-alexa-iot-intel-speech-enabling-kit)
-* [Amlogic A113X1 Far-Field Dev Kit for Amazon AVS](http://openlinux2.amlogic.com/download/doc/A113X1_Usermanual.pdf)
-* [Allwinner SoC-Only 3-Mic Far-Field Dev Kit for Amazon AVS](http://www.banana-pi.org/images/r18avs/AVS-quickstartguide.pdf)
-* [Synaptics AudioSmart 2-Mic Dev Kit for Amazon AVS with NXP SoC](https://www.nxp.com/docs/en/user-guide/Quick-Start-Guide-for-Arrow-AVS-kit.pdf)
-* [XMOS VocalFusion 4-Mic Dev Kit for Amazon AVS](https://github.com/xmos/vocalfusion-avs-setup)
-
+* [xCORE VocalFusion 4-Mic Kit](https://github.com/xmos/vocalfusion-avs-setup)
+* [NXP PICO-PI-IMX7D 2-Mic Kit](https://www.nxp.com/docs/en/user-guide/Quick-Start-Guide-for-Arrow-AVS-kit.pdf)
 
 Or if you prefer, you can start with our [SDK API Documentation](https://alexa.github.io/avs-device-sdk/).
 
@@ -93,27 +89,24 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 
 ### Release Notes and Known Issues
 
-**Note**: Features, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
+**Note**: Feature enhancements, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
-v1.4.0 released 01/12/2018:
+v1.5.0 released 02/12/2018:
 
 **Enhancements**
-* Added the Notifications Capability Agent. This allows a client to receive notification indicators from Alexa.
-* Added support for the `SoftwareInfo` event. This code is triggered in the `SampleApp` by providing a positive decimal integer as the "firmwareVersion" value in "sampleApp" object of the `AlexaClientSDKConfig.json`. The reported firmware version can be updated after starting the `SampleApp` by calling `SoftwareInfoSender::setFirmwareVersion()`. This code path can be exercised in the `SampleApp` with the new command: `f`.
-* Added unit tests for Alerts.
-* The GStreamer-based pipeline allows for the configuration of `MediaPlayer` output based on information provided in `Config`.
-* Playlist streaming now uses a `BLOCKING` writer, which improves streaming efficiency.
+* Added the `ExternalMediaPlayer` Capability Agent. This allows playback from music providers that control their own playback queue. Example: Spotify.
+* Added support for AU and NZ to the `SampleApp`.
+* Firmware version can now be sent to Alexa via the `SoftwareInfo` event. The firmware version is specified in the config file under the `sampleApp` object as an integer value named [`firmwareVersion`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L52).
+* The new `f` command was added to the `SampleApp` which allows the firmware version to be updated at run-time.
+* Optional configuration changes have been introduced. Now a [default log level](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L93) can be set for `ACSDK_LOG_MODULE` components, globally or individually. This value is specified under a new root level configuration object called `logger`, and the value itself is named `logLevel`. This allows you to limit the degree of logging to that default value, such as `ERROR`or `INFO`.
 
 **Bug Fixes**
-* Fixed bug where `SpeechSynthesizer` would not stop playback when a state change timeout was encountered.
-* Fixed the `SampleApplication` destructor to avoid segfaults if the object is not constructed correctly.
-* Fixed bug where `AudioPlayer` would erroneously call `executeStop()` in `cancelDirective()`.
-* [Issue 396](https://github.com/alexa/avs-device-sdk/issues/396) - Fixed bug for compilation error with GCC7 in `AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h`
-* [Issue 384](https://github.com/alexa/avs-device-sdk/issues/384) - Fixed bug that caused `AuthServer.py` to crash.
-* Fixed bug where a long delay was encountered after pausing and resuming a large Audible chapter.
-* Fixed bug that caused named timers and reminders to loop for an additional `loopCount` .
-* Fixed memory corruption bug in `MessageInterpreter`.
-* Fixed illegal memory accesses in `MediaPlayer` logging.
+* Fixed bug where `AudioPlayer` progress reports were not being sent, or were being sent incorrectly.
+* [Issue 408](https://github.com/alexa/avs-device-sdk/issues/408) - Irrelevant code related to `UrlSource` was removed from the `GStreamer-based MediaPlayer` implementation.
+* The `TZ` variable no longer needs to be set to `UTC` when building the `SampleApp`.
+* Fixed a bug where `CurlEasyHandleWrapper` logged unwanted data on failure conditions.
+* Fixed a bug to improve `SIGPIPE` handling.
+* Fixed a bug where the filename and classname were mismatched. Changed `UrlToAttachmentConverter.h` to `UrlContentToAttachmentConverter.h`,and `UrlToAttachmentConverter.cpp` to `UrlContentToAttachmentConverter.cpp`
 
 **Known Issues**
 * The `ACL` may encounter issues if audio attachments are received but not consumed.

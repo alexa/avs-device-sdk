@@ -1,7 +1,5 @@
 /*
- * HTTP2Stream.cpp
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +17,7 @@
 #include <sstream>
 
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
+#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Logger/LoggerUtils.h>
 #include <AVSCommon/Utils/Logger/ThreadMoniker.h>
@@ -30,6 +29,7 @@ namespace alexaClientSDK {
 namespace acl {
 
 using namespace alexaClientSDK::avsCommon::utils;
+using namespace alexaClientSDK::avsCommon::utils::libcurlUtils;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 
@@ -307,7 +307,7 @@ size_t HTTP2Stream::writeCallback(char* data, size_t size, size_t nmemb, void* u
      * payload. For all other response codes we're getting a JSON string without
      * multipart headers.
      */
-    if (HTTP2Stream::HTTPResponseCodes::SUCCESS_OK == stream->getResponseCode()) {
+    if (HTTPResponseCode::SUCCESS_OK == stream->getResponseCode()) {
         MimeParser::DataParsedStatus status = stream->m_parser.feed(data, numChars);
 
         if (MimeParser::DataParsedStatus::OK == status) {
@@ -340,7 +340,7 @@ size_t HTTP2Stream::headerCallback(char* data, size_t size, size_t nmemb, void* 
     std::string boundary;
     HTTP2Stream* stream = static_cast<HTTP2Stream*>(user);
     stream->m_timeOfLastTransfer = getNow();
-    if (HTTP2Stream::HTTPResponseCodes::SUCCESS_OK == stream->getResponseCode()) {
+    if (HTTPResponseCode::SUCCESS_OK == stream->getResponseCode()) {
         if (header.find(BOUNDARY_PREFIX) != std::string::npos) {
             boundary = header.substr(header.find(BOUNDARY_PREFIX));
             boundary = boundary.substr(BOUNDARY_PREFIX_SIZE, boundary.find(BOUNDARY_DELIMITER) - BOUNDARY_PREFIX_SIZE);
@@ -424,22 +424,22 @@ void HTTP2Stream::notifyRequestObserver() {
     long responseCode = getResponseCode();
 
     switch (responseCode) {
-        case HTTP2Stream::HTTPResponseCodes::NO_RESPONSE_RECEIVED:
+        case HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED:
             m_currentRequest->sendCompleted(
                 avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::INTERNAL_ERROR);
             break;
-        case HTTP2Stream::HTTPResponseCodes::SUCCESS_OK:
+        case HTTPResponseCode::SUCCESS_OK:
             m_currentRequest->sendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS);
             break;
-        case HTTP2Stream::HTTPResponseCodes::SUCCESS_NO_CONTENT:
+        case HTTPResponseCode::SUCCESS_NO_CONTENT:
             m_currentRequest->sendCompleted(
                 avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT);
             break;
-        case HTTP2Stream::HTTPResponseCodes::BAD_REQUEST:
+        case HTTPResponseCode::BAD_REQUEST:
             m_currentRequest->sendCompleted(
                 avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::BAD_REQUEST);
             break;
-        case HTTP2Stream::HTTPResponseCodes::SERVER_INTERNAL_ERROR:
+        case HTTPResponseCode::SERVER_INTERNAL_ERROR:
             m_currentRequest->sendCompleted(
                 avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2);
             break;
@@ -584,7 +584,7 @@ int HTTP2Stream::debugFunction(CURL* handle, curl_infotype type, char* data, siz
             if (index != std::string::npos) {
                 text.resize(index);
             }
-            ACSDK_INFO(LX("libcurl").d("streamId", stream->getLogicalStreamId()).sensitive("text", text));
+            ACSDK_DEBUG0(LX("libcurl").d("streamId", stream->getLogicalStreamId()).sensitive("text", text));
         } break;
         case CURLINFO_HEADER_IN:
         case CURLINFO_DATA_IN:

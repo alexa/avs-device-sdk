@@ -1,6 +1,4 @@
 /*
- * AlertScheduler.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -407,7 +405,7 @@ void AlertScheduler::setTimerForNextAlertLocked() {
     }
 
     if (m_scheduledAlerts.empty()) {
-        ACSDK_INFO(LX("executeScheduleNextAlertForRendering").m("no work to do."));
+        ACSDK_DEBUG9(LX("executeScheduleNextAlertForRendering").m("no work to do."));
         return;
     }
 

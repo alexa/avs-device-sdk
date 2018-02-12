@@ -1,7 +1,5 @@
 /*
- * TestMediaPlayer.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -46,7 +44,8 @@ public:
     ~TestMediaPlayer();
 
     avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId setSource(
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) override;
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+        const avsCommon::utils::AudioFormat* audioFormat = nullptr) override;
 
     avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId setSource(
         std::shared_ptr<std::istream> stream,
@@ -68,6 +67,8 @@ public:
 
     void setObserver(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) override;
+
+    uint64_t getNumBytesBuffered() override;
 
 private:
     /// Observer to notify of state changes.

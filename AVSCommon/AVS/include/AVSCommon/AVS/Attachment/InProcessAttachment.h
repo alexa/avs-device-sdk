@@ -1,6 +1,4 @@
 /*
- * InProcessAttachment.h
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -53,7 +51,7 @@ public:
         InProcessAttachmentWriter::SDSTypeWriter::Policy policy =
             InProcessAttachmentWriter::SDSTypeWriter::Policy::ALL_OR_NOTHING) override;
 
-    std::unique_ptr<AttachmentReader> createReader(AttachmentReader::Policy policy) override;
+    std::unique_ptr<AttachmentReader> createReader(InProcessAttachmentReader::SDSTypeReader::Policy policy) override;
 
 private:
     // The sds from which we will create the reader and writer.

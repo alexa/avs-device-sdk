@@ -1,6 +1,4 @@
 /*
- * SpeechSynthesizerTest.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -162,10 +160,10 @@ public:
     MOCK_METHOD1(setAttachmentTimeoutMinutes, bool(std::chrono::minutes timeoutMinutes));
     MOCK_METHOD2(
         createWriter,
-        std::unique_ptr<AttachmentWriter>(const std::string& attachmentId, utils::sds::WriterPolicy policy));
+        std::unique_ptr<AttachmentWriter>(const std::string& attachmentId, sds::WriterPolicy policy));
     MOCK_METHOD2(
         createReader,
-        std::unique_ptr<AttachmentReader>(const std::string& attachmentId, AttachmentReader::Policy policy));
+        std::unique_ptr<AttachmentReader>(const std::string& attachmentId, sds::ReaderPolicy policy));
 };
 
 class SpeechSynthesizerTest : public ::testing::Test {
@@ -316,7 +314,6 @@ void SpeechSynthesizerTest::SetUp() {
         m_mockMessageSender,
         m_mockFocusManager,
         m_mockContextManager,
-        m_attachmentManager,
         m_mockExceptionSender,
         m_dialogUXStateAggregator);
     m_mockDirHandlerResult.reset(new MockDirectiveHandlerResult);
@@ -381,7 +378,7 @@ TEST_F(SpeechSynthesizerTest, testCallingHandleImmediately) {
         .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
     EXPECT_CALL(
         *(m_mockSpeechPlayer.get()),
-        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>(), nullptr))
         .Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
@@ -421,7 +418,7 @@ TEST_F(SpeechSynthesizerTest, testCallingHandle) {
         .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
     EXPECT_CALL(
         *(m_mockSpeechPlayer.get()),
-        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>(), nullptr))
         .Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
@@ -484,7 +481,7 @@ TEST_F(SpeechSynthesizerTest, testCallingCancelAfterHandle) {
         .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
     EXPECT_CALL(
         *(m_mockSpeechPlayer.get()),
-        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>(), nullptr))
         .Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
@@ -556,7 +553,7 @@ TEST_F(SpeechSynthesizerTest, testCallingProvideStateWhenPlaying) {
         .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
     EXPECT_CALL(
         *(m_mockSpeechPlayer.get()),
-        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>(), nullptr))
         .Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
@@ -621,7 +618,7 @@ TEST_F(SpeechSynthesizerTest, testBargeInWhilePlaying) {
         .WillRepeatedly(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
     EXPECT_CALL(
         *(m_mockSpeechPlayer.get()),
-        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>(), nullptr))
         .Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
@@ -688,7 +685,7 @@ TEST_F(SpeechSynthesizerTest, testNotCallStopTwice) {
         .WillRepeatedly(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
     EXPECT_CALL(
         *(m_mockSpeechPlayer.get()),
-        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>(), nullptr))
         .Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
@@ -787,7 +784,7 @@ TEST_F(SpeechSynthesizerTest, testMediaPlayerFailedToStop) {
         .WillRepeatedly(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
     EXPECT_CALL(
         *(m_mockSpeechPlayer.get()),
-        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>(), nullptr))
         .Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
@@ -877,7 +874,7 @@ TEST_F(SpeechSynthesizerTest, testSetStateTimeout) {
         .WillRepeatedly(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
     EXPECT_CALL(
         *(m_mockSpeechPlayer.get()),
-        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>()))
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>(), nullptr))
         .Times(AtLeast(1));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(1).WillOnce(Return(true));
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))

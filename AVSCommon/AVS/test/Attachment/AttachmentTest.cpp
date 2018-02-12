@@ -1,7 +1,5 @@
 /*
- * AttachmentTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -47,13 +45,13 @@ public:
      *
      * @param policy The policy for the reader to be created.
      */
-    void testCreateReader(AttachmentReader::Policy policy);
+    void testCreateReader(ReaderPolicy policy);
 
     /// A local attachment object to simplify test code.
     std::shared_ptr<InProcessAttachment> m_attachment;
 };
 
-void AttachmentTest::testCreateReader(AttachmentReader::Policy policy) {
+void AttachmentTest::testCreateReader(ReaderPolicy policy) {
     // Test create reader where there is no writer.
     auto reader = m_attachment->createReader(policy);
     ASSERT_NE(reader, nullptr);
@@ -86,14 +84,14 @@ TEST_F(AttachmentTest, testGetAttachmentId) {
  * Verify that an Attachment can create a blocking reader in various scenarios.
  */
 TEST_F(AttachmentTest, testAttachmentCreateBlockingReader) {
-    testCreateReader(AttachmentReader::Policy::BLOCKING);
+    testCreateReader(ReaderPolicy::BLOCKING);
 }
 
 /**
  * Verify that an Attachment can create a non-blocking reader in various scenarios.
  */
 TEST_F(AttachmentTest, testAttachmentCreateNonBlockingReader) {
-    testCreateReader(AttachmentReader::Policy::NON_BLOCKING);
+    testCreateReader(ReaderPolicy::NONBLOCKING);
 }
 
 /**
@@ -111,7 +109,7 @@ TEST_F(AttachmentTest, testAttachmentCreateWriter) {
     // Once again - this time test where there is a reader.
     m_attachment = std::make_shared<InProcessAttachment>(TEST_ATTACHMENT_ID_STRING_ONE);
 
-    m_attachment->createReader(AttachmentReader::Policy::NON_BLOCKING);
+    m_attachment->createReader(ReaderPolicy::NONBLOCKING);
 
     writer = m_attachment->createWriter();
     ASSERT_NE(writer, nullptr);
@@ -131,7 +129,7 @@ TEST_F(AttachmentTest, testCreateAttachmentWithSDS) {
     // Test member functions, ensure they appear to work correctly.
     ASSERT_EQ(TEST_ATTACHMENT_ID_STRING_ONE, attachment->getId());
 
-    auto reader = attachment->createReader(AttachmentReader::Policy::NON_BLOCKING);
+    auto reader = attachment->createReader(ReaderPolicy::NONBLOCKING);
     ASSERT_NE(reader, nullptr);
 
     auto writer = attachment->createWriter();

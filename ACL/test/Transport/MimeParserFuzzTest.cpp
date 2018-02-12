@@ -1,7 +1,5 @@
 /*
- * MimeParserFuzzTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -205,7 +203,7 @@ void MimeParserFuzzTest::read() {
     auto readSizeSource = std::bind(readSizeDistribution, readSizeGenerator);
 
     auto attachmentId = m_attachmentManager->generateAttachmentId(CONTEXT_ID, CONTENT_ID);
-    auto reader = m_attachmentManager->createReader(attachmentId, AttachmentReader::Policy::BLOCKING);
+    auto reader = m_attachmentManager->createReader(attachmentId, avsCommon::utils::sds::ReaderPolicy::BLOCKING);
 
     std::vector<uint8_t> readBuffer(MAX_READ_SIZE);
     std::vector<uint8_t> verifyBuffer(MAX_READ_SIZE);

@@ -1,6 +1,4 @@
 /*
- * MockMediaPlayer.h
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -42,10 +40,12 @@ public:
      * Variant of setSource() taking an attachment reader.
      *
      * @param attachmentReader The attachment from which to read audio data.
+     * @param audioFormat The audioFormat to be used when playing raw PCM data.
      * @return The SourceId used by MediaPlayerInterface to identify this @c setSource() request.
      */
     virtual SourceId attachmentSetSource(
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) = 0;
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+        const avsCommon::utils::AudioFormat* audioFormat) = 0;
     /**
      * Variant of setSource() taking an istream from which to read audio data.
      *
@@ -83,7 +83,9 @@ public:
 
     /// @name MediaPlayerInterface overrides
     /// @{
-    SourceId setSource(std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) /*override*/;
+    SourceId setSource(
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+        const avsCommon::utils::AudioFormat* audioFormat = nullptr) /*override*/;
     SourceId setSource(
         const std::string& url,
         std::chrono::milliseconds offset = std::chrono::milliseconds::zero()) /*override*/;
@@ -96,15 +98,18 @@ public:
     MOCK_METHOD1(resume, bool(SourceId));
     MOCK_METHOD1(stop, bool(SourceId));
     MOCK_METHOD1(getOffset, std::chrono::milliseconds(SourceId));
+    MOCK_METHOD0(getNumBytesBuffered, uint64_t());
 
     /// @name RequiresShutdown overrides
     /// @{
     void doShutdown() /*override*/;
     /// @}
 
-    MOCK_METHOD1(
+    MOCK_METHOD2(
         attachmentSetSource,
-        SourceId(std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader));
+        SourceId(
+            std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+            const avsCommon::utils::AudioFormat* audioFormat));
     MOCK_METHOD2(streamSetSource, SourceId(std::shared_ptr<std::istream> stream, bool repeat));
     MOCK_METHOD1(urlSetSource, SourceId(const std::string& url));
 

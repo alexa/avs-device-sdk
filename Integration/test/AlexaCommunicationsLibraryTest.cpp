@@ -1,7 +1,5 @@
 /*
- * AlexaCommunicationsLibraryTest.cpp
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -284,7 +282,7 @@ public:
 
         // create and return the reader.
         std::shared_ptr<InProcessAttachmentReader> attachmentReader =
-            InProcessAttachmentReader::create(AttachmentReader::Policy::NON_BLOCKING, sds);
+            InProcessAttachmentReader::create(ReaderPolicy::NONBLOCKING, sds);
         EXPECT_NE(attachmentReader, nullptr);
 
         return attachmentReader;

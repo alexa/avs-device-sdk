@@ -1,7 +1,5 @@
 /*
- * HttpPost.cpp
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +14,7 @@
  */
 
 #include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
+#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
@@ -44,7 +43,7 @@ std::unique_ptr<HttpPost> HttpPost::create() {
     return nullptr;
 }
 
-HttpPost::HttpPost() : m_curl{nullptr} {
+HttpPost::HttpPost() : m_curl{nullptr}, m_requestHeaders{nullptr} {
 }
 
 bool HttpPost::init() {
@@ -73,6 +72,26 @@ HttpPost::~HttpPost() {
     if (m_curl) {
         curl_easy_cleanup(m_curl);
     }
+
+    if (m_requestHeaders) {
+        curl_slist_free_all(m_requestHeaders);
+        m_requestHeaders = nullptr;
+    }
+}
+
+bool HttpPost::addHTTPHeader(const std::string& header) {
+    m_requestHeaders = curl_slist_append(m_requestHeaders, header.c_str());
+    if (!m_requestHeaders) {
+        ACSDK_ERROR(LX("addHTTPHeaderFailed")
+                        .d("reason", "curlFailure")
+                        .d("method", "curl_slist_append")
+                        .sensitive("header", header));
+        return false;
+    }
+    if (!setopt(CURLOPT_HTTPHEADER, m_requestHeaders)) {
+        return false;
+    }
+    return true;
 }
 
 long HttpPost::doPost(
@@ -86,7 +105,7 @@ long HttpPost::doPost(
 
     if (!setopt(CURLOPT_TIMEOUT, static_cast<long>(timeout.count())) || !setopt(CURLOPT_URL, url.c_str()) ||
         !setopt(CURLOPT_POSTFIELDS, data.c_str()) || !setopt(CURLOPT_WRITEDATA, &body)) {
-        return HTTP_RESPONSE_CODE_UNDEFINED;
+        return HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED;
     }
 
     auto result = curl_easy_perform(m_curl);
@@ -97,7 +116,7 @@ long HttpPost::doPost(
                         .d("result", result)
                         .d("error", curl_easy_strerror(result)));
         body.clear();
-        return HTTP_RESPONSE_CODE_UNDEFINED;
+        return HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED;
     }
 
     long responseCode = 0;
@@ -109,7 +128,7 @@ long HttpPost::doPost(
                         .d("result", result)
                         .d("error", curl_easy_strerror(result)));
         body.clear();
-        return HTTP_RESPONSE_CODE_UNDEFINED;
+        return HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED;
     } else {
         ACSDK_DEBUG(LX("doPostSucceeded").d("code", responseCode));
         return responseCode;

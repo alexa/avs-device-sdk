@@ -19,6 +19,7 @@ target_link_libraries(DefaultClient
     Settings
     TemplateRuntime
     AudioPlayer
+    ExternalMediaPlayer
     AVSSystem
     ContextManager)
 

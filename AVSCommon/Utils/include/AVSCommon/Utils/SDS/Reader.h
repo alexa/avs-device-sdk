@@ -1,7 +1,5 @@
 /*
- * Reader.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +25,7 @@
 
 #include "AVSCommon/Utils/Logger/LoggerUtils.h"
 #include "SharedDataStream.h"
+#include "ReaderPolicy.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -45,21 +44,7 @@ template <typename T>
 class SharedDataStream<T>::Reader {
 public:
     /// Specifies the policy to use for reading from the stream.
-    enum class Policy {
-        /**
-         * A @c NONBLOCKING @c Reader will return any available data (up to the amount requested) immediately, without
-         * waiting for more data to be written to the stream.  If no data is available, a @c NONBLOCKING @c Reader will
-         * return @c Error::WOULDBLOCK.
-         */
-        NONBLOCKING,
-        /**
-         * A @c BLOCKING @c Reader will wait for up to the specified timeout (or forever if `(timeout == 0)`) for data
-         * to become available.  As soon as at least one word is available, the @c Reader will return up to the
-         * requested amount of data.  If no data becomes available in the specified timeout, a @c BLOCKING @c Reader
-         * will return @c Error::TIMEDOUT.
-         */
-        BLOCKING
-    };
+    using Policy = ReaderPolicy;
 
     /// Specifies a reference to measure @c seek()/@c tell()/@c close() offsets against.
     enum class Reference {

@@ -1,6 +1,4 @@
 /*
- * SpeechSynthesizer.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -102,7 +100,6 @@ std::shared_ptr<SpeechSynthesizer> SpeechSynthesizer::create(
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<FocusManagerInterface> focusManager,
     std::shared_ptr<ContextManagerInterface> contextManager,
-    std::shared_ptr<attachment::AttachmentManagerInterface> attachmentManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender,
     std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator) {
     if (!mediaPlayer) {
@@ -121,16 +118,12 @@ std::shared_ptr<SpeechSynthesizer> SpeechSynthesizer::create(
         ACSDK_ERROR(LX("SpeechSynthesizerCreationFailed").d("reason", "contextManagerNullReference"));
         return nullptr;
     }
-    if (!attachmentManager) {
-        ACSDK_ERROR(LX("SpeechSynthesizerCreationFailed").d("reason", "attachmentManagerNullReference"));
-        return nullptr;
-    }
     if (!exceptionSender) {
         ACSDK_ERROR(LX("SpeechSynthesizerCreationFailed").d("reason", "exceptionSenderNullReference"));
         return nullptr;
     }
-    auto speechSynthesizer = std::shared_ptr<SpeechSynthesizer>(new SpeechSynthesizer(
-        mediaPlayer, messageSender, focusManager, contextManager, attachmentManager, exceptionSender));
+    auto speechSynthesizer = std::shared_ptr<SpeechSynthesizer>(
+        new SpeechSynthesizer(mediaPlayer, messageSender, focusManager, contextManager, exceptionSender));
     speechSynthesizer->init();
 
     dialogUXStateAggregator->addObserver(speechSynthesizer);
@@ -306,7 +299,6 @@ SpeechSynthesizer::SpeechSynthesizer(
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<FocusManagerInterface> focusManager,
     std::shared_ptr<ContextManagerInterface> contextManager,
-    std::shared_ptr<attachment::AttachmentManagerInterface> attachmentManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender) :
         CapabilityAgent{NAMESPACE, exceptionSender},
         RequiresShutdown{"SpeechSynthesizer"},
@@ -315,7 +307,6 @@ SpeechSynthesizer::SpeechSynthesizer(
         m_messageSender{messageSender},
         m_focusManager{focusManager},
         m_contextManager{contextManager},
-        m_attachmentManager{attachmentManager},
         m_currentState{SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED},
         m_desiredState{SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED},
         m_currentFocus{FocusState::NONE},
@@ -356,7 +347,6 @@ void SpeechSynthesizer::doShutdown() {
     m_messageSender.reset();
     m_focusManager.reset();
     m_contextManager.reset();
-    m_attachmentManager.reset();
     m_observers.clear();
 }
 
@@ -435,8 +425,7 @@ void SpeechSynthesizer::executePreHandleAfterValidation(std::shared_ptr<SpeakDir
         return;
     }
     std::string contentId = urlValue.substr(contentIdPosition + CID_PREFIX.length());
-    speakInfo->attachmentReader =
-        speakInfo->directive->getAttachmentReader(contentId, AttachmentReader::Policy::BLOCKING);
+    speakInfo->attachmentReader = speakInfo->directive->getAttachmentReader(contentId, sds::ReaderPolicy::BLOCKING);
     if (!speakInfo->attachmentReader) {
         const std::string message("getAttachmentReaderFailed");
         ACSDK_ERROR(LX("executePreHandleFailed").d("reason", message));
@@ -921,7 +910,8 @@ void SpeechSynthesizer::executeOnDialogUXStateChanged(
     if (newState != avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE) {
         return;
     }
-    if (m_currentFocus != avsCommon::avs::FocusState::NONE) {
+    if (m_currentFocus != avsCommon::avs::FocusState::NONE &&
+        m_currentState != SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS) {
         m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
         m_currentFocus = avsCommon::avs::FocusState::NONE;
     }

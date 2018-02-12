@@ -1,5 +1,29 @@
 ## ChangeLog
 
+### [1.5.0] - 2018-02-12
+
+**Enhancements**
+* Added the `ExternalMediaPlayer` Capability Agent. This allows playback from music providers that control their own playback queue. Example: Spotify.
+* Added support for AU and NZ to the `SampleApp`.
+* Firmware version can now be sent to Alexa via the `SoftwareInfo` event. The firmware version is specified in the config file under the `sampleApp` object as an integer value named [`firmwareVersion`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L52).
+* The new `f` command was added to the `SampleApp` which allows the firmware version to be updated at run-time.
+* Optional configuration changes have been introduced. Now a [default log level](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L93) can be set for `ACSDK_LOG_MODULE` components, globally or individually. This value is specified under a new root level configuration object called `logger`, and the value itself is named `logLevel`. This allows you to limit the degree of logging to that default value, such as `ERROR`or `INFO`.
+
+**Bug Fixes**
+* Fixed bug where `AudioPlayer` progress reports were not being sent, or were being sent incorrectly.
+* [Issue 408](https://github.com/alexa/avs-device-sdk/issues/408) - Irrelevant code related to `UrlSource` was removed from the `GStreamer-based MediaPlayer` implementation.
+* The `TZ` variable no longer needs to be set to `UTC` when building the `SampleApp`.
+* Fixed a bug where `CurlEasyHandleWrapper` logged unwanted data on failure conditions.
+* Fixed a bug to improve `SIGPIPE` handling.
+* Fixed a bug where the filename and classname were mismatched. Changed `UrlToAttachmentConverter.h` to `UrlContentToAttachmentConverter.h`,and `UrlToAttachmentConverter.cpp` to `UrlContentToAttachmentConverter.cpp`
+
+**Known Issues**
+* The `ACL` may encounter issues if audio attachments are received but not consumed.
+* Display Cards for Kindle don't render.
+* If using the GStreamer-based `MediaPlayer` implementation, after muting and un-muting an audio item, the next item in the queue will begin playing rather than continuing playback of the originally muted audio item.
+* `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
+* Music playback doesn't immediately stop when a user barges-in on iHeartRadio.
+
 ### [1.4.0] - 2018-01-12
 
 **Enhancements**

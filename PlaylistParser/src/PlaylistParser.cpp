@@ -1,7 +1,5 @@
 /*
- * PlaylistParser.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -310,7 +308,7 @@ bool PlaylistParser::getContentFromPlaylistUrlIntoString(const std::string& url,
         ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "badHTTPContentReceived"));
         return false;
     }
-    auto reader = httpContent->dataStream->createReader(avsCommon::avs::attachment::AttachmentReader::Policy::BLOCKING);
+    auto reader = httpContent->dataStream->createReader(avsCommon::utils::sds::ReaderPolicy::BLOCKING);
     if (!reader) {
         ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "failedToCreateStreamReader"));
         return false;

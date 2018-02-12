@@ -1,6 +1,4 @@
 /*
- * DefaultClient.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -41,6 +39,8 @@ static const std::string TAG("DefaultClient");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::unique_ptr<DefaultClient> DefaultClient::create(
+    std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>&
+        externalMusicProviderMediaPlayers,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
@@ -49,6 +49,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker,
+    const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
     std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
@@ -63,6 +64,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver) {
     std::unique_ptr<DefaultClient> defaultClient(new DefaultClient());
     if (!defaultClient->initialize(
+            externalMusicProviderMediaPlayers,
             speakMediaPlayer,
             audioMediaPlayer,
             alertsMediaPlayer,
@@ -71,6 +73,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             audioSpeaker,
             alertsSpeaker,
             notificationsSpeaker,
+            additionalSpeakers,
             audioFactory,
             authDelegate,
             alertStorage,
@@ -88,6 +91,8 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
 }
 
 bool DefaultClient::initialize(
+    std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>&
+        externalMusicProviderMediaPlayers,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
@@ -96,6 +101,7 @@ bool DefaultClient::initialize(
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker,
+    const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
     std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
@@ -272,7 +278,6 @@ bool DefaultClient::initialize(
         m_connectionManager,
         m_focusManager,
         contextManager,
-        attachmentManager,
         m_exceptionSender,
         m_dialogUXStateAggregator);
     if (!m_speechSynthesizer) {
@@ -308,13 +313,7 @@ bool DefaultClient::initialize(
      * interface of AVS.
      */
     m_audioPlayer = capabilityAgents::audioPlayer::AudioPlayer::create(
-        audioMediaPlayer,
-        m_connectionManager,
-        m_focusManager,
-        contextManager,
-        attachmentManager,
-        m_exceptionSender,
-        m_playbackRouter);
+        audioMediaPlayer, m_connectionManager, m_focusManager, contextManager, m_exceptionSender, m_playbackRouter);
     if (!m_audioPlayer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateAudioPlayer"));
         return false;
@@ -374,19 +373,39 @@ bool DefaultClient::initialize(
         return false;
     }
 
+    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> allSpeakers = {
+        speakSpeaker, audioSpeaker, alertsSpeaker, notificationsSpeaker};
+    allSpeakers.insert(allSpeakers.end(), additionalSpeakers.begin(), additionalSpeakers.end());
+
     /*
      * Creating the SpeakerManager Capability Agent - This component is the Capability Agent that implements the
      * Speaker interface of AVS.
      */
     m_speakerManager = capabilityAgents::speakerManager::SpeakerManager::create(
-        {speakSpeaker, audioSpeaker, alertsSpeaker, notificationsSpeaker},
-        contextManager,
-        m_connectionManager,
-        m_exceptionSender);
+        allSpeakers, contextManager, m_connectionManager, m_exceptionSender);
     if (!m_speakerManager) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSpeakerManager"));
         return false;
     }
+
+    /*
+     * Creating the ExternalMediaPlayer CA - This component is the Capability Agent that implements the
+     * ExternalMediaPlayer interface of AVS.
+     */
+    m_externalMediaPlayer = capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::create(
+        externalMusicProviderMediaPlayers,
+        m_speakerManager,
+        m_connectionManager,
+        m_focusManager,
+        contextManager,
+        m_exceptionSender,
+        m_playbackRouter);
+    if (!m_externalMediaPlayer) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateExternalMediaPlayer"));
+        return false;
+    }
+
+    m_speakerManager->addSpeaker(m_externalMediaPlayer);
 
     /*
      * Creating the TemplateRuntime Capability Agent - This component is the Capability Agent that implements the
@@ -408,7 +427,7 @@ bool DefaultClient::initialize(
         return false;
     }
 
-    if (firmwareVersion != avsCommon::sdkInterfaces::softwareInfo::INVALID_FIRMWARE_VERSION) {
+    if (avsCommon::sdkInterfaces::softwareInfo::isValidFirmwareVersion(firmwareVersion)) {
         auto tempSender = capabilityAgents::system::SoftwareInfoSender::create(
             firmwareVersion,
             sendSoftwareInfoOnConnected,
@@ -439,6 +458,13 @@ bool DefaultClient::initialize(
         ACSDK_ERROR(LX("initializeFailed")
                         .d("reason", "unableToRegisterDirectiveHandler")
                         .d("directiveHandler", "AudioPlayer"));
+        return false;
+    }
+
+    if (!m_directiveSequencer->addDirectiveHandler(m_externalMediaPlayer)) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterDirectiveHandler")
+                        .d("directiveHandler", "ExternalMediaPlayer"));
         return false;
     }
 
@@ -627,9 +653,10 @@ std::future<bool> DefaultClient::notifyOfWakeWord(
     capabilityAgents::aip::AudioProvider wakeWordAudioProvider,
     avsCommon::avs::AudioInputStream::Index beginIndex,
     avsCommon::avs::AudioInputStream::Index endIndex,
-    std::string keyword) {
+    std::string keyword,
+    const capabilityAgents::aip::ESPData& espData) {
     return m_audioInputProcessor->recognize(
-        wakeWordAudioProvider, capabilityAgents::aip::Initiator::WAKEWORD, beginIndex, endIndex, keyword);
+        wakeWordAudioProvider, capabilityAgents::aip::Initiator::WAKEWORD, beginIndex, endIndex, keyword, espData);
 }
 
 std::future<bool> DefaultClient::notifyOfTapToTalk(
@@ -652,45 +679,63 @@ std::future<bool> DefaultClient::notifyOfTapToTalkEnd() {
 
 DefaultClient::~DefaultClient() {
     if (m_directiveSequencer) {
+        ACSDK_DEBUG(LX("DirectiveSequencerShutdown"));
         m_directiveSequencer->shutdown();
     }
     if (m_speakerManager) {
+        ACSDK_DEBUG(LX("SpeakerManagerShutdown"));
         m_speakerManager->shutdown();
     }
     if (m_templateRuntime) {
+        ACSDK_DEBUG(LX("TemplateRuntimeShutdown"));
         m_templateRuntime->shutdown();
     }
     if (m_audioInputProcessor) {
+        ACSDK_DEBUG(LX("AIPShutdown"));
         m_audioInputProcessor->shutdown();
     }
     if (m_audioPlayer) {
+        ACSDK_DEBUG(LX("AudioPlayerShutdown"));
         m_audioPlayer->shutdown();
     }
+    if (m_externalMediaPlayer) {
+        ACSDK_DEBUG(LX("ExternalMediaPlayerShutdown"));
+        m_externalMediaPlayer->shutdown();
+    }
     if (m_speechSynthesizer) {
+        ACSDK_DEBUG(LX("SpeechSynthesizerShutdown"));
         m_speechSynthesizer->shutdown();
     }
     if (m_alertsCapabilityAgent) {
+        ACSDK_DEBUG(LX("AlertsShutdown"));
         m_alertsCapabilityAgent->shutdown();
     }
     if (m_playbackController) {
+        ACSDK_DEBUG(LX("PlaybackControllerShutdown"));
         m_playbackController->shutdown();
     }
     if (m_softwareInfoSender) {
+        ACSDK_DEBUG(LX("SoftwareInfoShutdown"));
         m_softwareInfoSender->shutdown();
     }
     if (m_messageRouter) {
+        ACSDK_DEBUG(LX("MessageRouterShutdown."));
         m_messageRouter->shutdown();
     }
     if (m_connectionManager) {
+        ACSDK_DEBUG(LX("ConnectionManagerShutdown."));
         m_connectionManager->shutdown();
     }
     if (m_certifiedSender) {
+        ACSDK_DEBUG(LX("CertifiedSenderShutdown."));
         m_certifiedSender->shutdown();
     }
     if (m_playbackRouter) {
+        ACSDK_DEBUG(LX("PlaybackRouter."));
         m_playbackRouter->shutdown();
     }
     if (m_notificationsCapabilityAgent) {
+        ACSDK_DEBUG(LX("NotificationsShutdown."));
         m_notificationsCapabilityAgent->shutdown();
     }
 }

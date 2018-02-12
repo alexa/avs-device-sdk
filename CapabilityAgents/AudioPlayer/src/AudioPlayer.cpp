@@ -1,6 +1,4 @@
 /*
- * AudioPlayer.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -25,6 +23,8 @@
 
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Timing/TimeUtils.h>
+
+#include "AudioPlayer/IntervalCalculator.h"
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -95,7 +95,6 @@ std::shared_ptr<AudioPlayer> AudioPlayer::create(
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<FocusManagerInterface> focusManager,
     std::shared_ptr<ContextManagerInterface> contextManager,
-    std::shared_ptr<AttachmentManagerInterface> attachmentManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender,
     std::shared_ptr<PlaybackRouterInterface> playbackRouter) {
     if (nullptr == mediaPlayer) {
@@ -110,9 +109,6 @@ std::shared_ptr<AudioPlayer> AudioPlayer::create(
     } else if (nullptr == contextManager) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullContextManager"));
         return nullptr;
-    } else if (nullptr == attachmentManager) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "nullAttachmentManager"));
-        return nullptr;
     } else if (nullptr == exceptionSender) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullExceptionSender"));
         return nullptr;
@@ -121,8 +117,8 @@ std::shared_ptr<AudioPlayer> AudioPlayer::create(
         return nullptr;
     }
 
-    auto audioPlayer = std::shared_ptr<AudioPlayer>(new AudioPlayer(
-        mediaPlayer, messageSender, focusManager, contextManager, attachmentManager, exceptionSender, playbackRouter));
+    auto audioPlayer = std::shared_ptr<AudioPlayer>(
+        new AudioPlayer(mediaPlayer, messageSender, focusManager, contextManager, exceptionSender, playbackRouter));
     mediaPlayer->setObserver(audioPlayer);
     contextManager->setStateProvider(STATE, audioPlayer);
     return audioPlayer;
@@ -343,7 +339,6 @@ AudioPlayer::AudioPlayer(
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<FocusManagerInterface> focusManager,
     std::shared_ptr<ContextManagerInterface> contextManager,
-    std::shared_ptr<AttachmentManagerInterface> attachmentManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender,
     std::shared_ptr<PlaybackRouterInterface> playbackRouter) :
         CapabilityAgent{NAMESPACE, exceptionSender},
@@ -352,7 +347,6 @@ AudioPlayer::AudioPlayer(
         m_messageSender{messageSender},
         m_focusManager{focusManager},
         m_contextManager{contextManager},
-        m_attachmentManager{attachmentManager},
         m_playbackRouter{playbackRouter},
         m_currentActivity{PlayerActivity::IDLE},
         m_focus{FocusState::NONE},
@@ -371,7 +365,6 @@ void AudioPlayer::doShutdown() {
     m_focusManager.reset();
     m_contextManager->setStateProvider(STATE, nullptr);
     m_contextManager.reset();
-    m_attachmentManager.reset();
     m_audioItems.clear();
     m_playbackRouter.reset();
 }
@@ -442,7 +435,7 @@ void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
 
     if (audioItem.stream.url.compare(0, CID_PREFIX.size(), CID_PREFIX) == 0) {
         std::string contentId = audioItem.stream.url.substr(CID_PREFIX.length());
-        audioItem.stream.reader = info->directive->getAttachmentReader(contentId, AttachmentReader::Policy::BLOCKING);
+        audioItem.stream.reader = info->directive->getAttachmentReader(contentId, sds::ReaderPolicy::BLOCKING);
         if (nullptr == audioItem.stream.reader) {
             ACSDK_ERROR(LX("handlePlayDirectiveFailed")
                             .d("reason", "getAttachmentReaderFailed")
@@ -546,17 +539,6 @@ void AudioPlayer::removeDirective(std::shared_ptr<DirectiveInfo> info) {
     if (info->directive && info->result) {
         CapabilityAgent::removeDirective(info->directive->getMessageId());
     }
-}
-
-void AudioPlayer::sendExceptionEncounteredAndReportFailed(
-    std::shared_ptr<DirectiveInfo> info,
-    const std::string& message,
-    avsCommon::avs::ExceptionErrorType type) {
-    m_exceptionEncounteredSender->sendExceptionEncountered(info->directive->getUnparsedDirective(), type, message);
-    if (info && info->result) {
-        info->result->setFailed(message);
-    }
-    removeDirective(info);
 }
 
 void AudioPlayer::setHandlingCompleted(std::shared_ptr<DirectiveInfo> info) {
@@ -748,6 +730,14 @@ void AudioPlayer::executeOnPlaybackStopped(SourceId id) {
         case PlayerActivity::IDLE:
         case PlayerActivity::STOPPED:
         case PlayerActivity::FINISHED:
+            /*
+             * If playback failed before state changed to playing
+             * this function is called and need to release focus.
+             */
+            if (m_focus != FocusState::NONE) {
+                handlePlaybackCompleted();
+                return;
+            }
             ACSDK_ERROR(LX("executeOnPlaybackStoppedFailed")
                             .d("reason", "alreadyStopped")
                             .d("m_currentActivity", m_currentActivity));
@@ -1016,18 +1006,28 @@ void AudioPlayer::playNextItem() {
         executeOnPlaybackError(m_sourceId, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "playFailed");
         return;
     }
+
     if (std::chrono::milliseconds::max() != item.stream.progressReport.delay) {
-        m_delayTimer.start(item.stream.progressReport.delay - item.stream.offset, [this] {
-            m_executor.submit([this] { sendProgressReportDelayElapsedEvent(); });
-        });
+        const auto deltaBetweenDelayAndOffset = item.stream.progressReport.delay - item.stream.offset;
+        if (deltaBetweenDelayAndOffset >= std::chrono::milliseconds::zero()) {
+            m_delayTimer.start(deltaBetweenDelayAndOffset, [this] {
+                m_executor.submit([this] { sendProgressReportDelayElapsedEvent(); });
+            });
+        }
     }
     if (std::chrono::milliseconds::max() != item.stream.progressReport.interval) {
-        m_intervalTimer.start(
-            item.stream.progressReport.interval - item.stream.offset,
-            item.stream.progressReport.interval,
-            timing::Timer::PeriodType::ABSOLUTE,
-            timing::Timer::FOREVER,
-            [this] { m_executor.submit([this] { sendProgressReportIntervalElapsedEvent(); }); });
+        std::chrono::milliseconds intervalStart;
+
+        auto result = getIntervalStart(item.stream.progressReport.interval, item.stream.offset, &intervalStart);
+
+        if (result) {
+            m_intervalTimer.start(
+                intervalStart,
+                item.stream.progressReport.interval,
+                timing::Timer::PeriodType::ABSOLUTE,
+                timing::Timer::FOREVER,
+                [this] { m_executor.submit([this] { sendProgressReportIntervalElapsedEvent(); }); });
+        }
     }
 }
 

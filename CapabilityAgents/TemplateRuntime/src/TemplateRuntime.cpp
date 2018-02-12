@@ -1,7 +1,5 @@
 /*
- * TemplateRuntime.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -162,17 +160,6 @@ void TemplateRuntime::doShutdown() {
     m_observers.clear();
     m_audioPlayerInterface->removeObserver(shared_from_this());
     m_audioPlayerInterface.reset();
-}
-
-void TemplateRuntime::sendExceptionEncounteredAndReportFailed(
-    std::shared_ptr<DirectiveInfo> info,
-    const std::string& message,
-    avsCommon::avs::ExceptionErrorType type) {
-    m_exceptionEncounteredSender->sendExceptionEncountered(info->directive->getUnparsedDirective(), type, message);
-    if (info && info->result) {
-        info->result->setFailed(message);
-    }
-    removeDirective(info);
 }
 
 void TemplateRuntime::removeDirective(std::shared_ptr<DirectiveInfo> info) {

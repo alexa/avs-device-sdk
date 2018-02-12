@@ -1,7 +1,5 @@
 /*
- * AuthDelegateTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +25,7 @@
 #include "AuthDelegate/AuthDelegate.h"
 #include "AuthDelegate/MockHttpPost.h"
 #include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
+#include "AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h"
 #include "MockAuthObserver.h"
 
 using namespace alexaClientSDK::authDelegate;
@@ -77,7 +76,7 @@ protected:
     /// Stub certain mock objects with default actions
     virtual void SetUp() override {
         ON_CALL(*m_mockHttpPost, doPost(_, _, _, _))
-            .WillByDefault(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED));
+            .WillByDefault(Return(HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED));
         std::stringstream configuration;
         configuration << DEFAULT_SDK_CONFIGURATION;
         ASSERT_TRUE(AlexaClientSDKInit::initialize({&configuration}));
@@ -270,9 +269,9 @@ TEST_F(AuthDelegateTest, retry) {
     bool tokenRefreshed = false;
     const auto& validResponse = generateValidLwaResponseWithExpiration(std::chrono::seconds(60));
     EXPECT_CALL(*m_mockHttpPost, doPost(_, _, _, _))
-        .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
-        .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
-        .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)));
+        .WillOnce(Return(HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED))
+        .WillOnce(Return(HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED))
+        .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HTTPResponseCode::SUCCESS_OK)));
 
     EXPECT_CALL(
         *m_mockAuthObserver,
@@ -303,8 +302,8 @@ TEST_F(AuthDelegateTest, expirationNotification) {
     const auto& validResponse = generateValidLwaResponseWithExpiration(std::chrono::seconds(1));
 
     EXPECT_CALL(*m_mockHttpPost, doPost(_, _, _, _))
-        .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)))
-        .WillRepeatedly(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED));
+        .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HTTPResponseCode::SUCCESS_OK)))
+        .WillRepeatedly(Return(HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED));
 
     ::testing::InSequence s;
     EXPECT_CALL(
@@ -341,11 +340,11 @@ TEST_F(AuthDelegateTest, recoverAfterExpiration) {
     const auto& validResponse = generateValidLwaResponseWithExpiration(std::chrono::seconds(3));
 
     EXPECT_CALL(*m_mockHttpPost, doPost(_, _, _, _))
-        .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)))
-        .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
-        .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
-        .WillOnce(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED))
-        .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK)));
+        .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HTTPResponseCode::SUCCESS_OK)))
+        .WillOnce(Return(HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED))
+        .WillOnce(Return(HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED))
+        .WillOnce(Return(HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED))
+        .WillOnce(DoAll(SetArgReferee<3>(validResponse), Return(HTTPResponseCode::SUCCESS_OK)));
 
     ::testing::InSequence s;
     EXPECT_CALL(
@@ -388,7 +387,7 @@ TEST_F(AuthDelegateTest, unrecoverableErrorNotification) {
 
     EXPECT_CALL(*m_mockHttpPost, doPost(_, _, _, _))
         .WillOnce(DoAll(SetArgReferee<3>(invalidRequestResponse), Return(HTTP_RESPONSE_CODE_BAD_REQUEST)))
-        .WillRepeatedly(Return(HttpPostInterface::HTTP_RESPONSE_CODE_UNDEFINED));
+        .WillRepeatedly(Return(HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED));
 
     EXPECT_CALL(
         *m_mockAuthObserver,

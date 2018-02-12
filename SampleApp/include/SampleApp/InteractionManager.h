@@ -1,7 +1,5 @@
 /*
- * InteractionManager.h
- *
- * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,6 +23,7 @@
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <DefaultClient/DefaultClient.h>
 
+#include "KeywordObserver.h"
 #include "PortAudioMicrophoneWrapper.h"
 #include "UIManager.h"
 
@@ -48,7 +47,8 @@ public:
         std::shared_ptr<sampleApp::UIManager> userInterface,
         capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
         capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
-        capabilityAgents::aip::AudioProvider wakeWordAudioProvider = capabilityAgents::aip::AudioProvider::null());
+        capabilityAgents::aip::AudioProvider wakeWordAudioProvider = capabilityAgents::aip::AudioProvider::null(),
+        std::shared_ptr<sampleApp::KeywordObserver> keywordObserver = nullptr);
 
     /**
      * Begins the interaction between the Sample App and the user. This should only be called at startup.
@@ -157,9 +157,34 @@ public:
     void setMute(avsCommon::sdkInterfaces::SpeakerInterface::Type type, bool mute);
 
     /**
+     * Should be called whenever a user requests for ESP control.
+     */
+    void espControl();
+
+    /**
+     * Should be called whenever a user requests to toggle the ESP support.
+     */
+    void toggleESPSupport();
+
+    /**
+     * Should be called whenever a user requests to set the @c voiceEnergy sent in ReportEchoSpatialPerceptionData
+     * event.
+     *
+     * @param voiceEnergy The voice energy measurement to be set as the ESP measurement.
+     */
+    void setESPVoiceEnergy(const std::string& voiceEnergy);
+
+    /**
+     * Should be called whenever a user requests set the @c ambientEnergy sent in ReportEchoSpatialPerceptionData
+     * event.
+     *
+     * @param ambientEnergy The ambient energy measurement to be set as the ESP measurement.
+     */
+    void setESPAmbientEnergy(const std::string& ambientEnergy);
+
+    /**
      * UXDialogObserverInterface methods
      */
-
     void onDialogUXStateChanged(DialogUXState newState) override;
 
 private:
@@ -171,6 +196,9 @@ private:
 
     /// The user interface manager.
     std::shared_ptr<sampleApp::UIManager> m_userInterface;
+
+    /// The keyword observer instance passed to the keyword detector.
+    std::shared_ptr<alexaClientSDK::sampleApp::KeywordObserver> m_keywordObserver;
 
     /// The hold to talk audio provider.
     capabilityAgents::aip::AudioProvider m_holdToTalkAudioProvider;

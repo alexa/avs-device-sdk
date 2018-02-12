@@ -1,7 +1,5 @@
 /*
- * ModuleLogger.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -50,8 +48,16 @@ private:
 
     void onSinkChanged(const std::shared_ptr<Logger>& sink) override;
 
-    /// flag to determine if the m_sink's logLevel is to be used
-    bool m_useSinkLogLevel;
+    /**
+     * Combine @c m_moduleLogLevel and @c m_sinkLogLevel to determine the appropriate value for m_logLevel.
+     */
+    void updateLogLevel();
+
+    /// Log level specified for this module logger.
+    Level m_moduleLogLevel;
+
+    /// Log level specified for the sink to forward logs to.
+    Level m_sinkLogLevel;
 
 protected:
     /// The @c Logger to forward logs to.

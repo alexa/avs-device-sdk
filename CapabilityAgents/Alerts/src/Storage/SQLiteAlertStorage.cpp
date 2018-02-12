@@ -1,19 +1,16 @@
 /*
- * SQLiteAlertStorage.cpp
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates.
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *     http://aws.amazon.com/apache2.0/
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
  */
 
 #include "Alerts/Storage/SQLiteAlertStorage.h"
@@ -112,26 +109,31 @@ static const std::string CREATE_ALERTS_TABLE_SQL_STRING = std::string("CREATE TA
         "asset_loop_count INT NOT NULL," +
         "asset_loop_pause_milliseconds INT NOT NULL," +
         "background_asset TEXT NOT NULL);";
+// clang-format on
 
 /// The name of the alertAssets table.
 static const std::string ALERT_ASSETS_TABLE_NAME = "alertAssets";
 /// The SQL string to create the alertAssets table.
+// clang-format off
 static const std::string CREATE_ALERT_ASSETS_TABLE_SQL_STRING = std::string("CREATE TABLE ") +
                                                                 ALERT_ASSETS_TABLE_NAME + " (" +
                                                                 "id INT PRIMARY KEY NOT NULL," +
                                                                 "alert_id INT NOT NULL," +
                                                                 "avs_id TEXT NOT NULL," +
                                                                 "url TEXT NOT NULL);";
+// clang-format on
 
 /// The name of the alertAssetPlayOrderItems table.
 static const std::string ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME = "alertAssetPlayOrderItems";
 /// The SQL string to create the alertAssetPlayOrderItems table.
+// clang-format off
 static const std::string CREATE_ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_SQL_STRING = std::string("CREATE TABLE ") +
         ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME + " (" +
         "id INT PRIMARY KEY NOT NULL," +
         "alert_id INT NOT NULL," +
         "asset_play_order_position INT NOT NULL," +
         "asset_play_order_token TEXT NOT NULL);";
+// clang-format on
 
 struct AssetOrderItem {
     int index;
@@ -139,7 +141,7 @@ struct AssetOrderItem {
 };
 
 struct AssetOrderItemCompare {
-    bool operator() (const AssetOrderItem& lhs, const AssetOrderItem& rhs) const {
+    bool operator()(const AssetOrderItem& lhs, const AssetOrderItem& rhs) const {
         return lhs.index < rhs.index;
     }
 };
@@ -299,7 +301,10 @@ static bool alertExistsByAlertId(sqlite3* dbHandle, int alertId) {
     return countValue > 0;
 }
 
-    SQLiteAlertStorage::SQLiteAlertStorage(const std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> &alertsAudioFactory) : m_dbHandle{nullptr}, m_alertsAudioFactory{alertsAudioFactory} {
+SQLiteAlertStorage::SQLiteAlertStorage(
+    const std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface>& alertsAudioFactory) :
+        m_dbHandle{nullptr},
+        m_alertsAudioFactory{alertsAudioFactory} {
 }
 
 /**
@@ -347,7 +352,7 @@ static bool createAlertAssetPlayOrderItemsTable(sqlite3* dbHandle) {
     return true;
 }
 
-bool SQLiteAlertStorage::createDatabase(const std::string & filePath) {
+bool SQLiteAlertStorage::createDatabase(const std::string& filePath) {
     if (m_dbHandle) {
         ACSDK_ERROR(LX("createDatabaseFailed").m("Database handle is already open."));
         return false;
@@ -405,8 +410,8 @@ bool SQLiteAlertStorage::migrateAlertsDbFromV1ToV2() {
 
     if (!tableExists(m_dbHandle, ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME)) {
         if (!createAlertAssetPlayOrderItemsTable(m_dbHandle)) {
-            ACSDK_ERROR(LX("migrateAlertsDbFromV1ToV2Failed")
-                    .m("AlertAssetPlayOrderItems table could not be created."));
+            ACSDK_ERROR(
+                LX("migrateAlertsDbFromV1ToV2Failed").m("AlertAssetPlayOrderItems table could not be created."));
             return false;
         }
     }
@@ -421,7 +426,7 @@ bool SQLiteAlertStorage::migrateAlertsDbFromV1ToV2() {
             return false;
         }
 
-        for (auto &alert : alertContainer) {
+        for (auto& alert : alertContainer) {
             if (!store(alert)) {
                 ACSDK_ERROR(LX("migrateAlertsDbFromV1ToV2Failed").m("Could not migrate alert to V2 database."));
                 alert->printDiagnostic();
@@ -438,7 +443,7 @@ bool SQLiteAlertStorage::migrateAlertsDbFromV1ToV2() {
     return true;
 }
 
-bool SQLiteAlertStorage::open(const std::string & filePath) {
+bool SQLiteAlertStorage::open(const std::string& filePath) {
     if (m_dbHandle) {
         ACSDK_ERROR(LX("openFailed").m("Database handle is already open."));
         return false;
@@ -475,7 +480,7 @@ void SQLiteAlertStorage::close() {
     }
 }
 
-bool SQLiteAlertStorage::alertExists(const std::string & token) {
+bool SQLiteAlertStorage::alertExists(const std::string& token) {
     const std::string sqlString = "SELECT COUNT(*) FROM " + ALERTS_V2_TABLE_NAME + " WHERE token=?;";
 
     SQLiteStatement statement(m_dbHandle, sqlString);
@@ -508,16 +513,18 @@ bool SQLiteAlertStorage::alertExists(const std::string & token) {
     return countValue > 0;
 }
 
-static bool storeAlertAssets(sqlite3* dbHandle, int alertId, const Alert::AssetConfiguration & assetConfiguration) {
-    if(assetConfiguration.assets.empty()) {
+static bool storeAlertAssets(sqlite3* dbHandle, int alertId, const Alert::AssetConfiguration& assetConfiguration) {
+    if (assetConfiguration.assets.empty()) {
         return true;
     }
 
+    // clang-format off
     const std::string sqlString = "INSERT INTO " + ALERT_ASSETS_TABLE_NAME + " (" +
                             "id, alert_id, avs_id, url" +
                             ") VALUES (" +
                             "?, ?, ?, ?" +
                             ");";
+    // clang-format on
 
     int id = 0;
     if (!getTableMaxIntValue(dbHandle, ALERT_ASSETS_TABLE_NAME, DATABASE_COLUMN_ID_NAME, &id)) {
@@ -534,12 +541,11 @@ static bool storeAlertAssets(sqlite3* dbHandle, int alertId, const Alert::AssetC
     }
 
     // go through each asset in the alert, and store in the database.
-    for (auto & assetIter : assetConfiguration.assets) {
-        auto & asset = assetIter.second;
+    for (auto& assetIter : assetConfiguration.assets) {
+        auto& asset = assetIter.second;
 
         int boundParam = 1;
-        if (!statement.bindIntParameter(boundParam++, id) ||
-            !statement.bindIntParameter(boundParam++, alertId) ||
+        if (!statement.bindIntParameter(boundParam++, id) || !statement.bindIntParameter(boundParam++, alertId) ||
             !statement.bindStringParameter(boundParam++, asset.id) ||
             !statement.bindStringParameter(boundParam, asset.url)) {
             ACSDK_ERROR(LX("storeAlertAssetsFailed").m("Could not bind a parameter."));
@@ -563,16 +569,20 @@ static bool storeAlertAssets(sqlite3* dbHandle, int alertId, const Alert::AssetC
 }
 
 static bool storeAlertAssetPlayOrderItems(
-        sqlite3* dbHandle, int alertId, const Alert::AssetConfiguration & assetConfiguration) {
+    sqlite3* dbHandle,
+    int alertId,
+    const Alert::AssetConfiguration& assetConfiguration) {
     if (assetConfiguration.assetPlayOrderItems.empty()) {
         return true;
     }
 
+    // clang-format off
     const std::string sqlString = "INSERT INTO " + ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME + " (" +
                             "id, alert_id, asset_play_order_position, asset_play_order_token" +
                             ") VALUES (" +
                             "?, ?, ?, ?" +
                             ");";
+    // clang-format on
 
     int id = 0;
     if (!getTableMaxIntValue(dbHandle, ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME, DATABASE_COLUMN_ID_NAME, &id)) {
@@ -590,11 +600,9 @@ static bool storeAlertAssetPlayOrderItems(
 
     // go through each assetPlayOrderItem in the alert, and store in the database.
     int itemIndex = 1;
-    for (auto & assetId : assetConfiguration.assetPlayOrderItems) {
-
+    for (auto& assetId : assetConfiguration.assetPlayOrderItems) {
         int boundParam = 1;
-        if (!statement.bindIntParameter(boundParam++, id) ||
-            !statement.bindIntParameter(boundParam++, alertId) ||
+        if (!statement.bindIntParameter(boundParam++, id) || !statement.bindIntParameter(boundParam++, alertId) ||
             !statement.bindIntParameter(boundParam++, itemIndex) ||
             !statement.bindStringParameter(boundParam, assetId)) {
             ACSDK_ERROR(LX("storeAlertAssetPlayOrderItemsFailed").m("Could not bind a parameter."));
@@ -634,6 +642,7 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
         return false;
     }
 
+    // clang-format off
     const std::string sqlString = "INSERT INTO " + ALERTS_V2_TABLE_NAME + " (" +
                             "id, token, type, state, " +
                             "scheduled_time_unix, scheduled_time_iso_8601, asset_loop_count, " +
@@ -643,6 +652,7 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
                             "?, ?, ?," +
                             "?, ?" +
                             ");";
+    // clang-format on
 
     int id = 0;
     if (!getTableMaxIntValue(m_dbHandle, ALERTS_V2_TABLE_NAME, DATABASE_COLUMN_ID_NAME, &id)) {
@@ -674,10 +684,8 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
     auto token = alert->m_token;
     auto iso8601 = alert->getScheduledTime_ISO_8601();
     auto assetId = alert->getBackgroundAssetId();
-    if (!statement.bindIntParameter(boundParam++, id) ||
-        !statement.bindStringParameter(boundParam++, token) ||
-        !statement.bindIntParameter(boundParam++, alertType) ||
-        !statement.bindIntParameter(boundParam++, alertState) ||
+    if (!statement.bindIntParameter(boundParam++, id) || !statement.bindStringParameter(boundParam++, token) ||
+        !statement.bindIntParameter(boundParam++, alertType) || !statement.bindIntParameter(boundParam++, alertState) ||
         !statement.bindInt64Parameter(boundParam++, alert->getScheduledTime_Unix()) ||
         !statement.bindStringParameter(boundParam++, iso8601) ||
         !statement.bindIntParameter(boundParam++, alert->getLoopCount()) ||
@@ -730,11 +738,9 @@ static bool loadAlertAssets(sqlite3* dbHandle, std::map<int, std::vector<Alert::
     }
 
     while (SQLITE_ROW == statement.getStepResult()) {
-
         int numberColumns = statement.getColumnCount();
 
         for (int i = 0; i < numberColumns; i++) {
-
             std::string columnName = statement.getColumnName(i);
 
             if ("alert_id" == columnName) {
@@ -755,7 +761,8 @@ static bool loadAlertAssets(sqlite3* dbHandle, std::map<int, std::vector<Alert::
 }
 
 static bool loadAlertAssetPlayOrderItems(
-        sqlite3* dbHandle, std::map<int, std::set<AssetOrderItem, AssetOrderItemCompare>>* alertAssetOrderItemsMap) {
+    sqlite3* dbHandle,
+    std::map<int, std::set<AssetOrderItem, AssetOrderItemCompare>>* alertAssetOrderItemsMap) {
     const std::string sqlString = "SELECT * FROM " + ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME + ";";
 
     SQLiteStatement statement(dbHandle, sqlString);
@@ -775,11 +782,9 @@ static bool loadAlertAssetPlayOrderItems(
     }
 
     while (SQLITE_ROW == statement.getStepResult()) {
-
         int numberColumns = statement.getColumnCount();
 
         for (int i = 0; i < numberColumns; i++) {
-
             std::string columnName = statement.getColumnName(i);
 
             if ("alert_id" == columnName) {
@@ -876,11 +881,11 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
         } else if (ALERT_EVENT_TYPE_TIMER == type) {
             alert = std::make_shared<Timer>(m_alertsAudioFactory->timerDefault(), m_alertsAudioFactory->timerShort());
         } else if (ALERT_EVENT_TYPE_REMINDER == type) {
-            alert = std::make_shared<Reminder>(m_alertsAudioFactory->reminderDefault(), m_alertsAudioFactory->reminderShort());
+            alert = std::make_shared<Reminder>(
+                m_alertsAudioFactory->reminderDefault(), m_alertsAudioFactory->reminderShort());
         } else {
-            ACSDK_ERROR(LX("loadHelperFailed")
-                    .m("Could not instantiate an alert object.")
-                    .d("type read from database", type));
+            ACSDK_ERROR(
+                LX("loadHelperFailed").m("Could not instantiate an alert object.").d("type read from database", type));
             return false;
         }
 
@@ -892,8 +897,7 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
         alert->setBackgroundAssetId(backgroundAssetId);
 
         if (!dbFieldToAlertState(state, &(alert->m_state))) {
-            ACSDK_ERROR(LX("loadHelperFailed")
-                    .m("Could not convert alert state."));
+            ACSDK_ERROR(LX("loadHelperFailed").m("Could not convert alert state."));
             return false;
         }
 
@@ -917,13 +921,13 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
     }
 
     for (auto alert : *alertContainer) {
-        if(alertAssetsMap.find(alert->m_dbId) != alertAssetsMap.end()){
-            for (auto & mapEntry : alertAssetsMap[alert->m_dbId]) {
+        if (alertAssetsMap.find(alert->m_dbId) != alertAssetsMap.end()) {
+            for (auto& mapEntry : alertAssetsMap[alert->m_dbId]) {
                 alert->m_assetConfiguration.assets[mapEntry.id] = mapEntry;
             }
         }
-        if(alertAssetOrderItemsMap.find(alert->m_dbId) != alertAssetOrderItemsMap.end()){
-            for (auto & mapEntry : alertAssetOrderItemsMap[alert->m_dbId]) {
+        if (alertAssetOrderItemsMap.find(alert->m_dbId) != alertAssetOrderItemsMap.end()) {
+            for (auto& mapEntry : alertAssetOrderItemsMap[alert->m_dbId]) {
                 alert->m_assetConfiguration.assetPlayOrderItems.push_back(mapEntry.name);
             }
         }
@@ -953,8 +957,7 @@ bool SQLiteAlertStorage::modify(std::shared_ptr<Alert> alert) {
     }
 
     const std::string sqlString = "UPDATE " + ALERTS_V2_TABLE_NAME + " SET " +
-                            "state=?, scheduled_time_unix=?, scheduled_time_iso_8601=? " +
-                            "WHERE id=?;";
+                                  "state=?, scheduled_time_unix=?, scheduled_time_iso_8601=? " + "WHERE id=?;";
 
     int alertState = ALERT_STATE_SET;
     if (!alertStateToDbField(alert->m_state, &alertState)) {

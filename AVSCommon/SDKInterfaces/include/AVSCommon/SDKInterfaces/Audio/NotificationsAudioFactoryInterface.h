@@ -1,6 +1,4 @@
 /*
- * NotificationsAudioFactoryInterface.h
- *
  * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -19,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_AUDIO_NOTIFICATIONSAUDIOFACTORYINTERFACE_H_
 
 #include <istream>
+#include <functional>
 #include <memory>
 
 namespace alexaClientSDK {

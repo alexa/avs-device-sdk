@@ -1,7 +1,5 @@
 /*
- * HTTP2StreamTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -106,7 +104,7 @@ void HTTP2StreamTest::SetUp() {
     ASSERT_EQ(TEST_EXCEPTION_STRING_LENGTH, m_writer->write(m_dataBegin, TEST_EXCEPTION_STRING_LENGTH));
 
     /// Create an attachment Reader for @c m_MessageRequest
-    m_attachmentReader = InProcessAttachmentReader::create(AttachmentReader::Policy::NON_BLOCKING, stream);
+    m_attachmentReader = InProcessAttachmentReader::create(InProcessSDS::Reader::Policy::NONBLOCKING, stream);
     m_MessageRequest = std::make_shared<MessageRequest>("", std::move(m_attachmentReader));
     ASSERT_NE(m_MessageRequest, nullptr);
 

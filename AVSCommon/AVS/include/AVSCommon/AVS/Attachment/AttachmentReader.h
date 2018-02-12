@@ -1,7 +1,5 @@
 /*
- * AttachmentReader.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +19,8 @@
 #include <chrono>
 #include <cstddef>
 
+#include "AVSCommon/Utils/SDS/ReaderPolicy.h"
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace avs {
@@ -31,19 +31,6 @@ namespace attachment {
  */
 class AttachmentReader {
 public:
-    /**
-     * An enum class to allow configuration of the type of reader.
-     */
-    enum class Policy {
-        /**
-         * A read of n bytes will not return until a number of bytes, equal to or less than n, are available,
-         * or a timeout occurs.
-         */
-        BLOCKING,
-        /// A read of n bytes will return immediately, whether n bytes were available or not.
-        NON_BLOCKING
-    };
-
     /**
      * An enum class to communicate the possible states following a @c read() call.
      */
@@ -101,6 +88,13 @@ public:
      * to seek into a future index that has not been written to yet.
      */
     virtual bool seek(uint64_t offset) = 0;
+
+    /**
+     * Utility function to return the number of bytes in an attachment.
+     *
+     * @return Number of unread bytes in the attachment by this attachment reader.
+     */
+    virtual uint64_t getNumUnreadBytes() = 0;
 
     /**
      * The close function.  An implementation will take care of any resource management when a reader no longer

@@ -1,6 +1,4 @@
 /*
- * MockMediaPlayer.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -31,7 +29,7 @@ const static std::chrono::milliseconds WAIT_LOOP_INTERVAL{1};
 std::shared_ptr<NiceMock<MockMediaPlayer>> MockMediaPlayer::create() {
     auto result = std::make_shared<NiceMock<MockMediaPlayer>>();
 
-    ON_CALL(*result.get(), attachmentSetSource(_))
+    ON_CALL(*result.get(), attachmentSetSource(_, _))
         .WillByDefault(InvokeWithoutArgs(result.get(), &MockMediaPlayer::mockSetSource));
     ON_CALL(*result.get(), urlSetSource(_))
         .WillByDefault(InvokeWithoutArgs(result.get(), &MockMediaPlayer::mockSetSource));
@@ -51,8 +49,9 @@ MockMediaPlayer::MockMediaPlayer() : RequiresShutdown{"MockMediaPlayer"}, m_play
 }
 
 MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
-    return attachmentSetSource(attachmentReader);
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+    const avsCommon::utils::AudioFormat* audioFormat) {
+    return attachmentSetSource(attachmentReader, audioFormat);
 }
 
 MediaPlayerInterface::SourceId MockMediaPlayer::setSource(const std::string& url, std::chrono::milliseconds offset) {

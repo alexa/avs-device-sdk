@@ -1,7 +1,5 @@
 /*
- * UIManager.cpp
- *
- * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -68,6 +66,8 @@ static const std::string HELP_MESSAGE =
 #ifdef KWD
     "| Privacy mode (microphone off):                                             |\n"
     "|       Press 'm' and Enter to turn on and off the microphone.               |\n"
+    "| Echo Spatial Perception (ESP): This is only for testing purpose only!      |\n"
+    "|       Press 'e' followed by Enter at any time to adjust ESP settings.      |\n"
 #endif
     "| Playback Controls:                                                         |\n"
     "|       Press '1' for a 'PLAY' button press.                                 |\n"
@@ -104,6 +104,7 @@ static const std::string LOCALE_MESSAGE =
     "| Press '4' followed by Enter to change the language to Indian English.      |\n"
     "| Press '5' followed by Enter to change the language to Canadian English.    |\n"
     "| Press '6' followed by Enter to change the language to Japanese.            |\n"
+    "| Press '7' followed by Enter to change the language to Australian English.  |\n"
     "+----------------------------------------------------------------------------+\n";
 
 static const std::string SPEAKER_CONTROL_MESSAGE =
@@ -120,7 +121,7 @@ static const std::string FIRMWARE_CONTROL_MESSAGE =
     "+----------------------------------------------------------------------------+\n"
     "|                          Firmware Version:                                 |\n"
     "|                                                                            |\n"
-    "| Enter a positive decimal integer followed by enter.                        |\n"
+    "| Enter a decimal integer value between 1 and 2147483647.                    |\n"
     "+----------------------------------------------------------------------------+\n";
 
 static const std::string VOLUME_CONTROL_MESSAGE =
@@ -134,6 +135,18 @@ static const std::string VOLUME_CONTROL_MESSAGE =
     "| Press 'i' to display this help screen.                                     |\n"
     "| Press 'q' to exit Volume Control Mode.                                     |\n"
     "+----------------------------------------------------------------------------+\n";
+
+static const std::string ESP_CONTROL_MESSAGE =
+    "+----------------------------------------------------------------------------+\n"
+    "|                          ESP Options:                                      |\n"
+    "|                                                                            |\n"
+    "| By Default ESP support is off and the implementation in the SampleApp is   |\n"
+    "| for testing purpose only!                                                  |\n"
+    "|                                                                            |\n"
+    "| Press '1' followed by Enter to toggle ESP support.                         |\n"
+    "| Press '2' followed by Enter to enter the voice energy.                     |\n"
+    "| Press '3' followed by Enter to enter the ambient energy.                   |\n"
+    "| Press 'q' to exit ESP Control Mode.                                        |\n";
 
 void UIManager::onDialogUXStateChanged(DialogUXState state) {
     m_executor.submit([this, state]() {
@@ -208,6 +221,19 @@ void UIManager::printFirmwareVersionControlScreen() {
 
 void UIManager::printVolumeControlScreen() {
     m_executor.submit([]() { ConsolePrinter::simplePrint(VOLUME_CONTROL_MESSAGE); });
+}
+
+void UIManager::printESPControlScreen(bool support, const std::string& voiceEnergy, const std::string& ambientEnergy) {
+    m_executor.submit([support, voiceEnergy, ambientEnergy]() {
+        std::string screen = ESP_CONTROL_MESSAGE;
+        screen += "|\n";
+        screen += "| support       = ";
+        screen += support ? "true\n" : "false\n";
+        screen += "| voiceEnergy   = " + voiceEnergy + "\n";
+        screen += "| ambientEnergy = " + ambientEnergy + "\n";
+        screen += "+----------------------------------------------------------------------------+\n";
+        ConsolePrinter::simplePrint(screen);
+    });
 }
 
 void UIManager::printErrorScreen() {
