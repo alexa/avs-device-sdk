@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -74,6 +74,9 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#a03be8713bad301999bacd9f99d139732">alexaClientSDK::capabilityAgents::audioPlayer::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#abff1024405730cf3e933ae2793959c96">alexaClientSDK::capabilityAgents::speechSynthesizer::test</a>
 </li>
+<li>ignoreSigpipeSignals()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a2f98301eb630b2536fb19ff745665ccf">alexaClientSDK::sampleApp</a>
+</li>
 <li>INACTIVITY_EVENT_NAME
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system.html#a3c0dd9f1e35dbc88427f7e34484f7ba0">alexaClientSDK::capabilityAgents::system</a>
 </li>
@@ -100,10 +103,12 @@ $(function() {
 </li>
 <li>IndicatorState
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">alexaClientSDK::avsCommon::avs</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a0766f65a53522271be518260c5727a3f">alexaClientSDK::capabilityAgents::notifications</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a910e2992a7e425dd959d2cf93ddd85ac">alexaClientSDK::capabilityAgents::notifications::test</a>
 </li>
 <li>indicatorStateToInt()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a20b212635bfa8ba051063cbd465e9308">alexaClientSDK::avsCommon::avs</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a39cd86dc87b5fb189bd60f26326cf6da">alexaClientSDK::capabilityAgents::notifications</a>
 </li>
 <li>INFO
 : <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a9d86ab772af0a36d10310fb82b40c530">alexaClientSDK::sampleApp</a>
@@ -113,6 +118,9 @@ $(function() {
 </li>
 <li>Initiator
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4">alexaClientSDK::capabilityAgents::aip</a>
+</li>
+<li>INITIATOR_KEY
+: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a1732424dfb90cdd08d5e20c07ddd63bb">alexaClientSDK::capabilityAgents::aip</a>
 </li>
 <li>INITIATOR_PAYLOAD_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a3772cffc6118f192ae85a7665c817c9b">alexaClientSDK::capabilityAgents::aip::test</a>
@@ -141,6 +149,7 @@ $(function() {
 </li>
 <li>intToIndicatorState()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af2b2013ac22038b6abb00776c91ecff3">alexaClientSDK::avsCommon::avs</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#af6397afda167b2cd209a78c82b59b676">alexaClientSDK::capabilityAgents::notifications</a>
 </li>
 <li>INVALID_DURATION
 : <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#a44068fd7f1c56d94e4c557ffe57ea24a">alexaClientSDK::playlistParser</a>
@@ -158,6 +167,9 @@ $(function() {
 <li>IS_ENABLED_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a777bf22881b730248127a3197fe6e59e">alexaClientSDK::capabilityAgents::notifications</a>
 </li>
+<li>IS_GUEST
+: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a873bee1f64aaa976a4dab9a0f89477fd">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
+</li>
 <li>IS_VISUAL_INDICATOR_PERSISTED_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a90159498ad75a76f8eb3be1c0839b4ef">alexaClientSDK::capabilityAgents::notifications</a>
 </li>
@@ -168,7 +180,10 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer.html#a04bde67582c4181bc5daece6ed543734">alexaClientSDK::capabilityAgents::alerts::renderer</a>
 </li>
 <li>isUnrecoverable()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1auth_delegate.html#a90981c5626887a75a729cb9623f8db9c">alexaClientSDK::authDelegate</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1auth_delegate.html#aa10d9545c322e96ebe3a86a16d342b43">alexaClientSDK::authDelegate</a>
+</li>
+<li>isValidFirmwareVersion()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1software_info.html#a7dae6787a2b4bf7e68d981846c8669ea">alexaClientSDK::avsCommon::sdkInterfaces::softwareInfo</a>
 </li>
 <li>ITERATIONS
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a320ae161b21653ceee410825abce1743">alexaClientSDK::avsCommon::utils::timing::test</a>
@@ -178,7 +193,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

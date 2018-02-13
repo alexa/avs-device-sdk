@@ -2,10 +2,8 @@ var searchData=
 [
   ['uimanager_2ecpp',['UIManager.cpp',['../_u_i_manager_8cpp.html',1,'']]],
   ['uimanager_2eh',['UIManager.h',['../_u_i_manager_8h.html',1,'']]],
-  ['urlsource_2ecpp',['UrlSource.cpp',['../_url_source_8cpp.html',1,'']]],
-  ['urlsource_2eh',['UrlSource.h',['../_url_source_8h.html',1,'']]],
-  ['urltoattachmentconverter_2ecpp',['UrlToAttachmentConverter.cpp',['../_url_to_attachment_converter_8cpp.html',1,'']]],
-  ['urltoattachmentconverter_2eh',['UrlToAttachmentConverter.h',['../_url_to_attachment_converter_8h.html',1,'']]],
+  ['urlcontenttoattachmentconverter_2ecpp',['UrlContentToAttachmentConverter.cpp',['../_url_content_to_attachment_converter_8cpp.html',1,'']]],
+  ['urlcontenttoattachmentconverter_2eh',['UrlContentToAttachmentConverter.h',['../_url_content_to_attachment_converter_8h.html',1,'']]],
   ['useractivitynotifierinterface_2eh',['UserActivityNotifierInterface.h',['../_user_activity_notifier_interface_8h.html',1,'']]],
   ['userinactivitymonitor_2ecpp',['UserInactivityMonitor.cpp',['../_user_inactivity_monitor_8cpp.html',1,'']]],
   ['userinactivitymonitor_2eh',['UserInactivityMonitor.h',['../_user_inactivity_monitor_8h.html',1,'']]],

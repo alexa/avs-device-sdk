@@ -1,6 +1,8 @@
 var searchData=
 [
+  ['g_5fbuttontorequesttype',['g_buttonToRequestType',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a8c989ce3178e63f8d8efb5b62aed9b55',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer']]],
   ['g_5fconfigpath',['g_configPath',['../namespacealexa_client_s_d_k_1_1integration_1_1test.html#a56baf2c717a7ebf598980c057b68a87c',1,'alexaClientSDK::integration::test']]],
+  ['g_5fconfiguration',['g_configuration',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a8a0b5fa489671c4cbeb0f615c2dda721',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer']]],
   ['g_5fdbtestfilepath',['g_dbTestFilePath',['../namespacealexa_client_s_d_k_1_1certified_sender_1_1test.html#a9772547fd7cd408a3f32e65f457ce759',1,'alexaClientSDK::certifiedSender::test']]],
   ['g_5fid',['g_id',['../namespacealexa_client_s_d_k_1_1media_player.html#ada511e04fa2853e7b678cad488e4ec7a',1,'alexaClientSDK::mediaPlayer::g_id()'],['../namespacealexa_client_s_d_k_1_1playlist_parser.html#a863b8b4734d96a7f29deda10473fae14',1,'alexaClientSDK::playlistParser::g_id()']]],
   ['g_5finputpath',['g_inputPath',['../namespacealexa_client_s_d_k_1_1integration_1_1test.html#abfaff0ec341efe46eec2f39770d8a141',1,'alexaClientSDK::integration::test']]],

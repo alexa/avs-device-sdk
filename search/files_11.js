@@ -60,5 +60,6 @@ var searchData=
   ['streamfunctions_2eh',['StreamFunctions.h',['../_stream_functions_8h.html',1,'']]],
   ['streamfunctionstest_2ecpp',['StreamFunctionsTest.cpp',['../_stream_functions_test_8cpp.html',1,'']]],
   ['stringutils_2ecpp',['StringUtils.cpp',['../_string_utils_8cpp.html',1,'']]],
-  ['stringutils_2eh',['StringUtils.h',['../_string_utils_8h.html',1,'']]]
+  ['stringutils_2eh',['StringUtils.h',['../_string_utils_8h.html',1,'']]],
+  ['stringutilstest_2ecpp',['StringUtilsTest.cpp',['../_string_utils_test_8cpp.html',1,'']]]
 ];

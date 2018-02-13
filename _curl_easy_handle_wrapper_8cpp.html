@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,7 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;<a class="el" href="_curl_easy_handle_wrapper_8h_source.html">AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_http_response_codes_8h_source.html">AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_libcurl_utils_8h_source.html">AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -87,15 +88,16 @@ Include dependency graph for CurlEasyHandleWrapper.cpp:</div>
 <div class="center"><img src="_curl_easy_handle_wrapper_8cpp__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_libcurl_utils_2_curl_easy_handle_wrapper_8cpp" alt=""/></div>
 <map name="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_libcurl_utils_2_curl_easy_handle_wrapper_8cpp" id="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_libcurl_utils_2_curl_easy_handle_wrapper_8cpp">
 <area shape="rect" id="node3" href="_curl_easy_handle_wrapper_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/CurlEasyHandleWrapper.h" alt="" coords="229,119,429,157"/>
-<area shape="rect" id="node7" href="_libcurl_utils_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/LibcurlUtils.h" alt="" coords="5,119,205,157"/>
-<area shape="rect" id="node8" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="859,119,1034,157"/>
-<area shape="rect" id="node13" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="840,205,1053,244"/>
-<area shape="rect" id="node16" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1140,292,1316,331"/>
-<area shape="rect" id="node17" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1400,205,1576,244"/>
-<area shape="rect" id="node22" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1179,205,1376,244"/>
-<area shape="rect" id="node23" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="555,205,730,244"/>
-<area shape="rect" id="node18" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1391,292,1566,331"/>
-<area shape="rect" id="node20" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1333,379,1509,417"/>
+<area shape="rect" id="node7" href="_http_response_codes_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpResponseCodes.h" alt="" coords="1068,119,1268,157"/>
+<area shape="rect" id="node8" href="_libcurl_utils_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/LibcurlUtils.h" alt="" coords="5,119,205,157"/>
+<area shape="rect" id="node9" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="817,119,993,157"/>
+<area shape="rect" id="node14" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="678,205,892,244"/>
+<area shape="rect" id="node17" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1033,292,1209,331"/>
+<area shape="rect" id="node18" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1289,205,1465,244"/>
+<area shape="rect" id="node23" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1068,205,1265,244"/>
+<area shape="rect" id="node24" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="479,205,654,244"/>
+<area shape="rect" id="node19" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1284,292,1460,331"/>
+<area shape="rect" id="node21" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1284,379,1460,417"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -130,9 +132,6 @@ Variables</h2></td></tr>
 <tr class="memitem:ac61ca68afbad2308882b6206dfa1cb9b"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#ac61ca68afbad2308882b6206dfa1cb9b">alexaClientSDK::avsCommon::utils::libcurlUtils::OCTET_MIME_TYPE</a> = &quot;application/octet-stream&quot;</td></tr>
 <tr class="memdesc:ac61ca68afbad2308882b6206dfa1cb9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIME Content-Type for octet stream data.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#ac61ca68afbad2308882b6206dfa1cb9b">More...</a><br /></td></tr>
 <tr class="separator:ac61ca68afbad2308882b6206dfa1cb9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c1faa98bb0cdf87e894813704b90a57"><td class="memItemLeft" align="right" valign="top">static const long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#a0c1faa98bb0cdf87e894813704b90a57">alexaClientSDK::avsCommon::utils::libcurlUtils::HTTP_RESPONSE_SUCCESS_NO_CONTENT</a> = 204</td></tr>
-<tr class="memdesc:a0c1faa98bb0cdf87e894813704b90a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Response code for HTTP 204 (Success No Content response)  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#a0c1faa98bb0cdf87e894813704b90a57">More...</a><br /></td></tr>
-<tr class="separator:a0c1faa98bb0cdf87e894813704b90a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -164,7 +163,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

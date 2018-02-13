@@ -1,17 +1,15 @@
 <map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/MediaPlayer/include/MediaPlayer/PipelineInterface.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/MediaPlayer/include/MediaPlayer/PipelineInterface.h">
-<area shape="rect" id="node2" href="$_media_player_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/include/MediaPlayer/MediaPlayer.h" alt="" coords="279,205,513,257"/>
-<area shape="rect" id="node8" href="$_source_interface_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/include/MediaPlayer/SourceInterface.h" alt="" coords="497,105,751,157"/>
-<area shape="rect" id="node3" href="$_media_player_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/src/MediaPlayer.cpp" alt="" coords="600,419,792,471"/>
-<area shape="rect" id="node4" href="$_media_player_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/test/MediaPlayerTest.cpp" alt="" coords="48,312,240,364"/>
-<area shape="rect" id="node5" href="$_sample_application_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="263,312,529,364"/>
-<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/SampleApplication.cpp" alt="" coords="5,419,192,471"/>
-<area shape="rect" id="node6" href="$main_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/main.cpp" alt="" coords="303,419,489,471"/>
-<area shape="rect" id="node9" href="$_base_stream_source_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/include/MediaPlayer/BaseStreamSource.h" alt="" coords="977,205,1252,257"/>
-<area shape="rect" id="node15" href="$_url_source_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/include/MediaPlayer/UrlSource.h" alt="" coords="537,205,756,257"/>
-<area shape="rect" id="node10" href="$_attachment_reader_source_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/include/MediaPlayer/AttachmentReader\lSource.h" alt="" coords="1357,305,1617,371"/>
-<area shape="rect" id="node12" href="$_i_stream_source_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/include/MediaPlayer/IStreamSource.h" alt="" coords="869,312,1118,364"/>
-<area shape="rect" id="node14" href="$_base_stream_source_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/src/BaseStreamSource.cpp" alt="" coords="1141,312,1333,364"/>
-<area shape="rect" id="node11" href="$_attachment_reader_source_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/src/AttachmentReaderSource.cpp" alt="" coords="1374,419,1599,471"/>
-<area shape="rect" id="node13" href="$_i_stream_source_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/src/IStreamSource.cpp" alt="" coords="897,419,1089,471"/>
-<area shape="rect" id="node16" href="$_url_source_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/src/UrlSource.cpp" alt="" coords="653,312,845,364"/>
+<area shape="rect" id="node2" href="$_media_player_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/include/MediaPlayer/MediaPlayer.h" alt="" coords="806,205,1040,257"/>
+<area shape="rect" id="node8" href="$_source_interface_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/include/MediaPlayer/SourceInterface.h" alt="" coords="632,105,886,157"/>
+<area shape="rect" id="node3" href="$_media_player_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/src/MediaPlayer.cpp" alt="" coords="610,419,802,471"/>
+<area shape="rect" id="node4" href="$_media_player_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/test/MediaPlayerTest.cpp" alt="" coords="827,312,1019,364"/>
+<area shape="rect" id="node5" href="$_sample_application_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="1042,312,1308,364"/>
+<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/SampleApplication.cpp" alt="" coords="1251,419,1438,471"/>
+<area shape="rect" id="node6" href="$main_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/main.cpp" alt="" coords="1040,419,1227,471"/>
+<area shape="rect" id="node9" href="$_base_stream_source_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/include/MediaPlayer/BaseStreamSource.h" alt="" coords="361,205,637,257"/>
+<area shape="rect" id="node10" href="$_attachment_reader_source_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/include/MediaPlayer/AttachmentReader\lSource.h" alt="" coords="493,305,753,371"/>
+<area shape="rect" id="node12" href="$_i_stream_source_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/include/MediaPlayer/IStreamSource.h" alt="" coords="5,312,254,364"/>
+<area shape="rect" id="node14" href="$_base_stream_source_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/src/BaseStreamSource.cpp" alt="" coords="278,312,470,364"/>
+<area shape="rect" id="node11" href="$_attachment_reader_source_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/src/AttachmentReaderSource.cpp" alt="" coords="361,419,586,471"/>
+<area shape="rect" id="node13" href="$_i_stream_source_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/src/IStreamSource.cpp" alt="" coords="34,419,226,471"/>
 </map>

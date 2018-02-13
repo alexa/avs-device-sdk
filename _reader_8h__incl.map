@@ -1,6 +1,7 @@
 <map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/SDS/Reader.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/SDS/Reader.h">
 <area shape="rect" id="node8" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="928,265,1104,304"/>
 <area shape="rect" id="node26" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1203,119,1349,144"/>
+<area shape="rect" id="node30" href="$_reader_policy_8h.html" title="ReaderPolicy.h" alt="" coords="1779,119,1890,144"/>
 <area shape="rect" id="node10" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="775,352,951,391"/>
 <area shape="rect" id="node13" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="144,439,358,477"/>
 <area shape="rect" id="node18" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="976,525,1152,564"/>

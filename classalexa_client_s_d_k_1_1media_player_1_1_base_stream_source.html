@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -133,8 +133,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a13af43e36ef24de5f9746b6391f0bfd0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a13af43e36ef24de5f9746b6391f0bfd0">init</a> ()</td></tr>
-<tr class="separator:a13af43e36ef24de5f9746b6391f0bfd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e87e5e33b407f8e66138448b6de5598"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a4e87e5e33b407f8e66138448b6de5598">init</a> (const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html">avsCommon::utils::AudioFormat</a> *audioFormat=nullptr)</td></tr>
+<tr class="separator:a4e87e5e33b407f8e66138448b6de5598"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef7e3ed22f280d927ae9fa924151e4dc"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#aef7e3ed22f280d927ae9fa924151e4dc">isOpen</a> ()=0</td></tr>
 <tr class="separator:aef7e3ed22f280d927ae9fa924151e4dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c9167b911a1845fd12351a6075c926f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a9c9167b911a1845fd12351a6075c926f">close</a> ()=0</td></tr>
@@ -414,8 +414,8 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a13af43e36ef24de5f9746b6391f0bfd0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13af43e36ef24de5f9746b6391f0bfd0">&#9670;&nbsp;</a></span>init()</h2>
+<a id="a4e87e5e33b407f8e66138448b6de5598"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e87e5e33b407f8e66138448b6de5598">&#9670;&nbsp;</a></span>init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -426,7 +426,8 @@ Protected Member Functions</h2></td></tr>
         <tr>
           <td class="memname">bool alexaClientSDK::mediaPlayer::BaseStreamSource::init </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html">avsCommon::utils::AudioFormat</a> *&#160;</td>
+          <td class="paramname"><em>audioFormat</em> = <code>nullptr</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -437,6 +438,12 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Initializes a source. Creates all the necessary pipeline elements such that audio output from the final element should be decoded output that can be input to the <code>converter</code> of the <code>AudioPipeline</code>. Adding the elements to the <code>pipeline</code> of the <code>AudioPipeline</code>, linking the elements and setting up the callbacks for signals should be handled.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">audioFormat</td><td>The audioFormat to be used when playing raw PCM data. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the initialization was successful else <code>false</code>. </dd></dl>
 
 </div>
@@ -608,7 +615,7 @@ Protected Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

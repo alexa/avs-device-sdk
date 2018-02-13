@@ -18,7 +18,7 @@
 <area shape="rect" id="node34" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="3525,372,3719,411"/>
 <area shape="rect" id="node43" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="2501,192,2692,231"/>
 <area shape="rect" id="node44" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1994,279,2202,317"/>
-<area shape="rect" id="node47" href="$_url_to_attachment_converter_8h.html" title="PlaylistParser/UrlToAttachment\lConverter.h" alt="" coords="3241,192,3446,231"/>
+<area shape="rect" id="node47" href="$_url_content_to_attachment_converter_8h.html" title="PlaylistParser/UrlContent\lToAttachmentConverter.h" alt="" coords="3258,192,3429,231"/>
 <area shape="rect" id="node48" href="$_offset_manager_8h.html" title="MediaPlayer/OffsetManager.h" alt="" coords="1285,285,1482,311"/>
 <area shape="rect" id="node49" href="$_pipeline_interface_8h.html" title="MediaPlayer/PipelineInterface.h" alt="" coords="1659,285,1868,311"/>
 <area shape="rect" id="node50" href="$_source_interface_8h.html" title="MediaPlayer/SourceInterface.h" alt="" coords="1709,199,1914,224"/>

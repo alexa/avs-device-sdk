@@ -1,6 +1,7 @@
 <map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h">
-<area shape="rect" id="node2" href="$_speaker_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeakerManager/src/SpeakerManager.cpp" alt="" coords="5,119,285,171"/>
-<area shape="rect" id="node3" href="$_speaker_manager_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeakerManager/test/SpeakerManagerTest.cpp" alt="" coords="308,119,616,171"/>
-<area shape="rect" id="node4" href="$_media_player_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/src/MediaPlayer.cpp" alt="" coords="640,119,832,171"/>
-<area shape="rect" id="node5" href="$_media_player_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/test/MediaPlayerTest.cpp" alt="" coords="856,119,1048,171"/>
+<area shape="rect" id="node2" href="$_external_media_player_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/src/ExternalMedia\lPlayer.cpp" alt="" coords="5,119,264,184"/>
+<area shape="rect" id="node3" href="$_speaker_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeakerManager/src/SpeakerManager.cpp" alt="" coords="288,125,568,177"/>
+<area shape="rect" id="node4" href="$_speaker_manager_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeakerManager/test/SpeakerManagerTest.cpp" alt="" coords="591,125,899,177"/>
+<area shape="rect" id="node5" href="$_media_player_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/src/MediaPlayer.cpp" alt="" coords="923,125,1114,177"/>
+<area shape="rect" id="node6" href="$_media_player_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/test/MediaPlayerTest.cpp" alt="" coords="1139,125,1330,177"/>
 </map>

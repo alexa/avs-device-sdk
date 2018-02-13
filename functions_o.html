@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -119,6 +119,7 @@ $(function() {
 </li>
 <li>onButtonPressed()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html#a4e4e68dd7de2c246365a5c102abbc3c8">alexaClientSDK::avsCommon::sdkInterfaces::PlaybackHandlerInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a5470f248f826e7b37f49289bd06e6fc6">alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPlayer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html#ac46d73d6e8b20c50f6a39295695c4c8d">alexaClientSDK::capabilityAgents::playbackController::PlaybackController</a>
 </li>
 <li>onConnected()
@@ -159,6 +160,7 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#af12e043cb4bb7190474ca6b3b77375ec">alexaClientSDK::capabilityAgents::aip::AudioInputProcessor</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html#a78985125587bc62f4118ff949b197b6d">alexaClientSDK::capabilityAgents::alerts::AlertsCapabilityAgent</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#a046345d67219c38ce74f5d2558072f81">alexaClientSDK::capabilityAgents::audioPlayer::AudioPlayer</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a00630efe454bba50a562505eb1457038">alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPlayer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html#a735a44b3350e3d75338b9238030dbfaf">alexaClientSDK::capabilityAgents::speechSynthesizer::SpeechSynthesizer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_directive_handler.html#aeb89a15e4ed782296b5fb370a9b44f95">alexaClientSDK::integration::test::TestDirectiveHandler</a>
 </li>
@@ -270,7 +272,6 @@ $(function() {
 </li>
 <li>onPlaylistEntryParsed()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html#a3b7892ff8f8f9a69dcbdb2ad3938182b">alexaClientSDK::avsCommon::utils::playlistParser::PlaylistParserObserverInterface</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a328034f6710afccd0bb4ca52bf648244">alexaClientSDK::mediaPlayer::UrlSource</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_test_parser_observer.html#ad6cc0ba892e653448d91230bcb814786">alexaClientSDK::playlistParser::test::TestParserObserver</a>
 </li>
 <li>onPostConnected()
@@ -312,7 +313,7 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html#a584c4c69be2c31cdb86bf4aad4e08727">alexaClientSDK::sampleApp::UIManager</a>
 </li>
 <li>onStateChanged()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html#a899c2ae495b5f5a0e38837354000ee08">alexaClientSDK::avsCommon::avs::DialogUXStateAggregator</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html#a342295c79b160414a2064e8083edc3be">alexaClientSDK::avsCommon::avs::DialogUXStateAggregator</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_input_processor_observer_interface.html#a8c6aff677e2bf9c0240f46096bd51f8d">alexaClientSDK::avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_detector_state_observer_interface.html#ae926818923ec68489d21cc4f6caa1021">alexaClientSDK::avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_synthesizer_observer_interface.html#ae7387e2d3c6174dace466714ee8dedb4">alexaClientSDK::avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface</a>
@@ -358,6 +359,7 @@ $(function() {
 , <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_asset_order_item_compare.html#a231310445966bba0c262f4e00bde7ecd">alexaClientSDK::capabilityAgents::alerts::storage::AssetOrderItemCompare</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_time_comparator.html#a9894c429509ac667cc0e456506a8d1be">alexaClientSDK::capabilityAgents::alerts::TimeComparator</a>
 , <a class="el" href="structstd_1_1hash_3_01alexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name_01_4.html#ab5582680e0f35ae2596c50f6fc9aa696">std::hash&lt; alexaClientSDK::avsCommon::avs::NamespaceAndName &gt;</a>
+, <a class="el" href="structstd_1_1hash_3_01alexa_client_s_d_k_1_1avs_common_1_1avs_1_1_playback_button_01_4.html#ac098ce797393cd450b7742f62fd89e4b">std::hash&lt; alexaClientSDK::avsCommon::avs::PlaybackButton &gt;</a>
 </li>
 <li>operator+=()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits_1_1_atomic_index.html#ae76ebb638699b8786a790b8211effb5b">alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits::AtomicIndex</a>
@@ -388,7 +390,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

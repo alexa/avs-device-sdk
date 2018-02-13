@@ -1,5 +1,7 @@
 <map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/Utils/test/AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/Utils/test/AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h">
-<area shape="rect" id="node3" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="144,119,352,157"/>
-<area shape="rect" id="node10" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="479,119,667,157"/>
-<area shape="rect" id="node8" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="223,205,425,244"/>
+<area shape="rect" id="node3" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="183,119,392,157"/>
+<area shape="rect" id="node13" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="688,119,876,157"/>
+<area shape="rect" id="node8" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="186,205,388,244"/>
+<area shape="rect" id="node11" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="412,212,634,237"/>
+<area shape="rect" id="node10" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="254,292,416,331"/>
 </map>

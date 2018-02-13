@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -2334,38 +2334,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a55ebb169de21f4ad9b76b650a448c0db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55ebb169de21f4ad9b76b650a448c0db">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/69]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">sendDirectivesForPreHandling&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test <code>DirectiveSequencer's</code> ability to make both preHandleDirective() and handleDirective() call for <code>AVSDirectives</code> with a non-empty <code>dialogRequestId</code>.</p>
-<p>This test registers handlers for the directives expected in response to a <code>Recognize</code> event. It then counts the number of <code>preHandleDirective()</code> and <code>handleDirective()</code> callbacks verifying that the counts come out to the same value in the end. </p>
-
-</div>
-</div>
 <a id="a86237d026af98d28a23e396416bb02b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86237d026af98d28a23e396416bb02b7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a86237d026af98d28a23e396416bb02b7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/69]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2391,6 +2361,36 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Test ability for the SpeechSynthesizer to handle a barge in at the begining of consucutive speaks.</p>
 <p>This test is intended to test the SpeechSynthesizer's ability to receive multiple directives, play each using a MediaPlayer then return to a finished state and notify the DirectiveSequencer that the directive was handled. This is done by sending a Recognize event to AVS with audio of "What's up?" which returns four sets of SetMute and Speak. Once the first Speak reaches the SpeechSynthesizer, the dialogRequestID is changed and all directives are cancelled. </p>
+
+</div>
+</div>
+<a id="a55ebb169de21f4ad9b76b650a448c0db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55ebb169de21f4ad9b76b650a448c0db">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/69]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sendDirectivesForPreHandling&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test <code>DirectiveSequencer's</code> ability to make both preHandleDirective() and handleDirective() call for <code>AVSDirectives</code> with a non-empty <code>dialogRequestId</code>.</p>
+<p>This test registers handlers for the directives expected in response to a <code>Recognize</code> event. It then counts the number of <code>preHandleDirective()</code> and <code>handleDirective()</code> callbacks verifying that the counts come out to the same value in the end. </p>
 
 </div>
 </div>
@@ -8207,7 +8207,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

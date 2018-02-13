@@ -1,5 +1,6 @@
 <map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/Integration/include/Integration/ObservableMessageRequest.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/Integration/include/Integration/ObservableMessageRequest.h">
 <area shape="rect" id="node6" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="343,119,592,144"/>
 <area shape="rect" id="node10" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="597,192,799,231"/>
-<area shape="rect" id="node12" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="823,192,1070,231"/>
+<area shape="rect" id="node13" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="823,192,1070,231"/>
+<area shape="rect" id="node12" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="671,279,833,317"/>
 </map>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -194,6 +194,8 @@ Functions</h2></td></tr>
 <tr class="separator:a2cbd51cd6a7650cfa08420a0d25808de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7884a3958b23d1217f6c5aeefbedd44b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a7884a3958b23d1217f6c5aeefbedd44b">operator==</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">NamespaceAndName</a> &amp;lhs, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">NamespaceAndName</a> &amp;rhs)</td></tr>
 <tr class="separator:a7884a3958b23d1217f6c5aeefbedd44b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7264635c4a1097b3ecdfa9e93f53ce6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ad7264635c4a1097b3ecdfa9e93f53ce6">PlaybackButtonToString</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a61e425aaa1522eafa6647f6b11cb9556">PlaybackButton</a> button)</td></tr>
+<tr class="separator:ad7264635c4a1097b3ecdfa9e93f53ce6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c22420ec46081a4ee74a8ac7af8578e"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a4c22420ec46081a4ee74a8ac7af8578e">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a61e425aaa1522eafa6647f6b11cb9556">PlaybackButton</a> &amp;button)</td></tr>
 <tr class="separator:a4c22420ec46081a4ee74a8ac7af8578e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac22c7f4a86b0b02590b378298278fef4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ac22c7f4a86b0b02590b378298278fef4">playerActivityToString</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af150b2d10515e0e7347e09a69986a47b">PlayerActivity</a> playerActivity)</td></tr>
@@ -966,53 +968,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a4c22420ec46081a4ee74a8ac7af8578e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c22420ec46081a4ee74a8ac7af8578e">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[4/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; alexaClientSDK::avsCommon::avs::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>stream</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a61e425aaa1522eafa6647f6b11cb9556">PlaybackButton</a> &amp;&#160;</td>
-          <td class="paramname"><em>button</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Write a <code>Button</code> value to an <code>ostream</code> as a string.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stream</td><td>The stream to write the value to. </td></tr>
-    <tr><td class="paramname">button</td><td>The <code>Button</code> value to write to the <code>ostream</code> as a string. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The <code>ostream</code> that was passed in and written to. </dd></dl>
-
-</div>
-</div>
 <a id="a6f52765b8c90313829f1f0b55b798aa6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f52765b8c90313829f1f0b55b798aa6">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[5/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f52765b8c90313829f1f0b55b798aa6">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[4/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1049,6 +1006,51 @@ Variables</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">stream</td><td>The stream to write the value to. </td></tr>
     <tr><td class="paramname">state</td><td>The <code>FocusState</code> value to write to the <code>ostream</code> as a string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The <code>ostream</code> that was passed in and written to. </dd></dl>
+
+</div>
+</div>
+<a id="a4c22420ec46081a4ee74a8ac7af8578e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c22420ec46081a4ee74a8ac7af8578e">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[5/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; alexaClientSDK::avsCommon::avs::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a61e425aaa1522eafa6647f6b11cb9556">PlaybackButton</a> &amp;&#160;</td>
+          <td class="paramname"><em>button</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Write a <code>Button</code> value to an <code>ostream</code> as a string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>The stream to write the value to. </td></tr>
+    <tr><td class="paramname">button</td><td>The <code>Button</code> value to write to the <code>ostream</code> as a string. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1172,6 +1174,40 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the <code>lhs</code> instance is equal to the <code>rhs</code> instance. </dd></dl>
+
+</div>
+</div>
+<a id="ad7264635c4a1097b3ecdfa9e93f53ce6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7264635c4a1097b3ecdfa9e93f53ce6">&#9670;&nbsp;</a></span>PlaybackButtonToString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::avsCommon::avs::PlaybackButtonToString </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a61e425aaa1522eafa6647f6b11cb9556">PlaybackButton</a>&#160;</td>
+          <td class="paramname"><em>button</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Convert a <code>PlaybackButton</code> to <code>std::string</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">button</td><td>The <code>PlaybackButton</code> to convert. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The representation of <code>button</code>. </dd></dl>
 
 </div>
 </div>
@@ -1313,8 +1349,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a37d0c61f91841ac418a8938fbeed519c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37d0c61f91841ac418a8938fbeed519c">&#9670;&nbsp;</a></span>TAG() <span class="overload">[5/7]</span></h2>
+<a id="afe37f416ecd026b037a98f36d879f0b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe37f416ecd026b037a98f36d879f0b7">&#9670;&nbsp;</a></span>TAG() <span class="overload">[5/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1325,7 +1361,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static const std::string alexaClientSDK::avsCommon::avs::TAG </td>
           <td>(</td>
-          <td class="paramtype">&quot;ExceptionEncountered&quot;&#160;</td>
+          <td class="paramtype">&quot;CapabilityAgent&quot;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -1341,8 +1377,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="afe37f416ecd026b037a98f36d879f0b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe37f416ecd026b037a98f36d879f0b7">&#9670;&nbsp;</a></span>TAG() <span class="overload">[6/7]</span></h2>
+<a id="a37d0c61f91841ac418a8938fbeed519c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37d0c61f91841ac418a8938fbeed519c">&#9670;&nbsp;</a></span>TAG() <span class="overload">[6/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1353,7 +1389,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static const std::string alexaClientSDK::avsCommon::avs::TAG </td>
           <td>(</td>
-          <td class="paramtype">&quot;CapabilityAgent&quot;&#160;</td>
+          <td class="paramtype">&quot;ExceptionEncountered&quot;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -1785,7 +1821,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -106,10 +106,6 @@ Public Types</h2></td></tr>
 <tr class="memitem:af046de3561bb70eed1912822af0d782f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html#af046de3561bb70eed1912822af0d782f">SDSTypeReader</a> = <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">SDSType::Reader</a></td></tr>
 <tr class="separator:af046de3561bb70eed1912822af0d782f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_types_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html">alexaClientSDK::avsCommon::avs::attachment::AttachmentReader</a></td></tr>
-<tr class="memitem:aaa6fe587256c511800cd2fc4ed4f5e51 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#aaa6fe587256c511800cd2fc4ed4f5e51">Policy</a> { <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#aaa6fe587256c511800cd2fc4ed4f5e51a72323e5457d8fb855145bfee934aa415">Policy::BLOCKING</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#aaa6fe587256c511800cd2fc4ed4f5e51a71fed0a1fc7faaeab0a56a76799e5ad3">Policy::NON_BLOCKING</a>
- }</td></tr>
-<tr class="separator:aaa6fe587256c511800cd2fc4ed4f5e51 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf0a8d5bc9decff5049c41eaabe75f74 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#abf0a8d5bc9decff5049c41eaabe75f74">ReadStatus</a> { <br />
 &#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#abf0a8d5bc9decff5049c41eaabe75f74ae0aa021e21dddbd6d8cecec71e9cf564">ReadStatus::OK</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#abf0a8d5bc9decff5049c41eaabe75f74a787bd2f5224b6b864eea398349436849">ReadStatus::OK_WOULDBLOCK</a>, 
@@ -138,14 +134,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8a5717eb8c5c50ad8b346a0853b9b465"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12e66c492924fd0541c69de2143d7fc2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html#a12e66c492924fd0541c69de2143d7fc2">seek</a> (uint64_t offset) override</td></tr>
 <tr class="separator:a12e66c492924fd0541c69de2143d7fc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9495369591ada8ec547aa86c7631226e"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html#a9495369591ada8ec547aa86c7631226e">getNumUnreadBytes</a> () override</td></tr>
+<tr class="separator:a9495369591ada8ec547aa86c7631226e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html">alexaClientSDK::avsCommon::avs::attachment::AttachmentReader</a></td></tr>
 <tr class="memitem:a460af26fc9bbf1671a1dc0be3a4030bd inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#a460af26fc9bbf1671a1dc0be3a4030bd">~AttachmentReader</a> ()=default</td></tr>
 <tr class="separator:a460af26fc9bbf1671a1dc0be3a4030bd inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a03690545848a92234ecd5b519aa9fc38"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html">InProcessAttachmentReader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html#a03690545848a92234ecd5b519aa9fc38">create</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#aaa6fe587256c511800cd2fc4ed4f5e51">Policy</a> policy, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html#aed1beb827f994340d2a969e4262c5d27">SDSType</a> &gt; sds, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html#a903ef2ba650eef7377b63a1ab4d05de4">SDSTypeIndex</a> offset=0, <a class="el" href="_reader_8h.html#af8301ba5b9319ad0427cfe10efcf91ba">SDSTypeReader::Reference</a> reference=SDSTypeReader::Reference::ABSOLUTE)</td></tr>
-<tr class="separator:a03690545848a92234ecd5b519aa9fc38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6af7cd014c8bbd87bcc272404ece08f"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html">InProcessAttachmentReader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html#ab6af7cd014c8bbd87bcc272404ece08f">create</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds.html#a07d2a9441f40d089a1f9a0d7e2baab4b">SDSTypeReader::Policy</a> policy, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html#aed1beb827f994340d2a969e4262c5d27">SDSType</a> &gt; sds, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html#a903ef2ba650eef7377b63a1ab4d05de4">SDSTypeIndex</a> offset=0, <a class="el" href="_reader_8h.html#af8301ba5b9319ad0427cfe10efcf91ba">SDSTypeReader::Reference</a> reference=SDSTypeReader::Reference::ABSOLUTE)</td></tr>
+<tr class="separator:ab6af7cd014c8bbd87bcc272404ece08f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class that provides functionality to read data from an <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment.html">Attachment</a></code> following an in-process memory management model.</p>
@@ -250,8 +248,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a03690545848a92234ecd5b519aa9fc38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03690545848a92234ecd5b519aa9fc38">&#9670;&nbsp;</a></span>create()</h2>
+<a id="ab6af7cd014c8bbd87bcc272404ece08f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6af7cd014c8bbd87bcc272404ece08f">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -262,7 +260,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html">InProcessAttachmentReader</a> &gt; alexaClientSDK::avsCommon::avs::attachment::InProcessAttachmentReader::create </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#aaa6fe587256c511800cd2fc4ed4f5e51">Policy</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds.html#a07d2a9441f40d089a1f9a0d7e2baab4b">SDSTypeReader::Policy</a>&#160;</td>
           <td class="paramname"><em>policy</em>, </td>
         </tr>
         <tr>
@@ -298,7 +296,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Create an <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html">InProcessAttachmentReader</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">policy</td><td>The <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#aaa6fe587256c511800cd2fc4ed4f5e51">AttachmentReader::Policy</a></code> of this object. </td></tr>
+    <tr><td class="paramname">policy</td><td>The policy this reader should adhere to. </td></tr>
     <tr><td class="paramname">sds</td><td>The underlying <code>SharedDataStream</code> which this object will use. </td></tr>
     <tr><td class="paramname">index</td><td>If being constructed from an existing <code>SharedDataStream</code>, the index indicates where to read from. </td></tr>
     <tr><td class="paramname">reference</td><td>The position in the stream <code>offset</code> is applied to. This parameter defaults to 0, indicating no offset from the specified reference. </td></tr>
@@ -306,6 +304,35 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns a new <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html">InProcessAttachmentReader</a>, or nullptr if the operation failed. This parameter defaults to <code>ABSOLUTE</code>, indicating offset is relative to the very beginning of the <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment.html">Attachment</a>. </dd></dl>
+
+</div>
+</div>
+<a id="a9495369591ada8ec547aa86c7631226e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9495369591ada8ec547aa86c7631226e">&#9670;&nbsp;</a></span>getNumUnreadBytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t alexaClientSDK::avsCommon::avs::attachment::InProcessAttachmentReader::getNumUnreadBytes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Utility function to return the number of bytes in an attachment.</p>
+<dl class="section return"><dt>Returns</dt><dd>Number of unread bytes in the attachment by this attachment reader. </dd></dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#ac02b7a2a76504cf697ce05ffb990dbd6">alexaClientSDK::avsCommon::avs::attachment::AttachmentReader</a>.</p>
 
 </div>
 </div>
@@ -414,7 +441,7 @@ Static Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

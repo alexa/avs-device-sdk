@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -69,7 +69,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream-members.html">List of all members</a>  </div>
@@ -80,19 +79,6 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="_h_t_t_p2_stream_8h_source.html">HTTP2Stream.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a253d72adc131452317aba4863a3c6ea5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5">HTTPResponseCodes</a> { <br />
-&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5a2e8b43686fb259701beba62c8536f5ef">NO_RESPONSE_RECEIVED</a> = 0, 
-<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5a6d8ad7c0d644b6c01414ce8c62abdadb">SUCCESS_OK</a> = 200, 
-<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5a0206a26b042f61dfcc47f0d00b639c2c">SUCCESS_NO_CONTENT</a> = 204, 
-<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5a17658eb4b9f1987526760ad57cf6fa14">BAD_REQUEST</a> = 400, 
-<br />
-&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5a1b65ffd773ce3da00580697303a183fe">SERVER_INTERNAL_ERROR</a> = 500
-<br />
- }</td></tr>
-<tr class="separator:a253d72adc131452317aba4863a3c6ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2d4c6ff352ecbb6273442d6e4f3809eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a2d4c6ff352ecbb6273442d6e4f3809eb">HTTP2Stream</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_consumer_interface.html">MessageConsumerInterface</a> &gt; messageConsumer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager.html">avsCommon::avs::attachment::AttachmentManager</a> &gt; attachmentManager)</td></tr>
@@ -140,34 +126,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class that represents an HTTP/2 stream. </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
-<a id="a253d72adc131452317aba4863a3c6ea5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a253d72adc131452317aba4863a3c6ea5">&#9670;&nbsp;</a></span>HTTPResponseCodes</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a253d72adc131452317aba4863a3c6ea5">alexaClientSDK::acl::HTTP2Stream::HTTPResponseCodes</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a253d72adc131452317aba4863a3c6ea5a2e8b43686fb259701beba62c8536f5ef"></a>NO_RESPONSE_RECEIVED&#160;</td><td class="fielddoc"><p>No HTTP response received. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a253d72adc131452317aba4863a3c6ea5a6d8ad7c0d644b6c01414ce8c62abdadb"></a>SUCCESS_OK&#160;</td><td class="fielddoc"><p>HTTP Success with reponse payload. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a253d72adc131452317aba4863a3c6ea5a0206a26b042f61dfcc47f0d00b639c2c"></a>SUCCESS_NO_CONTENT&#160;</td><td class="fielddoc"><p>HTTP Succcess with no response payload. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a253d72adc131452317aba4863a3c6ea5a17658eb4b9f1987526760ad57cf6fa14"></a>BAD_REQUEST&#160;</td><td class="fielddoc"><p>HTTP code for invalid request by user. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a253d72adc131452317aba4863a3c6ea5a1b65ffd773ce3da00580697303a183fe"></a>SERVER_INTERNAL_ERROR&#160;</td><td class="fielddoc"><p>HTTP code for internal error by server which didn't fulfill the request. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2d4c6ff352ecbb6273442d6e4f3809eb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2d4c6ff352ecbb6273442d6e4f3809eb">&#9670;&nbsp;</a></span>HTTP2Stream()</h2>
 
@@ -326,7 +285,7 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Callback that gets executed when HTTP headers are received from the server See CurlEasyHandleWrapper::CurlCallback for details </p>
+<p>Callback that gets executed when HTTP headers are received from the server See <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a8cbbef2570297cf6980710809bb35d50">CurlEasyHandleWrapper::CurlCallback</a> for details </p>
 
 </div>
 </div>
@@ -724,7 +683,7 @@ template&lt;class TickType , class TickPeriod &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Callback that gets executed when data is received from the server See CurlEasyHandleWrapper::CurlCallback for details </p>
+<p>Callback that gets executed when data is received from the server See <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a8cbbef2570297cf6980710809bb35d50">CurlEasyHandleWrapper::CurlCallback</a> for details </p>
 <p>If we get an HTTP 200 response code then we're getting a MIME multipart payload. For all other response codes we're getting a JSON string without multipart headers.</p>
 
 </div>
@@ -737,7 +696,7 @@ template&lt;class TickType , class TickPeriod &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

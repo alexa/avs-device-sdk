@@ -9,8 +9,5 @@ var searchData=
   ['help_5fmessage',['HELP_MESSAGE',['../namespacealexa_client_s_d_k_1_1sample_app.html#a3e96b667dcbce6b0cc6f4d667630bd97',1,'alexaClientSDK::sampleApp']]],
   ['hertz_5fper_5fkilohertz',['HERTZ_PER_KILOHERTZ',['../namespacealexa_client_s_d_k_1_1kwd.html#a4ad06e0ca26f6fd7cc11ec1ac772fdb7',1,'alexaClientSDK::kwd::HERTZ_PER_KILOHERTZ()'],['../namespacealexa_client_s_d_k_1_1kwd.html#a4ad06e0ca26f6fd7cc11ec1ac772fdb7',1,'alexaClientSDK::kwd::HERTZ_PER_KILOHERTZ()']]],
   ['hold',['HOLD',['../namespacealexa_client_s_d_k_1_1sample_app.html#a0628fc6a1001150ff411f386a8a2e1c9',1,'alexaClientSDK::sampleApp']]],
-  ['http_5fresponse_5fcode_5fbad_5frequest',['HTTP_RESPONSE_CODE_BAD_REQUEST',['../_auth_delegate_test_8cpp.html#abdb78ce61fb30963a68f6ff53b7ad556',1,'AuthDelegateTest.cpp']]],
-  ['http_5fresponse_5fcode_5fsuccess_5fok',['HTTP_RESPONSE_CODE_SUCCESS_OK',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post_interface.html#a26739a5276708d1dcdba3f4d2bc4ec3d',1,'alexaClientSDK::avsCommon::utils::libcurlUtils::HttpPostInterface']]],
-  ['http_5fresponse_5fcode_5fundefined',['HTTP_RESPONSE_CODE_UNDEFINED',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post_interface.html#ac9d2889de396433ae622654b01d4cb17',1,'alexaClientSDK::avsCommon::utils::libcurlUtils::HttpPostInterface']]],
-  ['http_5fresponse_5fsuccess_5fno_5fcontent',['HTTP_RESPONSE_SUCCESS_NO_CONTENT',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#a0c1faa98bb0cdf87e894813704b90a57',1,'alexaClientSDK::avsCommon::utils::libcurlUtils']]]
+  ['http_5fresponse_5fcode_5fbad_5frequest',['HTTP_RESPONSE_CODE_BAD_REQUEST',['../_auth_delegate_test_8cpp.html#abdb78ce61fb30963a68f6ff53b7ad556',1,'AuthDelegateTest.cpp']]]
 ];

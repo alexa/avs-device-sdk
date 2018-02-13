@@ -1,16 +1,18 @@
 <map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/SpeakerManagerInterface.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/SpeakerManagerInterface.h">
-<area shape="rect" id="node2" href="$_speaker_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeakerManager/include/SpeakerManager\l/SpeakerManager.h" alt="" coords="466,119,746,184"/>
-<area shape="rect" id="node3" href="$_default_client_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Application\lUtilities/DefaultClient/include\l/DefaultClient/DefaultClient.h" alt="" coords="250,232,442,297"/>
-<area shape="rect" id="node14" href="$_speaker_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeakerManager/src/SpeakerManager.cpp" alt="" coords="466,239,746,291"/>
-<area shape="rect" id="node15" href="$_speaker_manager_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeakerManager/test/SpeakerManagerTest.cpp" alt="" coords="769,239,1078,291"/>
-<area shape="rect" id="node4" href="$_default_client_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Application\lUtilities/DefaultClient/src\l/DefaultClient.cpp" alt="" coords="5,345,188,411"/>
-<area shape="rect" id="node5" href="$_interaction_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/InteractionManager.h" alt="" coords="212,352,481,404"/>
-<area shape="rect" id="node12" href="$_keyword_observer_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/KeywordObserver.h" alt="" coords="505,352,766,404"/>
-<area shape="rect" id="node6" href="$_user_input_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/UserInputManager.h" alt="" coords="58,459,322,511"/>
-<area shape="rect" id="node11" href="$_interaction_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/InteractionManager.cpp" alt="" coords="346,459,533,511"/>
-<area shape="rect" id="node7" href="$_sample_application_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="58,559,323,611"/>
-<area shape="rect" id="node10" href="$_user_input_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/UserInputManager.cpp" alt="" coords="346,559,533,611"/>
-<area shape="rect" id="node8" href="$main_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/main.cpp" alt="" coords="97,659,283,711"/>
-<area shape="rect" id="node9" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/SampleApplication.cpp" alt="" coords="391,659,578,711"/>
-<area shape="rect" id="node13" href="$_keyword_observer_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/KeywordObserver.cpp" alt="" coords="607,459,794,511"/>
+<area shape="rect" id="node2" href="$_external_media_player_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/include\l/ExternalMediaPlayer/ExternalMediaPlayer.h" alt="" coords="195,119,480,184"/>
+<area shape="rect" id="node15" href="$_speaker_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeakerManager/include/SpeakerManager\l/SpeakerManager.h" alt="" coords="504,119,784,184"/>
+<area shape="rect" id="node3" href="$_default_client_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Application\lUtilities/DefaultClient/include\l/DefaultClient/DefaultClient.h" alt="" coords="288,232,480,297"/>
+<area shape="rect" id="node14" href="$_external_media_player_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/src/ExternalMedia\lPlayer.cpp" alt="" coords="5,232,264,297"/>
+<area shape="rect" id="node4" href="$_default_client_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Application\lUtilities/DefaultClient/src\l/DefaultClient.cpp" alt="" coords="163,345,346,411"/>
+<area shape="rect" id="node5" href="$_interaction_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/InteractionManager.h" alt="" coords="248,459,517,511"/>
+<area shape="rect" id="node12" href="$_keyword_observer_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/KeywordObserver.h" alt="" coords="423,352,684,404"/>
+<area shape="rect" id="node6" href="$_user_input_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/UserInputManager.h" alt="" coords="42,559,307,611"/>
+<area shape="rect" id="node11" href="$_interaction_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/InteractionManager.cpp" alt="" coords="331,559,517,611"/>
+<area shape="rect" id="node7" href="$_sample_application_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="42,659,307,711"/>
+<area shape="rect" id="node10" href="$_user_input_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/UserInputManager.cpp" alt="" coords="331,659,517,711"/>
+<area shape="rect" id="node8" href="$main_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/main.cpp" alt="" coords="81,759,268,811"/>
+<area shape="rect" id="node9" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/SampleApplication.cpp" alt="" coords="376,759,563,811"/>
+<area shape="rect" id="node13" href="$_keyword_observer_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/KeywordObserver.cpp" alt="" coords="592,459,779,511"/>
+<area shape="rect" id="node16" href="$_speaker_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeakerManager/src/SpeakerManager.cpp" alt="" coords="504,239,784,291"/>
+<area shape="rect" id="node17" href="$_speaker_manager_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeakerManager/test/SpeakerManagerTest.cpp" alt="" coords="807,239,1115,291"/>
 </map>

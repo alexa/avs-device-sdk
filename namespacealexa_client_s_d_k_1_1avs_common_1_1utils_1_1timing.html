@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -96,12 +96,18 @@ Functions</h2></td></tr>
 <tr class="separator:a49b3520d72a64b5d1830796bcdde1cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a164bbfe1a52ebf85be9b966ab4c9f637"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a164bbfe1a52ebf85be9b966ab4c9f637">getCurrentUnixTime</a> (int64_t *currentTime)</td></tr>
 <tr class="separator:a164bbfe1a52ebf85be9b966ab4c9f637"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f656e2272fad4dc138200f2ed89950b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a7f656e2272fad4dc138200f2ed89950b">convertToUtcTimeT</a> (const std::tm *utcTm, std::time_t *ret)</td></tr>
+<tr class="separator:a7f656e2272fad4dc138200f2ed89950b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a147a75c3ec510a7e6bf59927fe0431c1"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a147a75c3ec510a7e6bf59927fe0431c1">TAG</a> (&quot;TimePoint&quot;)</td></tr>
 <tr class="memdesc:a147a75c3ec510a7e6bf59927fe0431c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a147a75c3ec510a7e6bf59927fe0431c1">More...</a><br /></td></tr>
 <tr class="separator:a147a75c3ec510a7e6bf59927fe0431c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a339f97e7724a925d86e049a01a8fa255"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a339f97e7724a925d86e049a01a8fa255">TAG</a> (&quot;TimeUtils&quot;)</td></tr>
 <tr class="memdesc:a339f97e7724a925d86e049a01a8fa255"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a339f97e7724a925d86e049a01a8fa255">More...</a><br /></td></tr>
 <tr class="separator:a339f97e7724a925d86e049a01a8fa255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac00dfe8fbfa65abe8d7c6295e82a28de"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ac00dfe8fbfa65abe8d7c6295e82a28de">convertToLocalTimeT</a> (const std::tm *timeStruct, std::time_t *ret)</td></tr>
+<tr class="separator:ac00dfe8fbfa65abe8d7c6295e82a28de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6de94eeba18b465b6a352c22230edc51"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a6de94eeba18b465b6a352c22230edc51">localtimeOffset</a> (std::time_t *ret)</td></tr>
+<tr class="separator:a6de94eeba18b465b6a352c22230edc51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -159,6 +165,8 @@ Variables</h2></td></tr>
 <tr class="memitem:aeac8b242063f986dd407f64986a030f3"><td class="memItemLeft" align="right" valign="top">static const unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aeac8b242063f986dd407f64986a030f3">ENCODED_TIME_STRING_EXPECTED_LENGTH</a></td></tr>
 <tr class="memdesc:aeac8b242063f986dd407f64986a030f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The total expected length of an ISO-8601 formatted string.  <a href="#aeac8b242063f986dd407f64986a030f3">More...</a><br /></td></tr>
 <tr class="separator:aeac8b242063f986dd407f64986a030f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9ef5abcbb2ad9679b82d2180289c931"><td class="memItemLeft" align="right" valign="top">static std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#af9ef5abcbb2ad9679b82d2180289c931">timeLock</a></td></tr>
+<tr class="separator:af9ef5abcbb2ad9679b82d2180289c931"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a49b3520d72a64b5d1830796bcdde1cf3"></a>
@@ -191,12 +199,96 @@ Variables</h2></td></tr>
 <p>YYYY-MM-DDTHH:MM:SS+0000</p>
 <p>Where (in order of listing) : Y means year M means month D means day H means hour M means minute S means second</p>
 <p>So, for example:</p>
-<p>1986-8-8T21:30:00+0000</p>
+<p>1986-08-08T21:30:00+0000</p>
 <p>means the year 1986, August 8th, 9:30pm.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">timeString</td><td>The time string, formatted as described above. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">unixTime</td><td>The converted time into Unix epoch time. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the conversion was successful. </dd></dl>
+
+</div>
+</div>
+<a id="ac00dfe8fbfa65abe8d7c6295e82a28de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac00dfe8fbfa65abe8d7c6295e82a28de">&#9670;&nbsp;</a></span>convertToLocalTimeT()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool alexaClientSDK::avsCommon::utils::timing::convertToLocalTimeT </td>
+          <td>(</td>
+          <td class="paramtype">const std::tm *&#160;</td>
+          <td class="paramname"><em>timeStruct</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::time_t *&#160;</td>
+          <td class="paramname"><em>ret</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Utility function that wraps localtime conversion to std::time_t.</p>
+<p>This function also creates a copy of the given timeStruct since mktime can change the object.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">timeStruct</td><td>Required pointer to timeStruct to be converted to time_t. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ret</td><td>Required pointer to object where the result will be saved. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the conversion was successful. </dd></dl>
+
+</div>
+</div>
+<a id="a7f656e2272fad4dc138200f2ed89950b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f656e2272fad4dc138200f2ed89950b">&#9670;&nbsp;</a></span>convertToUtcTimeT()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::utils::timing::convertToUtcTimeT </td>
+          <td>(</td>
+          <td class="paramtype">const std::tm *&#160;</td>
+          <td class="paramname"><em>utcTm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::time_t *&#160;</td>
+          <td class="paramname"><em>ret</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Convert tm struct to time_t in UTC time</p>
+<p>This function is needed because mktime uses the current timezone. Hence, we calculate the current timezone difference, and adjust the converted time.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">utcTm</td><td>time to be converted. This should be in UTC time </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ret</td><td>The converted UTC time to time_t </td></tr>
   </table>
   </dd>
 </dl>
@@ -227,6 +319,42 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the get time was successful. </dd></dl>
+
+</div>
+</div>
+<a id="a6de94eeba18b465b6a352c22230edc51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6de94eeba18b465b6a352c22230edc51">&#9670;&nbsp;</a></span>localtimeOffset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool alexaClientSDK::avsCommon::utils::timing::localtimeOffset </td>
+          <td>(</td>
+          <td class="paramtype">std::time_t *&#160;</td>
+          <td class="paramname"><em>ret</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Calculate localtime offset in std::time_t.</p>
+<p>In order to calculate the timezone offset, we call gmtime and localtime giving the same arbitrary time point. Then, we convert them back to time_t and calculate the conversion difference. The arbitrary time point is 24 hours past epoch, so we don't have to deal with negative time_t values.</p>
+<p>This function uses non-threadsafe time functions. Thus, it is important to use timeLock to guard these calls.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">ret</td><td>Required pointer to object where the result will be saved. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether it succeeded to calculate the localtime offset. </dd></dl>
 
 </div>
 </div>
@@ -354,9 +482,9 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ac1663aa627521b06d9029062708b9028">ENCODED_TIME_STRING_MONTH_OFFSET</a> +</div><div class="line">                                                            <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a458c951009132690d6dda11f04d7af59">ENCODED_TIME_STRING_MONTH_STRING_LENGTH</a> +</div><div class="line">                                                            <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ae411c60b17fd5820c2ee6a2162ceb898">ENCODED_TIME_STRING_DASH_SEPARATOR_STRING</a>.length()</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_ae411c60b17fd5820c2ee6a2162ceb898"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ae411c60b17fd5820c2ee6a2162ceb898">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_DASH_SEPARATOR_STRING</a></div><div class="ttdeci">static const std::string ENCODED_TIME_STRING_DASH_SEPARATOR_STRING</div><div class="ttdoc">The dash separator used in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:60</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a458c951009132690d6dda11f04d7af59"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a458c951009132690d6dda11f04d7af59">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_MONTH_STRING_LENGTH</a></div><div class="ttdeci">static const int ENCODED_TIME_STRING_MONTH_STRING_LENGTH</div><div class="ttdoc">The length of the month element in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:48</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_ac1663aa627521b06d9029062708b9028"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ac1663aa627521b06d9029062708b9028">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_MONTH_OFFSET</a></div><div class="ttdeci">static const unsigned long ENCODED_TIME_STRING_MONTH_OFFSET</div><div class="ttdoc">The offset into an ISO-8601 formatted string where the month begins. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:71</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ac1663aa627521b06d9029062708b9028">ENCODED_TIME_STRING_MONTH_OFFSET</a> +</div><div class="line">                                                            <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a458c951009132690d6dda11f04d7af59">ENCODED_TIME_STRING_MONTH_STRING_LENGTH</a> +</div><div class="line">                                                            <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ae411c60b17fd5820c2ee6a2162ceb898">ENCODED_TIME_STRING_DASH_SEPARATOR_STRING</a>.length()</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_ae411c60b17fd5820c2ee6a2162ceb898"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ae411c60b17fd5820c2ee6a2162ceb898">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_DASH_SEPARATOR_STRING</a></div><div class="ttdeci">static const std::string ENCODED_TIME_STRING_DASH_SEPARATOR_STRING</div><div class="ttdoc">The dash separator used in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:58</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a458c951009132690d6dda11f04d7af59"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a458c951009132690d6dda11f04d7af59">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_MONTH_STRING_LENGTH</a></div><div class="ttdeci">static const int ENCODED_TIME_STRING_MONTH_STRING_LENGTH</div><div class="ttdoc">The length of the month element in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:46</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_ac1663aa627521b06d9029062708b9028"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ac1663aa627521b06d9029062708b9028">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_MONTH_OFFSET</a></div><div class="ttdeci">static const unsigned long ENCODED_TIME_STRING_MONTH_OFFSET</div><div class="ttdoc">The offset into an ISO-8601 formatted string where the month begins. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:69</div></div>
 </div><!-- fragment -->
 <p>The offset into an ISO-8601 formatted string where the day begins. </p>
 
@@ -405,10 +533,10 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a88dc2d7065a9092ebd6d62b20da248ee">ENCODED_TIME_STRING_SECOND_OFFSET</a> + <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a0cc4ce870881bcafc8c7005baa3d3ced">ENCODED_TIME_STRING_SECOND_STRING_LENGTH</a> +</div><div class="line">    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a729083ff0b26c9fefebae235f3e51eba">ENCODED_TIME_STRING_PLUS_SEPARATOR_STRING</a>.length() + <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a9dba0dd49d3216398f60c3ad89349b2d">ENCODED_TIME_STRING_POSTFIX_STRING_LENGTH</a></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a0cc4ce870881bcafc8c7005baa3d3ced"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a0cc4ce870881bcafc8c7005baa3d3ced">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_SECOND_STRING_LENGTH</a></div><div class="ttdeci">static const int ENCODED_TIME_STRING_SECOND_STRING_LENGTH</div><div class="ttdoc">The length of the second element in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:56</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a9dba0dd49d3216398f60c3ad89349b2d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a9dba0dd49d3216398f60c3ad89349b2d">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_POSTFIX_STRING_LENGTH</a></div><div class="ttdeci">static const int ENCODED_TIME_STRING_POSTFIX_STRING_LENGTH</div><div class="ttdoc">The length of the post-fix element in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:58</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a729083ff0b26c9fefebae235f3e51eba"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a729083ff0b26c9fefebae235f3e51eba">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_PLUS_SEPARATOR_STRING</a></div><div class="ttdeci">static const std::string ENCODED_TIME_STRING_PLUS_SEPARATOR_STRING</div><div class="ttdoc">The plus separator used in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:66</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a88dc2d7065a9092ebd6d62b20da248ee"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a88dc2d7065a9092ebd6d62b20da248ee">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_SECOND_OFFSET</a></div><div class="ttdeci">static const unsigned long ENCODED_TIME_STRING_SECOND_OFFSET</div><div class="ttdoc">The offset into an ISO-8601 formatted string where the second begins. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:87</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a88dc2d7065a9092ebd6d62b20da248ee">ENCODED_TIME_STRING_SECOND_OFFSET</a> + <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a0cc4ce870881bcafc8c7005baa3d3ced">ENCODED_TIME_STRING_SECOND_STRING_LENGTH</a> +</div><div class="line">    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a729083ff0b26c9fefebae235f3e51eba">ENCODED_TIME_STRING_PLUS_SEPARATOR_STRING</a>.length() + <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a9dba0dd49d3216398f60c3ad89349b2d">ENCODED_TIME_STRING_POSTFIX_STRING_LENGTH</a></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a0cc4ce870881bcafc8c7005baa3d3ced"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a0cc4ce870881bcafc8c7005baa3d3ced">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_SECOND_STRING_LENGTH</a></div><div class="ttdeci">static const int ENCODED_TIME_STRING_SECOND_STRING_LENGTH</div><div class="ttdoc">The length of the second element in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:54</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a9dba0dd49d3216398f60c3ad89349b2d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a9dba0dd49d3216398f60c3ad89349b2d">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_POSTFIX_STRING_LENGTH</a></div><div class="ttdeci">static const int ENCODED_TIME_STRING_POSTFIX_STRING_LENGTH</div><div class="ttdoc">The length of the post-fix element in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:56</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a729083ff0b26c9fefebae235f3e51eba"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a729083ff0b26c9fefebae235f3e51eba">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_PLUS_SEPARATOR_STRING</a></div><div class="ttdeci">static const std::string ENCODED_TIME_STRING_PLUS_SEPARATOR_STRING</div><div class="ttdoc">The plus separator used in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:64</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a88dc2d7065a9092ebd6d62b20da248ee"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a88dc2d7065a9092ebd6d62b20da248ee">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_SECOND_OFFSET</a></div><div class="ttdeci">static const unsigned long ENCODED_TIME_STRING_SECOND_OFFSET</div><div class="ttdoc">The offset into an ISO-8601 formatted string where the second begins. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:85</div></div>
 </div><!-- fragment -->
 <p>The total expected length of an ISO-8601 formatted string. </p>
 
@@ -433,9 +561,9 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aad5e9ae40fa085c342d80acda1ba8065">ENCODED_TIME_STRING_DAY_OFFSET</a> +</div><div class="line">                                                             <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ab6e5d66b24d741023a3ab36f657d3f0c">ENCODED_TIME_STRING_DAY_STRING_LENGTH</a> +</div><div class="line">                                                             <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a77b98307dbec0b46dec3c05d8991b4e4">ENCODED_TIME_STRING_T_SEPARATOR_STRING</a>.length()</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_ab6e5d66b24d741023a3ab36f657d3f0c"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ab6e5d66b24d741023a3ab36f657d3f0c">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_DAY_STRING_LENGTH</a></div><div class="ttdeci">static const int ENCODED_TIME_STRING_DAY_STRING_LENGTH</div><div class="ttdoc">The length of the day element in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:50</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_aad5e9ae40fa085c342d80acda1ba8065"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aad5e9ae40fa085c342d80acda1ba8065">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_DAY_OFFSET</a></div><div class="ttdeci">static const unsigned long ENCODED_TIME_STRING_DAY_OFFSET</div><div class="ttdoc">The offset into an ISO-8601 formatted string where the day begins. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:75</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a77b98307dbec0b46dec3c05d8991b4e4"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a77b98307dbec0b46dec3c05d8991b4e4">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_T_SEPARATOR_STRING</a></div><div class="ttdeci">static const std::string ENCODED_TIME_STRING_T_SEPARATOR_STRING</div><div class="ttdoc">The &amp;#39;T&amp;#39; separator used in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:62</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aad5e9ae40fa085c342d80acda1ba8065">ENCODED_TIME_STRING_DAY_OFFSET</a> +</div><div class="line">                                                             <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ab6e5d66b24d741023a3ab36f657d3f0c">ENCODED_TIME_STRING_DAY_STRING_LENGTH</a> +</div><div class="line">                                                             <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a77b98307dbec0b46dec3c05d8991b4e4">ENCODED_TIME_STRING_T_SEPARATOR_STRING</a>.length()</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_ab6e5d66b24d741023a3ab36f657d3f0c"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ab6e5d66b24d741023a3ab36f657d3f0c">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_DAY_STRING_LENGTH</a></div><div class="ttdeci">static const int ENCODED_TIME_STRING_DAY_STRING_LENGTH</div><div class="ttdoc">The length of the day element in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:48</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_aad5e9ae40fa085c342d80acda1ba8065"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aad5e9ae40fa085c342d80acda1ba8065">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_DAY_OFFSET</a></div><div class="ttdeci">static const unsigned long ENCODED_TIME_STRING_DAY_OFFSET</div><div class="ttdoc">The offset into an ISO-8601 formatted string where the day begins. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:73</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a77b98307dbec0b46dec3c05d8991b4e4"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a77b98307dbec0b46dec3c05d8991b4e4">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_T_SEPARATOR_STRING</a></div><div class="ttdeci">static const std::string ENCODED_TIME_STRING_T_SEPARATOR_STRING</div><div class="ttdoc">The &amp;#39;T&amp;#39; separator used in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:60</div></div>
 </div><!-- fragment -->
 <p>The offset into an ISO-8601 formatted string where the hour begins. </p>
 
@@ -484,9 +612,9 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ad0cbcb7e443f7e8205338016eda06692">ENCODED_TIME_STRING_HOUR_OFFSET</a> +</div><div class="line">                                                               <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a56ec42bb2702b2d3943789f8c3e6bf44">ENCODED_TIME_STRING_HOUR_STRING_LENGTH</a> +</div><div class="line">                                                               <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aeead4ef5ea3dfb79966a42331364cd2d">ENCODED_TIME_STRING_COLON_SEPARATOR_STRING</a>.length()</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a56ec42bb2702b2d3943789f8c3e6bf44"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a56ec42bb2702b2d3943789f8c3e6bf44">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_HOUR_STRING_LENGTH</a></div><div class="ttdeci">static const int ENCODED_TIME_STRING_HOUR_STRING_LENGTH</div><div class="ttdoc">The length of the hour element in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:52</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_aeead4ef5ea3dfb79966a42331364cd2d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aeead4ef5ea3dfb79966a42331364cd2d">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_COLON_SEPARATOR_STRING</a></div><div class="ttdeci">static const std::string ENCODED_TIME_STRING_COLON_SEPARATOR_STRING</div><div class="ttdoc">The colon separator used in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:64</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_ad0cbcb7e443f7e8205338016eda06692"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ad0cbcb7e443f7e8205338016eda06692">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_HOUR_OFFSET</a></div><div class="ttdeci">static const unsigned long ENCODED_TIME_STRING_HOUR_OFFSET</div><div class="ttdoc">The offset into an ISO-8601 formatted string where the hour begins. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:79</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ad0cbcb7e443f7e8205338016eda06692">ENCODED_TIME_STRING_HOUR_OFFSET</a> +</div><div class="line">                                                               <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a56ec42bb2702b2d3943789f8c3e6bf44">ENCODED_TIME_STRING_HOUR_STRING_LENGTH</a> +</div><div class="line">                                                               <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aeead4ef5ea3dfb79966a42331364cd2d">ENCODED_TIME_STRING_COLON_SEPARATOR_STRING</a>.length()</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a56ec42bb2702b2d3943789f8c3e6bf44"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a56ec42bb2702b2d3943789f8c3e6bf44">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_HOUR_STRING_LENGTH</a></div><div class="ttdeci">static const int ENCODED_TIME_STRING_HOUR_STRING_LENGTH</div><div class="ttdoc">The length of the hour element in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:50</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_aeead4ef5ea3dfb79966a42331364cd2d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aeead4ef5ea3dfb79966a42331364cd2d">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_COLON_SEPARATOR_STRING</a></div><div class="ttdeci">static const std::string ENCODED_TIME_STRING_COLON_SEPARATOR_STRING</div><div class="ttdoc">The colon separator used in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:62</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_ad0cbcb7e443f7e8205338016eda06692"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ad0cbcb7e443f7e8205338016eda06692">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_HOUR_OFFSET</a></div><div class="ttdeci">static const unsigned long ENCODED_TIME_STRING_HOUR_OFFSET</div><div class="ttdoc">The offset into an ISO-8601 formatted string where the hour begins. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:77</div></div>
 </div><!-- fragment -->
 <p>The offset into an ISO-8601 formatted string where the minute begins. </p>
 
@@ -535,9 +663,9 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ac463332baf0712b638da5a1d11dab2af">ENCODED_TIME_STRING_YEAR_OFFSET</a> +</div><div class="line">                                                              <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#abaeb3be6a52665482f316d2c4843381e">ENCODED_TIME_STRING_YEAR_STRING_LENGTH</a> +</div><div class="line">                                                              <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ae411c60b17fd5820c2ee6a2162ceb898">ENCODED_TIME_STRING_DASH_SEPARATOR_STRING</a>.length()</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_ae411c60b17fd5820c2ee6a2162ceb898"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ae411c60b17fd5820c2ee6a2162ceb898">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_DASH_SEPARATOR_STRING</a></div><div class="ttdeci">static const std::string ENCODED_TIME_STRING_DASH_SEPARATOR_STRING</div><div class="ttdoc">The dash separator used in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:60</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_abaeb3be6a52665482f316d2c4843381e"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#abaeb3be6a52665482f316d2c4843381e">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_YEAR_STRING_LENGTH</a></div><div class="ttdeci">static const int ENCODED_TIME_STRING_YEAR_STRING_LENGTH</div><div class="ttdoc">The length of the year element in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:46</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_ac463332baf0712b638da5a1d11dab2af"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ac463332baf0712b638da5a1d11dab2af">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_YEAR_OFFSET</a></div><div class="ttdeci">static const unsigned long ENCODED_TIME_STRING_YEAR_OFFSET</div><div class="ttdoc">The offset into an ISO-8601 formatted string where the year begins. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:69</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ac463332baf0712b638da5a1d11dab2af">ENCODED_TIME_STRING_YEAR_OFFSET</a> +</div><div class="line">                                                              <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#abaeb3be6a52665482f316d2c4843381e">ENCODED_TIME_STRING_YEAR_STRING_LENGTH</a> +</div><div class="line">                                                              <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ae411c60b17fd5820c2ee6a2162ceb898">ENCODED_TIME_STRING_DASH_SEPARATOR_STRING</a>.length()</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_ae411c60b17fd5820c2ee6a2162ceb898"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ae411c60b17fd5820c2ee6a2162ceb898">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_DASH_SEPARATOR_STRING</a></div><div class="ttdeci">static const std::string ENCODED_TIME_STRING_DASH_SEPARATOR_STRING</div><div class="ttdoc">The dash separator used in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:58</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_abaeb3be6a52665482f316d2c4843381e"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#abaeb3be6a52665482f316d2c4843381e">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_YEAR_STRING_LENGTH</a></div><div class="ttdeci">static const int ENCODED_TIME_STRING_YEAR_STRING_LENGTH</div><div class="ttdoc">The length of the year element in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:44</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_ac463332baf0712b638da5a1d11dab2af"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ac463332baf0712b638da5a1d11dab2af">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_YEAR_OFFSET</a></div><div class="ttdeci">static const unsigned long ENCODED_TIME_STRING_YEAR_OFFSET</div><div class="ttdoc">The offset into an ISO-8601 formatted string where the year begins. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:67</div></div>
 </div><!-- fragment -->
 <p>The offset into an ISO-8601 formatted string where the month begins. </p>
 
@@ -634,9 +762,9 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a87c3849605765c9cfd0626d52f69346b">ENCODED_TIME_STRING_MINUTE_OFFSET</a> +</div><div class="line">                                                               <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a723c2152e90895168f92a6828ebbd988">ENCODED_TIME_STRING_MINUTE_STRING_LENGTH</a> +</div><div class="line">                                                               <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aeead4ef5ea3dfb79966a42331364cd2d">ENCODED_TIME_STRING_COLON_SEPARATOR_STRING</a>.length()</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a87c3849605765c9cfd0626d52f69346b"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a87c3849605765c9cfd0626d52f69346b">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_MINUTE_OFFSET</a></div><div class="ttdeci">static const unsigned long ENCODED_TIME_STRING_MINUTE_OFFSET</div><div class="ttdoc">The offset into an ISO-8601 formatted string where the minute begins. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:83</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_aeead4ef5ea3dfb79966a42331364cd2d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aeead4ef5ea3dfb79966a42331364cd2d">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_COLON_SEPARATOR_STRING</a></div><div class="ttdeci">static const std::string ENCODED_TIME_STRING_COLON_SEPARATOR_STRING</div><div class="ttdoc">The colon separator used in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:64</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a723c2152e90895168f92a6828ebbd988"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a723c2152e90895168f92a6828ebbd988">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_MINUTE_STRING_LENGTH</a></div><div class="ttdeci">static const int ENCODED_TIME_STRING_MINUTE_STRING_LENGTH</div><div class="ttdoc">The length of the minute element in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:54</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a87c3849605765c9cfd0626d52f69346b">ENCODED_TIME_STRING_MINUTE_OFFSET</a> +</div><div class="line">                                                               <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a723c2152e90895168f92a6828ebbd988">ENCODED_TIME_STRING_MINUTE_STRING_LENGTH</a> +</div><div class="line">                                                               <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aeead4ef5ea3dfb79966a42331364cd2d">ENCODED_TIME_STRING_COLON_SEPARATOR_STRING</a>.length()</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a87c3849605765c9cfd0626d52f69346b"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a87c3849605765c9cfd0626d52f69346b">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_MINUTE_OFFSET</a></div><div class="ttdeci">static const unsigned long ENCODED_TIME_STRING_MINUTE_OFFSET</div><div class="ttdoc">The offset into an ISO-8601 formatted string where the minute begins. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:81</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_aeead4ef5ea3dfb79966a42331364cd2d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aeead4ef5ea3dfb79966a42331364cd2d">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_COLON_SEPARATOR_STRING</a></div><div class="ttdeci">static const std::string ENCODED_TIME_STRING_COLON_SEPARATOR_STRING</div><div class="ttdoc">The colon separator used in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:62</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_html_a723c2152e90895168f92a6828ebbd988"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a723c2152e90895168f92a6828ebbd988">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_MINUTE_STRING_LENGTH</a></div><div class="ttdeci">static const int ENCODED_TIME_STRING_MINUTE_STRING_LENGTH</div><div class="ttdoc">The length of the minute element in an ISO-8601 formatted string. </div><div class="ttdef"><b>Definition:</b> TimeUtils.cpp:52</div></div>
 </div><!-- fragment -->
 <p>The offset into an ISO-8601 formatted string where the second begins. </p>
 
@@ -738,11 +866,35 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="af9ef5abcbb2ad9679b82d2180289c931"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9ef5abcbb2ad9679b82d2180289c931">&#9670;&nbsp;</a></span>timeLock</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex alexaClientSDK::avsCommon::utils::timing::timeLock</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Mutex to guard calls to gmtime and localtime.</p>
+<p>Both functions use an internal shared structure making them non-threadsafe. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>: ACSDK-897 We should wrap all time access functions and this mutex into one singleton class. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

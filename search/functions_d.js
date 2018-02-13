@@ -48,7 +48,7 @@ var searchData=
   ['notifyofholdtotalkstart',['notifyOfHoldToTalkStart',['../classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#ab3d782ac4bd45ba7ba3d7bbe3cf9ae3c',1,'alexaClientSDK::defaultClient::DefaultClient']]],
   ['notifyoftaptotalk',['notifyOfTapToTalk',['../classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#aa22b06aa7d928641e7d1554bb71eef98',1,'alexaClientSDK::defaultClient::DefaultClient']]],
   ['notifyoftaptotalkend',['notifyOfTapToTalkEnd',['../classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a9f5e3728ead108bb40e3af129d370c28',1,'alexaClientSDK::defaultClient::DefaultClient']]],
-  ['notifyofwakeword',['notifyOfWakeWord',['../classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#aff3d42ce0832903567575745ce1a3b5d',1,'alexaClientSDK::defaultClient::DefaultClient']]],
+  ['notifyofwakeword',['notifyOfWakeWord',['../classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a80c3b09825f0f879000c94403a28e85b',1,'alexaClientSDK::defaultClient::DefaultClient']]],
   ['notifyplaybackerror',['notifyPlaybackError',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test.html#a038ce184c781471069d4f4775d4dd4a6',1,'alexaClientSDK::avsCommon::utils::mediaPlayer::test']]],
   ['notifyplaybackfinished',['notifyPlaybackFinished',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test.html#a0dd7f91325e10b99f9b15fdd1e849dfd',1,'alexaClientSDK::avsCommon::utils::mediaPlayer::test']]],
   ['notifyplaybackpaused',['notifyPlaybackPaused',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test.html#a00350ab9a06df31f1f6830854a903002',1,'alexaClientSDK::avsCommon::utils::mediaPlayer::test']]],

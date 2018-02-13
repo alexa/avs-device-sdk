@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -103,6 +103,11 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:a0766f65a53522271be518260c5727a3f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a0766f65a53522271be518260c5727a3f">IndicatorState</a> { <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a0766f65a53522271be518260c5727a3fa88559a0cfd8250c9d65970cc145c92d4">IndicatorState::OFF</a> = 0, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a0766f65a53522271be518260c5727a3fa90651ebea9a35ec4e018c8157492e17c">IndicatorState::ON</a> = 1, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a0766f65a53522271be518260c5727a3fa0db45d2a4141101bdfe48e3314cfbca3">IndicatorState::UNDEFINED</a>
+ }</td></tr>
+<tr class="separator:a0766f65a53522271be518260c5727a3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80a513116d8d663f36151f11a9d0396e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a80a513116d8d663f36151f11a9d0396e">NotificationsCapabilityAgentState</a> { <br />
 &#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a80a513116d8d663f36151f11a9d0396eaa5daf7f2ebbba4975d61dab1c40188c7">NotificationsCapabilityAgentState::IDLE</a>, 
 <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a80a513116d8d663f36151f11a9d0396ea50366a49630a416ab3ccaa004196027e">NotificationsCapabilityAgentState::PLAYING</a>, 
@@ -116,6 +121,12 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a39cd86dc87b5fb189bd60f26326cf6da"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a39cd86dc87b5fb189bd60f26326cf6da">indicatorStateToInt</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a> state)</td></tr>
+<tr class="separator:a39cd86dc87b5fb189bd60f26326cf6da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6397afda167b2cd209a78c82b59b676"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#af6397afda167b2cd209a78c82b59b676">intToIndicatorState</a> (int stateNum)</td></tr>
+<tr class="separator:af6397afda167b2cd209a78c82b59b676"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a9c63b3cc8c094ae74c7abf2ee5afc7"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a6a9c63b3cc8c094ae74c7abf2ee5afc7">operator&lt;&lt;</a> (std::ostream &amp;stream, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a> state)</td></tr>
+<tr class="separator:a6a9c63b3cc8c094ae74c7abf2ee5afc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2eda4f4d93b013fe31009ee347cdc2b1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a2eda4f4d93b013fe31009ee347cdc2b1">stateToString</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a80a513116d8d663f36151f11a9d0396e">NotificationsCapabilityAgentState</a> state)</td></tr>
 <tr class="separator:a2eda4f4d93b013fe31009ee347cdc2b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af551518036a97683e5d3175867bafba9"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#af551518036a97683e5d3175867bafba9">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a80a513116d8d663f36151f11a9d0396e">NotificationsCapabilityAgentState</a> &amp;state)</td></tr>
@@ -192,6 +203,35 @@ Variables</h2></td></tr>
 <tr class="separator:a01d27c3af75410431c818cda7f45a3f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a0766f65a53522271be518260c5727a3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0766f65a53522271be518260c5727a3f">&#9670;&nbsp;</a></span>IndicatorState</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">alexaClientSDK::capabilityAgents::notifications::IndicatorState</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>An enum class used to represent the state of the notification indicator.</p>
+<dl class="section note"><dt>Note</dt><dd>These values shouldn't be changed before evaluating the effect a change will have on existing databases. </dd></dl>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a0766f65a53522271be518260c5727a3fa88559a0cfd8250c9d65970cc145c92d4"></a>OFF&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a0766f65a53522271be518260c5727a3fa90651ebea9a35ec4e018c8157492e17c"></a>ON&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a0766f65a53522271be518260c5727a3fa0db45d2a4141101bdfe48e3314cfbca3"></a>UNDEFINED&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <a id="a80a513116d8d663f36151f11a9d0396e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a80a513116d8d663f36151f11a9d0396e">&#9670;&nbsp;</a></span>NotificationsCapabilityAgentState</h2>
 
@@ -222,8 +262,76 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a39cd86dc87b5fb189bd60f26326cf6da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39cd86dc87b5fb189bd60f26326cf6da">&#9670;&nbsp;</a></span>indicatorStateToInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int alexaClientSDK::capabilityAgents::notifications::indicatorStateToInt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a>&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Convert an IndicatorState to an int.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>The <code>IndicatorState</code> to convert. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The int representation of state </dd></dl>
+
+</div>
+</div>
+<a id="af6397afda167b2cd209a78c82b59b676"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6397afda167b2cd209a78c82b59b676">&#9670;&nbsp;</a></span>intToIndicatorState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a> alexaClientSDK::capabilityAgents::notifications::intToIndicatorState </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>stateNum</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Convert an int into an <code>IndicatorState</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stateNum</td><td>The int to convert. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The IndicatorState representation of stateNum or nullptr if stateNum is invalid. </dd></dl>
+
+</div>
+</div>
 <a id="a5c7b0bcd74dd52f6104ee9e011e71404"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c7b0bcd74dd52f6104ee9e011e71404">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c7b0bcd74dd52f6104ee9e011e71404">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -260,7 +368,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af551518036a97683e5d3175867bafba9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af551518036a97683e5d3175867bafba9">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af551518036a97683e5d3175867bafba9">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -278,6 +386,42 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a80a513116d8d663f36151f11a9d0396e">NotificationsCapabilityAgentState</a> &amp;&#160;</td>
+          <td class="paramname"><em>state</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6a9c63b3cc8c094ae74c7abf2ee5afc7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a9c63b3cc8c094ae74c7abf2ee5afc7">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; alexaClientSDK::capabilityAgents::notifications::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a>&#160;</td>
           <td class="paramname"><em>state</em>&#160;</td>
         </tr>
         <tr>
@@ -550,7 +694,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a6e754560cb10cb84f09d0976d9957178">INDICATOR_STATE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a6e754560cb10cb84f09d0976d9957178">INDICATOR_STATE_NAME</a> + <span class="stringliteral">&quot; INT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_html_a6e754560cb10cb84f09d0976d9957178"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a6e754560cb10cb84f09d0976d9957178">alexaClientSDK::capabilityAgents::notifications::INDICATOR_STATE_NAME</a></div><div class="ttdeci">static const std::string INDICATOR_STATE_NAME</div><div class="ttdoc">The name of the table and the field that will hold the state of the indicator. </div><div class="ttdef"><b>Definition:</b> SQLiteNotificationsStorage.cpp:62</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a6e754560cb10cb84f09d0976d9957178">INDICATOR_STATE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a6e754560cb10cb84f09d0976d9957178">INDICATOR_STATE_NAME</a> + <span class="stringliteral">&quot; INT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_html_a6e754560cb10cb84f09d0976d9957178"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a6e754560cb10cb84f09d0976d9957178">alexaClientSDK::capabilityAgents::notifications::INDICATOR_STATE_NAME</a></div><div class="ttdeci">static const std::string INDICATOR_STATE_NAME</div><div class="ttdoc">The name of the table and the field that will hold the state of the indicator. </div><div class="ttdef"><b>Definition:</b> SQLiteNotificationsStorage.cpp:59</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -573,11 +717,11 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a9876876bd0c30eb48c422df08a9cf1c2">NOTIFICATION_INDICATOR_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">    <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a2fa8ada39243a049d78a9a39d46d4618">DATABASE_COLUMN_PERSIST_VISUAL_INDICATOR_NAME</a> + <span class="stringliteral">&quot; INT NOT NULL,&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#abc6117b2559da464ed7f8cca984ef723">DATABASE_COLUMN_PLAY_AUDIO_INDICATOR_NAME</a> +</div><div class="line">    <span class="stringliteral">&quot; INT NOT NULL,&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#ade212ed907bc22e26a759f3dce8b099d">DATABASE_COLUMN_ASSET_ID_NAME</a> + <span class="stringliteral">&quot; TEXT NOT NULL,&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a1e5822b0a4dc46aae638572560716289">DATABASE_COLUMN_ASSET_URL_NAME</a> +</div><div class="line">    <span class="stringliteral">&quot; TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_html_ade212ed907bc22e26a759f3dce8b099d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#ade212ed907bc22e26a759f3dce8b099d">alexaClientSDK::capabilityAgents::notifications::DATABASE_COLUMN_ASSET_ID_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_ASSET_ID_NAME</div><div class="ttdef"><b>Definition:</b> SQLiteNotificationsStorage.cpp:51</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_html_abc6117b2559da464ed7f8cca984ef723"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#abc6117b2559da464ed7f8cca984ef723">alexaClientSDK::capabilityAgents::notifications::DATABASE_COLUMN_PLAY_AUDIO_INDICATOR_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_PLAY_AUDIO_INDICATOR_NAME</div><div class="ttdef"><b>Definition:</b> SQLiteNotificationsStorage.cpp:49</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_html_a9876876bd0c30eb48c422df08a9cf1c2"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a9876876bd0c30eb48c422df08a9cf1c2">alexaClientSDK::capabilityAgents::notifications::NOTIFICATION_INDICATOR_TABLE_NAME</a></div><div class="ttdeci">static const std::string NOTIFICATION_INDICATOR_TABLE_NAME</div><div class="ttdef"><b>Definition:</b> SQLiteNotificationsStorage.cpp:45</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_html_a2fa8ada39243a049d78a9a39d46d4618"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a2fa8ada39243a049d78a9a39d46d4618">alexaClientSDK::capabilityAgents::notifications::DATABASE_COLUMN_PERSIST_VISUAL_INDICATOR_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_PERSIST_VISUAL_INDICATOR_NAME</div><div class="ttdef"><b>Definition:</b> SQLiteNotificationsStorage.cpp:47</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_html_a1e5822b0a4dc46aae638572560716289"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a1e5822b0a4dc46aae638572560716289">alexaClientSDK::capabilityAgents::notifications::DATABASE_COLUMN_ASSET_URL_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_ASSET_URL_NAME</div><div class="ttdef"><b>Definition:</b> SQLiteNotificationsStorage.cpp:53</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a9876876bd0c30eb48c422df08a9cf1c2">NOTIFICATION_INDICATOR_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">    <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a2fa8ada39243a049d78a9a39d46d4618">DATABASE_COLUMN_PERSIST_VISUAL_INDICATOR_NAME</a> + <span class="stringliteral">&quot; INT NOT NULL,&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#abc6117b2559da464ed7f8cca984ef723">DATABASE_COLUMN_PLAY_AUDIO_INDICATOR_NAME</a> +</div><div class="line">    <span class="stringliteral">&quot; INT NOT NULL,&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#ade212ed907bc22e26a759f3dce8b099d">DATABASE_COLUMN_ASSET_ID_NAME</a> + <span class="stringliteral">&quot; TEXT NOT NULL,&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a1e5822b0a4dc46aae638572560716289">DATABASE_COLUMN_ASSET_URL_NAME</a> +</div><div class="line">    <span class="stringliteral">&quot; TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_html_ade212ed907bc22e26a759f3dce8b099d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#ade212ed907bc22e26a759f3dce8b099d">alexaClientSDK::capabilityAgents::notifications::DATABASE_COLUMN_ASSET_ID_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_ASSET_ID_NAME</div><div class="ttdef"><b>Definition:</b> SQLiteNotificationsStorage.cpp:48</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_html_abc6117b2559da464ed7f8cca984ef723"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#abc6117b2559da464ed7f8cca984ef723">alexaClientSDK::capabilityAgents::notifications::DATABASE_COLUMN_PLAY_AUDIO_INDICATOR_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_PLAY_AUDIO_INDICATOR_NAME</div><div class="ttdef"><b>Definition:</b> SQLiteNotificationsStorage.cpp:46</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_html_a9876876bd0c30eb48c422df08a9cf1c2"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a9876876bd0c30eb48c422df08a9cf1c2">alexaClientSDK::capabilityAgents::notifications::NOTIFICATION_INDICATOR_TABLE_NAME</a></div><div class="ttdeci">static const std::string NOTIFICATION_INDICATOR_TABLE_NAME</div><div class="ttdef"><b>Definition:</b> SQLiteNotificationsStorage.cpp:42</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_html_a2fa8ada39243a049d78a9a39d46d4618"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a2fa8ada39243a049d78a9a39d46d4618">alexaClientSDK::capabilityAgents::notifications::DATABASE_COLUMN_PERSIST_VISUAL_INDICATOR_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_PERSIST_VISUAL_INDICATOR_NAME</div><div class="ttdef"><b>Definition:</b> SQLiteNotificationsStorage.cpp:44</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_html_a1e5822b0a4dc46aae638572560716289"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a1e5822b0a4dc46aae638572560716289">alexaClientSDK::capabilityAgents::notifications::DATABASE_COLUMN_ASSET_URL_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_ASSET_URL_NAME</div><div class="ttdef"><b>Definition:</b> SQLiteNotificationsStorage.cpp:50</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -955,7 +1099,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

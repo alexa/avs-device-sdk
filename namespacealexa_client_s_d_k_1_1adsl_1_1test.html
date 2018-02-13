@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -1910,37 +1910,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aa1faf467c28b91508bc9df949dda9a93"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1faf467c28b91508bc9df949dda9a93">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/38]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::adsl::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_directive_sequencer_test.html">DirectiveSequencerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testUnhandledDirective&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Exercise sending a <code>AVSDirective</code> for which no handler has been registered. Expect that m_exceptionEncounteredSender will receive a request to send the ExceptionEncountered message. </p>
-
-</div>
-</div>
 <a id="a06488f12f598aa463fcfe83beb275274"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06488f12f598aa463fcfe83beb275274">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/38]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a06488f12f598aa463fcfe83beb275274">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/38]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1965,6 +1936,35 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Test when the content of message is invalid JSON format. The AVSDirective shouldn't be created and and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS. </p>
+
+</div>
+</div>
+<a id="aa1faf467c28b91508bc9df949dda9a93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1faf467c28b91508bc9df949dda9a93">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/38]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::adsl::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_directive_sequencer_test.html">DirectiveSequencerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testUnhandledDirective&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Exercise sending a <code>AVSDirective</code> for which no handler has been registered. Expect that m_exceptionEncounteredSender will receive a request to send the ExceptionEncountered message. </p>
 
 </div>
 </div>
@@ -2965,10 +2965,10 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= R<span class="stringliteral">&quot;({</span></div><div class="line"><span class="stringliteral">    &quot;directive&quot;: {</span></div><div class="line"><span class="stringliteral">        &quot;header&quot;: {</span></div><div class="line"><span class="stringliteral">            &quot;namespace&quot;:&quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#ac51bac5887cb39835c33b8b9e88ee843">NAMESPACE_TEST</a> + R</span><span class="stringliteral">&quot;(&quot;,</span></div><div class="line"><span class="stringliteral">            &quot;name&quot;: &quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a63297c654301d1711caaa065a404ec2c">NAME_TEST</a> + R</span><span class="stringliteral">&quot;(&quot;,</span></div><div class="line"><span class="stringliteral">            &quot;messageId&quot;: &quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a7d68a2c0a72735f709525c080f9aba8e">MESSAGE_ID_TEST</a> + R</span><span class="stringliteral">&quot;(&quot;</span></div><div class="line"><span class="stringliteral">        },</span></div><div class="line"><span class="stringliteral">        &quot;payload&quot;: )&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a8c9ccf568d63b93c58b461eca456afd7">PAYLOAD_TEST</a> + R</span><span class="stringliteral">&quot;(</span></div><div class="line"><span class="stringliteral">    }</span></div><div class="line"><span class="stringliteral">})&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_a7d68a2c0a72735f709525c080f9aba8e"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a7d68a2c0a72735f709525c080f9aba8e">alexaClientSDK::adsl::test::MESSAGE_ID_TEST</a></div><div class="ttdeci">static const std::string MESSAGE_ID_TEST</div><div class="ttdoc">The messageId in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:45</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_ac51bac5887cb39835c33b8b9e88ee843"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#ac51bac5887cb39835c33b8b9e88ee843">alexaClientSDK::adsl::test::NAMESPACE_TEST</a></div><div class="ttdeci">static const std::string NAMESPACE_TEST</div><div class="ttdoc">The namespace in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:41</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_a63297c654301d1711caaa065a404ec2c"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a63297c654301d1711caaa065a404ec2c">alexaClientSDK::adsl::test::NAME_TEST</a></div><div class="ttdeci">static const std::string NAME_TEST</div><div class="ttdoc">The name field in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:43</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_a8c9ccf568d63b93c58b461eca456afd7"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a8c9ccf568d63b93c58b461eca456afd7">alexaClientSDK::adsl::test::PAYLOAD_TEST</a></div><div class="ttdeci">static const std::string PAYLOAD_TEST</div><div class="ttdoc">The payload in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:49</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= R<span class="stringliteral">&quot;({</span></div><div class="line"><span class="stringliteral">    &quot;directive&quot;: {</span></div><div class="line"><span class="stringliteral">        &quot;header&quot;: {</span></div><div class="line"><span class="stringliteral">            &quot;namespace&quot;:&quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#ac51bac5887cb39835c33b8b9e88ee843">NAMESPACE_TEST</a> + R</span><span class="stringliteral">&quot;(&quot;,</span></div><div class="line"><span class="stringliteral">            &quot;name&quot;: &quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a63297c654301d1711caaa065a404ec2c">NAME_TEST</a> + R</span><span class="stringliteral">&quot;(&quot;,</span></div><div class="line"><span class="stringliteral">            &quot;messageId&quot;: &quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a7d68a2c0a72735f709525c080f9aba8e">MESSAGE_ID_TEST</a> + R</span><span class="stringliteral">&quot;(&quot;</span></div><div class="line"><span class="stringliteral">        },</span></div><div class="line"><span class="stringliteral">        &quot;payload&quot;: )&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a8c9ccf568d63b93c58b461eca456afd7">PAYLOAD_TEST</a> + R</span><span class="stringliteral">&quot;(</span></div><div class="line"><span class="stringliteral">    }</span></div><div class="line"><span class="stringliteral">})&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_a7d68a2c0a72735f709525c080f9aba8e"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a7d68a2c0a72735f709525c080f9aba8e">alexaClientSDK::adsl::test::MESSAGE_ID_TEST</a></div><div class="ttdeci">static const std::string MESSAGE_ID_TEST</div><div class="ttdoc">The messageId in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:43</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_ac51bac5887cb39835c33b8b9e88ee843"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#ac51bac5887cb39835c33b8b9e88ee843">alexaClientSDK::adsl::test::NAMESPACE_TEST</a></div><div class="ttdeci">static const std::string NAMESPACE_TEST</div><div class="ttdoc">The namespace in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:39</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_a63297c654301d1711caaa065a404ec2c"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a63297c654301d1711caaa065a404ec2c">alexaClientSDK::adsl::test::NAME_TEST</a></div><div class="ttdeci">static const std::string NAME_TEST</div><div class="ttdoc">The name field in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:41</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_a8c9ccf568d63b93c58b461eca456afd7"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a8c9ccf568d63b93c58b461eca456afd7">alexaClientSDK::adsl::test::PAYLOAD_TEST</a></div><div class="ttdeci">static const std::string PAYLOAD_TEST</div><div class="ttdoc">The payload in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:47</div></div>
 </div><!-- fragment -->
 <p>A sample AVS speak directive with no dialogRequestId key. </p>
 
@@ -3137,11 +3137,11 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= R<span class="stringliteral">&quot;({</span></div><div class="line"><span class="stringliteral">    &quot;directive&quot;: {</span></div><div class="line"><span class="stringliteral">        &quot;header&quot;: {</span></div><div class="line"><span class="stringliteral">            &quot;namespace&quot;:&quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#ac51bac5887cb39835c33b8b9e88ee843">NAMESPACE_TEST</a> + R</span><span class="stringliteral">&quot;(&quot;,</span></div><div class="line"><span class="stringliteral">            &quot;name&quot;: &quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a63297c654301d1711caaa065a404ec2c">NAME_TEST</a> + R</span><span class="stringliteral">&quot;(&quot;,</span></div><div class="line"><span class="stringliteral">            &quot;messageId&quot;: &quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a7d68a2c0a72735f709525c080f9aba8e">MESSAGE_ID_TEST</a> + R</span><span class="stringliteral">&quot;(&quot;,</span></div><div class="line"><span class="stringliteral">            &quot;dialogRequestId&quot;: &quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a283d5022244b1597e311f2d604e53647">DIALOG_REQUEST_ID_TEST</a> + R</span><span class="stringliteral">&quot;(&quot;</span></div><div class="line"><span class="stringliteral">        },</span></div><div class="line"><span class="stringliteral">        &quot;payload&quot;: )&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a8c9ccf568d63b93c58b461eca456afd7">PAYLOAD_TEST</a> + R</span><span class="stringliteral">&quot;(</span></div><div class="line"><span class="stringliteral">    }</span></div><div class="line"><span class="stringliteral">})&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_a7d68a2c0a72735f709525c080f9aba8e"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a7d68a2c0a72735f709525c080f9aba8e">alexaClientSDK::adsl::test::MESSAGE_ID_TEST</a></div><div class="ttdeci">static const std::string MESSAGE_ID_TEST</div><div class="ttdoc">The messageId in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:45</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_a283d5022244b1597e311f2d604e53647"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a283d5022244b1597e311f2d604e53647">alexaClientSDK::adsl::test::DIALOG_REQUEST_ID_TEST</a></div><div class="ttdeci">static const std::string DIALOG_REQUEST_ID_TEST</div><div class="ttdoc">The dialogRequestId in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:47</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_ac51bac5887cb39835c33b8b9e88ee843"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#ac51bac5887cb39835c33b8b9e88ee843">alexaClientSDK::adsl::test::NAMESPACE_TEST</a></div><div class="ttdeci">static const std::string NAMESPACE_TEST</div><div class="ttdoc">The namespace in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:41</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_a63297c654301d1711caaa065a404ec2c"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a63297c654301d1711caaa065a404ec2c">alexaClientSDK::adsl::test::NAME_TEST</a></div><div class="ttdeci">static const std::string NAME_TEST</div><div class="ttdoc">The name field in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:43</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_a8c9ccf568d63b93c58b461eca456afd7"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a8c9ccf568d63b93c58b461eca456afd7">alexaClientSDK::adsl::test::PAYLOAD_TEST</a></div><div class="ttdeci">static const std::string PAYLOAD_TEST</div><div class="ttdoc">The payload in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:49</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= R<span class="stringliteral">&quot;({</span></div><div class="line"><span class="stringliteral">    &quot;directive&quot;: {</span></div><div class="line"><span class="stringliteral">        &quot;header&quot;: {</span></div><div class="line"><span class="stringliteral">            &quot;namespace&quot;:&quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#ac51bac5887cb39835c33b8b9e88ee843">NAMESPACE_TEST</a> + R</span><span class="stringliteral">&quot;(&quot;,</span></div><div class="line"><span class="stringliteral">            &quot;name&quot;: &quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a63297c654301d1711caaa065a404ec2c">NAME_TEST</a> + R</span><span class="stringliteral">&quot;(&quot;,</span></div><div class="line"><span class="stringliteral">            &quot;messageId&quot;: &quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a7d68a2c0a72735f709525c080f9aba8e">MESSAGE_ID_TEST</a> + R</span><span class="stringliteral">&quot;(&quot;,</span></div><div class="line"><span class="stringliteral">            &quot;dialogRequestId&quot;: &quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a283d5022244b1597e311f2d604e53647">DIALOG_REQUEST_ID_TEST</a> + R</span><span class="stringliteral">&quot;(&quot;</span></div><div class="line"><span class="stringliteral">        },</span></div><div class="line"><span class="stringliteral">        &quot;payload&quot;: )&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a8c9ccf568d63b93c58b461eca456afd7">PAYLOAD_TEST</a> + R</span><span class="stringliteral">&quot;(</span></div><div class="line"><span class="stringliteral">    }</span></div><div class="line"><span class="stringliteral">})&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_a7d68a2c0a72735f709525c080f9aba8e"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a7d68a2c0a72735f709525c080f9aba8e">alexaClientSDK::adsl::test::MESSAGE_ID_TEST</a></div><div class="ttdeci">static const std::string MESSAGE_ID_TEST</div><div class="ttdoc">The messageId in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:43</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_a283d5022244b1597e311f2d604e53647"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a283d5022244b1597e311f2d604e53647">alexaClientSDK::adsl::test::DIALOG_REQUEST_ID_TEST</a></div><div class="ttdeci">static const std::string DIALOG_REQUEST_ID_TEST</div><div class="ttdoc">The dialogRequestId in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:45</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_ac51bac5887cb39835c33b8b9e88ee843"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#ac51bac5887cb39835c33b8b9e88ee843">alexaClientSDK::adsl::test::NAMESPACE_TEST</a></div><div class="ttdeci">static const std::string NAMESPACE_TEST</div><div class="ttdoc">The namespace in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:39</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_a63297c654301d1711caaa065a404ec2c"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a63297c654301d1711caaa065a404ec2c">alexaClientSDK::adsl::test::NAME_TEST</a></div><div class="ttdeci">static const std::string NAME_TEST</div><div class="ttdoc">The name field in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:41</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1adsl_1_1test_html_a8c9ccf568d63b93c58b461eca456afd7"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a8c9ccf568d63b93c58b461eca456afd7">alexaClientSDK::adsl::test::PAYLOAD_TEST</a></div><div class="ttdeci">static const std::string PAYLOAD_TEST</div><div class="ttdoc">The payload in AVS message. </div><div class="ttdef"><b>Definition:</b> MessageInterpreterTest.cpp:47</div></div>
 </div><!-- fragment -->
 <p>A sample AVS speak directive with all valid JSON keys. </p>
 
@@ -3173,7 +3173,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

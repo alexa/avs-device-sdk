@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::PlaybackHandlerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::PlaybackHandlerInterface">
 <area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_playback_handler.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockPlaybackHandler" alt="" coords="270,5,467,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html" title="alexaClientSDK::capability\lAgents::playbackController\l::PlaybackController" alt="" coords="278,81,458,133"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html" title="alexaClientSDK::capability\lAgents::externalMediaPlayer\l::ExternalMediaPlayer" alt="" coords="272,81,464,133"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html" title="alexaClientSDK::capability\lAgents::playbackController\l::PlaybackController" alt="" coords="278,157,458,209"/>
 </map>

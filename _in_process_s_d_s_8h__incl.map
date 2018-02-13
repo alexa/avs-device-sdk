@@ -1,16 +1,17 @@
 <map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/SDS/InProcessSDS.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/SDS/InProcessSDS.h">
-<area shape="rect" id="node7" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="465,119,612,144"/>
-<area shape="rect" id="node11" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="803,265,979,304"/>
-<area shape="rect" id="node26" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="679,192,787,217"/>
-<area shape="rect" id="node27" href="$_reader_8h.html" title="Reader.h" alt="" coords="346,192,422,217"/>
-<area shape="rect" id="node30" href="$_writer_8h.html" title="Writer.h" alt="" coords="505,192,572,217"/>
-<area shape="rect" id="node13" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="861,352,1037,391"/>
-<area shape="rect" id="node15" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="448,439,662,477"/>
-<area shape="rect" id="node18" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1043,525,1219,564"/>
-<area shape="rect" id="node19" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1309,439,1485,477"/>
-<area shape="rect" id="node24" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1038,439,1234,477"/>
-<area shape="rect" id="node25" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="736,439,912,477"/>
-<area shape="rect" id="node20" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1488,525,1664,564"/>
-<area shape="rect" id="node22" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1488,612,1664,651"/>
-<area shape="rect" id="node31" href="$_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="487,272,590,297"/>
+<area shape="rect" id="node7" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="681,119,828,144"/>
+<area shape="rect" id="node11" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="940,265,1116,304"/>
+<area shape="rect" id="node26" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="846,192,954,217"/>
+<area shape="rect" id="node27" href="$_reader_8h.html" title="Reader.h" alt="" coords="642,192,718,217"/>
+<area shape="rect" id="node31" href="$_writer_8h.html" title="Writer.h" alt="" coords="473,192,540,217"/>
+<area shape="rect" id="node13" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1256,352,1432,391"/>
+<area shape="rect" id="node15" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="717,439,931,477"/>
+<area shape="rect" id="node18" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1551,525,1727,564"/>
+<area shape="rect" id="node19" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1256,439,1432,477"/>
+<area shape="rect" id="node24" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1507,439,1704,477"/>
+<area shape="rect" id="node25" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1005,439,1181,477"/>
+<area shape="rect" id="node20" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1124,525,1300,564"/>
+<area shape="rect" id="node22" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="416,612,592,651"/>
+<area shape="rect" id="node30" href="$_reader_policy_8h.html" title="ReaderPolicy.h" alt="" coords="481,272,591,297"/>
+<area shape="rect" id="node32" href="$_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="194,272,297,297"/>
 </map>

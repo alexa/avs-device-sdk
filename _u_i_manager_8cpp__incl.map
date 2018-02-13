@@ -10,7 +10,7 @@
 <area shape="rect" id="node13" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="1902,352,2093,391"/>
 <area shape="rect" id="node14" href="$_speaker_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerObserverInterface.h" alt="" coords="1941,265,2187,304"/>
 <area shape="rect" id="node15" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2507,265,2701,304"/>
-<area shape="rect" id="node11" href="$_indicator_state_8h.html" title="AVSCommon/AVS/IndicatorState.h" alt="" coords="1650,359,1878,384"/>
+<area shape="rect" id="node11" href="$_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_indicator_state_8h.html" title="AVSCommon/AVS/IndicatorState.h" alt="" coords="1650,359,1878,384"/>
 <area shape="rect" id="node18" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2331,352,2525,391"/>
 <area shape="rect" id="node22" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="2331,439,2525,477"/>
 <area shape="rect" id="node29" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="541,179,717,217"/>

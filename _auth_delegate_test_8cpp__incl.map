@@ -1,10 +1,11 @@
 <map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AuthDelegate/test/AuthDelegateTest.cpp" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AuthDelegate/test/AuthDelegateTest.cpp">
-<area shape="rect" id="node9" href="$_auth_delegate_8h.html" title="AuthDelegate/AuthDelegate.h" alt="" coords="499,112,697,137"/>
-<area shape="rect" id="node19" href="$_mock_http_post_8h.html" title="AuthDelegate/MockHttpPost.h" alt="" coords="1079,112,1279,137"/>
-<area shape="rect" id="node20" href="$_alexa_client_s_d_k_init_8h.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="1750,105,1954,144"/>
-<area shape="rect" id="node23" href="$_mock_auth_observer_8h.html" title="MockAuthObserver.h" alt="" coords="721,112,867,137"/>
-<area shape="rect" id="node13" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="493,192,684,231"/>
-<area shape="rect" id="node14" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="493,279,684,317"/>
-<area shape="rect" id="node16" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="942,192,1142,231"/>
-<area shape="rect" id="node17" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="1267,199,1478,224"/>
+<area shape="rect" id="node9" href="$_auth_delegate_8h.html" title="AuthDelegate/AuthDelegate.h" alt="" coords="620,112,817,137"/>
+<area shape="rect" id="node19" href="$_mock_http_post_8h.html" title="AuthDelegate/MockHttpPost.h" alt="" coords="1180,112,1380,137"/>
+<area shape="rect" id="node20" href="$_alexa_client_s_d_k_init_8h.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="1855,105,2059,144"/>
+<area shape="rect" id="node23" href="$_http_response_codes_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpResponseCodes.h" alt="" coords="1632,105,1832,144"/>
+<area shape="rect" id="node24" href="$_mock_auth_observer_8h.html" title="MockAuthObserver.h" alt="" coords="892,112,1038,137"/>
+<area shape="rect" id="node13" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="494,192,685,231"/>
+<area shape="rect" id="node14" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="494,279,685,317"/>
+<area shape="rect" id="node16" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="943,192,1142,231"/>
+<area shape="rect" id="node17" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="1268,199,1478,224"/>
 </map>

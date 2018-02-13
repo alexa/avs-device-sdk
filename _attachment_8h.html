@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -81,29 +81,31 @@ $(function() {
 <code>#include &quot;<a class="el" href="_attachment_reader_8h_source.html">AVSCommon/AVS/Attachment/AttachmentReader.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_attachment_writer_8h_source.html">AVSCommon/AVS/Attachment/AttachmentWriter.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_in_process_s_d_s_8h_source.html">AVSCommon/Utils/SDS/InProcessSDS.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_reader_policy_8h_source.html">AVSCommon/Utils/SDS/ReaderPolicy.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_writer_policy_8h_source.html">AVSCommon/Utils/SDS/WriterPolicy.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Attachment.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_attachment_8h__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_attachment_2_attachment_8h" alt=""/></div>
 <map name="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_attachment_2_attachment_8h" id="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_attachment_2_attachment_8h">
-<area shape="rect" id="node5" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="307,279,509,317"/>
-<area shape="rect" id="node8" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="1114,119,1315,157"/>
-<area shape="rect" id="node9" href="_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1626,119,1788,157"/>
-<area shape="rect" id="node34" href="_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="1711,372,1814,397"/>
-<area shape="rect" id="node12" href="_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1209,205,1356,231"/>
-<area shape="rect" id="node15" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="965,365,1141,404"/>
-<area shape="rect" id="node29" href="_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="1129,285,1237,311"/>
-<area shape="rect" id="node30" href="_reader_8h.html" title="Reader.h" alt="" coords="1320,285,1395,311"/>
-<area shape="rect" id="node33" href="_writer_8h.html" title="Writer.h" alt="" coords="1429,285,1496,311"/>
-<area shape="rect" id="node16" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="965,452,1141,491"/>
-<area shape="rect" id="node18" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="296,539,510,577"/>
-<area shape="rect" id="node21" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="693,625,869,664"/>
-<area shape="rect" id="node22" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1056,539,1232,577"/>
-<area shape="rect" id="node27" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="584,539,781,577"/>
-<area shape="rect" id="node28" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="856,539,1032,577"/>
-<area shape="rect" id="node23" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="963,625,1139,664"/>
-<area shape="rect" id="node25" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="843,712,1019,751"/>
+<area shape="rect" id="node5" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="76,279,278,317"/>
+<area shape="rect" id="node8" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="167,365,329,404"/>
+<area shape="rect" id="node9" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="804,119,1006,157"/>
+<area shape="rect" id="node10" href="_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1488,119,1650,157"/>
+<area shape="rect" id="node35" href="_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="1422,372,1524,397"/>
+<area shape="rect" id="node13" href="_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="858,205,1005,231"/>
+<area shape="rect" id="node16" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="777,365,953,404"/>
+<area shape="rect" id="node30" href="_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="707,285,815,311"/>
+<area shape="rect" id="node31" href="_reader_8h.html" title="Reader.h" alt="" coords="969,285,1044,311"/>
+<area shape="rect" id="node34" href="_writer_8h.html" title="Writer.h" alt="" coords="1110,285,1177,311"/>
+<area shape="rect" id="node17" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="777,452,953,491"/>
+<area shape="rect" id="node19" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="525,539,739,577"/>
+<area shape="rect" id="node22" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="973,625,1149,664"/>
+<area shape="rect" id="node23" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="274,539,450,577"/>
+<area shape="rect" id="node28" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="763,539,960,577"/>
+<area shape="rect" id="node29" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1034,539,1210,577"/>
+<area shape="rect" id="node24" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="208,625,384,664"/>
+<area shape="rect" id="node26" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="21,712,197,751"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -111,55 +113,55 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_attachment_8h__dep__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_attachment_2_attachment_8hdep" alt=""/></div>
 <map name="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_attachment_2_attachment_8hdep" id="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_attachment_2_attachment_8hdep">
-<area shape="rect" id="node2" href="_attachment_manager_interface_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/include/AVSCommon/AVS\l/Attachment/AttachmentManagerInterface.h" alt="" coords="1789,119,2068,184"/>
-<area shape="rect" id="node44" href="_in_process_attachment_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/include/AVSCommon/AVS\l/Attachment/InProcessAttachment.h" alt="" coords="4593,459,4827,524"/>
-<area shape="rect" id="node50" href="_attachment_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/src/Attachment/Attachment.cpp" alt="" coords="3591,125,3831,177"/>
-<area shape="rect" id="node3" href="_attachment_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/include/AVSCommon/AVS\l/Attachment/AttachmentManager.h" alt="" coords="2565,459,2791,524"/>
-<area shape="rect" id="node26" href="_audio_player_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/AudioPlayer/test/AudioPlayerTest.cpp" alt="" coords="1542,579,1790,631"/>
-<area shape="rect" id="node27" href="_speech_synthesizer_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test/SpeechSynthesizer\lTest.cpp" alt="" coords="5,799,289,864"/>
-<area shape="rect" id="node31" href="_a_v_s_directive_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/include/AVSCommon/AVS\l/AVSDirective.h" alt="" coords="1370,232,1580,297"/>
-<area shape="rect" id="node38" href="_speech_synthesizer_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/include/SpeechSynthesizer\l/SpeechSynthesizer.h" alt="" coords="286,685,590,751"/>
-<area shape="rect" id="node42" href="_mock_attachment_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/test/AVSCommon/AVS\l/Attachment/MockAttachmentManager.h" alt="" coords="2074,232,2332,297"/>
-<area shape="rect" id="node4" href="_h_t_t_p2_message_router_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/include\l/ACL/Transport/HTTP2MessageRouter.h" alt="" coords="2310,692,2571,744"/>
-<area shape="rect" id="node5" href="_default_client_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Application\lUtilities/DefaultClient/src\l/DefaultClient.cpp" alt="" coords="2512,799,2695,864"/>
-<area shape="rect" id="node6" href="_alerts_integration_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/AlertsIntegrationTest.cpp" alt="" coords="1766,805,1963,857"/>
-<area shape="rect" id="node7" href="_alexa_communications_library_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/AlexaCommunicationsLibrary\lTest.cpp" alt="" coords="2926,799,3150,864"/>
-<area shape="rect" id="node8" href="_alexa_directive_sequencer_library_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/AlexaDirectiveSequencerLibrary\lTest.cpp" alt="" coords="1243,799,1484,864"/>
-<area shape="rect" id="node9" href="_audio_player_integration_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/AudioPlayerIntegrationTest.cpp" alt="" coords="556,805,791,857"/>
-<area shape="rect" id="node10" href="_speech_synthesizer_integration_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="816,799,1044,864"/>
-<area shape="rect" id="node11" href="_h_t_t_p2_stream_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/include\l/ACL/Transport/HTTP2Stream.h" alt="" coords="3622,692,3833,744"/>
-<area shape="rect" id="node12" href="_h_t_t_p2_stream_pool_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/include\l/ACL/Transport/HTTP2StreamPool.h" alt="" coords="3498,805,3735,857"/>
-<area shape="rect" id="node13" href="_h_t_t_p2_transport_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/include\l/ACL/Transport/HTTP2Transport.h" alt="" coords="3660,912,3885,964"/>
-<area shape="rect" id="node15" href="_message_router_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/include\l/ACL/Transport/MessageRouter.h" alt="" coords="2371,579,2590,631"/>
-<area shape="rect" id="node16" href="_mime_parser_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/include\l/ACL/Transport/MimeParser.h" alt="" coords="3571,579,3768,631"/>
-<area shape="rect" id="node17" href="_mime_utils_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/test\l/Transport/Common/MimeUtils.h" alt="" coords="4191,692,4404,744"/>
-<area shape="rect" id="node18" href="_testable_attachment_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/test\l/Transport/Common/TestableAttachment\lManager.h" alt="" coords="3908,685,4168,751"/>
-<area shape="rect" id="node19" href="_directive_processor_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/test/DirectiveProcessorTest.cpp" alt="" coords="1400,692,1612,744"/>
-<area shape="rect" id="node20" href="_directive_router_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/test/DirectiveRouterTest.cpp" alt="" coords="2715,579,2907,631"/>
-<area shape="rect" id="node21" href="_directive_sequencer_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/test/DirectiveSequencerTest.cpp" alt="" coords="2931,579,3147,631"/>
-<area shape="rect" id="node22" href="_message_interpreter_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/test/MessageInterpreterTest.cpp" alt="" coords="2163,805,2379,857"/>
-<area shape="rect" id="node23" href="_attachment_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/src/Attachment/AttachmentManager.cpp" alt="" coords="3995,579,4286,631"/>
-<area shape="rect" id="node24" href="_attachment_manager_v2_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/test/Attachment/Attachment\lManagerV2Test.cpp" alt="" coords="4310,572,4528,637"/>
-<area shape="rect" id="node25" href="_capability_agent_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/test/CapabilityAgentTest.cpp" alt="" coords="3223,579,3445,631"/>
-<area shape="rect" id="node28" href="_client_message_handler_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/include/Integration/ClientMessage\lHandler.h" alt="" coords="1686,685,1912,751"/>
-<area shape="rect" id="node29" href="_test_directive_handler_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/include/Integration/TestDirective\lHandler.h" alt="" coords="1062,685,1276,751"/>
-<area shape="rect" id="node30" href="_test_exception_encountered_sender_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/include/Integration/TestException\lEncounteredSender.h" alt="" coords="817,685,1038,751"/>
-<area shape="rect" id="node14" href="_mime_parser_fuzz_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/test\l/Transport/MimeParserFuzzTest.cpp" alt="" coords="4049,805,4285,857"/>
-<area shape="rect" id="node32" href="_directive_processor_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/include/ADSL/DirectiveProcessor.h" alt="" coords="1286,579,1518,631"/>
-<area shape="rect" id="node33" href="_message_interpreter_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/src/MessageInterpreter.cpp" alt="" coords="1382,352,1568,404"/>
-<area shape="rect" id="node34" href="_a_d_s_l_2test_2_a_d_s_l_2_mock_directive_sequencer_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/test/ADSL/MockDirectiveSequencer.h" alt="" coords="2038,692,2286,744"/>
-<area shape="rect" id="node35" href="_a_v_s_directive_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/src/AVSDirective.cpp" alt="" coords="1643,352,1841,404"/>
-<area shape="rect" id="node36" href="_directive_handler_interface_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/SDKInterfaces/include/AVSCommon\l/SDKInterfaces/DirectiveHandlerInterface.h" alt="" coords="686,459,963,524"/>
-<area shape="rect" id="node37" href="_directive_sequencer_interface_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/SDKInterfaces/include/AVSCommon\l/SDKInterfaces/DirectiveSequencerInterface.h" alt="" coords="917,572,1212,637"/>
-<area shape="rect" id="node39" href="_directive_handler_result_interface_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/SDKInterfaces/include/AVSCommon\l/SDKInterfaces/DirectiveHandlerResultInterface.h" alt="" coords="467,345,782,411"/>
-<area shape="rect" id="node40" href="_j_s_o_n_util_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/test/JSONUtilTest.cpp" alt="" coords="856,352,1054,404"/>
-<area shape="rect" id="node41" href="_speaker_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeakerManager/include/SpeakerManager\l/SpeakerManager.h" alt="" coords="1078,345,1357,411"/>
-<area shape="rect" id="node43" href="_audio_input_processor_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessorTest.cpp" alt="" coords="2117,352,2366,404"/>
-<area shape="rect" id="node45" href="_in_process_attachment_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/src/Attachment/InProcessAttachment.cpp" alt="" coords="4654,579,4953,631"/>
-<area shape="rect" id="node46" href="_attachment_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/test/Attachment/Attachment\lTest.cpp" alt="" coords="4977,572,5195,637"/>
-<area shape="rect" id="node47" href="_attachment_writer_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/test/Attachment/Attachment\lWriterTest.cpp" alt="" coords="5219,572,5438,637"/>
-<area shape="rect" id="node48" href="_h_t_t_p_content_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/include/AVSCommon\l/Utils/HTTPContent.h" alt="" coords="5462,572,5659,637"/>
-<area shape="rect" id="node49" href="_url_to_attachment_converter_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/PlaylistParser\l/include/PlaylistParser/UrlToAttachment\lConverter.h" alt="" coords="5684,572,5939,637"/>
+<area shape="rect" id="node2" href="_attachment_manager_interface_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/include/AVSCommon/AVS\l/Attachment/AttachmentManagerInterface.h" alt="" coords="2034,119,2314,184"/>
+<area shape="rect" id="node44" href="_in_process_attachment_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/include/AVSCommon/AVS\l/Attachment/InProcessAttachment.h" alt="" coords="4880,459,5114,524"/>
+<area shape="rect" id="node50" href="_attachment_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/src/Attachment/Attachment.cpp" alt="" coords="3636,125,3875,177"/>
+<area shape="rect" id="node3" href="_attachment_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/include/AVSCommon/AVS\l/Attachment/AttachmentManager.h" alt="" coords="2791,459,3018,524"/>
+<area shape="rect" id="node26" href="_audio_player_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/AudioPlayer/test/AudioPlayerTest.cpp" alt="" coords="1718,579,1966,631"/>
+<area shape="rect" id="node27" href="_speech_synthesizer_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test/SpeechSynthesizer\lTest.cpp" alt="" coords="2856,799,3140,864"/>
+<area shape="rect" id="node31" href="_a_v_s_directive_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/include/AVSCommon/AVS\l/AVSDirective.h" alt="" coords="741,232,951,297"/>
+<area shape="rect" id="node42" href="_mock_attachment_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/test/AVSCommon/AVS\l/Attachment/MockAttachmentManager.h" alt="" coords="1961,232,2219,297"/>
+<area shape="rect" id="node4" href="_h_t_t_p2_message_router_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/include\l/ACL/Transport/HTTP2MessageRouter.h" alt="" coords="2649,692,2910,744"/>
+<area shape="rect" id="node5" href="_default_client_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Application\lUtilities/DefaultClient/src\l/DefaultClient.cpp" alt="" coords="3499,799,3681,864"/>
+<area shape="rect" id="node6" href="_alerts_integration_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/AlertsIntegrationTest.cpp" alt="" coords="1646,805,1843,857"/>
+<area shape="rect" id="node7" href="_alexa_communications_library_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/AlexaCommunicationsLibrary\lTest.cpp" alt="" coords="3221,799,3445,864"/>
+<area shape="rect" id="node8" href="_alexa_directive_sequencer_library_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/AlexaDirectiveSequencerLibrary\lTest.cpp" alt="" coords="2440,799,2681,864"/>
+<area shape="rect" id="node9" href="_audio_player_integration_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/AudioPlayerIntegrationTest.cpp" alt="" coords="1341,805,1575,857"/>
+<area shape="rect" id="node10" href="_speech_synthesizer_integration_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/test/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="2069,799,2297,864"/>
+<area shape="rect" id="node11" href="_h_t_t_p2_stream_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/include\l/ACL/Transport/HTTP2Stream.h" alt="" coords="3838,692,4049,744"/>
+<area shape="rect" id="node12" href="_h_t_t_p2_stream_pool_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/include\l/ACL/Transport/HTTP2StreamPool.h" alt="" coords="3720,805,3958,857"/>
+<area shape="rect" id="node13" href="_h_t_t_p2_transport_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/include\l/ACL/Transport/HTTP2Transport.h" alt="" coords="3883,912,4108,964"/>
+<area shape="rect" id="node15" href="_message_router_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/include\l/ACL/Transport/MessageRouter.h" alt="" coords="2547,579,2766,631"/>
+<area shape="rect" id="node16" href="_mime_parser_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/include\l/ACL/Transport/MimeParser.h" alt="" coords="3849,579,4046,631"/>
+<area shape="rect" id="node17" href="_mime_utils_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/test\l/Transport/Common/MimeUtils.h" alt="" coords="4124,692,4336,744"/>
+<area shape="rect" id="node18" href="_testable_attachment_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/test\l/Transport/Common/TestableAttachment\lManager.h" alt="" coords="4360,685,4620,751"/>
+<area shape="rect" id="node19" href="_directive_processor_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/test/DirectiveProcessorTest.cpp" alt="" coords="789,692,1001,744"/>
+<area shape="rect" id="node20" href="_directive_router_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/test/DirectiveRouterTest.cpp" alt="" coords="2942,579,3134,631"/>
+<area shape="rect" id="node21" href="_directive_sequencer_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/test/DirectiveSequencerTest.cpp" alt="" coords="3158,579,3374,631"/>
+<area shape="rect" id="node22" href="_message_interpreter_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/test/MessageInterpreterTest.cpp" alt="" coords="597,805,812,857"/>
+<area shape="rect" id="node23" href="_attachment_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/src/Attachment/AttachmentManager.cpp" alt="" coords="4464,579,4756,631"/>
+<area shape="rect" id="node24" href="_attachment_manager_v2_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/test/Attachment/Attachment\lManagerV2Test.cpp" alt="" coords="4222,572,4440,637"/>
+<area shape="rect" id="node25" href="_capability_agent_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/test/CapabilityAgentTest.cpp" alt="" coords="3399,579,3621,631"/>
+<area shape="rect" id="node28" href="_client_message_handler_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/include/Integration/ClientMessage\lHandler.h" alt="" coords="2246,685,2472,751"/>
+<area shape="rect" id="node29" href="_test_directive_handler_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/include/Integration/TestDirective\lHandler.h" alt="" coords="1662,685,1876,751"/>
+<area shape="rect" id="node30" href="_test_exception_encountered_sender_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Integration\l/include/Integration/TestException\lEncounteredSender.h" alt="" coords="1900,685,2120,751"/>
+<area shape="rect" id="node14" href="_mime_parser_fuzz_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ACL/test\l/Transport/MimeParserFuzzTest.cpp" alt="" coords="4247,805,4483,857"/>
+<area shape="rect" id="node32" href="_directive_processor_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/include/ADSL/DirectiveProcessor.h" alt="" coords="777,579,1009,631"/>
+<area shape="rect" id="node33" href="_message_interpreter_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/src/MessageInterpreter.cpp" alt="" coords="622,352,809,404"/>
+<area shape="rect" id="node34" href="_a_d_s_l_2test_2_a_d_s_l_2_mock_directive_sequencer_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/ADSL\l/test/ADSL/MockDirectiveSequencer.h" alt="" coords="137,692,384,744"/>
+<area shape="rect" id="node35" href="_a_v_s_directive_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/src/AVSDirective.cpp" alt="" coords="883,352,1081,404"/>
+<area shape="rect" id="node36" href="_directive_handler_interface_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/SDKInterfaces/include/AVSCommon\l/SDKInterfaces/DirectiveHandlerInterface.h" alt="" coords="959,459,1235,524"/>
+<area shape="rect" id="node37" href="_directive_sequencer_interface_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/SDKInterfaces/include/AVSCommon\l/SDKInterfaces/DirectiveSequencerInterface.h" alt="" coords="459,572,753,637"/>
+<area shape="rect" id="node38" href="_speech_synthesizer_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/include/SpeechSynthesizer\l/SpeechSynthesizer.h" alt="" coords="1283,685,1588,751"/>
+<area shape="rect" id="node39" href="_directive_handler_result_interface_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/SDKInterfaces/include/AVSCommon\l/SDKInterfaces/DirectiveHandlerResultInterface.h" alt="" coords="1156,345,1470,411"/>
+<area shape="rect" id="node40" href="_j_s_o_n_util_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/test/JSONUtilTest.cpp" alt="" coords="46,352,243,404"/>
+<area shape="rect" id="node41" href="_speaker_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/SpeakerManager/include/SpeakerManager\l/SpeakerManager.h" alt="" coords="268,345,547,411"/>
+<area shape="rect" id="node43" href="_audio_input_processor_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessorTest.cpp" alt="" coords="1966,352,2214,404"/>
+<area shape="rect" id="node45" href="_in_process_attachment_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/src/Attachment/InProcessAttachment.cpp" alt="" coords="5361,579,5660,631"/>
+<area shape="rect" id="node46" href="_attachment_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/test/Attachment/Attachment\lTest.cpp" alt="" coords="5684,572,5902,637"/>
+<area shape="rect" id="node47" href="_attachment_writer_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/AVS/test/Attachment/Attachment\lWriterTest.cpp" alt="" coords="5926,572,6144,637"/>
+<area shape="rect" id="node48" href="_h_t_t_p_content_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/include/AVSCommon\l/Utils/HTTPContent.h" alt="" coords="4830,572,5027,637"/>
+<area shape="rect" id="node49" href="_url_content_to_attachment_converter_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/PlaylistParser\l/include/PlaylistParser/UrlContentTo\lAttachmentConverter.h" alt="" coords="5102,572,5336,637"/>
 </map>
 </div>
 </div>
@@ -186,7 +188,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

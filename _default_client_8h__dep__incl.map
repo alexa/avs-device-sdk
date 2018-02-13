@@ -1,12 +1,12 @@
 <map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/ApplicationUtilities/DefaultClient/include/DefaultClient/DefaultClient.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/ApplicationUtilities/DefaultClient/include/DefaultClient/DefaultClient.h">
-<area shape="rect" id="node2" href="$_default_client_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Application\lUtilities/DefaultClient/src\l/DefaultClient.cpp" alt="" coords="5,119,188,184"/>
-<area shape="rect" id="node3" href="$_interaction_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/InteractionManager.h" alt="" coords="212,125,481,177"/>
-<area shape="rect" id="node10" href="$_keyword_observer_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/KeywordObserver.h" alt="" coords="505,125,766,177"/>
-<area shape="rect" id="node4" href="$_user_input_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/UserInputManager.h" alt="" coords="58,232,322,284"/>
-<area shape="rect" id="node9" href="$_interaction_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/InteractionManager.cpp" alt="" coords="346,232,533,284"/>
-<area shape="rect" id="node5" href="$_sample_application_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="58,332,323,384"/>
-<area shape="rect" id="node8" href="$_user_input_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/UserInputManager.cpp" alt="" coords="346,332,533,384"/>
-<area shape="rect" id="node6" href="$main_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/main.cpp" alt="" coords="97,432,283,484"/>
-<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/SampleApplication.cpp" alt="" coords="391,432,578,484"/>
-<area shape="rect" id="node11" href="$_keyword_observer_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/KeywordObserver.cpp" alt="" coords="607,232,794,284"/>
+<area shape="rect" id="node2" href="$_default_client_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Application\lUtilities/DefaultClient/src\l/DefaultClient.cpp" alt="" coords="126,119,309,184"/>
+<area shape="rect" id="node3" href="$_interaction_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/InteractionManager.h" alt="" coords="211,232,480,284"/>
+<area shape="rect" id="node10" href="$_keyword_observer_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/KeywordObserver.h" alt="" coords="386,125,647,177"/>
+<area shape="rect" id="node4" href="$_user_input_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/UserInputManager.h" alt="" coords="6,332,270,384"/>
+<area shape="rect" id="node9" href="$_interaction_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/InteractionManager.cpp" alt="" coords="294,332,481,384"/>
+<area shape="rect" id="node5" href="$_sample_application_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="5,432,271,484"/>
+<area shape="rect" id="node8" href="$_user_input_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/UserInputManager.cpp" alt="" coords="294,432,481,484"/>
+<area shape="rect" id="node6" href="$main_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/main.cpp" alt="" coords="45,532,231,584"/>
+<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/SampleApplication.cpp" alt="" coords="339,532,526,584"/>
+<area shape="rect" id="node11" href="$_keyword_observer_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/KeywordObserver.cpp" alt="" coords="555,232,742,284"/>
 </map>

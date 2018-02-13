@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -121,6 +121,8 @@ Functions</h2></td></tr>
 <tr class="separator:a6595949db3e4db1d3512dc3372d26036"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d5e17b1f13073c9c66f3bd12cfcdc90"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a4d5e17b1f13073c9c66f3bd12cfcdc90">convertToValue</a> (const rapidjson::Value &amp;documentNode, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#ac2a1eefec8330e695ffcf2134869443e">ClearBehavior</a> *clearBehavior)</td></tr>
 <tr class="separator:a4d5e17b1f13073c9c66f3bd12cfcdc90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cb357164ceca3d529f570cdc59e2e4c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a1cb357164ceca3d529f570cdc59e2e4c">getIntervalStart</a> (const std::chrono::milliseconds &amp;interval, const std::chrono::milliseconds &amp;offset, std::chrono::milliseconds *intervalStart)</td></tr>
+<tr class="separator:a1cb357164ceca3d529f570cdc59e2e4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7242ee7592f37b8a50a026b49573dcb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aa7242ee7592f37b8a50a026b49573dcb">playBehaviorToString</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540">PlayBehavior</a> playBehavior)</td></tr>
 <tr class="separator:aa7242ee7592f37b8a50a026b49573dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7abd046ee00ef9c2f8ccab273748edf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#ae7abd046ee00ef9c2f8ccab273748edf">stringToPlayBehavior</a> (const std::string &amp;text, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540">PlayBehavior</a> *playBehavior)</td></tr>
@@ -140,6 +142,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aabdf92c5f143be35328cb007aabf27f4"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aabdf92c5f143be35328cb007aabf27f4">TAG</a> (&quot;AudioPlayer&quot;)</td></tr>
 <tr class="memdesc:aabdf92c5f143be35328cb007aabf27f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#aabdf92c5f143be35328cb007aabf27f4">More...</a><br /></td></tr>
 <tr class="separator:aabdf92c5f143be35328cb007aabf27f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2f3df88570a6468092f3f23f43b7a8d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#ad2f3df88570a6468092f3f23f43b7a8d">TAG</a> (&quot;IntervalCalculator&quot;)</td></tr>
+<tr class="memdesc:ad2f3df88570a6468092f3f23f43b7a8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#ad2f3df88570a6468092f3f23f43b7a8d">More...</a><br /></td></tr>
+<tr class="separator:ad2f3df88570a6468092f3f23f43b7a8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -446,6 +451,50 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if conversion is successful, else <code>false</code>. </dd></dl>
+
+</div>
+</div>
+<a id="a1cb357164ceca3d529f570cdc59e2e4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cb357164ceca3d529f570cdc59e2e4c">&#9670;&nbsp;</a></span>getIntervalStart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::capabilityAgents::audioPlayer::getIntervalStart </td>
+          <td>(</td>
+          <td class="paramtype">const std::chrono::milliseconds &amp;&#160;</td>
+          <td class="paramname"><em>interval</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::chrono::milliseconds &amp;&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::chrono::milliseconds *&#160;</td>
+          <td class="paramname"><em>intervalStart</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calculate the time relative to an offet for a given interval period. Error cases are negative intervals or offsets and null pointers for the return value. Additionally, an interval of 0 is illegal.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">interval</td><td>The period (starting from 0) that the interval occurs at. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">offset</td><td>The time that has elapsed so far </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">intervalStart</td><td>A pointer to the return value. It will contain the relative time from the offset when the next interval will start. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if successful, false if there is an error. </dd></dl>
 
 </div>
 </div>
@@ -787,8 +836,36 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ad2f3df88570a6468092f3f23f43b7a8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2f3df88570a6468092f3f23f43b7a8d">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::capabilityAgents::audioPlayer::TAG </td>
+          <td>(</td>
+          <td class="paramtype">&quot;IntervalCalculator&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
 <a id="aabdf92c5f143be35328cb007aabf27f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabdf92c5f143be35328cb007aabf27f4">&#9670;&nbsp;</a></span>TAG()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aabdf92c5f143be35328cb007aabf27f4">&#9670;&nbsp;</a></span>TAG() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1156,7 +1233,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

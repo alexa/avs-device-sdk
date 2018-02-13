@@ -4,12 +4,18 @@
 <area shape="rect" id="node4" href="$_kitt_ai_key_word_detector_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/KittAi\l/include/KittAi/KittAiKeyWordDetector.h" alt="" coords="318,232,570,284"/>
 <area shape="rect" id="node6" href="$_kitt_ai_key_word_detector_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/KittAi\l/test/KittAiKeyWordDetectorTest.cpp" alt="" coords="149,332,385,384"/>
 <area shape="rect" id="node7" href="$_sensory_keyword_detector_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/Sensory\l/include/Sensory/SensoryKeywordDetector.h" alt="" coords="595,232,880,284"/>
-<area shape="rect" id="node9" href="$_sensory_keyword_detector_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/Sensory\l/test/SensoryKeywordDetectorTest.cpp" alt="" coords="1076,332,1327,384"/>
+<area shape="rect" id="node9" href="$_sensory_keyword_detector_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/Sensory\l/test/SensoryKeywordDetectorTest.cpp" alt="" coords="916,332,1167,384"/>
 <area shape="rect" id="node11" href="$_abstract_keyword_detector_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/test\l/AbstractKeywordDetectorTest.cpp" alt="" coords="1128,232,1354,284"/>
-<area shape="rect" id="node12" href="$_keyword_observer_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/KeywordObserver.h" alt="" coords="1429,125,1690,177"/>
+<area shape="rect" id="node12" href="$_keyword_observer_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/KeywordObserver.h" alt="" coords="1519,125,1780,177"/>
 <area shape="rect" id="node10" href="$_abstract_keyword_detector_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/src\l/AbstractKeywordDetector.cpp" alt="" coords="904,232,1104,284"/>
 <area shape="rect" id="node5" href="$_kitt_ai_key_word_detector_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/KittAi\l/src/KittAiKeyWordDetector.cpp" alt="" coords="408,332,615,384"/>
 <area shape="rect" id="node8" href="$_sensory_keyword_detector_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/KWD/Sensory\l/src/SensoryKeywordDetector.cpp" alt="" coords="639,332,862,384"/>
-<area shape="rect" id="node13" href="$_keyword_observer_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/KeywordObserver.cpp" alt="" coords="1448,232,1634,284"/>
-<area shape="rect" id="node14" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/SampleApplication.cpp" alt="" coords="1659,232,1845,284"/>
+<area shape="rect" id="node13" href="$_interaction_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/InteractionManager.h" alt="" coords="1429,232,1698,284"/>
+<area shape="rect" id="node17" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/SampleApplication.cpp" alt="" coords="1643,532,1829,584"/>
+<area shape="rect" id="node20" href="$_keyword_observer_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/KeywordObserver.cpp" alt="" coords="1773,232,1960,284"/>
+<area shape="rect" id="node14" href="$_user_input_manager_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/UserInputManager.h" alt="" coords="1432,332,1696,384"/>
+<area shape="rect" id="node19" href="$_interaction_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/InteractionManager.cpp" alt="" coords="1221,332,1408,384"/>
+<area shape="rect" id="node15" href="$_sample_application_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="1433,432,1698,484"/>
+<area shape="rect" id="node18" href="$_user_input_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/UserInputManager.cpp" alt="" coords="1223,432,1409,484"/>
+<area shape="rect" id="node16" href="$main_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/main.cpp" alt="" coords="1432,532,1618,584"/>
 </map>

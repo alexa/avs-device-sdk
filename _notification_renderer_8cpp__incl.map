@@ -1,17 +1,19 @@
 <map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/CapabilityAgents/Notifications/src/NotificationRenderer.cpp" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/CapabilityAgents/Notifications/src/NotificationRenderer.cpp">
-<area shape="rect" id="node3" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="395,105,571,144"/>
-<area shape="rect" id="node22" href="$_notification_renderer_8h.html" title="Notifications/Notification\lRenderer.h" alt="" coords="1117,192,1280,231"/>
-<area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="488,279,702,317"/>
-<area shape="rect" id="node14" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="776,279,952,317"/>
-<area shape="rect" id="node15" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="195,192,371,231"/>
-<area shape="rect" id="node20" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="731,192,928,231"/>
-<area shape="rect" id="node21" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="395,192,571,231"/>
-<area shape="rect" id="node16" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="237,279,413,317"/>
-<area shape="rect" id="node18" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="93,365,269,404"/>
-<area shape="rect" id="node24" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1530,365,1739,404"/>
-<area shape="rect" id="node29" href="$_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="1206,279,1423,317"/>
-<area shape="rect" id="node31" href="$_notification_renderer_interface_8h.html" title="NotificationRendererInterface.h" alt="" coords="976,285,1182,311"/>
-<area shape="rect" id="node27" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1534,452,1735,491"/>
-<area shape="rect" id="node30" href="$_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="1197,365,1406,404"/>
-<area shape="rect" id="node32" href="$_notification_renderer_observer_interface_8h.html" title="NotificationRendererObserver\lInterface.h" alt="" coords="925,365,1123,404"/>
+<area shape="rect" id="node3" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="343,105,519,144"/>
+<area shape="rect" id="node22" href="$_notification_renderer_8h.html" title="Notifications/Notification\lRenderer.h" alt="" coords="1069,192,1233,231"/>
+<area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="417,279,631,317"/>
+<area shape="rect" id="node14" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="705,279,881,317"/>
+<area shape="rect" id="node15" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="116,192,292,231"/>
+<area shape="rect" id="node20" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="754,192,951,231"/>
+<area shape="rect" id="node21" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="468,192,644,231"/>
+<area shape="rect" id="node16" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="116,279,292,317"/>
+<area shape="rect" id="node18" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="100,365,276,404"/>
+<area shape="rect" id="node24" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1304,365,1512,404"/>
+<area shape="rect" id="node31" href="$_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="1136,279,1353,317"/>
+<area shape="rect" id="node33" href="$_notification_renderer_interface_8h.html" title="NotificationRendererInterface.h" alt="" coords="905,285,1111,311"/>
+<area shape="rect" id="node27" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1609,452,1810,491"/>
+<area shape="rect" id="node30" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1098,459,1320,484"/>
+<area shape="rect" id="node29" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1559,539,1721,577"/>
+<area shape="rect" id="node32" href="$_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="866,452,1075,491"/>
+<area shape="rect" id="node34" href="$_notification_renderer_observer_interface_8h.html" title="NotificationRendererObserver\lInterface.h" alt="" coords="931,365,1128,404"/>
 </map>

@@ -1,5 +1,9 @@
 var searchData=
 [
+  ['large_5furl',['LARGE_URL',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a46b2b1779c882b278ec37380592dea04',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer']]],
+  ['largeurl',['largeURL',['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_playback_state.html#a4d7b62b9288d1703b5f1087bf31ea6db',1,'alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::AdapterPlaybackState']]],
+  ['launched',['launched',['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_session_state.html#aefacc2a3f72dd99e08351e2ddc4fa8bf',1,'alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::AdapterSessionState::launched()'],['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a1299bc071b3fa4aab138281167bd5378',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer::LAUNCHED()']]],
+  ['layout',['layout',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html#a05ce645081b4a71bc899109bbde73a50',1,'alexaClientSDK::avsCommon::utils::AudioFormat']]],
   ['leading_5fcrlf_5fchar_5fsize',['LEADING_CRLF_CHAR_SIZE',['../namespacealexa_client_s_d_k_1_1acl.html#abe7026fc5eeec090250274fa1dd61af8',1,'alexaClientSDK::acl']]],
   ['level_5fand_5ftext_5fseparator',['LEVEL_AND_TEXT_SEPARATOR',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a26bab62dbf76d7c47eac3c67633d1837',1,'alexaClientSDK::avsCommon::utils::logger']]],
   ['libcurl_5ftest_5fauth_5fstring',['LIBCURL_TEST_AUTH_STRING',['../namespacealexa_client_s_d_k_1_1acl_1_1test.html#a53d86ae55627103156e1b77226eb181b',1,'alexaClientSDK::acl::test::LIBCURL_TEST_AUTH_STRING()'],['../namespacealexa_client_s_d_k_1_1acl_1_1test.html#a53d86ae55627103156e1b77226eb181b',1,'alexaClientSDK::acl::test::LIBCURL_TEST_AUTH_STRING()']]],
@@ -8,6 +12,12 @@ var searchData=
   ['line_5ffeed_5fascii',['LINE_FEED_ASCII',['../namespacealexa_client_s_d_k_1_1acl.html#a0a01f7d2f8ce31f228b80fa5103c7db0',1,'alexaClientSDK::acl']]],
   ['lions_5faudio_5ffile',['LIONS_AUDIO_FILE',['../namespacealexa_client_s_d_k_1_1integration_1_1test.html#acf1fa4d48de938ae0ae2b3f5ffe634a2',1,'alexaClientSDK::integration::test']]],
   ['locale_5fmessage',['LOCALE_MESSAGE',['../namespacealexa_client_s_d_k_1_1sample_app.html#a813826e4d8ab0b76184ffa92aec2f0c8',1,'alexaClientSDK::sampleApp']]],
+  ['logged_5fin',['LOGGED_IN',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#ab1fd5b9cab3e424dacf4b610327fa86a',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer']]],
+  ['loggedin',['loggedIn',['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_session_state.html#aaf1d9845dd16308ee5af59d9ac074ee5',1,'alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::AdapterSessionState']]],
+  ['login',['LOGIN',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a676be9eed1165e9a333506482be2f2b8',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer']]],
+  ['login_5fdirective',['LOGIN_DIRECTIVE',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#aface1f346dabc4bb5af0bee8ebe71794',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer']]],
+  ['logout',['LOGOUT',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a9dbb3b4348ba671e50f74c97df495774',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer']]],
+  ['logout_5fdirective',['LOGOUT_DIRECTIVE',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#add04cf636a9182dcd8a81ca20ed453ab',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer']]],
   ['long_5fdelay',['LONG_DELAY',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#ab2b55c2b3f357d4d2de244b5a98e26ef',1,'alexaClientSDK::avsCommon::utils::timing::test']]],
   ['long_5fdelay_5ftime',['LONG_DELAY_TIME',['../namespacealexa_client_s_d_k_1_1integration_1_1test.html#ad98488b188462b02b01bbe91cb67493e',1,'alexaClientSDK::integration::test']]],
   ['long_5ftimeout_5ffor_5fsend_5fin_5fseconds',['LONG_TIMEOUT_FOR_SEND_IN_SECONDS',['../namespacealexa_client_s_d_k_1_1integration_1_1test.html#a4ecd0a3b3e17a7765e2039402d726ea5',1,'alexaClientSDK::integration::test']]],

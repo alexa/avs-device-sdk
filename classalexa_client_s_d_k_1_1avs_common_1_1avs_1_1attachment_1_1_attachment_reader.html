@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -90,10 +90,6 @@ Inheritance diagram for alexaClientSDK::avsCommon::avs::attachment::AttachmentRe
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:aaa6fe587256c511800cd2fc4ed4f5e51"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#aaa6fe587256c511800cd2fc4ed4f5e51">Policy</a> { <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#aaa6fe587256c511800cd2fc4ed4f5e51a72323e5457d8fb855145bfee934aa415">Policy::BLOCKING</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#aaa6fe587256c511800cd2fc4ed4f5e51a71fed0a1fc7faaeab0a56a76799e5ad3">Policy::NON_BLOCKING</a>
- }</td></tr>
-<tr class="separator:aaa6fe587256c511800cd2fc4ed4f5e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf0a8d5bc9decff5049c41eaabe75f74"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#abf0a8d5bc9decff5049c41eaabe75f74">ReadStatus</a> { <br />
 &#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#abf0a8d5bc9decff5049c41eaabe75f74ae0aa021e21dddbd6d8cecec71e9cf564">ReadStatus::OK</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#abf0a8d5bc9decff5049c41eaabe75f74a787bd2f5224b6b864eea398349436849">ReadStatus::OK_WOULDBLOCK</a>, 
@@ -120,6 +116,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4cbeab24735c515366f5c3df77af15e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae67249ec9ce58aee98cb805088a148dc"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#ae67249ec9ce58aee98cb805088a148dc">seek</a> (uint64_t offset)=0</td></tr>
 <tr class="separator:ae67249ec9ce58aee98cb805088a148dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac02b7a2a76504cf697ce05ffb990dbd6"><td class="memItemLeft" align="right" valign="top">virtual uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#ac02b7a2a76504cf697ce05ffb990dbd6">getNumUnreadBytes</a> ()=0</td></tr>
+<tr class="separator:ac02b7a2a76504cf697ce05ffb990dbd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a3bb38796a3a8e23782ecb38d8d6fed"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#a1a3bb38796a3a8e23782ecb38d8d6fed">close</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#aa294a325880ee91da440be7008099f2f">ClosePoint</a> closePoint=<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#aa294a325880ee91da440be7008099f2fac7b7279c5169b23f95b28bd9e9437b79">ClosePoint::AFTER_DRAINING_CURRENT_BUFFER</a>)=0</td></tr>
 <tr class="separator:a1a3bb38796a3a8e23782ecb38d8d6fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -151,35 +149,6 @@ Public Member Functions</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aa294a325880ee91da440be7008099f2fad051319484a869ba5244878e7ed93b8d"></a>IMMEDIATELY&#160;</td><td class="fielddoc"><p>Stop returning data immediately after the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#a1a3bb38796a3a8e23782ecb38d8d6fed">close()</a></code> call. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="aa294a325880ee91da440be7008099f2fac7b7279c5169b23f95b28bd9e9437b79"></a>AFTER_DRAINING_CURRENT_BUFFER&#160;</td><td class="fielddoc"><p>Stop returning data when all of the data in the buffer at the time <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#a1a3bb38796a3a8e23782ecb38d8d6fed">close()</a></code> was called has been read. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="aaa6fe587256c511800cd2fc4ed4f5e51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa6fe587256c511800cd2fc4ed4f5e51">&#9670;&nbsp;</a></span>Policy</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#aaa6fe587256c511800cd2fc4ed4f5e51">alexaClientSDK::avsCommon::avs::attachment::AttachmentReader::Policy</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>An enum class to allow configuration of the type of reader. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aaa6fe587256c511800cd2fc4ed4f5e51a72323e5457d8fb855145bfee934aa415"></a>BLOCKING&#160;</td><td class="fielddoc"><p>A read of n bytes will not return until a number of bytes, equal to or less than n, are available, or a timeout occurs. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="aaa6fe587256c511800cd2fc4ed4f5e51a71fed0a1fc7faaeab0a56a76799e5ad3"></a>NON_BLOCKING&#160;</td><td class="fielddoc"><p>A read of n bytes will return immediately, whether n bytes were available or not. </p>
 </td></tr>
 </table>
 
@@ -283,6 +252,35 @@ Public Member Functions</h2></td></tr>
 </dl>
 
 <p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_attachment_reader.html#a8fd4d8a4b268cdeab2f7843afeadde54">alexaClientSDK::mediaPlayer::test::MockAttachmentReader</a>, and <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html#a8a5717eb8c5c50ad8b346a0853b9b465">alexaClientSDK::avsCommon::avs::attachment::InProcessAttachmentReader</a>.</p>
+
+</div>
+</div>
+<a id="ac02b7a2a76504cf697ce05ffb990dbd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac02b7a2a76504cf697ce05ffb990dbd6">&#9670;&nbsp;</a></span>getNumUnreadBytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint64_t alexaClientSDK::avsCommon::avs::attachment::AttachmentReader::getNumUnreadBytes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Utility function to return the number of bytes in an attachment.</p>
+<dl class="section return"><dt>Returns</dt><dd>Number of unread bytes in the attachment by this attachment reader. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_attachment_reader.html#af32538aedee5e4f833f808b5adb629cd">alexaClientSDK::mediaPlayer::test::MockAttachmentReader</a>, and <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html#a9495369591ada8ec547aa86c7631226e">alexaClientSDK::avsCommon::avs::attachment::InProcessAttachmentReader</a>.</p>
 
 </div>
 </div>
@@ -390,7 +388,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

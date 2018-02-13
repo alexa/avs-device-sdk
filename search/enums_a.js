@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['notificationscapabilityagentstate',['NotificationsCapabilityAgentState',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a80a513116d8d663f36151f11a9d0396e',1,'alexaClientSDK::capabilityAgents::notifications']]]
+  ['mediatype',['MediaType',['../namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player.html#a278ddc22d0280cbe5dd79dec501e9607',1,'alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer']]]
 ];

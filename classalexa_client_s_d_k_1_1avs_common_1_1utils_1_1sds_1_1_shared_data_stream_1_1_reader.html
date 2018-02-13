@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -70,6 +70,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader-members.html">List of all members</a>  </div>
@@ -85,9 +86,15 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader_1_1_error.html">Error</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a5605f9c3bab8fe16954eeffe66b2868a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a5605f9c3bab8fe16954eeffe66b2868a">Policy</a> = <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds.html#a07d2a9441f40d089a1f9a0d7e2baab4b">ReaderPolicy</a></td></tr>
+<tr class="memdesc:a5605f9c3bab8fe16954eeffe66b2868a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the policy to use for reading from the stream.  <a href="#a5605f9c3bab8fe16954eeffe66b2868a">More...</a><br /></td></tr>
+<tr class="separator:a5605f9c3bab8fe16954eeffe66b2868a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a396b1d383190a25bf3e9d3220ac8acfa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a396b1d383190a25bf3e9d3220ac8acfa">Reader</a> (<a class="el" href="_reader_8h.html#abb491487def337216dea442161545e72">Policy</a> policy, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout.html">BufferLayout</a> &gt; bufferLayout, uint8_t id)</td></tr>
+<tr class="memitem:a396b1d383190a25bf3e9d3220ac8acfa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a396b1d383190a25bf3e9d3220ac8acfa">Reader</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds.html#a07d2a9441f40d089a1f9a0d7e2baab4b">Policy</a> policy, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout.html">BufferLayout</a> &gt; bufferLayout, uint8_t id)</td></tr>
 <tr class="separator:a396b1d383190a25bf3e9d3220ac8acfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea7e1e2c62dc0b96ff1494e939e5840a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#aea7e1e2c62dc0b96ff1494e939e5840a">~Reader</a> ()</td></tr>
 <tr class="memdesc:aea7e1e2c62dc0b96ff1494e939e5840a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This destructor detaches the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> from a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout.html">BufferLayout</a></code>.  <a href="#aea7e1e2c62dc0b96ff1494e939e5840a">More...</a><br /></td></tr>
@@ -117,7 +124,28 @@ class alexaClientSDK::avsCommon::utils::sds::SharedDataStream&lt; T &gt;::Reader
 
 <p>This is a nested class in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html">SharedDataStream</a> which provides an interface for reading (consuming) data from a stream.</p>
 <dl class="section note"><dt>Note</dt><dd>This class is primarily intended to be used from a single thread. The <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> as a whole is thread-safe in the sense that <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html">Writer</a></code> and <code>Readers</code> can all live in different threads, but individual member functions of a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> instance should not be called from multiple threads except where specifically noted in function documentation below. </dd></dl>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a5605f9c3bab8fe16954eeffe66b2868a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5605f9c3bab8fe16954eeffe66b2868a">&#9670;&nbsp;</a></span>Policy</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html">alexaClientSDK::avsCommon::utils::sds::SharedDataStream</a>&lt; T &gt;::<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a>&lt; T &gt;::<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds.html#a07d2a9441f40d089a1f9a0d7e2baab4b">Policy</a> =  <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds.html#a07d2a9441f40d089a1f9a0d7e2baab4b">ReaderPolicy</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specifies the policy to use for reading from the stream. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a396b1d383190a25bf3e9d3220ac8acfa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a396b1d383190a25bf3e9d3220ac8acfa">&#9670;&nbsp;</a></span>Reader()</h2>
 
@@ -131,7 +159,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html">alexaClientSDK::avsCommon::utils::sds::SharedDataStream</a>&lt; T &gt;::<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a>&lt; T &gt;::<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="_reader_8h.html#abb491487def337216dea442161545e72">Policy</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds.html#a07d2a9441f40d089a1f9a0d7e2baab4b">Policy</a>&#160;</td>
           <td class="paramname"><em>policy</em>, </td>
         </tr>
         <tr>
@@ -436,7 +464,7 @@ template&lt;typename T &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

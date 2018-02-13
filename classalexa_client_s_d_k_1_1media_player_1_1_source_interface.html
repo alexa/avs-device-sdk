@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -82,9 +82,8 @@ Inheritance diagram for alexaClientSDK::mediaPlayer::SourceInterface:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1media_player_1_1_source_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1media_player_1_1_source_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1media_player_1_1_source_interface_inherit__map" id="alexa_client_s_d_k_1_1media_player_1_1_source_interface_inherit__map">
-<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html" title="alexaClientSDK::mediaPlayer\l::BaseStreamSource" alt="" coords="495,36,691,75"/>
-<area shape="rect" id="node6" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html" title="alexaClientSDK::mediaPlayer\l::UrlSource" alt="" coords="495,99,691,137"/>
-<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="5,68,202,107"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html" title="alexaClientSDK::mediaPlayer\l::BaseStreamSource" alt="" coords="495,37,691,76"/>
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="5,37,202,76"/>
 <area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1media_player_1_1_attachment_reader_source.html" title="alexaClientSDK::mediaPlayer\l::AttachmentReaderSource" alt="" coords="739,5,935,44"/>
 <area shape="rect" id="node5" href="classalexa_client_s_d_k_1_1media_player_1_1_i_stream_source.html" title="alexaClientSDK::mediaPlayer\l::IStreamSource" alt="" coords="739,68,935,107"/>
 </map>
@@ -219,7 +218,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Internally, a source may need additional processing after EOS is reached. This function will process that data.</p>
 <dl class="section return"><dt>Returns</dt><dd>A boolean indicating whether the process operation was successful. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a8ad648280a36f049de03bd98558d16db">alexaClientSDK::mediaPlayer::UrlSource</a>, and <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a155068ec162d01ad664c248319e8a0da">alexaClientSDK::mediaPlayer::BaseStreamSource</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a155068ec162d01ad664c248319e8a0da">alexaClientSDK::mediaPlayer::BaseStreamSource</a>.</p>
 
 </div>
 </div>
@@ -248,7 +247,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Internally, a source may have additional data after processing an EOS. This function indicates whether there is additional data, and should be called after <code><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html#a1db735cb93d89f68bcc07396cd90c849">handleEndOfStream()</a></code>.</p>
 <dl class="section return"><dt>Returns</dt><dd>A boolean indicating whether the source has additional data to be played. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a6e89b94e63348690c5589946e452b9a5">alexaClientSDK::mediaPlayer::UrlSource</a>, and <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#ae8431559ca9af10b686de63bbc910c0f">alexaClientSDK::mediaPlayer::BaseStreamSource</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#ae8431559ca9af10b686de63bbc910c0f">alexaClientSDK::mediaPlayer::BaseStreamSource</a>.</p>
 
 </div>
 </div>
@@ -277,7 +276,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Indicates whether a source is local or remote from the perspective of the <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html">MediaPlayer</a> (e.g. playing out of the SDS is local, playing a URL is remote).</p>
 <dl class="section return"><dt>Returns</dt><dd>A boolean indicating whether the source is from a remote or local source </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a300ab4708a8b1c9f2faa9f3dce2abc1d">alexaClientSDK::mediaPlayer::UrlSource</a>, and <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_attachment_reader_source.html#a0dbb878575a8bbfc56d78297ff12e043">alexaClientSDK::mediaPlayer::AttachmentReaderSource</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_attachment_reader_source.html#a0dbb878575a8bbfc56d78297ff12e043">alexaClientSDK::mediaPlayer::AttachmentReaderSource</a>.</p>
 
 </div>
 </div>
@@ -305,7 +304,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Perform preprocessing of the source. Must be called before reading from the source. </p>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_url_source.html#a4620388e0fde7e7a9f7f03d24981f8a1">alexaClientSDK::mediaPlayer::UrlSource</a>, and <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#aa470bd17a8d1aaab9021f9bba41c6baf">alexaClientSDK::mediaPlayer::BaseStreamSource</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#aa470bd17a8d1aaab9021f9bba41c6baf">alexaClientSDK::mediaPlayer::BaseStreamSource</a>.</p>
 
 </div>
 </div>
@@ -316,7 +315,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

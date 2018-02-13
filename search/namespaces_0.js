@@ -20,6 +20,7 @@ var searchData=
   ['contextmanager',['contextManager',['../namespacealexa_client_s_d_k_1_1context_manager.html',1,'alexaClientSDK']]],
   ['data',['data',['../namespacealexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1data.html',1,'alexaClientSDK::applicationUtilities::resources::audio']]],
   ['defaultclient',['defaultClient',['../namespacealexa_client_s_d_k_1_1default_client.html',1,'alexaClientSDK']]],
+  ['externalmediaplayer',['externalMediaPlayer',['../namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer'],['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer']]],
   ['file',['file',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1file.html',1,'alexaClientSDK::avsCommon::utils']]],
   ['functional',['functional',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1functional.html',1,'alexaClientSDK::avsCommon::utils']]],
   ['initialization',['initialization',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization.html',1,'alexaClientSDK::avsCommon::avs']]],

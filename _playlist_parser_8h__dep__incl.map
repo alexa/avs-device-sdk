@@ -1,12 +1,12 @@
 <map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/PlaylistParser/include/PlaylistParser/PlaylistParser.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/PlaylistParser/include/PlaylistParser/PlaylistParser.h">
 <area shape="rect" id="node2" href="$_media_player_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/src/MediaPlayer.cpp" alt="" coords="5,319,197,371"/>
-<area shape="rect" id="node3" href="$_media_player_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/test/MediaPlayerTest.cpp" alt="" coords="564,319,756,371"/>
-<area shape="rect" id="node4" href="$_url_to_attachment_converter_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/PlaylistParser\l/include/PlaylistParser/UrlToAttachment\lConverter.h" alt="" coords="247,105,502,171"/>
-<area shape="rect" id="node10" href="$_playlist_parser_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/PlaylistParser\l/src/PlaylistParser.cpp" alt="" coords="699,112,898,164"/>
-<area shape="rect" id="node11" href="$_playlist_parser_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/PlaylistParser\l/test/PlaylistParserTest.cpp" alt="" coords="922,112,1121,164"/>
-<area shape="rect" id="node5" href="$_media_player_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/include/MediaPlayer/MediaPlayer.h" alt="" coords="391,219,625,271"/>
-<area shape="rect" id="node9" href="$_url_to_attachment_converter_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/PlaylistParser\l/src/UrlToAttachmentConverter.cpp" alt="" coords="139,219,367,271"/>
-<area shape="rect" id="node6" href="$_sample_application_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="223,319,488,371"/>
-<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/SampleApplication.cpp" alt="" coords="432,419,619,471"/>
-<area shape="rect" id="node7" href="$main_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/main.cpp" alt="" coords="221,419,408,471"/>
+<area shape="rect" id="node3" href="$_media_player_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/test/MediaPlayerTest.cpp" alt="" coords="607,319,798,371"/>
+<area shape="rect" id="node4" href="$_url_content_to_attachment_converter_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/PlaylistParser\l/include/PlaylistParser/UrlContentTo\lAttachmentConverter.h" alt="" coords="298,105,532,171"/>
+<area shape="rect" id="node10" href="$_playlist_parser_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/PlaylistParser\l/src/PlaylistParser.cpp" alt="" coords="746,112,945,164"/>
+<area shape="rect" id="node11" href="$_playlist_parser_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/PlaylistParser\l/test/PlaylistParserTest.cpp" alt="" coords="968,112,1167,164"/>
+<area shape="rect" id="node5" href="$_media_player_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/MediaPlayer\l/include/MediaPlayer/MediaPlayer.h" alt="" coords="438,219,671,271"/>
+<area shape="rect" id="node9" href="$_url_content_to_attachment_converter_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/PlaylistParser\l/src/UrlContentToAttachmentConverter.cpp" alt="" coords="138,219,413,271"/>
+<area shape="rect" id="node6" href="$_sample_application_8h.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="258,319,523,371"/>
+<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/SampleApplication.cpp" alt="" coords="467,419,653,471"/>
+<area shape="rect" id="node7" href="$main_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/main.cpp" alt="" coords="256,419,443,471"/>
 </map>

@@ -1,6 +1,7 @@
 var searchData=
 [
   ['reader_2eh',['Reader.h',['../_reader_8h.html',1,'']]],
+  ['readerpolicy_2eh',['ReaderPolicy.h',['../_reader_policy_8h.html',1,'']]],
   ['readme_2emd',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
   ['reminder_2ecpp',['Reminder.cpp',['../_reminder_8cpp.html',1,'']]],
   ['reminder_2eh',['Reminder.h',['../_reminder_8h.html',1,'']]],

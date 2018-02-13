@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -83,6 +83,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test harness for <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a></code> class.  <a href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test harness for <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_e_s_p_data.html">ESPData</a></code> class.  <a href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_mock_observer.html">MockObserver</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mock class that implements the <a class="el" href="class_observer.html" title="Simple implementation of the AuthDelegateObserverInterface. ">Observer</a>.  <a href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_mock_observer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -112,6 +115,8 @@ Functions</h2></td></tr>
 <tr class="memitem:aefac69512b7cffc1c30d99d3702e8b52"><td class="memItemLeft" align="right" valign="top">static int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#aefac69512b7cffc1c30d99d3702e8b52">getJsonInt64</a> (const rapidjson::Value &amp;container, const std::string &amp;key)</td></tr>
 <tr class="memdesc:aefac69512b7cffc1c30d99d3702e8b52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility function to look up a JSON 'long' in a container.  <a href="#aefac69512b7cffc1c30d99d3702e8b52">More...</a><br /></td></tr>
 <tr class="separator:aefac69512b7cffc1c30d99d3702e8b52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a244975d09e403ccf26828215211fffe4"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a244975d09e403ccf26828215211fffe4">getInitiatorFromDirective</a> (const std::string directive, std::string *initiator)</td></tr>
+<tr class="separator:a244975d09e403ccf26828215211fffe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80e8bea3cd90f832184ac4f2e708a2cd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a80e8bea3cd90f832184ac4f2e708a2cd">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, createWithoutDirectiveSequencer)</td></tr>
 <tr class="memdesc:a80e8bea3cd90f832184ac4f2e708a2cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to verify that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#aec67877e5d27580cba12cf3ee002ea28">AudioInputProcessor::create()</a></code> errors out with an invalid <code>DirectiveSequencerInterface</code>.  <a href="#a80e8bea3cd90f832184ac4f2e708a2cd">More...</a><br /></td></tr>
 <tr class="separator:a80e8bea3cd90f832184ac4f2e708a2cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,41 +145,41 @@ Functions</h2></td></tr>
 <tr class="memitem:a87f944de484a6ef37202101b4276646c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a87f944de484a6ef37202101b4276646c">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, addRemoveObserver)</td></tr>
 <tr class="separator:a87f944de484a6ef37202101b4276646c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17973764951779a3d6467747c2927531"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a17973764951779a3d6467747c2927531">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeNullStream)</td></tr>
-<tr class="memdesc:a17973764951779a3d6467747c2927531"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> fails when given a null <code><a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">AudioProvider</a></code>.  <a href="#a17973764951779a3d6467747c2927531">More...</a><br /></td></tr>
+<tr class="memdesc:a17973764951779a3d6467747c2927531"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> fails when given a null <code><a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">AudioProvider</a></code>.  <a href="#a17973764951779a3d6467747c2927531">More...</a><br /></td></tr>
 <tr class="separator:a17973764951779a3d6467747c2927531"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1dfed9ac758b2863e9d5f7a4008e33e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a1dfed9ac758b2863e9d5f7a4008e33e8">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeInvalidAudioFormat)</td></tr>
-<tr class="memdesc:a1dfed9ac758b2863e9d5f7a4008e33e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> fails when given invalid <code>AudioFormats</code>.  <a href="#a1dfed9ac758b2863e9d5f7a4008e33e8">More...</a><br /></td></tr>
+<tr class="memdesc:a1dfed9ac758b2863e9d5f7a4008e33e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> fails when given invalid <code>AudioFormats</code>.  <a href="#a1dfed9ac758b2863e9d5f7a4008e33e8">More...</a><br /></td></tr>
 <tr class="separator:a1dfed9ac758b2863e9d5f7a4008e33e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09ec0356b4adbf31b8077d9bb246139b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a09ec0356b4adbf31b8077d9bb246139b">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizePressAndHold)</td></tr>
-<tr class="memdesc:a09ec0356b4adbf31b8077d9bb246139b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4a56d48be09b7b10cc583583453bc87a9b" title="Recognize event was initiated by a press-and-hold action. ">Initiator::PRESS_AND_HOLD</a></code>.  <a href="#a09ec0356b4adbf31b8077d9bb246139b">More...</a><br /></td></tr>
+<tr class="memdesc:a09ec0356b4adbf31b8077d9bb246139b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4a56d48be09b7b10cc583583453bc87a9b" title="Recognize event was initiated by a press-and-hold action. ">Initiator::PRESS_AND_HOLD</a></code>.  <a href="#a09ec0356b4adbf31b8077d9bb246139b">More...</a><br /></td></tr>
 <tr class="separator:a09ec0356b4adbf31b8077d9bb246139b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ef8fa1925d6dd0f165e453a2f582f81"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a5ef8fa1925d6dd0f165e453a2f582f81">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeTap)</td></tr>
-<tr class="memdesc:a5ef8fa1925d6dd0f165e453a2f582f81"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4afcd6420c60a17418a6de745d6546d966" title="Recognize event was initiated by a tap-to-talk action. ">Initiator::TAP</a></code>.  <a href="#a5ef8fa1925d6dd0f165e453a2f582f81">More...</a><br /></td></tr>
+<tr class="memdesc:a5ef8fa1925d6dd0f165e453a2f582f81"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4afcd6420c60a17418a6de745d6546d966" title="Recognize event was initiated by a tap-to-talk action. ">Initiator::TAP</a></code>.  <a href="#a5ef8fa1925d6dd0f165e453a2f582f81">More...</a><br /></td></tr>
 <tr class="separator:a5ef8fa1925d6dd0f165e453a2f582f81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f75008e6b694fe2e39351a593325848"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a3f75008e6b694fe2e39351a593325848">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeWakewordWithoutKeyword)</td></tr>
-<tr class="memdesc:a3f75008e6b694fe2e39351a593325848"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> fails with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> and no keyword.  <a href="#a3f75008e6b694fe2e39351a593325848">More...</a><br /></td></tr>
+<tr class="memdesc:a3f75008e6b694fe2e39351a593325848"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> fails with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> and no keyword.  <a href="#a3f75008e6b694fe2e39351a593325848">More...</a><br /></td></tr>
 <tr class="separator:a3f75008e6b694fe2e39351a593325848"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bcccb085febba7a0959a8c75388cbd1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a9bcccb085febba7a0959a8c75388cbd1">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeWakewordWithBadBegin)</td></tr>
 <tr class="separator:a9bcccb085febba7a0959a8c75388cbd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae85d0029f82fa2345df72eead6889f8a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#ae85d0029f82fa2345df72eead6889f8a">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeWakewordWithKeyword)</td></tr>
-<tr class="memdesc:ae85d0029f82fa2345df72eead6889f8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> and keyword.  <a href="#ae85d0029f82fa2345df72eead6889f8a">More...</a><br /></td></tr>
+<tr class="memdesc:ae85d0029f82fa2345df72eead6889f8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> and keyword.  <a href="#ae85d0029f82fa2345df72eead6889f8a">More...</a><br /></td></tr>
 <tr class="separator:ae85d0029f82fa2345df72eead6889f8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add2bdbae6c0fb670d7b8bee0e1cd4936"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#add2bdbae6c0fb670d7b8bee0e1cd4936">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeWakewordWithGoodBegin)</td></tr>
-<tr class="memdesc:add2bdbae6c0fb670d7b8bee0e1cd4936"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> valid begin.  <a href="#add2bdbae6c0fb670d7b8bee0e1cd4936">More...</a><br /></td></tr>
+<tr class="memdesc:add2bdbae6c0fb670d7b8bee0e1cd4936"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> valid begin.  <a href="#add2bdbae6c0fb670d7b8bee0e1cd4936">More...</a><br /></td></tr>
 <tr class="separator:add2bdbae6c0fb670d7b8bee0e1cd4936"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef10251040b7cc8bfb485a2cb47a9bca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#aef10251040b7cc8bfb485a2cb47a9bca">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeWakewordWithGoodBeginAndEnd)</td></tr>
 <tr class="separator:aef10251040b7cc8bfb485a2cb47a9bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd51e77748418e680e01623eb38b46d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#abd51e77748418e680e01623eb38b46d0">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeCloseTalk)</td></tr>
-<tr class="memdesc:abd51e77748418e680e01623eb38b46d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2dabdb500e22c9434ede56add466a99f025" title="Client determines end of user speech (0 to 2.5 ft). ">ASRProfile::CLOSE_TALK</a></code>.  <a href="#abd51e77748418e680e01623eb38b46d0">More...</a><br /></td></tr>
+<tr class="memdesc:abd51e77748418e680e01623eb38b46d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2dabdb500e22c9434ede56add466a99f025" title="Client determines end of user speech (0 to 2.5 ft). ">ASRProfile::CLOSE_TALK</a></code>.  <a href="#abd51e77748418e680e01623eb38b46d0">More...</a><br /></td></tr>
 <tr class="separator:abd51e77748418e680e01623eb38b46d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacb1a5dd2a4dcfc9c47420d300246232"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#aacb1a5dd2a4dcfc9c47420d300246232">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeNearField)</td></tr>
-<tr class="memdesc:aacb1a5dd2a4dcfc9c47420d300246232"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2da7683c793f1384a54b3dc5d0c9416e325" title="Cloud determines end of user speech (0 to 5 ft). ">ASRProfile::NEAR_FIELD</a></code>.  <a href="#aacb1a5dd2a4dcfc9c47420d300246232">More...</a><br /></td></tr>
+<tr class="memdesc:aacb1a5dd2a4dcfc9c47420d300246232"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2da7683c793f1384a54b3dc5d0c9416e325" title="Cloud determines end of user speech (0 to 5 ft). ">ASRProfile::NEAR_FIELD</a></code>.  <a href="#aacb1a5dd2a4dcfc9c47420d300246232">More...</a><br /></td></tr>
 <tr class="separator:aacb1a5dd2a4dcfc9c47420d300246232"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a212611c8cf2af61404fecc17a1d2639c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a212611c8cf2af61404fecc17a1d2639c">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeFarField)</td></tr>
-<tr class="memdesc:a212611c8cf2af61404fecc17a1d2639c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2daa8e929fc5b05bcd369ebadadcb4a5718" title="Cloud determines end of user speech (0 to 20+ ft). ">ASRProfile::FAR_FIELD</a></code>.  <a href="#a212611c8cf2af61404fecc17a1d2639c">More...</a><br /></td></tr>
+<tr class="memdesc:a212611c8cf2af61404fecc17a1d2639c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2daa8e929fc5b05bcd369ebadadcb4a5718" title="Cloud determines end of user speech (0 to 20+ ft). ">ASRProfile::FAR_FIELD</a></code>.  <a href="#a212611c8cf2af61404fecc17a1d2639c">More...</a><br /></td></tr>
 <tr class="separator:a212611c8cf2af61404fecc17a1d2639c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab60674ba15d92acb0cdc5416e0ac2cf5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#ab60674ba15d92acb0cdc5416e0ac2cf5">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeWhileExpectingSpeech)</td></tr>
-<tr class="memdesc:ab60674ba15d92acb0cdc5416e0ac2cf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works in <code>State::EXPECTING_SPEECH</code>.  <a href="#ab60674ba15d92acb0cdc5416e0ac2cf5">More...</a><br /></td></tr>
+<tr class="memdesc:ab60674ba15d92acb0cdc5416e0ac2cf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works in <code>State::EXPECTING_SPEECH</code>.  <a href="#ab60674ba15d92acb0cdc5416e0ac2cf5">More...</a><br /></td></tr>
 <tr class="separator:ab60674ba15d92acb0cdc5416e0ac2cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0c6cda19cb694ce102ea0ecb5d16da5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#af0c6cda19cb694ce102ea0ecb5d16da5">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeStopAfterRecognize)</td></tr>
 <tr class="separator:af0c6cda19cb694ce102ea0ecb5d16da5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -251,12 +256,44 @@ Functions</h2></td></tr>
 <tr class="memitem:a5ef441f928cfaa8af6784cc5b16fc820"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a5ef441f928cfaa8af6784cc5b16fc820">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, expectSpeechNoDefaultReadablePrevious)</td></tr>
 <tr class="memdesc:a5ef441f928cfaa8af6784cc5b16fc820"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that ExpectSpeech directives work with no default and readable previous <code><a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">AudioProvider</a></code>.  <a href="#a5ef441f928cfaa8af6784cc5b16fc820">More...</a><br /></td></tr>
 <tr class="separator:a5ef441f928cfaa8af6784cc5b16fc820"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7feb965c3d44d5b85e68c83d8f2f6f65"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a7feb965c3d44d5b85e68c83d8f2f6f65">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, expectSpeechWithInitiator)</td></tr>
+<tr class="memdesc:a7feb965c3d44d5b85e68c83d8f2f6f65"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function verifies that the initiator from an ExpectSpeech is passed to a subsequent Recognize.  <a href="#a7feb965c3d44d5b85e68c83d8f2f6f65">More...</a><br /></td></tr>
+<tr class="separator:a7feb965c3d44d5b85e68c83d8f2f6f65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab234072eb2c918024b9ba994ab49b954"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#ab234072eb2c918024b9ba994ab49b954">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, expectSpeechWithNoInitiator)</td></tr>
+<tr class="separator:ab234072eb2c918024b9ba994ab49b954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e93b521f024149595fe52d61130cf73"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a8e93b521f024149595fe52d61130cf73">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, expectSpeechWithInitiatorTimedOut)</td></tr>
+<tr class="separator:a8e93b521f024149595fe52d61130cf73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a80edea25804a3bf3c21b12cfe33414"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a8a80edea25804a3bf3c21b12cfe33414">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, focusChangedBackground)</td></tr>
 <tr class="separator:a8a80edea25804a3bf3c21b12cfe33414"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ae1a232d10f7de4637b362751e7e7ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a0ae1a232d10f7de4637b362751e7e7ba">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, focusChangedNone)</td></tr>
 <tr class="separator:a0ae1a232d10f7de4637b362751e7e7ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad97b4ea1a2339b91a1c4afc7fea56c35"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#ad97b4ea1a2339b91a1c4afc7fea56c35">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, resetStateOnTimeOut)</td></tr>
 <tr class="separator:ad97b4ea1a2339b91a1c4afc7fea56c35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae21a2c7931dce0616d48488efeb39226"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#ae21a2c7931dce0616d48488efeb39226">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeWakewordWithESPWithKeyword)</td></tr>
+<tr class="separator:ae21a2c7931dce0616d48488efeb39226"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e9c1022929b2bb5aa813e3372a151ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a2e9c1022929b2bb5aa813e3372a151ca">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, recognizeWakewordWithInvalidESPWithKeyword)</td></tr>
+<tr class="separator:a2e9c1022929b2bb5aa813e3372a151ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa977630c6b9cd3aa1408a0ca0bef8ea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#afa977630c6b9cd3aa1408a0ca0bef8ea">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a>, NormalPositiveNumber)</td></tr>
+<tr class="memdesc:afa977630c6b9cd3aa1408a0ca0bef8ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test for a normal positive number (with sign), expect verify() to return true.  <a href="#afa977630c6b9cd3aa1408a0ca0bef8ea">More...</a><br /></td></tr>
+<tr class="separator:afa977630c6b9cd3aa1408a0ca0bef8ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad641aac8cd150762e5bd8de775f34213"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#ad641aac8cd150762e5bd8de775f34213">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a>, NormalPositiveNumberWithoutSign)</td></tr>
+<tr class="memdesc:ad641aac8cd150762e5bd8de775f34213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test for a normal positive number (without sign), expect verify() to return true.  <a href="#ad641aac8cd150762e5bd8de775f34213">More...</a><br /></td></tr>
+<tr class="separator:ad641aac8cd150762e5bd8de775f34213"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41595df59516afe3431b563166fa0bfa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a41595df59516afe3431b563166fa0bfa">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a>, NormalNegativeNumber)</td></tr>
+<tr class="memdesc:a41595df59516afe3431b563166fa0bfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test for a normal negative number, expect verify() to return true.  <a href="#a41595df59516afe3431b563166fa0bfa">More...</a><br /></td></tr>
+<tr class="separator:a41595df59516afe3431b563166fa0bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa50db6d277f51e9332c536e5ee9d6ad"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#aaa50db6d277f51e9332c536e5ee9d6ad">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a>, NormalPositiveExponentialNumber)</td></tr>
+<tr class="memdesc:aaa50db6d277f51e9332c536e5ee9d6ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test for a normal positive exponential number, expect verify() to return true.  <a href="#aaa50db6d277f51e9332c536e5ee9d6ad">More...</a><br /></td></tr>
+<tr class="separator:aaa50db6d277f51e9332c536e5ee9d6ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64b4ba9030e1795705e18d8d75e5ea96"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a64b4ba9030e1795705e18d8d75e5ea96">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a>, NormalNegativeExponentialNumber)</td></tr>
+<tr class="memdesc:a64b4ba9030e1795705e18d8d75e5ea96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test for a normal negative exponential number, expect verify() to return true.  <a href="#a64b4ba9030e1795705e18d8d75e5ea96">More...</a><br /></td></tr>
+<tr class="separator:a64b4ba9030e1795705e18d8d75e5ea96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae088f396b5698c4e1abcff13294b4d67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#ae088f396b5698c4e1abcff13294b4d67">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a>, emptyNumber)</td></tr>
+<tr class="memdesc:ae088f396b5698c4e1abcff13294b4d67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test for a empty number, expect verify() to return false.  <a href="#ae088f396b5698c4e1abcff13294b4d67">More...</a><br /></td></tr>
+<tr class="separator:ae088f396b5698c4e1abcff13294b4d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75ce44945ec25690296afeac8b68ca2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a75ce44945ec25690296afeac8b68ca2c">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a>, noDigitInNumber)</td></tr>
+<tr class="memdesc:a75ce44945ec25690296afeac8b68ca2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test for a number with quotation mark, expect verify() to return false.  <a href="#a75ce44945ec25690296afeac8b68ca2c">More...</a><br /></td></tr>
+<tr class="separator:a75ce44945ec25690296afeac8b68ca2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -389,7 +426,7 @@ Variables</h2></td></tr>
 <tr class="memitem:a3bcb7dbe3ddee60dc6434940d568c6a1"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a3bcb7dbe3ddee60dc6434940d568c6a1">STATE_REQUEST_TOKEN</a> = 12345</td></tr>
 <tr class="memdesc:a3bcb7dbe3ddee60dc6434940d568c6a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value used in tests for a state request token by the context manager.  <a href="#a3bcb7dbe3ddee60dc6434940d568c6a1">More...</a><br /></td></tr>
 <tr class="separator:a3bcb7dbe3ddee60dc6434940d568c6a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52efc88a27335803773f847bedfb846d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a52efc88a27335803773f847bedfb846d">EXPECT_SPEECH_INITIATOR</a> = R&quot;({opaque:&quot;expectSpeechInitiator&quot;})&quot;</td></tr>
+<tr class="memitem:a52efc88a27335803773f847bedfb846d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a52efc88a27335803773f847bedfb846d">EXPECT_SPEECH_INITIATOR</a> = R&quot;({&quot;opaque&quot;:&quot;expectSpeechInitiator&quot;})&quot;</td></tr>
 <tr class="memdesc:a52efc88a27335803773f847bedfb846d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value used in the tests for an expect speech initiator.  <a href="#a52efc88a27335803773f847bedfb846d">More...</a><br /></td></tr>
 <tr class="separator:a52efc88a27335803773f847bedfb846d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40426fc3dcbe1506deeffdd79a908997"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a40426fc3dcbe1506deeffdd79a908997">EXPECT_SPEECH_TIMEOUT_KEY</a> = &quot;timeoutInMilliseconds&quot;</td></tr>
@@ -413,6 +450,15 @@ Variables</h2></td></tr>
 <tr class="memitem:a8d1882aec592f9192e4a6a45cbdf70f2"><td class="memItemLeft" align="right" valign="top">static const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a8d1882aec592f9192e4a6a45cbdf70f2">VERIFY_TIMEOUT</a> = true</td></tr>
 <tr class="memdesc:a8d1882aec592f9192e4a6a45cbdf70f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boolean value to indicate an expect speech directive should time out.  <a href="#a8d1882aec592f9192e4a6a45cbdf70f2">More...</a><br /></td></tr>
 <tr class="separator:a8d1882aec592f9192e4a6a45cbdf70f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0c08119711bcac8cb58e4dbda305974"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#ac0c08119711bcac8cb58e4dbda305974">ESP_EVENT_NAME</a> = &quot;ReportEchoSpatialPerceptionData&quot;</td></tr>
+<tr class="memdesc:ac0c08119711bcac8cb58e4dbda305974"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for a ReportEchoSpatialPerceptionData event's name.  <a href="#ac0c08119711bcac8cb58e4dbda305974">More...</a><br /></td></tr>
+<tr class="separator:ac0c08119711bcac8cb58e4dbda305974"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07835b275dbe95f6cda426a09c5523d8"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a07835b275dbe95f6cda426a09c5523d8">ESP_VOICE_ENERGY_KEY</a> = &quot;voiceEnergy&quot;</td></tr>
+<tr class="memdesc:a07835b275dbe95f6cda426a09c5523d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the voice energy field of a ReportEchoSpatialPerceptionData event.  <a href="#a07835b275dbe95f6cda426a09c5523d8">More...</a><br /></td></tr>
+<tr class="separator:a07835b275dbe95f6cda426a09c5523d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa112ffdad95b7a345cb08c7836a25c68"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#aa112ffdad95b7a345cb08c7836a25c68">ESP_AMBIENT_ENERGY_KEY</a> = &quot;ambientEnergy&quot;</td></tr>
+<tr class="memdesc:aa112ffdad95b7a345cb08c7836a25c68"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for the ambient energy field of a ReportEchoSpatialPerceptionData event.  <a href="#aa112ffdad95b7a345cb08c7836a25c68">More...</a><br /></td></tr>
+<tr class="separator:aa112ffdad95b7a345cb08c7836a25c68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a4d05d72be42c5f56a12258794f330cac"></a>
@@ -432,6 +478,42 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a244975d09e403ccf26828215211fffe4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a244975d09e403ccf26828215211fffe4">&#9670;&nbsp;</a></span>getInitiatorFromDirective()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool alexaClientSDK::capabilityAgents::aip::test::getInitiatorFromDirective </td>
+          <td>(</td>
+          <td class="paramtype">const std::string&#160;</td>
+          <td class="paramname"><em>directive</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string *&#160;</td>
+          <td class="paramname"><em>initiator</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aefac69512b7cffc1c30d99d3702e8b52"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aefac69512b7cffc1c30d99d3702e8b52">&#9670;&nbsp;</a></span>getJsonInt64()</h2>
 
@@ -536,8 +618,218 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="afa977630c6b9cd3aa1408a0ca0bef8ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa977630c6b9cd3aa1408a0ca0bef8ea">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/67]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::aip::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NormalPositiveNumber&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test for a normal positive number (with sign), expect verify() to return true. </p>
+
+</div>
+</div>
+<a id="ad641aac8cd150762e5bd8de775f34213"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad641aac8cd150762e5bd8de775f34213">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/67]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::aip::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NormalPositiveNumberWithoutSign&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test for a normal positive number (without sign), expect verify() to return true. </p>
+
+</div>
+</div>
+<a id="a41595df59516afe3431b563166fa0bfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41595df59516afe3431b563166fa0bfa">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/67]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::aip::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NormalNegativeNumber&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test for a normal negative number, expect verify() to return true. </p>
+
+</div>
+</div>
+<a id="aaa50db6d277f51e9332c536e5ee9d6ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa50db6d277f51e9332c536e5ee9d6ad">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/67]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::aip::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NormalPositiveExponentialNumber&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test for a normal positive exponential number, expect verify() to return true. </p>
+
+</div>
+</div>
+<a id="a64b4ba9030e1795705e18d8d75e5ea96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64b4ba9030e1795705e18d8d75e5ea96">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/67]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::aip::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NormalNegativeExponentialNumber&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test for a normal negative exponential number, expect verify() to return true. </p>
+
+</div>
+</div>
+<a id="ae088f396b5698c4e1abcff13294b4d67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae088f396b5698c4e1abcff13294b4d67">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/67]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::aip::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">emptyNumber&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test for a empty number, expect verify() to return false. </p>
+
+</div>
+</div>
+<a id="a75ce44945ec25690296afeac8b68ca2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75ce44945ec25690296afeac8b68ca2c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/67]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::aip::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_e_s_p_data_test.html">ESPDataTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">noDigitInNumber&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test for a number with quotation mark, expect verify() to return false. </p>
+
+</div>
+</div>
 <a id="a80e8bea3cd90f832184ac4f2e708a2cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a80e8bea3cd90f832184ac4f2e708a2cd">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a80e8bea3cd90f832184ac4f2e708a2cd">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -567,7 +859,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af1d480cf4270eb31e34a592b36dcf92d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1d480cf4270eb31e34a592b36dcf92d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af1d480cf4270eb31e34a592b36dcf92d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -597,7 +889,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a49255182218d1781eae0b4994edfe751"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49255182218d1781eae0b4994edfe751">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a49255182218d1781eae0b4994edfe751">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -627,7 +919,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af3930a77e289842af4c0b4297bdd987f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3930a77e289842af4c0b4297bdd987f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af3930a77e289842af4c0b4297bdd987f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -657,7 +949,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af4dec4df5de3b4c1f73db212a8bed76f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4dec4df5de3b4c1f73db212a8bed76f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af4dec4df5de3b4c1f73db212a8bed76f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -687,7 +979,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a1e6009b983b2f602d2921418ef6cbbb0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e6009b983b2f602d2921418ef6cbbb0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e6009b983b2f602d2921418ef6cbbb0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -716,7 +1008,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a6b7eddc3e7dd1b0b77ee4c89ec9b29c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b7eddc3e7dd1b0b77ee4c89ec9b29c3">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b7eddc3e7dd1b0b77ee4c89ec9b29c3">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -745,7 +1037,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab03beb46a4ec1e1c19648ce951017509"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab03beb46a4ec1e1c19648ce951017509">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab03beb46a4ec1e1c19648ce951017509">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -775,7 +1067,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a72fa143135aaa5e9626cba2c595240f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72fa143135aaa5e9626cba2c595240f0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a72fa143135aaa5e9626cba2c595240f0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -805,7 +1097,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a87f944de484a6ef37202101b4276646c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87f944de484a6ef37202101b4276646c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a87f944de484a6ef37202101b4276646c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -834,7 +1126,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a17973764951779a3d6467747c2927531"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17973764951779a3d6467747c2927531">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a17973764951779a3d6467747c2927531">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -859,12 +1151,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> fails when given a null <code><a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">AudioProvider</a></code>. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> fails when given a null <code><a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">AudioProvider</a></code>. </p>
 
 </div>
 </div>
 <a id="a1dfed9ac758b2863e9d5f7a4008e33e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1dfed9ac758b2863e9d5f7a4008e33e8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1dfed9ac758b2863e9d5f7a4008e33e8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -889,12 +1181,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> fails when given invalid <code>AudioFormats</code>. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> fails when given invalid <code>AudioFormats</code>. </p>
 
 </div>
 </div>
 <a id="a09ec0356b4adbf31b8077d9bb246139b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09ec0356b4adbf31b8077d9bb246139b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a09ec0356b4adbf31b8077d9bb246139b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -919,12 +1211,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4a56d48be09b7b10cc583583453bc87a9b" title="Recognize event was initiated by a press-and-hold action. ">Initiator::PRESS_AND_HOLD</a></code>. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4a56d48be09b7b10cc583583453bc87a9b" title="Recognize event was initiated by a press-and-hold action. ">Initiator::PRESS_AND_HOLD</a></code>. </p>
 
 </div>
 </div>
 <a id="a5ef8fa1925d6dd0f165e453a2f582f81"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ef8fa1925d6dd0f165e453a2f582f81">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ef8fa1925d6dd0f165e453a2f582f81">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -949,12 +1241,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4afcd6420c60a17418a6de745d6546d966" title="Recognize event was initiated by a tap-to-talk action. ">Initiator::TAP</a></code>. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4afcd6420c60a17418a6de745d6546d966" title="Recognize event was initiated by a tap-to-talk action. ">Initiator::TAP</a></code>. </p>
 
 </div>
 </div>
 <a id="a3f75008e6b694fe2e39351a593325848"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f75008e6b694fe2e39351a593325848">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f75008e6b694fe2e39351a593325848">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -979,12 +1271,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> fails with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> and no keyword. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> fails with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> and no keyword. </p>
 
 </div>
 </div>
 <a id="a9bcccb085febba7a0959a8c75388cbd1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9bcccb085febba7a0959a8c75388cbd1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bcccb085febba7a0959a8c75388cbd1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1008,12 +1300,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> fails with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> and invalid begin index. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> fails with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> and invalid begin index. </p>
 
 </div>
 </div>
 <a id="ae85d0029f82fa2345df72eead6889f8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae85d0029f82fa2345df72eead6889f8a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae85d0029f82fa2345df72eead6889f8a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[24/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1038,12 +1330,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> and keyword. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> and keyword. </p>
 
 </div>
 </div>
 <a id="add2bdbae6c0fb670d7b8bee0e1cd4936"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#add2bdbae6c0fb670d7b8bee0e1cd4936">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#add2bdbae6c0fb670d7b8bee0e1cd4936">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[25/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1068,12 +1360,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> valid begin. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> valid begin. </p>
 
 </div>
 </div>
 <a id="aef10251040b7cc8bfb485a2cb47a9bca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef10251040b7cc8bfb485a2cb47a9bca">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aef10251040b7cc8bfb485a2cb47a9bca">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1097,12 +1389,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> valid begin and end indices. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4acb8de769bb1ad99fe7114fa74fc11e72" title="Recognize event was initiated by a wakeword action. ">Initiator::WAKEWORD</a></code> valid begin and end indices. </p>
 
 </div>
 </div>
 <a id="abd51e77748418e680e01623eb38b46d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd51e77748418e680e01623eb38b46d0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abd51e77748418e680e01623eb38b46d0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1127,12 +1419,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2dabdb500e22c9434ede56add466a99f025" title="Client determines end of user speech (0 to 2.5 ft). ">ASRProfile::CLOSE_TALK</a></code>. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2dabdb500e22c9434ede56add466a99f025" title="Client determines end of user speech (0 to 2.5 ft). ">ASRProfile::CLOSE_TALK</a></code>. </p>
 
 </div>
 </div>
 <a id="aacb1a5dd2a4dcfc9c47420d300246232"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aacb1a5dd2a4dcfc9c47420d300246232">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aacb1a5dd2a4dcfc9c47420d300246232">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1157,12 +1449,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2da7683c793f1384a54b3dc5d0c9416e325" title="Cloud determines end of user speech (0 to 5 ft). ">ASRProfile::NEAR_FIELD</a></code>. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2da7683c793f1384a54b3dc5d0c9416e325" title="Cloud determines end of user speech (0 to 5 ft). ">ASRProfile::NEAR_FIELD</a></code>. </p>
 
 </div>
 </div>
 <a id="a212611c8cf2af61404fecc17a1d2639c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a212611c8cf2af61404fecc17a1d2639c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a212611c8cf2af61404fecc17a1d2639c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1187,12 +1479,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2daa8e929fc5b05bcd369ebadadcb4a5718" title="Cloud determines end of user speech (0 to 20+ ft). ">ASRProfile::FAR_FIELD</a></code>. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with <code><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2daa8e929fc5b05bcd369ebadadcb4a5718" title="Cloud determines end of user speech (0 to 20+ ft). ">ASRProfile::FAR_FIELD</a></code>. </p>
 
 </div>
 </div>
 <a id="ab60674ba15d92acb0cdc5416e0ac2cf5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab60674ba15d92acb0cdc5416e0ac2cf5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab60674ba15d92acb0cdc5416e0ac2cf5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1217,12 +1509,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works in <code>State::EXPECTING_SPEECH</code>. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works in <code>State::EXPECTING_SPEECH</code>. </p>
 
 </div>
 </div>
 <a id="af0c6cda19cb694ce102ea0ecb5d16da5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0c6cda19cb694ce102ea0ecb5d16da5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[24/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af0c6cda19cb694ce102ea0ecb5d16da5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[31/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1246,12 +1538,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with a call to <code>stopCapture()</code> immediately after the <code>recognize()</code> call. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with a call to <code>stopCapture()</code> immediately after the <code>recognize()</code> call. </p>
 
 </div>
 </div>
 <a id="ae890db01a0c45c1c99fd56891aeaa1dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae890db01a0c45c1c99fd56891aeaa1dd">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[25/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae890db01a0c45c1c99fd56891aeaa1dd">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[32/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1275,12 +1567,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with a call to <code>stopCapture()</code> immediately after the <code>onContextAvailable()</code> call. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with a call to <code>stopCapture()</code> immediately after the <code>onContextAvailable()</code> call. </p>
 
 </div>
 </div>
 <a id="a77b35870697e49e7af873c2c51aae2a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77b35870697e49e7af873c2c51aae2a8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a77b35870697e49e7af873c2c51aae2a8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[33/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1304,12 +1596,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with a call to <code>stopCapture()</code> immediately after the <code>onFocusChanged()</code> call. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with a call to <code>stopCapture()</code> immediately after the <code>onFocusChanged()</code> call. </p>
 
 </div>
 </div>
 <a id="a7ae907721c3f873e9eecf51d559c8eaa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ae907721c3f873e9eecf51d559c8eaa">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ae907721c3f873e9eecf51d559c8eaa">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1333,12 +1625,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works with a call to <code>stopCapture()</code> immediately after the message is sent. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works with a call to <code>stopCapture()</code> immediately after the message is sent. </p>
 
 </div>
 </div>
 <a id="aaf77a2e95cc46f7e4b9f63098d85012d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf77a2e95cc46f7e4b9f63098d85012d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf77a2e95cc46f7e4b9f63098d85012d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1362,12 +1654,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> works in <code>State::RECOGNIZING</code> when the previous recognize used the CLOSE_TALK profile. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> works in <code>State::RECOGNIZING</code> when the previous recognize used the CLOSE_TALK profile. </p>
 
 </div>
 </div>
 <a id="ac9cfe6b3dedf2eee1fef650d96b6886e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac9cfe6b3dedf2eee1fef650d96b6886e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9cfe6b3dedf2eee1fef650d96b6886e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[36/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1391,12 +1683,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> fails in <code>State::RECOGNIZING</code> when the previous recognize used the NEAR_FIELD profile. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> fails in <code>State::RECOGNIZING</code> when the previous recognize used the NEAR_FIELD profile. </p>
 
 </div>
 </div>
 <a id="a6d0d1953d94c76fac5f93ab1e4a5f141"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d0d1953d94c76fac5f93ab1e4a5f141">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d0d1953d94c76fac5f93ab1e4a5f141">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[37/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1420,12 +1712,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> fails in <code>State::RECOGNIZING</code> when the previous recognize used the FAR_FIELD profile. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> fails in <code>State::RECOGNIZING</code> when the previous recognize used the FAR_FIELD profile. </p>
 
 </div>
 </div>
 <a id="a4b4919f2caa688890b4c93f9a5a27211"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b4919f2caa688890b4c93f9a5a27211">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[31/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b4919f2caa688890b4c93f9a5a27211">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[38/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1449,12 +1741,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> fails in <code>State::RECOGNIZING</code> when the second <code><a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">AudioProvider</a></code> can't override. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> fails in <code>State::RECOGNIZING</code> when the second <code><a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">AudioProvider</a></code> can't override. </p>
 
 </div>
 </div>
 <a id="af198357837e6b1407244253f2abd9aab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af198357837e6b1407244253f2abd9aab">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[32/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af198357837e6b1407244253f2abd9aab">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[39/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1478,12 +1770,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a31948ed0b3f019df9ebca6e377afb8bf">AudioInputProcessor::recognize()</a></code> fails in <code>State::RECOGNIZING</code> when the first <code><a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">AudioProvider</a></code> can't be overridden. </p>
+<p>This function verifies that <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad9268acd0025e845230d3f1a05e9c5e3">AudioInputProcessor::recognize()</a></code> fails in <code>State::RECOGNIZING</code> when the first <code><a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">AudioProvider</a></code> can't be overridden. </p>
 
 </div>
 </div>
 <a id="aa87acdb16a74a8ffde7b111bf5dd0d98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa87acdb16a74a8ffde7b111bf5dd0d98">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[33/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa87acdb16a74a8ffde7b111bf5dd0d98">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[40/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1513,7 +1805,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a80818bd55d014227fe57232ddb0e9989"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a80818bd55d014227fe57232ddb0e9989">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a80818bd55d014227fe57232ddb0e9989">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1543,7 +1835,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a9e175e3269a6a0a5725b59fcaad7ff11"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e175e3269a6a0a5725b59fcaad7ff11">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e175e3269a6a0a5725b59fcaad7ff11">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[42/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1573,7 +1865,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="affeb397689b2df1f370068095459e96e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affeb397689b2df1f370068095459e96e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[36/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#affeb397689b2df1f370068095459e96e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[43/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1603,7 +1895,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a659785a2e33bf9d72563fc56015dde1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a659785a2e33bf9d72563fc56015dde1f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[37/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a659785a2e33bf9d72563fc56015dde1f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[44/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1633,7 +1925,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0102a757e1d9182c1d5bb8cb7bbbd6b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0102a757e1d9182c1d5bb8cb7bbbd6b5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[38/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0102a757e1d9182c1d5bb8cb7bbbd6b5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[45/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1663,7 +1955,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a4ac4d9f36eeb28485e20831c7bfdc67a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ac4d9f36eeb28485e20831c7bfdc67a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[39/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ac4d9f36eeb28485e20831c7bfdc67a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[46/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1692,7 +1984,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a906e10a58212b202fc7492773c564a07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a906e10a58212b202fc7492773c564a07">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[40/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a906e10a58212b202fc7492773c564a07">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[47/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1721,7 +2013,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aaca9a78018a88bcd255323f502e698b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaca9a78018a88bcd255323f502e698b1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaca9a78018a88bcd255323f502e698b1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[48/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1751,7 +2043,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ace28c718c9c8278f45334708750e400a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace28c718c9c8278f45334708750e400a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[42/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ace28c718c9c8278f45334708750e400a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[49/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1781,7 +2073,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aea7f4e8232dbeb2adcf52fbcf6260258"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea7f4e8232dbeb2adcf52fbcf6260258">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[43/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aea7f4e8232dbeb2adcf52fbcf6260258">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[50/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1811,7 +2103,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a17d31c5569b118154f6d747b78226f68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17d31c5569b118154f6d747b78226f68">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[44/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a17d31c5569b118154f6d747b78226f68">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[51/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1841,7 +2133,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a727f5a5e9512bf7c5d4ffb40cdadbee9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a727f5a5e9512bf7c5d4ffb40cdadbee9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[45/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a727f5a5e9512bf7c5d4ffb40cdadbee9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[52/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1871,7 +2163,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae54206bac67b252056a31d6983fdfc27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae54206bac67b252056a31d6983fdfc27">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[46/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae54206bac67b252056a31d6983fdfc27">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[53/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1901,7 +2193,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a6e24aedff999a8c779a5e49e6911b4cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e24aedff999a8c779a5e49e6911b4cb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[47/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e24aedff999a8c779a5e49e6911b4cb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[54/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1931,7 +2223,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0129a72ec49c1779947eb46fc15df92b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0129a72ec49c1779947eb46fc15df92b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[48/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0129a72ec49c1779947eb46fc15df92b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[55/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1961,7 +2253,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a094f1a0ebc2aef8f3acab3a1af68e011"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a094f1a0ebc2aef8f3acab3a1af68e011">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[49/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a094f1a0ebc2aef8f3acab3a1af68e011">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[56/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1991,7 +2283,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a5216e519e815aa3511b3d3db077fa7bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5216e519e815aa3511b3d3db077fa7bb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[50/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5216e519e815aa3511b3d3db077fa7bb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[57/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2021,7 +2313,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a70fbbed539f8b8c3fcad6f31629776ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70fbbed539f8b8c3fcad6f31629776ec">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[51/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a70fbbed539f8b8c3fcad6f31629776ec">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[58/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2050,7 +2342,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a5ef441f928cfaa8af6784cc5b16fc820"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ef441f928cfaa8af6784cc5b16fc820">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[52/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ef441f928cfaa8af6784cc5b16fc820">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[59/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2079,8 +2371,96 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a7feb965c3d44d5b85e68c83d8f2f6f65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7feb965c3d44d5b85e68c83d8f2f6f65">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[60/67]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::aip::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">expectSpeechWithInitiator&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function verifies that the initiator from an ExpectSpeech is passed to a subsequent Recognize. </p>
+
+</div>
+</div>
+<a id="ab234072eb2c918024b9ba994ab49b954"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab234072eb2c918024b9ba994ab49b954">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[61/67]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::aip::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">expectSpeechWithNoInitiator&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function verifies that if the ExpectSpeech does not have an initiator, no initiator is present in the subsequent Recognize. </p>
+
+</div>
+</div>
+<a id="a8e93b521f024149595fe52d61130cf73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e93b521f024149595fe52d61130cf73">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[62/67]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::aip::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">expectSpeechWithInitiatorTimedOut&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function verifies that if the ExpectSpeech times out, the next user initiated Recognize will send the standard initiator and not the one passed from AVS. </p>
+
+</div>
+</div>
 <a id="a8a80edea25804a3bf3c21b12cfe33414"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a80edea25804a3bf3c21b12cfe33414">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[53/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a80edea25804a3bf3c21b12cfe33414">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[63/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2109,7 +2489,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0ae1a232d10f7de4637b362751e7e7ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ae1a232d10f7de4637b362751e7e7ba">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[54/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ae1a232d10f7de4637b362751e7e7ba">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[64/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2138,7 +2518,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad97b4ea1a2339b91a1c4afc7fea56c35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad97b4ea1a2339b91a1c4afc7fea56c35">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[55/55]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad97b4ea1a2339b91a1c4afc7fea56c35">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[65/67]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2163,6 +2543,62 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Test that the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a></code> correctly transitions to <code>State::IDLE</code> if <code>Status::TIMEDOUT</code> is received </p>
+
+</div>
+</div>
+<a id="ae21a2c7931dce0616d48488efeb39226"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae21a2c7931dce0616d48488efeb39226">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[66/67]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::aip::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">recognizeWakewordWithESPWithKeyword&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2e9c1022929b2bb5aa813e3372a151ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e9c1022929b2bb5aa813e3372a151ca">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[67/67]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::aip::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">recognizeWakewordWithInvalidESPWithKeyword&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -2451,6 +2887,78 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="aa112ffdad95b7a345cb08c7836a25c68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa112ffdad95b7a345cb08c7836a25c68">&#9670;&nbsp;</a></span>ESP_AMBIENT_ENERGY_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::test::ESP_AMBIENT_ENERGY_KEY = &quot;ambientEnergy&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>JSON key for the ambient energy field of a ReportEchoSpatialPerceptionData event. </p>
+
+</div>
+</div>
+<a id="ac0c08119711bcac8cb58e4dbda305974"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0c08119711bcac8cb58e4dbda305974">&#9670;&nbsp;</a></span>ESP_EVENT_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::test::ESP_EVENT_NAME = &quot;ReportEchoSpatialPerceptionData&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>JSON value for a ReportEchoSpatialPerceptionData event's name. </p>
+
+</div>
+</div>
+<a id="a07835b275dbe95f6cda426a09c5523d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07835b275dbe95f6cda426a09c5523d8">&#9670;&nbsp;</a></span>ESP_VOICE_ENERGY_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::test::ESP_VOICE_ENERGY_KEY = &quot;voiceEnergy&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>JSON key for the voice energy field of a ReportEchoSpatialPerceptionData event. </p>
+
+</div>
+</div>
 <a id="a4a2c111f45ffbc07cd89cd7bd56994e0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4a2c111f45ffbc07cd89cd7bd56994e0">&#9670;&nbsp;</a></span>EXPECT_SPEECH</h2>
 
@@ -2485,7 +2993,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::test::EXPECT_SPEECH_INITIATOR = R&quot;({opaque:&quot;expectSpeechInitiator&quot;})&quot;</td>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::test::EXPECT_SPEECH_INITIATOR = R&quot;({&quot;opaque&quot;:&quot;expectSpeechInitiator&quot;})&quot;</td>
         </tr>
       </table>
   </td>
@@ -3415,7 +3923,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -68,7 +68,30 @@ $(function() {
 <div class="title">ChangeLog </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h3>[1.4.0] - 2018-01-12</h3>
+<div class="textblock"><h3>[1.5.0] - 2018-02-12</h3>
+<p><b>Enhancements</b></p><ul>
+<li>Added the <code>ExternalMediaPlayer</code> Capability Agent. This allows playback from music providers that control their own playback queue. Example: Spotify.</li>
+<li>Added support for AU and NZ to the <code>SampleApp</code>.</li>
+<li>Firmware version can now be sent to Alexa via the <code>SoftwareInfo</code> event. The firmware version is specified in the config file under the <code>sampleApp</code> object as an integer value named <a href="https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L52"><code>firmwareVersion</code></a>.</li>
+<li>The new <code>f</code> command was added to the <code>SampleApp</code> which allows the firmware version to be updated at run-time.</li>
+<li>Optional configuration changes have been introduced. Now a <a href="https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L93">default log level</a> can be set for <code>ACSDK_LOG_MODULE</code> components, globally or individually. This value is specified under a new root level configuration object called <code>logger</code>, and the value itself is named <code>logLevel</code>. This allows you to limit the degree of logging to that default value, such as <code>ERROR</code>or <code>INFO</code>.</li>
+</ul>
+<p><b>Bug Fixes</b></p><ul>
+<li>Fixed bug where <code>AudioPlayer</code> progress reports were not being sent, or were being sent incorrectly.</li>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/408">Issue 408</a> - Irrelevant code related to <code>UrlSource</code> was removed from the <code>GStreamer-based MediaPlayer</code> implementation.</li>
+<li>The <code>TZ</code> variable no longer needs to be set to <code>UTC</code> when building the <code>SampleApp</code>.</li>
+<li>Fixed a bug where <code>CurlEasyHandleWrapper</code> logged unwanted data on failure conditions.</li>
+<li>Fixed a bug to improve <code>SIGPIPE</code> handling.</li>
+<li>Fixed a bug where the filename and classname were mismatched. Changed <code>UrlToAttachmentConverter.h</code> to <code><a class="el" href="_url_content_to_attachment_converter_8h.html">UrlContentToAttachmentConverter.h</a></code>,and <code>UrlToAttachmentConverter.cpp</code> to <code><a class="el" href="_url_content_to_attachment_converter_8cpp.html">UrlContentToAttachmentConverter.cpp</a></code></li>
+</ul>
+<p><b>Known Issues</b></p><ul>
+<li>The <code>ACL</code> may encounter issues if audio attachments are received but not consumed.</li>
+<li>Display Cards for Kindle don't render.</li>
+<li>If using the GStreamer-based <code>MediaPlayer</code> implementation, after muting and un-muting an audio item, the next item in the queue will begin playing rather than continuing playback of the originally muted audio item.</li>
+<li><code>SpeechSynthesizerState</code> currently uses <code>GAINING_FOCUS</code> and <code>LOSING_FOCUS</code> as a workaround for handling intermediate state. These states may be removed in a future release.</li>
+<li>Music playback doesn't immediately stop when a user barges-in on iHeartRadio.</li>
+</ul>
+<h3>[1.4.0] - 2018-01-12</h3>
 <p><b>Enhancements</b></p><ul>
 <li>Added the Notifications Capability Agent. This allows a client to receive notification indicators from Alexa.</li>
 <li>Added support for the <code>SoftwareInfo</code> event. This code is triggered in the <code>SampleApp</code> by providing a positive decimal integer as the "firmwareVersion" value in "sampleApp" object of the <code>AlexaClientSDKConfig.json</code>. The reported firmware version can be updated after starting the <code>SampleApp</code> by calling <code>SoftwareInfoSender::setFirmwareVersion()</code>. This code path can be exercised in the <code>SampleApp</code> with the new command: <code>f</code>.</li>
@@ -515,7 +538,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.4.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>
