@@ -1,7 +1,5 @@
 /*
- * DirectiveRouter.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -76,12 +74,12 @@ bool DirectiveRouter::addDirectiveHandler(std::shared_ptr<DirectiveHandlerInterf
         HandlerAndPolicy handlerAndPolicy(handler, item.second);
         m_configuration[item.first] = handlerAndPolicy;
         incrementHandlerReferenceCountLocked(handler);
-        ACSDK_INFO(LX("addDirectiveHandlers")
-                       .d("action", "added")
-                       .d("namespace", item.first.nameSpace)
-                       .d("name", item.first.name)
-                       .d("handler", handler.get())
-                       .d("policy", item.second));
+        ACSDK_DEBUG9(LX("addDirectiveHandlers")
+                         .d("action", "added")
+                         .d("namespace", item.first.nameSpace)
+                         .d("name", item.first.name)
+                         .d("handler", handler.get())
+                         .d("policy", item.second));
     }
 
     return true;
@@ -114,12 +112,12 @@ bool DirectiveRouter::removeDirectiveHandlerLocked(std::shared_ptr<DirectiveHand
      */
     for (auto item : configuration) {
         m_configuration.erase(item.first);
-        ACSDK_INFO(LX("removeDirectiveHandlers")
-                       .d("action", "removed")
-                       .d("namespace", item.first.nameSpace)
-                       .d("name", item.first.name)
-                       .d("handler", handler.get())
-                       .d("policy", item.second));
+        ACSDK_DEBUG9(LX("removeDirectiveHandlers")
+                         .d("action", "removed")
+                         .d("namespace", item.first.nameSpace)
+                         .d("name", item.first.name)
+                         .d("handler", handler.get())
+                         .d("policy", item.second));
         auto it = m_handlerReferenceCounts.find(handler);
         if (0 == --(it->second)) {
             m_handlerReferenceCounts.erase(it);
@@ -137,7 +135,7 @@ bool DirectiveRouter::removeDirectiveHandler(std::shared_ptr<DirectiveHandlerInt
     }
 
     lock.unlock();
-    ACSDK_INFO(LX("onDeregisteredCalled").d("handler", handler.get()));
+    ACSDK_DEBUG9(LX("onDeregisteredCalled").d("handler", handler.get()));
     handler->onDeregistered();
 
     return true;
@@ -259,7 +257,7 @@ void DirectiveRouter::doShutdown() {
     lock.unlock();
 
     for (auto releasedHandler : releasedHandlers) {
-        ACSDK_INFO(LX("onDeregisteredCalled").d("handler", releasedHandler.get()));
+        ACSDK_DEBUG9(LX("onDeregisteredCalled").d("handler", releasedHandler.get()));
         releasedHandler->onDeregistered();
     }
 }
@@ -310,7 +308,7 @@ void DirectiveRouter::decrementHandlerReferenceCountLocked(
     if (it != m_handlerReferenceCounts.end()) {
         if (0 == --(it->second)) {
             m_handlerReferenceCounts.erase(it);
-            ACSDK_INFO(LX("onDeregisteredCalled").d("handler", handler.get()));
+            ACSDK_DEBUG9(LX("onDeregisteredCalled").d("handler", handler.get()));
             lock.unlock();
             handler->onDeregistered();
             lock.lock();

@@ -1,6 +1,4 @@
 /*
- * SoftwareInfoSendRequest.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -77,8 +75,8 @@ std::shared_ptr<SoftwareInfoSendRequest> SoftwareInfoSendRequest::create(
     std::shared_ptr<SoftwareInfoSenderObserverInterface> observer) {
     ACSDK_DEBUG5(LX("create").d("firmwareVersion", firmwareVersion));
 
-    if (INVALID_FIRMWARE_VERSION == firmwareVersion) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "invalidFirmwareVersion"));
+    if (!isValidFirmwareVersion(firmwareVersion)) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "invalidFirmwareVersion").d("firmwareVersion", firmwareVersion));
         return nullptr;
     }
 
@@ -134,7 +132,7 @@ void SoftwareInfoSendRequest::doShutdown() {
 }
 
 SoftwareInfoSendRequest::SoftwareInfoSendRequest(
-    uint32_t firmwareVersion,
+    FirmwareVersion firmwareVersion,
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
     std::shared_ptr<SoftwareInfoSenderObserverInterface> observer) :
         RequiresShutdown("SoftwareInfoSendRequest"),

@@ -1,6 +1,4 @@
 /*
- * Attachment.h
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -25,6 +23,7 @@
 #include "AVSCommon/AVS/Attachment/AttachmentReader.h"
 #include "AVSCommon/AVS/Attachment/AttachmentWriter.h"
 #include "AVSCommon/Utils/SDS/InProcessSDS.h"
+#include "AVSCommon/Utils/SDS/ReaderPolicy.h"
 #include "AVSCommon/Utils/SDS/WriterPolicy.h"
 
 namespace alexaClientSDK {
@@ -64,7 +63,7 @@ public:
      * @param The policy used to configure the reader.
      * @return a @unique_ptr to an AttachmentReader.
      * */
-    virtual std::unique_ptr<AttachmentReader> createReader(AttachmentReader::Policy policy) = 0;
+    virtual std::unique_ptr<AttachmentReader> createReader(utils::sds::ReaderPolicy policy) = 0;
 
     /**
      * An accessor to get the attachmentId.

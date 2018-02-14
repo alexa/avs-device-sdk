@@ -1,7 +1,5 @@
 /*
- * UIManager.h
- *
- * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -94,6 +92,11 @@ public:
      * Prints the Volume Control Options screen. This gives the user the possible volume control options.
      */
     void printVolumeControlScreen();
+
+    /**
+     * Prints the ESP Control Options screen. This gives the user the possible ESP control options.
+     */
+    void printESPControlScreen(bool support, const std::string& voiceEnergy, const std::string& ambientEnergy);
 
     /**
      * Prints the Error Message for Wrong Input.

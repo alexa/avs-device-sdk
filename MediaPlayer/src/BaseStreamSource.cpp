@@ -1,7 +1,5 @@
 /*
- * BaseStreamSource.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -42,6 +40,45 @@ static const std::string TAG("BaseStreamSource");
 /// The interval to wait (in milliseconds) between successive attempts to read audio data when none is available.
 static const guint RETRY_INTERVALS_MILLISECONDS[] = {0, 10, 10, 10, 20, 20, 50, 100};
 
+/**
+ * Method that returns a string to be used in CAPS negotiation (generating right PADS between gstreamer elements based
+ * on audio data.) For raw PCM data without header audioFormat information needs to be passed explicitly for a
+ * mediaplayer to interpret the audio bytes.
+ */
+static std::string getCapsString(const AudioFormat& audioFormat) {
+    std::stringstream caps;
+    switch (audioFormat.encoding) {
+        case AudioFormat::Encoding::LPCM:
+            caps << "audio/x-raw";
+            break;
+    }
+
+    switch (audioFormat.endianness) {
+        case AudioFormat::Endianness::LITTLE:
+            audioFormat.dataSigned ? caps << ",format=S" << audioFormat.sampleSizeInBits << "LE"
+                                   : caps << ",format=U" << audioFormat.sampleSizeInBits << "LE";
+            break;
+        case AudioFormat::Endianness::BIG:
+            audioFormat.dataSigned ? caps << ",format=S" << audioFormat.sampleSizeInBits << "BE"
+                                   : caps << ",format=U" << audioFormat.sampleSizeInBits << "BE";
+            break;
+    }
+
+    switch (audioFormat.layout) {
+        case AudioFormat::Layout::INTERLEAVED:
+            caps << ",layout=interleaved";
+            break;
+        case AudioFormat::Layout::NON_INTERLEAVED:
+            caps << ",layout=non-interleaved";
+            break;
+    }
+
+    caps << ",channels=" << audioFormat.numChannels;
+    caps << ",rate=" << audioFormat.sampleRateHz;
+
+    return caps.str();
+}
+
 BaseStreamSource::BaseStreamSource(PipelineInterface* pipeline, const std::string& className) :
         SourceInterface(className),
         m_pipeline{pipeline},
@@ -73,13 +110,28 @@ BaseStreamSource::~BaseStreamSource() {
     uninstallOnReadDataHandler();
 }
 
-bool BaseStreamSource::init() {
+bool BaseStreamSource::init(const AudioFormat* audioFormat) {
     auto appsrc = reinterpret_cast<GstAppSrc*>(gst_element_factory_make("appsrc", "src"));
     if (!appsrc) {
         ACSDK_ERROR(LX("initFailed").d("reason", "createSourceElementFailed"));
         return false;
     }
     gst_app_src_set_stream_type(appsrc, GST_APP_STREAM_TYPE_SEEKABLE);
+
+    GstCaps* audioCaps = nullptr;
+
+    if (audioFormat) {
+        std::string caps = getCapsString(*audioFormat);
+        audioCaps = gst_caps_from_string(caps.c_str());
+        if (!audioCaps) {
+            ACSDK_ERROR(LX("BaseStreamSourceInitFailed").d("reason", "capsNullForRawAudioFormat"));
+            return false;
+        }
+        gst_app_src_set_caps(GST_APP_SRC(appsrc), audioCaps);
+        g_object_set(G_OBJECT(appsrc), "format", GST_FORMAT_TIME, NULL);
+    } else {
+        ACSDK_DEBUG9(LX("initNoAudioFormat"));
+    }
 
     auto decoder = gst_element_factory_make("decodebin", "decoder");
     if (!decoder) {
@@ -137,6 +189,10 @@ bool BaseStreamSource::init() {
     if (0 == m_seekDataHandlerId) {
         ACSDK_ERROR(LX("initFailed").d("reason", "connectSeekDataSignalFailed"));
         return false;
+    }
+
+    if (audioCaps) {
+        gst_caps_unref(audioCaps);
     }
 
     m_pipeline->setAppSrc(appsrc);

@@ -1,7 +1,5 @@
 /*
- * SampleApplication.h
- *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_SAMPLEAPPLICATION_H_
 #define ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_SAMPLEAPPLICATION_H_
 
+#include <unordered_map>
 #include "ConsolePrinter.h"
 #include "UserInputManager.h"
 
@@ -68,6 +67,9 @@ private:
 
     /// The @c UserInputManager which controls the client.
     std::unique_ptr<UserInputManager> m_userInputManager;
+
+    /// The vector of mediaPlayers used by the adapters.
+    std::vector<std::shared_ptr<mediaPlayer::MediaPlayer>> m_externalMusicProviderMediaPlayers;
 
     /// The @c MediaPlayer used by @c SpeechSynthesizer.
     std::shared_ptr<mediaPlayer::MediaPlayer> m_speakMediaPlayer;

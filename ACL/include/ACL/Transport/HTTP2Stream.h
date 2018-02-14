@@ -1,7 +1,5 @@
 /*
- * HTTP2Stream.h
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,19 +49,6 @@ class HTTP2Transport;
  */
 class HTTP2Stream {
 public:
-    enum HTTPResponseCodes {
-        /// No HTTP response received.
-        NO_RESPONSE_RECEIVED = 0,
-        /// HTTP Success with reponse payload.
-        SUCCESS_OK = 200,
-        /// HTTP Succcess with no response payload.
-        SUCCESS_NO_CONTENT = 204,
-        /// HTTP code for invalid request by user.
-        BAD_REQUEST = 400,
-        /// HTTP code for internal error by server which didn't fulfill the request.
-        SERVER_INTERNAL_ERROR = 500
-    };
-
     /**
      * Constructor.
      *

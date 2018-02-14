@@ -10,15 +10,15 @@
         "clientId":"${SDK_CONFIG_CLIENT_ID}",
         // Product ID from developer.amazon.com
         "productId":"${SDK_CONFIG_PRODUCT_ID}"
-     },
-   "alertsCapabilityAgent":{
+    },
+    "alertsCapabilityAgent":{
         // Path to Alerts database file. e.g. /home/ubuntu/Build/alerts.db
         // Note: The directory specified must be valid.
         // The database file (alerts.db) will be created by SampleApp, do not create it yourself.
         // The database file should only be used for alerts (don't use it for other components of SDK)
         "databaseFilePath":"${SDK_SQLITE_DATABASE_FILE_PATH}"
-   },
-   "settings":{
+    },
+    "settings":{
         // Path to Settings database file. e.g. /home/ubuntu/Build/settings.db
         // Note: The directory specified must be valid.
         // The database file (settings.db) will be created by SampleApp, do not create it yourself.
@@ -28,9 +28,9 @@
             // Default language for Alexa.
             // See https://developer.amazon.com/docs/alexa-voice-service/settings.html#settingsupdated for valid values.
             "locale":"${SETTING_LOCALE_VALUE}"
-          }
+        }
     },
-   "certifiedSender":{ 
+    "certifiedSender":{
         // Path to Certified Sender database file. e.g. /home/ubuntu/Build/certifiedsender.db
         // Note: The directory specified must be valid.
         // The database file (certifiedsender.db) will be created by SampleApp, do not create it yourself.
@@ -47,7 +47,24 @@
     "sampleApp":{
         // To specify if the SampleApp supports display cards.
         "displayCardsSupported":true
+        // The firmware version of the device to send in SoftwareInfo event.
+        // Note: The firmware version should be a positive 32-bit integer in the range [1-2147483647].
+        // e.g. "firmwareVersion": 123
+        // The default endpoint to connect to.
+        // See https://developer.amazon.com/docs/alexa-voice-service/api-overview.html#endpoints for regions and values
+        // e.g. "endpoint": "https://avs-alexa-na.amazon.com"
     }
+    // Example of specifying a default log level for all ModuleLoggers.  If not specified, ModuleLoggers get
+    // their log level from the sink logger.
+    // "logging":{
+    //     "logLevel":"INFO"
+    // },
+
+    // Example of overriding a specific ModuleLogger's log level whether it was specified by the default value
+    // provided by the logging.logLevel value (as in the above example) or the log level of the sink logger.
+    // "acl":{
+    //     "logLevel":"DEBUG9"
+    // }
  }
 
 
@@ -74,4 +91,4 @@
 
 // To enable DEBUG, build with cmake option -DCMAKE_BUILD_TYPE=DEBUG. By default it is built with RELEASE build.
 // And run the SampleApp similar to the following command.
-// e.g. TZ=UTC ./SampleApp /home/ubuntu/.../AlexaClientSDKConfig.json /home/ubuntu/KittAiModels/ DEBUG9"
+// e.g. ./SampleApp /home/ubuntu/.../AlexaClientSDKConfig.json /home/ubuntu/KittAiModels/ DEBUG9"

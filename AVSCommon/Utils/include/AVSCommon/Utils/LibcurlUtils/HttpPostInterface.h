@@ -1,7 +1,5 @@
 /*
- * HttpPostInterface.h
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,14 +27,16 @@ namespace libcurlUtils {
 /// Minimal interface for making Http POST requests.
 class HttpPostInterface {
 public:
-    /// The HTTP response code to use when the disposition of Post request is undefined.
-    static const long HTTP_RESPONSE_CODE_UNDEFINED = 0;
-
-    /// The HTTP response code for successful response.
-    static const long HTTP_RESPONSE_CODE_SUCCESS_OK = 200;
-
     /// Virtual destructor to assure proper cleanup of derived types.
     virtual ~HttpPostInterface() = default;
+
+    /**
+     * Adds a HTTP Header to the CURL handle
+     *
+     * @param header The HTTP header to add to the POST request.
+     * @returns @c true if the addition was successful @c false otherwise.
+     */
+    virtual bool addHTTPHeader(const std::string& header) = 0;
 
     /**
      * Perform an HTTP Post request returning the response body as a string. This method blocks for the duration

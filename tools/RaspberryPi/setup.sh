@@ -268,7 +268,7 @@ EOF
 cat << EOF > "$START_SCRIPT"
 #!/bin/bash
 cd "$BUILD_PATH/SampleApp/src"
-TZ=UTC ./SampleApp "$CONFIG_FILE" "$THIRD_PARTY_PATH/snowboy/resources" 
+./SampleApp "$CONFIG_FILE" "$THIRD_PARTY_PATH/snowboy/resources" 
 EOF
 
 chmod +x "$START_SCRIPT"

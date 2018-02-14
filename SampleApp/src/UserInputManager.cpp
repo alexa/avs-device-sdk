@@ -1,7 +1,5 @@
 /*
- * UserInputManager.cpp
- *
- * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,6 +24,7 @@ namespace alexaClientSDK {
 namespace sampleApp {
 
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::sdkInterfaces::softwareInfo;
 
 static const char HOLD = 'h';
 static const char TAP = 't';
@@ -40,11 +39,12 @@ static const char PREVIOUS = '4';
 static const char SETTINGS = 'c';
 static const char SPEAKER_CONTROL = 'p';
 static const char FIRMWARE_VERSION = 'f';
+static const char ESP_CONTROL = 'e';
 
 enum class SettingsValues : char { LOCALE = '1' };
 
 static const std::unordered_map<char, std::string> LOCALE_VALUES(
-    {{'1', "en-US"}, {'2', "en-GB"}, {'3', "de-DE"}, {'4', "en-IN"}, {'5', "en-CA"}, {'6', "ja-JP"}});
+    {{'1', "en-US"}, {'2', "en-GB"}, {'3', "de-DE"}, {'4', "en-IN"}, {'5', "en-CA"}, {'6', "ja-JP"}, {'7', "en-AU"}});
 
 static const std::unordered_map<char, SpeakerInterface::Type> SPEAKER_TYPES({{'1', SpeakerInterface::Type::AVS_SYNCED},
                                                                              {'2', SpeakerInterface::Type::LOCAL}});
@@ -149,16 +149,55 @@ void UserInputManager::run() {
                 }
             }
         } else if (x == FIRMWARE_VERSION) {
-            m_interactionManager->firmwareVersionControl();
             std::string text;
-            std::cin >> text;
+            std::getline(std::cin, text);
+            // If text is empty the user entered newline right after the command key.
+            // Prompt for the version number and get the version from the next line.
+            if (text.empty()) {
+                m_interactionManager->firmwareVersionControl();
+                std::getline(std::cin, text);
+            }
             int version;
-            if (avsCommon::utils::string::stringToInt(text, &version) && version > 0) {
-                m_interactionManager->setFirmwareVersion(
-                    static_cast<avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion>(version));
+            const long long int maxValue = MAX_FIRMWARE_VERSION;
+            if (avsCommon::utils::string::stringToInt(text, &version) && version > 0 && version <= maxValue) {
+                m_interactionManager->setFirmwareVersion(static_cast<FirmwareVersion>(version));
             } else {
                 m_interactionManager->errorValue();
             }
+        } else if (x == ESP_CONTROL) {
+            m_interactionManager->espControl();
+            char espChoice;
+            std::string tempString;
+            bool continueWhileLoop = true;
+            while (continueWhileLoop) {
+                std::cin >> espChoice;
+                switch (espChoice) {
+                    case '1':
+                        m_interactionManager->toggleESPSupport();
+                        m_interactionManager->espControl();
+                        break;
+                    case '2':
+                        std::cin >> tempString;
+                        m_interactionManager->setESPVoiceEnergy(tempString);
+                        m_interactionManager->espControl();
+                        break;
+                    case '3':
+                        std::cin >> tempString;
+                        m_interactionManager->setESPAmbientEnergy(tempString);
+                        m_interactionManager->espControl();
+                        break;
+                    case 'q':
+                        m_interactionManager->help();
+                        continueWhileLoop = false;
+                        break;
+                    default:
+                        m_interactionManager->errorValue();
+                        m_interactionManager->espControl();
+                        break;
+                }
+            }
+        } else {
+            m_interactionManager->errorValue();
         }
     }
 }

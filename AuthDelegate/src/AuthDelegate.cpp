@@ -1,7 +1,5 @@
 /*
- * AuthDelegate.cpp
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,6 +24,7 @@
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
+#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "AuthDelegate/AuthDelegate.h"
@@ -366,7 +365,7 @@ AuthObserverInterface::Error AuthDelegate::handleLwaResponse(long code, const st
         return AuthObserverInterface::Error::UNKNOWN_ERROR;
     }
 
-    if (avsCommon::utils::libcurlUtils::HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK == code) {
+    if (HTTPResponseCode::SUCCESS_OK == code) {
         std::string authToken;
         std::string refreshToken;
         uint64_t expiresInSeconds = 0;

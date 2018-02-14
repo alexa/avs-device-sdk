@@ -1,7 +1,5 @@
 /*
- * InteractionManager.cpp
- *
- * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,11 +24,13 @@ InteractionManager::InteractionManager(
     std::shared_ptr<sampleApp::UIManager> userInterface,
     capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
     capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
-    capabilityAgents::aip::AudioProvider wakeWordAudioProvider) :
+    capabilityAgents::aip::AudioProvider wakeWordAudioProvider,
+    std::shared_ptr<sampleApp::KeywordObserver> keywordObserver) :
         RequiresShutdown{"InteractionManager"},
         m_client{client},
         m_micWrapper{micWrapper},
         m_userInterface{userInterface},
+        m_keywordObserver{keywordObserver},
         m_holdToTalkAudioProvider{holdToTalkAudioProvider},
         m_tapToTalkAudioProvider{tapToTalkAudioProvider},
         m_wakeWordAudioProvider{wakeWordAudioProvider},
@@ -180,6 +180,25 @@ void InteractionManager::setMute(avsCommon::sdkInterfaces::SpeakerInterface::Typ
     });
 }
 
+void InteractionManager::espControl() {
+    m_executor.submit([this]() {
+        m_userInterface->printESPControlScreen(
+            m_keywordObserver->m_espSupport, m_keywordObserver->m_voiceEnergy, m_keywordObserver->m_ambientEnergy);
+    });
+}
+
+void InteractionManager::toggleESPSupport() {
+    m_executor.submit([this]() { m_keywordObserver->m_espSupport = !m_keywordObserver->m_espSupport; });
+}
+
+void InteractionManager::setESPVoiceEnergy(const std::string& voiceEnergy) {
+    m_executor.submit([this, voiceEnergy]() { m_keywordObserver->m_voiceEnergy = voiceEnergy; });
+}
+
+void InteractionManager::setESPAmbientEnergy(const std::string& ambientEnergy) {
+    m_executor.submit([this, ambientEnergy]() { m_keywordObserver->m_ambientEnergy = ambientEnergy; });
+}
+
 void InteractionManager::onDialogUXStateChanged(DialogUXState state) {
     // reset tap-to-talk state
     if (DialogUXState::LISTENING != state) {
@@ -188,6 +207,7 @@ void InteractionManager::onDialogUXStateChanged(DialogUXState state) {
 }
 
 void InteractionManager::doShutdown() {
+    m_keywordObserver.reset();
     m_client.reset();
 }
 

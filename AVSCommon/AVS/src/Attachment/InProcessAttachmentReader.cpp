@@ -1,7 +1,5 @@
 /*
- * InProcessAttachmentReader.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,7 +34,7 @@ static const std::string TAG("InProcessAttachmentReader");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::unique_ptr<InProcessAttachmentReader> InProcessAttachmentReader::create(
-    Policy policy,
+    SDSTypeReader::Policy policy,
     std::shared_ptr<SDSType> sds,
     SDSTypeIndex offset,
     SDSTypeReader::Reference reference) {
@@ -55,16 +53,13 @@ std::unique_ptr<InProcessAttachmentReader> InProcessAttachmentReader::create(
     return reader;
 }
 
-InProcessAttachmentReader::InProcessAttachmentReader(Policy policy, std::shared_ptr<SDSType> sds) {
+InProcessAttachmentReader::InProcessAttachmentReader(SDSTypeReader::Policy policy, std::shared_ptr<SDSType> sds) {
     if (!sds) {
         ACSDK_ERROR(LX("ConstructorFailed").d("reason", "SDS parameter is nullptr"));
         return;
     }
 
-    auto sdsPolicy = (AttachmentReader::Policy::BLOCKING == policy) ? SDSType::Reader::Policy::BLOCKING
-                                                                    : SDSType::Reader::Policy::NONBLOCKING;
-
-    m_reader = sds->createReader(sdsPolicy);
+    m_reader = sds->createReader(policy);
 
     if (!m_reader) {
         ACSDK_ERROR(LX("ConstructorFailed").d("reason", "could not create an SDS reader"));
@@ -178,6 +173,15 @@ bool InProcessAttachmentReader::seek(uint64_t offset) {
         return m_reader->seek(offset);
     }
     return false;
+}
+
+uint64_t InProcessAttachmentReader::getNumUnreadBytes() {
+    if (m_reader) {
+        return m_reader->tell(utils::sds::InProcessSDS::Reader::Reference::BEFORE_WRITER);
+    }
+
+    ACSDK_ERROR(LX("getNumUnreadBytesFailed").d("reason", "noReader"));
+    return 0;
 }
 
 }  // namespace attachment

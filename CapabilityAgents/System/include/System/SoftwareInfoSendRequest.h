@@ -1,6 +1,4 @@
 /*
- * SoftwareInfoSendRequest.h
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -85,7 +83,7 @@ private:
      * @return The newly created instance of InfoSendRequest, or nullptr if the operation failed.
      */
     SoftwareInfoSendRequest(
-        uint32_t firmwareVersion,
+        avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> observer);
 

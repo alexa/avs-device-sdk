@@ -1,7 +1,5 @@
 /*
- * MediaPlayer.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -37,7 +35,7 @@
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
 #include <AVSCommon/Utils/PlaylistParser/PlaylistParserInterface.h>
-#include <PlaylistParser/UrlToAttachmentConverter.h>
+#include <PlaylistParser/UrlContentToAttachmentConverter.h>
 
 #include "MediaPlayer/OffsetManager.h"
 #include "MediaPlayer/PipelineInterface.h"
@@ -80,7 +78,9 @@ public:
 
     /// @name Overridden MediaPlayerInterface methods.
     /// @{
-    SourceId setSource(std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) override;
+    SourceId setSource(
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+        const avsCommon::utils::AudioFormat* format = nullptr) override;
     SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) override;
     SourceId setSource(const std::string& url, std::chrono::milliseconds offset = std::chrono::milliseconds::zero())
         override;
@@ -93,6 +93,7 @@ public:
      * will reset the pipeline and source, and will not resume playback.
      */
     bool resume(SourceId id) override;
+    uint64_t getNumBytesBuffered() override;
     std::chrono::milliseconds getOffset(SourceId id) override;
     void setObserver(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) override;
     /// @}
@@ -116,7 +117,7 @@ public:
     guint queueCallback(const std::function<gboolean()>* callback) override;
     /// @}
 
-    /// @name Overriden UrlToAttachmentConverter::ErrorObserverInterface methods.
+    /// @name Overriden UrlContentToAttachmentConverter::ErrorObserverInterface methods.
     /// @{
     void onError() override;
     /// @}
@@ -294,10 +295,12 @@ private:
      *
      * @param reader The @c AttachmentReader with which to receive the audio to play.
      * @param promise A promise to fulfill with a @c SourceId value once the source has been set.
+     * @param audioFormat The audioFormat to be used to interpret raw audio data.
      */
     void handleSetAttachmentReaderSource(
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader,
-        std::promise<SourceId>* promise);
+        std::promise<SourceId>* promise,
+        const avsCommon::utils::AudioFormat* audioFormat = nullptr);
 
     /**
      * Worker thread handler for setting the source of audio to play.
@@ -316,6 +319,13 @@ private:
      * @param promise A promise to fulfill with a @ SourceId value once the source has been set.
      */
     void handleSetIStreamSource(std::shared_ptr<std::istream> stream, bool repeat, std::promise<SourceId>* promise);
+
+    /**
+     * Internal method to update the volume according to a gstreamer bug fix
+     * https://bugzilla.gnome.org/show_bug.cgi?id=793081
+     * @param gstVolume a volume to be set to GStreamer
+     */
+    void handleSetVolumeInternal(gdouble gstVolume);
 
     /**
      * Worker thread handler for setting the volume.
@@ -459,14 +469,6 @@ private:
     bool queryIsSeekable(bool* isSeekable);
 
     /**
-     * Used to obtain the current buffering status of the pipeline.
-     *
-     * @param[out] buffering Whether the pipeline is currently buffering.
-     * @return A boolean indicating whether the operation was successful.
-     */
-    bool queryBufferingStatus(bool* buffering);
-
-    /**
      * Performs a seek to the @c seekPoint.
      *
      * @return A boolean indicating whether the seek operation was successful.
@@ -493,6 +495,12 @@ private:
      * Save offset of stream before we teardown the pipeline.
      */
     void saveOffsetBeforeTeardown();
+
+    /// The volume to restore to when exiting muted state. Used in GStreamer crash fix for zero volume on PCM data.
+    gdouble m_lastVolume;
+
+    /// The muted state of the player. Used in GStreamer crash fix for zero volume on PCM data.
+    bool m_isMuted;
 
     /// Used to stream urls into attachments
     std::shared_ptr<playlistParser::UrlContentToAttachmentConverter> m_urlConverter;

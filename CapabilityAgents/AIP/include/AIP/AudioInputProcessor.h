@@ -1,7 +1,5 @@
 /*
- * AudioInputProcessor.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -39,6 +37,7 @@
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 #include "AudioProvider.h"
+#include "ESPData.h"
 #include "Initiator.h"
 
 namespace alexaClientSDK {
@@ -113,11 +112,12 @@ public:
     void removeObserver(std::shared_ptr<ObserverInterface> observer);
 
     /**
-     * This function asks the @c AudioInputProcessor to send a Recognize Event to AVS and start streaming from
-     * @c audioProvider, which transitions it to the @c RECOGNIZING state.  This function can be called in any state
-     * except @c BUSY, however the flags in @c AudioProvider will dictate whether the call is allowed to override an
-     * ongoing Recognize Event.  If the flags do not allow an override, no event will be sent, no state change will
-     * occur, and the function will fail.
+     * This function asks the @c AudioInputProcessor to send a Recognize Event to AVS and start streaming from @c
+     * audioProvider, which transitions it to the @c RECOGNIZING state.  A ReportEchoSpatialPerceptionData Event will
+     * also be sent before the Recognize event if ESP measurements is passed into @c espData.  This function can be
+     * called in any state except @c BUSY, however the flags in @c AudioProvider will dictate whether the call is
+     * allowed to override an ongoing Recognize Event. If the flags do not allow an override, no event will be sent, no
+     * state change will occur, and the function will fail.
      *
      * @note This function will not pass the audio stream to @c MessageSenderInterface to start streaming if the the
      *     start index or any subsequent data has already expired from the buffer.  In addition, it is assumed that
@@ -149,6 +149,7 @@ public:
      *     empty string.  This parameter is ignored if initiator is not @c WAKEWORD.  The only value currently
      *     accepted by AVS for keyword is "ALEXA".  See
      *     https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/context#recognizerstate
+     * @param espData The ESP measurements to be sent in the ReportEchoSpatialPerceptionData event.
      * @return A future which is @c true if the Recognize Event was started successfully, else @c false.
      */
     std::future<bool> recognize(
@@ -156,7 +157,8 @@ public:
         Initiator initiator,
         avsCommon::avs::AudioInputStream::Index begin = INVALID_INDEX,
         avsCommon::avs::AudioInputStream::Index keywordEnd = INVALID_INDEX,
-        std::string keyword = "");
+        std::string keyword = "",
+        const ESPData& espData = ESPData::EMPTY_ESP_DATA);
 
     /**
      * This function asks the @c AudioInputProcessor to stop streaming audio and end an ongoing Recognize Event, which
@@ -280,9 +282,17 @@ private:
     /// @{
 
     /**
-     * This function builds and sends a @c Recognize event.  This version of the function expects an enumerated
-     * @c Initiator, and will build up the initiator json content for the event, before calling the
-     * @c executeRecognize() function below which takes an initiator string.
+     * This function builds a @c ReportEchoSpatialPerceptionData event.  The event will not be sent out until context is
+     * available so that the @c ReportEchoSpatialPerceptionData event will be sent just before the @c Recognize event.
+     * @param espData The ESP measurements to be sent in the ReportEchoSpatialPerceptionData event.
+     */
+    void executePrepareEspPayload(const ESPData& espData);
+
+    /**
+     * This function builds @c a Recognize event and will request context so the events will be sent upon @c
+     * onContextAvailable().  This version of the function expects an enumerated @c Initiator, and will build up the
+     * initiator json content for the event, before calling the @c executeRecognize() function below which takes an
+     * initiator string.
      *
      * @see @c recognize() for a detailed explanation of the Recognize Event.
      *
@@ -310,7 +320,7 @@ private:
 
     /**
      * This function builds and sends a @c Recognize event.  This version of the function expects a pre-built string
-     * containing the iniator json content for the event.  This initiator string is either built by the
+     * containing the initiator json content for the event.  This initiator string is either built by the
      * @c executeRecognize() function above which takes an enumerated @c Initiator, or is an opaque object provided by
      * an @c ExpectSpeech directive.
      *
@@ -397,15 +407,11 @@ private:
      * occurs, the timer will call @c executeExpectSpeechTimedOut(), which will send an ExpectSpeechTimedOut event.
      *
      * @param timeout The number of milliseconds to wait for a Recognize event.
-     * @param initiator The initiator json string from the ExpectSpeech directive.
      * @param info The @c DirectiveInfo for this call.
      * @return @c true if called in the correct state and the state had changed to @c EXPECTING_SPEECH or
      *     @c RECOGNIZING, else @c false.
      */
-    bool executeExpectSpeech(
-        std::chrono::milliseconds timeout,
-        std::string initiator,
-        std::shared_ptr<DirectiveInfo> info);
+    bool executeExpectSpeech(std::chrono::milliseconds timeout, std::shared_ptr<DirectiveInfo> info);
 
     /**
      * This function is called when @c m_expectingSpeechTimer expires.  It will send an ExpectSpeechTimedOut event.
@@ -503,19 +509,37 @@ private:
     std::shared_ptr<avsCommon::avs::attachment::InProcessAttachmentReader> m_reader;
 
     /**
+     * The payload for a ReportEchoSpatialPerceptionData event.  This string is populated by a call to @c
+     * executeRecognize(), and later consumed by a call to @c executeOnContextAvailable() when the context arrives and
+     * the full @c MessageRequest can be assembled.  This string is only relevant during the @c RECOGNIZING state.
+     */
+    std::string m_espPayload;
+
+    /**
      * The payload for a Recognize event.  This string is populated by a call to @c executeRecognize(), and later
      * consumed by a call to @c executeOnContextAvailable() when the context arrives and the full @c MessageRequest can
      * be assembled.  This string is only relevant during the @c RECOGNIZING state.
      */
-    std::string m_payload;
+    std::string m_recognizePayload;
+
+    /**
+     * The @c MessageRequest for a ReportEchoSpatialPerceptionData event.  This request is created by a call to
+     * @c executeOnContextAvailable(), and either sent immediately (if `m_focusState == afml::FocusState::FOREGROUND`),
+     * or later sent by a call to @c executeOnFocusChanged().  This pointer is only valid during the @c RECOGNIZING
+     * state after a call to @c executeRecognize(), and is reset after it is sent.
+     */
+    std::shared_ptr<avsCommon::avs::MessageRequest> m_espRequest;
 
     /**
      * The @c MessageRequest for a Recognize event.  This request is created by a call to
      * @c executeOnContextAvailable(), and either sent immediately (if `m_focusState == afml::FocusState::FOREGROUND`),
      * or later sent by a call to @c executeOnFocusChanged().  This pointer is only valid during the @c RECOGNIZING
      * state after a call to @c executeRecognize(), and is reset after it is sent.
+     *
+     * @note If ESP measurement is provided in @c recognize(), the @c ReportEchoSpatialPerceptionData event is sent
+     * before the @c Recognize event.
      */
-    std::shared_ptr<avsCommon::avs::MessageRequest> m_request;
+    std::shared_ptr<avsCommon::avs::MessageRequest> m_recognizeRequest;
 
     /// The current state of the @c AudioInputProcessor.
     ObserverInterface::State m_state;
@@ -544,6 +568,17 @@ private:
 
     /// This flag indicates whether the initial dialog UX State has been received.
     bool m_initialDialogUXStateReceived;
+
+    /**
+     * The initiator value from the preceding ExpectSpeech directive. The ExpectSpeech directive's initiator
+     * will need to be consumed and sent back in a subsequent Recognize event. This should be cleared if the
+     * ExpectSpeech times out. An empty initiator is possible, in which case an empty initiator should be sent back to
+     * AVS. This must override the standard user initiated Recognize initiator.
+     *
+     * A value of nullptr indicates that there is no pending preceding initiator to be consumed, and the Recognize's
+     * initiator should conform to the standard user initiated format.
+     */
+    std::unique_ptr<std::string> m_precedingExpectSpeechInitiator;
     /// @}
 
     /**

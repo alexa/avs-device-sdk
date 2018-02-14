@@ -1,7 +1,5 @@
 /*
- * AttachmentReaderSource.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -44,9 +42,10 @@ static const unsigned int CHUNK_SIZE(4096);
 
 std::unique_ptr<AttachmentReaderSource> AttachmentReaderSource::create(
     PipelineInterface* pipeline,
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) {
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+    const avsCommon::utils::AudioFormat* audioFormat) {
     std::unique_ptr<AttachmentReaderSource> result(new AttachmentReaderSource(pipeline, attachmentReader));
-    if (result->init()) {
+    if (result->init(audioFormat)) {
         return result;
     }
     return nullptr;

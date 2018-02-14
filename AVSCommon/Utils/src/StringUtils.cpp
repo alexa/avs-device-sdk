@@ -1,7 +1,5 @@
 /*
- * StringUtils.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -63,15 +61,27 @@ bool stringToInt(const char* str, int* result) {
     char* endPtr = nullptr;
     long tempResult = strtol(str, &endPtr, BASE_TEN);
 
-    // If strtol fails, then endPtr will still point to the beginning of str - a simple way to detect error.
+    // If strtol() fails, then endPtr will still point to the beginning of str - a simple way to detect error.
     if (str == endPtr) {
-        ACSDK_ERROR(LX("stringToIntFailed").m("input string was not parseable as an integer."));
+        ACSDK_ERROR(LX("stringToIntFailed").m("input string was not parsable as an integer."));
         return false;
     }
 
     if (ERANGE == errno || tempResult < std::numeric_limits<int>::min() ||
         tempResult > std::numeric_limits<int>::max()) {
         ACSDK_ERROR(LX("stringToIntFailed").m("converted number was out of range."));
+        return false;
+    }
+
+    // Ignore trailing whitespace.
+    while (isspace(*endPtr)) {
+        endPtr++;
+    }
+
+    // If endPtr does not point to a null terminator, then parsing the number was terminated by running in to
+    // a non-digit (and non-whitespace character), in which case the string was not just an integer (e.g. "1.23").
+    if (*endPtr != '\0') {
+        ACSDK_ERROR(LX("stringToIntFailed").m("non-whitespace in string after integer."));
         return false;
     }
 

@@ -1,7 +1,5 @@
 /*
- * SpeakerManager.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -654,6 +652,15 @@ bool SpeakerManager::executeGetSpeakerSettings(
     }
 
     return true;
+}
+
+void SpeakerManager::addSpeaker(std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker) {
+    if (!speaker) {
+        ACSDK_ERROR(LX("addSpeakerFailed").d("reason", "speaker cannot be nullptr"));
+        return;
+    }
+    m_speakerMap.insert(
+        std::pair<SpeakerInterface::Type, std::shared_ptr<SpeakerInterface>>(speaker->getSpeakerType(), speaker));
 }
 
 }  // namespace speakerManager

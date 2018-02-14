@@ -1,6 +1,4 @@
 /*
- * DefaultClient.h
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -38,9 +36,11 @@
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SingleSettingObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h>
+#include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <CertifiedSender/CertifiedSender.h>
 #include <CertifiedSender/SQLiteMessageStorage.h>
+#include <ExternalMediaPlayer/ExternalMediaPlayer.h>
 #include <Notifications/NotificationsCapabilityAgent.h>
 #include <Notifications/NotificationRenderer.h>
 #include <PlaybackController/PlaybackController.h>
@@ -69,6 +69,8 @@ public:
      * Creates and initializes a default AVS SDK client. To connect the client to AVS, users should make a call to
      * connect() after creation.
      *
+     * @param externalMusicProviderMediaPlayers The map of <players, mediaPlayer> to use to play content from each
+     * external music provider.
      * @param speakMediaPlayer The media player to use to play Alexa speech from.
      * @param audioMediaPlayer The media player to use to play Alexa audio content from.
      * @param alertsMediaPlayer The media player to use to play alerts from.
@@ -77,6 +79,7 @@ public:
      * @param audioSpeaker The speaker to control volume of Alexa audio content.
      * @param alertsSpeaker The speaker to control volume of alerts.
      * @param notificationsSpeaker The speaker to control volume of notifications.
+     * @param additionalSpeakers A list of additional speakers to receive volume changes.
      * @param audioFactory The audioFactory is a component that provides unique audio streams.
      * @param authDelegate The component that provides the client with valid LWA authorization.
      * @param alertStorage The storage interface that will be used to store alerts.
@@ -94,6 +97,8 @@ public:
      * TODO: Allow the user to pass in a MediaPlayer factory rather than each media player individually.
      */
     static std::unique_ptr<DefaultClient> create(
+        std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>&
+            externalMusicProviderMediaPlayers,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
@@ -102,6 +107,7 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker,
+        const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
@@ -311,13 +317,15 @@ public:
      * @param beginIndex The begin index of the keyword found within the stream.
      * @param endIndex The end index of the keyword found within the stream.
      * @param keyword The keyword that was detected.
+     * @param espData The ESP measurement data.
      * @return A future indicating whether the interaction was successfully started.
      */
     std::future<bool> notifyOfWakeWord(
         capabilityAgents::aip::AudioProvider wakeWordAudioProvider,
         avsCommon::avs::AudioInputStream::Index beginIndex,
         avsCommon::avs::AudioInputStream::Index endIndex,
-        std::string keyword);
+        std::string keyword,
+        const capabilityAgents::aip::ESPData& espData = capabilityAgents::aip::ESPData::EMPTY_ESP_DATA);
 
     /**
      * Begins a tap to talk initiated Alexa interaction. Note that this can also be used for wake word engines that
@@ -366,6 +374,8 @@ private:
     /**
      * Initializes the SDK and "glues" all the components together.
      *
+     * @param externalMusicProviderMediaPlayers The map of <PlayerId, mediaPlayer> to use to play content from each
+     * external music provider.
      * @param speakMediaPlayer The media player to use to play Alexa speech from.
      * @param audioMediaPlayer The media player to use to play Alexa audio content from.
      * @param alertsMediaPlayer The media player to use to play alerts from.
@@ -374,6 +384,7 @@ private:
      * @param audioSpeaker The speaker to control volume of Alexa audio content.
      * @param alertsSpeaker The speaker to control volume of alerts.
      * @param notificationsSpeaker The speaker to control volume of notifications.
+     * @param additionalSpeakers A list of additional speakers to receive volume changes.
      * @param audioFactory The audioFactory is a component the provides unique audio streams.
      * @param authDelegate The component that provides the client with valid LWA authorization.
      * @param alertStorage The storage interface that will be used to store alerts.
@@ -387,6 +398,8 @@ private:
      * @return Whether the SDK was initialized properly.
      */
     bool initialize(
+        std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>&
+            externalMusicProviderMediaPlayers,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
@@ -395,6 +408,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker,
+        const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
@@ -434,6 +448,9 @@ private:
 
     /// The audio player.
     std::shared_ptr<capabilityAgents::audioPlayer::AudioPlayer> m_audioPlayer;
+
+    /// The external media player.
+    std::shared_ptr<capabilityAgents::externalMediaPlayer::ExternalMediaPlayer> m_externalMediaPlayer;
 
     /// The alerts capability agent.
     std::shared_ptr<capabilityAgents::alerts::AlertsCapabilityAgent> m_alertsCapabilityAgent;

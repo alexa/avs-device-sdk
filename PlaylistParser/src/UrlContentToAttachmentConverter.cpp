@@ -1,6 +1,4 @@
 /*
- * UrlToAttachmentConverter.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -15,7 +13,7 @@
  * permissions and limitations under the License.
  */
 
-#include "PlaylistParser/UrlToAttachmentConverter.h"
+#include "PlaylistParser/UrlContentToAttachmentConverter.h"
 
 #include <AVSCommon/Utils/Logger/Logger.h>
 
@@ -192,7 +190,7 @@ bool UrlContentToAttachmentConverter::writeUrlContentIntoStream(std::string url)
         ACSDK_ERROR(LX("getContentFailed").d("reason", "badDataStream"));
         return false;
     }
-    auto reader = httpContent->dataStream->createReader(avsCommon::avs::attachment::AttachmentReader::Policy::BLOCKING);
+    auto reader = httpContent->dataStream->createReader(avsCommon::utils::sds::ReaderPolicy::BLOCKING);
     if (!reader) {
         ACSDK_ERROR(LX("getContentFailed").d("reason", "failedToCreateStreamReader"));
         return false;

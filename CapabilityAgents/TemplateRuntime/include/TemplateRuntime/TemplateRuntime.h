@@ -1,7 +1,5 @@
 /*
- * TemplateRuntime.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -141,18 +139,6 @@ private:
     /// @{
     void doShutdown() override;
     /// @}
-
-    /**
-     * Send ExceptionEncountered and report a failure to handle the @c AVSDirective.
-     *
-     * @param info The @c AVSDirective that encountered the error and ancillary information.
-     * @param type The type of Exception that was encountered.
-     * @param message The error message to include in the ExceptionEncountered message.
-     */
-    void sendExceptionEncounteredAndReportFailed(
-        std::shared_ptr<DirectiveInfo> info,
-        const std::string& message,
-        avsCommon::avs::ExceptionErrorType type = avsCommon::avs::ExceptionErrorType::INTERNAL_ERROR);
 
     /**
      * Remove a directive from the map of message IDs to DirectiveInfo instances.

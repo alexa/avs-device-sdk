@@ -1,7 +1,5 @@
 /*
- * TimeUtils.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_TIMING_TIMEUTILS_H_
 
 #include <string>
+#include <ctime>
 #include "AVSCommon/Utils/RetryTimer.h"
 
 namespace alexaClientSDK {
@@ -44,7 +43,7 @@ namespace timing {
  *
  * So, for example:
  *
- * 1986-8-8T21:30:00+0000
+ * 1986-08-08T21:30:00+0000
  *
  * means the year 1986, August 8th, 9:30pm.
  *
@@ -61,6 +60,18 @@ bool convert8601TimeStringToUnix(const std::string& timeString, int64_t* unixTim
  * @return Whether the get time was successful.
  */
 bool getCurrentUnixTime(int64_t* currentTime);
+
+/**
+ * Convert tm struct to time_t in UTC time
+ *
+ * This function is needed because mktime uses the current timezone. Hence, we calculate the current timezone
+ * difference, and adjust the converted time.
+ *
+ * @param utcTm time to be converted. This should be in UTC time
+ * @param[out] ret The converted UTC time to time_t
+ * @return Whether the conversion was successful.
+ */
+bool convertToUtcTimeT(const std::tm* utcTm, std::time_t* ret);
 
 }  // namespace timing
 }  // namespace utils

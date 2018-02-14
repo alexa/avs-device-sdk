@@ -1,7 +1,5 @@
 /*
- * HttpPost.h
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -60,6 +58,7 @@ public:
      */
     static std::unique_ptr<HttpPost> create();
 
+    bool addHTTPHeader(const std::string& header) override;
     long doPost(const std::string& m_url, const std::string& data, std::chrono::seconds timeout, std::string& body)
         override;
 
@@ -106,6 +105,9 @@ private:
 
     /// CURL handle with which to make requests
     CURL* m_curl;
+
+    /// A list of headers needed to be added at the HTTP level
+    curl_slist* m_requestHeaders;
 
     /// String used to accumuate the response body.
     std::string m_bodyAccumulator;

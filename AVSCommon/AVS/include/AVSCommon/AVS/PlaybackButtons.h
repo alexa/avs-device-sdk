@@ -1,6 +1,4 @@
 /*
- * PlaybackButtons.h
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -40,6 +38,27 @@ enum class PlaybackButton {
 };
 
 /**
+ * Convert a @c PlaybackButton to  @c std::string.
+ *
+ * @param button The @c PlaybackButton to convert.
+ * @return The representation of @c button.
+ */
+inline std::string PlaybackButtonToString(PlaybackButton button) {
+    switch (button) {
+        case PlaybackButton::PLAY:
+            return "Play";
+        case PlaybackButton::PAUSE:
+            return "Pause";
+        case PlaybackButton::PREVIOUS:
+            return "Previous";
+        case PlaybackButton::NEXT:
+            return "Next";
+    }
+
+    return "unknown playbackButton";
+}
+
+/**
  * A macro to be used in operator << overload function to help with the translation
  * of @c Button to string.
  *
@@ -71,5 +90,17 @@ inline std::ostream& operator<<(std::ostream& stream, const PlaybackButton& butt
 }  // namespace avs
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
+
+namespace std {
+/**
+ * @ std::hash() specialization defined to allow @c PlaybackButton to be used as a key in @c std::unordered_map.
+ */
+template <>
+struct hash<alexaClientSDK::avsCommon::avs::PlaybackButton> {
+    inline size_t operator()(const alexaClientSDK::avsCommon::avs::PlaybackButton& button) const {
+        return std::hash<std::string>{}(PlaybackButtonToString(button));
+    }
+};
+}  // namespace std
 
 #endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_PLAYBACKBUTTONS_H_

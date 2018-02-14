@@ -1,19 +1,16 @@
 /*
- * MimeUtils.cpp
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates.
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *     http://aws.amazon.com/apache2.0/
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
  */
 
 /// @file MimeUtils.cpp
@@ -92,7 +89,7 @@ std::string TestMimeAttachmentPart::getMimeString() const {
 
 bool TestMimeAttachmentPart::validateMimeParsing() {
     auto attachmentId = m_attachmentManager->generateAttachmentId(m_contextId, m_contentId);
-    auto reader = m_attachmentManager->createReader(attachmentId, AttachmentReader::Policy::BLOCKING);
+    auto reader = m_attachmentManager->createReader(attachmentId, avsCommon::utils::sds::ReaderPolicy::BLOCKING);
 
     std::vector<uint8_t> result(m_attachmentData.size());
     auto readStatus = InProcessAttachmentReader::ReadStatus::OK;

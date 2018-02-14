@@ -1,7 +1,5 @@
 /*
- * KeywordObserver.h
- *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -55,6 +53,18 @@ private:
 
     /// The audio provider.
     capabilityAgents::aip::AudioProvider m_audioProvider;
+
+    /// Flag to indicate if report of Echo Spatial Perception (ESP) is supported.
+    bool m_espSupport;
+
+    /// String representation of voice energy ESP measurement in float.
+    std::string m_voiceEnergy;
+
+    /// String representation of ambient energy ESP measurement in float.
+    std::string m_ambientEnergy;
+
+    /// Having InterfactionManager as a friend so that it can adjust the ESP related settings.
+    friend class InteractionManager;
 };
 
 }  // namespace sampleApp

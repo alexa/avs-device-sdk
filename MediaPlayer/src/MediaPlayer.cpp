@@ -1,7 +1,5 @@
 /*
- * MediaPlayer.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,13 +22,12 @@
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
 #include <PlaylistParser/PlaylistParser.h>
-#include <PlaylistParser/UrlToAttachmentConverter.h>
+#include <PlaylistParser/UrlContentToAttachmentConverter.h>
 
 #include "MediaPlayer/AttachmentReaderSource.h"
 #include "MediaPlayer/ErrorTypeConversion.h"
 #include "MediaPlayer/IStreamSource.h"
 #include "MediaPlayer/Normalizer.h"
-#include "MediaPlayer/UrlSource.h"
 
 #include "MediaPlayer/MediaPlayer.h"
 
@@ -88,6 +85,9 @@ static const int8_t GST_ADJUST_VOLUME_MIN = -1;
 
 /// GStreamer Volume Adjust Maximum.
 static const int8_t GST_ADJUST_VOLUME_MAX = 1;
+
+/// Represents the zero volume to avoid the actual 0.0 value. Used as a fix for GStreamer crashing on 0 volume for PCM.
+static const gdouble VOLUME_ZERO = 0.0000001;
 
 /// The amount to wait before stopping the pipeline on an end-of-stream message to avoid cutting audio short prematurely
 static const std::chrono::milliseconds SLEEP_AFTER_END_OF_AUDIO{300};
@@ -173,12 +173,14 @@ MediaPlayer::~MediaPlayer() {
     g_main_loop_unref(m_mainLoop);
 }
 
-MediaPlayer::SourceId MediaPlayer::setSource(std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader) {
+MediaPlayer::SourceId MediaPlayer::setSource(
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader,
+    const avsCommon::utils::AudioFormat* audioFormat) {
     ACSDK_DEBUG9(LX("setSourceCalled").d("sourceType", "AttachmentReader"));
     std::promise<MediaPlayer::SourceId> promise;
     auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &reader, &promise]() {
-        handleSetAttachmentReaderSource(std::move(reader), &promise);
+    std::function<gboolean()> callback = [this, &reader, &promise, audioFormat]() {
+        handleSetAttachmentReaderSource(std::move(reader), &promise, audioFormat);
         return false;
     };
     if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
@@ -213,6 +215,15 @@ MediaPlayer::SourceId MediaPlayer::setSource(const std::string& url, std::chrono
         return future.get();
     }
     return ERROR_SOURCE_ID;
+}
+
+uint64_t MediaPlayer::getNumBytesBuffered() {
+    ACSDK_DEBUG9(LX("getNumBytesBuffered"));
+    if (m_pipeline.appsrc) {
+        return gst_app_src_get_current_level_bytes(GST_APP_SRC(m_pipeline.appsrc));
+    } else {
+        return 0;
+    }
 }
 
 bool MediaPlayer::play(MediaPlayer::SourceId id) {
@@ -322,6 +333,15 @@ bool MediaPlayer::setVolume(int8_t volume) {
     return false;
 }
 
+void MediaPlayer::handleSetVolumeInternal(gdouble gstVolume) {
+    if (gstVolume == 0) {
+        g_object_set(m_pipeline.volume, "volume", VOLUME_ZERO, NULL);
+    } else {
+        g_object_set(m_pipeline.volume, "volume", gstVolume, NULL);
+    }
+    m_lastVolume = gstVolume;
+}
+
 void MediaPlayer::handleSetVolume(std::promise<bool>* promise, int8_t volume) {
     ACSDK_DEBUG9(LX("handleSetVolumeCalled"));
     auto toGstVolume =
@@ -345,7 +365,7 @@ void MediaPlayer::handleSetVolume(std::promise<bool>* promise, int8_t volume) {
         return;
     }
 
-    g_object_set(m_pipeline.volume, "volume", gstVolume, NULL);
+    handleSetVolumeInternal(gstVolume);
     promise->set_value(true);
 }
 
@@ -396,7 +416,7 @@ void MediaPlayer::handleAdjustVolume(std::promise<bool>* promise, int8_t delta) 
     gstVolume = std::min(gstVolume, static_cast<gdouble>(GST_SET_VOLUME_MAX));
     gstVolume = std::max(gstVolume, static_cast<gdouble>(GST_SET_VOLUME_MIN));
 
-    g_object_set(m_pipeline.volume, "volume", gstVolume, NULL);
+    handleSetVolumeInternal(gstVolume);
     promise->set_value(true);
 }
 
@@ -422,7 +442,9 @@ void MediaPlayer::handleSetMute(std::promise<bool>* promise, bool mute) {
         return;
     }
 
-    g_object_set(m_pipeline.volume, "mute", static_cast<gboolean>(mute), NULL);
+    // A fix for GStreamer crashing for zero volume on PCM data
+    g_object_set(m_pipeline.volume, "volume", mute || m_lastVolume == 0 ? VOLUME_ZERO : m_lastVolume, NULL);
+    m_isMuted = mute;
     promise->set_value(true);
 }
 
@@ -467,6 +489,12 @@ void MediaPlayer::handleGetSpeakerSettings(
     gboolean mute;
     g_object_get(m_pipeline.volume, "volume", &gstVolume, "mute", &mute, NULL);
 
+    /// A part of GStreamer crash fix for zero volume on PCM data
+    mute = m_isMuted;
+    if (mute) {
+        gstVolume = m_lastVolume;
+    }
+
     if (!toAVSVolume->normalize(gstVolume, &avsVolume)) {
         ACSDK_ERROR(LX("handleGetSpeakerSettingsFailed").d("reason", "normalizeVolumeFailed"));
         promise->set_value(false);
@@ -510,6 +538,8 @@ MediaPlayer::MediaPlayer(
     SpeakerInterface::Type type,
     std::string name) :
         RequiresShutdown{name},
+        m_lastVolume{GST_SET_VOLUME_MAX},
+        m_isMuted{false},
         m_contentFetcherFactory{contentFetcherFactory},
         m_speakerType{type},
         m_playbackStartedSent{false},
@@ -625,7 +655,7 @@ bool MediaPlayer::setupPipeline() {
             ACSDK_INFO(LX("invalidOutputConversion").d("string", gst_caps_to_string(caps)));
         }
     } else {
-        ACSDK_INFO(LX("noOutputConversion"));
+        ACSDK_DEBUG9(LX("noOutputConversion"));
     }
 
     // clean up caps object
@@ -735,23 +765,6 @@ void MediaPlayer::resetPipeline() {
     m_pipeline.resample = nullptr;
     m_pipeline.caps = nullptr;
     m_pipeline.audioSink = nullptr;
-}
-
-bool MediaPlayer::queryBufferingStatus(bool* buffering) {
-    ACSDK_DEBUG9(LX("queryBufferingStatus"));
-    GstQuery* query = gst_query_new_buffering(GST_FORMAT_TIME);
-    if (gst_element_query(m_pipeline.pipeline, query)) {
-        gboolean busy;
-        gst_query_parse_buffering_percent(query, &busy, nullptr);
-        *buffering = busy;
-        ACSDK_INFO(LX("queryBufferingStatus").d("buffering", *buffering));
-        gst_query_unref(query);
-        return true;
-    } else {
-        ACSDK_ERROR(LX("queryBufferingStatusFailed").d("reason", "bufferQueryFailed"));
-        gst_query_unref(query);
-        return false;
-    }
 }
 
 bool MediaPlayer::queryIsSeekable(bool* isSeekable) {
@@ -1063,12 +1076,13 @@ void MediaPlayer::sendStreamTagsToObserver(std::unique_ptr<const VectorOfTags> v
 
 void MediaPlayer::handleSetAttachmentReaderSource(
     std::shared_ptr<AttachmentReader> reader,
-    std::promise<MediaPlayer::SourceId>* promise) {
+    std::promise<MediaPlayer::SourceId>* promise,
+    const avsCommon::utils::AudioFormat* audioFormat) {
     ACSDK_DEBUG(LX("handleSetSourceCalled"));
 
     tearDownTransientPipelineElements();
 
-    std::shared_ptr<SourceInterface> source = AttachmentReaderSource::create(this, reader);
+    std::shared_ptr<SourceInterface> source = AttachmentReaderSource::create(this, reader, audioFormat);
 
     if (!source) {
         ACSDK_ERROR(LX("handleSetAttachmentReaderSourceFailed").d("reason", "sourceIsNullptr"));
@@ -1145,7 +1159,7 @@ void MediaPlayer::handleSetUrlSource(
         return;
     }
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader =
-        attachment->createReader(avsCommon::avs::attachment::AttachmentReader::Policy::BLOCKING);
+        attachment->createReader(sds::ReaderPolicy::BLOCKING);
     if (!reader) {
         ACSDK_ERROR(LX("setSourceUrlFailed").d("reason", "failedToCreateAttachmentReader"));
         promise->set_value(ERROR_SOURCE_ID);
@@ -1186,20 +1200,7 @@ void MediaPlayer::handlePlay(SourceId id, std::promise<bool>* promise) {
     m_pauseImmediately = false;
     promise->set_value(true);
 
-    gboolean attemptBuffering;
-    g_object_get(m_pipeline.decoder, "use-buffering", &attemptBuffering, NULL);
-    ACSDK_DEBUG(LX("handlePlay").d("attemptBuffering", attemptBuffering));
-
     GstState startingState = GST_STATE_PLAYING;
-    if (attemptBuffering) {
-        /*
-         * Set pipeline to PAUSED state to attempt buffering.
-         * The pipeline will be set to PLAY in two ways:
-         * i) If buffering is supported, then upon receiving buffer percent = 100.
-         * ii) If buffering is not supported, then the pipeline will be set to PLAY immediately.
-         */
-        startingState = GST_STATE_PAUSED;
-    }
 
     stateChange = gst_element_set_state(m_pipeline.pipeline, startingState);
     ACSDK_DEBUG(LX("handlePlay")

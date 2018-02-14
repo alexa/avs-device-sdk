@@ -1,7 +1,5 @@
 /*
- * SampleApplication.cpp
- *
- * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,6 +38,7 @@
 #include <algorithm>
 #include <cctype>
 #include <fstream>
+#include <csignal>
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -114,6 +113,20 @@ static alexaClientSDK::avsCommon::utils::logger::Level getLogLevelFromUserInput(
     return alexaClientSDK::avsCommon::utils::logger::convertNameToLevel(userInputLogLevel);
 }
 
+/**
+ * Allows the process to ignore the SIGPIPE signal.
+ * The SIGPIPE signal may be received when the application performs a write to a closed socket.
+ * This is a case that arises in the use of certain networking libraries.
+ *
+ * @return true if the action for handling SIGPIPEs was correctly set to ignore, else false.
+ */
+static bool ignoreSigpipeSignals() {
+    if (std::signal(SIGPIPE, SIG_IGN) == SIG_ERR) {
+        return false;
+    }
+    return true;
+}
+
 std::unique_ptr<SampleApplication> SampleApplication::create(
     const std::string& pathToConfig,
     const std::string& pathToInputFolder,
@@ -123,6 +136,11 @@ std::unique_ptr<SampleApplication> SampleApplication::create(
         ConsolePrinter::simplePrint("Failed to initialize SampleApplication");
         return nullptr;
     }
+    if (!ignoreSigpipeSignals()) {
+        ConsolePrinter::simplePrint("Failed to set a signal handler for SIGPIPE");
+        return nullptr;
+    }
+
     return clientApplication;
 }
 
@@ -135,6 +153,9 @@ SampleApplication::~SampleApplication() {
     m_userInputManager.reset();
 
     // Now it's safe to shut down the MediaPlayers.
+    for (auto mediaPlayer : m_externalMusicProviderMediaPlayers) {
+        mediaPlayer->shutdown();
+    }
     if (m_speakMediaPlayer) {
         m_speakMediaPlayer->shutdown();
     }
@@ -198,10 +219,9 @@ bool SampleApplication::initialize(
 
     auto httpContentFetcherFactory = std::make_shared<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory>();
 
-    /*
-     * Creating the media players. Here, the default GStreamer based MediaPlayer is being created. However, any
-     * MediaPlayer that follows the specified MediaPlayerInterface can work.
-     */
+    std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>
+        externalMusicProviderMediaPlayersMap;
+
     m_speakMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
         httpContentFetcherFactory, avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SYNCED, "SpeakMediaPlayer");
     if (!m_speakMediaPlayer) {
@@ -240,6 +260,8 @@ bool SampleApplication::initialize(
     /*
      * Create Speaker interfaces to control the volume. For the SDK, the MediaPlayer happens to also provide
      * volume control functionality, but this does not have to be case.
+     * Note the externalMusicProviderMediaPlayer is not added to the set of SpeakerInterfaces as there would be
+     * more actions needed for these beyond setting the volume control on the MediaPlayer.
      */
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker =
         std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface>(m_speakMediaPlayer);
@@ -250,6 +272,8 @@ bool SampleApplication::initialize(
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker =
         std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface>(
             m_notificationsMediaPlayer);
+
+    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> additionalSpeakers;
 
     auto audioFactory = std::make_shared<alexaClientSDK::applicationUtilities::resources::audio::AudioFactory>();
 
@@ -298,6 +322,7 @@ bool SampleApplication::initialize(
      */
     std::shared_ptr<alexaClientSDK::defaultClient::DefaultClient> client =
         alexaClientSDK::defaultClient::DefaultClient::create(
+            externalMusicProviderMediaPlayersMap,
             m_speakMediaPlayer,
             m_audioMediaPlayer,
             m_alertsMediaPlayer,
@@ -306,6 +331,7 @@ bool SampleApplication::initialize(
             audioSpeaker,
             alertsSpeaker,
             notificationsSpeaker,
+            additionalSpeakers,
             audioFactory,
             authDelegate,
             alertStorage,
@@ -474,7 +500,8 @@ bool SampleApplication::initialize(
         userInterfaceManager,
         holdToTalkAudioProvider,
         tapToTalkAudioProvider,
-        wakeWordAudioProvider);
+        wakeWordAudioProvider,
+        keywordObserver);
 
 #else
     // If wake word is not enabled, then creating the interaction manager without a wake word audio provider.

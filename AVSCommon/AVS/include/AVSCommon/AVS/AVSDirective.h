@@ -1,7 +1,5 @@
 /*
- * AVSDirective.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -59,7 +57,7 @@ public:
      */
     std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> getAttachmentReader(
         const std::string& contentId,
-        avsCommon::avs::attachment::AttachmentReader::Policy readerPolicy) const;
+        utils::sds::ReaderPolicy readerPolicy) const;
 
     /**
      * Returns the underlying unparsed directive.

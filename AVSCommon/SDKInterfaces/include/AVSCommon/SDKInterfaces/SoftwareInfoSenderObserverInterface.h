@@ -1,6 +1,4 @@
 /*
- * SoftwareInfoSenderObserverInterface.h
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -25,10 +23,22 @@ namespace sdkInterfaces {
 namespace softwareInfo {
 
 /// Type to use to communicate a firmware version.
-typedef uint32_t FirmwareVersion;
+typedef int32_t FirmwareVersion;
 
 /// The invalid firmware version.
 static const FirmwareVersion INVALID_FIRMWARE_VERSION = 0;
+
+static const FirmwareVersion MAX_FIRMWARE_VERSION = std::numeric_limits<FirmwareVersion>::max();
+
+/**
+ * Determine whether a firmware version is valid.
+ *
+ * @param version The version to check.
+ * @return Whether the specified firmware version is valid.
+ */
+inline bool isValidFirmwareVersion(FirmwareVersion version) {
+    return version > 0;
+}
 
 };  // namespace softwareInfo
 

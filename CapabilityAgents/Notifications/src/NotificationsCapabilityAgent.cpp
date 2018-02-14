@@ -1,6 +1,4 @@
 /*
- * NotificationsCapabilityAgent.cpp
- *
  * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -663,17 +661,6 @@ DirectiveHandlerConfiguration NotificationsCapabilityAgent::getConfiguration() c
     configuration[SET_INDICATOR] = BlockingPolicy::HANDLE_IMMEDIATELY;
     configuration[CLEAR_INDICATOR] = BlockingPolicy::HANDLE_IMMEDIATELY;
     return configuration;
-}
-
-void NotificationsCapabilityAgent::sendExceptionEncounteredAndReportFailed(
-    std::shared_ptr<DirectiveInfo> info,
-    const std::string& message,
-    avsCommon::avs::ExceptionErrorType type) {
-    m_exceptionEncounteredSender->sendExceptionEncountered(info->directive->getUnparsedDirective(), type, message);
-    if (info && info->result) {
-        info->result->setFailed(message);
-    }
-    removeDirective(info->directive->getMessageId());
 }
 
 void NotificationsCapabilityAgent::setHandlingCompleted(std::shared_ptr<DirectiveInfo> info) {

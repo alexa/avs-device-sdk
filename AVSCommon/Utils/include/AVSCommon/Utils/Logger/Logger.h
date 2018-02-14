@@ -1,7 +1,5 @@
 /*
- * Logger.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -228,6 +226,14 @@ protected:
     std::atomic<Level> m_level;
 
 private:
+    /**
+     * Initialize the log level from the specified @c ConfigurationNode.
+     *
+     * @param configuration The @c ConfigurationNode to read the log level from.
+     * @return Whether the logLevel was applied.
+     */
+    bool initLogLevel(const configuration::ConfigurationNode configuration);
+
     /**
      * Notify the observers of a logLevel change.
      */

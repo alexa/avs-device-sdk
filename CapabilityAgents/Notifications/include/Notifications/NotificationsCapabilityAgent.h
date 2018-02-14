@@ -1,6 +1,4 @@
 /*
- * NotificationsCapabilityAgent.h
- *
  * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -163,18 +161,6 @@ private:
     /// @{
     void doShutdown() override;
     /// @}
-
-    /**
-     * Send ExceptionEncountered and report a failure to handle the @c AVSDirective.
-     *
-     * @param info The @c AVSDirective that encountered the error and ancillary information.
-     * @param message The error message to include in the ExceptionEncountered message.
-     * @param type The type of Exception that was encountered.
-     */
-    void sendExceptionEncounteredAndReportFailed(
-        std::shared_ptr<DirectiveInfo> info,
-        const std::string& message,
-        avsCommon::avs::ExceptionErrorType type = avsCommon::avs::ExceptionErrorType::INTERNAL_ERROR);
 
     /**
      * Cleans up the Directive that has been completely handled.

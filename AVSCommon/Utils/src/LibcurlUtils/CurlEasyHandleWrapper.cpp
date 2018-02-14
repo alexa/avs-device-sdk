@@ -1,7 +1,5 @@
 /*
- * CurlEasyHandleWrapper.cpp
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +16,7 @@
 #include <iostream>
 
 #include <AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h>
+#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
@@ -42,8 +41,6 @@ static const std::string TAG("CurlEasyHandleWrapper");
 static std::string JSON_MIME_TYPE = "text/json";
 /// MIME Content-Type for octet stream data
 static std::string OCTET_MIME_TYPE = "application/octet-stream";
-/// Response code for HTTP 204 (Success No Content response)
-static const long HTTP_RESPONSE_SUCCESS_NO_CONTENT = 204;
 
 CurlEasyHandleWrapper::CurlEasyHandleWrapper() :
         m_handle{curl_easy_init()},
@@ -87,7 +84,7 @@ bool CurlEasyHandleWrapper::reset() {
      *
      * TODO: ACSDK-104 Find a way to re-use all handles, or re-evaluate the easy handle pooling scheme
      */
-    if (HTTP_RESPONSE_SUCCESS_NO_CONTENT == responseCode) {
+    if (HTTPResponseCode::SUCCESS_NO_CONTENT == responseCode) {
         ACSDK_DEBUG(LX("reset").d("responseCode", "HTTP_RESPONSE_SUCCESS_NO_CONTENT"));
         curl_easy_cleanup(m_handle);
         m_handle = curl_easy_init();
@@ -109,7 +106,7 @@ bool CurlEasyHandleWrapper::addHTTPHeader(const std::string& header) {
     m_requestHeaders = curl_slist_append(m_requestHeaders, header.c_str());
     if (!m_requestHeaders) {
         ACSDK_ERROR(LX("addHTTPHeaderFailed").d("reason", "curlFailure").d("method", "curl_slist_append"));
-        ACSDK_DEBUG(LX("addHTTPHeaderFailed").d("header", header));
+        ACSDK_DEBUG(LX("addHTTPHeaderFailed").sensitive("header", header));
         return false;
     }
     CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_HTTPHEADER, m_requestHeaders);
@@ -128,7 +125,7 @@ bool CurlEasyHandleWrapper::addPostHeader(const std::string& header) {
     m_postHeaders = curl_slist_append(m_postHeaders, header.c_str());
     if (!m_postHeaders) {
         ACSDK_ERROR(LX("addPostHeaderFailed").d("reason", "curlFailure").d("method", "curl_slist_append"));
-        ACSDK_DEBUG(LX("addPostHeaderFailed").d("header", header));
+        ACSDK_DEBUG(LX("addPostHeaderFailed").sensitive("header", header));
         return false;
     }
     return true;
@@ -141,7 +138,7 @@ bool CurlEasyHandleWrapper::setURL(const std::string& url) {
                         .d("reason", "curlFailure")
                         .d("method", "curl_easy_setopt")
                         .d("option", "CURLOPT_URL")
-                        .d("url", url)
+                        .sensitive("url", url)
                         .d("error", curl_easy_strerror(ret)));
         return false;
     }

@@ -1,6 +1,4 @@
 /*
- * AudioPlayerIntegrationTest.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -362,7 +360,6 @@ protected:
             m_avsConnectionManager,
             m_focusManager,
             m_contextManager,
-            m_attachmentManager,
             m_exceptionEncounteredSender,
             m_dialogUXStateAggregator);
         ASSERT_NE(nullptr, m_speechSynthesizer);
@@ -384,7 +381,6 @@ protected:
             m_avsConnectionManager,
             m_focusManager,
             m_contextManager,
-            m_attachmentManager,
             m_exceptionEncounteredSender,
             m_playbackRouter);
         ASSERT_NE(nullptr, m_audioPlayer);

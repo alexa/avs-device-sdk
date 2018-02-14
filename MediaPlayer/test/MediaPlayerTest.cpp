@@ -1,6 +1,4 @@
 /*
- * MediaPlayerTest.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -184,6 +182,10 @@ public:
 
     bool seek(uint64_t offset) override {
         return true;
+    }
+
+    uint64_t getNumUnreadBytes() override {
+        return 0;
     }
 
     /**
@@ -1011,10 +1013,11 @@ TEST_F(MediaPlayerTest, testSetOffsetSeekableSource) {
 }
 #endif
 
+// TODO: ACSDK-1024 MediaPlayerTest.testSetOffsetOutsideBounds is flaky
 /**
  * Test setting the offset outside the bounds of the source. Playback will immediately end.
  */
-TEST_F(MediaPlayerTest, testSetOffsetOutsideBounds) {
+TEST_F(MediaPlayerTest, DISABLED_testSetOffsetOutsideBounds) {
     std::chrono::milliseconds outOfBounds(MP3_FILE_LENGTH + PADDING);
 
     std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);

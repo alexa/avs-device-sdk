@@ -1,7 +1,5 @@
 /*
- * AttachmentWriterTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -69,7 +67,7 @@ void AttachmentWriterTest::init() {
     ASSERT_NE(m_sds, nullptr);
     m_writer = InProcessAttachmentWriter::create(m_sds);
     ASSERT_NE(m_writer, nullptr);
-    m_reader = InProcessAttachmentReader::create(AttachmentReader::Policy::NON_BLOCKING, m_sds);
+    m_reader = InProcessAttachmentReader::create(ReaderPolicy::NONBLOCKING, m_sds);
     ASSERT_NE(m_reader, nullptr);
     m_testPattern = createTestPattern(TEST_SDS_BUFFER_SIZE_IN_BYTES);
 }
