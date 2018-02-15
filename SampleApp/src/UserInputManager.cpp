@@ -196,9 +196,10 @@ void UserInputManager::run() {
                         break;
                 }
             }
-        } else {
-            m_interactionManager->errorValue();
         }
+//    	else {
+//            m_interactionManager->errorValue();
+//      }
     }
 }
 
