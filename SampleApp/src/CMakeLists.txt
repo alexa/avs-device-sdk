@@ -6,6 +6,7 @@ add_executable(SampleApp
     ConsolePrinter.cpp
     GuiRenderer.cpp
     UIManager.cpp
+    EverloopControl.cpp
     KeywordObserver.cpp
     ConnectionObserver.cpp
     SampleApplication.cpp)
