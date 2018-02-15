@@ -298,6 +298,12 @@ bool SampleApplication::initialize(
     auto userInterfaceManager = std::make_shared<alexaClientSDK::sampleApp::UIManager>();
 
     /*
+     * Creating the Everloop component that observes DialogUXState changes and map it to the everloop
+     * accordingly.
+     */
+    auto everloopController = std::make_shared<alexaClientSDK::sampleApp::EverloopControl>();
+
+    /*
      * Setting up a connection observer to wait for connection and authorization prior to accepting user input at
      * startup.
      */
@@ -376,11 +382,13 @@ bool SampleApplication::initialize(
 
     client->addNotificationsObserver(userInterfaceManager);
 
-    /*
-     * Add GUI Renderer as an observer if display cards are supported.  The default is supported unless specified
-     * otherwise in the configuration.
-     */
-    bool displayCardsSupported;
+    client->addAlexaDialogStateObserver(everloopController);
+
+        /*
+         * Add GUI Renderer as an observer if display cards are supported.  The default is supported unless specified
+         * otherwise in the configuration.
+         */
+        bool displayCardsSupported;
     config[SAMPLE_APP_CONFIG_KEY].getBool(DISPLAY_CARD_KEY, &displayCardsSupported, true);
     if (displayCardsSupported) {
         auto guiRenderer = std::make_shared<GuiRenderer>();
