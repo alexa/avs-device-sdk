@@ -19,6 +19,12 @@
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
+#include <matrix_hal/everloop_image.h>
+#include <matrix_hal/everloop.h>
+#include <matrix_hal/wishbone_bus.h>
+
+namespace hal = matrix_hal;
+
 namespace alexaClientSDK {
 namespace sampleApp {
 
@@ -31,13 +37,22 @@ class EverloopControl
 public:
     void onDialogUXStateChanged(DialogUXState state) override;
 
-
 private:
     /// The current dialog UX state of the SDK
     DialogUXState m_dialogState;
 
     /// An internal executor that performs execution of callable objects passed to it sequentially but asynchronously.
     avsCommon::utils::threading::Executor m_executor;
+
+    void InitWishboneBus();
+    void SetEverloopColors(int red, int green, int blue, int white);
+
+    hal::WishboneBus bus;
+    hal::Everloop everloop;
+    hal::EverloopImage image1d;
+
+    bool spiBusInit = false;
+
 };
 
 }  // namespace sampleApp
