@@ -15,12 +15,12 @@
 * The `TZ` variable no longer needs to be set to `UTC` when building the `SampleApp`.
 * Fixed a bug where `CurlEasyHandleWrapper` logged unwanted data on failure conditions.
 * Fixed a bug to improve `SIGPIPE` handling.
-* Fixed a bug where the filename and classname were mismatched. Changed `UrlToAttachmentConverter.h` to `UrlContentToAttachmentConverter.h`,and `UrlToAttachmentConverter.cpp` to `UrlContentToAttachmentConverter.cpp`
+* Fixed a bug where the filename and classname were mismatched. Changed `UrlToAttachmentConverter.h` to `UrlContentToAttachmentConverter.h`,and `UrlToAttachmentConverter.cpp` to `UrlContentToAttachmentConverter.cpp`.  
+* Fixed a bug where after muting and then un-muting the GStreamer-based `MediaPlayer` implementation, the next item in queue would play instead of continuing playback of the originally muted item.  
 
 **Known Issues**
 * The `ACL` may encounter issues if audio attachments are received but not consumed.
-* Display Cards for Kindle don't render.
-* If using the GStreamer-based `MediaPlayer` implementation, after muting and un-muting an audio item, the next item in the queue will begin playing rather than continuing playback of the originally muted audio item.
+* Display Cards for Kindle don't render.  
 * `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
 * Music playback doesn't immediately stop when a user barges-in on iHeartRadio.
 
