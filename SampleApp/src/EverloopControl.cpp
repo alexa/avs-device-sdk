@@ -31,7 +31,7 @@ static const std::string VERSION = avsCommon::utils::sdkVersion::getCurrentVersi
 
 void EverloopControl::onDialogUXStateChanged(DialogUXState state) {
     m_executor.submit([this, state]() {
-        printf("EverloopControl: new state :",stateToString(state));
+        printf("EverloopControl: new state :%s", stateToString(state).c_str());
     });
 }
 

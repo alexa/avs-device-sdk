@@ -19,6 +19,7 @@
 #include <unordered_map>
 #include "ConsolePrinter.h"
 #include "UserInputManager.h"
+#include "EverloopControl.h"
 
 #ifdef KWD
 #include <KWD/AbstractKeywordDetector.h>
