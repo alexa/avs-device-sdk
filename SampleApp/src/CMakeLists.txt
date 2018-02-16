@@ -11,6 +11,9 @@ add_executable(SampleApp
     ConnectionObserver.cpp
     SampleApplication.cpp)
 
+FIND_LIBRARY(HAL_LIB NAMES matrix_creator_hal)
+message(STATUS "HAL found => " "${HAL_LIB}")
+
 target_include_directories(SampleApp PUBLIC 
     "${SampleApp_SOURCE_DIR}/include"
     "${MediaPlayer_SOURCE_DIR}/include"
@@ -22,7 +25,8 @@ target_link_libraries(SampleApp
     DefaultClient
     AuthDelegate 
     MediaPlayer 
-    "${PORTAUDIO_LIB_PATH}")
+    "${PORTAUDIO_LIB_PATH}"
+    ${HAL_LIB})
 
 if(KITTAI_KEY_WORD_DETECTOR)
     target_link_libraries(SampleApp 
