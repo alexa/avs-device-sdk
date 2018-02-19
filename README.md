@@ -20,11 +20,11 @@ You can set up the SDK on the following platforms:
 * [Generic Linux](https://github.com/alexa/avs-device-sdk/wiki/Linux-Reference-Guide)
 
 You can also prototype with a third party development kit:
-* [XMOS VocalFusion 4-Mic Kit](https://github.com/xmos/vocalfusion-avs-setup)
-* [Synaptics AudioSmart 2-Mic Dev Kit for Amazon AVS with NXP SoC](https://www.nxp.com/docs/en/user-guide/Quick-Start-Guide-for-Arrow-AVS-kit.pdf)
-* [Intel Speech Enabling Developer Kit](https://avs-dvk-workshop.github.io)
-* [Amlogic A113X1 Far-Field Dev Kit for Amazon AVS](http://openlinux2.amlogic.com/download/doc/A113X1_Usermanual.pdf)
-* [Allwinner SoC-Only 3-Mic Far-Field Dev Kit for Amazon AVS](http://www.banana-pi.org/images/r18avs/AVS-quickstartguide.pdf)
+* [XMOS VocalFusion 4-Mic Kit](https://github.com/xmos/vocalfusion-avs-setup) - [Learn More](https://developer.amazon.com/alexa-voice-service/dev-kits/xmos-vocal-fusion)
+* [Synaptics AudioSmart 2-Mic Dev Kit for Amazon AVS with NXP SoC](https://www.nxp.com/docs/en/user-guide/Quick-Start-Guide-for-Arrow-AVS-kit.pdf) - [Learn More](https://developer.amazon.com/alexa-voice-service/dev-kits/synaptics-2-mic)
+* [Intel Speech Enabling Developer Kit](https://avs-dvk-workshop.github.io) - [Learn More](https://developer.amazon.com/alexa-voice-service/dev-kits/intel-speech-enabling/)
+* [Amlogic A113X1 Far-Field Dev Kit for Amazon AVS](http://openlinux2.amlogic.com/download/doc/A113X1_Usermanual.pdf) - [Learn More](https://developer.amazon.com/alexa-voice-service/dev-kits/amlogic-6-mic)
+* [Allwinner SoC-Only 3-Mic Far-Field Dev Kit for Amazon AVS](http://www.banana-pi.org/images/r18avs/AVS-quickstartguide.pdf) - [Learn More](https://developer.amazon.com/alexa-voice-service/dev-kits/allwinner-3-mic)
 
 Or if you prefer, you can start with our [SDK API Documentation](https://alexa.github.io/avs-device-sdk/).
 
