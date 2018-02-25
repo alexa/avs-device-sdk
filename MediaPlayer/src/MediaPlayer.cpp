@@ -596,7 +596,7 @@ bool MediaPlayer::setupPipeline() {
         return false;
     }
 
-    m_pipeline.audioSink = gst_element_factory_make("autoaudiosink", "audio_sink");
+    m_pipeline.audioSink = gst_element_factory_make("alsasink", "audio_sink");
     if (!m_pipeline.audioSink) {
         ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createAudioSinkElementFailed"));
         return false;

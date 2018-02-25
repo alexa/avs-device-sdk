@@ -1,3 +1,12 @@
+This is a brunch from AVS Device SDK 1.4 official repository.
+
+Summary of update is following.
+ * add download of pulseaudio, snowboy and relative package.
+ * change build option (build with snowboy)
+ * change .asoundrc(alsa->pulseaudio)
+ * fix build error
+ * change sink of gstreamer (autoaudiosink -> alsasink)
+
 ### IMPORTANT NOTE
 If you are updating from v1.3 or earlier to v1.5, you must update your `AlexaClientSDKConfig.json` to include a Notifications database. An updated sample is available in the quickstart guides for Ubuntu Linux, Raspberry Pi, macOS, and Generic Linux.
 

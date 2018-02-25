@@ -139,6 +139,9 @@ then
     sudo apt-get -y install git gcc cmake build-essential libsqlite3-dev libcurl4-openssl-dev libfaad-dev libsoup2.4-dev libgcrypt20-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-good libasound2-dev sox gedit vim python3-pip
     pip install flask commentjson
 
+	# for simultaneously
+	sudo apt-get -y install pulseaudio pavucontrol
+
     # create / paths
     echo
     echo "==============> CREATING PATHS AND GETTING SOUND FILES ============"
@@ -169,16 +172,18 @@ then
     echo
 
     cd $SOURCE_PATH
-    git clone git://github.com/alexa/avs-device-sdk.git
+    git clone git://github.com/dimeiza/avs-device-sdk.git
 
     #get sensory and build
     echo
-    echo "==============> CLONING AND BUILDING SENSORY =============="
+    echo "==============> CLONING AND BUILDING Snowboy =============="
     echo
 
     cd $THIRD_PARTY_PATH
-    git clone git://github.com/Sensory/alexa-rpi.git
-    bash ./alexa-rpi/bin/license.sh
+    git clone https://github.com/Kitt-AI/snowboy.git
+    sudo apt-get -y install libatlas-base-dev
+    
+    cp "$THIRD_PARTY_PATH/snowboy/resources/alexa/alexa-avs-sample-app/alexa.umdl" "$THIRD_PARTY_PATH/snowboy/resources/"
 
     # make the SDK
     echo
@@ -187,9 +192,9 @@ then
 
     cd $BUILD_PATH
     cmake "$SOURCE_PATH/avs-device-sdk" \
-    -DSENSORY_KEY_WORD_DETECTOR=ON \
-    -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH="$THIRD_PARTY_PATH/alexa-rpi/lib/libsnsr.a" \
-    -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR="$THIRD_PARTY_PATH/alexa-rpi/include" \
+	-DKITTAI_KEY_WORD_DETECTOR=ON \
+	-DKITTAI_KEY_WORD_DETECTOR_LIB_PATH="$THIRD_PARTY_PATH/snowboy/lib/rpi/libsnowboy-detect.a" \
+	-DKITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR="$THIRD_PARTY_PATH//snowboy/include" \
     -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
     -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.a" \
     -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
@@ -245,24 +250,29 @@ echo "==============> SAVING AUDIO CONFIGURATION FILE =============="
 echo
 
 cat << EOF > "$SOUND_CONFIG"
+pcm.pulse {
+    type pulse
+}
+
+ctl.pulse {
+    type pulse
+}
+
 pcm.!default {
-  type asym
-   playback.pcm {
-     type plug
-     slave.pcm "hw:0,0"
-   }
-   capture.pcm {
-     type plug
-     slave.pcm "hw:1,0"
-   }
+    type pulse
+}
+ctl.!default {
+    type pulse
 }
 EOF
 
 cat << EOF > "$START_SCRIPT"
+#!/bin/bash
 cd "$BUILD_PATH/SampleApp/src"
-
-./SampleApp "$CONFIG_FILE" "$THIRD_PARTY_PATH/alexa-rpi/models" DEBUG9
+./SampleApp "$CONFIG_FILE" "$THIRD_PARTY_PATH/snowboy/resources" 
 EOF
+
+chmod +x "$START_SCRIPT"
 
 cat << EOF > "$START_AUTH_SCRIPT"
 cd "$BUILD_PATH"
@@ -282,4 +292,11 @@ chmod +x "$START_AUTH_SCRIPT"
 EOF
 
 echo " **** Completed Configuration/Build ***"
+
+echo " **** device authentication ***"
+
+bash $CURRENT_DIR/startauth.sh
+
+echo " **** Completed device authentication ***"
+
 
