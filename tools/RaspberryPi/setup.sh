@@ -183,6 +183,7 @@ then
     git clone https://github.com/Kitt-AI/snowboy.git
     sudo apt-get -y install libatlas-base-dev
     
+    cp "$THIRD_PARTY_PATH/snowboy/resources/alexa/alexa-avs-sample-app/alexa.umdl" "$THIRD_PARTY_PATH/snowboy/resources/"
 
     # make the SDK
     echo
