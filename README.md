@@ -106,7 +106,7 @@ v1.5.0 released 02/12/2018:
 **Bug Fixes**
 * Fixed bug where `AudioPlayer` progress reports were not being sent, or were being sent incorrectly.
 * [Issue 408](https://github.com/alexa/avs-device-sdk/issues/408) - Irrelevant code related to `UrlSource` was removed from the `GStreamer-based MediaPlayer` implementation.
-* The `TZ` variable no longer needs to be set to `UTC` when building the `SampleApp`.
+* The `TZ` variable no longer needs to be set to `UTC` when running `SampleApp`.
 * Fixed a bug where `CurlEasyHandleWrapper` logged unwanted data on failure conditions.
 * Fixed a bug to improve `SIGPIPE` handling.
 * Fixed a bug where the filename and classname were mismatched. Changed `UrlToAttachmentConverter.h` to `UrlContentToAttachmentConverter.h`,and `UrlToAttachmentConverter.cpp` to `UrlContentToAttachmentConverter.cpp`.
