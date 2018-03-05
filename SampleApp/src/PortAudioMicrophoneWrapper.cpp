@@ -65,13 +65,22 @@ bool PortAudioMicrophoneWrapper::initialize() {
         ConsolePrinter::simplePrint("Failed to initialize PortAudio");
         return false;
     }
-    err = Pa_OpenDefaultStream(
+
+    PaStreamParameters inputParameters;
+    bzero( &inputParameters, sizeof(inputParameters));
+    inputParameters.device = Pa_GetDefaultInputDevice();
+    inputParameters.channelCount = NUM_INPUT_CHANNELS;
+    inputParameters.sampleFormat = paInt16;
+    inputParameters.suggestedLatency = 0.150;
+    inputParameters.hostApiSpecificStreamInfo = NULL;
+
+    err = Pa_OpenStream(
         &m_paStream,
-        NUM_INPUT_CHANNELS,
-        NUM_OUTPUT_CHANNELS,
-        paInt16,
+        &inputParameters,
+        NULL,
         SAMPLE_RATE,
         PREFERRED_SAMPLES_PER_CALLBACK,
+        paNoFlag,
         PortAudioCallback,
         this);
     if (err != paNoError) {
