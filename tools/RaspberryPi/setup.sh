@@ -136,8 +136,32 @@ then
     echo
 
     sudo apt-get update
-    sudo apt-get -y install git gcc cmake build-essential libsqlite3-dev libcurl4-openssl-dev libfaad-dev libsoup2.4-dev libgcrypt20-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-good libasound2-dev sox gedit vim python3-pip
-    pip install flask commentjson
+    sudo apt-get -y install git gcc cmake \
+    build-essential \
+    libsqlite3-dev \
+    libcurl4-openssl-dev \
+    libfaad-dev \
+    libsoup2.4-dev \
+    libgcrypt20-dev \
+    libgstreamer-plugins-bad1.0-dev \
+    gstreamer1.0-plugins-good \
+    libasound2-dev \
+    sox\
+    gedit\
+    vim\
+    python3-pip
+
+    # mpg123
+    # gst-plugins-ugly
+    # gstreamer1.0-plugins-ugly
+    # gstreamer1.0-plugins-base
+    # gstreamer1.0-plugins-bad
+    # gst-libav
+    # libgstreamer-plugins-base0.10-0 libgstreamer-plugins-base0.10-dev 
+    # gstreamer1.0-tools gstreamer1.0-alsa
+
+    pip install flask
+    pip install commentjson
 
     # create / paths
     echo
