@@ -15,40 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <unistd.h>
+#ifndef CPP_DRIVER_CREATOR_MEMORY_MAP_H_
+#define CPP_DRIVER_CREATOR_MEMORY_MAP_H_
+
 #include <string>
-#include <iostream>
-
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <unistd.h>
-
-#include "everloop.h"
 
 namespace matrix_hal {
 
-Everloop::Everloop() {}
+/* FPGA Wishbone address map */
+const uint32_t kConfBaseAddress = 0x0000;
+const uint32_t kUartBaseAddress = 0x0800;
+const uint32_t kMicrophoneArrayBaseAddress = 0x1800;
+const uint32_t kEverloopBaseAddress = 0x2000;
+const uint32_t kGPIOBaseAddress = 0x2800;
+const uint16_t kMCUBaseAddress = 0x3800;
 
-bool Everloop::Write(const EverloopImage* led_image) {
+/* MCU offsets map */
+const uint16_t kMemoryOffsetUV = 0x00;
+const uint16_t kMemoryOffsetPressure = 0x10;
+const uint16_t kMemoryOffsetHumidity = 0x20;
+const uint16_t kMemoryOffsetIMU = 0x30;
+const uint16_t kMemoryOffsetMCU = 0x90;
 
-  int fd = open("/dev/matrixio_everloop", O_WRONLY);
-
-  char buff[4*35];
-  uint32_t addr_offset = 0;
-  for (const LedValue& led : led_image->leds) {
-
-    buff[addr_offset] = led.red;
-    buff[addr_offset+1] = led.green;
-    buff[addr_offset+2] = led.white;
-    buff[addr_offset+3] = led.blue;
-    addr_offset +=4;
-  }
-
-  write(fd, buff, 35*4);
-  close(fd);
-
-  return true;
-}
-};  // namespace matrix_hal
+};      // namespace matrix_hal
+#endif  // CPP_DRIVER_CREATOR_MEMORY_MAP_H_

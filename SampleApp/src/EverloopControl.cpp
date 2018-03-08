@@ -29,13 +29,6 @@ using namespace avsCommon::sdkInterfaces;
 
 static const std::string VERSION = avsCommon::utils::sdkVersion::getCurrentVersion();
 
-void EverloopControl::InitWishboneBus(){
-    bus.SpiInit();
-    everloop.Setup(&bus);
-    SetEverloopColors(0,10,0,0);
-    spiBusInit = true;
-}
-
 void EverloopControl::SetEverloopColors(int red, int green, int blue, int white) {
     for (hal::LedValue& led : image1d.leds) {
         led.red = red;
@@ -48,10 +41,6 @@ void EverloopControl::SetEverloopColors(int red, int green, int blue, int white)
 
 void EverloopControl::onDialogUXStateChanged(DialogUXState state) {
     
-    if(spiBusInit == false){
-        InitWishboneBus();
-    }
-
     m_executor.submit([this, state]() {
         switch (state) {
             case DialogUXState::IDLE:
