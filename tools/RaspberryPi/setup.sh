@@ -155,7 +155,6 @@ then
     gstreamer1.0-tools gstreamer1.0-alsa \
     libasound2-dev \
     sox \
-    gedit \
     vim \
     python3-pip
 
@@ -262,6 +261,12 @@ echo
 echo "==============> FINAL CONFIGURATION  =============="
 echo
 cat $CONFIG_FILE
+
+echo
+echo "==============> MAKING BAKCUP OF /etc/asound.conf =============="
+echo
+
+mv -v /etc/asound.conf /etc/asound.conf.backup
 
 echo
 echo "==============> SAVING AUDIO CONFIGURATION FILE =============="
