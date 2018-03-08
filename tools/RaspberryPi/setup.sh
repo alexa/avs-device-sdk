@@ -144,21 +144,20 @@ then
     libsoup2.4-dev \
     libgcrypt20-dev \
     libgstreamer-plugins-bad1.0-dev \
-    gstreamer1.0-plugins-good \
+    gstreamer1.0-plugins-bad \
+    mpg123 \
+    gst-plugins-ugly \
+    gstreamer1.0-plugins-ugly \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-bad \
+    gst-libav \
+    libgstreamer-plugins-base0.10-0 libgstreamer-plugins-base0.10-dev  \
+    gstreamer1.0-tools gstreamer1.0-alsa \
     libasound2-dev \
-    sox\
-    gedit\
-    vim\
+    sox \
+    gedit \
+    vim \
     python3-pip
-
-    # mpg123
-    # gst-plugins-ugly
-    # gstreamer1.0-plugins-ugly
-    # gstreamer1.0-plugins-base
-    # gstreamer1.0-plugins-bad
-    # gst-libav
-    # libgstreamer-plugins-base0.10-0 libgstreamer-plugins-base0.10-dev 
-    # gstreamer1.0-tools gstreamer1.0-alsa
 
     pip install flask
     pip install commentjson
