@@ -169,7 +169,7 @@ then
     echo
 
     cd $SOURCE_PATH
-    git clone git://github.com/alexa/avs-device-sdk.git
+    git clone git://github.com/matrix-io/avs-device-sdk.git
 
     #get sensory and build
     echo
