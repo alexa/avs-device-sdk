@@ -268,16 +268,23 @@ echo "==============> SAVING AUDIO CONFIGURATION FILE =============="
 echo
 
 cat << EOF > "$SOUND_CONFIG"
-pcm.!default {
+pcm.sc {
+    type hw
+    card 2
+}
+pcm.!default
+{
   type asym
-   playback.pcm {
-     type plug
-     slave.pcm "hw:0,0"
-   }
-   capture.pcm {
-     type plug
-     slave.pcm "hw:1,0"
-   }
+  playback.pcm {
+    type hw
+    card 0
+    device 0
+  }
+  capture.pcm {
+    type hw
+    card 2
+    device 0
+  }
 }
 EOF
 
