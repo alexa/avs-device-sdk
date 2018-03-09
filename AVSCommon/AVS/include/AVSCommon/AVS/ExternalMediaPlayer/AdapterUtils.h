@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_EXTERNALMEDIAPLAYER_INCLUDE_EXTERNALMEDIAPLAYER_ADAPTERUTILS_H_
-#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_EXTERNALMEDIAPLAYER_INCLUDE_EXTERNALMEDIAPLAYER_ADAPTERUTILS_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_EXTERNALMEDIAPLAYER_ADAPTERUTILS_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_EXTERNALMEDIAPLAYER_ADAPTERUTILS_H_
 
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
@@ -26,7 +26,8 @@
 #include "AVSCommon/Utils/RetryTimer.h"
 
 namespace alexaClientSDK {
-namespace capabilityAgents {
+namespace avsCommon {
+namespace avs {
 namespace externalMediaPlayer {
 
 /// Enumeration class for events sent by adapters to AVS.
@@ -111,8 +112,9 @@ rapidjson::Value buildSessionState(
 bool buildDefaultPlayerState(rapidjson::Value* document, rapidjson::Document::AllocatorType& allocator);
 
 }  // namespace externalMediaPlayer
-}  // namespace capabilityAgents
+}  // namespace avs
+}  // namespace avsCommon
 }  // namespace alexaClientSDK
 
 #endif  // end
-// ALEXA_CLIENT_SDK_CAPABILITYAGENTS_EXTERNALMEDIAPLAYER_INCLUDE_EXTERNALMEDIAPLAYER_ADAPTERUTILS_H_
+// ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_EXTERNALMEDIAPLAYER_ADAPTERUTILS_H_

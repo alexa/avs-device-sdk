@@ -20,6 +20,7 @@
 #include <string>
 
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Logger/LogStringFormatter.h>
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -64,6 +65,11 @@ private:
      * when called from global's destructor
      */
     std::shared_ptr<std::mutex> m_mutex;
+
+    /**
+     * Object used to format strings for log messages.
+     */
+    avsCommon::utils::logger::LogStringFormatter m_logFormatter;
 };
 
 }  // namespace sampleApp

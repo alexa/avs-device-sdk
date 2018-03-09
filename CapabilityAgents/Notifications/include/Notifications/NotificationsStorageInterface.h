@@ -39,34 +39,23 @@ public:
     virtual ~NotificationsStorageInterface() = default;
 
     /**
-     * Creates a new database with the given filepath.
-     * If the file specified already exists, or if a database is already being handled by this object, then
-     * this function returns false.
+     * Creates a new database.
+     * If a database is already being handled by this object or there is another internal error, then this function
+     * returns false.
      *
-     * If the necessary tables cannot be created, this will return false.
-     *
-     * @param filePath The path to the file which will be used to contain the database.
-     * @return @c true If the database is created ok, or @c false if either the file exists or a database is already
-     * being handled by this object.
+     * @return @c true If the database is created ok, or @c false if a database is already being handled by this object
+     * or there is a problem creating the database.
      */
-    virtual bool createDatabase(const std::string& filePath) = 0;
+    virtual bool createDatabase() = 0;
 
     /**
-     * Open a database with the given filepath.  If this object is already managing an open database, or the file
-     * does not exist, or there is a problem opening the database, this function returns false.
+     * Open an existing database.  If this object is already managing an open database, or there is a problem opening
+     * the database, this function returns false.
      *
-     * @param filePath The path to the file which will be used to contain the database.
-     * @return @c true If the database is opened ok, @c false if either the file does not exist, if this object is
-     * already managing an open database, or if there is another internal reason the database could not be opened.
+     * @return @c true If the database is opened ok, @c false if this object is already managing an open database, or if
+     * there is another internal reason the database could not be opened.
      */
-    virtual bool open(const std::string& filePath) = 0;
-
-    /**
-     * Query if this object is currently managing an open database.
-     *
-     * @return @c true If a database is being currently managed by this object, @c false otherwise.
-     */
-    virtual bool isOpen() const = 0;
+    virtual bool open() = 0;
 
     /**
      * Close the currently open database, if one is open.
@@ -110,7 +99,7 @@ public:
      * @return Whether the get operation was successful.
      * @note The default IndicatorState for a new database is IndicatorState::OFF.
      */
-    virtual bool getIndicatorState(IndicatorState* state) const = 0;
+    virtual bool getIndicatorState(IndicatorState* state) = 0;
 
     /**
      * Checks if there are any NotificationIndicator records in the database.
@@ -118,7 +107,7 @@ public:
      * @param [out] empty Whether there were any records in the database.
      * @return Whether the operation was successful.
      */
-    virtual bool checkForEmptyQueue(bool* empty) const = 0;
+    virtual bool checkForEmptyQueue(bool* empty) = 0;
 
     /**
      * Clears the database of all @c NotificationIndicators.
@@ -133,7 +122,7 @@ public:
      * @param [out] size A pointer to receive the calculated size.
      * @return Whether the size operation was successful.
      */
-    virtual bool getQueueSize(int* size) const = 0;
+    virtual bool getQueueSize(int* size) = 0;
 };
 
 }  // namespace notifications

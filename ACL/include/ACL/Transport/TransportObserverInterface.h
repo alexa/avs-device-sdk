@@ -17,6 +17,8 @@
 #define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_TRANSPORTOBSERVERINTERFACE_H_
 
 #include <memory>
+
+#include <ACL/Transport/TransportInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 
 namespace alexaClientSDK {

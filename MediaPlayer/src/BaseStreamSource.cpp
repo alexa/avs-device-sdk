@@ -51,6 +51,10 @@ static std::string getCapsString(const AudioFormat& audioFormat) {
         case AudioFormat::Encoding::LPCM:
             caps << "audio/x-raw";
             break;
+        case AudioFormat::Encoding::OPUS:
+            ACSDK_ERROR(LX("MediaPlayer does not handle OPUS data"));
+            caps << " ";
+            break;
     }
 
     switch (audioFormat.endianness) {
@@ -98,6 +102,17 @@ BaseStreamSource::~BaseStreamSource() {
     g_signal_handler_disconnect(m_pipeline->getAppSrc(), m_needDataHandlerId);
     g_signal_handler_disconnect(m_pipeline->getAppSrc(), m_enoughDataHandlerId);
     g_signal_handler_disconnect(m_pipeline->getAppSrc(), m_seekDataHandlerId);
+    if (m_pipeline->getPipeline()) {
+        if (m_pipeline->getAppSrc()) {
+            gst_bin_remove(GST_BIN(m_pipeline->getPipeline()), GST_ELEMENT(m_pipeline->getAppSrc()));
+        }
+        m_pipeline->setAppSrc(nullptr);
+
+        if (m_pipeline->getDecoder()) {
+            gst_bin_remove(GST_BIN(m_pipeline->getPipeline()), GST_ELEMENT(m_pipeline->getDecoder()));
+        }
+        m_pipeline->setDecoder(nullptr);
+    }
     {
         std::lock_guard<std::mutex> lock(m_callbackIdMutex);
         if (m_needDataCallbackId && !g_source_remove(m_needDataCallbackId)) {
@@ -217,7 +232,6 @@ void BaseStreamSource::signalEndOfData() {
                         .d("result", gst_flow_get_name(flowRet)));
     }
     ACSDK_DEBUG9(LX("gstAppSrcEndOfStreamSuccess"));
-    close();
     clearOnReadDataHandler();
 }
 

@@ -32,13 +32,19 @@ public:
         bool(
             const std::string& channelName,
             std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver,
-            const std::string& activityId));
+            const std::string& interface));
     MOCK_METHOD2(
         releaseChannel,
         std::future<bool>(
             const std::string& channelName,
             std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver));
     MOCK_METHOD0(stopForegroundActivity, void());
+    MOCK_METHOD1(
+        addObserver,
+        void(const std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerObserverInterface>& observer));
+    MOCK_METHOD1(
+        removeObserver,
+        void(const std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerObserverInterface>& observer));
 };
 
 }  // namespace test

@@ -340,7 +340,7 @@ protected:
         ASSERT_NE(nullptr, m_avsConnectionManager);
         connect();
 
-        m_focusManager = std::make_shared<FocusManager>();
+        m_focusManager = std::make_shared<FocusManager>(FocusManager::DEFAULT_AUDIO_CHANNELS);
         m_testClient = std::make_shared<TestClient>();
         ASSERT_TRUE(
             m_focusManager->acquireChannel(FocusManager::ALERTS_CHANNEL_NAME, m_testClient, ALERTS_ACTIVITY_ID));

@@ -1,5 +1,28 @@
 ## ChangeLog
 
+### [1.6.0] - 2018-03-08
+
+**Enhancements**
+* `rapidJson` is now included with "make install".
+* Updated the `TemplateRuntimeObserverInterface` to support clearing of `displayCards`.
+* Added Windows SDK support, along with an installation script (MinGW-w64).
+* Updated `ContextManager` to ignore context reported by a state provider.
+* The `SharedDataStream` object is now associated by playlist, rather than by URL.
+* Added the `RegistrationManager` component. Now, when a user logs out all persistent user-specific data is cleared from the SDK. The log out functionality can be exercised in the sample app with the new command: `k`.
+
+**Bug Fixes**
+* [Issue 400](https://github.com/alexa/avs-device-sdk/issues/400) Fixed a bug where the alert reminder did not iterate as intended after loss of network connection.
+* [Issue 477](https://github.com/alexa/avs-device-sdk/issues/477) Fixed a bug in which Alexa's weather response was being truncated.
+* Fixed an issue in which there were reports of instability related to the Sensory engine. To correct this, the `portAudio` [`suggestedLatency`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L62) value can now be configured.
+
+**Known Issues**
+* The `ACL` may encounter issues if audio attachments are received but not consumed.
+* `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
+* Music playback doesn't immediately stop when a user barges-in on iHeartRadio.
+* The Windows sample app hangs on exit.
+* GDB receives a `SIGTRAP` when troubleshooting the Windows sample app.
+* `make integration` doesn't work on Windows. Integration tests will need to be run individually.
+
 ### [1.5.0] - 2018-02-12
 
 **Enhancements**

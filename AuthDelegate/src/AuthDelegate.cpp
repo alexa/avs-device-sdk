@@ -146,12 +146,12 @@ static bool isUnrecoverable(AuthObserverInterface::Error error) {
  * Helper function that retrieves the Error enum value.
  *
  * @param error The string in the @c error field of packet body.
- * @return the Error enum code corresponding to @c error. If error is "", returns NO_ERROR. If it is an unknown error,
+ * @return the Error enum code corresponding to @c error. If error is "", returns SUCCESS. If it is an unknown error,
  * returns UNKNOWN_ERROR.
  */
 static AuthObserverInterface::Error getErrorCode(const std::string& error) {
     if (error.empty()) {
-        return AuthObserverInterface::Error::NO_ERROR;
+        return AuthObserverInterface::Error::SUCCESS;
     } else {
         auto errorIterator = g_recoverableErrorCodeMap.find(error);
         if (g_recoverableErrorCodeMap.end() != errorIterator) {
@@ -213,7 +213,7 @@ std::unique_ptr<AuthDelegate> AuthDelegate::create(
 
 AuthDelegate::AuthDelegate(std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost) :
         m_authState{AuthObserverInterface::State::UNINITIALIZED},
-        m_authError{AuthObserverInterface::Error::NO_ERROR},
+        m_authError{AuthObserverInterface::Error::SUCCESS},
         m_isStopping{false},
         m_expirationTime{std::chrono::time_point<std::chrono::steady_clock>::max()},
         m_retryCount{0},
@@ -316,7 +316,7 @@ void AuthDelegate::refreshAndNotifyThreadFunction() {
             lock.unlock();
         } else {
             lock.unlock();
-            if (AuthObserverInterface::Error::NO_ERROR == refreshAuthToken()) {
+            if (AuthObserverInterface::Error::SUCCESS == refreshAuthToken()) {
                 nextState = AuthObserverInterface::State::REFRESHED;
             }
         }
@@ -343,7 +343,7 @@ AuthObserverInterface::Error AuthDelegate::refreshAuthToken() {
     auto code = m_HttpPost->doPost(m_lwaUrl, postData.str(), timeout, body);
     auto newError = handleLwaResponse(code, body);
 
-    if (AuthObserverInterface::Error::NO_ERROR == newError) {
+    if (AuthObserverInterface::Error::SUCCESS == newError) {
         m_retryCount = 0;
     } else {
         m_timeToRefresh = calculateTimeToRetry(m_retryCount++);
@@ -406,7 +406,7 @@ AuthObserverInterface::Error AuthDelegate::handleLwaResponse(long code, const st
             std::lock_guard<std::mutex> lock(m_mutex);
             m_authToken = authToken;
         }
-        return AuthObserverInterface::Error::NO_ERROR;
+        return AuthObserverInterface::Error::SUCCESS;
 
     } else {
         std::string error;

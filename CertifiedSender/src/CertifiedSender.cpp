@@ -18,6 +18,7 @@
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
+#include <RegistrationManager/CustomerDataManager.h>
 
 namespace alexaClientSDK {
 namespace certifiedSender {
@@ -26,11 +27,6 @@ using namespace avsCommon::utils::logger;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs;
 using namespace avsCommon::utils::configuration;
-
-/// The key in our config file to find the root of settings for this Capability Agent.
-static const std::string CERTIFIED_SENDER_CONFIGURATION_ROOT_KEY = "certifiedSender";
-/// The key in our config file to find the database file path.
-static const std::string CERTIFIED_SENDER_DB_FILE_PATH_KEY = "databaseFilePath";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("CertifiedSender");
@@ -90,8 +86,10 @@ void CertifiedSender::CertifiedMessageRequest::shutdown() {
 std::shared_ptr<CertifiedSender> CertifiedSender::create(
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<AbstractConnection> connection,
-    std::shared_ptr<MessageStorageInterface> storage) {
-    auto certifiedSender = std::shared_ptr<CertifiedSender>(new CertifiedSender(messageSender, connection, storage));
+    std::shared_ptr<MessageStorageInterface> storage,
+    std::shared_ptr<registrationManager::CustomerDataManager> dataManager) {
+    auto certifiedSender =
+        std::shared_ptr<CertifiedSender>(new CertifiedSender(messageSender, connection, storage, dataManager));
 
     if (!certifiedSender->init()) {
         ACSDK_ERROR(LX("createFailed").m("Could not initialize certifiedSender."));
@@ -107,9 +105,11 @@ CertifiedSender::CertifiedSender(
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
     std::shared_ptr<AbstractConnection> connection,
     std::shared_ptr<MessageStorageInterface> storage,
+    std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
     int queueSizeWarnLimit,
     int queueSizeHardLimit) :
         RequiresShutdown("CertifiedSender"),
+        CustomerDataHandler(dataManager),
         m_queueSizeWarnLimit{queueSizeWarnLimit},
         m_queueSizeHardLimit{queueSizeHardLimit},
         m_isShuttingDown{false},
@@ -143,17 +143,9 @@ bool CertifiedSender::init() {
         return false;
     }
 
-    auto configurationRoot = ConfigurationNode::getRoot()[CERTIFIED_SENDER_CONFIGURATION_ROOT_KEY];
-
-    std::string dbFilePath;
-    if (!configurationRoot.getString(CERTIFIED_SENDER_DB_FILE_PATH_KEY, &dbFilePath) || dbFilePath.empty()) {
-        ACSDK_ERROR(LX("initFailed").m("Could not load db file path."));
-        return false;
-    }
-
-    if (!m_storage->open(dbFilePath)) {
+    if (!m_storage->open()) {
         ACSDK_INFO(LX("init : Database file does not exist.  Creating."));
-        if (!m_storage->createDatabase(dbFilePath)) {
+        if (!m_storage->createDatabase()) {
             ACSDK_ERROR(LX("initFailed").m("Could not create database file."));
             return false;
         }
@@ -254,6 +246,15 @@ bool CertifiedSender::executeSendJSONMessage(std::string jsonMessage) {
 
 void CertifiedSender::doShutdown() {
     m_connection->removeConnectionStatusObserver(shared_from_this());
+}
+
+void CertifiedSender::clearData() {
+    auto result = m_executor.submit([this]() {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        m_messagesToSend.clear();
+        m_storage->clearDatabase();
+    });
+    result.wait();
 }
 
 }  // namespace certifiedSender

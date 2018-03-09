@@ -59,6 +59,7 @@
 #include "Integration/TestExceptionEncounteredSender.h"
 #include "Integration/TestMessageSender.h"
 #include "Integration/TestSpeechSynthesizerObserver.h"
+#include "RegistrationManager/CustomerDataManager.h"
 #include "SpeechSynthesizer/SpeechSynthesizer.h"
 #include "System/UserInactivityMonitor.h"
 
@@ -277,7 +278,7 @@ protected:
             m_messageRouter, isEnabled, m_connectionStatusObserver, m_messageInterpreter);
         ASSERT_NE(nullptr, m_avsConnectionManager);
 
-        m_focusManager = std::make_shared<FocusManager>();
+        m_focusManager = std::make_shared<FocusManager>(FocusManager::DEFAULT_AUDIO_CHANNELS);
         m_testContentClient = std::make_shared<TestClient>();
         ASSERT_TRUE(m_focusManager->acquireChannel(
             FocusManager::CONTENT_CHANNEL_NAME, m_testContentClient, CONTENT_ACTIVITY_ID));
@@ -367,14 +368,21 @@ protected:
 
         auto alertsAudioFactory = std::make_shared<applicationUtilities::resources::audio::AlertsAudioFactory>();
 
-        m_alertStorage = std::make_shared<storage::SQLiteAlertStorage>(alertsAudioFactory);
+        m_alertStorage = capabilityAgents::alerts::storage::SQLiteAlertStorage::create(
+            avsCommon::utils::configuration::ConfigurationNode::getRoot(), alertsAudioFactory);
 
         m_alertObserver = std::make_shared<TestAlertObserver>();
 
-        auto messageStorage = std::make_shared<SQLiteMessageStorage>();
+        auto messageStorage =
+            SQLiteMessageStorage::create(avsCommon::utils::configuration::ConfigurationNode::getRoot());
+
+        m_customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
 
         m_certifiedSender = CertifiedSender::create(
-            m_avsConnectionManager, m_avsConnectionManager->getConnectionManager(), messageStorage);
+            m_avsConnectionManager,
+            m_avsConnectionManager->getConnectionManager(),
+            std::move(messageStorage),
+            m_customerDataManager);
 
         m_alertsAgent = AlertsCapabilityAgent::create(
             m_avsConnectionManager,
@@ -384,7 +392,8 @@ protected:
             m_exceptionEncounteredSender,
             m_alertStorage,
             alertsAudioFactory,
-            m_alertRenderer);
+            m_alertRenderer,
+            m_customerDataManager);
         ASSERT_NE(m_alertsAgent, nullptr);
         m_alertsAgent->addObserver(m_alertObserver);
         m_alertsAgent->onLocalStop();
@@ -529,7 +538,7 @@ protected:
     std::shared_ptr<SpeechSynthesizer> m_speechSynthesizer;
     std::shared_ptr<AlertsCapabilityAgent> m_alertsAgent;
     std::shared_ptr<TestSpeechSynthesizerObserver> m_speechSynthesizerObserver;
-    std::shared_ptr<storage::SQLiteAlertStorage> m_alertStorage;
+    std::shared_ptr<capabilityAgents::alerts::storage::SQLiteAlertStorage> m_alertStorage;
     std::shared_ptr<renderer::RendererInterface> m_alertRenderer;
     std::shared_ptr<TestAlertObserver> m_alertObserver;
     std::shared_ptr<holdToTalkButton> m_holdToTalkButton;
@@ -539,6 +548,7 @@ protected:
     std::shared_ptr<AudioInputStream> m_AudioBuffer;
     std::shared_ptr<AudioInputProcessor> m_AudioInputProcessor;
     std::shared_ptr<UserInactivityMonitor> m_userInactivityMonitor;
+    std::shared_ptr<registrationManager::CustomerDataManager> m_customerDataManager;
 
     FocusState m_focusState;
     std::mutex m_mutex;

@@ -787,6 +787,110 @@ TEST_F(DirectiveSequencerTest, testHandleBlockingThenImmediatelyThenNonBockingOn
     ASSERT_TRUE(handler2->waitUntilCompleted());
 }
 
+/**
+ * Check that the @ DirectiveSequencer does not handle directives when it is disabled
+ */
+TEST_F(DirectiveSequencerTest, testAddDirectiveAfterDisabled) {
+    auto avsMessageHeader =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
+    std::shared_ptr<AVSDirective> directive = AVSDirective::create(
+        UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
+
+    DirectiveHandlerConfiguration handlerConfig;
+    handlerConfig[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy::BLOCKING;
+    auto handler = MockDirectiveHandler::create(handlerConfig, LONG_HANDLING_TIME_MS);
+
+    EXPECT_CALL(*handler, handleDirectiveImmediately(_)).Times(0);
+    EXPECT_CALL(*handler, preHandleDirective(directive, _)).Times(0);
+    EXPECT_CALL(*handler, handleDirective(MESSAGE_ID_2)).Times(0);
+    EXPECT_CALL(*handler, cancelDirective(_)).Times(0);
+
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler));
+    m_sequencer->disable();
+    m_sequencer->setDialogRequestId(DIALOG_REQUEST_ID_0);
+    ASSERT_FALSE(m_sequencer->onDirective(directive));
+
+    // Tear down method expects the sequencer to be enabled
+    m_sequencer->enable();
+}
+
+/**
+ * Check that the @ DirectiveSequencer.disable() cancel directive being handled
+ */
+TEST_F(DirectiveSequencerTest, testDisableCancelsDirective) {
+    auto avsMessageHeader =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
+    std::shared_ptr<AVSDirective> directive = AVSDirective::create(
+        UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
+
+    DirectiveHandlerConfiguration handlerConfig;
+    handlerConfig[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy::BLOCKING;
+    auto handler = MockDirectiveHandler::create(handlerConfig, LONG_HANDLING_TIME_MS);
+
+    EXPECT_CALL(*handler, handleDirectiveImmediately(_)).Times(0);
+    EXPECT_CALL(*handler, preHandleDirective(directive, _)).Times(1);
+    EXPECT_CALL(*handler, handleDirective(MESSAGE_ID_0)).Times(AtMost(1));
+    EXPECT_CALL(*handler, cancelDirective(_)).Times(1);
+
+    // Add directive and wait till prehandling
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler));
+    m_sequencer->setDialogRequestId(DIALOG_REQUEST_ID_0);
+    ASSERT_TRUE(m_sequencer->onDirective(directive));
+    ASSERT_TRUE(handler->waitUntilPreHandling());
+
+    // Disable
+    m_sequencer->disable();
+    ASSERT_TRUE(handler->waitUntilCanceling());
+
+    // Tear down method expects the sequencer to be enabled
+    m_sequencer->enable();
+}
+
+/**
+ * Check that the @ DirectiveSequencer can handle directives after being re-enabled
+ */
+TEST_F(DirectiveSequencerTest, testAddDirectiveAfterReEnabled) {
+    auto avsMessageHeader0 =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
+    std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
+        UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
+    auto avsMessageHeader1 =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_1, DIALOG_REQUEST_ID_1);
+    std::shared_ptr<AVSDirective> ignoredDirective1 = AVSDirective::create(
+        "ignoreDirective", avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
+    auto avsMessageHeader2 =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_2, DIALOG_REQUEST_ID_2);
+    std::shared_ptr<AVSDirective> ignoredDirective2 = AVSDirective::create(
+        "anotherIgnored", avsMessageHeader2, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
+
+    DirectiveHandlerConfiguration handlerConfig;
+    handlerConfig[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] = BlockingPolicy::NON_BLOCKING;
+    auto handler = MockDirectiveHandler::create(handlerConfig);
+
+    // No handle calls are expected
+    EXPECT_CALL(*handler, handleDirectiveImmediately(_)).Times(0);
+    EXPECT_CALL(*handler, preHandleDirective(_, _)).Times(0);
+    EXPECT_CALL(*handler, handleDirective(_)).Times(0);
+    EXPECT_CALL(*handler, cancelDirective(_)).Times(0);
+
+    // Except for the ones handling the directive0
+    EXPECT_CALL(*handler, preHandleDirective(directive0, _)).Times(1);
+    EXPECT_CALL(*handler, handleDirective(MESSAGE_ID_0)).Times(1);
+
+    ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler));
+    m_sequencer->disable();
+
+    // Make sure these directives are ignored and never processed
+    ASSERT_FALSE(m_sequencer->onDirective(ignoredDirective1));
+    ASSERT_FALSE(m_sequencer->onDirective(ignoredDirective2));
+
+    m_sequencer->enable();
+    m_sequencer->setDialogRequestId(DIALOG_REQUEST_ID_0);
+
+    ASSERT_TRUE(m_sequencer->onDirective(directive0));
+    ASSERT_TRUE(handler->waitUntilCompleted());
+}
+
 }  // namespace test
 }  // namespace adsl
 }  // namespace alexaClientSDK

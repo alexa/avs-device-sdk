@@ -36,15 +36,14 @@ static const std::string TAG{"Settings"};
 /// The key in our config file to find the root of settings.
 static const std::string SETTINGS_CONFIGURATION_ROOT_KEY = "settings";
 /// The key in our config file to find the database file path.
-static const std::string SETTINGS_DB_FILE_PATH_KEY = "databaseFilePath";
-/// The key in our config file to find the default setting root.
 static const std::string SETTINGS_DEFAULT_SETTINGS_ROOT_KEY = "defaultAVSClientSettings";
 /// The acceptable setting keys to find in our config file.
 static const std::unordered_set<std::string> SETTINGS_ACCEPTED_KEYS = {"locale"};
 
 std::shared_ptr<Settings> Settings::create(
     std::shared_ptr<SettingsStorageInterface> settingsStorage,
-    std::unordered_set<std::shared_ptr<GlobalSettingsObserverInterface>> globalSettingsObserver) {
+    std::unordered_set<std::shared_ptr<GlobalSettingsObserverInterface>> globalSettingsObserver,
+    std::shared_ptr<registrationManager::CustomerDataManager> dataManager) {
     if (!settingsStorage) {
         ACSDK_ERROR(LX("createFailed").d("reason", "settingsStorageNullReference").d("return", "nullptr"));
         return nullptr;
@@ -62,7 +61,7 @@ std::shared_ptr<Settings> Settings::create(
         }
     }
 
-    auto settingsObject = std::shared_ptr<Settings>(new Settings(settingsStorage, globalSettingsObserver));
+    auto settingsObject = std::shared_ptr<Settings>(new Settings(settingsStorage, globalSettingsObserver, dataManager));
 
     if (!settingsObject->initialize()) {
         ACSDK_ERROR(LX("createFailed").d("reason", "Initialization error."));
@@ -182,21 +181,9 @@ bool Settings::executeChangeSetting(const std::string& key, const std::string& v
 }
 
 bool Settings::initialize() {
-    auto configurationRoot = ConfigurationNode::getRoot()[SETTINGS_CONFIGURATION_ROOT_KEY];
-    if (!configurationRoot) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "SettingsConfigurationRootNotFound."));
-        return false;
-    }
-
-    std::string databaseFilePath;
-    if (!configurationRoot.getString(SETTINGS_DB_FILE_PATH_KEY, &databaseFilePath) || databaseFilePath.empty()) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "SqliteFilePathNotFound"));
-        return false;
-    }
-
-    if (!m_settingsStorage->open(databaseFilePath)) {
+    if (!m_settingsStorage->open()) {
         ACSDK_INFO(LX("initialize").m("database file does not exist.  Creating."));
-        if (!m_settingsStorage->createDatabase(databaseFilePath)) {
+        if (!m_settingsStorage->createDatabase()) {
             ACSDK_ERROR(LX("initializeFailed").d("reason", "SettingsDatabaseCreationFailed"));
             return false;
         }
@@ -210,8 +197,13 @@ bool Settings::initialize() {
         return false;
     }
 
-    auto defaultSettingRoot =
-        ConfigurationNode::getRoot()[SETTINGS_CONFIGURATION_ROOT_KEY][SETTINGS_DEFAULT_SETTINGS_ROOT_KEY];
+    auto configurationRoot = ConfigurationNode::getRoot()[SETTINGS_CONFIGURATION_ROOT_KEY];
+    if (!configurationRoot) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "SettingsConfigurationRootNotFound."));
+        return false;
+    }
+
+    auto defaultSettingRoot = configurationRoot[SETTINGS_DEFAULT_SETTINGS_ROOT_KEY];
 
     if (!defaultSettingRoot) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "DefaultSettingsRootNotFound"));
@@ -246,9 +238,20 @@ bool Settings::initialize() {
     return true;
 }
 
+void Settings::clearData() {
+    auto result = m_executor.submit([this]() {
+        // Notify the observers of the single settting with value of setting.
+        m_settingsStorage->clearDatabase();
+        m_mapOfSettingsAttributes.clear();
+    });
+    result.wait();
+}
+
 Settings::Settings(
     std::shared_ptr<SettingsStorageInterface> settingsStorage,
-    std::unordered_set<std::shared_ptr<GlobalSettingsObserverInterface>> globalSettingsObserver) :
+    std::unordered_set<std::shared_ptr<GlobalSettingsObserverInterface>> globalSettingsObserver,
+    std::shared_ptr<registrationManager::CustomerDataManager> dataManager) :
+        CustomerDataHandler{dataManager},
         m_settingsStorage{settingsStorage},
         m_globalSettingsObserver{globalSettingsObserver},
         m_sendDefaultSettings{false} {

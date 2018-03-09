@@ -21,6 +21,7 @@
 #include <string>
 
 #include "ChannelObserverInterface.h"
+#include "FocusManagerObserverInterface.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -32,12 +33,12 @@ namespace sdkInterfaces {
  * operations are provided:
  *
  * acquire Channel - clients should call the acquireChannel() method, passing in the name of the Channel they wish to
- * acquire, a pointer to the observer that they want to be notified once they get focus, and a unique activity id.
+ * acquire, a pointer to the observer that they want to be notified once they get focus, and a unique interface name.
  *
  * release Channel - clients should call the releaseChannel() method, passing in the name of the Channel and the
  * observer of the Channel they wish to release.
  *
- * stop foreground Channel - clients should call the stopForegroundActivitiy() method.
+ * stop foreground Channel - clients should call the stopForegroundActivity() method.
  *
  * All of these methods will notify the observer of the Channel of focus changes via an asynchronous callback to the
  * ChannelObserverInterface##onFocusChanged() method, at which point the client should make a user observable change
@@ -63,6 +64,12 @@ public:
     /// The default Content Channel priority.
     static constexpr unsigned int CONTENT_CHANNEL_PRIORITY = 300;
 
+    /// The default Visual Channel name.
+    static constexpr const char* VISUAL_CHANNEL_NAME = "Visual";
+
+    /// The default Visual Channel priority.
+    static constexpr unsigned int VISUAL_CHANNEL_PRIORITY = 100;
+
     /// Destructor.
     virtual ~FocusManagerInterface() = default;
 
@@ -74,15 +81,16 @@ public:
      *
      * @param channelName The name of the Channel to acquire.
      * @param channelObserver The observer that will be acquiring the Channel and be notified of focus changes.
-     * @param activityId The id of the new activity on the Channel. This should be unique and represents the activity
-     * using the Channel.
+     * @param interface The name of the AVS interface occupying the Channel. This should be unique and represents the
+     * name of the AVS interface using the Channel.  The name of the AVS interface is used by the ActivityTracker to
+     * send Context to AVS.
      *
      * @return Returns @c true if the Channel can be acquired and @c false otherwise.
      */
     virtual bool acquireChannel(
         const std::string& channelName,
         std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver,
-        const std::string& activityId) = 0;
+        const std::string& interface) = 0;
 
     /**
      * This method will release the Channel and notify the observer of the Channel, if the observer is the same as the
@@ -105,6 +113,22 @@ public:
      * to the foreground.
      */
     virtual void stopForegroundActivity() = 0;
+
+    /**
+     * Add an observer to the focus manager.
+     *
+     * @param observer The observer to add.
+     */
+    virtual void addObserver(
+        const std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerObserverInterface>& observer) = 0;
+
+    /**
+     * Remove an observer from the focus manager.
+     *
+     * @param observer The observer to remove.
+     */
+    virtual void removeObserver(
+        const std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerObserverInterface>& observer) = 0;
 };
 
 }  // namespace sdkInterfaces

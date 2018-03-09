@@ -42,12 +42,6 @@ static const std::string TAG("NotificationsCapabilityAgent");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-/// The key in our config file to find the root of settings.
-static const std::string NOTIFICATIONS_CONFIGURATION_ROOT_KEY = "notifications";
-
-/// The key in our config file to find the database file path.
-static const std::string NOTIFICATIONS_DB_FILE_PATH_KEY = "databaseFilePath";
-
 /// The namespace for this capability agent.
 static const std::string NAMESPACE = "Notifications";
 
@@ -80,7 +74,8 @@ std::shared_ptr<NotificationsCapabilityAgent> NotificationsCapabilityAgent::crea
     std::shared_ptr<NotificationRendererInterface> renderer,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
-    std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory) {
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory,
+    std::shared_ptr<registrationManager::CustomerDataManager> dataManager) {
     if (nullptr == notificationsStorage) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullNotificationsStorage"));
         return nullptr;
@@ -101,9 +96,13 @@ std::shared_ptr<NotificationsCapabilityAgent> NotificationsCapabilityAgent::crea
         ACSDK_ERROR(LX("createFailed").d("reason", "nullNotificationsAudioFactory"));
         return nullptr;
     }
+    if (nullptr == dataManager) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullDataManager"));
+        return nullptr;
+    }
 
     auto notificationsCapabilityAgent = std::shared_ptr<NotificationsCapabilityAgent>(new NotificationsCapabilityAgent(
-        notificationsStorage, renderer, contextManager, exceptionSender, notificationsAudioFactory));
+        notificationsStorage, renderer, contextManager, exceptionSender, notificationsAudioFactory, dataManager));
 
     if (!notificationsCapabilityAgent->init()) {
         ACSDK_ERROR(LX("createFailed").d("reason", "initFailed"));
@@ -117,9 +116,11 @@ NotificationsCapabilityAgent::NotificationsCapabilityAgent(
     std::shared_ptr<NotificationRendererInterface> renderer,
     std::shared_ptr<ContextManagerInterface> contextManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender,
-    std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory) :
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory,
+    std::shared_ptr<registrationManager::CustomerDataManager> dataManager) :
         CapabilityAgent{NAMESPACE, exceptionSender},
         RequiresShutdown{"NotificationsCapabilityAgent"},
+        CustomerDataHandler{dataManager},
         m_notificationsStorage{notificationsStorage},
         m_contextManager{contextManager},
         m_renderer{renderer},
@@ -134,22 +135,9 @@ bool NotificationsCapabilityAgent::init() {
     m_renderer->addObserver(shared_from_this());
     m_contextManager->setStateProvider(INDICATOR_STATE_CONTEXT_KEY, shared_from_this());
 
-    // initialize database
-    auto configurationRoot = ConfigurationNode::getRoot()[NOTIFICATIONS_CONFIGURATION_ROOT_KEY];
-    if (!configurationRoot) {
-        ACSDK_ERROR(LX("initFailed").d("reason", "NotificationsConfigurationRootNotFound."));
-        return false;
-    }
-
-    std::string databaseFilePath;
-    if (!configurationRoot.getString(NOTIFICATIONS_DB_FILE_PATH_KEY, &databaseFilePath) || databaseFilePath.empty()) {
-        ACSDK_ERROR(LX("initFailed").d("reason", "DatabaseFilePathNotFound"));
-        return false;
-    }
-
-    if (!m_notificationsStorage->open(databaseFilePath)) {
+    if (!m_notificationsStorage->open()) {
         ACSDK_INFO(LX(__func__).m("database file does not exist.  Creating."));
-        if (!m_notificationsStorage->createDatabase(databaseFilePath)) {
+        if (!m_notificationsStorage->createDatabase()) {
             ACSDK_ERROR(LX("initFailed").d("reason", "NotificationIndicatorDatabaseCreationFailed"));
             return false;
         }
@@ -731,6 +719,31 @@ void NotificationsCapabilityAgent::executeShutdown() {
             ACSDK_WARN(LX(__func__).m("executeShutdown called while already shutdown"));
             return;
     }
+}
+
+void NotificationsCapabilityAgent::clearData() {
+    ACSDK_DEBUG5(LX(__func__));
+    std::unique_lock<std::mutex> lock(m_shutdownMutex);
+
+    if (m_currentState == NotificationsCapabilityAgentState::PLAYING) {
+        if (!m_renderer->cancelNotificationRendering()) {
+            ACSDK_ERROR(LX(__func__).m("failed to cancel notification rendering during clearData"));
+        }
+    }
+
+    if (m_currentState == NotificationsCapabilityAgentState::SHUTDOWN ||
+        m_currentState == NotificationsCapabilityAgentState::SHUTTING_DOWN) {
+        ACSDK_WARN(LX(__func__).m("should not be trying to clear data during shutdown."));
+    } else {
+        executeSetState(NotificationsCapabilityAgentState::IDLE);
+    }
+
+    auto result = m_executor.submit([this]() {
+        m_notificationsStorage->clearNotificationIndicators();
+        m_notificationsStorage->setIndicatorState(IndicatorState::OFF);
+    });
+
+    result.wait();
 }
 
 }  // namespace notifications

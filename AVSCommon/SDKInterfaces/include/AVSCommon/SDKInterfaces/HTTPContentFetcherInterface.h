@@ -47,9 +47,12 @@ public:
      * This function retrieves content from a remote location. No thread safety is guaranteed.
      *
      * @param option Flag indicating desired content.
+     * @param writer An optional writer parameter to be used when writing to an external stream.
      * @return A new @c HTTPContent object or @c nullptr if a failure occured.
      */
-    virtual std::unique_ptr<avsCommon::utils::HTTPContent> getContent(FetchOptions option) = 0;
+    virtual std::unique_ptr<avsCommon::utils::HTTPContent> getContent(
+        FetchOptions option,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer = nullptr) = 0;
 };
 
 }  // namespace sdkInterfaces

@@ -53,7 +53,30 @@
         // The default endpoint to connect to.
         // See https://developer.amazon.com/docs/alexa-voice-service/api-overview.html#endpoints for regions and values
         // e.g. "endpoint": "https://avs-alexa-na.amazon.com"
+
+        // Example of specifying suggested latency in seconds when openning PortAudio stream. By default,
+        // when this paramater isn't specified, SampleApp calls Pa_OpenDefaultStream to use the default value.
+        // See http://portaudio.com/docs/v19-doxydocs/structPaStreamParameters.html for further explanation
+        // on this parameter.
+        //"portAudio":{
+        //    "suggestedLatency": 0.150
+        //}
     }
+
+    // Example of specifying the output format for the gstreamer-based MediaPlayer bundled with the SDK.  Many platforms
+    // will automatically set the output format correctly, but in some cases where the hardware requires a specific
+    // format and the software stack is not automatically setting it correctly, these parameters can be used to manually
+    // specify the output format.  Supported rate/format/channels values are documented in detail here:
+    // https://gstreamer.freedesktop.org/documentation/design/mediatype-audio-raw.html
+    //
+    // "gstreamerMediaPlayer":{
+    //     "outputConversion":{
+    //         "rate":16000,
+    //         "format":"S16LE",
+    //         "channels":1
+    //     }
+    // },
+
     // Example of specifying a default log level for all ModuleLoggers.  If not specified, ModuleLoggers get
     // their log level from the sink logger.
     // "logging":{

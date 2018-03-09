@@ -13,7 +13,7 @@
  * permissions and limitations under the License.
  */
 
-#include "ExternalMediaPlayer/AdapterUtils.h"
+#include "AVSCommon/AVS/ExternalMediaPlayer/AdapterUtils.h"
 
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
@@ -21,7 +21,8 @@
 #include <rapidjson/error/en.h>
 
 namespace alexaClientSDK {
-namespace capabilityAgents {
+namespace avsCommon {
+namespace avs {
 namespace externalMediaPlayer {
 
 using namespace avsCommon::avs;
@@ -190,5 +191,6 @@ bool buildDefaultPlayerState(rapidjson::Value* document, rapidjson::Document::Al
 }
 
 }  // namespace externalMediaPlayer
-}  // namespace capabilityAgents
+}  // namespace avs
+}  // namespace avsCommon
 }  // namespace alexaClientSDK

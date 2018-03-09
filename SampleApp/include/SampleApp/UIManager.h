@@ -113,6 +113,26 @@ public:
      */
     void microphoneOn();
 
+    /**
+     * Prints a warning that the customer still has to manually deregister the device.
+     */
+    void printResetWarning();
+
+    /**
+     * Prints a confirmation message prompting the user to confirm their intent.
+     */
+    void printResetConfirmation();
+
+    /**
+     * Prints an error message while trying to configure ESP in a device where ESP is not supported.
+     */
+    void printESPNotSupported();
+
+    /**
+     * Prints an error message while trying to override ESP Data in a device that do not support manual override.
+     */
+    void printESPDataOverrideNotSupported();
+
 private:
     /**
      * Prints the current state of Alexa after checking what the appropriate message to display is based on the current

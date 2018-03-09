@@ -121,7 +121,7 @@ void UserInactivityMonitor::sendInactivityReport() {
     const Pointer::Token payloadKey[] = {{INACTIVITY_EVENT_PAYLOAD_KEY.c_str(), payloadKeySize, kPointerInvalidIndex}};
     auto inactiveTime =
         std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - lastTimeActive);
-    Pointer(payloadKey, 1).Set(inactivityPayload, inactiveTime.count());
+    Pointer(payloadKey, 1).Set(inactivityPayload, static_cast<int64_t>(inactiveTime.count()));
     std::string inactivityPayloadString;
     jsonUtils::convertToValue(inactivityPayload, &inactivityPayloadString);
 

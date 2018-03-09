@@ -25,6 +25,7 @@
 #include <AVSCommon/SDKInterfaces/NotificationsObserverInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include <RegistrationManager/CustomerDataHandler.h>
 
 #include "NotificationIndicator.h"
 #include "NotificationRendererInterface.h"
@@ -49,6 +50,7 @@ class NotificationsCapabilityAgent
         : public NotificationRendererObserverInterface
         , public avsCommon::avs::CapabilityAgent
         , public avsCommon::utils::RequiresShutdown
+        , public registrationManager::CustomerDataHandler
         , public std::enable_shared_from_this<NotificationsCapabilityAgent> {
 public:
     /**
@@ -61,6 +63,7 @@ public:
      * @param exceptionSender The object to use for sending AVS Exception messages.
      * @param notificationsAudioFactory The audio factory object to produce the default notification sound.
      * @param observers The set of observers that will be notified of IndicatorState changes.
+     * @param dataManager A dataManager object that will track the CustomerDataHandler.
      * @return A @c std::shared_ptr to the new @c NotificationsCapabilityAgent instance.
      */
     static std::shared_ptr<NotificationsCapabilityAgent> create(
@@ -68,7 +71,8 @@ public:
         std::shared_ptr<NotificationRendererInterface> renderer,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory);
+        std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory,
+        std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
 
     /**
      * Adds a NotificationsObserver to the set of observers. This observer will be notified when a SetIndicator
@@ -108,6 +112,11 @@ public:
     void onNotificationRenderingFinished() override;
     /// @}
 
+    /**
+     * Clear all notifications saved in the device
+     */
+    void clearData() override;
+
 private:
     /**
      * Constructor.
@@ -119,13 +128,15 @@ private:
      * @param exceptionSender The object to use for sending AVS Exception messages.
      * @param notificationsAudioFactory The audio factory object to produce the default notification sound.
      * @param observers The set of observers that will be notified of IndicatorState changes.
+     * @param dataManager A dataManager object that will track the CustomerDataHandler.
      */
     NotificationsCapabilityAgent(
         std::shared_ptr<NotificationsStorageInterface> notificationsStorage,
         std::shared_ptr<NotificationRendererInterface> renderer,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory);
+        std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory,
+        std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
 
     /**
      * Utility to set some member variables and setup the database.

@@ -172,6 +172,25 @@ public:
      */
     operator bool() const;
 
+    /**
+     * Common logic for getting a value of a specific type.
+     *
+     * @tparam Type The type to be gotten.
+     * @param key The key of the value to get.
+     * @param out Pointer to receive the value. May be nullptr to just test for the presence of the value.
+     * @param defaultValue A default output value if no value of the desired type for @c key is present.
+     * @param isType rapidjson::Value member function to test for the desired type.
+     * @param getType rapidjson::Value member function to get the desired type.
+     * @return Whether a value of the specified @c Type is present for @c key.
+     */
+    template <typename Type>
+    bool getValue(
+        const std::string& key,
+        Type* out,
+        Type defaultValue,
+        bool (rapidjson::Value::*isType)() const,
+        Type (rapidjson::Value::*getType)() const) const;
+
 private:
     /**
      * Constructor.
@@ -191,25 +210,6 @@ private:
      * @return Whether this @c ConfigurationNode has a @c string value for @c key.
      */
     bool getString(const std::string& key, const char** out, const char* defaultValue) const;
-
-    /**
-     * Common logic for getting a value of a specific type.
-     *
-     * @tparam Type The type to be gotten.
-     * @param key The key of the value to get.
-     * @param out Pointer to receive the value. May be nullptr to just test for the presence of the value.
-     * @param defaultValue A default output value if no value of the desired type for @c key is present.
-     * @param isType rapidjson::Value member function to test for the desired type.
-     * @param getType rapidjson::Value member function to get the desired type.
-     * @return Whether a value of the specified @c Type is present for @c key.
-     */
-    template <typename Type>
-    bool getValue(
-        const std::string& key,
-        Type* out,
-        Type defaultValue,
-        bool (rapidjson::Value::*isType)() const,
-        Type (rapidjson::Value::*getType)() const) const;
 
     /// Object value within the global configuration that this @c ConfigurationNode represents.
     const rapidjson::Value* m_object;
@@ -235,6 +235,32 @@ bool ConfigurationNode::getDuration(const std::string& key, OutputType* out, Def
         *out = OutputType(result ? InputType(temp) : defaultValue);
     }
     return result;
+}
+
+template <typename Type>
+bool ConfigurationNode::getValue(
+    const std::string& key,
+    Type* out,
+    Type defaultValue,
+    bool (rapidjson::Value::*isType)() const,
+    Type (rapidjson::Value::*getType)() const) const {
+    if (key.empty() || !m_object) {
+        if (out) {
+            *out = defaultValue;
+        }
+        return false;
+    }
+    auto it = m_object->FindMember(key.c_str());
+    if (m_object->MemberEnd() == it || !(it->value.*isType)()) {
+        if (out) {
+            *out = defaultValue;
+        }
+        return false;
+    }
+    if (out) {
+        *out = (it->value.*getType)();
+    }
+    return true;
 }
 
 }  // namespace configuration

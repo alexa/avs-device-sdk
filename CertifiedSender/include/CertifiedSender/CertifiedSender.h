@@ -24,6 +24,8 @@
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include <RegistrationManager/CustomerDataHandler.h>
+#include <RegistrationManager/CustomerDataManager.h>
 
 #include <deque>
 #include <memory>
@@ -53,7 +55,8 @@ static const int CERTIFIED_SENDER_QUEUE_SIZE_HARD_LIMIT = 50;
 class CertifiedSender
         : public avsCommon::utils::RequiresShutdown
         , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface
-        , public std::enable_shared_from_this<CertifiedSender> {
+        , public std::enable_shared_from_this<CertifiedSender>
+        , public registrationManager::CustomerDataHandler {
 public:
     /**
      * This function creates a new instance of a @c CertifiedSender. If it fails for any reason, @c nullptr is returned.
@@ -61,12 +64,14 @@ public:
      * @param messageSender The entity which is able to send @c MessageRequests to AVS.
      * @param connection The connection which may be observed to determine connection status.
      * @param storage The object which manages persistent storage of messages to be sent.
+     * @param dataManager A dataManager object that will track the CustomerDataHandler.
      * @return A @c CertifiedSender object, or @c nullptr if there is any problem.
      */
     static std::shared_ptr<CertifiedSender> create(
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::avs::AbstractConnection> connection,
-        std::shared_ptr<MessageStorageInterface> storage);
+        std::shared_ptr<MessageStorageInterface> storage,
+        std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
 
     /**
      * Destructor.
@@ -84,6 +89,11 @@ public:
      * @return A future expressing if the message was successfully persisted.
      */
     std::future<bool> sendJSONMessage(const std::string& jsonMessage);
+
+    /**
+     * Clear all messages that we are currently storing
+     */
+    void clearData() override;
 
 private:
     /**
@@ -144,6 +154,7 @@ private:
      * @param messageSender The entity which is able to send @c MessageRequests to AVS.
      * @param connection The connection which may be observed to determine connection status.
      * @param storage The object which manages persistent storage of messages to be sent.
+     * @param dataManager A dataManager object that will track the CustomerDataHandler.
      * @param queueSizeWarnLimit The number of items we can store for sending without emitting a warning.
      * @param queueSizeHardLimit The maximum number of items we can store for sending.
      */
@@ -151,6 +162,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::avs::AbstractConnection> connection,
         std::shared_ptr<MessageStorageInterface> storage,
+        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
         int queueSizeWarnLimit = CERTIFIED_SENDER_QUEUE_SIZE_WARN_LIMIT,
         int queueSizeHardLimit = CERTIFIED_SENDER_QUEUE_SIZE_HARD_LIMIT);
 

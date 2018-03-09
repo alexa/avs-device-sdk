@@ -141,6 +141,9 @@ static const NamespaceAndName AUDIO_PLAYER(NAMESPACE_AUDIO_PLAYER, NAME_PLAYBACK
 /// Alerts namespace and name
 static const NamespaceAndName ALERTS(NAMESPACE_ALERTS, NAME_ALERTS_STATE);
 
+/// Dummy provider namespace and name
+static const NamespaceAndName DUMMY_PROVIDER("Dummy", "DummyName");
+
 /**
  * @c MockContextRequester used to verify @c ContextManager behavior.
  */
@@ -644,6 +647,47 @@ TEST_F(ContextManagerTest, testIncorrectToken) {
             StateRefreshPolicy::ALWAYS,
             m_speechSynthesizer->getCurrentstateRequestToken() + 1));
 }
+
+/**
+ * Set the states with a @c StateRefreshPolicy @c ALWAYS for @c StateProviderInterfaces that are registered with the
+ * @c ContextManager. Request for context by calling @c getContext. Expect that the context is returned within the
+ * timeout period.
+ *
+ * There's a dummyProvider with StateRefreshPolicy @c SOMETIMES that returns an empty context.  Check ContextManager is
+ * okay with it and would include the context provided by the dummyProvider.
+ *
+ * Check the context that is returned by the @c ContextManager. Expect it should match the test value.
+ */
+// ACSDK-1217 - ContextManagerTest::testEmptyProvider fails on Windows
+#if !defined(_WIN32) || defined(RESOLVED_ACSDK_1217)
+TEST_F(ContextManagerTest, testEmptyProvider) {
+    auto dummyProvider = MockStateProvider::create(
+        m_contextManager, DUMMY_PROVIDER, "", StateRefreshPolicy::SOMETIMES, DEFAULT_SLEEP_TIME);
+    m_contextManager->setStateProvider(DUMMY_PROVIDER, dummyProvider);
+
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            SPEECH_SYNTHESIZER,
+            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
+            StateRefreshPolicy::ALWAYS,
+            m_speechSynthesizer->getCurrentstateRequestToken()));
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            AUDIO_PLAYER,
+            AUDIO_PLAYER_PAYLOAD,
+            StateRefreshPolicy::ALWAYS,
+            m_audioPlayer->getCurrentstateRequestToken()));
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            DUMMY_PROVIDER, "", StateRefreshPolicy::ALWAYS, dummyProvider->getCurrentstateRequestToken()));
+    m_contextManager->getContext(m_contextRequester);
+    ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
+    ASSERT_EQ(CONTEXT_TEST, m_contextRequester->getContextString());
+}
+#endif
 
 }  // namespace test
 }  // namespace contextManager

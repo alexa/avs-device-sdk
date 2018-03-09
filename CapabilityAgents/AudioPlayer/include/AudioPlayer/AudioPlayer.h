@@ -31,6 +31,7 @@
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
+#include <AVSCommon/Utils/Timing/TimeUtils.h>
 
 #include "AudioItem.h"
 #include "ClearBehavior.h"
@@ -362,6 +363,9 @@ private:
     std::chrono::milliseconds getOffset();
 
     /// @}
+
+    /// This is used to safely access the time utilities.
+    avsCommon::utils::timing::TimeUtils m_timeUtils;
 
     /// MediaPlayerInterface instance to send audio attachments to.
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_mediaPlayer;

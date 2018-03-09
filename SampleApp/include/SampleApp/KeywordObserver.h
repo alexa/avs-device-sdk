@@ -22,6 +22,7 @@
 #include <AVSCommon/AVS/AudioInputStream.h>
 #include <AVSCommon/SDKInterfaces/KeyWordObserverInterface.h>
 #include <DefaultClient/DefaultClient.h>
+#include <ESP/ESPDataProviderInterface.h>
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -36,10 +37,12 @@ public:
      *
      * @param client The default SDK client.
      * @param audioProvider The audio provider from which to stream audio data from.
+     * @parm espProvider The ESP provider to calculate the Ambient and Voice energy from the audio stream.
      */
     KeywordObserver(
         std::shared_ptr<defaultClient::DefaultClient> client,
-        capabilityAgents::aip::AudioProvider audioProvider);
+        capabilityAgents::aip::AudioProvider audioProvider,
+        std::shared_ptr<esp::ESPDataProviderInterface> espProvider = nullptr);
 
     void onKeyWordDetected(
         std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
@@ -54,17 +57,8 @@ private:
     /// The audio provider.
     capabilityAgents::aip::AudioProvider m_audioProvider;
 
-    /// Flag to indicate if report of Echo Spatial Perception (ESP) is supported.
-    bool m_espSupport;
-
-    /// String representation of voice energy ESP measurement in float.
-    std::string m_voiceEnergy;
-
-    /// String representation of ambient energy ESP measurement in float.
-    std::string m_ambientEnergy;
-
-    /// Having InterfactionManager as a friend so that it can adjust the ESP related settings.
-    friend class InteractionManager;
+    /// Echo Spatial Perception (ESP) provider.
+    std::shared_ptr<esp::ESPDataProviderInterface> m_espProvider;
 };
 
 }  // namespace sampleApp

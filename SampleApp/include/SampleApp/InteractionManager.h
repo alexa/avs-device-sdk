@@ -22,6 +22,8 @@
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <DefaultClient/DefaultClient.h>
+#include <ESP/ESPDataModifierInterface.h>
+#include <RegistrationManager/CustomerDataManager.h>
 
 #include "KeywordObserver.h"
 #include "PortAudioMicrophoneWrapper.h"
@@ -48,7 +50,8 @@ public:
         capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
         capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
         capabilityAgents::aip::AudioProvider wakeWordAudioProvider = capabilityAgents::aip::AudioProvider::null(),
-        std::shared_ptr<sampleApp::KeywordObserver> keywordObserver = nullptr);
+        std::shared_ptr<esp::ESPDataProviderInterface> espProvider = nullptr,
+        std::shared_ptr<esp::ESPDataModifierInterface> espModifier = nullptr);
 
     /**
      * Begins the interaction between the Sample App and the user. This should only be called at startup.
@@ -157,6 +160,16 @@ public:
     void setMute(avsCommon::sdkInterfaces::SpeakerInterface::Type type, bool mute);
 
     /**
+     * Reset the device and remove any customer data.
+     */
+    void resetDevice();
+
+    /**
+     * Prompts the user to confirm the intent to reset the device.
+     */
+    void confirmResetDevice();
+
+    /**
      * Should be called whenever a user requests for ESP control.
      */
     void espControl();
@@ -197,8 +210,11 @@ private:
     /// The user interface manager.
     std::shared_ptr<sampleApp::UIManager> m_userInterface;
 
-    /// The keyword observer instance passed to the keyword detector.
-    std::shared_ptr<alexaClientSDK::sampleApp::KeywordObserver> m_keywordObserver;
+    /// The ESP provider.
+    std::shared_ptr<esp::ESPDataProviderInterface> m_espProvider;
+
+    /// The ESP modifier.
+    std::shared_ptr<esp::ESPDataModifierInterface> m_espModifier;
 
     /// The hold to talk audio provider.
     capabilityAgents::aip::AudioProvider m_holdToTalkAudioProvider;

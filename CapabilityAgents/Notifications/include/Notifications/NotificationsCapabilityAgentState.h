@@ -20,6 +20,9 @@ namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace notifications {
 
+#include <ostream>
+#include <string>
+
 enum class NotificationsCapabilityAgentState {
     // The capability agent is awaiting directives.
     IDLE,

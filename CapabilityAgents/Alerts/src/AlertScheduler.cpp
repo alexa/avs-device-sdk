@@ -51,7 +51,7 @@ void AlertScheduler::onAlertStateChange(const std::string& alertToken, State sta
     m_executor.submit([this, alertToken, state, reason]() { executeOnAlertStateChange(alertToken, state, reason); });
 }
 
-bool AlertScheduler::initialize(const std::string& storageFilePath, std::shared_ptr<AlertObserverInterface> observer) {
+bool AlertScheduler::initialize(std::shared_ptr<AlertObserverInterface> observer) {
     if (!observer) {
         ACSDK_ERROR(LX("initializeFailed").m("observer was nullptr."));
         return false;
@@ -59,16 +59,16 @@ bool AlertScheduler::initialize(const std::string& storageFilePath, std::shared_
 
     m_observer = observer;
 
-    if (!m_alertStorage->open(storageFilePath)) {
-        ACSDK_INFO(LX("initialize").m("storage file does not exist.  Creating."));
-        if (!m_alertStorage->createDatabase(storageFilePath)) {
-            ACSDK_ERROR(LX("initializeFailed").m("Could not create database file."));
+    if (!m_alertStorage->open()) {
+        ACSDK_INFO(LX("initialize").m("Couldn't open database.  Creating."));
+        if (!m_alertStorage->createDatabase()) {
+            ACSDK_ERROR(LX("initializeFailed").m("Could not create database."));
             return false;
         }
     }
 
     int64_t unixEpochNow = 0;
-    if (!getCurrentUnixTime(&unixEpochNow)) {
+    if (!m_timeUtils.getCurrentUnixTime(&unixEpochNow)) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "could not get current unix time."));
         return false;
     }
@@ -106,7 +106,7 @@ bool AlertScheduler::initialize(const std::string& storageFilePath, std::shared_
 bool AlertScheduler::scheduleAlert(std::shared_ptr<Alert> alert) {
     ACSDK_DEBUG9(LX("scheduleAlert"));
     int64_t unixEpochNow = 0;
-    if (!getCurrentUnixTime(&unixEpochNow)) {
+    if (!m_timeUtils.getCurrentUnixTime(&unixEpochNow)) {
         ACSDK_ERROR(LX("scheduleAlertFailed").d("reason", "could not get current unix time."));
         return false;
     }
@@ -253,11 +253,11 @@ void AlertScheduler::onLocalStop() {
     deactivateActiveAlertHelperLocked(Alert::StopReason::LOCAL_STOP);
 }
 
-void AlertScheduler::clearData() {
+void AlertScheduler::clearData(Alert::StopReason reason) {
     ACSDK_DEBUG9(LX("clearData"));
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    deactivateActiveAlertHelperLocked(Alert::StopReason::SHUTDOWN);
+    deactivateActiveAlertHelperLocked(reason);
 
     if (m_scheduledAlertTimer.isActive()) {
         m_scheduledAlertTimer.stop();
@@ -412,7 +412,7 @@ void AlertScheduler::setTimerForNextAlertLocked() {
     auto alert = (*m_scheduledAlerts.begin());
 
     int64_t timeNow;
-    if (!getCurrentUnixTime(&timeNow)) {
+    if (!m_timeUtils.getCurrentUnixTime(&timeNow)) {
         ACSDK_ERROR(LX("executeScheduleNextAlertForRenderingFailed").d("reason", "could not get current unix time."));
         return;
     }

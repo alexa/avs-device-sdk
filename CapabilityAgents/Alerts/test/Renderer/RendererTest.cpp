@@ -122,7 +122,7 @@ protected:
     std::shared_ptr<Renderer> m_renderer;
 
     static std::unique_ptr<std::istream> audioFactoryFunc() {
-        return std::unique_ptr<std::istream>();
+        return std::unique_ptr<std::istream>(new std::stringstream());
     }
 };
 

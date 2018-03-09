@@ -40,6 +40,7 @@ static const char SETTINGS = 'c';
 static const char SPEAKER_CONTROL = 'p';
 static const char FIRMWARE_VERSION = 'f';
 static const char ESP_CONTROL = 'e';
+static const char RESET = 'k';
 
 enum class SettingsValues : char { LOCALE = '1' };
 
@@ -196,6 +197,29 @@ void UserInputManager::run() {
                         break;
                 }
             }
+        } else if (x == RESET) {
+            m_interactionManager->confirmResetDevice();
+            char y;
+            bool cancelReset = false;
+            do {
+                std::cin >> y;
+                // Check the Setting which has to be changed.
+                switch (y) {
+                    case 'Y':
+                    case 'y':
+                        // Login experience is not provided yet. Exit sample app for now.
+                        m_interactionManager->resetDevice();
+                        return;
+                    case 'N':
+                    case 'n':
+                        cancelReset = true;
+                        break;
+                    default:
+                        m_interactionManager->errorValue();
+                        m_interactionManager->confirmResetDevice();
+                        break;
+                }
+            } while (!cancelReset);
         } else {
             m_interactionManager->errorValue();
         }

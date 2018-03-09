@@ -34,7 +34,10 @@ struct AudioFormat {
      */
     enum class Encoding {
         /// Represents LPCM (Linear pulse code modulation) encoding.
-        LPCM
+        LPCM,
+
+        /// Represents OPUS encoding.
+        OPUS
     };
 
     /**
@@ -92,6 +95,9 @@ inline std::ostream& operator<<(std::ostream& stream, const AudioFormat::Encodin
     switch (encoding) {
         case AudioFormat::Encoding::LPCM:
             stream << "LPCM";
+            break;
+        case AudioFormat::Encoding::OPUS:
+            stream << "OPUS";
             break;
     }
     return stream;

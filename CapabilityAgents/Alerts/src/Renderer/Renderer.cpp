@@ -67,12 +67,10 @@ void Renderer::start(
     const std::vector<std::string>& urls,
     int loopCount,
     std::chrono::milliseconds loopPause) {
-    {
-        auto defaultAudio = audioFactory();
-        if ((!defaultAudio || !defaultAudio->good()) && urls.empty()) {
-            ACSDK_ERROR(LX("startFailed").m("default audio is bad and urls are empty."));
-            return;
-        }
+    std::unique_ptr<std::istream> defaultAudio = audioFactory();
+    if (!defaultAudio) {
+        ACSDK_ERROR(LX("startFailed").m("default audio is nullptr"));
+        return;
     }
 
     if (loopCount < 0) {
@@ -115,7 +113,7 @@ void Renderer::onPlaybackError(
 Renderer::Renderer(std::shared_ptr<MediaPlayerInterface> mediaPlayer) :
         m_mediaPlayer{mediaPlayer},
         m_observer{nullptr},
-        m_nextUrlIndexToRender{0},
+        m_numberOfStreamsRenderedThisLoop{0},
         m_loopCount{0},
         m_loopPause{std::chrono::milliseconds{0}},
         m_isStopping{false} {
@@ -139,6 +137,8 @@ void Renderer::executeStart(
     m_urls = urls;
     m_loopCount = loopCount;
     m_loopPause = loopPause;
+    m_defaultAudio = audioFactory();
+
     ACSDK_DEBUG9(
         LX("executeStart")
             .d("m_urls.size", m_urls.size())
@@ -146,14 +146,13 @@ void Renderer::executeStart(
             .d("m_loopPause (ms)", std::chrono::duration_cast<std::chrono::milliseconds>(m_loopPause).count()));
     m_isStopping = false;
 
-    // TODO : ACSDK-389 to update the local audio to being streams rather than file paths.
-
+    m_numberOfStreamsRenderedThisLoop = 0;
     if (urls.empty()) {
-        m_currentSourceId = m_mediaPlayer->setSource(audioFactory(), true);
+        ACSDK_DEBUG5(LX("executeStart").m("setSource with default alert audio stream"));
+        m_currentSourceId = m_mediaPlayer->setSource(m_defaultAudio, m_loopCount <= 0);
     } else {
-        m_nextUrlIndexToRender = 0;
-        ACSDK_DEBUG9(LX("executeStart").d("setSource", m_nextUrlIndexToRender));
-        m_currentSourceId = m_mediaPlayer->setSource(m_urls[m_nextUrlIndexToRender++]);
+        ACSDK_DEBUG5(LX("executeStart").d("setSource", m_urls[m_numberOfStreamsRenderedThisLoop]));
+        m_currentSourceId = m_mediaPlayer->setSource(m_urls[m_numberOfStreamsRenderedThisLoop]);
     }
 
     ACSDK_INFO(LX("executeStart").d("m_currentSourceId", m_currentSourceId));
@@ -219,8 +218,10 @@ void Renderer::executeOnPlaybackFinished(SourceId sourceId) {
 
     RendererObserverInterface::State finalState = RendererObserverInterface::State::STOPPED;
 
-    if (!m_isStopping && !m_urls.empty()) {
-        if (renderNextUrl()) {
+    ++m_numberOfStreamsRenderedThisLoop;
+
+    if (!m_isStopping && 0 < m_loopCount) {
+        if (renderNextAudioAsset()) {
             return;
         }
 
@@ -232,55 +233,58 @@ void Renderer::executeOnPlaybackFinished(SourceId sourceId) {
     m_observer = nullptr;
 }
 
-bool Renderer::renderNextUrl() {
-    // sanity check.
-    if (m_urls.empty()) {
-        return false;
-    }
+bool Renderer::renderNextAudioAsset() {
+    bool shouldRenderAnotherAudioAsset = true;
 
-    bool shouldRenderNextUrl = true;
-
-    // If we have completed a loop, then update our counters, and determine what to do next.
-    if (m_nextUrlIndexToRender >= static_cast<int>(m_urls.size())) {
-        ACSDK_DEBUG9(LX("renderNextUrl")
-                         .d("loopCount", m_loopCount)
-                         .d("nextUrlIndex", m_nextUrlIndexToRender)
-                         .m("updating counters."));
+    // If we have completed a loop, then update our counters, and determine what to do next.  If the URLs aren't
+    // reachable, m_urls will be empty.
+    if (m_numberOfStreamsRenderedThisLoop >= static_cast<int>(m_urls.size())) {
         m_loopCount--;
-        m_nextUrlIndexToRender = 0;
+        m_numberOfStreamsRenderedThisLoop = 0;
+        ACSDK_DEBUG5(LX("renderNextAudioAsset")
+                         .d("loopCount", m_loopCount)
+                         .d("nextAudioIndex", m_numberOfStreamsRenderedThisLoop)
+                         .m("Preparing the audio loop counters."));
 
-        if (0 == m_loopCount) {
-            shouldRenderNextUrl = false;
+        if (m_loopCount <= 0) {
+            shouldRenderAnotherAudioAsset = false;
         } else if (m_loopPause.count() > 0) {
             std::this_thread::sleep_for(m_loopPause);
         }
     }
 
-    // If we should continue to the next url, let's kick it off.
-    if (shouldRenderNextUrl) {
-        ACSDK_DEBUG9(LX("renderNextUrl").d("setSource", m_nextUrlIndexToRender));
+    // If we should continue to the next url, let's kick it off.  If there aren't any urls, use the default audio.
+    if (shouldRenderAnotherAudioAsset) {
+        ACSDK_DEBUG9(LX("renderNextAudioAsset").d("setSource", m_numberOfStreamsRenderedThisLoop));
 
-        std::string url = m_urls[m_nextUrlIndexToRender++];
-        m_currentSourceId = m_mediaPlayer->setSource(url);
+        if (m_urls.empty()) {
+            m_currentSourceId = m_mediaPlayer->setSource(m_defaultAudio, false);
+        } else {
+            std::string url = m_urls[m_numberOfStreamsRenderedThisLoop];
+            m_currentSourceId = m_mediaPlayer->setSource(url);
+        }
+
         if (!isSourceIdOk(m_currentSourceId)) {
             std::string errorMessage = "SourceId response from setSource was invalid.";
-            ACSDK_ERROR(LX("renderNextUrl").d("SourceId", m_currentSourceId).sensitive("url", url).m(errorMessage));
+            ACSDK_ERROR(LX("renderNextAudioAsset").d("SourceId", m_currentSourceId).m(errorMessage));
             notifyObserver(RendererObserverInterface::State::ERROR, errorMessage);
             return false;
         }
+
         if (!m_mediaPlayer->play(m_currentSourceId)) {
             std::string errorMessage = "MediaPlayer was unable to play next media item.";
-            ACSDK_ERROR(LX("renderNextUrl").d("SourceId", m_currentSourceId).sensitive("url", url).m(errorMessage));
+            ACSDK_ERROR(LX("renderNextUrl").d("SourceId", m_currentSourceId).m(errorMessage));
             notifyObserver(RendererObserverInterface::State::ERROR, errorMessage);
             return false;
         }
 
-        ACSDK_DEBUG9(LX("renderNextUrl").m("Next url started successfully"));
+        ACSDK_DEBUG9(LX("renderNextAudioAsset").m("Next source started successfully"));
+
     } else {
-        ACSDK_DEBUG9(LX("renderNextUrl").m("No more urls to render."));
+        ACSDK_DEBUG9(LX("renderNextAudioAsset").m("No more sounds to render."));
     }
 
-    return shouldRenderNextUrl;
+    return shouldRenderAnotherAudioAsset;
 }
 
 void Renderer::executeOnPlaybackError(
@@ -296,6 +300,9 @@ void Renderer::executeOnPlaybackError(
     }
 
     resetSourceId();
+
+    // This will cause a retry (through Renderer::start) using the same code paths as before, except in this case the
+    // urls to render will be empty.
     notifyObserver(RendererObserverInterface::State::ERROR, error);
     m_observer = nullptr;
 }

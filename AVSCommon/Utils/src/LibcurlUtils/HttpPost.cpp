@@ -37,61 +37,14 @@ static const std::string TAG("HttpPost");
 
 std::unique_ptr<HttpPost> HttpPost::create() {
     std::unique_ptr<HttpPost> httpPost(new HttpPost());
-    if (httpPost->init()) {
+    if (httpPost->m_curl.isValid()) {
         return httpPost;
     }
     return nullptr;
 }
 
-HttpPost::HttpPost() : m_curl{nullptr}, m_requestHeaders{nullptr} {
-}
-
-bool HttpPost::init() {
-    m_curl = curl_easy_init();
-    if (!m_curl) {
-        ACSDK_ERROR(LX("initFailed").d("reason", "curl_easy_initFailed"));
-        return false;
-    }
-    if (!libcurlUtils::prepareForTLS(m_curl)) {
-        return false;
-    }
-    if (!setopt(CURLOPT_WRITEFUNCTION, staticWriteCallbackLocked)) {
-        return false;
-    }
-    /*
-     * The documentation from libcurl recommends setting CURLOPT_NOSIGNAL to 1 for multi-threaded applications.
-     * https://curl.haxx.se/libcurl/c/threadsafe.html
-     */
-    if (!setopt(CURLOPT_NOSIGNAL, 1)) {
-        return false;
-    }
-    return true;
-}
-
-HttpPost::~HttpPost() {
-    if (m_curl) {
-        curl_easy_cleanup(m_curl);
-    }
-
-    if (m_requestHeaders) {
-        curl_slist_free_all(m_requestHeaders);
-        m_requestHeaders = nullptr;
-    }
-}
-
 bool HttpPost::addHTTPHeader(const std::string& header) {
-    m_requestHeaders = curl_slist_append(m_requestHeaders, header.c_str());
-    if (!m_requestHeaders) {
-        ACSDK_ERROR(LX("addHTTPHeaderFailed")
-                        .d("reason", "curlFailure")
-                        .d("method", "curl_slist_append")
-                        .sensitive("header", header));
-        return false;
-    }
-    if (!setopt(CURLOPT_HTTPHEADER, m_requestHeaders)) {
-        return false;
-    }
-    return true;
+    return m_curl.addHTTPHeader(header);
 }
 
 long HttpPost::doPost(
@@ -103,12 +56,13 @@ long HttpPost::doPost(
 
     body.clear();
 
-    if (!setopt(CURLOPT_TIMEOUT, static_cast<long>(timeout.count())) || !setopt(CURLOPT_URL, url.c_str()) ||
-        !setopt(CURLOPT_POSTFIELDS, data.c_str()) || !setopt(CURLOPT_WRITEDATA, &body)) {
+    if (!m_curl.setTransferTimeout(static_cast<long>(timeout.count())) || !m_curl.setURL(url) ||
+        !m_curl.setPostData(data) || !m_curl.setWriteCallback(staticWriteCallbackLocked, &body)) {
         return HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED;
     }
 
-    auto result = curl_easy_perform(m_curl);
+    auto curlHandle = m_curl.getCurlHandle();
+    auto result = curl_easy_perform(curlHandle);
 
     if (result != CURLE_OK) {
         ACSDK_ERROR(LX("doPostFailed")
@@ -120,7 +74,7 @@ long HttpPost::doPost(
     }
 
     long responseCode = 0;
-    result = curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, &responseCode);
+    result = curl_easy_getinfo(curlHandle, CURLINFO_RESPONSE_CODE, &responseCode);
     if (result != CURLE_OK) {
         ACSDK_ERROR(LX("doPostFailed")
                         .d("reason", "curl_easy_getinfoFailed")
@@ -133,21 +87,6 @@ long HttpPost::doPost(
         ACSDK_DEBUG(LX("doPostSucceeded").d("code", responseCode));
         return responseCode;
     }
-}
-
-template <typename ParamType>
-bool HttpPost::setopt(CURLoption option, ParamType value) {
-    auto result = curl_easy_setopt(m_curl, option, value);
-    if (result != CURLE_OK) {
-        ACSDK_ERROR(LX("setoptFailed")
-                        .d("reason", "nullCurlHandle")
-                        .d("option", option)
-                        .sensitive("value", value)
-                        .d("result", result)
-                        .d("error", curl_easy_strerror(result)));
-        return false;
-    }
-    return true;
 }
 
 size_t HttpPost::staticWriteCallbackLocked(char* ptr, size_t size, size_t nmemb, void* userdata) {

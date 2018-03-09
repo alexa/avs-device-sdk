@@ -39,6 +39,12 @@ static const std::string TAG("SQLiteNotificationsStorage");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+/// The key in our config file to find the root of settings.
+static const std::string NOTIFICATIONS_CONFIGURATION_ROOT_KEY = "notifications";
+
+/// The key in our config file to find the database file path.
+static const std::string NOTIFICATIONS_DB_FILE_PATH_KEY = "databaseFilePath";
+
 static const std::string NOTIFICATION_INDICATOR_TABLE_NAME = "notificationIndicators";
 
 static const std::string DATABASE_COLUMN_PERSIST_VISUAL_INDICATOR_NAME = "persistVisualIndicator";
@@ -61,28 +67,39 @@ static const std::string INDICATOR_STATE_NAME = "indicatorState";
 static const std::string CREATE_INDICATOR_STATE_TABLE_SQL_STRING =
     std::string("CREATE TABLE ") + INDICATOR_STATE_NAME + " (" + INDICATOR_STATE_NAME + " INT NOT NULL);";
 
-SQLiteNotificationsStorage::SQLiteNotificationsStorage() : m_dbHandle{nullptr} {
+std::unique_ptr<SQLiteNotificationsStorage> SQLiteNotificationsStorage::create(
+    const avsCommon::utils::configuration::ConfigurationNode& configurationRoot) {
+    auto notificationConfigurationRoot = configurationRoot[NOTIFICATIONS_CONFIGURATION_ROOT_KEY];
+    if (!notificationConfigurationRoot) {
+        ACSDK_ERROR(LX("createFailed")
+                        .d("reason", "Could not load config for the Notification Storage database")
+                        .d("key", NOTIFICATIONS_CONFIGURATION_ROOT_KEY));
+        return nullptr;
+    }
+
+    std::string notificationDatabaseFilePath;
+    if (!notificationConfigurationRoot.getString(NOTIFICATIONS_DB_FILE_PATH_KEY, &notificationDatabaseFilePath) ||
+        notificationDatabaseFilePath.empty()) {
+        ACSDK_ERROR(
+            LX("createFailed").d("reason", "Could not load config value").d("key", NOTIFICATIONS_DB_FILE_PATH_KEY));
+        return nullptr;
+    }
+
+    return std::unique_ptr<SQLiteNotificationsStorage>(new SQLiteNotificationsStorage(notificationDatabaseFilePath));
 }
 
-bool SQLiteNotificationsStorage::createDatabase(const std::string& filePath) {
-    if (m_dbHandle) {
-        ACSDK_ERROR(LX("createDatabaseFailed").d("reason", "DatabaseHandleAlreadyOpen"));
-        return false;
-    }
+SQLiteNotificationsStorage::SQLiteNotificationsStorage(const std::string& databaseFilePath) :
+        m_database{databaseFilePath} {
+}
 
-    if (fileExists(filePath)) {
-        ACSDK_ERROR(LX("createDatabaseFailed").d("reason", "FileAlreadyExists").d("FilePath", filePath));
-        return false;
-    }
-
-    m_dbHandle = createSQLiteDatabase(filePath);
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("createDatabaseFailed").d("reason", "SQLiteCreateDatabaseFailed").d("file path", filePath));
+bool SQLiteNotificationsStorage::createDatabase() {
+    if (!m_database.initialize()) {
+        ACSDK_ERROR(LX("createDatabaseFailed").d("reason", "SQLiteCreateDatabaseFailed"));
         return false;
     }
 
     // Create NotificationIndicator table
-    if (!performQuery(m_dbHandle, CREATE_NOTIFICATION_INDICATOR_TABLE_SQL_STRING)) {
+    if (!m_database.performQuery(CREATE_NOTIFICATION_INDICATOR_TABLE_SQL_STRING)) {
         ACSDK_ERROR(LX("createDatabaseFailed").d("reason", "failed to create notification indicator table"));
         close();
         return false;
@@ -92,7 +109,7 @@ bool SQLiteNotificationsStorage::createDatabase(const std::string& filePath) {
     // the database will be in an inconsistent state and will require deletion or another call to createDatabase().
 
     // Create IndicatorState table
-    if (!performQuery(m_dbHandle, CREATE_INDICATOR_STATE_TABLE_SQL_STRING)) {
+    if (!m_database.performQuery(CREATE_INDICATOR_STATE_TABLE_SQL_STRING)) {
         ACSDK_ERROR(LX("createDatabaseFailed").d("reason", "failed to create indicator state table"));
         close();
         return false;
@@ -108,30 +125,19 @@ bool SQLiteNotificationsStorage::createDatabase(const std::string& filePath) {
     return true;
 }
 
-bool SQLiteNotificationsStorage::open(const std::string& filePath) {
-    if (m_dbHandle) {
-        ACSDK_ERROR(LX("openFailed").d("reason", "DatabaseHandleAlreadyOpen"));
+bool SQLiteNotificationsStorage::open() {
+    if (!m_database.open()) {
+        ACSDK_ERROR(LX("openFailed").d("reason", "openSQLiteDatabaseFailed"));
         return false;
     }
 
-    if (!fileExists(filePath)) {
-        ACSDK_DEBUG(LX("openFailed").d("reason", "FileDoesNotExist").d("FilePath", filePath));
-        return false;
-    }
-
-    m_dbHandle = openSQLiteDatabase(filePath);
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("openFailed").d("reason", "openSQLiteDatabaseFailed").d("FilePath", filePath));
-        return false;
-    }
-
-    if (!tableExists(m_dbHandle, NOTIFICATION_INDICATOR_TABLE_NAME)) {
+    if (!m_database.tableExists(NOTIFICATION_INDICATOR_TABLE_NAME)) {
         ACSDK_ERROR(
             LX("openFailed").d("reason", "table doesn't exist").d("TableName", NOTIFICATION_INDICATOR_TABLE_NAME));
         return false;
     }
 
-    if (!tableExists(m_dbHandle, INDICATOR_STATE_NAME)) {
+    if (!m_database.tableExists(INDICATOR_STATE_NAME)) {
         ACSDK_ERROR(LX("openFailed").d("reason", "table doesn't exist").d("TableName", INDICATOR_STATE_NAME));
         return false;
     }
@@ -139,15 +145,8 @@ bool SQLiteNotificationsStorage::open(const std::string& filePath) {
     return true;
 }
 
-bool SQLiteNotificationsStorage::isOpen() const {
-    return (nullptr != m_dbHandle);
-}
-
 void SQLiteNotificationsStorage::close() {
-    if (m_dbHandle) {
-        closeSQLiteDatabase(m_dbHandle);
-        m_dbHandle = nullptr;
-    }
+    m_database.close();
 }
 
 bool SQLiteNotificationsStorage::enqueue(const NotificationIndicator& notificationIndicator) {
@@ -162,32 +161,27 @@ bool SQLiteNotificationsStorage::enqueue(const NotificationIndicator& notificati
     // lock here to bind the id generation and the enqueue operations
     std::lock_guard<std::mutex> lock{m_databaseMutex};
 
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("enqueueFailed").m("Database handle is not open"));
-        return false;
-    }
+    auto statement = m_database.createStatement(sqlString);
 
-    SQLiteStatement statement(m_dbHandle, sqlString);
-
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("enqueueFailed").m("Could not create statement"));
         return false;
     }
     int boundParam = 1;
-    if (!statement.bindIntParameter(boundParam++, notificationIndicator.persistVisualIndicator) ||
-        !statement.bindIntParameter(boundParam++, notificationIndicator.playAudioIndicator) ||
-        !statement.bindStringParameter(boundParam++, notificationIndicator.asset.assetId) ||
-        !statement.bindStringParameter(boundParam++, notificationIndicator.asset.url)) {
+    if (!statement->bindIntParameter(boundParam++, notificationIndicator.persistVisualIndicator) ||
+        !statement->bindIntParameter(boundParam++, notificationIndicator.playAudioIndicator) ||
+        !statement->bindStringParameter(boundParam++, notificationIndicator.asset.assetId) ||
+        !statement->bindStringParameter(boundParam++, notificationIndicator.asset.url)) {
         ACSDK_ERROR(LX("enqueueFailed").m("Could not bind parameter"));
         return false;
     }
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("enqueueFailed").m("Could not perform step"));
         return false;
     }
 
-    statement.finalize();
+    statement->finalize();
 
     return true;
 }
@@ -195,11 +189,16 @@ bool SQLiteNotificationsStorage::enqueue(const NotificationIndicator& notificati
 /**
  * A utility function to pop the next notificationIndicator from the database.
  *
- * @param dbHandle The database handle.
+ * @param database Pounter to the database.
  * @return Whether the delete operation was successful.
  * @note This function should only be called when holding m_databaseMutex.
  */
-static bool popNotificationIndicatorLocked(sqlite3* dbHandle) {
+static bool popNotificationIndicatorLocked(SQLiteDatabase* database) {
+    if (!database) {
+        ACSDK_ERROR(LX("popNotificationIndicatorLockedFailed").m("null database"));
+        return false;
+    }
+
     // the next notificationIndicator in the queue corresponds to the minimum id
     const std::string minTableId =
         "(SELECT ROWID FROM " + NOTIFICATION_INDICATOR_TABLE_NAME + " order by ROWID limit 1)";
@@ -207,14 +206,14 @@ static bool popNotificationIndicatorLocked(sqlite3* dbHandle) {
     const std::string sqlString =
         "DELETE FROM " + NOTIFICATION_INDICATOR_TABLE_NAME + " WHERE ROWID=" + minTableId + ";";
 
-    SQLiteStatement statement(dbHandle, sqlString);
+    auto statement = database->createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("popNotificationIndicatorLockedFailed").m("Could not create statement."));
         return false;
     }
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("popNotificationIndicatorLockedFailed").m("Could not perform step."));
         return false;
     }
@@ -225,11 +224,6 @@ static bool popNotificationIndicatorLocked(sqlite3* dbHandle) {
 bool SQLiteNotificationsStorage::dequeue() {
     std::lock_guard<std::mutex> lock{m_databaseMutex};
 
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("dequeueFailed").m("Database handle is not open"));
-        return false;
-    }
-
     // need to check if there are NotificationIndicators left to dequeue, but the indicator itself doesn't matter
     NotificationIndicator dummyIndicator;
 
@@ -238,7 +232,7 @@ bool SQLiteNotificationsStorage::dequeue() {
         return false;
     }
 
-    if (!popNotificationIndicatorLocked(m_dbHandle)) {
+    if (!popNotificationIndicatorLocked(&m_database)) {
         ACSDK_ERROR(LX("dequeueFailed").m("Could not pop notificationIndicator from table"));
         return false;
     }
@@ -258,124 +252,109 @@ bool SQLiteNotificationsStorage::peek(NotificationIndicator* notificationIndicat
 bool SQLiteNotificationsStorage::setIndicatorState(IndicatorState state) {
     std::lock_guard<std::mutex> lock{m_databaseMutex};
 
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("setIndicatorStateFailed").m("Database handle is not open"));
-        return false;
-    }
-
     // first delete the old record, we only need to maintain one record of IndicatorState at a time.
     std::string sqlString = "DELETE FROM " + INDICATOR_STATE_NAME + " WHERE ROWID IN (SELECT ROWID FROM " +
                             INDICATOR_STATE_NAME + " limit 1);";
 
-    SQLiteStatement deleteStatement(m_dbHandle, sqlString);
+    auto deleteStatement = m_database.createStatement(sqlString);
 
-    if (!deleteStatement.isValid()) {
+    if (!deleteStatement) {
         ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not create deleteStatement"));
         return false;
     }
 
-    if (!deleteStatement.step()) {
+    if (!deleteStatement->step()) {
         ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not perform step"));
         return false;
     }
 
-    deleteStatement.finalize();
+    deleteStatement->finalize();
 
     // we should only be storing one record in this table at any given time
     sqlString = "INSERT INTO " + INDICATOR_STATE_NAME + " (" + INDICATOR_STATE_NAME + ") VALUES (?);";
 
-    SQLiteStatement insertStatement(m_dbHandle, sqlString);
+    auto insertStatement = m_database.createStatement(sqlString);
 
-    if (!insertStatement.isValid()) {
+    if (!insertStatement) {
         ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not create insertStatement"));
         return false;
     }
 
-    if (!insertStatement.bindIntParameter(1, indicatorStateToInt(state))) {
+    if (!insertStatement->bindIntParameter(1, indicatorStateToInt(state))) {
         ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not bind parameter"));
         return false;
     }
 
-    if (!insertStatement.step()) {
+    if (!insertStatement->step()) {
         ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not perform step"));
         return false;
     }
 
-    insertStatement.finalize();
+    insertStatement->finalize();
 
     return true;
 }
 
-bool SQLiteNotificationsStorage::getIndicatorState(IndicatorState* state) const {
+bool SQLiteNotificationsStorage::getIndicatorState(IndicatorState* state) {
     if (!state) {
         ACSDK_ERROR(LX("getIndicatorStateFailed").m("State parameter was nullptr"));
         return false;
     }
 
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("getIndicatorStateFailed").m("Database handle is not open"));
-        return false;
-    }
-
     std::string sqlString = "SELECT * FROM " + INDICATOR_STATE_NAME;
 
-    SQLiteStatement statement(m_dbHandle, sqlString);
+    auto statement = m_database.createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("getIndicatorStateFailed").m("Could not create statement"));
         return false;
     }
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("getIndicatorStateFailed").m("Could not perform step"));
         return false;
     }
 
-    int stepResult = statement.getStepResult();
+    int stepResult = statement->getStepResult();
 
     if (stepResult != SQLITE_ROW) {
         ACSDK_ERROR(LX("getIndicatorStateFailed").m("No records left in table"));
         return false;
     }
 
-    *state = avsCommon::avs::intToIndicatorState(statement.getColumnInt(0));
+    *state = avsCommon::avs::intToIndicatorState(statement->getColumnInt(0));
 
     if (IndicatorState::UNDEFINED == *state) {
         ACSDK_ERROR(LX("getIndicatorStateFailed").m("Unknown indicator state retrieved from table"));
         return false;
     }
 
-    statement.finalize();
+    statement->finalize();
 
     return true;
 }
 
-bool SQLiteNotificationsStorage::checkForEmptyQueue(bool* empty) const {
+bool SQLiteNotificationsStorage::checkForEmptyQueue(bool* empty) {
     if (!empty) {
         ACSDK_ERROR(LX("checkForEmptyQueueFailed").m("empty parameter was nullptr"));
         return false;
     }
 
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("checkForEmptyQueueFailed").m("Database handle is not open"));
-        return false;
-    }
-
     std::string sqlString = "SELECT * FROM " + NOTIFICATION_INDICATOR_TABLE_NAME;
 
-    SQLiteStatement statement(m_dbHandle, sqlString);
+    auto statement = m_database.createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("checkForEmptyQueueFailed").m("Could not create statement"));
         return false;
     }
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("checkForEmptyQueueFailed").m("Could not perform step"));
         return false;
     }
 
-    int stepResult = statement.getStepResult();
+    int stepResult = statement->getStepResult();
 
     if (stepResult != SQLITE_ROW) {
         *empty = true;
@@ -391,19 +370,14 @@ bool SQLiteNotificationsStorage::clearNotificationIndicators() {
 
     std::lock_guard<std::mutex> lock{m_databaseMutex};
 
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("clearNotificationIndicatorsFailed").m("Database handle is not open"));
-        return false;
-    }
+    auto statement = m_database.createStatement(sqlString);
 
-    SQLiteStatement statement(m_dbHandle, sqlString);
-
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("clearNotificationIndicatorsFailed").m("Could not create statement."));
         return false;
     }
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("clearNotificationIndicatorsFailed").m("Could not perform step."));
         return false;
     }
@@ -418,26 +392,26 @@ bool SQLiteNotificationsStorage::getNextNotificationIndicatorLocked(Notification
     // the minimum id is the next NotificationIndicator in the queue
     std::string sqlString = "SELECT * FROM " + NOTIFICATION_INDICATOR_TABLE_NAME + " ORDER BY ROWID ASC LIMIT 1;";
 
-    SQLiteStatement statement(m_dbHandle, sqlString);
+    auto statement = m_database.createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("getNextNotificationIndicatorLockedFailed").m("Could not create statement"));
         return false;
     }
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("getNextNotificationIndicatorLockedFailed").m("Could not perform step"));
         return false;
     }
 
-    int stepResult = statement.getStepResult();
+    int stepResult = statement->getStepResult();
 
     if (stepResult != SQLITE_ROW) {
         ACSDK_ERROR(LX("getNextNotificationIndicatorLockedFailed").m("No records left in table"));
         return false;
     }
 
-    int numberColumns = statement.getColumnCount();
+    int numberColumns = statement->getColumnCount();
 
     bool persistVisualIndicator = false;
     bool playAudioIndicator = false;
@@ -446,19 +420,19 @@ bool SQLiteNotificationsStorage::getNextNotificationIndicatorLocked(Notification
 
     // loop through columns to get all pertinent data for the out parameter
     for (int i = 0; i < numberColumns; i++) {
-        std::string columnName = statement.getColumnName(i);
+        std::string columnName = statement->getColumnName(i);
 
         if (DATABASE_COLUMN_PERSIST_VISUAL_INDICATOR_NAME == columnName) {
-            persistVisualIndicator = statement.getColumnInt(i);
+            persistVisualIndicator = statement->getColumnInt(i);
 
         } else if (DATABASE_COLUMN_PLAY_AUDIO_INDICATOR_NAME == columnName) {
-            playAudioIndicator = statement.getColumnInt(i);
+            playAudioIndicator = statement->getColumnInt(i);
 
         } else if (DATABASE_COLUMN_ASSET_ID_NAME == columnName) {
-            assetId = statement.getColumnText(i);
+            assetId = statement->getColumnText(i);
 
         } else if (DATABASE_COLUMN_ASSET_URL_NAME == columnName) {
-            assetUrl = statement.getColumnText(i);
+            assetUrl = statement->getColumnText(i);
         }
     }
 
@@ -467,18 +441,13 @@ bool SQLiteNotificationsStorage::getNextNotificationIndicatorLocked(Notification
     return true;
 }
 
-bool SQLiteNotificationsStorage::getQueueSize(int* size) const {
+bool SQLiteNotificationsStorage::getQueueSize(int* size) {
     if (!size) {
         ACSDK_ERROR(LX("getQueueSizeFailed").m("size parameter was nullptr"));
         return false;
     }
 
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("getQueueSizeFailed").m("Database handle is not open"));
-        return false;
-    }
-
-    if (!getNumberTableRows(m_dbHandle, NOTIFICATION_INDICATOR_TABLE_NAME, size)) {
+    if (!getNumberTableRows(&m_database, NOTIFICATION_INDICATOR_TABLE_NAME, size)) {
         ACSDK_ERROR(LX("getQueueSizeFailed").m("Failed to count rows in table"));
         return false;
     }

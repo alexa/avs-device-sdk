@@ -44,9 +44,6 @@ static const std::string TAG("AudioInputProcessor");
 /// The name of the @c FocusManager channel used by @c AudioInputProvider.
 static const std::string CHANNEL_NAME = avsCommon::sdkInterfaces::FocusManagerInterface::DIALOG_CHANNEL_NAME;
 
-/// The activityId string used with @c FocusManager by @c AudioInputProvider.
-static const std::string ACTIVITY_ID = "SpeechRecognizer.Recognize";
-
 /// The namespace for this capability agent.
 static const std::string NAMESPACE = "SpeechRecognizer";
 
@@ -393,24 +390,48 @@ bool AudioInputProcessor::executeRecognize(
         return false;
     }
 
-    if (provider.format.encoding != avsCommon::utils::AudioFormat::Encoding::LPCM) {
-        ACSDK_ERROR(
-            LX("executeRecognizeFailed").d("reason", "unsupportedEncoding").d("encoding", provider.format.encoding));
-        return false;
-    } else if (provider.format.endianness != avsCommon::utils::AudioFormat::Endianness::LITTLE) {
+    std::unordered_map<int, std::string> mapSampleRatesAVSEncoding = {{32000, "OPUS"}};
+    std::string avsEncodingFormat;
+    std::unordered_map<int, std::string>::iterator itSampleRateAVSEncoding;
+
+    switch (provider.format.encoding) {
+        case avsCommon::utils::AudioFormat::Encoding::LPCM:
+            if (provider.format.sampleRateHz != 16000) {
+                ACSDK_ERROR(LX("executeRecognizeFailed")
+                                .d("reason", "unsupportedSampleRateForPCM")
+                                .d("sampleRate", provider.format.sampleRateHz));
+                return false;
+            } else if (provider.format.sampleSizeInBits != 16) {
+                ACSDK_ERROR(LX("executeRecognizeFailed")
+                                .d("reason", "unsupportedSampleSize")
+                                .d("sampleSize", provider.format.sampleSizeInBits));
+                return false;
+            }
+
+            avsEncodingFormat = "AUDIO_L16_RATE_16000_CHANNELS_1";
+            break;
+        case avsCommon::utils::AudioFormat::Encoding::OPUS:
+            itSampleRateAVSEncoding = mapSampleRatesAVSEncoding.find(provider.format.sampleRateHz);
+            if (itSampleRateAVSEncoding == mapSampleRatesAVSEncoding.end()) {
+                ACSDK_ERROR(LX("executeRecognizeFailed")
+                                .d("reason", "unsupportedSampleRateForOPUS")
+                                .d("sampleRate", provider.format.sampleRateHz));
+                return false;
+            }
+
+            avsEncodingFormat = itSampleRateAVSEncoding->second;
+            break;
+        default:
+            ACSDK_ERROR(LX("executeRecognizeFailed")
+                            .d("reason", "unsupportedEncoding")
+                            .d("encoding", provider.format.encoding));
+            return false;
+    }
+
+    if (provider.format.endianness != avsCommon::utils::AudioFormat::Endianness::LITTLE) {
         ACSDK_ERROR(LX("executeRecognizeFailed")
                         .d("reason", "unsupportedEndianness")
                         .d("endianness", provider.format.endianness));
-        return false;
-    } else if (provider.format.sampleSizeInBits != 16) {
-        ACSDK_ERROR(LX("executeRecognizeFailed")
-                        .d("reason", "unsupportedSampleSize")
-                        .d("sampleSize", provider.format.sampleSizeInBits));
-        return false;
-    } else if (provider.format.sampleRateHz != 16000) {
-        ACSDK_ERROR(LX("executeRecognizeFailed")
-                        .d("reason", "unsupportedSampleRate")
-                        .d("sampleRate", provider.format.sampleRateHz));
         return false;
     } else if (provider.format.numChannels != 1) {
         ACSDK_ERROR(LX("executeRecognizeFailed")
@@ -452,7 +473,7 @@ bool AudioInputProcessor::executeRecognize(
     // clang-format off
     payload << R"({)"
                    R"("profile":")" << provider.profile << R"(",)"
-                   R"("format":"AUDIO_L16_RATE_16000_CHANNELS_1")";
+                   R"("format":")" << avsEncodingFormat << R"(")";
 
     // The initiator (or lack thereof) from a previous ExpectSpeech has precedence.
     if (m_precedingExpectSpeechInitiator) {
@@ -538,7 +559,7 @@ void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContex
 
     // Start acquiring the channel right away; we'll service the callback after assembling our Recognize event.
     if (m_focusState != avsCommon::avs::FocusState::FOREGROUND) {
-        if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), ACTIVITY_ID)) {
+        if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), NAMESPACE)) {
             ACSDK_ERROR(LX("executeOnContextAvailableFailed").d("reason", "Unable to acquire channel"));
             executeResetState();
             return;

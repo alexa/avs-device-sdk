@@ -12,6 +12,7 @@ add_library(AVSCommon SHARED
     AVS/src/AVSMessage.cpp
     AVS/src/AVSMessageHeader.cpp
     AVS/src/AbstractConnection.cpp
+    AVS/src/ExternalMediaPlayer/AdapterUtils.cpp
     AVS/src/AlexaClientSDKInit.cpp
     AVS/src/Attachment/Attachment.cpp
     AVS/src/Attachment/AttachmentManager.cpp
@@ -43,11 +44,13 @@ add_library(AVSCommon SHARED
     Utils/src/Logger/Logger.cpp
     Utils/src/Logger/LoggerSinkManager.cpp
     Utils/src/Logger/LoggerUtils.cpp
+    Utils/src/Logger/LogStringFormatter.cpp
     Utils/src/Logger/ModuleLogger.cpp
     Utils/src/Logger/ThreadMoniker.cpp
     Utils/src/Metrics.cpp
     Utils/src/RequiresShutdown.cpp
     Utils/src/RetryTimer.cpp
+    Utils/src/SafeCTimeAccess.cpp
     Utils/src/Stream/StreamFunctions.cpp
     Utils/src/Stream/Streambuf.cpp
     Utils/src/StringUtils.cpp

@@ -488,6 +488,10 @@ bool HTTP2Stream::hasProgressTimedOut() const {
     return (getNow() - m_timeOfLastTransfer) > m_progressTimeout;
 }
 
+const avsCommon::utils::logger::LogStringFormatter& HTTP2Stream::getLogFormatter() const {
+    return m_logFormatter;
+}
+
 template <typename ParamType>
 bool HTTP2Stream::setopt(CURLoption option, const char* optionName, ParamType value) {
     auto result = curl_easy_setopt(m_transfer.getCurlHandle(), option, value);
@@ -563,7 +567,8 @@ int HTTP2Stream::debugFunction(CURL* handle, curl_infotype type, char* data, siz
         return 0;
     }
     if (stream->m_streamLog) {
-        (*stream->m_streamLog) << logger::formatLogString(
+        auto logFormatter = stream->getLogFormatter();
+        (*stream->m_streamLog) << logFormatter.format(
                                       logger::Level::INFO,
                                       std::chrono::system_clock::now(),
                                       logger::ThreadMoniker::getThisThreadMoniker().c_str(),

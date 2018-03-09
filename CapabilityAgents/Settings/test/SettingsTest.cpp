@@ -92,6 +92,17 @@ static const std::string SETTINGS_CONFIG_JSON =
 // clang-format on
 
 /**
+ * Utility function to determine if the storage component is opened.
+ *
+ * @param storage The storage component to check.
+ * @return True if the storage component's underlying database is opened, false otherwise.
+ */
+static bool isOpen(const std::shared_ptr<SettingsStorageInterface>& storage) {
+    std::unordered_map<std::string, std::string> dummyMapOfSettings;
+    return storage->load(&dummyMapOfSettings);
+}
+
+/**
  * This class allows us to test SingleSettingObserver interaction.
  */
 class MockSingleSettingObserver : public SingleSettingObserverInterface {
@@ -209,16 +220,19 @@ protected:
     std::shared_ptr<SettingsVerifyTest> m_settingsVerifyObject;
     /// The map which stores all the settings for the object.
     std::unordered_map<std::string, std::string> m_mapOfSettings;
+    /// The data manager required to build the base object
+    std::shared_ptr<registrationManager::CustomerDataManager> m_dataManager;
 };
 
 void SettingsTest::SetUp() {
+    m_dataManager = std::make_shared<registrationManager::CustomerDataManager>();
     std::istringstream inString(SETTINGS_CONFIG_JSON);
     ASSERT_TRUE(AlexaClientSDKInit::initialize({&inString}));
     m_mockMessageSender = std::make_shared<MockMessageSender>();
     m_settingsEventSender = SettingsUpdatedEventSender::create(m_mockMessageSender);
     ASSERT_NE(m_settingsEventSender, nullptr);
-    m_storage = std::make_shared<SQLiteSettingStorage>();
-    m_settingsObject = Settings::create(m_storage, {m_settingsEventSender});
+    m_storage = std::make_shared<SQLiteSettingStorage>("settingsUnitTest.db");
+    m_settingsObject = Settings::create(m_storage, {m_settingsEventSender}, m_dataManager);
     ASSERT_NE(m_settingsObject, nullptr);
     ASSERT_TRUE(m_storage->load(&m_mapOfSettings));
 }
@@ -257,9 +271,10 @@ bool SettingsTest::testChangeSettingSucceeds(const std::string& key, const std::
 TEST_F(SettingsTest, createTest) {
     ASSERT_EQ(
         nullptr,
-        m_settingsObject->create(m_storage, std::unordered_set<std::shared_ptr<GlobalSettingsObserverInterface>>()));
-    ASSERT_EQ(nullptr, m_settingsObject->create(nullptr, {m_settingsEventSender}));
-    ASSERT_EQ(nullptr, m_settingsObject->create(m_storage, {nullptr}));
+        m_settingsObject->create(
+            m_storage, std::unordered_set<std::shared_ptr<GlobalSettingsObserverInterface>>(), m_dataManager));
+    ASSERT_EQ(nullptr, m_settingsObject->create(nullptr, {m_settingsEventSender}, m_dataManager));
+    ASSERT_EQ(nullptr, m_settingsObject->create(m_storage, {nullptr}, m_dataManager));
 }
 
 /**
@@ -352,6 +367,18 @@ TEST_F(SettingsTest, defaultSettingsCorrect) {
 }
 
 /**
+ * Test to check that @c clearData() removes any setting stored in the database.
+ */
+TEST_F(SettingsTest, clearDataTest) {
+    ASSERT_TRUE(testChangeSettingSucceeds("locale", "en-CA"));
+    m_settingsObject->clearData();
+
+    std::unordered_map<std::string, std::string> tempMap;
+    ASSERT_TRUE(m_storage->load(&tempMap));
+    ASSERT_TRUE(tempMap.empty());
+}
+
+/**
  * Test to check clear database works as expected.
  */
 TEST_F(SettingsTest, clearDatabaseTest) {
@@ -399,18 +426,18 @@ TEST_F(SettingsTest, eraseTest) {
  */
 TEST_F(SettingsTest, createDatabaseTest) {
     m_storage->close();
-    ASSERT_FALSE(m_storage->createDatabase("settingsUnitTest.db"));
+    ASSERT_FALSE(m_storage->createDatabase());
 }
 
 /**
  * Test to check the open and close functions of SQLiteSettingStorage class.
  */
 TEST_F(SettingsTest, openAndCloseDatabaseTest) {
-    ASSERT_FALSE(m_storage->open("settingsUnitTest.db"));
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_FALSE(m_storage->open());
+    ASSERT_TRUE(isOpen(m_storage));
     m_storage->close();
-    ASSERT_TRUE(m_storage->open("settingsUnitTest.db"));
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(m_storage->open());
+    ASSERT_TRUE(isOpen(m_storage));
 }
 }  // namespace test
 }  // namespace settings

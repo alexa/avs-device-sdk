@@ -57,6 +57,17 @@ static const unsigned int NOTIFICATION_INDICATOR_SEED = 1;
 /// The max random number to generate.
 static const unsigned int MAX_RANDOM_INT = 100;
 
+/**
+ * Utility function to determine if the storage component is opened.
+ *
+ * @param storage The storage component to check.
+ * @return True if the storage component's underlying database is opened, false otherwise.
+ */
+static bool isOpen(const std::shared_ptr<NotificationsStorageInterface>& storage) {
+    int dummySize;
+    return storage->getQueueSize(&dummySize);
+}
+
 class NotificationsStorageTest : public ::testing::Test {
 public:
     NotificationsStorageTest();
@@ -82,7 +93,8 @@ protected:
     std::shared_ptr<SQLiteNotificationsStorage> m_storage;
 };
 
-NotificationsStorageTest::NotificationsStorageTest() : m_storage{std::make_shared<SQLiteNotificationsStorage>()} {
+NotificationsStorageTest::NotificationsStorageTest() :
+        m_storage{std::make_shared<SQLiteNotificationsStorage>(TEST_DATABASE_FILE_PATH)} {
     cleanupLocalDbFile();
 }
 
@@ -92,7 +104,7 @@ NotificationsStorageTest::~NotificationsStorageTest() {
 }
 
 void NotificationsStorageTest::createDatabase() {
-    m_storage->createDatabase(TEST_DATABASE_FILE_PATH);
+    m_storage->createDatabase();
 }
 
 void NotificationsStorageTest::cleanupLocalDbFile() {
@@ -114,31 +126,31 @@ void NotificationsStorageTest::checkNotificationIndicatorsEquality(
  * Test basic construction. Database should not be open.
  */
 TEST_F(NotificationsStorageTest, testConstructionAndDestruction) {
-    ASSERT_FALSE(m_storage->isOpen());
+    ASSERT_FALSE(isOpen(m_storage));
 }
 
 /**
  * Test database creation.
  */
 TEST_F(NotificationsStorageTest, testDatabaseCreation) {
-    ASSERT_FALSE(m_storage->isOpen());
+    ASSERT_FALSE(isOpen(m_storage));
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
 }
 
 /**
  * Test opening and closing a database.
  */
 TEST_F(NotificationsStorageTest, testOpenAndCloseDatabase) {
-    ASSERT_FALSE(m_storage->isOpen());
+    ASSERT_FALSE(isOpen(m_storage));
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
     m_storage->close();
-    ASSERT_FALSE(m_storage->isOpen());
-    ASSERT_TRUE(m_storage->open(TEST_DATABASE_FILE_PATH));
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_FALSE(isOpen(m_storage));
+    ASSERT_TRUE(m_storage->open());
+    ASSERT_TRUE(isOpen(m_storage));
     m_storage->close();
-    ASSERT_FALSE(m_storage->isOpen());
+    ASSERT_FALSE(isOpen(m_storage));
 }
 
 /**
@@ -153,7 +165,7 @@ TEST_F(NotificationsStorageTest, testDatabaseEnqueueAndDequeue) {
     ASSERT_FALSE(m_storage->dequeue());
 
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
 
     ASSERT_TRUE(m_storage->enqueue(firstIndicator));
     ASSERT_TRUE(m_storage->enqueue(secondIndicator));
@@ -186,7 +198,7 @@ TEST_F(NotificationsStorageTest, testSettingAndGettingIndicatorState) {
     ASSERT_FALSE(m_storage->getIndicatorState(&state));
 
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
 
     ASSERT_TRUE(m_storage->setIndicatorState(IndicatorState::ON));
     ASSERT_TRUE(m_storage->getIndicatorState(&state));
@@ -204,7 +216,7 @@ TEST_F(NotificationsStorageTest, testSettingAndGettingIndicatorState) {
  */
 TEST_F(NotificationsStorageTest, testClearingNotificationIndicators) {
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
 
     NotificationIndicator firstIndicator(true, false, TEST_ASSET_ID1, TEST_ASSET_URL1);
     NotificationIndicator secondIndicator(false, true, TEST_ASSET_ID2, TEST_ASSET_URL2);
@@ -221,7 +233,7 @@ TEST_F(NotificationsStorageTest, testClearingNotificationIndicators) {
  */
 TEST_F(NotificationsStorageTest, testCheckingEmptyQueue) {
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
 
     bool empty = false;
 
@@ -257,7 +269,7 @@ TEST_F(NotificationsStorageTest, testCheckingEmptyQueue) {
  */
 TEST_F(NotificationsStorageTest, testDatabasePersistence) {
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
 
     NotificationIndicator firstIndicator(true, false, TEST_ASSET_ID1, TEST_ASSET_URL1);
     NotificationIndicator secondIndicator(false, true, TEST_ASSET_ID2, TEST_ASSET_URL2);
@@ -267,9 +279,9 @@ TEST_F(NotificationsStorageTest, testDatabasePersistence) {
 
     m_storage->close();
 
-    ASSERT_FALSE(m_storage->isOpen());
-    ASSERT_TRUE(m_storage->open(TEST_DATABASE_FILE_PATH));
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_FALSE(isOpen(m_storage));
+    ASSERT_TRUE(m_storage->open());
+    ASSERT_TRUE(isOpen(m_storage));
 
     NotificationIndicator firstDequeue;
     ASSERT_TRUE(m_storage->peek(&firstDequeue));
@@ -280,9 +292,9 @@ TEST_F(NotificationsStorageTest, testDatabasePersistence) {
     // let's try closing again before the second dequeue
     m_storage->close();
 
-    ASSERT_FALSE(m_storage->isOpen());
-    ASSERT_TRUE(m_storage->open(TEST_DATABASE_FILE_PATH));
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_FALSE(isOpen(m_storage));
+    ASSERT_TRUE(m_storage->open());
+    ASSERT_TRUE(isOpen(m_storage));
 
     NotificationIndicator secondDequeue;
     ASSERT_TRUE(m_storage->peek(&secondDequeue));
@@ -296,7 +308,7 @@ TEST_F(NotificationsStorageTest, testDatabasePersistence) {
  */
 TEST_F(NotificationsStorageTest, testQueueOrder) {
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
 
     // generate ints with a random generator, this will be used to produce random bool values
     std::default_random_engine intGenerator;
@@ -334,7 +346,7 @@ TEST_F(NotificationsStorageTest, testQueueOrder) {
  */
 TEST_F(NotificationsStorageTest, testPeek) {
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
 
     NotificationIndicator firstIndicator(true, false, TEST_ASSET_ID1, TEST_ASSET_URL1);
     NotificationIndicator secondIndicator(false, true, TEST_ASSET_ID2, TEST_ASSET_URL2);
@@ -361,7 +373,7 @@ TEST_F(NotificationsStorageTest, testPeek) {
 
 TEST_F(NotificationsStorageTest, testSize) {
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
 
     int size = 0;
     ASSERT_TRUE(m_storage->getQueueSize(&size));

@@ -13,10 +13,12 @@
  * permissions and limitations under the License.
  */
 
-#include <ctime>
 #include <chrono>
+#include <ctime>
+#include <iomanip>
 #include <mutex>
 #include <random>
+#include <sstream>
 
 #include "AVSCommon/Utils/Timing/TimeUtils.h"
 #include "AVSCommon/Utils/Logger/Logger.h"
@@ -92,14 +94,6 @@ static const unsigned long ENCODED_TIME_STRING_EXPECTED_LENGTH =
     ENCODED_TIME_STRING_PLUS_SEPARATOR_STRING.length() + ENCODED_TIME_STRING_POSTFIX_STRING_LENGTH;
 
 /**
- * Mutex to guard calls to gmtime and localtime.
- *
- * Both functions use an internal shared structure making them non-threadsafe.
- * @todo: ACSDK-897 We should wrap all time access functions and this mutex into one singleton class.
- */
-static std::mutex timeLock;
-
-/**
  * Utility function that wraps localtime conversion to std::time_t.
  *
  * This function also creates a copy of the given timeStruct since mktime can
@@ -119,37 +113,10 @@ static bool convertToLocalTimeT(const std::tm* timeStruct, std::time_t* ret) {
     return *ret >= 0;
 }
 
-/**
- * Calculate localtime offset in std::time_t.
- *
- * In order to calculate the timezone offset, we call gmtime and localtime giving the same arbitrary time point. Then,
- * we convert them back to time_t and calculate the conversion difference. The arbitrary time point is 24 hours past
- * epoch, so we don't have to deal with negative time_t values.
- *
- * This function uses non-threadsafe time functions. Thus, it is important to use timeLock to guard these calls.
- *
- * @param[out] ret Required pointer to object where the result will be saved.
- * @return Whether it succeeded to calculate the localtime offset.
- */
-static bool localtimeOffset(std::time_t* ret) {
-    std::lock_guard<std::mutex> lock{timeLock};
-
-    static const std::chrono::time_point<std::chrono::system_clock> timePoint{std::chrono::hours(24)};
-    auto fixedTime = std::chrono::system_clock::to_time_t(timePoint);
-
-    std::time_t utc;
-    std::time_t local;
-    if (!convertToLocalTimeT(std::gmtime(&fixedTime), &utc) ||
-        !convertToLocalTimeT(std::localtime(&fixedTime), &local)) {
-        ACSDK_ERROR(LX("localtimeOffset").m("cannot retrieve tm struct"));
-        return false;
-    }
-
-    *ret = utc - local;
-    return true;
+TimeUtils::TimeUtils() : m_safeCTimeAccess{SafeCTimeAccess::instance()} {
 }
 
-bool convertToUtcTimeT(const std::tm* utcTm, std::time_t* ret) {
+bool TimeUtils::convertToUtcTimeT(const std::tm* utcTm, std::time_t* ret) {
     std::time_t converted;
     std::time_t offset;
 
@@ -168,7 +135,7 @@ bool convertToUtcTimeT(const std::tm* utcTm, std::time_t* ret) {
     return true;
 }
 
-bool convert8601TimeStringToUnix(const std::string& timeString, int64_t* convertedTime) {
+bool TimeUtils::convert8601TimeStringToUnix(const std::string& timeString, int64_t* convertedTime) {
     // TODO : Use std::get_time once we only support compilers that implement this function (GCC 5.1+ / Clang 3.3+)
 
     if (!convertedTime) {
@@ -241,7 +208,7 @@ bool convert8601TimeStringToUnix(const std::string& timeString, int64_t* convert
     return true;
 }
 
-bool getCurrentUnixTime(int64_t* currentTime) {
+bool TimeUtils::getCurrentUnixTime(int64_t* currentTime) {
     if (!currentTime) {
         ACSDK_ERROR(LX("getCurrentUnixTimeFailed").m("currentTime parameter was nullptr."));
         return false;
@@ -251,6 +218,55 @@ bool getCurrentUnixTime(int64_t* currentTime) {
     *currentTime = static_cast<int64_t>(now);
 
     return now >= 0;
+}
+
+bool TimeUtils::convertTimeToUtcIso8601Rfc3339(const struct timeval& timeVal, std::string* iso8601TimeString) {
+    // The length of the RFC 3339 string for the time is maximum 28 characters, include an extra byte for the '\0'
+    // terminator.
+    char buf[29];
+    memset(buf, 0, sizeof(buf));
+
+    // Need to assign it to time_t since time_t in some platforms is long long
+    // and timeVal.tv_sec is long in some platforms
+    const time_t timeSecs = timeVal.tv_sec;
+
+    std::tm utcTm;
+    if (!m_safeCTimeAccess->getGmtime(timeSecs, &utcTm)) {
+        ACSDK_ERROR(LX("convertTimeToUtcIso8601Rfc3339").m("cannot retrieve tm struct"));
+        return false;
+    }
+
+    // it's possible for std::strftime to correctly return length = 0, but not with the format string used.  In this
+    // case length == 0 is an error.
+    auto strftimeResult = std::strftime(buf, sizeof(buf) - 1, "%Y-%m-%dT%H:%M:%S", &utcTm);
+    if (strftimeResult == 0) {
+        ACSDK_ERROR(LX("convertTimeToUtcIso8601Rfc3339Failed").m("strftime(..) failed"));
+        return false;
+    }
+
+    std::stringstream millisecondTrailer;
+    millisecondTrailer << buf << "." << std::setfill('0') << std::setw(3) << (timeVal.tv_usec / 1000) << "Z";
+
+    *iso8601TimeString = millisecondTrailer.str();
+    return true;
+}
+
+bool TimeUtils::localtimeOffset(std::time_t* ret) {
+    static const std::chrono::time_point<std::chrono::system_clock> timePoint{std::chrono::hours(24)};
+    auto fixedTime = std::chrono::system_clock::to_time_t(timePoint);
+
+    std::tm utcTm;
+    std::time_t utc;
+    std::tm localTm;
+    std::time_t local;
+    if (!m_safeCTimeAccess->getGmtime(fixedTime, &utcTm) || !convertToLocalTimeT(&utcTm, &utc) ||
+        !m_safeCTimeAccess->getLocaltime(fixedTime, &localTm) || !convertToLocalTimeT(&localTm, &local)) {
+        ACSDK_ERROR(LX("localtimeOffset").m("cannot retrieve tm struct"));
+        return false;
+    }
+
+    *ret = utc - local;
+    return true;
 }
 
 }  // namespace timing

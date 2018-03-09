@@ -305,6 +305,19 @@ TEST_F(DirectiveProcessorTest, testSetDialogRequestIdCancelsOutstandingDirective
     ASSERT_TRUE(handler2->waitUntilCompleted());
 }
 
+TEST_F(DirectiveProcessorTest, testAddDirectiveWhileDisabled) {
+    m_processor->disable();
+    ASSERT_FALSE(m_processor->onDirective(m_directive_0_0));
+}
+
+TEST_F(DirectiveProcessorTest, testAddDirectiveAfterReEnabled) {
+    m_processor->disable();
+    ASSERT_FALSE(m_processor->onDirective(m_directive_0_0));
+
+    m_processor->enable();
+    ASSERT_TRUE(m_processor->onDirective(m_directive_0_0));
+}
+
 }  // namespace test
 }  // namespace adsl
 }  // namespace alexaClientSDK

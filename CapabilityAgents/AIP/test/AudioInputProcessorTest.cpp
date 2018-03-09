@@ -52,10 +52,7 @@ namespace test {
 using avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface;
 
 /// The name of the @c FocusManager channel used by @c AudioInputProvider.
-static const std::string CHANNEL_NAME = "Dialog";
-
-/// The activityId string used with @c FocusManager by @c AudioInputProvider.
-static const std::string ACTIVITY_ID = "SpeechRecognizer.Recognize";
+static const std::string CHANNEL_NAME = avsCommon::sdkInterfaces::FocusManagerInterface::DIALOG_CHANNEL_NAME;
 
 /// The namespace for this capability agent.
 static const std::string NAMESPACE = "SpeechRecognizer";
@@ -159,8 +156,8 @@ static const std::string ASR_PROFILE_KEY = "profile";
 /// JSON key for the audio format field of a recognize event.
 static const std::string AUDIO_FORMAT_KEY = "format";
 
-/// JSON value for a recognize event's audio format.
-static const std::string AUDIO_FORMAT_VALUE = "AUDIO_L16_RATE_16000_CHANNELS_1";
+/// Accepted JSON values for a recognize event's audio format.
+static const std::unordered_set<std::string> AUDIO_FORMAT_VALUES = {"AUDIO_L16_RATE_16000_CHANNELS_1", "OPUS"};
 
 /// JSON key for the initiator field of a recognize event.
 static const std::string RECOGNIZE_INITIATOR_KEY = "initiator";
@@ -430,8 +427,14 @@ void RecognizeEvent::verifyMessage(
 
     std::ostringstream profile;
     profile << m_audioProvider.profile;
+
+    std::ostringstream encodingFormat;
+    encodingFormat << m_audioProvider.format.encoding;
+
     EXPECT_EQ(getJsonString(payload->value, ASR_PROFILE_KEY), profile.str());
-    EXPECT_EQ(getJsonString(payload->value, AUDIO_FORMAT_KEY), AUDIO_FORMAT_VALUE);
+
+    EXPECT_FALSE(
+        AUDIO_FORMAT_VALUES.find(getJsonString(payload->value, AUDIO_FORMAT_KEY)) == AUDIO_FORMAT_VALUES.end());
     auto initiator = payload->value.FindMember(RECOGNIZE_INITIATOR_KEY);
     EXPECT_NE(initiator, payload->value.MemberEnd());
 
@@ -851,7 +854,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     if (!bargeIn) {
         EXPECT_CALL(*m_mockUserActivityNotifier, onUserActive()).Times(2);
         EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
-        EXPECT_CALL(*m_mockFocusManager, acquireChannel(CHANNEL_NAME, _, ACTIVITY_ID))
+        EXPECT_CALL(*m_mockFocusManager, acquireChannel(CHANNEL_NAME, _, NAMESPACE))
             .WillOnce(InvokeWithoutArgs([this, stopPoint] {
                 m_audioInputProcessor->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND);
                 if (RecognizeStopPoint::AFTER_FOCUS == stopPoint) {
@@ -1929,6 +1932,37 @@ TEST_F(AudioInputProcessorTest, recognizeWakewordWithInvalidESPWithKeyword) {
         *m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT, RecognizeStopPoint::NONE, nullptr, espData));
 }
 
+/*
+ * This function verifies that @c AudioInputProcessor::recognize() works with OPUS encoding used with
+ * @c Initiator::TAP.
+ */
+TEST_F(AudioInputProcessorTest, recognizeOPUSWithTap) {
+    m_audioProvider->format.encoding = avsCommon::utils::AudioFormat::Encoding::OPUS;
+    m_audioProvider->format.sampleRateHz = 32000;
+    ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::TAP));
+}
+
+/*
+ * This function verifies that @c AudioInputProcessor::recognize() works with OPUS encoding used with
+ * @c Initiator::PRESS_AND_HOLD.
+ */
+TEST_F(AudioInputProcessorTest, recognizeOPUSWithPressAndHold) {
+    m_audioProvider->format.encoding = avsCommon::utils::AudioFormat::Encoding::OPUS;
+    m_audioProvider->format.sampleRateHz = 32000;
+    ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::PRESS_AND_HOLD));
+}
+
+/**
+ * This function verifies that @c AudioInputProcessor::recognize() works with OPUS encoding used with
+ * @c Initiator::WAKEWORD valid begin and end indices.
+ */
+TEST_F(AudioInputProcessorTest, recognizeOPUSWithWakeWord) {
+    avsCommon::avs::AudioInputStream::Index begin = 0;
+    avsCommon::avs::AudioInputStream::Index end = AudioInputProcessor::INVALID_INDEX;
+    m_audioProvider->format.encoding = avsCommon::utils::AudioFormat::Encoding::OPUS;
+    m_audioProvider->format.sampleRateHz = 32000;
+    EXPECT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT));
+}
 }  // namespace test
 }  // namespace aip
 }  // namespace capabilityAgents

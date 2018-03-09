@@ -41,7 +41,9 @@ public:
      * @copydoc
      * In this implementation, the function may only be called once. Subsequent calls will return @c nullptr.
      */
-    std::unique_ptr<avsCommon::utils::HTTPContent> getContent(FetchOptions fetchOption) override;
+    std::unique_ptr<avsCommon::utils::HTTPContent> getContent(
+        FetchOptions option,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer) override;
 
     /*
      * Destructor.
@@ -93,8 +95,8 @@ private:
      */
     std::string m_lastContentType;
 
-    /// Flag to indicate if a shutdown is occurring.
-    std::atomic<bool> m_shuttingDown;
+    /// Flag to indicate that the data-fetch operation has completed.
+    std::atomic<bool> m_done;
 
     /**
      * Internal thread that does the curl_easy_perform. The reason for using a thread is that curl_easy_perform may

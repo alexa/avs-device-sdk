@@ -20,12 +20,11 @@ namespace sampleApp {
 
 KeywordObserver::KeywordObserver(
     std::shared_ptr<defaultClient::DefaultClient> client,
-    capabilityAgents::aip::AudioProvider audioProvider) :
+    capabilityAgents::aip::AudioProvider audioProvider,
+    std::shared_ptr<esp::ESPDataProviderInterface> espProvider) :
         m_client{client},
         m_audioProvider{audioProvider},
-        m_espSupport{false},
-        m_voiceEnergy{""},
-        m_ambientEnergy{""} {
+        m_espProvider{espProvider} {
 }
 
 void KeywordObserver::onKeyWordDetected(
@@ -42,8 +41,8 @@ void KeywordObserver::onKeyWordDetected(
         endIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX &&
         beginIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX) {
         if (m_client) {
-            if (m_espSupport) {
-                capabilityAgents::aip::ESPData espData{m_voiceEnergy, m_ambientEnergy};
+            if (m_espProvider) {
+                auto espData = m_espProvider->getESPData();
                 m_client->notifyOfWakeWord(m_audioProvider, beginIndex, endIndex, keyword, espData);
             } else {
                 m_client->notifyOfWakeWord(m_audioProvider, beginIndex, endIndex, keyword);

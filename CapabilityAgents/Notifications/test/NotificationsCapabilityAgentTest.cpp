@@ -31,6 +31,7 @@
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/ConsoleLogger.h>
+#include <RegistrationManager/CustomerDataManager.h>
 
 #include "Notifications/NotificationsCapabilityAgent.h"
 #include "Notifications/NotificationIndicator.h"
@@ -169,11 +170,9 @@ void TestNotificationsObserver::onSetIndicator(IndicatorState state) {
  */
 class TestNotificationsStorage : public NotificationsStorageInterface {
 public:
-    bool createDatabase(const std::string& filePath) override;
+    bool createDatabase() override;
 
-    bool open(const std::string& filePath) override;
-
-    bool isOpen() const override;
+    bool open() override;
 
     void close() override;
 
@@ -185,13 +184,13 @@ public:
 
     bool setIndicatorState(IndicatorState state) override;
 
-    bool getIndicatorState(IndicatorState* state) const override;
+    bool getIndicatorState(IndicatorState* state) override;
 
-    bool checkForEmptyQueue(bool* empty) const override;
+    bool checkForEmptyQueue(bool* empty) override;
 
     bool clearNotificationIndicators() override;
 
-    bool getQueueSize(int* size) const override;
+    bool getQueueSize(int* size) override;
 
     /**
      * Waits until the queue is a particular size.
@@ -213,7 +212,7 @@ private:
     std::condition_variable m_conditionVariable;
 };
 
-bool TestNotificationsStorage::createDatabase(const std::string& filePath) {
+bool TestNotificationsStorage::createDatabase() {
     if (!setIndicatorState(IndicatorState::OFF)) {
         ACSDK_ERROR(LX("createTestDatabaseFailed").d("reason", "failed to set default indicator state"));
         return false;
@@ -221,11 +220,7 @@ bool TestNotificationsStorage::createDatabase(const std::string& filePath) {
     return true;
 }
 
-bool TestNotificationsStorage::open(const std::string& filePath) {
-    return true;
-}
-
-bool TestNotificationsStorage::isOpen() const {
+bool TestNotificationsStorage::open() {
     return true;
 }
 
@@ -259,7 +254,7 @@ bool TestNotificationsStorage::setIndicatorState(IndicatorState state) {
     return true;
 }
 
-bool TestNotificationsStorage::getIndicatorState(IndicatorState* state) const {
+bool TestNotificationsStorage::getIndicatorState(IndicatorState* state) {
     if (!state) {
         return false;
     }
@@ -267,7 +262,7 @@ bool TestNotificationsStorage::getIndicatorState(IndicatorState* state) const {
     return true;
 }
 
-bool TestNotificationsStorage::checkForEmptyQueue(bool* empty) const {
+bool TestNotificationsStorage::checkForEmptyQueue(bool* empty) {
     *empty = m_notificationQueue.empty();
     return true;
 }
@@ -277,7 +272,7 @@ bool TestNotificationsStorage::clearNotificationIndicators() {
     return true;
 }
 
-bool TestNotificationsStorage::getQueueSize(int* size) const {
+bool TestNotificationsStorage::getQueueSize(int* size) {
     if (!size) {
         return false;
     }
@@ -555,6 +550,9 @@ public:
     /// Triggers threads waiting on a SetIndicator directive to be processed.
     std::condition_variable m_setIndicatorTrigger;
 
+    /// Shared pointer to @c CustomerDataManager
+    std::shared_ptr<registrationManager::CustomerDataManager> m_dataManager;
+
     /// A count of how many SetIndicator directives have been processed.
     unsigned int m_numSetIndicatorsProcessed;
 };
@@ -565,7 +563,8 @@ void NotificationsCapabilityAgentTest::initializeCapabilityAgent() {
         m_renderer,
         m_mockContextManager,
         m_mockExceptionSender,
-        m_testNotificationsAudioFactory);
+        m_testNotificationsAudioFactory,
+        m_dataManager);
     ASSERT_TRUE(m_notificationsCapabilityAgent);
     m_notificationsCapabilityAgent->addObserver(m_testNotificationsObserver);
     m_renderer->addObserver(m_notificationsCapabilityAgent);
@@ -586,6 +585,7 @@ void NotificationsCapabilityAgentTest::SetUp() {
     m_mockDirectiveHandlerResult = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
 
     m_numSetIndicatorsProcessed = 0;
+    m_dataManager = std::make_shared<registrationManager::CustomerDataManager>();
 }
 
 void NotificationsCapabilityAgentTest::TearDown() {
@@ -661,23 +661,43 @@ TEST_F(NotificationsCapabilityAgentTest, testCreate) {
     std::shared_ptr<NotificationsCapabilityAgent> testNotificationsCapabilityAgent;
 
     testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
-        nullptr, m_renderer, m_mockContextManager, m_mockExceptionSender, m_testNotificationsAudioFactory);
+        nullptr,
+        m_renderer,
+        m_mockContextManager,
+        m_mockExceptionSender,
+        m_testNotificationsAudioFactory,
+        m_dataManager);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 
     testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
-        m_notificationsStorage, nullptr, m_mockContextManager, m_mockExceptionSender, m_testNotificationsAudioFactory);
+        m_notificationsStorage,
+        nullptr,
+        m_mockContextManager,
+        m_mockExceptionSender,
+        m_testNotificationsAudioFactory,
+        m_dataManager);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 
     testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
-        m_notificationsStorage, m_renderer, nullptr, m_mockExceptionSender, m_testNotificationsAudioFactory);
+        m_notificationsStorage,
+        m_renderer,
+        nullptr,
+        m_mockExceptionSender,
+        m_testNotificationsAudioFactory,
+        m_dataManager);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 
     testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
-        m_notificationsStorage, m_renderer, m_mockContextManager, nullptr, m_testNotificationsAudioFactory);
+        m_notificationsStorage,
+        m_renderer,
+        m_mockContextManager,
+        nullptr,
+        m_testNotificationsAudioFactory,
+        m_dataManager);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 
     testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
-        m_notificationsStorage, m_renderer, m_mockContextManager, m_mockExceptionSender, nullptr);
+        m_notificationsStorage, m_renderer, m_mockContextManager, m_mockExceptionSender, nullptr, m_dataManager);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 }
 
@@ -868,6 +888,32 @@ TEST_F(NotificationsCapabilityAgentTest, testMultipleSetIndicators) {
 
     ASSERT_TRUE(m_renderer->waitUntilRenderingStarted());
     ASSERT_TRUE(m_renderer->waitUntilRenderingFinished());
+}
+
+/**
+ * Test that @c clearData() removes all notifications and sets the indicator to OFF.
+ */
+TEST_F(NotificationsCapabilityAgentTest, testClearData) {
+    initializeCapabilityAgent();
+    sendSetIndicatorDirective(generatePayload(true, true, "assetId1"), "firstIndicatorMessageId");
+    ASSERT_TRUE(m_renderer->waitUntilRenderingStarted());
+    ASSERT_TRUE(m_renderer->waitUntilRenderingFinished());
+
+    // Check that indicator is ON
+    IndicatorState state = IndicatorState::UNDEFINED;
+    m_notificationsStorage->getIndicatorState(&state);
+    ASSERT_EQ(state, IndicatorState::ON);
+
+    // Check that the notification queue is not empty
+    int queueSize;
+    m_notificationsStorage->getQueueSize(&queueSize);
+    ASSERT_GT(queueSize, 0);
+
+    m_notificationsCapabilityAgent->clearData();
+    ASSERT_TRUE(m_notificationsStorage->waitForQueueSizeToBe(0));
+
+    m_notificationsStorage->getIndicatorState(&state);
+    ASSERT_EQ(state, IndicatorState::OFF);
 }
 
 }  // namespace test

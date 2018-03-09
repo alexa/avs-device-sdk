@@ -20,6 +20,8 @@ namespace alexaClientSDK {
 namespace avsCommon {
 namespace sdkInterfaces {
 
+#include <string>
+
 /**
  * This class allows a client to receive messages from AVS.
  */

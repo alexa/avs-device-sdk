@@ -157,11 +157,7 @@ std::shared_ptr<MediaPlayer> MediaPlayer::create(
 
 MediaPlayer::~MediaPlayer() {
     ACSDK_DEBUG9(LX("~MediaPlayerCalled"));
-    gst_element_set_state(m_pipeline.pipeline, GST_STATE_NULL);
-    if (m_source) {
-        m_source->shutdown();
-    }
-    m_source.reset();
+    cleanUpSource();
     g_main_loop_quit(m_mainLoop);
     if (m_mainLoopThread.joinable()) {
         m_mainLoopThread.join();
@@ -727,22 +723,7 @@ void MediaPlayer::tearDownTransientPipelineElements() {
         sendPlaybackStopped();
     }
     m_currentId = ERROR_SOURCE_ID;
-    if (m_source) {
-        m_source->shutdown();
-    }
-    m_source.reset();
-    if (m_pipeline.pipeline) {
-        gst_element_set_state(m_pipeline.pipeline, GST_STATE_NULL);
-        if (m_pipeline.appsrc) {
-            gst_bin_remove(GST_BIN(m_pipeline.pipeline), GST_ELEMENT(m_pipeline.appsrc));
-        }
-        m_pipeline.appsrc = nullptr;
-
-        if (m_pipeline.decoder) {
-            gst_bin_remove(GST_BIN(m_pipeline.pipeline), GST_ELEMENT(m_pipeline.decoder));
-        }
-        m_pipeline.decoder = nullptr;
-    }
+    cleanUpSource();
     m_offsetManager.clear();
     m_playPending = false;
     m_pausePending = false;
@@ -1459,10 +1440,7 @@ void MediaPlayer::sendPlaybackFinished() {
     if (m_currentId == ERROR_SOURCE_ID) {
         return;
     }
-    if (m_source) {
-        m_source->shutdown();
-    }
-    m_source.reset();
+    cleanUpSource();
     m_isPaused = false;
     m_playbackStartedSent = false;
     if (!m_playbackFinishedSent) {
@@ -1567,5 +1545,14 @@ gboolean MediaPlayer::onErrorCallback(gpointer pointer) {
     return false;
 }
 
+void MediaPlayer::cleanUpSource() {
+    if (m_pipeline.pipeline) {
+        gst_element_set_state(m_pipeline.pipeline, GST_STATE_NULL);
+    }
+    if (m_source) {
+        m_source->shutdown();
+    }
+    m_source.reset();
+}
 }  // namespace mediaPlayer
 }  // namespace alexaClientSDK

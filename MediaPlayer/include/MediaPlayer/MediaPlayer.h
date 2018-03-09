@@ -496,6 +496,11 @@ private:
      */
     void saveOffsetBeforeTeardown();
 
+    /**
+     * Destructs the @c m_source with proper steps.
+     */
+    void cleanUpSource();
+
     /// The volume to restore to when exiting muted state. Used in GStreamer crash fix for zero volume on PCM data.
     gdouble m_lastVolume;
 

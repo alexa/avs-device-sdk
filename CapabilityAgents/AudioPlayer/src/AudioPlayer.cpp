@@ -22,7 +22,6 @@
 #include <rapidjson/error/en.h>
 
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
-#include <AVSCommon/Utils/Timing/TimeUtils.h>
 
 #include "AudioPlayer/IntervalCalculator.h"
 
@@ -53,9 +52,6 @@ static const AudioPlayer::SourceId ERROR_SOURCE_ID = MediaPlayerInterface::ERROR
 
 /// The name of the @c FocusManager channel used by @c AudioPlayer.
 static const std::string CHANNEL_NAME = avsCommon::sdkInterfaces::FocusManagerInterface::CONTENT_CHANNEL_NAME;
-
-/// The activityId string used with @c FocusManager by @c AudioPlayer.
-static const std::string ACTIVITY_ID = "AudioPlayer.Play";
 
 /// The namespace for this capability agent.
 static const std::string NAMESPACE = "AudioPlayer";
@@ -471,9 +467,9 @@ void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
     audioItem.stream.expiryTime = std::chrono::steady_clock::time_point::max();
     if (jsonUtils::retrieveValue(stream->value, "expiryTime", &expiryTimeString)) {
         int64_t unixTime;
-        if (timing::convert8601TimeStringToUnix(expiryTimeString, &unixTime)) {
+        if (m_timeUtils.convert8601TimeStringToUnix(expiryTimeString, &unixTime)) {
             int64_t currentTime;
-            if (timing::getCurrentUnixTime(&currentTime)) {
+            if (m_timeUtils.getCurrentUnixTime(&currentTime)) {
                 std::chrono::seconds timeToExpiry(unixTime - currentTime);
                 audioItem.stream.expiryTime = std::chrono::steady_clock::now() + timeToExpiry;
             }
@@ -558,7 +554,9 @@ void AudioPlayer::executeProvideState(bool sendToken, unsigned int stateRequestT
     rapidjson::Document state(rapidjson::kObjectType);
     state.AddMember(TOKEN_KEY, m_token, state.GetAllocator());
     state.AddMember(
-        OFFSET_KEY, std::chrono::duration_cast<std::chrono::milliseconds>(getOffset()).count(), state.GetAllocator());
+        OFFSET_KEY,
+        (int64_t)std::chrono::duration_cast<std::chrono::milliseconds>(getOffset()).count(),
+        state.GetAllocator());
     state.AddMember(ACTIVITY_KEY, playerActivityToString(m_currentActivity), state.GetAllocator());
 
     rapidjson::StringBuffer buffer;
@@ -945,12 +943,12 @@ void AudioPlayer::executePlay(PlayBehavior playBehavior, const AudioItem& audioI
             if (FocusState::NONE == m_focus) {
                 // If we don't currently have focus, acquire it now; playback will start when focus changes to
                 // FOREGROUND.
-                if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), ACTIVITY_ID)) {
+                if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), NAMESPACE)) {
                     ACSDK_ERROR(LX("executePlayFailed").d("reason", "CouldNotAcquireChannel"));
                     sendPlaybackFailedEvent(
                         m_token,
                         ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR,
-                        std::string("Could not acquire ") + CHANNEL_NAME + " for " + ACTIVITY_ID);
+                        std::string("Could not acquire ") + CHANNEL_NAME + " for " + NAMESPACE);
                     return;
                 }
             }
@@ -1092,7 +1090,9 @@ void AudioPlayer::sendEventWithTokenAndOffset(const std::string& eventName, std:
         offset = getOffset();
     }
     payload.AddMember(
-        OFFSET_KEY, std::chrono::duration_cast<std::chrono::milliseconds>(offset).count(), payload.GetAllocator());
+        OFFSET_KEY,
+        (int64_t)std::chrono::duration_cast<std::chrono::milliseconds>(offset).count(),
+        payload.GetAllocator());
 
     rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
@@ -1130,11 +1130,13 @@ void AudioPlayer::sendPlaybackStutterFinishedEvent() {
     rapidjson::Document payload(rapidjson::kObjectType);
     payload.AddMember(TOKEN_KEY, m_token, payload.GetAllocator());
     payload.AddMember(
-        OFFSET_KEY, std::chrono::duration_cast<std::chrono::milliseconds>(getOffset()).count(), payload.GetAllocator());
+        OFFSET_KEY,
+        (int64_t)std::chrono::duration_cast<std::chrono::milliseconds>(getOffset()).count(),
+        payload.GetAllocator());
     auto stutterDuration = std::chrono::steady_clock::now() - m_bufferUnderrunTimestamp;
     payload.AddMember(
         STUTTER_DURATION_KEY,
-        std::chrono::duration_cast<std::chrono::milliseconds>(stutterDuration).count(),
+        (int64_t)std::chrono::duration_cast<std::chrono::milliseconds>(stutterDuration).count(),
         payload.GetAllocator());
 
     rapidjson::StringBuffer buffer;
@@ -1163,7 +1165,9 @@ void AudioPlayer::sendPlaybackFailedEvent(
     rapidjson::Value currentPlaybackState(rapidjson::kObjectType);
     currentPlaybackState.AddMember(TOKEN_KEY, m_token, payload.GetAllocator());
     currentPlaybackState.AddMember(
-        OFFSET_KEY, std::chrono::duration_cast<std::chrono::milliseconds>(getOffset()).count(), payload.GetAllocator());
+        OFFSET_KEY,
+        (int64_t)std::chrono::duration_cast<std::chrono::milliseconds>(getOffset()).count(),
+        payload.GetAllocator());
     currentPlaybackState.AddMember(ACTIVITY_KEY, playerActivityToString(m_currentActivity), payload.GetAllocator());
 
     payload.AddMember("currentPlaybackState", currentPlaybackState, payload.GetAllocator());

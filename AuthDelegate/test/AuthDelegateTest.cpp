@@ -275,12 +275,12 @@ TEST_F(AuthDelegateTest, retry) {
 
     EXPECT_CALL(
         *m_mockAuthObserver,
-        onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
+        onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::SUCCESS))
         .Times(AtMost(1));
 
     EXPECT_CALL(
         *m_mockAuthObserver,
-        onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
+        onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::SUCCESS))
         .WillOnce(InvokeWithoutArgs([this, &tokenRefreshed]() {
             tokenRefreshed = true;
             m_cv.notify_all();
@@ -308,12 +308,12 @@ TEST_F(AuthDelegateTest, expirationNotification) {
     ::testing::InSequence s;
     EXPECT_CALL(
         *m_mockAuthObserver,
-        onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
+        onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::SUCCESS))
         .Times(AtMost(1));
 
     EXPECT_CALL(
         *m_mockAuthObserver,
-        onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
+        onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::SUCCESS))
         .Times(1);
 
     EXPECT_CALL(
@@ -349,12 +349,12 @@ TEST_F(AuthDelegateTest, recoverAfterExpiration) {
     ::testing::InSequence s;
     EXPECT_CALL(
         *m_mockAuthObserver,
-        onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
+        onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::SUCCESS))
         .Times(AtMost(1));
 
     EXPECT_CALL(
         *m_mockAuthObserver,
-        onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
+        onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::SUCCESS))
         .Times(1);
 
     EXPECT_CALL(
@@ -364,7 +364,7 @@ TEST_F(AuthDelegateTest, recoverAfterExpiration) {
 
     EXPECT_CALL(
         *m_mockAuthObserver,
-        onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::NO_ERROR))
+        onAuthStateChange(AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::SUCCESS))
         .WillOnce(InvokeWithoutArgs([this, &tokenRefreshed]() {
             tokenRefreshed = true;
             m_cv.notify_all();
@@ -391,7 +391,7 @@ TEST_F(AuthDelegateTest, unrecoverableErrorNotification) {
 
     EXPECT_CALL(
         *m_mockAuthObserver,
-        onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::NO_ERROR))
+        onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::SUCCESS))
         .Times(AtMost(1));
 
     EXPECT_CALL(
