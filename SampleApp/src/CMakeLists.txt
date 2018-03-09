@@ -22,7 +22,7 @@ target_link_libraries(SampleApp
     DefaultClient
     AuthDelegate 
     MediaPlayer 
-    matrix_creator_hal
+    matrix_hal
     "${PORTAUDIO_LIB_PATH}")
 
 if(KITTAI_KEY_WORD_DETECTOR)

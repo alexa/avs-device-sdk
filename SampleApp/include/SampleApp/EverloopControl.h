@@ -19,8 +19,8 @@
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
-#include <matrix_hal/everloop_image.h>
-#include <matrix_hal/everloop.h>
+#include "../../../ThirdParty/matrixio-libs/everloop_image.h"
+#include "../../../ThirdParty/matrixio-libs/everloop.h"
 
 namespace hal = matrix_hal;
 
