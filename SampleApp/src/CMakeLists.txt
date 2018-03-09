@@ -13,6 +13,7 @@ add_executable(SampleApp
 
 target_include_directories(SampleApp PUBLIC 
     "${SampleApp_SOURCE_DIR}/include"
+    "${matrix_hal_SOURCE_DIR}"
     "${MediaPlayer_SOURCE_DIR}/include"
     "${DefaultClient_SOURCE_DIR}/include"
     "${AudioResources_SOURCE_DIR}/include"
