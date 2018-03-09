@@ -136,8 +136,30 @@ then
     echo
 
     sudo apt-get update
-    sudo apt-get -y install git gcc cmake build-essential libsqlite3-dev libcurl4-openssl-dev libfaad-dev libsoup2.4-dev libgcrypt20-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-good libasound2-dev sox gedit vim python3-pip
-    pip install flask commentjson
+    sudo apt-get -y install git gcc cmake \
+    build-essential \
+    libsqlite3-dev \
+    libcurl4-openssl-dev \
+    libfaad-dev \
+    libsoup2.4-dev \
+    libgcrypt20-dev \
+    libgstreamer-plugins-bad1.0-dev \
+    gstreamer1.0-plugins-bad \
+    mpg123 \
+    gst-plugins-ugly \
+    gstreamer1.0-plugins-ugly \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-bad \
+    gst-libav \
+    libgstreamer-plugins-base0.10-0 libgstreamer-plugins-base0.10-dev  \
+    gstreamer1.0-tools gstreamer1.0-alsa \
+    libasound2-dev \
+    sox \
+    vim \
+    python3-pip
+
+    pip install flask
+    pip install commentjson
 
     # create / paths
     echo
@@ -169,7 +191,7 @@ then
     echo
 
     cd $SOURCE_PATH
-    git clone git://github.com/alexa/avs-device-sdk.git
+    git clone git://github.com/matrix-io/avs-device-sdk.git
 
     #get sensory and build
     echo
@@ -241,20 +263,33 @@ echo
 cat $CONFIG_FILE
 
 echo
+echo "==============> MAKING BAKCUP OF /etc/asound.conf =============="
+echo
+
+mv -v /etc/asound.conf /etc/asound.conf.backup
+
+echo
 echo "==============> SAVING AUDIO CONFIGURATION FILE =============="
 echo
 
 cat << EOF > "$SOUND_CONFIG"
-pcm.!default {
+pcm.sc {
+    type hw
+    card 2
+}
+pcm.!default
+{
   type asym
-   playback.pcm {
-     type plug
-     slave.pcm "hw:0,0"
-   }
-   capture.pcm {
-     type plug
-     slave.pcm "hw:1,0"
-   }
+  playback.pcm {
+    type hw
+    card 0
+    device 0
+  }
+  capture.pcm {
+    type hw
+    card 2
+    device 0
+  }
 }
 EOF
 

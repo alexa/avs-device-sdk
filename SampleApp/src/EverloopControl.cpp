@@ -29,13 +29,6 @@ using namespace avsCommon::sdkInterfaces;
 
 static const std::string VERSION = avsCommon::utils::sdkVersion::getCurrentVersion();
 
-void EverloopControl::InitWishboneBus(){
-    bus.SpiInit();
-    everloop.Setup(&bus);
-    SetEverloopColors(0,10,0,0);
-    spiBusInit = true;
-}
-
 void EverloopControl::SetEverloopColors(int red, int green, int blue, int white) {
     for (hal::LedValue& led : image1d.leds) {
         led.red = red;
@@ -48,34 +41,25 @@ void EverloopControl::SetEverloopColors(int red, int green, int blue, int white)
 
 void EverloopControl::onDialogUXStateChanged(DialogUXState state) {
     
-    if(spiBusInit == false){
-        InitWishboneBus();
-    }
-
     m_executor.submit([this, state]() {
         switch (state) {
             case DialogUXState::IDLE:
-                SetEverloopColors(10,0,0,0);
+                SetEverloopColors(0,0,10,0);
                 return;
             case DialogUXState::LISTENING:
-                SetEverloopColors(0, 10, 0, 0);
+                SetEverloopColors(0,10,0,0);
                 return;
             case DialogUXState::THINKING:
-                SetEverloopColors(0, 0, 10, 0);
+                SetEverloopColors(10, 0, 0, 0);
                 return;
-                ;
             case DialogUXState::SPEAKING:
-                SetEverloopColors(0, 0, 0, 10);
+                SetEverloopColors(10, 0, 0, 0);
                 return;
-            /*
-             * This is an intermediate state after a SPEAK directive is completed. In the case of a speech burst the
-             * next SPEAK could kick in or if its the last SPEAK directive ALEXA moves to the IDLE state. So we do
-             * nothing for this state.
-             */
             case DialogUXState::FINISHED:
-                SetEverloopColors(10, 0, 10, 0);
                 return;
-        }
+            default:
+                return;
+        }   
     });
 }
 

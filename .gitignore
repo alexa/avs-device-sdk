@@ -5,3 +5,4 @@
 Integration/AuthDelegate.config
 #macOS specific files
 .DS_Store
+AVSCommon/Utils/include/AVSCommon/Utils/SDKVersion.h

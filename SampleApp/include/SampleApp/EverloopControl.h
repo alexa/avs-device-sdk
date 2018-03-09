@@ -19,9 +19,8 @@
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
-#include <matrix_hal/everloop_image.h>
-#include <matrix_hal/everloop.h>
-#include <matrix_hal/wishbone_bus.h>
+#include "everloop_image.h"
+#include "everloop.h"
 
 namespace hal = matrix_hal;
 
@@ -44,15 +43,10 @@ private:
     /// An internal executor that performs execution of callable objects passed to it sequentially but asynchronously.
     avsCommon::utils::threading::Executor m_executor;
 
-    void InitWishboneBus();
     void SetEverloopColors(int red, int green, int blue, int white);
 
-    hal::WishboneBus bus;
     hal::Everloop everloop;
     hal::EverloopImage image1d;
-
-    bool spiBusInit = false;
-
 };
 
 }  // namespace sampleApp
