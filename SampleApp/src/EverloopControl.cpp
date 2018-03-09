@@ -44,27 +44,22 @@ void EverloopControl::onDialogUXStateChanged(DialogUXState state) {
     m_executor.submit([this, state]() {
         switch (state) {
             case DialogUXState::IDLE:
-                SetEverloopColors(10,0,0,0);
+                SetEverloopColors(0,0,10,0);
                 return;
             case DialogUXState::LISTENING:
-                SetEverloopColors(0, 10, 0, 0);
+                SetEverloopColors(0,10,0,0);
                 return;
             case DialogUXState::THINKING:
-                SetEverloopColors(0, 0, 10, 0);
+                SetEverloopColors(10, 0, 0, 0);
                 return;
-                ;
             case DialogUXState::SPEAKING:
-                SetEverloopColors(0, 0, 0, 10);
+                SetEverloopColors(10, 0, 0, 0);
                 return;
-            /*
-             * This is an intermediate state after a SPEAK directive is completed. In the case of a speech burst the
-             * next SPEAK could kick in or if its the last SPEAK directive ALEXA moves to the IDLE state. So we do
-             * nothing for this state.
-             */
             case DialogUXState::FINISHED:
-                SetEverloopColors(10, 0, 10, 0);
                 return;
-        }
+            default:
+                return;
+        }   
     });
 }
 
