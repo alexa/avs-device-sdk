@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -81,6 +81,12 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html#ad11ff6f8970b0c112a49ab0478769cc4">alexaClientSDK::acl::AVSConnectionManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router.html#aa2280047337228ac9e7d7a51251e31a7">alexaClientSDK::acl::MessageRouter</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router_interface.html#ac0c1d4636d38bf80cd35531e702edfdf">alexaClientSDK::acl::MessageRouterInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_processor.html#a099e3796f20c3081d9479d25b2c87626">alexaClientSDK::adsl::DirectiveProcessor</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_sequencer.html#abb8b7f4bbf3d0b9b80db1281203897af">alexaClientSDK::adsl::DirectiveSequencer</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html#a5adc09e2f7c56f4d828d6a186bc87f74">alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSequencerInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1esp_1_1_dummy_e_s_p_data_provider.html#a0abeb399e1f810341b99d17412d80b45">alexaClientSDK::esp::DummyESPDataProvider</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1esp_1_1_e_s_p_data_provider.html#ac523ea656e0c28c8c94b89d9069595a0">alexaClientSDK::esp::ESPDataProvider</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1esp_1_1_e_s_p_data_provider_interface.html#a0747b5baf43869f6faa08d6ff4150061">alexaClientSDK::esp::ESPDataProviderInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender.html#af28872b52cbaa0de6f564e064cda47ad">alexaClientSDK::integration::test::TestMessageSender</a>
 </li>
 <li>enableReaderLocked()
@@ -135,7 +141,10 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a7157203315ae13be727845b5b1fb9dfb">alexaClientSDK::sampleApp::InteractionManager</a>
 </li>
 <li>ESPData()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_e_s_p_data.html#ac813f2c52e5904274e2d646edbfff211">alexaClientSDK::capabilityAgents::aip::ESPData</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_e_s_p_data.html#afa101f7cfaf59c9e3b22213744af51dd">alexaClientSDK::capabilityAgents::aip::ESPData</a>
+</li>
+<li>ESPDataProvider()
+: <a class="el" href="classalexa_client_s_d_k_1_1esp_1_1_e_s_p_data_provider.html#ae1dbd3057b1bc89edcd0fdd8e9cc92a9">alexaClientSDK::esp::ESPDataProvider</a>
 </li>
 <li>ExceptionEncounteredEvent()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_exception_encountered_event.html#a84adb5f44eb8b8804f375a0554a71b89">alexaClientSDK::avsCommon::test::ExceptionEncounteredEvent</a>
@@ -168,6 +177,9 @@ $(function() {
 <li>expectedPreviousToken
 : <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream.html#aaa5487e7eea5cb028eaf647de1508615">alexaClientSDK::capabilityAgents::audioPlayer::AudioItem::Stream</a>
 </li>
+<li>expectFocusChange()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager_observer.html#ac0eccaf0513e5ac445615987b5b87e62">alexaClientSDK::avsCommon::sdkInterfaces::test::MockFocusManagerObserver</a>
+</li>
 <li>expiryTime
 : <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream.html#ae83a9cb0aba6b332691715115833c63b">alexaClientSDK::capabilityAgents::audioPlayer::AudioItem::Stream</a>
 </li>
@@ -179,7 +191,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

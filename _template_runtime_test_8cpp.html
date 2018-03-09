@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -77,7 +77,8 @@ $(function() {
 <div class="title">TemplateRuntimeTest.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;memory&gt;</code><br />
+<div class="textblock"><code>#include &lt;future&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
 <code>#include &lt;gtest/gtest.h&gt;</code><br />
 <code>#include &lt;rapidjson/document.h&gt;</code><br />
@@ -86,6 +87,7 @@ $(function() {
 <code>#include &lt;<a class="el" href="_audio_player_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/AudioPlayerObserverInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_directive_handler_result_8h_source.html">AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_exception_encountered_sender_8h_source.html">AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_focus_manager_8h_source.html">AVSCommon/SDKInterfaces/MockFocusManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_template_runtime_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_memory_8h_source.html">AVSCommon/Utils/Memory/Memory.h</a>&gt;</code><br />
@@ -95,40 +97,41 @@ Include dependency graph for TemplateRuntimeTest.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_template_runtime_test_8cpp__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_capability_agents_2_template_runtime_2test_2_template_runtime_test_8cpp" alt=""/></div>
 <map name="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_capability_agents_2_template_runtime_2test_2_template_runtime_test_8cpp" id="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_capability_agents_2_template_runtime_2test_2_template_runtime_test_8cpp">
-<area shape="rect" id="node6" href="_mock_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/MockAttachmentManager.h" alt="" coords="563,205,765,244"/>
-<area shape="rect" id="node19" href="_audio_player_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerInterface.h" alt="" coords="1210,205,1401,244"/>
-<area shape="rect" id="node20" href="_audio_player_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerObserverInterface.h" alt="" coords="1065,292,1279,331"/>
-<area shape="rect" id="node23" href="_mock_directive_handler_result_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveHandlerResult.h" alt="" coords="283,205,488,244"/>
-<area shape="rect" id="node27" href="_mock_exception_encountered_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="788,205,1033,244"/>
-<area shape="rect" id="node30" href="_template_runtime_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/TemplateRuntimeObserverInterface.h" alt="" coords="743,292,990,331"/>
-<area shape="rect" id="node31" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="283,552,453,591"/>
-<area shape="rect" id="node34" href="_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="2865,552,3047,591"/>
-<area shape="rect" id="node36" href="_template_runtime_8h.html" title="TemplateRuntime/Template\lRuntime.h" alt="" coords="1465,119,1647,157"/>
-<area shape="rect" id="node9" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="979,552,1187,591"/>
-<area shape="rect" id="node10" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="1169,639,1370,677"/>
-<area shape="rect" id="node13" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="401,725,602,764"/>
-<area shape="rect" id="node16" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="779,725,981,764"/>
-<area shape="rect" id="node15" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="938,812,1100,851"/>
-<area shape="rect" id="node17" href="_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="2475,725,2637,764"/>
-<area shape="rect" id="node18" href="_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="1306,732,1409,757"/>
-<area shape="rect" id="node21" href="_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="1029,385,1254,411"/>
-<area shape="rect" id="node24" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="1725,379,1950,417"/>
-<area shape="rect" id="node25" href="_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="1625,472,1847,497"/>
-<area shape="rect" id="node26" href="_a_v_s_message_8h.html" title="AVSMessage.h" alt="" coords="1685,559,1797,584"/>
-<area shape="rect" id="node28" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="1354,292,1619,331"/>
-<area shape="rect" id="node29" href="_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="1378,379,1601,417"/>
-<area shape="rect" id="node32" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="477,639,653,677"/>
-<area shape="rect" id="node33" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1056,725,1232,764"/>
-<area shape="rect" id="node39" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="2061,205,2254,244"/>
-<area shape="rect" id="node46" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2581,552,2769,591"/>
-<area shape="rect" id="node47" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="3121,379,3316,417"/>
-<area shape="rect" id="node41" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="2395,379,2624,417"/>
-<area shape="rect" id="node42" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="2517,292,2710,331"/>
-<area shape="rect" id="node43" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2176,379,2371,417"/>
-<area shape="rect" id="node44" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="2302,292,2493,331"/>
-<area shape="rect" id="node45" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="1795,292,1986,331"/>
-<area shape="rect" id="node49" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2987,465,3181,504"/>
-<area shape="rect" id="node50" href="_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="3172,552,3367,591"/>
+<area shape="rect" id="node7" href="_mock_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/MockAttachmentManager.h" alt="" coords="2492,379,2694,417"/>
+<area shape="rect" id="node16" href="_audio_player_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerInterface.h" alt="" coords="2956,465,3147,504"/>
+<area shape="rect" id="node17" href="_audio_player_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerObserverInterface.h" alt="" coords="2882,552,3096,591"/>
+<area shape="rect" id="node20" href="_mock_directive_handler_result_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveHandlerResult.h" alt="" coords="3383,292,3587,331"/>
+<area shape="rect" id="node23" href="_mock_exception_encountered_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="3160,205,3405,244"/>
+<area shape="rect" id="node26" href="_mock_focus_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockFocusManager.h" alt="" coords="3116,379,3307,417"/>
+<area shape="rect" id="node31" href="_template_runtime_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/TemplateRuntimeObserverInterface.h" alt="" coords="2560,552,2807,591"/>
+<area shape="rect" id="node32" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="165,119,335,157"/>
+<area shape="rect" id="node35" href="_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="527,465,710,504"/>
+<area shape="rect" id="node37" href="_template_runtime_8h.html" title="TemplateRuntime/Template\lRuntime.h" alt="" coords="1943,119,2126,157"/>
+<area shape="rect" id="node10" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="1408,552,1616,591"/>
+<area shape="rect" id="node11" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="1211,639,1413,677"/>
+<area shape="rect" id="node14" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1087,725,1289,764"/>
+<area shape="rect" id="node15" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="1312,725,1514,764"/>
+<area shape="rect" id="node18" href="_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="2749,645,2973,671"/>
+<area shape="rect" id="node21" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="1205,379,1429,417"/>
+<area shape="rect" id="node22" href="_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="1206,472,1429,497"/>
+<area shape="rect" id="node24" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2668,292,2934,331"/>
+<area shape="rect" id="node25" href="_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="2718,379,2940,417"/>
+<area shape="rect" id="node27" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="1944,465,2135,504"/>
+<area shape="rect" id="node28" href="_channel_observer_interface_8h.html" title="ChannelObserverInterface.h" alt="" coords="2196,559,2385,584"/>
+<area shape="rect" id="node30" href="_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="1944,559,2172,584"/>
+<area shape="rect" id="node29" href="_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="2021,645,2234,671"/>
+<area shape="rect" id="node33" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="16,552,192,591"/>
+<area shape="rect" id="node34" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="237,639,413,677"/>
+<area shape="rect" id="node40" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="1671,205,1864,244"/>
+<area shape="rect" id="node46" href="_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="2213,292,2443,331"/>
+<area shape="rect" id="node47" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="586,552,774,591"/>
+<area shape="rect" id="node48" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="733,465,928,504"/>
+<area shape="rect" id="node50" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="229,465,403,504"/>
+<area shape="rect" id="node42" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1792,379,2021,417"/>
+<area shape="rect" id="node43" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2378,639,2573,677"/>
+<area shape="rect" id="node44" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1795,292,1986,331"/>
+<area shape="rect" id="node45" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="1174,292,1364,331"/>
+<area shape="rect" id="node49" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="368,552,562,591"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -159,6 +162,12 @@ Functions</h2></td></tr>
 <tr class="memitem:adaba500bde945d39271f7d99b60c0be9"><td class="memItemLeft" align="right" valign="top">static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#adaba500bde945d39271f7d99b60c0be9">alexaClientSDK::capabilityAgents::templateRuntime::test::TIMEOUT</a> (1000)</td></tr>
 <tr class="memdesc:adaba500bde945d39271f7d99b60c0be9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout when waiting for futures to be set.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#adaba500bde945d39271f7d99b60c0be9">More...</a><br /></td></tr>
 <tr class="separator:adaba500bde945d39271f7d99b60c0be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e4562bfabedc9098d9ac1479f4c9fa2"><td class="memItemLeft" align="right" valign="top">static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#a9e4562bfabedc9098d9ac1479f4c9fa2">alexaClientSDK::capabilityAgents::templateRuntime::test::TEMPLATE_TIMEOUT</a> (5000)</td></tr>
+<tr class="memdesc:a9e4562bfabedc9098d9ac1479f4c9fa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout when waiting for clearTemplateCard.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#a9e4562bfabedc9098d9ac1479f4c9fa2">More...</a><br /></td></tr>
+<tr class="separator:a9e4562bfabedc9098d9ac1479f4c9fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaca6ce0c73e6f9356cbd8716dd9bc6df"><td class="memItemLeft" align="right" valign="top">static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#aaca6ce0c73e6f9356cbd8716dd9bc6df">alexaClientSDK::capabilityAgents::templateRuntime::test::PLAYER_FINISHED_TIMEOUT</a> (5000)</td></tr>
+<tr class="memdesc:aaca6ce0c73e6f9356cbd8716dd9bc6df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout when waiting for clearTemplateCard.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#aaca6ce0c73e6f9356cbd8716dd9bc6df">More...</a><br /></td></tr>
+<tr class="separator:aaca6ce0c73e6f9356cbd8716dd9bc6df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae53143c73fe002cd64a16920f9591744"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#ae53143c73fe002cd64a16920f9591744">alexaClientSDK::capabilityAgents::templateRuntime::test::MESSAGE_ID</a> (&quot;messageId&quot;)</td></tr>
 <tr class="memdesc:ae53143c73fe002cd64a16920f9591744"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>MessageId</code> identifer.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#ae53143c73fe002cd64a16920f9591744">More...</a><br /></td></tr>
 <tr class="separator:ae53143c73fe002cd64a16920f9591744"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -170,6 +179,8 @@ Functions</h2></td></tr>
 <tr class="separator:aff94eb00c517debb284eef64792f5fd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1d25ec303a2fc826c512644a23dc61c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#aa1d25ec303a2fc826c512644a23dc61c">alexaClientSDK::capabilityAgents::templateRuntime::test::TEST_F</a> (TemplateRuntimeTest, testNullAudioPlayerInterface)</td></tr>
 <tr class="separator:aa1d25ec303a2fc826c512644a23dc61c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e5c1bf6049cc4e4e5dd2e5e20e78a84"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#a4e5c1bf6049cc4e4e5dd2e5e20e78a84">alexaClientSDK::capabilityAgents::templateRuntime::test::TEST_F</a> (TemplateRuntimeTest, testNullFocusManagerInterface)</td></tr>
+<tr class="separator:a4e5c1bf6049cc4e4e5dd2e5e20e78a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a346bfc29002c09af90eef40fed59d957"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#a346bfc29002c09af90eef40fed59d957">alexaClientSDK::capabilityAgents::templateRuntime::test::TEST_F</a> (TemplateRuntimeTest, testNullExceptionSender)</td></tr>
 <tr class="separator:a346bfc29002c09af90eef40fed59d957"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b8de6ef6da80e9c4a0dbbcd7dec53f6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#a7b8de6ef6da80e9c4a0dbbcd7dec53f6">alexaClientSDK::capabilityAgents::templateRuntime::test::TEST_F</a> (TemplateRuntimeTest, testAudioPlayerAddRemoveObserver)</td></tr>
@@ -192,6 +203,12 @@ Functions</h2></td></tr>
 <tr class="separator:abe529c5be50f983cf10d83d72fd37a69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52b884918b0d37042cc1167ad1efd244"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#a52b884918b0d37042cc1167ad1efd244">alexaClientSDK::capabilityAgents::templateRuntime::test::TEST_F</a> (TemplateRuntimeTest, testRenderPlayerInfoDirectiveAudioStateUpdate)</td></tr>
 <tr class="separator:a52b884918b0d37042cc1167ad1efd244"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5fdc80719c960c61d66d96b4a9648d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#ab5fdc80719c960c61d66d96b4a9648d1">alexaClientSDK::capabilityAgents::templateRuntime::test::TEST_F</a> (TemplateRuntimeTest, testFocusNone)</td></tr>
+<tr class="separator:ab5fdc80719c960c61d66d96b4a9648d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7f4f24d77eabfdf1b9bdb1d4c8ae081"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#af7f4f24d77eabfdf1b9bdb1d4c8ae081">alexaClientSDK::capabilityAgents::templateRuntime::test::TEST_F</a> (TemplateRuntimeTest, testDisplayCardCleared)</td></tr>
+<tr class="separator:af7f4f24d77eabfdf1b9bdb1d4c8ae081"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee3602af16e520979c7ce167c81e5f9b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#aee3602af16e520979c7ce167c81e5f9b">alexaClientSDK::capabilityAgents::templateRuntime::test::TEST_F</a> (TemplateRuntimeTest, testReacquireChannel)</td></tr>
+<tr class="separator:aee3602af16e520979c7ce167c81e5f9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -221,7 +238,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

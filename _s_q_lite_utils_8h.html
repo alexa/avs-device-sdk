@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -75,12 +75,17 @@ $(function() {
 <div class="title">SQLiteUtils.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;sqlite3.h&gt;</code><br />
-<code>#include &lt;string&gt;</code><br />
+<div class="textblock"><code>#include &lt;string&gt;</code><br />
+<code>#include &lt;sqlite3.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="_s_q_lite_database_8h_source.html">SQLiteStorage/SQLiteDatabase.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for SQLiteUtils.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_s_q_lite_utils_8h__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_storage_2_s_q_lite_storage_2include_2_s_q_lite_storage_2_s_q_lite_utils_8h" alt=""/></div>
+<map name="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_storage_2_s_q_lite_storage_2include_2_s_q_lite_storage_2_s_q_lite_utils_8h" id="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_storage_2_s_q_lite_storage_2include_2_s_q_lite_storage_2_s_q_lite_utils_8h">
+<area shape="rect" id="node4" href="_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="82,119,303,144"/>
+<area shape="rect" id="node7" href="_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="245,192,470,217"/>
+</map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
@@ -91,7 +96,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <area shape="rect" id="node3" href="_s_q_lite_notifications_storage_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/Notifications/src/SQLiteNotifications\lStorage.cpp" alt="" coords="305,119,541,184"/>
 <area shape="rect" id="node4" href="_s_q_lite_setting_storage_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/Settings/src/SQLiteSettingStorage.cpp" alt="" coords="564,125,817,177"/>
 <area shape="rect" id="node5" href="_s_q_lite_message_storage_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CertifiedSender\l/src/SQLiteMessageStorage.cpp" alt="" coords="841,125,1055,177"/>
-<area shape="rect" id="node6" href="_s_q_lite_utils_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Storage\l/SQLiteStorage/src/SQLiteUtils.cpp" alt="" coords="1079,125,1308,177"/>
+<area shape="rect" id="node6" href="_s_q_lite_database_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Storage\l/SQLiteStorage/src/SQLiteDatabase.cpp" alt="" coords="1079,125,1340,177"/>
+<area shape="rect" id="node7" href="_s_q_lite_utils_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Storage\l/SQLiteStorage/src/SQLiteUtils.cpp" alt="" coords="1364,125,1594,177"/>
 </map>
 </div>
 </div>
@@ -117,10 +123,10 @@ Functions</h2></td></tr>
 <tr class="separator:a4065a4e5f851ff9adc3ed32c61dba963"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0fc61e51b07d23d55a8a4ca4659f476"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1storage_1_1sqlite_storage.html#ad0fc61e51b07d23d55a8a4ca4659f476">alexaClientSDK::storage::sqliteStorage::performQuery</a> (sqlite3 *dbHandle, const std::string &amp;sqlString)</td></tr>
 <tr class="separator:ad0fc61e51b07d23d55a8a4ca4659f476"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9f8740d2c5f874427bd02741f6f5f91"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1storage_1_1sqlite_storage.html#ac9f8740d2c5f874427bd02741f6f5f91">alexaClientSDK::storage::sqliteStorage::getNumberTableRows</a> (sqlite3 *dbHandle, const std::string &amp;tableName, int *numberRows)</td></tr>
-<tr class="separator:ac9f8740d2c5f874427bd02741f6f5f91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62fbb5103d108641cfdc673c77fb499c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1storage_1_1sqlite_storage.html#a62fbb5103d108641cfdc673c77fb499c">alexaClientSDK::storage::sqliteStorage::getTableMaxIntValue</a> (sqlite3 *dbHandle, const std::string &amp;tableName, const std::string &amp;columnName, int *maxId)</td></tr>
-<tr class="separator:a62fbb5103d108641cfdc673c77fb499c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4a64573a562e76bf44d1d71cfb132f3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1storage_1_1sqlite_storage.html#ae4a64573a562e76bf44d1d71cfb132f3">alexaClientSDK::storage::sqliteStorage::getNumberTableRows</a> (SQLiteDatabase *db, const std::string &amp;tableName, int *numberRows)</td></tr>
+<tr class="separator:ae4a64573a562e76bf44d1d71cfb132f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57b3356f1cdadb940ced1af0c0493980"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1storage_1_1sqlite_storage.html#a57b3356f1cdadb940ced1af0c0493980">alexaClientSDK::storage::sqliteStorage::getTableMaxIntValue</a> (SQLiteDatabase *db, const std::string &amp;tableName, const std::string &amp;columnName, int *maxId)</td></tr>
+<tr class="separator:a57b3356f1cdadb940ced1af0c0493980"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b7c74efb0b3b32e22e07408c9bd3f60"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1storage_1_1sqlite_storage.html#a8b7c74efb0b3b32e22e07408c9bd3f60">alexaClientSDK::storage::sqliteStorage::tableExists</a> (sqlite3 *dbHandle, const std::string &amp;tableName)</td></tr>
 <tr class="separator:a8b7c74efb0b3b32e22e07408c9bd3f60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d5fe1638fedd28b1a65b21b5a4d5286"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1storage_1_1sqlite_storage.html#a3d5fe1638fedd28b1a65b21b5a4d5286">alexaClientSDK::storage::sqliteStorage::clearTable</a> (sqlite3 *dbHandle, const std::string &amp;tableName)</td></tr>
@@ -132,7 +138,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -70,8 +70,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">LoggerUtils.cpp File Reference</div>  </div>
 </div><!--header-->
@@ -86,15 +85,15 @@ Include dependency graph for LoggerUtils.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_logger_utils_8cpp__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_logger_2_logger_utils_8cpp" alt=""/></div>
 <map name="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_logger_2_logger_utils_8cpp" id="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_logger_2_logger_utils_8cpp">
-<area shape="rect" id="node5" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="392,105,568,144"/>
-<area shape="rect" id="node7" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="612,192,788,231"/>
-<area shape="rect" id="node12" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="229,279,443,317"/>
-<area shape="rect" id="node16" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="677,365,853,404"/>
-<area shape="rect" id="node17" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1227,279,1403,317"/>
-<area shape="rect" id="node22" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="670,279,867,317"/>
-<area shape="rect" id="node23" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="891,279,1067,317"/>
-<area shape="rect" id="node18" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1224,365,1400,404"/>
-<area shape="rect" id="node20" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="947,452,1123,491"/>
+<area shape="rect" id="node5" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="517,105,693,144"/>
+<area shape="rect" id="node7" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="727,192,903,231"/>
+<area shape="rect" id="node12" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="355,279,568,317"/>
+<area shape="rect" id="node16" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="808,365,984,404"/>
+<area shape="rect" id="node17" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1152,279,1328,317"/>
+<area shape="rect" id="node22" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="744,279,941,317"/>
+<area shape="rect" id="node23" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1277,452,1453,491"/>
+<area shape="rect" id="node18" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1152,365,1328,404"/>
+<area shape="rect" id="node20" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="965,452,1141,491"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -144,45 +143,14 @@ Functions</h2></td></tr>
 <tr class="separator:a73148d2591a1f326da51b65d6b02c8ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16a7d59de6eaa9fd4b9a7d8633249e8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a16a7d59de6eaa9fd4b9a7d8633249e8d">alexaClientSDK::avsCommon::utils::logger::logEntry</a> (Level level, const LogEntry &amp;entry)</td></tr>
 <tr class="separator:a16a7d59de6eaa9fd4b9a7d8633249e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5b7c106dc5047fc8b97de34776122be"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#ab5b7c106dc5047fc8b97de34776122be">alexaClientSDK::avsCommon::utils::logger::formatLogString</a> (Level level, std::chrono::system_clock::time_point time, const char *threadMoniker, const char *text)</td></tr>
-<tr class="separator:ab5b7c106dc5047fc8b97de34776122be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07622bd1de5d084d735c32e22e8d3553"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a07622bd1de5d084d735c32e22e8d3553">alexaClientSDK::avsCommon::utils::logger::dumpBytesToStream</a> (std::ostream &amp;stream, const char *prefix, size_t width, const unsigned char *data, size_t size)</td></tr>
 <tr class="separator:a07622bd1de5d084d735c32e22e8d3553"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a8ccb96589a77487e6befd8debd01761f"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a8ccb96589a77487e6befd8debd01761f">alexaClientSDK::avsCommon::utils::logger::STRFTIME_FORMAT_STRING</a> = &quot;%Y-%m-%d %H:%M:%S&quot;</td></tr>
-<tr class="memdesc:a8ccb96589a77487e6befd8debd01761f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format string for strftime() to produce date and time in the format "YYYY-MM-DD HH:MM:SS".  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a8ccb96589a77487e6befd8debd01761f">More...</a><br /></td></tr>
-<tr class="separator:a8ccb96589a77487e6befd8debd01761f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21947a2f48ca7f66d7412c1ebd93c7af"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a21947a2f48ca7f66d7412c1ebd93c7af">alexaClientSDK::avsCommon::utils::logger::DATE_AND_TIME_STRING_SIZE</a> = 20</td></tr>
-<tr class="memdesc:a21947a2f48ca7f66d7412c1ebd93c7af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of buffer needed to hold "YYYY-MM-DD HH:MM:SS" and a null terminator.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a21947a2f48ca7f66d7412c1ebd93c7af">More...</a><br /></td></tr>
-<tr class="separator:a21947a2f48ca7f66d7412c1ebd93c7af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c6335f77506eca3a58e6c08af63b524"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a9c6335f77506eca3a58e6c08af63b524">alexaClientSDK::avsCommon::utils::logger::TIME_AND_MILLIS_SEPARATOR</a> = '.'</td></tr>
-<tr class="memdesc:a9c6335f77506eca3a58e6c08af63b524"><td class="mdescLeft">&#160;</td><td class="mdescRight">Separator between date/time and millis.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a9c6335f77506eca3a58e6c08af63b524">More...</a><br /></td></tr>
-<tr class="separator:a9c6335f77506eca3a58e6c08af63b524"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfb50ea4a64a6f2f90f3d5b861e8ec9a"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#adfb50ea4a64a6f2f90f3d5b861e8ec9a">alexaClientSDK::avsCommon::utils::logger::MILLIS_FORMAT_STRING</a> = &quot;%03d&quot;</td></tr>
-<tr class="separator:adfb50ea4a64a6f2f90f3d5b861e8ec9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac260a9d46f3d659216636bc10502d279"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#ac260a9d46f3d659216636bc10502d279">alexaClientSDK::avsCommon::utils::logger::MILLIS_STRING_SIZE</a> = 4</td></tr>
-<tr class="memdesc:ac260a9d46f3d659216636bc10502d279"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of buffer needed to hold "nnn" (milliseconds value) and a null terminator.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#ac260a9d46f3d659216636bc10502d279">More...</a><br /></td></tr>
-<tr class="separator:ac260a9d46f3d659216636bc10502d279"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e7aa891e6be9030572abfc59c3066a8"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a5e7aa891e6be9030572abfc59c3066a8">alexaClientSDK::avsCommon::utils::logger::MILLIS_AND_THREAD_SEPARATOR</a> = &quot; [&quot;</td></tr>
-<tr class="memdesc:a5e7aa891e6be9030572abfc59c3066a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Separator string between milliseconds value and ExampleLogger name.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a5e7aa891e6be9030572abfc59c3066a8">More...</a><br /></td></tr>
-<tr class="separator:a5e7aa891e6be9030572abfc59c3066a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86721a09a7c917fd5df2e62abec24b3f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a86721a09a7c917fd5df2e62abec24b3f">alexaClientSDK::avsCommon::utils::logger::THREAD_AND_LEVEL_SEPARATOR</a> = &quot;] &quot;</td></tr>
-<tr class="memdesc:a86721a09a7c917fd5df2e62abec24b3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Separator between thread ID and level indicator in log lines.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a86721a09a7c917fd5df2e62abec24b3f">More...</a><br /></td></tr>
-<tr class="separator:a86721a09a7c917fd5df2e62abec24b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26bab62dbf76d7c47eac3c67633d1837"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a26bab62dbf76d7c47eac3c67633d1837">alexaClientSDK::avsCommon::utils::logger::LEVEL_AND_TEXT_SEPARATOR</a> = ' '</td></tr>
-<tr class="memdesc:a26bab62dbf76d7c47eac3c67633d1837"><td class="mdescLeft">&#160;</td><td class="mdescRight">Separator between level indicator and text in log lines.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a26bab62dbf76d7c47eac3c67633d1837">More...</a><br /></td></tr>
-<tr class="separator:a26bab62dbf76d7c47eac3c67633d1837"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8e497f6154a61ab043a3f45ba52664c"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#aa8e497f6154a61ab043a3f45ba52664c">alexaClientSDK::avsCommon::utils::logger::MILLISECONDS_PER_SECOND</a> = 1000</td></tr>
-<tr class="memdesc:aa8e497f6154a61ab043a3f45ba52664c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of milliseconds per second.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#aa8e497f6154a61ab043a3f45ba52664c">More...</a><br /></td></tr>
-<tr class="separator:aa8e497f6154a61ab043a3f45ba52664c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

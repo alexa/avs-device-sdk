@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -99,37 +99,41 @@ Functions</h2></td></tr>
 <tr class="separator:a460ed5ca22d58c13ba882a079bc7b11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad189a925dc365e18f4a38ef032851042"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#ad189a925dc365e18f4a38ef032851042">dbFieldToAlertState</a> (int dbState, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#afd1d5e2e5c4e778fe4e0a96c9537dc62">Alert::State</a> *state)</td></tr>
 <tr class="separator:ad189a925dc365e18f4a38ef032851042"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02beb62a16e85a592ebe8d5d732445a7"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a02beb62a16e85a592ebe8d5d732445a7">alertExistsByAlertId</a> (sqlite3 *dbHandle, int alertId)</td></tr>
-<tr class="separator:a02beb62a16e85a592ebe8d5d732445a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3480bb5994085cb4f04257a1a90c9b7"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#aa3480bb5994085cb4f04257a1a90c9b7">createAlertsTable</a> (sqlite3 *dbHandle)</td></tr>
-<tr class="separator:aa3480bb5994085cb4f04257a1a90c9b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a719320f2b79ab04b29793b5fc1d6db94"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a719320f2b79ab04b29793b5fc1d6db94">createAlertAssetsTable</a> (sqlite3 *dbHandle)</td></tr>
-<tr class="separator:a719320f2b79ab04b29793b5fc1d6db94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f5095cff90155af72d07159948c6da8"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a5f5095cff90155af72d07159948c6da8">createAlertAssetPlayOrderItemsTable</a> (sqlite3 *dbHandle)</td></tr>
-<tr class="separator:a5f5095cff90155af72d07159948c6da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa184feb7fb767f24eba3d05456700d6e"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#aa184feb7fb767f24eba3d05456700d6e">storeAlertAssets</a> (sqlite3 *dbHandle, int alertId, const <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset_configuration.html">Alert::AssetConfiguration</a> &amp;assetConfiguration)</td></tr>
-<tr class="separator:aa184feb7fb767f24eba3d05456700d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2638ca99f02be22fb0913034f78b3cac"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a2638ca99f02be22fb0913034f78b3cac">storeAlertAssetPlayOrderItems</a> (sqlite3 *dbHandle, int alertId, const <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset_configuration.html">Alert::AssetConfiguration</a> &amp;assetConfiguration)</td></tr>
-<tr class="separator:a2638ca99f02be22fb0913034f78b3cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fb66c5e1d1bcb7340252ecc2662dc30"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a0fb66c5e1d1bcb7340252ecc2662dc30">loadAlertAssets</a> (sqlite3 *dbHandle, std::map&lt; int, std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset.html">Alert::Asset</a> &gt;&gt; *alertAssetsMap)</td></tr>
-<tr class="separator:a0fb66c5e1d1bcb7340252ecc2662dc30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1335d75064290af462cf691271358193"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a1335d75064290af462cf691271358193">loadAlertAssetPlayOrderItems</a> (sqlite3 *dbHandle, std::map&lt; int, std::set&lt; <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_asset_order_item.html">AssetOrderItem</a>, <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_asset_order_item_compare.html">AssetOrderItemCompare</a> &gt;&gt; *alertAssetOrderItemsMap)</td></tr>
-<tr class="separator:a1335d75064290af462cf691271358193"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a364c2060d57c65e2202e944c22fda153"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a364c2060d57c65e2202e944c22fda153">eraseAlert</a> (sqlite3 *dbHandle, int alertId)</td></tr>
-<tr class="separator:a364c2060d57c65e2202e944c22fda153"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad71dba7aa14864a5502655dcb9feabd9"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#ad71dba7aa14864a5502655dcb9feabd9">eraseAlertAssets</a> (sqlite3 *dbHandle, int alertId)</td></tr>
-<tr class="separator:ad71dba7aa14864a5502655dcb9feabd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dd94c67895ac5a1b304cd15775a1be6"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a8dd94c67895ac5a1b304cd15775a1be6">eraseAlertAssetPlayOrderItems</a> (sqlite3 *dbHandle, int alertId)</td></tr>
-<tr class="separator:a8dd94c67895ac5a1b304cd15775a1be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0871b14f2d7a728a4dcd52809b6cb218"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a0871b14f2d7a728a4dcd52809b6cb218">eraseAlertByAlertId</a> (sqlite3 *dbHandle, int alertId)</td></tr>
-<tr class="separator:a0871b14f2d7a728a4dcd52809b6cb218"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae5ce2855e21f107ad9f74e940c09f3d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#aae5ce2855e21f107ad9f74e940c09f3d">printOneLineSummary</a> (sqlite3 *dbHandle)</td></tr>
-<tr class="separator:aae5ce2855e21f107ad9f74e940c09f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a010f2eacf96ef699cbfe0d733d3e8f21"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a010f2eacf96ef699cbfe0d733d3e8f21">printAlertsSummary</a> (sqlite3 *dbHandle, const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html">Alert</a> &gt;&gt; &amp;alerts, bool shouldPrintEverything=false)</td></tr>
-<tr class="separator:a010f2eacf96ef699cbfe0d733d3e8f21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c3844a8216f4e6a3a4d3b0a9f062430"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a8c3844a8216f4e6a3a4d3b0a9f062430">createAlertsTable</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db)</td></tr>
+<tr class="separator:a8c3844a8216f4e6a3a4d3b0a9f062430"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf6a5eec56d0e8d2ead4bd8e82a22a69"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#abf6a5eec56d0e8d2ead4bd8e82a22a69">createAlertAssetsTable</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db)</td></tr>
+<tr class="separator:abf6a5eec56d0e8d2ead4bd8e82a22a69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24bffdb5be18ba0eb5cdcc743e2a08a0"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a24bffdb5be18ba0eb5cdcc743e2a08a0">createAlertAssetPlayOrderItemsTable</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db)</td></tr>
+<tr class="separator:a24bffdb5be18ba0eb5cdcc743e2a08a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5cd446beb12cf52b7b51c9ef0c72fb8"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#ae5cd446beb12cf52b7b51c9ef0c72fb8">storeAlertAssets</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db, int alertId, const std::unordered_map&lt; std::string, <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset.html">Alert::Asset</a> &gt; &amp;assets)</td></tr>
+<tr class="separator:ae5cd446beb12cf52b7b51c9ef0c72fb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04beaca16721ac2b4de081eb0527cbda"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a04beaca16721ac2b4de081eb0527cbda">storeAlertAssetPlayOrderItems</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db, int alertId, const std::vector&lt; std::string &gt; &amp;assetPlayOrderItems)</td></tr>
+<tr class="separator:a04beaca16721ac2b4de081eb0527cbda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23aecc4708c20e55dc1975ae0e5ee587"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a23aecc4708c20e55dc1975ae0e5ee587">loadAlertAssets</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db, std::map&lt; int, std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset.html">Alert::Asset</a> &gt;&gt; *alertAssetsMap)</td></tr>
+<tr class="separator:a23aecc4708c20e55dc1975ae0e5ee587"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d2f513e70ade94dea85c1de0b46d18f"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a6d2f513e70ade94dea85c1de0b46d18f">loadAlertAssetPlayOrderItems</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db, std::map&lt; int, std::set&lt; <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_asset_order_item.html">AssetOrderItem</a>, <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_asset_order_item_compare.html">AssetOrderItemCompare</a> &gt;&gt; *alertAssetOrderItemsMap)</td></tr>
+<tr class="separator:a6d2f513e70ade94dea85c1de0b46d18f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbe9da6861fa54c1b994de84d011ad6d"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#afbe9da6861fa54c1b994de84d011ad6d">eraseAlert</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db, int alertId)</td></tr>
+<tr class="separator:afbe9da6861fa54c1b994de84d011ad6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f390f1e131ea8490cea4ad086669385"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a6f390f1e131ea8490cea4ad086669385">eraseAlertAssets</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db, int alertId)</td></tr>
+<tr class="separator:a6f390f1e131ea8490cea4ad086669385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3215be9e612cf1cb05f1250126a1aeba"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a3215be9e612cf1cb05f1250126a1aeba">eraseAlertAssetPlayOrderItems</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db, int alertId)</td></tr>
+<tr class="separator:a3215be9e612cf1cb05f1250126a1aeba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa60bf6c74df7c2d5a68fb00f8822d510"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#aa60bf6c74df7c2d5a68fb00f8822d510">eraseAlertByAlertId</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db, int alertId)</td></tr>
+<tr class="separator:aa60bf6c74df7c2d5a68fb00f8822d510"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac50670bd35a82215d22f2703e33c51fd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#ac50670bd35a82215d22f2703e33c51fd">printOneLineSummary</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db)</td></tr>
+<tr class="separator:ac50670bd35a82215d22f2703e33c51fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a098a81113277b033356b87e86ac0912d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a098a81113277b033356b87e86ac0912d">printAlertsSummary</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db, const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html">Alert</a> &gt;&gt; &amp;alerts, bool shouldPrintEverything=false)</td></tr>
+<tr class="separator:a098a81113277b033356b87e86ac0912d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:aa7ea27413da459671422f224ea944e90"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#aa7ea27413da459671422f224ea944e90">ALERTS_CAPABILITY_AGENT_CONFIGURATION_ROOT_KEY</a> = &quot;alertsCapabilityAgent&quot;</td></tr>
+<tr class="memdesc:aa7ea27413da459671422f224ea944e90"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key in our config file to find the root of settings for this Capability Agent.  <a href="#aa7ea27413da459671422f224ea944e90">More...</a><br /></td></tr>
+<tr class="separator:aa7ea27413da459671422f224ea944e90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40eee4f524eb2da3581e7487b063327f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a40eee4f524eb2da3581e7487b063327f">ALERTS_CAPABILITY_AGENT_DB_FILE_PATH_KEY</a> = &quot;databaseFilePath&quot;</td></tr>
+<tr class="memdesc:a40eee4f524eb2da3581e7487b063327f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key in our config file to find the database file path.  <a href="#a40eee4f524eb2da3581e7487b063327f">More...</a><br /></td></tr>
+<tr class="separator:a40eee4f524eb2da3581e7487b063327f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a112032202dee2c8844ccbabb1dd0606f"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a112032202dee2c8844ccbabb1dd0606f">ALERT_EVENT_TYPE_ALARM</a> = 1</td></tr>
 <tr class="memdesc:a112032202dee2c8844ccbabb1dd0606f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A definition which we will store in the database to indicate <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alarm.html">Alarm</a> type.  <a href="#a112032202dee2c8844ccbabb1dd0606f">More...</a><br /></td></tr>
 <tr class="separator:a112032202dee2c8844ccbabb1dd0606f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -210,51 +214,6 @@ Variables</h2></td></tr>
 <tr class="separator:a3944fccd18ddff378d6dc58b7a59b86f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a02beb62a16e85a592ebe8d5d732445a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02beb62a16e85a592ebe8d5d732445a7">&#9670;&nbsp;</a></span>alertExistsByAlertId()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool alexaClientSDK::capabilityAgents::alerts::storage::alertExistsByAlertId </td>
-          <td>(</td>
-          <td class="paramtype">sqlite3 *&#160;</td>
-          <td class="paramname"><em>dbHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>alertId</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>A utility function to query if an alert exists in the database, given its database id.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">dbHandle</td><td>The database handle. </td></tr>
-    <tr><td class="paramname">alertId</td><td>The database id of the alert. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Whether the alert was successfully found in the database. </dd></dl>
-
-</div>
-</div>
 <a id="a460ed5ca22d58c13ba882a079bc7b11d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a460ed5ca22d58c13ba882a079bc7b11d">&#9670;&nbsp;</a></span>alertStateToDbField()</h2>
 
@@ -345,8 +304,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a5f5095cff90155af72d07159948c6da8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f5095cff90155af72d07159948c6da8">&#9670;&nbsp;</a></span>createAlertAssetPlayOrderItemsTable()</h2>
+<a id="a24bffdb5be18ba0eb5cdcc743e2a08a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24bffdb5be18ba0eb5cdcc743e2a08a0">&#9670;&nbsp;</a></span>createAlertAssetPlayOrderItemsTable()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -357,8 +316,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static bool alexaClientSDK::capabilityAgents::alerts::storage::createAlertAssetPlayOrderItemsTable </td>
           <td>(</td>
-          <td class="paramtype">sqlite3 *&#160;</td>
-          <td class="paramname"><em>dbHandle</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *&#160;</td>
+          <td class="paramname"><em>db</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -371,7 +330,7 @@ Variables</h2></td></tr>
 <p>Utility function to create the AlertAssetPlayOrderItems table within the database.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dbHandle</td><td>A SQLite handle to an open database. </td></tr>
+    <tr><td class="paramname">db</td><td>The SQLiteDatabase object. </td></tr>
   </table>
   </dd>
 </dl>
@@ -379,8 +338,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a719320f2b79ab04b29793b5fc1d6db94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a719320f2b79ab04b29793b5fc1d6db94">&#9670;&nbsp;</a></span>createAlertAssetsTable()</h2>
+<a id="abf6a5eec56d0e8d2ead4bd8e82a22a69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf6a5eec56d0e8d2ead4bd8e82a22a69">&#9670;&nbsp;</a></span>createAlertAssetsTable()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -391,8 +350,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static bool alexaClientSDK::capabilityAgents::alerts::storage::createAlertAssetsTable </td>
           <td>(</td>
-          <td class="paramtype">sqlite3 *&#160;</td>
-          <td class="paramname"><em>dbHandle</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *&#160;</td>
+          <td class="paramname"><em>db</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -405,7 +364,7 @@ Variables</h2></td></tr>
 <p>Utility function to create the AlertAssets table within the database.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dbHandle</td><td>A SQLite handle to an open database. </td></tr>
+    <tr><td class="paramname">db</td><td>The SQLiteDatabase object. </td></tr>
   </table>
   </dd>
 </dl>
@@ -413,8 +372,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aa3480bb5994085cb4f04257a1a90c9b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3480bb5994085cb4f04257a1a90c9b7">&#9670;&nbsp;</a></span>createAlertsTable()</h2>
+<a id="a8c3844a8216f4e6a3a4d3b0a9f062430"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c3844a8216f4e6a3a4d3b0a9f062430">&#9670;&nbsp;</a></span>createAlertsTable()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -425,8 +384,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static bool alexaClientSDK::capabilityAgents::alerts::storage::createAlertsTable </td>
           <td>(</td>
-          <td class="paramtype">sqlite3 *&#160;</td>
-          <td class="paramname"><em>dbHandle</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *&#160;</td>
+          <td class="paramname"><em>db</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -439,7 +398,7 @@ Variables</h2></td></tr>
 <p>Utility function to create the Alerts table within the database.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dbHandle</td><td>A SQLite handle to an open database. </td></tr>
+    <tr><td class="paramname">db</td><td>The SQLiteDatabase object. </td></tr>
   </table>
   </dd>
 </dl>
@@ -492,8 +451,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a364c2060d57c65e2202e944c22fda153"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a364c2060d57c65e2202e944c22fda153">&#9670;&nbsp;</a></span>eraseAlert()</h2>
+<a id="afbe9da6861fa54c1b994de84d011ad6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbe9da6861fa54c1b994de84d011ad6d">&#9670;&nbsp;</a></span>eraseAlert()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -504,8 +463,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static bool alexaClientSDK::capabilityAgents::alerts::storage::eraseAlert </td>
           <td>(</td>
-          <td class="paramtype">sqlite3 *&#160;</td>
-          <td class="paramname"><em>dbHandle</em>, </td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *&#160;</td>
+          <td class="paramname"><em>db</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -528,7 +487,7 @@ Variables</h2></td></tr>
 <p>A utility function to delete alert records from the database for a given alert id. This function will clean up records in the alerts table.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dbHandle</td><td>The database handle. </td></tr>
+    <tr><td class="paramname">db</td><td>The database object. </td></tr>
     <tr><td class="paramname">alertId</td><td>The alert id of the alert to be deleted. </td></tr>
   </table>
   </dd>
@@ -537,8 +496,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a8dd94c67895ac5a1b304cd15775a1be6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8dd94c67895ac5a1b304cd15775a1be6">&#9670;&nbsp;</a></span>eraseAlertAssetPlayOrderItems()</h2>
+<a id="a3215be9e612cf1cb05f1250126a1aeba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3215be9e612cf1cb05f1250126a1aeba">&#9670;&nbsp;</a></span>eraseAlertAssetPlayOrderItems()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -549,8 +508,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static bool alexaClientSDK::capabilityAgents::alerts::storage::eraseAlertAssetPlayOrderItems </td>
           <td>(</td>
-          <td class="paramtype">sqlite3 *&#160;</td>
-          <td class="paramname"><em>dbHandle</em>, </td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *&#160;</td>
+          <td class="paramname"><em>db</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -573,7 +532,7 @@ Variables</h2></td></tr>
 <p>A utility function to delete alert records from the database for a given alert id. This function will clean up records in the alertAssetPlayOrderItems table.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dbHandle</td><td>The database handle. </td></tr>
+    <tr><td class="paramname">db</td><td>The database object. </td></tr>
     <tr><td class="paramname">alertId</td><td>The alert id of the alert to be deleted. </td></tr>
   </table>
   </dd>
@@ -582,8 +541,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ad71dba7aa14864a5502655dcb9feabd9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad71dba7aa14864a5502655dcb9feabd9">&#9670;&nbsp;</a></span>eraseAlertAssets()</h2>
+<a id="a6f390f1e131ea8490cea4ad086669385"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f390f1e131ea8490cea4ad086669385">&#9670;&nbsp;</a></span>eraseAlertAssets()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -594,8 +553,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static bool alexaClientSDK::capabilityAgents::alerts::storage::eraseAlertAssets </td>
           <td>(</td>
-          <td class="paramtype">sqlite3 *&#160;</td>
-          <td class="paramname"><em>dbHandle</em>, </td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *&#160;</td>
+          <td class="paramname"><em>db</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -618,7 +577,7 @@ Variables</h2></td></tr>
 <p>A utility function to delete alert records from the database for a given alert id. This function will clean up records in the alertAssets table.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dbHandle</td><td>The database handle. </td></tr>
+    <tr><td class="paramname">db</td><td>The database object. </td></tr>
     <tr><td class="paramname">alertId</td><td>The alert id of the alert to be deleted. </td></tr>
   </table>
   </dd>
@@ -627,8 +586,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a0871b14f2d7a728a4dcd52809b6cb218"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0871b14f2d7a728a4dcd52809b6cb218">&#9670;&nbsp;</a></span>eraseAlertByAlertId()</h2>
+<a id="aa60bf6c74df7c2d5a68fb00f8822d510"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa60bf6c74df7c2d5a68fb00f8822d510">&#9670;&nbsp;</a></span>eraseAlertByAlertId()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -639,8 +598,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static bool alexaClientSDK::capabilityAgents::alerts::storage::eraseAlertByAlertId </td>
           <td>(</td>
-          <td class="paramtype">sqlite3 *&#160;</td>
-          <td class="paramname"><em>dbHandle</em>, </td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *&#160;</td>
+          <td class="paramname"><em>db</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -663,7 +622,7 @@ Variables</h2></td></tr>
 <p>A utility function to delete an alert from the database for a given alert id. This will clean up records in all tables which are associated with the alert.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dbHandle</td><td>The database handle. </td></tr>
+    <tr><td class="paramname">db</td><td>The DB object. </td></tr>
     <tr><td class="paramname">alertId</td><td>The alert id of the alert to be deleted. </td></tr>
   </table>
   </dd>
@@ -672,8 +631,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a1335d75064290af462cf691271358193"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1335d75064290af462cf691271358193">&#9670;&nbsp;</a></span>loadAlertAssetPlayOrderItems()</h2>
+<a id="a6d2f513e70ade94dea85c1de0b46d18f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d2f513e70ade94dea85c1de0b46d18f">&#9670;&nbsp;</a></span>loadAlertAssetPlayOrderItems()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -684,8 +643,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static bool alexaClientSDK::capabilityAgents::alerts::storage::loadAlertAssetPlayOrderItems </td>
           <td>(</td>
-          <td class="paramtype">sqlite3 *&#160;</td>
-          <td class="paramname"><em>dbHandle</em>, </td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *&#160;</td>
+          <td class="paramname"><em>db</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -708,8 +667,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a0fb66c5e1d1bcb7340252ecc2662dc30"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0fb66c5e1d1bcb7340252ecc2662dc30">&#9670;&nbsp;</a></span>loadAlertAssets()</h2>
+<a id="a23aecc4708c20e55dc1975ae0e5ee587"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23aecc4708c20e55dc1975ae0e5ee587">&#9670;&nbsp;</a></span>loadAlertAssets()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -720,8 +679,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static bool alexaClientSDK::capabilityAgents::alerts::storage::loadAlertAssets </td>
           <td>(</td>
-          <td class="paramtype">sqlite3 *&#160;</td>
-          <td class="paramname"><em>dbHandle</em>, </td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *&#160;</td>
+          <td class="paramname"><em>db</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -744,8 +703,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a010f2eacf96ef699cbfe0d733d3e8f21"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a010f2eacf96ef699cbfe0d733d3e8f21">&#9670;&nbsp;</a></span>printAlertsSummary()</h2>
+<a id="a098a81113277b033356b87e86ac0912d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a098a81113277b033356b87e86ac0912d">&#9670;&nbsp;</a></span>printAlertsSummary()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -756,8 +715,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static void alexaClientSDK::capabilityAgents::alerts::storage::printAlertsSummary </td>
           <td>(</td>
-          <td class="paramtype">sqlite3 *&#160;</td>
-          <td class="paramname"><em>dbHandle</em>, </td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *&#160;</td>
+          <td class="paramname"><em>db</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -786,7 +745,7 @@ Variables</h2></td></tr>
 <p>Utility diagnostic function to print the details of all the alerts stored in the database.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dbHandle</td><td>The database handle. </td></tr>
+    <tr><td class="paramname">db</td><td>The database object. </td></tr>
     <tr><td class="paramname">shouldPrintEverything</td><td>If <code>true</code>, then all details of an alert will be printed. If <code>false</code>, then summary information will be printed instead. </td></tr>
   </table>
   </dd>
@@ -794,8 +753,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aae5ce2855e21f107ad9f74e940c09f3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae5ce2855e21f107ad9f74e940c09f3d">&#9670;&nbsp;</a></span>printOneLineSummary()</h2>
+<a id="ac50670bd35a82215d22f2703e33c51fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac50670bd35a82215d22f2703e33c51fd">&#9670;&nbsp;</a></span>printOneLineSummary()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -806,8 +765,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static void alexaClientSDK::capabilityAgents::alerts::storage::printOneLineSummary </td>
           <td>(</td>
-          <td class="paramtype">sqlite3 *&#160;</td>
-          <td class="paramname"><em>dbHandle</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *&#160;</td>
+          <td class="paramname"><em>db</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -820,15 +779,15 @@ Variables</h2></td></tr>
 <p>Utility diagnostic function to print a one-line summary of all alerts in the database.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dbHandle</td><td>The database handle. </td></tr>
+    <tr><td class="paramname">db</td><td>The database object. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a2638ca99f02be22fb0913034f78b3cac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2638ca99f02be22fb0913034f78b3cac">&#9670;&nbsp;</a></span>storeAlertAssetPlayOrderItems()</h2>
+<a id="a04beaca16721ac2b4de081eb0527cbda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04beaca16721ac2b4de081eb0527cbda">&#9670;&nbsp;</a></span>storeAlertAssetPlayOrderItems()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -839,8 +798,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static bool alexaClientSDK::capabilityAgents::alerts::storage::storeAlertAssetPlayOrderItems </td>
           <td>(</td>
-          <td class="paramtype">sqlite3 *&#160;</td>
-          <td class="paramname"><em>dbHandle</em>, </td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *&#160;</td>
+          <td class="paramname"><em>db</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -851,8 +810,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset_configuration.html">Alert::AssetConfiguration</a> &amp;&#160;</td>
-          <td class="paramname"><em>assetConfiguration</em>&#160;</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>assetPlayOrderItems</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -869,8 +828,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aa184feb7fb767f24eba3d05456700d6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa184feb7fb767f24eba3d05456700d6e">&#9670;&nbsp;</a></span>storeAlertAssets()</h2>
+<a id="ae5cd446beb12cf52b7b51c9ef0c72fb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5cd446beb12cf52b7b51c9ef0c72fb8">&#9670;&nbsp;</a></span>storeAlertAssets()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -881,8 +840,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static bool alexaClientSDK::capabilityAgents::alerts::storage::storeAlertAssets </td>
           <td>(</td>
-          <td class="paramtype">sqlite3 *&#160;</td>
-          <td class="paramname"><em>dbHandle</em>, </td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *&#160;</td>
+          <td class="paramname"><em>db</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -893,8 +852,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset_configuration.html">Alert::AssetConfiguration</a> &amp;&#160;</td>
-          <td class="paramname"><em>assetConfiguration</em>&#160;</td>
+          <td class="paramtype">const std::unordered_map&lt; std::string, <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset.html">Alert::Asset</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>assets</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1372,6 +1331,54 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="aa7ea27413da459671422f224ea944e90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7ea27413da459671422f224ea944e90">&#9670;&nbsp;</a></span>ALERTS_CAPABILITY_AGENT_CONFIGURATION_ROOT_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::alerts::storage::ALERTS_CAPABILITY_AGENT_CONFIGURATION_ROOT_KEY = &quot;alertsCapabilityAgent&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The key in our config file to find the root of settings for this Capability Agent. </p>
+
+</div>
+</div>
+<a id="a40eee4f524eb2da3581e7487b063327f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40eee4f524eb2da3581e7487b063327f">&#9670;&nbsp;</a></span>ALERTS_CAPABILITY_AGENT_DB_FILE_PATH_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::alerts::storage::ALERTS_CAPABILITY_AGENT_DB_FILE_PATH_KEY = &quot;databaseFilePath&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The key in our config file to find the database file path. </p>
+
+</div>
+</div>
 <a id="aba77667a0011a66e2f7efd3040a5c86f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aba77667a0011a66e2f7efd3040a5c86f">&#9670;&nbsp;</a></span>ALERTS_DATABASE_VERSION_ONE</h2>
 
@@ -1487,7 +1494,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a19bd9d040be5d162fe875db8caff8d5e">ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;alert_id INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_play_order_position INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_play_order_token TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_html_a19bd9d040be5d162fe875db8caff8d5e"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a19bd9d040be5d162fe875db8caff8d5e">alexaClientSDK::capabilityAgents::alerts::storage::ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</div><div class="ttdoc">The name of the alertAssetPlayOrderItems table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:127</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a19bd9d040be5d162fe875db8caff8d5e">ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;alert_id INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_play_order_position INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_play_order_token TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_html_a19bd9d040be5d162fe875db8caff8d5e"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a19bd9d040be5d162fe875db8caff8d5e">alexaClientSDK::capabilityAgents::alerts::storage::ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</div><div class="ttdoc">The name of the alertAssetPlayOrderItems table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:133</div></div>
 </div><!-- fragment -->
 <p>The SQL string to create the alertAssetPlayOrderItems table. </p>
 
@@ -1512,7 +1519,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">                                                                <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a42c6fcbfa1768f6a153095ed08cd68ce">ALERT_ASSETS_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;alert_id INT NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;avs_id TEXT NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;url TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_html_a42c6fcbfa1768f6a153095ed08cd68ce"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a42c6fcbfa1768f6a153095ed08cd68ce">alexaClientSDK::capabilityAgents::alerts::storage::ALERT_ASSETS_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERT_ASSETS_TABLE_NAME</div><div class="ttdoc">The name of the alertAssets table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:115</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">                                                                <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a42c6fcbfa1768f6a153095ed08cd68ce">ALERT_ASSETS_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;alert_id INT NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;avs_id TEXT NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;url TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_html_a42c6fcbfa1768f6a153095ed08cd68ce"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a42c6fcbfa1768f6a153095ed08cd68ce">alexaClientSDK::capabilityAgents::alerts::storage::ALERT_ASSETS_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERT_ASSETS_TABLE_NAME</div><div class="ttdoc">The name of the alertAssets table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:121</div></div>
 </div><!-- fragment -->
 <p>The SQL string to create the alertAssets table. </p>
 
@@ -1537,8 +1544,8 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#afe86a3fb078b01e3958c63bf432645c6">ALERTS_V2_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a367feac8d94b9869c74e97c688a9061b">DATABASE_COLUMN_ID_NAME</a> + <span class="stringliteral">&quot; INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;token TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;type INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;state INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;scheduled_time_unix INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;scheduled_time_iso_8601 TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_loop_count INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_loop_pause_milliseconds INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;background_asset TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_html_a367feac8d94b9869c74e97c688a9061b"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a367feac8d94b9869c74e97c688a9061b">alexaClientSDK::capabilityAgents::alerts::storage::DATABASE_COLUMN_ID_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_ID_NAME</div><div class="ttdoc">The name of the &amp;#39;id&amp;#39; field we will use as the primary key in our tables. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:87</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_html_afe86a3fb078b01e3958c63bf432645c6"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#afe86a3fb078b01e3958c63bf432645c6">alexaClientSDK::capabilityAgents::alerts::storage::ALERTS_V2_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERTS_V2_TABLE_NAME</div><div class="ttdoc">The name of the alerts (v2) table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:98</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#afe86a3fb078b01e3958c63bf432645c6">ALERTS_V2_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a367feac8d94b9869c74e97c688a9061b">DATABASE_COLUMN_ID_NAME</a> + <span class="stringliteral">&quot; INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;token TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;type INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;state INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;scheduled_time_unix INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;scheduled_time_iso_8601 TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_loop_count INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_loop_pause_milliseconds INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;background_asset TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_html_a367feac8d94b9869c74e97c688a9061b"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#a367feac8d94b9869c74e97c688a9061b">alexaClientSDK::capabilityAgents::alerts::storage::DATABASE_COLUMN_ID_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_ID_NAME</div><div class="ttdoc">The name of the &amp;#39;id&amp;#39; field we will use as the primary key in our tables. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:93</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_html_afe86a3fb078b01e3958c63bf432645c6"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage.html#afe86a3fb078b01e3958c63bf432645c6">alexaClientSDK::capabilityAgents::alerts::storage::ALERTS_V2_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERTS_V2_TABLE_NAME</div><div class="ttdoc">The name of the alerts (v2) table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:104</div></div>
 </div><!-- fragment -->
 <p>The SQL string to create the alerts table. </p>
 
@@ -1572,7 +1579,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

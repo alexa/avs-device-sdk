@@ -20,5 +20,7 @@ var searchData=
   ['loggertest_2ecpp',['LoggerTest.cpp',['../_logger_test_8cpp.html',1,'']]],
   ['loggerutils_2ecpp',['LoggerUtils.cpp',['../_logger_utils_8cpp.html',1,'']]],
   ['loggerutils_2eh',['LoggerUtils.h',['../_logger_utils_8h.html',1,'']]],
-  ['loglevelobserverinterface_2eh',['LogLevelObserverInterface.h',['../_log_level_observer_interface_8h.html',1,'']]]
+  ['loglevelobserverinterface_2eh',['LogLevelObserverInterface.h',['../_log_level_observer_interface_8h.html',1,'']]],
+  ['logstringformatter_2ecpp',['LogStringFormatter.cpp',['../_log_string_formatter_8cpp.html',1,'']]],
+  ['logstringformatter_2eh',['LogStringFormatter.h',['../_log_string_formatter_8h.html',1,'']]]
 ];

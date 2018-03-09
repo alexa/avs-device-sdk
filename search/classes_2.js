@@ -3,6 +3,7 @@ var searchData=
   ['capabilityagent',['CapabilityAgent',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html',1,'alexaClientSDK::avsCommon::avs']]],
   ['capabilityagenttest',['CapabilityAgentTest',['../classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_capability_agent_test.html',1,'alexaClientSDK::avsCommon::test']]],
   ['certifiedsender',['CertifiedSender',['../classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html',1,'alexaClientSDK::certifiedSender']]],
+  ['certifiedsendertest',['CertifiedSenderTest',['../classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_certified_sender_test.html',1,'alexaClientSDK::certifiedSender::test']]],
   ['changedalert',['changedAlert',['../classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_alert_observer_1_1changed_alert.html',1,'alexaClientSDK::integration::test::TestAlertObserver']]],
   ['channel',['Channel',['../classalexa_client_s_d_k_1_1afml_1_1_channel.html',1,'alexaClientSDK::afml']]],
   ['channelconfiguration',['ChannelConfiguration',['../structalexa_client_s_d_k_1_1afml_1_1_focus_manager_1_1_channel_configuration.html',1,'alexaClientSDK::afml::FocusManager']]],
@@ -24,5 +25,8 @@ var searchData=
   ['contextmanagertest',['ContextManagerTest',['../classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_context_manager_test.html',1,'alexaClientSDK::contextManager::test']]],
   ['contextrequesterinterface',['ContextRequesterInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['curleasyhandlewrapper',['CurlEasyHandleWrapper',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html',1,'alexaClientSDK::avsCommon::utils::libcurlUtils']]],
-  ['curlmultihandlewrapper',['CurlMultiHandleWrapper',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_multi_handle_wrapper.html',1,'alexaClientSDK::avsCommon::utils::libcurlUtils']]]
+  ['curlmultihandlewrapper',['CurlMultiHandleWrapper',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_multi_handle_wrapper.html',1,'alexaClientSDK::avsCommon::utils::libcurlUtils']]],
+  ['customerdatahandler',['CustomerDataHandler',['../classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler.html',1,'alexaClientSDK::registrationManager']]],
+  ['customerdatamanager',['CustomerDataManager',['../classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html',1,'alexaClientSDK::registrationManager']]],
+  ['customerdatamanagertest',['CustomerDataManagerTest',['../classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_customer_data_manager_test.html',1,'alexaClientSDK::registrationManager::test']]]
 ];

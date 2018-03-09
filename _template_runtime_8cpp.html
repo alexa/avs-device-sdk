@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -76,7 +76,8 @@ $(function() {
 <div class="title">TemplateRuntime.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;rapidjson/error/en.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;ostream&gt;</code><br />
+<code>#include &lt;rapidjson/error/en.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_template_runtime_8h_source.html">TemplateRuntime/TemplateRuntime.h</a>&quot;</code><br />
@@ -85,37 +86,37 @@ Include dependency graph for TemplateRuntime.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_template_runtime_8cpp__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_capability_agents_2_template_runtime_2src_2_template_runtime_8cpp" alt=""/></div>
 <map name="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_capability_agents_2_template_runtime_2src_2_template_runtime_8cpp" id="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_capability_agents_2_template_runtime_2src_2_template_runtime_8cpp">
-<area shape="rect" id="node3" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="696,105,866,144"/>
-<area shape="rect" id="node8" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="753,279,929,317"/>
-<area shape="rect" id="node23" href="_template_runtime_8h.html" title="TemplateRuntime/Template\lRuntime.h" alt="" coords="1854,105,2037,144"/>
-<area shape="rect" id="node6" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="690,192,866,231"/>
-<area shape="rect" id="node13" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="832,365,1045,404"/>
-<area shape="rect" id="node16" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1124,452,1300,491"/>
-<area shape="rect" id="node17" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="330,365,506,404"/>
-<area shape="rect" id="node21" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1069,365,1266,404"/>
-<area shape="rect" id="node22" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="530,365,706,404"/>
-<area shape="rect" id="node18" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="489,452,665,491"/>
-<area shape="rect" id="node20" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="489,539,665,577"/>
-<area shape="rect" id="node26" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="2654,192,2847,231"/>
-<area shape="rect" id="node39" href="_audio_player_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerInterface.h" alt="" coords="1331,279,1522,317"/>
-<area shape="rect" id="node40" href="_audio_player_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerObserverInterface.h" alt="" coords="1392,365,1607,404"/>
-<area shape="rect" id="node42" href="_template_runtime_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/TemplateRuntimeObserverInterface.h" alt="" coords="1631,365,1878,404"/>
-<area shape="rect" id="node43" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="3447,365,3635,404"/>
-<area shape="rect" id="node44" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="3810,192,4005,231"/>
-<area shape="rect" id="node28" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="2565,452,2794,491"/>
-<area shape="rect" id="node29" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="1982,279,2247,317"/>
-<area shape="rect" id="node31" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="2321,279,2513,317"/>
-<area shape="rect" id="node33" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="1929,452,2124,491"/>
-<area shape="rect" id="node34" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="2588,279,2779,317"/>
-<area shape="rect" id="node35" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="3047,279,3238,317"/>
-<area shape="rect" id="node38" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="3198,365,3423,404"/>
-<area shape="rect" id="node30" href="_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="1902,365,2124,404"/>
-<area shape="rect" id="node32" href="_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="2300,372,2513,397"/>
-<area shape="rect" id="node36" href="_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="2972,459,3195,484"/>
-<area shape="rect" id="node37" href="_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="2689,365,2921,404"/>
-<area shape="rect" id="node41" href="_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="1425,459,1649,484"/>
-<area shape="rect" id="node47" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="3945,279,4140,317"/>
-<area shape="rect" id="node49" href="_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="3861,365,4056,404"/>
+<area shape="rect" id="node4" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="704,192,874,231"/>
+<area shape="rect" id="node9" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="969,365,1145,404"/>
+<area shape="rect" id="node22" href="_template_runtime_8h.html" title="TemplateRuntime/Template\lRuntime.h" alt="" coords="1570,105,1753,144"/>
+<area shape="rect" id="node7" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1057,279,1233,317"/>
+<area shape="rect" id="node14" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="989,452,1203,491"/>
+<area shape="rect" id="node17" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="709,539,885,577"/>
+<area shape="rect" id="node18" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="416,452,592,491"/>
+<area shape="rect" id="node20" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="717,452,914,491"/>
+<area shape="rect" id="node21" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1328,452,1504,491"/>
+<area shape="rect" id="node19" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="458,539,634,577"/>
+<area shape="rect" id="node25" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="2262,279,2455,317"/>
+<area shape="rect" id="node35" href="_audio_player_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerInterface.h" alt="" coords="1359,365,1550,404"/>
+<area shape="rect" id="node36" href="_audio_player_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerObserverInterface.h" alt="" coords="1731,452,1946,491"/>
+<area shape="rect" id="node38" href="_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="4118,279,4348,317"/>
+<area shape="rect" id="node39" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="3843,365,4034,404"/>
+<area shape="rect" id="node42" href="_template_runtime_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/TemplateRuntimeObserverInterface.h" alt="" coords="3638,452,3884,491"/>
+<area shape="rect" id="node43" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2890,365,3078,404"/>
+<area shape="rect" id="node44" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="3021,192,3216,231"/>
+<area shape="rect" id="node50" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="3297,192,3471,231"/>
+<area shape="rect" id="node27" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="2421,452,2650,491"/>
+<area shape="rect" id="node28" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="1815,365,2080,404"/>
+<area shape="rect" id="node29" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="3909,452,4101,491"/>
+<area shape="rect" id="node31" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="45,539,240,577"/>
+<area shape="rect" id="node32" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="2422,365,2612,404"/>
+<area shape="rect" id="node33" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="2104,365,2295,404"/>
+<area shape="rect" id="node34" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="2122,452,2347,491"/>
+<area shape="rect" id="node30" href="_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="3776,545,3989,571"/>
+<area shape="rect" id="node37" href="_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="2138,545,2363,571"/>
+<area shape="rect" id="node41" href="_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="4126,459,4354,484"/>
+<area shape="rect" id="node46" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2752,279,2946,317"/>
+<area shape="rect" id="node47" href="_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="3152,365,3346,404"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -131,7 +132,7 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_template_runtime_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_example_auth_delegate_client_8cpp.html#adc8c4903d8b224bfaa986afb88575adb">TAG</a>, event)</td></tr>
+<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_template_runtime_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_registration_manager_8cpp.html#a73216df79c9ad2b23fd2eef0a8f10d1b">TAG</a>, event)</td></tr>
 <tr class="separator:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
@@ -139,13 +140,22 @@ Variables</h2></td></tr>
 <tr class="memitem:a4c73cf66f7c186ca2b05c7fafb73b20d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#a4c73cf66f7c186ca2b05c7fafb73b20d">alexaClientSDK::capabilityAgents::templateRuntime::TAG</a> {&quot;TemplateRuntime&quot;}</td></tr>
 <tr class="memdesc:a4c73cf66f7c186ca2b05c7fafb73b20d"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#a4c73cf66f7c186ca2b05c7fafb73b20d">More...</a><br /></td></tr>
 <tr class="separator:a4c73cf66f7c186ca2b05c7fafb73b20d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c71b4ba7f7945fc54e0ff1263a072e4"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#a7c71b4ba7f7945fc54e0ff1263a072e4">alexaClientSDK::capabilityAgents::templateRuntime::CHANNEL_NAME</a> = avsCommon::sdkInterfaces::FocusManagerInterface::VISUAL_CHANNEL_NAME</td></tr>
+<tr class="memdesc:a7c71b4ba7f7945fc54e0ff1263a072e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the <code>FocusManager</code> channel used by <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html">TemplateRuntime</a></code>.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#a7c71b4ba7f7945fc54e0ff1263a072e4">More...</a><br /></td></tr>
+<tr class="separator:a7c71b4ba7f7945fc54e0ff1263a072e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac25c44f5ed80430733e3ad7484156c64"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#ac25c44f5ed80430733e3ad7484156c64">alexaClientSDK::capabilityAgents::templateRuntime::NAMESPACE</a> {&quot;TemplateRuntime&quot;}</td></tr>
 <tr class="memdesc:ac25c44f5ed80430733e3ad7484156c64"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace for this capability agent.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#ac25c44f5ed80430733e3ad7484156c64">More...</a><br /></td></tr>
 <tr class="separator:ac25c44f5ed80430733e3ad7484156c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afffdbccfac82b739b772f81e095d16a7"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#afffdbccfac82b739b772f81e095d16a7">alexaClientSDK::capabilityAgents::templateRuntime::TEMPLATE</a> {NAMESPACE, &quot;RenderTemplate&quot;}</td></tr>
+<tr class="memitem:a14eca27952e1ac204f27d5bac23b3c22"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#a14eca27952e1ac204f27d5bac23b3c22">alexaClientSDK::capabilityAgents::templateRuntime::RENDER_TEMPLATE</a> {&quot;RenderTemplate&quot;}</td></tr>
+<tr class="memdesc:a14eca27952e1ac204f27d5bac23b3c22"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name for RenderTemplate directive.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#a14eca27952e1ac204f27d5bac23b3c22">More...</a><br /></td></tr>
+<tr class="separator:a14eca27952e1ac204f27d5bac23b3c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8dd1716da1c4f58157f03c938a014e1"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#ae8dd1716da1c4f58157f03c938a014e1">alexaClientSDK::capabilityAgents::templateRuntime::RENDER_PLAYER_INFO</a> {&quot;RenderPlayerInfo&quot;}</td></tr>
+<tr class="memdesc:ae8dd1716da1c4f58157f03c938a014e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name for RenderPlayerInfo directive.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#ae8dd1716da1c4f58157f03c938a014e1">More...</a><br /></td></tr>
+<tr class="separator:ae8dd1716da1c4f58157f03c938a014e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afffdbccfac82b739b772f81e095d16a7"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#afffdbccfac82b739b772f81e095d16a7">alexaClientSDK::capabilityAgents::templateRuntime::TEMPLATE</a> {NAMESPACE, RENDER_TEMPLATE}</td></tr>
 <tr class="memdesc:afffdbccfac82b739b772f81e095d16a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The RenderTemplate directive signature.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#afffdbccfac82b739b772f81e095d16a7">More...</a><br /></td></tr>
 <tr class="separator:afffdbccfac82b739b772f81e095d16a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7922fecbfb5835a76c7ffea82993611"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#af7922fecbfb5835a76c7ffea82993611">alexaClientSDK::capabilityAgents::templateRuntime::PLAYER_INFO</a> {NAMESPACE, &quot;RenderPlayerInfo&quot;}</td></tr>
+<tr class="memitem:af7922fecbfb5835a76c7ffea82993611"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#af7922fecbfb5835a76c7ffea82993611">alexaClientSDK::capabilityAgents::templateRuntime::PLAYER_INFO</a> {NAMESPACE, RENDER_PLAYER_INFO}</td></tr>
 <tr class="memdesc:af7922fecbfb5835a76c7ffea82993611"><td class="mdescLeft">&#160;</td><td class="mdescRight">The RenderPlayerInfo directive signature.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#af7922fecbfb5835a76c7ffea82993611">More...</a><br /></td></tr>
 <tr class="separator:af7922fecbfb5835a76c7ffea82993611"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adeb8861169db91114de33180faaa1d49"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#adeb8861169db91114de33180faaa1d49">alexaClientSDK::capabilityAgents::templateRuntime::AUDIO_ITEM_ID_TAG</a> {&quot;audioItemId&quot;}</td></tr>
@@ -154,6 +164,15 @@ Variables</h2></td></tr>
 <tr class="memitem:a97ddcf2d413a9543c0775b16e78146bd"><td class="memItemLeft" align="right" valign="top">static const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#a97ddcf2d413a9543c0775b16e78146bd">alexaClientSDK::capabilityAgents::templateRuntime::MAXIMUM_QUEUE_SIZE</a> {100}</td></tr>
 <tr class="memdesc:a97ddcf2d413a9543c0775b16e78146bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum queue size allowed for m_audioItems.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#a97ddcf2d413a9543c0775b16e78146bd">More...</a><br /></td></tr>
 <tr class="separator:a97ddcf2d413a9543c0775b16e78146bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a339be6149bc87cd05a478e21c160ed64"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#a339be6149bc87cd05a478e21c160ed64">alexaClientSDK::capabilityAgents::templateRuntime::TTS_FINISHED_TIMEOUT_MS</a> {2000}</td></tr>
+<tr class="memdesc:a339be6149bc87cd05a478e21c160ed64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout for clearing the RenderTemplate display card when SpeechSynthesizer is in FINISHED state.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#a339be6149bc87cd05a478e21c160ed64">More...</a><br /></td></tr>
+<tr class="separator:a339be6149bc87cd05a478e21c160ed64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bdfc9f808974b8358d94f006948c7d1"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#a1bdfc9f808974b8358d94f006948c7d1">alexaClientSDK::capabilityAgents::templateRuntime::AUDIO_FINISHED_TIMEOUT_MS</a> {2000}</td></tr>
+<tr class="memdesc:a1bdfc9f808974b8358d94f006948c7d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout for clearing the RenderPlayerInfo display card when AudioPlayer is in FINISHED state.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#a1bdfc9f808974b8358d94f006948c7d1">More...</a><br /></td></tr>
+<tr class="separator:a1bdfc9f808974b8358d94f006948c7d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b659c2793c254bd4d2c3bcd5119ede4"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#a8b659c2793c254bd4d2c3bcd5119ede4">alexaClientSDK::capabilityAgents::templateRuntime::AUDIO_STOPPED_PAUSED_TIMEOUT_MS</a> {60000}</td></tr>
+<tr class="memdesc:a8b659c2793c254bd4d2c3bcd5119ede4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout for clearing the RenderPlayerInfo display card when AudioPlayer is in STOPPED/PAUSED state.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#a8b659c2793c254bd4d2c3bcd5119ede4">More...</a><br /></td></tr>
+<tr class="separator:a8b659c2793c254bd4d2c3bcd5119ede4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -167,7 +186,7 @@ Variables</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">event</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_example_auth_delegate_client_8cpp.html#adc8c4903d8b224bfaa986afb88575adb">TAG</a>, event)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_registration_manager_8cpp.html#a73216df79c9ad2b23fd2eef0a8f10d1b">TAG</a>, event)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -185,7 +204,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -77,7 +77,9 @@ $(function() {
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html#ad37c933520b1d69943a1d8a2e364b0f7">addDirectiveHandler</a>(std::shared_ptr&lt; DirectiveHandlerInterface &gt; handler)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSequencerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html#a6e3eda9dddce99bc5037b51897529a7d">DirectiveSequencerInterface</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSequencerInterface</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a66df7916e28559f30233c2ff5a166293">doShutdown</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html#ae1047dd8584b681bbbbebe7590e1af7f">disable</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSequencerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a66df7916e28559f30233c2ff5a166293">doShutdown</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html#a5adc09e2f7c56f4d828d6a186bc87f74">enable</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSequencerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#af9352626109735aba40b5fb310913355">isShutdown</a>() const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a745cd4dc404db52f7d0afbf838454fac">name</a>() const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html#a1f130b4ffadb2bda35fddff1e9252a87">onDirective</a>(std::shared_ptr&lt; avsCommon::avs::AVSDirective &gt; directive)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSequencerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
@@ -91,7 +93,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

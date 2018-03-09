@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -111,6 +111,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9d99e3aaa023663cde990873e3e2b416"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f130b4ffadb2bda35fddff1e9252a87"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html#a1f130b4ffadb2bda35fddff1e9252a87">onDirective</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_directive.html">avsCommon::avs::AVSDirective</a> &gt; directive)=0</td></tr>
 <tr class="separator:a1f130b4ffadb2bda35fddff1e9252a87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1047dd8584b681bbbbebe7590e1af7f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html#ae1047dd8584b681bbbbebe7590e1af7f">disable</a> ()=0</td></tr>
+<tr class="separator:ae1047dd8584b681bbbbebe7590e1af7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5adc09e2f7c56f4d828d6a186bc87f74"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html#a5adc09e2f7c56f4d828d6a186bc87f74">enable</a> ()=0</td></tr>
+<tr class="separator:a5adc09e2f7c56f4d828d6a186bc87f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td></tr>
 <tr class="memitem:aae7174ed932ae1413460255238c4422b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#aae7174ed932ae1413460255238c4422b">RequiresShutdown</a> (const std::string &amp;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a745cd4dc404db52f7d0afbf838454fac">name</a>)</td></tr>
 <tr class="separator:aae7174ed932ae1413460255238c4422b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -228,6 +232,63 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="ae1047dd8584b681bbbbebe7590e1af7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1047dd8584b681bbbbebe7590e1af7f">&#9670;&nbsp;</a></span>disable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSequencerInterface::disable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Disable the DirectiveSequencer.</p>
+<dl class="section note"><dt>Note</dt><dd>While disabled the DirectiveSequencer should not be able to handle directives. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_sequencer.html#a15e75fdc20b5911930bc2056e25c4911">alexaClientSDK::adsl::DirectiveSequencer</a>.</p>
+
+</div>
+</div>
+<a id="a5adc09e2f7c56f4d828d6a186bc87f74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5adc09e2f7c56f4d828d6a186bc87f74">&#9670;&nbsp;</a></span>enable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSequencerInterface::enable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Enable the DirectiveSequencer. </p>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_sequencer.html#abb8b7f4bbf3d0b9b80db1281203897af">alexaClientSDK::adsl::DirectiveSequencer</a>.</p>
+
+</div>
+</div>
 <a id="a1f130b4ffadb2bda35fddff1e9252a87"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1f130b4ffadb2bda35fddff1e9252a87">&#9670;&nbsp;</a></span>onDirective()</h2>
 
@@ -286,7 +347,6 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Remove the specified handler's mapping of <code>NamespaceAndName</code> to <code>BlockingPolicy</code> values. Note that implementations of this should call the handler's getConfiguration() method to get the namespace(s), name(s), and policy(ies) of the handler. If the handler's configurations are unable to be removed, the entire operation is refused.</p>
-<p>specified mappings from <code>NamespaceAndName</code> values to <code>HandlerAndPolicy</code> values. If any of the specified mappings do not match an existing mapping, the entire operation is refused.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handler</td><td>The handler to remove. </td></tr>
@@ -339,7 +399,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

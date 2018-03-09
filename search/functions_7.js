@@ -19,6 +19,7 @@ var searchData=
   ['hascreatedreader',['hasCreatedReader',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment.html#a7cdc5bcb626d5ba0acf1991daae5eb54',1,'alexaClientSDK::avsCommon::avs::attachment::Attachment']]],
   ['hascreatedwriter',['hasCreatedWriter',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment.html#acb3941a2eeb0deb2b4f2546fb7e8f243',1,'alexaClientSDK::avsCommon::avs::attachment::Attachment']]],
   ['hashcombine',['hashCombine',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1functional.html#a0aabaf8367ab2aeafebe9947ef03c965',1,'alexaClientSDK::avsCommon::utils::functional']]],
+  ['hasobserver',['hasObserver',['../classalexa_client_s_d_k_1_1afml_1_1_channel.html#a40ec13f169e810256397869449815deb',1,'alexaClientSDK::afml::Channel']]],
   ['hasprogresstimedout',['hasProgressTimedOut',['../classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#aa9499c32758ac7117564bd713b4e2f8f',1,'alexaClientSDK::acl::HTTP2Stream']]],
   ['hassendcompleted',['hasSendCompleted',['../classalexa_client_s_d_k_1_1integration_1_1_observable_message_request.html#abc2a1e52b517c7be181c23b196b54f30',1,'alexaClientSDK::integration::ObservableMessageRequest']]],
   ['header',['HEADER',['../namespacealexa_client_s_d_k_1_1avs_common_1_1test.html#a2648fc1ca304be5182957d281a9ccee9',1,'alexaClientSDK::avsCommon::test']]],

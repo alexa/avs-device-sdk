@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -70,6 +70,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -83,8 +84,46 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test harness for <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer.html">Timer</a> class.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_timer_test.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a370f0753b13ce11e3a447ef03d1adefd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a370f0753b13ce11e3a447ef03d1adefd">TestType</a> { <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a370f0753b13ce11e3a447ef03d1adefdadff39ca39f426bd55bddeba8cd737c99">TestType::GMTIME</a>, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a370f0753b13ce11e3a447ef03d1adefda31efb745cad34aee80665c43960e3548">TestType::LOCALTIME</a>
+ }</td></tr>
+<tr class="separator:a370f0753b13ce11e3a447ef03d1adefd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a9acf9840d9479a9b1bfd874aa9d51baf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a9acf9840d9479a9b1bfd874aa9d51baf">TEST</a> (SafeCTimeAccessTest, getGmtimeNullReturnValue)</td></tr>
+<tr class="memdesc:a9acf9840d9479a9b1bfd874aa9d51baf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test to verify that getGmtime returns failure if a nullptr is passed for the result variable.  <a href="#a9acf9840d9479a9b1bfd874aa9d51baf">More...</a><br /></td></tr>
+<tr class="separator:a9acf9840d9479a9b1bfd874aa9d51baf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63eaad84aa801d1f62085a70b08484d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a63eaad84aa801d1f62085a70b08484d1">TEST</a> (SafeCTimeAccessTest, getLocaltimeNullReturnValue)</td></tr>
+<tr class="memdesc:a63eaad84aa801d1f62085a70b08484d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test to verify that getLocaltime returns failure if a nullptr is passed for the result variable.  <a href="#a63eaad84aa801d1f62085a70b08484d1">More...</a><br /></td></tr>
+<tr class="separator:a63eaad84aa801d1f62085a70b08484d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afecefec501a2a64d46b117b999c3f336"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#afecefec501a2a64d46b117b999c3f336">checkTm</a> (const std::tm &amp;a, const std::tm &amp;b)</td></tr>
+<tr class="separator:afecefec501a2a64d46b117b999c3f336"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c824117cfe6fbb9149b1f7ba7f3b18e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a7c824117cfe6fbb9149b1f7ba7f3b18e">testGmtimeHelper</a> (const std::tm &amp;expected, const time_t &amp;t)</td></tr>
+<tr class="separator:a7c824117cfe6fbb9149b1f7ba7f3b18e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f52c91b00b5d565ded786d0f7c4500a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a3f52c91b00b5d565ded786d0f7c4500a">testLocaltimeHelper</a> (const std::tm &amp;expected, const time_t &amp;t)</td></tr>
+<tr class="separator:a3f52c91b00b5d565ded786d0f7c4500a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08a5c086ae2319fa5b17ba9e4740fa86"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a08a5c086ae2319fa5b17ba9e4740fa86">TEST</a> (SafeCTimeAccessTest, getGmtimeAtTheEpoch)</td></tr>
+<tr class="memdesc:a08a5c086ae2319fa5b17ba9e4740fa86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test to verify that getGmtime returns the correct calendar date for the Unix epoch.  <a href="#a08a5c086ae2319fa5b17ba9e4740fa86">More...</a><br /></td></tr>
+<tr class="separator:a08a5c086ae2319fa5b17ba9e4740fa86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c26cb0dd2d7ec931d70d2c078b2f982"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a2c26cb0dd2d7ec931d70d2c078b2f982">TEST</a> (SafeCTimeAccessTest, getGmtime)</td></tr>
+<tr class="memdesc:a2c26cb0dd2d7ec931d70d2c078b2f982"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test to verify that getGmtime returns the same calendar date as std::gmtime.  <a href="#a2c26cb0dd2d7ec931d70d2c078b2f982">More...</a><br /></td></tr>
+<tr class="separator:a2c26cb0dd2d7ec931d70d2c078b2f982"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd9ce3145f10e9865ceb71f7c6e50bd7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#abd9ce3145f10e9865ceb71f7c6e50bd7">TEST</a> (SafeCTimeAccessTest, getLocaltime)</td></tr>
+<tr class="memdesc:abd9ce3145f10e9865ceb71f7c6e50bd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test to verify that getLocaltime returns the same calendar date as std::localtime.  <a href="#abd9ce3145f10e9865ceb71f7c6e50bd7">More...</a><br /></td></tr>
+<tr class="separator:abd9ce3145f10e9865ceb71f7c6e50bd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a948430a7c06f41026907e741fc1b3971"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a948430a7c06f41026907e741fc1b3971">callSafeCTimeFunction</a> (int startingSeed, const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a370f0753b13ce11e3a447ef03d1adefd">TestType</a> &amp;type, std::vector&lt; std::pair&lt; time_t, std::tm &gt;&gt; *results)</td></tr>
+<tr class="separator:a948430a7c06f41026907e741fc1b3971"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade3a19e0f92190d917f67113054d31d8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#ade3a19e0f92190d917f67113054d31d8">checkSafeCTimeFunction</a> (const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a370f0753b13ce11e3a447ef03d1adefd">TestType</a> &amp;type)</td></tr>
+<tr class="separator:ade3a19e0f92190d917f67113054d31d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53e8112da836c204a9099c43f3785d54"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a53e8112da836c204a9099c43f3785d54">TEST</a> (SafeCTimeAccessTest, DISABLED_gmTimeMultithreadedAccess)</td></tr>
+<tr class="memdesc:a53e8112da836c204a9099c43f3785d54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test to make sure that multithreaded access <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_safe_c_time_access.html#a120a08574810680d4493d23888a26f3a">SafeCTimeAccess::getGmtime</a> is safe.  <a href="#a53e8112da836c204a9099c43f3785d54">More...</a><br /></td></tr>
+<tr class="separator:a53e8112da836c204a9099c43f3785d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acaea50e3a0b573645c6ed415dd99764c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#acaea50e3a0b573645c6ed415dd99764c">TEST</a> (SafeCTimeAccessTest, DISABLED_localtimeMultithreadedAccess)</td></tr>
+<tr class="memdesc:acaea50e3a0b573645c6ed415dd99764c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test to make sure that multithreaded access SafeCTimeAccess::getLocaltimetime is safe.  <a href="#acaea50e3a0b573645c6ed415dd99764c">More...</a><br /></td></tr>
+<tr class="separator:acaea50e3a0b573645c6ed415dd99764c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc194ec3b86d0dc4ae887a65a4d6554d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#abc194ec3b86d0dc4ae887a65a4d6554d">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_timer_test.html">TimerTest</a>, singleShot)</td></tr>
 <tr class="memdesc:abc194ec3b86d0dc4ae887a65a4d6554d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This test runs a single-shot timer and verifies that the task is called once, at the expected time.  <a href="#abc194ec3b86d0dc4ae887a65a4d6554d">More...</a><br /></td></tr>
 <tr class="separator:abc194ec3b86d0dc4ae887a65a4d6554d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,9 +175,19 @@ Functions</h2></td></tr>
 <tr class="separator:a218ffc85fd07f8b178ff88677b535579"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1946a707fdacbb5d714971a43166e373"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a1946a707fdacbb5d714971a43166e373">TEST</a> (TimeTest, testCurrentTimeNullParam)</td></tr>
 <tr class="separator:a1946a707fdacbb5d714971a43166e373"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b4034e38e05c042776f2e70f8f4c896"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a3b4034e38e05c042776f2e70f8f4c896">testIso8601ConversionHelper</a> (const std::string &amp;expectedString, const struct timeval &amp;t)</td></tr>
+<tr class="separator:a3b4034e38e05c042776f2e70f8f4c896"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afec1b0e61a73b832387cff47ad771113"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#afec1b0e61a73b832387cff47ad771113">TEST</a> (TimeTest, testIso8601Conversion)</td></tr>
+<tr class="separator:afec1b0e61a73b832387cff47ad771113"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:a77df4d944756afab8b2fc1e6c86439f1"><td class="memItemLeft" align="right" valign="top">const time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a77df4d944756afab8b2fc1e6c86439f1">LARGE_TIME_VALUE</a> = (0x1 &lt;&lt; 30) - 1</td></tr>
+<tr class="memdesc:a77df4d944756afab8b2fc1e6c86439f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">A bound on the upper time to check.  <a href="#a77df4d944756afab8b2fc1e6c86439f1">More...</a><br /></td></tr>
+<tr class="separator:a77df4d944756afab8b2fc1e6c86439f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f252042ecc891e19bc053d4910c802d"><td class="memItemLeft" align="right" valign="top">static std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a9f252042ecc891e19bc053d4910c802d">g_resultsLock</a></td></tr>
+<tr class="memdesc:a9f252042ecc891e19bc053d4910c802d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutex to guard access to the results vector.  <a href="#a9f252042ecc891e19bc053d4910c802d">More...</a><br /></td></tr>
+<tr class="separator:a9f252042ecc891e19bc053d4910c802d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0441aa779d33f8cb2054f4ec98741e68"><td class="memItemLeft" align="right" valign="top">static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a0441aa779d33f8cb2054f4ec98741e68">ACCURACY</a> = std::chrono::milliseconds(15)</td></tr>
 <tr class="memdesc:a0441aa779d33f8cb2054f4ec98741e68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the expected timing accuracy (timestamps must be within +/- ACCURACY of expected values).  <a href="#a0441aa779d33f8cb2054f4ec98741e68">More...</a><br /></td></tr>
 <tr class="separator:a0441aa779d33f8cb2054f4ec98741e68"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -159,9 +208,165 @@ Variables</h2></td></tr>
 <tr class="memdesc:a320ae161b21653ceee410825abce1743"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of task iterations to run for multi-shot tests.  <a href="#a320ae161b21653ceee410825abce1743">More...</a><br /></td></tr>
 <tr class="separator:a320ae161b21653ceee410825abce1743"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a370f0753b13ce11e3a447ef03d1adefd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a370f0753b13ce11e3a447ef03d1adefd">&#9670;&nbsp;</a></span>TestType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a370f0753b13ce11e3a447ef03d1adefd">alexaClientSDK::avsCommon::utils::timing::test::TestType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The test code for SafeCTimeTest::getGmtime and SafeCTimeTest::getLocaltime is almost identical, this allows switching between them. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a370f0753b13ce11e3a447ef03d1adefdadff39ca39f426bd55bddeba8cd737c99"></a>GMTIME&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a370f0753b13ce11e3a447ef03d1adefda31efb745cad34aee80665c43960e3548"></a>LOCALTIME&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a948430a7c06f41026907e741fc1b3971"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a948430a7c06f41026907e741fc1b3971">&#9670;&nbsp;</a></span>callSafeCTimeFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::avsCommon::utils::timing::test::callSafeCTimeFunction </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingSeed</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a370f0753b13ce11e3a447ef03d1adefd">TestType</a> &amp;&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::pair&lt; time_t, std::tm &gt;&gt; *&#160;</td>
+          <td class="paramname"><em>results</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Function that accesses the safe time functions that is called from many threads. We call the function in a tight loop with no lock and save the results to be checked later.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingSeed</td><td>This is used to make sure that different time values are checked. </td></tr>
+    <tr><td class="paramname">type</td><td>The flavor of testing to perform. Can be GMTIME or LOCALTIME. </td></tr>
+    <tr><td class="paramname">results</td><td>A vector where the results are appended to be checked later. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ade3a19e0f92190d917f67113054d31d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade3a19e0f92190d917f67113054d31d8">&#9670;&nbsp;</a></span>checkSafeCTimeFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::avsCommon::utils::timing::test::checkSafeCTimeFunction </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a370f0753b13ce11e3a447ef03d1adefd">TestType</a> &amp;&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Main function for testing multithreaded access to the safe time functions. This function starts multiple threads that continuously access the time functions in an externally thread-unsafe manner. The results are collected in a single vector, where they are compared against the matching system function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>The flavor of testing to perform. Can be GMTIME or LOCALTIME. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afecefec501a2a64d46b117b999c3f336"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afecefec501a2a64d46b117b999c3f336">&#9670;&nbsp;</a></span>checkTm()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::avsCommon::utils::timing::test::checkTm </td>
+          <td>(</td>
+          <td class="paramtype">const std::tm &amp;&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::tm &amp;&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Utility function to check to see if two std::tm objects are equal.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a</td><td>One of the structures to check. </td></tr>
+    <tr><td class="paramname">b</td><td>The other structure to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a91cc083296e5bc8705ac721d702de6c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91cc083296e5bc8705ac721d702de6c5">&#9670;&nbsp;</a></span>TEST() <span class="overload">[1/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a91cc083296e5bc8705ac721d702de6c5">&#9670;&nbsp;</a></span>TEST() <span class="overload">[1/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -188,8 +393,68 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a9acf9840d9479a9b1bfd874aa9d51baf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9acf9840d9479a9b1bfd874aa9d51baf">&#9670;&nbsp;</a></span>TEST() <span class="overload">[2/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::timing::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">SafeCTimeAccessTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">getGmtimeNullReturnValue&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test to verify that getGmtime returns failure if a nullptr is passed for the result variable. </p>
+
+</div>
+</div>
+<a id="a63eaad84aa801d1f62085a70b08484d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63eaad84aa801d1f62085a70b08484d1">&#9670;&nbsp;</a></span>TEST() <span class="overload">[3/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::timing::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">SafeCTimeAccessTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">getLocaltimeNullReturnValue&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test to verify that getLocaltime returns failure if a nullptr is passed for the result variable. </p>
+
+</div>
+</div>
 <a id="afcf4c33a4e52ccb9d7b22151b65585db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afcf4c33a4e52ccb9d7b22151b65585db">&#9670;&nbsp;</a></span>TEST() <span class="overload">[2/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afcf4c33a4e52ccb9d7b22151b65585db">&#9670;&nbsp;</a></span>TEST() <span class="overload">[4/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -217,7 +482,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a171bc0ab8da3d6b9cc932642c285d72d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a171bc0ab8da3d6b9cc932642c285d72d">&#9670;&nbsp;</a></span>TEST() <span class="overload">[3/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a171bc0ab8da3d6b9cc932642c285d72d">&#9670;&nbsp;</a></span>TEST() <span class="overload">[5/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -245,7 +510,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a4bf75c16d1bd376705e29a723a694cc5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4bf75c16d1bd376705e29a723a694cc5">&#9670;&nbsp;</a></span>TEST() <span class="overload">[4/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bf75c16d1bd376705e29a723a694cc5">&#9670;&nbsp;</a></span>TEST() <span class="overload">[6/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -273,7 +538,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a218ffc85fd07f8b178ff88677b535579"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a218ffc85fd07f8b178ff88677b535579">&#9670;&nbsp;</a></span>TEST() <span class="overload">[5/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a218ffc85fd07f8b178ff88677b535579">&#9670;&nbsp;</a></span>TEST() <span class="overload">[7/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -301,7 +566,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a1946a707fdacbb5d714971a43166e373"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1946a707fdacbb5d714971a43166e373">&#9670;&nbsp;</a></span>TEST() <span class="overload">[6/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1946a707fdacbb5d714971a43166e373">&#9670;&nbsp;</a></span>TEST() <span class="overload">[8/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -325,6 +590,184 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a08a5c086ae2319fa5b17ba9e4740fa86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08a5c086ae2319fa5b17ba9e4740fa86">&#9670;&nbsp;</a></span>TEST() <span class="overload">[9/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::timing::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">SafeCTimeAccessTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">getGmtimeAtTheEpoch&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test to verify that getGmtime returns the correct calendar date for the Unix epoch. </p>
+
+</div>
+</div>
+<a id="afec1b0e61a73b832387cff47ad771113"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afec1b0e61a73b832387cff47ad771113">&#9670;&nbsp;</a></span>TEST() <span class="overload">[10/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::timing::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">TimeTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testIso8601Conversion&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2c26cb0dd2d7ec931d70d2c078b2f982"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c26cb0dd2d7ec931d70d2c078b2f982">&#9670;&nbsp;</a></span>TEST() <span class="overload">[11/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::timing::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">SafeCTimeAccessTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">getGmtime&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test to verify that getGmtime returns the same calendar date as std::gmtime. </p>
+
+</div>
+</div>
+<a id="abd9ce3145f10e9865ceb71f7c6e50bd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd9ce3145f10e9865ceb71f7c6e50bd7">&#9670;&nbsp;</a></span>TEST() <span class="overload">[12/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::timing::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">SafeCTimeAccessTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">getLocaltime&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test to verify that getLocaltime returns the same calendar date as std::localtime. </p>
+
+</div>
+</div>
+<a id="a53e8112da836c204a9099c43f3785d54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53e8112da836c204a9099c43f3785d54">&#9670;&nbsp;</a></span>TEST() <span class="overload">[13/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::timing::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">SafeCTimeAccessTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DISABLED_gmTimeMultithreadedAccess&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test to make sure that multithreaded access <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_safe_c_time_access.html#a120a08574810680d4493d23888a26f3a">SafeCTimeAccess::getGmtime</a> is safe. </p>
+
+</div>
+</div>
+<a id="acaea50e3a0b573645c6ed415dd99764c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acaea50e3a0b573645c6ed415dd99764c">&#9670;&nbsp;</a></span>TEST() <span class="overload">[14/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::timing::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">SafeCTimeAccessTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DISABLED_localtimeMultithreadedAccess&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test to make sure that multithreaded access SafeCTimeAccess::getLocaltimetime is safe. </p>
 
 </div>
 </div>
@@ -853,6 +1296,138 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a7c824117cfe6fbb9149b1f7ba7f3b18e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c824117cfe6fbb9149b1f7ba7f3b18e">&#9670;&nbsp;</a></span>testGmtimeHelper()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::avsCommon::utils::timing::test::testGmtimeHelper </td>
+          <td>(</td>
+          <td class="paramtype">const std::tm &amp;&#160;</td>
+          <td class="paramname"><em>expected</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const time_t &amp;&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Helper function to run through the test cases for getGmtime testing.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">expected</td><td>The std::tm structure string that getGmtime should generate. </td></tr>
+    <tr><td class="paramname">t</td><td>The time_t to convert. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3b4034e38e05c042776f2e70f8f4c896"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b4034e38e05c042776f2e70f8f4c896">&#9670;&nbsp;</a></span>testIso8601ConversionHelper()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::avsCommon::utils::timing::test::testIso8601ConversionHelper </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>expectedString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const struct timeval &amp;&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Helper function to run through the test cases for time to string conversions.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">expectedString</td><td>The string that convertTimeToUtcIso8601Rfc3339 should generate. </td></tr>
+    <tr><td class="paramname">t</td><td>The timeval to convert. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3f52c91b00b5d565ded786d0f7c4500a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f52c91b00b5d565ded786d0f7c4500a">&#9670;&nbsp;</a></span>testLocaltimeHelper()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::avsCommon::utils::timing::test::testLocaltimeHelper </td>
+          <td>(</td>
+          <td class="paramtype">const std::tm &amp;&#160;</td>
+          <td class="paramname"><em>expected</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const time_t &amp;&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Helper function to run through the test cases for getLocaltime testing.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">expected</td><td>The std::tm structure string that getLocaltime should generate. </td></tr>
+    <tr><td class="paramname">t</td><td>The time_t to convert. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a id="a0441aa779d33f8cb2054f4ec98741e68"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0441aa779d33f8cb2054f4ec98741e68">&#9670;&nbsp;</a></span>ACCURACY</h2>
@@ -878,6 +1453,30 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a9f252042ecc891e19bc053d4910c802d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f252042ecc891e19bc053d4910c802d">&#9670;&nbsp;</a></span>g_resultsLock</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex alexaClientSDK::avsCommon::utils::timing::test::g_resultsLock</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Mutex to guard access to the results vector. </p>
+
+</div>
+</div>
 <a id="a320ae161b21653ceee410825abce1743"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a320ae161b21653ceee410825abce1743">&#9670;&nbsp;</a></span>ITERATIONS</h2>
 
@@ -899,6 +1498,22 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Number of task iterations to run for multi-shot tests. </p>
+
+</div>
+</div>
+<a id="a77df4d944756afab8b2fc1e6c86439f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77df4d944756afab8b2fc1e6c86439f1">&#9670;&nbsp;</a></span>LARGE_TIME_VALUE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const time_t alexaClientSDK::avsCommon::utils::timing::test::LARGE_TIME_VALUE = (0x1 &lt;&lt; 30) - 1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A bound on the upper time to check. </p>
 
 </div>
 </div>
@@ -1024,7 +1639,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

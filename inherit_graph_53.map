@@ -1,11 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::Logger" alt="" coords="25,179,222,217"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_console_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::ConsoleLogger" alt="" coords="290,109,487,148"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_module_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::ModuleLogger" alt="" coords="290,47,487,85"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lMockLogger" alt="" coords="290,172,487,224"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_test_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lTestLogger" alt="" coords="290,248,487,300"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1sample_app_1_1_console_printer.html" title="alexaClientSDK::sampleApp\l::ConsolePrinter" alt="" coords="294,324,483,363"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_module_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lMockModuleLogger" alt="" coords="535,40,732,92"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_level_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::logger::LogLevelObserver\lInterface" alt="" coords="17,5,230,57"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_sink_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::logger::SinkObserverInterface" alt="" coords="5,81,242,120"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html" title="LogEntry is used to compile the log entry text to log via Logger. " alt="" coords="5,5,202,44"/>
 </map>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['firmwareversion',['FirmwareVersion',['../namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1software_info.html#af7c2b6a74bbdcaa7ff513eb8586ad0a8',1,'alexaClientSDK::avsCommon::sdkInterfaces::softwareInfo']]]
+  ['espdata',['ESPData',['../namespacealexa_client_s_d_k_1_1esp.html#ac6ad2d3a4e436a6768920997c30343f2',1,'alexaClientSDK::esp']]]
 ];

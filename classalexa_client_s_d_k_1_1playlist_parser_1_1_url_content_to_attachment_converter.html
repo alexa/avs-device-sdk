@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -193,13 +193,13 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Creates a converter object. Note that calling this function will commence the parsing and streaming of the URL into the internal attachment. If a desired start time is specified, this function will attempt to start streaming at that offset, based on available metadata if the URL points to a playlist file. If no such information is available, stremaing will begin from the beginning. It is up to the caller of this function to make a call to <code><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter.html#aa1157e9e7dac7bb81a0ced5366cefc75">getStartStreamingPoint()</a></code> to find out the actual offset from which streaming began.</p>
+<p>Creates a converter object. Note that calling this function will commence the parsing and streaming of the URL into the internal attachment. If a desired start time is specified, this function will attempt to start streaming at that offset, based on available metadata if the URL points to a playlist file. If no such information is available, streaming will begin from the beginning. It is up to the caller of this function to make a call to <code><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter.html#aa1157e9e7dac7bb81a0ced5366cefc75">getStartStreamingPoint()</a></code> to find out the actual offset from which streaming began.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">contentFetcherFactory</td><td>Used to create <code>HTTPContentFetchers</code>. </td></tr>
     <tr><td class="paramname">url</td><td>The URL to stream from. </td></tr>
     <tr><td class="paramname">observer</td><td>An observer to be notified of any errors that may happen during streaming. </td></tr>
-    <tr><td class="paramname">desiredStartTime</td><td>The desired time to attempt to start streaming from. Note that this will only succeed in cases where the URL points to a playlist with metadata about individual chunks within it. If none are found, streaming will begin from the beginning. </td></tr>
+    <tr><td class="paramname">startTime</td><td>The desired time to attempt to start streaming from. Note that this will only succeed in cases where the URL points to a playlist with metadata about individual chunks within it. If none are found, streaming will begin from the beginning. </td></tr>
   </table>
   </dd>
 </dl>
@@ -308,7 +308,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

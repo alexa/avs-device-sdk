@@ -1,18 +1,20 @@
 <map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AuthDelegate/src/AuthDelegate.cpp" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AuthDelegate/src/AuthDelegate.cpp">
-<area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="455,192,669,231"/>
-<area shape="rect" id="node15" href="$_alexa_client_s_d_k_init_8h.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="299,105,502,144"/>
-<area shape="rect" id="node17" href="$_http_post_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPost.h" alt="" coords="693,192,892,231"/>
-<area shape="rect" id="node20" href="$_http_response_codes_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpResponseCodes.h" alt="" coords="1137,105,1336,144"/>
-<area shape="rect" id="node21" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="937,105,1113,144"/>
-<area shape="rect" id="node30" href="$_auth_delegate_8h.html" title="AuthDelegate/AuthDelegate.h" alt="" coords="1964,199,2162,224"/>
-<area shape="rect" id="node19" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="1069,279,1268,317"/>
-<area shape="rect" id="node22" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1293,279,1469,317"/>
-<area shape="rect" id="node23" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1642,192,1818,231"/>
-<area shape="rect" id="node28" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1119,192,1316,231"/>
-<area shape="rect" id="node29" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1391,192,1567,231"/>
-<area shape="rect" id="node24" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1973,279,2149,317"/>
-<area shape="rect" id="node26" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1838,365,2014,404"/>
-<area shape="rect" id="node34" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="2589,279,2780,317"/>
-<area shape="rect" id="node35" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="2589,365,2780,404"/>
-<area shape="rect" id="node36" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="1687,285,1898,311"/>
+<area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="464,452,678,491"/>
+<area shape="rect" id="node15" href="$_alexa_client_s_d_k_init_8h.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="157,365,361,404"/>
+<area shape="rect" id="node17" href="$_http_post_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPost.h" alt="" coords="983,105,1183,144"/>
+<area shape="rect" id="node26" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="867,365,1043,404"/>
+<area shape="rect" id="node31" href="$_http_response_codes_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpResponseCodes.h" alt="" coords="1649,105,1848,144"/>
+<area shape="rect" id="node32" href="$_auth_delegate_8h.html" title="AuthDelegate/AuthDelegate.h" alt="" coords="2358,372,2555,397"/>
+<area shape="rect" id="node19" href="$_curl_easy_handle_wrapper_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/CurlEasyHandleWrapper.h" alt="" coords="1506,192,1706,231"/>
+<area shape="rect" id="node30" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="1883,452,2083,491"/>
+<area shape="rect" id="node20" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1329,452,1505,491"/>
+<area shape="rect" id="node25" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1455,279,1631,317"/>
+<area shape="rect" id="node21" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1355,539,1531,577"/>
+<area shape="rect" id="node23" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1030,625,1206,664"/>
+<area shape="rect" id="node27" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1011,539,1187,577"/>
+<area shape="rect" id="node28" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1006,452,1203,491"/>
+<area shape="rect" id="node29" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="830,625,1006,664"/>
+<area shape="rect" id="node36" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="2860,452,3051,491"/>
+<area shape="rect" id="node37" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="2676,539,2867,577"/>
+<area shape="rect" id="node38" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="2158,459,2368,484"/>
 </map>

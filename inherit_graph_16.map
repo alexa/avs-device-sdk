@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent_1_1_directive_info.html" title="alexaClientSDK::avsCommon\l::avs::CapabilityAgent\l::DirectiveInfo" alt="" coords="5,5,202,57"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message.html" title="alexaClientSDK::avsCommon\l::avs::AVSMessage" alt="" coords="5,5,202,44"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_directive.html" title="alexaClientSDK::avsCommon\l::avs::AVSDirective" alt="" coords="250,5,447,44"/>
 </map>

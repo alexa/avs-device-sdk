@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -75,24 +75,30 @@ $(function() {
 <div class="title">AudioItem.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="_stream_format_8h_source.html">StreamFormat.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;chrono&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;<a class="el" href="_attachment_reader_8h_source.html">AVSCommon/AVS/Attachment/AttachmentReader.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="_stream_format_8h_source.html">StreamFormat.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AudioItem.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_audio_item_8h__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_capability_agents_2_audio_player_2include_2_audio_player_2_audio_item_8h" alt=""/></div>
 <map name="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_capability_agents_2_audio_player_2include_2_audio_player_2_audio_item_8h" id="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_capability_agents_2_audio_player_2include_2_audio_player_2_audio_item_8h">
-<area shape="rect" id="node2" href="_stream_format_8h.html" title="StreamFormat.h" alt="" coords="99,119,216,144"/>
-<area shape="rect" id="node4" href="_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="42,279,272,317"/>
-<area shape="rect" id="node6" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="559,192,729,231"/>
-<area shape="rect" id="node8" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="903,279,1079,317"/>
-<area shape="rect" id="node10" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="903,365,1079,404"/>
-<area shape="rect" id="node15" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1141,452,1355,491"/>
-<area shape="rect" id="node18" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="361,539,537,577"/>
-<area shape="rect" id="node19" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="840,452,1016,491"/>
-<area shape="rect" id="node23" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="283,452,480,491"/>
-<area shape="rect" id="node24" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="640,452,816,491"/>
-<area shape="rect" id="node20" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="696,539,872,577"/>
-<area shape="rect" id="node21" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="885,625,1061,664"/>
+<area shape="rect" id="node5" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="187,119,389,157"/>
+<area shape="rect" id="node8" href="_stream_format_8h.html" title="StreamFormat.h" alt="" coords="590,125,708,151"/>
+<area shape="rect" id="node7" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="240,205,402,244"/>
+<area shape="rect" id="node10" href="_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="622,292,852,331"/>
+<area shape="rect" id="node11" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="478,205,648,244"/>
+<area shape="rect" id="node13" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="423,292,599,331"/>
+<area shape="rect" id="node14" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="976,379,1152,417"/>
+<area shape="rect" id="node19" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="796,465,1009,504"/>
+<area shape="rect" id="node21" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="324,552,500,591"/>
+<area shape="rect" id="node22" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1220,465,1396,504"/>
+<area shape="rect" id="node26" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="575,465,772,504"/>
+<area shape="rect" id="node27" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="945,639,1121,677"/>
+<area shape="rect" id="node23" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1379,552,1555,591"/>
+<area shape="rect" id="node24" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1145,639,1321,677"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -146,7 +152,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

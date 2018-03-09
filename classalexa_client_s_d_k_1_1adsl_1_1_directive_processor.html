@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -91,6 +91,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a90f8c546cb39a806374911fa73759013"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2faaf7acc90e86198035959717b24d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_processor.html#ae2faaf7acc90e86198035959717b24d2">shutdown</a> ()</td></tr>
 <tr class="separator:ae2faaf7acc90e86198035959717b24d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd74610d3b03928586673816b9b983bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_processor.html#abd74610d3b03928586673816b9b983bf">disable</a> ()</td></tr>
+<tr class="separator:abd74610d3b03928586673816b9b983bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a099e3796f20c3081d9479d25b2c87626"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_processor.html#a099e3796f20c3081d9479d25b2c87626">enable</a> ()</td></tr>
+<tr class="separator:a099e3796f20c3081d9479d25b2c87626"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Object to process <code>AVSDirectives</code> that have a non-empty <code>dialogRequestId</code>. </p><dl class="section user"><dt></dt><dd><code><a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_processor.html">DirectiveProcessor</a></code> receives directives via its <code><a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_processor.html#a90f8c546cb39a806374911fa73759013">onDirective()</a></code> method. The <code>dialogRequestId</code> property of incoming directives is checked against the current <code>dialogRequestId</code> (which is set by <code><a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_processor.html#a79f12de0f2919c6cd38cb0452c5b8523">setDialogRequestId()</a></code>). If the <code>AVSDirective's</code> value is not empty and does not match, the <code>AVSDirective</code> is dropped, and <code><a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_processor.html#a90f8c546cb39a806374911fa73759013">onDirective()</a></code> returns <code>true</code> to indicate that the <code>AVSDirective</code> has been consumed (in this case, because it is not longer relevant). </dd></dl>
@@ -141,6 +145,43 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="abd74610d3b03928586673816b9b983bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd74610d3b03928586673816b9b983bf">&#9670;&nbsp;</a></span>disable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::adsl::DirectiveProcessor::disable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Disable the <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_processor.html">DirectiveProcessor</a>, queues all outstanding <code>AVSDirectives</code> for cancellation and blocks until the processing of all <code>AVSDirectives</code> has completed. </p>
+
+</div>
+</div>
+<a id="a099e3796f20c3081d9479d25b2c87626"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a099e3796f20c3081d9479d25b2c87626">&#9670;&nbsp;</a></span>enable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::adsl::DirectiveProcessor::enable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable the <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_processor.html">DirectiveProcessor</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>Whether it succeeded to enable the directive processor. </dd></dl>
+
+</div>
+</div>
 <a id="a90f8c546cb39a806374911fa73759013"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a90f8c546cb39a806374911fa73759013">&#9670;&nbsp;</a></span>onDirective()</h2>
 
@@ -218,7 +259,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

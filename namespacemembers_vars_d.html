@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -120,7 +120,7 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1context_manager_1_1test.html#ac3e88a475a810ffd48debb1f4c2910bd">alexaClientSDK::contextManager::test</a>
 </li>
 <li>DEFAULT_STATE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a09add2e1d38a9cbeb28d64f59889effc">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#ad791223c40054f1f6ff04535866aebca">alexaClientSDK::avsCommon::avs::externalMediaPlayer</a>
 </li>
 <li>DEFAULT_TIMEOUT
 : <a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a2112e7611274fc458be2f75b9a7ebd81">alexaClientSDK::afml::test</a>
@@ -150,8 +150,7 @@ $(function() {
 : <a class="el" href="namespace_auth_server.html#a3a53c6617b3b0cadf52cec5bf60b4500">AuthServer</a>
 </li>
 <li>DIALOG_ACTIVITY_ID
-: <a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ae9cfc63f9c9c60a284f172a5ed29ef47">alexaClientSDK::afml::test</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a2118bc82bb44b479698a27fdee873426">alexaClientSDK::integration::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a2118bc82bb44b479698a27fdee873426">alexaClientSDK::integration::test</a>
 </li>
 <li>DIALOG_CHANNEL_NAME
 : <a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ad134513c6e11f83b95e0189169c263a2">alexaClientSDK::afml::test</a>
@@ -160,6 +159,9 @@ $(function() {
 <li>DIALOG_CHANNEL_PRIORITY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a98a5ca625ba6997f2eddf6525477790a">alexaClientSDK::afml::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#ada7aa27d9a89febf6487ffd2852029eb">alexaClientSDK::integration::test</a>
+</li>
+<li>DIALOG_INTERFACE_NAME
+: <a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a0ea027d9ebe4eb175412aa7f1b138870">alexaClientSDK::afml::test</a>
 </li>
 <li>DIALOG_REQUEST_ID
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#a1add0925f7f848342261752b56ad398c">alexaClientSDK::capabilityAgents::system::test</a>
@@ -171,8 +173,8 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a283d5022244b1597e311f2d604e53647">alexaClientSDK::adsl::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1test.html#a10299350b2effabf849ec9b88b7ff6b9">alexaClientSDK::avsCommon::utils::json::test</a>
 </li>
-<li>DIFFERENT_DIALOG_ACTIVITY_ID
-: <a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#aac248ba77cb050807b4c8d3a4ab7c156">alexaClientSDK::afml::test</a>
+<li>DIFFERENT_DIALOG_INTERFACE_NAME
+: <a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#aa76a1a4cc31a22c6c86e19bce5c400c4">alexaClientSDK::afml::test</a>
 </li>
 <li>DIRECTIVE_INVALID_DIRECTIVE_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#ae4892fe5cf070a72876096130d7b70aa">alexaClientSDK::adsl::test</a>
@@ -219,6 +221,9 @@ $(function() {
 <li>DISABLESHUFFLE_DIRECTIVE
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a810c64ac70416cee00ea1b6edff5f1c9">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
 </li>
+<li>DUMMY_PROVIDER
+: <a class="el" href="namespacealexa_client_s_d_k_1_1context_manager_1_1test.html#a969ce9e1355290250dcd5f0a211a07fd">alexaClientSDK::contextManager::test</a>
+</li>
 <li>DUMMY_SDS_BUFFER_SIZE
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acl_1_1test.html#ab905250a115ad260756129656b279bb8">alexaClientSDK::acl::test</a>
 </li>
@@ -226,14 +231,14 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acl_1_1test.html#a5548deea24d7857d05f3b9ad8b0c750b">alexaClientSDK::acl::test</a>
 </li>
 <li>DURATIONINMS
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a395b35f3021b383468470a61e77065b7">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#a76a8ffdaf8c3d1f37b6071eadd3a4316">alexaClientSDK::avsCommon::avs::externalMediaPlayer</a>
 </li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

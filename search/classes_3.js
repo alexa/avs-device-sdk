@@ -16,5 +16,6 @@ var searchData=
   ['directiveroutertest',['DirectiveRouterTest',['../classalexa_client_s_d_k_1_1adsl_1_1test_1_1_directive_router_test.html',1,'alexaClientSDK::adsl::test']]],
   ['directivesequencer',['DirectiveSequencer',['../classalexa_client_s_d_k_1_1adsl_1_1_directive_sequencer.html',1,'alexaClientSDK::adsl']]],
   ['directivesequencerinterface',['DirectiveSequencerInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
-  ['directivesequencertest',['DirectiveSequencerTest',['../classalexa_client_s_d_k_1_1adsl_1_1test_1_1_directive_sequencer_test.html',1,'alexaClientSDK::adsl::test']]]
+  ['directivesequencertest',['DirectiveSequencerTest',['../classalexa_client_s_d_k_1_1adsl_1_1test_1_1_directive_sequencer_test.html',1,'alexaClientSDK::adsl::test']]],
+  ['dummyespdataprovider',['DummyESPDataProvider',['../classalexa_client_s_d_k_1_1esp_1_1_dummy_e_s_p_data_provider.html',1,'alexaClientSDK::esp']]]
 ];

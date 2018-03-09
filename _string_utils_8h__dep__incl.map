@@ -1,10 +1,12 @@
 <map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/String/StringUtils.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/String/StringUtils.h">
-<area shape="rect" id="node2" href="$_string_utils_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/src/StringUtils.cpp" alt="" coords="5,119,203,171"/>
-<area shape="rect" id="node3" href="$_time_utils_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/src/TimeUtils.cpp" alt="" coords="227,119,424,171"/>
-<area shape="rect" id="node4" href="$_string_utils_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/test/StringUtilsTest.cpp" alt="" coords="448,119,645,171"/>
-<area shape="rect" id="node5" href="$_alert_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/Alerts/src/Alert.cpp" alt="" coords="670,119,888,171"/>
-<area shape="rect" id="node6" href="$_s_q_lite_alert_storage_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/Alerts/src/Storage/SQLiteAlertStorage.cpp" alt="" coords="912,119,1187,171"/>
-<area shape="rect" id="node7" href="$_s_q_lite_setting_storage_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/Settings/src/SQLiteSettingStorage.cpp" alt="" coords="1211,119,1464,171"/>
-<area shape="rect" id="node8" href="$_user_input_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/UserInputManager.cpp" alt="" coords="1488,119,1675,171"/>
-<area shape="rect" id="node9" href="$_s_q_lite_utils_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Storage\l/SQLiteStorage/src/SQLiteUtils.cpp" alt="" coords="1699,119,1928,171"/>
+<area shape="rect" id="node2" href="$_audio_activity_tracker_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AFML\l/src/AudioActivityTracker.cpp" alt="" coords="5,119,197,171"/>
+<area shape="rect" id="node3" href="$_audio_activity_tracker_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AFML\l/test/AudioActivityTrackerTest.cpp" alt="" coords="222,119,442,171"/>
+<area shape="rect" id="node4" href="$_string_utils_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/src/StringUtils.cpp" alt="" coords="467,119,664,171"/>
+<area shape="rect" id="node5" href="$_time_utils_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/src/TimeUtils.cpp" alt="" coords="688,119,885,171"/>
+<area shape="rect" id="node6" href="$_string_utils_test_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/AVSCommon\l/Utils/test/StringUtilsTest.cpp" alt="" coords="909,119,1107,171"/>
+<area shape="rect" id="node7" href="$_alert_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/Alerts/src/Alert.cpp" alt="" coords="1131,119,1349,171"/>
+<area shape="rect" id="node8" href="$_s_q_lite_alert_storage_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/Alerts/src/Storage/SQLiteAlertStorage.cpp" alt="" coords="1373,119,1648,171"/>
+<area shape="rect" id="node9" href="$_s_q_lite_setting_storage_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/CapabilityAgents\l/Settings/src/SQLiteSettingStorage.cpp" alt="" coords="1672,119,1925,171"/>
+<area shape="rect" id="node10" href="$_user_input_manager_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/SampleApp\l/src/UserInputManager.cpp" alt="" coords="1949,119,2136,171"/>
+<area shape="rect" id="node11" href="$_s_q_lite_utils_8cpp.html" title="/Users/sdy/AVS/github\l/avs&#45;device&#45;sdk/Storage\l/SQLiteStorage/src/SQLiteUtils.cpp" alt="" coords="2160,119,2389,171"/>
 </map>

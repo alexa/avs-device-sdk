@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -80,11 +80,15 @@ $(function() {
 Inheritance diagram for alexaClientSDK::capabilityAgents::notifications::test::NotificationsCapabilityAgentTest:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test_inherit__map" alt="Inheritance graph"/></div>
+<map name="alexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test_inherit__map" id="alexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test_inherit__map">
+</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for alexaClientSDK::capabilityAgents::notifications::test::NotificationsCapabilityAgentTest:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test__coll__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test_coll__map" alt="Collaboration graph"/></div>
+<map name="alexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test_coll__map" id="alexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test_coll__map">
+</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -134,6 +138,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a8a1176f52ea6b9c8a7abb428985b4cc4"><td class="memItemLeft" align="right" valign="top">std::condition_variable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test.html#a8a1176f52ea6b9c8a7abb428985b4cc4">m_setIndicatorTrigger</a></td></tr>
 <tr class="memdesc:a8a1176f52ea6b9c8a7abb428985b4cc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggers threads waiting on a SetIndicator directive to be processed.  <a href="#a8a1176f52ea6b9c8a7abb428985b4cc4">More...</a><br /></td></tr>
 <tr class="separator:a8a1176f52ea6b9c8a7abb428985b4cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60ca2688d1ebc82115003c2fc6c2c58c"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test.html#a60ca2688d1ebc82115003c2fc6c2c58c">m_dataManager</a></td></tr>
+<tr class="memdesc:a60ca2688d1ebc82115003c2fc6c2c58c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shared pointer to <code>CustomerDataManager</code>.  <a href="#a60ca2688d1ebc82115003c2fc6c2c58c">More...</a><br /></td></tr>
+<tr class="separator:a60ca2688d1ebc82115003c2fc6c2c58c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99b5437363bd3b75837184f9df3fcfdc"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test.html#a99b5437363bd3b75837184f9df3fcfdc">m_numSetIndicatorsProcessed</a></td></tr>
 <tr class="memdesc:a99b5437363bd3b75837184f9df3fcfdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">A count of how many SetIndicator directives have been processed.  <a href="#a99b5437363bd3b75837184f9df3fcfdc">More...</a><br /></td></tr>
 <tr class="separator:a99b5437363bd3b75837184f9df3fcfdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -297,6 +304,22 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a60ca2688d1ebc82115003c2fc6c2c58c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60ca2688d1ebc82115003c2fc6c2c58c">&#9670;&nbsp;</a></span>m_dataManager</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a>&gt; alexaClientSDK::capabilityAgents::notifications::test::NotificationsCapabilityAgentTest::m_dataManager</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Shared pointer to <code>CustomerDataManager</code>. </p>
+
+</div>
+</div>
 <a id="adc7f20736b9c1e3f2fac1ad3691b811c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adc7f20736b9c1e3f2fac1ad3691b811c">&#9670;&nbsp;</a></span>m_mockContextManager</h2>
 
@@ -480,7 +503,7 @@ Public Attributes</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

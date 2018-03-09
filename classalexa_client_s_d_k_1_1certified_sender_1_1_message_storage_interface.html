@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -83,7 +83,8 @@ Inheritance diagram for alexaClientSDK::certifiedSender::MessageStorageInterface
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface_inherit__map" id="alexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface_inherit__map">
-<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html" title="alexaClientSDK::certified\lSender::SQLiteMessageStorage" alt="" coords="11,92,224,131"/>
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html" title="alexaClientSDK::certified\lSender::SQLiteMessageStorage" alt="" coords="288,5,501,44"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_mock_message_storage.html" title="alexaClientSDK::certified\lSender::test::MockMessageStorage" alt="" coords="278,68,511,107"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -96,12 +97,10 @@ Classes</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a75f8c604874181dc95f58333383fea5e"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html#a75f8c604874181dc95f58333383fea5e">~MessageStorageInterface</a> ()=default</td></tr>
 <tr class="separator:a75f8c604874181dc95f58333383fea5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20180326b3a7644f1b554a3444ad7cd2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html#a20180326b3a7644f1b554a3444ad7cd2">createDatabase</a> (const std::string &amp;filePath)=0</td></tr>
-<tr class="separator:a20180326b3a7644f1b554a3444ad7cd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff1c7bece6a98976ce10759d71184189"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html#aff1c7bece6a98976ce10759d71184189">open</a> (const std::string &amp;filePath)=0</td></tr>
-<tr class="separator:aff1c7bece6a98976ce10759d71184189"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d8f9b66c166e7c259c30782bbdd79d2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html#a0d8f9b66c166e7c259c30782bbdd79d2">isOpen</a> ()=0</td></tr>
-<tr class="separator:a0d8f9b66c166e7c259c30782bbdd79d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83ad426fad42db7e0ffd7ff164d50744"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html#a83ad426fad42db7e0ffd7ff164d50744">createDatabase</a> ()=0</td></tr>
+<tr class="separator:a83ad426fad42db7e0ffd7ff164d50744"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69f5888e39921094136eb82e8c422b2d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html#a69f5888e39921094136eb82e8c422b2d">open</a> ()=0</td></tr>
+<tr class="separator:a69f5888e39921094136eb82e8c422b2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a770eca510a5c854d69f445ed65148def"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html#a770eca510a5c854d69f445ed65148def">close</a> ()=0</td></tr>
 <tr class="separator:a770eca510a5c854d69f445ed65148def"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae316419688e35565148312b7f793891d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html#ae316419688e35565148312b7f793891d">store</a> (const std::string &amp;message, int *id)=0</td></tr>
@@ -202,8 +201,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a20180326b3a7644f1b554a3444ad7cd2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20180326b3a7644f1b554a3444ad7cd2">&#9670;&nbsp;</a></span>createDatabase()</h2>
+<a id="a83ad426fad42db7e0ffd7ff164d50744"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83ad426fad42db7e0ffd7ff164d50744">&#9670;&nbsp;</a></span>createDatabase()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -214,8 +213,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual bool alexaClientSDK::certifiedSender::MessageStorageInterface::createDatabase </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filePath</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -225,16 +223,10 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Creates a new database with the given filePath. If the file specified already exists, or if a database is already being handled by this object, then this function returns false.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filePath</td><td>The path to the file which will be used to contain the database. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is created ok, or <code>false</code> if either the file exists or a database is already being handled by this object. </dd></dl>
+<p>Creates a new database with the given filePath. If a database is already being handled by this object, or there is are other errors creating the database, this function returns false.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is created ok, or <code>false</code> if a database is already being handled by this object or there is an internal error creating the database. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html#a14b6d62f83979271ee1e7a81a4471a9f">alexaClientSDK::certifiedSender::SQLiteMessageStorage</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html#a2fb82ae4bbd9473259c34e1251417530">alexaClientSDK::certifiedSender::SQLiteMessageStorage</a>.</p>
 
 </div>
 </div>
@@ -274,35 +266,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0d8f9b66c166e7c259c30782bbdd79d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d8f9b66c166e7c259c30782bbdd79d2">&#9670;&nbsp;</a></span>isOpen()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool alexaClientSDK::certifiedSender::MessageStorageInterface::isOpen </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Query if this object is currently managing an open database.</p>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> If a database is being currently managed by this object, <code>false</code> otherwise. </dd></dl>
-
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html#a89af28a4fb3261765200a344ac0b1944">alexaClientSDK::certifiedSender::SQLiteMessageStorage</a>.</p>
-
-</div>
-</div>
 <a id="ad30f520cabee0ec267f3587e5c6049c1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad30f520cabee0ec267f3587e5c6049c1">&#9670;&nbsp;</a></span>load()</h2>
 
@@ -339,8 +302,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aff1c7bece6a98976ce10759d71184189"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff1c7bece6a98976ce10759d71184189">&#9670;&nbsp;</a></span>open()</h2>
+<a id="a69f5888e39921094136eb82e8c422b2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69f5888e39921094136eb82e8c422b2d">&#9670;&nbsp;</a></span>open()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -351,8 +314,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual bool alexaClientSDK::certifiedSender::MessageStorageInterface::open </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filePath</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -362,16 +324,10 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Open a database with the given filePath. If this object is already managing an open database, or the file does not exist, or there is a problem opening the database, this function returns false.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filePath</td><td>The path to the file which will be used to contain the database. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is opened ok, <code>false</code> if either the file does not exist, if this object is already managing an open database, or if there is another internal reason the database could not be opened. </dd></dl>
+<p>Open an existing database. If this object is already managing an open database, or there is a problem opening the database, this function returns false.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is opened ok, <code>false</code> if this object is already managing an open database, or if there is another internal reason the database could not be opened. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html#a2e57b62ba9dd1b38ab3dd235c04c87d3">alexaClientSDK::certifiedSender::SQLiteMessageStorage</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html#a9a056147131f732aa37bbc834bf3a50d">alexaClientSDK::certifiedSender::SQLiteMessageStorage</a>.</p>
 
 </div>
 </div>
@@ -429,7 +385,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -85,8 +85,8 @@ Public Types</h2></td></tr>
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#af99f8694e53fbfa4fd3e291f53f7ef55a5596742061fc631cdf6bf2a6fa954df3">TransferType::kPOST</a>
  }</td></tr>
 <tr class="separator:af99f8694e53fbfa4fd3e291f53f7ef55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cbbef2570297cf6980710809bb35d50"><td class="memItemLeft" align="right" valign="top">typedef size_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a8cbbef2570297cf6980710809bb35d50">CurlCallback</a>) (char *buffer, size_t blockSize, size_t numBlocks, void *userData)</td></tr>
-<tr class="separator:a8cbbef2570297cf6980710809bb35d50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2809e455ecb95686d32239554f85156"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ae2809e455ecb95686d32239554f85156">CurlCallback</a> = size_t(*)(char *buffer, size_t blockSize, size_t numBlocks, void *userData)</td></tr>
+<tr class="separator:ae2809e455ecb95686d32239554f85156"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -98,6 +98,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a33550beee4b5eef59c38afdd60ee84f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab57976eddbdc9a43754d95179117b775"><td class="memItemLeft" align="right" valign="top">CURL *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ab57976eddbdc9a43754d95179117b775">getCurlHandle</a> ()</td></tr>
 <tr class="separator:ab57976eddbdc9a43754d95179117b775"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2aa345bbddc974cf1cb11f3de90bb01d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a2aa345bbddc974cf1cb11f3de90bb01d">isValid</a> ()</td></tr>
+<tr class="separator:a2aa345bbddc974cf1cb11f3de90bb01d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad39e3db5b3495f88cbb6e9e86f910130"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ad39e3db5b3495f88cbb6e9e86f910130">addHTTPHeader</a> (const std::string &amp;header)</td></tr>
 <tr class="separator:ad39e3db5b3495f88cbb6e9e86f910130"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29f38d8cc80e03c239b835d22a1cb71a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a29f38d8cc80e03c239b835d22a1cb71a">addPostHeader</a> (const std::string &amp;header)</td></tr>
@@ -112,26 +114,31 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a420e150322172570bfaeab781d1f448c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78fe8a942fc1fb48a8bb7f641943aa2d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a78fe8a942fc1fb48a8bb7f641943aa2d">setPostStream</a> (const std::string &amp;fieldName, void *userData)</td></tr>
 <tr class="separator:a78fe8a942fc1fb48a8bb7f641943aa2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a735f18ab0feb8ce20e36e89514b032b0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a735f18ab0feb8ce20e36e89514b032b0">setPostData</a> (const std::string &amp;data)</td></tr>
+<tr class="separator:a735f18ab0feb8ce20e36e89514b032b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a516946926175a0059059a7984cb13892"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a516946926175a0059059a7984cb13892">setConnectionTimeout</a> (const std::chrono::seconds timeoutSeconds)</td></tr>
 <tr class="separator:a516946926175a0059059a7984cb13892"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d7eff9cf78812e7c30704791a79bbe9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a7d7eff9cf78812e7c30704791a79bbe9">setWriteCallback</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a8cbbef2570297cf6980710809bb35d50">CurlCallback</a> callback, void *userData)</td></tr>
+<tr class="memitem:a7d7eff9cf78812e7c30704791a79bbe9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a7d7eff9cf78812e7c30704791a79bbe9">setWriteCallback</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ae2809e455ecb95686d32239554f85156">CurlCallback</a> callback, void *userData)</td></tr>
 <tr class="separator:a7d7eff9cf78812e7c30704791a79bbe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3198245e24508f7c49193daeb55d3e0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ac3198245e24508f7c49193daeb55d3e0">setHeaderCallback</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a8cbbef2570297cf6980710809bb35d50">CurlCallback</a> callback, void *userData)</td></tr>
+<tr class="memitem:ac3198245e24508f7c49193daeb55d3e0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ac3198245e24508f7c49193daeb55d3e0">setHeaderCallback</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ae2809e455ecb95686d32239554f85156">CurlCallback</a> callback, void *userData)</td></tr>
 <tr class="separator:ac3198245e24508f7c49193daeb55d3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d1472e6333afa532745ea04fab92288"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a5d1472e6333afa532745ea04fab92288">setReadCallback</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a8cbbef2570297cf6980710809bb35d50">CurlCallback</a> callback, void *userData)</td></tr>
+<tr class="memitem:a5d1472e6333afa532745ea04fab92288"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a5d1472e6333afa532745ea04fab92288">setReadCallback</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ae2809e455ecb95686d32239554f85156">CurlCallback</a> callback, void *userData)</td></tr>
 <tr class="separator:a5d1472e6333afa532745ea04fab92288"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e4cf1e3721b6a18bb417219b64d3d10"><td class="memTemplParams" colspan="2">template&lt;typename ParamType &gt; </td></tr>
+<tr class="memitem:a2e4cf1e3721b6a18bb417219b64d3d10"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a2e4cf1e3721b6a18bb417219b64d3d10">setopt</a> (CURLoption option, ParamType param)</td></tr>
+<tr class="separator:a2e4cf1e3721b6a18bb417219b64d3d10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class to allocate and configure a curl easy handle </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a8cbbef2570297cf6980710809bb35d50"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cbbef2570297cf6980710809bb35d50">&#9670;&nbsp;</a></span>CurlCallback</h2>
+<a id="ae2809e455ecb95686d32239554f85156"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2809e455ecb95686d32239554f85156">&#9670;&nbsp;</a></span>CurlCallback</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef size_t(* alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper::CurlCallback) (char *buffer, size_t blockSize, size_t numBlocks, void *userData)</td>
+          <td class="memname">using <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ae2809e455ecb95686d32239554f85156">alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper::CurlCallback</a> =  size_t (*)(char* buffer, size_t blockSize, size_t numBlocks, void* userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -270,6 +277,25 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a2aa345bbddc974cf1cb11f3de90bb01d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2aa345bbddc974cf1cb11f3de90bb01d">&#9670;&nbsp;</a></span>isValid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper::isValid </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Used to check if curl is correctly initialized</p>
+<dl class="section return"><dt>Returns</dt><dd>true if curl handler is valid </dd></dl>
+
+</div>
+</div>
 <a id="a33550beee4b5eef59c38afdd60ee84f9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a33550beee4b5eef59c38afdd60ee84f9">&#9670;&nbsp;</a></span>reset()</h2>
 
@@ -331,7 +357,7 @@ CURL post form </li>
         <tr>
           <td class="memname">bool alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper::setHeaderCallback </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a8cbbef2570297cf6980710809bb35d50">CurlCallback</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ae2809e455ecb95686d32239554f85156">CurlCallback</a>&#160;</td>
           <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
@@ -356,6 +382,45 @@ CURL post form </li>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the addition was successful </dd></dl>
+
+</div>
+</div>
+<a id="a2e4cf1e3721b6a18bb417219b64d3d10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e4cf1e3721b6a18bb417219b64d3d10">&#9670;&nbsp;</a></span>setopt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ParamType &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper::setopt </td>
+          <td>(</td>
+          <td class="paramtype">CURLoption&#160;</td>
+          <td class="paramname"><em>option</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ParamType&#160;</td>
+          <td class="paramname"><em>param</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Helper function for calling curl_easy_setopt and checking the result.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">option</td><td>The option parameter to pass through to curl_easy_setopt. </td></tr>
+    <tr><td class="paramname">param</td><td>The param option to pass through to curl_easy_setopt. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> of the operation was successful. </dd></dl>
 
 </div>
 </div>
@@ -393,6 +458,32 @@ CURL post form </li>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the addition was successful </dd></dl>
+
+</div>
+</div>
+<a id="a735f18ab0feb8ce20e36e89514b032b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a735f18ab0feb8ce20e36e89514b032b0">&#9670;&nbsp;</a></span>setPostData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper::setPostData </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the data to be sent in the next POST operation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>String buffer to the full data to send in a HTTP POST operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the operation was successful. </dd></dl>
 
 </div>
 </div>
@@ -442,7 +533,7 @@ CURL post form </li>
         <tr>
           <td class="memname">bool alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper::setReadCallback </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a8cbbef2570297cf6980710809bb35d50">CurlCallback</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ae2809e455ecb95686d32239554f85156">CurlCallback</a>&#160;</td>
           <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
@@ -557,7 +648,7 @@ CURL post form </li>
         <tr>
           <td class="memname">bool alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper::setWriteCallback </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a8cbbef2570297cf6980710809bb35d50">CurlCallback</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ae2809e455ecb95686d32239554f85156">CurlCallback</a>&#160;</td>
           <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
@@ -593,7 +684,7 @@ CURL post form </li>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

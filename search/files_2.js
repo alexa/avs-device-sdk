@@ -5,6 +5,7 @@ var searchData=
   ['capabilityagenttest_2ecpp',['CapabilityAgentTest.cpp',['../_capability_agent_test_8cpp.html',1,'']]],
   ['certifiedsender_2ecpp',['CertifiedSender.cpp',['../_certified_sender_8cpp.html',1,'']]],
   ['certifiedsender_2eh',['CertifiedSender.h',['../_certified_sender_8h.html',1,'']]],
+  ['certifiedsendertest_2ecpp',['CertifiedSenderTest.cpp',['../_certified_sender_test_8cpp.html',1,'']]],
   ['changelog_2emd',['CHANGELOG.md',['../_c_h_a_n_g_e_l_o_g_8md.html',1,'']]],
   ['channel_2ecpp',['Channel.cpp',['../_channel_8cpp.html',1,'']]],
   ['channel_2eh',['Channel.h',['../_channel_8h.html',1,'']]],
@@ -35,5 +36,10 @@ var searchData=
   ['curleasyhandlewrapper_2ecpp',['CurlEasyHandleWrapper.cpp',['../_curl_easy_handle_wrapper_8cpp.html',1,'']]],
   ['curleasyhandlewrapper_2eh',['CurlEasyHandleWrapper.h',['../_curl_easy_handle_wrapper_8h.html',1,'']]],
   ['curlmultihandlewrapper_2ecpp',['CurlMultiHandleWrapper.cpp',['../_curl_multi_handle_wrapper_8cpp.html',1,'']]],
-  ['curlmultihandlewrapper_2eh',['CurlMultiHandleWrapper.h',['../_curl_multi_handle_wrapper_8h.html',1,'']]]
+  ['curlmultihandlewrapper_2eh',['CurlMultiHandleWrapper.h',['../_curl_multi_handle_wrapper_8h.html',1,'']]],
+  ['customerdatahandler_2ecpp',['CustomerDataHandler.cpp',['../_customer_data_handler_8cpp.html',1,'']]],
+  ['customerdatahandler_2eh',['CustomerDataHandler.h',['../_customer_data_handler_8h.html',1,'']]],
+  ['customerdatamanager_2ecpp',['CustomerDataManager.cpp',['../_customer_data_manager_8cpp.html',1,'']]],
+  ['customerdatamanager_2eh',['CustomerDataManager.h',['../_customer_data_manager_8h.html',1,'']]],
+  ['customerdatamanagertest_2ecpp',['CustomerDataManagerTest.cpp',['../_customer_data_manager_test_8cpp.html',1,'']]]
 ];

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -90,12 +90,10 @@ Inheritance diagram for alexaClientSDK::capabilityAgents::settings::SettingsStor
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a6374b4c301c0c74b38090f4af1fe1e80"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_storage_interface.html#a6374b4c301c0c74b38090f4af1fe1e80">~SettingsStorageInterface</a> ()=default</td></tr>
 <tr class="separator:a6374b4c301c0c74b38090f4af1fe1e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d53200b2c0a590a73a0a82cbfe84294"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_storage_interface.html#a8d53200b2c0a590a73a0a82cbfe84294">createDatabase</a> (const std::string &amp;filePath)=0</td></tr>
-<tr class="separator:a8d53200b2c0a590a73a0a82cbfe84294"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a543a392a6fab6645459f3ffa267c1e15"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_storage_interface.html#a543a392a6fab6645459f3ffa267c1e15">open</a> (const std::string &amp;filePath)=0</td></tr>
-<tr class="separator:a543a392a6fab6645459f3ffa267c1e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a131546c11e40d93a592138690b3cfb8a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_storage_interface.html#a131546c11e40d93a592138690b3cfb8a">isOpen</a> ()=0</td></tr>
-<tr class="separator:a131546c11e40d93a592138690b3cfb8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a734be9e9d7c39ded86ad6fd610158d8c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_storage_interface.html#a734be9e9d7c39ded86ad6fd610158d8c">createDatabase</a> ()=0</td></tr>
+<tr class="separator:a734be9e9d7c39ded86ad6fd610158d8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d79720861ae81705d4d12d92eee0be3"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_storage_interface.html#a3d79720861ae81705d4d12d92eee0be3">open</a> ()=0</td></tr>
+<tr class="separator:a3d79720861ae81705d4d12d92eee0be3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a238caa6e15c85f44ea846e3f05f9064b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_storage_interface.html#a238caa6e15c85f44ea846e3f05f9064b">close</a> ()=0</td></tr>
 <tr class="separator:a238caa6e15c85f44ea846e3f05f9064b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa9c279a8f954f79c5a83befbdc610de"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_storage_interface.html#aaa9c279a8f954f79c5a83befbdc610de">settingExists</a> (const std::string &amp;key)=0</td></tr>
@@ -198,8 +196,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8d53200b2c0a590a73a0a82cbfe84294"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d53200b2c0a590a73a0a82cbfe84294">&#9670;&nbsp;</a></span>createDatabase()</h2>
+<a id="a734be9e9d7c39ded86ad6fd610158d8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a734be9e9d7c39ded86ad6fd610158d8c">&#9670;&nbsp;</a></span>createDatabase()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -210,8 +208,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual bool alexaClientSDK::capabilityAgents::settings::SettingsStorageInterface::createDatabase </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filePath</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -221,16 +218,10 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Creates a new database with the given filepath. If the file specified already exists, or if a database is already being handled by this object, then this function returns false.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filePath</td><td>The path to the file which will be used to contain the database. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is created ok, or <code>false</code> if either the file exists or a database is already being handled by this object. </dd></dl>
+<p>Creates a new database. If a database is already being handled by this object or there is another internal error, then this function returns false.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is created ok, or <code>false</code> if a database is already being handled by this object or there is a problem creating the database. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_s_q_lite_setting_storage.html#a51dc6c28fc3bc481dd65a77b743e00f2">alexaClientSDK::capabilityAgents::settings::SQLiteSettingStorage</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_s_q_lite_setting_storage.html#a6f9b962779a9596494ebd30614bb4c93">alexaClientSDK::capabilityAgents::settings::SQLiteSettingStorage</a>.</p>
 
 </div>
 </div>
@@ -267,35 +258,6 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Whether the setting was successfully erased. </dd></dl>
 
 <p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_s_q_lite_setting_storage.html#a005b035d760d971ccaf0bc06d9f19505">alexaClientSDK::capabilityAgents::settings::SQLiteSettingStorage</a>.</p>
-
-</div>
-</div>
-<a id="a131546c11e40d93a592138690b3cfb8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a131546c11e40d93a592138690b3cfb8a">&#9670;&nbsp;</a></span>isOpen()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool alexaClientSDK::capabilityAgents::settings::SettingsStorageInterface::isOpen </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Query if this object is currently managing an open database.</p>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> If a database is being currently managed by this object, <code>false</code> otherwise. </dd></dl>
-
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_s_q_lite_setting_storage.html#a84283a8e31c6cba95475ce19411ffc5d">alexaClientSDK::capabilityAgents::settings::SQLiteSettingStorage</a>.</p>
 
 </div>
 </div>
@@ -382,8 +344,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a543a392a6fab6645459f3ffa267c1e15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a543a392a6fab6645459f3ffa267c1e15">&#9670;&nbsp;</a></span>open()</h2>
+<a id="a3d79720861ae81705d4d12d92eee0be3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d79720861ae81705d4d12d92eee0be3">&#9670;&nbsp;</a></span>open()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -394,8 +356,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual bool alexaClientSDK::capabilityAgents::settings::SettingsStorageInterface::open </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filePath</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -405,16 +366,10 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Open a database with the given filepath. If this object is already managing an open database, or the file does not exist, or there is a problem opening the database, this function returns false.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filePath</td><td>The path to the file which will be used to contain the database. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is opened ok, <code>false</code> if either the file does not exist, if this object is already managing an open database, or if there is another internal reason the database could not be opened. </dd></dl>
+<p>Open an existing database. If this object is already managing an open database, or there is a problem opening the database, this function returns false.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is opened ok, <code>false</code> if this object is already managing an open database, or if there is another internal reason the database could not be opened. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_s_q_lite_setting_storage.html#a2fdb068ceadc69df4c321e3e426da8e8">alexaClientSDK::capabilityAgents::settings::SQLiteSettingStorage</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_s_q_lite_setting_storage.html#ab959cddcfc479c92f59f9f5510d78ecf">alexaClientSDK::capabilityAgents::settings::SQLiteSettingStorage</a>.</p>
 
 </div>
 </div>
@@ -508,7 +463,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

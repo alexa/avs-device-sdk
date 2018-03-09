@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['safectimeaccess',['SafeCTimeAccess',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_safe_c_time_access.html',1,'alexaClientSDK::avsCommon::utils::timing']]],
   ['sampleapplication',['SampleApplication',['../classalexa_client_s_d_k_1_1sample_app_1_1_sample_application.html',1,'alexaClientSDK::sampleApp']]],
   ['sendparams',['SendParams',['../classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html',1,'alexaClientSDK::integration::test::TestMessageSender']]],
   ['sensorykeyworddetector',['SensoryKeywordDetector',['../classalexa_client_s_d_k_1_1kwd_1_1_sensory_keyword_detector.html',1,'alexaClientSDK::kwd']]],
@@ -32,12 +33,14 @@ var searchData=
   ['speakersettings',['SpeakerSettings',['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface_1_1_speaker_settings.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface']]],
   ['speechsynthesizer',['SpeechSynthesizer',['../classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html',1,'alexaClientSDK::capabilityAgents::speechSynthesizer']]],
   ['speechsynthesizerobserverinterface',['SpeechSynthesizerObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_synthesizer_observer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
-  ['speechsynthesizertest',['SpeechSynthesizerTest',['../classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html',1,'alexaClientSDK::integration::test::SpeechSynthesizerTest'],['../classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html',1,'alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest']]],
+  ['speechsynthesizertest',['SpeechSynthesizerTest',['../classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html',1,'alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest'],['../classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html',1,'alexaClientSDK::integration::test::SpeechSynthesizerTest']]],
   ['sqlitealertstorage',['SQLiteAlertStorage',['../classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html',1,'alexaClientSDK::capabilityAgents::alerts::storage']]],
+  ['sqlitedatabase',['SQLiteDatabase',['../classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html',1,'alexaClientSDK::storage::sqliteStorage']]],
   ['sqlitemessagestorage',['SQLiteMessageStorage',['../classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html',1,'alexaClientSDK::certifiedSender']]],
   ['sqlitenotificationsstorage',['SQLiteNotificationsStorage',['../classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html',1,'alexaClientSDK::capabilityAgents::notifications']]],
   ['sqlitesettingstorage',['SQLiteSettingStorage',['../classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_s_q_lite_setting_storage.html',1,'alexaClientSDK::capabilityAgents::settings']]],
   ['sqlitestatement',['SQLiteStatement',['../classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_statement.html',1,'alexaClientSDK::storage::sqliteStorage']]],
+  ['state',['State',['../structalexa_client_s_d_k_1_1afml_1_1_channel_1_1_state.html',1,'alexaClientSDK::afml::Channel']]],
   ['statechangemanager',['StateChangeManager',['../classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_state_change_manager.html',1,'alexaClientSDK::avsCommon::test']]],
   ['stateproviderinterface',['StateProviderInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['statesynchronizerobserverinterface',['StateSynchronizerObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_synchronizer_observer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],

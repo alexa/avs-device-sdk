@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -71,6 +71,7 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">alexaClientSDK::afml::FocusManager Class Reference</div>  </div>
@@ -102,21 +103,31 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aca96ca85a198247aea510f07a0ac29a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html#aca96ca85a198247aea510f07a0ac29a8">FocusManager</a> (const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_focus_manager_1_1_channel_configuration.html">ChannelConfiguration</a> &gt; &amp;channelConfigurations={ {<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#ad394dd6b26126ab84a82a1ef864f8ddf">DIALOG_CHANNEL_NAME</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a645398e7765774df256d3b8240b3b245">DIALOG_CHANNEL_PRIORITY</a>}, {<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a54ffb1e5b6d078447de94c40750d4799">ALERTS_CHANNEL_NAME</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a90da34134c7308e4776a4620fa597479">ALERTS_CHANNEL_PRIORITY</a>}, {<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a665ff812ec1ce4cdc68ae409673ad0be">CONTENT_CHANNEL_NAME</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a63c396d5a7adaa78db5eccf9cb11224b">CONTENT_CHANNEL_PRIORITY</a>}})</td></tr>
-<tr class="separator:aca96ca85a198247aea510f07a0ac29a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8bcbb9aba197ac15ac5879aca188b26"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html#ab8bcbb9aba197ac15ac5879aca188b26">acquireChannel</a> (const std::string &amp;channelName, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html">avsCommon::sdkInterfaces::ChannelObserverInterface</a> &gt; channelObserver, const std::string &amp;activityId) override</td></tr>
-<tr class="separator:ab8bcbb9aba197ac15ac5879aca188b26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe0ca37d92dd220c378218fcf9de36e2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html#abe0ca37d92dd220c378218fcf9de36e2">FocusManager</a> (const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_focus_manager_1_1_channel_configuration.html">ChannelConfiguration</a> &gt; &amp;channelConfigurations, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_activity_tracker_interface.html">ActivityTrackerInterface</a> &gt; activityTrackerInterface=nullptr)</td></tr>
+<tr class="separator:abe0ca37d92dd220c378218fcf9de36e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d0a1f73862379e0f3e77703228352e4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html#a6d0a1f73862379e0f3e77703228352e4">acquireChannel</a> (const std::string &amp;channelName, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html">avsCommon::sdkInterfaces::ChannelObserverInterface</a> &gt; channelObserver, const std::string &amp;interface) override</td></tr>
+<tr class="separator:a6d0a1f73862379e0f3e77703228352e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2070cf2dd51b99215429327d393d49c5"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html#a2070cf2dd51b99215429327d393d49c5">releaseChannel</a> (const std::string &amp;channelName, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html">avsCommon::sdkInterfaces::ChannelObserverInterface</a> &gt; channelObserver) override</td></tr>
 <tr class="separator:a2070cf2dd51b99215429327d393d49c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74d546bdcca778681aba6b9194279bc7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html#a74d546bdcca778681aba6b9194279bc7">stopForegroundActivity</a> () override</td></tr>
 <tr class="separator:a74d546bdcca778681aba6b9194279bc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4d4580bdf4aac64f50c79c35919a7ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html#ae4d4580bdf4aac64f50c79c35919a7ad">addObserver</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_observer_interface.html">avsCommon::sdkInterfaces::FocusManagerObserverInterface</a> &gt; &amp;observer) override</td></tr>
+<tr class="separator:ae4d4580bdf4aac64f50c79c35919a7ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dfc2a219f6541918feb41baeb074e0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html#a0dfc2a219f6541918feb41baeb074e0b">removeObserver</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_observer_interface.html">avsCommon::sdkInterfaces::FocusManagerObserverInterface</a> &gt; &amp;observer) override</td></tr>
+<tr class="separator:a0dfc2a219f6541918feb41baeb074e0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface</a></td></tr>
 <tr class="memitem:a02a609d44d349193d726d9e35704660b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a02a609d44d349193d726d9e35704660b">~FocusManagerInterface</a> ()=default</td></tr>
 <tr class="memdesc:a02a609d44d349193d726d9e35704660b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a02a609d44d349193d726d9e35704660b">More...</a><br /></td></tr>
 <tr class="separator:a02a609d44d349193d726d9e35704660b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a48157463bf167c87b8d4de7d912236b0"><td class="memItemLeft" align="right" valign="top">static const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_focus_manager_1_1_channel_configuration.html">FocusManager::ChannelConfiguration</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html#a48157463bf167c87b8d4de7d912236b0">DEFAULT_AUDIO_CHANNELS</a></td></tr>
+<tr class="memdesc:a48157463bf167c87b8d4de7d912236b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default <code><a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_focus_manager_1_1_channel_configuration.html">ChannelConfiguration</a></code> for AVS audio channels.  <a href="#a48157463bf167c87b8d4de7d912236b0">More...</a><br /></td></tr>
+<tr class="separator:a48157463bf167c87b8d4de7d912236b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0dce07cfd438cb1b65c1a2fa6afd4d1"><td class="memItemLeft" align="right" valign="top">static const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_focus_manager_1_1_channel_configuration.html">FocusManager::ChannelConfiguration</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html#ad0dce07cfd438cb1b65c1a2fa6afd4d1">DEFAULT_VISUAL_CHANNELS</a></td></tr>
+<tr class="memdesc:ad0dce07cfd438cb1b65c1a2fa6afd4d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default <code><a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_focus_manager_1_1_channel_configuration.html">ChannelConfiguration</a></code> for AVS visual channels.  <a href="#ad0dce07cfd438cb1b65c1a2fa6afd4d1">More...</a><br /></td></tr>
+<tr class="separator:ad0dce07cfd438cb1b65c1a2fa6afd4d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_attribs_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface</a></td></tr>
 <tr class="memitem:ad394dd6b26126ab84a82a1ef864f8ddf inherit pub_static_attribs_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#ad394dd6b26126ab84a82a1ef864f8ddf">DIALOG_CHANNEL_NAME</a> = &quot;Dialog&quot;</td></tr>
 <tr class="memdesc:ad394dd6b26126ab84a82a1ef864f8ddf inherit pub_static_attribs_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Dialog Channel name.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#ad394dd6b26126ab84a82a1ef864f8ddf">More...</a><br /></td></tr>
@@ -136,16 +147,22 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a63c396d5a7adaa78db5eccf9cb11224b inherit pub_static_attribs_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td class="memItemLeft" align="right" valign="top">static constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a63c396d5a7adaa78db5eccf9cb11224b">CONTENT_CHANNEL_PRIORITY</a> = 300</td></tr>
 <tr class="memdesc:a63c396d5a7adaa78db5eccf9cb11224b inherit pub_static_attribs_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Content Channel priority.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a63c396d5a7adaa78db5eccf9cb11224b">More...</a><br /></td></tr>
 <tr class="separator:a63c396d5a7adaa78db5eccf9cb11224b inherit pub_static_attribs_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a09118eba4f058027dcd43245ec6df0 inherit pub_static_attribs_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a3a09118eba4f058027dcd43245ec6df0">VISUAL_CHANNEL_NAME</a> = &quot;Visual&quot;</td></tr>
+<tr class="memdesc:a3a09118eba4f058027dcd43245ec6df0 inherit pub_static_attribs_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Visual Channel name.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a3a09118eba4f058027dcd43245ec6df0">More...</a><br /></td></tr>
+<tr class="separator:a3a09118eba4f058027dcd43245ec6df0 inherit pub_static_attribs_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6356456affc0965f1db94f04030ecf4b inherit pub_static_attribs_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td class="memItemLeft" align="right" valign="top">static constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a6356456affc0965f1db94f04030ecf4b">VISUAL_CHANNEL_PRIORITY</a> = 100</td></tr>
+<tr class="memdesc:a6356456affc0965f1db94f04030ecf4b inherit pub_static_attribs_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Visual Channel priority.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a6356456affc0965f1db94f04030ecf4b">More...</a><br /></td></tr>
+<tr class="separator:a6356456affc0965f1db94f04030ecf4b inherit pub_static_attribs_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html">FocusManager</a> takes requests to acquire and release Channels and updates the focuses of other Channels based on their priorities so that the invariant that there can only be one Foreground <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> is held. The following operations are provided:</p>
-<p>acquire <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> - clients should call the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html#ab8bcbb9aba197ac15ac5879aca188b26">acquireChannel()</a> method, passing in the name of the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> they wish to acquire, a pointer to the observer that they want to be notified once they get focus, and a unique activity id.</p>
+<p>acquire <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> - clients should call the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html#a6d0a1f73862379e0f3e77703228352e4">acquireChannel()</a> method, passing in the name of the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> they wish to acquire, a pointer to the observer that they want to be notified once they get focus, and a unique interface name.</p>
 <p>release <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> - clients should call the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html#a2070cf2dd51b99215429327d393d49c5">releaseChannel()</a> method, passing in the name of the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> and the observer of the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> they wish to release.</p>
-<p>stop foreground <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> - clients should call the stopForegroundActivitiy() method.</p>
+<p>stop foreground <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> - clients should call the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html#a74d546bdcca778681aba6b9194279bc7">stopForegroundActivity()</a> method.</p>
 <p>All of these methods will notify the observer of the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> of focus changes via an asynchronous callback to the ChannelObserverInterface##onFocusChanged() method, at which point the client should make a user observable change based on the focus it receives. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aca96ca85a198247aea510f07a0ac29a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca96ca85a198247aea510f07a0ac29a8">&#9670;&nbsp;</a></span>FocusManager()</h2>
+<a id="abe0ca37d92dd220c378218fcf9de36e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe0ca37d92dd220c378218fcf9de36e2">&#9670;&nbsp;</a></span>FocusManager()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -154,15 +171,26 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">alexaClientSDK::afml::FocusManager::FocusManager </td>
           <td>(</td>
           <td class="paramtype">const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_focus_manager_1_1_channel_configuration.html">ChannelConfiguration</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>channelConfigurations</em> = <code>{&#160;{<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#ad394dd6b26126ab84a82a1ef864f8ddf">DIALOG_CHANNEL_NAME</a>,&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a645398e7765774df256d3b8240b3b245">DIALOG_CHANNEL_PRIORITY</a>},&#160;{<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a54ffb1e5b6d078447de94c40750d4799">ALERTS_CHANNEL_NAME</a>,&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a90da34134c7308e4776a4620fa597479">ALERTS_CHANNEL_PRIORITY</a>},&#160;{<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a665ff812ec1ce4cdc68ae409673ad0be">CONTENT_CHANNEL_NAME</a>,&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a63c396d5a7adaa78db5eccf9cb11224b">CONTENT_CHANNEL_PRIORITY</a>}}</code></td><td>)</td>
+          <td class="paramname"><em>channelConfigurations</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_activity_tracker_interface.html">ActivityTrackerInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>activityTrackerInterface</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This constructor creates Channels based on the provided configurations. This is defaulted to the default AVS <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> configuration names and priorities if no input parameter is provided.</p>
+<p>This constructor creates Channels based on the provided configurations.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">channelConfigurations</td><td>A vector of <code>channelConfiguration</code> objects that will be used to create the Channels. No two Channels should have the same name or priority. If there are multiple configurations with the same name or priority, the latter Channels with that name or priority will not be created. </td></tr>
+    <tr><td class="paramname">activityTrackerInterface</td><td>The interface to notify the activity tracker a vector of channel states that has been updated. </td></tr>
   </table>
   </dd>
 </dl>
@@ -170,8 +198,8 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ab8bcbb9aba197ac15ac5879aca188b26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab8bcbb9aba197ac15ac5879aca188b26">&#9670;&nbsp;</a></span>acquireChannel()</h2>
+<a id="a6d0a1f73862379e0f3e77703228352e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d0a1f73862379e0f3e77703228352e4">&#9670;&nbsp;</a></span>acquireChannel()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -195,7 +223,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>activityId</em>&#160;</td>
+          <td class="paramname"><em>interface</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -214,13 +242,48 @@ Additional Inherited Members</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">channelName</td><td>The name of the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> to acquire. </td></tr>
     <tr><td class="paramname">channelObserver</td><td>The observer that will be acquiring the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> and be notified of focus changes. </td></tr>
-    <tr><td class="paramname">activityId</td><td>The id of the new activity on the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>. This should be unique and represents the activity using the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>.</td></tr>
+    <tr><td class="paramname">interface</td><td>The name of the AVS interface occupying the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>. This should be unique and represents the name of the AVS interface using the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>. The name of the AVS interface is used by the ActivityTracker to send Context to AVS.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns <code>true</code> if the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> can be acquired and <code>false</code> otherwise. </dd></dl>
 
-<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#af22bf571ff0b23bd5dcfb8470f0d5de7">alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface</a>.</p>
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#ab7cface67c4e4498a7bcc577c9c702b1">alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface</a>.</p>
+
+</div>
+</div>
+<a id="ae4d4580bdf4aac64f50c79c35919a7ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4d4580bdf4aac64f50c79c35919a7ad">&#9670;&nbsp;</a></span>addObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::afml::FocusManager::addObserver </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_observer_interface.html">avsCommon::sdkInterfaces::FocusManagerObserverInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>observer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Add an observer to the focus manager.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">observer</td><td>The observer to add. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a2f17f293bfe792de29b7b75b131b8bf2">alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface</a>.</p>
 
 </div>
 </div>
@@ -271,6 +334,41 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a0dfc2a219f6541918feb41baeb074e0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0dfc2a219f6541918feb41baeb074e0b">&#9670;&nbsp;</a></span>removeObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::afml::FocusManager::removeObserver </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_observer_interface.html">avsCommon::sdkInterfaces::FocusManagerObserverInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>observer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Remove an observer from the focus manager.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">observer</td><td>The observer to remove. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#ab184660c68bda429c6786a2f9c81fa08">alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface</a>.</p>
+
+</div>
+</div>
 <a id="a74d546bdcca778681aba6b9194279bc7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a74d546bdcca778681aba6b9194279bc7">&#9670;&nbsp;</a></span>stopForegroundActivity()</h2>
 
@@ -299,6 +397,55 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a48157463bf167c87b8d4de7d912236b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48157463bf167c87b8d4de7d912236b0">&#9670;&nbsp;</a></span>DEFAULT_AUDIO_CHANNELS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_focus_manager_1_1_channel_configuration.html">FocusManager::ChannelConfiguration</a> &gt; alexaClientSDK::afml::FocusManager::DEFAULT_AUDIO_CHANNELS</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    {<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#ad394dd6b26126ab84a82a1ef864f8ddf">FocusManagerInterface::DIALOG_CHANNEL_NAME</a>, <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a645398e7765774df256d3b8240b3b245">FocusManagerInterface::DIALOG_CHANNEL_PRIORITY</a>},</div><div class="line">    {<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a54ffb1e5b6d078447de94c40750d4799">FocusManagerInterface::ALERTS_CHANNEL_NAME</a>, <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a90da34134c7308e4776a4620fa597479">FocusManagerInterface::ALERTS_CHANNEL_PRIORITY</a>},</div><div class="line">    {<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a665ff812ec1ce4cdc68ae409673ad0be">FocusManagerInterface::CONTENT_CHANNEL_NAME</a>, <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a63c396d5a7adaa78db5eccf9cb11224b">FocusManagerInterface::CONTENT_CHANNEL_PRIORITY</a>}}</div></div><!-- fragment -->
+<p>The default <code><a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_focus_manager_1_1_channel_configuration.html">ChannelConfiguration</a></code> for AVS audio channels. </p>
+
+</div>
+</div>
+<a id="ad0dce07cfd438cb1b65c1a2fa6afd4d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0dce07cfd438cb1b65c1a2fa6afd4d1">&#9670;&nbsp;</a></span>DEFAULT_VISUAL_CHANNELS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_focus_manager_1_1_channel_configuration.html">FocusManager::ChannelConfiguration</a> &gt; alexaClientSDK::afml::FocusManager::DEFAULT_VISUAL_CHANNELS</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    {<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a3a09118eba4f058027dcd43245ec6df0">FocusManagerInterface::VISUAL_CHANNEL_NAME</a>, <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a6356456affc0965f1db94f04030ecf4b">FocusManagerInterface::VISUAL_CHANNEL_PRIORITY</a>}}</div></div><!-- fragment -->
+<p>The default <code><a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_focus_manager_1_1_channel_configuration.html">ChannelConfiguration</a></code> for AVS visual channels. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/Users/sdy/AVS/github/avs-device-sdk/AFML/include/AFML/<a class="el" href="_focus_manager_8h_source.html">FocusManager.h</a></li>
 <li>/Users/sdy/AVS/github/avs-device-sdk/AFML/src/<a class="el" href="_focus_manager_8cpp.html">FocusManager.cpp</a></li>
@@ -307,7 +454,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

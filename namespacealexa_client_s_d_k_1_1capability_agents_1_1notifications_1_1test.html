@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -177,6 +177,10 @@ Functions</h2></td></tr>
 <tr class="separator:a49df3f6a6a261b1b228a0ce488f40f7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f310367d515abdea3e87793b8055d7a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a1f310367d515abdea3e87793b8055d7a">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test.html">NotificationsCapabilityAgentTest</a>, testMultipleSetIndicators)</td></tr>
 <tr class="separator:a1f310367d515abdea3e87793b8055d7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a751451f859736d3e52ab81e31841a4a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a751451f859736d3e52ab81e31841a4a8">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test.html">NotificationsCapabilityAgentTest</a>, testClearData)</td></tr>
+<tr class="separator:a751451f859736d3e52ab81e31841a4a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0eb3db7a6b7b8ceba106a94f2489e9e2"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a0eb3db7a6b7b8ceba106a94f2489e9e2">isOpen</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html">NotificationsStorageInterface</a> &gt; &amp;storage)</td></tr>
+<tr class="separator:a0eb3db7a6b7b8ceba106a94f2489e9e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a352d49a4012d79945b3fddc137179c66"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a352d49a4012d79945b3fddc137179c66">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_storage_test.html">NotificationsStorageTest</a>, testConstructionAndDestruction)</td></tr>
 <tr class="separator:a352d49a4012d79945b3fddc137179c66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f153c8f05fe324a1a0b091201d4873f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a8f153c8f05fe324a1a0b091201d4873f">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_storage_test.html">NotificationsStorageTest</a>, testDatabaseCreation)</td></tr>
@@ -398,6 +402,40 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a0eb3db7a6b7b8ceba106a94f2489e9e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0eb3db7a6b7b8ceba106a94f2489e9e2">&#9670;&nbsp;</a></span>isOpen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool alexaClientSDK::capabilityAgents::notifications::test::isOpen </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html">NotificationsStorageInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>storage</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Utility function to determine if the storage component is opened.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">storage</td><td>The storage component to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the storage component's underlying database is opened, false otherwise. </dd></dl>
+
+</div>
+</div>
 <a id="a5845f95c8c1ee3aa048eea28e698b08f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5845f95c8c1ee3aa048eea28e698b08f">&#9670;&nbsp;</a></span>MESSAGE_ID_TEST()</h2>
 
@@ -593,7 +631,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a352d49a4012d79945b3fddc137179c66"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a352d49a4012d79945b3fddc137179c66">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a352d49a4012d79945b3fddc137179c66">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -622,7 +660,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a8f153c8f05fe324a1a0b091201d4873f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f153c8f05fe324a1a0b091201d4873f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f153c8f05fe324a1a0b091201d4873f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -651,7 +689,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aaee20b51772bff4657890fcea61708a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaee20b51772bff4657890fcea61708a0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaee20b51772bff4657890fcea61708a0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -680,7 +718,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a1e821b82b98f6ce779af3bfde57602a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e821b82b98f6ce779af3bfde57602a9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e821b82b98f6ce779af3bfde57602a9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -708,37 +746,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aae704d65dba70d89984d3f56ffb491e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae704d65dba70d89984d3f56ffb491e2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/29]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::notifications::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_storage_test.html">NotificationsStorageTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testDatabaseEnqueueAndDequeue&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test enqueueing and dequeueing records in the database. </p>
-
-</div>
-</div>
 <a id="a2a0343a44f94f3604eae15839a464d8c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a0343a44f94f3604eae15839a464d8c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a0343a44f94f3604eae15839a464d8c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -766,8 +775,37 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="aae704d65dba70d89984d3f56ffb491e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae704d65dba70d89984d3f56ffb491e2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/30]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::notifications::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_storage_test.html">NotificationsStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testDatabaseEnqueueAndDequeue&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test enqueueing and dequeueing records in the database. </p>
+
+</div>
+</div>
 <a id="a0e548b9de3ce6aef11c24dbe1113b896"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e548b9de3ce6aef11c24dbe1113b896">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e548b9de3ce6aef11c24dbe1113b896">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -796,7 +834,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0b4dd17646a07425161dd1c75eab7beb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b4dd17646a07425161dd1c75eab7beb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b4dd17646a07425161dd1c75eab7beb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -825,7 +863,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae06ef08244a1b1b899f7bd37ece1bd32"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae06ef08244a1b1b899f7bd37ece1bd32">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae06ef08244a1b1b899f7bd37ece1bd32">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -853,37 +891,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aa1fda32d5fdb9f86374dc854596bf193"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1fda32d5fdb9f86374dc854596bf193">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/29]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::notifications::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_storage_test.html">NotificationsStorageTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testClearingNotificationIndicators&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test just clearing the notification indicators table. </p>
-
-</div>
-</div>
 <a id="aea5ced35f68adeb7202c5b6b03936e38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea5ced35f68adeb7202c5b6b03936e38">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aea5ced35f68adeb7202c5b6b03936e38">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -911,8 +920,37 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="aa1fda32d5fdb9f86374dc854596bf193"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1fda32d5fdb9f86374dc854596bf193">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/30]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::notifications::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_storage_test.html">NotificationsStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testClearingNotificationIndicators&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test just clearing the notification indicators table. </p>
+
+</div>
+</div>
 <a id="ade5f44af8c2084230b825d61afc876cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade5f44af8c2084230b825d61afc876cc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ade5f44af8c2084230b825d61afc876cc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -941,7 +979,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a3a0040e6f929639026cdc8b58ebc39d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a0040e6f929639026cdc8b58ebc39d7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a0040e6f929639026cdc8b58ebc39d7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -969,37 +1007,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a35286e6c1ead6fa14484ff26ad72e5a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35286e6c1ead6fa14484ff26ad72e5a0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/29]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::notifications::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_storage_test.html">NotificationsStorageTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testDatabasePersistence&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test persistence across closing and reopening database. </p>
-
-</div>
-</div>
 <a id="ae7afb0855ac2acf4a17b5d7e09d324ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7afb0855ac2acf4a17b5d7e09d324ca">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7afb0855ac2acf4a17b5d7e09d324ca">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1027,8 +1036,37 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a35286e6c1ead6fa14484ff26ad72e5a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35286e6c1ead6fa14484ff26ad72e5a0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/30]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::notifications::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_storage_test.html">NotificationsStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testDatabasePersistence&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test persistence across closing and reopening database. </p>
+
+</div>
+</div>
 <a id="ab34078252b9f433dc8f5f08ed3bedaed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab34078252b9f433dc8f5f08ed3bedaed">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab34078252b9f433dc8f5f08ed3bedaed">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1057,7 +1095,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a9cc25e07715a201cd1ba9d4599afe3dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9cc25e07715a201cd1ba9d4599afe3dc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cc25e07715a201cd1ba9d4599afe3dc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1086,7 +1124,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aa29a1032be9665987eba9be07240f08a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa29a1032be9665987eba9be07240f08a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa29a1032be9665987eba9be07240f08a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1115,7 +1153,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a242eefc6d76b542662c8fa67afae4976"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a242eefc6d76b542662c8fa67afae4976">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a242eefc6d76b542662c8fa67afae4976">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1144,7 +1182,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a133b0a887783970aec6cf79144ee6713"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a133b0a887783970aec6cf79144ee6713">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a133b0a887783970aec6cf79144ee6713">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1173,7 +1211,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab50fdeaef7161a5334d25715662cd6a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab50fdeaef7161a5334d25715662cd6a6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab50fdeaef7161a5334d25715662cd6a6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1202,7 +1240,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab173a1074a0c0b8740da844c53165ff9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab173a1074a0c0b8740da844c53165ff9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab173a1074a0c0b8740da844c53165ff9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1231,7 +1269,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af78bcb8f336ecfcca514c081545d8d31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af78bcb8f336ecfcca514c081545d8d31">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af78bcb8f336ecfcca514c081545d8d31">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1260,7 +1298,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a2aea75d3cfef3b94f06663e9ecc1c23e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2aea75d3cfef3b94f06663e9ecc1c23e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[24/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2aea75d3cfef3b94f06663e9ecc1c23e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[24/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1289,7 +1327,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a72f585dfa676c223c32a91ded3d150b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72f585dfa676c223c32a91ded3d150b5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[25/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a72f585dfa676c223c32a91ded3d150b5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[25/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1318,7 +1356,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="adb72ba8b12a7eb88e7ee6ce326807c2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb72ba8b12a7eb88e7ee6ce326807c2f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adb72ba8b12a7eb88e7ee6ce326807c2f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1347,7 +1385,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0966b160c6ecb01fbaaa0589dcca0be4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0966b160c6ecb01fbaaa0589dcca0be4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0966b160c6ecb01fbaaa0589dcca0be4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1376,7 +1414,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a49df3f6a6a261b1b228a0ce488f40f7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49df3f6a6a261b1b228a0ce488f40f7d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a49df3f6a6a261b1b228a0ce488f40f7d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1405,7 +1443,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a1f310367d515abdea3e87793b8055d7a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f310367d515abdea3e87793b8055d7a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/29]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f310367d515abdea3e87793b8055d7a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/30]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1430,6 +1468,35 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Test sending multiple SetIndicators and letting them all render. Expect multiple calls to renderNotification(). </p>
+
+</div>
+</div>
+<a id="a751451f859736d3e52ab81e31841a4a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a751451f859736d3e52ab81e31841a4a8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/30]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::notifications::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test.html">NotificationsCapabilityAgentTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testClearData&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test that <code>clearData()</code> removes all notifications and sets the indicator to OFF. </p>
 
 </div>
 </div>
@@ -1846,7 +1913,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

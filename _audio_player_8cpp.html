@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -82,48 +82,47 @@ $(function() {
 <code>#include &lt;rapidjson/writer.h&gt;</code><br />
 <code>#include &lt;rapidjson/error/en.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_time_utils_8h_source.html">AVSCommon/Utils/Timing/TimeUtils.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_interval_calculator_8h_source.html">AudioPlayer/IntervalCalculator.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AudioPlayer.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_audio_player_8cpp__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_capability_agents_2_audio_player_2src_2_audio_player_8cpp" alt=""/></div>
 <map name="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_capability_agents_2_audio_player_2src_2_audio_player_8cpp" id="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_capability_agents_2_audio_player_2src_2_audio_player_8cpp">
-<area shape="rect" id="node2" href="_audio_player_8h.html" title="AudioPlayer/AudioPlayer.h" alt="" coords="2935,105,3114,131"/>
-<area shape="rect" id="node41" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="3467,265,3637,304"/>
-<area shape="rect" id="node47" href="_time_utils_8h.html" title="AVSCommon/Utils/Timing\l/TimeUtils.h" alt="" coords="4422,265,4596,304"/>
-<area shape="rect" id="node50" href="_interval_calculator_8h.html" title="AudioPlayer/IntervalCalculator.h" alt="" coords="4369,105,4580,131"/>
-<area shape="rect" id="node4" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="718,179,911,217"/>
-<area shape="rect" id="node16" href="_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="3711,359,3936,384"/>
-<area shape="rect" id="node17" href="_audio_player_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerInterface.h" alt="" coords="3809,179,4000,217"/>
-<area shape="rect" id="node20" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="2001,179,2192,217"/>
-<area shape="rect" id="node22" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="1084,265,1275,304"/>
-<area shape="rect" id="node24" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2496,179,2687,217"/>
-<area shape="rect" id="node27" href="_playback_router_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackRouterInterface.h" alt="" coords="1756,179,1947,217"/>
-<area shape="rect" id="node30" href="_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="2786,265,2994,304"/>
-<area shape="rect" id="node31" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="3069,265,3277,304"/>
-<area shape="rect" id="node34" href="_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="2724,179,2941,217"/>
-<area shape="rect" id="node35" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="942,179,1129,217"/>
-<area shape="rect" id="node36" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="3244,179,3438,217"/>
-<area shape="rect" id="node37" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="4023,265,4197,304"/>
-<area shape="rect" id="node39" href="_audio_item_8h.html" title="AudioItem.h" alt="" coords="3693,185,3786,211"/>
-<area shape="rect" id="node40" href="_clear_behavior_8h.html" title="ClearBehavior.h" alt="" coords="3493,185,3610,211"/>
-<area shape="rect" id="node43" href="_play_behavior_8h.html" title="PlayBehavior.h" alt="" coords="3015,185,3125,211"/>
-<area shape="rect" id="node8" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1704,352,1933,391"/>
-<area shape="rect" id="node9" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="507,265,772,304"/>
-<area shape="rect" id="node10" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="846,352,1038,391"/>
-<area shape="rect" id="node11" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2227,352,2423,391"/>
-<area shape="rect" id="node13" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1452,265,1643,304"/>
-<area shape="rect" id="node14" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="101,265,292,304"/>
-<area shape="rect" id="node15" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="34,352,258,391"/>
-<area shape="rect" id="node19" href="_audio_player_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerObserverInterface.h" alt="" coords="3784,265,3999,304"/>
-<area shape="rect" id="node21" href="_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="2075,265,2287,304"/>
-<area shape="rect" id="node25" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="2463,272,2712,297"/>
-<area shape="rect" id="node26" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="2751,352,2952,391"/>
-<area shape="rect" id="node29" href="_playback_handler_interface_8h.html" title="PlaybackHandlerInterface.h" alt="" coords="1667,272,1852,297"/>
-<area shape="rect" id="node33" href="_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="3061,359,3282,384"/>
-<area shape="rect" id="node38" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="4010,352,4186,391"/>
-<area shape="rect" id="node49" href="_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="4413,359,4623,384"/>
+<area shape="rect" id="node2" href="_audio_player_8h.html" title="AudioPlayer/AudioPlayer.h" alt="" coords="2896,105,3075,131"/>
+<area shape="rect" id="node44" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="4124,265,4294,304"/>
+<area shape="rect" id="node50" href="_interval_calculator_8h.html" title="AudioPlayer/IntervalCalculator.h" alt="" coords="4358,105,4570,131"/>
+<area shape="rect" id="node4" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="836,179,1028,217"/>
+<area shape="rect" id="node16" href="_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="3856,359,4080,384"/>
+<area shape="rect" id="node17" href="_audio_player_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerInterface.h" alt="" coords="3438,179,3629,217"/>
+<area shape="rect" id="node20" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="2097,179,2287,217"/>
+<area shape="rect" id="node22" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="837,265,1027,304"/>
+<area shape="rect" id="node25" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2414,179,2605,217"/>
+<area shape="rect" id="node28" href="_playback_router_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackRouterInterface.h" alt="" coords="1673,179,1863,217"/>
+<area shape="rect" id="node31" href="_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="3802,265,4011,304"/>
+<area shape="rect" id="node32" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="3026,265,3235,304"/>
+<area shape="rect" id="node35" href="_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="2877,179,3094,217"/>
+<area shape="rect" id="node37" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1454,179,1642,217"/>
+<area shape="rect" id="node38" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="3168,179,3363,217"/>
+<area shape="rect" id="node39" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="3314,265,3488,304"/>
+<area shape="rect" id="node41" href="_time_utils_8h.html" title="AVSCommon/Utils/Timing\l/TimeUtils.h" alt="" coords="2629,179,2803,217"/>
+<area shape="rect" id="node42" href="_audio_item_8h.html" title="AudioItem.h" alt="" coords="2776,272,2869,297"/>
+<area shape="rect" id="node43" href="_clear_behavior_8h.html" title="ClearBehavior.h" alt="" coords="4034,185,4150,211"/>
+<area shape="rect" id="node46" href="_play_behavior_8h.html" title="PlayBehavior.h" alt="" coords="4174,185,4284,211"/>
+<area shape="rect" id="node8" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1739,352,1968,391"/>
+<area shape="rect" id="node9" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="497,265,762,304"/>
+<area shape="rect" id="node10" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="702,352,895,391"/>
+<area shape="rect" id="node11" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2194,352,2390,391"/>
+<area shape="rect" id="node13" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1341,265,1531,304"/>
+<area shape="rect" id="node14" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="91,265,282,304"/>
+<area shape="rect" id="node15" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="24,352,248,391"/>
+<area shape="rect" id="node19" href="_audio_player_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerObserverInterface.h" alt="" coords="3563,265,3778,304"/>
+<area shape="rect" id="node21" href="_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="2014,265,2226,304"/>
+<area shape="rect" id="node24" href="_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="970,359,1198,384"/>
+<area shape="rect" id="node26" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="2453,272,2702,297"/>
+<area shape="rect" id="node27" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="2616,352,2818,391"/>
+<area shape="rect" id="node30" href="_playback_handler_interface_8h.html" title="PlaybackHandlerInterface.h" alt="" coords="1754,272,1939,297"/>
+<area shape="rect" id="node34" href="_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="3128,359,3350,384"/>
+<area shape="rect" id="node40" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="3555,352,3731,391"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -139,7 +138,7 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_example_auth_delegate_client_8cpp.html#adc8c4903d8b224bfaa986afb88575adb">TAG</a>, event)</td></tr>
+<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_player_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_registration_manager_8cpp.html#a73216df79c9ad2b23fd2eef0a8f10d1b">TAG</a>, event)</td></tr>
 <tr class="separator:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -156,9 +155,6 @@ Variables</h2></td></tr>
 <tr class="memitem:af3702644873921bd62088226e22ddb70"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#af3702644873921bd62088226e22ddb70">alexaClientSDK::capabilityAgents::audioPlayer::CHANNEL_NAME</a> = avsCommon::sdkInterfaces::FocusManagerInterface::CONTENT_CHANNEL_NAME</td></tr>
 <tr class="memdesc:af3702644873921bd62088226e22ddb70"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the <code>FocusManager</code> channel used by <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code>.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#af3702644873921bd62088226e22ddb70">More...</a><br /></td></tr>
 <tr class="separator:af3702644873921bd62088226e22ddb70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0589d50538fd0844c399b111f73527f9"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a0589d50538fd0844c399b111f73527f9">alexaClientSDK::capabilityAgents::audioPlayer::ACTIVITY_ID</a> = &quot;AudioPlayer.Play&quot;</td></tr>
-<tr class="memdesc:a0589d50538fd0844c399b111f73527f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The activityId string used with <code>FocusManager</code> by <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html">AudioPlayer</a></code>.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a0589d50538fd0844c399b111f73527f9">More...</a><br /></td></tr>
-<tr class="separator:a0589d50538fd0844c399b111f73527f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26c4af53698c9812d5b34eb80124ed57"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a26c4af53698c9812d5b34eb80124ed57">alexaClientSDK::capabilityAgents::audioPlayer::NAMESPACE</a> = &quot;AudioPlayer&quot;</td></tr>
 <tr class="memdesc:a26c4af53698c9812d5b34eb80124ed57"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace for this capability agent.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a26c4af53698c9812d5b34eb80124ed57">More...</a><br /></td></tr>
 <tr class="separator:a26c4af53698c9812d5b34eb80124ed57"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,7 +201,7 @@ Variables</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">event</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_example_auth_delegate_client_8cpp.html#adc8c4903d8b224bfaa986afb88575adb">TAG</a>, event)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_registration_manager_8cpp.html#a73216df79c9ad2b23fd2eef0a8f10d1b">TAG</a>, event)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -223,7 +219,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -68,7 +68,29 @@ $(function() {
 <div class="title">ChangeLog </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h3>[1.5.0] - 2018-02-12</h3>
+<div class="textblock"><h3>[1.6.0] - 2018-03-08</h3>
+<p><b>Enhancements</b></p><ul>
+<li><code>rapidJson</code> is now included with "make install".</li>
+<li>Updated the <code>TemplateRuntimeObserverInterface</code> to support clearing of <code>displayCards</code>.</li>
+<li>Added Windows SDK support, along with an installation script (MinGW-w64).</li>
+<li>Updated <code>ContextManager</code> to ignore context reported by a state provider.</li>
+<li>The <code>SharedDataStream</code> object is now associated by playlist, rather than by URL.</li>
+<li>Added the <code>RegistrationManager</code> component. Now, when a user logs out all persistent user-specific data is cleared from the SDK. The log out functionality can be exercised in the sample app with the new command: <code>k</code>.</li>
+</ul>
+<p><b>Bug Fixes</b></p><ul>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/400">Issue 400</a> Fixed a bug where the alert reminder did not iterate as intended after loss of network connection.</li>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/477">Issue 477</a> Fixed a bug in which Alexa's weather response was being truncated.</li>
+<li>Fixed an issue in which there were reports of instability related to the Sensory engine. To correct this, the <code>portAudio</code> <a href="https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L62"><code>suggestedLatency</code></a> value can now be configured.</li>
+</ul>
+<p><b>Known Issues</b></p><ul>
+<li>The <code>ACL</code> may encounter issues if audio attachments are received but not consumed.</li>
+<li><code>SpeechSynthesizerState</code> currently uses <code>GAINING_FOCUS</code> and <code>LOSING_FOCUS</code> as a workaround for handling intermediate state. These states may be removed in a future release.</li>
+<li>Music playback doesn't immediately stop when a user barges-in on iHeartRadio.</li>
+<li>The Windows sample app hangs on exit.</li>
+<li>GDB receives a <code>SIGTRAP</code> when troubleshooting the Windows sample app.</li>
+<li><code>make integration</code> doesn't work on Windows. Integration tests will need to be run individually.</li>
+</ul>
+<h3>[1.5.0] - 2018-02-12</h3>
 <p><b>Enhancements</b></p><ul>
 <li>Added the <code>ExternalMediaPlayer</code> Capability Agent. This allows playback from music providers that control their own playback queue. Example: Spotify.</li>
 <li>Added support for AU and NZ to the <code>SampleApp</code>.</li>
@@ -82,13 +104,12 @@ $(function() {
 <li>The <code>TZ</code> variable no longer needs to be set to <code>UTC</code> when building the <code>SampleApp</code>.</li>
 <li>Fixed a bug where <code>CurlEasyHandleWrapper</code> logged unwanted data on failure conditions.</li>
 <li>Fixed a bug to improve <code>SIGPIPE</code> handling.</li>
-<li>Fixed a bug where the filename and classname were mismatched. Changed <code>UrlToAttachmentConverter.h</code> to <code><a class="el" href="_url_content_to_attachment_converter_8h.html">UrlContentToAttachmentConverter.h</a></code>,and <code>UrlToAttachmentConverter.cpp</code> to <code><a class="el" href="_url_content_to_attachment_converter_8cpp.html">UrlContentToAttachmentConverter.cpp</a></code></li>
-</ul>
-<p><b>Known Issues</b></p><ul>
+<li>Fixed a bug where the filename and classname were mismatched. Changed <code>UrlToAttachmentConverter.h</code> to <code><a class="el" href="_url_content_to_attachment_converter_8h.html">UrlContentToAttachmentConverter.h</a></code>,and <code>UrlToAttachmentConverter.cpp</code> to <code><a class="el" href="_url_content_to_attachment_converter_8cpp.html">UrlContentToAttachmentConverter.cpp</a></code>. <br />
+* Fixed a bug where after muting and then un-muting the GStreamer-based <code>MediaPlayer</code> implementation, the next item in queue would play instead of continuing playback of the originally muted item. <br />
+ <b>Known Issues</b></li>
 <li>The <code>ACL</code> may encounter issues if audio attachments are received but not consumed.</li>
-<li>Display Cards for Kindle don't render.</li>
-<li>If using the GStreamer-based <code>MediaPlayer</code> implementation, after muting and un-muting an audio item, the next item in the queue will begin playing rather than continuing playback of the originally muted audio item.</li>
-<li><code>SpeechSynthesizerState</code> currently uses <code>GAINING_FOCUS</code> and <code>LOSING_FOCUS</code> as a workaround for handling intermediate state. These states may be removed in a future release.</li>
+<li>Display Cards for Kindle don't render. <br />
+* <code>SpeechSynthesizerState</code> currently uses <code>GAINING_FOCUS</code> and <code>LOSING_FOCUS</code> as a workaround for handling intermediate state. These states may be removed in a future release.</li>
 <li>Music playback doesn't immediately stop when a user barges-in on iHeartRadio.</li>
 </ul>
 <h3>[1.4.0] - 2018-01-12</h3>
@@ -538,7 +559,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

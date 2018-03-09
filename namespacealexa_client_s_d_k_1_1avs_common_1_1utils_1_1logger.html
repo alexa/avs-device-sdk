@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -100,6 +100,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger_sink_manager.html">LoggerSinkManager</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_level_observer_interface.html">LogLevelObserverInterface</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_string_formatter.html">LogStringFormatter</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_module_logger.html">ModuleLogger</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -182,8 +184,6 @@ Functions</h2></td></tr>
 <tr class="separator:a73148d2591a1f326da51b65d6b02c8ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16a7d59de6eaa9fd4b9a7d8633249e8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a16a7d59de6eaa9fd4b9a7d8633249e8d">logEntry</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">Level</a> level, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">LogEntry</a> &amp;entry)</td></tr>
 <tr class="separator:a16a7d59de6eaa9fd4b9a7d8633249e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5b7c106dc5047fc8b97de34776122be"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#ab5b7c106dc5047fc8b97de34776122be">formatLogString</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">Level</a> level, std::chrono::system_clock::time_point time, const char *threadMoniker, const char *text)</td></tr>
-<tr class="separator:ab5b7c106dc5047fc8b97de34776122be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07622bd1de5d084d735c32e22e8d3553"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a07622bd1de5d084d735c32e22e8d3553">dumpBytesToStream</a> (std::ostream &amp;stream, const char *prefix, size_t width, const unsigned char *data, size_t size)</td></tr>
 <tr class="separator:a07622bd1de5d084d735c32e22e8d3553"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af34f56d312bbcf854b8ef8d86e6fda4c"><td class="memItemLeft" align="right" valign="top">static std::atomic&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#af34f56d312bbcf854b8ef8d86e6fda4c">g_nextThreadMoniker</a> (1)</td></tr>
@@ -871,57 +871,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ab5b7c106dc5047fc8b97de34776122be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5b7c106dc5047fc8b97de34776122be">&#9670;&nbsp;</a></span>formatLogString()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string alexaClientSDK::avsCommon::utils::logger::formatLogString </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">Level</a>&#160;</td>
-          <td class="paramname"><em>level</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::chrono::system_clock::time_point&#160;</td>
-          <td class="paramname"><em>time</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>threadMoniker</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>text</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Formats a log message into a printable string with other metadata regarding the log message.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">level</td><td>The severity Level of this log line. </td></tr>
-    <tr><td class="paramname">time</td><td>The time that the event to log occurred. </td></tr>
-    <tr><td class="paramname">threadMoniker</td><td>Moniker of the thread that generated the event. </td></tr>
-    <tr><td class="paramname">text</td><td>The text of the entry to log. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The formatted string. </dd></dl>
-
-</div>
-</div>
 <a id="af34f56d312bbcf854b8ef8d86e6fda4c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af34f56d312bbcf854b8ef8d86e6fda4c">&#9670;&nbsp;</a></span>g_nextThreadMoniker()</h2>
 
@@ -1599,7 +1548,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

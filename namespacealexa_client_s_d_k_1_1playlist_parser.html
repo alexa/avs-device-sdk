@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -131,11 +131,6 @@ Variables</h2></td></tr>
 <tr class="separator:ae4ea523dee7ebdc160762ddcd7ff59c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44068fd7f1c56d94e4c557ffe57ea24a"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#a44068fd7f1c56d94e4c557ffe57ea24a">INVALID_DURATION</a></td></tr>
 <tr class="separator:a44068fd7f1c56d94e4c557ffe57ea24a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4f1a57bd7a230fc17dd28f3ef5eee91"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#af4f1a57bd7a230fc17dd28f3ef5eee91">TIMEOUT_FOR_BLOCKING_WRITE</a> = std::chrono::milliseconds(100)</td></tr>
-<tr class="separator:af4f1a57bd7a230fc17dd28f3ef5eee91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e57134389b1445fd9056558a8115c52"><td class="memItemLeft" align="right" valign="top">static const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#a9e57134389b1445fd9056558a8115c52">CHUNK_SIZE</a></td></tr>
-<tr class="memdesc:a9e57134389b1445fd9056558a8115c52"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of bytes read from the attachment with each read in the read loop.  <a href="#a9e57134389b1445fd9056558a8115c52">More...</a><br /></td></tr>
-<tr class="separator:a9e57134389b1445fd9056558a8115c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06c164e6d21f8bc0ef18d5b3fb5ad3fd"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#a06c164e6d21f8bc0ef18d5b3fb5ad3fd">UNVALID_DURATION</a></td></tr>
 <tr class="separator:a06c164e6d21f8bc0ef18d5b3fb5ad3fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -225,30 +220,6 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="a9e57134389b1445fd9056558a8115c52"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e57134389b1445fd9056558a8115c52">&#9670;&nbsp;</a></span>CHUNK_SIZE</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const size_t alexaClientSDK::playlistParser::CHUNK_SIZE</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">{avsCommon::avs::attachment::InProcessAttachment::SDS_BUFFER_DEFAULT_SIZE_IN_BYTES -</div><div class="line">                               avsCommon::avs::attachment::InProcessAttachment::SDS_BUFFER_DEFAULT_SIZE_IN_BYTES / 4}</div></div><!-- fragment -->
-<p>The number of bytes read from the attachment with each read in the read loop. </p>
-
-</div>
-</div>
 <a id="a14d0209a92b8c7a230607470c384c205"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a14d0209a92b8c7a230607470c384c205">&#9670;&nbsp;</a></span>ENDLIST</h2>
 
@@ -484,29 +455,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="af4f1a57bd7a230fc17dd28f3ef5eee91"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4f1a57bd7a230fc17dd28f3ef5eee91">&#9670;&nbsp;</a></span>TIMEOUT_FOR_BLOCKING_WRITE</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::chrono::milliseconds alexaClientSDK::playlistParser::TIMEOUT_FOR_BLOCKING_WRITE = std::chrono::milliseconds(100)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The timeout for a blocking write call to an <code>AttachmentWriter</code>. This value may be increased to decrease wakeups but may also increase latency. </p>
-
-</div>
-</div>
 <a id="a06c164e6d21f8bc0ef18d5b3fb5ad3fd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a06c164e6d21f8bc0ef18d5b3fb5ad3fd">&#9670;&nbsp;</a></span>UNVALID_DURATION</h2>
 
@@ -534,7 +482,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

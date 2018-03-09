@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -96,6 +96,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7a7f66bf8a0eb3c402fbd52833f96819"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3abfc6353db12da8247d3efc9127ebcc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html#a3abfc6353db12da8247d3efc9127ebcc">operator bool</a> () const</td></tr>
 <tr class="separator:a3abfc6353db12da8247d3efc9127ebcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a738a358705a3d2e11135bdd11d37b55b"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a738a358705a3d2e11135bdd11d37b55b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html#a738a358705a3d2e11135bdd11d37b55b">getValue</a> (const std::string &amp;key, Type *out, Type defaultValue, bool(rapidjson::Value::*isType)() const, Type(rapidjson::Value::*getType)() const) const</td></tr>
+<tr class="separator:a738a358705a3d2e11135bdd11d37b55b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -342,6 +345,72 @@ template&lt;typename InputType , typename OutputType , typename DefaultType &gt;
 
 </div>
 </div>
+<a id="a738a358705a3d2e11135bdd11d37b55b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a738a358705a3d2e11135bdd11d37b55b">&#9670;&nbsp;</a></span>getValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Type &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::utils::configuration::ConfigurationNode::getValue </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Type *&#160;</td>
+          <td class="paramname"><em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Type&#160;</td>
+          <td class="paramname"><em>defaultValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool(rapidjson::Value::*)() const&#160;</td>
+          <td class="paramname"><em>isType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Type(rapidjson::Value::*)() const&#160;</td>
+          <td class="paramname"><em>getType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Common logic for getting a value of a specific type.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Type</td><td>The type to be gotten. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The key of the value to get. </td></tr>
+    <tr><td class="paramname">out</td><td>Pointer to receive the value. May be nullptr to just test for the presence of the value. </td></tr>
+    <tr><td class="paramname">defaultValue</td><td>A default output value if no value of the desired type for <code>key</code> is present. </td></tr>
+    <tr><td class="paramname">isType</td><td>rapidjson::Value member function to test for the desired type. </td></tr>
+    <tr><td class="paramname">getType</td><td>rapidjson::Value member function to get the desired type. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether a value of the specified <code>Type</code> is present for <code>key</code>. </dd></dl>
+
+</div>
+</div>
 <a id="accc2fef41c574f70c61264a5242fc72d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#accc2fef41c574f70c61264a5242fc72d">&#9670;&nbsp;</a></span>initialize()</h2>
 
@@ -457,7 +526,7 @@ template&lt;typename InputType , typename OutputType , typename DefaultType &gt;
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

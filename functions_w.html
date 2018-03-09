@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -86,6 +86,9 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_connection_observer.html#af768c2c37b8f6e7dc20ec484cceb4a7e">alexaClientSDK::sampleApp::ConnectionObserver</a>
 , <a class="el" href="class_auth_delegate_test.html#ade72abdf4d34bcd1bee7764ae46f8f9c">AuthDelegateTest</a>
 </li>
+<li>waitForActivityUpdates()
+: <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_mock_activity_tracker_interface.html#a63866b5ef749457e76d3d328a3112714">alexaClientSDK::afml::test::MockActivityTrackerInterface</a>
+</li>
 <li>waitForContext()
 : <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_context_requester.html#afdfc8b46e39d6890b4464885de4224b9">alexaClientSDK::contextManager::test::MockContextRequester</a>
 </li>
@@ -102,6 +105,9 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client.html#a3f3a4f900ef3cfc03de1c977595cb070">alexaClientSDK::afml::test::TestClient</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a6646a049e46ffcdd2b59b152c6ad0145">alexaClientSDK::integration::test::SpeechSynthesizerTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html#abf34360f669de979952fd033f4679225">alexaClientSDK::integration::test::TestClient</a>
+</li>
+<li>waitForFocusChanges()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager_observer.html#a1282ca5ea2b1c07d573412ad4f78fc5c">alexaClientSDK::avsCommon::sdkInterfaces::test::MockFocusManagerObserver</a>
 </li>
 <li>waitForFunctionCalls()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_mock_capability_agent.html#a859ceab5cfa71d14cc0eb3b986d821a8">alexaClientSDK::avsCommon::test::MockCapabilityAgent</a>
@@ -207,9 +213,16 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html#a95935e9d99758ffad062d1d2c33db8c0">alexaClientSDK::capabilityAgents::audioPlayer::test::AudioPlayerTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#aa5faaedf27b6ec8b1c0a2f9daf32748d">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
 </li>
+<li>wakeOnClearPlayerInfoCard()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_template_runtime_test.html#a9237e1c67c290ea4012032c63f4cc57b">alexaClientSDK::capabilityAgents::templateRuntime::test::TemplateRuntimeTest</a>
+</li>
+<li>wakeOnClearTemplateCard()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_template_runtime_test.html#ae0c18a031677218e975030d8e6f21e59">alexaClientSDK::capabilityAgents::templateRuntime::test::TemplateRuntimeTest</a>
+</li>
 <li>wakeOnReleaseChannel()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html#a5ae9d038c90ec3cdb03db520b90e0f77">alexaClientSDK::capabilityAgents::audioPlayer::test::AudioPlayerTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a5fd05e9e7dbd62eb86c1c8a9f5ea5daa">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_template_runtime_test.html#a711fd59ba9aa7274c0841cb52812b12d">alexaClientSDK::capabilityAgents::templateRuntime::test::TemplateRuntimeTest</a>
 </li>
 <li>wakeOnRenderPlayerInfoCard()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_template_runtime_test.html#a85a907c54917f9ab3b64f4f4c8a942ef">alexaClientSDK::capabilityAgents::templateRuntime::test::TemplateRuntimeTest</a>
@@ -230,7 +243,9 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a827e0d13eb5d96c9a69f1829c5829b82">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
 </li>
 <li>wakeOnSetState()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html#a3971a04bf069b15edcc2e320ab6dec62">alexaClientSDK::capabilityAgents::audioPlayer::test::AudioPlayerTest</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_audio_activity_tracker_test.html#acd9aa356b6c4ac8b5773175dc4261918">alexaClientSDK::afml::test::AudioActivityTrackerTest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_visual_activity_tracker_test.html#a896c60d9f1b1a2911c6c9ada154fc9fb">alexaClientSDK::afml::test::VisualActivityTrackerTest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html#a3971a04bf069b15edcc2e320ab6dec62">alexaClientSDK::capabilityAgents::audioPlayer::test::AudioPlayerTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#a8d481264cb0d44afe31afc61b7c55cfa">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
 </li>
 <li>wakeOnStopped()
@@ -283,7 +298,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,11 +79,21 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_certified_sender_test.html">CertifiedSenderTest</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_message_storage_test.html">MessageStorageTest</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_mock_connection.html">MockConnection</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_mock_message_storage.html">MockMessageStorage</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a6bec66095e2f02c5df792f6f401e43ac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1certified_sender_1_1test.html#a6bec66095e2f02c5df792f6f401e43ac">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_certified_sender_test.html">CertifiedSenderTest</a>, clearDataTest)</td></tr>
+<tr class="separator:a6bec66095e2f02c5df792f6f401e43ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaae898e026fd9bb43802954b06d36fa3"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1certified_sender_1_1test.html#aaae898e026fd9bb43802954b06d36fa3">isOpen</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html">MessageStorageInterface</a> &gt; &amp;storage)</td></tr>
+<tr class="separator:aaae898e026fd9bb43802954b06d36fa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23f84dd3ff0d0f1e8ffab4264e047f4f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1certified_sender_1_1test.html#a23f84dd3ff0d0f1e8ffab4264e047f4f">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_message_storage_test.html">MessageStorageTest</a>, testConstructionAndDestruction)</td></tr>
 <tr class="separator:a23f84dd3ff0d0f1e8ffab4264e047f4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b95870b4b5c378fe8837bfc188c822f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1certified_sender_1_1test.html#a1b95870b4b5c378fe8837bfc188c822f">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_message_storage_test.html">MessageStorageTest</a>, testDatabaseCreation)</td></tr>
@@ -122,8 +132,71 @@ Variables</h2></td></tr>
 <tr class="separator:a2610fe11716367ed3858c5b7f77402c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="aaae898e026fd9bb43802954b06d36fa3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaae898e026fd9bb43802954b06d36fa3">&#9670;&nbsp;</a></span>isOpen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool alexaClientSDK::certifiedSender::test::isOpen </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html">MessageStorageInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>storage</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Utility function to determine if the storage component is opened.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">storage</td><td>The storage component to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the storage component's underlying database is opened, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a6bec66095e2f02c5df792f6f401e43ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bec66095e2f02c5df792f6f401e43ac">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::certifiedSender::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_certified_sender_test.html">CertifiedSenderTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">clearDataTest&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check that <code>clearData()</code> method clears the persistent message storage and the current msg queue </p>
+
+</div>
+</div>
 <a id="a23f84dd3ff0d0f1e8ffab4264e047f4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23f84dd3ff0d0f1e8ffab4264e047f4f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a23f84dd3ff0d0f1e8ffab4264e047f4f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -152,7 +225,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a1b95870b4b5c378fe8837bfc188c822f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b95870b4b5c378fe8837bfc188c822f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b95870b4b5c378fe8837bfc188c822f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -181,7 +254,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="afd86b9a2c281b89aac9f5f51233331ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd86b9a2c281b89aac9f5f51233331ac">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afd86b9a2c281b89aac9f5f51233331ac">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -210,7 +283,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a9f06b84f33f5e1a21eaeb333f6adb7ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f06b84f33f5e1a21eaeb333f6adb7ba">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f06b84f33f5e1a21eaeb333f6adb7ba">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -239,7 +312,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a83d5b600f5d6039a760e32583510358c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83d5b600f5d6039a760e32583510358c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a83d5b600f5d6039a760e32583510358c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -268,7 +341,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a185c22b6f1a16575fa7246dd1ecefd8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a185c22b6f1a16575fa7246dd1ecefd8b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a185c22b6f1a16575fa7246dd1ecefd8b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -469,7 +542,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

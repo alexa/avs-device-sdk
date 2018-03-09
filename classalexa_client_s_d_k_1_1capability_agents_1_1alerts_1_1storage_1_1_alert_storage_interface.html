@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -69,7 +69,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -88,28 +87,16 @@ Inheritance diagram for alexaClientSDK::capabilityAgents::alerts::storage::Alert
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a73c2e0dc21b3824f14ae8e242bb58752"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a73c2e0dc21b3824f14ae8e242bb58752">StatLevel</a> { <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a73c2e0dc21b3824f14ae8e242bb58752aeadf97c15e9d8fd6aa6c41a46d73bc1f">StatLevel::ONE_LINE</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a73c2e0dc21b3824f14ae8e242bb58752a1cf06f2a3bf901ed8d26bb542be42a41">StatLevel::ALERTS_SUMMARY</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a73c2e0dc21b3824f14ae8e242bb58752a56e591f0c8e18fcd60303753c16b7a43">StatLevel::EVERYTHING</a>
- }</td></tr>
-<tr class="separator:a73c2e0dc21b3824f14ae8e242bb58752"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a49472e6059c7d23d14b0c9b2bc27b02d"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a49472e6059c7d23d14b0c9b2bc27b02d">~AlertStorageInterface</a> ()=default</td></tr>
 <tr class="separator:a49472e6059c7d23d14b0c9b2bc27b02d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72fab33ab189a1a45395f62eeda1d79d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a72fab33ab189a1a45395f62eeda1d79d">createDatabase</a> (const std::string &amp;filePath)=0</td></tr>
-<tr class="separator:a72fab33ab189a1a45395f62eeda1d79d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25a3edbcd9a845de36a4e9c05059668d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a25a3edbcd9a845de36a4e9c05059668d">open</a> (const std::string &amp;filePath)=0</td></tr>
-<tr class="separator:a25a3edbcd9a845de36a4e9c05059668d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a516c8b651de78002150bf61d9a525a5d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a516c8b651de78002150bf61d9a525a5d">isOpen</a> ()=0</td></tr>
-<tr class="separator:a516c8b651de78002150bf61d9a525a5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac86a85d16a239e3b56442234745513a3"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#ac86a85d16a239e3b56442234745513a3">createDatabase</a> ()=0</td></tr>
+<tr class="separator:ac86a85d16a239e3b56442234745513a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa33bc6984afc9bc5ab46ace4041ecbf6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#aa33bc6984afc9bc5ab46ace4041ecbf6">open</a> ()=0</td></tr>
+<tr class="separator:aa33bc6984afc9bc5ab46ace4041ecbf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b5186ee46f04b46fcff8cffe8e0abc3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a9b5186ee46f04b46fcff8cffe8e0abc3">close</a> ()=0</td></tr>
 <tr class="separator:a9b5186ee46f04b46fcff8cffe8e0abc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ba845c9ae54fabb65c31095a2ec05be"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a2ba845c9ae54fabb65c31095a2ec05be">alertExists</a> (const std::string &amp;token)=0</td></tr>
-<tr class="separator:a2ba845c9ae54fabb65c31095a2ec05be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a555731d57f81ca06094b252859aba5ba"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a555731d57f81ca06094b252859aba5ba">store</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html">Alert</a> &gt; alert)=0</td></tr>
 <tr class="separator:a555731d57f81ca06094b252859aba5ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f96728dfa51cdbb83a14f07b016b17b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a2f96728dfa51cdbb83a14f07b016b17b">load</a> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html">Alert</a> &gt;&gt; *alertContainer)=0</td></tr>
@@ -118,48 +105,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a534b5dcd3676ee798f90cf29d95442d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5cff81a79ad29664c0e169adfa0799d4"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a5cff81a79ad29664c0e169adfa0799d4">erase</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html">Alert</a> &gt; alert)=0</td></tr>
 <tr class="separator:a5cff81a79ad29664c0e169adfa0799d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1be8b0b50bfb039680c62886b03e3a2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#ae1be8b0b50bfb039680c62886b03e3a2">erase</a> (const std::vector&lt; int &gt; &amp;alertDbIds)=0</td></tr>
-<tr class="separator:ae1be8b0b50bfb039680c62886b03e3a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81266ad4f52672d03cabe0a5ceab45f1"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a81266ad4f52672d03cabe0a5ceab45f1">clearDatabase</a> ()=0</td></tr>
 <tr class="separator:a81266ad4f52672d03cabe0a5ceab45f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaca82aa450073375363937dd0841ab94"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#aaca82aa450073375363937dd0841ab94">printStats</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a73c2e0dc21b3824f14ae8e242bb58752">StatLevel</a> level=<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a73c2e0dc21b3824f14ae8e242bb58752aeadf97c15e9d8fd6aa6c41a46d73bc1f">StatLevel::ONE_LINE</a>)=0</td></tr>
-<tr class="separator:aaca82aa450073375363937dd0841ab94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An Interface class which defines APIs for interacting with a general database, as well as for storing, loading, and modifying Alerts. </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
-<a id="a73c2e0dc21b3824f14ae8e242bb58752"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a73c2e0dc21b3824f14ae8e242bb58752">&#9670;&nbsp;</a></span>StatLevel</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a73c2e0dc21b3824f14ae8e242bb58752">alexaClientSDK::capabilityAgents::alerts::storage::AlertStorageInterface::StatLevel</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>An enum class to help debug database contents. This type is used in the printStats function below. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a73c2e0dc21b3824f14ae8e242bb58752aeadf97c15e9d8fd6aa6c41a46d73bc1f"></a>ONE_LINE&#160;</td><td class="fielddoc"><p>Print only a single line, providing a count of rows from each table. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a73c2e0dc21b3824f14ae8e242bb58752a1cf06f2a3bf901ed8d26bb542be42a41"></a>ALERTS_SUMMARY&#160;</td><td class="fielddoc"><p>Print all details of the Alerts table, summarizing the other tables. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a73c2e0dc21b3824f14ae8e242bb58752a56e591f0c8e18fcd60303753c16b7a43"></a>EVERYTHING&#160;</td><td class="fielddoc"><p>Print all details of all records. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a49472e6059c7d23d14b0c9b2bc27b02d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a49472e6059c7d23d14b0c9b2bc27b02d">&#9670;&nbsp;</a></span>~AlertStorageInterface()</h2>
 
@@ -187,42 +138,6 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a2ba845c9ae54fabb65c31095a2ec05be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ba845c9ae54fabb65c31095a2ec05be">&#9670;&nbsp;</a></span>alertExists()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool alexaClientSDK::capabilityAgents::alerts::storage::AlertStorageInterface::alertExists </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>token</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Query whether an alert is currently stored with the given token.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">token</td><td>The AVS token which uniquely identifies an alert. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the alert is stored in the database, <code>false</code> otherwise. </dd></dl>
-
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert_storage.html#ae9e6ea8bffc23a8f0934bcbd7bd46081">alexaClientSDK::capabilityAgents::alerts::test::MockAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html#add6cfda24c9ab5fe7bfdbcc7e8d8ed2d">alexaClientSDK::capabilityAgents::alerts::storage::SQLiteAlertStorage</a>.</p>
-
-</div>
-</div>
 <a id="a81266ad4f52672d03cabe0a5ceab45f1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a81266ad4f52672d03cabe0a5ceab45f1">&#9670;&nbsp;</a></span>clearDatabase()</h2>
 
@@ -280,8 +195,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a72fab33ab189a1a45395f62eeda1d79d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72fab33ab189a1a45395f62eeda1d79d">&#9670;&nbsp;</a></span>createDatabase()</h2>
+<a id="ac86a85d16a239e3b56442234745513a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac86a85d16a239e3b56442234745513a3">&#9670;&nbsp;</a></span>createDatabase()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -292,8 +207,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual bool alexaClientSDK::capabilityAgents::alerts::storage::AlertStorageInterface::createDatabase </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filePath</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -303,21 +217,15 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Creates a new database with the given filepath. If the file specified already exists, or if a database is already being handled by this object, then this function returns false.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filePath</td><td>The path to the file which will be used to contain the database. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is created ok, or <code>false</code> if either the file exists or a database is already being handled by this object. </dd></dl>
+<p>Creates a new database. If a database is already being handled by this object or there is another internal error, then this function returns false.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is created ok, or <code>false</code> if a database is already being handled by this object or there is a problem creating the database. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert_storage.html#a8df778d8c4b22f081cbd43747d2e68b5">alexaClientSDK::capabilityAgents::alerts::test::MockAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html#a035b806db88faf16db368cae59256af7">alexaClientSDK::capabilityAgents::alerts::storage::SQLiteAlertStorage</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert_storage.html#ae93c30217ff9a41f1a07c6b9dbe329a5">alexaClientSDK::capabilityAgents::alerts::test::MockAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html#ae6f47e4442facf10ed1d76d72f227570">alexaClientSDK::capabilityAgents::alerts::storage::SQLiteAlertStorage</a>.</p>
 
 </div>
 </div>
 <a id="a5cff81a79ad29664c0e169adfa0799d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cff81a79ad29664c0e169adfa0799d4">&#9670;&nbsp;</a></span>erase() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cff81a79ad29664c0e169adfa0799d4">&#9670;&nbsp;</a></span>erase()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -349,71 +257,6 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Whether the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html">Alert</a></code> was successfully erased. </dd></dl>
 
 <p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html#a87b1e90dbecb4fcd662e4050663603f0">alexaClientSDK::capabilityAgents::alerts::storage::SQLiteAlertStorage</a>.</p>
-
-</div>
-</div>
-<a id="ae1be8b0b50bfb039680c62886b03e3a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1be8b0b50bfb039680c62886b03e3a2">&#9670;&nbsp;</a></span>erase() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool alexaClientSDK::capabilityAgents::alerts::storage::AlertStorageInterface::erase </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; int &gt; &amp;&#160;</td>
-          <td class="paramname"><em>alertDbIds</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Erases a collection of alerts from the database. NOTE: The input to this function is expected to be a collection of database-ids for each row in the alerts table. This is different from the 'token' which AVS uses to identify an alert. The reason for this decision is that database operations should be more efficient overall when keying off a small integer, rather than a long string.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">alertDbIds</td><td>A container of alert ids. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Whether the alerts were successfully erased. </dd></dl>
-
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert_storage.html#a2e38b0f79d05fb143ff2e35c58728e0b">alexaClientSDK::capabilityAgents::alerts::test::MockAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html#a3b4fd4876e641fa8a5d52c9c85a021ab">alexaClientSDK::capabilityAgents::alerts::storage::SQLiteAlertStorage</a>.</p>
-
-</div>
-</div>
-<a id="a516c8b651de78002150bf61d9a525a5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a516c8b651de78002150bf61d9a525a5d">&#9670;&nbsp;</a></span>isOpen()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool alexaClientSDK::capabilityAgents::alerts::storage::AlertStorageInterface::isOpen </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Query if this object is currently managing an open database.</p>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> If a database is being currently managed by this object, <code>false</code> otherwise. </dd></dl>
-
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert_storage.html#a83d58fe5bd5f2dc20c191fa53ce0e880">alexaClientSDK::capabilityAgents::alerts::test::MockAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html#a041abeefbbd0556d9bc9da655d76f28a">alexaClientSDK::capabilityAgents::alerts::storage::SQLiteAlertStorage</a>.</p>
 
 </div>
 </div>
@@ -489,8 +332,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a25a3edbcd9a845de36a4e9c05059668d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25a3edbcd9a845de36a4e9c05059668d">&#9670;&nbsp;</a></span>open()</h2>
+<a id="aa33bc6984afc9bc5ab46ace4041ecbf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa33bc6984afc9bc5ab46ace4041ecbf6">&#9670;&nbsp;</a></span>open()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -501,8 +344,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual bool alexaClientSDK::capabilityAgents::alerts::storage::AlertStorageInterface::open </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filePath</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -512,45 +354,10 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Open a database with the given filepath. If this object is already managing an open database, or the file does not exist, or there is a problem opening the database, this function returns false.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filePath</td><td>The path to the file which will be used to contain the database. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is opened ok, <code>false</code> if either the file does not exist, if this object is already managing an open database, or if there is another internal reason the database could not be opened. </dd></dl>
+<p>Open an existing database. If this object is already managing an open database, or there is a problem opening the database, this function returns false.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is opened ok, <code>false</code> if this object is already managing an open database, or if there is another internal reason the database could not be opened. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert_storage.html#afa5fe32980cf666cebb9717ca8fe0ee9">alexaClientSDK::capabilityAgents::alerts::test::MockAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html#acc361efb75ffb1ef31d8619119381f7d">alexaClientSDK::capabilityAgents::alerts::storage::SQLiteAlertStorage</a>.</p>
-
-</div>
-</div>
-<a id="aaca82aa450073375363937dd0841ab94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaca82aa450073375363937dd0841ab94">&#9670;&nbsp;</a></span>printStats()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void alexaClientSDK::capabilityAgents::alerts::storage::AlertStorageInterface::printStats </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a73c2e0dc21b3824f14ae8e242bb58752">StatLevel</a>&#160;</td>
-          <td class="paramname"><em>level</em> = <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a73c2e0dc21b3824f14ae8e242bb58752aeadf97c15e9d8fd6aa6c41a46d73bc1f">StatLevel::ONE_LINE</a></code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>A utility function to print the contents of the database to the SDK logger output. This function is provided for debug use only. </p>
-
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert_storage.html#aa700b5386e794537695807e05bead82c">alexaClientSDK::capabilityAgents::alerts::test::MockAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html#ae52693132a3e262109f8ac1e53ca985b">alexaClientSDK::capabilityAgents::alerts::storage::SQLiteAlertStorage</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert_storage.html#a795e54da776f6face44c0659f9dd3e84">alexaClientSDK::capabilityAgents::alerts::test::MockAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html#a0ba223256b1709e95f00479624ef9fcd">alexaClientSDK::capabilityAgents::alerts::storage::SQLiteAlertStorage</a>.</p>
 
 </div>
 </div>
@@ -597,7 +404,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

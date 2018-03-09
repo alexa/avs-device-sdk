@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -75,20 +75,22 @@ $(function() {
 
 <p>This is the complete list of members for <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#ac5a6a20ba26a9cfb57950323b2abace6">Channel</a>(const unsigned int priority)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a4bb4084a19af877be354d11f919b32d8">Channel</a>(const std::string &amp;name, const unsigned int priority)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a334ff43d1c4c9bd2a51d3e16626685fb">doesObserverOwnChannel</a>(std::shared_ptr&lt; avsCommon::sdkInterfaces::ChannelObserverInterface &gt; observer) const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#ad466e4f0c1d6277527e7b50a3465479f">getActivityId</a>() const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a279f121de6f73593cdc1e6350df0da0a">getPriority</a>() const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#ab1ebf2cf43e1e1211ab85af3870d8736">operator&gt;</a>(const Channel &amp;rhs) const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a8e7cc215ee731d465a4d60870af4f004">setActivityId</a>(const std::string &amp;activityId)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a5ce5635cff138c11f1f2fda972d82615">setFocus</a>(avsCommon::avs::FocusState focus)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#aeace7bcc1b64248c4b609ff4fa03b7c3">setObserver</a>(std::shared_ptr&lt; avsCommon::sdkInterfaces::ChannelObserverInterface &gt; observer)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#adbe563cec1cb93be446ad13666e93873">stopActivity</a>(const std::string &amp;activityId)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a705fcd8f244b6f90ba330836579e0b6b">getInterface</a>() const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a787ed8a96ea9cb8e4d92d3e32e81d83c">getName</a>() const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a279f121de6f73593cdc1e6350df0da0a">getPriority</a>() const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#aaaf8407036a908c4c1f60d34f714b110">getState</a>() const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a40ec13f169e810256397869449815deb">hasObserver</a>() const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#ab1ebf2cf43e1e1211ab85af3870d8736">operator&gt;</a>(const Channel &amp;rhs) const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a5c1b1297903478630e83930cfa6c84e6">setFocus</a>(avsCommon::avs::FocusState focus)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a7be4baa07ce71e33d2e79c6f62d7616c">setInterface</a>(const std::string &amp;interface)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#aeace7bcc1b64248c4b609ff4fa03b7c3">setObserver</a>(std::shared_ptr&lt; avsCommon::sdkInterfaces::ChannelObserverInterface &gt; observer)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">alexaClientSDK::afml::Channel</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

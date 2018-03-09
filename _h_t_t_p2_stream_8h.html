@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -82,6 +82,7 @@ $(function() {
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;<a class="el" href="_attachment_manager_8h_source.html">AVSCommon/AVS/Attachment/AttachmentManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_curl_easy_handle_wrapper_8h_source.html">AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_log_string_formatter_8h_source.html">AVSCommon/Utils/Logger/LogStringFormatter.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_message_request_8h_source.html">AVSCommon/AVS/MessageRequest.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_message_request_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_mime_parser_8h_source.html">ACL/Transport/MimeParser.h</a>&quot;</code><br />
@@ -91,32 +92,34 @@ Include dependency graph for HTTP2Stream.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_h_t_t_p2_stream_8h__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_c_l_2include_2_a_c_l_2_transport_2_h_t_t_p2_stream_8h" alt=""/></div>
 <map name="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_c_l_2include_2_a_c_l_2_transport_2_h_t_t_p2_stream_8h" id="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_c_l_2include_2_a_c_l_2_transport_2_h_t_t_p2_stream_8h">
-<area shape="rect" id="node7" href="_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="1505,179,1706,217"/>
-<area shape="rect" id="node40" href="_curl_easy_handle_wrapper_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/CurlEasyHandleWrapper.h" alt="" coords="94,859,293,897"/>
-<area shape="rect" id="node42" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="874,525,1123,551"/>
-<area shape="rect" id="node44" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="773,599,1019,637"/>
-<area shape="rect" id="node45" href="_mime_parser_8h.html" title="ACL/Transport/MimeParser.h" alt="" coords="2389,105,2582,131"/>
-<area shape="rect" id="node48" href="_message_consumer_interface_8h.html" title="ACL/Transport/MessageConsumer\lInterface.h" alt="" coords="2832,179,3059,217"/>
-<area shape="rect" id="node9" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="1501,265,1709,304"/>
-<area shape="rect" id="node10" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="1366,352,1567,391"/>
-<area shape="rect" id="node11" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1402,599,1603,637"/>
-<area shape="rect" id="node14" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="2251,439,2453,477"/>
-<area shape="rect" id="node13" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1044,685,1206,724"/>
-<area shape="rect" id="node15" href="_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1114,439,1276,477"/>
-<area shape="rect" id="node39" href="_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="2402,692,2505,717"/>
-<area shape="rect" id="node18" href="_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1809,525,1956,551"/>
-<area shape="rect" id="node20" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1416,685,1592,724"/>
-<area shape="rect" id="node34" href="_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="1829,605,1937,631"/>
-<area shape="rect" id="node35" href="_reader_8h.html" title="Reader.h" alt="" coords="1729,605,1804,631"/>
-<area shape="rect" id="node38" href="_writer_8h.html" title="Writer.h" alt="" coords="2010,605,2078,631"/>
-<area shape="rect" id="node21" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1416,772,1592,811"/>
-<area shape="rect" id="node23" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1333,859,1547,897"/>
-<area shape="rect" id="node26" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1061,945,1237,984"/>
-<area shape="rect" id="node27" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1872,859,2048,897"/>
-<area shape="rect" id="node32" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1112,859,1309,897"/>
-<area shape="rect" id="node33" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1571,859,1747,897"/>
-<area shape="rect" id="node28" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2107,945,2283,984"/>
-<area shape="rect" id="node30" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="2107,1032,2283,1071"/>
+<area shape="rect" id="node7" href="_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="2385,179,2586,217"/>
+<area shape="rect" id="node39" href="_curl_easy_handle_wrapper_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/CurlEasyHandleWrapper.h" alt="" coords="844,599,1044,637"/>
+<area shape="rect" id="node41" href="_log_string_formatter_8h.html" title="AVSCommon/Utils/Logger\l/LogStringFormatter.h" alt="" coords="856,685,1032,724"/>
+<area shape="rect" id="node44" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="2543,525,2793,551"/>
+<area shape="rect" id="node46" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="2967,599,3214,637"/>
+<area shape="rect" id="node47" href="_mime_parser_8h.html" title="ACL/Transport/MimeParser.h" alt="" coords="2775,105,2969,131"/>
+<area shape="rect" id="node50" href="_message_consumer_interface_8h.html" title="ACL/Transport/MessageConsumer\lInterface.h" alt="" coords="3269,179,3496,217"/>
+<area shape="rect" id="node9" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="2397,265,2605,304"/>
+<area shape="rect" id="node10" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="2065,352,2266,391"/>
+<area shape="rect" id="node11" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="2115,599,2317,637"/>
+<area shape="rect" id="node14" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="2217,439,2418,477"/>
+<area shape="rect" id="node13" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="2083,685,2245,724"/>
+<area shape="rect" id="node15" href="_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1427,439,1589,477"/>
+<area shape="rect" id="node38" href="_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="1666,692,1769,717"/>
+<area shape="rect" id="node18" href="_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1435,525,1581,551"/>
+<area shape="rect" id="node20" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1157,685,1333,724"/>
+<area shape="rect" id="node34" href="_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="1293,605,1401,631"/>
+<area shape="rect" id="node35" href="_reader_8h.html" title="Reader.h" alt="" coords="1565,605,1640,631"/>
+<area shape="rect" id="node37" href="_writer_8h.html" title="Writer.h" alt="" coords="1474,605,1542,631"/>
+<area shape="rect" id="node21" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1133,772,1309,811"/>
+<area shape="rect" id="node23" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1336,859,1550,897"/>
+<area shape="rect" id="node26" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1712,945,1888,984"/>
+<area shape="rect" id="node27" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="933,859,1109,897"/>
+<area shape="rect" id="node32" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1675,859,1872,897"/>
+<area shape="rect" id="node33" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1780,1032,1956,1071"/>
+<area shape="rect" id="node28" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="113,945,289,984"/>
+<area shape="rect" id="node30" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="20,1032,196,1071"/>
+<area shape="rect" id="node42" href="_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="736,859,910,897"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -157,7 +160,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -69,6 +69,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1afml_1_1_channel-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -78,32 +79,41 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="_channel_8h_source.html">Channel.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_channel_1_1_state.html">State</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac5a6a20ba26a9cfb57950323b2abace6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#ac5a6a20ba26a9cfb57950323b2abace6">Channel</a> (const unsigned int priority)</td></tr>
-<tr class="separator:ac5a6a20ba26a9cfb57950323b2abace6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bb4084a19af877be354d11f919b32d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a4bb4084a19af877be354d11f919b32d8">Channel</a> (const std::string &amp;name, const unsigned int priority)</td></tr>
+<tr class="separator:a4bb4084a19af877be354d11f919b32d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a787ed8a96ea9cb8e4d92d3e32e81d83c"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a787ed8a96ea9cb8e4d92d3e32e81d83c">getName</a> () const</td></tr>
+<tr class="separator:a787ed8a96ea9cb8e4d92d3e32e81d83c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a279f121de6f73593cdc1e6350df0da0a"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a279f121de6f73593cdc1e6350df0da0a">getPriority</a> () const</td></tr>
 <tr class="separator:a279f121de6f73593cdc1e6350df0da0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ce5635cff138c11f1f2fda972d82615"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a5ce5635cff138c11f1f2fda972d82615">setFocus</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a> focus)</td></tr>
-<tr class="separator:a5ce5635cff138c11f1f2fda972d82615"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c1b1297903478630e83930cfa6c84e6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a5c1b1297903478630e83930cfa6c84e6">setFocus</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a> focus)</td></tr>
+<tr class="separator:a5c1b1297903478630e83930cfa6c84e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeace7bcc1b64248c4b609ff4fa03b7c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#aeace7bcc1b64248c4b609ff4fa03b7c3">setObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html">avsCommon::sdkInterfaces::ChannelObserverInterface</a> &gt; observer)</td></tr>
 <tr class="separator:aeace7bcc1b64248c4b609ff4fa03b7c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40ec13f169e810256397869449815deb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a40ec13f169e810256397869449815deb">hasObserver</a> () const</td></tr>
+<tr class="separator:a40ec13f169e810256397869449815deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1ebf2cf43e1e1211ab85af3870d8736"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#ab1ebf2cf43e1e1211ab85af3870d8736">operator&gt;</a> (const <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> &amp;rhs) const</td></tr>
 <tr class="separator:ab1ebf2cf43e1e1211ab85af3870d8736"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e7cc215ee731d465a4d60870af4f004"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a8e7cc215ee731d465a4d60870af4f004">setActivityId</a> (const std::string &amp;activityId)</td></tr>
-<tr class="separator:a8e7cc215ee731d465a4d60870af4f004"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad466e4f0c1d6277527e7b50a3465479f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#ad466e4f0c1d6277527e7b50a3465479f">getActivityId</a> () const</td></tr>
-<tr class="separator:ad466e4f0c1d6277527e7b50a3465479f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbe563cec1cb93be446ad13666e93873"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#adbe563cec1cb93be446ad13666e93873">stopActivity</a> (const std::string &amp;activityId)</td></tr>
-<tr class="separator:adbe563cec1cb93be446ad13666e93873"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7be4baa07ce71e33d2e79c6f62d7616c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a7be4baa07ce71e33d2e79c6f62d7616c">setInterface</a> (const std::string &amp;interface)</td></tr>
+<tr class="separator:a7be4baa07ce71e33d2e79c6f62d7616c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a705fcd8f244b6f90ba330836579e0b6b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a705fcd8f244b6f90ba330836579e0b6b">getInterface</a> () const</td></tr>
+<tr class="separator:a705fcd8f244b6f90ba330836579e0b6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a334ff43d1c4c9bd2a51d3e16626685fb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#a334ff43d1c4c9bd2a51d3e16626685fb">doesObserverOwnChannel</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html">avsCommon::sdkInterfaces::ChannelObserverInterface</a> &gt; observer) const</td></tr>
 <tr class="separator:a334ff43d1c4c9bd2a51d3e16626685fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaf8407036a908c4c1f60d34f714b110"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_channel_1_1_state.html">Channel::State</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html#aaaf8407036a908c4c1f60d34f714b110">getState</a> () const</td></tr>
+<tr class="separator:aaaf8407036a908c4c1f60d34f714b110"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> represents a focusable layer with a priority, allowing the observer which has acquired the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> to understand focus changes. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac5a6a20ba26a9cfb57950323b2abace6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5a6a20ba26a9cfb57950323b2abace6">&#9670;&nbsp;</a></span>Channel()</h2>
+<a id="a4bb4084a19af877be354d11f919b32d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bb4084a19af877be354d11f919b32d8">&#9670;&nbsp;</a></span>Channel()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -111,15 +121,26 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">alexaClientSDK::afml::Channel::Channel </td>
           <td>(</td>
-          <td class="paramtype">const unsigned int&#160;</td>
-          <td class="paramname"><em>priority</em></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const unsigned int&#160;</td>
+          <td class="paramname"><em>priority</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Constructs a new <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> object with the provided priority.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">name</td><td>The channel's name. </td></tr>
     <tr><td class="paramname">priority</td><td>The priority of the channel. </td></tr>
   </table>
   </dd>
@@ -154,22 +175,41 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad466e4f0c1d6277527e7b50a3465479f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad466e4f0c1d6277527e7b50a3465479f">&#9670;&nbsp;</a></span>getActivityId()</h2>
+<a id="a705fcd8f244b6f90ba330836579e0b6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a705fcd8f244b6f90ba330836579e0b6b">&#9670;&nbsp;</a></span>getInterface()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string alexaClientSDK::afml::Channel::getActivityId </td>
+          <td class="memname">std::string alexaClientSDK::afml::Channel::getInterface </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Returns the activity id of the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>.</p>
-<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> activity id. </dd></dl>
+<p>Returns the name of the AVS interface occupying the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>The name of the AVS interface. </dd></dl>
+
+</div>
+</div>
+<a id="a787ed8a96ea9cb8e4d92d3e32e81d83c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a787ed8a96ea9cb8e4d92d3e32e81d83c">&#9670;&nbsp;</a></span>getName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string &amp; alexaClientSDK::afml::Channel::getName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the name of a channel.</p>
+<dl class="section return"><dt>Returns</dt><dd>The channel's name. </dd></dl>
 
 </div>
 </div>
@@ -189,6 +229,44 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns the priority of a <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>.</p>
 <dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> priority. </dd></dl>
+
+</div>
+</div>
+<a id="aaaf8407036a908c4c1f60d34f714b110"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaaf8407036a908c4c1f60d34f714b110">&#9670;&nbsp;</a></span>getState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_channel_1_1_state.html">Channel::State</a> alexaClientSDK::afml::Channel::getState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the <code><a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_channel_1_1_state.html">State</a></code> of the <code><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a></code>.</p>
+<dl class="section return"><dt>Returns</dt><dd>The <code><a class="el" href="structalexa_client_s_d_k_1_1afml_1_1_channel_1_1_state.html">State</a></code>. </dd></dl>
+
+</div>
+</div>
+<a id="a40ec13f169e810256397869449815deb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40ec13f169e810256397869449815deb">&#9670;&nbsp;</a></span>hasObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::afml::Channel::hasObserver </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Checks whether the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> has an observer.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> has an observer, else <code>false</code>. </dd></dl>
 
 </div>
 </div>
@@ -217,39 +295,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8e7cc215ee731d465a4d60870af4f004"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e7cc215ee731d465a4d60870af4f004">&#9670;&nbsp;</a></span>setActivityId()</h2>
+<a id="a5c1b1297903478630e83930cfa6c84e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c1b1297903478630e83930cfa6c84e6">&#9670;&nbsp;</a></span>setFocus()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void alexaClientSDK::afml::Channel::setActivityId </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>activityId</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Updates the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>'s activity id.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">activityId</td><td>The activity id of the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a5ce5635cff138c11f1f2fda972d82615"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ce5635cff138c11f1f2fda972d82615">&#9670;&nbsp;</a></span>setFocus()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void alexaClientSDK::afml::Channel::setFocus </td>
+          <td class="memname">bool alexaClientSDK::afml::Channel::setFocus </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a>&#160;</td>
           <td class="paramname"><em>focus</em></td><td>)</td>
@@ -261,6 +314,32 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">focus</td><td>The focus of the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if focus changed, else <code>false</code>. </dd></dl>
+
+</div>
+</div>
+<a id="a7be4baa07ce71e33d2e79c6f62d7616c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7be4baa07ce71e33d2e79c6f62d7616c">&#9670;&nbsp;</a></span>setInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::afml::Channel::setInterface </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>interface</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the AVS interface occupying the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">interface</td><td>The name of the interface occupying the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -282,39 +361,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sets a new observer and notifies the old observer, if there is one, that it lost focus.</p>
+<p>Sets a new observer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">observer</td><td>The observer of the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>. </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="adbe563cec1cb93be446ad13666e93873"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adbe563cec1cb93be446ad13666e93873">&#9670;&nbsp;</a></span>stopActivity()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool alexaClientSDK::afml::Channel::stopActivity </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>activityId</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Notifies the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>'s observer to stop if the <code>activityId</code> matches the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>'s activity id.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">activityId</td><td>The activity id to compare. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the activity on the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> was stopped and <code>false</code> otherwise. </dd></dl>
 
 </div>
 </div>
@@ -326,7 +379,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

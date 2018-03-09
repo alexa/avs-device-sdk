@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -97,10 +97,14 @@ Classes</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a1c176f309a29dfc503768f6650727746"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface.html#a1c176f309a29dfc503768f6650727746">~TemplateRuntimeObserverInterface</a> ()=default</td></tr>
 <tr class="separator:a1c176f309a29dfc503768f6650727746"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7cb12d4cbfbcd5b31030ab016a6af35"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface.html#ae7cb12d4cbfbcd5b31030ab016a6af35">renderTemplateCard</a> (const std::string &amp;jsonPayload)=0</td></tr>
-<tr class="separator:ae7cb12d4cbfbcd5b31030ab016a6af35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a634a705bd6876d266d86a9649f565537"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface.html#a634a705bd6876d266d86a9649f565537">renderPlayerInfoCard</a> (const std::string &amp;jsonPayload, <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface_1_1_audio_player_info.html">TemplateRuntimeObserverInterface::AudioPlayerInfo</a> audioPlayerInfo)=0</td></tr>
-<tr class="separator:a634a705bd6876d266d86a9649f565537"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fed5a4d0e5e0f91a1bf0bd8f2f9fb42"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface.html#a2fed5a4d0e5e0f91a1bf0bd8f2f9fb42">renderTemplateCard</a> (const std::string &amp;jsonPayload, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a> focusState)=0</td></tr>
+<tr class="separator:a2fed5a4d0e5e0f91a1bf0bd8f2f9fb42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b580ecba0c67d343b5f41e400fcc713"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface.html#a1b580ecba0c67d343b5f41e400fcc713">clearTemplateCard</a> ()=0</td></tr>
+<tr class="separator:a1b580ecba0c67d343b5f41e400fcc713"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa50826e60e62895cbf79e9c96b4df6d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface.html#afa50826e60e62895cbf79e9c96b4df6d">renderPlayerInfoCard</a> (const std::string &amp;jsonPayload, <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface_1_1_audio_player_info.html">TemplateRuntimeObserverInterface::AudioPlayerInfo</a> audioPlayerInfo, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a> focusState)=0</td></tr>
+<tr class="separator:afa50826e60e62895cbf79e9c96b4df6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9b7fdc8cbf458d4fb08130317fce21b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface.html#af9b7fdc8cbf458d4fb08130317fce21b">clearPlayerInfoCard</a> ()=0</td></tr>
+<tr class="separator:af9b7fdc8cbf458d4fb08130317fce21b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface.html">TemplateRuntimeObserverInterface</a></code> class is used to notify observers when a <code>RenderTemplate</code> or <code>RenderPlayerInfo</code> directive is received. These two directives contains metadata for rendering display cards for devices with GUI support. </p>
@@ -132,8 +136,64 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a634a705bd6876d266d86a9649f565537"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a634a705bd6876d266d86a9649f565537">&#9670;&nbsp;</a></span>renderPlayerInfoCard()</h2>
+<a id="af9b7fdc8cbf458d4fb08130317fce21b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9b7fdc8cbf458d4fb08130317fce21b">&#9670;&nbsp;</a></span>clearPlayerInfoCard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface::clearPlayerInfoCard </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Used to notify the observer when the client should clear the PlayerInfo display card. Once the card is cleared, the client should call templateCardCleared(). </p>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_gui_renderer.html#a304ed998fe2aee20403792cc20d2b88d">alexaClientSDK::sampleApp::GuiRenderer</a>.</p>
+
+</div>
+</div>
+<a id="a1b580ecba0c67d343b5f41e400fcc713"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b580ecba0c67d343b5f41e400fcc713">&#9670;&nbsp;</a></span>clearTemplateCard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface::clearTemplateCard </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Used to notify the observer when the client should clear the Template display card. Once the card is cleared, the client should call templateCardCleared(). </p>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_gui_renderer.html#aa9fe17ea7559283e44d4fa2b56ea3028">alexaClientSDK::sampleApp::GuiRenderer</a>.</p>
+
+</div>
+</div>
+<a id="afa50826e60e62895cbf79e9c96b4df6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa50826e60e62895cbf79e9c96b4df6d">&#9670;&nbsp;</a></span>renderPlayerInfoCard()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -151,7 +211,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface_1_1_audio_player_info.html">TemplateRuntimeObserverInterface::AudioPlayerInfo</a>&#160;</td>
-          <td class="paramname"><em>audioPlayerInfo</em>&#160;</td>
+          <td class="paramname"><em>audioPlayerInfo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a>&#160;</td>
+          <td class="paramname"><em>focusState</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -170,16 +236,17 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">jsonPayload</td><td>The payload of the RenderPlayerInfo directive in structured JSON format. </td></tr>
     <tr><td class="paramname">audioPlayerInfo</td><td>Information on the <code>AudioPlayer</code>. </td></tr>
+    <tr><td class="paramname">focusState</td><td>The <code>FocusState</code> of the channel used by TemplateRuntime interface. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_gui_renderer.html#ab7db9ebcea94a8262e2f85875dbfbcf1">alexaClientSDK::sampleApp::GuiRenderer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_gui_renderer.html#a7932b156649d82a7715458f43557a0c0">alexaClientSDK::sampleApp::GuiRenderer</a>.</p>
 
 </div>
 </div>
-<a id="ae7cb12d4cbfbcd5b31030ab016a6af35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7cb12d4cbfbcd5b31030ab016a6af35">&#9670;&nbsp;</a></span>renderTemplateCard()</h2>
+<a id="a2fed5a4d0e5e0f91a1bf0bd8f2f9fb42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fed5a4d0e5e0f91a1bf0bd8f2f9fb42">&#9670;&nbsp;</a></span>renderTemplateCard()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -191,8 +258,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">virtual void alexaClientSDK::avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface::renderTemplateCard </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>jsonPayload</em></td><td>)</td>
+          <td class="paramname"><em>jsonPayload</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a>&#160;</td>
+          <td class="paramname"><em>focusState</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -206,11 +283,12 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">jsonPayload</td><td>The payload of the RenderTemplate directive in structured JSON format. </td></tr>
+    <tr><td class="paramname">focusState</td><td>The <code>FocusState</code> of the channel used by TemplateRuntime interface. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_gui_renderer.html#a32fa6bf0661b6b960e578ed2580bcfdb">alexaClientSDK::sampleApp::GuiRenderer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_gui_renderer.html#aea438e06ee5a196dc2e056c8ac87670c">alexaClientSDK::sampleApp::GuiRenderer</a>.</p>
 
 </div>
 </div>
@@ -221,7 +299,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

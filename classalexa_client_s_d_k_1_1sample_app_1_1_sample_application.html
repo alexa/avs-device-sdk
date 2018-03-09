@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -69,6 +69,8 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1sample_app_1_1_sample_application-members.html">List of all members</a>  </div>
@@ -82,6 +84,18 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="_sample_application_8h_source.html">SampleApplication.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_sample_application_1_1_adapter_registration.html">AdapterRegistration</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_sample_application_1_1_media_player_registration.html">MediaPlayerRegistration</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a36520bb041fb403ae055f78d25f2dc30"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_sample_application.html#a36520bb041fb403ae055f78d25f2dc30">MediaPlayerCreateFunction</a> = std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html">mediaPlayer::MediaPlayer</a> &gt;(*)(std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_factory_interface.html">avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface</a> &gt; contentFetcherFactory, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html#a45fb9f447f7a2ed2d9ffb211c089de93">avsCommon::sdkInterfaces::SpeakerInterface::Type</a> type, std::string name)</td></tr>
+<tr class="separator:a36520bb041fb403ae055f78d25f2dc30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2f214a9cd113ba63b3a38f03ffb90c43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_sample_application.html#a2f214a9cd113ba63b3a38f03ffb90c43">run</a> ()</td></tr>
@@ -90,6 +104,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7e6402ffd9b13290423ced4ddd3b2120"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_sample_application.html#a7e6402ffd9b13290423ced4ddd3b2120">~SampleApplication</a> ()</td></tr>
 <tr class="memdesc:a7e6402ffd9b13290423ced4ddd3b2120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor which manages the <code><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_sample_application.html" title="Class to manage the top-level components of the AVS Client Application. ">SampleApplication</a></code> shutdown sequence.  <a href="#a7e6402ffd9b13290423ced4ddd3b2120">More...</a><br /></td></tr>
 <tr class="separator:a7e6402ffd9b13290423ced4ddd3b2120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c353af979b3a2ab437ae67132146ba3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_sample_application.html#a8c353af979b3a2ab437ae67132146ba3">createMediaPlayersForAdapters</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_content_fetcher_factory.html">avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory</a> &gt; httpContentFetcherFactory, std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt;&gt; &amp;additionalSpeakers)</td></tr>
+<tr class="separator:a8c353af979b3a2ab437ae67132146ba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -98,7 +114,32 @@ Static Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class to manage the top-level components of the AVS Client Application. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a36520bb041fb403ae055f78d25f2dc30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36520bb041fb403ae055f78d25f2dc30">&#9670;&nbsp;</a></span>MediaPlayerCreateFunction</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_sample_application.html#a36520bb041fb403ae055f78d25f2dc30">alexaClientSDK::sampleApp::SampleApplication::MediaPlayerCreateFunction</a> =  std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html">mediaPlayer::MediaPlayer</a>&gt; (*)( std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_factory_interface.html">avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface</a>&gt; contentFetcherFactory, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html#a45fb9f447f7a2ed2d9ffb211c089de93">avsCommon::sdkInterfaces::SpeakerInterface::Type</a> type, std::string name)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Signature of functions to create a MediaPlayer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">httpContentFetcherFactory</td><td>The HTTPContentFetcherFactory to be used while creating the mediaPlayers. </td></tr>
+    <tr><td class="paramname">type</td><td>The type of the SpeakerInterface. </td></tr>
+    <tr><td class="paramname">name</td><td>The name of the MediaPlayer instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Return shared pointer to the created MediaPlayer instance. </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7e6402ffd9b13290423ced4ddd3b2120"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7e6402ffd9b13290423ced4ddd3b2120">&#9670;&nbsp;</a></span>~SampleApplication()</h2>
 
@@ -171,6 +212,43 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a8c353af979b3a2ab437ae67132146ba3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c353af979b3a2ab437ae67132146ba3">&#9670;&nbsp;</a></span>createMediaPlayersForAdapters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::sampleApp::SampleApplication::createMediaPlayersForAdapters </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_content_fetcher_factory.html">avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory</a> &gt;&#160;</td>
+          <td class="paramname"><em>httpContentFetcherFactory</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>additionalSpeakers</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Method to create mediaPlayers for the optional music provider adapters plugged into the SDK.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">httpContentFetcherFactory</td><td>The HTTPContentFetcherFactory to be used while creating the mediaPlayers. </td></tr>
+    <tr><td class="paramname">additionalSpeakers</td><td>The speakerInterface to add the created <a class="el" href="namespacealexa_client_s_d_k_1_1media_player.html">mediaPlayer</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the <a class="el" href="namespacealexa_client_s_d_k_1_1media_player.html">mediaPlayer</a> of all the registered adapters could be created <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
 <a id="a2f214a9cd113ba63b3a38f03ffb90c43"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2f214a9cd113ba63b3a38f03ffb90c43">&#9670;&nbsp;</a></span>run()</h2>
 
@@ -198,7 +276,7 @@ Static Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

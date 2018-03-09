@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -76,11 +76,11 @@ $(function() {
 <p>This is the complete list of members for <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a>, including all inherited members.</p>
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#a7d1ebb9626f0891f6a24deea84177f86">AlertScheduler</a>(std::shared_ptr&lt; storage::AlertStorageInterface &gt; alertStorage, std::shared_ptr&lt; renderer::RendererInterface &gt; alertRenderer, std::chrono::seconds alertPastDueTimeLimitSeconds)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#a8c8c850560c1b0eb53f38aaa61701e3b">clearData</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#a9494f866ccf6e8f8dc4c71ffa2417bae">clearData</a>(Alert::StopReason reason=Alert::StopReason::SHUTDOWN)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#af47f84406836a2356c4b15d73938b1d7">deleteAlert</a>(const std::string &amp;alertToken)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#a5aa4fe51dc460845de912a6d5dce9cf0">getContextInfo</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#ae4e665ec2f2fa9a556ec8fb07ff2abb1">getFocusState</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#ac84870980822d662729375c522eca50c">initialize</a>(const std::string &amp;storageFilePath, std::shared_ptr&lt; AlertObserverInterface &gt; observer)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#a4786c57d2dc176da8bd24cb2f5f52a23">initialize</a>(std::shared_ptr&lt; AlertObserverInterface &gt; observer)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#a5958b4cce598b42dead134d2bb61333b">isAlertActive</a>(std::shared_ptr&lt; Alert &gt; alert)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#a395b00be9128387235fed3fefa186877">onAlertStateChange</a>(const std::string &amp;alertToken, State state, const std::string &amp;reason=&quot;&quot;) override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#ae4eee185a44ffae96657e4da3486bed5">onLocalStop</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html">alexaClientSDK::capabilityAgents::alerts::AlertScheduler</a></td><td class="entry"></td></tr>
@@ -95,7 +95,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -31,6 +31,7 @@ var searchData=
   ['hash_3c_20alexaclientsdk_3a_3aavscommon_3a_3aavs_3a_3anamespaceandname_20_3e',['hash&lt; alexaClientSDK::avsCommon::avs::NamespaceAndName &gt;',['../structstd_1_1hash_3_01alexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name_01_4.html',1,'std']]],
   ['hash_3c_20alexaclientsdk_3a_3aavscommon_3a_3aavs_3a_3aplaybackbutton_20_3e',['hash&lt; alexaClientSDK::avsCommon::avs::PlaybackButton &gt;',['../structstd_1_1hash_3_01alexa_client_s_d_k_1_1avs_common_1_1avs_1_1_playback_button_01_4.html',1,'std']]],
   ['hashcombine',['hashCombine',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1functional.html#a0aabaf8367ab2aeafebe9947ef03c965',1,'alexaClientSDK::avsCommon::utils::functional']]],
+  ['hasobserver',['hasObserver',['../classalexa_client_s_d_k_1_1afml_1_1_channel.html#a40ec13f169e810256397869449815deb',1,'alexaClientSDK::afml::Channel']]],
   ['hasprogresstimedout',['hasProgressTimedOut',['../classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#aa9499c32758ac7117564bd713b4e2f8f',1,'alexaClientSDK::acl::HTTP2Stream']]],
   ['hasrenderingfailed',['hasRenderingFailed',['../structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset_configuration.html#ab06667318165e817272944b2869169ac',1,'alexaClientSDK::capabilityAgents::alerts::Alert::AssetConfiguration']]],
   ['hassendcompleted',['hasSendCompleted',['../classalexa_client_s_d_k_1_1integration_1_1_observable_message_request.html#abc2a1e52b517c7be181c23b196b54f30',1,'alexaClientSDK::integration::ObservableMessageRequest']]],

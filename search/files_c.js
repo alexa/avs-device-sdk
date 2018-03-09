@@ -48,6 +48,7 @@ var searchData=
   ['mockdirectivesequencer_2eh',['MockDirectiveSequencer.h',['../_a_d_s_l_2test_2_a_d_s_l_2_mock_directive_sequencer_8h.html',1,'(Global Namespace)'],['../_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h.html',1,'(Global Namespace)']]],
   ['mockexceptionencounteredsender_2eh',['MockExceptionEncounteredSender.h',['../_mock_exception_encountered_sender_8h.html',1,'']]],
   ['mockfocusmanager_2eh',['MockFocusManager.h',['../_mock_focus_manager_8h.html',1,'']]],
+  ['mockfocusmanagerobserver_2eh',['MockFocusManagerObserver.h',['../_mock_focus_manager_observer_8h.html',1,'']]],
   ['mockhttppost_2eh',['MockHttpPost.h',['../_mock_http_post_8h.html',1,'']]],
   ['mockmediaplayer_2ecpp',['MockMediaPlayer.cpp',['../_mock_media_player_8cpp.html',1,'']]],
   ['mockmediaplayer_2eh',['MockMediaPlayer.h',['../_mock_media_player_8h.html',1,'']]],

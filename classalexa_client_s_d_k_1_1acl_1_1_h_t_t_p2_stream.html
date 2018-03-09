@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -114,6 +114,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a05b2efb8fb85c610fd4e959f15bc6b0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9499c32758ac7117564bd713b4e2f8f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#aa9499c32758ac7117564bd713b4e2f8f">hasProgressTimedOut</a> () const</td></tr>
 <tr class="separator:aa9499c32758ac7117564bd713b4e2f8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f75ff2f6ec4ed2f2444af7f1087c39d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_string_formatter.html">avsCommon::utils::logger::LogStringFormatter</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_stream.html#a3f75ff2f6ec4ed2f2444af7f1087c39d">getLogFormatter</a> () const</td></tr>
+<tr class="separator:a3f75ff2f6ec4ed2f2444af7f1087c39d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -180,6 +182,25 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Gets the CURL easy handle associated with this stream</p>
 <dl class="section return"><dt>Returns</dt><dd>The associated curl easy handle for the stream </dd></dl>
+
+</div>
+</div>
+<a id="a3f75ff2f6ec4ed2f2444af7f1087c39d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f75ff2f6ec4ed2f2444af7f1087c39d">&#9670;&nbsp;</a></span>getLogFormatter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_string_formatter.html">avsCommon::utils::logger::LogStringFormatter</a> &amp; alexaClientSDK::acl::HTTP2Stream::getLogFormatter </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return a reference to the LogStringFormatter owned by this object. This is to allow a callback that uses this object to get access to a known good LogStringFormatter.</p>
+<dl class="section return"><dt>Returns</dt><dd>A reference to a LogStringFormatter. </dd></dl>
 
 </div>
 </div>
@@ -285,7 +306,7 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Callback that gets executed when HTTP headers are received from the server See <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a8cbbef2570297cf6980710809bb35d50">CurlEasyHandleWrapper::CurlCallback</a> for details </p>
+<p>Callback that gets executed when HTTP headers are received from the server See <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ae2809e455ecb95686d32239554f85156">CurlEasyHandleWrapper::CurlCallback</a> for details </p>
 
 </div>
 </div>
@@ -683,7 +704,7 @@ template&lt;class TickType , class TickPeriod &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Callback that gets executed when data is received from the server See <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a8cbbef2570297cf6980710809bb35d50">CurlEasyHandleWrapper::CurlCallback</a> for details </p>
+<p>Callback that gets executed when data is received from the server See <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#ae2809e455ecb95686d32239554f85156">CurlEasyHandleWrapper::CurlCallback</a> for details </p>
 <p>If we get an HTTP 200 response code then we're getting a MIME multipart payload. For all other response codes we're getting a JSON string without multipart headers.</p>
 
 </div>
@@ -696,7 +717,7 @@ template&lt;class TickType , class TickPeriod &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -68,7 +68,7 @@ $(function() {
 <div class="title">IMPORTANT NOTE </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>If you are updating from v1.3 or earlier to v1.5, you must update your <code>AlexaClientSDKConfig.json</code> to include a Notifications database. An updated sample is available in the quickstart guides for Ubuntu Linux, Raspberry Pi, macOS, and Generic Linux.</p>
+<div class="textblock"><p>If you are updating from v1.3 or earlier to v1.6, you must update your <code>AlexaClientSDKConfig.json</code> to include a Notifications database. An updated sample is available in the quickstart guides for Ubuntu Linux, Raspberry Pi, macOS, and Generic Linux.</p>
 <h3>What is the Alexa Voice Service (AVS)?</h3>
 <p>The Alexa Voice Service (AVS) enables developers to integrate Alexa directly into their products, bringing the convenience of voice control to any connected device. AVS provides developers with access to a suite of resources to quickly and easily build Alexa-enabled products, including APIs, hardware development kits, software development kits, and documentation.</p>
 <p><a href="https://developer.amazon.com/alexa-voice-service">Learn more »</a></p>
@@ -79,11 +79,15 @@ $(function() {
 <li><a href="https://github.com/alexa/avs-device-sdk/wiki/Ubuntu-Linux-Quick-Start-Guide">Ubuntu Linux</a></li>
 <li><a href="https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide-with-Script">Raspberry Pi</a> (Raspbian Stretch)</li>
 <li><a href="https://github.com/alexa/avs-device-sdk/wiki/macOS-Quick-Start-Guide">macOS</a></li>
+<li><a href="https://github.com/alexa/avs-device-sdk/wiki/Windows-Quick-Start-Guide-with-Script">Windows 64-bit</a></li>
 <li><a href="https://github.com/alexa/avs-device-sdk/wiki/Linux-Reference-Guide">Generic Linux</a></li>
 </ul>
 <p>You can also prototype with a third party development kit:</p><ul>
-<li><a href="https://github.com/xmos/vocalfusion-avs-setup">xCORE VocalFusion 4-Mic Kit</a></li>
-<li><a href="https://www.nxp.com/docs/en/user-guide/Quick-Start-Guide-for-Arrow-AVS-kit.pdf">NXP PICO-PI-IMX7D 2-Mic Kit</a></li>
+<li><a href="https://github.com/xmos/vocalfusion-avs-setup">XMOS VocalFusion 4-Mic Kit</a> - Learn More <a href="https://developer.amazon.com/alexa-voice-service/dev-kits/xmos-vocal-fusion">Here</a></li>
+<li><a href="https://www.nxp.com/docs/en/user-guide/Quick-Start-Guide-for-Arrow-AVS-kit.pdf">Synaptics AudioSmart 2-Mic Dev Kit for Amazon AVS with NXP SoC</a> - Learn More <a href="https://developer.amazon.com/alexa-voice-service/dev-kits/synaptics-2-mic">Here</a></li>
+<li><a href="https://avs-dvk-workshop.github.io">Intel Speech Enabling Developer Kit</a> - Learn More <a href="https://developer.amazon.com/alexa-voice-service/dev-kits/intel-speech-enabling/">Here</a></li>
+<li><a href="http://openlinux2.amlogic.com/download/doc/A113X1_Usermanual.pdf">Amlogic A113X1 Far-Field Dev Kit for Amazon AVS</a> - Learn More <a href="https://developer.amazon.com/alexa-voice-service/dev-kits/amlogic-6-mic">Here</a></li>
+<li><a href="http://www.banana-pi.org/images/r18avs/AVS-quickstartguide.pdf">Allwinner SoC-Only 3-Mic Far-Field Dev Kit for Amazon AVS</a> - Learn More <a href="https://developer.amazon.com/alexa-voice-service/dev-kits/allwinner-3-mic">Here</a></li>
 </ul>
 <p>Or if you prefer, you can start with our <a href="https://alexa.github.io/avs-device-sdk/">SDK API Documentation</a>.</p>
 <h3>Learn More About The AVS Device SDK</h3>
@@ -92,8 +96,7 @@ $(function() {
 <h3>SDK Architecture</h3>
 <p>This diagram illustrates the data flows between components that comprise the AVS Device SDK for C++.</p>
 <div class="image">
-<img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/Alexa_Device_SDK_Architecture.png" alt="SDK Architecture Diagram"/ width="75%">
-</div>
+<img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/Alexa_Device_SDK_Architecture.png" alt="SDK Architecture Diagram"/ width="75%"></div>
 <p><b>Audio Signal Processor (ASP)</b> - Third-party software that applies signal processing algorithms to both input and output audio channels. The applied algorithms are designed to produce clean audio data and include, but are not limited to acoustic echo cancellation (AEC), beam forming (fixed or adaptive), voice activity detection (VAD), and dynamic range compression (DRC). If a multi-microphone array is present, the ASP constructs and outputs a single audio stream for the array.</p>
 <p><b>Shared Data Stream (SDS)</b> - A single producer, multi-consumer buffer that allows for the transport of any type of data between a single writer and one or more readers. SDS performs two key tasks:</p>
 <ol type="1">
@@ -138,34 +141,33 @@ $(function() {
 </ul>
 <h3>Release Notes and Known Issues</h3>
 <p><b>Note</b>: Feature enhancements, updates, and resolved issues from previous releases are available to view in https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md "CHANGELOG.md".</p>
-<p>v1.5.0 released 02/12/2018:</p>
+<p>v1.6.0 released 03/08/2018:</p>
 <p><b>Enhancements</b></p><ul>
-<li>Added the <code>ExternalMediaPlayer</code> Capability Agent. This allows playback from music providers that control their own playback queue. Example: Spotify.</li>
-<li>Added support for AU and NZ to the <code>SampleApp</code>.</li>
-<li>Firmware version can now be sent to Alexa via the <code>SoftwareInfo</code> event. The firmware version is specified in the config file under the <code>sampleApp</code> object as an integer value named <a href="https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L52"><code>firmwareVersion</code></a>.</li>
-<li>The new <code>f</code> command was added to the <code>SampleApp</code> which allows the firmware version to be updated at run-time.</li>
-<li>Optional configuration changes have been introduced. Now a <a href="https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L93">default log level</a> can be set for <code>ACSDK_LOG_MODULE</code> components, globally or individually. This value is specified under a new root level configuration object called <code>logger</code>, and the value itself is named <code>logLevel</code>. This allows you to limit the degree of logging to that default value, such as <code>ERROR</code>or <code>INFO</code>.</li>
+<li><code>rapidJson</code> is now included with "make install".</li>
+<li>Updated the <code>TemplateRuntimeObserverInterface</code> to support clearing of <code>displayCards</code>.</li>
+<li>Added Windows SDK support, along with an installation script (MinGW-w64).</li>
+<li>Updated <code>ContextManager</code> to ignore context reported by a state provider.</li>
+<li>The <code>SharedDataStream</code> object is now associated by playlist, rather than by URL.</li>
+<li>Added the <code>RegistrationManager</code> component. Now, when a user logs out all persistent user-specific data is cleared from the SDK. The log out functionality can be exercised in the sample app with the new command: <code>k</code>.</li>
 </ul>
 <p><b>Bug Fixes</b></p><ul>
-<li>Fixed bug where <code>AudioPlayer</code> progress reports were not being sent, or were being sent incorrectly.</li>
-<li><a href="https://github.com/alexa/avs-device-sdk/issues/408">Issue 408</a> - Irrelevant code related to <code>UrlSource</code> was removed from the <code>GStreamer-based MediaPlayer</code> implementation.</li>
-<li>The <code>TZ</code> variable no longer needs to be set to <code>UTC</code> when building the <code>SampleApp</code>.</li>
-<li>Fixed a bug where <code>CurlEasyHandleWrapper</code> logged unwanted data on failure conditions.</li>
-<li>Fixed a bug to improve <code>SIGPIPE</code> handling.</li>
-<li>Fixed a bug where the filename and classname were mismatched. Changed <code>UrlToAttachmentConverter.h</code> to <code><a class="el" href="_url_content_to_attachment_converter_8h.html">UrlContentToAttachmentConverter.h</a></code>,and <code>UrlToAttachmentConverter.cpp</code> to <code><a class="el" href="_url_content_to_attachment_converter_8cpp.html">UrlContentToAttachmentConverter.cpp</a></code></li>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/400">Issue 400</a> Fixed a bug where the alert reminder did not iterate as intended after loss of network connection.</li>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/477">Issue 477</a> Fixed a bug in which Alexa's weather response was being truncated.</li>
+<li>Fixed an issue in which there were reports of instability related to the Sensory engine. To correct this, the <code>portAudio</code> <a href="https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L62"><code>suggestedLatency</code></a> value can now be configured.</li>
 </ul>
 <p><b>Known Issues</b></p><ul>
 <li>The <code>ACL</code> may encounter issues if audio attachments are received but not consumed.</li>
-<li>Display Cards for Kindle don't render.</li>
-<li>If using the GStreamer-based <code>MediaPlayer</code> implementation, after muting and un-muting an audio item, the next item in the queue will begin playing rather than continuing playback of the originally muted audio item.</li>
 <li><code>SpeechSynthesizerState</code> currently uses <code>GAINING_FOCUS</code> and <code>LOSING_FOCUS</code> as a workaround for handling intermediate state. These states may be removed in a future release.</li>
-<li>Music playback doesn't immediately stop when a user barges-in on iHeartRadio. </li>
+<li>Music playback doesn't immediately stop when a user barges-in on iHeartRadio.</li>
+<li>The Windows sample app hangs on exit.</li>
+<li>GDB receives a <code>SIGTRAP</code> when troubleshooting the Windows sample app.</li>
+<li><code>make integration</code> doesn't work on Windows. Integration tests will need to be run individually. </li>
 </ul>
 </div></div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

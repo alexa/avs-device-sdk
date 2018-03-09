@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -99,8 +99,6 @@ Functions</h2></td></tr>
 <tr class="memitem:a6427363d719338b46953ea310d1e77da"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#a6427363d719338b46953ea310d1e77da">TAG</a> (&quot;SQLiteSettingsStorage&quot;)</td></tr>
 <tr class="memdesc:a6427363d719338b46953ea310d1e77da"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a6427363d719338b46953ea310d1e77da">More...</a><br /></td></tr>
 <tr class="separator:a6427363d719338b46953ea310d1e77da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0a8091d211efee024f2b77545cb26be"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#aa0a8091d211efee024f2b77545cb26be">fileExists</a> (const std::string &amp;filePath)</td></tr>
-<tr class="separator:aa0a8091d211efee024f2b77545cb26be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -110,11 +108,8 @@ Variables</h2></td></tr>
 <tr class="memitem:a4c81a8ad89582eebba382568e922d024"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#a4c81a8ad89582eebba382568e922d024">SETTINGS_CONFIGURATION_ROOT_KEY</a> = &quot;settings&quot;</td></tr>
 <tr class="memdesc:a4c81a8ad89582eebba382568e922d024"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key in our config file to find the root of settings.  <a href="#a4c81a8ad89582eebba382568e922d024">More...</a><br /></td></tr>
 <tr class="separator:a4c81a8ad89582eebba382568e922d024"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeaa366807af69f46cb266b6071df1079"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#aeaa366807af69f46cb266b6071df1079">SETTINGS_DB_FILE_PATH_KEY</a> = &quot;databaseFilePath&quot;</td></tr>
-<tr class="memdesc:aeaa366807af69f46cb266b6071df1079"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key in our config file to find the database file path.  <a href="#aeaa366807af69f46cb266b6071df1079">More...</a><br /></td></tr>
-<tr class="separator:aeaa366807af69f46cb266b6071df1079"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af049e2810ce9ce5f6b75394b61eafc32"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#af049e2810ce9ce5f6b75394b61eafc32">SETTINGS_DEFAULT_SETTINGS_ROOT_KEY</a> = &quot;defaultAVSClientSettings&quot;</td></tr>
-<tr class="memdesc:af049e2810ce9ce5f6b75394b61eafc32"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key in our config file to find the default setting root.  <a href="#af049e2810ce9ce5f6b75394b61eafc32">More...</a><br /></td></tr>
+<tr class="memdesc:af049e2810ce9ce5f6b75394b61eafc32"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key in our config file to find the database file path.  <a href="#af049e2810ce9ce5f6b75394b61eafc32">More...</a><br /></td></tr>
 <tr class="separator:af049e2810ce9ce5f6b75394b61eafc32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9494a4512aa8050c3ee63179a7e7c8e"><td class="memItemLeft" align="right" valign="top">static const std::unordered_set&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#ae9494a4512aa8050c3ee63179a7e7c8e">SETTINGS_ACCEPTED_KEYS</a> = {&quot;locale&quot;}</td></tr>
 <tr class="memdesc:ae9494a4512aa8050c3ee63179a7e7c8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The acceptable setting keys to find in our config file.  <a href="#ae9494a4512aa8050c3ee63179a7e7c8e">More...</a><br /></td></tr>
@@ -137,6 +132,12 @@ Variables</h2></td></tr>
 <tr class="memitem:a42e2b18aa94ea7fc3da76567b4ba45aa"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#a42e2b18aa94ea7fc3da76567b4ba45aa">SETTING_VALUE</a> [] = &quot;value&quot;</td></tr>
 <tr class="memdesc:a42e2b18aa94ea7fc3da76567b4ba45aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for the value field of the settings.  <a href="#a42e2b18aa94ea7fc3da76567b4ba45aa">More...</a><br /></td></tr>
 <tr class="separator:a42e2b18aa94ea7fc3da76567b4ba45aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c81a8ad89582eebba382568e922d024"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#a4c81a8ad89582eebba382568e922d024">SETTINGS_CONFIGURATION_ROOT_KEY</a> = &quot;settings&quot;</td></tr>
+<tr class="memdesc:a4c81a8ad89582eebba382568e922d024"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key in our config file to find the root of settings.  <a href="#a4c81a8ad89582eebba382568e922d024">More...</a><br /></td></tr>
+<tr class="separator:a4c81a8ad89582eebba382568e922d024"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaa366807af69f46cb266b6071df1079"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#aeaa366807af69f46cb266b6071df1079">SETTINGS_DB_FILE_PATH_KEY</a> = &quot;databaseFilePath&quot;</td></tr>
+<tr class="memdesc:aeaa366807af69f46cb266b6071df1079"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key in our config file to find the database file path.  <a href="#aeaa366807af69f46cb266b6071df1079">More...</a><br /></td></tr>
+<tr class="separator:aeaa366807af69f46cb266b6071df1079"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15eadc3a2f0d6e72d27049043aab263d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#a15eadc3a2f0d6e72d27049043aab263d">SETTINGS_TABLE_NAME</a> = &quot;settings&quot;</td></tr>
 <tr class="memdesc:a15eadc3a2f0d6e72d27049043aab263d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the settings table.  <a href="#a15eadc3a2f0d6e72d27049043aab263d">More...</a><br /></td></tr>
 <tr class="separator:a15eadc3a2f0d6e72d27049043aab263d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,40 +152,6 @@ Variables</h2></td></tr>
 <tr class="separator:a81c795b5e931aaa527fa1892c74589b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="aa0a8091d211efee024f2b77545cb26be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0a8091d211efee024f2b77545cb26be">&#9670;&nbsp;</a></span>fileExists()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool alexaClientSDK::capabilityAgents::settings::fileExists </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filePath</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>A small utility function to help determine if a file exists.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filePath</td><td>The path to the file being queried about. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Whether the file exists and is accessible. </dd></dl>
-
-</div>
-</div>
 <a id="a6427363d719338b46953ea310d1e77da"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6427363d719338b46953ea310d1e77da">&#9670;&nbsp;</a></span>TAG()</h2>
 
@@ -233,9 +200,9 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#a15eadc3a2f0d6e72d27049043aab263d">SETTINGS_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">                                                            <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#ab244877f485a255e751831a954b31c83">SETTING_KEY</a> + <span class="stringliteral">&quot; TEXT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">                                                            <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#a2b46dea8438d473f3ea9adacacd547ae">SETTING_VALUE</a> + <span class="stringliteral">&quot; TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings_html_a15eadc3a2f0d6e72d27049043aab263d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#a15eadc3a2f0d6e72d27049043aab263d">alexaClientSDK::capabilityAgents::settings::SETTINGS_TABLE_NAME</a></div><div class="ttdeci">static const std::string SETTINGS_TABLE_NAME</div><div class="ttdoc">The name of the settings table. </div><div class="ttdef"><b>Definition:</b> SQLiteSettingStorage.cpp:42</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings_html_ab244877f485a255e751831a954b31c83"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#ab244877f485a255e751831a954b31c83">alexaClientSDK::capabilityAgents::settings::SETTING_KEY</a></div><div class="ttdeci">static const std::string SETTING_KEY</div><div class="ttdoc">The setting key. </div><div class="ttdef"><b>Definition:</b> SQLiteSettingStorage.cpp:44</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings_html_a2b46dea8438d473f3ea9adacacd547ae"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#a2b46dea8438d473f3ea9adacacd547ae">alexaClientSDK::capabilityAgents::settings::SETTING_VALUE</a></div><div class="ttdeci">static const std::string SETTING_VALUE</div><div class="ttdoc">The setting value. </div><div class="ttdef"><b>Definition:</b> SQLiteSettingStorage.cpp:46</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#a15eadc3a2f0d6e72d27049043aab263d">SETTINGS_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">                                                            <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#ab244877f485a255e751831a954b31c83">SETTING_KEY</a> + <span class="stringliteral">&quot; TEXT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">                                                            <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#a2b46dea8438d473f3ea9adacacd547ae">SETTING_VALUE</a> + <span class="stringliteral">&quot; TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings_html_a15eadc3a2f0d6e72d27049043aab263d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#a15eadc3a2f0d6e72d27049043aab263d">alexaClientSDK::capabilityAgents::settings::SETTINGS_TABLE_NAME</a></div><div class="ttdeci">static const std::string SETTINGS_TABLE_NAME</div><div class="ttdoc">The name of the settings table. </div><div class="ttdef"><b>Definition:</b> SQLiteSettingStorage.cpp:47</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings_html_ab244877f485a255e751831a954b31c83"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#ab244877f485a255e751831a954b31c83">alexaClientSDK::capabilityAgents::settings::SETTING_KEY</a></div><div class="ttdeci">static const std::string SETTING_KEY</div><div class="ttdoc">The setting key. </div><div class="ttdef"><b>Definition:</b> SQLiteSettingStorage.cpp:49</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings_html_a2b46dea8438d473f3ea9adacacd547ae"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#a2b46dea8438d473f3ea9adacacd547ae">alexaClientSDK::capabilityAgents::settings::SETTING_VALUE</a></div><div class="ttdeci">static const std::string SETTING_VALUE</div><div class="ttdoc">The setting value. </div><div class="ttdef"><b>Definition:</b> SQLiteSettingStorage.cpp:51</div></div>
 </div><!-- fragment -->
 <p>The SQL string to create the settings table. </p>
 
@@ -265,32 +232,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ab244877f485a255e751831a954b31c83"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab244877f485a255e751831a954b31c83">&#9670;&nbsp;</a></span>SETTING_KEY <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string alexaClientSDK::capabilityAgents::settings::SETTING_KEY = &quot;key&quot;</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The setting key. </p>
-
-</div>
-</div>
 <a id="a587b3234e1f5512363185dd9de48129d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a587b3234e1f5512363185dd9de48129d">&#9670;&nbsp;</a></span>SETTING_KEY <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a587b3234e1f5512363185dd9de48129d">&#9670;&nbsp;</a></span>SETTING_KEY <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -313,8 +256,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a2b46dea8438d473f3ea9adacacd547ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b46dea8438d473f3ea9adacacd547ae">&#9670;&nbsp;</a></span>SETTING_VALUE <span class="overload">[1/2]</span></h2>
+<a id="ab244877f485a255e751831a954b31c83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab244877f485a255e751831a954b31c83">&#9670;&nbsp;</a></span>SETTING_KEY <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -323,7 +266,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::capabilityAgents::settings::SETTING_VALUE = &quot;value&quot;</td>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::settings::SETTING_KEY = &quot;key&quot;</td>
         </tr>
       </table>
   </td>
@@ -333,12 +276,12 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The setting value. </p>
+<p>The setting key. </p>
 
 </div>
 </div>
 <a id="a42e2b18aa94ea7fc3da76567b4ba45aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42e2b18aa94ea7fc3da76567b4ba45aa">&#9670;&nbsp;</a></span>SETTING_VALUE <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a42e2b18aa94ea7fc3da76567b4ba45aa">&#9670;&nbsp;</a></span>SETTING_VALUE <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -358,6 +301,30 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>JSON value for the value field of the settings. </p>
+
+</div>
+</div>
+<a id="a2b46dea8438d473f3ea9adacacd547ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b46dea8438d473f3ea9adacacd547ae">&#9670;&nbsp;</a></span>SETTING_VALUE <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::settings::SETTING_VALUE = &quot;value&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The setting value. </p>
 
 </div>
 </div>
@@ -386,7 +353,31 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a4c81a8ad89582eebba382568e922d024"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c81a8ad89582eebba382568e922d024">&#9670;&nbsp;</a></span>SETTINGS_CONFIGURATION_ROOT_KEY</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c81a8ad89582eebba382568e922d024">&#9670;&nbsp;</a></span>SETTINGS_CONFIGURATION_ROOT_KEY <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::settings::SETTINGS_CONFIGURATION_ROOT_KEY = &quot;settings&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The key in our config file to find the root of settings. </p>
+
+</div>
+</div>
+<a id="a4c81a8ad89582eebba382568e922d024"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c81a8ad89582eebba382568e922d024">&#9670;&nbsp;</a></span>SETTINGS_CONFIGURATION_ROOT_KEY <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -453,7 +444,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The key in our config file to find the default setting root. </p>
+<p>The key in our config file to find the database file path. </p>
 
 </div>
 </div>
@@ -581,7 +572,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

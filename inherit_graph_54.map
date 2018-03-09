@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_thread_moniker.html" title="alexaClientSDK::avsCommon\l::utils::logger::ThreadMoniker" alt="" coords="5,5,202,44"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_stream.html" title="alexaClientSDK::avsCommon\l::utils::logger::LogEntryStream" alt="" coords="379,27,580,65"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_buffer.html" title="alexaClientSDK::avsCommon\l::utils::logger::LogEntryBuffer" alt="" coords="134,55,331,93"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1stream_1_1_streambuf.html" title="alexaClientSDK::avsCommon\l::utils::stream::Streambuf" alt="" coords="134,117,331,156"/>
 </map>

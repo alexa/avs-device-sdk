@@ -1,0 +1,7 @@
+<map id="alexaClientSDK::registrationManager::CustomerDataHandler" name="alexaClientSDK::registrationManager::CustomerDataHandler">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html" title="alexaClientSDK::capability\lAgents::alerts::AlertsCapabilityAgent" alt="" coords="267,5,505,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_capability_agent.html" title="alexaClientSDK::capability\lAgents::notifications::\lNotificationsCapabilityAgent" alt="" coords="293,68,480,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings.html" title="alexaClientSDK::capability\lAgents::settings::Settings" alt="" coords="297,144,475,183"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html" title="alexaClientSDK::certified\lSender::CertifiedSender" alt="" coords="302,207,471,245"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_mock_customer_data_handler.html" title="alexaClientSDK::registration\lManager::test::MockCustomerData\lHandler" alt="" coords="272,269,500,321"/>
+</map>

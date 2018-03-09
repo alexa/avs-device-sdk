@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['uncertainityinms',['UNCERTAINITYINMS',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#ac663e57caf116909b4fbb5d9e6f7cd0a',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer']]],
+  ['uncertainityinms',['UNCERTAINITYINMS',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#a5448a7f27ce7ebae0fdeb6627b176d32',1,'alexaClientSDK::avsCommon::avs::externalMediaPlayer']]],
   ['unescaped_5fmetadata_5fvalue',['UNESCAPED_METADATA_VALUE',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test.html#abde2ac650cb456ba00256c5c1418c3a8',1,'alexaClientSDK::avsCommon::utils::logger::test']]],
   ['unexpected_5ftimeout',['UNEXPECTED_TIMEOUT',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a63520a886fd2f371a217e2d14aca33ad',1,'alexaClientSDK::capabilityAgents::notifications::test']]],
   ['unfavorite_5fdirective',['UNFAVORITE_DIRECTIVE',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a6bef5fa20ded38537181897b7f5867e3',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer']]],
@@ -21,7 +21,7 @@ var searchData=
   ['user_5finactivity_5freport_5fperiod',['USER_INACTIVITY_REPORT_PERIOD',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#adf6cd2862d47c94e6a9d9468c95fbec3',1,'alexaClientSDK::capabilityAgents::system::test']]],
   ['user_5finactivity_5freset_5fname',['USER_INACTIVITY_RESET_NAME',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#aed336d5e8f3a4e5680a6429f63021423',1,'alexaClientSDK::capabilityAgents::system::test']]],
   ['user_5finactivity_5freset_5fnamespace',['USER_INACTIVITY_RESET_NAMESPACE',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#af299909463b7a84a3f96b0e9621e9083',1,'alexaClientSDK::capabilityAgents::system::test']]],
-  ['username',['userName',['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_session_state.html#ab189d76e7427756693b37f5e758b41e5',1,'alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::AdapterSessionState::userName()'],['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#af662a9e5c6187ccc6e681e2d6cf7f3ac',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer::USERNAME()']]],
+  ['username',['userName',['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_session_state.html#ab189d76e7427756693b37f5e758b41e5',1,'alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::AdapterSessionState::userName()'],['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#acaa63e81987ffc03f13228e9fbd76c6b',1,'alexaClientSDK::avsCommon::avs::externalMediaPlayer::USERNAME()']]],
   ['uuid_5fvariant_5fvalue',['UUID_VARIANT_VALUE',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#ac71faa6b38e47b6d3146bfbe2c9dc6b2',1,'alexaClientSDK::avsCommon::utils::uuidGeneration']]],
   ['uuid_5fversion_5fvalue',['UUID_VERSION_VALUE',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#aad8db59e8283da913305f58c8cae2aa4',1,'alexaClientSDK::avsCommon::utils::uuidGeneration']]]
 ];

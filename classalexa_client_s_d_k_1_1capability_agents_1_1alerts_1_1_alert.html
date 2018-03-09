@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -129,10 +129,14 @@ Public Types</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:afd1d5e2e5c4e778fe4e0a96c9537dc62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f3b31fc54d94c3ada26cc9c6e51f158"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a3f3b31fc54d94c3ada26cc9c6e51f158">StopReason</a> { <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a3f3b31fc54d94c3ada26cc9c6e51f158a666a87025ab0d8965e221050c8948001">StopReason::UNSET</a>, 
+<tr class="memitem:a3f3b31fc54d94c3ada26cc9c6e51f158"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a3f3b31fc54d94c3ada26cc9c6e51f158">StopReason</a> { <br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a3f3b31fc54d94c3ada26cc9c6e51f158a666a87025ab0d8965e221050c8948001">StopReason::UNSET</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a3f3b31fc54d94c3ada26cc9c6e51f158a6bff61b82799856ef3361f62e121a00a">StopReason::AVS_STOP</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a3f3b31fc54d94c3ada26cc9c6e51f158a33964ffc87b70a90cfdccc616167fbe9">StopReason::LOCAL_STOP</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a3f3b31fc54d94c3ada26cc9c6e51f158ab9984206799a7f9fe4bd1b6c18db8112">StopReason::SHUTDOWN</a>
+<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a3f3b31fc54d94c3ada26cc9c6e51f158ab9984206799a7f9fe4bd1b6c18db8112">StopReason::SHUTDOWN</a>, 
+<br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a3f3b31fc54d94c3ada26cc9c6e51f158a7f51a628e9b89fd1f36ba1ae3498ce3a">StopReason::LOG_OUT</a>
+<br />
  }</td></tr>
 <tr class="separator:a3f3b31fc54d94c3ada26cc9c6e51f158"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9d9bccbd753f88f8f747cfc31fbbfc7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#ae9d9bccbd753f88f8f747cfc31fbbfc7">ParseFromJsonStatus</a> { <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#ae9d9bccbd753f88f8f747cfc31fbbfc7ae0aa021e21dddbd6d8cecec71e9cf564">ParseFromJsonStatus::OK</a>, 
@@ -340,6 +344,8 @@ Static Public Member Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="a3f3b31fc54d94c3ada26cc9c6e51f158a33964ffc87b70a90cfdccc616167fbe9"></a>LOCAL_STOP&#160;</td><td class="fielddoc"><p>The alert has been stopped due to a local user action. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a3f3b31fc54d94c3ada26cc9c6e51f158ab9984206799a7f9fe4bd1b6c18db8112"></a>SHUTDOWN&#160;</td><td class="fielddoc"><p>The alert is being stopped due to an SDK shutdown operation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a3f3b31fc54d94c3ada26cc9c6e51f158a7f51a628e9b89fd1f36ba1ae3498ce3a"></a>LOG_OUT&#160;</td><td class="fielddoc"><p>Logout customer logged out or deregistered. </p>
 </td></tr>
 </table>
 
@@ -1180,7 +1186,7 @@ Static Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

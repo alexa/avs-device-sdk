@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -98,12 +98,10 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2f5f9bc0e46d2348ab309ab89c87c03c"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#a2f5f9bc0e46d2348ab309ab89c87c03c">~NotificationsStorageInterface</a> ()=default</td></tr>
 <tr class="separator:a2f5f9bc0e46d2348ab309ab89c87c03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a735f548e143de927ec4ae7e9ba7555e8"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#a735f548e143de927ec4ae7e9ba7555e8">createDatabase</a> (const std::string &amp;filePath)=0</td></tr>
-<tr class="separator:a735f548e143de927ec4ae7e9ba7555e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5393100115a914292c393a144ea08a1f"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#a5393100115a914292c393a144ea08a1f">open</a> (const std::string &amp;filePath)=0</td></tr>
-<tr class="separator:a5393100115a914292c393a144ea08a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf75e1c93ea046a9411014cd1dd13734"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#acf75e1c93ea046a9411014cd1dd13734">isOpen</a> () const =0</td></tr>
-<tr class="separator:acf75e1c93ea046a9411014cd1dd13734"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ecee82dc58ecf8ad5101572585f7889"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#a6ecee82dc58ecf8ad5101572585f7889">createDatabase</a> ()=0</td></tr>
+<tr class="separator:a6ecee82dc58ecf8ad5101572585f7889"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09bcdd7cb6115d1a73d90235bd254d24"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#a09bcdd7cb6115d1a73d90235bd254d24">open</a> ()=0</td></tr>
+<tr class="separator:a09bcdd7cb6115d1a73d90235bd254d24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e8e0ca85a40291d179f955a33f3505f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#a2e8e0ca85a40291d179f955a33f3505f">close</a> ()=0</td></tr>
 <tr class="separator:a2e8e0ca85a40291d179f955a33f3505f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2efb8caebf34f82d54c1fc0874d98a2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#ae2efb8caebf34f82d54c1fc0874d98a2">enqueue</a> (const <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notification_indicator.html">NotificationIndicator</a> &amp;notificationIndicator)=0</td></tr>
@@ -114,14 +112,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab631db6e3015e95055d75a32eb8d0b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b9b7bb20a8a9716f3ff7f7efafa5dfa"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#a6b9b7bb20a8a9716f3ff7f7efafa5dfa">setIndicatorState</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a> state)=0</td></tr>
 <tr class="separator:a6b9b7bb20a8a9716f3ff7f7efafa5dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae79bb26b9ad5f4126e292689e3eecfa2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#ae79bb26b9ad5f4126e292689e3eecfa2">getIndicatorState</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a> *state) const =0</td></tr>
-<tr class="separator:ae79bb26b9ad5f4126e292689e3eecfa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95a3b927a0ae4efc5d861449986d4f5b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#a95a3b927a0ae4efc5d861449986d4f5b">checkForEmptyQueue</a> (bool *empty) const =0</td></tr>
-<tr class="separator:a95a3b927a0ae4efc5d861449986d4f5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af230a2ba6919fe579f6be6e82ee8a29d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#af230a2ba6919fe579f6be6e82ee8a29d">getIndicatorState</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a> *state)=0</td></tr>
+<tr class="separator:af230a2ba6919fe579f6be6e82ee8a29d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67aa409af0aed34e41dc17240fe3d90b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#a67aa409af0aed34e41dc17240fe3d90b">checkForEmptyQueue</a> (bool *empty)=0</td></tr>
+<tr class="separator:a67aa409af0aed34e41dc17240fe3d90b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5472b2cc4073addea17e0deca304e519"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#a5472b2cc4073addea17e0deca304e519">clearNotificationIndicators</a> ()=0</td></tr>
 <tr class="separator:a5472b2cc4073addea17e0deca304e519"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a310355ad83bb7b40f79bac920987f267"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#a310355ad83bb7b40f79bac920987f267">getQueueSize</a> (int *size) const =0</td></tr>
-<tr class="separator:a310355ad83bb7b40f79bac920987f267"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d38c62f0093b3e1a5b9c2f240b35deb"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html#a8d38c62f0093b3e1a5b9c2f240b35deb">getQueueSize</a> (int *size)=0</td></tr>
+<tr class="separator:a8d38c62f0093b3e1a5b9c2f240b35deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class implements an interface for interacting with a Notifications database.</p>
@@ -171,8 +169,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a95a3b927a0ae4efc5d861449986d4f5b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a95a3b927a0ae4efc5d861449986d4f5b">&#9670;&nbsp;</a></span>checkForEmptyQueue()</h2>
+<a id="a67aa409af0aed34e41dc17240fe3d90b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67aa409af0aed34e41dc17240fe3d90b">&#9670;&nbsp;</a></span>checkForEmptyQueue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -185,7 +183,7 @@ Public Member Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">bool *&#160;</td>
           <td class="paramname"><em>empty</em></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
   </td>
@@ -203,7 +201,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the operation was successful. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html#a7f2de671e4420a90cef3e6d7cc5cf788">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html#a722b165919591f3e31024d5c252878d1">alexaClientSDK::capabilityAgents::notifications::SQLiteNotificationsStorage</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html#a7d47e309ae8b70c4a74b2eaab903a341">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html#a9e7d1ff35cb9236cdf9aea4a4d12f1f0">alexaClientSDK::capabilityAgents::notifications::SQLiteNotificationsStorage</a>.</p>
 
 </div>
 </div>
@@ -264,8 +262,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a735f548e143de927ec4ae7e9ba7555e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a735f548e143de927ec4ae7e9ba7555e8">&#9670;&nbsp;</a></span>createDatabase()</h2>
+<a id="a6ecee82dc58ecf8ad5101572585f7889"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ecee82dc58ecf8ad5101572585f7889">&#9670;&nbsp;</a></span>createDatabase()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -276,8 +274,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual bool alexaClientSDK::capabilityAgents::notifications::NotificationsStorageInterface::createDatabase </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filePath</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -287,17 +284,10 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Creates a new database with the given filepath. If the file specified already exists, or if a database is already being handled by this object, then this function returns false.</p>
-<p>If the necessary tables cannot be created, this will return false.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filePath</td><td>The path to the file which will be used to contain the database. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is created ok, or <code>false</code> if either the file exists or a database is already being handled by this object. </dd></dl>
+<p>Creates a new database. If a database is already being handled by this object or there is another internal error, then this function returns false.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is created ok, or <code>false</code> if a database is already being handled by this object or there is a problem creating the database. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html#aea5f6b8c69381dcf9f907711a97fde33">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html#a60692aaf0c56bfe8fe1406dcfbb2cfaf">alexaClientSDK::capabilityAgents::notifications::SQLiteNotificationsStorage</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html#aad3c5efac97e4ab32c2c40f4c6665c47">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html#a4c4a6e023f0c03217333c66de84eab4d">alexaClientSDK::capabilityAgents::notifications::SQLiteNotificationsStorage</a>.</p>
 
 </div>
 </div>
@@ -366,8 +356,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae79bb26b9ad5f4126e292689e3eecfa2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae79bb26b9ad5f4126e292689e3eecfa2">&#9670;&nbsp;</a></span>getIndicatorState()</h2>
+<a id="af230a2ba6919fe579f6be6e82ee8a29d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af230a2ba6919fe579f6be6e82ee8a29d">&#9670;&nbsp;</a></span>getIndicatorState()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -380,7 +370,7 @@ Public Member Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a> *&#160;</td>
           <td class="paramname"><em>state</em></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
   </td>
@@ -399,12 +389,12 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Whether the get operation was successful. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The default IndicatorState for a new database is <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a0766f65a53522271be518260c5727a3fa88559a0cfd8250c9d65970cc145c92d4">IndicatorState::OFF</a>. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html#a4122c59915f588c2196b158e6bcacf6d">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html#ab102c45f3f831acec1d879575698ca35">alexaClientSDK::capabilityAgents::notifications::SQLiteNotificationsStorage</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html#a0d7ab7365df90f024b574ad4d6fa206e">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html#a1e1c4fffba0f9d6dd99ff4b469951527">alexaClientSDK::capabilityAgents::notifications::SQLiteNotificationsStorage</a>.</p>
 
 </div>
 </div>
-<a id="a310355ad83bb7b40f79bac920987f267"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a310355ad83bb7b40f79bac920987f267">&#9670;&nbsp;</a></span>getQueueSize()</h2>
+<a id="a8d38c62f0093b3e1a5b9c2f240b35deb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d38c62f0093b3e1a5b9c2f240b35deb">&#9670;&nbsp;</a></span>getQueueSize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -417,7 +407,7 @@ Public Member Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">int *&#160;</td>
           <td class="paramname"><em>size</em></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
   </td>
@@ -435,41 +425,12 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the size operation was successful. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html#aafe018c970e2966b002861869f765583">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html#ae886459889a76d8b2c2f6c58ec3353db">alexaClientSDK::capabilityAgents::notifications::SQLiteNotificationsStorage</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html#a50801d51839ea623d8200fe93c766488">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html#a058864b577e5a9c5adf87857e4fdf778">alexaClientSDK::capabilityAgents::notifications::SQLiteNotificationsStorage</a>.</p>
 
 </div>
 </div>
-<a id="acf75e1c93ea046a9411014cd1dd13734"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf75e1c93ea046a9411014cd1dd13734">&#9670;&nbsp;</a></span>isOpen()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool alexaClientSDK::capabilityAgents::notifications::NotificationsStorageInterface::isOpen </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Query if this object is currently managing an open database.</p>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> If a database is being currently managed by this object, <code>false</code> otherwise. </dd></dl>
-
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html#ab5afdd351db5905569a304ef7686546d">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html#a054d83738ba8804b5bbb69d49912418f">alexaClientSDK::capabilityAgents::notifications::SQLiteNotificationsStorage</a>.</p>
-
-</div>
-</div>
-<a id="a5393100115a914292c393a144ea08a1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5393100115a914292c393a144ea08a1f">&#9670;&nbsp;</a></span>open()</h2>
+<a id="a09bcdd7cb6115d1a73d90235bd254d24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09bcdd7cb6115d1a73d90235bd254d24">&#9670;&nbsp;</a></span>open()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -480,8 +441,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual bool alexaClientSDK::capabilityAgents::notifications::NotificationsStorageInterface::open </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filePath</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -491,16 +451,10 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Open a database with the given filepath. If this object is already managing an open database, or the file does not exist, or there is a problem opening the database, this function returns false.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filePath</td><td>The path to the file which will be used to contain the database. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is opened ok, <code>false</code> if either the file does not exist, if this object is already managing an open database, or if there is another internal reason the database could not be opened. </dd></dl>
+<p>Open an existing database. If this object is already managing an open database, or there is a problem opening the database, this function returns false.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is opened ok, <code>false</code> if this object is already managing an open database, or if there is another internal reason the database could not be opened. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html#ab90e500445f4734780b0335762015f95">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html#a8c91c7e248524ea3a3f3f8fd486f4230">alexaClientSDK::capabilityAgents::notifications::SQLiteNotificationsStorage</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html#a909a8d96d740c5d2c1a1a2a0a03fd03d">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html#ae0bdd6b4d86b7668c25ca10e1205454c">alexaClientSDK::capabilityAgents::notifications::SQLiteNotificationsStorage</a>.</p>
 
 </div>
 </div>
@@ -577,7 +531,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

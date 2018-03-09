@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -83,6 +83,8 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment.html">attachment</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html">externalMediaPlayer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization.html">initialization</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,7 +168,8 @@ Enumerations</h2></td></tr>
 <tr class="memdesc:af150b2d10515e0e7347e09a69986a47b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identifies the player state.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af150b2d10515e0e7347e09a69986a47b">More...</a><br /></td></tr>
 <tr class="separator:af150b2d10515e0e7347e09a69986a47b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6dceaef43ef22e8f83382c0072f0cd7c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6dceaef43ef22e8f83382c0072f0cd7c">StateRefreshPolicy</a> { <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6dceaef43ef22e8f83382c0072f0cd7ca443475558f0168dff92ecde26b98ae5a">StateRefreshPolicy::NEVER</a>, 
-<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6dceaef43ef22e8f83382c0072f0cd7caf3fc827ade4b968e50406496907ef962">StateRefreshPolicy::ALWAYS</a>
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6dceaef43ef22e8f83382c0072f0cd7caf3fc827ade4b968e50406496907ef962">StateRefreshPolicy::ALWAYS</a>, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6dceaef43ef22e8f83382c0072f0cd7caf95f3ac2fa2ff057120d1b0f3591f4fb">StateRefreshPolicy::SOMETIMES</a>
  }</td></tr>
 <tr class="separator:a6dceaef43ef22e8f83382c0072f0cd7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -531,6 +534,8 @@ Variables</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a6dceaef43ef22e8f83382c0072f0cd7ca443475558f0168dff92ecde26b98ae5a"></a>NEVER&#160;</td><td class="fielddoc"><p>Indicates to the ContextManager that the state information need not be updated on a <code>getContext</code> request. The <code>stateProviderInterface</code> is responsible for updating its state manually. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a6dceaef43ef22e8f83382c0072f0cd7caf3fc827ade4b968e50406496907ef962"></a>ALWAYS&#160;</td><td class="fielddoc"><p>Indicates to the <code>ContextManager</code> that the stateProvider needs to be queried and the state refreshed every time it processes a <code>getContext</code> request. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a6dceaef43ef22e8f83382c0072f0cd7caf95f3ac2fa2ff057120d1b0f3591f4fb"></a>SOMETIMES&#160;</td><td class="fielddoc"><p>Indicates to the <code>ContextManager</code> that the stateProvider needs to be queried and the state refreshed every time it processes a <code>getContext</code> request. The stateProvider may choose to not report context by supplying an empty <code>jsonState</code> via <code>setState</code>. </p>
 </td></tr>
 </table>
 
@@ -1821,7 +1826,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

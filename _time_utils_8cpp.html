@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -77,10 +77,12 @@ $(function() {
 <div class="title">TimeUtils.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;ctime&gt;</code><br />
-<code>#include &lt;chrono&gt;</code><br />
+<div class="textblock"><code>#include &lt;chrono&gt;</code><br />
+<code>#include &lt;ctime&gt;</code><br />
+<code>#include &lt;iomanip&gt;</code><br />
 <code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;random&gt;</code><br />
+<code>#include &lt;sstream&gt;</code><br />
 <code>#include &quot;<a class="el" href="_time_utils_8h_source.html">AVSCommon/Utils/Timing/TimeUtils.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_string_utils_8h_source.html">AVSCommon/Utils/String/StringUtils.h</a>&quot;</code><br />
@@ -89,17 +91,18 @@ Include dependency graph for TimeUtils.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_time_utils_8cpp__incl.png" border="0" usemap="#_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_time_utils_8cpp" alt=""/></div>
 <map name="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_time_utils_8cpp" id="_2_users_2sdy_2_a_v_s_2github_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_time_utils_8cpp">
-<area shape="rect" id="node6" href="_time_utils_8h.html" title="AVSCommon/Utils/Timing\l/TimeUtils.h" alt="" coords="246,105,420,144"/>
-<area shape="rect" id="node10" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="771,105,947,144"/>
-<area shape="rect" id="node25" href="_string_utils_8h.html" title="AVSCommon/Utils/String\l/StringUtils.h" alt="" coords="5,279,175,317"/>
-<area shape="rect" id="node8" href="_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="249,199,459,224"/>
-<area shape="rect" id="node13" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1443,192,1657,231"/>
-<area shape="rect" id="node17" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="843,279,1019,317"/>
-<area shape="rect" id="node18" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="771,192,947,231"/>
-<area shape="rect" id="node23" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1222,192,1419,231"/>
-<area shape="rect" id="node24" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1022,192,1198,231"/>
-<area shape="rect" id="node19" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1094,279,1270,317"/>
-<area shape="rect" id="node21" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1414,365,1590,404"/>
+<area shape="rect" id="node8" href="_time_utils_8h.html" title="AVSCommon/Utils/Timing\l/TimeUtils.h" alt="" coords="304,105,478,144"/>
+<area shape="rect" id="node14" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1063,105,1239,144"/>
+<area shape="rect" id="node27" href="_string_utils_8h.html" title="AVSCommon/Utils/String\l/StringUtils.h" alt="" coords="469,279,638,317"/>
+<area shape="rect" id="node10" href="_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="69,199,280,224"/>
+<area shape="rect" id="node12" href="_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="304,192,478,231"/>
+<area shape="rect" id="node16" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="882,192,1096,231"/>
+<area shape="rect" id="node19" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1303,279,1479,317"/>
+<area shape="rect" id="node20" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1477,192,1653,231"/>
+<area shape="rect" id="node25" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1256,192,1453,231"/>
+<area shape="rect" id="node26" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1736,365,1912,404"/>
+<area shape="rect" id="node21" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1553,279,1729,317"/>
+<area shape="rect" id="node23" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1188,365,1364,404"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -117,7 +120,7 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_time_utils_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_example_auth_delegate_client_8cpp.html#adc8c4903d8b224bfaa986afb88575adb">TAG</a>, event)</td></tr>
+<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_time_utils_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_registration_manager_8cpp.html#a73216df79c9ad2b23fd2eef0a8f10d1b">TAG</a>, event)</td></tr>
 <tr class="separator:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -127,14 +130,6 @@ Functions</h2></td></tr>
 <tr class="separator:a339f97e7724a925d86e049a01a8fa255"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac00dfe8fbfa65abe8d7c6295e82a28de"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ac00dfe8fbfa65abe8d7c6295e82a28de">alexaClientSDK::avsCommon::utils::timing::convertToLocalTimeT</a> (const std::tm *timeStruct, std::time_t *ret)</td></tr>
 <tr class="separator:ac00dfe8fbfa65abe8d7c6295e82a28de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6de94eeba18b465b6a352c22230edc51"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a6de94eeba18b465b6a352c22230edc51">alexaClientSDK::avsCommon::utils::timing::localtimeOffset</a> (std::time_t *ret)</td></tr>
-<tr class="separator:a6de94eeba18b465b6a352c22230edc51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f656e2272fad4dc138200f2ed89950b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a7f656e2272fad4dc138200f2ed89950b">alexaClientSDK::avsCommon::utils::timing::convertToUtcTimeT</a> (const std::tm *utcTm, std::time_t *ret)</td></tr>
-<tr class="separator:a7f656e2272fad4dc138200f2ed89950b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49b3520d72a64b5d1830796bcdde1cf3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a49b3520d72a64b5d1830796bcdde1cf3">alexaClientSDK::avsCommon::utils::timing::convert8601TimeStringToUnix</a> (const std::string &amp;timeString, int64_t *unixTime)</td></tr>
-<tr class="separator:a49b3520d72a64b5d1830796bcdde1cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a164bbfe1a52ebf85be9b966ab4c9f637"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#a164bbfe1a52ebf85be9b966ab4c9f637">alexaClientSDK::avsCommon::utils::timing::getCurrentUnixTime</a> (int64_t *currentTime)</td></tr>
-<tr class="separator:a164bbfe1a52ebf85be9b966ab4c9f637"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -192,8 +187,6 @@ Variables</h2></td></tr>
 <tr class="memitem:aeac8b242063f986dd407f64986a030f3"><td class="memItemLeft" align="right" valign="top">static const unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aeac8b242063f986dd407f64986a030f3">alexaClientSDK::avsCommon::utils::timing::ENCODED_TIME_STRING_EXPECTED_LENGTH</a></td></tr>
 <tr class="memdesc:aeac8b242063f986dd407f64986a030f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The total expected length of an ISO-8601 formatted string.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#aeac8b242063f986dd407f64986a030f3">More...</a><br /></td></tr>
 <tr class="separator:aeac8b242063f986dd407f64986a030f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9ef5abcbb2ad9679b82d2180289c931"><td class="memItemLeft" align="right" valign="top">static std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#af9ef5abcbb2ad9679b82d2180289c931">alexaClientSDK::avsCommon::utils::timing::timeLock</a></td></tr>
-<tr class="separator:af9ef5abcbb2ad9679b82d2180289c931"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -207,7 +200,7 @@ Variables</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">event</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_example_auth_delegate_client_8cpp.html#adc8c4903d8b224bfaa986afb88575adb">TAG</a>, event)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_registration_manager_8cpp.html#a73216df79c9ad2b23fd2eef0a8f10d1b">TAG</a>, event)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -225,7 +218,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

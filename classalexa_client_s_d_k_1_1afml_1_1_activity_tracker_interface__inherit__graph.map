@@ -1,0 +1,5 @@
+<map id="alexaClientSDK::afml::ActivityTrackerInterface" name="alexaClientSDK::afml::ActivityTrackerInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1afml_1_1_audio_activity_tracker.html" title="alexaClientSDK::afml\l::AudioActivityTracker" alt="" coords="234,5,384,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1afml_1_1test_1_1_mock_activity_tracker_interface.html" title="A test observer that mocks out the ActivityTrackerInterface#notifyOfActivityUpdates() call..." alt="" coords="221,68,397,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker.html" title="alexaClientSDK::afml\l::VisualActivityTracker" alt="" coords="233,144,385,183"/>
+</map>

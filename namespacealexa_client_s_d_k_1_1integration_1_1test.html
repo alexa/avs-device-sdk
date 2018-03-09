@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -229,10 +229,13 @@ Functions</h2></td></tr>
 <tr class="memitem:a6a324e8958bcaacd0fe4ee9cc2926704"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a6a324e8958bcaacd0fe4ee9cc2926704">TAG</a> (&quot;AlexaDirectiveSequencerLibraryTest&quot;)</td></tr>
 <tr class="memdesc:a6a324e8958bcaacd0fe4ee9cc2926704"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a6a324e8958bcaacd0fe4ee9cc2926704">More...</a><br /></td></tr>
 <tr class="separator:a6a324e8958bcaacd0fe4ee9cc2926704"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8461cd8f2f89d45011c0645d649a8368"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int16_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a8461cd8f2f89d45011c0645d649a8368">readAudioFromFile</a> (const std::string &amp;fileName, bool *errorOccurred)</td></tr>
-<tr class="separator:a8461cd8f2f89d45011c0645d649a8368"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade9cd8f50cc5d93f8084938976c8be71"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ade9cd8f50cc5d93f8084938976c8be71"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#ade9cd8f50cc5d93f8084938976c8be71">readAudioFromFile</a> (const std::string &amp;fileName, const int &amp;headerPosition, bool *errorOccurred)</td></tr>
+<tr class="separator:ade9cd8f50cc5d93f8084938976c8be71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab307406f690a0a4c4ae992abbdf4643b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#ab307406f690a0a4c4ae992abbdf4643b">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, DISABLED_tapToTalkJoke)</td></tr>
 <tr class="separator:ab307406f690a0a4c4ae992abbdf4643b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5ea60fee983fb9c6cb6ae5546bf14ec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#ae5ea60fee983fb9c6cb6ae5546bf14ec">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, tapToTalkTimeOpus)</td></tr>
+<tr class="separator:ae5ea60fee983fb9c6cb6ae5546bf14ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a373bbc3f650e99649e2b5a92b121feae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a373bbc3f650e99649e2b5a92b121feae">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, tapToTalkSilence)</td></tr>
 <tr class="separator:a373bbc3f650e99649e2b5a92b121feae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6025c434512ad72bbe73cf1f4f19eaa1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a6025c434512ad72bbe73cf1f4f19eaa1">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>, tapToTalkNoAudio)</td></tr>
@@ -568,6 +571,8 @@ Variables</h2></td></tr>
 <tr class="separator:a5c13ef10723996c7a2ad50b6e1c44131"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9cc3ece0a4b8585fa061aca5e9465c3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#ab9cc3ece0a4b8585fa061aca5e9465c3">ALEXA_SILENCE_AUDIO_FILE</a> = &quot;/alexa_recognize_silence_test.wav&quot;</td></tr>
 <tr class="separator:ab9cc3ece0a4b8585fa061aca5e9465c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a157771aef60434e42506ad9c55d59958"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a157771aef60434e42506ad9c55d59958">TIME_AUDIO_FILE_OPUS</a> = &quot;/utterance_time_success.opus&quot;</td></tr>
+<tr class="separator:a157771aef60434e42506ad9c55d59958"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad46809aab5261f6a7841764c4e9e2df9"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#ad46809aab5261f6a7841764c4e9e2df9">NAME_VOLUME_STATE</a> = &quot;VolumeState&quot;</td></tr>
 <tr class="separator:ad46809aab5261f6a7841764c4e9e2df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:affaa21189c8c60333ee4b441c2302c9d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#affaa21189c8c60333ee4b441c2302c9d">NAME_SPEAK</a> = &quot;Speak&quot;</td></tr>
@@ -613,6 +618,11 @@ Variables</h2></td></tr>
 <tr class="memitem:afbfa82d2614191e0c49f10883da92eff"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#afbfa82d2614191e0c49f10883da92eff">CONTENT_ACTIVITY_ID</a> = &quot;Content&quot;</td></tr>
 <tr class="memdesc:afbfa82d2614191e0c49f10883da92eff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample content activity id.  <a href="#afbfa82d2614191e0c49f10883da92eff">More...</a><br /></td></tr>
 <tr class="separator:afbfa82d2614191e0c49f10883da92eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02b1be065aa845faddeabb1b9771d084"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a02b1be065aa845faddeabb1b9771d084">RIFF_HEADER_SIZE</a> = 44</td></tr>
+<tr class="separator:a02b1be065aa845faddeabb1b9771d084"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c61febe586a0c6455092a410e95f2c8"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a3c61febe586a0c6455092a410e95f2c8">COMPATIBLE_SAMPLE_RATE_OPUS_32</a> = 32000</td></tr>
+<tr class="memdesc:a3c61febe586a0c6455092a410e95f2c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The compatible sample rate for OPUS 32KHz.  <a href="#a3c61febe586a0c6455092a410e95f2c8">More...</a><br /></td></tr>
+<tr class="separator:a3c61febe586a0c6455092a410e95f2c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f098424ddabced92c7b603a2a759cc5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a1f098424ddabced92c7b603a2a759cc5">JSON_MESSAGE_DIRECTIVE_KEY</a> = &quot;directive&quot;</td></tr>
 <tr class="memdesc:a1f098424ddabced92c7b603a2a759cc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key to get the directive object of a message.  <a href="#a1f098424ddabced92c7b603a2a759cc5">More...</a><br /></td></tr>
 <tr class="separator:a1f098424ddabced92c7b603a2a759cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -973,17 +983,25 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a8461cd8f2f89d45011c0645d649a8368"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8461cd8f2f89d45011c0645d649a8368">&#9670;&nbsp;</a></span>readAudioFromFile()</h2>
+<a id="ade9cd8f50cc5d93f8084938976c8be71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade9cd8f50cc5d93f8084938976c8be71">&#9670;&nbsp;</a></span>readAudioFromFile()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;int16_t&gt; alexaClientSDK::integration::test::readAudioFromFile </td>
+          <td class="memname">std::vector&lt;T&gt; alexaClientSDK::integration::test::readAudioFromFile </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>fileName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>headerPosition</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1354,7 +1372,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a320e9f6d7df7371a77a51120b47c869f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a320e9f6d7df7371a77a51120b47c869f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a320e9f6d7df7371a77a51120b47c869f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1384,7 +1402,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="adca11c33831643c50093e1af4ab935cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adca11c33831643c50093e1af4ab935cf">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adca11c33831643c50093e1af4ab935cf">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1414,7 +1432,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a10ed96b62adb349c3171562f470498b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a10ed96b62adb349c3171562f470498b4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a10ed96b62adb349c3171562f470498b4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1443,7 +1461,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a146e73020568368872fb4c98b6d7126e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a146e73020568368872fb4c98b6d7126e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a146e73020568368872fb4c98b6d7126e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1472,7 +1490,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aee13227b140a3cfbd4d714596d5640d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee13227b140a3cfbd4d714596d5640d8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aee13227b140a3cfbd4d714596d5640d8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1501,7 +1519,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a1d90bf433327eb939578224d8e42f7d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d90bf433327eb939578224d8e42f7d1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d90bf433327eb939578224d8e42f7d1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1530,7 +1548,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae5b8dc659b8435be2c7cccfbd409193d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5b8dc659b8435be2c7cccfbd409193d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5b8dc659b8435be2c7cccfbd409193d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1559,7 +1577,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a4d5d0e30590e09205ca2672b6be0ac98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d5d0e30590e09205ca2672b6be0ac98">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d5d0e30590e09205ca2672b6be0ac98">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1588,7 +1606,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ac93abfcd68a4191b97b6198315e14857"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac93abfcd68a4191b97b6198315e14857">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac93abfcd68a4191b97b6198315e14857">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1617,7 +1635,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae6f92ba1d69dcf19ab7135100934062f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6f92ba1d69dcf19ab7135100934062f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6f92ba1d69dcf19ab7135100934062f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1646,7 +1664,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a5eff0173cafb1024dd2315dc9667d941"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5eff0173cafb1024dd2315dc9667d941">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5eff0173cafb1024dd2315dc9667d941">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1676,7 +1694,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a1a65d70ef6e405becef649f6a4578796"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a65d70ef6e405becef649f6a4578796">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a65d70ef6e405becef649f6a4578796">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1707,7 +1725,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab6ed7b1a5ad75fd8835d4eeff63035ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6ed7b1a5ad75fd8835d4eeff63035ef">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6ed7b1a5ad75fd8835d4eeff63035ef">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1736,7 +1754,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ac5bfad489f6a2313466ecf5c906dceea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5bfad489f6a2313466ecf5c906dceea">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5bfad489f6a2313466ecf5c906dceea">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1767,7 +1785,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a91a96028ec48f2381b32f16dfbecb832"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91a96028ec48f2381b32f16dfbecb832">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a91a96028ec48f2381b32f16dfbecb832">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1798,7 +1816,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a2d170df06c7ad8803d754c166842a20b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d170df06c7ad8803d754c166842a20b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d170df06c7ad8803d754c166842a20b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1827,7 +1845,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aeb57fe83ba4ae6ac182aab25edcef232"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb57fe83ba4ae6ac182aab25edcef232">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb57fe83ba4ae6ac182aab25edcef232">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1856,7 +1874,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae0025c018ed01267111e24f18ce0dc3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0025c018ed01267111e24f18ce0dc3f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0025c018ed01267111e24f18ce0dc3f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1887,7 +1905,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a9bf0f1fd0c2beabf48529d6d0a7d4e56"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9bf0f1fd0c2beabf48529d6d0a7d4e56">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bf0f1fd0c2beabf48529d6d0a7d4e56">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1916,7 +1934,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a1a80435446935457862f967dba54abfd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a80435446935457862f967dba54abfd">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a80435446935457862f967dba54abfd">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1945,7 +1963,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a68bd3802cf2edaee443b053bc5762d8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a68bd3802cf2edaee443b053bc5762d8a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a68bd3802cf2edaee443b053bc5762d8a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1975,7 +1993,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab067420af22d8cd2a88d037795f80a15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab067420af22d8cd2a88d037795f80a15">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab067420af22d8cd2a88d037795f80a15">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2005,7 +2023,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aab6bd1f96ec22d51b82ac3ef195d405b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab6bd1f96ec22d51b82ac3ef195d405b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aab6bd1f96ec22d51b82ac3ef195d405b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2035,7 +2053,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae3a9280bb9c760400141f6f9dde7478e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae3a9280bb9c760400141f6f9dde7478e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[24/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3a9280bb9c760400141f6f9dde7478e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[24/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2065,7 +2083,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae0532a3fd459b78ba0a4186084099177"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0532a3fd459b78ba0a4186084099177">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[25/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0532a3fd459b78ba0a4186084099177">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[25/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2095,7 +2113,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aea763efa83f92ffb000d2fa1e71a1fbb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea763efa83f92ffb000d2fa1e71a1fbb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aea763efa83f92ffb000d2fa1e71a1fbb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2125,7 +2143,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a793669dc97afcfd0a09b34b82151ce98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a793669dc97afcfd0a09b34b82151ce98">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a793669dc97afcfd0a09b34b82151ce98">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2155,7 +2173,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a970bd3fc7d850145db6a5b2dc8e8eb5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a970bd3fc7d850145db6a5b2dc8e8eb5a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a970bd3fc7d850145db6a5b2dc8e8eb5a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2185,7 +2203,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a765884a577a3b6df363855bf7a6cd71c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a765884a577a3b6df363855bf7a6cd71c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a765884a577a3b6df363855bf7a6cd71c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2215,7 +2233,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ac14a919ec12b74f2ae67c784a88f7f67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac14a919ec12b74f2ae67c784a88f7f67">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac14a919ec12b74f2ae67c784a88f7f67">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2245,7 +2263,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a8ccbd4793197b8ba77a5a0b2d7b0d479"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ccbd4793197b8ba77a5a0b2d7b0d479">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[31/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ccbd4793197b8ba77a5a0b2d7b0d479">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[31/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2275,7 +2293,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab105fba281681b014c42d05e66a6014f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab105fba281681b014c42d05e66a6014f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[32/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab105fba281681b014c42d05e66a6014f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[32/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2305,7 +2323,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a2a5e41dda765ace310252f7b8119a279"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a5e41dda765ace310252f7b8119a279">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[33/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a5e41dda765ace310252f7b8119a279">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[33/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2335,7 +2353,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a86237d026af98d28a23e396416bb02b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86237d026af98d28a23e396416bb02b7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a86237d026af98d28a23e396416bb02b7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2365,7 +2383,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a55ebb169de21f4ad9b76b650a448c0db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55ebb169de21f4ad9b76b650a448c0db">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a55ebb169de21f4ad9b76b650a448c0db">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2395,7 +2413,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="acd80d7e33d65b021edea837c718b4eea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd80d7e33d65b021edea837c718b4eea">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[36/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acd80d7e33d65b021edea837c718b4eea">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[36/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2425,7 +2443,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a55ec830c2c3f94f072dc1fbb90403321"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55ec830c2c3f94f072dc1fbb90403321">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[37/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a55ec830c2c3f94f072dc1fbb90403321">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[37/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2455,7 +2473,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a1b7abc1eeaf5e497f45ce11fa612b8fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b7abc1eeaf5e497f45ce11fa612b8fa">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[38/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b7abc1eeaf5e497f45ce11fa612b8fa">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[38/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2484,38 +2502,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="af178c8b764ac09f5156966777b440493"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af178c8b764ac09f5156966777b440493">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[39/69]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DisconnectAndReconnect&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test when a disconnect and reconnect happens before an alert is active</p>
-<p>Set a 5 second timer, then call disconnect then reconnect. Once the alert is active, locally stop the alert and ensure AlertStopped is sent. </p>
-
-</div>
-</div>
 <a id="a6be1a9ebd7a20ca23bb0e478e21b9c07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6be1a9ebd7a20ca23bb0e478e21b9c07">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[40/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6be1a9ebd7a20ca23bb0e478e21b9c07">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[39/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2544,8 +2532,38 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="af178c8b764ac09f5156966777b440493"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af178c8b764ac09f5156966777b440493">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[40/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DisconnectAndReconnect&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test when a disconnect and reconnect happens before an alert is active</p>
+<p>Set a 5 second timer, then call disconnect then reconnect. Once the alert is active, locally stop the alert and ensure AlertStopped is sent. </p>
+
+</div>
+</div>
 <a id="ac4968cd4402b08350f5de949a83dd289"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4968cd4402b08350f5de949a83dd289">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4968cd4402b08350f5de949a83dd289">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2575,7 +2593,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a94a2848b84ed39da00bbf00dca1b5a8e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94a2848b84ed39da00bbf00dca1b5a8e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[42/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a94a2848b84ed39da00bbf00dca1b5a8e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[42/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2605,7 +2623,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae71863dd18978b4ef0d22cc5b144be7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae71863dd18978b4ef0d22cc5b144be7d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[43/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae71863dd18978b4ef0d22cc5b144be7d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[43/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2635,7 +2653,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="abf43dfa738bfbdeb444ee74fd5dacc95"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf43dfa738bfbdeb444ee74fd5dacc95">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[44/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abf43dfa738bfbdeb444ee74fd5dacc95">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[44/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2665,7 +2683,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab307406f690a0a4c4ae992abbdf4643b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab307406f690a0a4c4ae992abbdf4643b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[45/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab307406f690a0a4c4ae992abbdf4643b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[45/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2699,7 +2717,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a8fe6d43a9a415c0af45dd63e5c29ddae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fe6d43a9a415c0af45dd63e5c29ddae">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[46/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fe6d43a9a415c0af45dd63e5c29ddae">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[46/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2728,38 +2746,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a922fb193bf6f46ddc0ae2689fbc5e06d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a922fb193bf6f46ddc0ae2689fbc5e06d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[47/69]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">RemoveStorageBeforeAlarmIsSet&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test when the storage is removed before an alert is set</p>
-<p>Close the storage before asking for a 5 second timer. SetAlertFailed and DeleteAlertFailed events are then sent. </p>
-
-</div>
-</div>
 <a id="a09030187fbdc834f486ba7992c2ce271"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09030187fbdc834f486ba7992c2ce271">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[48/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a09030187fbdc834f486ba7992c2ce271">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[47/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2788,8 +2776,38 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a373bbc3f650e99649e2b5a92b121feae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a373bbc3f650e99649e2b5a92b121feae">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[49/69]</span></h2>
+<a id="a922fb193bf6f46ddc0ae2689fbc5e06d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a922fb193bf6f46ddc0ae2689fbc5e06d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[48/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">RemoveStorageBeforeAlarmIsSet&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test when the storage is removed before an alert is set</p>
+<p>Close the storage before asking for a 5 second timer. SetAlertFailed and DeleteAlertFailed events are then sent. </p>
+
+</div>
+</div>
+<a id="ae5ea60fee983fb9c6cb6ae5546bf14ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5ea60fee983fb9c6cb6ae5546bf14ec">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[49/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2803,7 +2821,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">tapToTalkSilence&#160;</td>
+          <td class="paramtype">tapToTalkTimeOpus&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -2813,13 +2831,11 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test AudioInputProcessor's ability to handle a silent interation triggered by a tap to talk button.</p>
-<p>To do this, audio of "....." is fed into a stream after button sends recognize to AudioInputProcessor. The AudioInputProcessor is then observed to send a Recognize event to AVS which responds no directives. </p>
 
 </div>
 </div>
 <a id="a224d707629bfb6f6340ee6393ecc1fa8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a224d707629bfb6f6340ee6393ecc1fa8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[50/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a224d707629bfb6f6340ee6393ecc1fa8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[50/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2848,8 +2864,38 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a373bbc3f650e99649e2b5a92b121feae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a373bbc3f650e99649e2b5a92b121feae">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[51/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tapToTalkSilence&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test AudioInputProcessor's ability to handle a silent interation triggered by a tap to talk button.</p>
+<p>To do this, audio of "....." is fed into a stream after button sends recognize to AudioInputProcessor. The AudioInputProcessor is then observed to send a Recognize event to AVS which responds no directives. </p>
+
+</div>
+</div>
 <a id="a72fba972623d9cb29d4a29cec7e2ce1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72fba972623d9cb29d4a29cec7e2ce1a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[51/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a72fba972623d9cb29d4a29cec7e2ce1a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[52/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2878,38 +2924,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a6025c434512ad72bbe73cf1f4f19eaa1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6025c434512ad72bbe73cf1f4f19eaa1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[52/69]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">tapToTalkNoAudio&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test AudioInputProcessor's ability to handle no audio being written triggered by a tap to talk button.</p>
-<p>To do this, no audio is fed into a stream after button sends recognize to AudioInputProcessor. The AudioInputProcessor is then observed to send a Recognize event to AVS which responds with no directive. </p>
-
-</div>
-</div>
 <a id="a9830dfe5c387a0b8d10b339adf2fe4b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9830dfe5c387a0b8d10b339adf2fe4b1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[53/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9830dfe5c387a0b8d10b339adf2fe4b1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[53/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2939,7 +2955,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aad986e048b8260ed647048e0ac9be724"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad986e048b8260ed647048e0ac9be724">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[54/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aad986e048b8260ed647048e0ac9be724">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[54/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2968,8 +2984,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a36073531fca9662a7a573782809227b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36073531fca9662a7a573782809227b6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[55/69]</span></h2>
+<a id="a6025c434512ad72bbe73cf1f4f19eaa1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6025c434512ad72bbe73cf1f4f19eaa1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[55/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2977,13 +2993,13 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">DISABLED_UserLongUnrelatedBargeInOnActiveTimer&#160;</td>
+          <td class="paramtype">tapToTalkNoAudio&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -2993,13 +3009,13 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test when an alert is active and the user barges in and gets multiple speaks in response</p>
-<p>Set a 5 second timer and wait until it is active. Send a recognize event asking "what's up" and see that the alert goes into the background. When all the speaks are complete, the alert is forgrounded and can be locally stopped. </p>
+<p>Test AudioInputProcessor's ability to handle no audio being written triggered by a tap to talk button.</p>
+<p>To do this, no audio is fed into a stream after button sends recognize to AudioInputProcessor. The AudioInputProcessor is then observed to send a Recognize event to AVS which responds with no directive. </p>
 
 </div>
 </div>
 <a id="ae0429bde5f283291028a3eb013b1bf12"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0429bde5f283291028a3eb013b1bf12">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[56/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0429bde5f283291028a3eb013b1bf12">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[56/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3028,7 +3044,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a667b2e326ccf3592a18569bfca021bc8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a667b2e326ccf3592a18569bfca021bc8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[57/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a667b2e326ccf3592a18569bfca021bc8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[57/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3057,8 +3073,38 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a36073531fca9662a7a573782809227b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36073531fca9662a7a573782809227b6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[58/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DISABLED_UserLongUnrelatedBargeInOnActiveTimer&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test when an alert is active and the user barges in and gets multiple speaks in response</p>
+<p>Set a 5 second timer and wait until it is active. Send a recognize event asking "what's up" and see that the alert goes into the background. When all the speaks are complete, the alert is forgrounded and can be locally stopped. </p>
+
+</div>
+</div>
 <a id="a51116c6feab7fde47170e1c9071de199"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51116c6feab7fde47170e1c9071de199">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[58/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a51116c6feab7fde47170e1c9071de199">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[59/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3089,7 +3135,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae53e18d8429516ecd65be8cffec99be5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae53e18d8429516ecd65be8cffec99be5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[59/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae53e18d8429516ecd65be8cffec99be5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[60/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3118,8 +3164,36 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ab65a8fb31c23b313a4e1c199d7304bc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab65a8fb31c23b313a4e1c199d7304bc9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[61/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">handleOneTimerWithVocalStop&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a3f8b6c06fc5c455937f4940c886becf8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f8b6c06fc5c455937f4940c886becf8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[60/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f8b6c06fc5c455937f4940c886becf8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[62/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3148,36 +3222,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ab65a8fb31c23b313a4e1c199d7304bc9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab65a8fb31c23b313a4e1c199d7304bc9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[61/69]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">handleOneTimerWithVocalStop&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="ae0bc7ab3ea6b37a6f89d7483f3a52b0c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0bc7ab3ea6b37a6f89d7483f3a52b0c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[62/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0bc7ab3ea6b37a6f89d7483f3a52b0c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[63/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3207,7 +3253,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aba9b86c4fe0089eb9842da5cfe8afe53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aba9b86c4fe0089eb9842da5cfe8afe53">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[63/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aba9b86c4fe0089eb9842da5cfe8afe53">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[64/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3237,7 +3283,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a029faeed557984b11cb0bc77d47b57e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a029faeed557984b11cb0bc77d47b57e8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[64/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a029faeed557984b11cb0bc77d47b57e8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[65/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3267,7 +3313,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a170fe18477e2acdcfd144fa061ac274e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a170fe18477e2acdcfd144fa061ac274e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[65/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a170fe18477e2acdcfd144fa061ac274e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[66/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3297,7 +3343,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a7de18d5ac0b8709ea3c5a22342dc4372"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7de18d5ac0b8709ea3c5a22342dc4372">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[66/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7de18d5ac0b8709ea3c5a22342dc4372">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[67/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3327,7 +3373,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a63082c69e3b983e7ac6d7b2817a4fb54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63082c69e3b983e7ac6d7b2817a4fb54">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[67/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a63082c69e3b983e7ac6d7b2817a4fb54">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[68/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3357,7 +3403,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0ee58fd275aa226b4f8f1ec662d40808"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ee58fd275aa226b4f8f1ec662d40808">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[68/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ee58fd275aa226b4f8f1ec662d40808">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[69/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3387,7 +3433,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af30b3deddcba4d611e965a6cf7905fd6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af30b3deddcba4d611e965a6cf7905fd6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[69/69]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af30b3deddcba4d611e965a6cf7905fd6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[70/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3442,8 +3488,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a88c47025f4edd6341975a8265c8e4a57"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88c47025f4edd6341975a8265c8e4a57">&#9670;&nbsp;</a></span>WAIT_FOR_TIMEOUT_DURATION() <span class="overload">[1/4]</span></h2>
+<a id="a02c081d9e04191b32024383219fda363"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02c081d9e04191b32024383219fda363">&#9670;&nbsp;</a></span>WAIT_FOR_TIMEOUT_DURATION() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3454,7 +3500,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static const std::chrono::seconds alexaClientSDK::integration::test::WAIT_FOR_TIMEOUT_DURATION </td>
           <td>(</td>
-          <td class="paramtype">25&#160;</td>
+          <td class="paramtype">15&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -3468,8 +3514,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a02c081d9e04191b32024383219fda363"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02c081d9e04191b32024383219fda363">&#9670;&nbsp;</a></span>WAIT_FOR_TIMEOUT_DURATION() <span class="overload">[2/4]</span></h2>
+<a id="a88c47025f4edd6341975a8265c8e4a57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88c47025f4edd6341975a8265c8e4a57">&#9670;&nbsp;</a></span>WAIT_FOR_TIMEOUT_DURATION() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3480,7 +3526,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static const std::chrono::seconds alexaClientSDK::integration::test::WAIT_FOR_TIMEOUT_DURATION </td>
           <td>(</td>
-          <td class="paramtype">15&#160;</td>
+          <td class="paramtype">25&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -4043,6 +4089,30 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The compatible sample rate for Kitt.ai. </p>
+
+</div>
+</div>
+<a id="a3c61febe586a0c6455092a410e95f2c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c61febe586a0c6455092a410e95f2c8">&#9670;&nbsp;</a></span>COMPATIBLE_SAMPLE_RATE_OPUS_32</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const unsigned int alexaClientSDK::integration::test::COMPATIBLE_SAMPLE_RATE_OPUS_32 = 32000</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The compatible sample rate for OPUS 32KHz. </p>
 
 </div>
 </div>
@@ -7769,6 +7839,28 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a02b1be065aa845faddeabb1b9771d084"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02b1be065aa845faddeabb1b9771d084">&#9670;&nbsp;</a></span>RIFF_HEADER_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int alexaClientSDK::integration::test::RIFF_HEADER_SIZE = 44</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a6989e294e1bfd9e16d9311d177efc9f7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6989e294e1bfd9e16d9311d177efc9f7">&#9670;&nbsp;</a></span>SET_ALERT_PAIR</h2>
 
@@ -8087,6 +8179,28 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a157771aef60434e42506ad9c55d59958"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a157771aef60434e42506ad9c55d59958">&#9670;&nbsp;</a></span>TIME_AUDIO_FILE_OPUS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::integration::test::TIME_AUDIO_FILE_OPUS = &quot;/utterance_time_success.opus&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ae1dd1cacbaa6ad406a94c27011c47886"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae1dd1cacbaa6ad406a94c27011c47886">&#9670;&nbsp;</a></span>TIMEOUT_FOR_SEND_IN_SECONDS <span class="overload">[1/2]</span></h2>
 
@@ -8207,7 +8321,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

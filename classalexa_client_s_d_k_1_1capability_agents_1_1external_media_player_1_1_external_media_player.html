@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -69,9 +69,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -91,8 +89,9 @@ Inheritance diagram for alexaClientSDK::capabilityAgents::externalMediaPlayer::E
 <area shape="rect" id="node5" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::StateProvider\lInterface" alt="" coords="18,157,215,209"/>
 <area shape="rect" id="node6" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextRequester\lInterface" alt="" coords="5,233,228,285"/>
 <area shape="rect" id="node7" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="293,188,490,227"/>
-<area shape="rect" id="node8" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerInterface" alt="" coords="283,251,500,289"/>
-<area shape="rect" id="node9" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::PlaybackHandler\lInterface" alt="" coords="283,313,499,365"/>
+<area shape="rect" id="node8" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ExternalMedia\lPlayerInterface" alt="" coords="291,251,491,303"/>
+<area shape="rect" id="node9" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerInterface" alt="" coords="283,327,500,365"/>
+<area shape="rect" id="node10" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::PlaybackHandler\lInterface" alt="" coords="283,389,499,441"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -106,22 +105,20 @@ Collaboration diagram for alexaClientSDK::capabilityAgents::externalMediaPlayer:
 <area shape="rect" id="node5" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::StateProvider\lInterface" alt="" coords="18,157,215,209"/>
 <area shape="rect" id="node6" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextRequester\lInterface" alt="" coords="5,233,228,285"/>
 <area shape="rect" id="node7" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="293,188,490,227"/>
-<area shape="rect" id="node8" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerInterface" alt="" coords="283,251,500,289"/>
-<area shape="rect" id="node9" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::PlaybackHandler\lInterface" alt="" coords="283,313,499,365"/>
+<area shape="rect" id="node8" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ExternalMedia\lPlayerInterface" alt="" coords="291,251,491,303"/>
+<area shape="rect" id="node9" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerInterface" alt="" coords="283,327,500,365"/>
+<area shape="rect" id="node10" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::PlaybackHandler\lInterface" alt="" coords="283,389,499,441"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player_1_1_adapter_registration.html">AdapterRegistration</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a28a66411b0781be1389740d150ffe63e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a28a66411b0781be1389740d150ffe63e">AdapterMediaPlayerMap</a> = std::unordered_map&lt; std::string, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; &gt;</td></tr>
 <tr class="separator:a28a66411b0781be1389740d150ffe63e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a854131211ca8bf4e3d80620e3af604e7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a854131211ca8bf4e3d80620e3af604e7">AdapterCreateFunction</a> = std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_external_media_adapter_interface.html">avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface</a> &gt;(*)(std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; mediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">avsCommon::sdkInterfaces::SpeakerManagerInterface</a> &gt; speakerManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; focusManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html">ExternalMediaPlayer</a> &gt; externalMediaPlayer)</td></tr>
-<tr class="separator:a854131211ca8bf4e3d80620e3af604e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61b1bad3f3a91a80fab27e2acc34b9ae"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a61b1bad3f3a91a80fab27e2acc34b9ae">AdapterCreateFunction</a> = std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_external_media_adapter_interface.html">avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface</a> &gt;(*)(std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; mediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">avsCommon::sdkInterfaces::SpeakerManagerInterface</a> &gt; speakerManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; focusManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface.html">avsCommon::sdkInterfaces::ExternalMediaPlayerInterface</a> &gt; externalMediaPlayer)</td></tr>
+<tr class="separator:a61b1bad3f3a91a80fab27e2acc34b9ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf4ebe27e2dfdda96617f1f0c2667e1c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#aaf4ebe27e2dfdda96617f1f0c2667e1c">AdapterCreationMap</a> = std::unordered_map&lt; std::string, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a61b1bad3f3a91a80fab27e2acc34b9ae">AdapterCreateFunction</a> &gt;</td></tr>
+<tr class="separator:aaf4ebe27e2dfdda96617f1f0c2667e1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface</a></td></tr>
 <tr class="memitem:a45fb9f447f7a2ed2d9ffb211c089de93 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html#a45fb9f447f7a2ed2d9ffb211c089de93">Type</a> { <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html#a45fb9f447f7a2ed2d9ffb211c089de93ab7dadd69a14fa73e26ba543bbe4bdbeb">Type::AVS_SYNCED</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html#a45fb9f447f7a2ed2d9ffb211c089de93a54b4c4075463b2e02cd69f5cd139b5b2">Type::LOCAL</a>
@@ -130,10 +127,6 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3e9ff2d428ef653c91c697746cc8030d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a3e9ff2d428ef653c91c697746cc8030d">setPlayerInFocus</a> (const std::string &amp;playerInFocus)</td></tr>
-<tr class="separator:a3e9ff2d428ef653c91c697746cc8030d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c265fe99e1a8ad5ad52ea46b1eaed51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a5c265fe99e1a8ad5ad52ea46b1eaed51">resetPlayerInFocus</a> (const std::string &amp;playerInFocus)</td></tr>
-<tr class="separator:a5c265fe99e1a8ad5ad52ea46b1eaed51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">StateProviderInterface Functions</div></td></tr>
 <tr class="memitem:a411c285401048584df6a15b673925b34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a411c285401048584df6a15b673925b34">provideState</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">avsCommon::avs::NamespaceAndName</a> &amp;stateProviderName, unsigned int stateRequestToken) override</td></tr>
 <tr class="separator:a411c285401048584df6a15b673925b34"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,6 +157,9 @@ Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Overridden PlaybackHandlerInterface methods.</div></td></tr>
 <tr class="memitem:a5470f248f826e7b37f49289bd06e6fc6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a5470f248f826e7b37f49289bd06e6fc6">onButtonPressed</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a61e425aaa1522eafa6647f6b11cb9556">avsCommon::avs::PlaybackButton</a> button) override</td></tr>
 <tr class="separator:a5470f248f826e7b37f49289bd06e6fc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Overridden ExternalMediaPlayerInterface methods.</div></td></tr>
+<tr class="memitem:a5f5857024eae187fda8e18176f7f4e63"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a5f5857024eae187fda8e18176f7f4e63">setPlayerInFocus</a> (const std::string &amp;playerInFocus) override</td></tr>
+<tr class="separator:a5f5857024eae187fda8e18176f7f4e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html">alexaClientSDK::avsCommon::avs::CapabilityAgent</a></td></tr>
 <tr class="memitem:ab6745fae4f7b144f64d34251c76d14f7 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html#ab6745fae4f7b144f64d34251c76d14f7">~CapabilityAgent</a> ()=default</td></tr>
 <tr class="separator:ab6745fae4f7b144f64d34251c76d14f7 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -207,11 +203,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a350a147e52eb3ad3c1326e6639861066 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9352626109735aba40b5fb310913355 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#af9352626109735aba40b5fb310913355">isShutdown</a> () const</td></tr>
 <tr class="separator:af9352626109735aba40b5fb310913355 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::ExternalMediaPlayerInterface</a></td></tr>
+<tr class="memitem:a48c76ab3d8d3cbcc7af5ad2e0268a202 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface.html#a48c76ab3d8d3cbcc7af5ad2e0268a202">~ExternalMediaPlayerInterface</a> ()=default</td></tr>
+<tr class="separator:a48c76ab3d8d3cbcc7af5ad2e0268a202 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a76ee8846df089c2a405750beb0fe9aea"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html">ExternalMediaPlayer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a76ee8846df089c2a405750beb0fe9aea">create</a> (const <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a28a66411b0781be1389740d150ffe63e">AdapterMediaPlayerMap</a> &amp;mediaPlayers, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">avsCommon::sdkInterfaces::SpeakerManagerInterface</a> &gt; speakerManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; focusManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; exceptionSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html">avsCommon::sdkInterfaces::PlaybackRouterInterface</a> &gt; playbackRouter)</td></tr>
-<tr class="separator:a76ee8846df089c2a405750beb0fe9aea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c2c49d47540507bc6a77f49bbf28225"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html">ExternalMediaPlayer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a7c2c49d47540507bc6a77f49bbf28225">create</a> (const <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a28a66411b0781be1389740d150ffe63e">AdapterMediaPlayerMap</a> &amp;mediaPlayers, const <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#aaf4ebe27e2dfdda96617f1f0c2667e1c">AdapterCreationMap</a> &amp;adapterCreationMap, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">avsCommon::sdkInterfaces::SpeakerManagerInterface</a> &gt; speakerManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; focusManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; exceptionSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html">avsCommon::sdkInterfaces::PlaybackRouterInterface</a> &gt; playbackRouter)</td></tr>
+<tr class="separator:a7c2c49d47540507bc6a77f49bbf28225"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -238,14 +237,28 @@ Additional Inherited Members</h2></td></tr>
 <div class="textblock"><p>This class implements the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html">ExternalMediaPlayer</a></code> capability agent. This agent is responsible for handling music service providers which manage their PLAY queue.</p>
 <dl class="section note"><dt>Note</dt><dd>For instances of this class to be cleaned up correctly, <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a350a147e52eb3ad3c1326e6639861066">shutdown()</a></code> must be called. </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a854131211ca8bf4e3d80620e3af604e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a854131211ca8bf4e3d80620e3af604e7">&#9670;&nbsp;</a></span>AdapterCreateFunction</h2>
+<a id="a61b1bad3f3a91a80fab27e2acc34b9ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61b1bad3f3a91a80fab27e2acc34b9ae">&#9670;&nbsp;</a></span>AdapterCreateFunction</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a854131211ca8bf4e3d80620e3af604e7">alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreateFunction</a> =  std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_external_media_adapter_interface.html">avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface</a>&gt; (*)( std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a>&gt; mediaPlayer, std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">avsCommon::sdkInterfaces::SpeakerManagerInterface</a>&gt; speakerManager, std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a>&gt; messageSender, std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a>&gt; focusManager, std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a>&gt; contextManager, std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html">ExternalMediaPlayer</a>&gt; externalMediaPlayer)</td>
+          <td class="memname">using <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a61b1bad3f3a91a80fab27e2acc34b9ae">alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreateFunction</a> =  std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_external_media_adapter_interface.html">avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface</a>&gt; (*)( std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a>&gt; mediaPlayer, std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">avsCommon::sdkInterfaces::SpeakerManagerInterface</a>&gt; speakerManager, std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a>&gt; messageSender, std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a>&gt; focusManager, std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a>&gt; contextManager, std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface.html">avsCommon::sdkInterfaces::ExternalMediaPlayerInterface</a>&gt; externalMediaPlayer)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaf4ebe27e2dfdda96617f1f0c2667e1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf4ebe27e2dfdda96617f1f0c2667e1c">&#9670;&nbsp;</a></span>AdapterCreationMap</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#aaf4ebe27e2dfdda96617f1f0c2667e1c">alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap</a> =  std::unordered_map&lt;std::string, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a61b1bad3f3a91a80fab27e2acc34b9ae">AdapterCreateFunction</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -341,8 +354,8 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 
 </div>
 </div>
-<a id="a76ee8846df089c2a405750beb0fe9aea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a76ee8846df089c2a405750beb0fe9aea">&#9670;&nbsp;</a></span>create()</h2>
+<a id="a7c2c49d47540507bc6a77f49bbf28225"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c2c49d47540507bc6a77f49bbf28225">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -355,6 +368,12 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a28a66411b0781be1389740d150ffe63e">AdapterMediaPlayerMap</a> &amp;&#160;</td>
           <td class="paramname"><em>mediaPlayers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#aaf4ebe27e2dfdda96617f1f0c2667e1c">AdapterCreationMap</a> &amp;&#160;</td>
+          <td class="paramname"><em>adapterCreationMap</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -408,6 +427,7 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mediaPlayers</td><td>The map of &lt;PlayerId, MediaPlayer&gt; to be used to find the <a class="el" href="namespacealexa_client_s_d_k_1_1media_player.html">mediaPlayer</a> to use for this adapter. </td></tr>
+    <tr><td class="paramname">adapterCreationMap</td><td>The map of &lt;PlayerId, AdapterCreateFunction&gt; to be used to create the adapters. </td></tr>
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html">speakerManager</a></td><td>A <code>SpeakerManagerInterface</code> to perform volume changes requested by adapters. </td></tr>
     <tr><td class="paramname">messageSender</td><td>The object to use for sending events. </td></tr>
     <tr><td class="paramname">focusManager</td><td>The object used to manage focus for the adapter managed by the EMP. </td></tr>
@@ -726,31 +746,6 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 
 </div>
 </div>
-<a id="a5c265fe99e1a8ad5ad52ea46b1eaed51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c265fe99e1a8ad5ad52ea46b1eaed51">&#9670;&nbsp;</a></span>resetPlayerInFocus()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::resetPlayerInFocus </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>playerInFocus</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Method to reset the player in focus after an adapter has acquired the channel.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">playerInFocus</td><td>The business name of the adapter that has currently released focus. If the currently playerInFocus is the one releasing focus we reset the playerInFocus to a null string. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a038234a82a93b8cdc28bf25d3a25ee4d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a038234a82a93b8cdc28bf25d3a25ee4d">&#9670;&nbsp;</a></span>setMute()</h2>
 
@@ -787,11 +782,14 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 
 </div>
 </div>
-<a id="a3e9ff2d428ef653c91c697746cc8030d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e9ff2d428ef653c91c697746cc8030d">&#9670;&nbsp;</a></span>setPlayerInFocus()</h2>
+<a id="a5f5857024eae187fda8e18176f7f4e63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f5857024eae187fda8e18176f7f4e63">&#9670;&nbsp;</a></span>setPlayerInFocus()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::setPlayerInFocus </td>
@@ -801,6 +799,11 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Method to set the player in focus after an adapter has acquired the channel.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -809,6 +812,8 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
   </table>
   </dd>
 </dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface.html#a7f95bbd4835965742a6431aaee23b7e4">alexaClientSDK::avsCommon::sdkInterfaces::ExternalMediaPlayerInterface</a>.</p>
 
 </div>
 </div>
@@ -856,7 +861,7 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.5.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.6.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>
