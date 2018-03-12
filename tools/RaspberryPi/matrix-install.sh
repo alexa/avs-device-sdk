@@ -23,4 +23,4 @@ sudo apt-get -y install raspberrypi-kernel-headers raspberrypi-kernel git
 echo "Rebooting required. Starting in 5sec."
 sleep 5
 echo "Connect again after 30 sec."
-# sudo reboot
+sudo reboot
