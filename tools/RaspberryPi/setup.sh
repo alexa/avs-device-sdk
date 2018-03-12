@@ -155,7 +155,7 @@ then
     libasound2-dev \
     sox \
     vim \
-    python3-pip
+    python-pip
 
     sudo pip install flask
     sudo pip install commentjson
