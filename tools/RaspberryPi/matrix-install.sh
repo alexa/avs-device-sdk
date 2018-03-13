@@ -16,8 +16,13 @@ sudo apt-get update
 sudo apt-get upgrade
 # Installation MATRIX Pacakages
 sudo apt install matrixio-creator-init
+
 # Installation Kernel Packages
 sudo apt-get -y install raspberrypi-kernel-headers raspberrypi-kernel git 
+git clone https://github.com/matrix-io/matrixio-kernel-modules
+cd matrixio-kernel-modules
+make && make install
+echo "dtoverlay=matrixio" | sudo tee -a /boot/config.txt
 
 # Reboot
 echo "Rebooting required. Starting in 5sec."
