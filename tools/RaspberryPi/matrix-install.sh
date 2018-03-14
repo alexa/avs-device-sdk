@@ -23,6 +23,7 @@ git clone https://github.com/matrix-io/matrixio-kernel-modules
 cd matrixio-kernel-modules
 make && make install
 echo "dtoverlay=matrixio" | sudo tee -a /boot/config.txt
+echo "matrixio-everloop" | sudo tee -a /etc/modules
 
 # Reboot
 echo "Rebooting required. Starting in 5sec."
