@@ -152,8 +152,8 @@ static const std::string ESP_CONTROL_MESSAGE =
     "| Press '2' followed by Enter to enter the voice energy.                     |\n"
     "| Press '3' followed by Enter to enter the ambient energy.                   |\n"
     "| Press 'q' to exit ESP Control Mode.                                        |\n";
-
-static const std::string RESET_CONFIRMATION =
+    
+    static const std::string RESET_CONFIRMATION =
     "+----------------------------------------------------------------------------+\n"
     "|                    Device Reset Confirmation:                              |\n"
     "|                                                                            |\n"
@@ -279,21 +279,27 @@ void UIManager::microphoneOn() {
 void UIManager::printState() {
     if (m_connectionStatus == avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::DISCONNECTED) {
         ConsolePrinter::prettyPrint("Client not connected!");
+        system("bash alexa-callback/alexa-callback-not-connected.sh");
     } else if (m_connectionStatus == avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::PENDING) {
         ConsolePrinter::prettyPrint("Connecting...");
+        system("bash alexa-callback/alexa-callback-connecting.sh");
     } else if (m_connectionStatus == avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED) {
         switch (m_dialogState) {
             case DialogUXState::IDLE:
+		system("bash alexa-callback/alexa-callback-idle.sh");
                 ConsolePrinter::prettyPrint("Alexa is currently idle!");
                 return;
             case DialogUXState::LISTENING:
+                system("bash alexa-callback/alexa-callback-listening.sh");
                 ConsolePrinter::prettyPrint("Listening...");
                 return;
             case DialogUXState::THINKING:
+                system("bash alexa-callback/alexa-callback-thinking.sh");
                 ConsolePrinter::prettyPrint("Thinking...");
                 return;
                 ;
             case DialogUXState::SPEAKING:
+                system("bash alexa-callback/alexa-callback-speaking.sh");
                 ConsolePrinter::prettyPrint("Speaking...");
                 return;
             /*
@@ -302,6 +308,7 @@ void UIManager::printState() {
              * nothing for this state.
              */
             case DialogUXState::FINISHED:
+                system("bash alexa-callback/alexa-callback-finished.sh");
                 return;
         }
     }
