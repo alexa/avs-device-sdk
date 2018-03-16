@@ -1,2 +1,2 @@
 #!/bin/bash
-bash alexa-callback.sh idle
+bash avs-device-sdk/alexa-callback.sh idle

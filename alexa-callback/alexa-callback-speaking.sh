@@ -1,2 +1,2 @@
 #!/bin/bash
-bash alexa-callback.sh speaking
+bash avs-device-sdk/alexa-callback.sh speaking

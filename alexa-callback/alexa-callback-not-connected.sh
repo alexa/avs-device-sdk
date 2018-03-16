@@ -1,2 +1,2 @@
 #!/bin/bash
-bash alexa-callback.sh not-connected
+bash avs-device-sdk/alexa-callback.sh not-connected

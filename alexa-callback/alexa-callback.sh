@@ -20,21 +20,22 @@ if [ "$1" == "connecting" ]
 then
     gpio write $PIN $STATE1
 elif [ "$1" == "finished" ]
-    gpio write $PIN $STATE1
 then
+    gpio write $PIN $STATE1
 elif [ "$1" == "idle" ]
+then
     gpio mode $PIN out
     gpio write $PIN $STATE2
     sleep 0.5
     gpio write $PIN $STATE1
-then
 elif [ "$1" == "listening" ]
+then
     gpio write $PIN $STATE2
-then
 elif [ "$1" == "not-connected" ]
-    gpio write $PIN $STATE1
 then
+    gpio write $PIN $STATE1
 elif [ "$1" == "speaking" ]
+then
     for i in `seq 1 2`;
         do
 		gpio write $PIN $STATE2
@@ -42,8 +43,8 @@ elif [ "$1" == "speaking" ]
 		gpio write $PIN $STATE1
         sleep $(echo 0.$RANDOM)        
 	done 
-then
 elif [ "$1" == "heartbeat" ]
+then
 	gpio write $PIN $STATE2
 	num=$(alive)
 	if [ $num -gt 1 ] 
@@ -51,7 +52,6 @@ elif [ "$1" == "heartbeat" ]
 		sleep 0.005
 		gpio write $PIN $STATE1
 	fi
-then
 else
-
+    sleep 0.05
 fi

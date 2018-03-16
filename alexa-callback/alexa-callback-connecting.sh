@@ -1,3 +1,3 @@
 #!/bin/bash
-bash alexa-callback.sh connecting
+bash avs-device-sdk/alexa-callback.sh connecting
 
