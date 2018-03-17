@@ -1,2 +1,2 @@
 #!/bin/bash
-bash alexa-callback/alexa-callback.sh not-connected
+echo "Callback not-connected"

@@ -1,2 +1,2 @@
 #!/bin/bash
-bash alexa-callback/alexa-callback.sh listening
+echo "Callback listening"
