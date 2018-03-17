@@ -218,6 +218,9 @@ else
     make SampleApp -j2
 fi
 
+# link callback scripts to "build" folder
+ln -s $SOURCE_PATH/avs-device-sdk/alexa-callback $BUILD_PATH/SampleApp/src/
+
 echo
 echo "==============> SAVING CONFIGURATION FILE =============="
 echo
