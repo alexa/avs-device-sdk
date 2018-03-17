@@ -52,7 +52,7 @@
         // e.g. "firmwareVersion": 123
         // The default endpoint to connect to.
         // See https://developer.amazon.com/docs/alexa-voice-service/api-overview.html#endpoints for regions and values
-        "endpoint": "https://avs-alexa-eu.amazon.com"
+        "endpoint": "https://avs-alexa-na.amazon.com"
     }
     // Example of specifying a default log level for all ModuleLoggers.  If not specified, ModuleLoggers get
     // their log level from the sink logger.

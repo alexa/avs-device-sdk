@@ -50,7 +50,7 @@ static const std::string TAG("HTTP2Transport");
  */
 const static int MAX_STREAMS = 10;
 /// Default @c AVS endpoint to connect to.
-const static std::string DEFAULT_AVS_ENDPOINT = "https://avs-alexa-eu.amazon.com";
+const static std::string DEFAULT_AVS_ENDPOINT = "https://avs-alexa-na.amazon.com";
 /// Downchannel URL
 const static std::string AVS_DOWNCHANNEL_URL_PATH_EXTENSION = "/v20160207/directives";
 /// URL to send events to

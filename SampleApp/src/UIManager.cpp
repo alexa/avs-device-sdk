@@ -152,8 +152,8 @@ static const std::string ESP_CONTROL_MESSAGE =
     "| Press '2' followed by Enter to enter the voice energy.                     |\n"
     "| Press '3' followed by Enter to enter the ambient energy.                   |\n"
     "| Press 'q' to exit ESP Control Mode.                                        |\n";
-    
-    static const std::string RESET_CONFIRMATION =
+
+static const std::string RESET_CONFIRMATION =
     "+----------------------------------------------------------------------------+\n"
     "|                    Device Reset Confirmation:                              |\n"
     "|                                                                            |\n"

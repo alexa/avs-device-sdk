@@ -195,7 +195,7 @@ then
     echo
 
     cd $SOURCE_PATH
-    git clone git://github.com/a2ron/avs-device-sdk.git
+    git clone git://github.com/alexa/avs-device-sdk.git
 
     # make the SDK
     echo
@@ -218,6 +218,7 @@ else
     make SampleApp -j2
 fi
 
+# link callback scripts to "build" folder
 ln -s $SOURCE_PATH/avs-device-sdk/alexa-callback $BUILD_PATH/SampleApp/src/
 
 echo

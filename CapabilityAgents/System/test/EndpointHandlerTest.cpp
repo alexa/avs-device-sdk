@@ -48,7 +48,7 @@ static const std::string ENDPOINTING_WRONG_NAME = "WrongEndpointer";
 static const std::string ENDPOINT_PAYLOAD_KEY = "endpoint";
 
 /// This is the string for the endpoint payload.
-static const std::string ENDPOINT_PAYLOAD_VALUE = "https://avs-alexa-eu.amazon.com";
+static const std::string ENDPOINT_PAYLOAD_VALUE = "https://avs-alexa-na.amazon.com";
 
 /// This is the full payload expected to come from AVS.
 static const std::string ENDPOINT_PAYLOAD = "{\"" + ENDPOINT_PAYLOAD_KEY + "\": \"" + ENDPOINT_PAYLOAD_VALUE + "\"}";
