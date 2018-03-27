@@ -263,10 +263,13 @@ echo
 cat $CONFIG_FILE
 
 echo
-echo "==============> MAKING BAKCUP OF /etc/asound.conf =============="
+echo "==============> MAKING BACKUP OF /etc/asound.conf =============="
 echo
 
-sudo mv -v /etc/asound.conf /etc/asound.conf.backup
+if [ -f "/etc/asound.conf" ]
+then
+  sudo mv -v /etc/asound.conf /etc/asound.conf.backup
+fi
 
 echo
 echo "==============> SAVING AUDIO CONFIGURATION FILE =============="
