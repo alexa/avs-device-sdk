@@ -152,6 +152,7 @@ then
     gstreamer1.0-plugins-good \
     libgstreamer-plugins-base0.10-0 libgstreamer-plugins-base0.10-dev  \
     gstreamer1.0-tools gstreamer1.0-alsa \
+    libatlas-base-dev \
     libasound2-dev \
     sox \
     vim \
@@ -191,22 +192,31 @@ then
     echo
 
     cd $SOURCE_PATH
-    git clone git://github.com/matrix-io/avs-device-sdk.git
+    git clone https://github.com/alexa/avs-device-sdk.git
 
-    #get sensory and build
+    # get sensory and build
     echo
     echo "==============> CLONING AND BUILDING SENSORY =============="
     echo
 
     cd $THIRD_PARTY_PATH
-    git clone git://github.com/Sensory/alexa-rpi.git
+    git clone https://github.com/Sensory/alexa-rpi.git
     bash ./alexa-rpi/bin/license.sh
+
+    # get sensory and build
+    echo
+    echo "==============> CLONING AND BUILDING SNOWBOY =============="
+    echo
+
+    cd $THIRD_PARTY_PATH
+    git clone https://github.com/Kitt-AI/snowboy.git
 
     # make the SDK
     echo
     echo "==============> BUILDING SDK =============="
     echo
 
+    # Build using Sensory Wakeword
     cd $BUILD_PATH
     cmake "$SOURCE_PATH/avs-device-sdk" \
     -DSENSORY_KEY_WORD_DETECTOR=ON \
@@ -217,6 +227,18 @@ then
     -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
     -DACSDK_EMIT_SENSITIVE_LOGS=ON \
     -DCMAKE_BUILD_TYPE=DEBUG
+
+    # Build using Snowboy Wakeword
+    # cd $BUILD_PATH
+    # cmake "/home/pi/avs-device-sdk" \
+    # -DKITTAI_KEY_WORD_DETECTOR=ON \
+    # -DKITTAI_KEY_WORD_DETECTOR_LIB_PATH="$THIRD_PARTY_PATH/snowboy/lib/rpi/libsnowboy-detect.a" \
+    # -DKITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR="$THIRD_PARTY_PATH/snowboy/include" \
+    # -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
+    # -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.a" \
+    # -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
+    # -DACSDK_EMIT_SENSITIVE_LOGS=ON \
+    # -DCMAKE_BUILD_TYPE=DEBUG
 
     cd $BUILD_PATH
     make SampleApp -j2
@@ -296,11 +318,19 @@ pcm.!default
 }
 EOF
 
+# For sensory
 cat << EOF > "$START_SCRIPT"
 cd "$BUILD_PATH/SampleApp/src"
 
 ./SampleApp "$CONFIG_FILE" "$THIRD_PARTY_PATH/alexa-rpi/models" DEBUG9
 EOF
+
+# For snowboy
+# cat << EOF > "$START_SCRIPT"
+# cd "$BUILD_PATH/SampleApp/src"
+
+# ./SampleApp "$CONFIG_FILE" "$THIRD_PARTY_PATH/snowboy/resources/alexa/alexa-avs-sample-app" DEBUG9
+# EOF
 
 cat << EOF > "$START_AUTH_SCRIPT"
 cd "$BUILD_PATH"
