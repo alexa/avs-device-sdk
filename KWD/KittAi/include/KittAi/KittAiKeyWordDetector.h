@@ -29,6 +29,7 @@
 
 #include "KWD/AbstractKeywordDetector.h"
 #include "snowboy-detect.h"
+#include "snowboy-detect-cxx-compat.h"
 
 namespace alexaClientSDK {
 namespace kwd {
@@ -162,7 +163,7 @@ private:
     std::thread m_detectionThread;
 
     /// The Kitt.ai engine instantiation.
-    std::unique_ptr<snowboy::SnowboyDetect> m_kittAiEngine;
+    std::unique_ptr<Snowboy> m_kittAiEngine;
 
     /**
      * The max number of samples to push into the underlying engine per iteration. This will be determined based on the
