@@ -155,6 +155,7 @@ then
     libasound2-dev \
     sox \
     vim \
+    links \
     python-pip
 
     sudo pip install flask
@@ -191,7 +192,7 @@ then
     echo
 
     cd $SOURCE_PATH
-    git clone git://github.com/matrix-io/avs-device-sdk.git
+    git clone https://github.com/matrix-io/avs-device-sdk.git
 
     #get sensory and build
     echo
@@ -199,7 +200,7 @@ then
     echo
 
     cd $THIRD_PARTY_PATH
-    git clone git://github.com/Sensory/alexa-rpi.git
+    git clone https://github.com/Sensory/alexa-rpi.git
     bash ./alexa-rpi/bin/license.sh
 
     # make the SDK
