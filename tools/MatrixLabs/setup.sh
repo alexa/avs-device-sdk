@@ -55,10 +55,6 @@ else
   exit 1
 fi
 
-
-
-
-
 if [ $# -eq 0 ]
 then
   echo  'bash setup.sh <config-file>'
@@ -122,19 +118,18 @@ DB_PATH="$INSTALL_BASE/$DB_FOLDER"
 UNIT_TEST_MODEL_PATH="$INSTALL_BASE/avs-device-sdk/KWD/inputs/SensoryModels/"
 UNIT_TEST_MODEL="$THIRD_PARTY_PATH/alexa-rpi/models/spot-alexa-rpi-31000.snsr"
 
-SNOWBOY_PATH="$THIRD_PARTY_PATH/snowboy"
-SNOWBOY_MODELS_PATH="$SNOWBOY_PATH/resources/alexa/alexa-sdk-resources"
+WAKE_WORD_ENGINE="snowboy" # "sensory" For Sensory engine
 SENSORY_PATH="$THIRD_PARTY_PATH/alexa-rpi"
 SENSORY_MODELS_PATH="$SENSORY_PATH/models"
-# WAKE_WORD_ENGINE="SENSORY"
-WAKE_WORD_ENGINE="SNOWBOY"
+SNOWBOY_PATH="$THIRD_PARTY_PATH/snowboy"
+SNOWBOY_MODELS_PATH="$SNOWBOY_PATH/resources/alexa/alexa-sdk-resources"
+SNOWBOY_WAKEWORD="snowboy" # "alexa" for Alexa wake word
 
 CONFIG_FILE="$BUILD_PATH/Integration/AlexaClientSDKConfig.json"
 SOUND_CONFIG="$HOME/.asoundrc"
 START_SCRIPT="$INSTALL_BASE/startsample.sh"
 START_AUTH_SCRIPT="$INSTALL_BASE/startauth.sh"
 TEST_SCRIPT="$INSTALL_BASE/test.sh"
-
 
 if [ ! -d "$BUILD_PATH" ]
 then
@@ -189,14 +184,14 @@ then
 
     cd portaudio
     ./configure --without-jack
-    make
+    make -j4
 
     echo
     echo "==============> CLONING SDK =============="
     echo
 
     cd $SOURCE_PATH
-    git clone https://github.com/alexa/avs-device-sdk.git
+    git clone https://github.com/matrix-io/avs-device-sdk.git
 
     echo
     echo "==============> CLONING AND BUILDING SENSORY =============="
@@ -215,20 +210,29 @@ then
 
     if [ ! -d "$THIRD_PARTY_PATH/snowboy" ]
     then
-        echo "**************************** cloning snowboy"
         cd $THIRD_PARTY_PATH
         git clone https://github.com/Kitt-AI/snowboy.git
         cd snowboy
         mkdir resources/alexa/alexa-sdk-resources
         cp ./resources/common.res ./resources/alexa/alexa-sdk-resources
-        cp ./resources/alexa/alexa_02092017.umdl ./resources/alexa/alexa-sdk-resources/alexa.umdl
+
+        if  [ $SNOWBOY_WAKEWORD = "alexa" ]
+        then
+            cp ./resources/alexa/alexa_02092017.umdl ./resources/alexa/alexa-sdk-resources/alexa.umdl
+        elif [ $SNOWBOY_WAKEWORD = "snowboy" ]
+        then
+            cp ./resources/models/snowboy.umdl ./resources/alexa/alexa-sdk-resources/alexa.umdl 
+        else
+            echo " ******* Wrong Wake Word Selected *********"
+            exit 1
+        fi
     fi
 
     echo
     echo "==============> BUILDING SDK =============="
     echo
 
-    if [ $WAKE_WORD_ENGINE = "SENSORY" ]
+    if [ $WAKE_WORD_ENGINE = "sensory" ]
     then
         cd $BUILD_PATH
         cmake "$SOURCE_PATH/avs-device-sdk" \
@@ -241,7 +245,7 @@ then
         -DACSDK_EMIT_SENSITIVE_LOGS=ON \
         -DCMAKE_BUILD_TYPE=DEBUG
 
-    elif [ $WAKE_WORD_ENGINE = "SNOWBOY" ]
+    elif [ $WAKE_WORD_ENGINE = "snowboy" ]
     then
         cd $BUILD_PATH
         cmake "/home/pi/avs-device-sdk" \
@@ -264,6 +268,10 @@ then
     cd $BUILD_PATH
     make SampleApp -j4
 
+else
+    cd $BUILD_PATH
+    make SampleApp -j4
+fi
 else
     cd $BUILD_PATH
     make SampleApp -j4
