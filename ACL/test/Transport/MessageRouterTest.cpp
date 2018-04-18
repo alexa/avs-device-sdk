@@ -175,7 +175,7 @@ TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
     auto newTransport = std::make_shared<NiceMock<MockTransport>>();
     initializeMockTransport(newTransport.get());
 
-    m_router->setMockTransport(newTransport);
+    m_transportFactory->setMockTransport(newTransport);
 
     // Reset the MessageRouterObserver, there should be no interactions with the observer
     m_router->onServerSideDisconnect(oldTransport);

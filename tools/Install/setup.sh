@@ -42,9 +42,10 @@ CONFIG_DB_PATH="$DB_PATH"
 UNIT_TEST_MODEL_PATH="$INSTALL_BASE/avs-device-sdk/KWD/inputs/SensoryModels/"
 UNIT_TEST_MODEL="$THIRD_PARTY_PATH/alexa-rpi/models/spot-alexa-rpi-31000.snsr"
 CONFIG_FILE="$BUILD_PATH/Integration/AlexaClientSDKConfig.json"
-START_AUTH_SCRIPT="$INSTALL_BASE/startauth.sh"
 TEST_SCRIPT="$INSTALL_BASE/test.sh"
 LIB_SUFFIX="a"
+
+GSTREAMER_AUDIO_SINK="autoaudiosink"
 
 get_platform() {
   uname_str=`uname -a`
@@ -119,7 +120,6 @@ then
   echo  'bash setup.sh <config-file>'
   echo  'the config file must contain the following:'
   echo  '   CLIENT_ID=<OAuth client ID>'
-  echo  '   CLIENT_SECRET=<OAuth client secret>'  
   echo  '   PRODUCT_NAME=<your product name for device>'
   echo  '   DEVICE_SERIAL_NUMBER=<your device serial number>'
 
@@ -133,12 +133,6 @@ set -e
 if [[ ! "$CLIENT_ID" =~ amzn1\.application-oa2-client\.[0-9a-z]{32} ]]
 then
    echo 'client ID is invalid!'
-   exit 1
-fi
-
-if [[ ! "$CLIENT_SECRET" =~ [0-9a-f]{64} ]]
-then 
-   echo 'client secret is invalid!'
    exit 1
 fi
 
@@ -239,12 +233,21 @@ cat << EOF > "$CONFIG_FILE"
     "notifications":{
         "databaseFilePath":"$CONFIG_DB_PATH/notifications.db"
     },
-    "authDelegate":{
-      "clientId":"$CLIENT_ID",
-        "clientSecret":"$CLIENT_SECRET",
+    "cblAuthDelegate":{
+        "databaseFilePath":"$CONFIG_DB_PATH/cblAuthDelegate.db"
+    },
+    "deviceInfo":{
+        "clientId":"$CLIENT_ID",
         "deviceSerialNumber":"$DEVICE_SERIAL_NUMBER",
-        "refreshToken":"",
         "productId":"$PRODUCT_ID"
+    },
+    "dcfDelegate":{
+    },
+    "miscDatabase":{
+        "databaseFilePath":"$CONFIG_DB_PATH/miscDatabase.db"
+    },
+    "gstreamerMediaPlayer":{
+        "audioSink":"$GSTREAMER_AUDIO_SINK"
     }
 }
 EOF
@@ -253,11 +256,6 @@ echo
 echo "==============> FINAL CONFIGURATION  =============="
 echo
 cat $CONFIG_FILE
-
-cat << EOF > "$START_AUTH_SCRIPT"
-cd "$BUILD_PATH"
-python AuthServer/AuthServer.py
-EOF
 
 generate_start_script
 
@@ -270,7 +268,6 @@ cp "$UNIT_TEST_MODEL" "$UNIT_TEST_MODEL_PATH"
 cd $BUILD_PATH
 make all test -j2
 chmod +x "$START_SCRIPT"
-chmod +x "$START_AUTH_SCRIPT"
 EOF
 
 echo " **** Completed Configuration/Build ***"

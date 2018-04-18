@@ -19,6 +19,7 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/error/en.h>
 
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Timing/TimeUtils.h>
 
@@ -31,6 +32,14 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::json;
 using namespace avsCommon::utils::logger;
+
+/// Notifications capability constants
+/// Notifications interface type
+static const std::string NOTIFICATIONS_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
+/// Notifications interface name
+static const std::string NOTIFICATIONS_CAPABILITY_INTERFACE_NAME = "Notifications";
+/// Notifications interface version
+static const std::string NOTIFICATIONS_CAPABILITY_INTERFACE_VERSION = "1.0";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("NotificationsCapabilityAgent");
@@ -68,6 +77,13 @@ static const char IS_ENABLED_KEY[] = "isEnabled";
 static const char IS_VISUAL_INDICATOR_PERSISTED_KEY[] = "isVisualIndicatorPersisted";
 
 static const std::chrono::milliseconds SHUTDOWN_TIMEOUT{500};
+
+/**
+ * Creates the Notifications capability configuration.
+ *
+ * @return The Notifications capability configuration.
+ */
+static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getNotificationsCapabilityConfiguration();
 
 std::shared_ptr<NotificationsCapabilityAgent> NotificationsCapabilityAgent::create(
     std::shared_ptr<NotificationsStorageInterface> notificationsStorage,
@@ -127,6 +143,16 @@ NotificationsCapabilityAgent::NotificationsCapabilityAgent(
         m_notificationsAudioFactory{notificationsAudioFactory},
         m_isEnabled{false},
         m_currentState{NotificationsCapabilityAgentState::IDLE} {
+    m_capabilityConfigurations.insert(getNotificationsCapabilityConfiguration());
+}
+
+std::shared_ptr<CapabilityConfiguration> getNotificationsCapabilityConfiguration() {
+    std::unordered_map<std::string, std::string> configMap;
+    configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, NOTIFICATIONS_CAPABILITY_INTERFACE_TYPE});
+    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, NOTIFICATIONS_CAPABILITY_INTERFACE_NAME});
+    configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, NOTIFICATIONS_CAPABILITY_INTERFACE_VERSION});
+
+    return std::make_shared<CapabilityConfiguration>(configMap);
 }
 
 bool NotificationsCapabilityAgent::init() {
@@ -170,13 +196,13 @@ void NotificationsCapabilityAgent::executeInit() {
     executeProvideState();
 
     if (queueSize > 0) {
-        ACSDK_DEBUG(LX(__func__).d("queueSize", queueSize).m("NotificationIndicator queue wasn't empty on startup"));
+        ACSDK_DEBUG5(LX(__func__).d("queueSize", queueSize).m("NotificationIndicator queue wasn't empty on startup"));
         executeStartQueueNotEmpty();
     }
 }
 
 void NotificationsCapabilityAgent::notifyObservers(IndicatorState state) {
-    ACSDK_DEBUG(LX(__func__).d("indicatorState", indicatorStateToInt(state)));
+    ACSDK_DEBUG5(LX(__func__).d("indicatorState", indicatorStateToInt(state)));
     for (const auto& observer : m_observers) {
         observer->onSetIndicator(state);
     }
@@ -185,7 +211,7 @@ void NotificationsCapabilityAgent::notifyObservers(IndicatorState state) {
 void NotificationsCapabilityAgent::provideState(
     const NamespaceAndName& stateProviderName,
     unsigned int stateRequestToken) {
-    ACSDK_DEBUG(LX(__func__).d("stateRequestToken", stateRequestToken));
+    ACSDK_DEBUG5(LX(__func__).d("stateRequestToken", stateRequestToken));
     m_executor.submit([this, stateRequestToken] { executeProvideState(true, stateRequestToken); });
 }
 
@@ -232,7 +258,7 @@ void NotificationsCapabilityAgent::preHandleDirective(std::shared_ptr<DirectiveI
 }
 
 void NotificationsCapabilityAgent::handleDirective(std::shared_ptr<DirectiveInfo> info) {
-    ACSDK_DEBUG(
+    ACSDK_DEBUG0(
         LX("handleDirective").d("name", info->directive->getName()).d("messageId", info->directive->getMessageId()));
     if (!info) {
         ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "nullDirectiveInfo"));
@@ -744,6 +770,11 @@ void NotificationsCapabilityAgent::clearData() {
     });
 
     result.wait();
+}
+
+std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> NotificationsCapabilityAgent::
+    getCapabilityConfigurations() {
+    return m_capabilityConfigurations;
 }
 
 }  // namespace notifications

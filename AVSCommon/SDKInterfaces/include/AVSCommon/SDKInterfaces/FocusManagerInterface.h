@@ -58,6 +58,12 @@ public:
     /// The default Alerts Channel priority.
     static constexpr unsigned int ALERTS_CHANNEL_PRIORITY = 200;
 
+    /// The default Communications Channel name.
+    static constexpr const char* COMMUNICATIONS_CHANNEL_NAME = "Communications";
+
+    /// The default Communications Channel priority.
+    static constexpr unsigned int COMMUNICATIONS_CHANNEL_PRIORITY = 250;
+
     /// The default Content Channel name.
     static constexpr const char* CONTENT_CHANNEL_NAME = "Content";
 

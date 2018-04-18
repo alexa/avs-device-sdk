@@ -16,6 +16,7 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/error/en.h>
 
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
@@ -27,6 +28,14 @@ namespace afml {
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils;
 using namespace avsCommon::avs;
+
+/// VisualActivityTracker capability constants
+/// VisualActivityTracker interface type
+static const std::string VISUALACTIVITYTRACKER_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
+/// VisualActivityTracker interface name
+static const std::string VISUALACTIVITYTRACKER_CAPABILITY_INTERFACE_NAME = "VisualActivityTracker";
+/// VisualActivityTracker interface version
+static const std::string VISUALACTIVITYTRACKER_CAPABILITY_INTERFACE_VERSION = "1.0";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("VisualActivityTracker");
@@ -46,6 +55,13 @@ static const char FOCUSED_KEY[] = "focused";
 
 /// The interface key used in the VisualActivityTracker context.
 static const char INTERFACE_KEY[] = "interface";
+
+/**
+ * Creates the VisualActivityTracker capability configuration.
+ *
+ * @return The VisualActivityTracker capability configuration.
+ */
+static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getVisualActivityTrackerCapabilityConfiguration();
 
 std::shared_ptr<VisualActivityTracker> VisualActivityTracker::create(
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager) {
@@ -97,6 +113,16 @@ VisualActivityTracker::VisualActivityTracker(
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager) :
         RequiresShutdown{"VisualActivityTracker"},
         m_contextManager{contextManager} {
+    m_capabilityConfigurations.insert(getVisualActivityTrackerCapabilityConfiguration());
+}
+
+std::shared_ptr<CapabilityConfiguration> getVisualActivityTrackerCapabilityConfiguration() {
+    std::unordered_map<std::string, std::string> configMap;
+    configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, VISUALACTIVITYTRACKER_CAPABILITY_INTERFACE_TYPE});
+    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, VISUALACTIVITYTRACKER_CAPABILITY_INTERFACE_NAME});
+    configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, VISUALACTIVITYTRACKER_CAPABILITY_INTERFACE_VERSION});
+
+    return std::make_shared<CapabilityConfiguration>(configMap);
 }
 
 void VisualActivityTracker::doShutdown() {
@@ -133,6 +159,11 @@ void VisualActivityTracker::executeProvideState(unsigned int stateRequestToken) 
             avsCommon::avs::StateRefreshPolicy::SOMETIMES,
             stateRequestToken);
     }
+}
+
+std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> VisualActivityTracker::
+    getCapabilityConfigurations() {
+    return m_capabilityConfigurations;
 }
 
 }  // namespace afml

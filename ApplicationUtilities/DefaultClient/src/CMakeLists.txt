@@ -24,5 +24,8 @@ target_link_libraries(DefaultClient
     ContextManager
     RegistrationManager)
 
+if (COMMS)
+    target_link_libraries(DefaultClient CallManager)
+endif()
 # install target
 asdk_install()

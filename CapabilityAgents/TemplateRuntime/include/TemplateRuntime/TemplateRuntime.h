@@ -23,6 +23,8 @@
 #include <unordered_set>
 
 #include <AVSCommon/AVS/CapabilityAgent.h>
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/AudioPlayerInterface.h>
 #include <AVSCommon/SDKInterfaces/AudioPlayerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
@@ -53,6 +55,7 @@ class TemplateRuntime
         : public avsCommon::avs::CapabilityAgent
         , public avsCommon::utils::RequiresShutdown
         , public avsCommon::sdkInterfaces::AudioPlayerObserverInterface
+        , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
         , public std::enable_shared_from_this<TemplateRuntime> {
 public:
@@ -120,6 +123,11 @@ public:
      * this notification, the @c TemplateRuntime will release the visual channel.
      */
     void displayCardCleared();
+
+    /// @name CapabilityConfigurationInterface Functions
+    /// @{
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
+    /// @}
 
 private:
     /**
@@ -365,6 +373,9 @@ private:
 
     /// The @c FocusManager used to manage usage of the visual channel.
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_focusManager;
+
+    /// Set of capability configurations that will get published using DCF
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /// This is the worker thread for the @c TemplateRuntime CA.
     avsCommon::utils::threading::Executor m_executor;

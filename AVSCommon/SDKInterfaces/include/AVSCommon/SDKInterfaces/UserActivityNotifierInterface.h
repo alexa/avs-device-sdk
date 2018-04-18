@@ -32,6 +32,13 @@ public:
 
     /// The function to be called when the user has become active.
     virtual void onUserActive() = 0;
+
+    /**
+     * Calculates how many seconds have elapsed since a user last interacted with the device.
+     *
+     * @return How many seconds have elapsed since a user last interacted with the device.
+     */
+    virtual std::chrono::seconds timeSinceUserActivity() = 0;
 };
 
 }  // namespace sdkInterfaces

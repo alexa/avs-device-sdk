@@ -14,40 +14,37 @@
  */
 
 /// @file SpeechSynthesizerIntegrationTest.cpp
-#include <gtest/gtest.h>
-#include <string>
-#include <future>
-#include <fstream>
+
 #include <chrono>
 #include <deque>
-#include <mutex>
-#include <unordered_map>
+#include <fstream>
+#include <future>
 #include <iostream>
+#include <mutex>
+#include <string>
+#include <unordered_map>
 
-#include "ACL/Transport/HTTP2MessageRouter.h"
-#include "ACL/Transport/PostConnectObject.h"
-#include "ADSL/DirectiveSequencer.h"
-#include "ADSL/MessageInterpreter.h"
-#include "AFML/FocusManager.h"
-#include "AuthDelegate/AuthDelegate.h"
-#include "AVSCommon/AVS/Attachment/AttachmentManager.h"
-#include "AVSCommon/AVS/Attachment/InProcessAttachmentReader.h"
-#include "AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h"
-#include "AVSCommon/AVS/BlockingPolicy.h"
-#include "AVSCommon/Utils/JSON/JSONUtils.h"
-#include "AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h"
-#include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
-#include "AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h"
-#include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
-#include "ContextManager/ContextManager.h"
-#include "Integration/AuthObserver.h"
+#include <gtest/gtest.h>
+
+#include <ADSL/DirectiveSequencer.h>
+#include <ADSL/MessageInterpreter.h>
+#include <AFML/FocusManager.h>
+#include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
+#include <AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h>
+#include <AVSCommon/AVS/BlockingPolicy.h>
+#include <AVSCommon/Utils/JSON/JSONUtils.h>
+#include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
+#include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
+#include <AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h>
+#include <AVSCommon/Utils/Logger/LogEntry.h>
+#include <SpeechSynthesizer/SpeechSynthesizer.h>
+
+#include "Integration/ACLTestContext.h"
 #include "Integration/ClientMessageHandler.h"
 #include "Integration/ConnectionStatusObserver.h"
 #include "Integration/ObservableMessageRequest.h"
 #include "Integration/TestMessageSender.h"
 #include "Integration/TestSpeechSynthesizerObserver.h"
-#include "AVSCommon/Utils/Logger/LogEntry.h"
-#include "SpeechSynthesizer/SpeechSynthesizer.h"
 #include "Integration/TestDirectiveHandler.h"
 #include "Integration/TestExceptionEncounteredSender.h"
 
@@ -63,19 +60,18 @@ namespace test {
 
 using namespace acl;
 using namespace adsl;
-using namespace authDelegate;
+using namespace afml;
 using namespace avsCommon;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
-using namespace avsCommon::avs::initialization;
-using namespace avsCommon::utils::mediaPlayer;
-using namespace contextManager;
-using namespace capabilityAgents::speechSynthesizer;
-using namespace sdkInterfaces;
-using namespace avsCommon::utils::sds;
 using namespace avsCommon::utils::json;
-using namespace afml;
+using namespace avsCommon::utils::mediaPlayer;
+using namespace avsCommon::utils::sds;
+using namespace capabilityAgents::speechSynthesizer;
+using namespace contextManager;
+using namespace sdkInterfaces;
+
 #ifdef GSTREAMER_MEDIA_PLAYER
 using namespace mediaPlayer;
 #endif
@@ -200,15 +196,15 @@ static const NamespaceAndName ADJUST_VOLUME_PAIR = {NAMESPACE_SPEAKER, NAME_ADJU
 static const std::string DIALOG_ACTIVITY_ID = "Dialog";
 /// Sample alerts activity id.
 static const std::string ALERTS_ACTIVITY_ID = "Alerts";
-// This Integer to be used to specify a timeout in seconds for a directive to reach the DirectiveHandler.
+// A timeout in seconds for a directive to reach the DirectiveHandler.
 static const std::chrono::seconds WAIT_FOR_TIMEOUT_DURATION(15);
-// This Integer to be used to specify a timeout in seconds for AuthDelegate to wait for LWA response.
+// A timeout in seconds for an event to be sent to @c AVS.
 static const std::chrono::seconds SEND_EVENT_TIMEOUT_DURATION(20);
-// This Integer to be used to specify a timeout in seconds for a directive to reach the DirectiveHandler.
+// A timeout in seconds for a directive to reach the DirectiveHandler.
 static const std::chrono::seconds DIRECTIVE_TIMEOUT_DURATION(7);
-// This Integer to be used when it is expected the duration will timeout.
+// Timeout to use when expecting o reach the timeout.
 static const std::chrono::seconds WANTING_TIMEOUT_DURATION(1);
-// This Integer to be used to specify a timeout in seconds for the Media Player to finish playing.
+// A timeout in seconds for the Media Player to finish playing.
 static const std::chrono::seconds WAIT_FOR_MEDIA_PLAYER_TIMEOUT_DURATION(60);
 // This Integer to be used to specify number of Speak Directives to validate in test handleMultipleConsecutiveSpeaks.
 // Although we anticipate four Speak Directives, we validate only three Speak Directives.
@@ -242,8 +238,10 @@ static const std::string TAG("SpeechSynthesizerIntegrationTest");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-std::string configPath;
-std::string inputPath;
+/// Path to the AlexaClientSDKConfig.json file (from command line arguments).
+static std::string g_configPath;
+/// Path to resources (e.g. audio files) for tests (from command line arguments).
+static std::string g_inputPath;
 
 /// A test observer that mocks out the ChannelObserverInterface##onFocusChanged() call.
 class TestClient : public ChannelObserverInterface {
@@ -305,18 +303,9 @@ private:
 class SpeechSynthesizerTest : public ::testing::Test {
 protected:
     virtual void SetUp() override {
-        std::ifstream infile(configPath);
-        ASSERT_TRUE(infile.good());
-        ASSERT_TRUE(AlexaClientSDKInit::initialize({&infile}));
-        m_authObserver = std::make_shared<AuthObserver>();
-        m_authDelegate = AuthDelegate::create();
-        m_authDelegate->addAuthObserver(m_authObserver);
-        m_attachmentManager = std::make_shared<avsCommon::avs::attachment::AttachmentManager>(
-            AttachmentManager::AttachmentType::IN_PROCESS);
-        m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
-        m_clientMessageHandler = std::make_shared<ClientMessageHandler>(m_attachmentManager);
-        bool isEnabled = false;
-        m_messageRouter = std::make_shared<HTTP2MessageRouter>(m_authDelegate, m_attachmentManager);
+        m_context = ACLTestContext::create(g_configPath);
+        ASSERT_TRUE(m_context);
+
         m_exceptionEncounteredSender = std::make_shared<TestExceptionEncounteredSender>();
         m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>();
 
@@ -328,16 +317,13 @@ protected:
 
         m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);
         m_messageInterpreter = std::make_shared<MessageInterpreter>(
-            m_exceptionEncounteredSender, m_directiveSequencer, m_attachmentManager);
-
-        m_contextManager = ContextManager::create();
-        ASSERT_NE(nullptr, m_contextManager);
-        PostConnectObject::init(m_contextManager);
+            m_exceptionEncounteredSender, m_directiveSequencer, m_context->getAttachmentManager());
 
         // Set up connection and connect
         m_avsConnectionManager = std::make_shared<TestMessageSender>(
-            m_messageRouter, isEnabled, m_connectionStatusObserver, m_messageInterpreter);
-        ASSERT_NE(nullptr, m_avsConnectionManager);
+            m_context->getMessageRouter(), false, m_context->getConnectionStatusObserver(), m_messageInterpreter);
+        ASSERT_TRUE(m_avsConnectionManager);
+
         connect();
 
         m_focusManager = std::make_shared<FocusManager>(FocusManager::DEFAULT_AUDIO_CHANNELS);
@@ -358,7 +344,7 @@ protected:
             m_mediaPlayer,
             m_avsConnectionManager,
             m_focusManager,
-            m_contextManager,
+            m_context->getContextManager(),
             m_exceptionEncounteredSender,
             m_dialogUXStateAggregator);
         m_directiveSequencer->addDirectiveHandler(m_speechSynthesizer);
@@ -464,30 +450,41 @@ protected:
 
     void TearDown() override {
         disconnect();
-        m_speechSynthesizer->removeObserver(m_dialogUXStateAggregator);
-        m_speechSynthesizer->shutdown();
-        m_directiveSequencer->shutdown();
-        m_avsConnectionManager->shutdown();
-        AlexaClientSDKInit::uninitialize();
+        // Note that these nullptr checks are needed to avoid segaults if @c SetUp() failed.
+        if (m_speechSynthesizer) {
+            // m_speechSynthesizer->removeObserver(m_dialogUXStateAggregator);
+            m_speechSynthesizer->shutdown();
+        }
+        if (m_directiveSequencer) {
+            m_directiveSequencer->shutdown();
+        }
+        if (m_avsConnectionManager) {
+            m_avsConnectionManager->shutdown();
+        }
+#ifdef GSTREAMER_MEDIA_PLAYER
+        if (m_mediaPlayer) {
+            m_mediaPlayer->shutdown();
+        }
+#endif
+        m_context.reset();
     }
 
     /**
      * Connect to AVS.
      */
     void connect() {
-        ASSERT_TRUE(m_authObserver->waitFor(AuthObserver::State::REFRESHED)) << "Retrieving the auth token timed out.";
         m_avsConnectionManager->enable();
-        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::CONNECTED))
-            << "Connecting timed out.";
+        m_context->waitForConnected();
     }
 
     /**
      * Disconnect from AVS.
      */
     void disconnect() {
-        m_avsConnectionManager->disable();
-        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::DISCONNECTED))
-            << "Connecting timed out.";
+        if (m_avsConnectionManager) {
+            m_avsConnectionManager->disable();
+            m_context->waitForDisconnected();
+        }
     }
 
     bool checkSentEventName(TestMessageSender::SendParams sendParams, std::string expectedName) {
@@ -503,21 +500,17 @@ protected:
         return false;
     }
 
-    std::shared_ptr<AuthObserver> m_authObserver;
-    std::shared_ptr<AuthDelegate> m_authDelegate;
-    std::shared_ptr<ConnectionStatusObserver> m_connectionStatusObserver;
-    std::shared_ptr<MessageRouter> m_messageRouter;
+    /// Context for running ACL based tests.
+    std::unique_ptr<ACLTestContext> m_context;
+
     std::shared_ptr<TestMessageSender> m_avsConnectionManager;
     std::shared_ptr<TestExceptionEncounteredSender> m_exceptionEncounteredSender;
     std::shared_ptr<TestDirectiveHandler> m_directiveHandler;
     std::shared_ptr<DirectiveSequencerInterface> m_directiveSequencer;
     std::shared_ptr<MessageInterpreter> m_messageInterpreter;
-    std::shared_ptr<ContextManager> m_contextManager;
     std::shared_ptr<TestSpeechSynthesizerObserver> m_speechSynthesizerObserver;
     std::shared_ptr<SpeechSynthesizer> m_speechSynthesizer;
     std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> m_dialogUXStateAggregator;
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
-    std::shared_ptr<ClientMessageHandler> m_clientMessageHandler;
     std::shared_ptr<FocusManager> m_focusManager;
     std::shared_ptr<TestClient> m_testClient;
     FocusState m_focusState;
@@ -547,7 +540,7 @@ TEST_F(SpeechSynthesizerTest, handleOneSpeech) {
 
     // Send audio of "Joke" that will prompt SetMute and Speak.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
-    std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
+    std::string file = g_inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
@@ -611,7 +604,7 @@ TEST_F(SpeechSynthesizerTest, handleMultipleConsecutiveSpeaks) {
 
     // Send audio of "What's up" that will prompt four sets of SetMute and Speak.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
-    std::string file = inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
+    std::string file = g_inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
@@ -678,7 +671,7 @@ TEST_F(SpeechSynthesizerTest, bargeInOnOneSpeech) {
 
     // Send audio of "Joke" that will prompt SetMute and Speak.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
-    std::string file = inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
+    std::string file = g_inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
@@ -746,7 +739,7 @@ TEST_F(SpeechSynthesizerTest, bargeInOnMultipleSpeaksAtTheBeginning) {
 
     // Send audio of "What's Up" that will prompt four sets of SetMute and Speak.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
-    std::string file = inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
+    std::string file = g_inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
@@ -814,7 +807,7 @@ TEST_F(SpeechSynthesizerTest, bargeInOnMultipleSpeaksInTheMiddle) {
 
     // Send audio of "What's up" that will prompt four sets of SetMute and Speak.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
-    std::string file = inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
+    std::string file = g_inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
@@ -920,7 +913,7 @@ TEST_F(SpeechSynthesizerTest, multiturnScenario) {
 
     // Send audio of "Wikipedia" that will prompt SetMute, Speak, and ExpectSpeech.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
-    std::string file = inputPath + RECOGNIZE_WIKI_AUDIO_FILE_NAME;
+    std::string file = g_inputPath + RECOGNIZE_WIKI_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
@@ -982,7 +975,7 @@ TEST_F(SpeechSynthesizerTest, multiturnScenario) {
 
     // Clear out remaining directives.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
-    std::string secondFile = inputPath + RECOGNIZE_LIONS_AUDIO_FILE_NAME;
+    std::string secondFile = g_inputPath + RECOGNIZE_LIONS_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         secondFile,
@@ -1047,7 +1040,7 @@ TEST_F(SpeechSynthesizerTest, handleNoSpeakDirectives) {
 
     // Send audio of "Volume up" that will prompt an adjustVolume directive.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
-    std::string file = inputPath + RECOGNIZE_VOLUME_UP_AUDIO_FILE_NAME;
+    std::string file = g_inputPath + RECOGNIZE_VOLUME_UP_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,
@@ -1148,8 +1141,8 @@ int main(int argc, char** argv) {
         return 1;
 
     } else {
-        alexaClientSDK::integration::test::configPath = std::string(argv[1]);
-        alexaClientSDK::integration::test::inputPath = std::string(argv[2]);
+        alexaClientSDK::integration::test::g_configPath = std::string(argv[1]);
+        alexaClientSDK::integration::test::g_inputPath = std::string(argv[2]);
         return RUN_ALL_TESTS();
     }
 }

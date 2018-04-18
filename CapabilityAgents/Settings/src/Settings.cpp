@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  */
 
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "Settings/Settings.h"
@@ -21,8 +22,18 @@ namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace settings {
 
+using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::configuration;
+
+/// Settings capability constants
+/// Settings interface type
+static const std::string SETTINGS_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
+/// Settings interface name
+static const std::string SETTINGS_CAPABILITY_INTERFACE_NAME = "Settings";
+/// Settings interface version
+static const std::string SETTINGS_CAPABILITY_INTERFACE_VERSION = "1.0";
+
 /// String to identify log entries originating from this file.
 static const std::string TAG{"Settings"};
 
@@ -39,6 +50,13 @@ static const std::string SETTINGS_CONFIGURATION_ROOT_KEY = "settings";
 static const std::string SETTINGS_DEFAULT_SETTINGS_ROOT_KEY = "defaultAVSClientSettings";
 /// The acceptable setting keys to find in our config file.
 static const std::unordered_set<std::string> SETTINGS_ACCEPTED_KEYS = {"locale"};
+
+/**
+ * Creates the Settings capability configuration.
+ *
+ * @return The Settings capability configuration.
+ */
+static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSettingsCapabilityConfiguration();
 
 std::shared_ptr<Settings> Settings::create(
     std::shared_ptr<SettingsStorageInterface> settingsStorage,
@@ -255,7 +273,22 @@ Settings::Settings(
         m_settingsStorage{settingsStorage},
         m_globalSettingsObserver{globalSettingsObserver},
         m_sendDefaultSettings{false} {
+    m_capabilityConfigurations.insert(getSettingsCapabilityConfiguration());
 }
+
+std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSettingsCapabilityConfiguration() {
+    std::unordered_map<std::string, std::string> configMap;
+    configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, SETTINGS_CAPABILITY_INTERFACE_TYPE});
+    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, SETTINGS_CAPABILITY_INTERFACE_NAME});
+    configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, SETTINGS_CAPABILITY_INTERFACE_VERSION});
+
+    return std::make_shared<avsCommon::avs::CapabilityConfiguration>(configMap);
+}
+
+std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> Settings::getCapabilityConfigurations() {
+    return m_capabilityConfigurations;
+}
+
 }  // namespace settings
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK

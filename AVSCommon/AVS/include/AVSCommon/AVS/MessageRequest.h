@@ -16,10 +16,12 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_MESSAGEREQUEST_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_MESSAGEREQUEST_H_
 
+#include <cstdlib>
 #include <memory>
-#include <string>
 #include <mutex>
+#include <string>
 #include <unordered_set>
+#include <vector>
 
 #include "AVSCommon/AVS/Attachment/AttachmentReader.h"
 #include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
@@ -34,20 +36,50 @@ namespace avs {
  */
 class MessageRequest {
 public:
+    /// A struct to hold an @c AttachmentReader alongside its name.
+    struct NamedReader {
+        /**
+         * Constructor.
+         *
+         * @param name The name of the message part.
+         * @param reader The @c AttachmentReader holding the data for this part.
+         */
+        NamedReader(const std::string& name, std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader) :
+                name{name},
+                reader{reader} {
+        }
+
+        /// The name of this message part.
+        std::string name;
+
+        /// The @c AttachmentReader contains the data of this message part.
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader;
+    };
+
     /**
      * Constructor.
+     *
      * @param jsonContent The message to be sent to AVS.
-     * @param attachmentReader The attachment data (if present) to be sent to AVS along with the message.
-     * Defaults to @c nullptr.
+     * @param uriPathExtension An optional uri path extension which will be appended to the base url of the AVS.
+     * endpoint.  If not specified, the default AVS path extension should be used by the sender implementation.
      */
-    MessageRequest(
-        const std::string& jsonContent,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader = nullptr);
+    MessageRequest(const std::string& jsonContent, const std::string& uriPathExtension = "");
 
     /**
      * Destructor.
      */
     virtual ~MessageRequest();
+
+    /**
+     * Adds an attachment reader to the message. The attachment data will be the next
+     * part in the message to be sent to AVS.
+     * @note: The order by which the message attachments sent to AVS
+     * is the one by which they have been added to it.
+     *
+     * @param name The name of the message part containing the attachment data.
+     * @param attachmentReader The attachment data to be sent to AVS along with the message.
+     */
+    void addAttachmentReader(const std::string& name, std::shared_ptr<attachment::AttachmentReader> attachmentReader);
 
     /**
      * Retrieves the JSON content to be sent to AVS.
@@ -57,11 +89,27 @@ public:
     std::string getJsonContent();
 
     /**
-     * Retrieves the AttachmentReader of the Attachment data to be sent to AVS.
+     * Retrieves the path extension to be appended to the base URL when sending.
      *
-     * @return The AttachmentReader of the Attachment data to be sent to AVS.
+     * @return The path extension to be appended to the base URL when sending.
      */
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> getAttachmentReader();
+    std::string getUriPathExtension();
+
+    /**
+     * Gets the number of @c AttachmentReaders in this message.
+     *
+     * @return The number of readers in this message.
+     */
+    int attachmentReadersCount();
+
+    /**
+     * Retrieves the ith AttachmentReader in the message.
+     *
+     * @param index The index of the @c AttachmentReader to retrieve.
+     * @return @c NamedReader of the ith attachment in the message.
+     * A null pointer is returned when @c index is out of bound.
+     */
+    std::shared_ptr<NamedReader> getAttachmentReader(size_t index);
 
     /**
      * This is called once the send request has completed.  The status parameter indicates success or failure.
@@ -108,8 +156,11 @@ protected:
     /// The JSON content to be sent to AVS.
     std::string m_jsonContent;
 
-    /// The AttachmentReader of the Attachment data to be sent to AVS.
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_attachmentReader;
+    /// The path extension to be appended to the base URL when sending.
+    std::string m_uriPathExtension;
+
+    /// The AttachmentReaders of the Attachments data to be sent to AVS.
+    std::vector<std::shared_ptr<NamedReader>> m_readers;
 };
 
 }  // namespace avs

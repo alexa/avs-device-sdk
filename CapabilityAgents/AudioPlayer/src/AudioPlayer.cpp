@@ -21,6 +21,7 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/error/en.h>
 
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 
 #include "AudioPlayer/IntervalCalculator.h"
@@ -36,6 +37,14 @@ using namespace avsCommon::utils;
 using namespace avsCommon::utils::json;
 using namespace avsCommon::utils::logger;
 using namespace avsCommon::utils::mediaPlayer;
+
+/// AudioPlayer capability constants
+/// AudioPlayer interface type
+static const std::string AUDIOPLAYER_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
+/// AudioPlayer interface name
+static const std::string AUDIOPLAYER_CAPABILITY_INTERFACE_NAME = "AudioPlayer";
+/// AudioPlayer interface version
+static const std::string AUDIOPLAYER_CAPABILITY_INTERFACE_VERSION = "1.0";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AudioPlayer");
@@ -85,6 +94,13 @@ static const char STUTTER_DURATION_KEY[] = "stutterDurationInMilliseconds";
 
 /// The duration to wait for a state change in @c onFocusChanged before failing.
 static const std::chrono::seconds TIMEOUT{2};
+
+/**
+ * Creates the AudioPlayer capability configuration.
+ *
+ * @return The AudioPlayer capability configuration.
+ */
+static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getAudioPlayerCapabilityConfiguration();
 
 std::shared_ptr<AudioPlayer> AudioPlayer::create(
     std::shared_ptr<MediaPlayerInterface> mediaPlayer,
@@ -233,7 +249,6 @@ void AudioPlayer::onFocusChanged(FocusState newFocus) {
                                 .d("reason", "unexpectedActivity")
                                 .d("m_currentActivity", m_currentActivity));
                 return false;
-
             };
             std::unique_lock<std::mutex> lock(m_currentActivityMutex);
             if (!m_currentActivityConditionVariable.wait_for(lock, TIMEOUT, predicate)) {
@@ -350,6 +365,16 @@ AudioPlayer::AudioPlayer(
         m_sourceId{MediaPlayerInterface::ERROR},
         m_offset{std::chrono::milliseconds{std::chrono::milliseconds::zero()}},
         m_isStopCalled{false} {
+    m_capabilityConfigurations.insert(getAudioPlayerCapabilityConfiguration());
+}
+
+std::shared_ptr<CapabilityConfiguration> getAudioPlayerCapabilityConfiguration() {
+    std::unordered_map<std::string, std::string> configMap;
+    configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, AUDIOPLAYER_CAPABILITY_INTERFACE_TYPE});
+    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, AUDIOPLAYER_CAPABILITY_INTERFACE_NAME});
+    configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, AUDIOPLAYER_CAPABILITY_INTERFACE_VERSION});
+
+    return std::make_shared<CapabilityConfiguration>(configMap);
 }
 
 void AudioPlayer::doShutdown() {
@@ -431,7 +456,7 @@ void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
 
     if (audioItem.stream.url.compare(0, CID_PREFIX.size(), CID_PREFIX) == 0) {
         std::string contentId = audioItem.stream.url.substr(CID_PREFIX.length());
-        audioItem.stream.reader = info->directive->getAttachmentReader(contentId, sds::ReaderPolicy::BLOCKING);
+        audioItem.stream.reader = info->directive->getAttachmentReader(contentId, sds::ReaderPolicy::NONBLOCKING);
         if (nullptr == audioItem.stream.reader) {
             ACSDK_ERROR(LX("handlePlayDirectiveFailed")
                             .d("reason", "getAttachmentReaderFailed")
@@ -1261,6 +1286,11 @@ std::chrono::milliseconds AudioPlayer::getOffset() {
         }
     }
     return m_offset;
+}
+
+std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> AudioPlayer::
+    getCapabilityConfigurations() {
+    return m_capabilityConfigurations;
 }
 
 }  // namespace audioPlayer

@@ -58,7 +58,7 @@ public:
 };
 
 void HTTP2StreamPoolTest::SetUp() {
-    AlexaClientSDKInit::initialize(std::vector<std::istream*>());
+    AlexaClientSDKInit::initialize(std::vector<std::shared_ptr<std::istream>>());
     m_mockMessageRequest = std::make_shared<MockMessageRequest>();
     m_testableConsumer = std::make_shared<TestableConsumer>();
     m_testableStreamPool = std::make_shared<HTTP2StreamPool>(TEST_MAX_STREAMS, nullptr);

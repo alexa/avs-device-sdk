@@ -220,15 +220,18 @@ bool TimeUtils::getCurrentUnixTime(int64_t* currentTime) {
     return now >= 0;
 }
 
-bool TimeUtils::convertTimeToUtcIso8601Rfc3339(const struct timeval& timeVal, std::string* iso8601TimeString) {
+bool TimeUtils::convertTimeToUtcIso8601Rfc3339(
+    const std::chrono::high_resolution_clock::time_point& tp,
+    std::string* iso8601TimeString) {
     // The length of the RFC 3339 string for the time is maximum 28 characters, include an extra byte for the '\0'
     // terminator.
     char buf[29];
     memset(buf, 0, sizeof(buf));
 
     // Need to assign it to time_t since time_t in some platforms is long long
-    // and timeVal.tv_sec is long in some platforms
-    const time_t timeSecs = timeVal.tv_sec;
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(tp.time_since_epoch());
+    auto sec = std::chrono::duration_cast<std::chrono::seconds>(ms);
+    const time_t timeSecs = static_cast<time_t>(sec.count());
 
     std::tm utcTm;
     if (!m_safeCTimeAccess->getGmtime(timeSecs, &utcTm)) {
@@ -245,7 +248,7 @@ bool TimeUtils::convertTimeToUtcIso8601Rfc3339(const struct timeval& timeVal, st
     }
 
     std::stringstream millisecondTrailer;
-    millisecondTrailer << buf << "." << std::setfill('0') << std::setw(3) << (timeVal.tv_usec / 1000) << "Z";
+    millisecondTrailer << buf << "." << std::setfill('0') << std::setw(3) << (ms.count() % 1000) << "Z";
 
     *iso8601TimeString = millisecondTrailer.str();
     return true;

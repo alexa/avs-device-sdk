@@ -1,15 +1,41 @@
  {
-    "authDelegate":{
-        // The Client Secret of the Product from developer.amazon.com
-        "clientSecret":"${SDK_CONFIG_CLIENT_SECRET}",
+    "cblAuthDelegate":{
+        // Path to CBLAuthDelegate's database file. e.g. /home/ubuntu/Build/cblAuthDelegate.db
+        // Note: The directory specified must be valid.
+        // The database file (cblAuthDelegate.db) will be created by SampleApp, do not create it yourself.
+        // The database file should only be used for CBLAuthDelegate (don't use it for other components of SDK)
+        "databaseFilePath":"${SDK_CBL_AUTH_DELEGATE_DATABASE_FILE_PATH}"
+    },
+    "deviceInfo":{
         // Unique device serial number. e.g. 123456
         "deviceSerialNumber":"${SDK_CONFIG_DEVICE_SERIAL_NUMBER}",
-        // Refresh Token populated by running AuthServer.py
-        "refreshToken":"${SDK_CONFIG_REFRESH_TOKEN}",
         // The Client ID of the Product from developer.amazon.com
         "clientId":"${SDK_CONFIG_CLIENT_ID}",
         // Product ID from developer.amazon.com
         "productId":"${SDK_CONFIG_PRODUCT_ID}"
+    },
+    "dcfDelegate":{
+        // The endpoint to connect in order to send device capabilities.
+        // This will only be used in DEBUG builds.
+        // e.g. "endpoint": "https://api.amazonalexa.com"
+        // Override DCF Publish message to be sent out.
+        // This will only be used in DEBUG builds.
+        // e.g. "overridenDcfPublishMessageBody": {
+        //          "envelopeVersion":"20160207",
+        //          "capabilities":[
+        //              {
+        //                "type":"AlexaInterface",
+        //                "interface":"Alerts",
+        //                "version":"1.1"
+        //              }
+        //          ]
+        //      }
+    },
+    "miscDatabase":{
+        // Path to misc database file. e.g. /home/ubuntu/Build/miscDatabase.db
+        // Note: The directory specified must be valid.
+        // The database file (miscDatabase.db) will be created by SampleApp, do not create it yourself.
+        "databaseFilePath":"${SDK_MISC_DATABASE_FILE_PATH}"
     },
     "alertsCapabilityAgent":{
         // Path to Alerts database file. e.g. /home/ubuntu/Build/alerts.db
@@ -63,18 +89,22 @@
         //}
     }
 
-    // Example of specifying the output format for the gstreamer-based MediaPlayer bundled with the SDK.  Many platforms
-    // will automatically set the output format correctly, but in some cases where the hardware requires a specific
-    // format and the software stack is not automatically setting it correctly, these parameters can be used to manually
-    // specify the output format.  Supported rate/format/channels values are documented in detail here:
+    // Example of specifying output format and the audioSink for the gstreamer-based MediaPlayer bundled with the SDK.
+    // Many platforms will automatically set the output format correctly, but in some cases where the hardware requires
+    // a specific format and the software stack is not automatically setting it correctly, these parameters can be used
+    // to manually specify the output format.  Supported rate/format/channels values are documented in detail here:
     // https://gstreamer.freedesktop.org/documentation/design/mediatype-audio-raw.html
     //
+    // By default the "autoaudiosink" element is used in the pipeline.  This element automatically selects the best sink
+    // to use based on the configuration in the system.  But sometimes the wrong sink is selected and that prevented sound
+    // from being played.  A new configuration is added where the audio sink can be specified for their system.
     // "gstreamerMediaPlayer":{
     //     "outputConversion":{
     //         "rate":16000,
     //         "format":"S16LE",
     //         "channels":1
-    //     }
+    //     },
+    //     "audioSink":"autoaudiosink"
     // },
 
     // Example of specifying a default log level for all ModuleLoggers.  If not specified, ModuleLoggers get

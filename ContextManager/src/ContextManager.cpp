@@ -79,10 +79,10 @@ void ContextManager::setStateProvider(
     std::lock_guard<std::mutex> stateProviderLock(m_stateProviderMutex);
     if (!stateProvider) {
         m_namespaceNameToStateInfo.erase(stateProviderName);
-        ACSDK_DEBUG(LX("setStateProvider")
-                        .d("action", "removedStateProvider")
-                        .d("namespace", stateProviderName.nameSpace)
-                        .d("name", stateProviderName.name));
+        ACSDK_DEBUG5(LX("setStateProvider")
+                         .d("action", "removedStateProvider")
+                         .d("namespace", stateProviderName.nameSpace)
+                         .d("name", stateProviderName.name));
         return;
     }
     auto stateInfoMappingIt = m_namespaceNameToStateInfo.find(stateProviderName);
@@ -175,11 +175,11 @@ SetStateResult ContextManager::updateStateLocked(
     } else {
         stateInfoMappingIt->second->jsonState = jsonState;
         stateInfoMappingIt->second->refreshPolicy = refreshPolicy;
-        ACSDK_DEBUG(LX("updateStateLocked")
-                        .d("action", "updatedState")
-                        .sensitive("state", jsonState)
-                        .d("namespace", stateProviderName.nameSpace)
-                        .d("name", stateProviderName.name));
+        ACSDK_DEBUG9(LX("updateStateLocked")
+                         .d("action", "updatedState")
+                         .sensitive("state", jsonState)
+                         .d("namespace", stateProviderName.nameSpace)
+                         .d("name", stateProviderName.name));
     }
     return SetStateResult::SUCCESS;
 }
@@ -329,7 +329,7 @@ void ContextManager::sendContextToRequesters() {
     if (errorBuildingContext) {
         sendContextAndClearQueue("", ContextRequestError::BUILD_CONTEXT_ERROR);
     } else {
-        ACSDK_DEBUG(LX("buildContextSuccessful").sensitive("context", jsonContextBuf.GetString()));
+        ACSDK_DEBUG5(LX("buildContextSuccessful").sensitive("context", jsonContextBuf.GetString()));
         sendContextAndClearQueue(jsonContextBuf.GetString());
     }
 }

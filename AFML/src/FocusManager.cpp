@@ -36,6 +36,7 @@ static const std::string TAG("FocusManager");
 const std::vector<FocusManager::ChannelConfiguration> FocusManager::DEFAULT_AUDIO_CHANNELS = {
     {FocusManagerInterface::DIALOG_CHANNEL_NAME, FocusManagerInterface::DIALOG_CHANNEL_PRIORITY},
     {FocusManagerInterface::ALERTS_CHANNEL_NAME, FocusManagerInterface::ALERTS_CHANNEL_PRIORITY},
+    {FocusManagerInterface::COMMUNICATIONS_CHANNEL_NAME, FocusManagerInterface::COMMUNICATIONS_CHANNEL_PRIORITY},
     {FocusManagerInterface::CONTENT_CHANNEL_NAME, FocusManagerInterface::CONTENT_CHANNEL_PRIORITY}};
 
 const std::vector<FocusManager::ChannelConfiguration> FocusManager::DEFAULT_VISUAL_CHANNELS = {

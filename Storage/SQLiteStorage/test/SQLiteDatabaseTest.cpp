@@ -13,9 +13,8 @@
  * permissions and limitations under the License.
  */
 
+#include <chrono>
 #include <cstdlib>
-
-#include <sys/time.h>
 
 #include <gtest/gtest.h>
 
@@ -40,10 +39,11 @@ static const std::string BAD_PATH =
  * @return A unique filepath.
  */
 static std::string generateDbFilePath() {
-    struct timeval t;
-    gettimeofday(&t, nullptr);
-    std::string filePath = g_workingDirectory + "/SQLiteDatabaseTest-" + std::to_string(t.tv_sec) +
-                           std::to_string(t.tv_usec) + std::to_string(rand());
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    auto nanosecond = static_cast<int64_t>(
+        std::chrono::duration_cast<std::chrono::nanoseconds>(currentTime.time_since_epoch()).count());
+    std::string filePath =
+        g_workingDirectory + "/SQLiteDatabaseTest-" + std::to_string(nanosecond) + std::to_string(rand());
     EXPECT_FALSE(avsCommon::utils::file::fileExists(filePath));
     return filePath;
 }

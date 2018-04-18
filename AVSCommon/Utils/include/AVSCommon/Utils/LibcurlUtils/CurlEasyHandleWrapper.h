@@ -35,7 +35,7 @@ class CurlEasyHandleWrapper {
 public:
     /**
      * Callbacks to libcurl typically follow the below pattern.
-     * size_t callback(char* data, size_t size, size_t nmemb, void* user)
+     * size_t callback(char* buffer, size_t blockSize, size_t numBlocks, void* userData)
      * @param buffer A pointer to the data buffer to either read or write to
      * @param blockSize The size of a "block" of data (ala fwrite)
      * @param numBlocks The number of "blocks" to read or write
@@ -44,13 +44,27 @@ public:
     using CurlCallback = size_t (*)(char* buffer, size_t blockSize, size_t numBlocks, void* userData);
 
     /**
+     * Debug Callbacks to libcurl typically follow the below pattern.
+     * size_t callback(CURL* handle, curl_infotype infoType, char *buffer, size_t blockSize, void *userData)
+     * @param handle The CURL handle
+     * @param handle The CURL info type
+     * @param buffer A pointer to the data buffer to either read or write to
+     * @param blockSize The size of a "block" of data (ala fwrite)
+     * @param userData Some user data passed in with CURLOPT_DEBUGDATA
+     */
+    using CurlDebugCallback =
+        int (*)(CURL* handle, curl_infotype infoType, char* buffer, size_t blockSize, void* userData);
+
+    /**
      * Definitions for HTTP action types
      */
     enum class TransferType {
         /// HTTP GET
         kGET,
         /// HTTP POST
-        kPOST
+        kPOST,
+        /// HTTP PUT
+        kPUT
     };
 
     /**
@@ -151,7 +165,7 @@ public:
      * @param userData User data passed into the read callback.
      * @return Whether the addition was successful.
      */
-    bool setPostStream(const std::string& fieldName, void* userData);
+    bool addPostStream(const std::string& fieldName, void* userData);
 
     /**
      * Sets the data to be sent in the next POST operation.
@@ -200,6 +214,15 @@ public:
     bool setReadCallback(CurlCallback callback, void* userData);
 
     /**
+     * Sets the callback to call when libcurl has debug data
+     *
+     * @param callback A function pointer to the callback
+     * @param userData Any data to be passed to the callback
+     * @return Whether the addition was successful
+     */
+    bool setDebugCallback(CurlDebugCallback callback, void* userData);
+
+    /**
      * Helper function for calling curl_easy_setopt and checking the result.
      *
      * @param option The option parameter to pass through to curl_easy_setopt.
@@ -208,6 +231,28 @@ public:
      */
     template <typename ParamType>
     bool setopt(CURLoption option, ParamType param);
+
+    /**
+     * URL encode a string.
+     *
+     * @param in The string to encode.
+     * @return The encoded string.
+     */
+    std::string urlEncode(const std::string& in) const;
+
+    /**
+     * Get the HTTP response code.
+     *
+     * @return The HTTP response code.
+     */
+    long getHTTPResponseCode();
+
+    /**
+     * Perform whatever has been setup in the handle.
+     *
+     * @return The CURL response code.
+     */
+    CURLcode perform();
 
 private:
     /**
@@ -235,6 +280,8 @@ private:
     curl_slist* m_postHeaders;
     /// The associated multipart post
     curl_httppost* m_post;
+    /// The last post used in curl_formadd
+    curl_httppost* m_lastPost;
 };
 
 template <typename ParamType>

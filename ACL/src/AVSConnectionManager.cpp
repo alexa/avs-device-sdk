@@ -80,7 +80,7 @@ AVSConnectionManager::AVSConnectionManager(
     std::shared_ptr<MessageRouterInterface> messageRouter,
     std::unordered_set<std::shared_ptr<ConnectionStatusObserverInterface>> connectionStatusObservers,
     std::unordered_set<std::shared_ptr<MessageObserverInterface>> messageObservers) :
-        AbstractConnection{connectionStatusObservers},
+        AbstractAVSConnectionManager{connectionStatusObservers},
         RequiresShutdown{"AVSConnectionManager"},
         m_isEnabled{false},
         m_messageObservers{messageObservers},

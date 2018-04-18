@@ -17,6 +17,7 @@
 
 #include <rapidjson/error/en.h>
 
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
@@ -30,6 +31,14 @@ using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils;
 using namespace avsCommon::utils::json;
+
+/// TemplateRuntime capability constants
+/// TemplateRuntime interface type
+static const std::string TEMPLATERUNTIME_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
+/// TemplateRuntime interface name
+static const std::string TEMPLATERUNTIME_CAPABILITY_INTERFACE_NAME = "TemplateRuntime";
+/// TemplateRuntime interface version
+static const std::string TEMPLATERUNTIME_CAPABILITY_INTERFACE_VERSION = "1.0";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG{"TemplateRuntime"};
@@ -73,6 +82,13 @@ static const std::chrono::milliseconds AUDIO_FINISHED_TIMEOUT_MS{2000};
 
 /// Timeout for clearing the RenderPlayerInfo display card when AudioPlayer is in STOPPED/PAUSED state.
 static const std::chrono::milliseconds AUDIO_STOPPED_PAUSED_TIMEOUT_MS{60000};
+
+/**
+ * Creates the TemplateRuntime capability configuration.
+ *
+ * @return The TemplateRuntime capability configuration.
+ */
+static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getTemplateRuntimeCapabilityConfiguration();
 
 std::shared_ptr<TemplateRuntime> TemplateRuntime::create(
     std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerInterface> audioPlayerInterface,
@@ -201,6 +217,16 @@ TemplateRuntime::TemplateRuntime(
         m_state{TemplateRuntime::State::IDLE},
         m_audioPlayerInterface{audioPlayerInterface},
         m_focusManager{focusManager} {
+    m_capabilityConfigurations.insert(getTemplateRuntimeCapabilityConfiguration());
+}
+
+std::shared_ptr<CapabilityConfiguration> getTemplateRuntimeCapabilityConfiguration() {
+    std::unordered_map<std::string, std::string> configMap;
+    configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, TEMPLATERUNTIME_CAPABILITY_INTERFACE_TYPE});
+    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, TEMPLATERUNTIME_CAPABILITY_INTERFACE_NAME});
+    configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, TEMPLATERUNTIME_CAPABILITY_INTERFACE_VERSION});
+
+    return std::make_shared<CapabilityConfiguration>(configMap);
 }
 
 void TemplateRuntime::doShutdown() {
@@ -658,6 +684,11 @@ void TemplateRuntime::executeCardClearedEvent() {
     ACSDK_DEBUG3(
         LX("executeCardClearedEvent").d("prevState", stateToString(m_state)).d("nextState", stateToString(nextState)));
     m_state = nextState;
+}
+
+std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> TemplateRuntime::
+    getCapabilityConfigurations() {
+    return m_capabilityConfigurations;
 }
 
 }  // namespace templateRuntime

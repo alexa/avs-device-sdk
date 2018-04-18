@@ -19,6 +19,7 @@
 #include "Alerts/Reminder.h"
 #include "Alerts/Storage/SQLiteAlertStorage.h"
 #include "Alerts/Timer.h"
+#include "AVSCommon/AVS/CapabilityConfiguration.h"
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/File/FileUtils.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
@@ -28,6 +29,8 @@
 #include <rapidjson/writer.h>
 
 #include <fstream>
+#include <unordered_map>
+#include <unordered_set>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -42,6 +45,14 @@ using namespace avsCommon::utils::timing;
 using namespace avsCommon::sdkInterfaces;
 using namespace certifiedSender;
 using namespace rapidjson;
+
+/// Alerts capability constants
+/// Alerts interface type
+static const std::string ALERTS_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
+/// Alerts interface name
+static const std::string ALERTS_CAPABILITY_INTERFACE_NAME = "Alerts";
+/// Alerts interface version
+static const std::string ALERTS_CAPABILITY_INTERFACE_VERSION = "1.1";
 
 /// The value for Type which we need for json parsing.
 static const std::string KEY_TYPE = "type";
@@ -107,6 +118,13 @@ static const std::string TAG("AlertsCapabilityAgent");
  * @param The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+/**
+ * Creates the alerts capability configuration.
+ *
+ * @return The alerts capability configuration.
+ */
+static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getAlertsCapabilityConfiguration();
 
 /**
  * Utility function to construct a rapidjson array of alert details, representing all the alerts currently managed.
@@ -288,6 +306,16 @@ AlertsCapabilityAgent::AlertsCapabilityAgent(
         m_isConnected{false},
         m_alertScheduler{alertStorage, alertRenderer, ALERT_PAST_DUE_CUTOFF_MINUTES},
         m_alertsAudioFactory{alertsAudioFactory} {
+    m_capabilityConfigurations.insert(getAlertsCapabilityConfiguration());
+}
+
+std::shared_ptr<CapabilityConfiguration> getAlertsCapabilityConfiguration() {
+    std::unordered_map<std::string, std::string> configMap;
+    configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, ALERTS_CAPABILITY_INTERFACE_TYPE});
+    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, ALERTS_CAPABILITY_INTERFACE_NAME});
+    configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, ALERTS_CAPABILITY_INTERFACE_VERSION});
+
+    return std::make_shared<CapabilityConfiguration>(configMap);
 }
 
 void AlertsCapabilityAgent::doShutdown() {
@@ -605,6 +633,11 @@ std::string AlertsCapabilityAgent::getContextString() {
 void AlertsCapabilityAgent::clearData() {
     auto result = m_executor.submit([this]() { m_alertScheduler.clearData(Alert::StopReason::LOG_OUT); });
     result.wait();
+}
+
+std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> AlertsCapabilityAgent::
+    getCapabilityConfigurations() {
+    return m_capabilityConfigurations;
 }
 
 }  // namespace alerts

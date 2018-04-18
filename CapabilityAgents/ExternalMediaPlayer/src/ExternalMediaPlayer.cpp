@@ -79,6 +79,7 @@ static const NamespaceAndName REWIND_DIRECTIVE{PLAYBACKCONTROLLER_NAMESPACE, "Re
 static const NamespaceAndName FASTFORWARD_DIRECTIVE{PLAYBACKCONTROLLER_NAMESPACE, "FastForward"};
 
 // The @c PlayList control directive signature.
+static const NamespaceAndName ENABLEREPEATONE_DIRECTIVE{PLAYLISTCONTROLLER_NAMESPACE, "EnableRepeatOne"};
 static const NamespaceAndName ENABLEREPEAT_DIRECTIVE{PLAYLISTCONTROLLER_NAMESPACE, "EnableRepeat"};
 static const NamespaceAndName DISABLEREPEAT_DIRECTIVE{PLAYLISTCONTROLLER_NAMESPACE, "DisableRepeat"};
 static const NamespaceAndName ENABLESHUFFLE_DIRECTIVE{PLAYLISTCONTROLLER_NAMESPACE, "EnableShuffle"};
@@ -121,6 +122,8 @@ std::unordered_map<NamespaceAndName, std::pair<RequestType, ExternalMediaPlayer:
         {STARTOVER_DIRECTIVE, std::make_pair(RequestType::START_OVER, &ExternalMediaPlayer::handlePlayControl)},
         {FASTFORWARD_DIRECTIVE, std::make_pair(RequestType::FAST_FORWARD, &ExternalMediaPlayer::handlePlayControl)},
         {REWIND_DIRECTIVE, std::make_pair(RequestType::REWIND, &ExternalMediaPlayer::handlePlayControl)},
+        {ENABLEREPEATONE_DIRECTIVE,
+         std::make_pair(RequestType::ENABLE_REPEAT_ONE, &ExternalMediaPlayer::handlePlayControl)},
         {ENABLEREPEAT_DIRECTIVE, std::make_pair(RequestType::ENABLE_REPEAT, &ExternalMediaPlayer::handlePlayControl)},
         {DISABLEREPEAT_DIRECTIVE, std::make_pair(RequestType::DISABLE_REPEAT, &ExternalMediaPlayer::handlePlayControl)},
         {ENABLESHUFFLE_DIRECTIVE, std::make_pair(RequestType::ENABLE_SHUFFLE, &ExternalMediaPlayer::handlePlayControl)},
@@ -141,6 +144,7 @@ static DirectiveHandlerConfiguration g_configuration = {{PLAY_DIRECTIVE, Blockin
                                                         {STARTOVER_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
                                                         {REWIND_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
                                                         {FASTFORWARD_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
+                                                        {ENABLEREPEATONE_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
                                                         {ENABLEREPEAT_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
                                                         {DISABLEREPEAT_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
                                                         {ENABLESHUFFLE_DIRECTIVE, BlockingPolicy::NON_BLOCKING},

@@ -116,7 +116,8 @@ public:
         std::shared_ptr<AudioInputStream> stream,
         std::string keyword,
         AudioInputStream::Index beginIndex,
-        AudioInputStream::Index endIndex) {
+        AudioInputStream::Index endIndex,
+        std::shared_ptr<const std::vector<char>> KWDMetadata) {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_detectionResults.push_back({beginIndex, endIndex, keyword});
         m_detectionOccurred.notify_one();

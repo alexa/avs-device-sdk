@@ -91,6 +91,10 @@ bool SQLiteDatabase::open() {
     return true;
 }
 
+bool SQLiteDatabase::isDatabaseReady() {
+    return (m_dbHandle != nullptr);
+}
+
 bool SQLiteDatabase::performQuery(const std::string& sqlString) {
     if (!alexaClientSDK::storage::sqliteStorage::performQuery(m_dbHandle, sqlString)) {
         ACSDK_ERROR(LX(__func__).m("Table could not be created.").d("SQL string", sqlString));

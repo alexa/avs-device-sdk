@@ -20,52 +20,45 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <AuthDelegate/AuthDelegate.h>
+#include <CBLAuthDelegate/CBLAuthDelegate.h>
+#include <CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
+#include <RegistrationManager/CustomerDataManager.h>
 
+#include "Integration/AuthDelegateTestContext.h"
 #include "Integration/AuthObserver.h"
+#include "Integration/SDKTestContext.h"
 
-using namespace alexaClientSDK::avsCommon::avs::initialization;
-using namespace alexaClientSDK::authDelegate;
-using namespace ::testing;
-
-namespace {
-
-/// Path to the AlexaClientSDKConfig.json file
-std::string g_configPath;
-
-/// Timeout in seconds for AuthDelegate to wait for LWA response.
-const int TIME_OUT_IN_SECONDS = 60;
-
-}  // namespace
+/// Path to the AlexaClientSDKConfig.json file (from command line arguments).
+static std::string g_configPath;
 
 namespace alexaClientSDK {
 namespace integration {
 namespace test {
 
-/// Define test fixture for AuthDelegate integration test.
+using namespace avsCommon::avs::initialization;
+using namespace avsCommon::utils::configuration;
+using namespace authorization::cblAuthDelegate;
+using namespace registrationManager;
+using namespace ::testing;
+
+/// Timeout in seconds for AuthDelegate to wait for LWA response.
+static const std::chrono::seconds TIME_OUT(60);
+
+/**
+ * Define test fixture for AuthDelegate integration test.
+ */
 class AlexaAuthorizationDelegateTest : public ::testing::Test {
-protected:
-    /// Initialize test dependencies
-    AlexaAuthorizationDelegateTest() {
-        m_authObserver = std::make_shared<AuthObserver>();
-    }
-
-    /// Stub certain mock objects with default actions
-    virtual void SetUp() {
-        std::ifstream infile(g_configPath);
-        ASSERT_TRUE(infile.good());
-        ASSERT_TRUE(AlexaClientSDKInit::initialize({&infile}));
-    }
-
-    /// Release resources
-    virtual void TearDown() {
-        AlexaClientSDKInit::uninitialize();
-    }
-
-    /// AuthObserver that implements AuthObserverInterface
-    std::shared_ptr<AuthObserver> m_authObserver;
+public:
+    /**
+     * Destructor
+     */
+    ~AlexaAuthorizationDelegateTest();
 };
+
+AlexaAuthorizationDelegateTest::~AlexaAuthorizationDelegateTest() {
+    AlexaClientSDKInit::uninitialize();
+}
 
 /**
  * Test AuthDelegate could get token refreshed with valid configurations
@@ -74,35 +67,36 @@ protected:
  * be able to retrieve the valid refresh token (get authorized).
  */
 TEST_F(AlexaAuthorizationDelegateTest, refreshAuthToken) {
-    auto authDelegate = AuthDelegate::create();
-    authDelegate->addAuthObserver(m_authObserver);
-    bool tokenRefreshed =
-        m_authObserver->waitFor(AuthObserver::State::REFRESHED, std::chrono::seconds(TIME_OUT_IN_SECONDS));
-    ASSERT_TRUE(tokenRefreshed) << "Refreshing the auth token timed out.";
+    auto authDelegateContext = AuthDelegateTestContext::create(g_configPath);
+    ASSERT_TRUE(authDelegateContext);
+
+    auto authDelegate = authDelegateContext->getAuthDelegate();
+    ASSERT_TRUE(authDelegate);
+    auto authObserver = std::make_shared<AuthObserver>();
+    authDelegate->addAuthObserver(authObserver);
+
+    ASSERT_TRUE(authObserver->waitFor(AuthObserver::State::REFRESHED, TIME_OUT))
+        << "Refreshing the auth token timed out.";
 }
 
 /**
- * Test when sending invalid refresh token, AuthDelegate notifies the observer of the error.
+ * Test when sending invalid refresh token, CBLAuthDelegate notifies the observer of the error.
  *
- * Currently if an invalid refresh token is sent to LWA, a "invalid_grant" response will be sent back and we should
- * notify the observer of the error.
+ * If an invalid client_id is sent to @c LWA, a "InvalidValue" response will be sent back and we should
+ * notify the observer of the unrecoverable error.
  */
-TEST_F(AlexaAuthorizationDelegateTest, invalidRefreshTokenWithUnrecoverableError) {
-    AlexaClientSDKInit::uninitialize();
-    std::ifstream infile(g_configPath);
-    ASSERT_TRUE(infile.good());
-    std::stringstream override;
-    override << R"({
-            "authDelegate" : {
-                "refreshToken" : "InvalidRefreshToken"
-            }
-        })";
-    ASSERT_TRUE(AlexaClientSDKInit::initialize({&infile, &override}));
-    auto authDelegate = AuthDelegate::create();
-    authDelegate->addAuthObserver(m_authObserver);
-    bool gotUnrecoverableError =
-        m_authObserver->waitFor(AuthObserver::State::UNRECOVERABLE_ERROR, std::chrono::seconds(TIME_OUT_IN_SECONDS));
-    ASSERT_TRUE(gotUnrecoverableError) << "Waiting for UNRECOVERABLE_ERROR timed out";
+TEST_F(AlexaAuthorizationDelegateTest, invalidClientIdWithUnrecoverableError) {
+    auto authDelegateContext =
+        AuthDelegateTestContext::create(g_configPath, R"({ "deviceInfo" : { "clientId" : "InvalidClientId" } })");
+    ASSERT_TRUE(authDelegateContext);
+
+    auto authDelegate = authDelegateContext->getAuthDelegate();
+    ASSERT_TRUE(authDelegate);
+    auto authObserver = std::make_shared<AuthObserver>();
+    authDelegate->addAuthObserver(authObserver);
+
+    ASSERT_TRUE(authObserver->waitFor(AuthObserver::State::UNRECOVERABLE_ERROR, TIME_OUT))
+        << "Waiting for UNRECOVERABLE_ERROR timed out";
 }
 
 }  // namespace test

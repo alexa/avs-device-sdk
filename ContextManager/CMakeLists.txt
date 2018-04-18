@@ -4,4 +4,4 @@ project(ContextManager LANGUAGES CXX)
 include(../build/BuildDefaults.cmake)
 
 add_subdirectory("src")
-acsdk_add_test_subdirectory_if_allowed()
+add_subdirectory("test")

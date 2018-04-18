@@ -46,7 +46,8 @@ CurlEasyHandleWrapper::CurlEasyHandleWrapper() :
         m_handle{curl_easy_init()},
         m_requestHeaders{nullptr},
         m_postHeaders{nullptr},
-        m_post{nullptr} {
+        m_post{nullptr},
+        m_lastPost{nullptr} {
     if (m_handle == nullptr) {
         ACSDK_ERROR(LX("CurlEasyHandleWrapperFailed").d("reason", "curl_easy_init failed"));
     } else {
@@ -143,15 +144,17 @@ bool CurlEasyHandleWrapper::setTransferType(TransferType type) {
         case TransferType::kPOST:
             ret = setopt(CURLOPT_HTTPPOST, m_post);
             break;
+        case TransferType::kPUT:
+            ret = setopt(CURLOPT_UPLOAD, 1L);
+            break;
     }
     return ret;
 }
 
 bool CurlEasyHandleWrapper::setPostContent(const std::string& fieldName, const std::string& payload) {
-    curl_httppost* last = nullptr;
     CURLFORMcode ret = curl_formadd(
         &m_post,
-        &last,
+        &m_lastPost,
         CURLFORM_COPYNAME,
         fieldName.c_str(),
         CURLFORM_COPYCONTENTS,
@@ -178,11 +181,10 @@ bool CurlEasyHandleWrapper::setTransferTimeout(const long timeoutSeconds) {
     return setopt(CURLOPT_TIMEOUT, timeoutSeconds);
 }
 
-bool CurlEasyHandleWrapper::setPostStream(const std::string& fieldName, void* userData) {
-    curl_httppost* last = m_post;
+bool CurlEasyHandleWrapper::addPostStream(const std::string& fieldName, void* userData) {
     CURLFORMcode ret = curl_formadd(
         &m_post,
-        &last,
+        &m_lastPost,
         CURLFORM_COPYNAME,
         fieldName.c_str(),
         CURLFORM_STREAM,
@@ -210,15 +212,34 @@ bool CurlEasyHandleWrapper::setConnectionTimeout(const std::chrono::seconds time
 }
 
 bool CurlEasyHandleWrapper::setWriteCallback(CurlCallback callback, void* userData) {
-    return setopt(CURLOPT_WRITEFUNCTION, callback) && (userData == nullptr || setopt(CURLOPT_WRITEDATA, userData));
+    return setopt(CURLOPT_WRITEFUNCTION, callback) && (!userData || setopt(CURLOPT_WRITEDATA, userData));
 }
 
 bool CurlEasyHandleWrapper::setHeaderCallback(CurlCallback callback, void* userData) {
-    return setopt(CURLOPT_HEADERFUNCTION, callback) && (userData == nullptr || setopt(CURLOPT_HEADERDATA, userData));
+    return setopt(CURLOPT_HEADERFUNCTION, callback) && (!userData || setopt(CURLOPT_HEADERDATA, userData));
 }
 
 bool CurlEasyHandleWrapper::setReadCallback(CurlCallback callback, void* userData) {
-    return setopt(CURLOPT_READFUNCTION, callback) && (userData == nullptr || setopt(CURLOPT_READDATA, userData));
+    return setopt(CURLOPT_READFUNCTION, callback) && (!userData || setopt(CURLOPT_READDATA, userData));
+}
+
+bool CurlEasyHandleWrapper::setDebugCallback(CurlDebugCallback callback, void* userData) {
+#ifdef ACSDK_EMIT_SENSITIVE_LOGS
+    return setopt(CURLOPT_VERBOSE, 1L) && setopt(CURLOPT_DEBUGFUNCTION, callback) &&
+           (!userData || setopt(CURLOPT_DEBUGDATA, userData));
+#else
+    return false;
+#endif
+}
+
+std::string CurlEasyHandleWrapper::urlEncode(const std::string& in) const {
+    std::string result;
+    auto temp = curl_easy_escape(m_handle, in.c_str(), 0);
+    if (temp) {
+        result = temp;
+        curl_free(temp);
+    }
+    return result;
 }
 
 void CurlEasyHandleWrapper::cleanupResources() {
@@ -235,6 +256,7 @@ void CurlEasyHandleWrapper::cleanupResources() {
     if (m_post) {
         curl_formfree(m_post);
         m_post = nullptr;
+        m_lastPost = nullptr;
     }
 }
 
@@ -250,6 +272,20 @@ bool CurlEasyHandleWrapper::setDefaultOptions() {
     curl_easy_cleanup(m_handle);
     m_handle = nullptr;
     return false;
+}
+
+long CurlEasyHandleWrapper::getHTTPResponseCode() {
+    long http_code = 0;
+    curl_easy_getinfo(m_handle, CURLINFO_RESPONSE_CODE, &http_code);
+
+    return http_code;
+}
+
+CURLcode CurlEasyHandleWrapper::perform() {
+    if (!isValid()) {
+        return CURLcode::CURLE_FAILED_INIT;
+    }
+    return curl_easy_perform(m_handle);
 }
 
 }  // namespace libcurlUtils

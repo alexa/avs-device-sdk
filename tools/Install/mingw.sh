@@ -23,6 +23,8 @@ START_SCRIPT="$INSTALL_BASE/startsample.bat"
 CMAKE_PLATFORM_SPECIFIC=(-G 'MSYS Makefiles' -Dgtest_disable_pthreads=ON)
 CONFIG_DB_PATH=`cygpath.exe -m $DB_PATH`
 
+GSTREAMER_AUDIO_SINK="directsoundsink"
+
 install_dependencies() {
 
   PACMAN_ARGS="--noconfirm --needed"

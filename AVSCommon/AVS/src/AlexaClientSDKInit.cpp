@@ -41,7 +41,7 @@ bool AlexaClientSDKInit::isInitialized() {
     return g_isInitialized > 0;
 }
 
-bool AlexaClientSDKInit::initialize(const std::vector<std::istream*>& jsonStreams) {
+bool AlexaClientSDKInit::initialize(const std::vector<std::shared_ptr<std::istream>>& jsonStreams) {
     if (!(curl_version_info(CURLVERSION_NOW)->features & CURL_VERSION_HTTP2)) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "curlDoesNotSupportHTTP2"));
         return false;

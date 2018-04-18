@@ -226,8 +226,8 @@ protected:
 
 void SettingsTest::SetUp() {
     m_dataManager = std::make_shared<registrationManager::CustomerDataManager>();
-    std::istringstream inString(SETTINGS_CONFIG_JSON);
-    ASSERT_TRUE(AlexaClientSDKInit::initialize({&inString}));
+    auto inString = std::shared_ptr<std::istringstream>(new std::istringstream(SETTINGS_CONFIG_JSON));
+    ASSERT_TRUE(AlexaClientSDKInit::initialize({inString}));
     m_mockMessageSender = std::make_shared<MockMessageSender>();
     m_settingsEventSender = SettingsUpdatedEventSender::create(m_mockMessageSender);
     ASSERT_NE(m_settingsEventSender, nullptr);

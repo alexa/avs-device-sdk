@@ -43,7 +43,7 @@ public:
      */
     std::unique_ptr<avsCommon::utils::HTTPContent> getContent(
         FetchOptions option,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer) override;
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer = nullptr) override;
 
     /*
      * Destructor.

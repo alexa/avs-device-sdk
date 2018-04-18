@@ -18,6 +18,7 @@
 #include "PlaybackController/PlaybackController.h"
 #include "PlaybackController/PlaybackMessageRequest.h"
 
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/AVS/EventBuilder.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
@@ -27,6 +28,14 @@ namespace playbackController {
 
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+
+/// PlaybackController capability constants
+/// PlaybackController interface type
+static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
+/// PlaybackController interface name
+static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_NAME = "PlaybackController";
+/// PlaybackController interface version
+static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION = "1.0";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("PlaybackController");
@@ -49,6 +58,13 @@ static const std::string PLAYBACK_PAUSE_NAME = "PauseCommandIssued";
 static const std::string PLAYBACK_NEXT_NAME = "NextCommandIssued";
 /// String to identify the AVS name of the event on the 'Previous' button pressed.
 static const std::string PLAYBACK_PREVIOUS_NAME = "PreviousCommandIssued";
+
+/**
+ * Creates the PlaybackController capability configuration.
+ *
+ * @return The PlaybackController capability configuration.
+ */
+static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getPlaybackControllerCapabilityConfiguration();
 
 /**
  * A macro to be used in buttonToMessageName function to help with the translation
@@ -176,6 +192,21 @@ PlaybackController::PlaybackController(
         RequiresShutdown{"PlaybackController"},
         m_messageSender{messageSender},
         m_contextManager{contextManager} {
+    m_capabilityConfigurations.insert(getPlaybackControllerCapabilityConfiguration());
+}
+
+std::shared_ptr<CapabilityConfiguration> getPlaybackControllerCapabilityConfiguration() {
+    std::unordered_map<std::string, std::string> configMap;
+    configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_TYPE});
+    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_NAME});
+    configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION});
+
+    return std::make_shared<CapabilityConfiguration>(configMap);
+}
+
+std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> PlaybackController::
+    getCapabilityConfigurations() {
+    return m_capabilityConfigurations;
 }
 
 }  // namespace playbackController

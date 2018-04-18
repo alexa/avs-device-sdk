@@ -15,6 +15,7 @@
 
 #include <cstdint>
 #include <sstream>
+#include <utility>
 
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
@@ -51,8 +52,6 @@ static const int BOUNDARY_PREFIX_SIZE = BOUNDARY_PREFIX.size();
 static const std::string BOUNDARY_DELIMITER = ";";
 /// The HTTP header to pass the LWA token into
 static const std::string AUTHORIZATION_HEADER = "Authorization: Bearer ";
-/// The POST field name for an attachment
-static const std::string ATTACHMENT_FIELD_NAME = "audio";
 /// The POST field name for message metadata
 static const std::string METADATA_FIELD_NAME = "metadata";
 /// The prefix for a stream contextId.
@@ -166,6 +165,7 @@ bool HTTP2Stream::reset() {
     m_exceptionBeingProcessed.clear();
     m_progressTimeout = std::chrono::steady_clock::duration::max().count();
     m_timeOfLastTransfer = getNow();
+    m_callbackData.clear();
     return true;
 }
 
@@ -276,9 +276,23 @@ bool HTTP2Stream::initPost(
         return false;
     }
 
-    if (request->getAttachmentReader()) {
-        if (!m_transfer.setPostStream(ATTACHMENT_FIELD_NAME, this)) {
-            ACSDK_ERROR(LX("initPostFailed").d("reason", "setPostStreamFailed"));
+    /*
+     * Pushing callback data on a separate loop.
+     * Otherwise, the address of the item will be changed
+     * by the time it'll be passed to the read callback
+     */
+    for (int i = 0; i < request->attachmentReadersCount(); i++) {
+        m_callbackData.push_back(std::make_pair(i, this));
+    }
+
+    for (int i = 0; i < request->attachmentReadersCount(); i++) {
+        auto attachmentReader = request->getAttachmentReader(i);
+        if (!attachmentReader) {
+            ACSDK_ERROR(LX("initPostFailed").d("reason", "no AttachmentReader").d("index", i));
+            return false;
+        }
+        if (!m_transfer.addPostStream(attachmentReader->name, &(m_callbackData[i]))) {
+            ACSDK_ERROR(LX("initPostFailed").d("reason", "setPostStreamFailed").d("name", attachmentReader->name));
             return false;
         }
     }
@@ -356,15 +370,23 @@ size_t HTTP2Stream::readCallback(char* data, size_t size, size_t nmemb, void* us
         return 0;
     }
 
-    HTTP2Stream* stream = static_cast<HTTP2Stream*>(userData);
-
+    /*
+     * userData holds the this pointer and index of the @c AttachmentReader
+     * for which the read callback has been called.
+     */
+    auto indexAndStream = static_cast<AttachmentIndexAndStream*>(userData);
+    auto index = indexAndStream->first;
+    auto stream = indexAndStream->second;
     stream->m_timeOfLastTransfer = getNow();
-    auto attachmentReader = stream->m_currentRequest->getAttachmentReader();
+
+    auto namedReader = stream->m_currentRequest->getAttachmentReader(index);
 
     // This is ok - it means there's no attachment to send.  Return 0 so libcurl can complete the stream to AVS.
-    if (!attachmentReader) {
+    if (!namedReader) {
         return 0;
     }
+
+    auto attachmentReader = namedReader->reader;
 
     // Pass the data to libcurl.
     const size_t maxBytesToRead = size * nmemb;
@@ -589,7 +611,7 @@ int HTTP2Stream::debugFunction(CURL* handle, curl_infotype type, char* data, siz
             if (index != std::string::npos) {
                 text.resize(index);
             }
-            ACSDK_DEBUG0(LX("libcurl").d("streamId", stream->getLogicalStreamId()).sensitive("text", text));
+            ACSDK_DEBUG9(LX("libcurl").d("streamId", stream->getLogicalStreamId()).sensitive("text", text));
         } break;
         case CURLINFO_HEADER_IN:
         case CURLINFO_DATA_IN:

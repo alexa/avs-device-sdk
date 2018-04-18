@@ -18,9 +18,12 @@
 
 #include <atomic>
 #include <chrono>
+#include <cstdlib>
 #include <memory>
 #include <mutex>
 #include <string>
+#include <utility>
+#include <vector>
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h>
@@ -213,6 +216,12 @@ public:
 
 private:
     /**
+     * The type holding the read callback data: index into the reader for which the callback is called
+     * and the @c this pointer for @c HTTP2Stream.
+     */
+    using AttachmentIndexAndStream = std::pair<size_t, HTTP2Stream*>;
+
+    /**
      * Configure the associated curl easy handle with options common to GET and POST
      *
      * @return Whether the setting was successful or not
@@ -284,6 +293,8 @@ private:
     std::atomic<std::chrono::steady_clock::rep> m_timeOfLastTransfer;
     /// Object to format log strings correctly.
     avsCommon::utils::logger::LogStringFormatter m_logFormatter;
+    /// Read callback data per binary message part.
+    std::vector<AttachmentIndexAndStream> m_callbackData;
 };
 
 template <class TickType, class TickPeriod>

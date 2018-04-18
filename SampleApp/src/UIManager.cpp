@@ -74,6 +74,10 @@ static const std::string HELP_MESSAGE =
     "|       Press '2' for a 'PAUSE' button press.                                |\n"
     "|       Press '3' for a 'NEXT' button press.                                 |\n"
     "|       Press '4' for a 'PREVIOUS' button press.                             |\n"
+#ifdef ENABLE_COMMS
+    "| Comms Controls:                                                            |\n"
+    "|       Press 'd' followed by Enter at any time to accept or stop calls.     |\n"
+#endif
     "| Settings:                                                                  |\n"
     "|       Press 'c' followed by Enter at any time to see the settings screen.  |\n"
     "| Speaker Control:                                                           |\n"
@@ -168,6 +172,23 @@ static const std::string RESET_WARNING =
     "Device was reset! Please don't forget to deregister it. For more details "
     "visit https://www.amazon.com/gp/help/customer/display.html?nodeId=201357520";
 
+UIManager::UIManager() :
+        m_dialogState{DialogUXState::IDLE},
+        m_dcfState{DCFObserverInterface::State::UNINITIALIZED},
+        m_dcfError{DCFObserverInterface::Error::UNINITIALIZED},
+        m_authState{AuthObserverInterface::State::UNINITIALIZED},
+        m_authCheckCounter{0},
+        m_connectionStatus{avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::DISCONNECTED} {
+}
+
+static const std::string COMMS_MESSAGE =
+    "+----------------------------------------------------------------------------+\n"
+    "|                          Comms Options:                                    |\n"
+    "|                                                                            |\n"
+    "| Press 'a' followed by Enter to accept an incoming call.                    |\n"
+    "| Press 's' followed by Enter to stop an ongoing call.                       |\n"
+    "+----------------------------------------------------------------------------+\n";
+
 void UIManager::onDialogUXStateChanged(DialogUXState state) {
     m_executor.submit([this, state]() {
         if (state == m_dialogState) {
@@ -215,6 +236,63 @@ void UIManager::onSetIndicator(avsCommon::avs::IndicatorState state) {
     });
 }
 
+void UIManager::onRequestAuthorization(const std::string& url, const std::string& code) {
+    m_executor.submit([this, url, code]() {
+        m_authCheckCounter = 0;
+        ConsolePrinter::prettyPrint("NOT YET AUTHORIZED");
+        std::ostringstream oss;
+        oss << "To authorize, browse to: '" << url << "' and enter the code: " << code;
+        ConsolePrinter::prettyPrint(oss.str());
+    });
+}
+
+void UIManager::onCheckingForAuthorization() {
+    m_executor.submit([this]() {
+        std::ostringstream oss;
+        oss << "Checking for authorization (" << ++m_authCheckCounter << ")...";
+        ConsolePrinter::prettyPrint(oss.str());
+    });
+}
+
+void UIManager::onAuthStateChange(AuthObserverInterface::State newState, AuthObserverInterface::Error error) {
+    m_executor.submit([this, newState, error]() {
+        if (m_authState != newState) {
+            m_authState = newState;
+            switch (m_authState) {
+                case AuthObserverInterface::State::UNINITIALIZED:
+                    break;
+                case AuthObserverInterface::State::REFRESHED:
+                    ConsolePrinter::prettyPrint("Authorized!");
+                    break;
+                case AuthObserverInterface::State::EXPIRED:
+                    ConsolePrinter::prettyPrint("AUTHORIZATION EXPIRED");
+                    break;
+                case AuthObserverInterface::State::UNRECOVERABLE_ERROR:
+                    std::ostringstream oss;
+                    oss << "UNRECOVERABLE AUTHORIZATION ERROR: " << error;
+                    ConsolePrinter::prettyPrint(oss.str());
+                    exit(1);
+                    break;
+            }
+        }
+    });
+}
+
+void UIManager::onDCFStateChange(DCFObserverInterface::State newState, DCFObserverInterface::Error newError) {
+    m_executor.submit([this, newState, newError]() {
+        if ((m_dcfState != newState) && (m_dcfError != newError)) {
+            m_dcfState = newState;
+            m_dcfError = newError;
+            if (DCFObserverInterface::State::FATAL_ERROR == m_dcfState) {
+                std::ostringstream oss;
+                oss << "UNRECOVERABLE DCF ERROR: " << m_dcfError;
+                ConsolePrinter::prettyPrint(oss.str());
+                exit(1);
+            }
+        }
+    });
+}
+
 void UIManager::printWelcomeScreen() {
     m_executor.submit([]() { ConsolePrinter::simplePrint(ALEXA_WELCOME_MESSAGE); });
 }
@@ -254,6 +332,10 @@ void UIManager::printESPControlScreen(bool support, const std::string& voiceEner
         screen += "+----------------------------------------------------------------------------+\n";
         ConsolePrinter::simplePrint(screen);
     });
+}
+
+void UIManager::printCommsControlScreen() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint(COMMS_MESSAGE); });
 }
 
 void UIManager::printErrorScreen() {
@@ -313,6 +395,10 @@ void UIManager::printESPDataOverrideNotSupported() {
 
 void UIManager::printESPNotSupported() {
     m_executor.submit([]() { ConsolePrinter::simplePrint("ESP is not supported in this device."); });
+}
+
+void UIManager::printCommsNotSupported() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint("Comms is not supported in this device."); });
 }
 
 }  // namespace sampleApp

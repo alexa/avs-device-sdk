@@ -1,4 +1,3 @@
-CLIENT_SECRET=""
 #NOTE: The Device Serial Number can be any unique number
 DEVICE_SERIAL_NUMBER="123456"
 CLIENT_ID=""

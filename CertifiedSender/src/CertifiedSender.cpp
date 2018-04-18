@@ -85,7 +85,7 @@ void CertifiedSender::CertifiedMessageRequest::shutdown() {
 
 std::shared_ptr<CertifiedSender> CertifiedSender::create(
     std::shared_ptr<MessageSenderInterface> messageSender,
-    std::shared_ptr<AbstractConnection> connection,
+    std::shared_ptr<AVSConnectionManagerInterface> connection,
     std::shared_ptr<MessageStorageInterface> storage,
     std::shared_ptr<registrationManager::CustomerDataManager> dataManager) {
     auto certifiedSender =
@@ -103,7 +103,7 @@ std::shared_ptr<CertifiedSender> CertifiedSender::create(
 
 CertifiedSender::CertifiedSender(
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-    std::shared_ptr<AbstractConnection> connection,
+    std::shared_ptr<AVSConnectionManagerInterface> connection,
     std::shared_ptr<MessageStorageInterface> storage,
     std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
     int queueSizeWarnLimit,

@@ -20,10 +20,10 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "AVSCommon/AVS/Attachment/MockAttachmentManager.h"
-#include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
-#include "AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h"
-#include "AVSCommon/Utils/Memory/Memory.h"
+#include <AVSCommon/SDKInterfaces/MockAVSConnectionManager.h>
+#include <AVSCommon/SDKInterfaces/MockDirectiveSequencer.h>
+#include <AVSCommon/Utils/Memory/Memory.h>
+
 #include "RegistrationManager/RegistrationManager.h"
 #include "RegistrationManager/CustomerDataManager.h"
 
@@ -31,21 +31,11 @@ namespace alexaClientSDK {
 namespace registrationManager {
 namespace test {
 
+using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::sdkInterfaces::test;
+using namespace testing;
+
 using avsCommon::utils::memory::make_unique;
-
-class MockMessageRouter : public acl::MessageRouterInterface {
-public:
-    MockMessageRouter() : MessageRouterInterface{"MockMessageRouter"} {
-    }
-
-    MOCK_METHOD0(enable, void());
-    MOCK_METHOD0(disable, void());
-    MOCK_METHOD0(doShutdown, void());
-    MOCK_METHOD0(getConnectionStatus, acl::MessageRouterInterface::ConnectionStatus());
-    MOCK_METHOD1(sendMessage, void(std::shared_ptr<avsCommon::avs::MessageRequest> request));
-    MOCK_METHOD1(setAVSEndpoint, void(const std::string& avsEndpoint));
-    MOCK_METHOD1(setObserver, void(std::shared_ptr<acl::MessageRouterObserverInterface> observer));
-};
 
 class MockRegistrationObserver : public RegistrationObserverInterface {
 public:
@@ -62,22 +52,12 @@ public:
 class RegistrationManagerTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        avsCommon::avs::initialization::AlexaClientSDKInit::initialize(std::vector<std::istream*>());
-
-        m_messageRouter = std::make_shared<MockMessageRouter>();
-        EXPECT_CALL(*m_messageRouter, setObserver(testing::_));
-        EXPECT_CALL(*m_messageRouter, enable());
-        m_avsConnectionManager = acl::AVSConnectionManager::create(m_messageRouter, true);
-
-        auto exceptionEncounteredSender =
-            std::make_shared<avsCommon::sdkInterfaces::test::MockExceptionEncounteredSender>();
-        m_directiveSequencer = adsl::DirectiveSequencer::create(exceptionEncounteredSender);
-
+        m_directiveSequencer = std::make_shared<MockDirectiveSequencer>();
+        m_avsConnectionManager = std::make_shared<MockAVSConnectionManager>();
         m_dataManager = std::make_shared<CustomerDataManager>();
         m_dataHandler = make_unique<MockCustomerDataHandler>(m_dataManager);
-
-        m_registrationManager =
-            make_unique<RegistrationManager>(m_directiveSequencer, m_avsConnectionManager, m_dataManager);
+        m_registrationManager.reset(
+            new RegistrationManager(m_directiveSequencer, m_avsConnectionManager, m_dataManager));
         m_registrationObserver = std::make_shared<MockRegistrationObserver>();
         m_registrationManager->addObserver(m_registrationObserver);
     }
@@ -88,12 +68,10 @@ protected:
         }
     }
 
-    /// Connection manager used during logout.
-    std::shared_ptr<acl::AVSConnectionManager> m_avsConnectionManager;
-    /// Mock message router.
-    std::shared_ptr<MockMessageRouter> m_messageRouter;
     /// Used to check if logout disabled the directive sequencer.
-    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> m_directiveSequencer;
+    std::shared_ptr<MockDirectiveSequencer> m_directiveSequencer;
+    /// Connection manager used during logout.
+    std::shared_ptr<MockAVSConnectionManager> m_avsConnectionManager;
     /// Mock data handler to ensure that @c clearData() method is called during logout.
     std::unique_ptr<MockCustomerDataHandler> m_dataHandler;
     /// Data manager is used to call @c clearData() on every dataHandler.
@@ -105,28 +83,21 @@ protected:
 };
 
 /**
- * Test that logout performsa all the following actions:
+ * Test that logout performs all the following actions:
  * - disable connection manager
  * - disable directive sequencer
  * - clear data handler's data
  * - notify registration observer
  */
 TEST_F(RegistrationManagerTest, testLogout) {
-    EXPECT_CALL(*m_messageRouter, disable());
+    EXPECT_CALL(*m_directiveSequencer, disable());
+    EXPECT_CALL(*m_avsConnectionManager, disable());
     EXPECT_CALL(*m_registrationObserver, onLogout());
     EXPECT_CALL(*m_dataHandler, clearData());
 
     m_registrationManager->logout();
 
     ASSERT_FALSE(m_avsConnectionManager->isEnabled());
-
-    // Check that directive sequencer is not processing directives
-    std::string context{"context"};
-    auto header = std::make_shared<avsCommon::avs::AVSMessageHeader>("namespace", "name", "messageid", "requestid");
-    auto attachmentManager = std::make_shared<avsCommon::avs::attachment::test::MockAttachmentManager>();
-    std::shared_ptr<avsCommon::avs::AVSDirective> directive =
-        avsCommon::avs::AVSDirective::create("unparsed", header, "payload", attachmentManager, context);
-    ASSERT_FALSE(m_directiveSequencer->onDirective(directive));
 }
 
 }  // namespace test

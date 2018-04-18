@@ -169,6 +169,14 @@ private:
      */
     bool renderNextAudioAsset();
 
+    /**
+     * Utility function to handle all aspects of an error occurring.  The sourceId is reset, the observer is notified
+     * and the observer is reset.
+     *
+     * @param error The error string.
+     */
+    void handlePlaybackError(const std::string& error);
+
     /// @}
 
     /**

@@ -164,9 +164,9 @@ void Renderer::executeStart(
     }
 
     if (!m_mediaPlayer->play(m_currentSourceId)) {
-        ACSDK_ERROR(
-            LX("executeStartFailed").d("m_currentSourceId", m_currentSourceId).m("MediaPlayer play request failed."));
-        resetSourceId();
+        const std::string errorMessage{"MediaPlayer play request failed."};
+        ACSDK_ERROR(LX("executeStartFailed").d("m_currentSourceId", m_currentSourceId).m(errorMessage));
+        handlePlaybackError(errorMessage);
     }
 }
 
@@ -299,12 +299,9 @@ void Renderer::executeOnPlaybackError(
         return;
     }
 
-    resetSourceId();
-
     // This will cause a retry (through Renderer::start) using the same code paths as before, except in this case the
     // urls to render will be empty.
-    notifyObserver(RendererObserverInterface::State::ERROR, error);
-    m_observer = nullptr;
+    handlePlaybackError(error);
 }
 
 void Renderer::notifyObserver(RendererObserverInterface::State state, const std::string& message) {
@@ -315,6 +312,13 @@ void Renderer::notifyObserver(RendererObserverInterface::State state, const std:
 
 void Renderer::resetSourceId() {
     m_currentSourceId = MediaPlayerInterface::ERROR;
+}
+
+void Renderer::handlePlaybackError(const std::string& error) {
+    resetSourceId();
+
+    notifyObserver(RendererObserverInterface::State::ERROR, error);
+    m_observer = nullptr;
 }
 
 }  // namespace renderer

@@ -13,6 +13,8 @@
  * permissions and limitations under the License.
  */
 
+#include <sstream>
+
 #include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
 #include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
@@ -43,22 +45,44 @@ std::unique_ptr<HttpPost> HttpPost::create() {
     return nullptr;
 }
 
-bool HttpPost::addHTTPHeader(const std::string& header) {
-    return m_curl.addHTTPHeader(header);
-}
-
 long HttpPost::doPost(
     const std::string& url,
     const std::string& data,
     std::chrono::seconds timeout,
     std::string& body) {
+    auto response = doPost(url, {}, data, timeout);
+    body = response.body;
+    return response.code;
+}
+
+HTTPResponse HttpPost::doPost(
+    const std::string& url,
+    const std::vector<std::string> headerLines,
+    const std::vector<std::pair<std::string, std::string>>& data,
+    std::chrono::seconds timeout) {
+    auto encodedData = buildPostData(data);
+    return doPost(url, headerLines, encodedData, timeout);
+}
+
+HTTPResponse HttpPost::doPost(
+    const std::string& url,
+    const std::vector<std::string> headerLines,
+    const std::string& data,
+    std::chrono::seconds timeout) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    body.clear();
+    HTTPResponse response;
 
-    if (!m_curl.setTransferTimeout(static_cast<long>(timeout.count())) || !m_curl.setURL(url) ||
-        !m_curl.setPostData(data) || !m_curl.setWriteCallback(staticWriteCallbackLocked, &body)) {
-        return HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED;
+    if (!m_curl.reset() || !m_curl.setTransferTimeout(static_cast<long>(timeout.count())) || !m_curl.setURL(url) ||
+        !m_curl.setPostData(data) || !m_curl.setWriteCallback(staticWriteCallbackLocked, &response.body)) {
+        return HTTPResponse();
+    }
+
+    for (auto line : headerLines) {
+        if (!m_curl.addHTTPHeader(line)) {
+            ACSDK_ERROR(LX("doPostFailed").d("reason", "unableToAddHttpHeader"));
+            return HTTPResponse();
+        }
     }
 
     auto curlHandle = m_curl.getCurlHandle();
@@ -69,24 +93,34 @@ long HttpPost::doPost(
                         .d("reason", "curl_easy_performFailed")
                         .d("result", result)
                         .d("error", curl_easy_strerror(result)));
-        body.clear();
-        return HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED;
+        return HTTPResponse();
     }
 
-    long responseCode = 0;
-    result = curl_easy_getinfo(curlHandle, CURLINFO_RESPONSE_CODE, &responseCode);
+    result = curl_easy_getinfo(curlHandle, CURLINFO_RESPONSE_CODE, &response.code);
     if (result != CURLE_OK) {
         ACSDK_ERROR(LX("doPostFailed")
                         .d("reason", "curl_easy_getinfoFailed")
                         .d("property", "CURLINFO_RESPONSE_CODE")
                         .d("result", result)
                         .d("error", curl_easy_strerror(result)));
-        body.clear();
-        return HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED;
+        return HTTPResponse();
     } else {
-        ACSDK_DEBUG(LX("doPostSucceeded").d("code", responseCode));
-        return responseCode;
+        ACSDK_DEBUG5(LX("doPostSucceeded").d("code", response.code));
+        return response;
     }
+}
+
+std::string HttpPost::buildPostData(const std::vector<std::pair<std::string, std::string>>& data) const {
+    std::stringstream dataStream;
+
+    for (auto ix = data.begin(); ix != data.end(); ix++) {
+        if (ix != data.begin()) {
+            dataStream << '&';
+        }
+        dataStream << m_curl.urlEncode(ix->first) << '=' << m_curl.urlEncode(ix->second);
+    }
+
+    return dataStream.str();
 }
 
 size_t HttpPost::staticWriteCallbackLocked(char* ptr, size_t size, size_t nmemb, void* userdata) {

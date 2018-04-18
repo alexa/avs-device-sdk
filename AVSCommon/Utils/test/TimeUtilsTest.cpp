@@ -92,32 +92,50 @@ TEST(TimeTest, testCurrentTimeNullParam) {
  * Helper function to run through the test cases for time to string conversions.
  *
  * @param expectedString The string that convertTimeToUtcIso8601Rfc3339 should generate.
- * @param t The timeval to convert.
+ * @param sec The seconds since epoch to convert.
+ * @param us The microseconds since epoch to convert.
  */
-static void testIso8601ConversionHelper(const std::string& expectedString, const struct timeval& t) {
+static void testIso8601ConversionHelper(
+    const std::string& expectedString,
+    const std::chrono::seconds sec,
+    const std::chrono::microseconds us) {
     TimeUtils timeUtils;
     std::string resultString;
-    EXPECT_TRUE(timeUtils.convertTimeToUtcIso8601Rfc3339(t, &resultString));
+    std::chrono::high_resolution_clock::time_point tp;
+    tp += sec;
+    tp += us;
+    EXPECT_TRUE(timeUtils.convertTimeToUtcIso8601Rfc3339(tp, &resultString));
     EXPECT_EQ(expectedString, resultString);
 }
 
 TEST(TimeTest, testIso8601Conversion) {
-    testIso8601ConversionHelper("1970-01-01T00:00:00.000Z", {0, 0});
-    testIso8601ConversionHelper("1970-01-01T00:00:01.000Z", {1, 0});
-    testIso8601ConversionHelper("1970-01-01T00:00:00.001Z", {0, 1000});
-    testIso8601ConversionHelper("1970-01-01T00:01:00.000Z", {60, 0});
-    testIso8601ConversionHelper("1970-01-01T01:00:00.000Z", {60 * 60, 0});
-    testIso8601ConversionHelper("1970-01-02T00:00:00.000Z", {60 * 60 * 24, 0});
-    testIso8601ConversionHelper("1970-02-01T00:00:00.000Z", {60 * 60 * 24 * 31, 0});
-    testIso8601ConversionHelper("1971-01-01T00:00:00.000Z", {60 * 60 * 24 * 365, 0});
+    testIso8601ConversionHelper("1970-01-01T00:00:00.000Z", std::chrono::seconds{0}, std::chrono::microseconds{0});
+    testIso8601ConversionHelper("1970-01-01T00:00:01.000Z", std::chrono::seconds{1}, std::chrono::microseconds{0});
+    testIso8601ConversionHelper("1970-01-01T00:00:00.001Z", std::chrono::seconds{0}, std::chrono::microseconds{1000});
+    testIso8601ConversionHelper("1970-01-01T00:01:00.000Z", std::chrono::seconds{60}, std::chrono::microseconds{0});
+    testIso8601ConversionHelper(
+        "1970-01-01T01:00:00.000Z", std::chrono::seconds{60 * 60}, std::chrono::microseconds{0});
+    testIso8601ConversionHelper(
+        "1970-01-02T00:00:00.000Z", std::chrono::seconds{60 * 60 * 24}, std::chrono::microseconds{0});
+    testIso8601ConversionHelper(
+        "1970-02-01T00:00:00.000Z", std::chrono::seconds{60 * 60 * 24 * 31}, std::chrono::microseconds{0});
+    testIso8601ConversionHelper(
+        "1971-01-01T00:00:00.000Z", std::chrono::seconds{60 * 60 * 24 * 365}, std::chrono::microseconds{0});
 
-    testIso8601ConversionHelper("1970-01-02T00:00:00.000Z", {60 * 60 * 24, 999});
-    testIso8601ConversionHelper("1970-01-02T00:00:00.001Z", {60 * 60 * 24, 1000});
-    testIso8601ConversionHelper("1970-01-02T00:00:00.001Z", {60 * 60 * 24, 1001});
-    testIso8601ConversionHelper("1970-01-02T00:00:00.001Z", {60 * 60 * 24, 1999});
-    testIso8601ConversionHelper("1970-01-02T00:00:00.002Z", {60 * 60 * 24, 2000});
-    testIso8601ConversionHelper("1970-01-02T00:00:00.002Z", {60 * 60 * 24, 2001});
-    testIso8601ConversionHelper("1970-01-02T00:00:00.202Z", {60 * 60 * 24, 202001});
+    testIso8601ConversionHelper(
+        "1970-01-02T00:00:00.000Z", std::chrono::seconds{60 * 60 * 24}, std::chrono::microseconds{999});
+    testIso8601ConversionHelper(
+        "1970-01-02T00:00:00.001Z", std::chrono::seconds{60 * 60 * 24}, std::chrono::microseconds{1000});
+    testIso8601ConversionHelper(
+        "1970-01-02T00:00:00.001Z", std::chrono::seconds{60 * 60 * 24}, std::chrono::microseconds{1001});
+    testIso8601ConversionHelper(
+        "1970-01-02T00:00:00.001Z", std::chrono::seconds{60 * 60 * 24}, std::chrono::microseconds{1999});
+    testIso8601ConversionHelper(
+        "1970-01-02T00:00:00.002Z", std::chrono::seconds{60 * 60 * 24}, std::chrono::microseconds{2000});
+    testIso8601ConversionHelper(
+        "1970-01-02T00:00:00.002Z", std::chrono::seconds{60 * 60 * 24}, std::chrono::microseconds{2001});
+    testIso8601ConversionHelper(
+        "1970-01-02T00:00:00.202Z", std::chrono::seconds{60 * 60 * 24}, std::chrono::microseconds{202001});
 }
 
 }  // namespace test

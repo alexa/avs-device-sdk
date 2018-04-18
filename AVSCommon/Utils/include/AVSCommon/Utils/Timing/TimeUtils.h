@@ -16,8 +16,10 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_TIMING_TIMEUTILS_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_TIMING_TIMEUTILS_H_
 
+#include <chrono>
 #include <ctime>
 #include <string>
+#include <sys/time.h>
 
 #include "AVSCommon/Utils/RetryTimer.h"
 #include "AVSCommon/Utils/Timing/SafeCTimeAccess.h"
@@ -86,16 +88,18 @@ public:
     bool getCurrentUnixTime(int64_t* currentTime);
 
     /**
-     * Convert timeval struct to a ISO 8601 RFC 3339 date-time string.  This follows these specifications:
+     * Convert timepoint to a ISO 8601 RFC 3339 date-time string.  This follows these specifications:
      *   - https://tools.ietf.org/html/rfc3339
      *
      * The end result will look like "1970-01-01T00:00:00.000Z"
      *
-     * @param t The time from the Unix epoch to convert.
+     * @param tp The timepoint from which to convert.
      * @param[out] iso8601TimeString The resulting time string.
      * @return True, if successful, false otherwise.
      */
-    bool convertTimeToUtcIso8601Rfc3339(const struct timeval& t, std::string* iso8601TimeString);
+    bool convertTimeToUtcIso8601Rfc3339(
+        const std::chrono::high_resolution_clock::time_point& tp,
+        std::string* iso8601TimeString);
 
 private:
     /**

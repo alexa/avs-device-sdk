@@ -106,6 +106,13 @@ public:
      */
     std::unique_ptr<SQLiteStatement> createStatement(const std::string& sqlString);
 
+    /**
+     * Checks if the database is ready to be acted upon.
+     *
+     * @return true if database is ready to be acted upon, false otherwise.
+     */
+    bool isDatabaseReady();
+
 private:
     /// The path to use when creating/opening the internal SQLite DB.
     const std::string m_storageFilePath;

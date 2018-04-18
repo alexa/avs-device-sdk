@@ -19,7 +19,7 @@
 #include "CertifiedSender/MessageStorageInterface.h"
 
 #include <AVSCommon/AVS/MessageRequest.h>
-#include <AVSCommon/AVS/AbstractConnection.h>
+#include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
@@ -69,7 +69,7 @@ public:
      */
     static std::shared_ptr<CertifiedSender> create(
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<avsCommon::avs::AbstractConnection> connection,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connection,
         std::shared_ptr<MessageStorageInterface> storage,
         std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
 
@@ -160,7 +160,7 @@ private:
      */
     CertifiedSender(
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<avsCommon::avs::AbstractConnection> connection,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connection,
         std::shared_ptr<MessageStorageInterface> storage,
         std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
         int queueSizeWarnLimit = CERTIFIED_SENDER_QUEUE_SIZE_WARN_LIMIT,
@@ -219,7 +219,7 @@ private:
     std::shared_ptr<CertifiedMessageRequest> m_currentMessage;
 
     // The connection object we are observing.
-    std::shared_ptr<avsCommon::avs::AbstractConnection> m_connection;
+    std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> m_connection;
 
     /// Where we will store the messages we wish to send.
     std::shared_ptr<MessageStorageInterface> m_storage;

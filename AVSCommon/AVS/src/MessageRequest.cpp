@@ -32,22 +32,45 @@ static const std::string TAG("MessageRequest");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-MessageRequest::MessageRequest(
-    const std::string& jsonContent,
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) :
+MessageRequest::MessageRequest(const std::string& jsonContent, const std::string& uriPathExtension) :
         m_jsonContent{jsonContent},
-        m_attachmentReader{attachmentReader} {
+        m_uriPathExtension{uriPathExtension} {
 }
 
 MessageRequest::~MessageRequest() {
+}
+
+void MessageRequest::addAttachmentReader(
+    const std::string& name,
+    std::shared_ptr<attachment::AttachmentReader> attachmentReader) {
+    if (!attachmentReader) {
+        ACSDK_ERROR(LX("addAttachmentReaderFailed").d("reason", "nullAttachment"));
+        return;
+    }
+
+    auto namedReader = std::make_shared<MessageRequest::NamedReader>(name, attachmentReader);
+    m_readers.push_back(namedReader);
 }
 
 std::string MessageRequest::getJsonContent() {
     return m_jsonContent;
 }
 
-std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> MessageRequest::getAttachmentReader() {
-    return m_attachmentReader;
+std::string MessageRequest::getUriPathExtension() {
+    return m_uriPathExtension;
+}
+
+int MessageRequest::attachmentReadersCount() {
+    return m_readers.size();
+}
+
+std::shared_ptr<MessageRequest::NamedReader> MessageRequest::getAttachmentReader(size_t index) {
+    if (m_readers.size() <= index) {
+        ACSDK_ERROR(LX("getAttachmentReaderFailed").d("reason", "index out of bound").d("index", index));
+        return nullptr;
+    }
+
+    return m_readers[index];
 }
 
 void MessageRequest::sendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status) {

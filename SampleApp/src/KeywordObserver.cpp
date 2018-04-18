@@ -31,7 +31,8 @@ void KeywordObserver::onKeyWordDetected(
     std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
     std::string keyword,
     avsCommon::avs::AudioInputStream::Index beginIndex,
-    avsCommon::avs::AudioInputStream::Index endIndex) {
+    avsCommon::avs::AudioInputStream::Index endIndex,
+    std::shared_ptr<const std::vector<char>> KWDMetadata) {
     if (endIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX &&
         beginIndex == avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX) {
         if (m_client) {
@@ -40,13 +41,13 @@ void KeywordObserver::onKeyWordDetected(
     } else if (
         endIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX &&
         beginIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX) {
+        auto espData = capabilityAgents::aip::ESPData::EMPTY_ESP_DATA;
+        if (m_espProvider) {
+            espData = m_espProvider->getESPData();
+        }
+
         if (m_client) {
-            if (m_espProvider) {
-                auto espData = m_espProvider->getESPData();
-                m_client->notifyOfWakeWord(m_audioProvider, beginIndex, endIndex, keyword, espData);
-            } else {
-                m_client->notifyOfWakeWord(m_audioProvider, beginIndex, endIndex, keyword);
-            }
+            m_client->notifyOfWakeWord(m_audioProvider, beginIndex, endIndex, keyword, espData, KWDMetadata);
         }
     }
 }

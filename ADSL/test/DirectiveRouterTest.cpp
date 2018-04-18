@@ -43,8 +43,14 @@ static const std::string MESSAGE_ID_0_0("Message_0_0");
 /// Generic MessageId used for test.
 static const std::string MESSAGE_ID_0_1("Message_0_1");
 
+/// Generic MessageId used for test.
+static const std::string MESSAGE_ID_0_2("Message_0_2");
+
 /// Generic MessageId used for tests.
 static const std::string MESSAGE_ID_1_0("Message_1_0");
+
+/// Generic MessageId used for test.
+static const std::string MESSAGE_ID_2_0("Message_2_0");
 
 /// Generic DialogRequestId used for tests.
 static const std::string DIALOG_REQUEST_ID_0("DialogRequestId_0");
@@ -61,11 +67,20 @@ static const std::string NAMESPACE_0("namespace_0");
 /// A generic namespace string for tests.
 static const std::string NAMESPACE_1("namespace_1");
 
+/// A generic namespace string for tests.
+static const std::string NAMESPACE_2("namespace_2");
+
 /// A generic name string for tests.
 static const std::string NAME_0("name_0");
 
 /// A generic name string for tests.
 static const std::string NAME_1("name_1");
+
+/// A generic name string for tests.
+static const std::string NAME_2("name_2");
+
+/// A generic 'any name' string for tests.
+static const std::string NAME_ANY("*");
 
 static const std::string TEST_ATTACHMENT_CONTEXT_ID("TEST_ATTACHMENT_CONTEXT_ID");
 
@@ -75,8 +90,20 @@ static const std::string TEST_ATTACHMENT_CONTEXT_ID("TEST_ATTACHMENT_CONTEXT_ID"
 /// Namespace and name combination (changing name this time) for tests.
 #define NAMESPACE_AND_NAME_0_1 NAMESPACE_0, NAME_1
 
+/// Namespace and name combination (changing name this time) for tests.
+#define NAMESPACE_AND_NAME_0_2 NAMESPACE_0, NAME_2
+
+/// Namespace and name combination ('any name' this time) for tests.
+#define NAMESPACE_AND_NAME_0_ANY NAMESPACE_0, NAME_ANY
+
 /// Namespace and name combination (changing namespace this time) for tests.
 #define NAMESPACE_AND_NAME_1_0 NAMESPACE_1, NAME_0
+
+/// Namespace and name combination (changing namespace this time) for tests.
+#define NAMESPACE_AND_NAME_2_0 NAMESPACE_2, NAME_0
+
+/// Namespace and name combination (changing namespace this time) for tests.
+#define NAMESPACE_AND_NAME_2_ANY NAMESPACE_2, NAME_ANY
 
 /// Long timeout we only reach when a concurrency test fails.
 static const std::chrono::seconds LONG_TIMEOUT(15);
@@ -102,7 +129,13 @@ public:
     std::shared_ptr<AVSDirective> m_directive_0_1;
 
     /// Generic @c AVSDirective for tests.
+    std::shared_ptr<AVSDirective> m_directive_0_2;
+
+    /// Generic @c AVSDirective for tests.
     std::shared_ptr<AVSDirective> m_directive_1_0;
+
+    /// Generic @c AVSDirective for tests.
+    std::shared_ptr<AVSDirective> m_directive_2_0;
 };
 
 void DirectiveRouterTest::SetUp() {
@@ -116,10 +149,18 @@ void DirectiveRouterTest::SetUp() {
         std::make_shared<AVSMessageHeader>(NAMESPACE_AND_NAME_0_1, MESSAGE_ID_0_1, DIALOG_REQUEST_ID_0);
     m_directive_0_1 = AVSDirective::create(
         UNPARSED_DIRECTIVE, avsMessageHeader_0_1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
+    auto avsMessageHeader_0_2 =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AND_NAME_0_2, MESSAGE_ID_0_2, DIALOG_REQUEST_ID_0);
+    m_directive_0_2 = AVSDirective::create(
+        UNPARSED_DIRECTIVE, avsMessageHeader_0_2, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     auto avsMessageHeader_1_0 =
         std::make_shared<AVSMessageHeader>(NAMESPACE_AND_NAME_1_0, MESSAGE_ID_1_0, DIALOG_REQUEST_ID_0);
     m_directive_1_0 = AVSDirective::create(
         UNPARSED_DIRECTIVE, avsMessageHeader_1_0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
+    auto avsMessageHeader_2_0 =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AND_NAME_2_0, MESSAGE_ID_2_0, DIALOG_REQUEST_ID_0);
+    m_directive_2_0 = AVSDirective::create(
+        UNPARSED_DIRECTIVE, avsMessageHeader_2_0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 }
 
 void DirectiveRouterTest::TearDown() {
@@ -166,12 +207,22 @@ TEST_F(DirectiveRouterTest, testRegisteringMultipeHandler) {
     std::shared_ptr<MockDirectiveHandler> handler1 = MockDirectiveHandler::create(handler1Config);
 
     DirectiveHandlerConfiguration handler2Config;
-    handler2Config[{NAMESPACE_AND_NAME_1_0}] = BlockingPolicy::NON_BLOCKING;
+    handler2Config[{NAMESPACE_AND_NAME_0_ANY}] = BlockingPolicy::NON_BLOCKING;
     std::shared_ptr<MockDirectiveHandler> handler2 = MockDirectiveHandler::create(handler2Config);
+
+    DirectiveHandlerConfiguration handler3Config;
+    handler3Config[{NAMESPACE_AND_NAME_1_0}] = BlockingPolicy::NON_BLOCKING;
+    std::shared_ptr<MockDirectiveHandler> handler3 = MockDirectiveHandler::create(handler3Config);
+
+    DirectiveHandlerConfiguration handler4Config;
+    handler4Config[{NAMESPACE_AND_NAME_2_ANY}] = BlockingPolicy::NON_BLOCKING;
+    std::shared_ptr<MockDirectiveHandler> handler4 = MockDirectiveHandler::create(handler4Config);
 
     ASSERT_TRUE(m_router.addDirectiveHandler(handler0));
     ASSERT_TRUE(m_router.addDirectiveHandler(handler1));
     ASSERT_TRUE(m_router.addDirectiveHandler(handler2));
+    ASSERT_TRUE(m_router.addDirectiveHandler(handler3));
+    ASSERT_TRUE(m_router.addDirectiveHandler(handler4));
 
     EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(_)).Times(0);
     EXPECT_CALL(*(handler0.get()), preHandleDirective(m_directive_0_0, _)).Times(1);
@@ -185,15 +236,31 @@ TEST_F(DirectiveRouterTest, testRegisteringMultipeHandler) {
     EXPECT_CALL(*(handler1.get()), cancelDirective(_)).Times(0);
     EXPECT_CALL(*(handler1.get()), onDeregistered()).Times(1);
 
+    // Test that wildcard handler2 will get a directive, while other handlers exist within the same namespace
     EXPECT_CALL(*(handler2.get()), handleDirectiveImmediately(_)).Times(0);
-    EXPECT_CALL(*(handler2.get()), preHandleDirective(m_directive_1_0, _)).Times(1);
+    EXPECT_CALL(*(handler2.get()), preHandleDirective(m_directive_0_2, _)).Times(1);
     EXPECT_CALL(*(handler2.get()), handleDirective(_)).Times(0);
     EXPECT_CALL(*(handler2.get()), cancelDirective(_)).Times(0);
     EXPECT_CALL(*(handler2.get()), onDeregistered()).Times(1);
 
+    EXPECT_CALL(*(handler3.get()), handleDirectiveImmediately(_)).Times(0);
+    EXPECT_CALL(*(handler3.get()), preHandleDirective(m_directive_1_0, _)).Times(1);
+    EXPECT_CALL(*(handler3.get()), handleDirective(_)).Times(0);
+    EXPECT_CALL(*(handler3.get()), cancelDirective(_)).Times(0);
+    EXPECT_CALL(*(handler3.get()), onDeregistered()).Times(1);
+
+    // Test that wildcard handler4 will get a directive, when no other handlers exist within the same namespace
+    EXPECT_CALL(*(handler4.get()), handleDirectiveImmediately(_)).Times(0);
+    EXPECT_CALL(*(handler4.get()), preHandleDirective(m_directive_2_0, _)).Times(1);
+    EXPECT_CALL(*(handler4.get()), handleDirective(_)).Times(0);
+    EXPECT_CALL(*(handler4.get()), cancelDirective(_)).Times(0);
+    EXPECT_CALL(*(handler4.get()), onDeregistered()).Times(1);
+
     ASSERT_TRUE(m_router.preHandleDirective(m_directive_0_0, nullptr));
     ASSERT_TRUE(m_router.preHandleDirective(m_directive_0_1, nullptr));
+    ASSERT_TRUE(m_router.preHandleDirective(m_directive_0_2, nullptr));
     ASSERT_TRUE(m_router.preHandleDirective(m_directive_1_0, nullptr));
+    ASSERT_TRUE(m_router.preHandleDirective(m_directive_2_0, nullptr));
 }
 
 /**

@@ -17,9 +17,10 @@
 
 #include <gtest/gtest.h>
 
-#include "RegistrationManager/CustomerDataManager.h"
-#include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
-#include "AVSCommon/SDKInterfaces/MockMessageSender.h"
+#include <RegistrationManager/CustomerDataManager.h>
+#include <AVSCommon/AVS/AbstractAVSConnectionManager.h>
+#include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
+#include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 
 #include "CertifiedSender/CertifiedSender.h"
 
@@ -29,8 +30,18 @@ namespace alexaClientSDK {
 namespace certifiedSender {
 namespace test {
 
-class MockConnection : public avsCommon::avs::AbstractConnection {
+class MockConnection : public avsCommon::avs::AbstractAVSConnectionManager {
+    MOCK_METHOD0(enable, void());
+    MOCK_METHOD0(disable, void());
+    MOCK_METHOD0(isEnabled, bool());
+    MOCK_METHOD0(reconnect, void());
     MOCK_CONST_METHOD0(isConnected, bool());
+    MOCK_METHOD1(
+        addMessageObserver,
+        void(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer));
+    MOCK_METHOD1(
+        removeMessageObserver,
+        void(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer));
 };
 
 class MockMessageStorage : public MessageStorageInterface {
@@ -54,9 +65,9 @@ protected:
                 "databaseFilePath":"database.db"
             }
         })";
-        std::stringstream configuration;
-        configuration << CONFIGURATION;
-        ASSERT_TRUE(avsCommon::avs::initialization::AlexaClientSDKInit::initialize({&configuration}));
+        auto configuration = std::shared_ptr<std::stringstream>(new std::stringstream());
+        (*configuration) << CONFIGURATION;
+        ASSERT_TRUE(avsCommon::avs::initialization::AlexaClientSDKInit::initialize({configuration}));
 
         auto customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
         auto msgSender = std::make_shared<avsCommon::sdkInterfaces::test::MockMessageSender>();

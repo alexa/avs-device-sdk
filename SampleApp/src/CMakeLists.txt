@@ -30,18 +30,15 @@ target_include_directories(SampleApp PUBLIC
 
 target_link_libraries(SampleApp 
     DefaultClient
-    AuthDelegate
+    DCFDelegate
+    CBLAuthDelegate
     MediaPlayer
+    SQLiteStorage
     ESP
     "${PORTAUDIO_LIB_PATH}")
 
-if(KITTAI_KEY_WORD_DETECTOR)
-    target_link_libraries(SampleApp 
-        KITTAI)
-endif()
-
-if(SENSORY_KEY_WORD_DETECTOR)
-    target_link_libraries(SampleApp SENSORY)
+if(KWD)
+    target_link_libraries(SampleApp KeywordDetectorProvider)
 endif()
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

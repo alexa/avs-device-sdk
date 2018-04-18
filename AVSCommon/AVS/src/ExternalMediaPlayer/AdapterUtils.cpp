@@ -117,10 +117,7 @@ rapidjson::Value buildPlaybackState(
     playerJson.AddMember(STATE, playbackState.state, allocator);
     auto operations = buildSupportedOperations(playbackState.supportedOperations, allocator);
     playerJson.AddMember(OPERATIONS, operations, allocator);
-    playerJson.AddMember(
-        POSITIONINMS,
-        std::chrono::duration_cast<std::chrono::milliseconds>(playbackState.trackOffset).count(),
-        allocator);
+    playerJson.AddMember(POSITIONINMS, static_cast<uint64_t>(playbackState.trackOffset.count()), allocator);
     playerJson.AddMember(SHUFFLE, SHUFFLE_STATUS_STRING(playbackState.shuffleEnabled), allocator);
     playerJson.AddMember(REPEAT, REPEAT_STATUS_STRING(playbackState.repeatEnabled), allocator);
     playerJson.AddMember(FAVORITE, RatingToString(playbackState.favorites), allocator);
@@ -149,8 +146,7 @@ rapidjson::Value buildPlaybackState(
     value.AddMember(COVER_ID, playbackState.coverId, allocator);
     value.AddMember(MEDIA_PROVIDER, playbackState.mediaProvider, allocator);
     value.AddMember(MEDIA_TYPE, MediaTypeToString(playbackState.mediaType), allocator);
-    value.AddMember(
-        DURATIONINMS, std::chrono::duration_cast<std::chrono::milliseconds>(playbackState.duration).count(), allocator);
+    value.AddMember(DURATIONINMS, static_cast<uint64_t>(playbackState.duration.count()), allocator);
 
     media.AddMember(VALUE, value, allocator);
     playerJson.AddMember(MEDIA, media, allocator);

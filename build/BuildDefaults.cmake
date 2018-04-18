@@ -21,9 +21,6 @@ include(Logger)
 # Setup keyword requirement variables.
 include(KeywordDetector)
 
-# Setup playlist parser variables.
-include(PlaylistParser)
-
 # Setup media player variables.
 include(MediaPlayer)
 
@@ -38,6 +35,9 @@ include (Platforms)
 
 # Setup ESP variables.
 include (ESP)
+
+# Setup Comms variables.
+include (Comms)
 
 if (HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
     include (ExternalMediaPlayerAdapters)

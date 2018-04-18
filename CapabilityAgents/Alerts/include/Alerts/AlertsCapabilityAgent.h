@@ -24,11 +24,14 @@
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/AVS/FocusState.h>
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
@@ -37,6 +40,7 @@
 
 #include <chrono>
 #include <set>
+#include <string>
 #include <unordered_set>
 
 namespace alexaClientSDK {
@@ -51,6 +55,7 @@ static const std::chrono::minutes ALERT_PAST_DUE_CUTOFF_MINUTES = std::chrono::m
 class AlertsCapabilityAgent
         : public avsCommon::avs::CapabilityAgent
         , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface
+        , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public AlertObserverInterface
         , public avsCommon::utils::RequiresShutdown
         , public registrationManager::CustomerDataHandler
@@ -99,6 +104,11 @@ public:
 
     void onAlertStateChange(const std::string& token, AlertObserverInterface::State state, const std::string& reason)
         override;
+
+    /// @name CapabilityConfigurationInterface Functions
+    /// @{
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
+    /// @}
 
     /**
      * Adds an observer to be notified of alert status changes.
@@ -357,6 +367,9 @@ private:
 
     /// This member contains a factory to provide unique audio streams for the various alerts.
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> m_alertsAudioFactory;
+
+    /// Set of capability configurations that will get published using DCF
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /**
      * The @c Executor which queues up operations from asynchronous API calls.

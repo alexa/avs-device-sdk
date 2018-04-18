@@ -90,13 +90,14 @@ static void mergeDocument(const std::string& path, Value& out, Value& in, Docume
     }
 }
 
-bool ConfigurationNode::initialize(const std::vector<std::istream*>& jsonStreams) {
+bool ConfigurationNode::initialize(const std::vector<std::shared_ptr<std::istream>>& jsonStreams) {
     std::lock_guard<std::mutex> lock(m_mutex);
     if (m_root) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "alreadyInitialized"));
         return false;
     }
     m_document.SetObject();
+
     for (auto jsonStream : jsonStreams) {
         if (!jsonStream) {
             m_document.SetObject();
@@ -111,10 +112,13 @@ bool ConfigurationNode::initialize(const std::vector<std::istream*>& jsonStreams
                             .d("offset", overlay.GetErrorOffset())
                             .d("message", GetParseError_En(overlay.GetParseError())));
             m_document.SetObject();
+
             return false;
         }
+
         mergeDocument("root", m_document, overlay, m_document.GetAllocator());
     }
+
     m_root = ConfigurationNode(&m_document);
     ACSDK_DEBUG0(LX("initializeSuccess").sensitive("configuration", valueToString(m_document)));
     return true;
@@ -170,6 +174,23 @@ ConfigurationNode::operator bool() const {
 }
 
 ConfigurationNode::ConfigurationNode(const rapidjson::Value* object) : m_object{object} {
+}
+
+std::string ConfigurationNode::serialize() const {
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    if (!m_object->Accept(writer)) {
+        ACSDK_ERROR(LX("serializeFailed").d("reason", "writerRefusedObject"));
+        return "";
+    }
+
+    const char* bufferData = buffer.GetString();
+    if (!bufferData) {
+        ACSDK_ERROR(LX("serializeFailed").d("reason", "nullptrBufferString"));
+        return "";
+    }
+
+    return std::string(bufferData);
 }
 
 }  // namespace configuration
