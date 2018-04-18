@@ -1,4 +1,4 @@
 <map id="alexaClientSDK::acl::transport::test::MockTransport" name="alexaClientSDK::acl::transport::test::MockTransport">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html" title="alexaClientSDK::acl\l::TransportInterface" alt="" coords="39,92,178,131"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="10,5,207,44"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html" title="alexaClientSDK::acl\l::TransportInterface" alt="" coords="39,95,179,136"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="10,5,207,47"/>
 </map>

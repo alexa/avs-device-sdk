@@ -1,9 +1,9 @@
-<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/CapabilityAgents/System/include/System" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/CapabilityAgents/System/include/System">
-<area shape="rect" id="node1" href="dir_03b67ee1b6ab353c932baaa9d86e354a.html" title="System" alt="" coords="43,51,115,99"/>
-<area shape="rect" id="node2" href="dir_b1dfedc9efa610ba8c818c30206ff41f.html" title="ACL" alt="" coords="5,147,77,195"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000151_000000.html" title="1" alt="" coords="62,126,69,139"/>
-<area shape="rect" id="node3" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="27,243,128,291"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000151_000009.html" title="18" alt="" coords="87,219,101,232"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000000_000009.html" title="91" alt="" coords="62,216,77,229"/>
-<area shape="rect" id="clust1" href="dir_76128cd39a5afd90f6d9deea527eb79c.html" title="include" alt="" coords="32,16,125,109"/>
+<map id="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/System/include/System" name="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/System/include/System">
+<area shape="rect" id="node1" href="dir_03b67ee1b6ab353c932baaa9d86e354a.html" title="System" alt="" coords="41,52,113,100"/>
+<area shape="rect" id="node2" href="dir_b1dfedc9efa610ba8c818c30206ff41f.html" title="ACL" alt="" coords="5,148,77,196"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000147_000000.html" title="1" alt="" coords="61,127,69,141"/>
+<area shape="rect" id="node3" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="26,244,129,292"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000147_000009.html" title="21" alt="" coords="86,220,101,235"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000000_000009.html" title="92" alt="" coords="63,217,77,231"/>
+<area shape="rect" id="clust1" href="dir_76128cd39a5afd90f6d9deea527eb79c.html" title="include" alt="" coords="31,16,124,111"/>
 </map>

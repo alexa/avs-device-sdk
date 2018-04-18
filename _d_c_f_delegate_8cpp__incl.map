@@ -1,0 +1,28 @@
+<map id="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/DCFDelegate/src/DCFDelegate.cpp" name="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/DCFDelegate/src/DCFDelegate.cpp">
+<area shape="rect" id="node2" href="$_d_c_f_delegate_8h.html" title="DCFDelegate/DCFDelegate.h" alt="" coords="1045,146,1242,173"/>
+<area shape="rect" id="node9" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="1365,317,1557,359"/>
+<area shape="rect" id="node13" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="1737,407,1931,448"/>
+<area shape="rect" id="node16" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="1682,228,1893,269"/>
+<area shape="rect" id="node17" href="$_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="2043,235,2254,262"/>
+<area shape="rect" id="node32" href="$_http_put_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPutInterface.h" alt="" coords="2762,228,2965,269"/>
+<area shape="rect" id="node33" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="3437,325,3564,351"/>
+<area shape="rect" id="node40" href="$_transport_defines_8h.html" title="ACL/Transport/TransportDefines.h" alt="" coords="2068,146,2291,173"/>
+<area shape="rect" id="node42" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2402,228,2578,269"/>
+<area shape="rect" id="node49" href="$_http_response_codes_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpResponseCodes.h" alt="" coords="3266,139,3469,180"/>
+<area shape="rect" id="node50" href="$_libcurl_utils_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/LibcurlUtils.h" alt="" coords="3039,139,3242,180"/>
+<area shape="rect" id="node10" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="1217,407,1409,448"/>
+<area shape="rect" id="node12" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="649,317,872,359"/>
+<area shape="rect" id="node14" href="$_d_c_f_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DCFDelegateInterface.h" alt="" coords="730,228,922,269"/>
+<area shape="rect" id="node15" href="$_d_c_f_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DCFObserverInterface.h" alt="" coords="1047,317,1239,359"/>
+<area shape="rect" id="node23" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="94,228,289,269"/>
+<area shape="rect" id="node34" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="902,407,1091,448"/>
+<area shape="rect" id="node18" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2187,317,2401,359"/>
+<area shape="rect" id="node26" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="229,317,423,359"/>
+<area shape="rect" id="node29" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="118,407,313,448"/>
+<area shape="rect" id="node41" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="2527,325,2741,351"/>
+<area shape="rect" id="node44" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="2810,407,2986,448"/>
+<area shape="rect" id="node45" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="3135,317,3311,359"/>
+<area shape="rect" id="node47" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="2816,317,3009,359"/>
+<area shape="rect" id="node48" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1834,317,2010,359"/>
+<area shape="rect" id="node46" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="3010,407,3186,448"/>
+</map>

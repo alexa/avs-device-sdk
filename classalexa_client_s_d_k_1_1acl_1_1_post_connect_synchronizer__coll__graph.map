@@ -1,7 +1,5 @@
 <map id="alexaClientSDK::acl::PostConnectSynchronizer" name="alexaClientSDK::acl::PostConnectSynchronizer">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_post_connect_object.html" title="alexaClientSDK::acl\l::PostConnectObject" alt="" coords="309,5,452,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="5,5,202,44"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextRequester\lInterface" alt="" coords="269,68,492,120"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::MessageRequest\lObserverInterface" alt="" coords="271,144,490,196"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html" title="alexaClientSDK::acl\l::TransportObserverInterface" alt="" coords="285,220,477,259"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_post_connect_interface.html" title="alexaClientSDK::acl\l::PostConnectInterface" alt="" coords="56,5,213,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextRequester\lInterface" alt="" coords="23,70,246,126"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::MessageRequest\lObserverInterface" alt="" coords="25,150,244,206"/>
 </map>

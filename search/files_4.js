@@ -17,7 +17,6 @@ var searchData=
   ['espdatatest_2ecpp',['ESPDataTest.cpp',['../_e_s_p_data_test_8cpp.html',1,'']]],
   ['eventbuilder_2ecpp',['EventBuilder.cpp',['../_event_builder_8cpp.html',1,'']]],
   ['eventbuilder_2eh',['EventBuilder.h',['../_event_builder_8h.html',1,'']]],
-  ['exampleauthdelegateclient_2ecpp',['ExampleAuthDelegateClient.cpp',['../_example_auth_delegate_client_8cpp.html',1,'']]],
   ['exceptionencounteredsender_2ecpp',['ExceptionEncounteredSender.cpp',['../_exception_encountered_sender_8cpp.html',1,'']]],
   ['exceptionencounteredsender_2eh',['ExceptionEncounteredSender.h',['../_exception_encountered_sender_8h.html',1,'']]],
   ['exceptionencounteredsenderinterface_2eh',['ExceptionEncounteredSenderInterface.h',['../_exception_encountered_sender_interface_8h.html',1,'']]],

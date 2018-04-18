@@ -1,6 +1,7 @@
 <map id="alexaClientSDK::acl::HTTP2Transport" name="alexaClientSDK::acl::HTTP2Transport">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html" title="alexaClientSDK::acl\l::TransportInterface" alt="" coords="302,5,441,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="5,5,202,44"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface.html" title="alexaClientSDK::acl\l::PostConnectObserverInterface" alt="" coords="265,68,477,107"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1_post_connect_send_message_interface.html" title="alexaClientSDK::acl\l::PostConnectSendMessageInterface" alt="" coords="250,131,492,169"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html" title="alexaClientSDK::acl\l::TransportInterface" alt="" coords="305,5,445,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="5,5,203,47"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface.html" title="alexaClientSDK::acl\l::PostConnectObserverInterface" alt="" coords="269,71,480,112"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1_post_connect_send_message_interface.html" title="alexaClientSDK::acl\l::PostConnectSendMessageInterface" alt="" coords="255,136,495,177"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AuthObserverInterface" alt="" coords="251,201,499,243"/>
 </map>

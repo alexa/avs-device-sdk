@@ -7,6 +7,7 @@ var searchData=
   ['useractivitynotifierinterface_2eh',['UserActivityNotifierInterface.h',['../_user_activity_notifier_interface_8h.html',1,'']]],
   ['userinactivitymonitor_2ecpp',['UserInactivityMonitor.cpp',['../_user_inactivity_monitor_8cpp.html',1,'']]],
   ['userinactivitymonitor_2eh',['UserInactivityMonitor.h',['../_user_inactivity_monitor_8h.html',1,'']]],
+  ['userinactivitymonitorobserverinterface_2eh',['UserInactivityMonitorObserverInterface.h',['../_user_inactivity_monitor_observer_interface_8h.html',1,'']]],
   ['userinactivitymonitortest_2ecpp',['UserInactivityMonitorTest.cpp',['../_user_inactivity_monitor_test_8cpp.html',1,'']]],
   ['userinputmanager_2ecpp',['UserInputManager.cpp',['../_user_input_manager_8cpp.html',1,'']]],
   ['userinputmanager_2eh',['UserInputManager.h',['../_user_input_manager_8h.html',1,'']]],

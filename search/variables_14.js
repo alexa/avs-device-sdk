@@ -5,6 +5,7 @@ var searchData=
   ['unexpected_5ftimeout',['UNEXPECTED_TIMEOUT',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a63520a886fd2f371a217e2d14aca33ad',1,'alexaClientSDK::capabilityAgents::notifications::test']]],
   ['unfavorite_5fdirective',['UNFAVORITE_DIRECTIVE',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a6bef5fa20ded38537181897b7f5867e3',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer']]],
   ['unknown_5fdirective',['UNKNOWN_DIRECTIVE',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#abe54bd100351a8a4a812ce4847a3b5b1',1,'alexaClientSDK::capabilityAgents::templateRuntime::test']]],
+  ['unknown_5fkey_5fvalue_5ftype',['UNKNOWN_KEY_VALUE_TYPE',['../namespacealexa_client_s_d_k_1_1storage_1_1sqlite_storage.html#a90aa4526a73ebfbf8c9c03a1a009723b',1,'alexaClientSDK::storage::sqliteStorage']]],
   ['unparsed_5fdirective',['UNPARSED_DIRECTIVE',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#ad39d1cfc45929f5507c45c2511f31a18',1,'alexaClientSDK::capabilityAgents::system::test']]],
   ['unparsed_5fdirective_5fjson_5fstring',['UNPARSED_DIRECTIVE_JSON_STRING',['../namespacealexa_client_s_d_k_1_1avs_common_1_1test.html#acfb241ab039b472ca1b3f77ef0b0859c',1,'alexaClientSDK::avsCommon::test']]],
   ['unparsed_5fdirective_5fkey',['UNPARSED_DIRECTIVE_KEY',['../namespacealexa_client_s_d_k_1_1avs_common_1_1test.html#a1943cfb1b16fc27227b1d8593d4c71a1',1,'alexaClientSDK::avsCommon::test']]],

@@ -1,9 +1,7 @@
 <map id="alexaClientSDK::acl::MessageRouterInterface" name="alexaClientSDK::acl::MessageRouterInterface">
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router.html" title="alexaClientSDK::acl\l::MessageRouter" alt="" coords="537,36,676,75"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_router.html" title="alexaClientSDK::acl\l::test::MockMessageRouter" alt="" coords="515,99,699,137"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_mock_message_router.html" title="alexaClientSDK::registration\lManager::test::MockMessageRouter" alt="" coords="489,161,725,200"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message. " alt="" coords="5,57,218,109"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="13,133,210,172"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_message_router.html" title="alexaClientSDK::acl\l::HTTP2MessageRouter" alt="" coords="791,5,956,44"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_router.html" title="alexaClientSDK::acl\l::test::TestableMessageRouter" alt="" coords="773,68,974,107"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router.html" title="alexaClientSDK::acl\l::MessageRouter" alt="" coords="507,15,647,57"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_router.html" title="alexaClientSDK::acl\l::test::MockMessageRouter" alt="" coords="485,81,669,122"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message. " alt="" coords="5,5,216,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="12,85,209,126"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_router.html" title="alexaClientSDK::acl\l::test::TestableMessageRouter" alt="" coords="717,15,920,57"/>
 </map>

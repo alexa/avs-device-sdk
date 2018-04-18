@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html" title="alexaClientSDK::acl\l::TransportDefines" alt="" coords="5,5,144,44"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_part.html" title="alexaClientSDK::acl\l::test::TestMimePart" alt="" coords="5,39,148,80"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_attachment_part.html" title="alexaClientSDK::acl\l::test::TestMimeAttachmentPart" alt="" coords="196,5,405,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_test_mime_json_part.html" title="alexaClientSDK::acl\l::test::TestMimeJsonPart" alt="" coords="215,71,386,112"/>
 </map>

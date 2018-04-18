@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader_1_1_error.html" title="alexaClientSDK::avsCommon\l::utils::sds::SharedDataStream\l\&lt; T \&gt;::Reader\&lt; T \&gt;::Error" alt="" coords="5,5,207,57"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_put_interface.html" title="Minimal interface for making HTTP PUT requests. " alt="" coords="5,41,203,97"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_put.html" title="LIBCURL based implementation of HttpPutInterface. " alt="" coords="251,5,448,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_http_put.html" title="alexaClientSDK::integration\l::test::TestHttpPut" alt="" coords="258,85,441,126"/>
 </map>

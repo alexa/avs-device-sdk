@@ -1,4 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::GlobalSettingsObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::GlobalSettingsObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_updated_event_sender.html" title="alexaClientSDK::capability\lAgents::settings::SettingsUpdated\lEventSender" alt="" coords="256,5,478,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1test_1_1_mock_global_settings_observer.html" title="alexaClientSDK::capability\lAgents::settings::test\l::MockGlobalSettingsObserver" alt="" coords="266,81,468,133"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_updated_event_sender.html" title="alexaClientSDK::capability\lAgents::settings::SettingsUpdated\lEventSender" alt="" coords="256,5,479,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1test_1_1_mock_global_settings_observer.html" title="alexaClientSDK::capability\lAgents::settings::test\l::MockGlobalSettingsObserver" alt="" coords="267,85,467,141"/>
 </map>

@@ -1,6 +1,7 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::AuthObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::AuthObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1auth_delegate_1_1test_1_1_mock_auth_observer.html" title="Mock AuthObserverInterface class. " alt="" coords="303,5,504,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1integration_1_1_auth_observer.html" title="alexaClientSDK::integration\l::AuthObserver" alt="" coords="311,68,496,107"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1sample_app_1_1_connection_observer.html" title="alexaClientSDK::sampleApp\l::ConnectionObserver" alt="" coords="309,131,498,169"/>
-<area shape="rect" id="node5" href="$class_observer.html" title="Simple implementation of the AuthDelegateObserverInterface. " alt="" coords="366,193,442,219"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html" title="alexaClientSDK::acl\l::HTTP2Transport" alt="" coords="328,5,468,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1dcf_delegate_1_1_d_c_f_delegate.html" title="alexaClientSDK::dcfDelegate\l::DCFDelegate" alt="" coords="301,71,495,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1integration_1_1_auth_observer.html" title="alexaClientSDK::integration\l::AuthObserver" alt="" coords="307,136,489,177"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1sample_app_1_1_connection_observer.html" title="alexaClientSDK::sampleApp\l::ConnectionObserver" alt="" coords="304,201,492,243"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title="alexaClientSDK::sampleApp\l::UIManager" alt="" coords="304,267,492,308"/>
 </map>

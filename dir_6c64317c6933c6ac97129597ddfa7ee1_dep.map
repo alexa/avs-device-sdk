@@ -1,6 +1,9 @@
-<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/ContextManager/test" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/ContextManager/test">
-<area shape="rect" id="node1" href="dir_6c64317c6933c6ac97129597ddfa7ee1.html" title="test" alt="" coords="39,51,111,99"/>
-<area shape="rect" id="node2" href="dir_0f8ea464962f792f3167c26165597ec0.html" title="include" alt="" coords="39,147,111,195"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000168_000165.html" title="1" alt="" coords="79,121,87,135"/>
-<area shape="rect" id="clust1" href="dir_ed284a04dd0d49c135ac897057737ac2.html" title="ContextManager" alt="" coords="16,16,135,109"/>
+<map id="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/ContextManager/test" name="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/ContextManager/test">
+<area shape="rect" id="node1" href="dir_6c64317c6933c6ac97129597ddfa7ee1.html" title="test" alt="" coords="39,52,111,100"/>
+<area shape="rect" id="node2" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="23,244,126,292"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000164_000009.html" title="1" alt="" coords="72,217,80,232"/>
+<area shape="rect" id="node3" href="dir_0f8ea464962f792f3167c26165597ec0.html" title="include" alt="" coords="76,148,148,196"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000164_000161.html" title="1" alt="" coords="100,121,108,135"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000161_000009.html" title="5" alt="" coords="94,223,102,238"/>
+<area shape="rect" id="clust1" href="dir_ed284a04dd0d49c135ac897057737ac2.html" title="ContextManager" alt="" coords="16,16,135,111"/>
 </map>

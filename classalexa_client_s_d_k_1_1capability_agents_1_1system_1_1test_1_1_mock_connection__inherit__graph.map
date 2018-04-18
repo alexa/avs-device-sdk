@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::capabilityAgents::system::test::MockConnection" name="alexaClientSDK::capabilityAgents::system::test::MockConnection">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_abstract_connection.html" title="alexaClientSDK::avsCommon\l::avs::AbstractConnection" alt="" coords="31,5,228,44"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_abstract_a_v_s_connection_manager.html" title="alexaClientSDK::avsCommon\l::avs::AbstractAVSConnectionManager" alt="" coords="5,109,256,151"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AVSConnection\lManagerInterface" alt="" coords="25,5,236,61"/>
 </map>

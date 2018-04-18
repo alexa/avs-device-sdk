@@ -1,6 +1,6 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html" title="alexaClientSDK::capability\lAgents::externalMediaPlayer\l::ExternalMediaPlayer" alt="" coords="273,5,464,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_speaker.html" title="alexaClientSDK::capability\lAgents::speakerManager\l::test::MockSpeaker" alt="" coords="280,81,457,133"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_speaker_interface.html" title="alexaClientSDK::capability\lAgents::speakerManager\l::test::MockSpeakerInterface" alt="" coords="273,157,464,209"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="270,233,467,272"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html" title="alexaClientSDK::capability\lAgents::externalMediaPlayer\l::ExternalMediaPlayer" alt="" coords="272,5,461,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_speaker.html" title="alexaClientSDK::capability\lAgents::speakerManager\l::test::MockSpeaker" alt="" coords="277,85,456,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_speaker_interface.html" title="alexaClientSDK::capability\lAgents::speakerManager\l::test::MockSpeakerInterface" alt="" coords="271,165,462,221"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="269,245,464,286"/>
 </map>

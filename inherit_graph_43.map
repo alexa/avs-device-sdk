@@ -1,5 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::TemplateRuntime\lObserverInterface" alt="" coords="5,40,225,92"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_gui.html" title="alexaClientSDK::capability\lAgents::templateRuntime\l::test::MockGui" alt="" coords="278,5,456,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_gui_renderer.html" title="alexaClientSDK::sampleApp\l::GuiRenderer" alt="" coords="273,81,461,120"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_observer_interface.html" title="An interface that clients can extend to register to observe focus changes. " alt="" coords="5,5,261,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager_observer.html" title="Mock class that implements the FocusManagerObserver. " alt="" coords="309,5,507,61"/>
 </map>

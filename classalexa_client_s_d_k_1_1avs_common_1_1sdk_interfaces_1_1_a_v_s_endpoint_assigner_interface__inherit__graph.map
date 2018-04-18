@@ -1,4 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::AVSEndpointAssignerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::AVSEndpointAssignerInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html" title="alexaClientSDK::acl\l::AVSConnectionManager" alt="" coords="310,5,485,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_endpoint_assigner.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockAVSEndpointAssigner" alt="" coords="299,68,496,120"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html" title="alexaClientSDK::acl\l::AVSConnectionManager" alt="" coords="312,5,485,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_endpoint_assigner.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockAVSEndpointAssigner" alt="" coords="300,70,497,126"/>
 </map>

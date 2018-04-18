@@ -2,6 +2,7 @@ var searchData=
 [
   ['safectimeaccess',['SafeCTimeAccess',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_safe_c_time_access.html',1,'alexaClientSDK::avsCommon::utils::timing']]],
   ['sampleapplication',['SampleApplication',['../classalexa_client_s_d_k_1_1sample_app_1_1_sample_application.html',1,'alexaClientSDK::sampleApp']]],
+  ['sdktestcontext',['SDKTestContext',['../classalexa_client_s_d_k_1_1integration_1_1test_1_1_s_d_k_test_context.html',1,'alexaClientSDK::integration::test']]],
   ['sendparams',['SendParams',['../classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html',1,'alexaClientSDK::integration::test::TestMessageSender']]],
   ['sensorykeyworddetector',['SensoryKeywordDetector',['../classalexa_client_s_d_k_1_1kwd_1_1_sensory_keyword_detector.html',1,'alexaClientSDK::kwd']]],
   ['sensorykeywordtest',['SensoryKeywordTest',['../classalexa_client_s_d_k_1_1kwd_1_1test_1_1_sensory_keyword_test.html',1,'alexaClientSDK::kwd::test']]],
@@ -35,8 +36,11 @@ var searchData=
   ['speechsynthesizerobserverinterface',['SpeechSynthesizerObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_synthesizer_observer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['speechsynthesizertest',['SpeechSynthesizerTest',['../classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html',1,'alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest'],['../classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html',1,'alexaClientSDK::integration::test::SpeechSynthesizerTest']]],
   ['sqlitealertstorage',['SQLiteAlertStorage',['../classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html',1,'alexaClientSDK::capabilityAgents::alerts::storage']]],
+  ['sqlitecblauthdelegatestorage',['SQLiteCBLAuthDelegateStorage',['../classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_s_q_lite_c_b_l_auth_delegate_storage.html',1,'alexaClientSDK::authorization::cblAuthDelegate']]],
   ['sqlitedatabase',['SQLiteDatabase',['../classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html',1,'alexaClientSDK::storage::sqliteStorage']]],
   ['sqlitemessagestorage',['SQLiteMessageStorage',['../classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html',1,'alexaClientSDK::certifiedSender']]],
+  ['sqlitemiscstorage',['SQLiteMiscStorage',['../classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html',1,'alexaClientSDK::storage::sqliteStorage']]],
+  ['sqlitemiscstoragetest',['SQLiteMiscStorageTest',['../classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1test_1_1_s_q_lite_misc_storage_test.html',1,'alexaClientSDK::storage::sqliteStorage::test']]],
   ['sqlitenotificationsstorage',['SQLiteNotificationsStorage',['../classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html',1,'alexaClientSDK::capabilityAgents::notifications']]],
   ['sqlitesettingstorage',['SQLiteSettingStorage',['../classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_s_q_lite_setting_storage.html',1,'alexaClientSDK::capabilityAgents::settings']]],
   ['sqlitestatement',['SQLiteStatement',['../classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_statement.html',1,'alexaClientSDK::storage::sqliteStorage']]],
@@ -48,5 +52,6 @@ var searchData=
   ['stream',['Stream',['../structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream.html',1,'alexaClientSDK::capabilityAgents::audioPlayer::AudioItem']]],
   ['streambuf',['Streambuf',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1stream_1_1_streambuf.html',1,'alexaClientSDK::avsCommon::utils::stream']]],
   ['streambuftest',['StreambufTest',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1test_1_1_streambuf_test.html',1,'alexaClientSDK::avsCommon::utils::test']]],
-  ['streamfunctionstest',['StreamFunctionsTest',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1test_1_1_stream_functions_test.html',1,'alexaClientSDK::avsCommon::utils::test']]]
+  ['streamfunctionstest',['StreamFunctionsTest',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1test_1_1_stream_functions_test.html',1,'alexaClientSDK::avsCommon::utils::test']]],
+  ['systemcapabilityprovider',['SystemCapabilityProvider',['../classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_system_capability_provider.html',1,'alexaClientSDK::capabilityAgents::system']]]
 ];

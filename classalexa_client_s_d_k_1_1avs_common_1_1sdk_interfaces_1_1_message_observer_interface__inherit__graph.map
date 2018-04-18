@@ -1,7 +1,7 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::MessageObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::MessageObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_observer.html" title="This class allows us to test MessageObserver interaction. " alt="" coords="287,5,485,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_observer.html" title="alexaClientSDK::acl\l::test::TestableMessageObserver" alt="" coords="278,68,494,107"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1adsl_1_1_message_interpreter.html" title="alexaClientSDK::adsl\l::MessageInterpreter" alt="" coords="313,131,459,169"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title="alexaClientSDK::avsCommon\l::avs::DialogUXStateAggregator" alt="" coords="281,193,491,232"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1integration_1_1_client_message_handler.html" title="Minimal implementation of a message observer for integration tests. " alt="" coords="294,256,478,295"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_observer.html" title="This class allows us to test MessageObserver interaction. " alt="" coords="285,5,483,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_observer.html" title="alexaClientSDK::acl\l::test::TestableMessageObserver" alt="" coords="276,71,492,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1adsl_1_1_message_interpreter.html" title="alexaClientSDK::adsl\l::MessageInterpreter" alt="" coords="311,136,457,177"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title="alexaClientSDK::avsCommon\l::avs::DialogUXStateAggregator" alt="" coords="279,201,489,243"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1integration_1_1_client_message_handler.html" title="Minimal implementation of a message observer for integration tests. " alt="" coords="293,267,475,308"/>
 </map>

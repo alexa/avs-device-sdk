@@ -1,6 +1,6 @@
-<map id="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/CapabilityAgents/Settings/include/Settings/SQLiteSettingStorage.h" name="/Users/sdy/AVS/github/avs&#45;device&#45;sdk/CapabilityAgents/Settings/include/Settings/SQLiteSettingStorage.h">
-<area shape="rect" id="node2" href="$_settings_storage_interface_8h.html" title="Settings/SettingsStorage\lInterface.h" alt="" coords="495,119,663,157"/>
-<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="762,119,976,157"/>
-<area shape="rect" id="node13" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="213,125,434,151"/>
-<area shape="rect" id="node15" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="23,205,248,231"/>
+<map id="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/Settings/include/Settings/SQLiteSettingStorage.h" name="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/Settings/include/Settings/SQLiteSettingStorage.h">
+<area shape="rect" id="node2" href="$_settings_storage_interface_8h.html" title="Settings/SettingsStorage\lInterface.h" alt="" coords="493,153,660,195"/>
+<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="759,153,973,195"/>
+<area shape="rect" id="node13" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="213,161,431,187"/>
+<area shape="rect" id="node15" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="24,243,247,269"/>
 </map>

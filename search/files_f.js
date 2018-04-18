@@ -21,10 +21,12 @@ var searchData=
   ['playlistparsertest_2ecpp',['PlaylistParserTest.cpp',['../_playlist_parser_test_8cpp.html',1,'']]],
   ['portaudiomicrophonewrapper_2ecpp',['PortAudioMicrophoneWrapper.cpp',['../_port_audio_microphone_wrapper_8cpp.html',1,'']]],
   ['portaudiomicrophonewrapper_2eh',['PortAudioMicrophoneWrapper.h',['../_port_audio_microphone_wrapper_8h.html',1,'']]],
-  ['postconnectobject_2ecpp',['PostConnectObject.cpp',['../_post_connect_object_8cpp.html',1,'']]],
-  ['postconnectobject_2eh',['PostConnectObject.h',['../_post_connect_object_8h.html',1,'']]],
+  ['postconnectfactoryinterface_2eh',['PostConnectFactoryInterface.h',['../_post_connect_factory_interface_8h.html',1,'']]],
+  ['postconnectinterface_2eh',['PostConnectInterface.h',['../_post_connect_interface_8h.html',1,'']]],
   ['postconnectobserverinterface_2eh',['PostConnectObserverInterface.h',['../_post_connect_observer_interface_8h.html',1,'']]],
   ['postconnectsendmessageinterface_2eh',['PostConnectSendMessageInterface.h',['../_post_connect_send_message_interface_8h.html',1,'']]],
   ['postconnectsynchronizer_2ecpp',['PostConnectSynchronizer.cpp',['../_post_connect_synchronizer_8cpp.html',1,'']]],
-  ['postconnectsynchronizer_2eh',['PostConnectSynchronizer.h',['../_post_connect_synchronizer_8h.html',1,'']]]
+  ['postconnectsynchronizer_2eh',['PostConnectSynchronizer.h',['../_post_connect_synchronizer_8h.html',1,'']]],
+  ['postconnectsynchronizerfactory_2ecpp',['PostConnectSynchronizerFactory.cpp',['../_post_connect_synchronizer_factory_8cpp.html',1,'']]],
+  ['postconnectsynchronizerfactory_2eh',['PostConnectSynchronizerFactory.h',['../_post_connect_synchronizer_factory_8h.html',1,'']]]
 ];

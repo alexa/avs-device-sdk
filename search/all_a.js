@@ -1,11 +1,14 @@
 var searchData=
 [
   ['key',['key',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface_1_1_tag_key_value_type.html#a874156c3c9a3933587c1060f843d81f0',1,'alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::TagKeyValueType']]],
+  ['key1',['KEY1',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1test.html#acc25918ea0f83fd30c86fc5b64052aed',1,'alexaClientSDK::avsCommon::avs::test']]],
+  ['key2',['KEY2',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1test.html#ad17341c9734ef47062074d8b17f893a8',1,'alexaClientSDK::avsCommon::avs::test']]],
   ['key_5fasset_5fid',['KEY_ASSET_ID',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#a5912ccd48988be35b67d9f9610132da8',1,'alexaClientSDK::capabilityAgents::alerts']]],
   ['key_5fasset_5fplay_5forder',['KEY_ASSET_PLAY_ORDER',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#acbea0c7a90c4ecdb341398ca011995a8',1,'alexaClientSDK::capabilityAgents::alerts']]],
   ['key_5fasset_5furl',['KEY_ASSET_URL',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#a5228eebc4587caa725eabc80bc3b4f83',1,'alexaClientSDK::capabilityAgents::alerts']]],
   ['key_5fassets',['KEY_ASSETS',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#aa7a0af364baef5d18e3ef3d67663c2f2',1,'alexaClientSDK::capabilityAgents::alerts']]],
   ['key_5fbackground_5fasset_5fid',['KEY_BACKGROUND_ASSET_ID',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#a4abf27307984fbc74d1fbfd61fddd630',1,'alexaClientSDK::capabilityAgents::alerts']]],
+  ['key_5fcolumn_5fname',['KEY_COLUMN_NAME',['../namespacealexa_client_s_d_k_1_1storage_1_1sqlite_storage.html#a59ecba2494f508656c6e39e88326a21d',1,'alexaClientSDK::storage::sqliteStorage']]],
   ['key_5fformat',['KEY_FORMAT',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer.html#a8acf7ea1596639407471648977be6dd3',1,'alexaClientSDK::capabilityAgents::speechSynthesizer']]],
   ['key_5floop_5fcount',['KEY_LOOP_COUNT',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#a1188b2e10ad69833fde57d1b70dbfdad',1,'alexaClientSDK::capabilityAgents::alerts']]],
   ['key_5floop_5fpause_5fin_5fmilliseconds',['KEY_LOOP_PAUSE_IN_MILLISECONDS',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#a5010230a4d492e2dc1216097e74667a2',1,'alexaClientSDK::capabilityAgents::alerts']]],
@@ -17,8 +20,12 @@ var searchData=
   ['key_5furl',['KEY_URL',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer.html#a3e35fb265529c791dc3b47110f0d74d0',1,'alexaClientSDK::capabilityAgents::speechSynthesizer']]],
   ['key_5fvalue_5fpair_5fseparator',['KEY_VALUE_PAIR_SEPARATOR',['../_logger_test_8cpp.html#a04da45c750acbcce22e82b572f6f9eba',1,'LoggerTest.cpp']]],
   ['key_5fvalue_5fseparator',['KEY_VALUE_SEPARATOR',['../_logger_test_8cpp.html#ab713c086d0b8d00fe2db0a46cb805ec7',1,'LoggerTest.cpp']]],
+  ['keytype',['KeyType',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1_misc_storage_interface.html#a8dba8c0444a0cc2aaed5b8353c513eea',1,'alexaClientSDK::avsCommon::sdkInterfaces::storage::MiscStorageInterface']]],
   ['keyword',['keyword',['../structalexa_client_s_d_k_1_1kwd_1_1_kitt_ai_key_word_detector_1_1_kitt_ai_configuration.html#a6e9d8b4a9bf070a616b16da3aec6f030',1,'alexaClientSDK::kwd::KittAiKeyWordDetector::KittAiConfiguration::keyword()'],['../structalexa_client_s_d_k_1_1kwd_1_1test_1_1test_key_word_observer_1_1detection_result.html#a4f731887fdec238ab884fd2391995c8a',1,'alexaClientSDK::kwd::test::testKeyWordObserver::detectionResult::keyword()'],['../namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a29dff1e4eb8e21a2ecc3682e3c5a8bdc',1,'alexaClientSDK::kwd::test::KEYWORD()']]],
   ['keyword_5ftext',['KEYWORD_TEXT',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#af5f2f9b3653903b10217927495a77d9d',1,'alexaClientSDK::capabilityAgents::aip::test']]],
+  ['keyworddetectorprovider',['KeywordDetectorProvider',['../classalexa_client_s_d_k_1_1kwd_1_1_keyword_detector_provider.html',1,'alexaClientSDK::kwd']]],
+  ['keyworddetectorprovider_2ecpp',['KeywordDetectorProvider.cpp',['../_keyword_detector_provider_8cpp.html',1,'']]],
+  ['keyworddetectorprovider_2eh',['KeywordDetectorProvider.h',['../_keyword_detector_provider_8h.html',1,'']]],
   ['keyworddetectorstate',['KeyWordDetectorState',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_detector_state_observer_interface.html#a21803055867165b26a00c12c65aa04b9',1,'alexaClientSDK::avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface']]],
   ['keyworddetectorstateobserverinterface',['KeyWordDetectorStateObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_detector_state_observer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['keyworddetectorstateobserverinterface_2eh',['KeyWordDetectorStateObserverInterface.h',['../_key_word_detector_state_observer_interface_8h.html',1,'']]],
@@ -45,5 +52,9 @@ var searchData=
   ['kittaikeyworddetector_2eh',['KittAiKeyWordDetector.h',['../_kitt_ai_key_word_detector_8h.html',1,'']]],
   ['kittaikeyworddetectortest_2ecpp',['KittAiKeyWordDetectorTest.cpp',['../_kitt_ai_key_word_detector_test_8cpp.html',1,'']]],
   ['kittaikeywordtest',['KittAiKeyWordTest',['../classalexa_client_s_d_k_1_1kwd_1_1test_1_1_kitt_ai_key_word_test.html',1,'alexaClientSDK::kwd::test']]],
-  ['kpost',['kPOST',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#af99f8694e53fbfa4fd3e291f53f7ef55a5596742061fc631cdf6bf2a6fa954df3',1,'alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper']]]
+  ['kpost',['kPOST',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#af99f8694e53fbfa4fd3e291f53f7ef55a5596742061fc631cdf6bf2a6fa954df3',1,'alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper']]],
+  ['kput',['kPUT',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#af99f8694e53fbfa4fd3e291f53f7ef55a78da24a91dff79c841b226c0d1641d3f',1,'alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper']]],
+  ['kwd_5fmetadata_5fattachment_5ffield_5fname',['KWD_METADATA_ATTACHMENT_FIELD_NAME',['../namespacealexa_client_s_d_k_1_1acl_1_1test.html#a274556edd6067931d39776b46f3ce951',1,'alexaClientSDK::acl::test']]],
+  ['kwd_5fmetadata_5fexample',['KWD_METADATA_EXAMPLE',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a5bf9c46e9f5df046d9f870c177d02835',1,'alexaClientSDK::capabilityAgents::aip::test']]],
+  ['kwd_5fmetadata_5ffield_5fname',['KWD_METADATA_FIELD_NAME',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a9715649e3977c3460ae6a3a39aff6955',1,'alexaClientSDK::capabilityAgents::aip::KWD_METADATA_FIELD_NAME()'],['../namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a24c002f81ecda6bb22a214ca1a743c9a',1,'alexaClientSDK::capabilityAgents::aip::test::KWD_METADATA_FIELD_NAME()']]]
 ];
