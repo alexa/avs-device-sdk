@@ -118,7 +118,7 @@ DB_PATH="$INSTALL_BASE/$DB_FOLDER"
 UNIT_TEST_MODEL_PATH="$INSTALL_BASE/avs-device-sdk/KWD/inputs/SensoryModels/"
 UNIT_TEST_MODEL="$THIRD_PARTY_PATH/alexa-rpi/models/spot-alexa-rpi-31000.snsr"
 
-WAKE_WORD_ENGINE="snowboy" # "sensory" For Sensory engine
+WAKE_WORD_ENGINE="sensory" # "snowboy" For Sensory engine
 SENSORY_PATH="$THIRD_PARTY_PATH/alexa-rpi"
 SENSORY_MODELS_PATH="$SENSORY_PATH/models"
 SNOWBOY_PATH="$THIRD_PARTY_PATH/snowboy"
@@ -272,10 +272,6 @@ else
     cd $BUILD_PATH
     make SampleApp -j4
 fi
-else
-    cd $BUILD_PATH
-    make SampleApp -j4
-fi
 
 echo
 echo "==============> Saving Configuration File =============="
@@ -352,7 +348,7 @@ echo "==============> Create StartSampleApp Script =============="
 echo
 
 
-if [ $WAKE_WORD_ENGINE = "SENSORY"  ]
+if [ $WAKE_WORD_ENGINE = "sensory"  ]
 then
 
 cat << EOF > "$START_SCRIPT"
@@ -360,7 +356,7 @@ cd "$BUILD_PATH/SampleApp/src"
 ./SampleApp "$CONFIG_FILE" "$SENSORY_MODELS_PATH" DEBUG9
 EOF
 
-elif [ $WAKE_WORD_ENGINE = "SNOWBOY"  ]
+elif [ $WAKE_WORD_ENGINE = "snowboy"  ]
 then
 
 cat << EOF > "$START_SCRIPT"
