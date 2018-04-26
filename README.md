@@ -85,7 +85,7 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 
 ### Security Best Practices
 
-In addition to adopting the `Security Best Practices for Alexa`[https://developer.amazon.com/docs/alexa-voice-service/security-best-practices.html], when building the SDK:
+In addition to adopting the [Security Best Practices for Alexa](https://developer.amazon.com/docs/alexa-voice-service/security-best-practices.html), when building the SDK:
 
 * Protect configuration parameters, such as those found in the AlexaClientSDKCOnfig.json file, from tampering and inspection.
 * Protect executable files and processes from tampering and inspection.
@@ -136,6 +136,6 @@ v1.7.0 released 04/18/2018:
 **Known Issues**
 * The `ACL` may encounter issues if audio attachments are received but not consumed.
 * `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
-* Some ERROR messages may be printed during start-up event if initialization proceeds normally and successfully.
+* Some ERROR messages may be printed during start-up even if initialization proceeds normally and successfully.
 * If an unrecoverable authorization error is encountered the sample app may crash on shutdown.
 * If a non-CBL `clientId` is included in the `deviceInfo` section of `AlexaClientSDKConfig.json`, the error will be reported as an unrecoverable authorization error, rather than a more specific error.
