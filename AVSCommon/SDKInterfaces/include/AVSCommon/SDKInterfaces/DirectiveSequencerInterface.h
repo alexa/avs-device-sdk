@@ -57,9 +57,14 @@ public:
     virtual ~DirectiveSequencerInterface() = default;
 
     /**
-     * Add the specified handler as a handler for its specified namespace, name, and policy. Note that implmentations
+     * Add the specified handler as a handler for its specified namespace, name, and policy. Note that implementations
      * of this should call the handler's getConfiguration() method to get the namespace(s), name(s), and policy(ies) of
      * the handler. If any of the mappings fail, the entire call is refused.
+     *
+     * @note If the @c name of the configuration is "*", then this is considered a wildcard handler for the given
+     * @c namespace.  For a given @c directive, the @c DirectiveSequencer will look first for a handler whose
+     * configuration exactly matches the @c directive's { namespace, name } pair.  If no exact match is found, then
+     * the @c directive will be sent to the wildcard handler for the @c namespace, if one has been added.
      *
      * @param handler The handler to add.
      * @return Whether the handler was added.
@@ -71,9 +76,6 @@ public:
      * implementations of this should call the handler's getConfiguration() method to get the namespace(s), name(s), and
      * policy(ies) of the handler. If the handler's configurations are unable to be removed, the entire operation is
      * refused.
-
-     specified mappings from @c NamespaceAndName values to @c HandlerAndPolicy values. If any of
-     * the specified mappings do not match an existing mapping, the entire operation is refused.
      *
      * @param handler The handler to remove.
      * @return Whether the handler was removed.
@@ -98,6 +100,18 @@ public:
      * @return Whether or not the directive was accepted.
      */
     virtual bool onDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive) = 0;
+
+    /**
+     * Disable the DirectiveSequencer.
+     *
+     * @note While disabled the DirectiveSequencer should not be able to handle directives.
+     */
+    virtual void disable() = 0;
+
+    /**
+     * Enable the DirectiveSequencer.
+     */
+    virtual void enable() = 0;
 };
 
 inline DirectiveSequencerInterface::DirectiveSequencerInterface(const std::string& name) :

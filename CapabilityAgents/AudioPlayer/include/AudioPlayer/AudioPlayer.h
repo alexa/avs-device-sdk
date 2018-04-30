@@ -20,6 +20,8 @@
 
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/PlayerActivity.h>
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/AudioPlayerInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
@@ -31,6 +33,7 @@
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
+#include <AVSCommon/Utils/Timing/TimeUtils.h>
 
 #include "AudioItem.h"
 #include "ClearBehavior.h"
@@ -50,6 +53,7 @@ namespace audioPlayer {
 class AudioPlayer
         : public avsCommon::avs::CapabilityAgent
         , public avsCommon::sdkInterfaces::AudioPlayerInterface
+        , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface
         , public avsCommon::utils::RequiresShutdown
         , public std::enable_shared_from_this<AudioPlayer> {
@@ -112,6 +116,11 @@ public:
     void addObserver(std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer) override;
     void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer) override;
     std::chrono::milliseconds getAudioItemOffset() override;
+    /// @}
+
+    /// @name CapabilityConfigurationInterface Functions
+    /// @{
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
     /// @}
 
 private:
@@ -363,6 +372,9 @@ private:
 
     /// @}
 
+    /// This is used to safely access the time utilities.
+    avsCommon::utils::timing::TimeUtils m_timeUtils;
+
     /// MediaPlayerInterface instance to send audio attachments to.
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_mediaPlayer;
 
@@ -458,6 +470,9 @@ private:
     bool m_isStopCalled;
 
     /// @}
+
+    /// Set of capability configurations that will get published using DCF
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

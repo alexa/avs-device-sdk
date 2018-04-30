@@ -85,12 +85,14 @@ protected:
      * @param keyword The keyword detected.
      * @param beginIndex The absolute begin index of the first part of the keyword found within the @c stream.
      * @param endIndex The absolute end index of the last part of the keyword within the stream of the @c stream.
+     * @param KWDMetadata Wake word engine metadata.
      */
     void notifyKeyWordObservers(
         std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
         std::string keyword,
         avsCommon::avs::AudioInputStream::Index beginIndex,
-        avsCommon::avs::AudioInputStream::Index endIndex) const;
+        avsCommon::avs::AudioInputStream::Index endIndex,
+        std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr) const;
 
     /**
      * Notifies all keyword detector state observers of state changes in the derived detector.

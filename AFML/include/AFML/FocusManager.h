@@ -19,12 +19,14 @@
 #include <mutex>
 #include <set>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include <AVSCommon/SDKInterfaces/ChannelObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 
 #include "AFML/Channel.h"
+#include "AFML/ActivityTrackerInterface.h"
 #include "AVSCommon/Utils/Threading/Executor.h"
 
 namespace alexaClientSDK {
@@ -36,12 +38,12 @@ namespace afml {
  * operations are provided:
  *
  * acquire Channel - clients should call the acquireChannel() method, passing in the name of the Channel they wish to
- * acquire, a pointer to the observer that they want to be notified once they get focus, and a unique activity id.
+ * acquire, a pointer to the observer that they want to be notified once they get focus, and a unique interface name.
  *
  * release Channel - clients should call the releaseChannel() method, passing in the name of the Channel and the
  * observer of the Channel they wish to release.
  *
- * stop foreground Channel - clients should call the stopForegroundActivitiy() method.
+ * stop foreground Channel - clients should call the stopForegroundActivity() method.
  *
  * All of these methods will notify the observer of the Channel of focus changes via an asynchronous callback to the
  * ChannelObserverInterface##onFocusChanged() method, at which point the client should make a user observable change
@@ -82,30 +84,40 @@ public:
         unsigned int priority;
     };
 
+    /// The default @c ChannelConfiguration for AVS audio channels.
+    static const std::vector<FocusManager::ChannelConfiguration> DEFAULT_AUDIO_CHANNELS;
+
+    /// The default @c ChannelConfiguration for AVS visual channels.
+    static const std::vector<FocusManager::ChannelConfiguration> DEFAULT_VISUAL_CHANNELS;
+
     /**
-     * This constructor creates Channels based on the provided configurations. This is defaulted to the default
-     * AVS Channel configuration names and priorities if no input parameter is provided.
+     * This constructor creates Channels based on the provided configurations.
      *
      * @param channelConfigurations A vector of @c channelConfiguration objects that will be used to create the
      * Channels. No two Channels should have the same name or priority. If there are multiple configurations with the
      * same name or priority, the latter Channels with that name or priority will not be created.
+     * @param activityTrackerInterface The interface to notify the activity tracker a vector of channel states that has
+     * been updated.
      */
     FocusManager(
-        const std::vector<ChannelConfiguration>& channelConfigurations = {
-            {DIALOG_CHANNEL_NAME, DIALOG_CHANNEL_PRIORITY},
-            {ALERTS_CHANNEL_NAME, ALERTS_CHANNEL_PRIORITY},
-            {CONTENT_CHANNEL_NAME, CONTENT_CHANNEL_PRIORITY}});
+        const std::vector<ChannelConfiguration>& channelConfigurations,
+        std::shared_ptr<ActivityTrackerInterface> activityTrackerInterface = nullptr);
 
     bool acquireChannel(
         const std::string& channelName,
         std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver,
-        const std::string& activityId) override;
+        const std::string& interface) override;
 
     std::future<bool> releaseChannel(
         const std::string& channelName,
         std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver) override;
 
     void stopForegroundActivity() override;
+
+    void addObserver(const std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerObserverInterface>& observer) override;
+
+    void removeObserver(
+        const std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerObserverInterface>& observer) override;
 
 private:
     /**
@@ -126,17 +138,25 @@ private:
     };
 
     /**
+     * Sets the @c FocusState for @c channel and notifies observers of the change.
+     *
+     * @param channel The @c Channel to set the @c FocusState for.
+     * @param focus The @c FocusState to set @c channel to.
+     */
+    void setChannelFocus(const std::shared_ptr<Channel>& channel, avsCommon::avs::FocusState focus);
+
+    /**
      * Grants access to the Channel specified and updates other Channels as needed. This function provides the full
      * implementation which the public method will call.
      *
      * @param channelToAcquire The Channel to acquire.
      * @param channelObserver The new observer of the Channel.
-     * @param activityId The id of the new activity on the Channel.
+     * @param interface The name of the AVS inferface on the Channel.
      */
     void acquireChannelHelper(
         std::shared_ptr<Channel> channelToAcquire,
         std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> channelObserver,
-        const std::string& activityId);
+        const std::string& interface);
 
     /**
      * Releases the Channel specified and updates other Channels as needed. This function provides the full
@@ -154,15 +174,16 @@ private:
         const std::string& channelName);
 
     /**
-     * Stops the Channel specified and updates other Channels as needed if the activity id passed in matches the
-     * activity id of the Channel. This function provides the full implementation which the public method will call.
+     * Stops the Channel specified and updates other Channels as needed if the interface name passed in matches the
+     * interface occupying the Channel. This function provides the full implementation which the public method will
+     * call.
      *
      * @param foregroundChannel The Channel to stop.
-     * @param foregroundChannelActivityId The id of the activity to stop.
+     * @param foregroundChannelInterface The name of the interface to stop.
      */
     void stopForegroundActivityHelper(
         std::shared_ptr<Channel> foregroundChannel,
-        std::string foregroundChannelActivityId);
+        std::string foregroundChannelInterface);
 
     /**
      * Finds the channel from the given channel name.
@@ -210,14 +231,33 @@ private:
      */
     void foregroundHighestPriorityActiveChannel();
 
+    /**
+     * This function is called inside the executor context of @c FocusManager to notify its activityTracker of updates
+     * to a set of @c Channel via the @c ActivityTrackerInterface interface.
+     */
+    void notifyActivityTracker();
+
     /// Map of channel names to shared_ptrs of Channel objects and contains every channel.
     std::unordered_map<std::string, std::shared_ptr<Channel>> m_allChannels;
 
     /// Set of currently observed Channels ordered by Channel priority.
     std::set<std::shared_ptr<Channel>, ChannelPtrComparator> m_activeChannels;
 
-    /// Mutex used to lock m_activeChannels and Channels' activity ids.
+    /// The set of observers to notify about focus changes.
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerObserverInterface>> m_observers;
+
+    /// Mutex used to lock m_activeChannels, m_observers and Channels' interface name.
     std::mutex m_mutex;
+
+    /*
+     * A vector of channel's State that has been updated due to @c acquireChannel(), @c releaseChannel() or
+     * stopForegroundActivity().  This is accessed by functions in the @c m_executor worker thread, and do not require
+     * any synchronization.
+     */
+    std::vector<Channel::State> m_activityUpdates;
+
+    /// The interface to notify its activity tracker of any changes to its channels.
+    std::shared_ptr<ActivityTrackerInterface> m_activityTracker;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

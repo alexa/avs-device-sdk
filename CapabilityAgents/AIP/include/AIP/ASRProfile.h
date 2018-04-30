@@ -16,9 +16,13 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AIP_INCLUDE_AIP_ASRPROFILE_H_
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AIP_INCLUDE_AIP_ASRPROFILE_H_
 
+#include <ostream>
+
 namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace aip {
+
+#include <ostream>
 
 /**
  * Enumerates the different ASR profiles supported by AVS.

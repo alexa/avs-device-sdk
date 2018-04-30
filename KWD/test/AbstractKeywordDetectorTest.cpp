@@ -34,13 +34,14 @@ using ::testing::_;
 /// A test observer that mocks out the KeyWordObserverInterface##onKeyWordDetected() call.
 class MockKeyWordObserver : public avsCommon::sdkInterfaces::KeyWordObserverInterface {
 public:
-    MOCK_METHOD4(
+    MOCK_METHOD5(
         onKeyWordDetected,
         void(
             std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
             std::string keyword,
             avsCommon::avs::AudioInputStream::Index beginIndex,
-            avsCommon::avs::AudioInputStream::Index endIndex));
+            avsCommon::avs::AudioInputStream::Index endIndex,
+            std::shared_ptr<const std::vector<char>> KWDMetadata));
 };
 
 /// A test observer that mocks out the KeyWordDetectorStateObserverInterface##onStateChanged() call.
@@ -95,7 +96,7 @@ protected:
 TEST_F(AbstractKeyWordDetectorTest, testAddKeyWordObserver) {
     detector->addKeyWordObserver(keyWordObserver1);
 
-    EXPECT_CALL(*keyWordObserver1, onKeyWordDetected(_, _, _, _)).Times(1);
+    EXPECT_CALL(*keyWordObserver1, onKeyWordDetected(_, _, _, _, _)).Times(1);
     detector->sendKeyWordCallToObservers();
 }
 
@@ -103,8 +104,8 @@ TEST_F(AbstractKeyWordDetectorTest, testAddMultipleKeyWordObserver) {
     detector->addKeyWordObserver(keyWordObserver1);
     detector->addKeyWordObserver(keyWordObserver2);
 
-    EXPECT_CALL(*keyWordObserver1, onKeyWordDetected(_, _, _, _)).Times(1);
-    EXPECT_CALL(*keyWordObserver2, onKeyWordDetected(_, _, _, _)).Times(1);
+    EXPECT_CALL(*keyWordObserver1, onKeyWordDetected(_, _, _, _, _)).Times(1);
+    EXPECT_CALL(*keyWordObserver2, onKeyWordDetected(_, _, _, _, _)).Times(1);
     detector->sendKeyWordCallToObservers();
 }
 
@@ -112,14 +113,14 @@ TEST_F(AbstractKeyWordDetectorTest, testRemoveKeyWordObserver) {
     detector->addKeyWordObserver(keyWordObserver1);
     detector->addKeyWordObserver(keyWordObserver2);
 
-    EXPECT_CALL(*keyWordObserver1, onKeyWordDetected(_, _, _, _)).Times(1);
-    EXPECT_CALL(*keyWordObserver2, onKeyWordDetected(_, _, _, _)).Times(1);
+    EXPECT_CALL(*keyWordObserver1, onKeyWordDetected(_, _, _, _, _)).Times(1);
+    EXPECT_CALL(*keyWordObserver2, onKeyWordDetected(_, _, _, _, _)).Times(1);
     detector->sendKeyWordCallToObservers();
 
     detector->removeKeyWordObserver(keyWordObserver1);
 
-    EXPECT_CALL(*keyWordObserver1, onKeyWordDetected(_, _, _, _)).Times(0);
-    EXPECT_CALL(*keyWordObserver2, onKeyWordDetected(_, _, _, _)).Times(1);
+    EXPECT_CALL(*keyWordObserver1, onKeyWordDetected(_, _, _, _, _)).Times(0);
+    EXPECT_CALL(*keyWordObserver2, onKeyWordDetected(_, _, _, _, _)).Times(1);
     detector->sendKeyWordCallToObservers();
 }
 

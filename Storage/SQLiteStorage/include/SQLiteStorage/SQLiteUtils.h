@@ -16,8 +16,11 @@
 #ifndef ALEXA_CLIENT_SDK_STORAGE_SQLITESTORAGE_INCLUDE_SQLITESTORAGE_SQLITEUTILS_H_
 #define ALEXA_CLIENT_SDK_STORAGE_SQLITESTORAGE_INCLUDE_SQLITESTORAGE_SQLITEUTILS_H_
 
-#include <sqlite3.h>
 #include <string>
+
+#include <sqlite3.h>
+
+#include <SQLiteStorage/SQLiteDatabase.h>
 
 namespace alexaClientSDK {
 namespace storage {
@@ -45,7 +48,7 @@ sqlite3* openSQLiteDatabase(const std::string& filePath);
  * Closes a SQLite database.
  *
  * @param The handle to sqlite database.
- * @return Whether the operation was successul.
+ * @return Whether the operation was successful.
  */
 bool closeSQLiteDatabase(sqlite3* dbHandle);
 
@@ -62,24 +65,24 @@ bool performQuery(sqlite3* dbHandle, const std::string& sqlString);
 /**
  * Acquires the number of rows in a table within an open database.
  *
- * @param dbHandle A SQLite handle to an open database.
+ * @param db A SQLite database object.
  * @param tableName The name of the table to be queried.
  * @param[out] numberRows Where the number of rows will be stored on a successful lookup.
  * @return Whether the lookup was successful or not.
  */
-bool getNumberTableRows(sqlite3* dbHandle, const std::string& tableName, int* numberRows);
+bool getNumberTableRows(SQLiteDatabase* db, const std::string& tableName, int* numberRows);
 
 /**
  * Queries a specified column in a SQLite table, and identifies the highest value across all rows.
  * This function requires that the table and column exists, and that the column is of integer type.
  *
- * @param dbHandle A SQLite handle to an open database.
+ * @param db A SQLite database object.
  * @param tableName The name of the table to be queried.
  * @param columnName The name of the column in the table to be queried.
  * @param[out] maxId Where the maximum id will be stored on a successful lookup.
  * @return Whether the lookup was successful or not.
  */
-bool getTableMaxIntValue(sqlite3* dbHandle, const std::string& tableName, const std::string& columnName, int* maxId);
+bool getTableMaxIntValue(SQLiteDatabase* db, const std::string& tableName, const std::string& columnName, int* maxId);
 
 /**
  * Queries if a table exists within a given open database.

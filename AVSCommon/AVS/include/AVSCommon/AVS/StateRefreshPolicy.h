@@ -35,7 +35,14 @@ enum class StateRefreshPolicy {
      * Indicates to the @c ContextManager that the stateProvider needs to be queried and the state refreshed every time
      * it processes a @c getContext request.
      */
-    ALWAYS
+    ALWAYS,
+
+    /**
+     * Indicates to the @c ContextManager that the stateProvider needs to be queried and the state refreshed every time
+     * it processes a @c getContext request.  The stateProvider may choose to not report context by supplying an empty
+     * @c jsonState via @c setState.
+     */
+    SOMETIMES
 };
 
 }  // namespace avs

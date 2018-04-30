@@ -16,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_CHANNEL_H_
 #define ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_CHANNEL_H_
 
+#include <chrono>
 #include <memory>
 #include <string>
 
@@ -31,12 +32,47 @@ namespace afml {
  */
 class Channel {
 public:
+    /*
+     * This class contains the states of the @c Channel.  The states inside this structure are intended to be shared via
+     * the @c ActivityTrackerInterface.
+     */
+    struct State {
+        /// Constructor with @c Channel name as the parameter.
+        State(const std::string& name);
+
+        /// Constructor.
+        State();
+
+        /*
+         * The channel's name.  Although the name is not dynamic, it is useful for identifying which channel the state
+         * belongs to.
+         */
+        std::string name;
+
+        /// The current Focus of the Channel.
+        avsCommon::avs::FocusState focusState;
+
+        /// The name of the AVS interface that is occupying the Channel.
+        std::string interfaceName;
+
+        /// Time at which the channel goes to NONE focus.
+        std::chrono::steady_clock::time_point timeAtIdle;
+    };
+
     /**
      * Constructs a new Channel object with the provided priority.
      *
+     * @param name The channel's name.
      * @param priority The priority of the channel.
      */
-    Channel(const unsigned int priority);
+    Channel(const std::string& name, const unsigned int priority);
+
+    /**
+     * Returns the name of a channel.
+     *
+     * @return The channel's name.
+     */
+    const std::string& getName() const;
 
     /**
      * Returns the priority of a Channel.
@@ -51,15 +87,23 @@ public:
      * @c NONE, the observer will be removed from the Channel.
      *
      * @param focus The focus of the Channel.
+     * @return @c true if focus changed, else @c false.
      */
-    void setFocus(avsCommon::avs::FocusState focus);
+    bool setFocus(avsCommon::avs::FocusState focus);
 
     /**
-     * Sets a new observer and notifies the old observer, if there is one, that it lost focus.
+     * Sets a new observer.
      *
      * @param observer The observer of the Channel.
      */
     void setObserver(std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> observer);
+
+    /**
+     * Checks whether the Channel has an observer.
+     *
+     * @return @c true if the Channel has an observer, else @c false.
+     */
+    bool hasObserver() const;
 
     /**
      * Compares this Channel and another Channel and checks which is higher priority. A Channel is considered higher
@@ -70,26 +114,18 @@ public:
     bool operator>(const Channel& rhs) const;
 
     /**
-     * Updates the Channel's activity id.
+     * Updates the AVS interface occupying the Channel.
      *
-     * @param activityId The activity id of the Channel.
+     * @param interface The name of the interface occupying the Channel.
      */
-    void setActivityId(const std::string& activityId);
+    void setInterface(const std::string& interface);
 
     /**
-     * Returns the activity id of the Channel.
+     * Returns the name of the AVS interface occupying the Channel.
      *
-     * @return The Channel activity id.
+     * @return The name of the AVS interface.
      */
-    std::string getActivityId() const;
-
-    /**
-     * Notifies the Channel's observer to stop if the @c activityId matches the Channel's activity id.
-     *
-     * @param activityId The activity id to compare.
-     * @return @c true if the activity on the Channel was stopped and @c false otherwise.
-     */
-    bool stopActivity(const std::string& activityId);
+    std::string getInterface() const;
 
     /**
      * Checks whether the observer passed in currently owns the Channel.
@@ -99,18 +135,22 @@ public:
      */
     bool doesObserverOwnChannel(std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> observer) const;
 
+    /**
+     * Returns the @c State of the @c Channel.
+     *
+     * @return The @c State.
+     */
+    Channel::State getState() const;
+
 private:
     /// The priority of the Channel.
     const unsigned int m_priority;
 
-    /// The current Focus of the Channel.
-    avsCommon::avs::FocusState m_focusState;
+    /// The @c State of the @c Channel.
+    State m_state;
 
     /// The current observer of the Channel.
     std::shared_ptr<avsCommon::sdkInterfaces::ChannelObserverInterface> m_observer;
-
-    /// An identifier which should be unique to any activity that can occur on any Channel.
-    std::string m_currentActivityId;
 };
 
 }  // namespace afml

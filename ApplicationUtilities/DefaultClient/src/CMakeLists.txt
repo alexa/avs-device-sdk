@@ -21,7 +21,11 @@ target_link_libraries(DefaultClient
     AudioPlayer
     ExternalMediaPlayer
     AVSSystem
-    ContextManager)
+    ContextManager
+    RegistrationManager)
 
+if (COMMS)
+    target_link_libraries(DefaultClient CallManager)
+endif()
 # install target
 asdk_install()

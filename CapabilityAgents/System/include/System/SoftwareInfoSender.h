@@ -22,7 +22,7 @@
 #include <string>
 #include <ACL/AVSConnectionManager.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
-#include <AVSCommon/AVS/AbstractConnection.h>
+#include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/SoftwareInfoSenderObserverInterface.h>
@@ -63,7 +63,7 @@ public:
         avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
         bool sendSoftwareInfoUponConnect,
         std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> observer,
-        std::shared_ptr<avsCommon::avs::AbstractConnection> connection,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connection,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
 
@@ -120,7 +120,7 @@ private:
         avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
         bool sendSoftwareInfoUponConnect,
         std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> observer,
-        std::shared_ptr<avsCommon::avs::AbstractConnection> connection,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connection,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
 
@@ -141,7 +141,7 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> m_observer;
 
     /// Our connection to AVS.
-    std::shared_ptr<avsCommon::avs::AbstractConnection> m_connection;
+    std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> m_connection;
 
     /// Object for sending messages to AVS.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;

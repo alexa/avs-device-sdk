@@ -22,17 +22,12 @@
 #include <gtest/gtest.h>
 
 #include <ACL/AVSConnectionManager.h>
-#include <ACL/Transport/PostConnectObject.h>
-#include <ACL/Transport/HTTP2MessageRouter.h>
-#include <ContextManager/ContextManager.h>
-#include <AuthDelegate/AuthDelegate.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachment.h>
-#include <AVSCommon/Utils/SDS/InProcessSDS.h>
-#include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
-#include <AVSCommon/Utils/Logger/Logger.h>
+#include <CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h>
+#include <ContextManager/ContextManager.h>
 
-#include "Integration/AuthObserver.h"
+#include "Integration/ACLTestContext.h"
 #include "Integration/ClientMessageHandler.h"
 #include "Integration/ConnectionStatusObserver.h"
 #include "Integration/ObservableMessageRequest.h"
@@ -42,11 +37,11 @@ namespace integration {
 namespace test {
 
 using namespace acl;
-using namespace authDelegate;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
+using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::sds;
-using namespace avsCommon::avs::initialization;
+using namespace registrationManager;
 
 /// This is a basic synchronize JSON message which may be used to initiate a connection with AVS.
 // clang-format off
@@ -178,53 +173,44 @@ static const std::string SILENCE_AUDIO_FILE_NAME = "silence_test.wav";
  */
 static const int MAX_CONCURRENT_STREAMS = 9;
 
-std::string g_configPath;
-std::string g_inputPath;
+/// Path to the AlexaClientSDKConfig.json file (from command line arguments).
+static std::string g_configPath;
+/// Path to resources (e.g. audio files) for tests (from command line arguments).
+static std::string g_inputPath;
 
 class AlexaCommunicationsLibraryTest : public ::testing::Test {
 public:
     void SetUp() override {
-        std::ifstream infile(g_configPath);
-        ASSERT_TRUE(infile.good());
-        ASSERT_TRUE(AlexaClientSDKInit::initialize({&infile}));
+        m_context = ACLTestContext::create(g_configPath);
+        ASSERT_TRUE(m_context);
 
-        m_authObserver = std::make_shared<AuthObserver>();
-        ASSERT_TRUE(m_authDelegate = AuthDelegate::create());
-        m_authDelegate->addAuthObserver(m_authObserver);
-
-        m_contextManager = contextManager::ContextManager::create();
-        ASSERT_NE(m_contextManager, nullptr);
-        PostConnectObject::init(m_contextManager);
-
-        m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
-
-        m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
-        m_clientMessageHandler = std::make_shared<ClientMessageHandler>(m_attachmentManager);
-        m_messageRouter = std::make_shared<HTTP2MessageRouter>(m_authDelegate, m_attachmentManager);
-
-        bool isEnabled = false;
+        m_clientMessageHandler = std::make_shared<ClientMessageHandler>(m_context->getAttachmentManager());
         m_avsConnectionManager = AVSConnectionManager::create(
-            m_messageRouter, isEnabled, {m_connectionStatusObserver}, {m_clientMessageHandler});
+            m_context->getMessageRouter(), false, {m_context->getConnectionStatusObserver()}, {m_clientMessageHandler});
+        ASSERT_TRUE(m_avsConnectionManager);
+
         connect();
     }
 
     void TearDown() override {
-        disconnect();
-        m_avsConnectionManager->shutdown();
-        AlexaClientSDKInit::uninitialize();
+        // Note nullptr checks needed to avoid segaults if @c SetUp() failed.
+        if (m_avsConnectionManager) {
+            disconnect();
+            m_avsConnectionManager->shutdown();
+        }
+        m_context.reset();
     }
 
     void connect() {
-        ASSERT_TRUE(m_authObserver->waitFor(AuthObserver::State::REFRESHED)) << "Retrieving the auth token timed out.";
         m_avsConnectionManager->enable();
-        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::CONNECTED))
-            << "Connecting timed out.";
+        m_context->waitForConnected();
     }
 
     void disconnect() {
-        m_avsConnectionManager->disable();
-        ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::DISCONNECTED))
-            << "Disconnecting timed out.";
+        if (m_avsConnectionManager) {
+            m_avsConnectionManager->disable();
+            m_context->waitForDisconnected();
+        }
     }
 
     /*
@@ -305,13 +291,10 @@ public:
         sendEvent(eventJson, status, std::chrono::seconds(40), attachmentReader);
     }
 
-    std::shared_ptr<AuthObserver> m_authObserver;
-    std::shared_ptr<AuthDelegate> m_authDelegate;
-    std::shared_ptr<contextManager::ContextManager> m_contextManager;
-    std::shared_ptr<ConnectionStatusObserver> m_connectionStatusObserver;
+    /// Context for running ACL based tests.
+    std::unique_ptr<ACLTestContext> m_context;
+
     std::shared_ptr<ClientMessageHandler> m_clientMessageHandler;
-    std::shared_ptr<AttachmentManager> m_attachmentManager;
-    std::shared_ptr<MessageRouter> m_messageRouter;
     std::shared_ptr<AVSConnectionManager> m_avsConnectionManager;
 };
 
@@ -446,7 +429,7 @@ TEST_F(AlexaCommunicationsLibraryTest, testPersistentConnection) {
         avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
         std::chrono::seconds(10),
         attachmentReader);
-    ASSERT_FALSE(m_connectionStatusObserver->waitFor(
+    ASSERT_FALSE(m_context->getConnectionStatusObserver()->waitFor(
         ConnectionStatusObserverInterface::Status::DISCONNECTED, std::chrono::seconds(20)))
         << "Connection changed after a response was received";
     sendEvent(
@@ -469,7 +452,8 @@ TEST_F(AlexaCommunicationsLibraryTest, testMultipleConnectionStatusObservers) {
     m_avsConnectionManager->removeConnectionStatusObserver(observer);
     disconnect();
     ASSERT_EQ(observer->getConnectionStatus(), ConnectionStatusObserverInterface::Status::CONNECTED);
-    ASSERT_TRUE(m_connectionStatusObserver->waitFor(ConnectionStatusObserverInterface::Status::DISCONNECTED));
+    ASSERT_TRUE(
+        m_context->getConnectionStatusObserver()->waitFor(ConnectionStatusObserverInterface::Status::DISCONNECTED));
 }
 }  // namespace test
 }  // namespace integration

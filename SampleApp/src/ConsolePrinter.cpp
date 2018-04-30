@@ -17,8 +17,6 @@
 
 #include <iostream>
 
-#include <AVSCommon/Utils/Logger/LoggerUtils.h>
-
 namespace alexaClientSDK {
 namespace sampleApp {
 
@@ -55,7 +53,7 @@ void ConsolePrinter::emit(
     const char* threadMoniker,
     const char* text) {
     std::lock_guard<std::mutex> lock{*m_mutex};
-    std::cout << avsCommon::utils::logger::formatLogString(level, time, threadMoniker, text) << std::endl;
+    std::cout << m_logFormatter.format(level, time, threadMoniker, text) << std::endl;
 }
 
 }  // namespace sampleApp

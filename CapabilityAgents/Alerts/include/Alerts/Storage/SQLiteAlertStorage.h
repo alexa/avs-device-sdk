@@ -18,9 +18,11 @@
 
 #include "Alerts/Storage/AlertStorageInterface.h"
 
-#include <sqlite3.h>
+#include <set>
 
 #include <AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h>
+#include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
+#include <SQLiteStorage/SQLiteDatabase.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -36,20 +38,26 @@ namespace storage {
 class SQLiteAlertStorage : public AlertStorageInterface {
 public:
     /**
-     * Constructor.
+     * Factory method for creating a storage object for Alerts based on an SQLite database.
+     *
+     * @param configurationRoot The global config object.
+     * @param alertsAudioFactory A factory that can produce default alert sounds.
+     * @return Pointer to the SQLiteAlertStorage object, nullptr if there's an error creating it.
      */
-    SQLiteAlertStorage(
+    static std::unique_ptr<SQLiteAlertStorage> create(
+        const avsCommon::utils::configuration::ConfigurationNode& configurationRoot,
         const std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface>& alertsAudioFactory);
 
-    bool createDatabase(const std::string& filePath) override;
+    /**
+     * On destruction, close the underlying database.
+     */
+    ~SQLiteAlertStorage();
 
-    bool open(const std::string& filePath) override;
+    bool createDatabase() override;
 
-    bool isOpen() override;
+    bool open() override;
 
     void close() override;
-
-    bool alertExists(const std::string& token) override;
 
     bool store(std::shared_ptr<Alert> alert) override;
 
@@ -59,13 +67,37 @@ public:
 
     bool erase(std::shared_ptr<Alert> alert) override;
 
-    bool erase(const std::vector<int>& alertDbIds) override;
-
     bool clearDatabase() override;
 
-    void printStats(StatLevel level) override;
+    /**
+     * An enum class to help debug database contents.  This type is used in the printStats function below.
+     */
+    enum class StatLevel {
+        /// Print only a single line, providing a count of rows from each table.
+        ONE_LINE,
+        /// Print all details of the Alerts table, summarizing the other tables.
+        ALERTS_SUMMARY,
+        /// Print all details of all records.
+        EVERYTHING
+    };
+
+    /**
+     * A utility function to print the contents of the database to the SDK logger output.
+     * This function is provided for debug use only.
+     */
+    void printStats(StatLevel level = StatLevel::ONE_LINE);
 
 private:
+    /**
+     * Constructor.
+     *
+     * @param dbFilePath The location of the SQLite database file.
+     * @param alertsAudioFactory A factory that can produce default alert sounds.
+     */
+    SQLiteAlertStorage(
+        const std::string& dbFilePath,
+        const std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface>& alertsAudioFactory);
+
     /**
      * Utility function to migrate an existing V1 Alerts database file to the V2 format.
      *
@@ -74,7 +106,6 @@ private:
      * If this table does not exist, then this function will create it, and the additional tables that V2 expects,
      * and then load all alerts from the V1 table and save them into the V2 table.
      *
-     * @param dbHandle A SQLite handle to an open database.
      * @return Whether the migration was successful.  Returns true by default if the db is already V2.
      */
     bool migrateAlertsDbFromV1ToV2();
@@ -89,11 +120,19 @@ private:
      */
     bool loadHelper(int dbVersion, std::vector<std::shared_ptr<Alert>>* alertContainer);
 
-    /// The sqlite database handle.
-    sqlite3* m_dbHandle;
+    /**
+     * Query whether an alert is currently stored with the given token.
+     *
+     * @param token The AVS token which uniquely identifies an alert.
+     * @return @c true If the alert is stored in the database, @c false otherwise.
+     */
+    bool alertExists(const std::string& token);
 
     /// A member that stores a factory that produces audio streams for alerts.
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> m_alertsAudioFactory;
+
+    /// The underlying database class.
+    alexaClientSDK::storage::sqliteStorage::SQLiteDatabase m_db;
 };
 
 }  // namespace storage

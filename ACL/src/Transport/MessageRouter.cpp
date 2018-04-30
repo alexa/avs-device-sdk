@@ -43,6 +43,7 @@ static const std::string TAG("MessageRouter");
 MessageRouter::MessageRouter(
     std::shared_ptr<AuthDelegateInterface> authDelegate,
     std::shared_ptr<AttachmentManager> attachmentManager,
+    std::shared_ptr<TransportFactoryInterface> transportFactory,
     const std::string& avsEndpoint) :
         MessageRouterInterface{"MessageRouter"},
         m_avsEndpoint{avsEndpoint},
@@ -50,7 +51,8 @@ MessageRouter::MessageRouter(
         m_connectionStatus{ConnectionStatusObserverInterface::Status::DISCONNECTED},
         m_connectionReason{ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST},
         m_isEnabled{false},
-        m_attachmentManager{attachmentManager} {
+        m_attachmentManager{attachmentManager},
+        m_transportFactory{transportFactory} {
 }
 
 MessageRouterInterface::ConnectionStatus MessageRouter::getConnectionStatus() {
@@ -203,8 +205,8 @@ void MessageRouter::notifyObserverOnReceive(const std::string& contextId, const 
 }
 
 void MessageRouter::createActiveTransportLocked() {
-    auto transport =
-        createTransport(m_authDelegate, m_attachmentManager, m_avsEndpoint, shared_from_this(), shared_from_this());
+    auto transport = m_transportFactory->createTransport(
+        m_authDelegate, m_attachmentManager, m_avsEndpoint, shared_from_this(), shared_from_this());
     if (transport && transport->connect()) {
         m_transports.push_back(transport);
         m_activeTransport = transport;

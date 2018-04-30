@@ -48,6 +48,12 @@ static const std::string TAG("SQLiteAlertStorage");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+/// The key in our config file to find the root of settings for this Capability Agent.
+static const std::string ALERTS_CAPABILITY_AGENT_CONFIGURATION_ROOT_KEY = "alertsCapabilityAgent";
+
+/// The key in our config file to find the database file path.
+static const std::string ALERTS_CAPABILITY_AGENT_DB_FILE_PATH_KEY = "databaseFilePath";
+
 /// A definition which we will store in the database to indicate Alarm type.
 static const int ALERT_EVENT_TYPE_ALARM = 1;
 /// A definition which we will store in the database to indicate Timer type.
@@ -261,60 +267,53 @@ static bool dbFieldToAlertState(int dbState, Alert::State* state) {
     return false;
 }
 
-/**
- * A utility function to query if an alert exists in the database, given its database id.
- *
- * @param dbHandle The database handle.
- * @param alertId The database id of the alert.
- * @return Whether the alert was successfully found in the database.
- */
-static bool alertExistsByAlertId(sqlite3* dbHandle, int alertId) {
-    const std::string sqlString = "SELECT COUNT(*) FROM " + ALERTS_V2_TABLE_NAME + " WHERE id=?;";
-
-    SQLiteStatement statement(dbHandle, sqlString);
-
-    if (!statement.isValid()) {
-        ACSDK_ERROR(LX("alertExistsByAlertIdFailed").m("Could not create statement."));
-        return false;
+std::unique_ptr<SQLiteAlertStorage> SQLiteAlertStorage::create(
+    const avsCommon::utils::configuration::ConfigurationNode& configurationRoot,
+    const std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface>& alertsAudioFactory) {
+    auto alertsConfigurationRoot = configurationRoot[ALERTS_CAPABILITY_AGENT_CONFIGURATION_ROOT_KEY];
+    if (!alertsConfigurationRoot) {
+        ACSDK_ERROR(LX("createFailed")
+                        .d("reason", "Could not load config for the Alerts capability agent")
+                        .d("key", ALERTS_CAPABILITY_AGENT_CONFIGURATION_ROOT_KEY));
+        return nullptr;
     }
 
-    int boundParam = 1;
-    if (!statement.bindIntParameter(boundParam, alertId)) {
-        ACSDK_ERROR(LX("alertExistsByAlertIdFailed").m("Could not bind a parameter."));
-        return false;
+    std::string alertDbFilePath;
+    if (!alertsConfigurationRoot.getString(ALERTS_CAPABILITY_AGENT_DB_FILE_PATH_KEY, &alertDbFilePath) ||
+        alertDbFilePath.empty()) {
+        ACSDK_ERROR(LX("createFailed")
+                        .d("reason", "Could not load config value")
+                        .d("key", ALERTS_CAPABILITY_AGENT_DB_FILE_PATH_KEY));
+        return nullptr;
     }
 
-    if (!statement.step()) {
-        ACSDK_ERROR(LX("alertExistsByAlertIdFailed").m("Could not step to next row."));
-        return false;
-    }
-
-    const int RESULT_COLUMN_POSITION = 0;
-    std::string rowValue = statement.getColumnText(RESULT_COLUMN_POSITION);
-
-    int countValue = 0;
-    if (!stringToInt(rowValue.c_str(), &countValue)) {
-        ACSDK_ERROR(LX("alertExistsByAlertIdFailed").d("Could not convert string to integer", rowValue));
-        return false;
-    }
-
-    return countValue > 0;
+    return std::unique_ptr<SQLiteAlertStorage>(new SQLiteAlertStorage(alertDbFilePath, alertsAudioFactory));
 }
 
 SQLiteAlertStorage::SQLiteAlertStorage(
+    const std::string& dbFilePath,
     const std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface>& alertsAudioFactory) :
-        m_dbHandle{nullptr},
-        m_alertsAudioFactory{alertsAudioFactory} {
+        m_alertsAudioFactory{alertsAudioFactory},
+        m_db{dbFilePath} {
+}
+
+SQLiteAlertStorage::~SQLiteAlertStorage() {
+    close();
 }
 
 /**
  * Utility function to create the Alerts table within the database.
  *
- * @param dbHandle A SQLite handle to an open database.
+ * @param db The SQLiteDatabase object.
  * @return Whether the table was successfully created.
  */
-static bool createAlertsTable(sqlite3* dbHandle) {
-    if (!performQuery(dbHandle, CREATE_ALERTS_TABLE_SQL_STRING)) {
+static bool createAlertsTable(SQLiteDatabase* db) {
+    if (!db) {
+        ACSDK_ERROR(LX("createAlertsTableFailed").m("null db"));
+        return false;
+    }
+
+    if (!db->performQuery(CREATE_ALERTS_TABLE_SQL_STRING)) {
         ACSDK_ERROR(LX("createAlertsTableFailed").m("Table could not be created."));
         return false;
     }
@@ -325,11 +324,16 @@ static bool createAlertsTable(sqlite3* dbHandle) {
 /**
  * Utility function to create the AlertAssets table within the database.
  *
- * @param dbHandle A SQLite handle to an open database.
+ * @param db The SQLiteDatabase object.
  * @return Whether the table was successfully created.
  */
-static bool createAlertAssetsTable(sqlite3* dbHandle) {
-    if (!performQuery(dbHandle, CREATE_ALERT_ASSETS_TABLE_SQL_STRING)) {
+static bool createAlertAssetsTable(SQLiteDatabase* db) {
+    if (!db) {
+        ACSDK_ERROR(LX("createAlertAssetsTableFailed").m("null db"));
+        return false;
+    }
+
+    if (!db->performQuery(CREATE_ALERT_ASSETS_TABLE_SQL_STRING)) {
         ACSDK_ERROR(LX("createAlertAssetsTableFailed").m("Table could not be created."));
         return false;
     }
@@ -340,11 +344,16 @@ static bool createAlertAssetsTable(sqlite3* dbHandle) {
 /**
  * Utility function to create the AlertAssetPlayOrderItems table within the database.
  *
- * @param dbHandle A SQLite handle to an open database.
+ * @param db The SQLiteDatabase object.
  * @return Whether the table was successfully created.
  */
-static bool createAlertAssetPlayOrderItemsTable(sqlite3* dbHandle) {
-    if (!performQuery(dbHandle, CREATE_ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_SQL_STRING)) {
+static bool createAlertAssetPlayOrderItemsTable(SQLiteDatabase* db) {
+    if (!db) {
+        ACSDK_ERROR(LX("createAlertAssetPlayOrderItemsTableFailed").m("null db"));
+        return false;
+    }
+
+    if (!db->performQuery(CREATE_ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_SQL_STRING)) {
         ACSDK_ERROR(LX("createAlertAssetPlayOrderItemsTableFailed").m("Table could not be created."));
         return false;
     }
@@ -352,36 +361,25 @@ static bool createAlertAssetPlayOrderItemsTable(sqlite3* dbHandle) {
     return true;
 }
 
-bool SQLiteAlertStorage::createDatabase(const std::string& filePath) {
-    if (m_dbHandle) {
-        ACSDK_ERROR(LX("createDatabaseFailed").m("Database handle is already open."));
+bool SQLiteAlertStorage::createDatabase() {
+    if (!m_db.initialize()) {
+        ACSDK_ERROR(LX("createDatabaseFailed"));
         return false;
     }
 
-    if (fileExists(filePath)) {
-        ACSDK_ERROR(LX("createDatabaseFailed").m("File specified already exists.").d("file path", filePath));
-        return false;
-    }
-
-    m_dbHandle = createSQLiteDatabase(filePath);
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("createDatabaseFailed").m("Database could not be created.").d("file path", filePath));
-        return false;
-    }
-
-    if (!createAlertsTable(m_dbHandle)) {
+    if (!createAlertsTable(&m_db)) {
         ACSDK_ERROR(LX("createDatabaseFailed").m("Alerts table could not be created."));
         close();
         return false;
     }
 
-    if (!createAlertAssetsTable(m_dbHandle)) {
+    if (!createAlertAssetsTable(&m_db)) {
         ACSDK_ERROR(LX("createDatabaseFailed").m("AlertAssets table could not be created."));
         close();
         return false;
     }
 
-    if (!createAlertAssetPlayOrderItemsTable(m_dbHandle)) {
+    if (!createAlertAssetPlayOrderItemsTable(&m_db)) {
         ACSDK_ERROR(LX("createDatabaseFailed").m("AlertAssetPlayOrderItems table could not be created."));
         close();
         return false;
@@ -392,24 +390,24 @@ bool SQLiteAlertStorage::createDatabase(const std::string& filePath) {
 
 bool SQLiteAlertStorage::migrateAlertsDbFromV1ToV2() {
     // The good case - the db file is already up to date.
-    if (tableExists(m_dbHandle, ALERTS_V2_TABLE_NAME)) {
+    if (m_db.tableExists(ALERTS_V2_TABLE_NAME)) {
         return true;
     }
 
-    if (!createAlertsTable(m_dbHandle)) {
-        ACSDK_ERROR(LX("migrateAlertsDbFromV1ToV2Failed").m("AlertAssets table could not be created."));
+    if (!createAlertsTable(&m_db)) {
+        ACSDK_ERROR(LX("migrateAlertsDbFromV1ToV2Failed").m("Alert table could not be created."));
         return false;
     }
 
-    if (!tableExists(m_dbHandle, ALERT_ASSETS_TABLE_NAME)) {
-        if (!createAlertAssetsTable(m_dbHandle)) {
+    if (!m_db.tableExists(ALERT_ASSETS_TABLE_NAME)) {
+        if (!createAlertAssetsTable(&m_db)) {
             ACSDK_ERROR(LX("migrateAlertsDbFromV1ToV2Failed").m("AlertAssets table could not be created."));
             return false;
         }
     }
 
-    if (!tableExists(m_dbHandle, ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME)) {
-        if (!createAlertAssetPlayOrderItemsTable(m_dbHandle)) {
+    if (!m_db.tableExists(ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME)) {
+        if (!createAlertAssetPlayOrderItemsTable(&m_db)) {
             ACSDK_ERROR(
                 LX("migrateAlertsDbFromV1ToV2Failed").m("AlertAssetPlayOrderItems table could not be created."));
             return false;
@@ -419,7 +417,7 @@ bool SQLiteAlertStorage::migrateAlertsDbFromV1ToV2() {
     // We have created the new alerts tables, and the expectation is that the old alerts table exists.
     // Just for an edge case where it does not, let's not fail out if the old table does not exist - in that case,
     // the migration is fine.
-    if (tableExists(m_dbHandle, ALERTS_TABLE_NAME)) {
+    if (m_db.tableExists(ALERTS_TABLE_NAME)) {
         std::vector<std::shared_ptr<Alert>> alertContainer;
         if (!loadHelper(ALERTS_DATABASE_VERSION_ONE, &alertContainer)) {
             ACSDK_ERROR(LX("migrateAlertsDbFromV1ToV2Failed").m("Could not load V1 alert records."));
@@ -434,7 +432,9 @@ bool SQLiteAlertStorage::migrateAlertsDbFromV1ToV2() {
             }
         }
 
-        if (!dropTable(m_dbHandle, ALERTS_TABLE_NAME)) {
+        const std::string sqlString = "DROP TABLE IF EXISTS " + ALERTS_TABLE_NAME + ";";
+
+        if (!m_db.performQuery(sqlString)) {
             ACSDK_ERROR(LX("migrateAlertsDbFromV1ToV2Failed").m("Alerts table could not be dropped."));
             return false;
         }
@@ -443,66 +443,36 @@ bool SQLiteAlertStorage::migrateAlertsDbFromV1ToV2() {
     return true;
 }
 
-bool SQLiteAlertStorage::open(const std::string& filePath) {
-    if (m_dbHandle) {
-        ACSDK_ERROR(LX("openFailed").m("Database handle is already open."));
-        return false;
-    }
-
-    if (!fileExists(filePath)) {
-        ACSDK_ERROR(LX("openFailed").m("File specified does not exist.").d("file path", filePath));
-        return false;
-    }
-
-    m_dbHandle = openSQLiteDatabase(filePath);
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("openFailed").m("Database could not be opened.").d("file path", filePath));
-        return false;
-    }
-
-    if (!migrateAlertsDbFromV1ToV2()) {
-        ACSDK_ERROR(LX("openFailed").m("Could not migrate database file from V1 to V2."));
-        close();
-        return false;
-    }
-
-    return true;
-}
-
-bool SQLiteAlertStorage::isOpen() {
-    return (nullptr != m_dbHandle);
+bool SQLiteAlertStorage::open() {
+    return m_db.open();
 }
 
 void SQLiteAlertStorage::close() {
-    if (m_dbHandle) {
-        closeSQLiteDatabase(m_dbHandle);
-        m_dbHandle = nullptr;
-    }
+    m_db.close();
 }
 
 bool SQLiteAlertStorage::alertExists(const std::string& token) {
     const std::string sqlString = "SELECT COUNT(*) FROM " + ALERTS_V2_TABLE_NAME + " WHERE token=?;";
+    auto statement = m_db.createStatement(sqlString);
 
-    SQLiteStatement statement(m_dbHandle, sqlString);
-
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("alertExistsFailed").m("Could not create statement."));
         return false;
     }
 
     int boundParam = 1;
-    if (!statement.bindStringParameter(boundParam, token)) {
+    if (!statement->bindStringParameter(boundParam, token)) {
         ACSDK_ERROR(LX("alertExistsFailed").m("Could not bind a parameter."));
         return false;
     }
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("alertExistsFailed").m("Could not step to next row."));
         return false;
     }
 
     const int RESULT_COLUMN_POSITION = 0;
-    std::string rowValue = statement.getColumnText(RESULT_COLUMN_POSITION);
+    std::string rowValue = statement->getColumnText(RESULT_COLUMN_POSITION);
 
     int countValue = 0;
     if (!stringToInt(rowValue.c_str(), &countValue)) {
@@ -513,8 +483,11 @@ bool SQLiteAlertStorage::alertExists(const std::string& token) {
     return countValue > 0;
 }
 
-static bool storeAlertAssets(sqlite3* dbHandle, int alertId, const Alert::AssetConfiguration& assetConfiguration) {
-    if (assetConfiguration.assets.empty()) {
+static bool storeAlertAssets(
+    SQLiteDatabase* db,
+    int alertId,
+    const std::unordered_map<std::string, Alert::Asset>& assets) {
+    if (assets.empty()) {
         return true;
     }
 
@@ -527,37 +500,36 @@ static bool storeAlertAssets(sqlite3* dbHandle, int alertId, const Alert::AssetC
     // clang-format on
 
     int id = 0;
-    if (!getTableMaxIntValue(dbHandle, ALERT_ASSETS_TABLE_NAME, DATABASE_COLUMN_ID_NAME, &id)) {
+    if (!getTableMaxIntValue(db, ALERT_ASSETS_TABLE_NAME, DATABASE_COLUMN_ID_NAME, &id)) {
         ACSDK_ERROR(LX("storeAlertAssetsFailed").m("Cannot generate asset id."));
         return false;
     }
     id++;
 
-    SQLiteStatement statement(dbHandle, sqlString);
-
-    if (!statement.isValid()) {
+    auto statement = db->createStatement(sqlString);
+    if (!statement) {
         ACSDK_ERROR(LX("storeAlertAssetsFailed").m("Could not create statement."));
         return false;
     }
 
     // go through each asset in the alert, and store in the database.
-    for (auto& assetIter : assetConfiguration.assets) {
+    for (auto& assetIter : assets) {
         auto& asset = assetIter.second;
 
         int boundParam = 1;
-        if (!statement.bindIntParameter(boundParam++, id) || !statement.bindIntParameter(boundParam++, alertId) ||
-            !statement.bindStringParameter(boundParam++, asset.id) ||
-            !statement.bindStringParameter(boundParam, asset.url)) {
+        if (!statement->bindIntParameter(boundParam++, id) || !statement->bindIntParameter(boundParam++, alertId) ||
+            !statement->bindStringParameter(boundParam++, asset.id) ||
+            !statement->bindStringParameter(boundParam, asset.url)) {
             ACSDK_ERROR(LX("storeAlertAssetsFailed").m("Could not bind a parameter."));
             return false;
         }
 
-        if (!statement.step()) {
+        if (!statement->step()) {
             ACSDK_ERROR(LX("storeAlertAssetsFailed").m("Could not step to next row."));
             return false;
         }
 
-        if (!statement.reset()) {
+        if (!statement->reset()) {
             ACSDK_ERROR(LX("storeAlertAssetsFailed").m("Could not reset the statement."));
             return false;
         }
@@ -569,10 +541,10 @@ static bool storeAlertAssets(sqlite3* dbHandle, int alertId, const Alert::AssetC
 }
 
 static bool storeAlertAssetPlayOrderItems(
-    sqlite3* dbHandle,
+    SQLiteDatabase* db,
     int alertId,
-    const Alert::AssetConfiguration& assetConfiguration) {
-    if (assetConfiguration.assetPlayOrderItems.empty()) {
+    const std::vector<std::string>& assetPlayOrderItems) {
+    if (assetPlayOrderItems.empty()) {
         return true;
     }
 
@@ -585,36 +557,36 @@ static bool storeAlertAssetPlayOrderItems(
     // clang-format on
 
     int id = 0;
-    if (!getTableMaxIntValue(dbHandle, ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME, DATABASE_COLUMN_ID_NAME, &id)) {
+    if (!getTableMaxIntValue(db, ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME, DATABASE_COLUMN_ID_NAME, &id)) {
         ACSDK_ERROR(LX("storeAlertAssetPlayOrderItemsFailed").m("Cannot generate asset id."));
         return false;
     }
     id++;
 
-    SQLiteStatement statement(dbHandle, sqlString);
+    auto statement = db->createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("storeAlertAssetPlayOrderItemsFailed").m("Could not create statement."));
         return false;
     }
 
     // go through each assetPlayOrderItem in the alert, and store in the database.
     int itemIndex = 1;
-    for (auto& assetId : assetConfiguration.assetPlayOrderItems) {
+    for (auto& assetId : assetPlayOrderItems) {
         int boundParam = 1;
-        if (!statement.bindIntParameter(boundParam++, id) || !statement.bindIntParameter(boundParam++, alertId) ||
-            !statement.bindIntParameter(boundParam++, itemIndex) ||
-            !statement.bindStringParameter(boundParam, assetId)) {
+        if (!statement->bindIntParameter(boundParam++, id) || !statement->bindIntParameter(boundParam++, alertId) ||
+            !statement->bindIntParameter(boundParam++, itemIndex) ||
+            !statement->bindStringParameter(boundParam, assetId)) {
             ACSDK_ERROR(LX("storeAlertAssetPlayOrderItemsFailed").m("Could not bind a parameter."));
             return false;
         }
 
-        if (!statement.step()) {
+        if (!statement->step()) {
             ACSDK_ERROR(LX("storeAlertAssetPlayOrderItemsFailed").m("Could not step to next row."));
             return false;
         }
 
-        if (!statement.reset()) {
+        if (!statement->reset()) {
             ACSDK_ERROR(LX("storeAlertAssetPlayOrderItemsFailed").m("Could not reset the statement."));
             return false;
         }
@@ -627,11 +599,6 @@ static bool storeAlertAssetPlayOrderItems(
 }
 
 bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("storeFailed").m("Database handle is not open."));
-        return false;
-    }
-
     if (!alert) {
         ACSDK_ERROR(LX("storeFailed").m("Alert parameter is nullptr"));
         return false;
@@ -655,7 +622,7 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
     // clang-format on
 
     int id = 0;
-    if (!getTableMaxIntValue(m_dbHandle, ALERTS_V2_TABLE_NAME, DATABASE_COLUMN_ID_NAME, &id)) {
+    if (!getTableMaxIntValue(&m_db, ALERTS_V2_TABLE_NAME, DATABASE_COLUMN_ID_NAME, &id)) {
         ACSDK_ERROR(LX("storeFailed").m("Cannot generate alert id."));
         return false;
     }
@@ -673,9 +640,9 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
         return false;
     }
 
-    SQLiteStatement statement(m_dbHandle, sqlString);
+    auto statement = m_db.createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("storeFailed").m("Could not create statement."));
         return false;
     }
@@ -684,18 +651,19 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
     auto token = alert->m_token;
     auto iso8601 = alert->getScheduledTime_ISO_8601();
     auto assetId = alert->getBackgroundAssetId();
-    if (!statement.bindIntParameter(boundParam++, id) || !statement.bindStringParameter(boundParam++, token) ||
-        !statement.bindIntParameter(boundParam++, alertType) || !statement.bindIntParameter(boundParam++, alertState) ||
-        !statement.bindInt64Parameter(boundParam++, alert->getScheduledTime_Unix()) ||
-        !statement.bindStringParameter(boundParam++, iso8601) ||
-        !statement.bindIntParameter(boundParam++, alert->getLoopCount()) ||
-        !statement.bindIntParameter(boundParam++, alert->getLoopPause().count()) ||
-        !statement.bindStringParameter(boundParam, assetId)) {
+    if (!statement->bindIntParameter(boundParam++, id) || !statement->bindStringParameter(boundParam++, token) ||
+        !statement->bindIntParameter(boundParam++, alertType) ||
+        !statement->bindIntParameter(boundParam++, alertState) ||
+        !statement->bindInt64Parameter(boundParam++, alert->getScheduledTime_Unix()) ||
+        !statement->bindStringParameter(boundParam++, iso8601) ||
+        !statement->bindIntParameter(boundParam++, alert->getLoopCount()) ||
+        !statement->bindIntParameter(boundParam++, alert->getLoopPause().count()) ||
+        !statement->bindStringParameter(boundParam, assetId)) {
         ACSDK_ERROR(LX("storeFailed").m("Could not bind parameter."));
         return false;
     }
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("storeFailed").m("Could not perform step."));
         return false;
     }
@@ -703,14 +671,12 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
     // capture the generated database id in the alert object.
     alert->m_dbId = id;
 
-    statement.finalize();
-
-    if (!storeAlertAssets(m_dbHandle, id, alert->m_assetConfiguration)) {
+    if (!storeAlertAssets(&m_db, id, alert->m_assetConfiguration.assets)) {
         ACSDK_ERROR(LX("storeFailed").m("Could not store alertAssets."));
         return false;
     }
 
-    if (!storeAlertAssetPlayOrderItems(m_dbHandle, id, alert->m_assetConfiguration)) {
+    if (!storeAlertAssetPlayOrderItems(&m_db, id, alert->m_assetConfiguration.assetPlayOrderItems)) {
         ACSDK_ERROR(LX("storeFailed").m("Could not store alertAssetPlayOrderItems."));
         return false;
     }
@@ -718,12 +684,12 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
     return true;
 }
 
-static bool loadAlertAssets(sqlite3* dbHandle, std::map<int, std::vector<Alert::Asset>>* alertAssetsMap) {
+static bool loadAlertAssets(SQLiteDatabase* db, std::map<int, std::vector<Alert::Asset>>* alertAssetsMap) {
     const std::string sqlString = "SELECT * FROM " + ALERT_ASSETS_TABLE_NAME + ";";
 
-    SQLiteStatement statement(dbHandle, sqlString);
+    auto statement = db->createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("loadAlertAssetsFailed").m("Could not create statement."));
         return false;
     }
@@ -732,42 +698,42 @@ static bool loadAlertAssets(sqlite3* dbHandle, std::map<int, std::vector<Alert::
     std::string avsId;
     std::string url;
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("loadAlertAssetsFailed").m("Could not perform step."));
         return false;
     }
 
-    while (SQLITE_ROW == statement.getStepResult()) {
-        int numberColumns = statement.getColumnCount();
+    while (SQLITE_ROW == statement->getStepResult()) {
+        int numberColumns = statement->getColumnCount();
 
         for (int i = 0; i < numberColumns; i++) {
-            std::string columnName = statement.getColumnName(i);
+            std::string columnName = statement->getColumnName(i);
 
             if ("alert_id" == columnName) {
-                alertId = statement.getColumnInt(i);
+                alertId = statement->getColumnInt(i);
             } else if ("avs_id" == columnName) {
-                avsId = statement.getColumnText(i);
+                avsId = statement->getColumnText(i);
             } else if ("url" == columnName) {
-                url = statement.getColumnText(i);
+                url = statement->getColumnText(i);
             }
         }
 
         (*alertAssetsMap)[alertId].push_back(Alert::Asset(avsId, url));
 
-        statement.step();
+        statement->step();
     }
 
     return true;
 }
 
 static bool loadAlertAssetPlayOrderItems(
-    sqlite3* dbHandle,
+    SQLiteDatabase* db,
     std::map<int, std::set<AssetOrderItem, AssetOrderItemCompare>>* alertAssetOrderItemsMap) {
     const std::string sqlString = "SELECT * FROM " + ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME + ";";
 
-    SQLiteStatement statement(dbHandle, sqlString);
+    auto statement = db->createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("loadAlertAssetPlayOrderItemsFailed").m("Could not create statement."));
         return false;
     }
@@ -776,40 +742,35 @@ static bool loadAlertAssetPlayOrderItems(
     int playOrderPosition = 0;
     std::string playOrderToken;
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("loadAlertAssetPlayOrderItemsFailed").m("Could not perform step."));
         return false;
     }
 
-    while (SQLITE_ROW == statement.getStepResult()) {
-        int numberColumns = statement.getColumnCount();
+    while (SQLITE_ROW == statement->getStepResult()) {
+        int numberColumns = statement->getColumnCount();
 
         for (int i = 0; i < numberColumns; i++) {
-            std::string columnName = statement.getColumnName(i);
+            std::string columnName = statement->getColumnName(i);
 
             if ("alert_id" == columnName) {
-                alertId = statement.getColumnInt(i);
+                alertId = statement->getColumnInt(i);
             } else if ("asset_play_order_position" == columnName) {
-                playOrderPosition = statement.getColumnInt(i);
+                playOrderPosition = statement->getColumnInt(i);
             } else if ("asset_play_order_token" == columnName) {
-                playOrderToken = statement.getColumnText(i);
+                playOrderToken = statement->getColumnText(i);
             }
         }
 
         (*alertAssetOrderItemsMap)[alertId].insert(AssetOrderItem{playOrderPosition, playOrderToken});
 
-        statement.step();
+        statement->step();
     }
 
     return true;
 }
 
 bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<Alert>>* alertContainer) {
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("loadHelperFailed").m("Database handle is not open."));
-        return false;
-    }
-
     if (!alertContainer) {
         ACSDK_ERROR(LX("loadHelperFailed").m("Alert container parameter is nullptr."));
         return false;
@@ -827,9 +788,9 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
 
     const std::string sqlString = "SELECT * FROM " + alertsTableName + ";";
 
-    SQLiteStatement statement(m_dbHandle, sqlString);
+    auto statement = m_db.createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("loadHelperFailed").m("Could not create statement."));
         return false;
     }
@@ -844,34 +805,34 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
     int loopPauseInMilliseconds = 0;
     std::string backgroundAssetId;
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("loadHelperFailed").m("Could not perform step."));
         return false;
     }
 
-    while (SQLITE_ROW == statement.getStepResult()) {
-        int numberColumns = statement.getColumnCount();
+    while (SQLITE_ROW == statement->getStepResult()) {
+        int numberColumns = statement->getColumnCount();
 
         // SQLite cannot guarantee the order of the columns in a given row, so this logic is required.
         for (int i = 0; i < numberColumns; i++) {
-            std::string columnName = statement.getColumnName(i);
+            std::string columnName = statement->getColumnName(i);
 
             if ("id" == columnName) {
-                id = statement.getColumnInt(i);
+                id = statement->getColumnInt(i);
             } else if ("token" == columnName) {
-                token = statement.getColumnText(i);
+                token = statement->getColumnText(i);
             } else if ("type" == columnName) {
-                type = statement.getColumnInt(i);
+                type = statement->getColumnInt(i);
             } else if ("state" == columnName) {
-                state = statement.getColumnInt(i);
+                state = statement->getColumnInt(i);
             } else if ("scheduled_time_iso_8601" == columnName) {
-                scheduledTime_ISO_8601 = statement.getColumnText(i);
+                scheduledTime_ISO_8601 = statement->getColumnText(i);
             } else if ("asset_loop_count" == columnName) {
-                loopCount = statement.getColumnInt(i);
+                loopCount = statement->getColumnInt(i);
             } else if ("asset_loop_pause_milliseconds" == columnName) {
-                loopPauseInMilliseconds = statement.getColumnInt(i);
+                loopPauseInMilliseconds = statement->getColumnInt(i);
             } else if ("background_asset" == columnName) {
-                backgroundAssetId = statement.getColumnText(i);
+                backgroundAssetId = statement->getColumnText(i);
             }
         }
 
@@ -903,19 +864,19 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
 
         alertContainer->push_back(alert);
 
-        statement.step();
+        statement->step();
     }
 
-    statement.finalize();
+    statement->finalize();
 
     std::map<int, std::vector<Alert::Asset>> alertAssetsMap;
-    if (!loadAlertAssets(m_dbHandle, &alertAssetsMap)) {
+    if (!loadAlertAssets(&m_db, &alertAssetsMap)) {
         ACSDK_ERROR(LX("loadHelperFailed").m("Could not load alert assets."));
         return false;
     }
 
     std::map<int, std::set<AssetOrderItem, AssetOrderItemCompare>> alertAssetOrderItemsMap;
-    if (!loadAlertAssetPlayOrderItems(m_dbHandle, &alertAssetOrderItemsMap)) {
+    if (!loadAlertAssetPlayOrderItems(&m_db, &alertAssetOrderItemsMap)) {
         ACSDK_ERROR(LX("loadHelperFailed").m("Could not load alert asset play order items."));
         return false;
     }
@@ -941,11 +902,6 @@ bool SQLiteAlertStorage::load(std::vector<std::shared_ptr<Alert>>* alertContaine
 }
 
 bool SQLiteAlertStorage::modify(std::shared_ptr<Alert> alert) {
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("modifyFailed").m("Database handle is not open."));
-        return false;
-    }
-
     if (!alert) {
         ACSDK_ERROR(LX("modifyFailed").m("Alert parameter is nullptr."));
         return false;
@@ -965,24 +921,24 @@ bool SQLiteAlertStorage::modify(std::shared_ptr<Alert> alert) {
         return false;
     }
 
-    SQLiteStatement statement(m_dbHandle, sqlString);
+    auto statement = m_db.createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("modifyFailed").m("Could not create statement."));
         return false;
     }
 
     int boundParam = 1;
     auto iso8601 = alert->getScheduledTime_ISO_8601();
-    if (!statement.bindIntParameter(boundParam++, alertState) ||
-        !statement.bindInt64Parameter(boundParam++, alert->getScheduledTime_Unix()) ||
-        !statement.bindStringParameter(boundParam++, iso8601) ||
-        !statement.bindIntParameter(boundParam++, alert->m_dbId)) {
+    if (!statement->bindIntParameter(boundParam++, alertState) ||
+        !statement->bindInt64Parameter(boundParam++, alert->getScheduledTime_Unix()) ||
+        !statement->bindStringParameter(boundParam++, iso8601) ||
+        !statement->bindIntParameter(boundParam++, alert->m_dbId)) {
         ACSDK_ERROR(LX("modifyFailed").m("Could not bind a parameter."));
         return false;
     }
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("modifyFailed").m("Could not perform step."));
         return false;
     }
@@ -994,27 +950,27 @@ bool SQLiteAlertStorage::modify(std::shared_ptr<Alert> alert) {
  * A utility function to delete alert records from the database for a given alert id.
  * This function will clean up records in the alerts table.
  *
- * @param dbHandle The database handle.
+ * @param db The database object.
  * @param alertId The alert id of the alert to be deleted.
  * @return Whether the delete operation was successful.
  */
-static bool eraseAlert(sqlite3* dbHandle, int alertId) {
+static bool eraseAlert(SQLiteDatabase* db, int alertId) {
     const std::string sqlString = "DELETE FROM " + ALERTS_V2_TABLE_NAME + " WHERE id=?;";
 
-    SQLiteStatement statement(dbHandle, sqlString);
+    auto statement = db->createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("eraseAlertByAlertIdFailed").m("Could not create statement."));
         return false;
     }
 
     int boundParam = 1;
-    if (!statement.bindIntParameter(boundParam, alertId)) {
+    if (!statement->bindIntParameter(boundParam, alertId)) {
         ACSDK_ERROR(LX("eraseAlertByAlertIdFailed").m("Could not bind a parameter."));
         return false;
     }
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("eraseAlertByAlertIdFailed").m("Could not perform step."));
         return false;
     }
@@ -1026,27 +982,27 @@ static bool eraseAlert(sqlite3* dbHandle, int alertId) {
  * A utility function to delete alert records from the database for a given alert id.
  * This function will clean up records in the alertAssets table.
  *
- * @param dbHandle The database handle.
+ * @param db The database object.
  * @param alertId The alert id of the alert to be deleted.
  * @return Whether the delete operation was successful.
  */
-static bool eraseAlertAssets(sqlite3* dbHandle, int alertId) {
+static bool eraseAlertAssets(SQLiteDatabase* db, int alertId) {
     const std::string sqlString = "DELETE FROM " + ALERT_ASSETS_TABLE_NAME + " WHERE alert_id=?;";
 
-    SQLiteStatement statement(dbHandle, sqlString);
+    auto statement = db->createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("eraseAlertAssetsFailed").m("Could not create statement."));
         return false;
     }
 
     int boundParam = 1;
-    if (!statement.bindIntParameter(boundParam, alertId)) {
+    if (!statement->bindIntParameter(boundParam, alertId)) {
         ACSDK_ERROR(LX("eraseAlertAssetsFailed").m("Could not bind a parameter."));
         return false;
     }
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("eraseAlertAssetsFailed").m("Could not perform step."));
         return false;
     }
@@ -1058,27 +1014,27 @@ static bool eraseAlertAssets(sqlite3* dbHandle, int alertId) {
  * A utility function to delete alert records from the database for a given alert id.
  * This function will clean up records in the alertAssetPlayOrderItems table.
  *
- * @param dbHandle The database handle.
+ * @param db The database object.
  * @param alertId The alert id of the alert to be deleted.
  * @return Whether the delete operation was successful.
  */
-static bool eraseAlertAssetPlayOrderItems(sqlite3* dbHandle, int alertId) {
+static bool eraseAlertAssetPlayOrderItems(SQLiteDatabase* db, int alertId) {
     const std::string sqlString = "DELETE FROM " + ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME + " WHERE alert_id=?;";
 
-    SQLiteStatement statement(dbHandle, sqlString);
+    auto statement = db->createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("eraseAlertAssetPlayOrderItemsFailed").m("Could not create statement."));
         return false;
     }
 
     int boundParam = 1;
-    if (!statement.bindIntParameter(boundParam, alertId)) {
+    if (!statement->bindIntParameter(boundParam, alertId)) {
         ACSDK_ERROR(LX("eraseAlertAssetPlayOrderItemsFailed").m("Could not bind a parameter."));
         return false;
     }
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("eraseAlertAssetPlayOrderItemsFailed").m("Could not perform step."));
         return false;
     }
@@ -1090,27 +1046,27 @@ static bool eraseAlertAssetPlayOrderItems(sqlite3* dbHandle, int alertId) {
  * A utility function to delete an alert from the database for a given alert id.  This will clean up records in
  * all tables which are associated with the alert.
  *
- * @param dbHandle The database handle.
+ * @param db The DB object.
  * @param alertId The alert id of the alert to be deleted.
  * @return Whether the delete operation was successful.
  */
-static bool eraseAlertByAlertId(sqlite3* dbHandle, int alertId) {
-    if (!dbHandle) {
-        ACSDK_ERROR(LX("eraseAlertByAlertIdFailed").m("dbHandle is nullptr."));
+static bool eraseAlertByAlertId(SQLiteDatabase* db, int alertId) {
+    if (!db) {
+        ACSDK_ERROR(LX("eraseAlertByAlertIdFailed").m("db is nullptr."));
         return false;
     }
 
-    if (!eraseAlert(dbHandle, alertId)) {
+    if (!eraseAlert(db, alertId)) {
         ACSDK_ERROR(LX("eraseAlertByAlertIdFailed").m("Could not erase alert table items."));
         return false;
     }
 
-    if (!eraseAlertAssets(dbHandle, alertId)) {
+    if (!eraseAlertAssets(db, alertId)) {
         ACSDK_ERROR(LX("eraseAlertByAlertIdFailed").m("Could not erase alertAsset table items."));
         return false;
     }
 
-    if (!eraseAlertAssetPlayOrderItems(dbHandle, alertId)) {
+    if (!eraseAlertAssetPlayOrderItems(db, alertId)) {
         ACSDK_ERROR(LX("eraseAlertByAlertIdFailed").m("Could not erase alertAssetPlayOrderItems table items."));
         return false;
     }
@@ -1119,11 +1075,6 @@ static bool eraseAlertByAlertId(sqlite3* dbHandle, int alertId) {
 }
 
 bool SQLiteAlertStorage::erase(std::shared_ptr<Alert> alert) {
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("eraseFailed").m("Database handle is not open."));
-        return false;
-    }
-
     if (!alert) {
         ACSDK_ERROR(LX("eraseFailed").m("Alert parameter is nullptr."));
         return false;
@@ -1134,42 +1085,17 @@ bool SQLiteAlertStorage::erase(std::shared_ptr<Alert> alert) {
         return false;
     }
 
-    return eraseAlertByAlertId(m_dbHandle, alert->m_dbId);
-}
-
-bool SQLiteAlertStorage::erase(const std::vector<int>& alertDbIds) {
-    if (!m_dbHandle) {
-        ACSDK_ERROR(LX("eraseFailed").m("Database handle is not open."));
-        return false;
-    }
-
-    for (auto id : alertDbIds) {
-        if (!alertExistsByAlertId(m_dbHandle, id)) {
-            ACSDK_ERROR(LX("eraseFailed").m("Cannot erase an alert - does not exist in db.").d("id", id));
-            return false;
-        }
-
-        if (!eraseAlertByAlertId(m_dbHandle, id)) {
-            ACSDK_ERROR(LX("eraseFailed").m("Cannot erase an alert.").d("id", id));
-            return false;
-        }
-    }
-
-    return true;
+    return eraseAlertByAlertId(&m_db, alert->m_dbId);
 }
 
 bool SQLiteAlertStorage::clearDatabase() {
-    if (!clearTable(m_dbHandle, ALERTS_V2_TABLE_NAME)) {
-        ACSDK_ERROR(LX("clearDatabaseFailed").m("could not clear alerts table."));
-        return false;
-    }
-    if (!clearTable(m_dbHandle, ALERT_ASSETS_TABLE_NAME)) {
-        ACSDK_ERROR(LX("clearDatabaseFailed").m("could not clear alertAssets table."));
-        return false;
-    }
-    if (!clearTable(m_dbHandle, ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME)) {
-        ACSDK_ERROR(LX("clearDatabaseFailed").m("could not clear alertAssetPlayOrderItems table."));
-        return false;
+    const std::vector<std::string> tablesToClear = {
+        ALERTS_V2_TABLE_NAME, ALERT_ASSETS_TABLE_NAME, ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME};
+    for (auto& tableName : tablesToClear) {
+        if (!m_db.clearTable(tableName)) {
+            ACSDK_ERROR(LX("clearDatabaseFailed").d("could not clear table", tableName));
+            return false;
+        }
     }
 
     return true;
@@ -1178,12 +1104,12 @@ bool SQLiteAlertStorage::clearDatabase() {
 /**
  * Utility diagnostic function to print a one-line summary of all alerts in the database.
  *
- * @param dbHandle The database handle.
+ * @param db The database object.
  */
-static void printOneLineSummary(sqlite3* dbHandle) {
+static void printOneLineSummary(SQLiteDatabase* db) {
     int numberAlerts = 0;
 
-    if (!getNumberTableRows(dbHandle, ALERTS_V2_TABLE_NAME, &numberAlerts)) {
+    if (!getNumberTableRows(db, ALERTS_V2_TABLE_NAME, &numberAlerts)) {
         ACSDK_ERROR(LX("printOneLineSummaryFailed").m("could not read number of alerts."));
         return;
     }
@@ -1194,15 +1120,15 @@ static void printOneLineSummary(sqlite3* dbHandle) {
 /**
  * Utility diagnostic function to print the details of all the alerts stored in the database.
  *
- * @param dbHandle The database handle.
+ * @param db The database object.
  * @param shouldPrintEverything If @c true, then all details of an alert will be printed.  If @c false, then
  * summary information will be printed instead.
  */
 static void printAlertsSummary(
-    sqlite3* dbHandle,
+    SQLiteDatabase* db,
     const std::vector<std::shared_ptr<Alert>>& alerts,
     bool shouldPrintEverything = false) {
-    printOneLineSummary(dbHandle);
+    printOneLineSummary(db);
 
     for (auto& alert : alerts) {
         alert->printDiagnostic();
@@ -1214,13 +1140,13 @@ void SQLiteAlertStorage::printStats(StatLevel level) {
     load(&alerts);
     switch (level) {
         case StatLevel::ONE_LINE:
-            printOneLineSummary(m_dbHandle);
+            printOneLineSummary(&m_db);
             break;
         case StatLevel::ALERTS_SUMMARY:
-            printAlertsSummary(m_dbHandle, alerts, false);
+            printAlertsSummary(&m_db, alerts, false);
             break;
         case StatLevel::EVERYTHING:
-            printAlertsSummary(m_dbHandle, alerts, true);
+            printAlertsSummary(&m_db, alerts, true);
             break;
     }
 }

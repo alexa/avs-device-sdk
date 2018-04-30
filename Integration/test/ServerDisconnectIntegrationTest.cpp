@@ -15,21 +15,24 @@
 
 /// @file ServerDisconnectIntegrationTest.cpp
 
-#include <fstream>
 #include <chrono>
+#include <fstream>
 #include <thread>
+
 #include <gtest/gtest.h>
+
 #include <ACL/AVSConnectionManager.h>
-#include <ACL/Transport/HTTP2MessageRouter.h>
-#include <ACL/Transport/PostConnectSynchronizer.h>
-#include <AVSCommon/AVS/MessageRequest.h>
-#include <AuthDelegate/AuthDelegate.h>
+#include <ACL/Transport/HTTP2TransportFactory.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
+#include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <ContextManager/ContextManager.h>
+#include <ACL/Transport/PostConnectSynchronizerFactory.h>
 
+#include "Integration/AuthDelegateTestContext.h"
 #include "Integration/AuthObserver.h"
+#include "Integration/SDKTestContext.h"
 #include "Integration/ConnectionStatusObserver.h"
 #include "Integration/JsonHeader.h"
 #include "Integration/ObservableMessageRequest.h"
@@ -40,7 +43,6 @@ namespace test {
 
 using namespace ::testing;
 using namespace acl;
-using namespace authDelegate;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::avs::initialization;
@@ -60,8 +62,8 @@ static const std::string TAG("ServerDisconnectIntegrationTest");
 /// The time to wait for expected message status on sending the message.
 static const int TIMEOUT_FOR_SEND_IN_SECONDS = 10;
 
-/// Path to the AlexaClientSDKConfig.json file.
-std::string g_configPath;
+/// Path to the AlexaClientSDKConfig.json file (from command line arguments).
+static std::string g_configPath;
 
 /**
  * This class tests the functionality for communication between client and AVS using ACL library.
@@ -70,10 +72,12 @@ class AVSCommunication : public avsCommon::utils::RequiresShutdown {
 public:
     /**
      * Create an AVSCommunication object which initializes @c m_connectionStatusObserver, @c m_avsConnectionManager,
-     * @c m_authObserver, @c m_authDelegate and @c m_messageRouter.
+     * @c m_authDelegate and @c m_messageRouter.
+     *
+     * @param authDelegate AuthDelegate to use to authorize access to @c AVS.
      * @return The created AVSCommunication object or @c nullptr if create fails.
      */
-    static std::unique_ptr<AVSCommunication> create();
+    static std::unique_ptr<AVSCommunication> create(std::shared_ptr<AuthDelegateInterface> authDelegate);
 
     /**
      * The function to establish connection by enabling the @c m_avsConnectionManager.
@@ -123,35 +127,33 @@ private:
     std::shared_ptr<ConnectionStatusObserver> m_connectionStatusObserver;
     /// Connection Manager for handling the communication between client.
     std::shared_ptr<AVSConnectionManager> m_avsConnectionManager;
-    /// AuthObserver for checking the status of authorization.
-    std::shared_ptr<AuthObserver> m_authObserver;
     /// ContextManager object.
     std::shared_ptr<contextManager::ContextManager> m_contextManager;
+    /// Pointer to message router so we can properly shutdown
+    std::shared_ptr<MessageRouter> m_messageRouter;
 };
 
 AVSCommunication::AVSCommunication() : RequiresShutdown("AVSCommunication") {
 }
 
-std::unique_ptr<AVSCommunication> AVSCommunication::create() {
-    /// AuthDelegate to handle the authorization token.
-    std::shared_ptr<AuthDelegate> authDelegate;
-    /// MessageRouter for routing the message to @c HTTPTransport.
-    std::shared_ptr<MessageRouter> messageRouter;
+std::unique_ptr<AVSCommunication> AVSCommunication::create(std::shared_ptr<AuthDelegateInterface> authDelegate) {
     std::unique_ptr<AVSCommunication> avsCommunication(new AVSCommunication());
-    avsCommunication->m_authObserver = std::make_shared<AuthObserver>();
-    authDelegate = AuthDelegate::create();
     if (!authDelegate) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullAuthDelegate"));
         return nullptr;
     }
-    authDelegate->addAuthObserver(avsCommunication->m_authObserver);
-    avsCommunication->m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
-    messageRouter = std::make_shared<HTTP2MessageRouter>(authDelegate, nullptr);
     avsCommunication->m_contextManager = contextManager::ContextManager::create();
-    PostConnectObject::init(avsCommunication->m_contextManager);
+    avsCommunication->m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
+
+    auto postConnectFactory = acl::PostConnectSynchronizerFactory::create(avsCommunication->m_contextManager);
+    auto transportFactory = std::make_shared<acl::HTTP2TransportFactory>(postConnectFactory);
+    avsCommunication->m_messageRouter = std::make_shared<MessageRouter>(
+        authDelegate,
+        std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS),
+        transportFactory);
 
     avsCommunication->m_avsConnectionManager = AVSConnectionManager::create(
-        messageRouter,
+        avsCommunication->m_messageRouter,
         false,
         {avsCommunication->m_connectionStatusObserver},
         std::unordered_set<std::shared_ptr<MessageObserverInterface>>());
@@ -163,7 +165,6 @@ std::unique_ptr<AVSCommunication> AVSCommunication::create() {
 }
 
 void AVSCommunication::connect() {
-    ASSERT_TRUE(m_authObserver->waitFor(AuthObserver::State::REFRESHED));
     m_avsConnectionManager->enable();
 
     /*
@@ -186,6 +187,7 @@ std::shared_ptr<ConnectionStatusObserver> AVSCommunication::getConnectionStatusO
 
 void AVSCommunication::doShutdown() {
     m_avsConnectionManager->shutdown();
+    m_messageRouter->shutdown();
 }
 
 bool AVSCommunication::sendEvent(
@@ -211,6 +213,8 @@ public:
     void TearDown() override;
 
 protected:
+    /// Context for running AuthDelegate based tests.
+    std::unique_ptr<AuthDelegateTestContext> m_authDelegateTestContext;
     /// Object for the 1st connection to AVS.
     std::unique_ptr<AVSCommunication> m_firstAvsCommunication;
     /// Object for the 2nd connection to AVS.
@@ -218,17 +222,23 @@ protected:
 };
 
 void ServerDisconnectIntegrationTest::SetUp() {
-    std::ifstream infile(g_configPath);
-    ASSERT_TRUE(infile.good());
-    ASSERT_TRUE(AlexaClientSDKInit::initialize({&infile}));
-    ASSERT_TRUE(m_firstAvsCommunication = AVSCommunication::create());
-    ASSERT_TRUE(m_secondAvsCommunication = AVSCommunication::create());
+    m_authDelegateTestContext = AuthDelegateTestContext::create(g_configPath);
+    ASSERT_TRUE(m_authDelegateTestContext);
+
+    auto authDelegate = m_authDelegateTestContext->getAuthDelegate();
+    ASSERT_TRUE(m_firstAvsCommunication = AVSCommunication::create(authDelegate));
+    ASSERT_TRUE(m_secondAvsCommunication = AVSCommunication::create(authDelegate));
 }
 
 void ServerDisconnectIntegrationTest::TearDown() {
-    m_firstAvsCommunication->shutdown();
-    m_secondAvsCommunication->shutdown();
-    AlexaClientSDKInit::uninitialize();
+    // Note that these nullptr checks are needed to avoid segaults if @c SetUp() failed.
+    if (m_firstAvsCommunication) {
+        m_firstAvsCommunication->shutdown();
+    }
+    if (m_secondAvsCommunication) {
+        m_secondAvsCommunication->shutdown();
+    }
+    m_authDelegateTestContext.reset();
 }
 
 /**

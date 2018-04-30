@@ -59,7 +59,7 @@ SQLiteStatement::~SQLiteStatement() {
 }
 
 bool SQLiteStatement::isValid() {
-    return (getHandle() != nullptr);
+    return nullptr != m_handle;
 }
 
 bool SQLiteStatement::step() {
@@ -153,10 +153,6 @@ bool SQLiteStatement::bindStringParameter(int index, const std::string& value) {
     }
 
     return true;
-}
-
-sqlite3_stmt* SQLiteStatement::getHandle() {
-    return m_handle;
 }
 
 int SQLiteStatement::getStepResult() const {

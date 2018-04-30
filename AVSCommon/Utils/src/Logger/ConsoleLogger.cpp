@@ -42,7 +42,7 @@ void ConsoleLogger::emit(
     const char* threadMoniker,
     const char* text) {
     std::lock_guard<std::mutex> lock(m_coutMutex);
-    std::cout << formatLogString(level, time, threadMoniker, text) << std::endl;
+    std::cout << m_logFormatter.format(level, time, threadMoniker, text) << std::endl;
 }
 
 ConsoleLogger::ConsoleLogger() : Logger(Level::UNKNOWN) {

@@ -31,12 +31,11 @@
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 
 #include "AVSCommon/SDKInterfaces/AuthDelegateInterface.h"
-#include "AVSCommon/SDKInterfaces/ContextManagerInterface.h"
 #include "AVSCommon/Utils/LibcurlUtils/CurlMultiHandleWrapper.h"
 #include "ACL/Transport/HTTP2Stream.h"
 #include "ACL/Transport/HTTP2StreamPool.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
-#include "ACL/Transport/PostConnectObject.h"
+#include "ACL/Transport/PostConnectFactoryInterface.h"
 #include "ACL/Transport/PostConnectObserverInterface.h"
 #include "ACL/Transport/PostConnectSendMessageInterface.h"
 #include "ACL/Transport/TransportInterface.h"
@@ -52,6 +51,7 @@ class HTTP2Transport
         : public TransportInterface
         , public PostConnectObserverInterface
         , public PostConnectSendMessageInterface
+        , public avsCommon::sdkInterfaces::AuthObserverInterface
         , public std::enable_shared_from_this<HTTP2Transport> {
 public:
     /**
@@ -61,7 +61,8 @@ public:
      * @param avsEndpoint The URL for the AVS endpoint of this object.
      * @param messageConsumer The MessageConsumerInterface to pass messages to.
      * @param attachmentManager The attachment manager that manages the attachments.
-     * @param observer The observer to this class.
+     * @param transportObserver The observer to this class.
+     * @param postConnectFactory The object used to create @c PostConnectInterface instances.
      * @return A shared pointer to a HTTP2Transport object.
      */
     static std::shared_ptr<HTTP2Transport> create(
@@ -69,7 +70,8 @@ public:
         const std::string& avsEndpoint,
         std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-        std::shared_ptr<TransportObserverInterface> observer);
+        std::shared_ptr<TransportObserverInterface> transportObserver,
+        std::shared_ptr<PostConnectFactoryInterface> postConnectFactory);
 
     /**
      * @inheritDoc
@@ -87,17 +89,22 @@ public:
     void sendPostConnectMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
     void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
 
-    /**
-     * Method to add observers for TranportObserverInterface.
-     *
-     * @param observer The observer object to add.
-     */
-    void addObserver(std::shared_ptr<TransportObserverInterface> observer);
+    /// @name AuthObserverInterface methods
+    /// @{
+    void onAuthStateChange(State newState, Error error) override;
+    /// @}
 
     /**
-     * Method to add observers for TranportObserverInterface.
+     * Method to add a TransportObserverInterface instance.
      *
-     * @param observer The observer object to add.
+     * @param transportObserver The observer instance to add.
+     */
+    void addObserver(std::shared_ptr<TransportObserverInterface> transportObserver);
+
+    /**
+     * Method to remove a TransportObserverInterface instance.
+     *
+     * @param observer The observer instance to remove.
      */
     void removeObserver(std::shared_ptr<TransportObserverInterface> observer);
 
@@ -109,6 +116,7 @@ private:
      * @param avsEndpoint The URL for the AVS endpoint of this object.
      * @param messageConsumer The MessageConsumerInterface to pass messages to.
      * @param attachmentManager The attachment manager that manages the attachments.
+     * @param postConnect The object used to create PostConnectInterface instances.
      * @param observer The observer to this class.
      */
     HTTP2Transport(
@@ -116,7 +124,7 @@ private:
         const std::string& avsEndpoint,
         std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-        std::shared_ptr<PostConnectObject> postConnectObject,
+        std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
         std::shared_ptr<TransportObserverInterface> observer);
 
     /**
@@ -140,14 +148,6 @@ private:
     typedef std::pair<CURL*, std::shared_ptr<HTTP2Stream>> ActiveTransferEntry;
 
     /**
-     * Sets up the downchannel stream. If a downchannel stream already exists, it is torn down and reset.
-     *
-     * @param[out] reason Pointer to receive the reason the operation failed, if it does.
-     * @return Whether the operation was successful.
-     */
-    bool setupDownchannelStream(avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason* reason);
-
-    /**
      * Main network loop. Will establish a connection then repeatedly call curl_multi_perform in order to
      * receive data from the AVS backend.
      */
@@ -159,6 +159,13 @@ private:
      * @return Whether the connection was successful or if we're already connected.
      */
     bool establishConnection();
+
+    /**
+     * Sets up the downchannel stream. If a downchannel stream already exists, it is torn down and reset.
+     *
+     * @return Whether the operation was successful.
+     */
+    bool setupDownchannelStream();
 
     /**
      * Checks if an active stream is finished and reports the response code the observer.
@@ -266,12 +273,9 @@ private:
      * Release the down channel stream.
      *
      * @param removeFromMulti Whether to remove the stream from @c m_multi as part of releasing the stream.
-     * @param[out] reason If the operation fails, returns reason value.
      * @return Whether the operation was successful.
      */
-    bool releaseDownchannelStream(
-        bool removeFromMulti = true,
-        avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason* reason = nullptr);
+    bool releaseDownchannelStream(bool removeFromMulti);
 
     /**
      * Release the ping stream.
@@ -355,6 +359,9 @@ private:
     /// Keeps track of whether the main network loop is running. Serialized by @c m_mutex.
     bool m_isNetworkThreadRunning;
 
+    //// Whether or not requests for an auth token are expected to provide a valid token.
+    bool m_isAuthRefreshed;
+
     /// Keeps track of whether we're connected to AVS. Serialized by @c m_mutex.
     bool m_isConnected;
 
@@ -370,8 +377,11 @@ private:
     /// Used to wake the main network thread in connection retry back-off situation.
     std::condition_variable m_wakeRetryTrigger;
 
-    /// PostConnect object.
-    std::shared_ptr<PostConnectObject> m_postConnectObject;
+    /// Factory for creating @c PostConnectInterface instances.
+    std::shared_ptr<PostConnectFactoryInterface> m_postConnectFactory;
+
+    /// PostConnect object is used to perform activities required once a connection is established.
+    std::shared_ptr<PostConnectInterface> m_postConnect;
 };
 
 }  // namespace acl

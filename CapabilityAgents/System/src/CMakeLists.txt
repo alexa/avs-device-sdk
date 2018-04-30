@@ -4,6 +4,7 @@ add_library(AVSSystem SHARED
     "${CMAKE_CURRENT_LIST_DIR}/EndpointHandler.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/SoftwareInfoSender.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/SoftwareInfoSendRequest.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/SystemCapabilityProvider.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/UserInactivityMonitor.cpp")
 
 target_include_directories(AVSSystem

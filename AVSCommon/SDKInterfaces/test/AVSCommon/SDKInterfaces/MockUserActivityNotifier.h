@@ -28,6 +28,7 @@ namespace test {
 class MockUserActivityNotifier : public UserActivityNotifierInterface {
 public:
     MOCK_METHOD0(onUserActive, void());
+    MOCK_METHOD0(timeSinceUserActivity, std::chrono::seconds());
 };
 
 }  // namespace test

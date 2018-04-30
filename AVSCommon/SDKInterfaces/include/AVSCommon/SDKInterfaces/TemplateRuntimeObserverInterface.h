@@ -19,6 +19,7 @@
 #include <chrono>
 #include <string>
 
+#include "AVSCommon/AVS/FocusState.h"
 #include <AVSCommon/AVS/PlayerActivity.h>
 
 namespace alexaClientSDK {
@@ -64,8 +65,15 @@ public:
      * Failure to do so may result in exposing or mishandling of customer data.
      *
      * @param jsonPayload The payload of the RenderTemplate directive in structured JSON format.
+     * @param focusState The @c FocusState of the channel used by TemplateRuntime interface.
      */
-    virtual void renderTemplateCard(const std::string& jsonPayload) = 0;
+    virtual void renderTemplateCard(const std::string& jsonPayload, avsCommon::avs::FocusState focusState) = 0;
+
+    /**
+     * Used to notify the observer when the client should clear the Template display card.  Once the card is cleared,
+     * the client should call templateCardCleared().
+     */
+    virtual void clearTemplateCard() = 0;
 
     /**
      * Used to notify the observer when a RenderPlayerInfo directive is received. Once called, the client should
@@ -74,10 +82,18 @@ public:
      *
      * @param jsonPayload The payload of the RenderPlayerInfo directive in structured JSON format.
      * @param audioPlayerInfo Information on the @c AudioPlayer.
+     * @param focusState The @c FocusState of the channel used by TemplateRuntime interface.
      */
     virtual void renderPlayerInfoCard(
         const std::string& jsonPayload,
-        TemplateRuntimeObserverInterface::AudioPlayerInfo audioPlayerInfo) = 0;
+        TemplateRuntimeObserverInterface::AudioPlayerInfo audioPlayerInfo,
+        avsCommon::avs::FocusState focusState) = 0;
+
+    /**
+     * Used to notify the observer when the client should clear the PlayerInfo display card.  Once the card is cleared,
+     * the client should call templateCardCleared().
+     */
+    virtual void clearPlayerInfoCard() = 0;
 };
 
 }  // namespace sdkInterfaces

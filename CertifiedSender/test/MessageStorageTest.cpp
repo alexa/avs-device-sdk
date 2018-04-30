@@ -22,6 +22,7 @@
 
 #include <fstream>
 #include <queue>
+#include <memory>
 
 using namespace ::testing;
 
@@ -54,7 +55,7 @@ public:
     /**
      * Constructor.
      */
-    MessageStorageTest() : m_storage{std::make_shared<SQLiteMessageStorage>()} {
+    MessageStorageTest() : m_storage{std::make_shared<SQLiteMessageStorage>(g_dbTestFilePath)} {
         cleanupLocalDbFile();
     }
 
@@ -64,18 +65,13 @@ public:
     ~MessageStorageTest() {
         m_storage->close();
         cleanupLocalDbFile();
-
-        // test
     }
 
     /**
      * Utility function to create the database, using the global filename.
      */
     void createDatabase() {
-        if (g_dbTestFilePath.empty()) {
-            return;
-        }
-        m_storage->createDatabase(g_dbTestFilePath);
+        m_storage->createDatabase();
     }
 
     /**
@@ -97,34 +93,45 @@ protected:
 };
 
 /**
+ * Utility function to determine if the storage component is opened.
+ *
+ * @param storage The storage component to check.
+ * @return True if the storage component's underlying database is opened, false otherwise.
+ */
+static bool isOpen(const std::shared_ptr<MessageStorageInterface>& storage) {
+    std::queue<MessageStorageInterface::StoredMessage> dummyMessages;
+    return storage->load(&dummyMessages);
+}
+
+/**
  * Test basic construction.  Database should not be open.
  */
 TEST_F(MessageStorageTest, testConstructionAndDestruction) {
-    ASSERT_FALSE(m_storage->isOpen());
+    ASSERT_FALSE(isOpen(m_storage));
 }
 
 /**
  * Test database creation.
  */
 TEST_F(MessageStorageTest, testDatabaseCreation) {
-    ASSERT_FALSE(m_storage->isOpen());
+    ASSERT_FALSE(isOpen(m_storage));
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
 }
 
 /**
  * Test opening and closing a database.
  */
 TEST_F(MessageStorageTest, testOpenAndCloseDatabase) {
-    ASSERT_FALSE(m_storage->isOpen());
+    ASSERT_FALSE(isOpen(m_storage));
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
     m_storage->close();
-    ASSERT_FALSE(m_storage->isOpen());
-    ASSERT_TRUE(m_storage->open(g_dbTestFilePath));
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_FALSE(isOpen(m_storage));
+    ASSERT_TRUE(m_storage->open());
+    ASSERT_TRUE(isOpen(m_storage));
     m_storage->close();
-    ASSERT_FALSE(m_storage->isOpen());
+    ASSERT_FALSE(isOpen(m_storage));
 }
 
 /**
@@ -132,7 +139,7 @@ TEST_F(MessageStorageTest, testOpenAndCloseDatabase) {
  */
 TEST_F(MessageStorageTest, testDatabaseStoreAndLoad) {
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
 
     std::queue<MessageStorageInterface::StoredMessage> dbMessages;
     ASSERT_TRUE(m_storage->load(&dbMessages));
@@ -167,7 +174,7 @@ TEST_F(MessageStorageTest, testDatabaseStoreAndLoad) {
  */
 TEST_F(MessageStorageTest, testDatabaseErase) {
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
 
     // add three messages, and verify
     int dbId = 0;
@@ -199,7 +206,7 @@ TEST_F(MessageStorageTest, testDatabaseErase) {
  */
 TEST_F(MessageStorageTest, testDatabaseClear) {
     createDatabase();
-    ASSERT_TRUE(m_storage->isOpen());
+    ASSERT_TRUE(isOpen(m_storage));
 
     int dbId = 0;
     ASSERT_TRUE(m_storage->store(TEST_MESSAGE_ONE, &dbId));

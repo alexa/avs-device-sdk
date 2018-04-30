@@ -79,10 +79,10 @@ void ContextManager::setStateProvider(
     std::lock_guard<std::mutex> stateProviderLock(m_stateProviderMutex);
     if (!stateProvider) {
         m_namespaceNameToStateInfo.erase(stateProviderName);
-        ACSDK_DEBUG(LX("setStateProvider")
-                        .d("action", "removedStateProvider")
-                        .d("namespace", stateProviderName.nameSpace)
-                        .d("name", stateProviderName.name));
+        ACSDK_DEBUG5(LX("setStateProvider")
+                         .d("action", "removedStateProvider")
+                         .d("namespace", stateProviderName.nameSpace)
+                         .d("name", stateProviderName.name));
         return;
     }
     auto stateInfoMappingIt = m_namespaceNameToStateInfo.find(stateProviderName);
@@ -164,7 +164,7 @@ SetStateResult ContextManager::updateStateLocked(
     const StateRefreshPolicy& refreshPolicy) {
     auto stateInfoMappingIt = m_namespaceNameToStateInfo.find(stateProviderName);
     if (m_namespaceNameToStateInfo.end() == stateInfoMappingIt) {
-        if (StateRefreshPolicy::ALWAYS == refreshPolicy) {
+        if (StateRefreshPolicy::ALWAYS == refreshPolicy || StateRefreshPolicy::SOMETIMES == refreshPolicy) {
             ACSDK_ERROR(LX("updateStateLockedFailed")
                             .d("reason", "unregisteredStateProvider")
                             .d("namespace", stateProviderName.nameSpace)
@@ -175,11 +175,11 @@ SetStateResult ContextManager::updateStateLocked(
     } else {
         stateInfoMappingIt->second->jsonState = jsonState;
         stateInfoMappingIt->second->refreshPolicy = refreshPolicy;
-        ACSDK_DEBUG(LX("updateStateLocked")
-                        .d("action", "updatedState")
-                        .sensitive("state", jsonState)
-                        .d("namespace", stateProviderName.nameSpace)
-                        .d("name", stateProviderName.name));
+        ACSDK_DEBUG9(LX("updateStateLocked")
+                         .d("action", "updatedState")
+                         .sensitive("state", jsonState)
+                         .d("namespace", stateProviderName.nameSpace)
+                         .d("name", stateProviderName.name));
     }
     return SetStateResult::SUCCESS;
 }
@@ -197,7 +197,8 @@ void ContextManager::requestStatesLocked(std::unique_lock<std::mutex>& stateProv
 
     for (auto it = m_namespaceNameToStateInfo.begin(); it != m_namespaceNameToStateInfo.end(); ++it) {
         auto& stateInfo = it->second;
-        if (StateRefreshPolicy::ALWAYS == stateInfo->refreshPolicy) {
+        if (StateRefreshPolicy::ALWAYS == stateInfo->refreshPolicy ||
+            StateRefreshPolicy::SOMETIMES == stateInfo->refreshPolicy) {
             m_pendingOnStateProviders.insert(it->first);
             stateProviderLock.unlock();
             stateInfo->stateProvider->provideState(it->first, curStateReqToken);
@@ -298,6 +299,14 @@ void ContextManager::sendContextToRequesters() {
     std::unique_lock<std::mutex> stateProviderLock(m_stateProviderMutex);
     for (auto it = m_namespaceNameToStateInfo.begin(); it != m_namespaceNameToStateInfo.end(); ++it) {
         auto& stateInfo = it->second;
+        if (stateInfo->jsonState.empty() && StateRefreshPolicy::SOMETIMES == stateInfo->refreshPolicy) {
+            /*
+             * If jsonState supplied by the state provider is empty and it has a refreshPolicy of SOMETIMES, it means
+             * that it doesn't want to provide state.
+             */
+            ACSDK_DEBUG9(LX("buildContextIgnored").d("namespace", it->first.nameSpace).d("name", it->first.name));
+            continue;
+        }
         Value jsonState = buildState(it->first, stateInfo->jsonState, allocator);
         if (jsonState.ObjectEmpty()) {
             ACSDK_ERROR(LX("buildContextFailed").d("reason", "buildStateFailed"));
@@ -320,7 +329,7 @@ void ContextManager::sendContextToRequesters() {
     if (errorBuildingContext) {
         sendContextAndClearQueue("", ContextRequestError::BUILD_CONTEXT_ERROR);
     } else {
-        ACSDK_DEBUG(LX("buildContextSuccessful").sensitive("context", jsonContextBuf.GetString()));
+        ACSDK_DEBUG5(LX("buildContextSuccessful").sensitive("context", jsonContextBuf.GetString()));
         sendContextAndClearQueue(jsonContextBuf.GetString());
     }
 }

@@ -17,6 +17,7 @@
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Metrics.h>
 
@@ -33,6 +34,14 @@ using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace rapidjson;
+
+/// SpeechSynthesizer capability constants
+/// SpeechSynthesizer interface type
+static const std::string SPEECHSYNTHESIZER_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
+/// SpeechSynthesizer interface name
+static const std::string SPEECHSYNTHESIZER_CAPABILITY_INTERFACE_NAME = "SpeechSynthesizer";
+/// SpeechSynthesizer interface version
+static const std::string SPEECHSYNTHESIZER_CAPABILITY_INTERFACE_VERSION = "1.0";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG{"SpeechSynthesizer"};
@@ -55,9 +64,6 @@ static const NamespaceAndName CONTEXT_MANAGER_SPEECH_STATE{NAMESPACE, "SpeechSta
 
 /// The name of the @c FocusManager channel used by the @c SpeechSynthesizer.
 static const std::string CHANNEL_NAME = FocusManagerInterface::DIALOG_CHANNEL_NAME;
-
-/// The activity Id used with the @c FocusManager by @c SpeechSynthesizer.
-static const std::string FOCUS_MANAGER_ACTIVITY_ID{"SpeechSynthesizer.Speak"};
 
 /// The name of the event to send to the AVS server once audio starting playing.
 static std::string SPEECH_STARTED_EVENT_NAME{"SpeechStarted"};
@@ -94,6 +100,13 @@ static const char PLAYER_STATE_FINISHED[] = "FINISHED";
 
 /// The duration to wait for a state change in @c onFocusChanged before failing.
 static const std::chrono::seconds STATE_CHANGE_TIMEOUT{5};
+
+/**
+ * Creates the SpeechSynthesizer capability configuration.
+ *
+ * @return The SpeechSynthesizer capability configuration.
+ */
+static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSpeechSynthesizerCapabilityConfiguration();
 
 std::shared_ptr<SpeechSynthesizer> SpeechSynthesizer::create(
     std::shared_ptr<MediaPlayerInterface> mediaPlayer,
@@ -312,6 +325,16 @@ SpeechSynthesizer::SpeechSynthesizer(
         m_currentFocus{FocusState::NONE},
         m_isAlreadyStopping{false},
         m_initialDialogUXStateReceived{false} {
+    m_capabilityConfigurations.insert(getSpeechSynthesizerCapabilityConfiguration());
+}
+
+std::shared_ptr<CapabilityConfiguration> getSpeechSynthesizerCapabilityConfiguration() {
+    std::unordered_map<std::string, std::string> configMap;
+    configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, SPEECHSYNTHESIZER_CAPABILITY_INTERFACE_TYPE});
+    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, SPEECHSYNTHESIZER_CAPABILITY_INTERFACE_NAME});
+    configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, SPEECHSYNTHESIZER_CAPABILITY_INTERFACE_VERSION});
+
+    return std::make_shared<CapabilityConfiguration>(configMap);
 }
 
 void SpeechSynthesizer::doShutdown() {
@@ -425,7 +448,7 @@ void SpeechSynthesizer::executePreHandleAfterValidation(std::shared_ptr<SpeakDir
         return;
     }
     std::string contentId = urlValue.substr(contentIdPosition + CID_PREFIX.length());
-    speakInfo->attachmentReader = speakInfo->directive->getAttachmentReader(contentId, sds::ReaderPolicy::BLOCKING);
+    speakInfo->attachmentReader = speakInfo->directive->getAttachmentReader(contentId, sds::ReaderPolicy::NONBLOCKING);
     if (!speakInfo->attachmentReader) {
         const std::string message("getAttachmentReaderFailed");
         ACSDK_ERROR(LX("executePreHandleFailed").d("reason", message));
@@ -442,9 +465,8 @@ void SpeechSynthesizer::executePreHandleAfterValidation(std::shared_ptr<SpeakDir
 
 void SpeechSynthesizer::executeHandleAfterValidation(std::shared_ptr<SpeakDirectiveInfo> speakInfo) {
     m_currentInfo = speakInfo;
-    if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), FOCUS_MANAGER_ACTIVITY_ID)) {
-        static const std::string message =
-            std::string("Could not acquire ") + CHANNEL_NAME + " for " + FOCUS_MANAGER_ACTIVITY_ID;
+    if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), NAMESPACE)) {
+        static const std::string message = std::string("Could not acquire ") + CHANNEL_NAME + " for " + NAMESPACE;
         ACSDK_ERROR(LX("executeHandleFailed")
                         .d("reason", "CouldNotAcquireChannel")
                         .d("messageId", m_currentInfo->directive->getMessageId()));
@@ -915,6 +937,11 @@ void SpeechSynthesizer::executeOnDialogUXStateChanged(
         m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
         m_currentFocus = avsCommon::avs::FocusState::NONE;
     }
+}
+
+std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> SpeechSynthesizer::
+    getCapabilityConfigurations() {
+    return m_capabilityConfigurations;
 }
 
 }  // namespace speechSynthesizer

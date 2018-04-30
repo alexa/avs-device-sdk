@@ -33,9 +33,13 @@ class GuiRenderer : public avsCommon::sdkInterfaces::TemplateRuntimeObserverInte
 public:
     /// @name TemplateRuntimeObserverInterface Functions
     /// @{
-    void renderTemplateCard(const std::string& jsonPayload) override;
-    void renderPlayerInfoCard(const std::string& jsonPayload, TemplateRuntimeObserverInterface::AudioPlayerInfo info)
-        override;
+    void renderTemplateCard(const std::string& jsonPayload, avsCommon::avs::FocusState focusState) override;
+    void clearTemplateCard() override;
+    void renderPlayerInfoCard(
+        const std::string& jsonPayload,
+        TemplateRuntimeObserverInterface::AudioPlayerInfo info,
+        avsCommon::avs::FocusState focusState) override;
+    void clearPlayerInfoCard() override;
     /// @}
 };
 

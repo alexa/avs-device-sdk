@@ -18,6 +18,7 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/error/en.h>
 
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
@@ -34,6 +35,14 @@ using namespace avsCommon::avs::speakerConstants;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::json;
 using namespace rapidjson;
+
+/// Speaker capability constants
+/// Speaker interface type
+static const std::string SPEAKER_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
+/// Speaker interface name
+static const std::string SPEAKER_CAPABILITY_INTERFACE_NAME = "Speaker";
+/// Speaker interface version
+static const std::string SPEAKER_CAPABILITY_INTERFACE_VERSION = "1.0";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG{"SpeakerManager"};
@@ -60,6 +69,13 @@ static bool withinBounds(T value, T min, T max) {
     }
     return true;
 }
+
+/**
+ * Creates the Speaker capability configuration.
+ *
+ * @return The Speaker capability configuration.
+ */
+static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSpeakerCapabilityConfiguration();
 
 std::shared_ptr<SpeakerManager> SpeakerManager::create(
     const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& speakers,
@@ -112,6 +128,17 @@ SpeakerManager::SpeakerManager(
             ACSDK_ERROR(LX("initialUpdateContextManagerFailed"));
         }
     }
+
+    m_capabilityConfigurations.insert(getSpeakerCapabilityConfiguration());
+}
+
+std::shared_ptr<CapabilityConfiguration> getSpeakerCapabilityConfiguration() {
+    std::unordered_map<std::string, std::string> configMap;
+    configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, SPEAKER_CAPABILITY_INTERFACE_TYPE});
+    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, SPEAKER_CAPABILITY_INTERFACE_NAME});
+    configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, SPEAKER_CAPABILITY_INTERFACE_VERSION});
+
+    return std::make_shared<CapabilityConfiguration>(configMap);
 }
 
 DirectiveHandlerConfiguration SpeakerManager::getConfiguration() const {
@@ -661,6 +688,11 @@ void SpeakerManager::addSpeaker(std::shared_ptr<avsCommon::sdkInterfaces::Speake
     }
     m_speakerMap.insert(
         std::pair<SpeakerInterface::Type, std::shared_ptr<SpeakerInterface>>(speaker->getSpeakerType(), speaker));
+}
+
+std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> SpeakerManager::
+    getCapabilityConfigurations() {
+    return m_capabilityConfigurations;
 }
 
 }  // namespace speakerManager

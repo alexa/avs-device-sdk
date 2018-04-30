@@ -16,9 +16,10 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SETTINGS_INCLUDE_SETTINGS_SQLITESETTINGSTORAGE_H_
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SETTINGS_INCLUDE_SETTINGS_SQLITESETTINGSTORAGE_H_
 
-#include <sqlite3.h>
-
 #include "Settings/SettingsStorageInterface.h"
+
+#include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
+#include <SQLiteStorage/SQLiteDatabase.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -32,15 +33,24 @@ namespace settings {
 class SQLiteSettingStorage : public SettingsStorageInterface {
 public:
     /**
-     * Constructor.
+     * Factory method for creating a storage object for Settings based on an SQLite database.
+     *
+     * @param configurationRoot The global config object.
+     * @return Pointer to the SQLiteSettingStorage object, nullptr if there's an error creating it.
      */
-    SQLiteSettingStorage();
+    static std::unique_ptr<SQLiteSettingStorage> create(
+        const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
 
-    bool createDatabase(const std::string& filePath) override;
+    /**
+     * Constructor.
+     *
+     * @param dbFilePath The location of the SQLite database file.
+     */
+    SQLiteSettingStorage(const std::string& databaseFilePath);
 
-    bool open(const std::string& filePath) override;
+    bool createDatabase() override;
 
-    bool isOpen() override;
+    bool open() override;
 
     void close() override;
 
@@ -59,8 +69,8 @@ public:
     ~SQLiteSettingStorage();
 
 private:
-    /// The sqlite database handle.
-    sqlite3* m_dbHandle;
+    /// The underlying database class.
+    alexaClientSDK::storage::sqliteStorage::SQLiteDatabase m_database;
 };
 
 }  // namespace settings

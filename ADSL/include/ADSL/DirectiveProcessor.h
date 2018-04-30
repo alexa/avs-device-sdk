@@ -93,6 +93,19 @@ public:
      */
     void shutdown();
 
+    /**
+     * Disable the DirectiveProcessor, queues all outstanding @c AVSDirectives for cancellation and
+     * blocks until the processing of all @c AVSDirectives has completed.
+     */
+    void disable();
+
+    /**
+     * Enable the DirectiveProcessor.
+     *
+     * @return Whether it succeeded to enable the directive processor.
+     */
+    bool enable();
+
 private:
     /**
      * Handle used to identify @c DirectiveProcessor instances referenced by @c DirectiveHandlerResult.
@@ -221,6 +234,9 @@ private:
 
     /// Whether or not the @c DirectiveProcessor is shutting down.
     bool m_isShuttingDown;
+
+    /// Whether or not the @c DirectiveProcessor is enabled.
+    bool m_isEnabled;
 
     /// The current @c dialogRequestId
     std::string m_dialogRequestId;

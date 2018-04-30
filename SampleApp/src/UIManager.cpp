@@ -66,7 +66,7 @@ static const std::string HELP_MESSAGE =
 #ifdef KWD
     "| Privacy mode (microphone off):                                             |\n"
     "|       Press 'm' and Enter to turn on and off the microphone.               |\n"
-    "| Echo Spatial Perception (ESP): This is only for testing purpose only!      |\n"
+    "| Echo Spatial Perception (ESP): This is for testing purpose only!           |\n"
     "|       Press 'e' followed by Enter at any time to adjust ESP settings.      |\n"
 #endif
     "| Playback Controls:                                                         |\n"
@@ -74,6 +74,10 @@ static const std::string HELP_MESSAGE =
     "|       Press '2' for a 'PAUSE' button press.                                |\n"
     "|       Press '3' for a 'NEXT' button press.                                 |\n"
     "|       Press '4' for a 'PREVIOUS' button press.                             |\n"
+#ifdef ENABLE_COMMS
+    "| Comms Controls:                                                            |\n"
+    "|       Press 'd' followed by Enter at any time to accept or stop calls.     |\n"
+#endif
     "| Settings:                                                                  |\n"
     "|       Press 'c' followed by Enter at any time to see the settings screen.  |\n"
     "| Speaker Control:                                                           |\n"
@@ -83,6 +87,11 @@ static const std::string HELP_MESSAGE =
     "|       firmware version.                                                    |\n"
     "| Info:                                                                      |\n"
     "|       Press 'i' followed by Enter at any time to see the help screen.      |\n"
+    "| Reset device:                                                              |\n"
+    "|       Press 'k' followed by Enter at any time to reset your device. This   |\n"
+    "|       will erase any data stored in the device and you will have to        |\n"
+    "|       register your device with another account.                           |\n"
+    "|       This will kill the application since we don't support login yet.     |\n"
     "| Quit:                                                                      |\n"
     "|       Press 'q' followed by Enter at any time to quit the application.     |\n"
     "+----------------------------------------------------------------------------+\n";
@@ -148,6 +157,38 @@ static const std::string ESP_CONTROL_MESSAGE =
     "| Press '3' followed by Enter to enter the ambient energy.                   |\n"
     "| Press 'q' to exit ESP Control Mode.                                        |\n";
 
+static const std::string RESET_CONFIRMATION =
+    "+----------------------------------------------------------------------------+\n"
+    "|                    Device Reset Confirmation:                              |\n"
+    "|                                                                            |\n"
+    "| This operation will remove all your personal information, device settings, |\n"
+    "| and downloaded content. Are you sure you want to reset your device?        |\n"
+    "|                                                                            |\n"
+    "| Press 'Y' followed by Enter to reset the device.                           |\n"
+    "| Press 'N' followed by Enter to cancel the device reset operation.          |\n"
+    "+----------------------------------------------------------------------------+\n";
+
+static const std::string RESET_WARNING =
+    "Device was reset! Please don't forget to deregister it. For more details "
+    "visit https://www.amazon.com/gp/help/customer/display.html?nodeId=201357520";
+
+UIManager::UIManager() :
+        m_dialogState{DialogUXState::IDLE},
+        m_dcfState{DCFObserverInterface::State::UNINITIALIZED},
+        m_dcfError{DCFObserverInterface::Error::UNINITIALIZED},
+        m_authState{AuthObserverInterface::State::UNINITIALIZED},
+        m_authCheckCounter{0},
+        m_connectionStatus{avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::DISCONNECTED} {
+}
+
+static const std::string COMMS_MESSAGE =
+    "+----------------------------------------------------------------------------+\n"
+    "|                          Comms Options:                                    |\n"
+    "|                                                                            |\n"
+    "| Press 'a' followed by Enter to accept an incoming call.                    |\n"
+    "| Press 's' followed by Enter to stop an ongoing call.                       |\n"
+    "+----------------------------------------------------------------------------+\n";
+
 void UIManager::onDialogUXStateChanged(DialogUXState state) {
     m_executor.submit([this, state]() {
         if (state == m_dialogState) {
@@ -195,6 +236,63 @@ void UIManager::onSetIndicator(avsCommon::avs::IndicatorState state) {
     });
 }
 
+void UIManager::onRequestAuthorization(const std::string& url, const std::string& code) {
+    m_executor.submit([this, url, code]() {
+        m_authCheckCounter = 0;
+        ConsolePrinter::prettyPrint("NOT YET AUTHORIZED");
+        std::ostringstream oss;
+        oss << "To authorize, browse to: '" << url << "' and enter the code: " << code;
+        ConsolePrinter::prettyPrint(oss.str());
+    });
+}
+
+void UIManager::onCheckingForAuthorization() {
+    m_executor.submit([this]() {
+        std::ostringstream oss;
+        oss << "Checking for authorization (" << ++m_authCheckCounter << ")...";
+        ConsolePrinter::prettyPrint(oss.str());
+    });
+}
+
+void UIManager::onAuthStateChange(AuthObserverInterface::State newState, AuthObserverInterface::Error error) {
+    m_executor.submit([this, newState, error]() {
+        if (m_authState != newState) {
+            m_authState = newState;
+            switch (m_authState) {
+                case AuthObserverInterface::State::UNINITIALIZED:
+                    break;
+                case AuthObserverInterface::State::REFRESHED:
+                    ConsolePrinter::prettyPrint("Authorized!");
+                    break;
+                case AuthObserverInterface::State::EXPIRED:
+                    ConsolePrinter::prettyPrint("AUTHORIZATION EXPIRED");
+                    break;
+                case AuthObserverInterface::State::UNRECOVERABLE_ERROR:
+                    std::ostringstream oss;
+                    oss << "UNRECOVERABLE AUTHORIZATION ERROR: " << error;
+                    ConsolePrinter::prettyPrint(oss.str());
+                    exit(1);
+                    break;
+            }
+        }
+    });
+}
+
+void UIManager::onDCFStateChange(DCFObserverInterface::State newState, DCFObserverInterface::Error newError) {
+    m_executor.submit([this, newState, newError]() {
+        if ((m_dcfState != newState) && (m_dcfError != newError)) {
+            m_dcfState = newState;
+            m_dcfError = newError;
+            if (DCFObserverInterface::State::FATAL_ERROR == m_dcfState) {
+                std::ostringstream oss;
+                oss << "UNRECOVERABLE DCF ERROR: " << m_dcfError;
+                ConsolePrinter::prettyPrint(oss.str());
+                exit(1);
+            }
+        }
+    });
+}
+
 void UIManager::printWelcomeScreen() {
     m_executor.submit([]() { ConsolePrinter::simplePrint(ALEXA_WELCOME_MESSAGE); });
 }
@@ -236,12 +334,24 @@ void UIManager::printESPControlScreen(bool support, const std::string& voiceEner
     });
 }
 
+void UIManager::printCommsControlScreen() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint(COMMS_MESSAGE); });
+}
+
 void UIManager::printErrorScreen() {
     m_executor.submit([]() { ConsolePrinter::prettyPrint("Invalid Option"); });
 }
 
 void UIManager::microphoneOff() {
     m_executor.submit([]() { ConsolePrinter::prettyPrint("Microphone Off!"); });
+}
+
+void UIManager::printResetConfirmation() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint(RESET_CONFIRMATION); });
+}
+
+void UIManager::printResetWarning() {
+    m_executor.submit([]() { ConsolePrinter::prettyPrint(RESET_WARNING); });
 }
 
 void UIManager::microphoneOn() {
@@ -277,6 +387,18 @@ void UIManager::printState() {
                 return;
         }
     }
+}
+
+void UIManager::printESPDataOverrideNotSupported() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint("Cannot override ESP Value in this device."); });
+}
+
+void UIManager::printESPNotSupported() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint("ESP is not supported in this device."); });
+}
+
+void UIManager::printCommsNotSupported() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint("Comms is not supported in this device."); });
 }
 
 }  // namespace sampleApp

@@ -16,6 +16,12 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_AUDIOITEM_H_
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_AUDIOITEM_H_
 
+#include <chrono>
+#include <memory>
+#include <string>
+
+#include <AVSCommon/AVS/Attachment/AttachmentReader.h>
+
 #include "StreamFormat.h"
 
 namespace alexaClientSDK {

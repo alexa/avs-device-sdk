@@ -183,6 +183,19 @@ public:
     void log(Level level, const LogEntry& entry);
 
     /**
+     * Send a log entry to this Logger while program is exiting.
+     *
+     * Use this method if the code may be run while destroying a static object. This method should not rely in any
+     * other static object.
+     *
+     * @note The user code should still ensure that the Logger object itself is valid.
+     *
+     * @param level The severity Level to associate with this log entry.
+     * @param entry Object used to build the text of this log entry.
+     */
+    void logAtExit(Level level, const LogEntry& entry);
+
+    /**
      * Emit a log entry.
      * NOTE: This method must be thread-safe.
      * NOTE: Delays in returning from this method may hold up calls to Logger::log().

@@ -188,6 +188,34 @@ TEST(StringUtilsTest, testMultipleNumbers) {
     ASSERT_FALSE(stringToInt("1 2 3", &result));
 }
 
+/**
+ * Verify that converting a empty string to lower case works.
+ */
+TEST(StringUtilsTest, testToLowerEmptyString) {
+    ASSERT_EQ(stringToLowerCase(""), "");
+}
+
+/**
+ * Verify that converting a lower case string to lower case works.
+ */
+TEST(StringUtilsTest, testToLowerCaseString) {
+    ASSERT_EQ(stringToLowerCase("abc"), "abc");
+}
+
+/**
+ * Verify that converting a Upper case string to lower case works.
+ */
+TEST(StringUtilsTest, testToUpperCaseString) {
+    ASSERT_EQ(stringToLowerCase("ABC"), "abc");
+}
+
+/**
+ * Verify that converting a Camel case string to lower case works.
+ */
+TEST(StringUtilsTest, testToCamelCaseString) {
+    ASSERT_EQ(stringToLowerCase("AbCd"), "abcd");
+}
+
 }  // namespace test
 }  // namespace utils
 }  // namespace avsCommon

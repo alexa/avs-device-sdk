@@ -27,11 +27,12 @@
 #include <AVSCommon/AVS/MessageRequest.h>
 
 #include "AVSCommon/SDKInterfaces/AuthDelegateInterface.h"
+#include "ACL/Transport/MessageConsumerInterface.h"
 #include "ACL/Transport/MessageRouterInterface.h"
 #include "ACL/Transport/MessageRouterObserverInterface.h"
+#include "ACL/Transport/TransportFactoryInterface.h"
 #include "ACL/Transport/TransportInterface.h"
 #include "ACL/Transport/TransportObserverInterface.h"
-#include "ACL/Transport/MessageConsumerInterface.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -52,13 +53,15 @@ public:
      * @param authDelegate An implementation of an AuthDelegate, which will provide valid access tokens with which
      * the MessageRouter can authorize the client to AVS.
      * @param attachmentManager The AttachmentManager, which allows ACL to write attachments received from AVS.
+     * @param transportFactory Factory used to create new transport objects.
      * @param avsEndpoint The endpoint to connect to AVS.  If empty the "endpoint" value of the "acl" configuration
      * will be used.  If there no such configuration value a default value will be used instead.
      */
     MessageRouter(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-        const std::string& avsEndpoint);
+        std::shared_ptr<TransportFactoryInterface> transportFactory,
+        const std::string& avsEndpoint = "");
 
     void enable() override;
 
@@ -86,24 +89,6 @@ public:
     void doShutdown() override;
 
 private:
-    /**
-     * Creates a new MessageRouter.
-     *
-     * @param authDelegate The AuthDelegateInterface to use for authentication and authorization with AVS.
-     * @param avsEndpoint The URL for the AVS server we will connect to.
-     * @param messageConsumerInterface The object which should be notified on messages which arrive from AVS.
-     * @param transportObserverInterface A pointer to the transport observer the new transport should notify.
-     * @return A new MessageRouter object.
-     *
-     * TODO: ACSDK-99 Replace this with an injected transport factory.
-     */
-    virtual std::shared_ptr<TransportInterface> createTransport(
-        std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-        const std::string& avsEndpoint,
-        std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
-        std::shared_ptr<TransportObserverInterface> transportObserverInterface) = 0;
-
     /**
      * Set the connection state. If it changes, notify our observer.
      * @c m_connectionMutex must be locked to call this method.
@@ -211,6 +196,9 @@ private:
 
     /// The attachment manager.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
+
+    /// The transport factory.
+    std::shared_ptr<TransportFactoryInterface> m_transportFactory;
 
 protected:
     /**
