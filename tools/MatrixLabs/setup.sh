@@ -15,6 +15,46 @@
 # permissions and limitations under the License.
 # 
 
+
+LOCALE=${LOCALE:-'en-US'}
+
+PORT_AUDIO_FILE="pa_stable_v190600_20161030.tgz"
+PORT_AUDIO_DOWNLOAD_URL="http://www.portaudio.com/archives/$PORT_AUDIO_FILE"
+
+TEST_MODEL_DOWNLOAD="https://github.com/Sensory/alexa-rpi/blob/master/models/spot-alexa-rpi-31000.snsr"
+
+BUILD_TESTS=${BUILD_TESTS:-'true'}
+
+CURRENT_DIR="$(pwd)"
+INSTALL_BASE=${INSTALL_BASE:-"$CURRENT_DIR"}
+SOURCE_FOLDER=${SDK_LOC:-''}
+THIRD_PARTY_FOLDER=${THIRD_PARTY_LOC:-'third-party'}
+BUILD_FOLDER=${BUILD_FOLDER:-'build'}
+SOUNDS_FOLDER=${SOUNDS_FOLDER:-'sounds'}
+DB_FOLDER=${DB_FOLDER:-'db'}
+
+SOURCE_PATH="$INSTALL_BASE/$SOURCE_FOLDER"
+THIRD_PARTY_PATH="$INSTALL_BASE/$THIRD_PARTY_FOLDER"
+BUILD_PATH="$INSTALL_BASE/$BUILD_FOLDER"
+SOUNDS_PATH="$INSTALL_BASE/$SOUNDS_FOLDER"
+DB_PATH="$INSTALL_BASE/$DB_FOLDER"
+CONFIG_DB_PATH="$DB_PATH"
+UNIT_TEST_MODEL_PATH="$INSTALL_BASE/avs-device-sdk/KWD/inputs/SensoryModels/"
+UNIT_TEST_MODEL="$THIRD_PARTY_PATH/alexa-rpi/models/spot-alexa-rpi-31000.snsr"
+CONFIG_FILE="$BUILD_PATH/Integration/AlexaClientSDKConfig.json"
+
+WAKE_WORD_ENGINE="sensory" # "kitt_ai" or  "sensory" wake word engines
+SENSORY_PATH="$THIRD_PARTY_PATH/alexa-rpi"
+SENSORY_MODELS_PATH="$SENSORY_PATH/models"
+KITT_AI_PATH="$THIRD_PARTY_PATH/snowboy"
+KIT_AI_MODELS_PATH="$KITT_AI_PATH/resources/alexa/alexa-sdk-resources"
+KIT_AI_WAKEWORD="snowboy" # "alexa" or "snowboy" wake words
+SOUND_CONFIG="$HOME/.asoundrc"
+START_SCRIPT="$INSTALL_BASE/startsample.sh"
+TEST_SCRIPT="$INSTALL_BASE/test.sh"
+GSTREAMER_AUDIO_SINK="autoaudiosink"
+
+
 echo "################################################################################"
 echo "################################################################################"
 echo ""
@@ -60,9 +100,10 @@ then
   echo  'bash setup.sh <config-file>'
   echo  'the config file must contain the following:'
   echo  '   CLIENT_ID=<OAuth client ID>'
-  echo  '   CLIENT_SECRET=<OAuth client secret>'  
   echo  '   PRODUCT_NAME=<your product name for device>'
   echo  '   DEVICE_SERIAL_NUMBER=<your device serial number>'
+
+  exit 1
 fi
 
 source $1
@@ -72,12 +113,6 @@ set -e
 if [[ ! "$CLIENT_ID" =~ amzn1\.application-oa2-client\.[0-9a-z]{32} ]]
 then
    echo 'client ID is invalid!'
-   exit 1
-fi
-
-if [[ ! "$CLIENT_SECRET" =~ [0-9a-f]{64} ]]
-then 
-   echo 'client secret is invalid!'
    exit 1
 fi
 
@@ -93,77 +128,39 @@ then
    exit 1
 fi
 
-LOCALE=${LOCALE:-'en-US'}
-
-PORT_AUDIO_FILE="pa_stable_v190600_20161030.tgz"
-PORT_AUDIO_DOWNLOAD_URL="http://www.portaudio.com/archives/$PORT_AUDIO_FILE"
-
-TEST_MODEL_DOWNLOAD="https://github.com/Sensory/alexa-rpi/blob/master/models/spot-alexa-rpi-31000.snsr"
-
-BUILD_TESTS=${BUILD_TESTS:-'true'}
-
-CURRENT_DIR="$(pwd)"
-INSTALL_BASE=${INSTALL_BASE:-"$CURRENT_DIR"}
-SOURCE_FOLDER=${SDK_LOC:-''}
-THIRD_PARTY_FOLDER=${THIRD_PARTY_LOC:-'third-party'}
-BUILD_FOLDER=${BUILD_FOLDER:-'build'}
-SOUNDS_FOLDER=${SOUNDS_FOLDER:-'sounds'}
-DB_FOLDER=${DB_FOLDER:-'db'}
-
-SOURCE_PATH="$INSTALL_BASE/$SOURCE_FOLDER"
-THIRD_PARTY_PATH="$INSTALL_BASE/$THIRD_PARTY_FOLDER"
-BUILD_PATH="$INSTALL_BASE/$BUILD_FOLDER"
-SOUNDS_PATH="$INSTALL_BASE/$SOUNDS_FOLDER"
-DB_PATH="$INSTALL_BASE/$DB_FOLDER"
-UNIT_TEST_MODEL_PATH="$INSTALL_BASE/avs-device-sdk/KWD/inputs/SensoryModels/"
-UNIT_TEST_MODEL="$THIRD_PARTY_PATH/alexa-rpi/models/spot-alexa-rpi-31000.snsr"
-
-WAKE_WORD_ENGINE="sensory" # "kitt_ai" or  "sensory" wake word engines
-SENSORY_PATH="$THIRD_PARTY_PATH/alexa-rpi"
-SENSORY_MODELS_PATH="$SENSORY_PATH/models"
-KITT_AI_PATH="$THIRD_PARTY_PATH/snowboy"
-KIT_AI_MODELS_PATH="$KITT_AI_PATH/resources/alexa/alexa-sdk-resources"
-KIT_AI_WAKEWORD="snowboy" # "alexa" or "snowboy" wake words
-
-CONFIG_FILE="$BUILD_PATH/Integration/AlexaClientSDKConfig.json"
-SOUND_CONFIG="$HOME/.asoundrc"
-START_SCRIPT="$INSTALL_BASE/startsample.sh"
-START_AUTH_SCRIPT="$INSTALL_BASE/startauth.sh"
-TEST_SCRIPT="$INSTALL_BASE/test.sh"
-
 if [ ! -d "$BUILD_PATH" ]
 then
 
     echo "==============> INSTALLING REQUIRED TOOLS AND PACKAGE ============"
     echo
 
-    sudo apt-get update
-    sudo apt-get -y install git gcc cmake \
-    build-essential \
-    libsqlite3-dev \
-    libcurl4-openssl-dev \
-    libfaad-dev \
-    libsoup2.4-dev \
-    libgcrypt20-dev \
-    libgstreamer-plugins-bad1.0-dev \
-    gstreamer1.0-plugins-bad \
-    mpg123 \
-    gstreamer1.0-plugins-ugly \
-    gstreamer1.0-plugins-base \
-    gstreamer1.0-plugins-bad \
-    gstreamer1.0-plugins-good \
-    libgstreamer-plugins-base0.10-0 libgstreamer-plugins-base0.10-dev  \
-    gstreamer1.0-tools gstreamer1.0-alsa \
-    libatlas-base-dev \
-    libasound2-dev \
-    links \
-    sox \
-    vim \
-    python-pip
+    # sudo apt-get update
+    # sudo apt-get -y install git gcc cmake \
+    # build-essential \
+    # libsqlite3-dev \
+    # libcurl4-openssl-dev \
+    # libfaad-dev \
+    # libsoup2.4-dev \
+    # libgcrypt20-dev \
+    # libgstreamer-plugins-bad1.0-dev \
+    # gstreamer1.0-plugins-bad \
+    # mpg123 \
+    # gstreamer1.0-plugins-ugly \
+    # gstreamer1.0-plugins-base \
+    # gstreamer1.0-plugins-bad \
+    # gstreamer1.0-plugins-good \
+    # libgstreamer-plugins-base0.10-0 libgstreamer-plugins-base0.10-dev  \
+    # gstreamer1.0-tools gstreamer1.0-alsa \
+    # libatlas-base-dev \
+    # libasound2-dev \
+    # links \
+    # sox \
+    # vim \
+    # python-pip
 
-    sudo pip install flask
-    sudo pip install commentjson
-    sudo pip install requests 
+    # sudo pip install flask
+    # sudo pip install commentjson
+    # sudo pip install requests 
 
     echo
     echo "==============> CREATING PATHS AND GETTING SOUND FILES ============"
@@ -279,26 +276,35 @@ echo
 cat << EOF > "$CONFIG_FILE"
 {
     "alertsCapabilityAgent":{
-        "databaseFilePath":"$DB_PATH/alerts.db"
+        "databaseFilePath":"$CONFIG_DB_PATH/alerts.db"
     },
     "certifiedSender":{
-        "databaseFilePath":"$DB_PATH/certifiedSender.db"
+        "databaseFilePath":"$CONFIG_DB_PATH/certifiedSender.db"
     },
     "settings":{
-        "databaseFilePath":"$DB_PATH/settings.db",
+        "databaseFilePath":"$CONFIG_DB_PATH/settings.db",
         "defaultAVSClientSettings":{
             "locale":"$LOCALE"
         }
     },
     "notifications":{
-        "databaseFilePath":"$DB_PATH/notifications.db"
+        "databaseFilePath":"$CONFIG_DB_PATH/notifications.db"
     },
-    "authDelegate":{
-      "clientId":"$CLIENT_ID",
-        "clientSecret":"$CLIENT_SECRET",
+    "cblAuthDelegate":{
+        "databaseFilePath":"$CONFIG_DB_PATH/cblAuthDelegate.db"
+    },
+    "deviceInfo":{
+        "clientId":"$CLIENT_ID",
         "deviceSerialNumber":"$DEVICE_SERIAL_NUMBER",
-        "refreshToken":"",
         "productId":"$PRODUCT_ID"
+    },
+    "dcfDelegate":{
+    },
+    "miscDatabase":{
+        "databaseFilePath":"$CONFIG_DB_PATH/miscDatabase.db"
+    },
+    "gstreamerMediaPlayer":{
+        "audioSink":"$GSTREAMER_AUDIO_SINK"
     }
 }
 EOF
@@ -369,14 +375,5 @@ else
     echo 
     exit 1
 fi
-
-echo
-echo "==============> Create Auth Script =============="
-echo
-
-cat << EOF > "$START_AUTH_SCRIPT"
-cd "$BUILD_PATH"
-python AuthServer/AuthServer.py
-EOF
 
 echo " **** Completed Configuration/Build ***"
