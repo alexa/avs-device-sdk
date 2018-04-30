@@ -118,12 +118,12 @@ DB_PATH="$INSTALL_BASE/$DB_FOLDER"
 UNIT_TEST_MODEL_PATH="$INSTALL_BASE/avs-device-sdk/KWD/inputs/SensoryModels/"
 UNIT_TEST_MODEL="$THIRD_PARTY_PATH/alexa-rpi/models/spot-alexa-rpi-31000.snsr"
 
-WAKE_WORD_ENGINE="sensory" # "snowboy" For Sensory engine
+WAKE_WORD_ENGINE="sensory" # "kitt_ai" or  "sensory" wake word engines
 SENSORY_PATH="$THIRD_PARTY_PATH/alexa-rpi"
 SENSORY_MODELS_PATH="$SENSORY_PATH/models"
-SNOWBOY_PATH="$THIRD_PARTY_PATH/snowboy"
-SNOWBOY_MODELS_PATH="$SNOWBOY_PATH/resources/alexa/alexa-sdk-resources"
-SNOWBOY_WAKEWORD="snowboy" # "alexa" for Alexa wake word
+KITT_AI_PATH="$THIRD_PARTY_PATH/snowboy"
+KIT_AI_MODELS_PATH="$KITT_AI_PATH/resources/alexa/alexa-sdk-resources"
+KIT_AI_WAKEWORD="snowboy" # "alexa" or "snowboy" wake words
 
 CONFIG_FILE="$BUILD_PATH/Integration/AlexaClientSDKConfig.json"
 SOUND_CONFIG="$HOME/.asoundrc"
@@ -156,6 +156,7 @@ then
     gstreamer1.0-tools gstreamer1.0-alsa \
     libatlas-base-dev \
     libasound2-dev \
+    links \
     sox \
     vim \
     python-pip
@@ -194,84 +195,82 @@ then
     git clone https://github.com/matrix-io/avs-device-sdk.git
 
     echo
-    echo "==============> CLONING AND BUILDING SENSORY =============="
+    echo "==============> CLONING SENSORY =============="
     echo
-
-    if [ ! -d "$THIRD_PARTY_PATH/alexa-rpi" ]
+    
+    if [ ! -d "$SENSORY_PATH" 
     then
         cd $THIRD_PARTY_PATH
         git clone https://github.com/Sensory/alexa-rpi.git
         bash ./alexa-rpi/bin/license.sh
     fi
-    
+
     echo
-    echo "==============> CLONING AND BUILDING SNOWBOY =============="
+    echo "==============> CLONING SNOWBOY =============="
     echo
 
-    if [ ! -d "$THIRD_PARTY_PATH/snowboy" ]
+    if [ ! -d "$KITT_AI_PATH" ]
     then
         cd $THIRD_PARTY_PATH
         git clone https://github.com/Kitt-AI/snowboy.git
         cd snowboy
         mkdir resources/alexa/alexa-sdk-resources
-        cp ./resources/common.res ./resources/alexa/alexa-sdk-resources
-
-        if  [ $SNOWBOY_WAKEWORD = "alexa" ]
-        then
-            cp ./resources/alexa/alexa_02092017.umdl ./resources/alexa/alexa-sdk-resources/alexa.umdl
-        elif [ $SNOWBOY_WAKEWORD = "snowboy" ]
-        then
-            cp ./resources/models/snowboy.umdl ./resources/alexa/alexa-sdk-resources/alexa.umdl 
-        else
-            echo " ******* Wrong Wake Word Selected *********"
-            exit 1
-        fi
+        cp $KITT_AI_PATH/resources/common.res $KITT_AI_PATH/resources/alexa/alexa-sdk-resources
+        cp $KITT_AI_PATH/resources/alexa/alexa_02092017.umdl $KITT_AI_PATH/resources/alexa/alexa-sdk-resources/alexa.umdl
     fi
+fi
 
-    echo
-    echo "==============> BUILDING SDK =============="
-    echo
+echo
+echo "==============> BUILDING SDK =============="
+echo
 
-    if [ $WAKE_WORD_ENGINE = "sensory" ]
+if [ $WAKE_WORD_ENGINE = "sensory" ]
+then
+    cd $BUILD_PATH
+    cmake "$SOURCE_PATH/avs-device-sdk" \
+    -DSENSORY_KEY_WORD_DETECTOR=ON \
+    -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH="$THIRD_PARTY_PATH/alexa-rpi/lib/libsnsr.a" \
+    -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR="$THIRD_PARTY_PATH/alexa-rpi/include" \
+    -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
+    -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.a" \
+    -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
+    -DACSDK_EMIT_SENSITIVE_LOGS=ON \
+    -DCMAKE_BUILD_TYPE=DEBUG
+
+elif [ $WAKE_WORD_ENGINE = "kitt_ai" ]
+then
+
+    if  [ $KIT_AI_WAKEWORD = "alexa" ]
     then
-        cd $BUILD_PATH
-        cmake "$SOURCE_PATH/avs-device-sdk" \
-        -DSENSORY_KEY_WORD_DETECTOR=ON \
-        -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH="$THIRD_PARTY_PATH/alexa-rpi/lib/libsnsr.a" \
-        -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR="$THIRD_PARTY_PATH/alexa-rpi/include" \
-        -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
-        -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.a" \
-        -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
-        -DACSDK_EMIT_SENSITIVE_LOGS=ON \
-        -DCMAKE_BUILD_TYPE=DEBUG
-
-    elif [ $WAKE_WORD_ENGINE = "snowboy" ]
+        cp $KITT_AI_PATH/resources/alexa/alexa_02092017.umdl $KITT_AI_PATH/resources/alexa/alexa-sdk-resources/alexa.umdl
+    elif [ $KIT_AI_WAKEWORD = "snowboy" ]
     then
-        cd $BUILD_PATH
-        cmake "/home/pi/avs-device-sdk" \
-        -DKITTAI_KEY_WORD_DETECTOR=ON \
-        -DKITTAI_KEY_WORD_DETECTOR_LIB_PATH="$THIRD_PARTY_PATH/snowboy/lib/rpi/libsnowboy-detect.a" \
-        -DKITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR="$THIRD_PARTY_PATH/snowboy/include" \
-        -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
-        -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.a" \
-        -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
-        -DACSDK_EMIT_SENSITIVE_LOGS=ON \
-        -DCMAKE_BUILD_TYPE=DEBUG
-
+        cp $KITT_AI_PATH/resources/models/snowboy.umdl $KITT_AI_PATH/resources/alexa/alexa-sdk-resources/alexa.umdl 
     else
-        echo 
-        echo "Please select a WakeWord Engine."
-        echo 
+        echo " ******* Wrong Wake Word Selected *********"
         exit 1
     fi
 
     cd $BUILD_PATH
-    make SampleApp -j4
+    cmake "$SOURCE_PATH/avs-device-sdk" \
+    -DKITTAI_KEY_WORD_DETECTOR=ON \
+    -DKITTAI_KEY_WORD_DETECTOR_LIB_PATH="$THIRD_PARTY_PATH/snowboy/lib/rpi/libsnowboy-detect.a" \
+    -DKITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR="$THIRD_PARTY_PATH/snowboy/include" \
+    -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
+    -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.a" \
+    -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
+    -DACSDK_EMIT_SENSITIVE_LOGS=ON \
+    -DCMAKE_BUILD_TYPE=DEBUG
 
 else
-    cd $BUILD_PATH
-    make SampleApp -j4
+    echo 
+    echo "Please select a WakeWord Engine."
+    echo 
+    exit 1
 fi
+
+cd $BUILD_PATH
+make SampleApp -j4
 
 echo
 echo "==============> Saving Configuration File =============="
@@ -356,12 +355,12 @@ cd "$BUILD_PATH/SampleApp/src"
 ./SampleApp "$CONFIG_FILE" "$SENSORY_MODELS_PATH" DEBUG9
 EOF
 
-elif [ $WAKE_WORD_ENGINE = "snowboy"  ]
+elif [ $WAKE_WORD_ENGINE = "kitt_ai"  ]
 then
 
 cat << EOF > "$START_SCRIPT"
 cd "$BUILD_PATH/SampleApp/src"
-./SampleApp "$CONFIG_FILE" "$SNOWBOY_MODELS_PATH" DEBUG9
+./SampleApp "$CONFIG_FILE" "$KIT_AI_MODELS_PATH" DEBUG9
 EOF
 
 else
