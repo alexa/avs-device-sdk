@@ -134,33 +134,33 @@ then
     echo "==============> INSTALLING REQUIRED TOOLS AND PACKAGE ============"
     echo
 
-    # sudo apt-get update
-    # sudo apt-get -y install git gcc cmake \
-    # build-essential \
-    # libsqlite3-dev \
-    # libcurl4-openssl-dev \
-    # libfaad-dev \
-    # libsoup2.4-dev \
-    # libgcrypt20-dev \
-    # libgstreamer-plugins-bad1.0-dev \
-    # gstreamer1.0-plugins-bad \
-    # mpg123 \
-    # gstreamer1.0-plugins-ugly \
-    # gstreamer1.0-plugins-base \
-    # gstreamer1.0-plugins-bad \
-    # gstreamer1.0-plugins-good \
-    # libgstreamer-plugins-base0.10-0 libgstreamer-plugins-base0.10-dev  \
-    # gstreamer1.0-tools gstreamer1.0-alsa \
-    # libatlas-base-dev \
-    # libasound2-dev \
-    # links \
-    # sox \
-    # vim \
-    # python-pip
+    sudo apt-get update
+    sudo apt-get -y install git gcc cmake \
+    build-essential \
+    libsqlite3-dev \
+    libcurl4-openssl-dev \
+    libfaad-dev \
+    libsoup2.4-dev \
+    libgcrypt20-dev \
+    libgstreamer-plugins-bad1.0-dev \
+    gstreamer1.0-plugins-bad \
+    mpg123 \
+    gstreamer1.0-plugins-ugly \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-bad \
+    gstreamer1.0-plugins-good \
+    libgstreamer-plugins-base0.10-0 libgstreamer-plugins-base0.10-dev  \
+    gstreamer1.0-tools gstreamer1.0-alsa \
+    libatlas-base-dev \
+    libasound2-dev \
+    links \
+    sox \
+    vim \
+    python-pip
 
-    # sudo pip install flask
-    # sudo pip install commentjson
-    # sudo pip install requests 
+    sudo pip install flask
+    sudo pip install commentjson
+    sudo pip install requests 
 
     echo
     echo "==============> CREATING PATHS AND GETTING SOUND FILES ============"
@@ -239,10 +239,10 @@ then
 
     if  [ $KIT_AI_WAKEWORD = "alexa" ]
     then
-        cp $KITT_AI_PATH/resources/alexa/alexa_02092017.umdl $KITT_AI_PATH/resources/alexa/alexa-sdk-resources/alexa.umdl
+        cp $KITT_AI_PATH/resources/alexa/alexa_02092017.umdl $KIT_AI_MODELS_PATH/alexa.umdl
     elif [ $KIT_AI_WAKEWORD = "snowboy" ]
     then
-        cp $KITT_AI_PATH/resources/models/snowboy.umdl $KITT_AI_PATH/resources/alexa/alexa-sdk-resources/alexa.umdl 
+        cp $KITT_AI_PATH/resources/models/snowboy.umdl $KIT_AI_MODELS_PATH/alexa.umdl 
     else
         echo " ******* Wrong Wake Word Selected *********"
         exit 1
