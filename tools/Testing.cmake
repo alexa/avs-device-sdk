@@ -27,13 +27,3 @@ macro(discover_unit_tests includes libraries)
         endforeach ()
     endif()
 endmacro()
-
-option(ACSDK_EXCLUDE_TEST_FROM_ALL "Exclude unit test from all." OFF)
-
-macro(acsdk_add_test_subdirectory_if_allowed)
-    if (ACSDK_EXCLUDE_TEST_FROM_ALL)
-        add_subdirectory("test" EXCLUDE_FROM_ALL)
-    else()
-        add_subdirectory("test")
-    endif()
-endmacro()

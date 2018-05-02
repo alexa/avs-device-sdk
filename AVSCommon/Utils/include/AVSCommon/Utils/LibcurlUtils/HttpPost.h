@@ -23,6 +23,7 @@
 #include <mutex>
 #include <string>
 
+#include "AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h"
 #include "AVSCommon/Utils/LibcurlUtils/HttpPostInterface.h"
 
 namespace alexaClientSDK {
@@ -33,8 +34,17 @@ namespace libcurlUtils {
 /// LIBCURL based implementation of HttpPostInterface.
 class HttpPost : public HttpPostInterface {
 public:
-    /// HttpPost destructor
-    ~HttpPost();
+    /**
+     * Create a new HttpPost instance, passing ownership of the new instance on to the caller.
+     *
+     * @return Returns an std::unique_ptr to the new HttpPost instance, or @c nullptr of the operation failed.
+     */
+    static std::unique_ptr<HttpPost> create();
+
+    /**
+     * HttpPost destructor
+     */
+    ~HttpPost() = default;
 
     /**
      * Deleted copy constructor.
@@ -51,42 +61,34 @@ public:
      */
     HttpPost& operator=(const HttpPost& rhs) = delete;
 
-    /**
-     * Create a new HttpPost instance, passing ownership of the new instance on to the caller.
-     *
-     * @return Retruns an std::unique_ptr to the new HttpPost instance, or @c nullptr of the operation failed.
-     */
-    static std::unique_ptr<HttpPost> create();
-
-    bool addHTTPHeader(const std::string& header) override;
-    long doPost(const std::string& m_url, const std::string& data, std::chrono::seconds timeout, std::string& body)
+    long doPost(const std::string& url, const std::string& data, std::chrono::seconds timeout, std::string& body)
         override;
+
+    HTTPResponse doPost(
+        const std::string& url,
+        const std::vector<std::string> headerLines,
+        const std::vector<std::pair<std::string, std::string>>& data,
+        std::chrono::seconds timeout) override;
+
+    HTTPResponse doPost(
+        const std::string& url,
+        const std::vector<std::string> headerLines,
+        const std::string& data,
+        std::chrono::seconds timeout) override;
 
 private:
     /**
-     * HttpPost constructor.
-     *
-     * @param curl CURL handle with which to make requests.
+     * Default HttpPost constructor.
      */
-    HttpPost();
+    HttpPost() = default;
 
     /**
-     * init() is used by create() to perform initialization after construction but before returning the
-     * HttpPost instance so that clients only get access to fully formed instances.
+     * Build POST data from a vector of key value pairs.
      *
-     * @return @c true if initialization is successful.
+     * @param data Vector of key, value pairs from which to build the POST data.
+     * @return
      */
-    bool init();
-
-    /**
-     * Helper function for calling curl_easy_setopt and checking the result.
-     *
-     * @param option The option parameter to pass through to curl_easy_setopt.
-     * @param param The param option to pass through to curl_easy_setopt.
-     * @return @c true of the operation was successful.
-     */
-    template <typename ParamType>
-    bool setopt(CURLoption option, ParamType param);
+    std::string buildPostData(const std::vector<std::pair<std::string, std::string>>& data) const;
 
     /**
      * Callback function used to accumulate the body of the HTTP Post response
@@ -104,12 +106,9 @@ private:
     std::mutex m_mutex;
 
     /// CURL handle with which to make requests
-    CURL* m_curl;
+    CurlEasyHandleWrapper m_curl;
 
-    /// A list of headers needed to be added at the HTTP level
-    curl_slist* m_requestHeaders;
-
-    /// String used to accumuate the response body.
+    /// String used to accumulate the response body.
     std::string m_bodyAccumulator;
 };
 

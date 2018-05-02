@@ -44,9 +44,9 @@ TEST(AlexaClientSDKInitTest, initializeNoJSONConfig) {
  * @note This test also validates whether libcurl supports HTTP2.
  */
 TEST(AlexaClientSDKInitTest, initializeInvalidJSONConfig) {
-    stringstream invalidJSON;
-    invalidJSON << "{";
-    ASSERT_FALSE(AlexaClientSDKInit::initialize({&invalidJSON}));
+    auto invalidJSON = std::shared_ptr<std::stringstream>(new std::stringstream());
+    (*invalidJSON) << "{";
+    ASSERT_FALSE(AlexaClientSDKInit::initialize({invalidJSON}));
 }
 
 /**
@@ -55,9 +55,9 @@ TEST(AlexaClientSDKInitTest, initializeInvalidJSONConfig) {
  * @note This test also validates whether libcurl supports HTTP2.
  */
 TEST(AlexaClientSDKInitTest, initializeValidJSONConfig) {
-    stringstream validJSON;
-    validJSON << R"({"key":"value"})";
-    ASSERT_TRUE(AlexaClientSDKInit::initialize({&validJSON}));
+    auto validJSON = std::shared_ptr<std::stringstream>(new std::stringstream());
+    (*validJSON) << R"({"key":"value"})";
+    ASSERT_TRUE(AlexaClientSDKInit::initialize({validJSON}));
     AlexaClientSDKInit::uninitialize();
 }
 

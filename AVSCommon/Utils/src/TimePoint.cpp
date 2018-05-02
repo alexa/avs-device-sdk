@@ -16,7 +16,6 @@
 #include "AVSCommon/Utils/Timing/TimePoint.h"
 
 #include "AVSCommon/Utils/Logger/Logger.h"
-#include "AVSCommon/Utils/Timing/TimeUtils.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -40,7 +39,7 @@ TimePoint::TimePoint() : m_time_Unix{0} {
 
 bool TimePoint::setTime_ISO_8601(const std::string& time_ISO_8601) {
     int64_t tempUnixTime = 0;
-    if (!convert8601TimeStringToUnix(time_ISO_8601, &tempUnixTime)) {
+    if (!m_timeUtils.convert8601TimeStringToUnix(time_ISO_8601, &tempUnixTime)) {
         ACSDK_ERROR(LX("setTime_ISO_8601Failed").d("input", time_ISO_8601).m("Could not convert to Unix time."));
         return false;
     }

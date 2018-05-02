@@ -24,8 +24,6 @@ namespace avsCommon {
 namespace utils {
 namespace logger {
 
-thread_local ThreadMoniker ThreadMoniker::m_threadMoniker;
-
 /// Counter to generate (small) unique thread monikers.
 static std::atomic<int> g_nextThreadMoniker(1);
 

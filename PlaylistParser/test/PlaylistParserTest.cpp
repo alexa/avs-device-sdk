@@ -260,7 +260,9 @@ public:
     MockContentFetcher(const std::string& url) : m_url{url} {
     }
 
-    std::unique_ptr<avsCommon::utils::HTTPContent> getContent(FetchOptions fetchOption) {
+    std::unique_ptr<avsCommon::utils::HTTPContent> getContent(
+        FetchOptions fetchOption,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer) {
         if (fetchOption == FetchOptions::CONTENT_TYPE) {
             auto it1 = urlsToContentTypes.find(m_url);
             if (it1 == urlsToContentTypes.end()) {

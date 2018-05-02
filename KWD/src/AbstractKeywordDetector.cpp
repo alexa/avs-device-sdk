@@ -68,10 +68,11 @@ void AbstractKeywordDetector::notifyKeyWordObservers(
     std::shared_ptr<AudioInputStream> stream,
     std::string keyword,
     AudioInputStream::Index beginIndex,
-    AudioInputStream::Index endIndex) const {
+    AudioInputStream::Index endIndex,
+    std::shared_ptr<const std::vector<char>> KWDMetadata) const {
     std::lock_guard<std::mutex> lock(m_keyWordObserversMutex);
     for (auto keyWordObserver : m_keyWordObservers) {
-        keyWordObserver->onKeyWordDetected(stream, keyword, beginIndex, endIndex);
+        keyWordObserver->onKeyWordDetected(stream, keyword, beginIndex, endIndex, KWDMetadata);
     }
 }
 

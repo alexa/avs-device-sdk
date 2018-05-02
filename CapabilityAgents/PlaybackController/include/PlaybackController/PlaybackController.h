@@ -20,7 +20,9 @@
 #include <queue>
 #include <string>
 
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/AVS/MessageRequest.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextRequesterInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
@@ -35,6 +37,7 @@ namespace playbackController {
 class PlaybackController
         : public avsCommon::sdkInterfaces::ContextRequesterInterface
         , public avsCommon::sdkInterfaces::PlaybackHandlerInterface
+        , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::utils::RequiresShutdown
         , public std::enable_shared_from_this<PlaybackController> {
 public:
@@ -63,6 +66,11 @@ public:
     /// @name PlaybackHandlerInterface functions.
     /// @{
     void onButtonPressed(avsCommon::avs::PlaybackButton button) override;
+    /// @}
+
+    /// @name CapabilityConfigurationInterface Functions
+    /// @{
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
     /// @}
 
     /**
@@ -108,6 +116,9 @@ private:
     /// The queue for storing buttons pressed.
     std::queue<avsCommon::avs::PlaybackButton> m_buttons;
     /// @}
+
+    /// Set of capability configurations that will get published using DCF
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /// The @c Executor which queues up operations from asynchronous API calls to the @c PlaybackControllerInterface.
     avsCommon::utils::threading::Executor m_executor;

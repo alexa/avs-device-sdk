@@ -50,13 +50,13 @@ public:
      * Creates a converter object. Note that calling this function will commence the parsing and streaming of the URL
      * into the internal attachment. If a desired start time is specified, this function will attempt to start streaming
      * at that offset, based on available metadata if the URL points to a playlist file. If no such information is
-     * available, stremaing will begin from the beginning. It is up to the caller of this function to make a call to
+     * available, streaming will begin from the beginning. It is up to the caller of this function to make a call to
      * @c getStartStreamingPoint() to find out the actual offset from which streaming began.
      *
      * @param contentFetcherFactory Used to create @c HTTPContentFetchers.
      * @param url The URL to stream from.
      * @param observer An observer to be notified of any errors that may happen during streaming.
-     * @param desiredStartTime The desired time to attempt to start streaming from. Note that this will only succeed
+     * @param startTime The desired time to attempt to start streaming from. Note that this will only succeed
      * in cases where the URL points to a playlist with metadata about individual chunks within it. If none are found,
      * streaming will begin from the beginning.
      * @return A @c std::shared_ptr to the new @c UrlContentToAttachmentConverter object or @c nullptr on failure.
@@ -131,15 +131,6 @@ private:
      */
     bool writeUrlContentIntoStream(std::string url);
 
-    /**
-     * Writes the given data into the internal stream.
-     *
-     * @param buffer The data to write.
-     * @param numBytes The number of bytes to write.
-     * @return @c true if the data was successully written or @c false otherwise
-     */
-    bool writeDataIntoStream(const std::vector<char>& buffer, size_t numBytes);
-
     /// @}
 
     /// The initial desired offset from which streaming should begin.
@@ -151,9 +142,10 @@ private:
     /// Used to parse URLS that point to playlists.
     std::shared_ptr<PlaylistParser> m_playlistParser;
 
+    /// The stream that will hold downloaded data.
     std::shared_ptr<avsCommon::avs::attachment::InProcessAttachment> m_stream;
 
-    /// The writer used to write data into the internal master stream.
+    /// The writer used to write data into the stream.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> m_streamWriter;
 
     /// The observer to be notified of errors.

@@ -23,9 +23,6 @@ namespace capabilityAgents {
 namespace alerts {
 namespace test {
 
-/// File path where the database for alerts storage will exist.
-static const std::string STORAGE_FILE_PATH = "test/file/path";
-
 /// Tokens for alerts.
 static const std::string ALERT1_TOKEN = "token1";
 static const std::string ALERT2_TOKEN = "token2";
@@ -121,10 +118,10 @@ public:
         m_eraseRetVal = true;
     }
 
-    bool createDatabase(const std::string& filePath) {
+    bool createDatabase() {
         return m_createDatabaseRetVal;
     }
-    bool open(const std::string& filePath) {
+    bool open() {
         return m_openRetVal;
     }
     bool isOpen() {
@@ -150,9 +147,6 @@ public:
     bool erase(const std::vector<int>& alertDbIds) {
         return m_eraseRetVal;
     }
-    void printStats(StatLevel level) {
-    }
-
     void setCreateDatabaseRetVal(bool retVal) {
         m_createDatabaseRetVal = retVal;
     }
@@ -258,11 +252,11 @@ std::shared_ptr<TestAlert> AlertSchedulerTest::doSimpleTestSetup(bool activateAl
     m_alertStorage->setAlerts(alertToAdd);
 
     if (initWithAlertObserver) {
-        m_alertScheduler->initialize(STORAGE_FILE_PATH, m_testAlertObserver);
+        m_alertScheduler->initialize(m_testAlertObserver);
     } else {
         std::shared_ptr<AlertScheduler> alertSchedulerObs{
             std::make_shared<AlertScheduler>(m_alertStorage, m_alertRenderer, m_alertPastDueTimeLimit)};
-        m_alertScheduler->initialize(STORAGE_FILE_PATH, alertSchedulerObs);
+        m_alertScheduler->initialize(alertSchedulerObs);
     }
 
     if (activateAlert) {
@@ -278,12 +272,12 @@ std::shared_ptr<TestAlert> AlertSchedulerTest::doSimpleTestSetup(bool activateAl
  */
 TEST_F(AlertSchedulerTest, initialize) {
     /// check if init fails if scheduler is not available
-    ASSERT_FALSE(m_alertScheduler->initialize(STORAGE_FILE_PATH, nullptr));
+    ASSERT_FALSE(m_alertScheduler->initialize(nullptr));
 
     /// check if init fails if a database for alerts cant be created
     m_alertStorage->setOpenRetVal(false);
     m_alertStorage->setCreateDatabaseRetVal(false);
-    ASSERT_FALSE(m_alertScheduler->initialize(STORAGE_FILE_PATH, m_alertScheduler));
+    ASSERT_FALSE(m_alertScheduler->initialize(m_alertScheduler));
 
     /// check if init succeeds. Pass in 3 alerts of which 1 is expired. Only 2 should actually remain in the end.
     std::shared_ptr<AlertScheduler> alertSchedulerObs{
@@ -312,7 +306,7 @@ TEST_F(AlertSchedulerTest, initialize) {
     /// active alert should get modified
     EXPECT_CALL(*(m_alertStorage.get()), modify(testing::_)).Times(1);
 
-    ASSERT_TRUE(m_alertScheduler->initialize(STORAGE_FILE_PATH, alertSchedulerObs));
+    ASSERT_TRUE(m_alertScheduler->initialize(alertSchedulerObs));
 
     const unsigned int expectedRemainingAlerts = 2;
 
@@ -382,7 +376,7 @@ TEST_F(AlertSchedulerTest, deleteAlert) {
     std::shared_ptr<TestAlert> alert1 = std::make_shared<TestAlert>(ALERT1_TOKEN, FUTURE_INSTANT);
     alertsToAdd.push_back(alert1);
     m_alertStorage->setAlerts(alertsToAdd);
-    m_alertScheduler->initialize(STORAGE_FILE_PATH, alertSchedulerObs);
+    m_alertScheduler->initialize(alertSchedulerObs);
     m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND);
 
     /// if active alert and the token matches, ensure that we dont delete it (we deactivate the alert actually)
@@ -396,7 +390,7 @@ TEST_F(AlertSchedulerTest, deleteAlert) {
     std::shared_ptr<TestAlert> alert2 = std::make_shared<TestAlert>(ALERT2_TOKEN, FUTURE_INSTANT);
     alertsToAdd.push_back(alert2);
     m_alertStorage->setAlerts(alertsToAdd);
-    m_alertScheduler->initialize(STORAGE_FILE_PATH, alertSchedulerObs);
+    m_alertScheduler->initialize(alertSchedulerObs);
     EXPECT_CALL(*(m_alertStorage.get()), erase(testing::_)).Times(1);
     ASSERT_TRUE(m_alertScheduler->deleteAlert(ALERT2_TOKEN));
 }
@@ -413,7 +407,7 @@ TEST_F(AlertSchedulerTest, isAlertActive) {
     std::shared_ptr<TestAlert> alert1 = std::make_shared<TestAlert>(ALERT1_TOKEN, FUTURE_INSTANT);
     alertsToAdd.push_back(alert1);
     m_alertStorage->setAlerts(alertsToAdd);
-    m_alertScheduler->initialize(STORAGE_FILE_PATH, alertSchedulerObs);
+    m_alertScheduler->initialize(alertSchedulerObs);
     m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND);
 
     /// inactive alert
@@ -442,7 +436,7 @@ TEST_F(AlertSchedulerTest, getContextInfo) {
     std::shared_ptr<TestAlert> alert2 = std::make_shared<TestAlert>(ALERT2_TOKEN, FUTURE_INSTANT);
     alertsToAdd.push_back(alert2);
     m_alertStorage->setAlerts(alertsToAdd);
-    m_alertScheduler->initialize(STORAGE_FILE_PATH, alertSchedulerObs);
+    m_alertScheduler->initialize(alertSchedulerObs);
     m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND);
 
     AlertScheduler::AlertsContextInfo resultContextInfo = m_alertScheduler->getContextInfo();
@@ -478,6 +472,19 @@ TEST_F(AlertSchedulerTest, clearData) {
 
     ASSERT_EQ(alert->getState(), Alert::State::STOPPING);
     ASSERT_EQ(alert->getStopReason(), Alert::StopReason::SHUTDOWN);
+}
+
+/**
+ * Test if AlertScheduler clears data
+ */
+TEST_F(AlertSchedulerTest, clearDataLogout) {
+    std::shared_ptr<TestAlert> alert = doSimpleTestSetup(true);
+    EXPECT_CALL(*(m_alertStorage.get()), clearDatabase()).Times(1);
+
+    m_alertScheduler->clearData(Alert::StopReason::LOG_OUT);
+
+    ASSERT_EQ(alert->getState(), Alert::State::STOPPING);
+    ASSERT_EQ(alert->getStopReason(), Alert::StopReason::LOG_OUT);
 }
 
 /**

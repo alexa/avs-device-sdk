@@ -17,6 +17,7 @@
 
 #include "Audio/AlertsAudioFactory.h"
 #include "Audio/NotificationsAudioFactory.h"
+#include "Audio/CommunicationsAudioFactory.h"
 
 namespace alexaClientSDK {
 namespace applicationUtilities {
@@ -30,6 +31,11 @@ std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> Au
 std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> AudioFactory::notifications()
     const {
     return std::make_shared<NotificationsAudioFactory>();
+}
+
+std::shared_ptr<avsCommon::sdkInterfaces::audio::CommunicationsAudioFactoryInterface> AudioFactory::communications()
+    const {
+    return std::make_shared<CommunicationsAudioFactory>();
 }
 
 }  // namespace audio

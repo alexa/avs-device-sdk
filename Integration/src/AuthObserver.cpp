@@ -23,7 +23,7 @@ using avsCommon::sdkInterfaces::AuthObserverInterface;
 
 AuthObserver::AuthObserver() :
         m_authState(AuthObserverInterface::State::UNINITIALIZED),
-        m_authError(AuthObserverInterface::Error::NO_ERROR) {
+        m_authError(AuthObserverInterface::Error::SUCCESS) {
 }
 
 void AuthObserver::onAuthStateChange(

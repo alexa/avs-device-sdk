@@ -35,13 +35,19 @@ static const std::string TAG("ObservableMessageRequest");
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 
+/// The field name for the user voice attachment.
+static const std::string AUDIO_ATTACHMENT_FIELD_NAME = "audio";
+
 ObservableMessageRequest::ObservableMessageRequest(
     const std::string& jsonContent,
     std::shared_ptr<AttachmentReader> attachmentReader) :
-        MessageRequest{jsonContent, attachmentReader},
+        MessageRequest{jsonContent},
         m_sendMessageStatus(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::PENDING),
         m_sendCompleted{false},
         m_exceptionReceived{false} {
+    if (attachmentReader) {
+        addAttachmentReader(AUDIO_ATTACHMENT_FIELD_NAME, attachmentReader);
+    }
 }
 
 void ObservableMessageRequest::sendCompleted(

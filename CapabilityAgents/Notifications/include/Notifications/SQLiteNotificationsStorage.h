@@ -16,10 +16,12 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_NOTIFICATIONS_INCLUDE_NOTIFICATIONS_SQLITENOTIFICATIONSSTORAGE_H_
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_NOTIFICATIONS_INCLUDE_NOTIFICATIONS_SQLITENOTIFICATIONSSTORAGE_H_
 
-#include <mutex>
-#include <sqlite3.h>
-
 #include "Notifications/NotificationsStorageInterface.h"
+
+#include <mutex>
+
+#include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
+#include <SQLiteStorage/SQLiteDatabase.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -32,18 +34,26 @@ namespace notifications {
 class SQLiteNotificationsStorage : public NotificationsStorageInterface {
 public:
     /**
-     * Constructor.
-     * Initializes m_dbHandle to nullptr.
+     * Factory method for creating a storage object for Notifications based on an SQLite database.
+     *
+     * @param configurationRoot The global config object.
+     * @return Pointer to the SQLiteMessagetStorge object, nullptr if there's an error creating it.
      */
-    SQLiteNotificationsStorage();
+    static std::unique_ptr<SQLiteNotificationsStorage> create(
+        const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
+
+    /**
+     * Constructor.
+     *
+     * @param dbFilePath The location of the SQLite database file.
+     */
+    SQLiteNotificationsStorage(const std::string& databaseFilePath);
 
     ~SQLiteNotificationsStorage();
 
-    bool createDatabase(const std::string& filePath) override;
+    bool createDatabase() override;
 
-    bool open(const std::string& filePath) override;
-
-    bool isOpen() const override;
+    bool open() override;
 
     void close() override;
 
@@ -55,13 +65,13 @@ public:
 
     bool setIndicatorState(IndicatorState state) override;
 
-    bool getIndicatorState(IndicatorState* state) const override;
+    bool getIndicatorState(IndicatorState* state) override;
 
-    bool checkForEmptyQueue(bool* empty) const override;
+    bool checkForEmptyQueue(bool* empty) override;
 
     bool clearNotificationIndicators() override;
 
-    bool getQueueSize(int* size) const override;
+    bool getQueueSize(int* size) override;
 
 private:
     /**
@@ -71,11 +81,11 @@ private:
      */
     bool getNextNotificationIndicatorLocked(NotificationIndicator* notificationIndicator);
 
-    /// The sqlite database handle.
-    sqlite3* m_dbHandle;
-
     /// A mutex to protect database access.
     std::mutex m_databaseMutex;
+
+    /// The underlying database class.
+    alexaClientSDK::storage::sqliteStorage::SQLiteDatabase m_database;
 };
 
 }  // namespace notifications

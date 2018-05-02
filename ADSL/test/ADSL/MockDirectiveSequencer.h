@@ -46,6 +46,10 @@ public:
     MOCK_METHOD1(setDialogRequestId, void(const std::string& dialogRequestId));
 
     MOCK_METHOD1(onDirective, bool(std::shared_ptr<avsCommon::avs::AVSDirective> directive));
+
+    MOCK_METHOD0(disable, void());
+
+    MOCK_METHOD0(enable, void());
 };
 
 inline MockDirectiveSequencer::MockDirectiveSequencer() :

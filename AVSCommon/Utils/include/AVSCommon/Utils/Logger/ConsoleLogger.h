@@ -17,6 +17,8 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_CONSOLELOGGER_H_
 
 #include "AVSCommon/Utils/Logger/Logger.h"
+#include "AVSCommon/Utils/Logger/LoggerUtils.h"
+#include "AVSCommon/Utils/Logger/LogStringFormatter.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -45,6 +47,9 @@ private:
     ConsoleLogger();
 
     std::mutex m_coutMutex;
+
+    /// Object to format log strings correctly.
+    LogStringFormatter m_logFormatter;
 };
 
 /**

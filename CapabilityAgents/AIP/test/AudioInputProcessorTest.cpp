@@ -15,6 +15,7 @@
 
 /// @file AudioInputProcessorTest.cpp
 
+#include <cstring>
 #include <climits>
 #include <numeric>
 #include <sstream>
@@ -52,10 +53,7 @@ namespace test {
 using avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface;
 
 /// The name of the @c FocusManager channel used by @c AudioInputProvider.
-static const std::string CHANNEL_NAME = "Dialog";
-
-/// The activityId string used with @c FocusManager by @c AudioInputProvider.
-static const std::string ACTIVITY_ID = "SpeechRecognizer.Recognize";
+static const std::string CHANNEL_NAME = avsCommon::sdkInterfaces::FocusManagerInterface::DIALOG_CHANNEL_NAME;
 
 /// The namespace for this capability agent.
 static const std::string NAMESPACE = "SpeechRecognizer";
@@ -159,8 +157,8 @@ static const std::string ASR_PROFILE_KEY = "profile";
 /// JSON key for the audio format field of a recognize event.
 static const std::string AUDIO_FORMAT_KEY = "format";
 
-/// JSON value for a recognize event's audio format.
-static const std::string AUDIO_FORMAT_VALUE = "AUDIO_L16_RATE_16000_CHANNELS_1";
+/// Accepted JSON values for a recognize event's audio format.
+static const std::unordered_set<std::string> AUDIO_FORMAT_VALUES = {"AUDIO_L16_RATE_16000_CHANNELS_1", "OPUS"};
 
 /// JSON key for the initiator field of a recognize event.
 static const std::string RECOGNIZE_INITIATOR_KEY = "initiator";
@@ -219,6 +217,18 @@ static const std::string ESP_VOICE_ENERGY_KEY = "voiceEnergy";
 /// JSON key for the ambient energy field of a ReportEchoSpatialPerceptionData event.
 static const std::string ESP_AMBIENT_ENERGY_KEY = "ambientEnergy";
 
+/// The field name for the user voice attachment.
+static const std::string AUDIO_ATTACHMENT_FIELD_NAME = "audio";
+
+/// The field name for the wake word engine metadata.
+static const std::string KWD_METADATA_FIELD_NAME = "wakewordEngineMetadata";
+
+/// The index of the Wakeword engine metadata in the @c MessageRequest.
+static const size_t MESSAGE_ATTACHMENT_KWD_METADATA_INDEX = 0;
+
+/// Sample Wakeword engine metadata to compare with the @ AttachmentReader
+static const std::string KWD_METADATA_EXAMPLE = "Wakeword engine metadata example";
+
 /// Utility function to parse a JSON document.
 static rapidjson::Document parseJson(const std::string& json) {
     rapidjson::Document document;
@@ -266,7 +276,8 @@ public:
         avsCommon::avs::AudioInputStream::Index keywordEnd = AudioInputProcessor::INVALID_INDEX,
         std::string keyword = "",
         std::shared_ptr<std::string> avsInitiator = nullptr,
-        const ESPData& espData = ESPData::EMPTY_ESP_DATA);
+        const ESPData& espData = ESPData::EMPTY_ESP_DATA,
+        const std::shared_ptr<std::vector<char>> KWDMetadata = nullptr);
 
     /**
      * This function sends a recognize event using the provided @c AudioInputProcessor and the recognize parameters
@@ -297,6 +308,16 @@ public:
      * @param dialogRequestId The expected dialogRequestId in the @c MessageRequest.
      */
     void verifyEspMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request, const std::string& dialogRequestId);
+
+    /**
+     * This function verifies the metadata @c AttachmentReader created is correct
+     *
+     * @param request The @c MessageRequest to verify
+     * @param KWDMetadata The Wakeword engine metadata recevied by @c AudioInputProcessor::recognize
+     */
+    void verifyMetadata(
+        const std::shared_ptr<avsCommon::avs::MessageRequest> request,
+        const std::shared_ptr<std::vector<char>> KWDMetadata);
 
     /**
      * This function verifies that JSON content of a recognize @c MessageRequest is correct, and that it has an
@@ -340,8 +361,11 @@ private:
     /// The ESP data for this ReportEchoSpatialPerceptionData event.
     const ESPData m_espData;
 
-    /// The attachment reader saved by a call to @c verifyMessage().
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_reader;
+    /// The user voice attachment reader saved by a call to @c verifyMessage().
+    std::shared_ptr<avsCommon::avs::MessageRequest::NamedReader> m_reader;
+
+    /// The wake word engine metadata attachment reader saved by a call to @c verifyMessage().
+    std::shared_ptr<std::vector<char>> m_KWDMetadata;
 };
 
 RecognizeEvent::RecognizeEvent(
@@ -351,19 +375,21 @@ RecognizeEvent::RecognizeEvent(
     avsCommon::avs::AudioInputStream::Index keywordEnd,
     std::string keyword,
     std::shared_ptr<std::string> avsInitiator,
-    const ESPData& espData) :
+    const ESPData& espData,
+    const std::shared_ptr<std::vector<char>> KWDMetadata) :
         m_audioProvider{audioProvider},
         m_initiator{initiator},
         m_begin{begin},
         m_keywordEnd{keywordEnd},
         m_keyword{keyword},
         m_avsInitiator{avsInitiator},
-        m_espData{espData} {
+        m_espData{espData},
+        m_KWDMetadata{KWDMetadata} {
 }
 
 std::future<bool> RecognizeEvent::send(std::shared_ptr<AudioInputProcessor> audioInputProcessor) {
-    auto result =
-        audioInputProcessor->recognize(m_audioProvider, m_initiator, m_begin, m_keywordEnd, m_keyword, m_espData);
+    auto result = audioInputProcessor->recognize(
+        m_audioProvider, m_initiator, m_begin, m_keywordEnd, m_keyword, m_espData, m_KWDMetadata);
     EXPECT_TRUE(result.valid());
     return result;
 }
@@ -403,6 +429,24 @@ void RecognizeEvent::verifyEspMessage(
     EXPECT_EQ(std::to_string(getJsonInt64(payload->value, ESP_AMBIENT_ENERGY_KEY)), m_espData.getAmbientEnergy());
 }
 
+void RecognizeEvent::verifyMetadata(
+    const std::shared_ptr<avsCommon::avs::MessageRequest> request,
+    const std::shared_ptr<std::vector<char>> KWDMetadata) {
+    if (!KWDMetadata) {
+        EXPECT_EQ(request->attachmentReadersCount(), 1);
+    } else {
+        char buffer[50];
+        auto readStatus = avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK;
+
+        EXPECT_EQ(request->attachmentReadersCount(), 2);
+        EXPECT_NE(request->getAttachmentReader(MESSAGE_ATTACHMENT_KWD_METADATA_INDEX), nullptr);
+        auto bytesRead = request->getAttachmentReader(MESSAGE_ATTACHMENT_KWD_METADATA_INDEX)
+                             ->reader->read(buffer, KWD_METADATA_EXAMPLE.length(), &readStatus);
+
+        EXPECT_EQ(bytesRead, KWD_METADATA_EXAMPLE.length());
+        EXPECT_EQ(memcmp(buffer, KWD_METADATA_EXAMPLE.data(), KWD_METADATA_EXAMPLE.length()), 0);
+    }
+}
 void RecognizeEvent::verifyMessage(
     std::shared_ptr<avsCommon::avs::MessageRequest> request,
     const std::vector<Sample>& pattern,
@@ -430,8 +474,14 @@ void RecognizeEvent::verifyMessage(
 
     std::ostringstream profile;
     profile << m_audioProvider.profile;
+
+    std::ostringstream encodingFormat;
+    encodingFormat << m_audioProvider.format.encoding;
+
     EXPECT_EQ(getJsonString(payload->value, ASR_PROFILE_KEY), profile.str());
-    EXPECT_EQ(getJsonString(payload->value, AUDIO_FORMAT_KEY), AUDIO_FORMAT_VALUE);
+
+    EXPECT_FALSE(
+        AUDIO_FORMAT_VALUES.find(getJsonString(payload->value, AUDIO_FORMAT_KEY)) == AUDIO_FORMAT_VALUES.end());
     auto initiator = payload->value.FindMember(RECOGNIZE_INITIATOR_KEY);
     EXPECT_NE(initiator, payload->value.MemberEnd());
 
@@ -456,16 +506,17 @@ void RecognizeEvent::verifyMessage(
         }
     }
 
-    m_reader = request->getAttachmentReader();
+    m_reader = request->getAttachmentReader(request->attachmentReadersCount() - 1);
     EXPECT_NE(m_reader, nullptr);
+    EXPECT_EQ(m_reader->name, AUDIO_ATTACHMENT_FIELD_NAME);
 
     std::vector<Sample> samples(PATTERN_WORDS);
     size_t samplesRead = 0;
     auto t0 = std::chrono::steady_clock::now();
     do {
         avsCommon::avs::attachment::AttachmentReader::ReadStatus status;
-        auto bytesRead =
-            m_reader->read(samples.data() + samplesRead, (samples.size() - samplesRead) * SDS_WORDSIZE, &status);
+        auto bytesRead = m_reader->reader->read(
+            samples.data() + samplesRead, (samples.size() - samplesRead) * SDS_WORDSIZE, &status);
         if (avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK_WOULDBLOCK == status) {
             std::this_thread::yield();
             continue;
@@ -480,7 +531,7 @@ void RecognizeEvent::verifyMessage(
 }
 
 std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> RecognizeEvent::getReader() {
-    return m_reader;
+    return m_reader->reader;
 }
 
 /// Class to monitor DialogUXStateAggregator for the @c THINKING state and automatically move it to @c IDLE.
@@ -563,7 +614,8 @@ protected:
         std::string keyword = "",
         RecognizeStopPoint stopPoint = RecognizeStopPoint::NONE,
         std::shared_ptr<std::string> avsInitiator = nullptr,
-        const ESPData& espData = ESPData::EMPTY_ESP_DATA);
+        const ESPData& espData = ESPData::EMPTY_ESP_DATA,
+        const std::shared_ptr<std::vector<char>> KWDMetadata = nullptr);
 
     /**
      * Function to call @c AudioInputProcessor::stopCapture() and verify that it succeeds.
@@ -794,7 +846,8 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     std::string keyword,
     RecognizeStopPoint stopPoint,
     std::shared_ptr<std::string> avsInitiator,
-    const ESPData& espData) {
+    const ESPData& espData,
+    const std::shared_ptr<std::vector<char>> KWDMetadata) {
     std::mutex mutex;
     std::condition_variable conditionVariable;
 
@@ -813,8 +866,8 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     rapidjson::Writer<rapidjson::StringBuffer> contextWriter(contextBuffer);
     contextDocument.Accept(contextWriter);
     std::string contextJson = contextBuffer.GetString();
-    m_recognizeEvent =
-        std::make_shared<RecognizeEvent>(audioProvider, initiator, begin, keywordEnd, keyword, avsInitiator, espData);
+    m_recognizeEvent = std::make_shared<RecognizeEvent>(
+        audioProvider, initiator, begin, keywordEnd, keyword, avsInitiator, espData, KWDMetadata);
     if (keyword.empty()) {
         EXPECT_CALL(*m_mockContextManager, getContext(_)).WillOnce(InvokeWithoutArgs([this] {
             m_audioInputProcessor->provideState(STOP_CAPTURE, STATE_REQUEST_TOKEN);
@@ -851,7 +904,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     if (!bargeIn) {
         EXPECT_CALL(*m_mockUserActivityNotifier, onUserActive()).Times(2);
         EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
-        EXPECT_CALL(*m_mockFocusManager, acquireChannel(CHANNEL_NAME, _, ACTIVITY_ID))
+        EXPECT_CALL(*m_mockFocusManager, acquireChannel(CHANNEL_NAME, _, NAMESPACE))
             .WillOnce(InvokeWithoutArgs([this, stopPoint] {
                 m_audioInputProcessor->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND);
                 if (RecognizeStopPoint::AFTER_FOCUS == stopPoint) {
@@ -875,7 +928,8 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
         }
         EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
             .WillOnce(DoAll(
-                Invoke([this](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+                Invoke([this, KWDMetadata](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+                    m_recognizeEvent->verifyMetadata(request, KWDMetadata);
                     m_recognizeEvent->verifyMessage(request, m_pattern, m_dialogRequestId);
                 }),
                 InvokeWithoutArgs([&] {
@@ -1255,7 +1309,7 @@ void AudioInputProcessorTest::verifyExpectSpeechTimedOut(std::shared_ptr<avsComm
     EXPECT_EQ(getJsonString(header->value, MESSAGE_NAME_KEY), EXPECT_SPEECH_TIMED_OUT_EVENT_NAME);
     EXPECT_NE(getJsonString(header->value, MESSAGE_MESSAGE_ID_KEY), "");
 
-    EXPECT_EQ(request->getAttachmentReader(), nullptr);
+    EXPECT_EQ(request->attachmentReadersCount(), 0);
 }
 
 void AudioInputProcessorTest::removeDefaultAudioProvider() {
@@ -1927,6 +1981,61 @@ TEST_F(AudioInputProcessorTest, recognizeWakewordWithInvalidESPWithKeyword) {
     ESPData espData("@#\"", "@#\"");
     EXPECT_TRUE(testRecognizeSucceeds(
         *m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT, RecognizeStopPoint::NONE, nullptr, espData));
+}
+
+/*
+ * This function verifies that @c AudioInputProcessor::recognize() works with OPUS encoding used with
+ * @c Initiator::TAP.
+ */
+TEST_F(AudioInputProcessorTest, recognizeOPUSWithTap) {
+    m_audioProvider->format.encoding = avsCommon::utils::AudioFormat::Encoding::OPUS;
+    m_audioProvider->format.sampleRateHz = 32000;
+    ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::TAP));
+}
+
+/*
+ * This function verifies that @c AudioInputProcessor::recognize() works with OPUS encoding used with
+ * @c Initiator::PRESS_AND_HOLD.
+ */
+TEST_F(AudioInputProcessorTest, recognizeOPUSWithPressAndHold) {
+    m_audioProvider->format.encoding = avsCommon::utils::AudioFormat::Encoding::OPUS;
+    m_audioProvider->format.sampleRateHz = 32000;
+    ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::PRESS_AND_HOLD));
+}
+
+/**
+ * This function verifies that @c AudioInputProcessor::recognize() works with OPUS encoding used with
+ * @c Initiator::WAKEWORD valid begin and end indices.
+ */
+TEST_F(AudioInputProcessorTest, recognizeOPUSWithWakeWord) {
+    avsCommon::avs::AudioInputStream::Index begin = 0;
+    avsCommon::avs::AudioInputStream::Index end = AudioInputProcessor::INVALID_INDEX;
+    m_audioProvider->format.encoding = avsCommon::utils::AudioFormat::Encoding::OPUS;
+    m_audioProvider->format.sampleRateHz = 32000;
+    EXPECT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT));
+}
+
+/**
+ * This function verifies that @c AudioInputProcessor::recognize() creates a @c MessageRequest with KWDMetadata
+ * When metadata has been received
+ */
+TEST_F(AudioInputProcessorTest, recognizeWakewordWithKWDMetadata) {
+    auto begin = AudioInputProcessor::INVALID_INDEX;
+    auto end = AudioInputProcessor::INVALID_INDEX;
+
+    auto metadata = std::make_shared<std::vector<char>>();
+    metadata->assign(KWD_METADATA_EXAMPLE.data(), KWD_METADATA_EXAMPLE.data() + KWD_METADATA_EXAMPLE.length());
+
+    EXPECT_TRUE(testRecognizeSucceeds(
+        *m_audioProvider,
+        Initiator::WAKEWORD,
+        begin,
+        end,
+        KEYWORD_TEXT,
+        RecognizeStopPoint::NONE,
+        nullptr,
+        ESPData::EMPTY_ESP_DATA,
+        metadata));
 }
 
 }  // namespace test

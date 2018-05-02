@@ -71,7 +71,7 @@ public:
      * @param numBytes The size of the buffer in bytes.
      * @param[out] readStatus The out-parameter where the resulting state of the read will be expressed.
      * @param timeoutMs The timeout for this read call in milliseconds.  This value is only used for the @c BLOCKING
-     * reader policy.
+     * reader policy.  If this parameter is zero, there is no timeout and blocking reads will wait forever.
      * @return The number of bytes read as a result of this call.
      */
     virtual std::size_t read(

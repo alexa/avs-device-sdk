@@ -1,5 +1,5 @@
 AVS Device SDK
-Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
 ***************************
 AVS DEVICE SDK COMPONENTS
@@ -17,14 +17,17 @@ License, Version 2.0 (the "License"):
 - Certified Sender
 - Context Manager
 - Default Client
+- ExternalMediaPlayer Capability Agent
 - Key Word Detector (KWD)
 - Media Player
+- Notifications Capability Agent
 - Playback Controller Capability Agent
 - Playlist Parser
+- RegistrationManager 
 - Sample App
 - Settings Capability Agent
-- Speaker Manager Capability Agent
-- Speech Synthesizer Capability Agent
+- SpeakerManager Capability Agent
+- SpeechSynthesizer Capability Agent
 - Storage
 - System Capability Agent
 - Template Runtime Capability Agent
@@ -43,7 +46,7 @@ limitations under the License.
 ALEXA AUDIO ASSETS
 ******************
 
-Copyright 2017 Amazon.com, Inc. or its affiliates (“Amazon”).
+Copyright 2018 Amazon.com, Inc. or its affiliates (“Amazon”).
 All Rights Reserved.
 
 These materials are licensed to you as "Alexa Materials" under the Alexa Voice

@@ -26,12 +26,12 @@ namespace avsCommon {
 namespace sdkInterfaces {
 
 /**
- * The AuthDelegateInterface is used to provide clients with valid LWA authroization
+ * The AuthDelegateInterface is used to provide clients with valid LWA authorization
  * tokens. @see
  * https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/content/avs-api-overview#authorization
  * Given an @c AuthDelegateInterface pointer, the client is expected to call @c getAuthToken() immediately before
  * making AVS requests. The returned value is passed in the HTTP/2 header of requests sent to AVS.
- * These authroization tokens may expire, so AuthDelegates also track the state of authorization (essentially,
+ * These authorization tokens may expire, so AuthDelegates also track the state of authorization (essentially,
  * whether an immediate call to @c getAuthToken() will return a token that is expected to be viable).  The client
  * may elect to receive callbacks when this state changes by calling @c setAuthObserver().  This allows the client
  * to avoid sending requests tha are doomed to fail because the authorization token has already expired.  This also

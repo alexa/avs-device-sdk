@@ -140,21 +140,6 @@ void acsdkCritical(const LogEntry& entry);
 void logEntry(Level level, const LogEntry& entry);
 
 /**
- * Formats a log message into a printable string with other metadata regarding the log message.
- *
- * @param level The severity Level of this log line.
- * @param time The time that the event to log occurred.
- * @param threadMoniker Moniker of the thread that generated the event.
- * @param text The text of the entry to log.
- * @return The formatted string.
- */
-std::string formatLogString(
-    Level level,
-    std::chrono::system_clock::time_point time,
-    const char* threadMoniker,
-    const char* text);
-
-/**
  * Stream out an array of bytes as a hex dump.
  *
  * @param stream The stream to render to.

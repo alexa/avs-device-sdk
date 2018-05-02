@@ -135,25 +135,37 @@ class ConfigurationNodeTest : public ::testing::Test {};
  */
 TEST_F(ConfigurationNodeTest, testInitializationAndAccess) {
     // Verify a null configuration results in failure
-    ASSERT_FALSE(ConfigurationNode::initialize({nullptr}));
+    std::vector<std::shared_ptr<std::istream>> jsonStream;
+    jsonStream.push_back(nullptr);
+    ASSERT_FALSE(ConfigurationNode::initialize(jsonStream));
+    jsonStream.clear();
 
     // Verify invalid JSON results in failure
-    std::stringstream badStream;
-    badStream << BAD_JSON;
-    ASSERT_FALSE(ConfigurationNode::initialize({&badStream}));
+    auto badStream = std::shared_ptr<std::stringstream>(new std::stringstream());
+    (*badStream) << BAD_JSON;
+    jsonStream.push_back(badStream);
+    ASSERT_FALSE(ConfigurationNode::initialize(jsonStream));
+    jsonStream.clear();
 
     // Combine valid JSON streams with overlapping values. Verify reported success.
-    std::stringstream firstStream;
-    firstStream << FIRST_JSON;
-    std::stringstream secondStream;
-    secondStream << SECOND_JSON;
-    std::stringstream thirdStream;
-    thirdStream << THIRD_JSON;
-    ASSERT_TRUE(ConfigurationNode::initialize({&firstStream, &secondStream, &thirdStream}));
+    auto firstStream = std::shared_ptr<std::stringstream>(new std::stringstream());
+    (*firstStream) << FIRST_JSON;
+    auto secondStream = std::shared_ptr<std::stringstream>(new std::stringstream());
+    (*secondStream) << SECOND_JSON;
+    auto thirdStream = std::shared_ptr<std::stringstream>(new std::stringstream());
+    (*thirdStream) << THIRD_JSON;
+    jsonStream.push_back(firstStream);
+    jsonStream.push_back(secondStream);
+    jsonStream.push_back(thirdStream);
+    ASSERT_TRUE(ConfigurationNode::initialize(jsonStream));
+    jsonStream.clear();
 
     // Verify failure reported for subsequent initializations.
-    firstStream << FIRST_JSON;
-    ASSERT_FALSE(ConfigurationNode::initialize({&firstStream}));
+    auto firstStream1 = std::shared_ptr<std::stringstream>(new std::stringstream());
+    (*firstStream1) << FIRST_JSON;
+    jsonStream.push_back(firstStream1);
+    ASSERT_FALSE(ConfigurationNode::initialize(jsonStream));
+    jsonStream.clear();
 
     // Verify non-found name results in a ConfigurationNode that evaluates to false.
     ASSERT_FALSE(ConfigurationNode::getRoot()[NON_OBJECT]);

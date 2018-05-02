@@ -91,7 +91,9 @@ public:
         /// The alert has been stopped due to a local user action.
         LOCAL_STOP,
         /// The alert is being stopped due to an SDK shutdown operation.
-        SHUTDOWN
+        SHUTDOWN,
+        /// Logout customer logged out or deregistered.
+        LOG_OUT
     };
 
     /**

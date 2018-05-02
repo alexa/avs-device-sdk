@@ -65,31 +65,22 @@ public:
 
     /**
      * Creates a new database with the given filePath.
-     * If the file specified already exists, or if a database is already being handled by this object, then
-     * this function returns false.
+     * If a database is already being handled by this object, or there is are other errors creating the database, this
+     * function returns false.
      *
-     * @param filePath The path to the file which will be used to contain the database.
-     * @return @c true If the database is created ok, or @c false if either the file exists or a database is already
-     * being handled by this object.
+     * @return @c true If the database is created ok, or @c false if a database is already being handled by this object
+     * or there is an internal error creating the database.
      */
-    virtual bool createDatabase(const std::string& filePath) = 0;
+    virtual bool createDatabase() = 0;
 
     /**
-     * Open a database with the given filePath.  If this object is already managing an open database, or the file
-     * does not exist, or there is a problem opening the database, this function returns false.
+     * Open an existing database.  If this object is already managing an open database, or there is a problem opening
+     * the database, this function returns false.
      *
-     * @param filePath The path to the file which will be used to contain the database.
-     * @return @c true If the database is opened ok, @c false if either the file does not exist, if this object is
-     * already managing an open database, or if there is another internal reason the database could not be opened.
+     * @return @c true If the database is opened ok, @c false if this object is already managing an open database, or if
+     * there is another internal reason the database could not be opened.
      */
-    virtual bool open(const std::string& filePath) = 0;
-
-    /**
-     * Query if this object is currently managing an open database.
-     *
-     * @return @c true If a database is being currently managed by this object, @c false otherwise.
-     */
-    virtual bool isOpen() = 0;
+    virtual bool open() = 0;
 
     /**
      * Close the currently open database, if one is open.

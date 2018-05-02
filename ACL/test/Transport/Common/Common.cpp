@@ -22,6 +22,12 @@
 #include <random>
 #include <vector>
 
+// A constant seed for random number generator, to make the test consistent every run
+static const unsigned int RANDOM_NUMBER_SEED = 1;
+
+// The random number generator
+static std::minstd_rand randGenerator;
+
 namespace alexaClientSDK {
 namespace acl {
 namespace test {
@@ -52,11 +58,15 @@ int generateRandomNumber(int min, int max) {
         std::swap(min, max);
     }
 
-    std::mt19937 rng;
-    rng.seed(std::random_device()());
-    std::uniform_int_distribution<std::mt19937::result_type> dist(min, max);
+    /// Identifier to tell if the random number generated has been initialized
+    static bool randInit = false;
 
-    return dist(rng);
+    if (!randInit) {
+        randGenerator.seed(RANDOM_NUMBER_SEED);
+        randInit = true;
+    }
+
+    return (randGenerator() % (max - min + 1)) + min;
 }
 
 }  // namespace test

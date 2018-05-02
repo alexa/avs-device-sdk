@@ -70,6 +70,10 @@ static const std::string UNESCAPED_METADATA_VALUE = R"(reserved_chars['\' ',' ':
 static const std::string TEST_MESSAGE_STRING = "Hello World!";
 /// Another String used to test that the message component is logged
 static const std::string TEST_MESSAGE_STRING_1 = "World Hello!";
+/// A const char* nullptr to verify the logger won't crash in degenerate cases
+static const char* TEST_MESSAGE_CONST_NULL_CHAR_PTR = nullptr;
+/// A char* nullptr to verify the logger won't crash in degenerate cases
+static char* TEST_MESSAGE_NULL_CHAR_PTR = nullptr;
 
 /**
  * Mock derivation of Logger for verifying calls and parameters to those calls.
@@ -463,6 +467,37 @@ TEST_F(LoggerTest, logCriticalLevel) {
 TEST_F(LoggerTest, logNoneLevel) {
     setLevelExpectations(Level::NONE);
     exerciseLevels();
+}
+
+/**
+ * Test to ensure that logger usage with possible nullptr inputs is robust.  As some functionality is templated,
+ * we must test both char* and const char* variants, for LogEntry construction, and the .d() and .m() functionality.
+ */
+TEST_F(LoggerTest, testNullInputs) {
+    ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
+
+    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(13);
+
+    // The good case.
+    ACSDK_INFO(LX("testEntryName").d("key", "value"));
+
+    // Test the constructors.
+    ACSDK_INFO(LX(TEST_MESSAGE_CONST_NULL_CHAR_PTR).m("testEventNameConstNullPtr"));
+    ACSDK_INFO(LX(TEST_MESSAGE_NULL_CHAR_PTR).m("testEventNameNullPtr"));
+
+    // Test the .d() bad variants, both params.
+    ACSDK_INFO(LX("testEntryName").d("key", TEST_MESSAGE_CONST_NULL_CHAR_PTR));
+    ACSDK_INFO(LX("testEntryName").d("key", TEST_MESSAGE_NULL_CHAR_PTR));
+    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_CONST_NULL_CHAR_PTR, "value"));
+    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_NULL_CHAR_PTR, "value"));
+    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_CONST_NULL_CHAR_PTR, TEST_MESSAGE_CONST_NULL_CHAR_PTR));
+    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_CONST_NULL_CHAR_PTR, TEST_MESSAGE_NULL_CHAR_PTR));
+    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_NULL_CHAR_PTR, TEST_MESSAGE_CONST_NULL_CHAR_PTR));
+    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_NULL_CHAR_PTR, TEST_MESSAGE_NULL_CHAR_PTR));
+
+    // Test the .m() variants.
+    ACSDK_INFO(LX("testEntryName").m(TEST_MESSAGE_CONST_NULL_CHAR_PTR));
+    ACSDK_INFO(LX("testEntryName").m(TEST_MESSAGE_NULL_CHAR_PTR));
 }
 
 /**

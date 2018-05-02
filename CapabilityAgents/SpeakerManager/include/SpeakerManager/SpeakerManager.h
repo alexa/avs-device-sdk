@@ -24,6 +24,8 @@
 
 #include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
@@ -67,6 +69,7 @@ namespace speakerManager {
  */
 class SpeakerManager
         : public avsCommon::avs::CapabilityAgent
+        , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::sdkInterfaces::SpeakerManagerInterface
         , public avsCommon::utils::RequiresShutdown {
 public:
@@ -123,6 +126,12 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerObserverInterface> observer) override;
     void addSpeaker(std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker) override;
     /// @}
+
+    /// @name CapabilityConfigurationInterface Functions
+    /// @{
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
+    /// @}
+
 private:
     /**
      * Constructor. Called after validation has occurred on parameters.
@@ -307,6 +316,9 @@ private:
 
     /// The observers to be notified whenever any of the @c SpeakerSetting changing APIs are called.
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerObserverInterface>> m_observers;
+
+    /// Set of capability configurations that will get published using DCF
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /// An executor to perform operations on a worker thread.
     avsCommon::utils::threading::Executor m_executor;

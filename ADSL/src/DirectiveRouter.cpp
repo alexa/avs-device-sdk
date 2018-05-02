@@ -285,10 +285,17 @@ HandlerAndPolicy DirectiveRouter::getHandlerAndPolicyLocked(std::shared_ptr<avsC
         ACSDK_WARN(LX("getHandlerAndPolicyLockedFailed").d("reason", "nullptrDirective"));
         return HandlerAndPolicy();
     }
+
+    // First, look for an exact match.  If not found, then look for a wildcard handler for the AVS namespace.
     auto it = m_configuration.find(NamespaceAndName(directive->getNamespace(), directive->getName()));
+    if (m_configuration.end() == it) {
+        it = m_configuration.find(NamespaceAndName(directive->getNamespace(), "*"));
+    }
+
     if (m_configuration.end() == it) {
         return HandlerAndPolicy();
     }
+
     return it->second;
 }
 

@@ -20,12 +20,11 @@
 #include <memory>
 #include <string>
 
-#include "ExternalMediaPlayer/AdapterUtils.h"
-
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/DirectiveHandlerConfiguration.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ExternalMediaAdapterInterface.h>
+#include <AVSCommon/SDKInterfaces/ExternalMediaPlayerInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/PlaybackHandlerInterface.h>
@@ -50,18 +49,34 @@ namespace externalMediaPlayer {
 class ExternalMediaPlayer
         : public avsCommon::avs::CapabilityAgent
         , public avsCommon::utils::RequiresShutdown
+        , public avsCommon::sdkInterfaces::ExternalMediaPlayerInterface
         , public avsCommon::sdkInterfaces::SpeakerInterface
         , public avsCommon::sdkInterfaces::PlaybackHandlerInterface
         , public std::enable_shared_from_this<ExternalMediaPlayer> {
 public:
+    // Map of adapter business names to their mediaPlayers.
     using AdapterMediaPlayerMap =
         std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>;
+
+    // Signature of functions to create an ExternalMediaAdapter.
+    using AdapterCreateFunction =
+        std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface> (*)(
+            std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
+            std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
+            std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+            std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
+            std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+            std::shared_ptr<avsCommon::sdkInterfaces::ExternalMediaPlayerInterface> externalMediaPlayer);
+
+    // Map of adapter business names to their creation method.
+    using AdapterCreationMap = std::unordered_map<std::string, AdapterCreateFunction>;
 
     /**
      * Creates a new @c ExternalMediaPlayer instance.
      *
      * @param mediaPlayers The map of <PlayerId, MediaPlayer> to be used to find the mediaPlayer to use for this
      * adapter.
+     * @param adapterCreationMap The map of <PlayerId, AdapterCreateFunction> to be used to create the adapters.
      * @param speakerManager A @c SpeakerManagerInterface to perform volume changes requested by adapters.
      * @param messageSender The object to use for sending events.
      * @param focusManager The object used to manage focus for the adapter managed by the EMP.
@@ -72,6 +87,7 @@ public:
      */
     static std::shared_ptr<ExternalMediaPlayer> create(
         const AdapterMediaPlayerMap& mediaPlayers,
+        const AdapterCreationMap& adapterCreationMap,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
@@ -109,46 +125,10 @@ public:
     virtual void onButtonPressed(avsCommon::avs::PlaybackButton button) override;
     /// @}
 
-    /**
-     * Method to set the player in focus after an adapter has acquired the channel.
-     *
-     * @param playerInFocus The business name of the adapter that has currently acquired focus.
-     */
-    void setPlayerInFocus(const std::string& playerInFocus);
-
-    /**
-     * Method to reset the player in focus after an adapter has acquired the channel.
-     *
-     * @param playerInFocus The business name of the adapter that has currently released focus.
-     * If the currently playerInFocus is the one releasing focus we reset the playerInFocus to
-     * a null string.
-     */
-    void resetPlayerInFocus(const std::string& playerInFocus);
-
-    // Signature of functions to create an ExternalMediaAdapter.
-    using AdapterCreateFunction =
-        std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface> (*)(
-            std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
-            std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
-            std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-            std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
-            std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-            std::shared_ptr<ExternalMediaPlayer> externalMediaPlayer);
-
-    /**
-     * Instances of this class register ExternalMediaAdapters. Each adapter registers itself by instantiating
-     * a static instance of the below class supplying their business name and creator method.
-     */
-    class AdapterRegistration {
-    public:
-        /**
-         * Register an @c ExternalMediaAdapter for use by @c ExternalMediaPlayer.
-         *
-         * @param playerId The @c playerId identifying the @c ExternalMediaAdapter to register.
-         * @param createFunction The function to use to create instances of the specified @c ExternalMediaAdapter.
-         */
-        AdapterRegistration(const std::string& playerId, AdapterCreateFunction createFunction);
-    };
+    /// @name Overridden ExternalMediaPlayerInterface methods.
+    /// @{
+    virtual void setPlayerInFocus(const std::string& playerInFocus) override;
+    /// @}
 
 private:
     /**
@@ -200,22 +180,16 @@ private:
     /**
      * Method to create all the adapters registered.
      *
-     * @param playerId The @c playerId identifying the @c ExternalMediaAdapter to register.
-     * @param createFunction The function to use to create instances of the specified @c ExternalMediaAdapter.
-     */
-    static bool registerAdapter(const std::string& playerId, AdapterCreateFunction createFunction);
-
-    /**
-     * Method to create all the adapters registered.
-     *
      * @param mediaPlayers The map of <PlayerId, MediaPlayer> to be used to find the mediaPlayer to use for this
      * adapter.
+     * @param adapterCreationMap The map of <PlayerId, AdapterCreateFunction> to be used to create the adapters.
      * @param messageSender The messager sender of the adapter.
      * @param focusManager The focus manager to be used by the adapter to acquire/release channel.
      * @param contextManager The context manager of the ExternalMediaPlayer and adapters.
      */
     void createAdapters(
         const AdapterMediaPlayerMap& mediaPlayers,
+        const AdapterCreationMap& adapterCreationMap,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager);
@@ -373,9 +347,6 @@ private:
         avsCommon::avs::NamespaceAndName,
         std::pair<avsCommon::sdkInterfaces::externalMediaPlayer::RequestType, ExternalMediaPlayer::DirectiveHandler>>
         m_directiveToHandlerMap;
-
-    /// The singleton map from @c playerId to @c ExternalMediaAdapter creation functions.
-    static std::unordered_map<std::string, AdapterCreateFunction> m_adapterToCreateFuncMap;
 };
 
 }  // namespace externalMediaPlayer

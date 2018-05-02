@@ -16,6 +16,8 @@
 #ifndef ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_JSONHEADER_H_
 #define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_JSONHEADER_H_
 
+#include <string>
+
 // Todo ACSDK-443: Move the JSON to text file
 /// This is a basic synchronize JSON message which may be used to initiate a connection with AVS.
 // clang-format off

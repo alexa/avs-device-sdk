@@ -12,16 +12,15 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-
-#include "AVSCommon/Utils/String/StringUtils.h"
-
+#include <algorithm>
+#include <errno.h>
 #include <iomanip>
 #include <limits>
-
-#include <errno.h>
 #include <stdlib.h>
 
 #include "AVSCommon/Utils/Logger/Logger.h"
+
+#include "AVSCommon/Utils/String/StringUtils.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -97,6 +96,12 @@ std::string byteVectorToString(const std::vector<uint8_t>& byteVector) {
         firstTime = false;
     }
     return ss.str();
+}
+
+std::string stringToLowerCase(const std::string& input) {
+    std::string lowerCaseString = input;
+    std::transform(lowerCaseString.begin(), lowerCaseString.end(), lowerCaseString.begin(), ::tolower);
+    return lowerCaseString;
 }
 
 }  // namespace string

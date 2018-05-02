@@ -99,7 +99,7 @@ gboolean AttachmentReaderSource::handleReadData() {
     }
 
     auto status = AttachmentReader::ReadStatus::OK;
-    auto size = m_reader->read(info.data, info.size, &status);
+    auto size = m_reader->read(info.data, info.size, &status, std::chrono::milliseconds(1));
 
     ACSDK_DEBUG9(LX("read").d("size", size).d("status", static_cast<int>(status)));
 

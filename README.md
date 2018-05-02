@@ -1,5 +1,7 @@
 ### IMPORTANT NOTE
-If you are updating from v1.3 or earlier to v1.5, you must update your `AlexaClientSDKConfig.json` to include a Notifications database. An updated sample is available in the quickstart guides for Ubuntu Linux, Raspberry Pi, macOS, and Generic Linux.
+Significant changes have been made to the authorization process and the `AlexaClientSDKConfig.json` configuration file in v1.7 of the AVS Device SDK. [Click here for update instructions](https://github.com/alexa/avs-device-sdk/wiki/Code-Based-Linking----Configuration-Update-Guide).
+
+See [release notes](https://github.com/alexa/avs-device-sdk#release-notes-and-known-issues) for a complete list of updates, enhancements, bug fixes, and known issues for this release.
 
 ### What is the Alexa Voice Service (AVS)?
 
@@ -17,11 +19,15 @@ You can set up the SDK on the following platforms:
 * [Ubuntu Linux](https://github.com/alexa/avs-device-sdk/wiki/Ubuntu-Linux-Quick-Start-Guide)
 * [Raspberry Pi](https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide-with-Script) (Raspbian Stretch)
 * [macOS](https://github.com/alexa/avs-device-sdk/wiki/macOS-Quick-Start-Guide)
+* [Windows 64-bit](https://github.com/alexa/avs-device-sdk/wiki/Windows-Quick-Start-Guide-with-Script)
 * [Generic Linux](https://github.com/alexa/avs-device-sdk/wiki/Linux-Reference-Guide)
 
 You can also prototype with a third party development kit:
-* [xCORE VocalFusion 4-Mic Kit](https://github.com/xmos/vocalfusion-avs-setup)
-* [NXP PICO-PI-IMX7D 2-Mic Kit](https://www.nxp.com/docs/en/user-guide/Quick-Start-Guide-for-Arrow-AVS-kit.pdf)
+* [XMOS VocalFusion 4-Mic Kit](https://github.com/xmos/vocalfusion-avs-setup) - Learn More [Here](https://developer.amazon.com/alexa-voice-service/dev-kits/xmos-vocal-fusion)
+* [Synaptics AudioSmart 2-Mic Dev Kit for Amazon AVS with NXP SoC](https://www.nxp.com/docs/en/user-guide/Quick-Start-Guide-for-Arrow-AVS-kit.pdf) - Learn More [Here](https://developer.amazon.com/alexa-voice-service/dev-kits/synaptics-2-mic)
+* [Intel Speech Enabling Developer Kit](https://avs-dvk-workshop.github.io) - Learn More [Here](https://developer.amazon.com/alexa-voice-service/dev-kits/intel-speech-enabling/)
+* [Amlogic A113X1 Far-Field Dev Kit for Amazon AVS](http://openlinux2.amlogic.com/download/doc/A113X1_Usermanual.pdf) - Learn More [Here](https://developer.amazon.com/alexa-voice-service/dev-kits/amlogic-6-mic)
+* [Allwinner SoC-Only 3-Mic Far-Field Dev Kit for Amazon AVS](http://www.banana-pi.org/images/r18avs/AVS-quickstartguide.pdf) - Learn More [Here](https://developer.amazon.com/alexa-voice-service/dev-kits/allwinner-3-mic)
 
 Or if you prefer, you can start with our [SDK API Documentation](https://alexa.github.io/avs-device-sdk/).
 
@@ -77,6 +83,16 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 * [System](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system) - The interface for communicating product status/state to AVS.
 * [TemplateRuntime](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/templateruntime) - The interface for rendering visual metadata.
 
+### Security Best Practices
+
+In addition to adopting the [Security Best Practices for Alexa](https://developer.amazon.com/docs/alexa-voice-service/security-best-practices.html), when building the SDK:
+
+* Protect configuration parameters, such as those found in the AlexaClientSDKCOnfig.json file, from tampering and inspection.
+* Protect executable files and processes from tampering and inspection.
+* Protect storage of the SDK's persistent states from tampering and inspection.
+* Your C++ implementation of AVS Device SDK interfaces must not retain locks, crash, hang, or throw exceptions.
+* Use exploit mitigation flags and memory randomization techniques when you compile your source code, in order to prevent vulnerabilities from exploiting buffer overflows and memory corruptions.
+
 ### Important Considerations
 
 * Review the AVS [Terms & Agreements](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/support/terms-and-agreements).
@@ -86,31 +102,40 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
   * [Contact KITT.AI](mailto:snowboy@kitt.ai) for information on SnowBoy licensing.
 * **IMPORTANT**: The Sensory wake word engine referenced in this document is time-limited: code linked against it will stop working when the library expires. The library included in this repository will, at all times, have an expiration date that is at least 120 days in the future. See [Sensory's GitHub ](https://github.com/Sensory/alexa-rpi#license)page for more information.
 
-
 ### Release Notes and Known Issues
 
 **Note**: Feature enhancements, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
-v1.5.0 released 02/12/2018:
+v1.7.0 released 04/18/2018:
 
 **Enhancements**
-* Added the `ExternalMediaPlayer` Capability Agent. This allows playback from music providers that control their own playback queue. Example: Spotify.
-* Added support for AU and NZ to the `SampleApp`.
-* Firmware version can now be sent to Alexa via the `SoftwareInfo` event. The firmware version is specified in the config file under the `sampleApp` object as an integer value named [`firmwareVersion`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L52).
-* The new `f` command was added to the `SampleApp` which allows the firmware version to be updated at run-time.
-* Optional configuration changes have been introduced. Now a [default log level](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L93) can be set for `ACSDK_LOG_MODULE` components, globally or individually. This value is specified under a new root level configuration object called `logger`, and the value itself is named `logLevel`. This allows you to limit the degree of logging to that default value, such as `ERROR`or `INFO`.
+* `AuthDelegate` and `AuthServer.py` have been replaced by `CBLAUthDelegate`, which uses Code Based Linking for authorization.
+* Added new properties to `AlexaClientSDKConfig`:
+  * [`cblAuthDelegate`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L2) - This object specifies parameters for `CBLAuthDelegate`.
+  * [`miscDatabase`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L34) - A generic key/value database to be used by various components.
+  * [`dcfDelegate`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L17) - This object specifies parameters for `DCFDelegate`. Within this object, values were added for `endpoint` and `overridenDcfPublishMessageBody`. `endpoint` is the endpoint for the Capabilities API. `overridenDcfPublishMessageBody`is the message that is sent to the Capabilities API. **Note**: Values in the `dcfDelegate` object will only work in `DEBUG` builds.  
+  * [`deviceInfo`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L9) - Specifies device-identifying information for use by the Capabilities API and `CBLAuthDelegate`.  
+* Updated Directive Sequencer to support wildcard directive handlers. This allows a handler for a given AVS interface to register at the namespace level, rather than specifying the names of all directives within a given namespace.  
+* Updated the Raspberry Pi installation script to include `alsasink` in `AlexaClientSDKConfig`.  
+* Added `audioSink` as a configuration option. This allows users to override the audio sink element used in `Gstreamer`.
+* Added an interface for monitoring internet connection status: `InternetConnectionMonitorInterface.h`.  
+* The Alexa Communications Library (ACL) is no longer required to wait until authorization has succeeded before attempting to connect to AVS. Instead, `HTTP2Transport` handles waiting for authorization to complete.  
+* Device capabilities can now be sent for each capability interface using the Capabilities API.  
+* The sample app has been updated to send Capabilities API messages, which are automatically sent when the sample app starts. **Note**: A successful call to the Capabilities API must occur before a connection with AVS is established.  
+* The SDK now supports HTTP PUT messages.
+* Added support for opt-arg style arguments and multiple configuration files. Now, the sample app can be invoked by either of these commands: `SampleApp <configfile> <debuglevel>` OR `SampleApp -C file1 -C file2 ... -L loglevel`.
 
 **Bug Fixes**
-* Fixed bug where `AudioPlayer` progress reports were not being sent, or were being sent incorrectly.
-* [Issue 408](https://github.com/alexa/avs-device-sdk/issues/408) - Irrelevant code related to `UrlSource` was removed from the `GStreamer-based MediaPlayer` implementation.
-* The `TZ` variable no longer needs to be set to `UTC` when building the `SampleApp`.
-* Fixed a bug where `CurlEasyHandleWrapper` logged unwanted data on failure conditions.
-* Fixed a bug to improve `SIGPIPE` handling.
-* Fixed a bug where the filename and classname were mismatched. Changed `UrlToAttachmentConverter.h` to `UrlContentToAttachmentConverter.h`,and `UrlToAttachmentConverter.cpp` to `UrlContentToAttachmentConverter.cpp`
+* Fixed Issues [447](https://github.com/alexa/avs-device-sdk/issues/447) and [553](https://github.com/alexa/avs-device-sdk/issues/553).  
+* Fixed the `AttachmentRenderSource`'s handling of `BLOCKING` `AttachmentReaders`.  
+* Updated the `Logger` implementation to be more resilient to `nullptr` string inputs.  
+* Fixed a `TimeUtils` utility-related compile issue.  
+* Fixed a bug in which alerts failed to activate if the system was restarted without network connection.  
+* Fixed Android 64-bit build failure issue.  
 
 **Known Issues**
 * The `ACL` may encounter issues if audio attachments are received but not consumed.
-* Display Cards for Kindle don't render.
-* If using the GStreamer-based `MediaPlayer` implementation, after muting and un-muting an audio item, the next item in the queue will begin playing rather than continuing playback of the originally muted audio item.
 * `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
-* Music playback doesn't immediately stop when a user barges-in on iHeartRadio.
+* Some ERROR messages may be printed during start-up even if initialization proceeds normally and successfully.
+* If an unrecoverable authorization error is encountered the sample app may crash on shutdown.
+* If a non-CBL `clientId` is included in the `deviceInfo` section of `AlexaClientSDKConfig.json`, the error will be reported as an unrecoverable authorization error, rather than a more specific error.

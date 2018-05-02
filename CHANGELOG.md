@@ -1,5 +1,63 @@
 ## ChangeLog
 
+### v1.7.0 released 04/18/2018:
+
+**Enhancements**
+* `AuthDelegate` and `AuthServer.py` have been replaced by `CBLAUthDelegate`, which uses Code Based Linking for authorization.
+* Added new properties to `AlexaClientSDKConfig`:
+  * [`cblAuthDelegate`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L2) - This object specifies parameters for `CBLAuthDelegate`.
+  * [`miscDatabase`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L34) - A generic key/value database to be used by various components.
+  * [`dcfDelegate`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L17) - This object specifies parameters for `DCFDelegate`. Within this object, values were added for `endpoint` and `overridenDcfPublishMessageBody`. `endpoint` is the endpoint for the Capabilities API. `overridenDcfPublishMessageBody`is the message that is sent to the Capabilities API. **Note**: Values in the `dcfDelegate` object will only work in `DEBUG` builds.  
+  * [`deviceInfo`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L9) - Specifies device-identifying information for use by the Capabilities API and `CBLAuthDelegate`.  
+* Updated Directive Sequencer to support wildcard directive handlers. This allows a handler for a given AVS interface to register at the namespace level, rather than specifying the names of all directives within a given namespace.  
+* Updated the Raspberry Pi installation script to include `alsasink` in `AlexaClientSDKConfig`.  
+* Added `audioSink` as a configuration option. This allows users to override the audio sink element used in `Gstreamer`.
+* Added an interface for monitoring internet connection status: `InternetConnectionMonitorInterface.h`.  
+* The Alexa Communications Library (ACL) is no longer required to wait until authorization has succeeded before attempting to connect to AVS. Instead, `HTTP2Transport` handles waiting for authorization to complete.  
+* Device capabilities can now be sent for each capability interface using the Capabilities API.  
+* The sample app has been updated to send Capabilities API messages, which are automatically sent when the sample app starts. **Note**: A successful call to the Capabilities API must occur before a connection with AVS is established.  
+* The SDK now supports HTTP PUT messages.
+* Added support for opt-arg style arguments and multiple configuration files. Now, the sample app can be invoked by either of these commands: `SampleApp <configfile> <debuglevel>` OR `SampleApp -C file1 -C file2 ... -L loglevel`.
+
+**Bug Fixes**
+* Fixed Issues [447](https://github.com/alexa/avs-device-sdk/issues/447) and [553](https://github.com/alexa/avs-device-sdk/issues/553).  
+* Fixed the `AttachmentRenderSource`'s handling of `BLOCKING` `AttachmentReaders`.  
+* Updated the `Logger` implementation to be more resilient to `nullptr` string inputs.  
+* Fixed a `TimeUtils` utility-related compile issue.  
+* Fixed a bug in which alerts failed to activate if the system was restarted without network connection.  
+* Fixed Android 64-bit build failure issue.  
+
+**Known Issues**
+* The `ACL` may encounter issues if audio attachments are received but not consumed.
+* `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
+* Some ERROR messages may be printed during start-up even if initialization proceeds normally and successfully.
+* If an unrecoverable authorization error is encountered the sample app may crash on shutdown.
+* If a non-CBL `clientId` is included in the `deviceInfo` section of `AlexaClientSDKConfig.json`, the error will be reported as an unrecoverable authorization error, rather than a more specific error.
+
+
+### [1.6.0] - 2018-03-08
+
+**Enhancements**
+* `rapidJson` is now included with "make install".
+* Updated the `TemplateRuntimeObserverInterface` to support clearing of `displayCards`.
+* Added Windows SDK support, along with an installation script (MinGW-w64).
+* Updated `ContextManager` to ignore context reported by a state provider.
+* The `SharedDataStream` object is now associated by playlist, rather than by URL.
+* Added the `RegistrationManager` component. Now, when a user logs out all persistent user-specific data is cleared from the SDK. The log out functionality can be exercised in the sample app with the new command: `k`.
+
+**Bug Fixes**
+* [Issue 400](https://github.com/alexa/avs-device-sdk/issues/400) Fixed a bug where the alert reminder did not iterate as intended after loss of network connection.
+* [Issue 477](https://github.com/alexa/avs-device-sdk/issues/477) Fixed a bug in which Alexa's weather response was being truncated.
+* Fixed an issue in which there were reports of instability related to the Sensory engine. To correct this, the `portAudio` [`suggestedLatency`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L62) value can now be configured.
+
+**Known Issues**
+* The `ACL` may encounter issues if audio attachments are received but not consumed.
+* `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
+* Music playback doesn't immediately stop when a user barges-in on iHeartRadio.
+* The Windows sample app hangs on exit.
+* GDB receives a `SIGTRAP` when troubleshooting the Windows sample app.
+* `make integration` doesn't work on Windows. Integration tests will need to be run individually.
+
 ### [1.5.0] - 2018-02-12
 
 **Enhancements**
@@ -15,12 +73,12 @@
 * The `TZ` variable no longer needs to be set to `UTC` when building the `SampleApp`.
 * Fixed a bug where `CurlEasyHandleWrapper` logged unwanted data on failure conditions.
 * Fixed a bug to improve `SIGPIPE` handling.
-* Fixed a bug where the filename and classname were mismatched. Changed `UrlToAttachmentConverter.h` to `UrlContentToAttachmentConverter.h`,and `UrlToAttachmentConverter.cpp` to `UrlContentToAttachmentConverter.cpp`
+* Fixed a bug where the filename and classname were mismatched. Changed `UrlToAttachmentConverter.h` to `UrlContentToAttachmentConverter.h`,and `UrlToAttachmentConverter.cpp` to `UrlContentToAttachmentConverter.cpp`.  
+* Fixed a bug where after muting and then un-muting the GStreamer-based `MediaPlayer` implementation, the next item in queue would play instead of continuing playback of the originally muted item.  
 
 **Known Issues**
 * The `ACL` may encounter issues if audio attachments are received but not consumed.
-* Display Cards for Kindle don't render.
-* If using the GStreamer-based `MediaPlayer` implementation, after muting and un-muting an audio item, the next item in the queue will begin playing rather than continuing playback of the originally muted audio item.
+* Display Cards for Kindle don't render.  
 * `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
 * Music playback doesn't immediately stop when a user barges-in on iHeartRadio.
 

@@ -16,7 +16,10 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_THREADMONIKER_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_THREADMONIKER_H_
 
+#include <iomanip>
 #include <string>
+#include <sstream>
+#include <thread>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -40,18 +43,24 @@ public:
      *
      * @return The moniker for @c std::this_thread.
      */
-    static inline const std::string& getThisThreadMoniker();
+    static inline const std::string getThisThreadMoniker();
 
 private:
     /// The current thread's moniker.
     std::string m_moniker;
-
-    /// Per-thread static instance so that @c m_threadMoniker.m_moniker is @c std::this_thread's moniker.
-    static thread_local ThreadMoniker m_threadMoniker;
 };
 
-const std::string& ThreadMoniker::getThisThreadMoniker() {
+const std::string ThreadMoniker::getThisThreadMoniker() {
+#ifdef _WIN32
+    std::ostringstream winThreadID;
+    winThreadID << std::setw(3) << std::hex << std::right << std::this_thread::get_id();
+    return winThreadID.str();
+#else
+    /// Per-thread static instance so that @c m_threadMoniker.m_moniker is @c std::this_thread's moniker.
+    static thread_local ThreadMoniker m_threadMoniker;
+
     return m_threadMoniker.m_moniker;
+#endif
 }
 
 }  // namespace logger

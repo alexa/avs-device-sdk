@@ -63,6 +63,20 @@ public:
      * @param request The requested message.
      */
     virtual void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) = 0;
+
+    /**
+     * Deleted copy constructor
+     *
+     * @param rhs The 'right hand side' to not copy.
+     */
+    TransportInterface(const TransportInterface& rhs) = delete;
+
+    /**
+     * Deleted assignment operator
+     *
+     * @param rhs The 'right hand side' to not copy.
+     */
+    TransportInterface& operator=(const TransportInterface& rhs) = delete;
 };
 
 inline TransportInterface::TransportInterface() : RequiresShutdown{"TransportInterface"} {

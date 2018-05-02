@@ -119,7 +119,9 @@ KittAiKeyWordDetector::KittAiKeyWordDetector(
     std::chrono::milliseconds msToPushPerIteration) :
         AbstractKeywordDetector(keyWordObservers, keyWordDetectorStateObservers),
         m_stream{stream},
-        m_maxSamplesPerPush{(audioFormat.sampleRateHz / HERTZ_PER_KILOHERTZ) * msToPushPerIteration.count()} {
+        m_maxSamplesPerPush{
+          (audioFormat.sampleRateHz / HERTZ_PER_KILOHERTZ) *
+          static_cast<unsigned int>(msToPushPerIteration.count())} {
     std::stringstream sensitivities;
     std::stringstream modelPaths;
     for (unsigned int i = 0; i < kittAiConfigurations.size(); ++i) {
@@ -131,10 +133,17 @@ KittAiKeyWordDetector::KittAiKeyWordDetector(
             sensitivities << KITT_DELIMITER;
         }
     }
-    m_kittAiEngine = avsCommon::utils::memory::make_unique<snowboy::SnowboyDetect>(resourceFilePath, modelPaths.str());
-    m_kittAiEngine->SetSensitivity(sensitivities.str());
-    m_kittAiEngine->SetAudioGain(audioGain);
-    m_kittAiEngine->ApplyFrontend(applyFrontEnd);
+    printf("resourceFilePath: %s\n",resourceFilePath.c_str());
+    printf(" modelPaths: %s\n", modelPaths.str().c_str());
+    printf(" sensitivities: %s\n", sensitivities.str().c_str());
+    printf(" audioGain: %f\n", audioGain);
+    printf(" applyFrontEnd: %d\n", applyFrontEnd);
+    m_kittAiEngine = avsCommon::utils::memory::make_unique<Snowboy>(
+        resourceFilePath.c_str(), modelPaths.str().c_str(), sensitivities.str().c_str(),
+        audioGain, applyFrontEnd);
+    // m_kittAiEngine->SetSensitivity(sensitivities.str());
+    // m_kittAiEngine->SetAudioGain(audioGain);
+    // m_kittAiEngine->ApplyFrontend(applyFrontEnd);
 }
 
 bool KittAiKeyWordDetector::init(avsCommon::utils::AudioFormat audioFormat) {

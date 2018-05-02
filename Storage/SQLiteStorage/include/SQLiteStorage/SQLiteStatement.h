@@ -101,13 +101,6 @@ public:
     bool bindStringParameter(int index, const std::string& value);
 
     /**
-     * Returns the managed statement handle.
-     *
-     * @return The managed statement handle.
-     */
-    sqlite3_stmt* getHandle();
-
-    /**
      * Returns the SQLite result for the last step operation performed.
      *
      * @return The SQLite result for the last step operation performed.

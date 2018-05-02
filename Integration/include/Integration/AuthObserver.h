@@ -31,7 +31,7 @@ public:
     void onAuthStateChange(
         const avsCommon::sdkInterfaces::AuthObserverInterface::State,
         const avsCommon::sdkInterfaces::AuthObserverInterface::Error =
-            avsCommon::sdkInterfaces::AuthObserverInterface::Error::NO_ERROR) override;
+            avsCommon::sdkInterfaces::AuthObserverInterface::Error::SUCCESS) override;
     AuthObserverInterface::State getAuthState() const;
     bool waitFor(
         const avsCommon::sdkInterfaces::AuthObserverInterface::State,

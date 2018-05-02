@@ -15,6 +15,7 @@
 
 #include <sstream>
 
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/AVS/FocusState.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
@@ -22,14 +23,24 @@
 #include <AVSCommon/Utils/Memory/Memory.h>
 #include <AVSCommon/Utils/Metrics.h>
 #include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
+#include <AVSCommon/AVS/Attachment/AttachmentUtils.h>
 
 #include "AIP/AudioInputProcessor.h"
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace aip {
+using namespace avsCommon::avs;
 using namespace avsCommon::utils;
 using namespace avsCommon::utils::logger;
+
+/// SpeechRecognizer capability constants
+/// SpeechRecognizer interface type
+static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
+/// SpeechRecognizer interface name
+static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_NAME = "SpeechRecognizer";
+/// SpeechRecognizer interface version
+static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_VERSION = "2.0";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AudioInputProcessor");
@@ -43,9 +54,6 @@ static const std::string TAG("AudioInputProcessor");
 
 /// The name of the @c FocusManager channel used by @c AudioInputProvider.
 static const std::string CHANNEL_NAME = avsCommon::sdkInterfaces::FocusManagerInterface::DIALOG_CHANNEL_NAME;
-
-/// The activityId string used with @c FocusManager by @c AudioInputProvider.
-static const std::string ACTIVITY_ID = "SpeechRecognizer.Recognize";
 
 /// The namespace for this capability agent.
 static const std::string NAMESPACE = "SpeechRecognizer";
@@ -61,6 +69,19 @@ static const avsCommon::avs::NamespaceAndName RECOGNIZER_STATE{NAMESPACE, "Recog
 
 /// The field identifying the initiator.
 static const std::string INITIATOR_KEY = "initiator";
+
+/// The field name for the user voice attachment.
+static const std::string AUDIO_ATTACHMENT_FIELD_NAME = "audio";
+
+/// The field name for the wake word engine metadata.
+static const std::string KWD_METADATA_FIELD_NAME = "wakewordEngineMetadata";
+
+/**
+ * Creates the SpeechRecognizer capability configuration.
+ *
+ * @return The SpeechRecognizer capability configuration.
+ */
+static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSpeechRecognizerCapabilityConfiguration();
 
 std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
@@ -140,7 +161,8 @@ std::future<bool> AudioInputProcessor::recognize(
     avsCommon::avs::AudioInputStream::Index begin,
     avsCommon::avs::AudioInputStream::Index keywordEnd,
     std::string keyword,
-    const ESPData& espData) {
+    const ESPData& espData,
+    std::shared_ptr<const std::vector<char>> KWDMetadata) {
     ACSDK_METRIC_IDS(TAG, "Recognize", "", "", Metrics::Location::AIP_RECEIVE);
 
     // If no begin index was provided, grab the current index ASAP so that we can start streaming from the time this
@@ -162,8 +184,8 @@ std::future<bool> AudioInputProcessor::recognize(
         m_executor.submit([this, espData]() { executePrepareEspPayload(espData); });
     }
 
-    return m_executor.submit([this, audioProvider, initiator, begin, keywordEnd, keyword]() {
-        return executeRecognize(audioProvider, initiator, begin, keywordEnd, keyword);
+    return m_executor.submit([this, audioProvider, initiator, begin, keywordEnd, keyword, KWDMetadata]() {
+        return executeRecognize(audioProvider, initiator, begin, keywordEnd, keyword, KWDMetadata);
     });
 }
 
@@ -258,11 +280,22 @@ AudioInputProcessor::AudioInputProcessor(
         m_userActivityNotifier{userActivityNotifier},
         m_defaultAudioProvider{defaultAudioProvider},
         m_lastAudioProvider{AudioProvider::null()},
+        m_KWDMetadataReader{nullptr},
         m_state{ObserverInterface::State::IDLE},
         m_focusState{avsCommon::avs::FocusState::NONE},
         m_preparingToSend{false},
         m_initialDialogUXStateReceived{false},
         m_precedingExpectSpeechInitiator{nullptr} {
+    m_capabilityConfigurations.insert(getSpeechRecognizerCapabilityConfiguration());
+}
+
+std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSpeechRecognizerCapabilityConfiguration() {
+    std::unordered_map<std::string, std::string> configMap;
+    configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, SPEECHRECOGNIZER_CAPABILITY_INTERFACE_TYPE});
+    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, SPEECHRECOGNIZER_CAPABILITY_INTERFACE_NAME});
+    configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, SPEECHRECOGNIZER_CAPABILITY_INTERFACE_VERSION});
+
+    return std::make_shared<avsCommon::avs::CapabilityConfiguration>(configMap);
 }
 
 void AudioInputProcessor::doShutdown() {
@@ -339,7 +372,8 @@ bool AudioInputProcessor::executeRecognize(
     Initiator initiator,
     avsCommon::avs::AudioInputStream::Index begin,
     avsCommon::avs::AudioInputStream::Index end,
-    const std::string& keyword) {
+    const std::string& keyword,
+    std::shared_ptr<const std::vector<char>> KWDMetadata) {
     // Make sure we have a keyword if this is a wakeword initiator.
     if (Initiator::WAKEWORD == initiator && keyword.empty()) {
         ACSDK_ERROR(LX("executeRecognizeFailed").d("reason", "emptyKeywordWithWakewordInitiator"));
@@ -380,37 +414,62 @@ bool AudioInputProcessor::executeRecognize(
                R"(})";
     // clang-format on
 
-    return executeRecognize(provider, initiatorJson.str(), begin, keyword);
+    return executeRecognize(provider, initiatorJson.str(), begin, keyword, KWDMetadata);
 }
 
 bool AudioInputProcessor::executeRecognize(
     AudioProvider provider,
     const std::string& initiatorJson,
     avsCommon::avs::AudioInputStream::Index begin,
-    const std::string& keyword) {
+    const std::string& keyword,
+    std::shared_ptr<const std::vector<char>> KWDMetadata) {
     if (!provider.stream) {
         ACSDK_ERROR(LX("executeRecognizeFailed").d("reason", "nullAudioInputStream"));
         return false;
     }
 
-    if (provider.format.encoding != avsCommon::utils::AudioFormat::Encoding::LPCM) {
-        ACSDK_ERROR(
-            LX("executeRecognizeFailed").d("reason", "unsupportedEncoding").d("encoding", provider.format.encoding));
-        return false;
-    } else if (provider.format.endianness != avsCommon::utils::AudioFormat::Endianness::LITTLE) {
+    std::unordered_map<int, std::string> mapSampleRatesAVSEncoding = {{32000, "OPUS"}};
+    std::string avsEncodingFormat;
+    std::unordered_map<int, std::string>::iterator itSampleRateAVSEncoding;
+
+    switch (provider.format.encoding) {
+        case avsCommon::utils::AudioFormat::Encoding::LPCM:
+            if (provider.format.sampleRateHz != 16000) {
+                ACSDK_ERROR(LX("executeRecognizeFailed")
+                                .d("reason", "unsupportedSampleRateForPCM")
+                                .d("sampleRate", provider.format.sampleRateHz));
+                return false;
+            } else if (provider.format.sampleSizeInBits != 16) {
+                ACSDK_ERROR(LX("executeRecognizeFailed")
+                                .d("reason", "unsupportedSampleSize")
+                                .d("sampleSize", provider.format.sampleSizeInBits));
+                return false;
+            }
+
+            avsEncodingFormat = "AUDIO_L16_RATE_16000_CHANNELS_1";
+            break;
+        case avsCommon::utils::AudioFormat::Encoding::OPUS:
+            itSampleRateAVSEncoding = mapSampleRatesAVSEncoding.find(provider.format.sampleRateHz);
+            if (itSampleRateAVSEncoding == mapSampleRatesAVSEncoding.end()) {
+                ACSDK_ERROR(LX("executeRecognizeFailed")
+                                .d("reason", "unsupportedSampleRateForOPUS")
+                                .d("sampleRate", provider.format.sampleRateHz));
+                return false;
+            }
+
+            avsEncodingFormat = itSampleRateAVSEncoding->second;
+            break;
+        default:
+            ACSDK_ERROR(LX("executeRecognizeFailed")
+                            .d("reason", "unsupportedEncoding")
+                            .d("encoding", provider.format.encoding));
+            return false;
+    }
+
+    if (provider.format.endianness != avsCommon::utils::AudioFormat::Endianness::LITTLE) {
         ACSDK_ERROR(LX("executeRecognizeFailed")
                         .d("reason", "unsupportedEndianness")
                         .d("endianness", provider.format.endianness));
-        return false;
-    } else if (provider.format.sampleSizeInBits != 16) {
-        ACSDK_ERROR(LX("executeRecognizeFailed")
-                        .d("reason", "unsupportedSampleSize")
-                        .d("sampleSize", provider.format.sampleSizeInBits));
-        return false;
-    } else if (provider.format.sampleRateHz != 16000) {
-        ACSDK_ERROR(LX("executeRecognizeFailed")
-                        .d("reason", "unsupportedSampleRate")
-                        .d("sampleRate", provider.format.sampleRateHz));
         return false;
     } else if (provider.format.numChannels != 1) {
         ACSDK_ERROR(LX("executeRecognizeFailed")
@@ -452,7 +511,7 @@ bool AudioInputProcessor::executeRecognize(
     // clang-format off
     payload << R"({)"
                    R"("profile":")" << provider.profile << R"(",)"
-                   R"("format":"AUDIO_L16_RATE_16000_CHANNELS_1")";
+                   R"("format":")" << avsEncodingFormat << R"(")";
 
     // The initiator (or lack thereof) from a previous ExpectSpeech has precedence.
     if (m_precedingExpectSpeechInitiator) {
@@ -480,6 +539,13 @@ bool AudioInputProcessor::executeRecognize(
     if (!m_reader) {
         ACSDK_ERROR(LX("executeRecognizeFailed").d("reason", "Failed to create attachment reader"));
         return false;
+    }
+
+    if (KWDMetadata) {
+        m_KWDMetadataReader = avsCommon::avs::attachment::AttachmentUtils::createAttachmentReader(*KWDMetadata);
+        if (!m_KWDMetadataReader) {
+            ACSDK_ERROR(LX("sendingKWDMetadataFailed").d("reason", "Failed to create attachment reader"));
+        }
     }
 
     // Code below this point changes the state of AIP.  Formally update state now, and don't error out without calling
@@ -538,7 +604,7 @@ void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContex
 
     // Start acquiring the channel right away; we'll service the callback after assembling our Recognize event.
     if (m_focusState != avsCommon::avs::FocusState::FOREGROUND) {
-        if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), ACTIVITY_ID)) {
+        if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), NAMESPACE)) {
             ACSDK_ERROR(LX("executeOnContextAvailableFailed").d("reason", "Unable to acquire channel"));
             executeResetState();
             return;
@@ -556,7 +622,16 @@ void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContex
         m_espRequest->addObserver(shared_from_this());
     }
     auto msgIdAndJsonEvent = buildJsonEventString("Recognize", dialogRequestId, m_recognizePayload, jsonContext);
-    m_recognizeRequest = std::make_shared<avsCommon::avs::MessageRequest>(msgIdAndJsonEvent.second, m_reader);
+    m_recognizeRequest = std::make_shared<avsCommon::avs::MessageRequest>(msgIdAndJsonEvent.second);
+
+    if (m_KWDMetadataReader) {
+        m_recognizeRequest->addAttachmentReader(KWD_METADATA_FIELD_NAME, m_KWDMetadataReader);
+    }
+    m_recognizeRequest->addAttachmentReader(AUDIO_ATTACHMENT_FIELD_NAME, m_reader);
+
+    // Release ownership of the metadata so it can be released once ACL will finish sending the message.
+    m_KWDMetadataReader.reset();
+
     m_recognizeRequest->addObserver(shared_from_this());
 
     // If we already have focus, there won't be a callback to send the message, so send it now.
@@ -652,6 +727,7 @@ void AudioInputProcessor::executeResetState() {
         m_reader->close();
     }
     m_reader.reset();
+    m_KWDMetadataReader.reset();
     m_recognizeRequest.reset();
     m_espRequest.reset();
     m_preparingToSend = false;
@@ -726,7 +802,7 @@ bool AudioInputProcessor::executeExpectSpeechTimedOut() {
     }
     m_precedingExpectSpeechInitiator.reset();
     auto msgIdAndJsonEvent = buildJsonEventString("ExpectSpeechTimedOut");
-    auto request = std::make_shared<avsCommon::avs::MessageRequest>(msgIdAndJsonEvent.second, m_reader);
+    auto request = std::make_shared<avsCommon::avs::MessageRequest>(msgIdAndJsonEvent.second);
     request->addObserver(shared_from_this());
     m_messageSender->sendMessage(request);
     setState(ObserverInterface::State::IDLE);
@@ -821,6 +897,11 @@ void AudioInputProcessor::onSendCompleted(avsCommon::sdkInterfaces::MessageReque
     }
     ACSDK_DEBUG(LX("resetState").d("dueToStatus", status));
     resetState();
+}
+
+std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> AudioInputProcessor::
+    getCapabilityConfigurations() {
+    return m_capabilityConfigurations;
 }
 
 }  // namespace aip

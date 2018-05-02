@@ -25,6 +25,8 @@ enum HTTPResponseCode {
     SUCCESS_NO_CONTENT = 204,
     /// HTTP code for invalid request by user.
     BAD_REQUEST = 400,
+    /// HTTP code for forbidden request by user.
+    FORBIDDEN = 403,
     /// HTTP code for internal error by server which didn't fulfill the request.
     SERVER_INTERNAL_ERROR = 500
 };

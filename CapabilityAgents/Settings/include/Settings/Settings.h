@@ -16,14 +16,19 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SETTINGS_INCLUDE_SETTINGS_SETTINGS_H_
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SETTINGS_INCLUDE_SETTINGS_SETTINGS_H_
 
+#include <memory>
 #include <unordered_set>
 #include <unordered_map>
 #include <vector>
 
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/GlobalSettingsObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SingleSettingObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include <RegistrationManager/CustomerDataHandler.h>
+#include <RegistrationManager/CustomerDataManager.h>
 #include "Settings/SettingsStorageInterface.h"
 
 namespace alexaClientSDK {
@@ -36,19 +41,22 @@ namespace settings {
  * This class writes the Setting change to database and notifies the observers of the setting.
  * @see https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/settings
  */
-class Settings {
+class Settings
+        : public registrationManager::CustomerDataHandler
+        , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface {
 public:
     /**
      * Creates a new @c Settings instance.
      * @param settingsStorage An interface to store, load, modify and delete Settings.
      * @param globalSettingsObserver A set of SettingsGlobalObserver which are notified when all the settings are
      * changed.
+     * @param dataManager A dataManager object that will track the CustomerDataHandler.
      * @return An instance of Settings if construction is successful or nullptr if construction fails.
      */
     static std::shared_ptr<Settings> create(
         std::shared_ptr<SettingsStorageInterface> settingsStorage,
-        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::GlobalSettingsObserverInterface>>
-            globalSettingsObserver);
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::GlobalSettingsObserverInterface>> observers,
+        std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
 
     /**
      * Add an observer for a single setting mapped to the setting key.
@@ -98,6 +106,16 @@ public:
      */
     void sendDefaultSettings();
 
+    /**
+     * Clears the settings storage  and attributes
+     */
+    void clearData() override;
+
+    /// @name CapabilityConfigurationInterface Functions
+    /// @{
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
+    /// @}
+
 private:
     /**
      * The structure to hold all the data of a single setting.
@@ -118,11 +136,16 @@ private:
 
     /**
      * Constructor
+     *
+     * @param settingsStorage An interface to store, load, modify and delete Settings.
+     * @param globalSettingsObserver A set of SettingsGlobalObserver which are notified when all the settings are
+     * changed.
+     * @param dataManager A dataManager object that will track the CustomerDataHandler.
      */
     Settings(
         std::shared_ptr<SettingsStorageInterface> settingsStorage,
-        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::GlobalSettingsObserverInterface>>
-            globalSettingsObserver);
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::GlobalSettingsObserverInterface>> observers,
+        std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
 
     /**
      * Function which implements the setting change. The function writes to the database and notifies the
@@ -141,6 +164,10 @@ private:
         m_globalSettingsObserver;
     /// The map of <key, SettingElements> pairs of the settings.
     std::unordered_map<std::string, SettingElements> m_mapOfSettingsAttributes;
+
+    /// Set of capability configurations that will get published using DCF
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
+
     /// Executor that queues up the calls when a setting is changed.
     avsCommon::utils::threading::Executor m_executor;
 

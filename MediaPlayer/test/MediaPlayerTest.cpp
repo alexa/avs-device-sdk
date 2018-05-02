@@ -97,7 +97,9 @@ public:
     MockContentFetcher(const std::string& url) : m_url{url} {
     }
 
-    std::unique_ptr<avsCommon::utils::HTTPContent> getContent(FetchOptions fetchOption) override {
+    std::unique_ptr<avsCommon::utils::HTTPContent> getContent(
+        FetchOptions fetchOption,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer) override {
         if (fetchOption == FetchOptions::CONTENT_TYPE) {
             auto urlAndContentType = urlsToContentTypes.find(m_url);
             if (urlAndContentType == urlsToContentTypes.end()) {
@@ -123,7 +125,7 @@ public:
             std::promise<std::string> contentTypePromise;
             auto contentTypeFuture = contentTypePromise.get_future();
             contentTypePromise.set_value("");
-            auto attachment = writeStringIntoAttachment(urlAndContent->second);
+            auto attachment = writeStringIntoAttachment(urlAndContent->second, writer);
             if (!attachment) {
                 return nullptr;
             }
@@ -134,16 +136,17 @@ public:
 
 private:
     std::shared_ptr<avsCommon::avs::attachment::InProcessAttachment> writeStringIntoAttachment(
-        const std::string& string) {
+        const std::string& string,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer) {
         static int id = 0;
         std::shared_ptr<avsCommon::avs::attachment::InProcessAttachment> stream =
             std::make_shared<avsCommon::avs::attachment::InProcessAttachment>(std::to_string(id++));
         if (!stream) {
             return nullptr;
         }
-        auto writer = stream->createWriter();
+
         if (!writer) {
-            return nullptr;
+            writer = stream->createWriter();
         }
         avsCommon::avs::attachment::AttachmentWriter::WriteStatus writeStatus;
         writer->write(string.data(), string.size(), &writeStatus);
@@ -283,7 +286,7 @@ size_t MockAttachmentReader::receiveBytes(char* buf, std::size_t size) {
     while (pos < end) {
         if (!m_stream || m_stream->eof()) {
             if (m_iterationsLeft-- > 0) {
-                m_stream = make_unique<std::ifstream>(inputsDirPath + MP3_FILE_PATH);
+                m_stream = make_unique<std::ifstream>(inputsDirPath + MP3_FILE_PATH, std::ifstream::binary);
                 EXPECT_TRUE(m_stream);
                 EXPECT_TRUE(m_stream->good());
             } else {
@@ -633,7 +636,8 @@ void MediaPlayerTest::setAttachmentReaderSource(
 }
 
 void MediaPlayerTest::setIStreamSource(MediaPlayer::SourceId* id, bool repeat) {
-    auto returnId = m_mediaPlayer->setSource(make_unique<std::ifstream>(inputsDirPath + MP3_FILE_PATH), repeat);
+    auto returnId = m_mediaPlayer->setSource(
+        make_unique<std::ifstream>(inputsDirPath + MP3_FILE_PATH, std::ifstream::binary), repeat);
     ASSERT_NE(ERROR_SOURCE_ID, returnId);
     if (id) {
         *id = returnId;
@@ -1390,7 +1394,8 @@ int main(int argc, char** argv) {
                  alexaClientSDK::mediaPlayer::test::MP3_FILE_PATH,
              "audio/mpeg"});
         std::ifstream fileStream(
-            alexaClientSDK::mediaPlayer::test::inputsDirPath + alexaClientSDK::mediaPlayer::test::MP3_FILE_PATH);
+            alexaClientSDK::mediaPlayer::test::inputsDirPath + alexaClientSDK::mediaPlayer::test::MP3_FILE_PATH,
+            std::ifstream::binary);
         std::stringstream fileData;
         fileData << fileStream.rdbuf();
         alexaClientSDK::mediaPlayer::test::urlsToContent.insert({alexaClientSDK::mediaPlayer::test::FILE_PREFIX +
@@ -1412,6 +1417,7 @@ int main(int argc, char** argv) {
         alexaClientSDK::mediaPlayer::test::urlsToContent.insert(
             {alexaClientSDK::mediaPlayer::test::TEST_M3U_PLAYLIST_URL,
              alexaClientSDK::mediaPlayer::test::TEST_M3U_PLAYLIST_CONTENT});
+
         return RUN_ALL_TESTS();
     }
 }

@@ -63,11 +63,10 @@ public:
      *
      * @note This function must be called before other use of an object this class.
      *
-     * @param storageFilePath The file we will expect to use for our database.
      * @param observer An observer which we will notify of all alert state changes.
      * @return Whether initialization was successful.
      */
-    bool initialize(const std::string& storageFilePath, std::shared_ptr<AlertObserverInterface> observer);
+    bool initialize(std::shared_ptr<AlertObserverInterface> observer);
 
     /**
      * Schedule an alert for rendering.
@@ -131,8 +130,10 @@ public:
 
     /**
      * Clear all data being managed.  This includes database storage.
+     *
+     * @param reason What triggered the data to be cleared.
      */
-    void clearData();
+    void clearData(Alert::StopReason reason = Alert::StopReason::SHUTDOWN);
 
     /**
      * Handle shutdown.
@@ -214,6 +215,9 @@ private:
      * @param The reason the alert is being stopped.
      */
     void deactivateActiveAlertHelperLocked(Alert::StopReason reason);
+
+    /// This is used to safely access the time utilities.
+    avsCommon::utils::timing::TimeUtils m_timeUtils;
 
     /**
      * Our observer.  Once initialized, this is only accessed within executor functions, so does not need mutex

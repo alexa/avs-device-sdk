@@ -18,7 +18,8 @@
 
 #include "CertifiedSender/MessageStorageInterface.h"
 
-#include <sqlite3.h>
+#include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
+#include <SQLiteStorage/SQLiteDatabase.h>
 
 namespace alexaClientSDK {
 namespace certifiedSender {
@@ -31,17 +32,26 @@ namespace certifiedSender {
 class SQLiteMessageStorage : public MessageStorageInterface {
 public:
     /**
-     * Constructor.
+     * Factory method for creating a storage object for Messages based on an SQLite database.
+     *
+     * @param configurationRoot The global config object.
+     * @return Pointer to the SQLiteMessagetStorge object, nullptr if there's an error creating it.
      */
-    SQLiteMessageStorage();
+    static std::unique_ptr<SQLiteMessageStorage> create(
+        const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
+
+    /**
+     * Constructor.
+     *
+     * @param dbFilePath The location of the SQLite database file.
+     */
+    SQLiteMessageStorage(const std::string& databaseFilePath);
 
     ~SQLiteMessageStorage();
 
-    bool createDatabase(const std::string& filePath) override;
+    bool createDatabase() override;
 
-    bool open(const std::string& filePath) override;
-
-    bool isOpen() override;
+    bool open() override;
 
     void close() override;
 
@@ -53,15 +63,9 @@ public:
 
     bool clearDatabase() override;
 
-protected:
-    /**
-     * A non-virtual function that may be called to clean up resources managed by this class.
-     */
-    void doClose();
-
 private:
-    /// The sqlite database handle.
-    sqlite3* m_dbHandle;
+    /// The underlying database class.
+    alexaClientSDK::storage::sqliteStorage::SQLiteDatabase m_database;
 };
 
 }  // namespace certifiedSender

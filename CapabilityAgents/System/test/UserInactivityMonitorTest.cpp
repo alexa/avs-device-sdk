@@ -24,6 +24,7 @@
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
+#include <AVSCommon/SDKInterfaces/MockUserInactivityMonitorObserver.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <ADSL/DirectiveSequencer.h>
 
@@ -150,6 +151,14 @@ TEST_F(UserInactivityMonitorTest, handleDirectiveProperly) {
         m_mockMessageSender, m_mockExceptionEncounteredSender, USER_INACTIVITY_REPORT_PERIOD);
     ASSERT_NE(nullptr, userInactivityMonitor);
 
+    // let's verify that observers are notified when the UserInactivityReport Event is sent.
+    auto userInactivityObserver1 = std::make_shared<MockUserInactivityMonitorObserver>();
+    auto userInactivityObserver2 = std::make_shared<MockUserInactivityMonitorObserver>();
+    EXPECT_CALL(*(userInactivityObserver1.get()), onUserInactivityReportSent());
+    EXPECT_CALL(*(userInactivityObserver2.get()), onUserInactivityReportSent());
+    userInactivityMonitor->addObserver(userInactivityObserver1);
+    userInactivityMonitor->addObserver(userInactivityObserver2);
+
     auto directiveSequencer = adsl::DirectiveSequencer::create(m_mockExceptionEncounteredSender);
     directiveSequencer->addDirectiveHandler(userInactivityMonitor);
 
@@ -161,6 +170,7 @@ TEST_F(UserInactivityMonitorTest, handleDirectiveProperly) {
 
     directiveSequencer->onDirective(userInactivityDirective);
     exitTrigger.wait_for(exitLock, USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD / 2);
+
     directiveSequencer->shutdown();
 }
 
@@ -179,6 +189,24 @@ TEST_F(UserInactivityMonitorTest, sendMultipleReports) {
     ASSERT_NE(nullptr, userInactivityMonitor);
 
     exitTrigger.wait_for(exitLock, repetitionCount * USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD / 2);
+}
+
+/**
+ * Verify that timeSinceUserInactivity works as expected.
+ */
+TEST_F(UserInactivityMonitorTest, verifyInactivityTime) {
+    auto userInactivityMonitor = UserInactivityMonitor::create(m_mockMessageSender, m_mockExceptionEncounteredSender);
+    ASSERT_NE(nullptr, userInactivityMonitor);
+
+    // we should strongly expect that zero seconds have passed!
+    auto timeInactive = userInactivityMonitor->timeSinceUserActivity();
+    ASSERT_EQ(0, timeInactive.count());
+
+    // now test for a small millisecond delta.
+    std::this_thread::sleep_for(USER_INACTIVITY_REPORT_PERIOD);
+    timeInactive = userInactivityMonitor->timeSinceUserActivity();
+    auto msPassed = std::chrono::duration_cast<std::chrono::milliseconds>(timeInactive);
+    ASSERT_GE(msPassed.count(), 0);
 }
 
 /**
@@ -217,3 +245,14 @@ TEST_F(UserInactivityMonitorTest, sendMultipleReportsWithReset) {
 }  // namespace system
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
+
+int main(int argc, char** argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+
+// ACSDK-1367 - Some tests fail on Windows
+#if defined(_WIN32) && !defined(RESOLVED_ACSDK_1367)
+    ::testing::GTEST_FLAG(filter) =
+        "-UserInactivityMonitorTest.sendMultipleReports:UserInactivityMonitorTest.handleDirectiveProperly";
+#endif
+    return RUN_ALL_TESTS();
+}

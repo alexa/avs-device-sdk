@@ -13,9 +13,13 @@
  * permissions and limitations under the License.
  */
 
+#include <chrono>
+#include <string>
+
 #include <gtest/gtest.h>
 #include <rapidjson/document.h>
 
+#include <AVSCommon/AVS/AbstractAVSConnectionManager.h>
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
@@ -89,11 +93,22 @@ public:
 /**
  * Class with which to mock a connection ot AVS.
  */
-class MockConnection : public AbstractConnection {
+class MockConnection : public AbstractAVSConnectionManager {
 public:
     MockConnection();
 
-    bool isConnected() const override;
+    MOCK_METHOD0(enable, void());
+    MOCK_METHOD0(disable, void());
+    MOCK_METHOD0(isEnabled, bool());
+    MOCK_METHOD0(reconnect, void());
+    MOCK_METHOD1(
+        addMessageObserver,
+        void(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer));
+    MOCK_METHOD1(
+        removeMessageObserver,
+        void(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer));
+
+    bool isConnected() const;
 
     /**
      * Update the connection status.
@@ -106,7 +121,7 @@ public:
         ConnectionStatusObserverInterface::ChangedReason reason);
 };
 
-MockConnection::MockConnection() : AbstractConnection{} {
+MockConnection::MockConnection() : AbstractAVSConnectionManager{} {
 }
 
 bool MockConnection::isConnected() const {
@@ -116,7 +131,7 @@ bool MockConnection::isConnected() const {
 void MockConnection::updateConnectionStatus(
     ConnectionStatusObserverInterface::Status status,
     ConnectionStatusObserverInterface::ChangedReason reason) {
-    AbstractConnection::updateConnectionStatus(status, reason);
+    AbstractAVSConnectionManager::updateConnectionStatus(status, reason);
 }
 
 /// Test harness for @c SoftwareInfoSender class.

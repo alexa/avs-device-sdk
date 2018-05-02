@@ -18,6 +18,8 @@
 
 #include <string>
 
+#include "AVSCommon/Utils/Timing/TimeUtils.h"
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
@@ -59,6 +61,9 @@ private:
     std::string m_time_ISO_8601;
     /// The scheduled time for the alert in Unix epoch format.
     int64_t m_time_Unix;
+
+    /// Object used to safely access time utilities.
+    TimeUtils m_timeUtils;
 };
 
 }  // namespace timing

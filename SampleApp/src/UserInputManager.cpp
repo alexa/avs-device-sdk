@@ -16,6 +16,7 @@
 #include <cctype>
 
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/String/StringUtils.h>
 #include "SampleApp/UserInputManager.h"
 #include "SampleApp/ConsolePrinter.h"
@@ -40,6 +41,10 @@ static const char SETTINGS = 'c';
 static const char SPEAKER_CONTROL = 'p';
 static const char FIRMWARE_VERSION = 'f';
 static const char ESP_CONTROL = 'e';
+static const char RESET = 'k';
+#ifdef ENABLE_COMMS
+static const char COMMS_CONTROL = 'd';
+#endif
 
 enum class SettingsValues : char { LOCALE = '1' };
 
@@ -53,9 +58,19 @@ static const int8_t INCREASE_VOLUME = 10;
 
 static const int8_t DECREASE_VOLUME = -10;
 
+/// String to identify log entries originating from this file.
+static const std::string TAG("UserInputManager");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
 std::unique_ptr<UserInputManager> UserInputManager::create(std::shared_ptr<InteractionManager> interactionManager) {
     if (!interactionManager) {
-        ConsolePrinter::simplePrint("Invalid InteractionManager passed to UserInputManager");
+        ACSDK_CRITICAL(LX("Invalid InteractionManager passed to UserInputManager"));
         return nullptr;
     }
     return std::unique_ptr<UserInputManager>(new UserInputManager(interactionManager));
@@ -75,7 +90,6 @@ void UserInputManager::run() {
         std::cin >> x;
         x = ::tolower(x);
         if (x == QUIT) {
-            m_interactionManager->shutdown();
             return;
         } else if (x == INFO) {
             m_interactionManager->help();
@@ -196,6 +210,56 @@ void UserInputManager::run() {
                         break;
                 }
             }
+        } else if (x == RESET) {
+            m_interactionManager->confirmResetDevice();
+            char y;
+            bool cancelReset = false;
+            do {
+                std::cin >> y;
+                // Check the Setting which has to be changed.
+                switch (y) {
+                    case 'Y':
+                    case 'y':
+                        // Login experience is not provided yet. Exit sample app for now.
+                        m_interactionManager->resetDevice();
+                        return;
+                    case 'N':
+                    case 'n':
+                        cancelReset = true;
+                        break;
+                    default:
+                        m_interactionManager->errorValue();
+                        m_interactionManager->confirmResetDevice();
+                        break;
+                }
+            } while (!cancelReset);
+#ifdef ENABLE_COMMS
+        } else if (x == COMMS_CONTROL) {
+            m_interactionManager->commsControl();
+            char commsChoice;
+            bool continueWhileLoop = true;
+            while (continueWhileLoop) {
+                std::cin >> commsChoice;
+                switch (commsChoice) {
+                    case 'a':
+                    case 'A':
+                        m_interactionManager->acceptCall();
+                        break;
+                    case 's':
+                    case 'S':
+                        m_interactionManager->stopCall();
+                        break;
+                    case 'q':
+                        m_interactionManager->help();
+                        continueWhileLoop = false;
+                        break;
+                    default:
+                        m_interactionManager->errorValue();
+                        continueWhileLoop = false;
+                        break;
+                }
+            }
+#endif
         } else {
             m_interactionManager->errorValue();
         }

@@ -18,9 +18,12 @@
 
 #include <memory>
 #include <unordered_set>
+#include <vector>
 
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/AVS/DirectiveHandlerConfiguration.h>
 #include <AVSCommon/AVS/DialogUXStateAggregator.h>
 #include <AVSCommon/SDKInterfaces/AudioInputProcessorObserverInterface.h>
@@ -58,6 +61,7 @@ namespace aip {
  */
 class AudioInputProcessor
         : public avsCommon::avs::CapabilityAgent
+        , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
         , public avsCommon::sdkInterfaces::MessageRequestObserverInterface
         , public avsCommon::utils::RequiresShutdown
@@ -150,6 +154,7 @@ public:
      *     accepted by AVS for keyword is "ALEXA".  See
      *     https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/context#recognizerstate
      * @param espData The ESP measurements to be sent in the ReportEchoSpatialPerceptionData event.
+     * @param KWDMetadata Wake word engine metadata.
      * @return A future which is @c true if the Recognize Event was started successfully, else @c false.
      */
     std::future<bool> recognize(
@@ -158,7 +163,8 @@ public:
         avsCommon::avs::AudioInputStream::Index begin = INVALID_INDEX,
         avsCommon::avs::AudioInputStream::Index keywordEnd = INVALID_INDEX,
         std::string keyword = "",
-        const ESPData& espData = ESPData::EMPTY_ESP_DATA);
+        const ESPData& espData = ESPData::EMPTY_ESP_DATA,
+        std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr);
 
     /**
      * This function asks the @c AudioInputProcessor to stop streaming audio and end an ongoing Recognize Event, which
@@ -215,6 +221,11 @@ public:
     /// @{
     void onDialogUXStateChanged(
         avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) override;
+    /// @}
+
+    /// @name CapabilityConfigurationInterface Functions
+    /// @{
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
     /// @}
 
 private:
@@ -309,6 +320,7 @@ private:
      *     empty string.  This parameter is ignored if initiator is not @c WAKEWORD.  The only value currently
      *     accepted by AVS for keyword is "ALEXA".  See
      *     https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/context#recognizerstate
+     * @param KWDMetadata Wake word engine metadata.
      * @return @c true if the Recognize Event was started successfully, else @c false.
      */
     bool executeRecognize(
@@ -316,7 +328,8 @@ private:
         Initiator initiator,
         avsCommon::avs::AudioInputStream::Index begin = INVALID_INDEX,
         avsCommon::avs::AudioInputStream::Index keywordEnd = INVALID_INDEX,
-        const std::string& keyword = "");
+        const std::string& keyword = "",
+        std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr);
 
     /**
      * This function builds and sends a @c Recognize event.  This version of the function expects a pre-built string
@@ -337,13 +350,15 @@ private:
      *     empty string.  This parameter is ignored if initiator is not @c WAKEWORD.  The only value currently
      *     accepted by AVS for keyword is "ALEXA".  See
      *     https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/context#recognizerstate
+     * @param KWDMetadata Wake word engine metadata.
      * @return @c true if the Recognize Event was started successfully, else @c false.
      */
     bool executeRecognize(
         AudioProvider provider,
         const std::string& initiatorJson,
         avsCommon::avs::AudioInputStream::Index begin = INVALID_INDEX,
-        const std::string& keyword = "");
+        const std::string& keyword = "",
+        std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr);
 
     /**
      * This function receives the full system context from @c ContextManager.  Context requests are initiated by
@@ -509,6 +524,13 @@ private:
     std::shared_ptr<avsCommon::avs::attachment::InProcessAttachmentReader> m_reader;
 
     /**
+     * The attachment reader used for the wake word engine metadata. It's is populated by a call to @c
+     * executeRecognize(), and later consumed by a call to @c executeOnContextAvailable() when the context arrives and
+     * the full @c MessageRequest can be assembled.  This reader is only relevant during the @c RECOGNIZING state.
+     */
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_KWDMetadataReader;
+
+    /**
      * The payload for a ReportEchoSpatialPerceptionData event.  This string is populated by a call to @c
      * executeRecognize(), and later consumed by a call to @c executeOnContextAvailable() when the context arrives and
      * the full @c MessageRequest can be assembled.  This string is only relevant during the @c RECOGNIZING state.
@@ -580,6 +602,9 @@ private:
      */
     std::unique_ptr<std::string> m_precedingExpectSpeechInitiator;
     /// @}
+
+    /// Set of capability configurations that will get published using DCF
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

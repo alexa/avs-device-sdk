@@ -71,6 +71,9 @@ enum class RequestType {
     /// rewind
     REWIND,
 
+    /// Enable Repeat of a track.
+    ENABLE_REPEAT_ONE,
+
     /// Enable Loop on.
     ENABLE_REPEAT,
 

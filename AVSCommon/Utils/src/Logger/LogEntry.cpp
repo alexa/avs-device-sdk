@@ -13,9 +13,10 @@
  * permissions and limitations under the License.
  */
 
+#include "AVSCommon/Utils/Logger/LogEntry.h"
+
 #include <cstring>
 #include <iomanip>
-#include "AVSCommon/Utils/Logger/LogEntry.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -53,22 +54,44 @@ static const std::string BOOL_TRUE = "true";
 static const std::string BOOL_FALSE = "false";
 
 LogEntry::LogEntry(const std::string& source, const char* event) : m_hasMetadata(false) {
-    m_stream << source << SECTION_SEPARATOR << event;
+    m_stream << source << SECTION_SEPARATOR;
+    if (event) {
+        m_stream << event;
+    }
 }
 
 LogEntry::LogEntry(const std::string& source, const std::string& event) : m_hasMetadata(false) {
     m_stream << source << SECTION_SEPARATOR << event;
 }
 
+LogEntry& LogEntry::d(const std::string& key, const char* value) {
+    return d(key.c_str(), value);
+}
+
+LogEntry& LogEntry::d(const char* key, char* value) {
+    return d(key, static_cast<const char*>(value));
+}
+
 LogEntry& LogEntry::d(const char* key, const char* value) {
     prefixKeyValuePair();
+    if (!key) {
+        key = "";
+    }
     m_stream << key << KEY_VALUE_SEPARATOR;
     appendEscapedString(value);
     return *this;
 }
 
+LogEntry& LogEntry::d(const std::string& key, const std::string& value) {
+    return d(key.c_str(), value.c_str());
+}
+
 LogEntry& LogEntry::d(const char* key, const std::string& value) {
     return d(key, value.c_str());
+}
+
+LogEntry& LogEntry::d(const std::string& key, bool value) {
+    return d(key.c_str(), value);
 }
 
 LogEntry& LogEntry::d(const char* key, bool value) {
@@ -77,7 +100,9 @@ LogEntry& LogEntry::d(const char* key, bool value) {
 
 LogEntry& LogEntry::m(const char* message) {
     prefixMessage();
-    m_stream << message;
+    if (message) {
+        m_stream << message;
+    }
     return *this;
 }
 
@@ -108,6 +133,9 @@ void LogEntry::prefixMessage() {
 }
 
 void LogEntry::appendEscapedString(const char* in) {
+    if (!in) {
+        return;
+    }
     auto pos = in;
     // A little insurance against an infinite loop.
     auto maxCount = strlen(in);

@@ -20,19 +20,19 @@ namespace sampleApp {
 
 KeywordObserver::KeywordObserver(
     std::shared_ptr<defaultClient::DefaultClient> client,
-    capabilityAgents::aip::AudioProvider audioProvider) :
+    capabilityAgents::aip::AudioProvider audioProvider,
+    std::shared_ptr<esp::ESPDataProviderInterface> espProvider) :
         m_client{client},
         m_audioProvider{audioProvider},
-        m_espSupport{false},
-        m_voiceEnergy{""},
-        m_ambientEnergy{""} {
+        m_espProvider{espProvider} {
 }
 
 void KeywordObserver::onKeyWordDetected(
     std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
     std::string keyword,
     avsCommon::avs::AudioInputStream::Index beginIndex,
-    avsCommon::avs::AudioInputStream::Index endIndex) {
+    avsCommon::avs::AudioInputStream::Index endIndex,
+    std::shared_ptr<const std::vector<char>> KWDMetadata) {
     if (endIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX &&
         beginIndex == avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX) {
         if (m_client) {
@@ -41,13 +41,13 @@ void KeywordObserver::onKeyWordDetected(
     } else if (
         endIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX &&
         beginIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX) {
+        auto espData = capabilityAgents::aip::ESPData::EMPTY_ESP_DATA;
+        if (m_espProvider) {
+            espData = m_espProvider->getESPData();
+        }
+
         if (m_client) {
-            if (m_espSupport) {
-                capabilityAgents::aip::ESPData espData{m_voiceEnergy, m_ambientEnergy};
-                m_client->notifyOfWakeWord(m_audioProvider, beginIndex, endIndex, keyword, espData);
-            } else {
-                m_client->notifyOfWakeWord(m_audioProvider, beginIndex, endIndex, keyword);
-            }
+            m_client->notifyOfWakeWord(m_audioProvider, beginIndex, endIndex, keyword, espData, KWDMetadata);
         }
     }
 }
