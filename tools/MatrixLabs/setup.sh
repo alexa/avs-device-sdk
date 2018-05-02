@@ -195,7 +195,7 @@ then
     echo "==============> CLONING SENSORY =============="
     echo
     
-    if [ ! -d "$SENSORY_PATH" 
+    if [ ! -d "$SENSORY_PATH" ]
     then
         cd $THIRD_PARTY_PATH
         git clone https://github.com/Sensory/alexa-rpi.git
