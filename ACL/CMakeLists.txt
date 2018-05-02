@@ -4,4 +4,4 @@ project(ACL LANGUAGES CXX)
 include(../build/BuildDefaults.cmake)
 
 add_subdirectory("src")
-add_subdirectory("test")
+# add_subdirectory("test")
