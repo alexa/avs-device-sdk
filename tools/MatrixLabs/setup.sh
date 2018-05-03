@@ -267,7 +267,7 @@ else
 fi
 
 cd $BUILD_PATH
-make SampleApp -j4
+make SampleApp -j2
 
 echo
 echo "==============> Saving Configuration File =============="
