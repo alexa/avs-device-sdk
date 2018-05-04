@@ -26,7 +26,7 @@
 #ifdef KWD
 #include <KWD/AbstractKeywordDetector.h>
 #endif
-#include <DCFDelegate/DCFDelegate.h>
+#include <CapabilitiesDelegate/CapabilitiesDelegate.h>
 #include <ExternalMediaPlayer/ExternalMediaPlayer.h>
 #include <MediaPlayer/MediaPlayer.h>
 
@@ -136,7 +136,7 @@ private:
     std::shared_ptr<InteractionManager> m_interactionManager;
 
     /// The @c UserInputManager which controls the client.
-    std::unique_ptr<UserInputManager> m_userInputManager;
+    std::shared_ptr<UserInputManager> m_userInputManager;
 
     /// The map of the adapters and their mediaPlayers.
     std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>
@@ -157,8 +157,11 @@ private:
     /// The @c MediaPlayer used by @c NotificationsCapabilityAgent.
     std::shared_ptr<mediaPlayer::MediaPlayer> m_notificationsMediaPlayer;
 
-    /// The @c DCFDelegate used by the client.
-    std::shared_ptr<alexaClientSDK::dcfDelegate::DCFDelegate> m_dcfDelegate;
+    /// The @c MediaPlayer used by @c Bluetooth.
+    std::shared_ptr<mediaPlayer::MediaPlayer> m_bluetoothMediaPlayer;
+
+    /// The @c CapabilitiesDelegate used by the client.
+    std::shared_ptr<alexaClientSDK::capabilitiesDelegate::CapabilitiesDelegate> m_capabilitiesDelegate;
 
     /// The @c MediaPlayer used by @c NotificationsCapabilityAgent.
     std::shared_ptr<mediaPlayer::MediaPlayer> m_ringtoneMediaPlayer;

@@ -65,6 +65,11 @@ public:
     void help();
 
     /**
+     * Should be called when a user requests help and the application failed to connect to AVS.
+     */
+    void limitedHelp();
+
+    /**
      * Toggles the microphone state if the Sample App was built with wakeword. When the microphone is turned off, the
      * app enters a privacy mode in which it stops recording audio data from the microphone, thus disabling Alexa waking
      * up due to wake word. Note however that hold-to-talk and tap-to-talk modes will still work by recording

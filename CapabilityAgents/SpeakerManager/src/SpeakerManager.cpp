@@ -189,7 +189,7 @@ void SpeakerManager::sendExceptionEncountered(
     std::shared_ptr<CapabilityAgent::DirectiveInfo> info,
     const std::string& message,
     avsCommon::avs::ExceptionErrorType type) {
-    m_executor.submit([this, info, &message, type] {
+    m_executor.submit([this, info, message, type] {
         m_exceptionEncounteredSender->sendExceptionEncountered(info->directive->getUnparsedDirective(), type, message);
         if (info && info->result) {
             info->result->setFailed(message);

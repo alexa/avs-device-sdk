@@ -26,7 +26,7 @@ namespace avsCommon {
 namespace sdkInterfaces {
 
 /**
- * This interface provides the DCF delegate access to the version and configurations of the capabilities
+ * This interface provides the CapabilitiesDelegate access to the version and configurations of the capabilities
  * being implemented by a capability agent.
  */
 class CapabilityConfigurationInterface {

@@ -369,7 +369,8 @@ CBLAuthDelegate::CBLAuthDelegate(
         m_authState{AuthObserverInterface::State::UNINITIALIZED},
         m_authError{AuthObserverInterface::Error::SUCCESS},
         m_tokenExpirationTime{std::chrono::time_point<std::chrono::steady_clock>::max()},
-        m_retryCount{0} {
+        m_retryCount{0},
+        m_newRefreshToken{false} {
     ACSDK_DEBUG5(LX("CBLAuthDelegate"));
 }
 
@@ -448,7 +449,7 @@ CBLAuthDelegate::FlowState CBLAuthDelegate::handleStarting() {
         return FlowState::REFRESHING_TOKEN;
     }
 
-    ACSDK_INFO(LX("getRefreshTokenFailed"));
+    ACSDK_DEBUG0(LX("getRefreshTokenFailed"));
     return FlowState::REQUESTING_CODE_PAIR;
 }
 
@@ -473,7 +474,8 @@ CBLAuthDelegate::FlowState CBLAuthDelegate::handleRequestingCodePair() {
             case AuthObserverInterface::Error::INVALID_REQUEST:
             case AuthObserverInterface::Error::INVALID_VALUE:
             case AuthObserverInterface::Error::UNSUPPORTED_GRANT_TYPE:
-            case AuthObserverInterface::Error::INTERNAL_ERROR: {
+            case AuthObserverInterface::Error::INTERNAL_ERROR:
+            case AuthObserverInterface::Error::INVALID_CBL_CLIENT_ID: {
                 setAuthState(AuthObserverInterface::State::UNRECOVERABLE_ERROR);
                 return FlowState::STOPPING;
             }
@@ -501,6 +503,7 @@ CBLAuthDelegate::FlowState CBLAuthDelegate::handleRequestingToken() {
         auto result = receiveTokenResponse(requestToken(), true);
         switch (result) {
             case AuthObserverInterface::Error::SUCCESS:
+                m_newRefreshToken = true;
                 return FlowState::REFRESHING_TOKEN;
             case AuthObserverInterface::Error::UNKNOWN_ERROR:
             case AuthObserverInterface::Error::AUTHORIZATION_FAILED:
@@ -517,7 +520,8 @@ CBLAuthDelegate::FlowState CBLAuthDelegate::handleRequestingToken() {
             case AuthObserverInterface::Error::INVALID_REQUEST:
             case AuthObserverInterface::Error::INVALID_VALUE:
             case AuthObserverInterface::Error::UNSUPPORTED_GRANT_TYPE:
-            case AuthObserverInterface::Error::INTERNAL_ERROR: {
+            case AuthObserverInterface::Error::INTERNAL_ERROR:
+            case AuthObserverInterface::Error::INVALID_CBL_CLIENT_ID: {
                 setAuthState(AuthObserverInterface::State::UNRECOVERABLE_ERROR);
                 return FlowState::STOPPING;
             }
@@ -552,6 +556,8 @@ CBLAuthDelegate::FlowState CBLAuthDelegate::handleRefreshingToken() {
             lock.unlock();
             nextState = AuthObserverInterface::State::EXPIRED;
         } else {
+            bool newRefreshToken = m_newRefreshToken;
+            m_newRefreshToken = false;
             lock.unlock();
             auto result = receiveTokenResponse(requestRefresh(), false);
             switch (result) {
@@ -570,11 +576,16 @@ CBLAuthDelegate::FlowState CBLAuthDelegate::handleRefreshingToken() {
                 case AuthObserverInterface::Error::INVALID_CODE_PAIR:
                     clearRefreshToken();
                     return FlowState::REQUESTING_CODE_PAIR;
-                case AuthObserverInterface::Error::UNAUTHORIZED_CLIENT:
                 case AuthObserverInterface::Error::INVALID_REQUEST:
+                    if (newRefreshToken) {
+                        setAuthError(AuthObserverInterface::Error::INVALID_CBL_CLIENT_ID);
+                    }
+                // Falls through
+                case AuthObserverInterface::Error::UNAUTHORIZED_CLIENT:
                 case AuthObserverInterface::Error::INVALID_VALUE:
                 case AuthObserverInterface::Error::UNSUPPORTED_GRANT_TYPE:
-                case AuthObserverInterface::Error::INTERNAL_ERROR: {
+                case AuthObserverInterface::Error::INTERNAL_ERROR:
+                case AuthObserverInterface::Error::INVALID_CBL_CLIENT_ID: {
                     setAuthState(AuthObserverInterface::State::UNRECOVERABLE_ERROR);
                     return FlowState::STOPPING;
                 }

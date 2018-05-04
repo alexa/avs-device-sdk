@@ -38,9 +38,10 @@
 #include <AVSCommon/Utils/Network/InternetConnectionMonitor.h>
 #include <Alerts/Storage/SQLiteAlertStorage.h>
 #include <Audio/AudioFactory.h>
+#include <Bluetooth/SQLiteBluetoothStorage.h>
 #include <CBLAuthDelegate/CBLAuthDelegate.h>
 #include <CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h>
-#include <DCFDelegate/DCFDelegate.h>
+#include <CapabilitiesDelegate/CapabilitiesDelegate.h>
 #include <MediaPlayer/MediaPlayer.h>
 #include <Notifications/SQLiteNotificationsStorage.h>
 #include <Settings/SQLiteSettingStorage.h>
@@ -193,8 +194,8 @@ void SampleApplication::run() {
 }
 
 SampleApplication::~SampleApplication() {
-    if (m_dcfDelegate) {
-        m_dcfDelegate->shutdown();
+    if (m_capabilitiesDelegate) {
+        m_capabilitiesDelegate->shutdown();
     }
 
     // First clean up anything that depends on the the MediaPlayers.
@@ -220,6 +221,9 @@ SampleApplication::~SampleApplication() {
     }
     if (m_notificationsMediaPlayer) {
         m_notificationsMediaPlayer->shutdown();
+    }
+    if (m_bluetoothMediaPlayer) {
+        m_bluetoothMediaPlayer->shutdown();
     }
     if (m_ringtoneMediaPlayer) {
         m_ringtoneMediaPlayer->shutdown();
@@ -327,6 +331,15 @@ bool SampleApplication::initialize(
         return false;
     }
 
+    m_bluetoothMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
+        httpContentFetcherFactory,
+        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SYNCED,
+        "BluetoothMediaPlayer");
+
+    if (!m_bluetoothMediaPlayer) {
+        ACSDK_CRITICAL(LX("Failed to create media player for bluetooth!"));
+    }
+
     m_ringtoneMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
         httpContentFetcherFactory, avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SYNCED, "RingtoneMediaPlayer");
     if (!m_ringtoneMediaPlayer) {
@@ -361,6 +374,8 @@ bool SampleApplication::initialize(
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker =
         std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface>(
             m_notificationsMediaPlayer);
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker =
+        std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface>(m_bluetoothMediaPlayer);
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker =
         std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface>(m_ringtoneMediaPlayer);
 
@@ -400,6 +415,11 @@ bool SampleApplication::initialize(
         avsCommon::utils::libcurlUtils::HttpPut::create();
 
     /*
+     * Creating bluetooth storage object to be used for storing uuid to mac mappings for devices.
+     */
+    auto bluetoothStorage = alexaClientSDK::capabilityAgents::bluetooth::SQLiteBluetoothStorage::create(config);
+
+    /*
      * Creating the UI component that observes various components and prints to the console accordingly.
      */
     auto userInterfaceManager = std::make_shared<alexaClientSDK::sampleApp::UIManager>();
@@ -433,18 +453,19 @@ bool SampleApplication::initialize(
     }
 
     /*
-     * Creating the DCFDelegate - This component provides the client with the ability to send DCF messages.
+     * Creating the CapabilitiesDelegate - This component provides the client with the ability to send messages to the
+     * Capabilities API.
      */
-    m_dcfDelegate =
-        alexaClientSDK::dcfDelegate::DCFDelegate::create(authDelegate, miscStorage, httpPut, config, deviceInfo);
+    m_capabilitiesDelegate = alexaClientSDK::capabilitiesDelegate::CapabilitiesDelegate::create(
+        authDelegate, miscStorage, httpPut, config, deviceInfo);
 
-    if (!m_dcfDelegate) {
-        alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Creation of DCFDelegate failed!");
+    if (!m_capabilitiesDelegate) {
+        alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Creation of CapabilitiesDelegate failed!");
         return false;
     }
 
     authDelegate->addAuthObserver(userInterfaceManager);
-    m_dcfDelegate->addDCFObserver(userInterfaceManager);
+    m_capabilitiesDelegate->addCapabilitiesObserver(userInterfaceManager);
 
     // INVALID_FIRMWARE_VERSION is passed to @c getInt() as a default in case FIRMWARE_VERSION_KEY is not found.
     int firmwareVersion = static_cast<int>(avsCommon::sdkInterfaces::softwareInfo::INVALID_FIRMWARE_VERSION);
@@ -479,11 +500,13 @@ bool SampleApplication::initialize(
             m_audioMediaPlayer,
             m_alertsMediaPlayer,
             m_notificationsMediaPlayer,
+            m_bluetoothMediaPlayer,
             m_ringtoneMediaPlayer,
             speakSpeaker,
             audioSpeaker,
             alertsSpeaker,
             notificationsSpeaker,
+            bluetoothSpeaker,
             ringtoneSpeaker,
             additionalSpeakers,
             audioFactory,
@@ -492,11 +515,12 @@ bool SampleApplication::initialize(
             std::move(messageStorage),
             std::move(notificationsStorage),
             std::move(settingsStorage),
+            std::move(bluetoothStorage),
             {userInterfaceManager},
             {userInterfaceManager},
             std::move(internetConnectionMonitor),
             displayCardsSupported,
-            m_dcfDelegate,
+            m_capabilitiesDelegate,
             firmwareVersion,
             true,
             nullptr);
@@ -506,17 +530,8 @@ bool SampleApplication::initialize(
         return false;
     }
 
-    m_dcfDelegate->addDCFObserver(client);
-
-    std::string endpoint;
-    sampleAppConfig.getString(ENDPOINT_KEY, &endpoint);
-
-    client->connect(m_dcfDelegate, endpoint);
-
     // Add userInterfaceManager as observer of locale setting.
     client->addSettingObserver("locale", userInterfaceManager);
-    // Send default settings set by the user to AVS.
-    client->sendDefaultSettings();
 
     client->addSpeakerManagerObserver(userInterfaceManager);
 
@@ -654,6 +669,19 @@ bool SampleApplication::initialize(
         ACSDK_CRITICAL(LX("Failed to create UserInputManager!"));
         return false;
     }
+
+    authDelegate->addAuthObserver(m_userInputManager);
+    m_capabilitiesDelegate->addCapabilitiesObserver(m_userInputManager);
+    m_capabilitiesDelegate->addCapabilitiesObserver(client);
+
+    // Connect once configuration is all set.
+    std::string endpoint;
+    sampleAppConfig.getString(ENDPOINT_KEY, &endpoint);
+
+    client->connect(m_capabilitiesDelegate, endpoint);
+
+    // Send default settings set by the user to AVS.
+    client->sendDefaultSettings();
 
     return true;
 }

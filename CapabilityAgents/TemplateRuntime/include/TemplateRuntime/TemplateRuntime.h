@@ -374,7 +374,7 @@ private:
     /// The @c FocusManager used to manage usage of the visual channel.
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_focusManager;
 
-    /// Set of capability configurations that will get published using DCF
+    /// Set of capability configurations that will get published using the Capabilities API
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /// This is the worker thread for the @c TemplateRuntime CA.

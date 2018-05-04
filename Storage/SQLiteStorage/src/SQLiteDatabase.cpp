@@ -78,7 +78,7 @@ bool SQLiteDatabase::open() {
     }
 
     if (!avsCommon::utils::file::fileExists(m_storageFilePath)) {
-        ACSDK_ERROR(LX(__func__).m("File specified does not exist.").d("file path", m_storageFilePath));
+        ACSDK_DEBUG0(LX(__func__).m("File specified does not exist.").d("file path", m_storageFilePath));
         return false;
     }
 
@@ -106,7 +106,7 @@ bool SQLiteDatabase::performQuery(const std::string& sqlString) {
 
 bool SQLiteDatabase::tableExists(const std::string& tableName) {
     if (!alexaClientSDK::storage::sqliteStorage::tableExists(m_dbHandle, tableName)) {
-        ACSDK_ERROR(
+        ACSDK_DEBUG0(
             LX(__func__).d("reason", "table doesn't exist or there was an error checking").d("table", tableName));
         return false;
     }

@@ -603,7 +603,7 @@ private:
     std::unique_ptr<std::string> m_precedingExpectSpeechInitiator;
     /// @}
 
-    /// Set of capability configurations that will get published using DCF
+    /// Set of capability configurations that will get published using the Capabilities API
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /**

@@ -117,7 +117,7 @@ private:
     std::queue<avsCommon::avs::PlaybackButton> m_buttons;
     /// @}
 
-    /// Set of capability configurations that will get published using DCF
+    /// Set of capability configurations that will get published using the Capabilities API
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /// The @c Executor which queues up operations from asynchronous API calls to the @c PlaybackControllerInterface.

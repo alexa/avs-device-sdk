@@ -150,7 +150,7 @@ SQLiteMiscStorage::~SQLiteMiscStorage() {
 
 bool SQLiteMiscStorage::open() {
     if (!m_db.open()) {
-        ACSDK_ERROR(LX("openDatabaseFailed"));
+        ACSDK_DEBUG0(LX("openDatabaseFailed"));
         return false;
     }
 

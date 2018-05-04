@@ -30,6 +30,9 @@ include(PortAudio)
 # Setup Test Options variables.
 include(TestOptions)
 
+# Setup Bluetooth variables.
+include(Bluetooth)
+
 # Setup platform dependant variables.
 include (Platforms)
 

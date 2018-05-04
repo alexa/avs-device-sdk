@@ -25,7 +25,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h>
+#include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
 #include <PlaylistParser/PlaylistParser.h>
@@ -37,6 +39,7 @@ namespace alexaClientSDK {
 namespace mediaPlayer {
 namespace test {
 
+using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::avs::speakerConstants;
 using namespace avsCommon::sdkInterfaces;
@@ -76,6 +79,14 @@ static const std::chrono::milliseconds MP3_FILE_LENGTH(2688);
 
 /// Offset to start playback at.
 static const std::chrono::milliseconds OFFSET(2000);
+
+#ifdef _WIN32
+static const std::string MEDIA_PLAYER_CONFIG = R"({
+"gstreamerMediaPlayer":{
+        "audioSink":"directsoundsink"
+    }
+})";
+#endif
 
 #ifdef RESOLVED_ACSDK_627
 
@@ -617,6 +628,12 @@ public:
 };
 
 void MediaPlayerTest::SetUp() {
+// ACSDK-1373 - MediaPlayerTest fail on Windows
+// with GStreamer 1.14 default audio sink.
+#ifdef _WIN32
+    auto inString = std::shared_ptr<std::istringstream>(new std::istringstream(MEDIA_PLAYER_CONFIG));
+    initialization::AlexaClientSDKInit::initialize({inString});
+#endif
     m_playerObserver = std::make_shared<MockPlayerObserver>();
     m_mediaPlayer = MediaPlayer::create(std::make_shared<MockContentFetcherFactory>());
     ASSERT_TRUE(m_mediaPlayer);

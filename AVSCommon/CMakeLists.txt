@@ -28,10 +28,13 @@ add_library(AVSCommon SHARED
     AVS/src/HandlerAndPolicy.cpp
     AVS/src/MessageRequest.cpp
     AVS/src/NamespaceAndName.cpp
+    Utils/src/Bluetooth/SDPRecords.cpp
+    Utils/src/BluetoothEventBus.cpp
     Utils/src/Configuration/ConfigurationNode.cpp
     Utils/src/DeviceInfo.cpp
     Utils/src/Executor.cpp
     Utils/src/FileUtils.cpp
+    Utils/src/FormattedAudioStreamAdapter.cpp
     Utils/src/JSONUtils.cpp
     Utils/src/LibcurlUtils/CallbackData.cpp
     Utils/src/LibcurlUtils/CurlEasyHandleWrapper.cpp
@@ -53,6 +56,7 @@ add_library(AVSCommon SHARED
     Utils/src/Logger/LogStringFormatter.cpp
     Utils/src/Logger/ModuleLogger.cpp
     Utils/src/Logger/ThreadMoniker.cpp
+    Utils/src/MacAddressString.cpp
     Utils/src/Metrics.cpp
     Utils/src/Network/InternetConnectionMonitor.cpp
     Utils/src/RequiresShutdown.cpp

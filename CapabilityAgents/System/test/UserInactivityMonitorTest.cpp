@@ -127,7 +127,7 @@ TEST_F(UserInactivityMonitorTest, createSuccessfully) {
         m_mockMessageSender, m_mockExceptionEncounteredSender, USER_INACTIVITY_REPORT_PERIOD);
     ASSERT_NE(nullptr, userInactivityMonitor);
 
-    exitTrigger.wait_for(exitLock, USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD / 2);
+    exitTrigger.wait_for(exitLock, USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD);
 }
 
 /**
@@ -169,7 +169,7 @@ TEST_F(UserInactivityMonitorTest, handleDirectiveProperly) {
         AVSDirective::create("", userInactivityDirectiveHeader, "", attachmentManager, "");
 
     directiveSequencer->onDirective(userInactivityDirective);
-    exitTrigger.wait_for(exitLock, USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD / 2);
+    exitTrigger.wait_for(exitLock, USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD);
 
     directiveSequencer->shutdown();
 }
@@ -188,7 +188,7 @@ TEST_F(UserInactivityMonitorTest, sendMultipleReports) {
         m_mockMessageSender, m_mockExceptionEncounteredSender, USER_INACTIVITY_REPORT_PERIOD);
     ASSERT_NE(nullptr, userInactivityMonitor);
 
-    exitTrigger.wait_for(exitLock, repetitionCount * USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD / 2);
+    exitTrigger.wait_for(exitLock, repetitionCount * USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD);
 }
 
 /**
@@ -237,7 +237,7 @@ TEST_F(UserInactivityMonitorTest, sendMultipleReportsWithReset) {
     std::this_thread::sleep_for(2 * USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD / 2);
     directiveSequencer->onDirective(userInactivityDirective);
 
-    exitTrigger.wait_for(exitLock, repetitionCount * USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD / 2);
+    exitTrigger.wait_for(exitLock, repetitionCount * USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD);
     directiveSequencer->shutdown();
 }
 
@@ -245,14 +245,3 @@ TEST_F(UserInactivityMonitorTest, sendMultipleReportsWithReset) {
 }  // namespace system
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
-
-int main(int argc, char** argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-
-// ACSDK-1367 - Some tests fail on Windows
-#if defined(_WIN32) && !defined(RESOLVED_ACSDK_1367)
-    ::testing::GTEST_FLAG(filter) =
-        "-UserInactivityMonitorTest.sendMultipleReports:UserInactivityMonitorTest.handleDirectiveProperly";
-#endif
-    return RUN_ALL_TESTS();
-}

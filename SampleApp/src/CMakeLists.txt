@@ -30,7 +30,7 @@ target_include_directories(SampleApp PUBLIC
 
 target_link_libraries(SampleApp 
     DefaultClient
-    DCFDelegate
+    CapabilitiesDelegate
     CBLAuthDelegate
     MediaPlayer
     SQLiteStorage

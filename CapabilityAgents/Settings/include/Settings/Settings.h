@@ -165,7 +165,7 @@ private:
     /// The map of <key, SettingElements> pairs of the settings.
     std::unordered_map<std::string, SettingElements> m_mapOfSettingsAttributes;
 
-    /// Set of capability configurations that will get published using DCF
+    /// Set of capability configurations that will get published using the Capabilities API
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /// Executor that queues up the calls when a setting is changed.

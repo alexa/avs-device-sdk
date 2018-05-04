@@ -1,5 +1,31 @@
 ## ChangeLog
 
+### v1.7.1 released 05/04/2018:
+
+**Enhancements**
+* Added the Bluetooth interface, which manages the Bluetooth connection between Alexa-enabled products and peer devices. This release supports `A2DP-SINK` and `AVRCP` profiles. **Note**: Bluetooth is optional and is currently limited to Raspberry Pi and Linux platforms.
+* Added new [Bluetooth dependencies](https://github.com/alexa/avs-device-sdk/wiki/Dependencies#bluetooth-dependencies) for Linux and Raspberry Pi.
+* Device Capability Framework (`DCF`) renamed to `Capabilities`.
+* Updated the non-CBL client ID error message to be more specific.
+* Updated the sample app to enter a limited interaction mode after an unrecoverable error.
+
+**Bug Fixes**
+* [Issue 597](https://github.com/alexa/avs-device-sdk/issues/597) - Fixed a bug where the sample app did not respond to locale change settings.   
+* Fixed issue where GStreamer 1.14 `MediaPlayerTest` failed on Windows.
+* Fixed an issue where a segmentation fault was triggered after unrecoverable error handling.
+
+**Known Issues**
+* The `ACL` may encounter issues if audio attachments are received but not consumed.
+* `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
+* The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.
+* Connecting a product to streaming media via Bluetooth will sometimes stop media playback within the source application. Resuming playback through the source application or toggling next/previous will correct playback.
+* When streaming silence via Bluetooth, the Alexa companion app will sometimes indicate that media content is streaming.
+* The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation is not yet supported.
+* On some products, interrupted Bluetooth playback may not resume if other content is locally streamed.
+* When streaming content via Bluetooth, under certain conditions playback will fail to resume and the sample app hangs on exit. This is due to a conflict between the `GStreamer` pipeline and the Bluetooth agent.
+* On Raspberry Pi, when streaming audio via Bluetooth, sometimes the audio stream stutters.
+* On Raspberry Pi, `BlueALSA` must be terminated each time the device boots. See [Raspberry Pi Quick Start Guide](https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide-with-Script#bluetooth) for more information.
+
 ### v1.7.0 released 04/18/2018:
 
 **Enhancements**
@@ -263,7 +289,6 @@
   * Bug fix for ADSL test failures with `sendDirectiveWithoutADialogRequestId`.
   * Bug fix for `SpeechSynthesizer` showing the wrong UX state when a burst of `Speak` directives are received.
   * Bug fix for recursive loop in `AudioPlayer.Stop`.
->>>>>>> 3553854... Updated CHANGELOG.md and README.md for 1.1
 
 ### [1.0.2] - 2017-08-23
 * Removed code from AIP which propagates ExpectSpeech initiator strings to subsequent Recognize events.  This code will be re-introduced when AVS starts sending initiator strings.

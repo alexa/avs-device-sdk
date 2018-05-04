@@ -16,7 +16,6 @@
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
-#include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/AVS/EventBuilder.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
@@ -57,13 +56,13 @@ static const char SETTING_VALUE[] = "value";
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::unique_ptr<SettingsUpdatedEventSender> SettingsUpdatedEventSender::create(
-    std::shared_ptr<MessageSenderInterface> messageSender) {
-    if (!messageSender) {
+    std::shared_ptr<certifiedSender::CertifiedSender> certifiedMessageSender) {
+    if (!certifiedMessageSender) {
         ACSDK_ERROR(LX("createFailed").d("reason", "messageSenderNullReference"));
         return nullptr;
     }
 
-    return std::unique_ptr<SettingsUpdatedEventSender>(new SettingsUpdatedEventSender(messageSender));
+    return std::unique_ptr<SettingsUpdatedEventSender>(new SettingsUpdatedEventSender(certifiedMessageSender));
 }
 
 void SettingsUpdatedEventSender::onSettingChanged(const std::unordered_map<std::string, std::string>& mapOfSettings) {
@@ -104,12 +103,12 @@ void SettingsUpdatedEventSender::onSettingChanged(const std::unordered_map<std::
         return;
     }
 
-    std::shared_ptr<MessageRequest> request = std::make_shared<MessageRequest>(msgIdAndJsonEvent.second);
-    m_messageSender->sendMessage(request);
+    m_certifiedSender->sendJSONMessage(msgIdAndJsonEvent.second);
 }
 
-SettingsUpdatedEventSender::SettingsUpdatedEventSender(std::shared_ptr<MessageSenderInterface> messageSender) :
-        m_messageSender{messageSender} {
+SettingsUpdatedEventSender::SettingsUpdatedEventSender(
+    std::shared_ptr<certifiedSender::CertifiedSender> certifiedMessageSender) :
+        m_certifiedSender{certifiedMessageSender} {
 }
 
 }  // namespace settings

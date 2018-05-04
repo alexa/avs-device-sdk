@@ -317,7 +317,7 @@ private:
     /// The observers to be notified whenever any of the @c SpeakerSetting changing APIs are called.
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerObserverInterface>> m_observers;
 
-    /// Set of capability configurations that will get published using DCF
+    /// Set of capability configurations that will get published using the Capabilities API
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /// An executor to perform operations on a worker thread.

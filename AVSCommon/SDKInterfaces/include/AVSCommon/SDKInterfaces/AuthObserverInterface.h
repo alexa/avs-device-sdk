@@ -69,7 +69,9 @@ public:
         /// Client should slow down in the rate of requests polling for an access token.
         SLOW_DOWN,
         /// Internal error in client code.
-        INTERNAL_ERROR
+        INTERNAL_ERROR,
+        /// Client ID not valid for use with code based linking.
+        INVALID_CBL_CLIENT_ID
     };
 
     /**
@@ -145,6 +147,8 @@ inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterfac
             return stream << "SLOW_DOWN";
         case AuthObserverInterface::Error::INTERNAL_ERROR:
             return stream << "INTERNAL_ERROR";
+        case AuthObserverInterface::Error::INVALID_CBL_CLIENT_ID:
+            return stream << "INVALID_CBL_CLIENT_ID";
     }
     return stream << "Unknown AuthObserverInterface::Error!: " << error;
 }

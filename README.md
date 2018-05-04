@@ -82,6 +82,7 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 * [Speaker](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speaker) - The interface for volume control, including mute and unmute.
 * [System](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system) - The interface for communicating product status/state to AVS.
 * [TemplateRuntime](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/templateruntime) - The interface for rendering visual metadata.
+* [Bluetooth](https://developer.amazon.com/docs/alexa-voice-service/bluetooth.html) - The interface for managing Bluetooth connections between peer devices and Alexa-enabled products.
 
 ### Security Best Practices
 
@@ -106,36 +107,28 @@ In addition to adopting the [Security Best Practices for Alexa](https://develope
 
 **Note**: Feature enhancements, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
-v1.7.0 released 04/18/2018:
+v1.7.1 released 05/04/2018:
 
 **Enhancements**
-* `AuthDelegate` and `AuthServer.py` have been replaced by `CBLAUthDelegate`, which uses Code Based Linking for authorization.
-* Added new properties to `AlexaClientSDKConfig`:
-  * [`cblAuthDelegate`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L2) - This object specifies parameters for `CBLAuthDelegate`.
-  * [`miscDatabase`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L34) - A generic key/value database to be used by various components.
-  * [`dcfDelegate`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L17) - This object specifies parameters for `DCFDelegate`. Within this object, values were added for `endpoint` and `overridenDcfPublishMessageBody`. `endpoint` is the endpoint for the Capabilities API. `overridenDcfPublishMessageBody`is the message that is sent to the Capabilities API. **Note**: Values in the `dcfDelegate` object will only work in `DEBUG` builds.  
-  * [`deviceInfo`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L9) - Specifies device-identifying information for use by the Capabilities API and `CBLAuthDelegate`.  
-* Updated Directive Sequencer to support wildcard directive handlers. This allows a handler for a given AVS interface to register at the namespace level, rather than specifying the names of all directives within a given namespace.  
-* Updated the Raspberry Pi installation script to include `alsasink` in `AlexaClientSDKConfig`.  
-* Added `audioSink` as a configuration option. This allows users to override the audio sink element used in `Gstreamer`.
-* Added an interface for monitoring internet connection status: `InternetConnectionMonitorInterface.h`.  
-* The Alexa Communications Library (ACL) is no longer required to wait until authorization has succeeded before attempting to connect to AVS. Instead, `HTTP2Transport` handles waiting for authorization to complete.  
-* Device capabilities can now be sent for each capability interface using the Capabilities API.  
-* The sample app has been updated to send Capabilities API messages, which are automatically sent when the sample app starts. **Note**: A successful call to the Capabilities API must occur before a connection with AVS is established.  
-* The SDK now supports HTTP PUT messages.
-* Added support for opt-arg style arguments and multiple configuration files. Now, the sample app can be invoked by either of these commands: `SampleApp <configfile> <debuglevel>` OR `SampleApp -C file1 -C file2 ... -L loglevel`.
+* Added the Bluetooth interface, which manages the Bluetooth connection between Alexa-enabled products and peer devices. This release supports `A2DP-SINK` and `AVRCP` profiles. **Note**: Bluetooth is optional and is currently limited to Raspberry Pi and Linux platforms.
+* Added new [Bluetooth dependencies](https://github.com/alexa/avs-device-sdk/wiki/Dependencies#bluetooth-dependencies) for Linux and Raspberry Pi.
+* Device Capability Framework (`DCF`) renamed to `Capabilities`.
+* Updated the non-CBL client ID error message to be more specific.
+* Updated the sample app to enter a limited interaction mode after an unrecoverable error.
 
 **Bug Fixes**
-* Fixed Issues [447](https://github.com/alexa/avs-device-sdk/issues/447) and [553](https://github.com/alexa/avs-device-sdk/issues/553).  
-* Fixed the `AttachmentRenderSource`'s handling of `BLOCKING` `AttachmentReaders`.  
-* Updated the `Logger` implementation to be more resilient to `nullptr` string inputs.  
-* Fixed a `TimeUtils` utility-related compile issue.  
-* Fixed a bug in which alerts failed to activate if the system was restarted without network connection.  
-* Fixed Android 64-bit build failure issue.  
+* [Issue 597](https://github.com/alexa/avs-device-sdk/issues/597) - Fixed a bug where the sample app did not respond to locale change settings.   
+* Fixed issue where GStreamer 1.14 `MediaPlayerTest` failed on Windows.
+* Fixed an issue where a segmentation fault was triggered after unrecoverable error handling.
 
 **Known Issues**
 * The `ACL` may encounter issues if audio attachments are received but not consumed.
 * `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
-* Some ERROR messages may be printed during start-up even if initialization proceeds normally and successfully.
-* If an unrecoverable authorization error is encountered the sample app may crash on shutdown.
-* If a non-CBL `clientId` is included in the `deviceInfo` section of `AlexaClientSDKConfig.json`, the error will be reported as an unrecoverable authorization error, rather than a more specific error.
+* The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.
+* Connecting a product to streaming media via Bluetooth will sometimes stop media playback within the source application. Resuming playback through the source application or toggling next/previous will correct playback.
+* When streaming silence via Bluetooth, the Alexa companion app will sometimes indicate that media content is streaming.
+* The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation is not yet supported.
+* On some products, interrupted Bluetooth playback may not resume if other content is locally streamed.
+* When streaming content via Bluetooth, under certain conditions playback will fail to resume and the sample app hangs on exit. This is due to a conflict between the `GStreamer` pipeline and the Bluetooth agent.
+* On Raspberry Pi, when streaming audio via Bluetooth, sometimes the audio stream stutters.
+* On Raspberry Pi, `BlueALSA` must be terminated each time the device boots. See [Raspberry Pi Quick Start Guide](https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide-with-Script#bluetooth) for more information.

@@ -14,13 +14,13 @@
         // Product ID from developer.amazon.com
         "productId":"${SDK_CONFIG_PRODUCT_ID}"
     },
-    "dcfDelegate":{
+    "capabilitiesDelegate":{
         // The endpoint to connect in order to send device capabilities.
         // This will only be used in DEBUG builds.
         // e.g. "endpoint": "https://api.amazonalexa.com"
-        // Override DCF Publish message to be sent out.
+        // Override the message to be sent out to the Capabilities API.
         // This will only be used in DEBUG builds.
-        // e.g. "overridenDcfPublishMessageBody": {
+        // e.g. "overridenCapabilitiesPublishMessageBody": {
         //          "envelopeVersion":"20160207",
         //          "capabilities":[
         //              {
@@ -55,6 +55,13 @@
             // See https://developer.amazon.com/docs/alexa-voice-service/settings.html#settingsupdated for valid values.
             "locale":"${SETTING_LOCALE_VALUE}"
         }
+    },
+    "bluetooth" : {
+        // Path to Bluetooth database file. e.g. /home/ubuntu/Build/bluetooth.db
+        // Note: The directory specified must be valid.
+        // The database file (bluetooth.db) will be created by SampleApp, do not create it yourself.
+        // The database file should only be used for bluetooth (don't use it for other components of SDK)
+        "databaseFilePath":"${SDK_BLUETOOTH_DATABASE_FILE_PATH}"
     },
     "certifiedSender":{
         // Path to Certified Sender database file. e.g. /home/ubuntu/Build/certifiedsender.db

@@ -147,7 +147,7 @@ std::size_t InProcessAttachmentReader::read(
 
     } else if (0 == readResult) {
         *readStatus = ReadStatus::CLOSED;
-        ACSDK_INFO(LX("readFailed").d("reason", "SDS is closed"));
+        ACSDK_DEBUG0(LX("readFailed").d("reason", "SDS is closed"));
     } else {
         bytesRead = static_cast<size_t>(readResult) * wordSize;
     }

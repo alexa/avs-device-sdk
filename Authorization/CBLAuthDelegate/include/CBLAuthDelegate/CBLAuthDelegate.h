@@ -348,6 +348,9 @@ private:
 
     /// Number of time an access token refresh has been attempted.
     int m_retryCount;
+
+    /// True if the refresh token has not yet been used to create an access token.
+    bool m_newRefreshToken;
 };
 
 }  // namespace cblAuthDelegate

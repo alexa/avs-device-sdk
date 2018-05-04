@@ -106,7 +106,7 @@ bool SQLiteCBLAuthDelegateStorage::open() {
     std::lock_guard<std::mutex> lock(m_mutex);
 
     if (!m_database.open()) {
-        ACSDK_ERROR(LX("openFailed").d("reason", "openSQLiteDatabaseFailed"));
+        ACSDK_DEBUG0(LX("openFailed").d("reason", "openSQLiteDatabaseFailed"));
         return false;
     }
 

@@ -16,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_USERINPUTMANAGER_H_
 #define ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_USERINPUTMANAGER_H_
 
+#include <atomic>
 #include <memory>
 
 #include "InteractionManager.h"
@@ -24,7 +25,9 @@ namespace alexaClientSDK {
 namespace sampleApp {
 
 /// Observes user input from the console and notifies the interaction manager of the user's intentions.
-class UserInputManager {
+class UserInputManager
+        : public avsCommon::sdkInterfaces::AuthObserverInterface
+        , public avsCommon::sdkInterfaces::CapabilitiesObserverInterface {
 public:
     /**
      * Create a UserInputManager.
@@ -35,7 +38,7 @@ public:
     static std::unique_ptr<UserInputManager> create(std::shared_ptr<InteractionManager> interactionManager);
 
     /**
-     * Processes user input forever. Returns upon a quit command.
+     * Processes user input until a quit command or a device reset is triggered.
      */
     void run();
 
@@ -45,8 +48,36 @@ private:
      */
     UserInputManager(std::shared_ptr<InteractionManager> interactionManager);
 
+    /**
+     * Implement speaker control options.
+     */
+    void controlSpeaker();
+
+    /**
+     * Implement device reset confirmation.
+     *
+     * @return @c true if device was reset; otherwise, return @c false.
+     */
+    bool confirmReset();
+
+    /// @name AuthObserverInterface Function
+    /// @{
+    void onAuthStateChange(AuthObserverInterface::State newState, AuthObserverInterface::Error newError) override;
+    /// @}
+
+    /// @name CapabilitiesObserverInterface Function
+    /// @{
+    void onCapabilitiesStateChange(
+        CapabilitiesObserverInterface::State newState,
+        CapabilitiesObserverInterface::Error newError) override;
+    /// @}
+
     /// The main interaction manager that interfaces with the SDK.
     std::shared_ptr<InteractionManager> m_interactionManager;
+
+    /// Flag to indicate that a fatal failure occurred. In this case, customer can either reset the device or kill
+    /// the app.
+    std::atomic_bool m_limitedInteraction;
 };
 
 }  // namespace sampleApp

@@ -123,7 +123,7 @@ static const std::chrono::milliseconds TIMEOUT_SLEEP_TIME = std::chrono::millise
 static const std::chrono::milliseconds DEFAULT_TIMEOUT = std::chrono::milliseconds(50);
 
 /// Timeout for the @c ContextRequester to get the failure.
-static const std::chrono::milliseconds FAILURE_TIMEOUT = std::chrono::milliseconds(110);
+static const std::chrono::milliseconds FAILURE_TIMEOUT = std::chrono::milliseconds(220);
 
 /// Namespace for SpeechSynthesizer.
 static const std::string NAMESPACE_SPEECH_SYNTHESIZER("SpeechSynthesizer");

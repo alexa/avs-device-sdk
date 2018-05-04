@@ -20,6 +20,7 @@
 #include <ADSL/MessageInterpreter.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
+#include <AVSCommon/Utils/Bluetooth/BluetoothEventBus.h>
 
 #ifdef ENABLE_COMMS
 #include <CallManager/CallManager.h>
@@ -31,6 +32,10 @@
 #include <System/EndpointHandler.h>
 #include <System/SystemCapabilityProvider.h>
 #include <System/UserInactivityMonitor.h>
+
+#ifdef BLUETOOTH_BLUEZ
+#include <BlueZ/BlueZBluetoothDeviceManager.h>
+#endif
 
 namespace alexaClientSDK {
 namespace defaultClient {
@@ -56,11 +61,13 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> notificationsMediaPlayer,
+    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
     const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
@@ -69,13 +76,14 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<certifiedSender::MessageStorageInterface> messageStorage,
     std::shared_ptr<capabilityAgents::notifications::NotificationsStorageInterface> notificationsStorage,
     std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
+    std::shared_ptr<capabilityAgents::bluetooth::BluetoothStorageInterface> bluetoothStorage,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
         alexaDialogStateObservers,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
         connectionObservers,
     std::shared_ptr<avsCommon::utils::network::InternetConnectionMonitor> internetConnectionMonitor,
     bool isGuiSupported,
-    std::shared_ptr<avsCommon::sdkInterfaces::DCFDelegateInterface> dcfDelegate,
+    std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
     avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
     bool sendSoftwareInfoOnConnected,
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver) {
@@ -88,11 +96,13 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             audioMediaPlayer,
             alertsMediaPlayer,
             notificationsMediaPlayer,
+            bluetoothMediaPlayer,
             ringtoneMediaPlayer,
             speakSpeaker,
             audioSpeaker,
             alertsSpeaker,
             notificationsSpeaker,
+            bluetoothSpeaker,
             ringtoneSpeaker,
             additionalSpeakers,
             audioFactory,
@@ -101,11 +111,12 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             messageStorage,
             notificationsStorage,
             settingsStorage,
+            bluetoothStorage,
             alexaDialogStateObservers,
             connectionObservers,
             internetConnectionMonitor,
             isGuiSupported,
-            dcfDelegate,
+            capabilitiesDelegate,
             firmwareVersion,
             sendSoftwareInfoOnConnected,
             softwareInfoSenderObserver)) {
@@ -124,11 +135,13 @@ bool DefaultClient::initialize(
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> notificationsMediaPlayer,
+    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
     const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
@@ -137,13 +150,14 @@ bool DefaultClient::initialize(
     std::shared_ptr<certifiedSender::MessageStorageInterface> messageStorage,
     std::shared_ptr<capabilityAgents::notifications::NotificationsStorageInterface> notificationsStorage,
     std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
+    std::shared_ptr<capabilityAgents::bluetooth::BluetoothStorageInterface> bluetoothStorage,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
         alexaDialogStateObservers,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
         connectionObservers,
     std::shared_ptr<avsCommon::utils::network::InternetConnectionMonitor> internetConnectionMonitor,
     bool isGuiSupported,
-    std::shared_ptr<avsCommon::sdkInterfaces::DCFDelegateInterface> dcfDelegate,
+    std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
     avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
     bool sendSoftwareInfoOnConnected,
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver) {
@@ -172,6 +186,11 @@ bool DefaultClient::initialize(
         return false;
     }
 
+    if (!bluetoothMediaPlayer) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullBluetoothMediaPlayer"));
+        return false;
+    }
+
     if (!ringtoneMediaPlayer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullRingtoneMediaPlayer"));
         return false;
@@ -182,8 +201,8 @@ bool DefaultClient::initialize(
         return false;
     }
 
-    if (!dcfDelegate) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullDCFDelegate"));
+    if (!capabilitiesDelegate) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullCapabilitiesDelegate"));
         return false;
     }
 
@@ -456,7 +475,7 @@ bool DefaultClient::initialize(
 #endif
 
     std::shared_ptr<capabilityAgents::settings::SettingsUpdatedEventSender> settingsUpdatedEventSender =
-        alexaClientSDK::capabilityAgents::settings::SettingsUpdatedEventSender::create(m_connectionManager);
+        alexaClientSDK::capabilityAgents::settings::SettingsUpdatedEventSender::create(m_certifiedSender);
     if (!settingsUpdatedEventSender) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSettingsObserver"));
         return false;
@@ -474,7 +493,7 @@ bool DefaultClient::initialize(
     }
 
     std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> allSpeakers = {
-        speakSpeaker, audioSpeaker, alertsSpeaker, notificationsSpeaker, ringtoneSpeaker};
+        speakSpeaker, audioSpeaker, alertsSpeaker, notificationsSpeaker, bluetoothSpeaker, ringtoneSpeaker};
     allSpeakers.insert(allSpeakers.end(), additionalSpeakers.begin(), additionalSpeakers.end());
 
     /*
@@ -575,6 +594,26 @@ bool DefaultClient::initialize(
         }
     }
 
+#ifdef BLUETOOTH_BLUEZ
+    auto eventBus = std::make_shared<avsCommon::utils::bluetooth::BluetoothEventBus>();
+
+    auto bluetoothDeviceManager = bluetoothImplementations::blueZ::BlueZBluetoothDeviceManager::create(eventBus);
+
+    /*
+     * Creating the Bluetooth Capability Agent - This component is responsible for handling directives from AVS
+     * regarding bluetooth functionality.
+     */
+    m_bluetooth = capabilityAgents::bluetooth::Bluetooth::create(
+        contextManager,
+        m_audioFocusManager,
+        m_connectionManager,
+        m_exceptionSender,
+        std::move(bluetoothStorage),
+        std::move(bluetoothDeviceManager),
+        eventBus,
+        bluetoothMediaPlayer);
+#endif
+
     /*
      * The following two statements show how to register capability agents to the directive sequencer.
      */
@@ -660,74 +699,97 @@ bool DefaultClient::initialize(
         }
     }
 
+    if (m_bluetooth && !m_directiveSequencer->addDirectiveHandler(m_bluetooth)) {
+        ACSDK_ERROR(
+            LX("initializeFailed").d("reason", "unableToRegisterDirectiveHandler").d("directiveHandler", "Bluetooth"));
+    }
+
     /*
-     * Register capabilities for DCF publishing.
+     * Register capabilities for publishing to the Capabilities API.
      */
-    if (!(dcfDelegate->registerCapability(m_alertsCapabilityAgent))) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToRegisterCapability").d("dcfDelegate", "Alerts"));
-        return false;
-    }
-
-    if (!(dcfDelegate->registerCapability(m_audioActivityTracker))) {
+    if (!(capabilitiesDelegate->registerCapability(m_alertsCapabilityAgent))) {
         ACSDK_ERROR(
-            LX("initializeFailed").d("reason", "unableToRegisterCapability").d("dcfDelegate", "AudioActivityTracker"));
+            LX("initializeFailed").d("reason", "unableToRegisterCapability").d("capabilitiesDelegate", "Alerts"));
         return false;
     }
 
-    if (!(dcfDelegate->registerCapability(m_audioPlayer))) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToRegisterCapability").d("dcfDelegate", "AudioPlayer"));
+    if (!(capabilitiesDelegate->registerCapability(m_audioActivityTracker))) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterCapability")
+                        .d("capabilitiesDelegate", "AudioActivityTracker"));
         return false;
     }
 
-    if (!(dcfDelegate->registerCapability(m_notificationsCapabilityAgent))) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToRegisterCapability").d("dcfDelegate", "Notifications"));
-        return false;
-    }
-
-    if (!(dcfDelegate->registerCapability(m_playbackController))) {
+    if (!(capabilitiesDelegate->registerCapability(m_audioPlayer))) {
         ACSDK_ERROR(
-            LX("initializeFailed").d("reason", "unableToRegisterCapability").d("dcfDelegate", "PlaybackController"));
+            LX("initializeFailed").d("reason", "unableToRegisterCapability").d("capabilitiesDelegate", "AudioPlayer"));
         return false;
     }
 
-    if (!(dcfDelegate->registerCapability(m_settings))) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToRegisterCapability").d("dcfDelegate", "Settings"));
-        return false;
-    }
-
-    if (!(dcfDelegate->registerCapability(m_speakerManager))) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToRegisterCapability").d("dcfDelegate", "Speaker"));
-        return false;
-    }
-
-    if (!(dcfDelegate->registerCapability(m_audioInputProcessor))) {
+    if (m_bluetooth && !(capabilitiesDelegate->registerCapability(m_bluetooth))) {
         ACSDK_ERROR(
-            LX("initializeFailed").d("reason", "unableToRegisterCapability").d("dcfDelegate", "SpeechRecognizer"));
+            LX("initializeFailed").d("reason", "unableToRegisterCapability").d("capabilitiesDelegate", "Bluetooth"));
         return false;
     }
 
-    if (!(dcfDelegate->registerCapability(m_speechSynthesizer))) {
+    if (!(capabilitiesDelegate->registerCapability(m_notificationsCapabilityAgent))) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterCapability")
+                        .d("capabilitiesDelegate", "Notifications"));
+        return false;
+    }
+
+    if (!(capabilitiesDelegate->registerCapability(m_playbackController))) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterCapability")
+                        .d("capabilitiesDelegate", "PlaybackController"));
+        return false;
+    }
+
+    if (!(capabilitiesDelegate->registerCapability(m_settings))) {
         ACSDK_ERROR(
-            LX("initializeFailed").d("reason", "unableToRegisterCapability").d("dcfDelegate", "SpeechSynthesizer"));
+            LX("initializeFailed").d("reason", "unableToRegisterCapability").d("capabilitiesDelegate", "Settings"));
         return false;
     }
 
-    if (!(dcfDelegate->registerCapability(systemCapabilityProvider))) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToRegisterCapability").d("dcfDelegate", "System"));
+    if (!(capabilitiesDelegate->registerCapability(m_speakerManager))) {
+        ACSDK_ERROR(
+            LX("initializeFailed").d("reason", "unableToRegisterCapability").d("capabilitiesDelegate", "Speaker"));
+        return false;
+    }
+
+    if (!(capabilitiesDelegate->registerCapability(m_audioInputProcessor))) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterCapability")
+                        .d("capabilitiesDelegate", "SpeechRecognizer"));
+        return false;
+    }
+
+    if (!(capabilitiesDelegate->registerCapability(m_speechSynthesizer))) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterCapability")
+                        .d("capabilitiesDelegate", "SpeechSynthesizer"));
+        return false;
+    }
+
+    if (!(capabilitiesDelegate->registerCapability(systemCapabilityProvider))) {
+        ACSDK_ERROR(
+            LX("initializeFailed").d("reason", "unableToRegisterCapability").d("capabilitiesDelegate", "System"));
         return false;
     }
 
     if (isGuiSupported) {
-        if (!(dcfDelegate->registerCapability(m_templateRuntime))) {
-            ACSDK_ERROR(
-                LX("initializeFailed").d("reason", "unableToRegisterCapability").d("dcfDelegate", "TemplateRuntime"));
+        if (!(capabilitiesDelegate->registerCapability(m_templateRuntime))) {
+            ACSDK_ERROR(LX("initializeFailed")
+                            .d("reason", "unableToRegisterCapability")
+                            .d("capabilitiesDelegate", "TemplateRuntime"));
             return false;
         }
 
-        if (!(dcfDelegate->registerCapability(m_visualActivityTracker))) {
+        if (!(capabilitiesDelegate->registerCapability(m_visualActivityTracker))) {
             ACSDK_ERROR(LX("initializeFailed")
                             .d("reason", "unableToRegisterCapability")
-                            .d("dcfDelegate", "VisualActivityTracker"));
+                            .d("capabilitiesDelegate", "VisualActivityTracker"));
             return false;
         }
     }
@@ -735,19 +797,21 @@ bool DefaultClient::initialize(
     return true;
 }
 
-void DefaultClient::onDCFStateChange(DCFObserverInterface::State newState, DCFObserverInterface::Error newError) {
-    if (DCFObserverInterface::State::SUCCESS == newState) {
+void DefaultClient::onCapabilitiesStateChange(
+    CapabilitiesObserverInterface::State newState,
+    CapabilitiesObserverInterface::Error newError) {
+    if (CapabilitiesObserverInterface::State::SUCCESS == newState) {
         m_connectionManager->enable();
     }
 }
 
 void DefaultClient::connect(
-    const std::shared_ptr<avsCommon::sdkInterfaces::DCFDelegateInterface>& dcfDelegate,
+    const std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface>& capabilitiesDelegate,
     const std::string& avsEndpoint) {
     if (!avsEndpoint.empty()) {
         m_connectionManager->setAVSEndpoint(avsEndpoint);
     }
-    dcfDelegate->publishCapabilitiesAsyncWithRetries();
+    capabilitiesDelegate->publishCapabilitiesAsyncWithRetries();
 }
 
 void DefaultClient::disconnect() {
@@ -1022,6 +1086,10 @@ DefaultClient::~DefaultClient() {
     if (m_notificationsCapabilityAgent) {
         ACSDK_DEBUG5(LX("NotificationsShutdown."));
         m_notificationsCapabilityAgent->shutdown();
+    }
+    if (m_bluetooth) {
+        ACSDK_DEBUG5(LX("BluetoothShutdown."));
+        m_bluetooth->shutdown();
     }
     if (m_userInactivityMonitor) {
         ACSDK_DEBUG5(LX("UserInactivityMonitorShutdown."));

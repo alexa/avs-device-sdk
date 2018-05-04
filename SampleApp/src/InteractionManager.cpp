@@ -57,6 +57,10 @@ void InteractionManager::help() {
     m_executor.submit([this]() { m_userInterface->printHelpScreen(); });
 }
 
+void InteractionManager::limitedHelp() {
+    m_executor.submit([this]() { m_userInterface->printLimitedHelp(); });
+}
+
 void InteractionManager::settings() {
     m_executor.submit([this]() { m_userInterface->printSettingsScreen(); });
 }

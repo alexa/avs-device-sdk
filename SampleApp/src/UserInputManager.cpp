@@ -77,7 +77,8 @@ std::unique_ptr<UserInputManager> UserInputManager::create(std::shared_ptr<Inter
 }
 
 UserInputManager::UserInputManager(std::shared_ptr<InteractionManager> interactionManager) :
-        m_interactionManager{interactionManager} {
+        m_interactionManager{interactionManager},
+        m_limitedInteraction{false} {
 }
 
 void UserInputManager::run() {
@@ -91,16 +92,30 @@ void UserInputManager::run() {
         x = ::tolower(x);
         if (x == QUIT) {
             return;
-        } else if (x == INFO) {
-            m_interactionManager->help();
+        } else if (x == RESET) {
+            if (confirmReset()) {
+                // Exit sample app after device reset.
+                return;
+            }
         } else if (x == MIC_TOGGLE) {
             m_interactionManager->microphoneToggle();
+        } else if (x == STOP) {
+            m_interactionManager->stopForegroundActivity();
+        } else if (x == SPEAKER_CONTROL) {
+            controlSpeaker();
+        } else if (x == INFO) {
+            if (m_limitedInteraction) {
+                m_interactionManager->limitedHelp();
+            } else {
+                m_interactionManager->help();
+            }
+        } else if (m_limitedInteraction) {
+            m_interactionManager->errorValue();
+            // ----- Add a new interaction bellow if the action is available only in 'unlimited interaction mode'.
         } else if (x == HOLD) {
             m_interactionManager->holdToggled();
         } else if (x == TAP) {
             m_interactionManager->tap();
-        } else if (x == STOP) {
-            m_interactionManager->stopForegroundActivity();
         } else if (x == PLAY) {
             m_interactionManager->playbackPlay();
         } else if (x == PAUSE) {
@@ -128,39 +143,6 @@ void UserInputManager::run() {
                     break;
                 }
                     m_interactionManager->help();
-            }
-        } else if (x == SPEAKER_CONTROL) {
-            m_interactionManager->speakerControl();
-            char speakerChoice;
-            std::cin >> speakerChoice;
-            if (SPEAKER_TYPES.count(speakerChoice) == 0) {
-                m_interactionManager->errorValue();
-            } else {
-                m_interactionManager->volumeControl();
-                SpeakerInterface::Type speaker = SPEAKER_TYPES.at(speakerChoice);
-                char volume;
-                while (std::cin >> volume && volume != 'q') {
-                    switch (volume) {
-                        case '1':
-                            m_interactionManager->adjustVolume(speaker, INCREASE_VOLUME);
-                            break;
-                        case '2':
-                            m_interactionManager->adjustVolume(speaker, DECREASE_VOLUME);
-                            break;
-                        case '3':
-                            m_interactionManager->setMute(speaker, true);
-                            break;
-                        case '4':
-                            m_interactionManager->setMute(speaker, false);
-                            break;
-                        case 'i':
-                            m_interactionManager->volumeControl();
-                            break;
-                        default:
-                            m_interactionManager->errorValue();
-                            break;
-                    }
-                }
             }
         } else if (x == FIRMWARE_VERSION) {
             std::string text;
@@ -210,29 +192,6 @@ void UserInputManager::run() {
                         break;
                 }
             }
-        } else if (x == RESET) {
-            m_interactionManager->confirmResetDevice();
-            char y;
-            bool cancelReset = false;
-            do {
-                std::cin >> y;
-                // Check the Setting which has to be changed.
-                switch (y) {
-                    case 'Y':
-                    case 'y':
-                        // Login experience is not provided yet. Exit sample app for now.
-                        m_interactionManager->resetDevice();
-                        return;
-                    case 'N':
-                    case 'n':
-                        cancelReset = true;
-                        break;
-                    default:
-                        m_interactionManager->errorValue();
-                        m_interactionManager->confirmResetDevice();
-                        break;
-                }
-            } while (!cancelReset);
 #ifdef ENABLE_COMMS
         } else if (x == COMMS_CONTROL) {
             m_interactionManager->commsControl();
@@ -264,6 +223,75 @@ void UserInputManager::run() {
             m_interactionManager->errorValue();
         }
     }
+}
+
+void UserInputManager::onAuthStateChange(AuthObserverInterface::State newState, AuthObserverInterface::Error newError) {
+    m_limitedInteraction = m_limitedInteraction || (newState == AuthObserverInterface::State::UNRECOVERABLE_ERROR);
+}
+
+void UserInputManager::onCapabilitiesStateChange(
+    CapabilitiesObserverInterface::State newState,
+    CapabilitiesObserverInterface::Error newError) {
+    m_limitedInteraction = m_limitedInteraction || (newState == CapabilitiesObserverInterface::State::FATAL_ERROR);
+}
+
+void UserInputManager::controlSpeaker() {
+    m_interactionManager->speakerControl();
+    char speakerChoice;
+    std::cin >> speakerChoice;
+    if (SPEAKER_TYPES.count(speakerChoice) == 0) {
+        m_interactionManager->errorValue();
+    } else {
+        m_interactionManager->volumeControl();
+        SpeakerInterface::Type speaker = SPEAKER_TYPES.at(speakerChoice);
+        char volume;
+        while (std::cin >> volume && volume != 'q') {
+            switch (volume) {
+                case '1':
+                    m_interactionManager->adjustVolume(speaker, INCREASE_VOLUME);
+                    break;
+                case '2':
+                    m_interactionManager->adjustVolume(speaker, DECREASE_VOLUME);
+                    break;
+                case '3':
+                    m_interactionManager->setMute(speaker, true);
+                    break;
+                case '4':
+                    m_interactionManager->setMute(speaker, false);
+                    break;
+                case 'i':
+                    m_interactionManager->volumeControl();
+                    break;
+                default:
+                    m_interactionManager->errorValue();
+                    break;
+            }
+        }
+    }
+}
+
+bool UserInputManager::confirmReset() {
+    m_interactionManager->confirmResetDevice();
+    char y;
+    do {
+        std::cin >> y;
+        // Check the Setting which has to be changed.
+        switch (y) {
+            case 'Y':
+            case 'y':
+                m_interactionManager->resetDevice();
+                return true;
+            case 'N':
+            case 'n':
+                return false;
+            default:
+                m_interactionManager->errorValue();
+                m_interactionManager->confirmResetDevice();
+                break;
+        }
+    } while (true);
+
+    return false;
 }
 
 }  // namespace sampleApp

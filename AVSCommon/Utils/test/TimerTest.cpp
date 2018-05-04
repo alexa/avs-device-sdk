@@ -27,7 +27,11 @@ namespace timing {
 namespace test {
 
 /// Specifies the expected timing accuracy (timestamps must be within +/- ACCURACY of expected values).
+#ifdef _WIN32
+static const auto ACCURACY = std::chrono::milliseconds(30);
+#else
 static const auto ACCURACY = std::chrono::milliseconds(15);
+#endif
 
 /// Used for cases where the task should return immediately, without delay.
 static const auto NO_DELAY = std::chrono::milliseconds(0);
@@ -461,15 +465,3 @@ TEST_F(TimerTest, startRunningAfterStopDuringTask) {
 }  // namespace utils
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
-
-int main(int argc, char** argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-
-// ACSDK-1367 - Some tests fail on Windows
-#if defined(_WIN32) && !defined(RESOLVED_ACSDK_1367)
-    ::testing::GTEST_FLAG(filter) = "-TimerTest.slowTaskLessThanPeriod";
-    return 0;
-#else
-    return RUN_ALL_TESTS();
-#endif
-}
