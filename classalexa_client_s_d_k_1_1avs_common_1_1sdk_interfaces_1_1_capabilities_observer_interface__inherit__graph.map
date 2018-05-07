@@ -1,0 +1,5 @@
+<map id="alexaClientSDK::avsCommon::sdkInterfaces::CapabilitiesObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::CapabilitiesObserverInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1default_client_1_1_default_client.html" title="alexaClientSDK::defaultClient\l::DefaultClient" alt="" coords="293,5,489,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title="alexaClientSDK::sampleApp\l::UIManager" alt="" coords="296,68,485,107"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1sample_app_1_1_user_input_manager.html" title="Observes user input from the console and notifies the interaction manager of the user&#39;s intentions..." alt="" coords="296,131,485,169"/>
+</map>

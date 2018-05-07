@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html" title="alexaClientSDK::avsCommon\l::utils::configuration\l::ConfigurationNode" alt="" coords="5,5,203,61"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_user_inactivity_monitor_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::UserInactivity\lMonitorObserverInterface" alt="" coords="5,5,202,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_user_inactivity_monitor_observer.html" title="Mock class that implements UserInactivityMonitorObserverInterface. " alt="" coords="250,5,483,57"/>
 </map>

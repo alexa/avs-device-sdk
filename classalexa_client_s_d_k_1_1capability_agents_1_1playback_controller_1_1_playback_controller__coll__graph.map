@@ -1,6 +1,6 @@
 <map id="alexaClientSDK::capabilityAgents::playbackController::PlaybackController" name="alexaClientSDK::capabilityAgents::playbackController::PlaybackController">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextRequester\lInterface" alt="" coords="20,5,243,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::PlaybackHandler\lInterface" alt="" coords="23,85,239,141"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilityConfiguration\lInterface" alt="" coords="5,165,257,221"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="33,245,230,286"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextRequester\lInterface" alt="" coords="21,5,243,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::PlaybackHandler\lInterface" alt="" coords="24,81,240,133"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilityConfiguration\lInterface" alt="" coords="5,157,259,209"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="34,233,230,272"/>
 </map>

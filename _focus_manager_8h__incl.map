@@ -1,11 +1,11 @@
-<map id="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/AFML/include/AFML/FocusManager.h" name="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/AFML/include/AFML/FocusManager.h">
-<area shape="rect" id="node7" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="1057,317,1249,359"/>
-<area shape="rect" id="node10" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="688,228,880,269"/>
-<area shape="rect" id="node14" href="$_channel_8h.html" title="AFML/Channel.h" alt="" coords="1227,235,1347,262"/>
-<area shape="rect" id="node16" href="$_activity_tracker_interface_8h.html" title="AFML/ActivityTrackerInterface.h" alt="" coords="1027,146,1237,173"/>
-<area shape="rect" id="node17" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="365,139,560,180"/>
-<area shape="rect" id="node8" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="1046,407,1261,433"/>
-<area shape="rect" id="node13" href="$_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="810,325,1033,351"/>
-<area shape="rect" id="node19" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="365,228,560,269"/>
-<area shape="rect" id="node22" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="205,317,400,359"/>
+<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AFML/include/AFML/FocusManager.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AFML/include/AFML/FocusManager.h">
+<area shape="rect" id="node7" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="1062,292,1254,331"/>
+<area shape="rect" id="node10" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="688,205,879,244"/>
+<area shape="rect" id="node14" href="$_channel_8h.html" title="AFML/Channel.h" alt="" coords="1231,212,1352,237"/>
+<area shape="rect" id="node16" href="$_activity_tracker_interface_8h.html" title="AFML/ActivityTrackerInterface.h" alt="" coords="1030,125,1241,151"/>
+<area shape="rect" id="node17" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="364,119,558,157"/>
+<area shape="rect" id="node8" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="1052,379,1265,404"/>
+<area shape="rect" id="node13" href="$_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="809,299,1038,324"/>
+<area shape="rect" id="node19" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="364,205,558,244"/>
+<area shape="rect" id="node22" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="204,292,398,331"/>
 </map>

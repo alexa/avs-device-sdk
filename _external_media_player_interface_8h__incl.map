@@ -1,22 +1,22 @@
-<map id="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ExternalMediaPlayerInterface.h" name="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ExternalMediaPlayerInterface.h">
-<area shape="rect" id="node2" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="384,153,576,195"/>
-<area shape="rect" id="node10" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="1065,153,1257,195"/>
-<area shape="rect" id="node15" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1384,153,1576,195"/>
-<area shape="rect" id="node27" href="$_playback_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackHandlerInterface.h" alt="" coords="2432,243,2624,284"/>
-<area shape="rect" id="node29" href="$_playback_router_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackRouterInterface.h" alt="" coords="2009,153,2201,195"/>
-<area shape="rect" id="node30" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="672,332,864,373"/>
-<area shape="rect" id="node31" href="$_speaker_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerInterface.h" alt="" coords="849,153,1041,195"/>
-<area shape="rect" id="node4" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="197,332,392,373"/>
-<area shape="rect" id="node7" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="317,243,509,284"/>
-<area shape="rect" id="node8" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="416,332,647,373"/>
-<area shape="rect" id="node9" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="27,243,242,284"/>
-<area shape="rect" id="node12" href="$_channel_observer_interface_8h.html" title="ChannelObserverInterface.h" alt="" coords="1232,250,1418,277"/>
-<area shape="rect" id="node14" href="$_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="1442,250,1664,277"/>
-<area shape="rect" id="node13" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="1218,339,1432,366"/>
-<area shape="rect" id="node16" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1689,250,1940,277"/>
-<area shape="rect" id="node21" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1802,332,2006,373"/>
-<area shape="rect" id="node25" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="2114,332,2357,373"/>
-<area shape="rect" id="node24" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1960,421,2125,463"/>
-<area shape="rect" id="node28" href="$_playback_buttons_8h.html" title="AVSCommon/AVS/PlaybackButtons.h" alt="" coords="2431,339,2678,366"/>
-<area shape="rect" id="node32" href="$_speaker_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerObserverInterface.h" alt="" coords="686,243,924,284"/>
+<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ExternalMediaPlayerInterface.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ExternalMediaPlayerInterface.h">
+<area shape="rect" id="node2" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="381,132,572,171"/>
+<area shape="rect" id="node10" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="1066,132,1257,171"/>
+<area shape="rect" id="node15" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1512,132,1702,171"/>
+<area shape="rect" id="node27" href="$_playback_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackHandlerInterface.h" alt="" coords="2436,219,2626,257"/>
+<area shape="rect" id="node29" href="$_playback_router_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackRouterInterface.h" alt="" coords="2022,132,2213,171"/>
+<area shape="rect" id="node30" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="666,305,857,344"/>
+<area shape="rect" id="node31" href="$_speaker_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerInterface.h" alt="" coords="852,132,1042,171"/>
+<area shape="rect" id="node4" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="195,305,390,344"/>
+<area shape="rect" id="node7" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="314,219,505,257"/>
+<area shape="rect" id="node8" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="414,305,643,344"/>
+<area shape="rect" id="node9" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="26,219,238,257"/>
+<area shape="rect" id="node12" href="$_channel_observer_interface_8h.html" title="ChannelObserverInterface.h" alt="" coords="1234,225,1423,251"/>
+<area shape="rect" id="node14" href="$_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="1446,225,1674,251"/>
+<area shape="rect" id="node13" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="1222,312,1435,337"/>
+<area shape="rect" id="node16" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1699,225,1948,251"/>
+<area shape="rect" id="node21" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1805,305,2007,344"/>
+<area shape="rect" id="node25" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="2114,305,2361,344"/>
+<area shape="rect" id="node24" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1962,392,2124,431"/>
+<area shape="rect" id="node28" href="$_playback_buttons_8h.html" title="AVSCommon/AVS/PlaybackButtons.h" alt="" coords="2435,312,2680,337"/>
+<area shape="rect" id="node32" href="$_speaker_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerObserverInterface.h" alt="" coords="682,219,927,257"/>
 </map>

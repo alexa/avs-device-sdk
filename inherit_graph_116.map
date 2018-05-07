@@ -1,3 +1,8 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_time_comparator.html" title="alexaClientSDK::capability\lAgents::alerts::TimeComparator" alt="" coords="5,5,213,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_object_base.html" title="alexaClientSDK::bluetooth\lImplementations::blueZ\l::DBusObjectBase" alt="" coords="5,81,182,133"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_object.html" title="alexaClientSDK::bluetooth\lImplementations::blueZ\l::DBusObject\&lt; T \&gt;" alt="" coords="248,5,425,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_object.html" title="alexaClientSDK::bluetooth\lImplementations::blueZ\l::DBusObject\&lt; MediaEndpoint \&gt;" alt="" coords="230,81,442,133"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_object.html" title="alexaClientSDK::bluetooth\lImplementations::blueZ\l::DBusObject\&lt; PairingAgent \&gt;" alt="" coords="237,157,436,209"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_media_endpoint.html" title="alexaClientSDK::bluetooth\lImplementations::blueZ\l::MediaEndpoint" alt="" coords="490,81,667,133"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_pairing_agent.html" title="alexaClientSDK::bluetooth\lImplementations::blueZ\l::PairingAgent" alt="" coords="490,157,667,209"/>
 </map>

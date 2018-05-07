@@ -1,8 +1,8 @@
-<map id="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/Notifications/include/Notifications/SQLiteNotificationsStorage.h" name="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/Notifications/include/Notifications/SQLiteNotificationsStorage.h">
-<area shape="rect" id="node2" href="$_notifications_storage_interface_8h.html" title="Notifications/Notifications\lStorageInterface.h" alt="" coords="247,153,419,195"/>
-<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="539,153,754,195"/>
-<area shape="rect" id="node14" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="964,161,1183,187"/>
-<area shape="rect" id="node3" href="$_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_indicator_state_8h.html" title="AVSCommon/AVS/IndicatorState.h" alt="" coords="5,243,235,269"/>
-<area shape="rect" id="node5" href="$_notification_indicator_8h.html" title="NotificationIndicator.h" alt="" coords="259,243,408,269"/>
-<area shape="rect" id="node16" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="1143,243,1366,269"/>
+<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/Notifications/include/Notifications/SQLiteNotificationsStorage.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/Notifications/include/Notifications/SQLiteNotificationsStorage.h">
+<area shape="rect" id="node2" href="$_notifications_storage_interface_8h.html" title="Notifications/Notifications\lStorageInterface.h" alt="" coords="246,132,416,171"/>
+<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="536,132,750,171"/>
+<area shape="rect" id="node14" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="962,139,1183,164"/>
+<area shape="rect" id="node3" href="$_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_indicator_state_8h.html" title="AVSCommon/AVS/IndicatorState.h" alt="" coords="5,219,233,244"/>
+<area shape="rect" id="node5" href="$_notification_indicator_8h.html" title="NotificationIndicator.h" alt="" coords="257,219,406,244"/>
+<area shape="rect" id="node16" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="1143,219,1368,244"/>
 </map>

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['pairingagent',['PairingAgent',['../classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_pairing_agent.html',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
   ['parseresult',['ParseResult',['../structalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_test_parser_observer_1_1_parse_result.html',1,'alexaClientSDK::playlistParser::test::TestParserObserver']]],
   ['pipelineinterface',['PipelineInterface',['../classalexa_client_s_d_k_1_1media_player_1_1_pipeline_interface.html',1,'alexaClientSDK::mediaPlayer']]],
   ['playbackcontroller',['PlaybackController',['../classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html',1,'alexaClientSDK::capabilityAgents::playbackController']]],

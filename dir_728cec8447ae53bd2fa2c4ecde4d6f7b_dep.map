@@ -1,9 +1,9 @@
-<map id="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/TemplateRuntime/test" name="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/TemplateRuntime/test">
-<area shape="rect" id="node1" href="dir_728cec8447ae53bd2fa2c4ecde4d6f7b.html" title="test" alt="" coords="43,52,115,100"/>
-<area shape="rect" id="node2" href="dir_c812ba13d40d97c773fd9f77093be04d.html" title="include" alt="" coords="7,148,79,196"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000154_000151.html" title="1" alt="" coords="62,127,70,141"/>
-<area shape="rect" id="node3" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="27,244,130,292"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000154_000009.html" title="9" alt="" coords="91,220,99,235"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000151_000009.html" title="11" alt="" coords="64,217,79,231"/>
-<area shape="rect" id="clust1" href="dir_ad7482f55cfb335a38f864aa77f75e62.html" title="TemplateRuntime" alt="" coords="16,16,141,111"/>
+<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/TemplateRuntime/test" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/TemplateRuntime/test">
+<area shape="rect" id="node1" href="dir_728cec8447ae53bd2fa2c4ecde4d6f7b.html" title="test" alt="" coords="43,51,115,99"/>
+<area shape="rect" id="node2" href="dir_c812ba13d40d97c773fd9f77093be04d.html" title="include" alt="" coords="5,147,77,195"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000172_000169.html" title="1" alt="" coords="62,126,69,139"/>
+<area shape="rect" id="node3" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="27,243,128,291"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000172_000009.html" title="9" alt="" coords="90,219,98,232"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000169_000009.html" title="11" alt="" coords="63,216,77,229"/>
+<area shape="rect" id="clust1" href="dir_ad7482f55cfb335a38f864aa77f75e62.html" title="TemplateRuntime" alt="" coords="17,16,141,109"/>
 </map>

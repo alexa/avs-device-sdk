@@ -1,0 +1,6 @@
+<map id="alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::services::BluetoothServiceInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::services::BluetoothServiceInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a2_d_p_source_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::bluetooth\l::services::A2DPSourceInterface" alt="" coords="294,5,508,57"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a_v_r_c_p_target_interface.html" title="Used to implement an instance of AVRCPTarget (Audio/Video Remote Control Profile). " alt="" coords="291,81,510,133"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_a2_d_p_source.html" title="alexaClientSDK::bluetooth\lImplementations::blueZ\l::BlueZA2DPSource" alt="" coords="558,5,735,57"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_a_v_r_c_p_target.html" title="A BlueZ implementation of the AVRCPTargetInterface. " alt="" coords="558,81,735,133"/>
+</map>

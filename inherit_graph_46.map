@@ -1,6 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_factory_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::HTTPContentFetcher\lInterfaceFactoryInterface" alt="" coords="5,77,248,133"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_content_fetcher_factory.html" title="alexaClientSDK::avsCommon\l::utils::libcurlUtils::\lHTTPContentFetcherFactory" alt="" coords="311,5,508,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_content_fetcher_factory.html" title="A mock factory that creates mock content fetchers. " alt="" coords="296,85,523,126"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_mock_content_fetcher_factory.html" title="A mock factory that creates mock content fetchers. " alt="" coords="299,149,519,205"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_observer_interface.html" title="An interface that clients can extend to register to observe focus changes. " alt="" coords="5,5,265,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager_observer.html" title="Mock class that implements the FocusManagerObserver. " alt="" coords="313,5,510,57"/>
 </map>

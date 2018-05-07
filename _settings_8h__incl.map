@@ -1,17 +1,17 @@
-<map id="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/Settings/include/Settings/Settings.h" name="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/Settings/include/Settings/Settings.h">
-<area shape="rect" id="node6" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="465,228,659,269"/>
-<area shape="rect" id="node8" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="981,139,1204,180"/>
-<area shape="rect" id="node9" href="$_global_settings_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/GlobalSettingsObserverInterface.h" alt="" coords="98,139,325,180"/>
-<area shape="rect" id="node10" href="$_single_setting_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SingleSettingObserverInterface.h" alt="" coords="399,139,618,180"/>
-<area shape="rect" id="node11" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="765,139,957,180"/>
-<area shape="rect" id="node21" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1845,139,2039,180"/>
-<area shape="rect" id="node31" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="1356,317,1523,359"/>
-<area shape="rect" id="node32" href="$_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="1407,228,1579,269"/>
-<area shape="rect" id="node34" href="$_settings_storage_interface_8h.html" title="Settings/SettingsStorage\lInterface.h" alt="" coords="171,228,337,269"/>
-<area shape="rect" id="node12" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="743,235,994,262"/>
-<area shape="rect" id="node15" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="796,317,1000,359"/>
-<area shape="rect" id="node19" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="445,317,687,359"/>
-<area shape="rect" id="node18" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="954,407,1119,448"/>
-<area shape="rect" id="node24" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1845,228,2039,269"/>
-<area shape="rect" id="node27" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="1711,317,1906,359"/>
+<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/Settings/include/Settings/Settings.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/Settings/include/Settings/Settings.h">
+<area shape="rect" id="node6" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="465,205,658,244"/>
+<area shape="rect" id="node8" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="978,119,1204,157"/>
+<area shape="rect" id="node9" href="$_global_settings_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/GlobalSettingsObserverInterface.h" alt="" coords="100,119,330,157"/>
+<area shape="rect" id="node10" href="$_single_setting_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SingleSettingObserverInterface.h" alt="" coords="404,119,626,157"/>
+<area shape="rect" id="node11" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="764,119,954,157"/>
+<area shape="rect" id="node21" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1850,119,2044,157"/>
+<area shape="rect" id="node31" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="1359,292,1527,331"/>
+<area shape="rect" id="node32" href="$_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="1409,205,1583,244"/>
+<area shape="rect" id="node34" href="$_settings_storage_interface_8h.html" title="Settings/SettingsStorage\lInterface.h" alt="" coords="174,205,342,244"/>
+<area shape="rect" id="node12" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="751,212,1000,237"/>
+<area shape="rect" id="node15" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="800,292,1001,331"/>
+<area shape="rect" id="node19" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="445,292,692,331"/>
+<area shape="rect" id="node18" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="957,379,1119,417"/>
+<area shape="rect" id="node24" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1850,205,2044,244"/>
+<area shape="rect" id="node27" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="1716,292,1911,331"/>
 </map>

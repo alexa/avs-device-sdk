@@ -1,7 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ExceptionEncountered\lSenderInterface" alt="" coords="5,113,253,169"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_exception_encountered_sender.html" title="alexaClientSDK::adsl\l::test::MockExceptionEncountered\lSender" alt="" coords="305,5,528,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_exception_encountered_sender.html" title="alexaClientSDK::avsCommon\l::avs::ExceptionEncounteredSender" alt="" coords="301,85,532,126"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_exception_encountered_sender.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockExceptionEncounteredSender" alt="" coords="303,149,530,205"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_exception_encountered_sender.html" title="alexaClientSDK::integration\l::test::TestExceptionEncountered\lSender" alt="" coords="308,229,525,285"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CallStateObserver\lInterface" alt="" coords="5,5,230,57"/>
 </map>

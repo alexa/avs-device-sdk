@@ -1,6 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html" title="alexaClientSDK::avsCommon\l::avs::MessageRequest" alt="" coords="5,77,203,119"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_request.html" title="alexaClientSDK::acl\l::test::MockMessageRequest" alt="" coords="253,5,447,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_message_request.html" title="alexaClientSDK::capability\lAgents::playbackController\l::PlaybackMessageRequest" alt="" coords="257,70,443,126"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1integration_1_1_observable_message_request.html" title="alexaClientSDK::integration\l::ObservableMessageRequest" alt="" coords="251,149,449,191"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html" title="alexaClientSDK::avsCommon\l::avs::MessageRequest" alt="" coords="5,75,202,113"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_request.html" title="alexaClientSDK::acl\l::test::MockMessageRequest" alt="" coords="254,5,447,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_message_request.html" title="alexaClientSDK::capability\lAgents::playbackController\l::PlaybackMessageRequest" alt="" coords="257,68,444,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1integration_1_1_observable_message_request.html" title="alexaClientSDK::integration\l::ObservableMessageRequest" alt="" coords="250,144,451,183"/>
 </map>

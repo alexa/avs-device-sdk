@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['pairingagent_2ecpp',['PairingAgent.cpp',['../_pairing_agent_8cpp.html',1,'']]],
+  ['pairingagent_2eh',['PairingAgent.h',['../_pairing_agent_8h.html',1,'']]],
   ['pipelineinterface_2eh',['PipelineInterface.h',['../_pipeline_interface_8h.html',1,'']]],
   ['playbackbuttons_2eh',['PlaybackButtons.h',['../_playback_buttons_8h.html',1,'']]],
   ['playbackcontroller_2ecpp',['PlaybackController.cpp',['../_playback_controller_8cpp.html',1,'']]],

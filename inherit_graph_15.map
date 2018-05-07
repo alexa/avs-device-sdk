@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate_storage_interface.html" title="alexaClientSDK::authorization\l::cblAuthDelegate::CBLAuthDelegate\lStorageInterface" alt="" coords="5,5,244,61"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_s_q_lite_c_b_l_auth_delegate_storage.html" title="alexaClientSDK::authorization\l::cblAuthDelegate::SQLiteCBLAuth\lDelegateStorage" alt="" coords="292,5,519,61"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate_storage_interface.html" title="alexaClientSDK::authorization\l::cblAuthDelegate::CBLAuthDelegate\lStorageInterface" alt="" coords="5,5,246,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_s_q_lite_c_b_l_auth_delegate_storage.html" title="alexaClientSDK::authorization\l::cblAuthDelegate::SQLiteCBLAuth\lDelegateStorage" alt="" coords="294,5,522,57"/>
 </map>

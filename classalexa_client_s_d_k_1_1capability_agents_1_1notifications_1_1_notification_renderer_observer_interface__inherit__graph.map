@@ -1,4 +1,4 @@
 <map id="alexaClientSDK::capabilityAgents::notifications::NotificationRendererObserverInterface" name="alexaClientSDK::capabilityAgents::notifications::NotificationRendererObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_capability_agent.html" title="alexaClientSDK::capability\lAgents::notifications::\lNotificationsCapabilityAgent" alt="" coords="333,5,520,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_mock_notification_renderer_observer.html" title="alexaClientSDK::capability\lAgents::notifications::\ltest::MockNotificationRendererObserver" alt="" coords="299,85,555,141"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_capability_agent.html" title="alexaClientSDK::capability\lAgents::notifications::\lNotificationsCapabilityAgent" alt="" coords="338,5,526,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_mock_notification_renderer_observer.html" title="alexaClientSDK::capability\lAgents::notifications::\ltest::MockNotificationRendererObserver" alt="" coords="303,81,561,133"/>
 </map>

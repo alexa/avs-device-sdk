@@ -1,6 +1,6 @@
-<map id="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/Integration/src/TestHttpPut.cpp" name="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/Integration/src/TestHttpPut.cpp">
-<area shape="rect" id="node2" href="$_test_http_put_8h.html" title="Integration/TestHttpPut.h" alt="" coords="13,146,183,173"/>
-<area shape="rect" id="node7" href="$_http_response_codes_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpResponseCodes.h" alt="" coords="207,139,410,180"/>
-<area shape="rect" id="node5" href="$_http_put_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPutInterface.h" alt="" coords="66,228,269,269"/>
-<area shape="rect" id="node6" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="191,317,317,344"/>
+<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/Integration/src/TestHttpPut.cpp" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/Integration/src/TestHttpPut.cpp">
+<area shape="rect" id="node2" href="$_test_http_put_8h.html" title="Integration/TestHttpPut.h" alt="" coords="5,125,173,151"/>
+<area shape="rect" id="node7" href="$_http_response_codes_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpResponseCodes.h" alt="" coords="198,119,397,157"/>
+<area shape="rect" id="node5" href="$_http_put_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPutInterface.h" alt="" coords="59,205,259,244"/>
+<area shape="rect" id="node6" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="182,292,309,317"/>
 </map>

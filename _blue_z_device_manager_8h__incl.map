@@ -1,0 +1,28 @@
+<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/BlueZDeviceManager.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/BlueZDeviceManager.h">
+<area shape="rect" id="node5" href="$_bluetooth_device_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceInterface.h" alt="" coords="297,405,543,444"/>
+<area shape="rect" id="node11" href="$_a2_d_p_source_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/A2DPSource\lInterface.h" alt="" coords="472,492,688,544"/>
+<area shape="rect" id="node18" href="$_bluetooth_device_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceManager\lInterface.h" alt="" coords="753,119,988,171"/>
+<area shape="rect" id="node19" href="$_bluetooth_host_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothHostController\lInterface.h" alt="" coords="864,305,1091,357"/>
+<area shape="rect" id="node20" href="$_bluetooth_event_bus_8h.html" title="AVSCommon/Utils/Bluetooth\l/BluetoothEventBus.h" alt="" coords="1561,125,1751,164"/>
+<area shape="rect" id="node22" href="$_bluetooth_events_8h.html" title="AVSCommon/Utils/Bluetooth\l/BluetoothEvents.h" alt="" coords="598,312,789,351"/>
+<area shape="rect" id="node24" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1415,219,1609,257"/>
+<area shape="rect" id="node33" href="$_blue_z_utils_8h.html" title="BlueZ/BlueZUtils.h" alt="" coords="2577,412,2709,437"/>
+<area shape="rect" id="node39" href="$_pairing_agent_8h.html" title="BlueZ/PairingAgent.h" alt="" coords="2248,225,2395,251"/>
+<area shape="rect" id="node12" href="$_bluetooth_service_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/Bluetooth\lServiceInterface.h" alt="" coords="309,592,505,644"/>
+<area shape="rect" id="node13" href="$_s_d_p_record_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/SDPRecord\lInterface.h" alt="" coords="247,692,457,744"/>
+<area shape="rect" id="node17" href="$_a_v_r_c_p_target_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/AVRCPTarget\lInterface.h" alt="" coords="118,492,340,544"/>
+<area shape="rect" id="node14" href="$_formatted_audio_stream_adapter_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapter.h" alt="" coords="529,599,749,637"/>
+<area shape="rect" id="node15" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="504,792,726,817"/>
+<area shape="rect" id="node16" href="$_formatted_audio_stream_adapter_listener_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapterListener.h" alt="" coords="481,699,748,737"/>
+<area shape="rect" id="node23" href="$_bluetooth_event_listener_interface_8h.html" title="AVSCommon/Utils/Bluetooth\l/BluetoothEventListenerInterface.h" alt="" coords="1164,219,1390,257"/>
+<area shape="rect" id="node26" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1165,312,1360,351"/>
+<area shape="rect" id="node29" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="1265,405,1460,444"/>
+<area shape="rect" id="node34" href="$_managed_g_variant_8h.html" title="BlueZ/ManagedGVariant.h" alt="" coords="2536,605,2714,631"/>
+<area shape="rect" id="node36" href="$_managed_g_error_8h.html" title="BlueZ/ManagedGError.h" alt="" coords="2840,605,3006,631"/>
+<area shape="rect" id="node37" href="$_g_variant_tuple_reader_8h.html" title="BlueZ/GVariantTupleReader.h" alt="" coords="2802,505,3001,531"/>
+<area shape="rect" id="node38" href="$_g_variant_map_reader_8h.html" title="BlueZ/GVariantMapReader.h" alt="" coords="2587,505,2778,531"/>
+<area shape="rect" id="node40" href="$_d_bus_object_8h.html" title="BlueZ/DBusObject.h" alt="" coords="1981,412,2123,437"/>
+<area shape="rect" id="node43" href="$_d_bus_proxy_8h.html" title="BlueZ/DBusProxy.h" alt="" coords="2298,319,2435,344"/>
+<area shape="rect" id="node41" href="$_d_bus_object_base_8h.html" title="BlueZ/DBusObjectBase.h" alt="" coords="2035,505,2208,531"/>
+<area shape="rect" id="node42" href="$_d_bus_connection_8h.html" title="BlueZ/DBusConnection.h" alt="" coords="1986,605,2158,631"/>
+</map>

@@ -1,5 +1,8 @@
 var searchData=
 [
+  ['a2dpsinkrecord',['A2DPSinkRecord',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a2_d_p_sink_record.html',1,'alexaClientSDK::avsCommon::utils::bluetooth']]],
+  ['a2dpsourceinterface',['A2DPSourceInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a2_d_p_source_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::services']]],
+  ['a2dpsourcerecord',['A2DPSourceRecord',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a2_d_p_source_record.html',1,'alexaClientSDK::avsCommon::utils::bluetooth']]],
   ['abstractavsconnectionmanager',['AbstractAVSConnectionManager',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_abstract_a_v_s_connection_manager.html',1,'alexaClientSDK::avsCommon::avs']]],
   ['abstractkeyworddetector',['AbstractKeywordDetector',['../classalexa_client_s_d_k_1_1kwd_1_1_abstract_keyword_detector.html',1,'alexaClientSDK::kwd']]],
   ['abstractkeyworddetectortest',['AbstractKeyWordDetectorTest',['../classalexa_client_s_d_k_1_1kwd_1_1test_1_1_abstract_key_word_detector_test.html',1,'alexaClientSDK::kwd::test']]],
@@ -64,6 +67,8 @@ var searchData=
   ['authdelegatetestcontext',['AuthDelegateTestContext',['../classalexa_client_s_d_k_1_1integration_1_1test_1_1_auth_delegate_test_context.html',1,'alexaClientSDK::integration::test']]],
   ['authobserver',['AuthObserver',['../classalexa_client_s_d_k_1_1integration_1_1_auth_observer.html',1,'alexaClientSDK::integration']]],
   ['authobserverinterface',['AuthObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
+  ['avrcptargetinterface',['AVRCPTargetInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a_v_r_c_p_target_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::services']]],
+  ['avrcptargetrecord',['AVRCPTargetRecord',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a_v_r_c_p_target_record.html',1,'alexaClientSDK::avsCommon::utils::bluetooth']]],
   ['avscommunication',['AVSCommunication',['../classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_v_s_communication.html',1,'alexaClientSDK::integration::test']]],
   ['avsconnectionmanager',['AVSConnectionManager',['../classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html',1,'alexaClientSDK::acl']]],
   ['avsconnectionmanagerinterface',['AVSConnectionManagerInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],

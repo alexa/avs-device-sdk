@@ -1,7 +1,7 @@
-<map id="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/CallManagerInterface.h" name="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/CallManagerInterface.h">
-<area shape="rect" id="node4" href="$_call_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CallStateObserverInterface.h" alt="" coords="340,153,535,195"/>
-<area shape="rect" id="node6" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="559,153,804,195"/>
-<area shape="rect" id="node7" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="829,153,1089,195"/>
-<area shape="rect" id="node9" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="127,153,316,195"/>
-<area shape="rect" id="node8" href="$_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="782,243,1005,284"/>
+<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/CallManagerInterface.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/CallManagerInterface.h">
+<area shape="rect" id="node4" href="$_call_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CallStateObserverInterface.h" alt="" coords="336,132,533,171"/>
+<area shape="rect" id="node6" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="557,132,805,171"/>
+<area shape="rect" id="node7" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="829,132,1094,171"/>
+<area shape="rect" id="node9" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="125,132,313,171"/>
+<area shape="rect" id="node8" href="$_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="784,219,1006,257"/>
 </map>

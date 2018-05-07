@@ -1,10 +1,10 @@
-<map id="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/MediaPlayer/include/MediaPlayer/IStreamSource.h" name="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/MediaPlayer/include/MediaPlayer/IStreamSource.h">
-<area shape="rect" id="node6" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="565,213,774,255"/>
-<area shape="rect" id="node15" href="$_base_stream_source_8h.html" title="MediaPlayer/BaseStreamSource.h" alt="" coords="889,139,1111,165"/>
-<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="111,303,315,344"/>
-<area shape="rect" id="node13" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="390,310,613,337"/>
-<area shape="rect" id="node12" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="5,392,171,433"/>
-<area shape="rect" id="node16" href="$_source_interface_8h.html" title="MediaPlayer/SourceInterface.h" alt="" coords="919,221,1121,247"/>
-<area shape="rect" id="node17" href="$_pipeline_interface_8h.html" title="MediaPlayer/PipelineInterface.h" alt="" coords="1133,310,1339,337"/>
-<area shape="rect" id="node19" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="919,303,1108,344"/>
+<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/MediaPlayer/include/MediaPlayer/IStreamSource.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/MediaPlayer/include/MediaPlayer/IStreamSource.h">
+<area shape="rect" id="node6" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="561,192,769,231"/>
+<area shape="rect" id="node15" href="$_base_stream_source_8h.html" title="MediaPlayer/BaseStreamSource.h" alt="" coords="884,119,1110,144"/>
+<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="109,279,311,317"/>
+<area shape="rect" id="node13" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="386,285,608,311"/>
+<area shape="rect" id="node12" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="5,365,167,404"/>
+<area shape="rect" id="node16" href="$_source_interface_8h.html" title="MediaPlayer/SourceInterface.h" alt="" coords="915,199,1119,224"/>
+<area shape="rect" id="node17" href="$_pipeline_interface_8h.html" title="MediaPlayer/PipelineInterface.h" alt="" coords="1125,285,1335,311"/>
+<area shape="rect" id="node19" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="914,279,1102,317"/>
 </map>

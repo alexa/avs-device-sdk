@@ -1,7 +1,7 @@
 <map id="alexaClientSDK::mediaPlayer::MediaPlayer" name="alexaClientSDK::mediaPlayer::MediaPlayer">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="16,5,213,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lInterface" alt="" coords="7,70,222,126"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerInterface" alt="" coords="7,149,223,191"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1media_player_1_1_pipeline_interface.html" title="alexaClientSDK::mediaPlayer\l::PipelineInterface" alt="" coords="17,215,212,256"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter_1_1_error_observer_interface.html" title="Class to observe errors that arise from converting a URL to to an Attachment. " alt="" coords="5,279,224,335"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="19,5,216,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lInterface" alt="" coords="9,68,225,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerInterface" alt="" coords="9,144,226,183"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1media_player_1_1_pipeline_interface.html" title="alexaClientSDK::mediaPlayer\l::PipelineInterface" alt="" coords="19,207,215,245"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter_1_1_error_observer_interface.html" title="Class to observe errors that arise from converting a URL to to an Attachment. " alt="" coords="5,269,229,321"/>
 </map>

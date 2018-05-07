@@ -43,6 +43,7 @@ var searchData=
   ['request_5fcode_5fpair_5fpath',['REQUEST_CODE_PAIR_PATH',['../namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a5060fc26a4ec254f534d11ff4ff631a2',1,'alexaClientSDK::authorization::cblAuthDelegate']]],
   ['request_5ftoken',['REQUEST_TOKEN',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#a146fadc7645c37e5e4b3cd1edd3ce713',1,'alexaClientSDK::avsCommon::avs::externalMediaPlayer']]],
   ['request_5ftoken_5fpath',['REQUEST_TOKEN_PATH',['../namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a24c6638f45391a1c108f8022f9037b5f',1,'alexaClientSDK::authorization::cblAuthDelegate']]],
+  ['requester_5fkey',['REQUESTER_KEY',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#ae20ffca2f4bea8c50070971f8c1d2b58',1,'alexaClientSDK::capabilityAgents::bluetooth']]],
   ['requestid',['requestId',['../structalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_test_parser_observer_1_1_parse_result.html#a5ad832459dcf4430f7f8ea70bfde0501',1,'alexaClientSDK::playlistParser::test::TestParserObserver::ParseResult']]],
   ['reserved_5fmetadata_5fchars',['RESERVED_METADATA_CHARS',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a9426f0400ec1550d40bd48d79d37aa98',1,'alexaClientSDK::avsCommon::utils::logger']]],
   ['reset',['RESET',['../namespacealexa_client_s_d_k_1_1sample_app.html#afe63debf00d4ed680c30956a77e8c610',1,'alexaClientSDK::sampleApp']]],

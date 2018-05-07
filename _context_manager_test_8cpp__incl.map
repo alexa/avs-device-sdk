@@ -1,16 +1,16 @@
-<map id="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/ContextManager/test/ContextManagerTest.cpp" name="/workplace/release/tools/avs&#45;cpp&#45;sdk&#45;tools/cm/output2/autoCM_publicRepo/avs&#45;device&#45;sdk/ContextManager/test/ContextManagerTest.cpp">
-<area shape="rect" id="node2" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="414,139,590,180"/>
-<area shape="rect" id="node23" href="$_context_manager_8h.html" title="ContextManager/ContextManager.h" alt="" coords="1594,146,1823,173"/>
-<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="725,228,940,269"/>
-<area shape="rect" id="node13" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="445,317,621,359"/>
-<area shape="rect" id="node14" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="69,228,245,269"/>
-<area shape="rect" id="node19" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="405,228,599,269"/>
-<area shape="rect" id="node20" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="935,407,1111,448"/>
-<area shape="rect" id="node15" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="245,317,421,359"/>
-<area shape="rect" id="node17" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="270,407,446,448"/>
-<area shape="rect" id="node31" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1613,228,1805,269"/>
-<area shape="rect" id="node32" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="1231,317,1426,359"/>
-<area shape="rect" id="node33" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1501,317,1693,359"/>
-<area shape="rect" id="node34" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1397,407,1628,448"/>
-<area shape="rect" id="node35" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="1819,317,2033,359"/>
+<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/ContextManager/test/ContextManagerTest.cpp" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/ContextManager/test/ContextManagerTest.cpp">
+<area shape="rect" id="node2" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="414,119,590,157"/>
+<area shape="rect" id="node23" href="$_context_manager_8h.html" title="ContextManager/ContextManager.h" alt="" coords="1594,125,1827,151"/>
+<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="726,205,940,244"/>
+<area shape="rect" id="node13" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="444,292,620,331"/>
+<area shape="rect" id="node14" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="68,205,244,244"/>
+<area shape="rect" id="node19" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="404,205,601,244"/>
+<area shape="rect" id="node20" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="934,379,1110,417"/>
+<area shape="rect" id="node15" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="244,292,420,331"/>
+<area shape="rect" id="node17" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="269,379,445,417"/>
+<area shape="rect" id="node31" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1615,205,1806,244"/>
+<area shape="rect" id="node32" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="1233,292,1428,331"/>
+<area shape="rect" id="node33" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1503,292,1694,331"/>
+<area shape="rect" id="node34" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1400,379,1629,417"/>
+<area shape="rect" id="node35" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="1820,292,2032,331"/>
 </map>

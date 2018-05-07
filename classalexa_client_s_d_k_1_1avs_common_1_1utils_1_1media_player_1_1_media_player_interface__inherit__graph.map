@@ -1,7 +1,7 @@
 <map id="alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface" name="alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player_helper.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::test\l::MockMediaPlayerHelper" alt="" coords="268,5,465,61"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html" title="alexaClientSDK::integration\l::test::TestMediaPlayer" alt="" coords="275,85,458,126"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="269,150,464,191"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html" title="A mock MediaPlayer for unit tests. " alt="" coords="513,5,711,61"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1test_1_1_test_media_player.html" title="alexaClientSDK::capability\lAgents::alerts::renderer\l::test::TestMediaPlayer" alt="" coords="759,5,937,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player_helper.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::test\l::MockMediaPlayerHelper" alt="" coords="269,5,466,57"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html" title="alexaClientSDK::integration\l::test::TestMediaPlayer" alt="" coords="275,81,459,120"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="269,144,465,183"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html" title="A mock MediaPlayer for unit tests. " alt="" coords="514,5,711,57"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1test_1_1_test_media_player.html" title="alexaClientSDK::capability\lAgents::alerts::renderer\l::test::TestMediaPlayer" alt="" coords="759,5,936,57"/>
 </map>
