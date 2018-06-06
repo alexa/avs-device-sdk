@@ -74,7 +74,13 @@ Run the setup script with your configuration as an argument:
 ```
 bash ./setup.sh ./config.txt
 ```
-This installation can take some time, so go find something useful to do while waiting :)
+This installation can take about 30 min, so go find something useful to do while waiting :)
+
+After finished reboot the Pi.
+
+```
+sudo reboot
+```
 
 ### 4. Run Alexa!
 
