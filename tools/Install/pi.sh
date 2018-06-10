@@ -64,7 +64,7 @@ build_kwd_engine() {
   echo
 
   cd $THIRD_PARTY_PATH
-  git clone git://github.com/Sensory/alexa-rpi.git
+  git clone --depth 1 git://github.com/Sensory/alexa-rpi.git
   bash ./alexa-rpi/bin/license.sh
 }
 
