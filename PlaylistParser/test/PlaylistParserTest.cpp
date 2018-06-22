@@ -1,6 +1,4 @@
 /*
- * PlaylistParserTest.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -262,7 +260,9 @@ public:
     MockContentFetcher(const std::string& url) : m_url{url} {
     }
 
-    std::unique_ptr<avsCommon::utils::HTTPContent> getContent(FetchOptions fetchOption) {
+    std::unique_ptr<avsCommon::utils::HTTPContent> getContent(
+        FetchOptions fetchOption,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer) {
         if (fetchOption == FetchOptions::CONTENT_TYPE) {
             auto it1 = urlsToContentTypes.find(m_url);
             if (it1 == urlsToContentTypes.end()) {

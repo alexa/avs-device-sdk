@@ -1,7 +1,5 @@
 /*
- * InteractionManager.cpp
- *
- * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,7 +13,9 @@
  * permissions and limitations under the License.
  */
 
+#include "ESP/ESPDataProviderInterface.h"
 #include "SampleApp/InteractionManager.h"
+#include "RegistrationManager/CustomerDataManager.h"
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -26,11 +26,15 @@ InteractionManager::InteractionManager(
     std::shared_ptr<sampleApp::UIManager> userInterface,
     capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
     capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
-    capabilityAgents::aip::AudioProvider wakeWordAudioProvider) :
+    capabilityAgents::aip::AudioProvider wakeWordAudioProvider,
+    std::shared_ptr<esp::ESPDataProviderInterface> espProvider,
+    std::shared_ptr<esp::ESPDataModifierInterface> espModifier) :
         RequiresShutdown{"InteractionManager"},
         m_client{client},
         m_micWrapper{micWrapper},
         m_userInterface{userInterface},
+        m_espProvider{espProvider},
+        m_espModifier{espModifier},
         m_holdToTalkAudioProvider{holdToTalkAudioProvider},
         m_tapToTalkAudioProvider{tapToTalkAudioProvider},
         m_wakeWordAudioProvider{wakeWordAudioProvider},
@@ -177,6 +181,69 @@ void InteractionManager::setMute(avsCommon::sdkInterfaces::SpeakerInterface::Typ
     m_executor.submit([this, type, mute]() {
         std::future<bool> future = m_client->getSpeakerManager()->setMute(type, mute);
         future.get();
+    });
+}
+
+void InteractionManager::confirmResetDevice() {
+    m_executor.submit([this]() { m_userInterface->printResetConfirmation(); });
+}
+
+void InteractionManager::resetDevice() {
+    // This is a blocking operation. No interaction will be allowed during / after resetDevice
+    auto result = m_executor.submit([this]() {
+        m_client->getRegistrationManager()->logout();
+        m_userInterface->printResetWarning();
+    });
+    result.wait();
+}
+
+void InteractionManager::espControl() {
+    m_executor.submit([this]() {
+        if (m_espProvider) {
+            auto espData = m_espProvider->getESPData();
+            m_userInterface->printESPControlScreen(
+                m_espProvider->isEnabled(), espData.getVoiceEnergy(), espData.getAmbientEnergy());
+        } else {
+            m_userInterface->printESPNotSupported();
+        }
+    });
+}
+
+void InteractionManager::toggleESPSupport() {
+    m_executor.submit([this]() {
+        if (m_espProvider) {
+            m_espProvider->isEnabled() ? m_espProvider->disable() : m_espProvider->enable();
+        } else {
+            m_userInterface->printESPNotSupported();
+        }
+    });
+}
+
+void InteractionManager::setESPVoiceEnergy(const std::string& voiceEnergy) {
+    m_executor.submit([this, voiceEnergy]() {
+        if (m_espProvider) {
+            if (m_espModifier) {
+                m_espModifier->setVoiceEnergy(voiceEnergy);
+            } else {
+                m_userInterface->printESPDataOverrideNotSupported();
+            }
+        } else {
+            m_userInterface->printESPNotSupported();
+        }
+    });
+}
+
+void InteractionManager::setESPAmbientEnergy(const std::string& ambientEnergy) {
+    m_executor.submit([this, ambientEnergy]() {
+        if (m_espProvider) {
+            if (m_espModifier) {
+                m_espModifier->setAmbientEnergy(ambientEnergy);
+            } else {
+                m_userInterface->printESPDataOverrideNotSupported();
+            }
+        } else {
+            m_userInterface->printESPNotSupported();
+        }
     });
 }
 

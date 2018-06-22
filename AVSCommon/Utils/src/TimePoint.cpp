@@ -1,25 +1,21 @@
 /*
- * TimePoint.cpp
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates.
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *     http://aws.amazon.com/apache2.0/
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
  */
 
 #include "AVSCommon/Utils/Timing/TimePoint.h"
 
 #include "AVSCommon/Utils/Logger/Logger.h"
-#include "AVSCommon/Utils/Timing/TimeUtils.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -43,7 +39,7 @@ TimePoint::TimePoint() : m_time_Unix{0} {
 
 bool TimePoint::setTime_ISO_8601(const std::string& time_ISO_8601) {
     int64_t tempUnixTime = 0;
-    if (!convert8601TimeStringToUnix(time_ISO_8601, &tempUnixTime)) {
+    if (!m_timeUtils.convert8601TimeStringToUnix(time_ISO_8601, &tempUnixTime)) {
         ACSDK_ERROR(LX("setTime_ISO_8601Failed").d("input", time_ISO_8601).m("Could not convert to Unix time."));
         return false;
     }

@@ -1,19 +1,16 @@
 /*
- * DirectiveProcessor.cpp
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates.
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *     http://aws.amazon.com/apache2.0/
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
  */
 
 #include <algorithm>
@@ -50,6 +47,7 @@ std::unordered_map<DirectiveProcessor::ProcessorHandle, DirectiveProcessor*> Dir
 DirectiveProcessor::DirectiveProcessor(DirectiveRouter* directiveRouter) :
         m_directiveRouter{directiveRouter},
         m_isShuttingDown{false},
+        m_isEnabled{true},
         m_isHandlingDirective{false} {
     std::lock_guard<std::mutex> lock(m_handleMapMutex);
     m_handle = ++m_nextProcessorHandle;
@@ -73,11 +71,11 @@ bool DirectiveProcessor::onDirective(std::shared_ptr<AVSDirective> directive) {
     }
     std::lock_guard<std::mutex> onDirectiveLock(m_onDirectiveMutex);
     std::unique_lock<std::mutex> lock(m_mutex);
-    if (m_isShuttingDown) {
+    if (m_isShuttingDown || !m_isEnabled) {
         ACSDK_WARN(LX("onDirectiveFailed")
                        .d("messageId", directive->getMessageId())
                        .d("action", "ignored")
-                       .d("reason", "shuttingDown"));
+                       .d("reason", m_isShuttingDown ? "shuttingDown" : "disabled"));
         return false;
     }
     if (!directive->getDialogRequestId().empty() && directive->getDialogRequestId() != m_dialogRequestId) {
@@ -119,6 +117,20 @@ void DirectiveProcessor::shutdown() {
     if (m_processingThread.joinable()) {
         m_processingThread.join();
     }
+}
+
+void DirectiveProcessor::disable() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    ACSDK_DEBUG(LX("disable"));
+    queueAllDirectivesForCancellationLocked();
+    m_isEnabled = false;
+    m_wakeProcessingLoop.notify_one();
+}
+
+bool DirectiveProcessor::enable() {
+    std::lock_guard<std::mutex> lock{m_mutex};
+    m_isEnabled = true;
+    return m_isEnabled;
 }
 
 DirectiveProcessor::DirectiveHandlerResult::DirectiveHandlerResult(

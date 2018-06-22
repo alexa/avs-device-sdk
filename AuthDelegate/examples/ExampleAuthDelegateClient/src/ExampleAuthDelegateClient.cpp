@@ -1,7 +1,5 @@
 /*
- * ExampleAuthDelegateClient.cpp
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,14 +38,14 @@ static const std::string TAG("AlexAuthDelegateClient");
 /// Simple implementation of the AuthDelegateObserverInterface.
 class Observer : public AuthObserverInterface {
 public:
-    /// Construct an Observer, initialized as not authroized.
+    /// Construct an Observer, initialized as not authorized.
     Observer() : m_state(AuthObserverInterface::State::UNINITIALIZED) {
     }
 
     void onAuthStateChange(
         AuthObserverInterface::State newState,
-        AuthObserverInterface::Error error = AuthObserverInterface::Error::NO_ERROR) override {
-        if (error == AuthObserverInterface::Error::NO_ERROR) {
+        AuthObserverInterface::Error error = AuthObserverInterface::Error::SUCCESS) override {
+        if (error == AuthObserverInterface::Error::SUCCESS) {
             ACSDK_DEBUG(LX("onAuthStateChange").d("newState", newState));
         } else {
             ACSDK_ERROR(LX("onAuthStateChangeError").d("newState", newState).d("error", error));
@@ -61,7 +59,7 @@ public:
 
     /**
      * Wait until we are authorized.
-     * @return true if we are authroized.
+     * @return true if we are authorized.
      */
     bool wait() {
         std::unique_lock<std::mutex> lock(m_mutex);

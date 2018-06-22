@@ -1,5 +1,5 @@
 ### IMPORTANT NOTE
-If you are updating from v1.x to v1.4, you must update your `AlexaClientSDKConfig.json` to include a Notifications database. An updated sample is available in the quickstart guides for Ubuntu Linux, Raspberry Pi, macOS, and Generic Linux.
+If you are updating from v1.3 or earlier to v1.6, you must update your `AlexaClientSDKConfig.json` to include a Notifications database. An updated sample is available in the quickstart guides for Ubuntu Linux, Raspberry Pi, macOS, and Generic Linux.
 
 ### What is the Alexa Voice Service (AVS)?
 
@@ -17,11 +17,15 @@ You can set up the SDK on the following platforms:
 * [Ubuntu Linux](https://github.com/alexa/avs-device-sdk/wiki/Ubuntu-Linux-Quick-Start-Guide)
 * [Raspberry Pi](https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide-with-Script) (Raspbian Stretch)
 * [macOS](https://github.com/alexa/avs-device-sdk/wiki/macOS-Quick-Start-Guide)
+* [Windows 64-bit](https://github.com/alexa/avs-device-sdk/wiki/Windows-Quick-Start-Guide-with-Script)
 * [Generic Linux](https://github.com/alexa/avs-device-sdk/wiki/Linux-Reference-Guide)
 
 You can also prototype with a third party development kit:
-* [xCORE VocalFusion 4-Mic Kit](https://github.com/xmos/vocalfusion-avs-setup)
-* [NXP PICO-PI-IMX7D 2-Mic Kit](https://www.nxp.com/docs/en/user-guide/Quick-Start-Guide-for-Arrow-AVS-kit.pdf)
+* [XMOS VocalFusion 4-Mic Kit](https://github.com/xmos/vocalfusion-avs-setup) - Learn More [Here](https://developer.amazon.com/alexa-voice-service/dev-kits/xmos-vocal-fusion)
+* [Synaptics AudioSmart 2-Mic Dev Kit for Amazon AVS with NXP SoC](https://www.nxp.com/docs/en/user-guide/Quick-Start-Guide-for-Arrow-AVS-kit.pdf) - Learn More [Here](https://developer.amazon.com/alexa-voice-service/dev-kits/synaptics-2-mic)
+* [Intel Speech Enabling Developer Kit](https://avs-dvk-workshop.github.io) - Learn More [Here](https://developer.amazon.com/alexa-voice-service/dev-kits/intel-speech-enabling/)
+* [Amlogic A113X1 Far-Field Dev Kit for Amazon AVS](http://openlinux2.amlogic.com/download/doc/A113X1_Usermanual.pdf) - Learn More [Here](https://developer.amazon.com/alexa-voice-service/dev-kits/amlogic-6-mic)
+* [Allwinner SoC-Only 3-Mic Far-Field Dev Kit for Amazon AVS](http://www.banana-pi.org/images/r18avs/AVS-quickstartguide.pdf) - Learn More [Here](https://developer.amazon.com/alexa-voice-service/dev-kits/allwinner-3-mic)
 
 Or if you prefer, you can start with our [SDK API Documentation](https://alexa.github.io/avs-device-sdk/).
 
@@ -89,31 +93,27 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 
 ### Release Notes and Known Issues
 
-**Note**: Features, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
+**Note**: Feature enhancements, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
-v1.4.0 released 01/12/2018:
+v1.6.0 released 03/08/2018:
 
 **Enhancements**
-* Added the Notifications Capability Agent. This allows a client to receive notification indicators from Alexa.
-* Added support for the `SoftwareInfo` event. This code is triggered in the `SampleApp` by providing a positive decimal integer as the "firmwareVersion" value in "sampleApp" object of the `AlexaClientSDKConfig.json`. The reported firmware version can be updated after starting the `SampleApp` by calling `SoftwareInfoSender::setFirmwareVersion()`. This code path can be exercised in the `SampleApp` with the new command: `f`.
-* Added unit tests for Alerts.
-* The GStreamer-based pipeline allows for the configuration of `MediaPlayer` output based on information provided in `Config`.
-* Playlist streaming now uses a `BLOCKING` writer, which improves streaming efficiency.
+* `rapidJson` is now included with "make install".
+* Updated the `TemplateRuntimeObserverInterface` to support clearing of `displayCards`.
+* Added Windows SDK support, along with an installation script (MinGW-w64).
+* Updated `ContextManager` to ignore context reported by a state provider.
+* The `SharedDataStream` object is now associated by playlist, rather than by URL.
+* Added the `RegistrationManager` component. Now, when a user logs out all persistent user-specific data is cleared from the SDK. The log out functionality can be exercised in the sample app with the new command: `k`.
 
 **Bug Fixes**
-* Fixed bug where `SpeechSynthesizer` would not stop playback when a state change timeout was encountered.
-* Fixed the `SampleApplication` destructor to avoid segfaults if the object is not constructed correctly.
-* Fixed bug where `AudioPlayer` would erroneously call `executeStop()` in `cancelDirective()`.
-* [Issue 396](https://github.com/alexa/avs-device-sdk/issues/396) - Fixed bug for compilation error with GCC7 in `AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h`
-* [Issue 384](https://github.com/alexa/avs-device-sdk/issues/384) - Fixed bug that caused `AuthServer.py` to crash.
-* Fixed bug where a long delay was encountered after pausing and resuming a large Audible chapter.
-* Fixed bug that caused named timers and reminders to loop for an additional `loopCount` .
-* Fixed memory corruption bug in `MessageInterpreter`.
-* Fixed illegal memory accesses in `MediaPlayer` logging.
+* [Issue 400](https://github.com/alexa/avs-device-sdk/issues/400) Fixed a bug where the alert reminder did not iterate as intended after loss of network connection.
+* [Issue 477](https://github.com/alexa/avs-device-sdk/issues/477) Fixed a bug in which Alexa's weather response was being truncated.
+* Fixed an issue in which there were reports of instability related to the Sensory engine. To correct this, the `portAudio` [`suggestedLatency`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L62) value can now be configured.
 
 **Known Issues**
 * The `ACL` may encounter issues if audio attachments are received but not consumed.
-* Display Cards for Kindle don't render.
-* If using the GStreamer-based `MediaPlayer` implementation, after muting and un-muting an audio item, the next item in the queue will begin playing rather than continuing playback of the originally muted audio item.
 * `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
 * Music playback doesn't immediately stop when a user barges-in on iHeartRadio.
+* The Windows sample app hangs on exit.
+* GDB receives a `SIGTRAP` when troubleshooting the Windows sample app.
+* `make integration` doesn't work on Windows. Integration tests will need to be run individually.

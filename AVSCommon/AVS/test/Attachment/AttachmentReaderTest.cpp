@@ -1,7 +1,5 @@
 /*
- * AttachmentReaderTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -46,7 +44,7 @@ public:
      * Constructor.
      */
     AttachmentReaderTest() :
-            m_readerPolicy{AttachmentReader::Policy::NON_BLOCKING},
+            m_readerPolicy{InProcessSDS::Reader::Policy::NONBLOCKING},
             m_writerPolicy{InProcessSDS::Writer::Policy::ALL_OR_NOTHING} {
     }
 
@@ -77,7 +75,7 @@ public:
         size_t dataOffset = 0);
 
     /// The commonly used AttachmentReader policy.
-    AttachmentReader::Policy m_readerPolicy;
+    ReaderPolicy m_readerPolicy;
     /// The commonly used SDSWriter policy.
     InProcessSDS::Writer::Policy m_writerPolicy;
     /// The commonly used SDS in these tests.

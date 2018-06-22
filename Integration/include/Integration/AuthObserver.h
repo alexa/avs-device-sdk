@@ -1,7 +1,5 @@
 /*
- * AuthObserver.h
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,7 +31,7 @@ public:
     void onAuthStateChange(
         const avsCommon::sdkInterfaces::AuthObserverInterface::State,
         const avsCommon::sdkInterfaces::AuthObserverInterface::Error =
-            avsCommon::sdkInterfaces::AuthObserverInterface::Error::NO_ERROR) override;
+            avsCommon::sdkInterfaces::AuthObserverInterface::Error::SUCCESS) override;
     AuthObserverInterface::State getAuthState() const;
     bool waitFor(
         const avsCommon::sdkInterfaces::AuthObserverInterface::State,

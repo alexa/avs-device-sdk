@@ -1,6 +1,4 @@
 /*
- * ContextManager.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -166,7 +164,7 @@ SetStateResult ContextManager::updateStateLocked(
     const StateRefreshPolicy& refreshPolicy) {
     auto stateInfoMappingIt = m_namespaceNameToStateInfo.find(stateProviderName);
     if (m_namespaceNameToStateInfo.end() == stateInfoMappingIt) {
-        if (StateRefreshPolicy::ALWAYS == refreshPolicy) {
+        if (StateRefreshPolicy::ALWAYS == refreshPolicy || StateRefreshPolicy::SOMETIMES == refreshPolicy) {
             ACSDK_ERROR(LX("updateStateLockedFailed")
                             .d("reason", "unregisteredStateProvider")
                             .d("namespace", stateProviderName.nameSpace)
@@ -199,7 +197,8 @@ void ContextManager::requestStatesLocked(std::unique_lock<std::mutex>& stateProv
 
     for (auto it = m_namespaceNameToStateInfo.begin(); it != m_namespaceNameToStateInfo.end(); ++it) {
         auto& stateInfo = it->second;
-        if (StateRefreshPolicy::ALWAYS == stateInfo->refreshPolicy) {
+        if (StateRefreshPolicy::ALWAYS == stateInfo->refreshPolicy ||
+            StateRefreshPolicy::SOMETIMES == stateInfo->refreshPolicy) {
             m_pendingOnStateProviders.insert(it->first);
             stateProviderLock.unlock();
             stateInfo->stateProvider->provideState(it->first, curStateReqToken);
@@ -300,6 +299,14 @@ void ContextManager::sendContextToRequesters() {
     std::unique_lock<std::mutex> stateProviderLock(m_stateProviderMutex);
     for (auto it = m_namespaceNameToStateInfo.begin(); it != m_namespaceNameToStateInfo.end(); ++it) {
         auto& stateInfo = it->second;
+        if (stateInfo->jsonState.empty() && StateRefreshPolicy::SOMETIMES == stateInfo->refreshPolicy) {
+            /*
+             * If jsonState supplied by the state provider is empty and it has a refreshPolicy of SOMETIMES, it means
+             * that it doesn't want to provide state.
+             */
+            ACSDK_DEBUG9(LX("buildContextIgnored").d("namespace", it->first.nameSpace).d("name", it->first.name));
+            continue;
+        }
         Value jsonState = buildState(it->first, stateInfo->jsonState, allocator);
         if (jsonState.ObjectEmpty()) {
             ACSDK_ERROR(LX("buildContextFailed").d("reason", "buildStateFailed"));

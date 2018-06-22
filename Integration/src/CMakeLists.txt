@@ -10,6 +10,7 @@ target_include_directories(Integration PUBLIC "${SpeechSynthesizer_SOURCE_DIR}/i
 target_include_directories(Integration PUBLIC "${Alerts_SOURCE_DIR}/include")
 target_include_directories(Integration PUBLIC "${AudioPlayer_SOURCE_DIR}/include")
 target_include_directories(Integration PUBLIC "${AVSSystem_SOURCE_DIR}/include")
+target_include_directories(Integration PUBLIC "${RegistrationManager_SOURCE_DIR}/include")
 target_include_directories(Integration PUBLIC "${KITTAI_SOURCE_DIR}/include")
 
 target_link_libraries(Integration ACL AuthDelegate)

@@ -1,7 +1,5 @@
 /*
- * ConfigurationNode.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -43,6 +41,7 @@ std::mutex ConfigurationNode::m_mutex;
 Document ConfigurationNode::m_document;
 ConfigurationNode ConfigurationNode::m_root;
 
+#ifdef ACSDK_DEBUG_LOG_ENABLED
 /**
  * Render @c rapidjson::Value as a string.
  *
@@ -58,6 +57,7 @@ static std::string valueToString(const Value& value) {
     ACSDK_ERROR(LX("valueToStringFailed").d("reason", "AcceptReturnedFalse"));
     return "";
 }
+#endif  // ACSDK_DEBUG_LOG_ENABLED
 
 /**
  * Deep (possibly recursive) merge of two @c rapidjson values of type @c rapidjson::Type::kObject. The contents
@@ -116,7 +116,7 @@ bool ConfigurationNode::initialize(const std::vector<std::istream*>& jsonStreams
         mergeDocument("root", m_document, overlay, m_document.GetAllocator());
     }
     m_root = ConfigurationNode(&m_document);
-    ACSDK_INFO(LX("initializeSuccess").sensitive("configuration", valueToString(m_document)));
+    ACSDK_DEBUG0(LX("initializeSuccess").sensitive("configuration", valueToString(m_document)));
     return true;
 }
 
@@ -152,32 +152,6 @@ bool ConfigurationNode::getString(const std::string& key, std::string* out, std:
 
 bool ConfigurationNode::getString(const std::string& key, const char** out, const char* defaultValue) const {
     return getValue(key, out, defaultValue, &Value::IsString, &Value::GetString);
-}
-
-template <typename Type>
-bool ConfigurationNode::getValue(
-    const std::string& key,
-    Type* out,
-    Type defaultValue,
-    bool (rapidjson::Value::*isType)() const,
-    Type (rapidjson::Value::*getType)() const) const {
-    if (key.empty() || !m_object) {
-        if (out) {
-            *out = defaultValue;
-        }
-        return false;
-    }
-    auto it = m_object->FindMember(key.c_str());
-    if (m_object->MemberEnd() == it || !(it->value.*isType)()) {
-        if (out) {
-            *out = defaultValue;
-        }
-        return false;
-    }
-    if (out) {
-        *out = (it->value.*getType)();
-    }
-    return true;
 }
 
 ConfigurationNode ConfigurationNode::operator[](const std::string& key) const {

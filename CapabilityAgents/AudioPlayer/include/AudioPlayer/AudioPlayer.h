@@ -1,6 +1,4 @@
 /*
- * AudioPlayer.h
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -33,6 +31,7 @@
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
+#include <AVSCommon/Utils/Timing/TimeUtils.h>
 
 #include "AudioItem.h"
 #include "ClearBehavior.h"
@@ -63,7 +62,6 @@ public:
      * @param messageSender The object to use for sending events.
      * @param focusManager The channel focus manager used to manage usage of the dialog channel.
      * @param contextManager The AVS Context manager used to generate system context for events.
-     * @param attachmentManager The instance of the @c AttachmentManagerInterface to use to read the attachment.
      * @param exceptionSender The object to use for sending AVS Exception messages.
      * @param playbackRouter The @c PlaybackRouterInterface instance to use when @c AudioPlayer becomes active.
      * @return A @c std::shared_ptr to the new @c AudioPlayer instance.
@@ -73,7 +71,6 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter);
 
@@ -126,7 +123,6 @@ private:
      * @param messageSender The object to use for sending events.
      * @param focusManager The channel focus manager used to manage usage of the dialog channel.
      * @param contextManager The AVS Context manager used to generate system context for events.
-     * @param attachmentManager The instance of the @c AttachmentManagerInterface to use to read the attachment.
      * @param exceptionSender The object to use for sending AVS Exception messages.
      * @param playbackRouter The playback router used for switching playback buttons handler to default.
      * @return A @c std::shared_ptr to the new @c AudioPlayer instance.
@@ -136,7 +132,6 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter);
 
@@ -181,18 +176,6 @@ private:
      * @param info The @c DirectiveInfo containing the @c AVSDirective whose message ID is to be removed.
      */
     void removeDirective(std::shared_ptr<DirectiveInfo> info);
-
-    /**
-     * Send ExceptionEncountered and report a failure to handle the @c AVSDirective.
-     *
-     * @param info The @c AVSDirective that encountered the error and ancillary information.
-     * @param message The error message to include in the ExceptionEncountered message.
-     * @param type The type of Exception that was encountered.
-     */
-    void sendExceptionEncounteredAndReportFailed(
-        std::shared_ptr<DirectiveInfo> info,
-        const std::string& message,
-        avsCommon::avs::ExceptionErrorType type = avsCommon::avs::ExceptionErrorType::INTERNAL_ERROR);
 
     /**
      * Send the handling completed notification and clean up the resources the specified @c DirectiveInfo.
@@ -381,6 +364,9 @@ private:
 
     /// @}
 
+    /// This is used to safely access the time utilities.
+    avsCommon::utils::timing::TimeUtils m_timeUtils;
+
     /// MediaPlayerInterface instance to send audio attachments to.
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_mediaPlayer;
 
@@ -392,9 +378,6 @@ private:
 
     /// The @c ContextManager that needs to be updated of the state.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
-
-    /// The @c AttachmentManager used to read attachments.
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> m_attachmentManager;
 
     /// The @c PlaybackRouterInterface instance to use when @c AudioPlayer becomes active.
     std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> m_playbackRouter;

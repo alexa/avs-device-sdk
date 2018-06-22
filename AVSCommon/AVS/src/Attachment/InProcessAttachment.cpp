@@ -1,6 +1,4 @@
 /*
- * InProcessAttachment.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -51,7 +49,8 @@ std::unique_ptr<AttachmentWriter> InProcessAttachment::createWriter(
     return std::move(writer);
 }
 
-std::unique_ptr<AttachmentReader> InProcessAttachment::createReader(AttachmentReader::Policy policy) {
+std::unique_ptr<AttachmentReader> InProcessAttachment::createReader(
+    InProcessAttachmentReader::SDSTypeReader::Policy policy) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
     if (m_hasCreatedReader) {

@@ -1,7 +1,5 @@
 /*
- * HttpPost.h
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,6 +23,7 @@
 #include <mutex>
 #include <string>
 
+#include "AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h"
 #include "AVSCommon/Utils/LibcurlUtils/HttpPostInterface.h"
 
 namespace alexaClientSDK {
@@ -36,7 +35,7 @@ namespace libcurlUtils {
 class HttpPost : public HttpPostInterface {
 public:
     /// HttpPost destructor
-    ~HttpPost();
+    ~HttpPost() = default;
 
     /**
      * Deleted copy constructor.
@@ -60,34 +59,16 @@ public:
      */
     static std::unique_ptr<HttpPost> create();
 
-    long doPost(const std::string& m_url, const std::string& data, std::chrono::seconds timeout, std::string& body)
+    bool addHTTPHeader(const std::string& header) override;
+
+    long doPost(const std::string& url, const std::string& data, std::chrono::seconds timeout, std::string& body)
         override;
 
 private:
     /**
-     * HttpPost constructor.
-     *
-     * @param curl CURL handle with which to make requests.
+     * Default HttpPost constructor.
      */
-    HttpPost();
-
-    /**
-     * init() is used by create() to perform initialization after construction but before returning the
-     * HttpPost instance so that clients only get access to fully formed instances.
-     *
-     * @return @c true if initialization is successful.
-     */
-    bool init();
-
-    /**
-     * Helper function for calling curl_easy_setopt and checking the result.
-     *
-     * @param option The option parameter to pass through to curl_easy_setopt.
-     * @param param The param option to pass through to curl_easy_setopt.
-     * @return @c true of the operation was successful.
-     */
-    template <typename ParamType>
-    bool setopt(CURLoption option, ParamType param);
+    HttpPost() = default;
 
     /**
      * Callback function used to accumulate the body of the HTTP Post response
@@ -105,7 +86,7 @@ private:
     std::mutex m_mutex;
 
     /// CURL handle with which to make requests
-    CURL* m_curl;
+    CurlEasyHandleWrapper m_curl;
 
     /// String used to accumuate the response body.
     std::string m_bodyAccumulator;

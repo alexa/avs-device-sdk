@@ -1,7 +1,5 @@
 /*
- * BaseStreamSource.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -53,9 +51,10 @@ protected:
      * the elements to the @c pipeline of the @c AudioPipeline, linking the elements and setting up the
      * callbacks for signals should be handled.
      *
+     * @param audioFormat The audioFormat to be used when playing raw PCM data.
      * @return @c true if the initialization was successful else @c false.
      */
-    bool init();
+    bool init(const avsCommon::utils::AudioFormat* audioFormat = nullptr);
 
     /**
      * Return whether the audio source is still open.

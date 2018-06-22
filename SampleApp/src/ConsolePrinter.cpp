@@ -1,7 +1,5 @@
 /*
- * ConsolePrinter.cpp
- *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,8 +16,6 @@
 #include "SampleApp/ConsolePrinter.h"
 
 #include <iostream>
-
-#include <AVSCommon/Utils/Logger/LoggerUtils.h>
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -57,7 +53,7 @@ void ConsolePrinter::emit(
     const char* threadMoniker,
     const char* text) {
     std::lock_guard<std::mutex> lock{*m_mutex};
-    std::cout << avsCommon::utils::logger::formatLogString(level, time, threadMoniker, text) << std::endl;
+    std::cout << m_logFormatter.format(level, time, threadMoniker, text) << std::endl;
 }
 
 }  // namespace sampleApp

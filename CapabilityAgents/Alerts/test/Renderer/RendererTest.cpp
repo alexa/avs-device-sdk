@@ -1,6 +1,4 @@
 /*
- * RendererTest.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -124,7 +122,7 @@ protected:
     std::shared_ptr<Renderer> m_renderer;
 
     static std::unique_ptr<std::istream> audioFactoryFunc() {
-        return std::unique_ptr<std::istream>();
+        return std::unique_ptr<std::istream>(new std::stringstream());
     }
 };
 

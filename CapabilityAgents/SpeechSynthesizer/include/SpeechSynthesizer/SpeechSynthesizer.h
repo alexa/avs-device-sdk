@@ -1,6 +1,4 @@
 /*
- * SpeechSynthesizer.h
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -27,7 +25,6 @@
 #include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/DialogUXStateAggregator.h>
-#include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeechSynthesizerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
@@ -66,7 +63,6 @@ public:
      * @param focusManager The instance of the @c FocusManagerInterface used to acquire focus of a channel.
      * @param contextManager The instance of the @c ContextObserverInterface to use to set the context
      * of the @c SpeechSynthesizer.
-     * @param attachmentManager The instance of the @c AttachmentManagerInterface to use to read the attachment.
      * @param exceptionSender The instance of the @c ExceptionEncounteredSenderInterface to use to notify AVS
      * when a directive cannot be processed.
      *
@@ -77,7 +73,6 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator);
 
@@ -175,7 +170,6 @@ private:
      * @param focusManager The instance of the @c FocusManagerInterface used to acquire focus of a channel.
      * @param contextManager The instance of the @c ContextObserverInterface to use to set the context
      * of the SpeechSynthesizer.
-     * @param attachmentManager The instance of the @c AttachmentManagerInterface to use to read the attachment.
      * @param exceptionSender The instance of the @c ExceptionEncounteredSenderInterface to use to notify AVS
      * when a directive cannot be processed.
      */
@@ -184,7 +178,6 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
 
     void doShutdown() override;
@@ -454,9 +447,6 @@ private:
 
     /// The @c ContextManager that needs to be updated of the state.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
-
-    /// The @c AttachmentManager used to read attachments.
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> m_attachmentManager;
 
     /// The set of @c SpeechSynthesizerObserverInterface instances to notify of state changes.
     std::unordered_set<std::shared_ptr<SpeechSynthesizerObserverInterface>> m_observers;

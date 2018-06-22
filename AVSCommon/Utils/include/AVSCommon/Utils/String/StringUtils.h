@@ -1,7 +1,5 @@
 /*
- * StringUtils.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -54,6 +52,14 @@ bool stringToInt(const char* str, int* result);
  * @return a string of the hex values of each byte printed.
  */
 std::string byteVectorToString(const std::vector<uint8_t>& byteVector);
+
+/**
+ * A utility function to convert a string into lower case.
+ *
+ * @param input The input string to be converted.
+ * @return The converted string in lower case.
+ */
+std::string stringToLowerCase(const std::string& input);
 
 }  // namespace string
 }  // namespace utils

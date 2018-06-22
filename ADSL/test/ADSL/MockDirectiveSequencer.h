@@ -1,7 +1,5 @@
 /*
- * MockDirectiveSequencer.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -48,6 +46,10 @@ public:
     MOCK_METHOD1(setDialogRequestId, void(const std::string& dialogRequestId));
 
     MOCK_METHOD1(onDirective, bool(std::shared_ptr<avsCommon::avs::AVSDirective> directive));
+
+    MOCK_METHOD0(disable, void());
+
+    MOCK_METHOD0(enable, void());
 };
 
 inline MockDirectiveSequencer::MockDirectiveSequencer() :

@@ -1,5 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=sqliteStorage")
 add_library(SQLiteStorage SHARED
+        SQLiteDatabase.cpp
         SQLiteStatement.cpp
         SQLiteUtils.cpp)
 

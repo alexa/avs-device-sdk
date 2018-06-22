@@ -1,7 +1,5 @@
 /*
- * AuthObserverInterface.h
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -46,8 +44,8 @@ public:
 
     /// The enum Error encodes possible errors which may occur when changing state.
     enum class Error {
-        /// No error.
-        NO_ERROR,
+        /// Success.
+        SUCCESS,
         /// An unknown body containing no error field has been encountered.
         UNKNOWN_ERROR,
         /// The client authorization failed.
@@ -112,8 +110,8 @@ inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterfac
  */
 inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterface::Error& error) {
     switch (error) {
-        case AuthObserverInterface::Error::NO_ERROR:
-            stream << "NO_ERROR";
+        case AuthObserverInterface::Error::SUCCESS:
+            stream << "SUCCESS";
             break;
         case AuthObserverInterface::Error::UNKNOWN_ERROR:
             stream << "UNKNOWN_ERROR";

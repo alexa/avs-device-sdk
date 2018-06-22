@@ -1,7 +1,5 @@
 /*
- * TimePoint.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +17,8 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_TIMING_TIMEPOINT_H_
 
 #include <string>
+
+#include "AVSCommon/Utils/Timing/TimeUtils.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -61,6 +61,9 @@ private:
     std::string m_time_ISO_8601;
     /// The scheduled time for the alert in Unix epoch format.
     int64_t m_time_Unix;
+
+    /// Object used to safely access time utilities.
+    TimeUtils m_timeUtils;
 };
 
 }  // namespace timing

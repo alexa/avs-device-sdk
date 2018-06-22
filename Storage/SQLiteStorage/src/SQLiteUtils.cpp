@@ -1,19 +1,16 @@
 /*
- * SQLiteUtils.cpp
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates.
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *     http://aws.amazon.com/apache2.0/
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
  */
 
 #include "SQLiteStorage/SQLiteUtils.h"
@@ -154,32 +151,32 @@ bool performQuery(sqlite3* dbHandle, const std::string& sqlString) {
     return true;
 }
 
-bool getNumberTableRows(sqlite3* dbHandle, const std::string& tableName, int* numberRows) {
-    if (!dbHandle) {
-        ACSDK_ERROR(LX("getNumberTableRowsFailed").m("dbHandle was nullptr."));
+bool getNumberTableRows(SQLiteDatabase* db, const std::string& tableName, int* numberRows) {
+    if (!db) {
+        ACSDK_ERROR(LX("getNumberTableRowsFailed").m("db was nullptr."));
         return false;
     }
 
     if (!numberRows) {
-        ACSDK_ERROR(LX("getNumberTableRowsFailed").m("dbHandle was nullptr."));
+        ACSDK_ERROR(LX("getNumberTableRowsFailed").m("numberRows was nullptr."));
         return false;
     }
 
     std::string sqlString = "SELECT COUNT(*) FROM " + tableName + ";";
-    SQLiteStatement statement(dbHandle, sqlString);
+    auto statement = db->createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("getNumberTableRowsFailed").m("Could not create statement."));
         return false;
     }
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("getNumberTableRowsFailed").m("Could not step to next row."));
         return false;
     }
 
     const int RESULT_COLUMN_POSITION = 0;
-    std::string rowValue = statement.getColumnText(RESULT_COLUMN_POSITION);
+    std::string rowValue = statement->getColumnText(RESULT_COLUMN_POSITION);
 
     if (!stringToInt(rowValue.c_str(), numberRows)) {
         ACSDK_ERROR(LX("getNumberTableRowsFailed").d("Could not convert string to integer", rowValue));
@@ -189,28 +186,33 @@ bool getNumberTableRows(sqlite3* dbHandle, const std::string& tableName, int* nu
     return true;
 }
 
-bool getTableMaxIntValue(sqlite3* dbHandle, const std::string& tableName, const std::string& columnName, int* maxId) {
-    if (!maxId) {
-        ACSDK_ERROR(LX("getMaxIdFailed").m("dbHandle was nullptr."));
+bool getTableMaxIntValue(SQLiteDatabase* db, const std::string& tableName, const std::string& columnName, int* maxInt) {
+    if (!db) {
+        ACSDK_ERROR(LX("getTableMaxIntValue").m("db was nullptr."));
+        return false;
+    }
+
+    if (!maxInt) {
+        ACSDK_ERROR(LX("getMaxIntFailed").m("maxInt was nullptr."));
         return false;
     }
 
     std::string sqlString =
         "SELECT " + columnName + " FROM " + tableName + " ORDER BY " + columnName + " DESC LIMIT 1;";
 
-    SQLiteStatement statement(dbHandle, sqlString);
+    auto statement = db->createStatement(sqlString);
 
-    if (!statement.isValid()) {
+    if (!statement) {
         ACSDK_ERROR(LX("getTableMaxIntValueFailed").m("Could not create statement."));
         return false;
     }
 
-    if (!statement.step()) {
+    if (!statement->step()) {
         ACSDK_ERROR(LX("getTableMaxIntValueFailed").m("Could not step to next row."));
         return false;
     }
 
-    int stepResult = statement.getStepResult();
+    int stepResult = statement->getStepResult();
 
     if (stepResult != SQLITE_ROW && stepResult != SQLITE_DONE) {
         ACSDK_ERROR(LX("getTableMaxIntValueFailed").m("Step did not evaluate to either row or completion."));
@@ -219,15 +221,15 @@ bool getTableMaxIntValue(sqlite3* dbHandle, const std::string& tableName, const 
 
     // No entries were found in database - set to zero as the current max id.
     if (SQLITE_DONE == stepResult) {
-        *maxId = 0;
+        *maxInt = 0;
     }
 
     // Entries were found - let's get the value.
     if (SQLITE_ROW == stepResult) {
         const int RESULT_COLUMN_POSITION = 0;
-        std::string rowValue = statement.getColumnText(RESULT_COLUMN_POSITION);
+        std::string rowValue = statement->getColumnText(RESULT_COLUMN_POSITION);
 
-        if (!stringToInt(rowValue.c_str(), maxId)) {
+        if (!stringToInt(rowValue.c_str(), maxInt)) {
             ACSDK_ERROR(LX("getTableMaxIntValueFailed").d("Could not convert string to integer", rowValue));
             return false;
         }

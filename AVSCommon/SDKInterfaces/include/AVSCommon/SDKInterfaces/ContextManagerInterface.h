@@ -1,7 +1,5 @@
 /*
- * ContextManagerInterface.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -93,7 +91,8 @@ public:
      * The @c jsonState is the json value that is associated with the key "payload".
      *
      * @param namespaceAndName The namespace and name of the @c StateProviderInterface whose state is being updated.
-     * @param jsonState The state of the @c StateProviderInterface.
+     * @param jsonState The state of the @c StateProviderInterface.  The @c StateProviderInterface with a @c
+     * refreshPolicy of SOMETIMES can pass in an empty string to indicate no contexts needs to be sent by the provider.
      * @param refreshPolicy The refresh policy for the state.
      * @param stateRequestToken The token that was provided in a @c provideState request. Defaults to 0.
      *

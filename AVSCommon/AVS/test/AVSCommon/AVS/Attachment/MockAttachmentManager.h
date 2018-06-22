@@ -1,6 +1,4 @@
 /*
- * MockAttachmentManager.h
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -41,7 +39,7 @@ public:
         std::unique_ptr<AttachmentWriter>(const std::string& attachmentId, utils::sds::WriterPolicy policy));
     MOCK_METHOD2(
         createReader,
-        std::unique_ptr<AttachmentReader>(const std::string& attachmentId, AttachmentReader::Policy policy));
+        std::unique_ptr<AttachmentReader>(const std::string& attachmentId, utils::sds::ReaderPolicy policy));
 };
 
 }  // namespace test

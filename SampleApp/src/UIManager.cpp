@@ -1,7 +1,5 @@
 /*
- * UIManager.cpp
- *
- * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -68,6 +66,8 @@ static const std::string HELP_MESSAGE =
 #ifdef KWD
     "| Privacy mode (microphone off):                                             |\n"
     "|       Press 'm' and Enter to turn on and off the microphone.               |\n"
+    "| Echo Spatial Perception (ESP): This is for testing purpose only!           |\n"
+    "|       Press 'e' followed by Enter at any time to adjust ESP settings.      |\n"
 #endif
     "| Playback Controls:                                                         |\n"
     "|       Press '1' for a 'PLAY' button press.                                 |\n"
@@ -83,6 +83,11 @@ static const std::string HELP_MESSAGE =
     "|       firmware version.                                                    |\n"
     "| Info:                                                                      |\n"
     "|       Press 'i' followed by Enter at any time to see the help screen.      |\n"
+    "| Reset device:                                                              |\n"
+    "|       Press 'k' followed by Enter at any time to reset your device. This   |\n"
+    "|       will erase any data stored in the device and you will have to        |\n"
+    "|       register your device with another account.                           |\n"
+    "|       This will kill the application since we don't support login yet.     |\n"
     "| Quit:                                                                      |\n"
     "|       Press 'q' followed by Enter at any time to quit the application.     |\n"
     "+----------------------------------------------------------------------------+\n";
@@ -104,6 +109,7 @@ static const std::string LOCALE_MESSAGE =
     "| Press '4' followed by Enter to change the language to Indian English.      |\n"
     "| Press '5' followed by Enter to change the language to Canadian English.    |\n"
     "| Press '6' followed by Enter to change the language to Japanese.            |\n"
+    "| Press '7' followed by Enter to change the language to Australian English.  |\n"
     "+----------------------------------------------------------------------------+\n";
 
 static const std::string SPEAKER_CONTROL_MESSAGE =
@@ -120,7 +126,7 @@ static const std::string FIRMWARE_CONTROL_MESSAGE =
     "+----------------------------------------------------------------------------+\n"
     "|                          Firmware Version:                                 |\n"
     "|                                                                            |\n"
-    "| Enter a positive decimal integer followed by enter.                        |\n"
+    "| Enter a decimal integer value between 1 and 2147483647.                    |\n"
     "+----------------------------------------------------------------------------+\n";
 
 static const std::string VOLUME_CONTROL_MESSAGE =
@@ -134,6 +140,33 @@ static const std::string VOLUME_CONTROL_MESSAGE =
     "| Press 'i' to display this help screen.                                     |\n"
     "| Press 'q' to exit Volume Control Mode.                                     |\n"
     "+----------------------------------------------------------------------------+\n";
+
+static const std::string ESP_CONTROL_MESSAGE =
+    "+----------------------------------------------------------------------------+\n"
+    "|                          ESP Options:                                      |\n"
+    "|                                                                            |\n"
+    "| By Default ESP support is off and the implementation in the SampleApp is   |\n"
+    "| for testing purpose only!                                                  |\n"
+    "|                                                                            |\n"
+    "| Press '1' followed by Enter to toggle ESP support.                         |\n"
+    "| Press '2' followed by Enter to enter the voice energy.                     |\n"
+    "| Press '3' followed by Enter to enter the ambient energy.                   |\n"
+    "| Press 'q' to exit ESP Control Mode.                                        |\n";
+
+static const std::string RESET_CONFIRMATION =
+    "+----------------------------------------------------------------------------+\n"
+    "|                    Device Reset Confirmation:                              |\n"
+    "|                                                                            |\n"
+    "| This operation will remove all your personal information, device settings, |\n"
+    "| and downloaded content. Are you sure you want to reset your device?        |\n"
+    "|                                                                            |\n"
+    "| Press 'Y' followed by Enter to reset the device.                           |\n"
+    "| Press 'N' followed by Enter to cancel the device reset operation.          |\n"
+    "+----------------------------------------------------------------------------+\n";
+
+static const std::string RESET_WARNING =
+    "Device was reset! Please don't forget to deregister it. For more details "
+    "visit https://www.amazon.com/gp/help/customer/display.html?nodeId=201357520";
 
 void UIManager::onDialogUXStateChanged(DialogUXState state) {
     m_executor.submit([this, state]() {
@@ -210,12 +243,33 @@ void UIManager::printVolumeControlScreen() {
     m_executor.submit([]() { ConsolePrinter::simplePrint(VOLUME_CONTROL_MESSAGE); });
 }
 
+void UIManager::printESPControlScreen(bool support, const std::string& voiceEnergy, const std::string& ambientEnergy) {
+    m_executor.submit([support, voiceEnergy, ambientEnergy]() {
+        std::string screen = ESP_CONTROL_MESSAGE;
+        screen += "|\n";
+        screen += "| support       = ";
+        screen += support ? "true\n" : "false\n";
+        screen += "| voiceEnergy   = " + voiceEnergy + "\n";
+        screen += "| ambientEnergy = " + ambientEnergy + "\n";
+        screen += "+----------------------------------------------------------------------------+\n";
+        ConsolePrinter::simplePrint(screen);
+    });
+}
+
 void UIManager::printErrorScreen() {
     m_executor.submit([]() { ConsolePrinter::prettyPrint("Invalid Option"); });
 }
 
 void UIManager::microphoneOff() {
     m_executor.submit([]() { ConsolePrinter::prettyPrint("Microphone Off!"); });
+}
+
+void UIManager::printResetConfirmation() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint(RESET_CONFIRMATION); });
+}
+
+void UIManager::printResetWarning() {
+    m_executor.submit([]() { ConsolePrinter::prettyPrint(RESET_WARNING); });
 }
 
 void UIManager::microphoneOn() {
@@ -251,6 +305,14 @@ void UIManager::printState() {
                 return;
         }
     }
+}
+
+void UIManager::printESPDataOverrideNotSupported() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint("Cannot override ESP Value in this device."); });
+}
+
+void UIManager::printESPNotSupported() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint("ESP is not supported in this device."); });
 }
 
 }  // namespace sampleApp

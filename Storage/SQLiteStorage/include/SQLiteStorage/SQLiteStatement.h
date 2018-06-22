@@ -1,7 +1,5 @@
 /*
- * SQLiteStatement.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -101,13 +99,6 @@ public:
      * @return Whether the bind was successful.
      */
     bool bindStringParameter(int index, const std::string& value);
-
-    /**
-     * Returns the managed statement handle.
-     *
-     * @return The managed statement handle.
-     */
-    sqlite3_stmt* getHandle();
 
     /**
      * Returns the SQLite result for the last step operation performed.

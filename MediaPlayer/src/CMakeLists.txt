@@ -6,8 +6,7 @@ add_library(MediaPlayer SHARED
     IStreamSource.cpp
     MediaPlayer.cpp
     Normalizer.cpp
-    OffsetManager.cpp
-    UrlSource.cpp)
+    OffsetManager.cpp)
 
 target_include_directories(MediaPlayer PUBLIC
     "${MediaPlayer_SOURCE_DIR}/include"

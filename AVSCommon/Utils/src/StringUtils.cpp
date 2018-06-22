@@ -1,7 +1,5 @@
 /*
- * StringUtils.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,16 +12,15 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-
-#include "AVSCommon/Utils/String/StringUtils.h"
-
+#include <algorithm>
+#include <errno.h>
 #include <iomanip>
 #include <limits>
-
-#include <errno.h>
 #include <stdlib.h>
 
 #include "AVSCommon/Utils/Logger/Logger.h"
+
+#include "AVSCommon/Utils/String/StringUtils.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -63,15 +60,27 @@ bool stringToInt(const char* str, int* result) {
     char* endPtr = nullptr;
     long tempResult = strtol(str, &endPtr, BASE_TEN);
 
-    // If strtol fails, then endPtr will still point to the beginning of str - a simple way to detect error.
+    // If strtol() fails, then endPtr will still point to the beginning of str - a simple way to detect error.
     if (str == endPtr) {
-        ACSDK_ERROR(LX("stringToIntFailed").m("input string was not parseable as an integer."));
+        ACSDK_ERROR(LX("stringToIntFailed").m("input string was not parsable as an integer."));
         return false;
     }
 
     if (ERANGE == errno || tempResult < std::numeric_limits<int>::min() ||
         tempResult > std::numeric_limits<int>::max()) {
         ACSDK_ERROR(LX("stringToIntFailed").m("converted number was out of range."));
+        return false;
+    }
+
+    // Ignore trailing whitespace.
+    while (isspace(*endPtr)) {
+        endPtr++;
+    }
+
+    // If endPtr does not point to a null terminator, then parsing the number was terminated by running in to
+    // a non-digit (and non-whitespace character), in which case the string was not just an integer (e.g. "1.23").
+    if (*endPtr != '\0') {
+        ACSDK_ERROR(LX("stringToIntFailed").m("non-whitespace in string after integer."));
         return false;
     }
 
@@ -87,6 +96,12 @@ std::string byteVectorToString(const std::vector<uint8_t>& byteVector) {
         firstTime = false;
     }
     return ss.str();
+}
+
+std::string stringToLowerCase(const std::string& input) {
+    std::string lowerCaseString = input;
+    std::transform(lowerCaseString.begin(), lowerCaseString.end(), lowerCaseString.begin(), ::tolower);
+    return lowerCaseString;
 }
 
 }  // namespace string

@@ -1,6 +1,4 @@
 /*
- * SpeechSynthesizer.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -58,9 +56,6 @@ static const NamespaceAndName CONTEXT_MANAGER_SPEECH_STATE{NAMESPACE, "SpeechSta
 /// The name of the @c FocusManager channel used by the @c SpeechSynthesizer.
 static const std::string CHANNEL_NAME = FocusManagerInterface::DIALOG_CHANNEL_NAME;
 
-/// The activity Id used with the @c FocusManager by @c SpeechSynthesizer.
-static const std::string FOCUS_MANAGER_ACTIVITY_ID{"SpeechSynthesizer.Speak"};
-
 /// The name of the event to send to the AVS server once audio starting playing.
 static std::string SPEECH_STARTED_EVENT_NAME{"SpeechStarted"};
 
@@ -102,7 +97,6 @@ std::shared_ptr<SpeechSynthesizer> SpeechSynthesizer::create(
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<FocusManagerInterface> focusManager,
     std::shared_ptr<ContextManagerInterface> contextManager,
-    std::shared_ptr<attachment::AttachmentManagerInterface> attachmentManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender,
     std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator) {
     if (!mediaPlayer) {
@@ -121,16 +115,12 @@ std::shared_ptr<SpeechSynthesizer> SpeechSynthesizer::create(
         ACSDK_ERROR(LX("SpeechSynthesizerCreationFailed").d("reason", "contextManagerNullReference"));
         return nullptr;
     }
-    if (!attachmentManager) {
-        ACSDK_ERROR(LX("SpeechSynthesizerCreationFailed").d("reason", "attachmentManagerNullReference"));
-        return nullptr;
-    }
     if (!exceptionSender) {
         ACSDK_ERROR(LX("SpeechSynthesizerCreationFailed").d("reason", "exceptionSenderNullReference"));
         return nullptr;
     }
-    auto speechSynthesizer = std::shared_ptr<SpeechSynthesizer>(new SpeechSynthesizer(
-        mediaPlayer, messageSender, focusManager, contextManager, attachmentManager, exceptionSender));
+    auto speechSynthesizer = std::shared_ptr<SpeechSynthesizer>(
+        new SpeechSynthesizer(mediaPlayer, messageSender, focusManager, contextManager, exceptionSender));
     speechSynthesizer->init();
 
     dialogUXStateAggregator->addObserver(speechSynthesizer);
@@ -306,7 +296,6 @@ SpeechSynthesizer::SpeechSynthesizer(
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<FocusManagerInterface> focusManager,
     std::shared_ptr<ContextManagerInterface> contextManager,
-    std::shared_ptr<attachment::AttachmentManagerInterface> attachmentManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender) :
         CapabilityAgent{NAMESPACE, exceptionSender},
         RequiresShutdown{"SpeechSynthesizer"},
@@ -315,7 +304,6 @@ SpeechSynthesizer::SpeechSynthesizer(
         m_messageSender{messageSender},
         m_focusManager{focusManager},
         m_contextManager{contextManager},
-        m_attachmentManager{attachmentManager},
         m_currentState{SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED},
         m_desiredState{SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED},
         m_currentFocus{FocusState::NONE},
@@ -356,7 +344,6 @@ void SpeechSynthesizer::doShutdown() {
     m_messageSender.reset();
     m_focusManager.reset();
     m_contextManager.reset();
-    m_attachmentManager.reset();
     m_observers.clear();
 }
 
@@ -435,8 +422,7 @@ void SpeechSynthesizer::executePreHandleAfterValidation(std::shared_ptr<SpeakDir
         return;
     }
     std::string contentId = urlValue.substr(contentIdPosition + CID_PREFIX.length());
-    speakInfo->attachmentReader =
-        speakInfo->directive->getAttachmentReader(contentId, AttachmentReader::Policy::BLOCKING);
+    speakInfo->attachmentReader = speakInfo->directive->getAttachmentReader(contentId, sds::ReaderPolicy::BLOCKING);
     if (!speakInfo->attachmentReader) {
         const std::string message("getAttachmentReaderFailed");
         ACSDK_ERROR(LX("executePreHandleFailed").d("reason", message));
@@ -453,9 +439,8 @@ void SpeechSynthesizer::executePreHandleAfterValidation(std::shared_ptr<SpeakDir
 
 void SpeechSynthesizer::executeHandleAfterValidation(std::shared_ptr<SpeakDirectiveInfo> speakInfo) {
     m_currentInfo = speakInfo;
-    if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), FOCUS_MANAGER_ACTIVITY_ID)) {
-        static const std::string message =
-            std::string("Could not acquire ") + CHANNEL_NAME + " for " + FOCUS_MANAGER_ACTIVITY_ID;
+    if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), NAMESPACE)) {
+        static const std::string message = std::string("Could not acquire ") + CHANNEL_NAME + " for " + NAMESPACE;
         ACSDK_ERROR(LX("executeHandleFailed")
                         .d("reason", "CouldNotAcquireChannel")
                         .d("messageId", m_currentInfo->directive->getMessageId()));
@@ -921,7 +906,8 @@ void SpeechSynthesizer::executeOnDialogUXStateChanged(
     if (newState != avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE) {
         return;
     }
-    if (m_currentFocus != avsCommon::avs::FocusState::NONE) {
+    if (m_currentFocus != avsCommon::avs::FocusState::NONE &&
+        m_currentState != SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS) {
         m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
         m_currentFocus = avsCommon::avs::FocusState::NONE;
     }

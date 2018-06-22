@@ -1,7 +1,5 @@
 /*
- * AlertTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -235,10 +233,11 @@ TEST_F(AlertTest, testDeactivate) {
 }
 
 TEST_F(AlertTest, testSetTimeISO8601) {
+    avsCommon::utils::timing::TimeUtils timeUtils;
     std::string schedTime{"2030-02-02T12:56:34+0000"};
     m_alert->setTime_ISO_8601(schedTime);
     int64_t unixTime = 0;
-    avsCommon::utils::timing::convert8601TimeStringToUnix(schedTime, &unixTime);
+    timeUtils.convert8601TimeStringToUnix(schedTime, &unixTime);
 
     ASSERT_EQ(m_alert->getScheduledTime_ISO_8601(), schedTime);
     ASSERT_EQ(m_alert->getScheduledTime_Unix(), unixTime);
@@ -281,8 +280,9 @@ TEST_F(AlertTest, testSetBackgroundAssetId) {
 }
 
 TEST_F(AlertTest, testIsPastDue) {
+    avsCommon::utils::timing::TimeUtils timeUtils;
     int64_t currentUnixTime = 0;
-    avsCommon::utils::timing::getCurrentUnixTime(&currentUnixTime);
+    timeUtils.getCurrentUnixTime(&currentUnixTime);
     m_alert->setTime_ISO_8601(TEST_DATE_IN_THE_FUTURE);
     ASSERT_FALSE(m_alert->isPastDue(currentUnixTime, std::chrono::seconds{1}));
     m_alert->setTime_ISO_8601(TEST_DATE_IN_THE_PAST);

@@ -1,7 +1,5 @@
 /*
- * PortAudioMicrophoneWrapper.cpp
- *
- * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,6 +13,12 @@
  * permissions and limitations under the License.
  */
 
+#include <cstring>
+#include <string>
+
+#include <rapidjson/document.h>
+
+#include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include "SampleApp/PortAudioMicrophoneWrapper.h"
 #include "SampleApp/ConsolePrinter.h"
 
@@ -27,6 +31,10 @@ static const int NUM_INPUT_CHANNELS = 1;
 static const int NUM_OUTPUT_CHANNELS = 0;
 static const double SAMPLE_RATE = 16000;
 static const unsigned long PREFERRED_SAMPLES_PER_CALLBACK = paFramesPerBufferUnspecified;
+
+static const std::string SAMPLE_APP_CONFIG_ROOT_KEY("sampleApp");
+static const std::string PORTAUDIO_CONFIG_ROOT_KEY("portAudio");
+static const std::string PORTAUDIO_CONFIG_SUGGESTED_LATENCY_KEY("suggestedLatency");
 
 std::unique_ptr<PortAudioMicrophoneWrapper> PortAudioMicrophoneWrapper::create(
     std::shared_ptr<AudioInputStream> stream) {
@@ -66,23 +74,42 @@ bool PortAudioMicrophoneWrapper::initialize() {
         return false;
     }
 
-    PaStreamParameters inputParameters;
-    bzero( &inputParameters, sizeof(inputParameters));
-    inputParameters.device = Pa_GetDefaultInputDevice();
-    inputParameters.channelCount = NUM_INPUT_CHANNELS;
-    inputParameters.sampleFormat = paInt16;
-    inputParameters.suggestedLatency = 0.150;
-    inputParameters.hostApiSpecificStreamInfo = NULL;
+    PaTime suggestedLatency;
+    bool latencyInConfig = getConfigSuggestedLatency(suggestedLatency);
 
-    err = Pa_OpenStream(
-        &m_paStream,
-        &inputParameters,
-        NULL,
-        SAMPLE_RATE,
-        PREFERRED_SAMPLES_PER_CALLBACK,
-        paNoFlag,
-        PortAudioCallback,
-        this);
+    if (!latencyInConfig) {
+        err = Pa_OpenDefaultStream(
+            &m_paStream,
+            NUM_INPUT_CHANNELS,
+            NUM_OUTPUT_CHANNELS,
+            paInt16,
+            SAMPLE_RATE,
+            PREFERRED_SAMPLES_PER_CALLBACK,
+            PortAudioCallback,
+            this);
+    } else {
+        ConsolePrinter::simplePrint(
+            "PortAudio suggestedLatency has been configured to " + std::to_string(suggestedLatency) + " Seconds");
+
+        PaStreamParameters inputParameters;
+        std::memset(&inputParameters, 0, sizeof(inputParameters));
+        inputParameters.device = Pa_GetDefaultInputDevice();
+        inputParameters.channelCount = NUM_INPUT_CHANNELS;
+        inputParameters.sampleFormat = paInt16;
+        inputParameters.suggestedLatency = suggestedLatency;
+        inputParameters.hostApiSpecificStreamInfo = nullptr;
+
+        err = Pa_OpenStream(
+            &m_paStream,
+            &inputParameters,
+            nullptr,
+            SAMPLE_RATE,
+            PREFERRED_SAMPLES_PER_CALLBACK,
+            paNoFlag,
+            PortAudioCallback,
+            this);
+    }
+
     if (err != paNoError) {
         ConsolePrinter::simplePrint("Failed to open PortAudio default stream");
         return false;
@@ -124,6 +151,22 @@ int PortAudioMicrophoneWrapper::PortAudioCallback(
         return paAbort;
     }
     return paContinue;
+}
+
+bool PortAudioMicrophoneWrapper::getConfigSuggestedLatency(PaTime& suggestedLatency) {
+    bool latencyInConfig = false;
+    auto config = avsCommon::utils::configuration::ConfigurationNode::getRoot()[SAMPLE_APP_CONFIG_ROOT_KEY]
+                                                                               [PORTAUDIO_CONFIG_ROOT_KEY];
+    if (config) {
+        latencyInConfig = config.getValue(
+            PORTAUDIO_CONFIG_SUGGESTED_LATENCY_KEY,
+            &suggestedLatency,
+            suggestedLatency,
+            &rapidjson::Value::IsDouble,
+            &rapidjson::Value::GetDouble);
+    }
+
+    return latencyInConfig;
 }
 
 }  // namespace sampleApp

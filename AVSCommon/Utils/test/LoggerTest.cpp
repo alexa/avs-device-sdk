@@ -1,7 +1,5 @@
 /*
- * LoggerTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -229,6 +227,7 @@ protected:
 
 void LoggerTest::SetUp() {
     // make sure getLoggerTestLogger() is used as sink
+    g_log = MockLogger::create();
     LoggerSinkManager::instance().initialize(getLoggerTestLogger());
 }
 
@@ -237,7 +236,6 @@ void LoggerTest::TearDown() {
 }
 
 void LoggerTest::setLevelExpectations(Level level) {
-    g_log = MockLogger::create();
     ACSDK_GET_LOGGER_FUNCTION().setLevel(level);
 
     switch (level) {
@@ -473,7 +471,6 @@ TEST_F(LoggerTest, logNoneLevel) {
  * emit() method is between (inclusive) the before and after times.
  */
 TEST_F(LoggerTest, verifyTime) {
-    g_log = MockLogger::create();
     ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
 
     EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
@@ -489,7 +486,6 @@ TEST_F(LoggerTest, verifyTime) {
  * two threads and verifies that the thread moniker values passed to the emit() method are in fact different.
  */
 TEST_F(LoggerTest, verifyThreadMoniker) {
-    g_log = MockLogger::create();
     ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
     EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(2);
     ACSDK_INFO(LX("testing threadMoniker (1 of 2)"));
@@ -507,7 +503,6 @@ TEST_F(LoggerTest, verifyThreadMoniker) {
  * passed to the emit() method.
  */
 TEST_F(LoggerTest, verifySource) {
-    g_log = MockLogger::create();
     ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
     EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
     ACSDK_INFO(LX("random_event"));
@@ -520,7 +515,6 @@ TEST_F(LoggerTest, verifySource) {
  * passed to the emit() method.
  */
 TEST_F(LoggerTest, verifyEvent) {
-    g_log = MockLogger::create();
     ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
     EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
     std::string event(TEST_EVENT_STRING);
@@ -534,7 +528,6 @@ TEST_F(LoggerTest, verifyEvent) {
  * both the key and escaped value are included in the text passed to the emit() method.
  */
 TEST_F(LoggerTest, verifyMetadata) {
-    g_log = MockLogger::create();
     ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
     EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
     ACSDK_INFO(LX("testing metadata")
@@ -550,7 +543,6 @@ TEST_F(LoggerTest, verifyMetadata) {
  * Expects that the message is included in text passed to the emit() method.
  */
 TEST_F(LoggerTest, verifyMessage) {
-    g_log = MockLogger::create();
     ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
     EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
     std::string message(TEST_MESSAGE_STRING);
@@ -562,7 +554,6 @@ TEST_F(LoggerTest, verifyMessage) {
  * Test passing sensitive data to the logging system.  It should only be emitted in DEBUG builds.
  */
 TEST_F(LoggerTest, testSensitiveDataSuppressed) {
-    g_log = MockLogger::create();
     ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
     EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
     ACSDK_INFO(LX("testing metadata").sensitive(METADATA_KEY, UNESCAPED_METADATA_VALUE));
@@ -586,7 +577,7 @@ TEST_F(LoggerTest, testModuleLoggerObserver) {
     mockModuleLogger.setLevel(Level::CRITICAL);
     ASSERT_EQ(mockModuleLogger.getLogLevel(), Level::CRITICAL);
     getLoggerTestLogger()->setLevel(Level::NONE);
-    ASSERT_EQ(mockModuleLogger.getLogLevel(), Level::CRITICAL);
+    ASSERT_EQ(mockModuleLogger.getLogLevel(), Level::NONE);
 }
 
 /**
@@ -608,7 +599,7 @@ TEST_F(LoggerTest, testMultipleModuleLoggerObservers) {
     ASSERT_EQ(mockModuleLogger3.getLogLevel(), Level::WARN);
 
     getLoggerTestLogger()->setLevel(Level::NONE);
-    ASSERT_EQ(mockModuleLogger1.getLogLevel(), Level::CRITICAL);
+    ASSERT_EQ(mockModuleLogger1.getLogLevel(), Level::NONE);
     ASSERT_EQ(mockModuleLogger2.getLogLevel(), Level::NONE);
     ASSERT_EQ(mockModuleLogger3.getLogLevel(), Level::NONE);
 }
@@ -618,7 +609,6 @@ TEST_F(LoggerTest, testMultipleModuleLoggerObservers) {
  * ModuleLoggers will be changed.
  */
 TEST_F(LoggerTest, testChangeSinkLogger) {
-    g_log = MockLogger::create();
     std::shared_ptr<MockLogger> sink1 = MockLogger::create();
     std::shared_ptr<Logger> sink1Logger = sink1;
 

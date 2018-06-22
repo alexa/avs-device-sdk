@@ -1,7 +1,5 @@
 /*
- * AttachmentManagerV2Test.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -102,9 +100,9 @@ void AttachmentManagerTest::testWriters(const WriterVec& writers, bool expectedV
 }
 
 void AttachmentManagerTest::createReaders(ReaderVec* readers) {
-    readers->push_back(m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, AttachmentReader::Policy::BLOCKING));
-    readers->push_back(m_manager.createReader(TEST_ATTACHMENT_ID_STRING_TWO, AttachmentReader::Policy::BLOCKING));
-    readers->push_back(m_manager.createReader(TEST_ATTACHMENT_ID_STRING_THREE, AttachmentReader::Policy::BLOCKING));
+    readers->push_back(m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, utils::sds::ReaderPolicy::BLOCKING));
+    readers->push_back(m_manager.createReader(TEST_ATTACHMENT_ID_STRING_TWO, utils::sds::ReaderPolicy::BLOCKING));
+    readers->push_back(m_manager.createReader(TEST_ATTACHMENT_ID_STRING_THREE, utils::sds::ReaderPolicy::BLOCKING));
 }
 
 void AttachmentManagerTest::testReaders(const ReaderVec& readers, bool expectedValid) {
@@ -158,7 +156,7 @@ TEST_F(AttachmentManagerTest, testAttachmentManagerSetTimeout) {
 TEST_F(AttachmentManagerTest, testAttachmentManagerCreateWriterThenReader) {
     // Create the writer before the reader.
     auto writer = m_manager.createWriter(TEST_ATTACHMENT_ID_STRING_ONE);
-    auto reader = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, AttachmentReader::Policy::BLOCKING);
+    auto reader = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, utils::sds::ReaderPolicy::BLOCKING);
     ASSERT_NE(writer, nullptr);
     ASSERT_NE(reader, nullptr);
 }
@@ -168,7 +166,7 @@ TEST_F(AttachmentManagerTest, testAttachmentManagerCreateWriterThenReader) {
  */
 TEST_F(AttachmentManagerTest, testAttachmentManagerCreateReaderThenWriter) {
     // Create the reader before the writer.
-    auto reader = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, AttachmentReader::Policy::BLOCKING);
+    auto reader = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, utils::sds::ReaderPolicy::BLOCKING);
     auto writer = m_manager.createWriter(TEST_ATTACHMENT_ID_STRING_ONE);
     ASSERT_NE(writer, nullptr);
     ASSERT_NE(reader, nullptr);
@@ -179,7 +177,7 @@ TEST_F(AttachmentManagerTest, testAttachmentManagerCreateReaderThenWriter) {
  */
 TEST_F(AttachmentManagerTest, testAttachmentManagerCreateReader) {
     // Create the reader.
-    auto reader = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, AttachmentReader::Policy::BLOCKING);
+    auto reader = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, utils::sds::ReaderPolicy::BLOCKING);
     ASSERT_NE(reader, nullptr);
 }
 
@@ -191,7 +189,7 @@ TEST_F(AttachmentManagerTest, testAttachmentManagerReadAttachmentWithoutWriter) 
     std::vector<uint8_t> result(testPattern.size());
 
     // Create the reader.
-    auto reader = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, AttachmentReader::Policy::NON_BLOCKING);
+    auto reader = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, utils::sds::ReaderPolicy::NONBLOCKING);
     ASSERT_NE(reader, nullptr);
 
     // Verify that read indicates an empty (but not closed) buffer.
@@ -261,8 +259,8 @@ TEST_F(AttachmentManagerTest, testAttachmentManagerCreateMultipleWriters) {
  * Verify an AttachmentManager can't create multiple readers.
  */
 TEST_F(AttachmentManagerTest, testAttachmentManagerCreateMultipleReaders) {
-    auto reader1 = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, AttachmentReader::Policy::BLOCKING);
-    auto reader2 = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, AttachmentReader::Policy::BLOCKING);
+    auto reader1 = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, utils::sds::ReaderPolicy::BLOCKING);
+    auto reader2 = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, utils::sds::ReaderPolicy::BLOCKING);
     ASSERT_NE(reader1, nullptr);
     ASSERT_EQ(reader2, nullptr);
 }
@@ -272,7 +270,7 @@ TEST_F(AttachmentManagerTest, testAttachmentManagerCreateMultipleReaders) {
  */
 TEST_F(AttachmentManagerTest, testAttachmentWriterAndReaderInOnePass) {
     auto writer = m_manager.createWriter(TEST_ATTACHMENT_ID_STRING_ONE);
-    auto reader = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, AttachmentReader::Policy::BLOCKING);
+    auto reader = m_manager.createReader(TEST_ATTACHMENT_ID_STRING_ONE, utils::sds::ReaderPolicy::BLOCKING);
     ASSERT_NE(writer, nullptr);
     ASSERT_NE(reader, nullptr);
 

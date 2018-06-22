@@ -1,7 +1,5 @@
 /*
- * UserInactivityMonitor.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -123,7 +121,7 @@ void UserInactivityMonitor::sendInactivityReport() {
     const Pointer::Token payloadKey[] = {{INACTIVITY_EVENT_PAYLOAD_KEY.c_str(), payloadKeySize, kPointerInvalidIndex}};
     auto inactiveTime =
         std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - lastTimeActive);
-    Pointer(payloadKey, 1).Set(inactivityPayload, inactiveTime.count());
+    Pointer(payloadKey, 1).Set(inactivityPayload, static_cast<int64_t>(inactiveTime.count()));
     std::string inactivityPayloadString;
     jsonUtils::convertToValue(inactivityPayload, &inactivityPayloadString);
 

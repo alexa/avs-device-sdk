@@ -1,7 +1,5 @@
 /*
- * ModuleLogger.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,19 +33,13 @@ void ModuleLogger::emit(
 }
 
 void ModuleLogger::setLevel(Level level) {
-    Logger::setLevel(level);
-
-    /*
-     * Once the logLevel of the ModuleLogger has been changed, it should no
-     * longer use the logLevel in the m_sink, hence the flag is cleared here.
-     */
-    m_useSinkLogLevel = false;
+    m_moduleLogLevel = level;
+    updateLogLevel();
 }
 
 void ModuleLogger::onLogLevelChanged(Level level) {
-    if (m_useSinkLogLevel) {
-        Logger::m_level = level;
-    }
+    m_sinkLogLevel = level;
+    updateLogLevel();
 }
 
 void ModuleLogger::onSinkChanged(const std::shared_ptr<Logger>& logger) {
@@ -58,16 +50,21 @@ void ModuleLogger::onSinkChanged(const std::shared_ptr<Logger>& logger) {
     m_sink->addLogLevelObserver(this);
 }
 
+void ModuleLogger::updateLogLevel() {
+    if (Level::UNKNOWN == m_sinkLogLevel) {
+        Logger::setLevel(m_moduleLogLevel);
+    } else if (Level::UNKNOWN == m_moduleLogLevel) {
+        Logger::setLevel(m_sinkLogLevel);
+    } else {
+        Logger::setLevel((m_sinkLogLevel > m_moduleLogLevel) ? m_sinkLogLevel : m_moduleLogLevel);
+    }
+}
+
 ModuleLogger::ModuleLogger(const std::string& configKey) :
         Logger(Level::UNKNOWN),
-        m_useSinkLogLevel(true),
+        m_moduleLogLevel(Level::UNKNOWN),
+        m_sinkLogLevel(Level::UNKNOWN),
         m_sink(nullptr) {
-    /*
-     * Note that m_useSinkLogLevel is set to true by default.  The idea is for
-     * the ModuleLogger to use the same logLevel as its sink unless it's been
-     * set specifically.
-     */
-
     /*
      * By adding itself to the LoggerSinkManager, the LoggerSinkManager will
      * notify the ModuleLogger of the current sink logger via the

@@ -1,7 +1,5 @@
 /*
- * DirectiveSequencerInterface.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -73,9 +71,6 @@ public:
      * implementations of this should call the handler's getConfiguration() method to get the namespace(s), name(s), and
      * policy(ies) of the handler. If the handler's configurations are unable to be removed, the entire operation is
      * refused.
-
-     specified mappings from @c NamespaceAndName values to @c HandlerAndPolicy values. If any of
-     * the specified mappings do not match an existing mapping, the entire operation is refused.
      *
      * @param handler The handler to remove.
      * @return Whether the handler was removed.
@@ -100,6 +95,18 @@ public:
      * @return Whether or not the directive was accepted.
      */
     virtual bool onDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive) = 0;
+
+    /**
+     * Disable the DirectiveSequencer.
+     *
+     * @note While disabled the DirectiveSequencer should not be able to handle directives.
+     */
+    virtual void disable() = 0;
+
+    /**
+     * Enable the DirectiveSequencer.
+     */
+    virtual void enable() = 0;
 };
 
 inline DirectiveSequencerInterface::DirectiveSequencerInterface(const std::string& name) :

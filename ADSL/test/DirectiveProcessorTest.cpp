@@ -1,7 +1,5 @@
 /*
- * DirectiveProcessorTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,6 +12,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
 // @file DirectiveProcessorTest.cpp
 
 #include <chrono>
@@ -304,6 +303,19 @@ TEST_F(DirectiveProcessorTest, testSetDialogRequestIdCancelsOutstandingDirective
     m_processor->setDialogRequestId(DIALOG_REQUEST_ID_1);
     ASSERT_TRUE(m_processor->onDirective(m_directive_1_0));
     ASSERT_TRUE(handler2->waitUntilCompleted());
+}
+
+TEST_F(DirectiveProcessorTest, testAddDirectiveWhileDisabled) {
+    m_processor->disable();
+    ASSERT_FALSE(m_processor->onDirective(m_directive_0_0));
+}
+
+TEST_F(DirectiveProcessorTest, testAddDirectiveAfterReEnabled) {
+    m_processor->disable();
+    ASSERT_FALSE(m_processor->onDirective(m_directive_0_0));
+
+    m_processor->enable();
+    ASSERT_TRUE(m_processor->onDirective(m_directive_0_0));
 }
 
 }  // namespace test

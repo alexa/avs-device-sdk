@@ -1,7 +1,5 @@
 /*
- * DirectiveProcessor.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -94,6 +92,19 @@ public:
      * blocks until the processing of all @c AVSDirectives has completed.
      */
     void shutdown();
+
+    /**
+     * Disable the DirectiveProcessor, queues all outstanding @c AVSDirectives for cancellation and
+     * blocks until the processing of all @c AVSDirectives has completed.
+     */
+    void disable();
+
+    /**
+     * Enable the DirectiveProcessor.
+     *
+     * @return Whether it succeeded to enable the directive processor.
+     */
+    bool enable();
 
 private:
     /**
@@ -223,6 +234,9 @@ private:
 
     /// Whether or not the @c DirectiveProcessor is shutting down.
     bool m_isShuttingDown;
+
+    /// Whether or not the @c DirectiveProcessor is enabled.
+    bool m_isEnabled;
 
     /// The current @c dialogRequestId
     std::string m_dialogRequestId;

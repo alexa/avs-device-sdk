@@ -1,19 +1,16 @@
 /*
- * DirectiveSequencer.cpp
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates.
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *     http://aws.amazon.com/apache2.0/
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
  */
 
 #include <algorithm>
@@ -71,11 +68,11 @@ bool DirectiveSequencer::onDirective(std::shared_ptr<AVSDirective> directive) {
         return false;
     }
     std::lock_guard<std::mutex> lock(m_mutex);
-    if (m_isShuttingDown) {
+    if (m_isShuttingDown || !m_isEnabled) {
         ACSDK_WARN(LX("onDirectiveFailed")
                        .d("directive", directive->getHeaderAsString())
                        .d("action", "ignored")
-                       .d("reason", "isShuttingDown"));
+                       .d("reason", m_isShuttingDown ? "isShuttingDown" : "disabled"));
         return false;
     }
     ACSDK_INFO(LX("onDirective").d("directive", directive->getHeaderAsString()));
@@ -89,13 +86,14 @@ DirectiveSequencer::DirectiveSequencer(
         DirectiveSequencerInterface{"DirectiveSequencer"},
         m_mutex{},
         m_exceptionSender{exceptionSender},
-        m_isShuttingDown{false} {
+        m_isShuttingDown{false},
+        m_isEnabled{true} {
     m_directiveProcessor = std::make_shared<DirectiveProcessor>(&m_directiveRouter);
     m_receivingThread = std::thread(&DirectiveSequencer::receivingLoop, this);
 }
 
 void DirectiveSequencer::doShutdown() {
-    ACSDK_INFO(LX("doShutdown"));
+    ACSDK_DEBUG9(LX("doShutdown"));
     {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_isShuttingDown = true;
@@ -107,6 +105,23 @@ void DirectiveSequencer::doShutdown() {
     m_directiveProcessor->shutdown();
     m_directiveRouter.shutdown();
     m_exceptionSender.reset();
+}
+
+void DirectiveSequencer::disable() {
+    ACSDK_DEBUG9(LX("disable"));
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_isEnabled = false;
+    m_directiveProcessor->setDialogRequestId("");
+    m_directiveProcessor->disable();
+    m_wakeReceivingLoop.notify_one();
+}
+
+void DirectiveSequencer::enable() {
+    ACSDK_DEBUG9(LX("disable"));
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_isEnabled = true;
+    m_directiveProcessor->enable();
+    m_wakeReceivingLoop.notify_one();
 }
 
 void DirectiveSequencer::receivingLoop() {

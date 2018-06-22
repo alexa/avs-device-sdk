@@ -1,7 +1,5 @@
 /*
- * SpeakerManagerInterface.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_SPEAKERMANAGERINTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_SPEAKERMANAGERINTERFACE_H_
 
+#include <future>
 #include <memory>
 
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
@@ -109,6 +108,17 @@ public:
      */
     virtual void removeSpeakerManagerObserver(
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerObserverInterface> observer) = 0;
+
+    /**
+     * Adds a speaker to be tracked by @c SpeakerManagerInterface.
+     * This method is not guaranteed to be thread safe and should be called during the initialization step only.
+     * All speakers added this way must be destroyed during the shutdown process.
+     * @remarks
+     * Note that after this method @c SpeakerManagerInterface instance will hold a reference to the @c SpeakerInterface
+     * added.
+     * @param speaker
+     */
+    virtual void addSpeaker(std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker) = 0;
 };
 
 }  // namespace sdkInterfaces

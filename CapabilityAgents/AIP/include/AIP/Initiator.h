@@ -1,7 +1,5 @@
 /*
- * Initiator.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +19,8 @@
 namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace aip {
+
+#include <string>
 
 /**
  * Enumerates the different initiators supported by AVS.

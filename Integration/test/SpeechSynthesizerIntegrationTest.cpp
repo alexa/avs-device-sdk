@@ -1,7 +1,5 @@
 /*
- * SpeechSynthesizerIntegrationTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -342,7 +340,7 @@ protected:
         ASSERT_NE(nullptr, m_avsConnectionManager);
         connect();
 
-        m_focusManager = std::make_shared<FocusManager>();
+        m_focusManager = std::make_shared<FocusManager>(FocusManager::DEFAULT_AUDIO_CHANNELS);
         m_testClient = std::make_shared<TestClient>();
         ASSERT_TRUE(
             m_focusManager->acquireChannel(FocusManager::ALERTS_CHANNEL_NAME, m_testClient, ALERTS_ACTIVITY_ID));
@@ -361,7 +359,6 @@ protected:
             m_avsConnectionManager,
             m_focusManager,
             m_contextManager,
-            m_attachmentManager,
             m_exceptionEncounteredSender,
             m_dialogUXStateAggregator);
         m_directiveSequencer->addDirectiveHandler(m_speechSynthesizer);
@@ -445,7 +442,7 @@ protected:
         attachmentWriter->close();
 
         std::shared_ptr<InProcessAttachmentReader> attachmentReader =
-            InProcessAttachmentReader::create(AttachmentReader::Policy::NON_BLOCKING, sds);
+            InProcessAttachmentReader::create(ReaderPolicy::NONBLOCKING, sds);
         ASSERT_NE(attachmentReader, nullptr);
 
         sendEvent(json, attachmentReader, expectedStatus, std::chrono::seconds(timeout));

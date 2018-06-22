@@ -1,6 +1,4 @@
 /*
- * AttachmentWriter.h
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -18,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_ATTACHMENTWRITER_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_ATTACHMENTWRITER_H_
 
+#include <chrono>
 #include <cstddef>
 
 namespace alexaClientSDK {

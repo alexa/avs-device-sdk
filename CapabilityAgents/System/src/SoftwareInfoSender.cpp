@@ -1,6 +1,4 @@
 /*
- * SoftwareInfoSender.cpp
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -59,8 +57,8 @@ std::shared_ptr<SoftwareInfoSender> SoftwareInfoSender::create(
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender) {
     ACSDK_DEBUG5(LX("create"));
 
-    if (INVALID_FIRMWARE_VERSION == firmwareVersion) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "invalidFirmwareVersion"));
+    if (firmwareVersion <= 0) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "invalidFirmwareVersion").d("firmwareVersion", firmwareVersion));
         return nullptr;
     }
 
@@ -90,8 +88,9 @@ std::shared_ptr<SoftwareInfoSender> SoftwareInfoSender::create(
 bool SoftwareInfoSender::setFirmwareVersion(FirmwareVersion firmwareVersion) {
     ACSDK_DEBUG5(LX("setFirmwareVersion").d("firmwareVersion", firmwareVersion));
 
-    if (INVALID_FIRMWARE_VERSION == firmwareVersion) {
-        ACSDK_ERROR(LX("setFirmwareVersion").d("reason", "invalidFirmwareVersion"));
+    if (!isValidFirmwareVersion(firmwareVersion)) {
+        ACSDK_ERROR(
+            LX("setFirmwareVersion").d("reason", "invalidFirmwareVersion").d("firmwareVersion", firmwareVersion));
         return false;
     }
 
@@ -167,7 +166,7 @@ void SoftwareInfoSender::handleDirective(std::shared_ptr<CapabilityAgent::Direct
     if (info->directive->getNamespace() != REPORT_SOFTWARE_INFO.nameSpace ||
         info->directive->getName() != REPORT_SOFTWARE_INFO.name) {
         sendExceptionEncounteredAndReportFailed(
-            info, ExceptionErrorType::UNSUPPORTED_OPERATION, "Unsupported operation");
+            info, "Unsupported operation", ExceptionErrorType::UNSUPPORTED_OPERATION);
         return;
     }
 
@@ -183,7 +182,7 @@ void SoftwareInfoSender::handleDirective(std::shared_ptr<CapabilityAgent::Direct
         std::lock_guard<std::mutex> lock(m_mutex);
 
         if (m_firmwareVersion == INVALID_FIRMWARE_VERSION) {
-            sendExceptionEncounteredAndReportFailed(info, ExceptionErrorType::INTERNAL_ERROR, "NoFirmwareVersion");
+            sendExceptionEncounteredAndReportFailed(info, "NoFirmwareVersion", ExceptionErrorType::INTERNAL_ERROR);
             return;
         }
 
@@ -194,7 +193,7 @@ void SoftwareInfoSender::handleDirective(std::shared_ptr<CapabilityAgent::Direct
             m_handleDirectiveSendRequest = newSendRequest;
         } else {
             sendExceptionEncounteredAndReportFailed(
-                info, ExceptionErrorType::INTERNAL_ERROR, "sendFirmwareVersionFailed");
+                info, "sendFirmwareVersionFailed", ExceptionErrorType::INTERNAL_ERROR);
         }
     }
 
@@ -349,18 +348,6 @@ void SoftwareInfoSender::removeDirective(std::shared_ptr<DirectiveInfo> info) {
     if (info && info->result) {
         CapabilityAgent::removeDirective(info->directive->getMessageId());
     }
-}
-
-void SoftwareInfoSender::sendExceptionEncounteredAndReportFailed(
-    std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info,
-    avsCommon::avs::ExceptionErrorType type,
-    const std::string& message) {
-    ACSDK_DEBUG5(LX("sendExceptionEncounteredAndReportFailed").d("type", type).d("message", message));
-    m_exceptionEncounteredSender->sendExceptionEncountered(info->directive->getUnparsedDirective(), type, message);
-    if (info && info->result) {
-        info->result->setFailed(message);
-    }
-    removeDirective(info);
 }
 
 }  // namespace system

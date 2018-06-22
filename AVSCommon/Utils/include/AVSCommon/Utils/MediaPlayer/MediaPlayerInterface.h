@@ -1,6 +1,4 @@
 /*
- * MediaPlayerInterface.h
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -24,6 +22,7 @@
 #include <memory>
 
 #include "AVSCommon/AVS/Attachment/AttachmentReader.h"
+#include "AVSCommon/Utils/AudioFormat.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -77,11 +76,13 @@ public:
      * @c MediaPlayerObserverInterface::onPlaybackStopped() with the previous source's id if there was a source set.
      *
      * @param attachmentReader Object with which to read an incoming audio attachment.
-     *
+     * @param format The audioFormat to be used to interpret raw audio data.
      * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
      *     returned if the source failed to be set.
      */
-    virtual SourceId setSource(std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) = 0;
+    virtual SourceId setSource(
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+        const avsCommon::utils::AudioFormat* format = nullptr) = 0;
 
     /**
      * Set a url source to play. The source should be set before making calls to any of the playback control APIs. If
@@ -211,6 +212,13 @@ public:
      *      will be returned. If the specified source is not playing, the last offset it played will be returned.
      */
     virtual std::chrono::milliseconds getOffset(SourceId id) = 0;
+
+    /**
+     * Returns the number of bytes queued up in the media player buffers.
+     *
+     * @return The number of bytes currently queued in this MediaPlayer's buffer.
+     */
+    virtual uint64_t getNumBytesBuffered() = 0;
 
     /**
      * Sets an observer to be notified when playback state changes.

@@ -1,19 +1,16 @@
 /*
- * CertifiedSender.cpp
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates.
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *     http://aws.amazon.com/apache2.0/
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
  */
 
 #include "CertifiedSender/CertifiedSender.h"
@@ -21,6 +18,7 @@
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
+#include <RegistrationManager/CustomerDataManager.h>
 
 namespace alexaClientSDK {
 namespace certifiedSender {
@@ -29,11 +27,6 @@ using namespace avsCommon::utils::logger;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs;
 using namespace avsCommon::utils::configuration;
-
-/// The key in our config file to find the root of settings for this Capability Agent.
-static const std::string CERTIFIED_SENDER_CONFIGURATION_ROOT_KEY = "certifiedSender";
-/// The key in our config file to find the database file path.
-static const std::string CERTIFIED_SENDER_DB_FILE_PATH_KEY = "databaseFilePath";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("CertifiedSender");
@@ -93,8 +86,10 @@ void CertifiedSender::CertifiedMessageRequest::shutdown() {
 std::shared_ptr<CertifiedSender> CertifiedSender::create(
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<AbstractConnection> connection,
-    std::shared_ptr<MessageStorageInterface> storage) {
-    auto certifiedSender = std::shared_ptr<CertifiedSender>(new CertifiedSender(messageSender, connection, storage));
+    std::shared_ptr<MessageStorageInterface> storage,
+    std::shared_ptr<registrationManager::CustomerDataManager> dataManager) {
+    auto certifiedSender =
+        std::shared_ptr<CertifiedSender>(new CertifiedSender(messageSender, connection, storage, dataManager));
 
     if (!certifiedSender->init()) {
         ACSDK_ERROR(LX("createFailed").m("Could not initialize certifiedSender."));
@@ -110,9 +105,11 @@ CertifiedSender::CertifiedSender(
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
     std::shared_ptr<AbstractConnection> connection,
     std::shared_ptr<MessageStorageInterface> storage,
+    std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
     int queueSizeWarnLimit,
     int queueSizeHardLimit) :
         RequiresShutdown("CertifiedSender"),
+        CustomerDataHandler(dataManager),
         m_queueSizeWarnLimit{queueSizeWarnLimit},
         m_queueSizeHardLimit{queueSizeHardLimit},
         m_isShuttingDown{false},
@@ -146,17 +143,9 @@ bool CertifiedSender::init() {
         return false;
     }
 
-    auto configurationRoot = ConfigurationNode::getRoot()[CERTIFIED_SENDER_CONFIGURATION_ROOT_KEY];
-
-    std::string dbFilePath;
-    if (!configurationRoot.getString(CERTIFIED_SENDER_DB_FILE_PATH_KEY, &dbFilePath) || dbFilePath.empty()) {
-        ACSDK_ERROR(LX("initFailed").m("Could not load db file path."));
-        return false;
-    }
-
-    if (!m_storage->open(dbFilePath)) {
+    if (!m_storage->open()) {
         ACSDK_INFO(LX("init : Database file does not exist.  Creating."));
-        if (!m_storage->createDatabase(dbFilePath)) {
+        if (!m_storage->createDatabase()) {
             ACSDK_ERROR(LX("initFailed").m("Could not create database file."));
             return false;
         }
@@ -179,7 +168,7 @@ void CertifiedSender::mainloop() {
         }
 
         if (m_isShuttingDown) {
-            ACSDK_INFO(LX("CertifiedSender worker thread done.  exiting mainloop."));
+            ACSDK_DEBUG9(LX("CertifiedSender worker thread done.  exiting mainloop."));
             return;
         }
 
@@ -257,6 +246,15 @@ bool CertifiedSender::executeSendJSONMessage(std::string jsonMessage) {
 
 void CertifiedSender::doShutdown() {
     m_connection->removeConnectionStatusObserver(shared_from_this());
+}
+
+void CertifiedSender::clearData() {
+    auto result = m_executor.submit([this]() {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        m_messagesToSend.clear();
+        m_storage->clearDatabase();
+    });
+    result.wait();
 }
 
 }  // namespace certifiedSender

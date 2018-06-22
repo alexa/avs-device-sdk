@@ -1,7 +1,5 @@
 /*
- * StateRefreshPolicy.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -37,7 +35,14 @@ enum class StateRefreshPolicy {
      * Indicates to the @c ContextManager that the stateProvider needs to be queried and the state refreshed every time
      * it processes a @c getContext request.
      */
-    ALWAYS
+    ALWAYS,
+
+    /**
+     * Indicates to the @c ContextManager that the stateProvider needs to be queried and the state refreshed every time
+     * it processes a @c getContext request.  The stateProvider may choose to not report context by supplying an empty
+     * @c jsonState via @c setState.
+     */
+    SOMETIMES
 };
 
 }  // namespace avs

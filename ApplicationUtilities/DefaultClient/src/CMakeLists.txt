@@ -19,8 +19,10 @@ target_link_libraries(DefaultClient
     Settings
     TemplateRuntime
     AudioPlayer
+    ExternalMediaPlayer
     AVSSystem
-    ContextManager)
+    ContextManager
+    RegistrationManager)
 
 # install target
 asdk_install()

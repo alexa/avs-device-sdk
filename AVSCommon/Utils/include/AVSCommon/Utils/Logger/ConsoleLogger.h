@@ -1,7 +1,5 @@
 /*
- * ConsoleLogger.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +17,8 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_CONSOLELOGGER_H_
 
 #include "AVSCommon/Utils/Logger/Logger.h"
+#include "AVSCommon/Utils/Logger/LoggerUtils.h"
+#include "AVSCommon/Utils/Logger/LogStringFormatter.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -47,6 +47,9 @@ private:
     ConsoleLogger();
 
     std::mutex m_coutMutex;
+
+    /// Object to format log strings correctly.
+    LogStringFormatter m_logFormatter;
 };
 
 /**

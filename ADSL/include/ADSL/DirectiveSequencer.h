@@ -1,7 +1,5 @@
 /*
- * DirectiveSequencer.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -56,6 +54,10 @@ public:
 
     bool onDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive) override;
 
+    void disable() override;
+
+    void enable() override;
+
 private:
     /**
      * Constructor.
@@ -94,6 +96,9 @@ private:
 
     /// Whether or not the @c DirectiveReceiver is shutting down.
     bool m_isShuttingDown;
+
+    /// Whether or not the @c DirectiveSequencer is enabled.
+    bool m_isEnabled;
 
     /// Object used to route directives to their assigned handler.
     DirectiveRouter m_directiveRouter;

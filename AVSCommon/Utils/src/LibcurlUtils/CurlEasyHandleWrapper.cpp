@@ -1,7 +1,5 @@
 /*
- * CurlEasyHandleWrapper.cpp
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +16,7 @@
 #include <iostream>
 
 #include <AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h>
+#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
@@ -42,20 +41,24 @@ static const std::string TAG("CurlEasyHandleWrapper");
 static std::string JSON_MIME_TYPE = "text/json";
 /// MIME Content-Type for octet stream data
 static std::string OCTET_MIME_TYPE = "application/octet-stream";
-/// Response code for HTTP 204 (Success No Content response)
-static const long HTTP_RESPONSE_SUCCESS_NO_CONTENT = 204;
 
 CurlEasyHandleWrapper::CurlEasyHandleWrapper() :
         m_handle{curl_easy_init()},
         m_requestHeaders{nullptr},
         m_postHeaders{nullptr},
         m_post{nullptr} {
-    setDefaultOptions();
+    if (m_handle == nullptr) {
+        ACSDK_ERROR(LX("CurlEasyHandleWrapperFailed").d("reason", "curl_easy_init failed"));
+    } else {
+        setDefaultOptions();
+    }
 };
 
 CurlEasyHandleWrapper::~CurlEasyHandleWrapper() {
     cleanupResources();
-    curl_easy_cleanup(m_handle);
+    if (m_handle != nullptr) {
+        curl_easy_cleanup(m_handle);
+    }
 };
 
 bool CurlEasyHandleWrapper::reset() {
@@ -84,10 +87,8 @@ bool CurlEasyHandleWrapper::reset() {
      * if we receive a 204.
      *
      * This may be related to an older curl version. This workaround is confirmed unneeded for curl 7.55.1
-     *
-     * TODO: ACSDK-104 Find a way to re-use all handles, or re-evaluate the easy handle pooling scheme
      */
-    if (HTTP_RESPONSE_SUCCESS_NO_CONTENT == responseCode) {
+    if (HTTPResponseCode::SUCCESS_NO_CONTENT == responseCode) {
         ACSDK_DEBUG(LX("reset").d("responseCode", "HTTP_RESPONSE_SUCCESS_NO_CONTENT"));
         curl_easy_cleanup(m_handle);
         m_handle = curl_easy_init();
@@ -101,6 +102,10 @@ bool CurlEasyHandleWrapper::reset() {
     return setDefaultOptions();
 }
 
+bool CurlEasyHandleWrapper::isValid() {
+    return m_handle != nullptr;
+}
+
 CURL* CurlEasyHandleWrapper::getCurlHandle() {
     return m_handle;
 }
@@ -109,72 +114,37 @@ bool CurlEasyHandleWrapper::addHTTPHeader(const std::string& header) {
     m_requestHeaders = curl_slist_append(m_requestHeaders, header.c_str());
     if (!m_requestHeaders) {
         ACSDK_ERROR(LX("addHTTPHeaderFailed").d("reason", "curlFailure").d("method", "curl_slist_append"));
-        ACSDK_DEBUG(LX("addHTTPHeaderFailed").d("header", header));
+        ACSDK_DEBUG(LX("addHTTPHeaderFailed").sensitive("header", header));
         return false;
     }
-    CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_HTTPHEADER, m_requestHeaders);
-    if (ret != CURLE_OK) {
-        ACSDK_ERROR(LX("addHTTPHeaderFailed")
-                        .d("reason", "curlFailure")
-                        .d("method", "curl_easy_setopt")
-                        .d("option", "CURLOPT_HTTPHEADER")
-                        .d("error", curl_easy_strerror(ret)));
-        return false;
-    }
-    return true;
+    return setopt(CURLOPT_HTTPHEADER, m_requestHeaders);
 }
 
 bool CurlEasyHandleWrapper::addPostHeader(const std::string& header) {
     m_postHeaders = curl_slist_append(m_postHeaders, header.c_str());
     if (!m_postHeaders) {
         ACSDK_ERROR(LX("addPostHeaderFailed").d("reason", "curlFailure").d("method", "curl_slist_append"));
-        ACSDK_DEBUG(LX("addPostHeaderFailed").d("header", header));
+        ACSDK_DEBUG(LX("addPostHeaderFailed").sensitive("header", header));
         return false;
     }
     return true;
 }
 
 bool CurlEasyHandleWrapper::setURL(const std::string& url) {
-    CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_URL, url.c_str());
-    if (ret != CURLE_OK) {
-        ACSDK_ERROR(LX("setUrlFailed")
-                        .d("reason", "curlFailure")
-                        .d("method", "curl_easy_setopt")
-                        .d("option", "CURLOPT_URL")
-                        .d("url", url)
-                        .d("error", curl_easy_strerror(ret)));
-        return false;
-    }
-    return true;
+    return setopt(CURLOPT_URL, url.c_str());
 }
 
 bool CurlEasyHandleWrapper::setTransferType(TransferType type) {
-    CURLcode ret;
+    bool ret = false;
     switch (type) {
         case TransferType::kGET:
-            ret = curl_easy_setopt(m_handle, CURLOPT_HTTPGET, 1L);
-            if (ret != CURLE_OK) {
-                ACSDK_ERROR(LX("setTransferTypeFailed")
-                                .d("reason", "curlFailure")
-                                .d("method", "curl_easy_setopt")
-                                .d("option", "CURLOPT_HTTPGET")
-                                .d("error", curl_easy_strerror(ret)));
-                return false;
-            }
+            ret = setopt(CURLOPT_HTTPGET, 1L);
             break;
         case TransferType::kPOST:
-            ret = curl_easy_setopt(m_handle, CURLOPT_HTTPPOST, m_post);
-            if (!m_post || ret != CURLE_OK) {
-                ACSDK_ERROR(LX("setTransferTypeFailed")
-                                .d("reason", "curlFailure")
-                                .d("method", "curl_easy_setopt")
-                                .d("option", "CURLOPT_HTTPPOST")
-                                .d("error", curl_easy_strerror(ret)));
-                return false;
-            }
+            ret = setopt(CURLOPT_HTTPPOST, m_post);
             break;
     }
-    return true;
+    return ret;
 }
 
 bool CurlEasyHandleWrapper::setPostContent(const std::string& fieldName, const std::string& payload) {
@@ -205,17 +175,7 @@ bool CurlEasyHandleWrapper::setPostContent(const std::string& fieldName, const s
 }
 
 bool CurlEasyHandleWrapper::setTransferTimeout(const long timeoutSeconds) {
-    CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_TIMEOUT, timeoutSeconds);
-    if (ret != CURLE_OK) {
-        ACSDK_ERROR(LX("setTransferTimeoutFailed")
-                        .d("reason", "curlFailure")
-                        .d("method", "curl_easy_setopt")
-                        .d("option", "CURLOPT_TIMEOUT")
-                        .d("timeOut", timeoutSeconds)
-                        .d("error", curl_easy_strerror(ret)));
-        return false;
-    }
-    return true;
+    return setopt(CURLOPT_TIMEOUT, timeoutSeconds);
 }
 
 bool CurlEasyHandleWrapper::setPostStream(const std::string& fieldName, void* userData) {
@@ -241,91 +201,24 @@ bool CurlEasyHandleWrapper::setPostStream(const std::string& fieldName, void* us
     return true;
 }
 
-bool CurlEasyHandleWrapper::setConnectionTimeout(const std::chrono::seconds timeoutSeconds) {
-    CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_CONNECTTIMEOUT, timeoutSeconds.count());
-    if (ret != CURLE_OK) {
-        ACSDK_ERROR(LX("setConnectionTimeoutFailed")
-                        .d("reason", "curlFailure")
-                        .d("method", "curl_easy_setopt")
-                        .d("option", "CURLOPT_TIMEOUT")
-                        .d("timeOut", timeoutSeconds.count())
-                        .d("error", curl_easy_strerror(ret)));
-        return false;
-    }
+bool CurlEasyHandleWrapper::setPostData(const std::string& data) {
+    return setopt(CURLOPT_POSTFIELDS, data.c_str());
+}
 
-    return true;
+bool CurlEasyHandleWrapper::setConnectionTimeout(const std::chrono::seconds timeoutSeconds) {
+    return setopt(CURLOPT_CONNECTTIMEOUT, timeoutSeconds.count());
 }
 
 bool CurlEasyHandleWrapper::setWriteCallback(CurlCallback callback, void* userData) {
-    CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_WRITEFUNCTION, callback);
-    if (ret != CURLE_OK) {
-        ACSDK_ERROR(LX("setWriteCallbackFailed")
-                        .d("reason", "curlFailure")
-                        .d("method", "curl_easy_setopt")
-                        .d("option", "CURLOPT_WRITEFUNCTION")
-                        .d("error", curl_easy_strerror(ret)));
-        return false;
-    }
-    if (userData) {
-        ret = curl_easy_setopt(m_handle, CURLOPT_WRITEDATA, userData);
-        if (ret != CURLE_OK) {
-            ACSDK_ERROR(LX("setWriteCallbackFailed")
-                            .d("reason", "curlFailure")
-                            .d("method", "curl_easy_setopt")
-                            .d("option", "CURLOPT_WRITEDATA")
-                            .d("error", curl_easy_strerror(ret)));
-            return false;
-        }
-    }
-    return true;
+    return setopt(CURLOPT_WRITEFUNCTION, callback) && (userData == nullptr || setopt(CURLOPT_WRITEDATA, userData));
 }
 
 bool CurlEasyHandleWrapper::setHeaderCallback(CurlCallback callback, void* userData) {
-    CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_HEADERFUNCTION, callback);
-    if (ret != CURLE_OK) {
-        ACSDK_ERROR(LX("setHeaderCallbackFailed")
-                        .d("reason", "curlFailure")
-                        .d("method", "curl_easy_setopt")
-                        .d("option", "CURLOPT_HEADERFUNCTION")
-                        .d("error", curl_easy_strerror(ret)));
-        return false;
-    }
-    if (userData) {
-        ret = curl_easy_setopt(m_handle, CURLOPT_HEADERDATA, userData);
-        if (ret != CURLE_OK) {
-            ACSDK_ERROR(LX("setHeaderCallbackFailed")
-                            .d("reason", "curlFailure")
-                            .d("method", "curl_easy_setopt")
-                            .d("option", "CURLOPT_HEADERDATA")
-                            .d("error", curl_easy_strerror(ret)));
-            return false;
-        }
-    }
-    return true;
+    return setopt(CURLOPT_HEADERFUNCTION, callback) && (userData == nullptr || setopt(CURLOPT_HEADERDATA, userData));
 }
 
 bool CurlEasyHandleWrapper::setReadCallback(CurlCallback callback, void* userData) {
-    CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_READFUNCTION, callback);
-    if (ret != CURLE_OK) {
-        ACSDK_ERROR(LX("setReadCallbackFailed")
-                        .d("reason", "curlFailure")
-                        .d("method", "curl_easy_setopt")
-                        .d("option", "CURLOPT_READFUNCTION")
-                        .d("error", curl_easy_strerror(ret)));
-        return false;
-    }
-    if (userData) {
-        ret = curl_easy_setopt(m_handle, CURLOPT_READDATA, userData);
-        if (ret != CURLE_OK) {
-            ACSDK_ERROR(LX("setReadCallbackFailed")
-                            .d("reason", "curlFailure")
-                            .d("method", "curl_easy_setopt")
-                            .d("option", "CURLOPT_READDATA")
-                            .d("error", curl_easy_strerror(ret)));
-            return false;
-        }
-    }
-    return true;
+    return setopt(CURLOPT_READFUNCTION, callback) && (userData == nullptr || setopt(CURLOPT_READDATA, userData));
 }
 
 void CurlEasyHandleWrapper::cleanupResources() {
@@ -351,17 +244,9 @@ bool CurlEasyHandleWrapper::setDefaultOptions() {
          * The documentation from libcurl recommends setting CURLOPT_NOSIGNAL to 1 for multi-threaded applications.
          * https://curl.haxx.se/libcurl/c/threadsafe.html
          */
-        CURLcode ret = curl_easy_setopt(m_handle, CURLOPT_NOSIGNAL, 1);
-        if (ret != CURLE_OK) {
-            ACSDK_ERROR(LX("setDefaultOptions")
-                            .d("reason", "curlFailure")
-                            .d("method", "curl_easy_setopt")
-                            .d("option", "CURLOPT_NOSIGNAL")
-                            .d("error", curl_easy_strerror(ret)));
-            return false;
-        }
-        return true;
+        return setopt(CURLOPT_NOSIGNAL, 1);
     }
+    ACSDK_ERROR(LX("setDefaultOptions").d("reason", "prepareForTLS failed"));
     curl_easy_cleanup(m_handle);
     m_handle = nullptr;
     return false;

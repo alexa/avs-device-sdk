@@ -33,3 +33,12 @@ include(PortAudio)
 # Setup Test Options variables.
 include(TestOptions)
 
+# Setup platform dependant variables.
+include (Platforms)
+
+# Setup ESP variables.
+include (ESP)
+
+if (HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
+    include (ExternalMediaPlayerAdapters)
+endif()

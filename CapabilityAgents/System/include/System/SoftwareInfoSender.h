@@ -1,6 +1,4 @@
 /*
- * SoftwareInfoSender.h
- *
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -132,18 +130,6 @@ private:
      * @param info The @c DirectiveInfo containing the @c AVSDirective whose message ID is to be removed.
      */
     void removeDirective(std::shared_ptr<DirectiveInfo> info);
-
-    /**
-     * Send an ExceptionEncountered message to AVS and report that handling the directive failed.
-     *
-     * @param info Information about the directive that was being handled when the exception was encountered.
-     * @param type The type of error to be reported.
-     * @param message A message describing the error.
-     */
-    void sendExceptionEncounteredAndReportFailed(
-        std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info,
-        avsCommon::avs::ExceptionErrorType type,
-        const std::string& message);
 
     /// The firmware Version to send by SoftwareInfo event.
     avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion m_firmwareVersion;

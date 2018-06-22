@@ -51,6 +51,9 @@ set(AUTHSERVER_SCRIPT_FILE_TARGET "${AlexaClientSDK_BINARY_DIR}/AuthServer/${AUT
 configure_file("${AUTHSERVER_SCRIPT_FILE_SOURCE}" "${AUTHSERVER_SCRIPT_FILE_TARGET}")
 
 if(BUILD_TESTING)
+    add_custom_target(integration
+        COMMAND ${CMAKE_CTEST_COMMAND} -L Integration -C Integration --output-on-failure)
+    include(${Integration_BINARY_DIR}/CTestCustom.cmake OPTIONAL)
     set(testSourceFiles
         "${CMAKE_CURRENT_SOURCE_DIR}/AlexaAuthorizationDelegateTest.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/AlexaCommunicationsLibraryTest.cpp"
@@ -66,22 +69,13 @@ if(BUILD_TESTING)
         add_executable(${testName} ${testSourceFile})
         target_include_directories(${testName} PUBLIC "${INCLUDE_PATH}")
         target_link_libraries(${testName} "${LINK_PATH}")
+        add_test(NAME ${testName}
+            COMMAND ${testName} ${SDK_CONFIG_FILE_TARGET} ${INTEGRATION_INPUTS}
+            CONFIGURATIONS Integration)
+        set_tests_properties(${testName} PROPERTIES LABELS "Integration")
+        add_dependencies(integration ${testName})
     endforeach()
 
-    include(${Integration_BINARY_DIR}/CTestCustom.cmake OPTIONAL)
-    separate_arguments(CTEST_CUSTOM_PRE_TEST UNIX_COMMAND "${CTEST_CUSTOM_PRE_TEST}")
-    separate_arguments(CTEST_CUSTOM_POST_TEST UNIX_COMMAND "${CTEST_CUSTOM_POST_TEST}")
-    add_custom_target(integration
-            COMMAND ${CTEST_CUSTOM_PRE_TEST}
-            COMMAND AlexaAuthorizationDelegateTest "${SDK_CONFIG_FILE_TARGET}" 
-            COMMAND AlexaCommunicationsLibraryTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
-            COMMAND AlexaDirectiveSequencerLibraryTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
-            COMMAND AudioInputProcessorIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
-            COMMAND ServerDisconnectIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
-            COMMAND SpeechSynthesizerIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
-            COMMAND AlertsIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
-            COMMAND AudioPlayerIntegrationTest "${SDK_CONFIG_FILE_TARGET}" "${INTEGRATION_INPUTS}"
-            COMMAND ${CTEST_CUSTOM_POST_TEST})
     message(STATUS "Please fill ${SDK_CONFIG_FILE_TARGET} before you execute integration tests.")
 
     if(NETWORK_INTEGRATION_TESTS AND (${CMAKE_SYSTEM_NAME} MATCHES "Linux"))
@@ -93,7 +87,6 @@ if(BUILD_TESTING)
         target_link_libraries(${networkTestName} "${LINK_PATH}")
         add_custom_target(networkIntegration
                 COMMAND NetworkIntegrationTests "${SDK_CONFIG_FILE_TARGET}" "${NETWORK_INTERFACE}")
-        message(STATUS "Please fill ${SDK_CONFIG_FILE_TARGET} before you execute integration tests.")
     else()
         message("Skipping build of NetworkIntegrationTests.cpp.")
     endif()

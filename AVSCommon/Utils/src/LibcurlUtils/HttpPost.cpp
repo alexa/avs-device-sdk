@@ -1,7 +1,5 @@
 /*
- * HttpPost.cpp
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +14,7 @@
  */
 
 #include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
+#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
@@ -38,41 +37,14 @@ static const std::string TAG("HttpPost");
 
 std::unique_ptr<HttpPost> HttpPost::create() {
     std::unique_ptr<HttpPost> httpPost(new HttpPost());
-    if (httpPost->init()) {
+    if (httpPost->m_curl.isValid()) {
         return httpPost;
     }
     return nullptr;
 }
 
-HttpPost::HttpPost() : m_curl{nullptr} {
-}
-
-bool HttpPost::init() {
-    m_curl = curl_easy_init();
-    if (!m_curl) {
-        ACSDK_ERROR(LX("initFailed").d("reason", "curl_easy_initFailed"));
-        return false;
-    }
-    if (!libcurlUtils::prepareForTLS(m_curl)) {
-        return false;
-    }
-    if (!setopt(CURLOPT_WRITEFUNCTION, staticWriteCallbackLocked)) {
-        return false;
-    }
-    /*
-     * The documentation from libcurl recommends setting CURLOPT_NOSIGNAL to 1 for multi-threaded applications.
-     * https://curl.haxx.se/libcurl/c/threadsafe.html
-     */
-    if (!setopt(CURLOPT_NOSIGNAL, 1)) {
-        return false;
-    }
-    return true;
-}
-
-HttpPost::~HttpPost() {
-    if (m_curl) {
-        curl_easy_cleanup(m_curl);
-    }
+bool HttpPost::addHTTPHeader(const std::string& header) {
+    return m_curl.addHTTPHeader(header);
 }
 
 long HttpPost::doPost(
@@ -84,12 +56,13 @@ long HttpPost::doPost(
 
     body.clear();
 
-    if (!setopt(CURLOPT_TIMEOUT, static_cast<long>(timeout.count())) || !setopt(CURLOPT_URL, url.c_str()) ||
-        !setopt(CURLOPT_POSTFIELDS, data.c_str()) || !setopt(CURLOPT_WRITEDATA, &body)) {
-        return HTTP_RESPONSE_CODE_UNDEFINED;
+    if (!m_curl.setTransferTimeout(static_cast<long>(timeout.count())) || !m_curl.setURL(url) ||
+        !m_curl.setPostData(data) || !m_curl.setWriteCallback(staticWriteCallbackLocked, &body)) {
+        return HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED;
     }
 
-    auto result = curl_easy_perform(m_curl);
+    auto curlHandle = m_curl.getCurlHandle();
+    auto result = curl_easy_perform(curlHandle);
 
     if (result != CURLE_OK) {
         ACSDK_ERROR(LX("doPostFailed")
@@ -97,11 +70,11 @@ long HttpPost::doPost(
                         .d("result", result)
                         .d("error", curl_easy_strerror(result)));
         body.clear();
-        return HTTP_RESPONSE_CODE_UNDEFINED;
+        return HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED;
     }
 
     long responseCode = 0;
-    result = curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, &responseCode);
+    result = curl_easy_getinfo(curlHandle, CURLINFO_RESPONSE_CODE, &responseCode);
     if (result != CURLE_OK) {
         ACSDK_ERROR(LX("doPostFailed")
                         .d("reason", "curl_easy_getinfoFailed")
@@ -109,26 +82,11 @@ long HttpPost::doPost(
                         .d("result", result)
                         .d("error", curl_easy_strerror(result)));
         body.clear();
-        return HTTP_RESPONSE_CODE_UNDEFINED;
+        return HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED;
     } else {
         ACSDK_DEBUG(LX("doPostSucceeded").d("code", responseCode));
         return responseCode;
     }
-}
-
-template <typename ParamType>
-bool HttpPost::setopt(CURLoption option, ParamType value) {
-    auto result = curl_easy_setopt(m_curl, option, value);
-    if (result != CURLE_OK) {
-        ACSDK_ERROR(LX("setoptFailed")
-                        .d("reason", "nullCurlHandle")
-                        .d("option", option)
-                        .sensitive("value", value)
-                        .d("result", result)
-                        .d("error", curl_easy_strerror(result)));
-        return false;
-    }
-    return true;
 }
 
 size_t HttpPost::staticWriteCallbackLocked(char* ptr, size_t size, size_t nmemb, void* userdata) {

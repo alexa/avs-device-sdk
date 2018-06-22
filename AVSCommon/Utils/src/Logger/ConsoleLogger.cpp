@@ -1,7 +1,5 @@
 /*
- * ConsoleLogger.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -44,7 +42,7 @@ void ConsoleLogger::emit(
     const char* threadMoniker,
     const char* text) {
     std::lock_guard<std::mutex> lock(m_coutMutex);
-    std::cout << formatLogString(level, time, threadMoniker, text) << std::endl;
+    std::cout << m_logFormatter.format(level, time, threadMoniker, text) << std::endl;
 }
 
 ConsoleLogger::ConsoleLogger() : Logger(Level::UNKNOWN) {

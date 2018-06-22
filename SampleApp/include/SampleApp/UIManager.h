@@ -1,7 +1,5 @@
 /*
- * UIManager.h
- *
- * Copyright (c) 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -96,6 +94,11 @@ public:
     void printVolumeControlScreen();
 
     /**
+     * Prints the ESP Control Options screen. This gives the user the possible ESP control options.
+     */
+    void printESPControlScreen(bool support, const std::string& voiceEnergy, const std::string& ambientEnergy);
+
+    /**
      * Prints the Error Message for Wrong Input.
      */
     void printErrorScreen();
@@ -109,6 +112,26 @@ public:
      * Prints the state that Alexa is currenty in.
      */
     void microphoneOn();
+
+    /**
+     * Prints a warning that the customer still has to manually deregister the device.
+     */
+    void printResetWarning();
+
+    /**
+     * Prints a confirmation message prompting the user to confirm their intent.
+     */
+    void printResetConfirmation();
+
+    /**
+     * Prints an error message while trying to configure ESP in a device where ESP is not supported.
+     */
+    void printESPNotSupported();
+
+    /**
+     * Prints an error message while trying to override ESP Data in a device that do not support manual override.
+     */
+    void printESPDataOverrideNotSupported();
 
 private:
     /**
