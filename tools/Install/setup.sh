@@ -55,6 +55,12 @@ LIB_SUFFIX="a"
 SENSORY_MODEL_HASH=5d811d92fb89043f4a4a7b7d0d26d7c3c83899b0
 ALIASES=$HOME/.bash_aliases
 
+unset CLIENT_ID
+unset CLIENT_SECRET
+unset PRODUCT_ID
+unset DEVICE_SERIAL_NUMBER
+unset LOCALE
+
 echo "################################################################################"
 echo "################################################################################"
 echo ""
@@ -95,13 +101,24 @@ else
   exit 1
 fi
 
-config_userinput(){
-    unset CLIENT_ID
-    unset CLIENT_SECRET
-    unset PRODUCT_ID
-    unset DEVICE_SERIAL_NUMBER
-    unset LOCALE
+AUTH_DETAILS=$CURRENT_DIR/.auth_details
+if [[ -e $AUTH_DETAILS ]]; then
+    echo "==============> PREVIOUS AUTH DETAILS ============"
+    echo
+    cat $AUTH_DETAILS
+    while true; do
+        read -p "Do you wish to use the auth details listed above (y/n)? " ANSWER
+        case ${ANSWER} in
+            y|Y|yes|YES )
+                source $AUTH_DETAILS
+                break;;
+            n|N|no|NO )
+                break;;
+        esac
+    done
+fi
 
+config_userinput(){
     while [[ -z $CLIENT_ID ]] ; do
         echo "Enter your Client ID:"
         read CLIENT_ID
@@ -145,42 +162,48 @@ config_userinput(){
         read LOCALE
     done
 }
-
-config_autostart(){
-    AUTOSTART_SESSION="avsrun"
-    AUTOSTART=$HOME/.config/lxsession/LXDE-pi/autostart
-    STARTUP_SCRIPT=$CURRENT_DIR/.avsrun-startup.sh
-
-    cat << EOF > "$STARTUP_SCRIPT"
-    #!/bin/bash
-    $BUILD_PATH/SampleApp/src/SampleApp $CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models
-    \$SHELL
-EOF
-    chmod a+rx $STARTUP_SCRIPT
-
-    while true; do
-        read -p "Automatically run AVS SDK at startup (y/n)? " ANSWER
-        case ${ANSWER} in
-            n|N|no|NO )
-                grep $AUTOSTART_SESSION $AUTOSTART > /dev/null 2>&1
-                if [ $? == 0 ]; then
-                    # Remove startup script from autostart file
-                    sed -i '/'"$AUTOSTART_SESSION"'/d' $AUTOSTART
-                fi
-                break;;
-            y|Y|yes|YES )
-                grep $AUTOSTART_SESSION $AUTOSTART > /dev/null 2>&1
-                if [ $? != 0 ]; then
-                    # Append startup script if not already in autostart file
-                    echo "@lxterminal -t $AUTOSTART_SESSION --geometry=150x50 -e $STARTUP_SCRIPT" >> $AUTOSTART
-                fi
-                break;;
-        esac
-    done
-}
-
 config_userinput
-config_autostart
+
+# Store auth details
+cat << EOF > "$AUTH_DETAILS"
+CLIENT_ID="$CLIENT_ID"
+CLIENT_SECRET="$CLIENT_SECRET"
+PRODUCT_ID="$PRODUCT_ID"
+DEVICE_SERIAL_NUMBER="$DEVICE_SERIAL_NUMBER"
+LOCALE="$LOCALE"
+EOF
+chmod a+rx $AUTH_DETAILS
+
+
+# Create autostart script
+AUTOSTART_SESSION="avsrun"
+AUTOSTART=$HOME/.config/lxsession/LXDE-pi/autostart
+STARTUP_SCRIPT=$CURRENT_DIR/.avsrun-startup.sh
+cat << EOF > "$STARTUP_SCRIPT"
+#!/bin/bash
+$BUILD_PATH/SampleApp/src/SampleApp $CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models
+\$SHELL
+EOF
+chmod a+rx $STARTUP_SCRIPT
+while true; do
+    read -p "Automatically run AVS SDK at startup (y/n)? " ANSWER
+    case ${ANSWER} in
+        n|N|no|NO )
+            grep $AUTOSTART_SESSION $AUTOSTART > /dev/null 2>&1
+            if [ $? == 0 ]; then
+                # Remove startup script from autostart file
+                sed -i '/'"$AUTOSTART_SESSION"'/d' $AUTOSTART
+            fi
+            break;;
+        y|Y|yes|YES )
+            grep $AUTOSTART_SESSION $AUTOSTART > /dev/null 2>&1
+            if [ $? != 0 ]; then
+                # Append startup script if not already in autostart file
+                echo "@lxterminal -t $AUTOSTART_SESSION --geometry=150x50 -e $STARTUP_SCRIPT" >> $AUTOSTART
+            fi
+            break;;
+    esac
+done
 
 set -e
 
