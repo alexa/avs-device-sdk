@@ -1,8 +1,8 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics.h">
-<area shape="rect" id="node2" href="$_directive_sequencer_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/ADSL/src/DirectiveSequencer.cpp" alt="" coords="5,125,299,177"/>
-<area shape="rect" id="node3" href="$_message_interpreter_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/ADSL/src/MessageInterpreter.cpp" alt="" coords="323,125,616,177"/>
-<area shape="rect" id="node4" href="$_event_builder_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/AVSCommon/AVS\l/src/EventBuilder.cpp" alt="" coords="640,119,843,184"/>
-<area shape="rect" id="node5" href="$_metrics_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/AVSCommon/Utils\l/src/Metrics.cpp" alt="" coords="867,119,1070,184"/>
-<area shape="rect" id="node6" href="$_audio_input_processor_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="1093,119,1313,184"/>
-<area shape="rect" id="node7" href="$_speech_synthesizer_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/src/SpeechSynthesizer.cpp" alt="" coords="1337,119,1642,184"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/Utils/include/AVSCommon/Utils/Metrics.h" name="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/Utils/include/AVSCommon/Utils/Metrics.h">
+<area shape="rect" id="node2" href="$_directive_sequencer_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/ADSL\l/src/DirectiveSequencer.cpp" alt="" coords="5,125,193,177"/>
+<area shape="rect" id="node3" href="$_message_interpreter_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/ADSL\l/src/MessageInterpreter.cpp" alt="" coords="216,125,403,177"/>
+<area shape="rect" id="node4" href="$_event_builder_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/AVSCommon\l/AVS/src/EventBuilder.cpp" alt="" coords="428,125,653,177"/>
+<area shape="rect" id="node5" href="$_metrics_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/AVSCommon\l/Utils/src/Metrics.cpp" alt="" coords="677,125,902,177"/>
+<area shape="rect" id="node6" href="$_audio_input_processor_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Capability\lAgents/AIP/src/AudioInputProcessor.cpp" alt="" coords="927,125,1188,177"/>
+<area shape="rect" id="node7" href="$_speech_synthesizer_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Capability\lAgents/SpeechSynthesizer\l/src/SpeechSynthesizer.cpp" alt="" coords="1213,119,1417,184"/>
 </map>

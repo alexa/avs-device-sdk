@@ -1,11 +1,11 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/ESP/include/ESP/ESPDataModifierInterface.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/ESP/include/ESP/ESPDataModifierInterface.h">
-<area shape="rect" id="node2" href="$_dummy_e_s_p_data_provider_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/ESP/include/ESP\l/DummyESPDataProvider.h" alt="" coords="177,119,373,184"/>
-<area shape="rect" id="node5" href="$_interaction_manager_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="397,119,620,184"/>
-<area shape="rect" id="node3" href="$_dummy_e_s_p_data_provider_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/ESP/src/DummyESPData\lProvider.cpp" alt="" coords="5,232,251,297"/>
-<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/SampleApplication.cpp" alt="" coords="192,459,384,524"/>
-<area shape="rect" id="node6" href="$_user_input_manager_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="374,232,592,297"/>
-<area shape="rect" id="node10" href="$_interaction_manager_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/InteractionManager.cpp" alt="" coords="616,232,808,297"/>
-<area shape="rect" id="node7" href="$_sample_application_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="360,345,579,411"/>
-<area shape="rect" id="node9" href="$_user_input_manager_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/UserInputManager.cpp" alt="" coords="603,345,795,411"/>
-<area shape="rect" id="node8" href="$main_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/main.cpp" alt="" coords="408,459,600,524"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/ESP/include/ESP/ESPDataModifierInterface.h" name="/Users/psendil/SDK_18/AlexaClientSDK/ESP/include/ESP/ESPDataModifierInterface.h">
+<area shape="rect" id="node2" href="$_dummy_e_s_p_data_provider_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/ESP\l/include/ESP/DummyESPDataProvider.h" alt="" coords="112,119,374,171"/>
+<area shape="rect" id="node5" href="$_interaction_manager_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/InteractionManager.h" alt="" coords="398,119,666,171"/>
+<area shape="rect" id="node3" href="$_dummy_e_s_p_data_provider_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/ESP\l/src/DummyESPDataProvider.cpp" alt="" coords="5,219,227,271"/>
+<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/SampleApplication.cpp" alt="" coords="157,419,371,471"/>
+<area shape="rect" id="node6" href="$_user_input_manager_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/UserInputManager.h" alt="" coords="357,219,622,271"/>
+<area shape="rect" id="node10" href="$_interaction_manager_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/InteractionManager.cpp" alt="" coords="646,219,861,271"/>
+<area shape="rect" id="node7" href="$_sample_application_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="335,319,601,371"/>
+<area shape="rect" id="node9" href="$_user_input_manager_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/UserInputManager.cpp" alt="" coords="625,319,839,371"/>
+<area shape="rect" id="node8" href="$main_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/main.cpp" alt="" coords="395,419,610,471"/>
 </map>

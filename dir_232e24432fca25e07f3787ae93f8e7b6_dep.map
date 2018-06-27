@@ -1,13 +1,13 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/Authorization/CBLAuthDelegate/src" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/Authorization/CBLAuthDelegate/src">
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/Authorization/CBLAuthDelegate/src" name="/Users/psendil/SDK_18/AlexaClientSDK/Authorization/CBLAuthDelegate/src">
 <area shape="rect" id="node1" href="dir_232e24432fca25e07f3787ae93f8e7b6.html" title="src" alt="" coords="44,51,116,99"/>
 <area shape="rect" id="node2" href="dir_d29c5f5a2915d6c5388c9daae4f109c7.html" title="Storage" alt="" coords="56,243,128,291"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000045_000230.html" title="2" alt="" coords="94,217,102,231"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000045_000240.html" title="2" alt="" coords="94,217,102,231"/>
 <area shape="rect" id="node3" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="41,339,143,387"/>
 <area shape="rect" id="edge2-headlabel" href="dir_000045_000009.html" title="11" alt="" coords="60,312,74,326"/>
 <area shape="rect" id="node4" href="dir_a67a10ca8da4806b7df551cc647f99f2.html" title="include" alt="" coords="117,147,189,195"/>
 <area shape="rect" id="edge3-headlabel" href="dir_000045_000043.html" title="3" alt="" coords="127,120,134,133"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000230_000009.html" title="12" alt="" coords="93,313,108,327"/>
-<area shape="rect" id="edge5-headlabel" href="dir_000043_000230.html" title="1" alt="" coords="121,225,128,238"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000240_000009.html" title="12" alt="" coords="93,313,108,327"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000043_000240.html" title="1" alt="" coords="121,225,128,238"/>
 <area shape="rect" id="edge6-headlabel" href="dir_000043_000009.html" title="7" alt="" coords="126,322,134,335"/>
 <area shape="rect" id="clust1" href="dir_6bef8e5d89a136eb38670596d28d1118.html" title="CBLAuthDelegate" alt="" coords="16,16,144,109"/>
 </map>

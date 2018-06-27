@@ -1,7 +1,7 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/HTTP2Transport.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/HTTP2Transport.h">
-<area shape="rect" id="node2" href="$_h_t_t_p2_stream_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/ACL/src/Transport\l/HTTP2Stream.cpp" alt="" coords="5,119,206,184"/>
-<area shape="rect" id="node3" href="$_h_t_t_p2_transport_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/ACL/src/Transport\l/HTTP2Transport.cpp" alt="" coords="231,119,432,184"/>
-<area shape="rect" id="node4" href="$_h_t_t_p2_transport_factory_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/ACL/src/Transport\l/HTTP2TransportFactory.cpp" alt="" coords="456,119,657,184"/>
-<area shape="rect" id="node5" href="$_post_connect_synchronizer_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/ACL/src/Transport\l/PostConnectSynchronizer.cpp" alt="" coords="681,119,885,184"/>
-<area shape="rect" id="node6" href="$_h_t_t_p2_stream_pool_test_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/ACL/test/Transport\l/HTTP2StreamPoolTest.cpp" alt="" coords="909,119,1113,184"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/ACL/include/ACL/Transport/HTTP2Transport.h" name="/Users/psendil/SDK_18/AlexaClientSDK/ACL/include/ACL/Transport/HTTP2Transport.h">
+<area shape="rect" id="node2" href="$_h_t_t_p2_stream_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/ACL\l/src/Transport/HTTP2Stream.cpp" alt="" coords="5,125,223,177"/>
+<area shape="rect" id="node3" href="$_h_t_t_p2_transport_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/ACL\l/src/Transport/HTTP2Transport.cpp" alt="" coords="247,125,477,177"/>
+<area shape="rect" id="node4" href="$_h_t_t_p2_transport_factory_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/ACL\l/src/Transport/HTTP2Transport\lFactory.cpp" alt="" coords="502,119,707,184"/>
+<area shape="rect" id="node5" href="$_post_connect_synchronizer_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/ACL\l/src/Transport/PostConnectSynchronizer.cpp" alt="" coords="731,125,1017,177"/>
+<area shape="rect" id="node6" href="$_h_t_t_p2_stream_pool_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/ACL\l/test/Transport/HTTP2StreamPool\lTest.cpp" alt="" coords="1040,119,1262,184"/>
 </map>

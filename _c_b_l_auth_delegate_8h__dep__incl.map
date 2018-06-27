@@ -1,7 +1,7 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/CBLAuthDelegate.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/CBLAuthDelegate.h">
-<area shape="rect" id="node2" href="$_c_b_l_auth_delegate_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/Authorization\l/CBLAuthDelegate/src/CBLAuthDelegate.cpp" alt="" coords="5,132,294,197"/>
-<area shape="rect" id="node3" href="$_a_c_l_test_context_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/Integration/src\l/ACLTestContext.cpp" alt="" coords="318,132,510,197"/>
-<area shape="rect" id="node4" href="$_auth_delegate_test_context_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/Integration/src\l/AuthDelegateTestContext.cpp" alt="" coords="533,132,735,197"/>
-<area shape="rect" id="node5" href="$_alexa_authorization_delegate_test_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/Integration/test\l/AlexaAuthorizationDelegateTest.cpp" alt="" coords="758,132,997,197"/>
-<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/SampleApplication.cpp" alt="" coords="1022,132,1214,197"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/CBLAuthDelegate.h" name="/Users/psendil/SDK_18/AlexaClientSDK/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/CBLAuthDelegate.h">
+<area shape="rect" id="node2" href="$_c_b_l_auth_delegate_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Authorization\l/CBLAuthDelegate/src/CBLAuthDelegate.cpp" alt="" coords="5,119,294,171"/>
+<area shape="rect" id="node3" href="$_a_c_l_test_context_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Integration\l/src/ACLTestContext.cpp" alt="" coords="319,119,528,171"/>
+<area shape="rect" id="node4" href="$_auth_delegate_test_context_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Integration\l/src/AuthDelegateTestContext.cpp" alt="" coords="552,119,775,171"/>
+<area shape="rect" id="node5" href="$_alexa_authorization_delegate_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Integration\l/test/AlexaAuthorizationDelegateTest.cpp" alt="" coords="799,119,1063,171"/>
+<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/SampleApplication.cpp" alt="" coords="1088,119,1303,171"/>
 </map>

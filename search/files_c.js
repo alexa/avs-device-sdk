@@ -51,6 +51,7 @@ var searchData=
   ['mockavsconnectionmanager_2eh',['MockAVSConnectionManager.h',['../_mock_a_v_s_connection_manager_8h.html',1,'']]],
   ['mockavsendpointassigner_2eh',['MockAVSEndpointAssigner.h',['../_mock_a_v_s_endpoint_assigner_8h.html',1,'']]],
   ['mockcontextmanager_2eh',['MockContextManager.h',['../_mock_context_manager_8h.html',1,'']]],
+  ['mockdbusproxy_2eh',['MockDBusProxy.h',['../_mock_d_bus_proxy_8h.html',1,'']]],
   ['mockdirectivehandler_2ecpp',['MockDirectiveHandler.cpp',['../_mock_directive_handler_8cpp.html',1,'']]],
   ['mockdirectivehandler_2eh',['MockDirectiveHandler.h',['../_mock_directive_handler_8h.html',1,'']]],
   ['mockdirectivehandlerresult_2eh',['MockDirectiveHandlerResult.h',['../_mock_directive_handler_result_8h.html',1,'']]],
@@ -66,11 +67,17 @@ var searchData=
   ['mockobserver_2eh',['MockObserver.h',['../_mock_observer_8h.html',1,'']]],
   ['mockplaybackhandler_2eh',['MockPlaybackHandler.h',['../_mock_playback_handler_8h.html',1,'']]],
   ['mockplaybackrouter_2eh',['MockPlaybackRouter.h',['../_mock_playback_router_8h.html',1,'']]],
+  ['mockspeakerinterface_2eh',['MockSpeakerInterface.h',['../_mock_speaker_interface_8h.html',1,'']]],
+  ['mockspeakermanager_2eh',['MockSpeakerManager.h',['../_mock_speaker_manager_8h.html',1,'']]],
   ['mockstatesynchronizerobserver_2eh',['MockStateSynchronizerObserver.h',['../_mock_state_synchronizer_observer_8h.html',1,'']]],
   ['mocktransport_2eh',['MockTransport.h',['../_mock_transport_8h.html',1,'']]],
   ['mocktransportobserver_2eh',['MockTransportObserver.h',['../_mock_transport_observer_8h.html',1,'']]],
-  ['mockuseractivitynotifier_2eh',['MockUserActivityNotifier.h',['../_mock_user_activity_notifier_8h.html',1,'']]],
+  ['mockuserinactivitymonitor_2eh',['MockUserInactivityMonitor.h',['../_mock_user_inactivity_monitor_8h.html',1,'']]],
   ['mockuserinactivitymonitorobserver_2eh',['MockUserInactivityMonitorObserver.h',['../_mock_user_inactivity_monitor_observer_8h.html',1,'']]],
   ['modulelogger_2ecpp',['ModuleLogger.cpp',['../_module_logger_8cpp.html',1,'']]],
-  ['modulelogger_2eh',['ModuleLogger.h',['../_module_logger_8h.html',1,'']]]
+  ['modulelogger_2eh',['ModuleLogger.h',['../_module_logger_8h.html',1,'']]],
+  ['mrmcapabilityagent_2ecpp',['MRMCapabilityAgent.cpp',['../_m_r_m_capability_agent_8cpp.html',1,'']]],
+  ['mrmcapabilityagent_2eh',['MRMCapabilityAgent.h',['../_m_r_m_capability_agent_8h.html',1,'']]],
+  ['mrmcapabilityagenttest_2ecpp',['MRMCapabilityAgentTest.cpp',['../_m_r_m_capability_agent_test_8cpp.html',1,'']]],
+  ['mrmhandlerinterface_2eh',['MRMHandlerInterface.h',['../_m_r_m_handler_interface_8h.html',1,'']]]
 ];

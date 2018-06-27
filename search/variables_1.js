@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['background_5falert_5fsound_5fpause_5ftime',['BACKGROUND_ALERT_SOUND_PAUSE_TIME',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#a6c9e023c7c47f1975b6caf85a0066660',1,'alexaClientSDK::capabilityAgents::alerts']]],
   ['backgroundassetid',['backgroundAssetId',['../structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset_configuration.html#a0082a866e9fcead2186a93b2009e66d4',1,'alexaClientSDK::capabilityAgents::alerts::Alert::AssetConfiguration']]],
   ['backwardseekmutex',['backwardSeekMutex',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout_1_1_header.html#acbe2e97e8f1929bed0d9916fab0bb891',1,'alexaClientSDK::avsCommon::utils::sds::SharedDataStream::BufferLayout::Header']]],
   ['bad_5fjson',['BAD_JSON',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1test.html#adcedece7305277a837d34c29a7a22d90',1,'alexaClientSDK::avsCommon::utils::configuration::test']]],
@@ -16,6 +17,7 @@ var searchData=
   ['bluetooth_5fcapability_5finterface_5fversion',['BLUETOOTH_CAPABILITY_INTERFACE_VERSION',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#ac5fb894ce7d7fa3d0de6e6e9c2af7d1c',1,'alexaClientSDK::capabilityAgents::bluetooth']]],
   ['bluetooth_5fconfiguration_5froot_5fkey',['BLUETOOTH_CONFIGURATION_ROOT_KEY',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#a71483de71439e9e2ee1c9194c49efa49',1,'alexaClientSDK::capabilityAgents::bluetooth']]],
   ['bluetooth_5fdb_5ffile_5fpath_5fkey',['BLUETOOTH_DB_FILE_PATH_KEY',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#a5f59fa78c1ebfdc3b01832e1aef6f1b4',1,'alexaClientSDK::capabilityAgents::bluetooth']]],
+  ['bluetooth_5fjson',['BLUETOOTH_JSON',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test.html#a2d5751c03b00485daa65e00a653c005c',1,'alexaClientSDK::capabilityAgents::bluetooth::test']]],
   ['bluetooth_5fstate',['BLUETOOTH_STATE',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#ac26112a0a1c4da54a665d330ae347e08',1,'alexaClientSDK::capabilityAgents::bluetooth']]],
   ['bluez_5fadapter_5finterface',['BLUEZ_ADAPTER_INTERFACE',['../classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_constants.html#ae61396a536a9942362bf4f019fcbc90c',1,'alexaClientSDK::bluetoothImplementations::blueZ::BlueZConstants']]],
   ['bluez_5fadapter_5fremove_5fdevice',['BLUEZ_ADAPTER_REMOVE_DEVICE',['../namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a234ce143713e003d6e3babf74e2b7979',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
@@ -26,6 +28,7 @@ var searchData=
   ['bluez_5fdevice_5fmethod_5fconnect',['BLUEZ_DEVICE_METHOD_CONNECT',['../namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a957d853b07ec9bf32f9c3e59cc224667',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
   ['bluez_5fdevice_5fmethod_5fdisconnect',['BLUEZ_DEVICE_METHOD_DISCONNECT',['../namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ab86564879fa131e74ea00a2354d0bea3',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
   ['bluez_5fdevice_5fmethod_5fpair',['BLUEZ_DEVICE_METHOD_PAIR',['../namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#af1c668beb8657cac6258395477658ddc',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
+  ['bluez_5fdevice_5fproperty_5falias',['BLUEZ_DEVICE_PROPERTY_ALIAS',['../namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a380373ca755a08bc24830fa7e964f3bf',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
   ['bluez_5fdevice_5fproperty_5fconnected',['BLUEZ_DEVICE_PROPERTY_CONNECTED',['../namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a7ae6e1a8fac41ba09fd85abe444eec53',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
   ['bluez_5fdevice_5fproperty_5fpaired',['BLUEZ_DEVICE_PROPERTY_PAIRED',['../namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a0123c5478c78e9160c0cc39e7759058e',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
   ['bluez_5fdevice_5fproperty_5fuuids',['BLUEZ_DEVICE_PROPERTY_UUIDS',['../namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#afe60b6f9eab84d6653efcd73a00eb1b8',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],

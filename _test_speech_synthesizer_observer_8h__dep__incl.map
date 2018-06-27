@@ -1,6 +1,6 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/Integration/include/Integration/TestSpeechSynthesizerObserver.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/Integration/include/Integration/TestSpeechSynthesizerObserver.h">
-<area shape="rect" id="node2" href="$_test_speech_synthesizer_observer_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/Integration/src\l/TestSpeechSynthesizerObserver.cpp" alt="" coords="5,119,249,184"/>
-<area shape="rect" id="node3" href="$_alerts_integration_test_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="273,119,464,184"/>
-<area shape="rect" id="node4" href="$_audio_player_integration_test_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="489,119,699,184"/>
-<area shape="rect" id="node5" href="$_speech_synthesizer_integration_test_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/Integration/test\l/SpeechSynthesizerIntegrationTest.cpp" alt="" coords="722,119,975,184"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/Integration/include/Integration/TestSpeechSynthesizerObserver.h" name="/Users/psendil/SDK_18/AlexaClientSDK/Integration/include/Integration/TestSpeechSynthesizerObserver.h">
+<area shape="rect" id="node2" href="$_test_speech_synthesizer_observer_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Integration\l/src/TestSpeechSynthesizerObserver.cpp" alt="" coords="5,125,270,177"/>
+<area shape="rect" id="node3" href="$_alerts_integration_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Integration\l/test/AlertsIntegrationTest.cpp" alt="" coords="295,125,504,177"/>
+<area shape="rect" id="node4" href="$_audio_player_integration_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Integration\l/test/AudioPlayerIntegrationTest.cpp" alt="" coords="527,125,762,177"/>
+<area shape="rect" id="node5" href="$_speech_synthesizer_integration_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Integration\l/test/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="787,119,1015,184"/>
 </map>

@@ -1,10 +1,10 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/KWD/KittAi/include" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/KWD/KittAi/include">
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/KWD/KittAi/include" name="/Users/psendil/SDK_18/AlexaClientSDK/KWD/KittAi/include">
 <area shape="rect" id="node2" href="dir_c9def04ff622aff51b9c4a33fc88c147.html" title="KittAi" alt="" coords="37,61,109,109"/>
 <area shape="rect" id="node3" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="21,253,123,301"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000197_000009.html" title="4" alt="" coords="69,227,77,240"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000207_000009.html" title="4" alt="" coords="69,227,77,240"/>
 <area shape="rect" id="node4" href="dir_8dea89c1bb4f7e14d42e016f897bd2de.html" title="include" alt="" coords="73,157,145,205"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000197_000193.html" title="1" alt="" coords="98,130,105,144"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000193_000009.html" title="4" alt="" coords="92,232,100,246"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000207_000203.html" title="1" alt="" coords="98,130,105,144"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000203_000009.html" title="4" alt="" coords="92,232,100,246"/>
 <area shape="rect" id="clust2" href="dir_729485d88e0eb81a3a496bdd4eb780b4.html" alt="" coords="27,51,216,120"/>
 <area shape="rect" id="clust1" href="dir_07f50320bebe2b4870f5c0b96b76b257.html" title="KittAi" alt="" coords="16,16,227,131"/>
 </map>

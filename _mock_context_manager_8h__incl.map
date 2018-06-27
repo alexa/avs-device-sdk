@@ -1,7 +1,7 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockContextManager.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockContextManager.h">
-<area shape="rect" id="node2" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="318,132,509,171"/>
-<area shape="rect" id="node4" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="98,219,294,257"/>
-<area shape="rect" id="node7" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="318,219,509,257"/>
-<area shape="rect" id="node8" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="312,305,541,344"/>
-<area shape="rect" id="node9" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="585,219,797,257"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockContextManager.h" name="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockContextManager.h">
+<area shape="rect" id="node2" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="318,119,509,157"/>
+<area shape="rect" id="node4" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="98,205,294,244"/>
+<area shape="rect" id="node7" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="318,205,509,244"/>
+<area shape="rect" id="node8" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="312,292,541,331"/>
+<area shape="rect" id="node9" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="585,205,797,244"/>
 </map>

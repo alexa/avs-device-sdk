@@ -1,7 +1,7 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockMessageSender.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockMessageSender.h">
-<area shape="rect" id="node2" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="248,132,438,171"/>
-<area shape="rect" id="node3" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="218,219,467,244"/>
-<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="554,292,756,331"/>
-<area shape="rect" id="node14" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="794,292,1041,331"/>
-<area shape="rect" id="node13" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="703,379,865,417"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockMessageSender.h" name="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockMessageSender.h">
+<area shape="rect" id="node2" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="248,119,438,157"/>
+<area shape="rect" id="node3" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="218,205,467,231"/>
+<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="554,279,756,317"/>
+<area shape="rect" id="node14" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="794,279,1041,317"/>
+<area shape="rect" id="node13" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="703,365,865,404"/>
 </map>

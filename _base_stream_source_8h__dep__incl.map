@@ -1,8 +1,8 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/MediaPlayer/include/MediaPlayer/BaseStreamSource.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/MediaPlayer/include/MediaPlayer/BaseStreamSource.h">
-<area shape="rect" id="node2" href="$_attachment_reader_source_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/MediaPlayer/include\l/MediaPlayer/AttachmentReaderSource.h" alt="" coords="60,119,328,184"/>
-<area shape="rect" id="node5" href="$_i_stream_source_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/MediaPlayer/include\l/MediaPlayer/IStreamSource.h" alt="" coords="351,119,564,184"/>
-<area shape="rect" id="node7" href="$_base_stream_source_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/MediaPlayer/src\l/BaseStreamSource.cpp" alt="" coords="589,119,780,184"/>
-<area shape="rect" id="node3" href="$_attachment_reader_source_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/MediaPlayer/src\l/AttachmentReaderSource.cpp" alt="" coords="5,232,209,297"/>
-<area shape="rect" id="node4" href="$_media_player_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/MediaPlayer/src\l/MediaPlayer.cpp" alt="" coords="233,232,424,297"/>
-<area shape="rect" id="node6" href="$_i_stream_source_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/MediaPlayer/src\l/IStreamSource.cpp" alt="" coords="449,232,640,297"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/MediaPlayer/include/MediaPlayer/BaseStreamSource.h" name="/Users/psendil/SDK_18/AlexaClientSDK/MediaPlayer/include/MediaPlayer/BaseStreamSource.h">
+<area shape="rect" id="node2" href="$_attachment_reader_source_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/MediaPlayer\l/include/MediaPlayer/AttachmentReader\lSource.h" alt="" coords="93,105,353,171"/>
+<area shape="rect" id="node5" href="$_i_stream_source_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/MediaPlayer\l/include/MediaPlayer/IStreamSource.h" alt="" coords="377,112,626,164"/>
+<area shape="rect" id="node7" href="$_base_stream_source_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/MediaPlayer\l/src/BaseStreamSource.cpp" alt="" coords="651,112,871,164"/>
+<area shape="rect" id="node3" href="$_attachment_reader_source_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/MediaPlayer\l/src/AttachmentReaderSource.cpp" alt="" coords="5,219,230,271"/>
+<area shape="rect" id="node4" href="$_media_player_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/MediaPlayer\l/src/MediaPlayer.cpp" alt="" coords="255,219,475,271"/>
+<area shape="rect" id="node6" href="$_i_stream_source_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/MediaPlayer\l/src/IStreamSource.cpp" alt="" coords="499,219,719,271"/>
 </map>

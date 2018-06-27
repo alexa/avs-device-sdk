@@ -49,6 +49,7 @@ var searchData=
   ['sqlitealertstorage_2eh',['SQLiteAlertStorage.h',['../_s_q_lite_alert_storage_8h.html',1,'']]],
   ['sqlitebluetoothstorage_2ecpp',['SQLiteBluetoothStorage.cpp',['../_s_q_lite_bluetooth_storage_8cpp.html',1,'']]],
   ['sqlitebluetoothstorage_2eh',['SQLiteBluetoothStorage.h',['../_s_q_lite_bluetooth_storage_8h.html',1,'']]],
+  ['sqlitebluetoothstoragetest_2ecpp',['SQLiteBluetoothStorageTest.cpp',['../_s_q_lite_bluetooth_storage_test_8cpp.html',1,'']]],
   ['sqlitecblauthdelegatestorage_2ecpp',['SQLiteCBLAuthDelegateStorage.cpp',['../_s_q_lite_c_b_l_auth_delegate_storage_8cpp.html',1,'']]],
   ['sqlitecblauthdelegatestorage_2eh',['SQLiteCBLAuthDelegateStorage.h',['../_s_q_lite_c_b_l_auth_delegate_storage_8h.html',1,'']]],
   ['sqlitedatabase_2ecpp',['SQLiteDatabase.cpp',['../_s_q_lite_database_8cpp.html',1,'']]],

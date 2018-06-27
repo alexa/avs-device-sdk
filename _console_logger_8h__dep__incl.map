@@ -1,5 +1,6 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ConsoleLogger.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ConsoleLogger.h">
-<area shape="rect" id="node2" href="$_console_logger_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/AVSCommon/Utils\l/src/Logger/ConsoleLogger.cpp" alt="" coords="5,139,212,204"/>
-<area shape="rect" id="node3" href="$_audio_player_test_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/CapabilityAgents\l/AudioPlayer/test/AudioPlayerTest.cpp" alt="" coords="236,139,483,204"/>
-<area shape="rect" id="node4" href="$_notifications_capability_agent_test_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/CapabilityAgents\l/Notifications/test/NotificationsCapability\lAgentTest.cpp" alt="" coords="506,132,764,211"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ConsoleLogger.h" name="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ConsoleLogger.h">
+<area shape="rect" id="node2" href="$_console_logger_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/AVSCommon\l/Utils/src/Logger/ConsoleLogger.cpp" alt="" coords="5,125,242,177"/>
+<area shape="rect" id="node3" href="$_audio_player_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Capability\lAgents/AudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="265,119,504,184"/>
+<area shape="rect" id="node4" href="$_external_media_player_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Capability\lAgents/ExternalMediaPlayer\l/test/ExternalMediaPlayerTest.cpp" alt="" coords="528,119,751,184"/>
+<area shape="rect" id="node5" href="$_notifications_capability_agent_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Capability\lAgents/Notifications/test\l/NotificationsCapabilityAgentTest.cpp" alt="" coords="775,119,1016,184"/>
 </map>

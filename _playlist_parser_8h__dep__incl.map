@@ -1,12 +1,12 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/PlaylistParser/include/PlaylistParser/PlaylistParser.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/PlaylistParser/include/PlaylistParser/PlaylistParser.h">
-<area shape="rect" id="node2" href="$_media_player_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/MediaPlayer/src\l/MediaPlayer.cpp" alt="" coords="5,359,197,424"/>
-<area shape="rect" id="node3" href="$_media_player_test_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/MediaPlayer/test\l/MediaPlayerTest.cpp" alt="" coords="589,359,781,424"/>
-<area shape="rect" id="node4" href="$_url_content_to_attachment_converter_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/PlaylistParser\l/include/PlaylistParser/UrlContentTo\lAttachmentConverter.h" alt="" coords="288,119,522,197"/>
-<area shape="rect" id="node10" href="$_playlist_parser_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/PlaylistParser\l/src/PlaylistParser.cpp" alt="" coords="725,125,917,191"/>
-<area shape="rect" id="node11" href="$_playlist_parser_test_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/PlaylistParser\l/test/PlaylistParserTest.cpp" alt="" coords="941,125,1133,191"/>
-<area shape="rect" id="node5" href="$_media_player_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/MediaPlayer/include\l/MediaPlayer/MediaPlayer.h" alt="" coords="437,245,651,311"/>
-<area shape="rect" id="node9" href="$_url_content_to_attachment_converter_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/PlaylistParser\l/src/UrlContentToAttachmentConverter.cpp" alt="" coords="138,245,413,311"/>
-<area shape="rect" id="node6" href="$_sample_application_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="290,359,510,424"/>
-<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/SampleApplication.cpp" alt="" coords="451,472,642,537"/>
-<area shape="rect" id="node7" href="$main_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/main.cpp" alt="" coords="235,472,426,537"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/PlaylistParser/include/PlaylistParser/PlaylistParser.h" name="/Users/psendil/SDK_18/AlexaClientSDK/PlaylistParser/include/PlaylistParser/PlaylistParser.h">
+<area shape="rect" id="node2" href="$_media_player_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/MediaPlayer\l/src/MediaPlayer.cpp" alt="" coords="5,345,225,397"/>
+<area shape="rect" id="node3" href="$_media_player_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/MediaPlayer\l/test/MediaPlayerTest.cpp" alt="" coords="588,345,808,397"/>
+<area shape="rect" id="node4" href="$_url_content_to_attachment_converter_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Playlist\lParser/include/PlaylistParser\l/UrlContentToAttachmentConverter.h" alt="" coords="296,119,535,184"/>
+<area shape="rect" id="node10" href="$_playlist_parser_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Playlist\lParser/src/PlaylistParser.cpp" alt="" coords="735,125,927,177"/>
+<area shape="rect" id="node11" href="$_playlist_parser_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Playlist\lParser/test/PlaylistParserTest.cpp" alt="" coords="952,125,1172,177"/>
+<area shape="rect" id="node5" href="$_media_player_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/MediaPlayer\l/include/MediaPlayer/MediaPlayer.h" alt="" coords="428,239,661,291"/>
+<area shape="rect" id="node9" href="$_url_content_to_attachment_converter_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Playlist\lParser/src/UrlContentToAttachment\lConverter.cpp" alt="" coords="173,232,404,297"/>
+<area shape="rect" id="node6" href="$_sample_application_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="249,345,515,397"/>
+<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/SampleApplication.cpp" alt="" coords="444,445,659,497"/>
+<area shape="rect" id="node7" href="$main_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/main.cpp" alt="" coords="205,445,420,497"/>
 </map>

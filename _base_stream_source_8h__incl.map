@@ -1,9 +1,9 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/MediaPlayer/include/MediaPlayer/BaseStreamSource.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/MediaPlayer/include/MediaPlayer/BaseStreamSource.h">
-<area shape="rect" id="node5" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="372,192,581,231"/>
-<area shape="rect" id="node14" href="$_source_interface_8h.html" title="MediaPlayer/SourceInterface.h" alt="" coords="1094,119,1299,144"/>
-<area shape="rect" id="node9" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="61,279,263,317"/>
-<area shape="rect" id="node12" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="365,285,587,311"/>
-<area shape="rect" id="node11" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="193,365,355,404"/>
-<area shape="rect" id="node15" href="$_pipeline_interface_8h.html" title="MediaPlayer/PipelineInterface.h" alt="" coords="809,199,1019,224"/>
-<area shape="rect" id="node17" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1102,192,1290,231"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/MediaPlayer/include/MediaPlayer/BaseStreamSource.h" name="/Users/psendil/SDK_18/AlexaClientSDK/MediaPlayer/include/MediaPlayer/BaseStreamSource.h">
+<area shape="rect" id="node5" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="372,179,581,217"/>
+<area shape="rect" id="node14" href="$_source_interface_8h.html" title="MediaPlayer/SourceInterface.h" alt="" coords="1094,105,1299,131"/>
+<area shape="rect" id="node9" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="61,265,263,304"/>
+<area shape="rect" id="node12" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="365,272,587,297"/>
+<area shape="rect" id="node11" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="193,352,355,391"/>
+<area shape="rect" id="node15" href="$_pipeline_interface_8h.html" title="MediaPlayer/PipelineInterface.h" alt="" coords="809,185,1019,211"/>
+<area shape="rect" id="node17" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1102,179,1290,217"/>
 </map>

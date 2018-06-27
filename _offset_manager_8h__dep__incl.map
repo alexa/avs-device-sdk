@@ -1,9 +1,9 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/MediaPlayer/include/MediaPlayer/OffsetManager.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/MediaPlayer/include/MediaPlayer/OffsetManager.h">
-<area shape="rect" id="node2" href="$_media_player_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/MediaPlayer/include\l/MediaPlayer/MediaPlayer.h" alt="" coords="325,119,539,184"/>
-<area shape="rect" id="node8" href="$_offset_manager_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/MediaPlayer/src\l/OffsetManager.cpp" alt="" coords="563,119,754,184"/>
-<area shape="rect" id="node3" href="$_media_player_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/MediaPlayer/src\l/MediaPlayer.cpp" alt="" coords="5,232,197,297"/>
-<area shape="rect" id="node4" href="$_media_player_test_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/MediaPlayer/test\l/MediaPlayerTest.cpp" alt="" coords="221,232,413,297"/>
-<area shape="rect" id="node5" href="$_sample_application_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="437,232,656,297"/>
-<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/SampleApplication.cpp" alt="" coords="597,345,789,411"/>
-<area shape="rect" id="node6" href="$main_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/main.cpp" alt="" coords="381,345,573,411"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/MediaPlayer/include/MediaPlayer/OffsetManager.h" name="/Users/psendil/SDK_18/AlexaClientSDK/MediaPlayer/include/MediaPlayer/OffsetManager.h">
+<area shape="rect" id="node2" href="$_media_player_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/MediaPlayer\l/include/MediaPlayer/MediaPlayer.h" alt="" coords="376,105,609,157"/>
+<area shape="rect" id="node8" href="$_offset_manager_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/MediaPlayer\l/src/OffsetManager.cpp" alt="" coords="633,105,853,157"/>
+<area shape="rect" id="node3" href="$_media_player_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/MediaPlayer\l/src/MediaPlayer.cpp" alt="" coords="5,205,225,257"/>
+<area shape="rect" id="node4" href="$_media_player_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/MediaPlayer\l/test/MediaPlayerTest.cpp" alt="" coords="249,205,469,257"/>
+<area shape="rect" id="node5" href="$_sample_application_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="493,205,759,257"/>
+<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/SampleApplication.cpp" alt="" coords="688,305,903,357"/>
+<area shape="rect" id="node6" href="$main_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/main.cpp" alt="" coords="449,305,664,357"/>
 </map>

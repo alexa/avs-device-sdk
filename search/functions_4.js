@@ -30,5 +30,6 @@ var searchData=
   ['expectfocuschange',['expectFocusChange',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager_observer.html#ac0eccaf0513e5ac445615987b5b87e62',1,'alexaClientSDK::avsCommon::sdkInterfaces::test::MockFocusManagerObserver']]],
   ['expiry_5ftest',['EXPIRY_TEST',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#ad04884d6a66295a661e129c1107abc8d',1,'alexaClientSDK::capabilityAgents::audioPlayer::test']]],
   ['externalmediaadapterinterface',['ExternalMediaAdapterInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_external_media_adapter_interface.html#ab8bcbd506e348e225d9da14c8757e1d2',1,'alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface']]],
+  ['externalmediaplayertest',['ExternalMediaPlayerTest',['../classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test_1_1_external_media_player_test.html#a0d9af21c8817098abef023d55078bf69',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer::test::ExternalMediaPlayerTest']]],
   ['extractavsprofiles',['extractAvsProfiles',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#aaa196eb3820e5686342196a928ba5fe5',1,'alexaClientSDK::capabilityAgents::bluetooth']]]
 ];

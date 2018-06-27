@@ -1,4 +1,4 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils">
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/Utils/include/AVSCommon/Utils" name="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/Utils/include/AVSCommon/Utils">
 <area shape="rect" id="node2" href="dir_6eadaab29cdb7047f6853df6d41739df.html" title="Bluetooth" alt="" coords="1413,205,1491,253"/>
 <area shape="rect" id="node20" href="dir_97afc8111b754cf401b73024f872f45d.html" title="SDKInterfaces" alt="" coords="548,5,655,53"/>
 <area shape="rect" id="edge21-headlabel" href="dir_000074_000020.html" title="3" alt="" coords="669,33,677,47"/>
@@ -32,7 +32,7 @@
 <area shape="rect" id="node18" href="dir_fa57286f413a8ff2261f39d3dc5aff6c.html" title="UUIDGeneration" alt="" coords="872,205,992,253"/>
 <area shape="rect" id="edge13-headlabel" href="dir_000010_000075.html" title="1" alt="" coords="114,375,122,388"/>
 <area shape="rect" id="edge10-headlabel" href="dir_000010_000077.html" title="2" alt="" coords="192,187,199,201"/>
-<area shape="rect" id="edge11-headlabel" href="dir_000010_000078.html" title="2" alt="" coords="1133,178,1140,192"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000010_000078.html" title="3" alt="" coords="1133,178,1140,192"/>
 <area shape="rect" id="edge6-headlabel" href="dir_000010_000080.html" title="12" alt="" coords="233,292,248,305"/>
 <area shape="rect" id="edge14-headlabel" href="dir_000010_000082.html" title="3" alt="" coords="570,180,578,194"/>
 <area shape="rect" id="edge12-headlabel" href="dir_000010_000085.html" title="12" alt="" coords="1033,179,1048,192"/>
@@ -41,7 +41,7 @@
 <area shape="rect" id="edge7-headlabel" href="dir_000010_000093.html" title="4" alt="" coords="905,179,912,193"/>
 <area shape="rect" id="edge9-headlabel" href="dir_000010_000020.html" title="21" alt="" coords="579,62,594,75"/>
 <area shape="rect" id="edge18-headlabel" href="dir_000020_000074.html" title="1" alt="" coords="1435,179,1442,192"/>
-<area shape="rect" id="edge17-headlabel" href="dir_000020_000010.html" title="18" alt="" coords="573,79,588,93"/>
+<area shape="rect" id="edge17-headlabel" href="dir_000020_000010.html" title="19" alt="" coords="573,79,588,93"/>
 <area shape="rect" id="clust2" href="dir_ee116be5d1129358ffaec72096859541.html" alt="" coords="119,195,1597,456"/>
 <area shape="rect" id="clust1" href="dir_ced5fe410515ed61d81f9a22ef3eef03.html" title="AVSCommon" alt="" coords="108,160,1608,467"/>
 </map>

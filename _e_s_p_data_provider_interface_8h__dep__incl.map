@@ -1,15 +1,15 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/ESP/include/ESP/ESPDataProviderInterface.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/ESP/include/ESP/ESPDataProviderInterface.h">
-<area shape="rect" id="node2" href="$_dummy_e_s_p_data_provider_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/ESP/include/ESP\l/DummyESPDataProvider.h" alt="" coords="190,119,386,184"/>
-<area shape="rect" id="node5" href="$_e_s_p_data_provider_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/ESP/include/ESP\l/ESPDataProvider.h" alt="" coords="434,119,630,184"/>
-<area shape="rect" id="node7" href="$_keyword_observer_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="668,119,882,184"/>
-<area shape="rect" id="node13" href="$_interaction_manager_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/InteractionManager.cpp" alt="" coords="988,345,1180,411"/>
-<area shape="rect" id="node3" href="$_dummy_e_s_p_data_provider_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/ESP/src/DummyESPData\lProvider.cpp" alt="" coords="5,232,251,297"/>
-<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/SampleApplication.cpp" alt="" coords="507,572,699,637"/>
-<area shape="rect" id="node6" href="$_e_s_p_data_provider_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/ESP/src/ESPDataProvider.cpp" alt="" coords="326,239,600,291"/>
-<area shape="rect" id="node8" href="$_interaction_manager_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="675,232,898,297"/>
-<area shape="rect" id="node14" href="$_keyword_observer_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/KeywordObserver.cpp" alt="" coords="923,232,1115,297"/>
-<area shape="rect" id="node9" href="$_user_input_manager_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="678,345,896,411"/>
-<area shape="rect" id="node10" href="$_sample_application_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="676,459,895,524"/>
-<area shape="rect" id="node12" href="$_user_input_manager_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/UserInputManager.cpp" alt="" coords="919,459,1111,524"/>
-<area shape="rect" id="node11" href="$main_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/main.cpp" alt="" coords="723,572,915,637"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/ESP/include/ESP/ESPDataProviderInterface.h" name="/Users/psendil/SDK_18/AlexaClientSDK/ESP/include/ESP/ESPDataProviderInterface.h">
+<area shape="rect" id="node2" href="$_dummy_e_s_p_data_provider_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/ESP\l/include/ESP/DummyESPDataProvider.h" alt="" coords="30,119,292,171"/>
+<area shape="rect" id="node5" href="$_e_s_p_data_provider_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/ESP\l/include/ESP/ESPDataProvider.h" alt="" coords="316,119,532,171"/>
+<area shape="rect" id="node7" href="$_keyword_observer_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/KeywordObserver.h" alt="" coords="556,119,817,171"/>
+<area shape="rect" id="node13" href="$_interaction_manager_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/InteractionManager.cpp" alt="" coords="917,319,1131,371"/>
+<area shape="rect" id="node3" href="$_dummy_e_s_p_data_provider_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/ESP\l/src/DummyESPDataProvider.cpp" alt="" coords="5,219,227,271"/>
+<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/SampleApplication.cpp" alt="" coords="373,519,587,571"/>
+<area shape="rect" id="node6" href="$_e_s_p_data_provider_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/ESP\l/src/ESPDataProvider.cpp" alt="" coords="302,219,477,271"/>
+<area shape="rect" id="node8" href="$_interaction_manager_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/InteractionManager.h" alt="" coords="552,219,821,271"/>
+<area shape="rect" id="node14" href="$_keyword_observer_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/KeywordObserver.cpp" alt="" coords="845,219,1059,271"/>
+<area shape="rect" id="node9" href="$_user_input_manager_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/UserInputManager.h" alt="" coords="554,319,819,371"/>
+<area shape="rect" id="node10" href="$_sample_application_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="553,419,818,471"/>
+<area shape="rect" id="node12" href="$_user_input_manager_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/UserInputManager.cpp" alt="" coords="842,419,1057,471"/>
+<area shape="rect" id="node11" href="$main_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/main.cpp" alt="" coords="611,519,826,571"/>
 </map>

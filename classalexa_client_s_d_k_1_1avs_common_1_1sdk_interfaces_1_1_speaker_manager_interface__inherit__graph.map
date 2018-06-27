@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::SpeakerManagerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::SpeakerManagerInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html" title="alexaClientSDK::capability\lAgents::speakerManager\l::SpeakerManager" alt="" coords="25,105,203,157"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_speaker_manager.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockSpeakerManager" alt="" coords="271,5,468,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html" title="alexaClientSDK::capability\lAgents::speakerManager\l::SpeakerManager" alt="" coords="281,81,458,133"/>
 </map>

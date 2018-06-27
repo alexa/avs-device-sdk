@@ -1,6 +1,6 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/Settings/include/Settings/SQLiteSettingStorage.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/Settings/include/Settings/SQLiteSettingStorage.h">
-<area shape="rect" id="node2" href="$_settings_storage_interface_8h.html" title="Settings/SettingsStorage\lInterface.h" alt="" coords="495,132,663,171"/>
-<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="762,132,976,171"/>
-<area shape="rect" id="node13" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="213,139,434,164"/>
-<area shape="rect" id="node15" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="23,219,248,244"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/CapabilityAgents/Settings/include/Settings/SQLiteSettingStorage.h" name="/Users/psendil/SDK_18/AlexaClientSDK/CapabilityAgents/Settings/include/Settings/SQLiteSettingStorage.h">
+<area shape="rect" id="node2" href="$_settings_storage_interface_8h.html" title="Settings/SettingsStorage\lInterface.h" alt="" coords="495,119,663,157"/>
+<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="762,119,976,157"/>
+<area shape="rect" id="node13" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="213,125,434,151"/>
+<area shape="rect" id="node15" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="23,205,248,231"/>
 </map>

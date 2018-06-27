@@ -1,6 +1,6 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h">
-<area shape="rect" id="node2" href="$_curl_easy_handle_wrapper_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/AVSCommon/Utils\l/src/LibcurlUtils/CurlEasyHandleWrapper.cpp" alt="" coords="5,132,292,197"/>
-<area shape="rect" id="node3" href="$_http_post_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/AVSCommon/Utils\l/src/LibcurlUtils/HttpPost.cpp" alt="" coords="317,132,520,197"/>
-<area shape="rect" id="node4" href="$_libcurl_utils_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/AVSCommon/Utils\l/src/LibcurlUtils/LibcurlUtils.cpp" alt="" coords="543,132,749,197"/>
-<area shape="rect" id="node5" href="$_capabilities_delegate_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/CapabilitiesDelegate\l/src/CapabilitiesDelegate.cpp" alt="" coords="773,132,989,197"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h" name="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h">
+<area shape="rect" id="node2" href="$_curl_easy_handle_wrapper_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/AVSCommon\l/Utils/src/LibcurlUtils/CurlEasy\lHandleWrapper.cpp" alt="" coords="5,119,231,184"/>
+<area shape="rect" id="node3" href="$_http_post_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/AVSCommon\l/Utils/src/LibcurlUtils/HttpPost.cpp" alt="" coords="255,125,480,177"/>
+<area shape="rect" id="node4" href="$_libcurl_utils_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/AVSCommon\l/Utils/src/LibcurlUtils/LibcurlUtils.cpp" alt="" coords="504,125,740,177"/>
+<area shape="rect" id="node5" href="$_capabilities_delegate_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Capabilities\lDelegate/src/CapabilitiesDelegate.cpp" alt="" coords="764,125,1011,177"/>
 </map>

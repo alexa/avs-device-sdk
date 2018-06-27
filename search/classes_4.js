@@ -20,5 +20,6 @@ var searchData=
   ['expectedchannelstateresult',['ExpectedChannelStateResult',['../structalexa_client_s_d_k_1_1afml_1_1test_1_1_mock_activity_tracker_interface_1_1_expected_channel_state_result.html',1,'alexaClientSDK::afml::test::MockActivityTrackerInterface']]],
   ['externalmediaadapterinterface',['ExternalMediaAdapterInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_external_media_adapter_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer']]],
   ['externalmediaplayer',['ExternalMediaPlayer',['../classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer']]],
-  ['externalmediaplayerinterface',['ExternalMediaPlayerInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]]
+  ['externalmediaplayerinterface',['ExternalMediaPlayerInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
+  ['externalmediaplayertest',['ExternalMediaPlayerTest',['../classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test_1_1_external_media_player_test.html',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer::test']]]
 ];

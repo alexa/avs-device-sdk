@@ -1,5 +1,5 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/System/include/System/EndpointHandler.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilityAgents/System/include/System/EndpointHandler.h">
-<area shape="rect" id="node2" href="$_default_client_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="5,119,233,184"/>
-<area shape="rect" id="node3" href="$_endpoint_handler_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/CapabilityAgents\l/System/src/EndpointHandler.cpp" alt="" coords="257,119,475,184"/>
-<area shape="rect" id="node4" href="$_endpoint_handler_test_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/CapabilityAgents\l/System/test/EndpointHandlerTest.cpp" alt="" coords="500,119,747,184"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/CapabilityAgents/System/include/System/EndpointHandler.h" name="/Users/psendil/SDK_18/AlexaClientSDK/CapabilityAgents/System/include/System/EndpointHandler.h">
+<area shape="rect" id="node2" href="$_default_client_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Application\lUtilities/DefaultClient/src\l/DefaultClient.cpp" alt="" coords="5,119,216,184"/>
+<area shape="rect" id="node3" href="$_endpoint_handler_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Capability\lAgents/System/src/EndpointHandler.cpp" alt="" coords="241,125,501,177"/>
+<area shape="rect" id="node4" href="$_endpoint_handler_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Capability\lAgents/System/test/EndpointHandler\lTest.cpp" alt="" coords="525,119,764,184"/>
 </map>

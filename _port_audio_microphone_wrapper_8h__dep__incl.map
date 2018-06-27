@@ -1,10 +1,10 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/PortAudioMicrophoneWrapper.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/PortAudioMicrophoneWrapper.h">
-<area shape="rect" id="node2" href="$_interaction_manager_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="327,119,550,184"/>
-<area shape="rect" id="node9" href="$_port_audio_microphone_wrapper_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/PortAudioMicrophoneWrapper.cpp" alt="" coords="574,119,802,184"/>
-<area shape="rect" id="node3" href="$_user_input_manager_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="215,232,433,297"/>
-<area shape="rect" id="node8" href="$_interaction_manager_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/InteractionManager.cpp" alt="" coords="457,232,649,297"/>
-<area shape="rect" id="node4" href="$_sample_application_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="100,345,319,411"/>
-<area shape="rect" id="node7" href="$_user_input_manager_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/UserInputManager.cpp" alt="" coords="343,345,534,411"/>
-<area shape="rect" id="node5" href="$main_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/main.cpp" alt="" coords="5,459,197,524"/>
-<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/SampleApplication.cpp" alt="" coords="221,459,413,524"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/SampleApp/include/SampleApp/PortAudioMicrophoneWrapper.h" name="/Users/psendil/SDK_18/AlexaClientSDK/SampleApp/include/SampleApp/PortAudioMicrophoneWrapper.h">
+<area shape="rect" id="node2" href="$_interaction_manager_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/InteractionManager.h" alt="" coords="361,119,630,171"/>
+<area shape="rect" id="node9" href="$_port_audio_microphone_wrapper_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/PortAudioMicrophoneWrapper.cpp" alt="" coords="654,119,904,171"/>
+<area shape="rect" id="node3" href="$_user_input_manager_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/UserInputManager.h" alt="" coords="231,219,496,271"/>
+<area shape="rect" id="node8" href="$_interaction_manager_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/InteractionManager.cpp" alt="" coords="520,219,735,271"/>
+<area shape="rect" id="node4" href="$_sample_application_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="99,319,364,371"/>
+<area shape="rect" id="node7" href="$_user_input_manager_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/UserInputManager.cpp" alt="" coords="388,319,603,371"/>
+<area shape="rect" id="node5" href="$main_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/main.cpp" alt="" coords="5,419,220,471"/>
+<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/SampleApplication.cpp" alt="" coords="244,419,459,471"/>
 </map>

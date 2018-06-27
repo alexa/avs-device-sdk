@@ -1,7 +1,7 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/CapabilitiesDelegate.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/CapabilitiesDelegate.h">
-<area shape="rect" id="node2" href="$_capabilities_delegate_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/CapabilitiesDelegate\l/src/CapabilitiesDelegate.cpp" alt="" coords="5,132,221,197"/>
-<area shape="rect" id="node3" href="$_capabilities_delegate_test_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/CapabilitiesDelegate\l/test/CapabilitiesDelegateTest.cpp" alt="" coords="245,132,467,197"/>
-<area shape="rect" id="node4" href="$_sample_application_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="491,132,711,197"/>
-<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/SampleApplication.cpp" alt="" coords="652,245,844,311"/>
-<area shape="rect" id="node5" href="$main_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/main.cpp" alt="" coords="436,245,628,311"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/CapabilitiesDelegate/include/CapabilitiesDelegate/CapabilitiesDelegate.h" name="/Users/psendil/SDK_18/AlexaClientSDK/CapabilitiesDelegate/include/CapabilitiesDelegate/CapabilitiesDelegate.h">
+<area shape="rect" id="node2" href="$_capabilities_delegate_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Capabilities\lDelegate/src/CapabilitiesDelegate.cpp" alt="" coords="5,125,253,177"/>
+<area shape="rect" id="node3" href="$_capabilities_delegate_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Capabilities\lDelegate/test/CapabilitiesDelegate\lTest.cpp" alt="" coords="276,119,502,184"/>
+<area shape="rect" id="node4" href="$_sample_application_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="526,125,791,177"/>
+<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/SampleApplication.cpp" alt="" coords="720,232,935,284"/>
+<area shape="rect" id="node5" href="$main_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/main.cpp" alt="" coords="482,232,696,284"/>
 </map>

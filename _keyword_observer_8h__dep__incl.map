@@ -1,10 +1,10 @@
-<map id="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/KeywordObserver.h" name="/Users/rozenbf/workplace/cm/autoCM_publicRepo/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/KeywordObserver.h">
-<area shape="rect" id="node2" href="$_interaction_manager_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="217,119,440,184"/>
-<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/SampleApplication.cpp" alt="" coords="308,459,500,524"/>
-<area shape="rect" id="node9" href="$_keyword_observer_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/KeywordObserver.cpp" alt="" coords="515,119,707,184"/>
-<area shape="rect" id="node3" href="$_user_input_manager_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="6,232,224,297"/>
-<area shape="rect" id="node8" href="$_interaction_manager_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/InteractionManager.cpp" alt="" coords="248,232,440,297"/>
-<area shape="rect" id="node4" href="$_sample_application_8h.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="5,345,225,411"/>
-<area shape="rect" id="node7" href="$_user_input_manager_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/UserInputManager.cpp" alt="" coords="248,345,440,411"/>
-<area shape="rect" id="node5" href="$main_8cpp.html" title="/Users/rozenbf/workplace\l/cm/autoCM_publicRepo/avs\l&#45;device&#45;sdk/SampleApp/src\l/main.cpp" alt="" coords="19,459,211,524"/>
+<map id="/Users/psendil/SDK_18/AlexaClientSDK/SampleApp/include/SampleApp/KeywordObserver.h" name="/Users/psendil/SDK_18/AlexaClientSDK/SampleApp/include/SampleApp/KeywordObserver.h">
+<area shape="rect" id="node2" href="$_interaction_manager_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/InteractionManager.h" alt="" coords="241,105,510,157"/>
+<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/SampleApplication.cpp" alt="" coords="355,405,569,457"/>
+<area shape="rect" id="node9" href="$_keyword_observer_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/KeywordObserver.cpp" alt="" coords="585,105,800,157"/>
+<area shape="rect" id="node3" href="$_user_input_manager_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/UserInputManager.h" alt="" coords="6,205,270,257"/>
+<area shape="rect" id="node8" href="$_interaction_manager_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/InteractionManager.cpp" alt="" coords="295,205,509,257"/>
+<area shape="rect" id="node4" href="$_sample_application_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="5,305,271,357"/>
+<area shape="rect" id="node7" href="$_user_input_manager_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/UserInputManager.cpp" alt="" coords="295,305,509,357"/>
+<area shape="rect" id="node5" href="$main_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/main.cpp" alt="" coords="31,405,245,457"/>
 </map>
