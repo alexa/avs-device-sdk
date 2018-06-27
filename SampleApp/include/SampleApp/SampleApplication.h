@@ -142,6 +142,10 @@ private:
     std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>
         m_externalMusicProviderMediaPlayersMap;
 
+    /// The map of the adapters and their mediaPlayers.
+    std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>
+        m_externalMusicProviderSpeakersMap;
+
     /// The vector of mediaPlayers for the adapters.
     std::vector<std::shared_ptr<mediaPlayer::MediaPlayer>> m_adapterMediaPlayers;
 

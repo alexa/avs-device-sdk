@@ -1,5 +1,31 @@
 ## ChangeLog
 
+### v1.8.0 released 06/27/2018:
+
+**Enhancements**
+
+* Added local stop functionality. This allows a user to stop an active function, such as an alert or timer, by uttering "Alexa, stop" when an Alexa-enabled product is *offline*.
+* Alerts in the background now stream in 10 sec intervals, rather than continuously.
+* Added support for France to the sample app.
+* Updated the ACL MIME type for sending JSON to AVS from `"text/json"` to `"application/json"`.
+* `friendlyName` can now be updated for `BlueZ` implementations of `BlueZBluetoothDevice` and `BlueZHostController`.
+
+**Bug Fixes**
+* Fixed an issue where the Bluetooth agent didn't clear user data upon reset, including paired devices and the `uuidMapping` table.
+* Fixed `MediaPlayer` threading issues. Now each instance has it's own `glib` main loop thread, rather than utilizing the default main context worker thread.
+* Fixed segmentation fault issues that occurred when certain static initializers needed to be initialized in a certain order, but the order wasn't defined.
+
+**Known Issues**
+* The `ACL` may encounter issues if audio attachments are received but not consumed.
+* `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
+* The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.
+* Connecting a product to streaming media via Bluetooth will sometimes stop media playback within the source application. Resuming playback through the source application or toggling next/previous will correct playback.
+* When a source device is streaming silence via Bluetooth, the Alexa companion app indicates that audio content is streaming.
+* The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation is not yet supported.
+* On some products, interrupted Bluetooth playback may not resume if other content is locally streamed.
+* On Raspberry Pi, when streaming audio via Bluetooth, sometimes the audio stream stutters.
+* On Raspberry Pi, `BlueALSA` must be terminated each time the device boots. See [Raspberry Pi Quick Start Guide](https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide-with-Script#bluetooth) for more information.
+
 ### v1.7.1 released 05/04/2018:
 
 **Enhancements**

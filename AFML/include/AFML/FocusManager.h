@@ -84,12 +84,6 @@ public:
         unsigned int priority;
     };
 
-    /// The default @c ChannelConfiguration for AVS audio channels.
-    static const std::vector<FocusManager::ChannelConfiguration> DEFAULT_AUDIO_CHANNELS;
-
-    /// The default @c ChannelConfiguration for AVS visual channels.
-    static const std::vector<FocusManager::ChannelConfiguration> DEFAULT_VISUAL_CHANNELS;
-
     /**
      * This constructor creates Channels based on the provided configurations.
      *
@@ -100,7 +94,7 @@ public:
      * been updated.
      */
     FocusManager(
-        const std::vector<ChannelConfiguration>& channelConfigurations,
+        const std::vector<ChannelConfiguration> channelConfigurations,
         std::shared_ptr<ActivityTrackerInterface> activityTrackerInterface = nullptr);
 
     bool acquireChannel(
@@ -118,6 +112,20 @@ public:
 
     void removeObserver(
         const std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerObserverInterface>& observer) override;
+
+    /**
+     * Retrieves the default @c ChannelConfiguration for AVS audio channels.
+     *
+     * @return the default @c ChannelConfiguration for AVS audio channels.
+     */
+    static const std::vector<FocusManager::ChannelConfiguration> getDefaultAudioChannels();
+
+    /**
+     * Retrieves the default @c ChannelConfiguration for AVS visual channels.
+     *
+     * @return the default @c ChannelConfiguration for AVS visual channels.
+     */
+    static const std::vector<FocusManager::ChannelConfiguration> getDefaultVisualChannels();
 
 private:
     /**

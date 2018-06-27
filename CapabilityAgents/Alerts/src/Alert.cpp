@@ -61,6 +61,8 @@ static const std::string KEY_BACKGROUND_ASSET_ID = "backgroundAlertAsset";
 
 /// We won't allow an alert to render more than 1 hour.
 const std::chrono::seconds MAXIMUM_ALERT_RENDERING_TIME = std::chrono::hours(1);
+/// Length of pause of alert sounds when played in background
+const auto BACKGROUND_ALERT_SOUND_PAUSE_TIME = std::chrono::seconds(10);
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("Alert");
@@ -507,6 +509,7 @@ void Alert::startRenderer() {
         if (!m_assetConfiguration.backgroundAssetId.empty() && !m_assetConfiguration.hasRenderingFailed) {
             urls.push_back(m_assetConfiguration.assets[m_assetConfiguration.backgroundAssetId].url);
         }
+        loopPause = BACKGROUND_ALERT_SOUND_PAUSE_TIME;
     } else if (!m_assetConfiguration.assets.empty() && !m_assetConfiguration.hasRenderingFailed) {
         // Only play the named timer urls when it's in foreground.
         for (auto item : m_assetConfiguration.assetPlayOrderItems) {

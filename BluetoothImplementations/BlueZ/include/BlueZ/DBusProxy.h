@@ -32,7 +32,7 @@ namespace blueZ {
  */
 class DBusProxy {
 public:
-    ~DBusProxy();
+    virtual ~DBusProxy();
 
     /**
      * Factory method to create a new instance of the DBus proxy. DBus proxies are shortcuts that bind to a specific
@@ -54,7 +54,10 @@ public:
      * @param[out] error A pointer to a @c GError* variable that will receive the error returned by method invocation
      * @return The result @c GVariant* returned by method invocation
      */
-    ManagedGVariant callMethod(const std::string& methodName, GVariant* parameters = nullptr, GError** error = nullptr);
+    virtual ManagedGVariant callMethod(
+        const std::string& methodName,
+        GVariant* parameters = nullptr,
+        GError** error = nullptr);
 
     /**
      * Calls a method of the proxy and returns the its result along with the list of linux file descriptors associated
@@ -68,7 +71,7 @@ public:
      * @param[out] error A pointer to a @c GError* variable that will receive the error returned by method invocation
      * @return The result @c GVariant* returned by method invocation
      */
-    ManagedGVariant callMethodWithFDList(
+    virtual ManagedGVariant callMethodWithFDList(
         const std::string& methodName,
         GVariant* parameters = nullptr,
         GUnixFDList** outlist = nullptr,
@@ -79,7 +82,7 @@ public:
      *
      * @return A string containing the object path
      */
-    std::string getObjectPath() const;
+    virtual std::string getObjectPath() const;
 
     /**
      * Get the raw @c GDBusProxy* value associated with the object
@@ -87,7 +90,7 @@ public:
      * @return A pointer to @c GDBusProxy object associated with the this instance. This pointer is valid as long as
      * @c DBusProxy object is valid.
      */
-    GDBusProxy* get();
+    virtual GDBusProxy* get();
 
 protected:
     /**

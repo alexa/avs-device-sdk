@@ -13,10 +13,11 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_TEST_AVSCOMMON_SDKINTERFACES_MOCKUSERACTIVITYNOTIFIER_H_
-#define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_TEST_AVSCOMMON_SDKINTERFACES_MOCKUSERACTIVITYNOTIFIER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_TEST_AVSCOMMON_SDKINTERFACES_MOCKUSERINACTIVITYMONITOR_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_TEST_AVSCOMMON_SDKINTERFACES_MOCKUSERINACTIVITYMONITOR_H_
 
-#include "AVSCommon/SDKInterfaces/UserActivityNotifierInterface.h"
+#include "AVSCommon/SDKInterfaces/UserInactivityMonitorInterface.h"
+#include "AVSCommon/SDKInterfaces/UserInactivityMonitorObserverInterface.h"
 #include <gmock/gmock.h>
 
 namespace alexaClientSDK {
@@ -24,11 +25,15 @@ namespace avsCommon {
 namespace sdkInterfaces {
 namespace test {
 
-/// Mock class that implements @c UserActivityNotifierInterface.
-class MockUserActivityNotifier : public UserActivityNotifierInterface {
+/// Mock class that implements @c UserInactivityMonitorInterface.
+class MockUserInactivityMonitor : public UserInactivityMonitorInterface {
 public:
     MOCK_METHOD0(onUserActive, void());
     MOCK_METHOD0(timeSinceUserActivity, std::chrono::seconds());
+    MOCK_METHOD1(addObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorObserverInterface>));
+    MOCK_METHOD1(
+        removeObserver,
+        void(std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorObserverInterface>));
 };
 
 }  // namespace test
@@ -36,4 +41,4 @@ public:
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_TEST_AVSCOMMON_SDKINTERFACES_MOCKUSERACTIVITYNOTIFIER_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_TEST_AVSCOMMON_SDKINTERFACES_MOCKUSERINACTIVITYMONITOR_H_

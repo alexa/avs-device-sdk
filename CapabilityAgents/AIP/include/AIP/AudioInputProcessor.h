@@ -35,7 +35,7 @@
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
-#include <AVSCommon/SDKInterfaces/UserActivityNotifierInterface.h>
+#include <AVSCommon/SDKInterfaces/UserInactivityMonitorInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
@@ -82,7 +82,7 @@ public:
      * @param focusManager The channel focus manager used to manage usage of the dialog channel.
      * @param dialogUXStateAggregator The dialog state aggregator which tracks UX states related to dialog.
      * @param exceptionEncounteredSender The object to use for sending AVS Exception messages.
-     * @param userActivityNotifier The object to use for resetting user inactivity.
+     * @param UserInactivityMonitor The object to use for resetting user inactivity.
      * @param defaultAudioProvider A default @c avsCommon::AudioProvider to use for ExpectSpeech if the previous
      *     provider is not readable (@c avsCommon::AudioProvider::alwaysReadable).  This parameter is optional and
      *     defaults to an invalid @c avsCommon::AudioProvider.
@@ -95,7 +95,7 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> userActivityNotifier,
+        std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityNotifier,
         AudioProvider defaultAudioProvider = AudioProvider::null());
 
     /**
@@ -163,7 +163,7 @@ public:
         avsCommon::avs::AudioInputStream::Index begin = INVALID_INDEX,
         avsCommon::avs::AudioInputStream::Index keywordEnd = INVALID_INDEX,
         std::string keyword = "",
-        const ESPData& espData = ESPData::EMPTY_ESP_DATA,
+        const ESPData espData = ESPData::getEmptyESPData(),
         std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr);
 
     /**
@@ -237,7 +237,7 @@ private:
      * @param contextManager The AVS Context manager used to generate system context for events.
      * @param focusManager The channel focus manager used to manage usage of the dialog channel.
      * @param exceptionEncounteredSender The object to use for sending ExceptionEncountered messages.
-     * @param userActivityNotifier The object to use for resetting user inactivity.
+     * @param userInactivityMonitor The object to use for resetting user inactivity.
      * @param defaultAudioProvider A default @c avsCommon::AudioProvider to use for ExpectSpeech if the previous
      *     provider is not readable (@c AudioProvider::alwaysReadable).  This parameter is optional, and ignored if set
      *     to @c AudioProvider::null().
@@ -252,7 +252,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> userActivityNotifier,
+        std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityMonitor,
         AudioProvider defaultAudioProvider);
 
     /// @name RequiresShutdown Functions
@@ -297,7 +297,7 @@ private:
      * available so that the @c ReportEchoSpatialPerceptionData event will be sent just before the @c Recognize event.
      * @param espData The ESP measurements to be sent in the ReportEchoSpatialPerceptionData event.
      */
-    void executePrepareEspPayload(const ESPData& espData);
+    void executePrepareEspPayload(const ESPData espData);
 
     /**
      * This function builds @c a Recognize event and will request context so the events will be sent upon @c
@@ -487,8 +487,8 @@ private:
     /// The @c FocusManager used to manage usage of the dialog channel.
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_focusManager;
 
-    /// The @c UserInactivityMonitor used to reset the inactivity timer of the user.
-    std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> m_userActivityNotifier;
+    /// The @c UserInactivityMonitorInterface used to reset the inactivity timer of the user.
+    std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> m_userInactivityMonitor;
 
     /// Timer which runs in the @c EXPECTING_SPEECH state.
     avsCommon::utils::timing::Timer m_expectingSpeechTimer;

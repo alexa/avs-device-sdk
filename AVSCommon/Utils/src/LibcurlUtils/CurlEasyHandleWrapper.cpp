@@ -38,7 +38,7 @@ static const std::string TAG("CurlEasyHandleWrapper");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// MIME Content-Type for JSON data
-static std::string JSON_MIME_TYPE = "text/json";
+static std::string JSON_MIME_TYPE = "application/json";
 /// MIME Content-Type for octet stream data
 static std::string OCTET_MIME_TYPE = "application/octet-stream";
 

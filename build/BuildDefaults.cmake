@@ -42,6 +42,9 @@ include (ESP)
 # Setup Comms variables.
 include (Comms)
 
+# Setup MRM variables.
+include (MRM)
+
 if (HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
     include (ExternalMediaPlayerAdapters)
 endif()

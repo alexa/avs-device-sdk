@@ -33,9 +33,6 @@ static const std::string TAG{"BlueZAVRCPTarget"};
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-/// The Media Control interface on the DBus object.
-static const std::string MEDIA_CONTROL_INTERFACE = "org.bluez.MediaControl1";
-
 /// The AVRCP Play command.
 static const std::string PLAY_CMD = "Play";
 
@@ -48,14 +45,9 @@ static const std::string NEXT_CMD = "Next";
 /// The AVRCP Play command.
 static const std::string PREVIOUS_CMD = "Previous";
 
-std::shared_ptr<BlueZAVRCPTarget> BlueZAVRCPTarget::create(std::shared_ptr<BlueZBluetoothDevice> device) {
+std::shared_ptr<BlueZAVRCPTarget> BlueZAVRCPTarget::create(std::shared_ptr<DBusProxy> mediaControlProxy) {
     ACSDK_DEBUG5(LX(__func__));
-    if (!device) {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullDevice"));
-        return nullptr;
-    }
 
-    auto mediaControlProxy = DBusProxy::create(MEDIA_CONTROL_INTERFACE, device->getObjectPath());
     if (!mediaControlProxy) {
         ACSDK_ERROR(LX(__func__).d("reason", "nullMediaControlProxy"));
         return nullptr;

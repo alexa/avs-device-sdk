@@ -83,7 +83,7 @@ ESPData ESPDataProvider::getESPData() {
         return ESPData{std::to_string(m_frameEnergyCompute.getVoicedEnergy()),
                        std::to_string(m_frameEnergyCompute.getAmbientEnergy())};
     }
-    return ESPData::EMPTY_ESP_DATA;
+    return ESPData::getEmptyESPData();
 }
 
 bool ESPDataProvider::isEnabled() const {

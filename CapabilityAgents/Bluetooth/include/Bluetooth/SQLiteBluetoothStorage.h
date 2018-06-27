@@ -37,7 +37,7 @@ public:
      * Should take the form:
      * "bluetooth" : { "databaseFilePath" : "<filePath>" }
      */
-    static std::unique_ptr<BluetoothStorageInterface> create(
+    static std::unique_ptr<SQLiteBluetoothStorage> create(
         const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
 
     /// @name BluetoothStorageInterface

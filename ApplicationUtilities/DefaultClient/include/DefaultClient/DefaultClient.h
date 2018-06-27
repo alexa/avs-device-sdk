@@ -42,6 +42,7 @@
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SingleSettingObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h>
+#include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/Network/InternetConnectionMonitor.h>
@@ -50,6 +51,7 @@
 #include <CertifiedSender/CertifiedSender.h>
 #include <CertifiedSender/SQLiteMessageStorage.h>
 #include <ExternalMediaPlayer/ExternalMediaPlayer.h>
+#include <MRM/MRMCapabilityAgent.h>
 #include <Notifications/NotificationsCapabilityAgent.h>
 #include <Notifications/NotificationRenderer.h>
 #include <PlaybackController/PlaybackController.h>
@@ -80,10 +82,13 @@ public:
      * Creates and initializes a default AVS SDK client. To connect the client to AVS, users should make a call to
      * connect() after creation.
      *
+     * @param deviceInfo DeviceInfo which reflects the device setup credentials.
      * @param customerDataManager CustomerDataManager instance to be used by RegistrationManager and instances of
      * all classes extending CustomDataHandler.
      * @param externalMusicProviderMediaPlayers The map of <players, mediaPlayer> to use to play content from each
      * external music provider.
+     * @param externalMusicProviderSpeakers The map of <players, speaker> to use to track volume of each
+     * external music provider media player.
      * @param adapterCreationMap The map of <players, adapterCreationMethod> to use when creating the adapters for the
      * different music providers supported by ExternalMediaPlayer.
      * @param speakMediaPlayer The media player to use to play Alexa speech from.
@@ -91,17 +96,20 @@ public:
      * @param alertsMediaPlayer The media player to use to play alerts from.
      * @param notificationsMediaPlayer The media player to to play notification indicators.
      * @param bluetoothMediaPlayer The media player to to play bluetooth content.
+     * @param ringtoneMediaPlayer The media player to to play Comms ringtones.
      * @param speakSpeaker The speaker to control volume of Alexa speech.
      * @param audioSpeaker The speaker to control volume of Alexa audio content.
      * @param alertsSpeaker The speaker to control volume of alerts.
      * @param notificationsSpeaker The speaker to control volume of notifications.
      * @param bluetoothSpeaker The speaker to control volume of bluetooth.
+     * @param ringtoneSpeaker The speaker to control volume of Comms ringtones.
      * @param additionalSpeakers A list of additional speakers to receive volume changes.
      * @param audioFactory The audioFactory is a component that provides unique audio streams.
      * @param authDelegate The component that provides the client with valid LWA authorization.
      * @param alertStorage The storage interface that will be used to store alerts.
      * @param messageStorage The storage interface that will be used to store certified sender messages.
      * @param notificationsStorage The storage interface that will be used to store notification indicators.
+     * @param settingsStorage The storage interface that will be used to store settings.
      * @param alexaDialogStateObservers Observers that can be used to be notified of Alexa dialog related UX state
      * changes.
      * @param connectionObservers Observers that can be used to be notified of connection status changes.
@@ -116,9 +124,12 @@ public:
      * TODO: Allow the user to pass in a MediaPlayer factory rather than each media player individually.
      */
     static std::unique_ptr<DefaultClient> create(
+        std::shared_ptr<avsCommon::utils::DeviceInfo> deviceInfo,
         std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
         const std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>&
             externalMusicProviderMediaPlayers,
+        const std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>&
+            externalMusicProviderSpeakers,
         const capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
@@ -394,7 +405,7 @@ public:
         avsCommon::avs::AudioInputStream::Index beginIndex,
         avsCommon::avs::AudioInputStream::Index endIndex,
         std::string keyword,
-        const capabilityAgents::aip::ESPData& espData = capabilityAgents::aip::ESPData::EMPTY_ESP_DATA,
+        const capabilityAgents::aip::ESPData espData = capabilityAgents::aip::ESPData::getEmptyESPData(),
         std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr);
 
     /**
@@ -461,10 +472,13 @@ private:
     /**
      * Initializes the SDK and "glues" all the components together.
      *
+     * @param deviceInfo DeviceInfo which reflects the device setup credentials.
      * @param customerDataManager CustomerDataManager instance to be used by RegistrationManager and instances of
      * all classes extending CustomDataHandler.
      * @param externalMusicProviderMediaPlayers The map of <PlayerId, mediaPlayer> to use to play content from each
      * external music provider.
+     * @param externalMusicProviderSpeakers The map of <players, speaker> to use to track volume of each
+     * external music provider media player.
      * @param adapterCreationMap The map of <players, adapterCreationMethod> to use when creating the adapters for the
      * different music providers supported by ExternalMediaPlayer.
      * @param speakMediaPlayer The media player to use to play Alexa speech from.
@@ -472,17 +486,20 @@ private:
      * @param alertsMediaPlayer The media player to use to play alerts from.
      * @param notificationsMediaPlayer The media player to to play notification indicators.
      * @param bluetoothMediaPlayer The media player to to play bluetooth content.
+     * @param ringtoneMediaPlayer The media player to to play Comms ringtones.
      * @param speakSpeaker The speaker to control volume of Alexa speech.
      * @param audioSpeaker The speaker to control volume of Alexa audio content.
      * @param alertsSpeaker The speaker to control volume of alerts.
      * @param notificationsSpeaker The speaker to control volume of notifications.
      * @param bluetoothSpeaker The speaker to control bluetooth volume.
+     * @param ringtoneSpeaker The speaker to control volume of Comms ringtones.
      * @param additionalSpeakers A list of additional speakers to receive volume changes.
      * @param audioFactory The audioFactory is a component the provides unique audio streams.
      * @param authDelegate The component that provides the client with valid LWA authorization.
      * @param alertStorage The storage interface that will be used to store alerts.
      * @param messageStorage The storage interface that will be used to store certified sender messages.
      * @param notificationsStorage The storage interface that will be used to store notification indicators.
+     * @param settingsStorage The storage interface that will be used to store settings.
      * @param alexaDialogStateObservers Observers that can be used to be notified of Alexa dialog related UX state
      * changes.
      * @param connectionObservers Observers that can be used to be notified of connection status changes.
@@ -495,9 +512,12 @@ private:
      * @return Whether the SDK was initialized properly.
      */
     bool initialize(
+        std::shared_ptr<avsCommon::utils::DeviceInfo> deviceInfo,
         std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
         const std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>&
             externalMusicProviderMediaPlayers,
+        const std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>&
+            externalMusicProviderSpeakers,
         const capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
@@ -603,6 +623,9 @@ private:
 
     /// The TemplateRuntime capability agent.
     std::shared_ptr<capabilityAgents::templateRuntime::TemplateRuntime> m_templateRuntime;
+
+    /// The MRM capability agent.
+    std::shared_ptr<capabilityAgents::mrm::MRMCapabilityAgent> m_mrmCapabilityAgent;
 
     /// Mutex to serialize access to m_softwareInfoSender.
     std::mutex m_softwareInfoSenderMutex;

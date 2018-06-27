@@ -88,12 +88,8 @@ static const std::string MEDIA_PLAYER_CONFIG = R"({
 })";
 #endif
 
-#ifdef RESOLVED_ACSDK_627
-
 /// Tolerance when setting expectations.
-static const std::chrono::milliseconds TOLERANCE(200);
-
-#endif
+static const std::chrono::milliseconds TOLERANCE(500);
 
 /// Padding to add to offsets when necessary.
 static const std::chrono::milliseconds PADDING(10);
@@ -1006,8 +1002,6 @@ TEST_F(MediaPlayerTest, testStartPlayWithUrlPlaylistWaitForEnd) {
     ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
 }
 
-// TODO: ACSDK-627 This test fails frequently on Ubuntu Linux platforms.
-#ifdef RESOLVED_ACSDK_627
 /**
  * Test setting the offset to a seekable source. Setting the offset should succeed and playback should start from the
  * offset.
@@ -1016,23 +1010,21 @@ TEST_F(MediaPlayerTest, testSetOffsetSeekableSource) {
     std::chrono::milliseconds offset(OFFSET);
 
     std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);
-    auto sourceId = m_mediaPlayer->setSource(url_single);
+    auto sourceId = m_mediaPlayer->setSource(url_single, offset);
     ASSERT_NE(ERROR_SOURCE_ID, sourceId);
-    ASSERT_TRUE(m_mediaPlayer->setOffset(sourceId, offset));
     ASSERT_TRUE(m_mediaPlayer->play(sourceId));
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted(sourceId));
     auto start = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(sourceId));
-    ACSDK_INFO(LX("MediaPlayerTest").d("timeElapsed", timeElapsed.count()));
-    // Time elapsed should be total file length minus the offset.
-    ASSERT_TRUE(timeElapsed < (MP3_FILE_LENGTH - offset + TOLERANCE));
     ASSERT_EQ(m_playerObserver->getOnPlaybackStartedCallCount(), 1);
     ASSERT_EQ(m_playerObserver->getOnPlaybackFinishedCallCount(), 1);
 
     std::chrono::milliseconds timeElapsed =
         std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
+    ACSDK_INFO(LX("MediaPlayerTest").d("timeElapsed", timeElapsed.count()));
+    // Time elapsed should be total file length minus the offset.
+    ASSERT_TRUE(timeElapsed < (MP3_FILE_LENGTH - offset + TOLERANCE));
 }
-#endif
 
 // TODO: ACSDK-1024 MediaPlayerTest.testSetOffsetOutsideBounds is flaky
 /**

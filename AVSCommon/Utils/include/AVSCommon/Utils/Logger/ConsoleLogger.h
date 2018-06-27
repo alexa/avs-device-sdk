@@ -27,8 +27,13 @@ namespace logger {
 
 /**
  * A very simple (e.g. not asynchronous) @c Logger that logs to console.
+ *
+ * Inheriting @c std::ios_base::Init ensures that the standard iostreams objects are properly initialized before @c
+ * ConsoleLogger uses them.
  */
-class ConsoleLogger : public Logger {
+class ConsoleLogger
+        : public Logger
+        , private std::ios_base::Init {
 public:
     /**
      * Return the one and only @c ConsoleLogger instance.

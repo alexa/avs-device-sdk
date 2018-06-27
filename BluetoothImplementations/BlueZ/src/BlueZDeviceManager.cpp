@@ -153,21 +153,6 @@ bool BlueZDeviceManager::init() {
         return false;
     }
 
-    ACSDK_DEBUG5(LX("Initializing bluetooth media..."));
-
-    if (!initializeMedia()) {
-        ACSDK_ERROR(LX("initFailed").d("Failed to initialize bluetooth media", ""));
-        return false;
-    }
-
-    ACSDK_DEBUG5(LX("Creating pairing agent..."));
-
-    m_pairingAgent = PairingAgent::create(m_connection);
-    if (!m_pairingAgent) {
-        ACSDK_ERROR(LX("initFailed").d("reason", "Failed to create pairing agent"));
-        return false;
-    }
-
     ACSDK_DEBUG5(LX("BlueZDeviceManager initialized..."));
 
     return true;
@@ -294,6 +279,16 @@ void BlueZDeviceManager::onDevicePropertyChanged(const std::string& path, const 
     ACSDK_DEBUG7(LX(__func__).d("finished", "ok"));
 }
 
+void BlueZDeviceManager::onAdapterPropertyChanged(const std::string& path, const GVariantMapReader& changesMap) {
+    ACSDK_DEBUG7(LX(__func__).d("path", path));
+    if (!m_hostController) {
+        ACSDK_ERROR(LX("onAdapterPropertyChangedFailed").d("reason", "nullHostController"));
+        return;
+    }
+
+    m_hostController->onPropertyChanged(changesMap);
+}
+
 std::string BlueZDeviceManager::getAdapterPath() const {
     return m_adapterPath;
 }
@@ -399,6 +394,8 @@ void BlueZDeviceManager::onPropertiesChanged(
         onMediaStreamPropertyChanged(objectPath, changesMap);
     } else if (BlueZConstants::BLUEZ_DEVICE_INTERFACE == propertyOwner) {
         onDevicePropertyChanged(objectPath, changesMap);
+    } else if (BlueZConstants::BLUEZ_ADAPTER_INTERFACE == propertyOwner) {
+        onAdapterPropertyChanged(objectPath, changesMap);
     }
 }
 
@@ -542,16 +539,14 @@ std::shared_ptr<BlueZBluetoothDevice> BlueZDeviceManager::addDeviceFromDBusObjec
 
     GVariantMapReader deviceMapReader(dbusObject);
     char* macAddress = nullptr;
-    char* alias = nullptr;
 
     if (!deviceMapReader.getCString(BlueZConstants::BLUEZ_DEVICE_INTERFACE_ADDRESS, &macAddress)) {
         // No mac address - ignore the device
         return nullptr;
     }
-    deviceMapReader.getCString(BlueZConstants::BLUEZ_DEVICE_INTERFACE_ALIAS, &alias);
 
     std::shared_ptr<BlueZBluetoothDevice> knownDevice =
-        BlueZBluetoothDevice::create(macAddress, alias ? alias : "", objectPath, shared_from_this());
+        BlueZBluetoothDevice::create(macAddress, objectPath, shared_from_this());
     if (knownDevice) {
         addDevice(objectPath, knownDevice);
     }
@@ -574,7 +569,7 @@ std::list<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceIn
     return newList;
 }
 
-std::shared_ptr<BluetoothHostControllerInterface> BlueZDeviceManager::initializeHostController() {
+std::shared_ptr<BlueZHostController> BlueZDeviceManager::initializeHostController() {
     return BlueZHostController::create(m_adapterPath);
 }
 
@@ -654,6 +649,23 @@ void BlueZDeviceManager::mainLoopThread() {
 
         if (0 == subscriptionId) {
             ACSDK_ERROR(LX("initFailed").d("reason", "failed to subscribe to PropertiesChanged signal"));
+            m_mainLoopInitPromise.set_value(false);
+            break;
+        }
+
+        ACSDK_DEBUG5(LX("init").m("Initializing Bluetooth Media"));
+
+        if (!initializeMedia()) {
+            ACSDK_ERROR(LX("initFailed").d("reason", "initBluetoothMediaFailed"));
+            m_mainLoopInitPromise.set_value(false);
+            break;
+        }
+
+        ACSDK_DEBUG5(LX("init").m("Initializing Pairing Agent"));
+
+        m_pairingAgent = PairingAgent::create(m_connection);
+        if (!m_pairingAgent) {
+            ACSDK_ERROR(LX("initFailed").d("reason", "initPairingAgentFailed"));
             m_mainLoopInitPromise.set_value(false);
             break;
         }

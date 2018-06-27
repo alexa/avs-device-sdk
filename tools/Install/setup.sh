@@ -41,7 +41,9 @@ DB_PATH="$INSTALL_BASE/$DB_FOLDER"
 CONFIG_DB_PATH="$DB_PATH"
 UNIT_TEST_MODEL_PATH="$INSTALL_BASE/avs-device-sdk/KWD/inputs/SensoryModels/"
 UNIT_TEST_MODEL="$THIRD_PARTY_PATH/alexa-rpi/models/spot-alexa-rpi-31000.snsr"
-CONFIG_FILE="$BUILD_PATH/Integration/AlexaClientSDKConfig.json"
+INPUT_CONFIG_FILE="$SOURCE_PATH/avs-device-sdk/Integration/AlexaClientSDKConfig.json"
+OUTPUT_CONFIG_FILE="$BUILD_PATH/Integration/AlexaClientSDKConfig.json"
+TEMP_CONFIG_FILE="$BUILD_PATH/Integration/tmp_AlexaClientSDKConfig.json"
 TEST_SCRIPT="$INSTALL_BASE/test.sh"
 LIB_SUFFIX="a"
 
@@ -216,49 +218,71 @@ echo
 echo "==============> SAVING CONFIGURATION FILE =============="
 echo
 
-cat << EOF > "$CONFIG_FILE"
-{
-    "alertsCapabilityAgent":{
-        "databaseFilePath":"$CONFIG_DB_PATH/alerts.db"
-    },
-    "certifiedSender":{
-        "databaseFilePath":"$CONFIG_DB_PATH/certifiedSender.db"
-    },
-    "settings":{
-        "databaseFilePath":"$CONFIG_DB_PATH/settings.db",
-        "defaultAVSClientSettings":{
-            "locale":"$LOCALE"
-        }
-    },
-    "notifications":{
-        "databaseFilePath":"$CONFIG_DB_PATH/notifications.db"
-    },
-    "bluetooth" : {
-        "databaseFilePath":"$CONFIG_DB_PATH/bluetooth.db"
-    },
-    "cblAuthDelegate":{
-        "databaseFilePath":"$CONFIG_DB_PATH/cblAuthDelegate.db"
-    },
-    "deviceInfo":{
-        "clientId":"$CLIENT_ID",
-        "deviceSerialNumber":"$DEVICE_SERIAL_NUMBER",
-        "productId":"$PRODUCT_ID"
-    },
-    "capabilitiesDelegate":{
-    },
-    "miscDatabase":{
-        "databaseFilePath":"$CONFIG_DB_PATH/miscDatabase.db"
-    },
+# Set variables for configuration file
+
+# Variables for cblAuthDelegate
+SDK_CBL_AUTH_DELEGATE_DATABASE_FILE_PATH=$CONFIG_DB_PATH/cblAuthDelegate.db
+
+# Variables for deviceInfo
+SDK_CONFIG_DEVICE_SERIAL_NUMBER=$DEVICE_SERIAL_NUMBER
+SDK_CONFIG_CLIENT_ID=$CLIENT_ID
+SDK_CONFIG_PRODUCT_ID=$PRODUCT_ID
+
+# Variables for miscDatabase
+SDK_MISC_DATABASE_FILE_PATH=$CONFIG_DB_PATH/miscDatabase.db
+
+# Variables for alertsCapabilityAgent
+SDK_SQLITE_DATABASE_FILE_PATH=$CONFIG_DB_PATH/alerts.db
+
+# Variables for settings
+SDK_SQLITE_SETTINGS_DATABASE_FILE_PATH=$CONFIG_DB_PATH/settings.db
+SETTING_LOCALE_VALUE=$LOCALE
+
+# Variables for bluetooth
+SDK_BLUETOOTH_DATABASE_FILE_PATH=$CONFIG_DB_PATH/bluetooth.db
+
+# Variables for certifiedSender
+SDK_CERTIFIED_SENDER_DATABASE_FILE_PATH=$CONFIG_DB_PATH/certifiedSender.db
+
+# Variables for notifications
+SDK_NOTIFICATIONS_DATABASE_FILE_PATH=$CONFIG_DB_PATH/notifications.db
+
+# Create configuration file with audioSink configuration at the beginning of the file
+cat << EOF > "$OUTPUT_CONFIG_FILE"
+ {
     "gstreamerMediaPlayer":{
         "audioSink":"$GSTREAMER_AUDIO_SINK"
-    }
-}
+    },
 EOF
+
+# Check if temporary file exists
+if [ -f $TEMP_CONFIG_FILE ]; then
+  rm $TEMP_CONFIG_FILE
+fi
+
+# Create temporary configuration file with variables filled out
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    while [[ "$line" =~ (\$\{[a-zA-Z_][a-zA-Z_0-9]*\}) ]]; do
+        LHS=${BASH_REMATCH[1]}
+        RHS="$(eval echo "\"$LHS\"")"
+        line=${line//$LHS/$RHS}
+    done
+    echo "$line" >> $TEMP_CONFIG_FILE
+done < $INPUT_CONFIG_FILE
+
+# Delete first line from temp file to remove opening bracket
+sed -i -e "1d" $TEMP_CONFIG_FILE
+
+# Append temp file to configuration file
+cat $TEMP_CONFIG_FILE >> $OUTPUT_CONFIG_FILE
+
+# Delete temp file
+rm $TEMP_CONFIG_FILE
 
 echo
 echo "==============> FINAL CONFIGURATION  =============="
 echo
-cat $CONFIG_FILE
+cat $OUTPUT_CONFIG_FILE
 
 generate_start_script
 

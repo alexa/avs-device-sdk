@@ -34,10 +34,10 @@ public:
     /**
      * Creates a BlueZAVRCPTarget instance.
      *
-     * @param device A pointer to the @c BlueZBluetoothDevice device.
+     * @param device A pointer to an instance of a @c DBusProxy for an org.bluez.MediaControl1 interface.
      * @return An instance of AVRCPTarget if successful, else a nullptr.
      */
-    static std::shared_ptr<BlueZAVRCPTarget> create(std::shared_ptr<BlueZBluetoothDevice> device);
+    static std::shared_ptr<BlueZAVRCPTarget> create(std::shared_ptr<DBusProxy> mediaControlProxy);
 
     /// @name BluetoothServiceInterface methods
     /// @{

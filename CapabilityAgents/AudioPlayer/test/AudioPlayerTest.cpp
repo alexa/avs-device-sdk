@@ -1642,14 +1642,3 @@ TEST_F(AudioPlayerTest, testProgressReportIntervalElapsedIntervalLessThanOffset)
 }  // namespace audioPlayer
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
-
-int main(int argc, char** argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-
-// ACSDK-1216 - AudioPlayer tests sometimes fail in Windows
-#if !defined(_WIN32) || defined(RESOLVED_ACSDK_1216)
-    return RUN_ALL_TESTS();
-#else
-    return 0;
-#endif
-}

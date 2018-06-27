@@ -164,8 +164,10 @@ MediaPlayer::~MediaPlayer() {
     gst_object_unref(m_pipeline.pipeline);
     resetPipeline();
 
-    g_source_remove(m_busWatchId);
+    removeSource(m_busWatchId);
     g_main_loop_unref(m_mainLoop);
+
+    g_main_context_unref(m_workerContext);
 }
 
 MediaPlayer::SourceId MediaPlayer::setSource(
@@ -549,23 +551,42 @@ MediaPlayer::MediaPlayer(
         m_pauseImmediately{false} {
 }
 
+void MediaPlayer::workerLoop() {
+    g_main_context_push_thread_default(m_workerContext);
+
+    // Add bus watch only after calling g_main_context_push_thread_default.
+    GstBus* bus = gst_pipeline_get_bus(GST_PIPELINE(m_pipeline.pipeline));
+    m_busWatchId = gst_bus_add_watch(bus, &MediaPlayer::onBusMessage, this);
+    gst_object_unref(bus);
+
+    g_main_loop_run(m_mainLoop);
+
+    g_main_context_pop_thread_default(m_workerContext);
+}
+
 bool MediaPlayer::init() {
+    m_workerContext = g_main_context_new();
+    if (!m_workerContext) {
+        ACSDK_ERROR(LX("initPlayerFailed").d("reason", "nullWorkerContext"));
+        return false;
+    }
+
+    if (!(m_mainLoop = g_main_loop_new(m_workerContext, false))) {
+        ACSDK_ERROR(LX("initPlayerFailed").d("reason", "gstMainLoopNewFailed"));
+        return false;
+    };
+
     if (false == gst_init_check(NULL, NULL, NULL)) {
         ACSDK_ERROR(LX("initPlayerFailed").d("reason", "gstInitCheckFailed"));
         return false;
     }
 
-    if (!(m_mainLoop = g_main_loop_new(nullptr, false))) {
-        ACSDK_ERROR(LX("initPlayerFailed").d("reason", "gstMainLoopNewFailed"));
-        return false;
-    };
-
-    m_mainLoopThread = std::thread(g_main_loop_run, m_mainLoop);
-
     if (!setupPipeline()) {
         ACSDK_ERROR(LX("initPlayerFailed").d("reason", "setupPipelineFailed"));
         return false;
     }
+
+    m_mainLoopThread = std::thread(&MediaPlayer::workerLoop, this);
 
     return true;
 }
@@ -658,10 +679,6 @@ bool MediaPlayer::setupPipeline() {
         ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createPipelineElementFailed"));
         return false;
     }
-
-    GstBus* bus = gst_pipeline_get_bus(GST_PIPELINE(m_pipeline.pipeline));
-    m_busWatchId = gst_bus_add_watch(bus, &MediaPlayer::onBusMessage, this);
-    gst_object_unref(bus);
 
     // Link only the queue, converter, volume, and sink here. Src will be linked in respective source files.
     gst_bin_add_many(
@@ -773,7 +790,27 @@ guint MediaPlayer::queueCallback(const std::function<gboolean()>* callback) {
     if (isShutdown()) {
         return UNQUEUED_CALLBACK;
     }
-    return g_idle_add(reinterpret_cast<GSourceFunc>(&onCallback), const_cast<std::function<gboolean()>*>(callback));
+    auto source = g_idle_source_new();
+    g_source_set_callback(
+        source, reinterpret_cast<GSourceFunc>(&onCallback), const_cast<std::function<gboolean()>*>(callback), nullptr);
+    auto sourceId = g_source_attach(source, m_workerContext);
+    g_source_unref(source);
+    return sourceId;
+}
+
+guint MediaPlayer::attachSource(GSource* source) {
+    if (source) {
+        return g_source_attach(source, m_workerContext);
+    }
+    return UNQUEUED_CALLBACK;
+}
+
+gboolean MediaPlayer::removeSource(guint tag) {
+    auto source = g_main_context_find_source_by_id(m_workerContext, tag);
+    if (source) {
+        g_source_destroy(source);
+    }
+    return true;
 }
 
 void MediaPlayer::onError() {
@@ -783,7 +820,10 @@ void MediaPlayer::onError() {
      * to be non-blocking.  To do this, we are creating a static callback function with the this pointer passed in as
      * a parameter.
      */
-    g_idle_add(reinterpret_cast<GSourceFunc>(&onErrorCallback), this);
+    auto source = g_idle_source_new();
+    g_source_set_callback(source, reinterpret_cast<GSourceFunc>(&onErrorCallback), this, nullptr);
+    g_source_attach(source, m_workerContext);
+    g_source_unref(source);
 }
 
 void MediaPlayer::doShutdown() {

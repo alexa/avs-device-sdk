@@ -430,7 +430,8 @@ std::shared_ptr<Bluetooth> Bluetooth::create(
     std::shared_ptr<BluetoothStorageInterface> bluetoothStorage,
     std::unique_ptr<BluetoothDeviceManagerInterface> deviceManager,
     std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
-    std::shared_ptr<MediaPlayerInterface> mediaPlayer) {
+    std::shared_ptr<MediaPlayerInterface> mediaPlayer,
+    std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager) {
     ACSDK_DEBUG5(LX(__func__));
 
     if (!contextManager) {
@@ -449,6 +450,8 @@ std::shared_ptr<Bluetooth> Bluetooth::create(
         ACSDK_ERROR(LX(__func__).d("reason", "nullEventBus"));
     } else if (!mediaPlayer) {
         ACSDK_ERROR(LX(__func__).d("reason", "nullMediaPlayer"));
+    } else if (!customerDataManager) {
+        ACSDK_ERROR(LX(__func__).d("reason", "nullCustomerDataManager"));
     } else {
         auto bluetooth = std::shared_ptr<Bluetooth>(new Bluetooth(
             contextManager,
@@ -458,7 +461,8 @@ std::shared_ptr<Bluetooth> Bluetooth::create(
             bluetoothStorage,
             deviceManager,
             eventBus,
-            mediaPlayer));
+            mediaPlayer,
+            customerDataManager));
 
         if (bluetooth->init()) {
             return bluetooth;
@@ -502,9 +506,11 @@ Bluetooth::Bluetooth(
     std::shared_ptr<BluetoothStorageInterface> bluetoothStorage,
     std::unique_ptr<BluetoothDeviceManagerInterface>& deviceManager,
     std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
-    std::shared_ptr<MediaPlayerInterface> mediaPlayer) :
+    std::shared_ptr<MediaPlayerInterface> mediaPlayer,
+    std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         RequiresShutdown{"Bluetooth"},
+        CustomerDataHandler{customerDataManager},
         m_messageSender{messageSender},
         m_contextManager{contextManager},
         m_focusManager{focusManager},
@@ -584,6 +590,34 @@ void Bluetooth::doShutdown() {
 
 std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> Bluetooth::getCapabilityConfigurations() {
     return m_capabilityConfigurations;
+}
+
+void Bluetooth::clearData() {
+    m_executor.submit([this] {
+        ACSDK_DEBUG5(LX("clearData"));
+
+        // Stop scanning and discoverability.
+        auto hostController = m_deviceManager->getHostController();
+        if (hostController->isScanning()) {
+            hostController->stopScan().get();
+            ACSDK_DEBUG5(LX("clearData").d("action", "stoppedScanning"));
+        }
+
+        if (hostController->isDiscoverable()) {
+            hostController->exitDiscoverableMode().get();
+            ACSDK_DEBUG5(LX("clearData").d("action", "disabledDiscoverable"));
+        }
+
+        // Unpair all devices.
+        for (auto& device : m_deviceManager->getDiscoveredDevices()) {
+            if (device->isPaired()) {
+                device->unpair().get();
+                ACSDK_DEBUG5(LX("clearData").d("action", "unpairDevice").d("device", device->getFriendlyName()));
+            }
+        }
+
+        m_db->clear();
+    });
 }
 
 void Bluetooth::executeInitializeMediaSource() {

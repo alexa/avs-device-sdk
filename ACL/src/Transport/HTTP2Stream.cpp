@@ -70,6 +70,8 @@ static const std::string STREAM_LOG_NAME_SUFFIX(".log");
 static const std::string STREAM_IN_DUMP_SUFFIX("-in.bin");
 /// Suffix for per-stream dump of outgoing data.
 static const std::string STREAM_OUT_DUMP_SUFFIX("-out.bin");
+/// Maximum size for exception messages.
+static const size_t EXCEPTION_MESSAGE_MAX_SIZE = 4096;
 
 #ifdef DEBUG
 /// Carriage return
@@ -333,7 +335,20 @@ size_t HTTP2Stream::writeCallback(char* data, size_t size, size_t nmemb, void* u
             return CURL_READFUNC_ABORT;
         }
     } else {
-        stream->m_exceptionBeingProcessed.append(data, numChars);
+        auto totalLengthExceptionBeingProcessed = stream->m_exceptionBeingProcessed.size() + numChars;
+        if (totalLengthExceptionBeingProcessed <= EXCEPTION_MESSAGE_MAX_SIZE) {
+            stream->m_exceptionBeingProcessed.append(data, numChars);
+        } else {
+            // Only append up to the maximum allowed.
+            auto numCharsToAppend = EXCEPTION_MESSAGE_MAX_SIZE - stream->m_exceptionBeingProcessed.size();
+            stream->m_exceptionBeingProcessed.append(data, numCharsToAppend);
+            ACSDK_ERROR(LX("writeCallbackFailed")
+                            .d("reason", "exceptionMessageSize")
+                            .d("totalSize", totalLengthExceptionBeingProcessed)
+                            .d("maxSize", EXCEPTION_MESSAGE_MAX_SIZE)
+                            .d("numCharsToAppend", numCharsToAppend));
+            return numCharsToAppend;
+        }
     }
     return numChars;
 }

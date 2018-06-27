@@ -113,7 +113,8 @@ public:
     virtual bool insertByMac(const std::string& mac, const std::string& uuid, bool overwrite) = 0;
 
     /**
-     * Remove the entry by the MAC address.
+     * Remove the entry by the MAC address. The operation is considered successful if the entry
+     * no longer exists after this call, including the case where the entry did not exist prior.
      *
      * @param mac The MAC address.
      * @return A bool indicating success.

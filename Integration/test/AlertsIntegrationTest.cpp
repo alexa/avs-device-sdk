@@ -263,7 +263,7 @@ protected:
             m_context->getMessageRouter(), false, m_context->getConnectionStatusObserver(), m_messageInterpreter);
         ASSERT_TRUE(m_avsConnectionManager);
 
-        m_focusManager = std::make_shared<FocusManager>(FocusManager::DEFAULT_AUDIO_CHANNELS);
+        m_focusManager = std::make_shared<FocusManager>(FocusManager::getDefaultAudioChannels());
         m_testContentClient = std::make_shared<TestClient>();
         ASSERT_TRUE(m_focusManager->acquireChannel(
             FocusManager::CONTENT_CHANNEL_NAME, m_testContentClient, CONTENT_ACTIVITY_ID));

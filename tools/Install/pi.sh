@@ -72,6 +72,6 @@ generate_start_script() {
   cat << EOF > "$START_SCRIPT"
   cd "$BUILD_PATH/SampleApp/src"
 
-  ./SampleApp "$CONFIG_FILE" "$THIRD_PARTY_PATH/alexa-rpi/models" DEBUG9
+  ./SampleApp "$OUTPUT_CONFIG_FILE" "$THIRD_PARTY_PATH/alexa-rpi/models" DEBUG9
 EOF
 }

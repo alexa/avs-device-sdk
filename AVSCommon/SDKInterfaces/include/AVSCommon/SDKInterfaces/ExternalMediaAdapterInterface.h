@@ -441,20 +441,6 @@ public:
      */
     virtual void handleAdjustSeek(std::chrono::milliseconds deltaOffset) = 0;
 
-    /**
-     * Method to set volume to a given value.
-     *
-     * @param volume The volume level to be set.
-     */
-    virtual void handleSetVolume(int8_t volume) = 0;
-
-    /**
-     * Method to mute/unmute the speaker.
-     *
-     * @param mute @c true mute the speaker @c false unmute a speaker.
-     */
-    virtual void handleSetMute(bool mute) = 0;
-
     /// Method to fetch the state(session state and playback state) of an adapter.
     virtual AdapterState getState() = 0;
 };

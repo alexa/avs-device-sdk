@@ -63,7 +63,7 @@ generate_start_script() {
   cat << EOF > "$START_SCRIPT"
   set path=`cygpath.exe -m $MSYSTEM_PREFIX/bin`;%path%;
   cd `cygpath.exe -m $BUILD_PATH/bin`
-  SampleApp.exe `cygpath.exe -m $CONFIG_FILE` DEBUG9
+  SampleApp.exe `cygpath.exe -m $OUTPUT_CONFIG_FILE` DEBUG9
   pause
 EOF
 }

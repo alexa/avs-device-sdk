@@ -41,6 +41,9 @@ static const std::string TAG{"BlueZBluetoothDevice"};
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+/// The Name property that BlueZ uses.
+static const std::string BLUEZ_DEVICE_PROPERTY_ALIAS = "Alias";
+
 /// The UUID property that BlueZ uses.
 static const std::string BLUEZ_DEVICE_PROPERTY_UUIDS = "UUIDs";
 
@@ -68,9 +71,11 @@ static const std::string BLUEZ_DEVICE_PROPERTY_CONNECTED = "Connected";
 /// BlueZ org.bluez.Adapter1 method to remove device.
 static const std::string BLUEZ_ADAPTER_REMOVE_DEVICE = "RemoveDevice";
 
+/// The Media Control interface on the DBus object.
+static const std::string MEDIA_CONTROL_INTERFACE = "org.bluez.MediaControl1";
+
 std::shared_ptr<BlueZBluetoothDevice> BlueZBluetoothDevice::create(
     const std::string& mac,
-    const std::string& friendlyName,
     const std::string& objectPath,
     std::shared_ptr<BlueZDeviceManager> deviceManager) {
     ACSDK_DEBUG5(LX(__func__));
@@ -80,8 +85,7 @@ std::shared_ptr<BlueZBluetoothDevice> BlueZBluetoothDevice::create(
         return nullptr;
     }
 
-    auto device =
-        std::shared_ptr<BlueZBluetoothDevice>(new BlueZBluetoothDevice(mac, friendlyName, objectPath, deviceManager));
+    auto device = std::shared_ptr<BlueZBluetoothDevice>(new BlueZBluetoothDevice(mac, objectPath, deviceManager));
 
     if (!device->init()) {
         ACSDK_ERROR(LX(__func__).d("reason", "initFailed"));
@@ -93,11 +97,9 @@ std::shared_ptr<BlueZBluetoothDevice> BlueZBluetoothDevice::create(
 
 BlueZBluetoothDevice::BlueZBluetoothDevice(
     const std::string& mac,
-    const std::string& friendlyName,
     const std::string& objectPath,
     std::shared_ptr<BlueZDeviceManager> deviceManager) :
         m_mac{mac},
-        m_friendlyName{friendlyName},
         m_objectPath{objectPath},
         m_deviceState{BlueZDeviceState::FOUND},
         m_deviceManager{deviceManager} {
@@ -113,6 +115,18 @@ std::string BlueZBluetoothDevice::getFriendlyName() const {
     ACSDK_DEBUG5(LX(__func__));
 
     return m_friendlyName;
+}
+
+bool BlueZBluetoothDevice::updateFriendlyName() {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (!m_propertiesProxy->getStringProperty(
+            BlueZConstants::BLUEZ_DEVICE_INTERFACE, BLUEZ_DEVICE_PROPERTY_ALIAS, &m_friendlyName)) {
+        ACSDK_ERROR(LX(__func__).d("reason", "getNameFailed"));
+        return false;
+    }
+
+    return true;
 }
 
 BlueZBluetoothDevice::~BlueZBluetoothDevice() {
@@ -136,6 +150,8 @@ bool BlueZBluetoothDevice::init() {
         ACSDK_ERROR(LX(__func__).d("reason", "createPropertyProxyFailed"));
         return false;
     }
+
+    updateFriendlyName();
 
     bool isPaired = false;
     if (queryDeviceProperty(BLUEZ_DEVICE_PROPERTY_PAIRED, &isPaired) && isPaired) {
@@ -171,7 +187,13 @@ bool BlueZBluetoothDevice::initializeServices(const std::unordered_set<std::stri
             }
         } else if (AVRCPTargetRecord::UUID == uuid && m_servicesMap.count(AVRCPTargetRecord::UUID) == 0) {
             ACSDK_DEBUG5(LX(__func__).d("supports", AVRCPTargetRecord::NAME));
-            auto avrcpTarget = BlueZAVRCPTarget::create(shared_from_this());
+            auto mediaControlProxy = DBusProxy::create(MEDIA_CONTROL_INTERFACE, m_objectPath);
+            if (!mediaControlProxy) {
+                ACSDK_ERROR(LX(__func__).d("reason", "nullMediaControlProxy"));
+                return false;
+            }
+
+            auto avrcpTarget = BlueZAVRCPTarget::create(mediaControlProxy);
             if (!avrcpTarget) {
                 ACSDK_ERROR(LX(__func__).d("reason", "createAVRCPTargetFailed"));
                 return false;
@@ -506,6 +528,21 @@ void BlueZBluetoothDevice::onPropertyChanged(const GVariantMapReader& changesMap
     gboolean connected = false;
     bool connectedChanged = changesMap.getBoolean(BLUEZ_DEVICE_PROPERTY_CONNECTED.c_str(), &connected);
 
+    // Changes to the friendlyName on the device will be saved on a new connect.
+    char* alias = nullptr;
+    bool aliasChanged = changesMap.getCString(BLUEZ_DEVICE_PROPERTY_ALIAS.c_str(), &alias);
+    std::string aliasStr;
+
+    if (aliasChanged) {
+        // This should never happen. If it does, don't update.
+        if (!alias) {
+            ACSDK_ERROR(LX(__func__).d("reason", "nullAlias"));
+            aliasChanged = false;
+        } else {
+            aliasStr = alias;
+        }
+    }
+
     // This is used for checking connectedness.
     bool a2dpSourceAvailable = false;
 
@@ -523,66 +560,74 @@ void BlueZBluetoothDevice::onPropertyChanged(const GVariantMapReader& changesMap
         a2dpSourceAvailable = (uuids.count(A2DPSourceRecord::UUID) > 0);
     }
 
-    m_executor.submit([this, pairedChanged, paired, connectedChanged, connected, a2dpSourceAvailable] {
-        switch (m_deviceState) {
-            case BlueZDeviceState::FOUND: {
-                if (pairedChanged && paired) {
-                    transitionToState(BlueZDeviceState::PAIRED, true);
-                    transitionToState(BlueZDeviceState::IDLE, true);
+    m_executor.submit(
+        [this, pairedChanged, paired, connectedChanged, connected, a2dpSourceAvailable, aliasChanged, aliasStr] {
 
-                    /*
-                     * A connect signal doesn't always mean a device is connected by the BluetoothDeviceInterface
-                     * definition. This sequence has observed:
-                     *
-                     * 1) Pairing (BlueZ sends Connect = true).
-                     * 2) Pair Successful.
-                     * 3) Connect multimedia services.
-                     * 4) Connect multimedia services successful (BlueZ sends Paired = true, UUIDs = [array of uuids]).
-                     *
-                     * Thus we will use the combination of Connect, Paired, and the availability of certain UUIDs to
-                     * determine connectedness.
-                     */
-                    bool isConnected = false;
-                    if (queryDeviceProperty(BLUEZ_DEVICE_PROPERTY_CONNECTED, &isConnected) && isConnected &&
-                        a2dpSourceAvailable) {
+            if (aliasChanged) {
+                ACSDK_DEBUG5(LX("nameChanged").d("oldName", m_friendlyName).d("newName", aliasStr));
+                m_friendlyName = aliasStr;
+            }
+
+            switch (m_deviceState) {
+                case BlueZDeviceState::FOUND: {
+                    if (pairedChanged && paired) {
+                        transitionToState(BlueZDeviceState::PAIRED, true);
+                        transitionToState(BlueZDeviceState::IDLE, true);
+
+                        /*
+                         * A connect signal doesn't always mean a device is connected by the BluetoothDeviceInterface
+                         * definition. This sequence has observed:
+                         *
+                         * 1) Pairing (BlueZ sends Connect = true).
+                         * 2) Pair Successful.
+                         * 3) Connect multimedia services.
+                         * 4) Connect multimedia services successful (BlueZ sends Paired = true, UUIDs = [array of
+                         * uuids]).
+                         *
+                         * Thus we will use the combination of Connect, Paired, and the availability of certain UUIDs to
+                         * determine connectedness.
+                         */
+                        bool isConnected = false;
+                        if (queryDeviceProperty(BLUEZ_DEVICE_PROPERTY_CONNECTED, &isConnected) && isConnected &&
+                            a2dpSourceAvailable) {
+                            transitionToState(BlueZDeviceState::CONNECTED, true);
+                        }
+                    }
+                    break;
+                }
+                case BlueZDeviceState::IDLE: {
+                    if (connectedChanged && connected) {
                         transitionToState(BlueZDeviceState::CONNECTED, true);
+                    } else if (pairedChanged && !paired) {
+                        transitionToState(BlueZDeviceState::UNPAIRED, true);
+                        transitionToState(BlueZDeviceState::FOUND, true);
+                    }
+                    break;
+                }
+                case BlueZDeviceState::CONNECTED: {
+                    if (pairedChanged && !paired) {
+                        transitionToState(BlueZDeviceState::UNPAIRED, true);
+                        transitionToState(BlueZDeviceState::FOUND, true);
+                    } else if (connectedChanged && !connected) {
+                        transitionToState(BlueZDeviceState::DISCONNECTED, true);
+                        transitionToState(BlueZDeviceState::IDLE, true);
+                    }
+                    break;
+                }
+                case BlueZDeviceState::UNPAIRED:
+                case BlueZDeviceState::PAIRED:
+                case BlueZDeviceState::DISCONNECTED: {
+                    ACSDK_ERROR(LX("onPropertyChanged").d("reason", "invalidState").d("state", m_deviceState));
+                    break;
+                }
+                case BlueZDeviceState::CONNECTION_FAILED: {
+                    if (pairedChanged && !paired) {
+                        transitionToState(BlueZDeviceState::UNPAIRED, true);
+                        transitionToState(BlueZDeviceState::FOUND, true);
                     }
                 }
-                break;
             }
-            case BlueZDeviceState::IDLE: {
-                if (connectedChanged && connected) {
-                    transitionToState(BlueZDeviceState::CONNECTED, true);
-                } else if (pairedChanged && !paired) {
-                    transitionToState(BlueZDeviceState::UNPAIRED, true);
-                    transitionToState(BlueZDeviceState::FOUND, true);
-                }
-                break;
-            }
-            case BlueZDeviceState::CONNECTED: {
-                if (pairedChanged && !paired) {
-                    transitionToState(BlueZDeviceState::UNPAIRED, true);
-                    transitionToState(BlueZDeviceState::FOUND, true);
-                } else if (connectedChanged && !connected) {
-                    transitionToState(BlueZDeviceState::DISCONNECTED, true);
-                    transitionToState(BlueZDeviceState::IDLE, true);
-                }
-                break;
-            }
-            case BlueZDeviceState::UNPAIRED:
-            case BlueZDeviceState::PAIRED:
-            case BlueZDeviceState::DISCONNECTED: {
-                ACSDK_ERROR(LX("onPropertyChanged").d("reason", "invalidState").d("state", m_deviceState));
-                break;
-            }
-            case BlueZDeviceState::CONNECTION_FAILED: {
-                if (pairedChanged && !paired) {
-                    transitionToState(BlueZDeviceState::UNPAIRED, true);
-                    transitionToState(BlueZDeviceState::FOUND, true);
-                }
-            }
-        }
-    });
+        });
 }
 
 }  // namespace blueZ

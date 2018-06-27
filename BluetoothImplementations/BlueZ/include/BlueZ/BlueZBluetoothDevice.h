@@ -86,14 +86,12 @@ public:
      * Creates an instance of the BlueZBluetoothDevice.
      *
      * @param mac The MAC address.
-     * @param friendlyName The friendlyName.
      * @param objectPath The DBus object path.
      * @param deviceManager The associated deviceManager.
      * @return A pointer to a BlueZBluetoothDevice if successful, else a nullptr.
      */
     static std::shared_ptr<BlueZBluetoothDevice> create(
         const std::string& mac,
-        const std::string& friendlyName,
         const std::string& objectPath,
         std::shared_ptr<BlueZDeviceManager> deviceManager);
 
@@ -117,7 +115,6 @@ private:
     /// Constructor.
     BlueZBluetoothDevice(
         const std::string& mac,
-        const std::string& friendlyName,
         const std::string& objectPath,
         std::shared_ptr<BlueZDeviceManager> deviceManager);
 
@@ -127,6 +124,13 @@ private:
      * @return Whether the operation was successful.
      */
     bool init();
+
+    /**
+     * Query BlueZ and update @c m_friendlyName of the device.
+     *
+     * @return Whether the operation was successful. The return does not incidate whether the friendlyName changed.
+     */
+    bool updateFriendlyName();
 
     /**
      * Helper function to extract and parse the supported services for this device from the BlueZ device property.
@@ -227,11 +231,11 @@ private:
     /// The MAC address.
     const std::string m_mac;
 
-    /// The friendly name.
-    const std::string m_friendlyName;
-
     /// The DBus object path.
     const std::string m_objectPath;
+
+    /// The friendly name.
+    std::string m_friendlyName;
 
     /// A map of UUID to services.
     std::unordered_map<

@@ -48,7 +48,7 @@ static const std::string COLUMN_UUID = "uuid";
 /// The MAC address column.
 static const std::string COLUMN_MAC = "mac";
 
-std::unique_ptr<BluetoothStorageInterface> SQLiteBluetoothStorage::create(
+std::unique_ptr<SQLiteBluetoothStorage> SQLiteBluetoothStorage::create(
     const avsCommon::utils::configuration::ConfigurationNode& configurationRoot) {
     ACSDK_DEBUG5(LX(__func__));
     auto bluetoothConfigurationRoot = configurationRoot[BLUETOOTH_CONFIGURATION_ROOT_KEY];
@@ -106,7 +106,7 @@ void SQLiteBluetoothStorage::close() {
 bool SQLiteBluetoothStorage::clear() {
     ACSDK_DEBUG5(LX(__func__));
 
-    const std::string sqlString = "DELETE * FROM " + UUID_TABLE_NAME + ";";
+    const std::string sqlString = "DELETE FROM " + UUID_TABLE_NAME + ";";
 
     std::lock_guard<std::mutex> lock(m_databaseMutex);
     auto statement = m_db.createStatement(sqlString);

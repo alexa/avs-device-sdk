@@ -238,6 +238,7 @@ bool SampleApplication::createMediaPlayersForAdapters(
             entry.second.second(httpContentFetcherFactory, entry.second.first, entry.first + "MediaPlayer");
         if (mediaPlayer) {
             m_externalMusicProviderMediaPlayersMap[entry.first] = mediaPlayer;
+            m_externalMusicProviderSpeakersMap[entry.first] = mediaPlayer;
             additionalSpeakers.push_back(
                 std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface>(mediaPlayer));
             m_adapterMediaPlayers.push_back(mediaPlayer);
@@ -493,8 +494,10 @@ bool SampleApplication::initialize(
      */
     std::shared_ptr<alexaClientSDK::defaultClient::DefaultClient> client =
         alexaClientSDK::defaultClient::DefaultClient::create(
+            deviceInfo,
             customerDataManager,
             m_externalMusicProviderMediaPlayersMap,
+            m_externalMusicProviderSpeakersMap,
             m_adapterToCreateFuncMap,
             m_speakMediaPlayer,
             m_audioMediaPlayer,

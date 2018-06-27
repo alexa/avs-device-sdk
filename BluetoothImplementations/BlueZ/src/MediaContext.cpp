@@ -65,8 +65,8 @@ bool MediaContext::isSBCInitialized() {
     return m_isSBCInitialized;
 }
 
-void MediaContext::setSBCInitialized(bool valid) {
-    m_isSBCInitialized = valid;
+void MediaContext::setSBCInitialized(bool initialized) {
+    m_isSBCInitialized = initialized;
 }
 
 }  // namespace blueZ

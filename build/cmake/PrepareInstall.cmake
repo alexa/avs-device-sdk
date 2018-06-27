@@ -3,6 +3,12 @@
 # file for the SDK.
 #
 
+# Function to install the target library only.
+function(asdk_install_lib)
+    SET(PKG_CONFIG_LIBS "${PKG_CONFIG_LIBS} -l${PROJECT_NAME}" CACHE INTERNAL "" FORCE)
+    install(TARGETS ${PROJECT_NAME} DESTINATION "${ASDK_LIB_INSTALL_DIR}")
+endfunction()
+
 # Function to install the target
 function(asdk_install)
     SET(PKG_CONFIG_LIBS "${PKG_CONFIG_LIBS} -l${PROJECT_NAME}" CACHE INTERNAL "" FORCE)

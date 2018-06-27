@@ -160,7 +160,59 @@ private:
     void resetSourceId();
 
     /**
-     * Utility function to handle the rendering of the next audio asset, with respect to @c m_loopCount and @c
+     * Utility function that checks whether the default audio will be rendered or will be taken from the URL sources
+     *
+     * @return @c true if default audio will be rendered.  Returns @c false otherwise.
+     */
+    bool shouldPlayDefault();
+
+    /**
+     * Utility function that checks whether the audio source will be played repeatedly by the media player
+     *
+     * @return @c true if media player will loop the audio source .  Returns @c false otherwise.
+     */
+    bool shouldMediaPlayerRepeat();
+
+    /**
+     * Utility function that checks whether there is an audio source that will be played next
+     *
+     * @return @c true if there is an audio source to play next.  Returns @c false otherwise.
+     */
+    bool shouldRenderNext();
+
+    /**
+     * Utility function that checks whether to pause after a playback
+     *
+     * @return @c true if pause is needed after a plaback.  Returns @c false otherwise.
+     */
+    bool shouldPause();
+
+    /**
+     * Utility function that checks whether the last played source is the last one in the loop
+     *
+     * @return @c true if  last played source is the last one in the loop.  Returns @c false otherwise.
+     */
+    bool isLastSourceInLoop();
+
+    /**
+     * Utility function that checks whether the last played source is the last one to be played
+     *
+     * @return @c true if  last played source is the last one to be polayed.  Returns @c false otherwise.
+     */
+    bool isLastSource();
+
+    /**
+     * Implements the pause between playback loops
+     */
+    void pause();
+
+    /**
+     * Implements the playback of the audio source
+     */
+    void play();
+
+    /**
+     * Utility function to handle the rendering of the next audio asset, with respect to @c m_remainingLoopCount and @c
      * m_nextUrlIndexToRender.  If all urls within a loop have completed, and there are further loops to render, this
      * function will also perform a sleep for the @c m_loopPause duration.
      *
@@ -200,8 +252,11 @@ private:
     /// The number of streams that have been rendered during the processing of the current loop.
     int m_numberOfStreamsRenderedThisLoop;
 
-    /// The number of times @c m_urls should be rendered.
-    int m_loopCount;
+    /// The number of times remaining @c m_urls should be rendered.
+    int m_remainingLoopCount;
+
+    /// The number of times @c m_urls should be rendered as specified in the directive
+    int m_directiveLoopCount;
 
     /// The time to pause between the rendering of the @c m_urls sequence.
     std::chrono::milliseconds m_loopPause;

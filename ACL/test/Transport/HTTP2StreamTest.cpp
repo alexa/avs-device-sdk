@@ -47,6 +47,10 @@ static const std::string LIBCURL_TEST_AUTH_STRING = "test_auth_string";
 static const int TEST_EXCEPTION_STRING_LENGTH = 200;
 /// The number of iterations the multi-write test will perform.
 static const int TEST_EXCEPTION_PARTITIONS = 7;
+/// The maximum length of the exception message allowed.  Must be same as EXCEPTION_MESSAGE_MAX_SIZE.
+static const size_t TEST_EXCEPTION_STRING_MAX_SIZE = 4096;
+/// The length of the string we will test for the exception message that exceeded the maximum length.
+static const size_t TEST_EXCEPTION_STRING_EXCEED_MAX_LENGTH = TEST_EXCEPTION_STRING_MAX_SIZE + 1024;
 /// Number of bytes per word in the SDS circular buffer.
 static const size_t SDS_WORDSIZE = 1;
 /// Maximum number of readers to support in the SDS circular buffer.
@@ -173,6 +177,23 @@ TEST_F(HTTP2StreamTest, testExceptionReceivedMultiWrite) {
     EXPECT_CALL(*m_mockMessageRequest, exceptionReceived(_)).Times(1);
     EXPECT_CALL(*m_mockMessageRequest, sendCompleted(_)).Times(1);
 
+    // This simulates stream cleanup, which flushes out the parsed exception message.
+    m_testableStream->notifyRequestObserver();
+}
+
+/**
+ * We will invoke the stream writeCallbacks directly to simulate exception data that exceeded maximum length allowed
+ * returning from AVS, and verify that the stream passes up the correct data up to the maximum length back to the
+ * request object.
+ */
+TEST_F(HTTP2StreamTest, testExceptionExceededMaximum) {
+    HTTP2Stream::writeCallback(
+        m_dataBegin, TEST_EXCEPTION_STRING_EXCEED_MAX_LENGTH, NUMBER_OF_STRINGS, m_testableStream.get());
+
+    EXPECT_CALL(*m_mockMessageRequest, exceptionReceived(_)).WillOnce(Invoke([](const std::string& exceptionMessage) {
+        EXPECT_EQ(exceptionMessage.size(), TEST_EXCEPTION_STRING_MAX_SIZE);
+    }));
+    EXPECT_CALL(*m_mockMessageRequest, sendCompleted(_)).Times(1);
     // This simulates stream cleanup, which flushes out the parsed exception message.
     m_testableStream->notifyRequestObserver();
 }

@@ -90,7 +90,7 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
     std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-    std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> userActivityNotifier,
+    std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityMonitor,
     AudioProvider defaultAudioProvider) {
     if (!directiveSequencer) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullDirectiveSequencer"));
@@ -110,8 +110,8 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
     } else if (!exceptionEncounteredSender) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullExceptionEncounteredSender"));
         return nullptr;
-    } else if (!userActivityNotifier) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "nullUserActivityNotifier"));
+    } else if (!userInactivityMonitor) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullUserInctivityMonitor"));
         return nullptr;
     }
 
@@ -121,7 +121,7 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
         contextManager,
         focusManager,
         exceptionEncounteredSender,
-        userActivityNotifier,
+        userInactivityMonitor,
         defaultAudioProvider));
 
     if (aip) {
@@ -161,7 +161,7 @@ std::future<bool> AudioInputProcessor::recognize(
     avsCommon::avs::AudioInputStream::Index begin,
     avsCommon::avs::AudioInputStream::Index keywordEnd,
     std::string keyword,
-    const ESPData& espData,
+    const ESPData espData,
     std::shared_ptr<const std::vector<char>> KWDMetadata) {
     ACSDK_METRIC_IDS(TAG, "Recognize", "", "", Metrics::Location::AIP_RECEIVE);
 
@@ -269,7 +269,7 @@ AudioInputProcessor::AudioInputProcessor(
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-    std::shared_ptr<avsCommon::sdkInterfaces::UserActivityNotifierInterface> userActivityNotifier,
+    std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityMonitor,
     AudioProvider defaultAudioProvider) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         RequiresShutdown{"AudioInputProcessor"},
@@ -277,7 +277,7 @@ AudioInputProcessor::AudioInputProcessor(
         m_messageSender{messageSender},
         m_contextManager{contextManager},
         m_focusManager{focusManager},
-        m_userActivityNotifier{userActivityNotifier},
+        m_userInactivityMonitor{userInactivityMonitor},
         m_defaultAudioProvider{defaultAudioProvider},
         m_lastAudioProvider{AudioProvider::null()},
         m_KWDMetadataReader{nullptr},
@@ -305,7 +305,7 @@ void AudioInputProcessor::doShutdown() {
     m_messageSender.reset();
     m_contextManager.reset();
     m_focusManager.reset();
-    m_userActivityNotifier.reset();
+    m_userInactivityMonitor.reset();
     m_observers.clear();
 }
 
@@ -343,7 +343,7 @@ void AudioInputProcessor::handleExpectSpeechDirective(std::shared_ptr<DirectiveI
     m_executor.submit([this, timeout, info]() { executeExpectSpeech(std::chrono::milliseconds{timeout}, info); });
 }
 
-void AudioInputProcessor::executePrepareEspPayload(const ESPData& espData) {
+void AudioInputProcessor::executePrepareEspPayload(const ESPData espData) {
     m_espPayload.clear();
     if (!espData.verify()) {
         // Log an error as the values are invalid, but we should continue to send the recognize event.
@@ -846,7 +846,7 @@ void AudioInputProcessor::setState(ObserverInterface::State state) {
 
     // Reset the user inactivity if transitioning to or from `RECOGNIZING` state.
     if (ObserverInterface::State::RECOGNIZING == m_state || ObserverInterface::State::RECOGNIZING == state) {
-        m_userActivityNotifier->onUserActive();
+        m_userInactivityMonitor->onUserActive();
     }
 
     ACSDK_DEBUG(LX("setState").d("from", m_state).d("to", state));

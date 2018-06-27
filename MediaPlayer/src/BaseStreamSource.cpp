@@ -115,10 +115,10 @@ BaseStreamSource::~BaseStreamSource() {
     }
     {
         std::lock_guard<std::mutex> lock(m_callbackIdMutex);
-        if (m_needDataCallbackId && !g_source_remove(m_needDataCallbackId)) {
+        if (m_needDataCallbackId && !m_pipeline->removeSource(m_needDataCallbackId)) {
             ACSDK_ERROR(LX("gSourceRemove failed for m_needDataCallbackId"));
         }
-        if (m_enoughDataCallbackId && !g_source_remove(m_enoughDataCallbackId)) {
+        if (m_enoughDataCallbackId && !m_pipeline->removeSource(m_enoughDataCallbackId)) {
             ACSDK_ERROR(LX("gSourceRemove failed for m_enoughDataCallbackId"));
         }
     }
@@ -243,7 +243,7 @@ void BaseStreamSource::installOnReadDataHandler() {
         // Remove the existing source if it was timer based.  Otherwise it is already properly installed.
         if (m_sourceRetryCount != 0) {
             ACSDK_DEBUG9(LX("installOnReadDataHandler").d("action", "removeSourceId").d("sourceId", m_sourceId));
-            if (!g_source_remove(m_sourceId)) {
+            if (!m_pipeline->removeSource(m_sourceId)) {
                 ACSDK_ERROR(
                     LX("installOnReadDataHandlerError").d("reason", "gSourceRemoveFailed").d("sourceId", m_sourceId));
             }
@@ -252,20 +252,28 @@ void BaseStreamSource::installOnReadDataHandler() {
         }
     }
     m_sourceRetryCount = 0;
-    m_sourceId = g_idle_add(reinterpret_cast<GSourceFunc>(&onReadData), this);
+    auto source = g_idle_source_new();
+    g_source_set_callback(source, reinterpret_cast<GSourceFunc>(&onReadData), this, nullptr);
+    m_sourceId = m_pipeline->attachSource(source);
+    g_source_unref(source);
     ACSDK_DEBUG9(LX("installOnReadDataHandler").d("action", "newSourceId").d("sourceId", m_sourceId));
 }
 
 void BaseStreamSource::updateOnReadDataHandler() {
     if (m_sourceRetryCount < sizeof(RETRY_INTERVALS_MILLISECONDS) / sizeof(RETRY_INTERVALS_MILLISECONDS[0])) {
         ACSDK_DEBUG9(LX("updateOnReadDataHandler").d("action", "removeSourceId").d("sourceId", m_sourceId));
-        if (!g_source_remove(m_sourceId)) {
+        if (!m_pipeline->removeSource(m_sourceId)) {
             ACSDK_ERROR(
                 LX("updateOnReadDataHandlerError").d("reason", "gSourceRemoveFailed").d("sourceId", m_sourceId));
         }
         auto interval = RETRY_INTERVALS_MILLISECONDS[m_sourceRetryCount];
         m_sourceRetryCount++;
-        m_sourceId = g_timeout_add(interval, reinterpret_cast<GSourceFunc>(&onReadData), this);
+
+        auto source = g_timeout_source_new(interval);
+        g_source_set_callback(source, reinterpret_cast<GSourceFunc>(&onReadData), this, nullptr);
+        m_sourceId = m_pipeline->attachSource(source);
+        g_source_unref(source);
+
         ACSDK_DEBUG9(LX("updateOnReadDataHandlerNewSourceId")
                          .d("action", "newSourceId")
                          .d("sourceId", m_sourceId)
@@ -275,7 +283,7 @@ void BaseStreamSource::updateOnReadDataHandler() {
 
 void BaseStreamSource::uninstallOnReadDataHandler() {
     if (m_sourceId != 0) {
-        if (!g_source_remove(m_sourceId)) {
+        if (!m_pipeline->removeSource(m_sourceId)) {
             ACSDK_ERROR(
                 LX("uninstallOnReadDataHandlerError").d("reason", "gSourceRemoveFailed").d("sourceId", m_sourceId));
         }

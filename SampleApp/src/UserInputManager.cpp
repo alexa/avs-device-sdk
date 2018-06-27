@@ -48,8 +48,14 @@ static const char COMMS_CONTROL = 'd';
 
 enum class SettingsValues : char { LOCALE = '1' };
 
-static const std::unordered_map<char, std::string> LOCALE_VALUES(
-    {{'1', "en-US"}, {'2', "en-GB"}, {'3', "de-DE"}, {'4', "en-IN"}, {'5', "en-CA"}, {'6', "ja-JP"}, {'7', "en-AU"}});
+static const std::unordered_map<char, std::string> LOCALE_VALUES({{'1', "en-US"},
+                                                                  {'2', "en-GB"},
+                                                                  {'3', "de-DE"},
+                                                                  {'4', "en-IN"},
+                                                                  {'5', "en-CA"},
+                                                                  {'6', "ja-JP"},
+                                                                  {'7', "en-AU"},
+                                                                  {'8', "fr-FR"}});
 
 static const std::unordered_map<char, SpeakerInterface::Type> SPEAKER_TYPES({{'1', SpeakerInterface::Type::AVS_SYNCED},
                                                                              {'2', SpeakerInterface::Type::LOCAL}});

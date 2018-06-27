@@ -41,7 +41,7 @@ void KeywordObserver::onKeyWordDetected(
     } else if (
         endIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX &&
         beginIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX) {
-        auto espData = capabilityAgents::aip::ESPData::EMPTY_ESP_DATA;
+        auto espData = capabilityAgents::aip::ESPData::getEmptyESPData();
         if (m_espProvider) {
             espData = m_espProvider->getESPData();
         }

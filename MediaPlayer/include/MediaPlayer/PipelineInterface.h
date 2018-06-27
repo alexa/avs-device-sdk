@@ -77,6 +77,22 @@ public:
      */
     virtual guint queueCallback(const std::function<gboolean()>* callback) = 0;
 
+    /**
+     * Attach the source to the worker thread.
+     *
+     * @param source The source to be executed on the worker thread.
+     * @return The ID (greater than 0) of the source.  0 if there is an error.
+     */
+    virtual guint attachSource(GSource* source) = 0;
+
+    /**
+     * Remove the callback from the worker thread.
+     *
+     * @param The ID of the queued callback.
+     * @return Whether the removal is successful.
+     */
+    virtual gboolean removeSource(guint tag) = 0;
+
 protected:
     /**
      * Destructor.

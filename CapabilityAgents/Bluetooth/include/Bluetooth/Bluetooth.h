@@ -47,6 +47,8 @@
 #include <AVSCommon/Utils/Bluetooth/FormattedAudioStreamAdapter.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include "Bluetooth/BluetoothStorageInterface.h"
+#include <RegistrationManager/CustomerDataHandler.h>
+#include <RegistrationManager/CustomerDataManager.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -106,7 +108,8 @@ class Bluetooth
         , public avsCommon::utils::bluetooth::FormattedAudioStreamAdapterListener
         , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface
-        , public avsCommon::utils::RequiresShutdown {
+        , public avsCommon::utils::RequiresShutdown
+        , public registrationManager::CustomerDataHandler {
 public:
     /**
      * An enum representing the streaming states.
@@ -139,6 +142,7 @@ public:
      * @param deviceManager Responsible for management of Bluetooth devices.
      * @param eventBus A bus to abstract Bluetooth stack specific messages.
      * @param mediaPlayer The Media Player which will handle playback.
+     * @param customerDataManager Object that will track the CustomerDataHandler.
      */
     static std::shared_ptr<Bluetooth> create(
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
@@ -148,7 +152,8 @@ public:
         std::shared_ptr<BluetoothStorageInterface> bluetoothStorage,
         std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> deviceManager,
         std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
-        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer);
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
+        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager);
 
     /// @name CapabilityAgent Functions
     /// @{
@@ -187,6 +192,11 @@ public:
         std::string error) override;
     /// @}
 
+    /// @name CustomerDataHandler Functions
+    /// @{
+    virtual void clearData() override;
+    /// @}
+
 protected:
     /// @name BluetoothEventBusListenerInterface Functions
     /// @{
@@ -205,6 +215,7 @@ private:
      * @param deviceManager Responsible for management of Bluetooth devices.
      * @param eventBus A bus to abstract Bluetooth stack specific messages.
      * @param mediaPlayer The Media Player which will handle playback.
+     * @param customerDataManager Object that will track the CustomerDataHandler.
      */
     Bluetooth(
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
@@ -214,7 +225,8 @@ private:
         std::shared_ptr<BluetoothStorageInterface> bluetoothStorage,
         std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface>& deviceManager,
         std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
-        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer);
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
+        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager);
 
     /**
      * Initializes the agent.

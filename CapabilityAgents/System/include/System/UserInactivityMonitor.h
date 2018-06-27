@@ -26,7 +26,7 @@
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
-#include <AVSCommon/SDKInterfaces/UserActivityNotifierInterface.h>
+#include <AVSCommon/SDKInterfaces/UserInactivityMonitorInterface.h>
 #include <AVSCommon/SDKInterfaces/UserInactivityMonitorObserverInterface.h>
 
 namespace alexaClientSDK {
@@ -35,7 +35,7 @@ namespace system {
 
 /// This class implements a @c CapabilityAgent that handles the @c SetEndpoint directive.
 class UserInactivityMonitor
-        : public avsCommon::sdkInterfaces::UserActivityNotifierInterface
+        : public avsCommon::sdkInterfaces::UserInactivityMonitorInterface
         , public avsCommon::avs::CapabilityAgent
         , public avsCommon::utils::RequiresShutdown {
 public:
@@ -65,23 +65,11 @@ public:
     /// @{
     void onUserActive() override;
     std::chrono::seconds timeSinceUserActivity() override;
+    void addObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorObserverInterface> observer) override;
+    void removeObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorObserverInterface> observer) override;
     /// @}
-
-    /**
-     * Adds an observer to be notified when the System.UserInactivityReport Event has been sent.
-     *
-     * @param observer The observer to be notified when the System.UserInactivityReport Event has been sent.
-     */
-    void addObserver(std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorObserverInterface> observer);
-
-    /**
-     * Removes an observer from the collection of observers which will be notified when the System.UserInactivityReport
-     * Event has been sent.
-     *
-     * @param observer The observer that should no longer be notified when the System.UserInactivityReport Event has
-     * been sent.
-     */
-    void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorObserverInterface> observer);
 
 private:
     /**

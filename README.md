@@ -1,8 +1,3 @@
-### IMPORTANT NOTE
-Significant changes have been made to the authorization process and the `AlexaClientSDKConfig.json` configuration file in v1.7 of the AVS Device SDK. [Click here for update instructions](https://github.com/alexa/avs-device-sdk/wiki/Code-Based-Linking----Configuration-Update-Guide).
-
-See [release notes](https://github.com/alexa/avs-device-sdk#release-notes-and-known-issues) for a complete list of updates, enhancements, bug fixes, and known issues for this release.
-
 ### What is the Alexa Voice Service (AVS)?
 
 The Alexa Voice Service (AVS) enables developers to integrate Alexa directly into their products, bringing the convenience of voice control to any connected device. AVS provides developers with access to a suite of resources to quickly and easily build Alexa-enabled products, including APIs, hardware development kits, software development kits, and documentation.
@@ -107,28 +102,28 @@ In addition to adopting the [Security Best Practices for Alexa](https://develope
 
 **Note**: Feature enhancements, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
-v1.7.1 released 05/04/2018:
+v1.8.0 released 06/27/2018:
 
 **Enhancements**
-* Added the Bluetooth interface, which manages the Bluetooth connection between Alexa-enabled products and peer devices. This release supports `A2DP-SINK` and `AVRCP` profiles. **Note**: Bluetooth is optional and is currently limited to Raspberry Pi and Linux platforms.
-* Added new [Bluetooth dependencies](https://github.com/alexa/avs-device-sdk/wiki/Dependencies#bluetooth-dependencies) for Linux and Raspberry Pi.
-* Device Capability Framework (`DCF`) renamed to `Capabilities`.
-* Updated the non-CBL client ID error message to be more specific.
-* Updated the sample app to enter a limited interaction mode after an unrecoverable error.
+
+* Added local stop functionality. This allows a user to stop an active function, such as an alert or timer, by uttering "Alexa, stop" when an Alexa-enabled product is *offline*.
+* Alerts in the background now stream in 10 sec intervals, rather than continuously.
+* Added support for France to the sample app.
+* Updated the ACL MIME type for sending JSON to AVS from `"text/json"` to `"application/json"`.
+* `friendlyName` can now be updated for `BlueZ` implementations of `BlueZBluetoothDevice` and `BlueZHostController`.
 
 **Bug Fixes**
-* [Issue 597](https://github.com/alexa/avs-device-sdk/issues/597) - Fixed a bug where the sample app did not respond to locale change settings.   
-* Fixed issue where GStreamer 1.14 `MediaPlayerTest` failed on Windows.
-* Fixed an issue where a segmentation fault was triggered after unrecoverable error handling.
+* Fixed an issue where the Bluetooth agent didn't clear user data upon reset, including paired devices and the `uuidMapping` table.
+* Fixed `MediaPlayer` threading issues. Now each instance has it's own `glib` main loop thread, rather than utilizing the default main context worker thread.
+* Fixed segmentation fault issues that occurred when certain static initializers needed to be initialized in a certain order, but the order wasn't defined.
 
 **Known Issues**
 * The `ACL` may encounter issues if audio attachments are received but not consumed.
 * `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
 * The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.
 * Connecting a product to streaming media via Bluetooth will sometimes stop media playback within the source application. Resuming playback through the source application or toggling next/previous will correct playback.
-* When streaming silence via Bluetooth, the Alexa companion app will sometimes indicate that media content is streaming.
+* When a source device is streaming silence via Bluetooth, the Alexa companion app indicates that audio content is streaming.
 * The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation is not yet supported.
 * On some products, interrupted Bluetooth playback may not resume if other content is locally streamed.
-* When streaming content via Bluetooth, under certain conditions playback will fail to resume and the sample app hangs on exit. This is due to a conflict between the `GStreamer` pipeline and the Bluetooth agent.
 * On Raspberry Pi, when streaming audio via Bluetooth, sometimes the audio stream stutters.
 * On Raspberry Pi, `BlueALSA` must be terminated each time the device boots. See [Raspberry Pi Quick Start Guide](https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide-with-Script#bluetooth) for more information.

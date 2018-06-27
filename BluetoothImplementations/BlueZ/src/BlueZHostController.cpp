@@ -27,8 +27,21 @@ namespace blueZ {
 /// String to identify log entries originating from this file.
 static const std::string TAG{"BlueZHostController"};
 
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+/// String to identify name property.
+static const std::string ALIAS_PROPERTY = "Alias";
+
 /// String to identify discovering property.
 static const std::string DISCOVERABLE_PROPERTY = "Discoverable";
+
+/// The expected size of a MAC address in the format XX:XX:XX:XX:XX:XX.
+static const unsigned int MAC_SIZE = 17;
 
 /// String to identify scanning property.
 static const std::string SCANNING_PROPERTY = "Discovering";
@@ -38,16 +51,6 @@ static const std::string START_SCAN = "StartDiscovery";
 
 /// String to identify adapter method to stop scanning.
 static const std::string STOP_SCAN = "StopDiscovery";
-
-/// The expected size of a MAC address in the format XX:XX:XX:XX:XX:XX.
-static const unsigned int MAC_SIZE = 17;
-
-/**
- * Create a LogEntry using this file's TAG and the specified event string.
- *
- * @param The event string for this @c LogEntry.
- */
-#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 using namespace avsCommon::utils;
 
@@ -261,8 +264,24 @@ bool BlueZHostController::isScanning() const {
 
     bool result = false;
     std::lock_guard<std::mutex> lock(m_adapterMutex);
-    m_adapterProperties->getBooleanProperty(BlueZConstants::BLUEZ_ADAPTER_INTERFACE, "Discovering", &result);
+    m_adapterProperties->getBooleanProperty(BlueZConstants::BLUEZ_ADAPTER_INTERFACE, SCANNING_PROPERTY, &result);
     return result;
+}
+
+void BlueZHostController::onPropertyChanged(const GVariantMapReader& changesMap) {
+    char* alias = nullptr;
+    bool aliasChanged = changesMap.getCString(ALIAS_PROPERTY.c_str(), &alias);
+
+    std::lock_guard<std::mutex> lock(m_adapterMutex);
+    if (aliasChanged) {
+        // This should never happen.
+        if (!alias) {
+            ACSDK_ERROR(LX(__func__).d("reason", "nullAlias"));
+        } else {
+            ACSDK_DEBUG5(LX("nameChanged").d("oldName", m_friendlyName).d("newName", alias));
+            m_friendlyName = alias;
+        }
+    }
 }
 
 }  // namespace blueZ

@@ -581,12 +581,22 @@ void HTTP2Transport::cleanupFinishedStreams() {
 
 void HTTP2Transport::cleanupStalledStreams() {
     auto it = m_activeStreams.begin();
+    bool hasStalledStream = false;
     while (it != m_activeStreams.end()) {
         auto stream = (it++)->second;
         if (isEventStream(stream) && stream->hasProgressTimedOut()) {
             ACSDK_INFO(LX("streamProgressTimedOut").d("streamId", stream->getLogicalStreamId()));
             stream->notifyRequestObserver(MessageRequestObserverInterface::Status::TIMEDOUT);
             releaseEventStream(stream);
+            hasStalledStream = true;
+        }
+    }
+    if (hasStalledStream) {
+        // Send a ping if a stream has not progressed for the duration of the stream timeout to make sure we're still
+        // connected
+        if (!sendPing()) {
+            ACSDK_INFO(LX("networkLoopStopping").d("reason", "sendPingFailed"));
+            setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
         }
     }
 }

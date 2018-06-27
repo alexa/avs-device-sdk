@@ -28,6 +28,7 @@
 #include <AVSCommon/Utils/Bluetooth/BluetoothEvents.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
+#include "BlueZ/BlueZHostController.h"
 #include "BlueZ/BlueZUtils.h"
 #include "BlueZ/PairingAgent.h"
 
@@ -227,6 +228,14 @@ private:
     void onInterfaceRemoved(const char* objectPath);
 
     /**
+     * Handles the property values changes in the Adapter.
+     *
+     * @param path DBus path of the object whose properties are changed.
+     * @param changesMap Variant containing the changes description.
+     */
+    void onAdapterPropertyChanged(const std::string& path, const GVariantMapReader& changesMap);
+
+    /**
      * Handles the property values changes in BlueZ objects.
      *
      * @param path DBus path of the object whose properties are changed.
@@ -243,11 +252,11 @@ private:
     void onMediaStreamPropertyChanged(const std::string& path, const GVariantMapReader& changesMap);
 
     /**
-     * Initializes the @c BluetoothHostControllerInterface instance.
+     * Initializes the @c BluezHostController instance.
      *
-     * @return A new @c BluetoothHostControllerInterface instance.
+     * @return A new @c BluezHostController instance.
      */
-    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothHostControllerInterface> initializeHostController();
+    std::shared_ptr<BlueZHostController> initializeHostController();
 
     /**
      * Handles the object's properties changes.
@@ -315,7 +324,7 @@ private:
     mutable std::mutex m_devicesMutex;
 
     /// A host controller instance used by the device manager.
-    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothHostControllerInterface> m_hostController;
+    std::shared_ptr<BlueZHostController> m_hostController;
 
     /// Promise to hold the result of a glib's main loop thread initialization.
     std::promise<bool> m_mainLoopInitPromise;

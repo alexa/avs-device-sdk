@@ -33,7 +33,7 @@
 #include <AVSCommon/SDKInterfaces/MockFocusManager.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
-#include <AVSCommon/SDKInterfaces/MockUserActivityNotifier.h>
+#include <AVSCommon/SDKInterfaces/MockUserInactivityMonitor.h>
 #include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
@@ -276,7 +276,7 @@ public:
         avsCommon::avs::AudioInputStream::Index keywordEnd = AudioInputProcessor::INVALID_INDEX,
         std::string keyword = "",
         std::shared_ptr<std::string> avsInitiator = nullptr,
-        const ESPData& espData = ESPData::EMPTY_ESP_DATA,
+        const ESPData espData = ESPData::getEmptyESPData(),
         const std::shared_ptr<std::vector<char>> KWDMetadata = nullptr);
 
     /**
@@ -375,7 +375,7 @@ RecognizeEvent::RecognizeEvent(
     avsCommon::avs::AudioInputStream::Index keywordEnd,
     std::string keyword,
     std::shared_ptr<std::string> avsInitiator,
-    const ESPData& espData,
+    const ESPData espData,
     const std::shared_ptr<std::vector<char>> KWDMetadata) :
         m_audioProvider{audioProvider},
         m_initiator{initiator},
@@ -614,7 +614,7 @@ protected:
         std::string keyword = "",
         RecognizeStopPoint stopPoint = RecognizeStopPoint::NONE,
         std::shared_ptr<std::string> avsInitiator = nullptr,
-        const ESPData& espData = ESPData::EMPTY_ESP_DATA,
+        const ESPData espData = ESPData::getEmptyESPData(),
         const std::shared_ptr<std::vector<char>> KWDMetadata = nullptr);
 
     /**
@@ -744,8 +744,8 @@ protected:
     /// The mock @c ExceptionEncounteredSenderInterface.
     std::shared_ptr<avsCommon::sdkInterfaces::test::MockExceptionEncounteredSender> m_mockExceptionEncounteredSender;
 
-    /// The mock @c UserActivityNotifierInterface.
-    std::shared_ptr<avsCommon::sdkInterfaces::test::MockUserActivityNotifier> m_mockUserActivityNotifier;
+    /// The mock @c UserInactivityMonitorInterface.
+    std::shared_ptr<avsCommon::sdkInterfaces::test::MockUserInactivityMonitor> m_mockUserInactivityMonitor;
 
     /// A @c AudioInputStream::Writer to write audio data to m_audioProvider.
     std::unique_ptr<avsCommon::avs::AudioInputStream::Writer> m_writer;
@@ -780,7 +780,7 @@ void AudioInputProcessorTest::SetUp() {
 
     m_mockExceptionEncounteredSender =
         std::make_shared<avsCommon::sdkInterfaces::test::MockExceptionEncounteredSender>();
-    m_mockUserActivityNotifier = std::make_shared<avsCommon::sdkInterfaces::test::MockUserActivityNotifier>();
+    m_mockUserInactivityMonitor = std::make_shared<avsCommon::sdkInterfaces::test::MockUserInactivityMonitor>();
     size_t bufferSize = avsCommon::avs::AudioInputStream::calculateBufferSize(SDS_WORDS, SDS_WORDSIZE, SDS_MAXREADERS);
     auto buffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(bufferSize);
     auto stream = avsCommon::avs::AudioInputStream::create(buffer, SDS_WORDSIZE, SDS_MAXREADERS);
@@ -803,7 +803,7 @@ void AudioInputProcessorTest::SetUp() {
         m_mockFocusManager,
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
-        m_mockUserActivityNotifier,
+        m_mockUserInactivityMonitor,
         *m_audioProvider);
     ASSERT_NE(m_audioInputProcessor, nullptr);
     m_audioInputProcessor->addObserver(m_dialogUXStateAggregator);
@@ -846,7 +846,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     std::string keyword,
     RecognizeStopPoint stopPoint,
     std::shared_ptr<std::string> avsInitiator,
-    const ESPData& espData,
+    const ESPData espData,
     const std::shared_ptr<std::vector<char>> KWDMetadata) {
     std::mutex mutex;
     std::condition_variable conditionVariable;
@@ -902,7 +902,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     }
 
     if (!bargeIn) {
-        EXPECT_CALL(*m_mockUserActivityNotifier, onUserActive()).Times(2);
+        EXPECT_CALL(*m_mockUserInactivityMonitor, onUserActive()).Times(2);
         EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
         EXPECT_CALL(*m_mockFocusManager, acquireChannel(CHANNEL_NAME, _, NAMESPACE))
             .WillOnce(InvokeWithoutArgs([this, stopPoint] {
@@ -1007,7 +1007,7 @@ bool AudioInputProcessorTest::testContextFailure(avsCommon::sdkInterfaces::Conte
         m_audioInputProcessor->onContextFailure(error);
     }));
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
-    EXPECT_CALL(*m_mockUserActivityNotifier, onUserActive()).Times(2);
+    EXPECT_CALL(*m_mockUserInactivityMonitor, onUserActive()).Times(2);
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::IDLE))
         .WillOnce(InvokeWithoutArgs([&] {
             std::lock_guard<std::mutex> lock(mutex);
@@ -1089,7 +1089,7 @@ bool AudioInputProcessorTest::testExpectSpeechSucceeds(bool withDialogRequestId)
 
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH));
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
-    EXPECT_CALL(*m_mockUserActivityNotifier, onUserActive()).Times(2);
+    EXPECT_CALL(*m_mockUserInactivityMonitor, onUserActive()).Times(2);
     if (withDialogRequestId) {
         EXPECT_CALL(*result, setCompleted());
     }
@@ -1226,7 +1226,7 @@ bool AudioInputProcessorTest::testRecognizeWithExpectSpeechInitiator(bool withIn
     EXPECT_CALL(*result, setCompleted());
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH));
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
-    EXPECT_CALL(*m_mockUserActivityNotifier, onUserActive()).Times(2);
+    EXPECT_CALL(*m_mockUserInactivityMonitor, onUserActive()).Times(2);
     EXPECT_CALL(*m_mockContextManager, getContext(_));
     EXPECT_CALL(*m_mockDirectiveSequencer, setDialogRequestId(_));
 
@@ -1322,7 +1322,7 @@ void AudioInputProcessorTest::removeDefaultAudioProvider() {
         m_mockFocusManager,
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
-        m_mockUserActivityNotifier);
+        m_mockUserInactivityMonitor);
     EXPECT_NE(m_audioInputProcessor, nullptr);
     m_audioInputProcessor->addObserver(m_mockObserver);
     m_audioInputProcessor->addObserver(m_dialogUXStateAggregator);
@@ -1339,7 +1339,7 @@ void AudioInputProcessorTest::makeDefaultAudioProviderNotAlwaysReadable() {
         m_mockFocusManager,
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
-        m_mockUserActivityNotifier,
+        m_mockUserInactivityMonitor,
         *m_audioProvider);
     EXPECT_NE(m_audioInputProcessor, nullptr);
     m_audioInputProcessor->addObserver(m_mockObserver);
@@ -1381,7 +1381,7 @@ TEST_F(AudioInputProcessorTest, createWithoutDirectiveSequencer) {
         m_mockFocusManager,
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
-        m_mockUserActivityNotifier,
+        m_mockUserInactivityMonitor,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
@@ -1396,7 +1396,7 @@ TEST_F(AudioInputProcessorTest, createWithoutMessageSender) {
         m_mockFocusManager,
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
-        m_mockUserActivityNotifier,
+        m_mockUserInactivityMonitor,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
@@ -1411,7 +1411,7 @@ TEST_F(AudioInputProcessorTest, createWithoutContextManager) {
         m_mockFocusManager,
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
-        m_mockUserActivityNotifier,
+        m_mockUserInactivityMonitor,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
@@ -1426,7 +1426,7 @@ TEST_F(AudioInputProcessorTest, createWithoutFocusManager) {
         nullptr,
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
-        m_mockUserActivityNotifier,
+        m_mockUserInactivityMonitor,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
@@ -1441,7 +1441,7 @@ TEST_F(AudioInputProcessorTest, createWithoutStateAggregator) {
         m_mockFocusManager,
         nullptr,
         m_mockExceptionEncounteredSender,
-        m_mockUserActivityNotifier,
+        m_mockUserInactivityMonitor,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
@@ -1459,16 +1459,16 @@ TEST_F(AudioInputProcessorTest, createWithoutExceptionSender) {
         m_mockFocusManager,
         m_dialogUXStateAggregator,
         nullptr,
-        m_mockUserActivityNotifier,
+        m_mockUserInactivityMonitor,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
 
 /**
  * Function to verify that @c AudioInputProcessor::create() errors out with an invalid
- * @c UserActivityNotifierInterface.
+ * @c UserInactivityMonitorInterface.
  */
-TEST_F(AudioInputProcessorTest, createWithoutUserActivityNotifier) {
+TEST_F(AudioInputProcessorTest, createWithoutUserInactivityMonitor) {
     m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
     m_audioInputProcessor = AudioInputProcessor::create(
         m_mockDirectiveSequencer,
@@ -1493,7 +1493,7 @@ TEST_F(AudioInputProcessorTest, createWithoutAudioProvider) {
         m_mockFocusManager,
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
-        m_mockUserActivityNotifier,
+        m_mockUserInactivityMonitor,
         AudioProvider::null());
     EXPECT_NE(m_audioInputProcessor, nullptr);
 }
@@ -2034,7 +2034,7 @@ TEST_F(AudioInputProcessorTest, recognizeWakewordWithKWDMetadata) {
         KEYWORD_TEXT,
         RecognizeStopPoint::NONE,
         nullptr,
-        ESPData::EMPTY_ESP_DATA,
+        ESPData::getEmptyESPData(),
         metadata));
 }
 

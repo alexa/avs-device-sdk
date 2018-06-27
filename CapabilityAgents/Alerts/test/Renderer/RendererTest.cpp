@@ -47,11 +47,22 @@ static const std::chrono::milliseconds TEST_LOOP_PAUSE{100};
 /// Loop count for the renderer.
 static const int TEST_LOOP_COUNT = 2;
 
+/// Loop background pause for the renderer.
+static const auto TEST_BACKGROUND_LOOP_PAUSE = std::chrono::seconds(1);
+
+/// Amount of time that the renderer observer should wait for a task to finish.
+static const auto TEST_BACKGROUND_TIMEOUT = std::chrono::seconds(5);
+
 class MockRendererObserver : public RendererObserverInterface {
 public:
     bool waitFor(RendererObserverInterface::State newState) {
         std::unique_lock<std::mutex> lock(m_mutex);
         return m_conditionVariable.wait_for(lock, TEST_TIMEOUT, [this, newState] { return m_state == newState; });
+    }
+
+    bool waitFor(RendererObserverInterface::State newState, std::chrono::milliseconds maxWait) {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        return m_conditionVariable.wait_for(lock, maxWait, [this, newState] { return m_state == newState; });
     }
 
     void onRendererStateChange(RendererObserverInterface::State newState, const std::string& reason) {
@@ -88,6 +99,10 @@ public:
 
     SourceId setSource(const std::string& url, std::chrono::milliseconds offset = std::chrono::milliseconds::zero())
         override {
+        return m_sourceIdRetVal;
+    }
+
+    SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) override {
         return m_sourceIdRetVal;
     }
 
@@ -274,6 +289,49 @@ TEST_F(RendererTest, onPlaybackError) {
     /// shouldn't respond with errors if the source is good
     m_renderer->onPlaybackError(TEST_SOURCE_ID_GOOD, errorType, errorMsg);
     ASSERT_TRUE(m_observer->waitFor(RendererObserverInterface::State::ERROR));
+}
+
+/**
+ * Test empty URL with non-zero loop pause, simulating playing a default alarm audio on background
+ */
+TEST_F(RendererTest, emptyURLNonZeroLoopPause) {
+    std::function<std::unique_ptr<std::istream>()> audioFactory = RendererTest::audioFactoryFunc;
+    std::vector<std::string> urls;
+    m_renderer->setObserver(m_observer);
+
+    // pass empty URLS with 10s pause and no loop count
+    // this simulates playing a default alarm audio on background
+    // it is expected to renderer to play the alert sound continuously at loop pause intervals
+    m_renderer->start(audioFactory, urls, TEST_LOOP_COUNT, TEST_BACKGROUND_LOOP_PAUSE);
+
+    // mediaplayer starts playing the alarm audio, in this case audio is of 0 length
+    m_renderer->onPlaybackStarted(TEST_SOURCE_ID_GOOD);
+
+    // record the time audio starts playing
+    auto now = std::chrono::high_resolution_clock::now();
+
+    // expect the renderer state to change to 'STARTED'
+    ASSERT_TRUE(m_observer->waitFor(RendererObserverInterface::State::STARTED, TEST_BACKGROUND_TIMEOUT));
+
+    // mediaplayer finishes playing the alarm audio
+    m_renderer->onPlaybackFinished(TEST_SOURCE_ID_GOOD);
+
+    // mediaplayer starts playing the alarm audio, in this case audio is of 0 length
+    m_renderer->onPlaybackStarted(TEST_SOURCE_ID_GOOD);
+
+    // mediaplayer finishes playing the alarm audio
+    m_renderer->onPlaybackFinished(TEST_SOURCE_ID_GOOD);
+
+    ASSERT_TRUE(m_observer->waitFor(RendererObserverInterface::State::STARTED, TEST_BACKGROUND_TIMEOUT));
+
+    // expect the renderer state to change to 'STOPPED' after TEST_BACKGROUND_LOOP_PAUSE
+    ASSERT_TRUE(m_observer->waitFor(RendererObserverInterface::State::COMPLETED, TEST_BACKGROUND_TIMEOUT));
+
+    // get the elapsed time
+    auto elapsed = std::chrono::high_resolution_clock::now() - now;
+
+    // check the elapsed time is ~TEST_BACKGROUND_LOOP_PAUSE
+    ASSERT_TRUE((elapsed >= TEST_BACKGROUND_LOOP_PAUSE) && (elapsed < TEST_BACKGROUND_TIMEOUT));
 }
 
 }  // namespace test

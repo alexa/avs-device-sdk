@@ -8,6 +8,7 @@ target_include_directories(Bluetooth PUBLIC
 target_link_libraries(
     Bluetooth
     AVSCommon
+    RegistrationManager
     SQLiteStorage
 )
 

@@ -428,7 +428,7 @@ protected:
 
         m_tapToTalkButton = std::make_shared<tapToTalkButton>();
         m_holdToTalkButton = std::make_shared<holdToTalkButton>();
-        m_focusManager = std::make_shared<FocusManager>(FocusManager::DEFAULT_AUDIO_CHANNELS);
+        m_focusManager = std::make_shared<FocusManager>(FocusManager::getDefaultAudioChannels());
         m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>();
 
         m_stateProvider = std::make_shared<testStateProvider>(m_context->getContextManager());

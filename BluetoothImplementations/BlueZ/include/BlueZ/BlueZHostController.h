@@ -59,6 +59,14 @@ public:
      */
     static std::unique_ptr<BlueZHostController> create(const std::string& adapterObjectPath);
 
+    /**
+     * A function for BlueZDeviceManager to alert devices when its property has changed. This is to avoid
+     * having multiple objects subscribing to DBus events.
+     *
+     * @param changesMap A map containing the property changes of the device.
+     */
+    void onPropertyChanged(const GVariantMapReader& changesMap);
+
 private:
     /**
      * Constructor
@@ -103,15 +111,15 @@ private:
     /// The MAC address of the adapter.
     std::unique_ptr<avsCommon::utils::MacAddressString> m_mac;
 
-    /// The friendly name of the adapter. This is what will appear when devices perform queries.
-    std::string m_friendlyName;
-
     /**
      * A mutex to protect calls to the adapter. The mutex is marked
      * as mutable because we need to lock inside const functions
      * @c isDiscoverable() and @c isScanning().
      */
     mutable std::mutex m_adapterMutex;
+
+    /// The friendly name of the adapter. This is what will appear when devices perform queries.
+    std::string m_friendlyName;
 
     /// A proxy of the Adapter Properties interface.
     std::shared_ptr<DBusPropertiesProxy> m_adapterProperties;

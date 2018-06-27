@@ -20,14 +20,14 @@
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
 #include <AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h>
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
-#include <AVSCommon/SDKInterfaces/MockContextManager.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
+#include <AVSCommon/SDKInterfaces/MockSpeakerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
-#include "SpeakerManager/SpeakerManagerConstants.h"
+#include <SpeakerManager/SpeakerManagerConstants.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <rapidjson/document.h>
@@ -57,15 +57,6 @@ static std::chrono::milliseconds TIMEOUT(1000);
 /// The @c MessageId identifer.
 static const std::string MESSAGE_ID("messageId");
 
-/// Value for mute.
-static const bool MUTE(true);
-
-/// String value for mute.
-static const std::string MUTE_STRING("true");
-
-/// Value for unmute.
-static const bool UNMUTE(false);
-
 /// A @c SetVolume/AdjustVolume payload.
 static const std::string VOLUME_PAYLOAD =
     "{"
@@ -81,76 +72,6 @@ static const std::string MUTE_PAYLOAD =
     MUTE_STRING +
     ""
     "}";
-
-static const SpeakerInterface::SpeakerSettings DEFAULT_SETTINGS{AVS_SET_VOLUME_MIN, UNMUTE};
-
-class MockSpeaker : public SpeakerInterface {
-public:
-    bool setVolume(int8_t volume) {
-        m_settings.volume = volume;
-        return true;
-    }
-
-    bool adjustVolume(int8_t delta) {
-        int8_t curVolume = m_settings.volume + delta;
-        curVolume = std::min(curVolume, AVS_SET_VOLUME_MAX);
-        curVolume = std::max(curVolume, AVS_SET_VOLUME_MIN);
-        m_settings.volume = curVolume;
-        return true;
-    }
-
-    bool setMute(bool mute) {
-        m_settings.mute = mute;
-        return true;
-    }
-
-    bool getSpeakerSettings(SpeakerInterface::SpeakerSettings* settings) {
-        if (!settings) {
-            return false;
-        }
-
-        settings->volume = m_settings.volume;
-        settings->mute = m_settings.mute;
-
-        return true;
-    }
-
-    SpeakerInterface::Type getSpeakerType() {
-        return m_type;
-    }
-
-    MockSpeaker(SpeakerInterface::Type type) : m_type{type} {
-        m_settings = DEFAULT_SETTINGS;
-    }
-
-private:
-    SpeakerInterface::Type m_type;
-    SpeakerInterface::SpeakerSettings m_settings;
-};
-
-class MockSpeakerInterface : public SpeakerInterface {
-public:
-    MOCK_METHOD1(setVolume, bool(int8_t));
-    MOCK_METHOD1(adjustVolume, bool(int8_t));
-    MOCK_METHOD1(setMute, bool(bool));
-    MOCK_METHOD1(getSpeakerSettings, bool(SpeakerInterface::SpeakerSettings*));
-    MOCK_METHOD0(getSpeakerType, SpeakerInterface::Type());
-
-    void DelegateToReal() {
-        ON_CALL(*this, setVolume(_)).WillByDefault(Invoke(&m_speaker, &SpeakerInterface::setVolume));
-        ON_CALL(*this, adjustVolume(_)).WillByDefault(Invoke(&m_speaker, &SpeakerInterface::adjustVolume));
-        ON_CALL(*this, setMute(_)).WillByDefault(Invoke(&m_speaker, &SpeakerInterface::setMute));
-        ON_CALL(*this, getSpeakerSettings(_)).WillByDefault(Invoke(&m_speaker, &SpeakerInterface::getSpeakerSettings));
-        ON_CALL(*this, getSpeakerType()).WillByDefault(Invoke(&m_speaker, &SpeakerInterface::getSpeakerType));
-    }
-
-    MockSpeakerInterface(SpeakerInterface::Type type) : m_speaker{type} {
-    }
-
-private:
-    // Implementation of Speaker object to handle calls.
-    MockSpeaker m_speaker;
-};
 
 /**
  * A mock object to test that the observer is being correctly notified.

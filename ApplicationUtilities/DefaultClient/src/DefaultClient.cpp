@@ -27,6 +27,10 @@
 #include <CallManager/SipUserAgent.h>
 #endif
 
+#ifdef ENABLE_MRM
+#include <MRMHandler/MRMHandler.h>
+#endif
+
 #include <ContextManager/ContextManager.h>
 #include <Settings/SettingsUpdatedEventSender.h>
 #include <System/EndpointHandler.h>
@@ -42,6 +46,9 @@ namespace defaultClient {
 
 using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 
+/// String identifier for 'Alexa Stop' return by wake word engine
+static const std::string ALEXA_STOP_KEYWORD = "STOP";
+
 /// String to identify log entries originating from this file.
 static const std::string TAG("DefaultClient");
 
@@ -53,9 +60,12 @@ static const std::string TAG("DefaultClient");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::unique_ptr<DefaultClient> DefaultClient::create(
+    std::shared_ptr<avsCommon::utils::DeviceInfo> deviceInfo,
     std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
     const std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>&
         externalMusicProviderMediaPlayers,
+    const std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>&
+        externalMusicProviderSpeakers,
     const capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
@@ -89,8 +99,10 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver) {
     std::unique_ptr<DefaultClient> defaultClient(new DefaultClient());
     if (!defaultClient->initialize(
+            deviceInfo,
             customerDataManager,
             externalMusicProviderMediaPlayers,
+            externalMusicProviderSpeakers,
             adapterCreationMap,
             speakMediaPlayer,
             audioMediaPlayer,
@@ -127,9 +139,12 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
 }
 
 bool DefaultClient::initialize(
+    std::shared_ptr<avsCommon::utils::DeviceInfo> deviceInfo,
     std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
     const std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>&
         externalMusicProviderMediaPlayers,
+    const std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>&
+        externalMusicProviderSpeakers,
     const capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
@@ -328,7 +343,7 @@ bool DefaultClient::initialize(
      * Capability Agent will require the Focus Manager in order to request access to the Channel it wishes to play on.
      */
     m_audioFocusManager =
-        std::make_shared<afml::FocusManager>(afml::FocusManager::DEFAULT_AUDIO_CHANNELS, m_audioActivityTracker);
+        std::make_shared<afml::FocusManager>(afml::FocusManager::getDefaultAudioChannels(), m_audioActivityTracker);
 
     /*
      * Creating the User Inactivity Monitor - This component is responsibly for updating AVS of user inactivity as
@@ -455,6 +470,11 @@ bool DefaultClient::initialize(
     }
 
 #ifdef ENABLE_COMMS
+    if (!ringtoneMediaPlayer) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullRingtoneMediaPlayer"));
+        return false;
+    }
+
     auto sipUserAgent = std::make_shared<capabilityAgents::callManager::SipUserAgent>();
 
     if (!capabilityAgents::callManager::CallManager::create(
@@ -513,6 +533,7 @@ bool DefaultClient::initialize(
      */
     m_externalMediaPlayer = capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::create(
         externalMusicProviderMediaPlayers,
+        externalMusicProviderSpeakers,
         adapterCreationMap,
         m_speakerManager,
         m_connectionManager,
@@ -524,8 +545,6 @@ bool DefaultClient::initialize(
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateExternalMediaPlayer"));
         return false;
     }
-
-    m_speakerManager->addSpeaker(m_externalMediaPlayer);
 
     if (isGuiSupported) {
         /*
@@ -541,8 +560,8 @@ bool DefaultClient::initialize(
          * Capability Agent will require the Focus Manager in order to request access to the Channel it wishes to play
          * on.
          */
-        m_visualFocusManager =
-            std::make_shared<afml::FocusManager>(afml::FocusManager::DEFAULT_VISUAL_CHANNELS, m_visualActivityTracker);
+        m_visualFocusManager = std::make_shared<afml::FocusManager>(
+            afml::FocusManager::getDefaultVisualChannels(), m_visualActivityTracker);
 
         /*
          * Creating the TemplateRuntime Capability Agent - This component is the Capability Agent that implements the
@@ -556,6 +575,35 @@ bool DefaultClient::initialize(
         }
         m_dialogUXStateAggregator->addObserver(m_templateRuntime);
     }
+
+#ifdef ENABLE_MRM
+    /*
+     * Creating the MRM (Multi-Room-Music) Capability Agent.
+     */
+
+    auto mrmHandler = capabilityAgents::mrm::mrmHandler::MRMHandler::create(
+        m_connectionManager,
+        m_connectionManager,
+        m_directiveSequencer,
+        m_userInactivityMonitor,
+        contextManager,
+        m_audioFocusManager,
+        deviceInfo->getDeviceSerialNumber());
+
+    if (!mrmHandler) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "Unable to create mrmHandler."));
+        return false;
+    }
+
+    m_mrmCapabilityAgent = capabilityAgents::mrm::MRMCapabilityAgent::create(
+        std::move(mrmHandler), m_speakerManager, m_userInactivityMonitor, m_exceptionSender);
+
+    if (!m_mrmCapabilityAgent) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateMRMCapabilityAgent"));
+        return false;
+    }
+
+#endif
 
     /*
      * Creating the Endpoint Handler - This component is responsible for handling directives from AVS instructing the
@@ -611,7 +659,8 @@ bool DefaultClient::initialize(
         std::move(bluetoothStorage),
         std::move(bluetoothDeviceManager),
         eventBus,
-        bluetoothMediaPlayer);
+        bluetoothMediaPlayer,
+        customerDataManager);
 #endif
 
     /*
@@ -704,6 +753,15 @@ bool DefaultClient::initialize(
             LX("initializeFailed").d("reason", "unableToRegisterDirectiveHandler").d("directiveHandler", "Bluetooth"));
     }
 
+    if (m_mrmCapabilityAgent) {
+        if (!m_directiveSequencer->addDirectiveHandler(m_mrmCapabilityAgent)) {
+            ACSDK_ERROR(LX("initializeFailed")
+                            .d("reason", "unableToRegisterDirectiveHandler")
+                            .d("directiveHandler", "MRMCapabilityAgent"));
+            return false;
+        }
+    }
+
     /*
      * Register capabilities for publishing to the Capabilities API.
      */
@@ -790,6 +848,14 @@ bool DefaultClient::initialize(
             ACSDK_ERROR(LX("initializeFailed")
                             .d("reason", "unableToRegisterCapability")
                             .d("capabilitiesDelegate", "VisualActivityTracker"));
+            return false;
+        }
+    }
+
+    if (m_mrmCapabilityAgent) {
+        if (!(capabilitiesDelegate->registerCapability(m_mrmCapabilityAgent))) {
+            ACSDK_ERROR(
+                LX("initializeFailed").d("reason", "unableToRegisterCapability").d("capabilitiesDelegate", "MRM"));
             return false;
         }
     }
@@ -972,8 +1038,28 @@ std::future<bool> DefaultClient::notifyOfWakeWord(
     avsCommon::avs::AudioInputStream::Index beginIndex,
     avsCommon::avs::AudioInputStream::Index endIndex,
     std::string keyword,
-    const capabilityAgents::aip::ESPData& espData,
+    const capabilityAgents::aip::ESPData espData,
     std::shared_ptr<const std::vector<char>> KWDMetadata) {
+    if (!m_connectionManager->isConnected()) {
+        std::promise<bool> ret;
+        if (ALEXA_STOP_KEYWORD == keyword) {
+            // Alexa Stop uttered while offline
+            ACSDK_INFO(LX("notifyOfWakeWord").d("action", "localStop").d("reason", "stopUtteredWhileNotConnected"));
+            stopForegroundActivity();
+
+            // Returning as interaction handled
+            ret.set_value(true);
+            return ret.get_future();
+        } else {
+            // Ignore Alexa wake word while disconnected
+            ACSDK_INFO(LX("notifyOfWakeWord").d("action", "ignoreAlexaWakeWord").d("reason", "networkDisconnected"));
+
+            // Returning as interaction not handled
+            ret.set_value(false);
+            return ret.get_future();
+        }
+    }
+
     return m_audioInputProcessor->recognize(
         wakeWordAudioProvider,
         capabilityAgents::aip::Initiator::WAKEWORD,
@@ -1098,6 +1184,10 @@ DefaultClient::~DefaultClient() {
     if (m_callManager) {
         ACSDK_DEBUG5(LX("CallManagerShutdown."));
         m_callManager->shutdown();
+    }
+    if (m_mrmCapabilityAgent) {
+        ACSDK_DEBUG5(LX("MRMCapabilityAgentShutdown"));
+        m_mrmCapabilityAgent->shutdown();
     }
 }
 

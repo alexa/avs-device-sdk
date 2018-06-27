@@ -1,5 +1,4 @@
 /*
- *
  * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -27,8 +26,8 @@
  * https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/support/terms-and-agreements.
  */
 
-#ifndef ALEXA_CLIENT_SDK_SYSTEM_COMM_CALL_INCOMING_RINGTONE_INTRO_MP3_H_
-#define ALEXA_CLIENT_SDK_SYSTEM_COMM_CALL_INCOMING_RINGTONE_INTRO_MP3_H_
+#ifndef ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_RESOURCES_AUDIO_INCLUDE_AUDIO_DATA_SYSTEM_COMM_CALL_INCOMING_RINGTONE_INTRO__MP3_H_
+#define ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_RESOURCES_AUDIO_INCLUDE_AUDIO_DATA_SYSTEM_COMM_CALL_INCOMING_RINGTONE_INTRO__MP3_H_
 
 namespace alexaClientSDK {
 namespace applicationUtilities {
@@ -6890,7 +6889,7 @@ unsigned char system_comm_call_incoming_ringtone_intro_mp3[] = {
 unsigned int system_comm_call_incoming_ringtone_intro_mp3_len = 82176;
 // clang-format on
 
-#endif  // ALEXA_CLIENT_SDK_SYSTEM_COMM_CALL_INCOMING_RINGTONE_INTRO_MP3_H_
+#endif  // ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_RESOURCES_AUDIO_INCLUDE_AUDIO_DATA_SYSTEM_COMM_CALL_INCOMING_RINGTONE_INTRO__MP3_H_
 
 }  // namespace data
 }  // namespace audio
