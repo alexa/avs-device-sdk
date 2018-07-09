@@ -281,8 +281,7 @@ TEST_F(SQLiteBluetoothStorageTest, getUuidWithOneSucceeds) {
 /// Test getUuid with multiple rows, one of which contains the UUID.
 TEST_F(SQLiteBluetoothStorageTest, getUuidWithMultipleSucceeds) {
     const std::unordered_map<std::string, std::string> data{
-        {TEST_MAC, TEST_UUID},
-        {TEST_MAC_2, TEST_UUID_2},
+        {TEST_MAC, TEST_UUID}, {TEST_MAC_2, TEST_UUID_2},
     };
 
     getMacOrUuidHelper(&SQLiteBluetoothStorage::getUuid, TEST_MAC, TEST_UUID, data);

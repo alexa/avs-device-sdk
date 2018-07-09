@@ -130,6 +130,90 @@ TEST(SQLiteDatabaseTest, OpenTwice) {
     db1.close();
 }
 
+/// Test transactions commit
+TEST(SQLiteDatabaseTest, TransactionsCommit) {
+    auto dbFilePath = generateDbFilePath();
+    SQLiteDatabase db(dbFilePath);
+    ASSERT_TRUE(db.initialize());
+
+    {
+        auto transaction1 = db.beginTransaction();
+        ASSERT_NE(transaction1, nullptr);
+        ASSERT_TRUE(transaction1->commit());
+    }
+
+    // Should not fail because previous transaction is completed
+    auto transaction2 = db.beginTransaction();
+    ASSERT_NE(transaction2, nullptr);
+
+    db.close();
+}
+
+// Test transactions rollback
+TEST(SQLiteDatabaseTest, TransactionsRollback) {
+    auto dbFilePath = generateDbFilePath();
+    SQLiteDatabase db(dbFilePath);
+    ASSERT_TRUE(db.initialize());
+
+    {
+        auto transaction1 = db.beginTransaction();
+        ASSERT_NE(transaction1, nullptr);
+        ASSERT_TRUE(transaction1->rollback());
+    }
+
+    // Should not fail because previous transaction is completed
+    auto transaction2 = db.beginTransaction();
+    ASSERT_NE(transaction2, nullptr);
+
+    db.close();
+}
+
+/// Test nested transactions
+TEST(SQLiteDatabaseTest, NestedTransactions) {
+    auto dbFilePath = generateDbFilePath();
+    SQLiteDatabase db(dbFilePath);
+    ASSERT_TRUE(db.initialize());
+
+    auto transaction1 = db.beginTransaction();
+    ASSERT_NE(transaction1, nullptr);
+    auto transaction2 = db.beginTransaction();
+    ASSERT_EQ(transaction2, nullptr);
+
+    db.close();
+}
+
+/// Test transactions double commit
+TEST(SQLiteDatabaseTest, DoubleCommit) {
+    auto dbFilePath = generateDbFilePath();
+    SQLiteDatabase db(dbFilePath);
+    ASSERT_TRUE(db.initialize());
+
+    auto transaction1 = db.beginTransaction();
+    ASSERT_NE(transaction1, nullptr);
+    ASSERT_TRUE(transaction1->commit());
+    ASSERT_FALSE(transaction1->commit());
+
+    db.close();
+}
+
+/// Test automatic rollback
+TEST(SQLiteDatabaseTest, AutoRollback) {
+    auto dbFilePath = generateDbFilePath();
+    SQLiteDatabase db(dbFilePath);
+    ASSERT_TRUE(db.initialize());
+
+    {
+        auto transaction1 = db.beginTransaction();
+        ASSERT_NE(transaction1, nullptr);
+    }
+
+    // Should not fail because transaction should have been automatically completed
+    auto transaction2 = db.beginTransaction();
+    ASSERT_NE(transaction2, nullptr);
+
+    db.close();
+}
+
 }  // namespace test
 }  // namespace sqliteStorage
 }  // namespace storage

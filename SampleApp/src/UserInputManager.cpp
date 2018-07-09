@@ -57,8 +57,8 @@ static const std::unordered_map<char, std::string> LOCALE_VALUES({{'1', "en-US"}
                                                                   {'7', "en-AU"},
                                                                   {'8', "fr-FR"}});
 
-static const std::unordered_map<char, SpeakerInterface::Type> SPEAKER_TYPES({{'1', SpeakerInterface::Type::AVS_SYNCED},
-                                                                             {'2', SpeakerInterface::Type::LOCAL}});
+static const std::unordered_map<char, SpeakerInterface::Type> SPEAKER_TYPES(
+    {{'1', SpeakerInterface::Type::AVS_SPEAKER_VOLUME}, {'2', SpeakerInterface::Type::AVS_ALERTS_VOLUME}});
 
 static const int8_t INCREASE_VOLUME = 10;
 

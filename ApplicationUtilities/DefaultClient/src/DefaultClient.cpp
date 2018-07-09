@@ -430,14 +430,31 @@ bool DefaultClient::initialize(
         return false;
     }
 
+    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> allSpeakers = {
+        speakSpeaker, audioSpeaker, alertsSpeaker, notificationsSpeaker, bluetoothSpeaker, ringtoneSpeaker};
+    allSpeakers.insert(allSpeakers.end(), additionalSpeakers.begin(), additionalSpeakers.end());
+
+    /*
+     * Creating the SpeakerManager Capability Agent - This component is the Capability Agent that implements the
+     * Speaker interface of AVS.
+     */
+    m_speakerManager = capabilityAgents::speakerManager::SpeakerManager::create(
+        allSpeakers, contextManager, m_connectionManager, m_exceptionSender);
+    if (!m_speakerManager) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSpeakerManager"));
+        return false;
+    }
+
     /*
      * Creating the Alerts Capability Agent - This component is the Capability Agent that implements the Alerts
      * interface of AVS.
      */
     m_alertsCapabilityAgent = capabilityAgents::alerts::AlertsCapabilityAgent::create(
         m_connectionManager,
+        m_connectionManager,
         m_certifiedSender,
         m_audioFocusManager,
+        m_speakerManager,
         contextManager,
         m_exceptionSender,
         alertStorage,
@@ -448,8 +465,6 @@ bool DefaultClient::initialize(
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateAlertsCapabilityAgent"));
         return false;
     }
-
-    addConnectionObserver(m_alertsCapabilityAgent);
 
     addConnectionObserver(m_dialogUXStateAggregator);
 
@@ -509,21 +524,6 @@ bool DefaultClient::initialize(
 
     if (!m_settings) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSettingsObject"));
-        return false;
-    }
-
-    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> allSpeakers = {
-        speakSpeaker, audioSpeaker, alertsSpeaker, notificationsSpeaker, bluetoothSpeaker, ringtoneSpeaker};
-    allSpeakers.insert(allSpeakers.end(), additionalSpeakers.begin(), additionalSpeakers.end());
-
-    /*
-     * Creating the SpeakerManager Capability Agent - This component is the Capability Agent that implements the
-     * Speaker interface of AVS.
-     */
-    m_speakerManager = capabilityAgents::speakerManager::SpeakerManager::create(
-        allSpeakers, contextManager, m_connectionManager, m_exceptionSender);
-    if (!m_speakerManager) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSpeakerManager"));
         return false;
     }
 

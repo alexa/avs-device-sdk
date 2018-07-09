@@ -68,7 +68,7 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory =
             nullptr,
         avsCommon::sdkInterfaces::SpeakerInterface::Type type =
-            avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SYNCED,
+            avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
         std::string name = "");
 
     /**

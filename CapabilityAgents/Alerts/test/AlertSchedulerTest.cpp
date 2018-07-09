@@ -176,6 +176,7 @@ public:
     }
 
     MOCK_METHOD1(erase, bool(std::shared_ptr<Alert>));
+    MOCK_METHOD1(bulkErase, bool(const std::list<std::shared_ptr<Alert>>&));
     MOCK_METHOD1(modify, bool(std::shared_ptr<Alert>));
     MOCK_METHOD0(clearDatabase, bool());
 
@@ -384,7 +385,7 @@ TEST_F(AlertSchedulerTest, deleteAlert) {
     ASSERT_TRUE(m_alertScheduler->deleteAlert(ALERT1_TOKEN));
 
     /// check that a random alert token is ignored
-    ASSERT_FALSE(m_alertScheduler->deleteAlert(ALERT2_TOKEN));
+    ASSERT_TRUE(m_alertScheduler->deleteAlert(ALERT2_TOKEN));
 
     /// if inactive alert, then check that we succeed if the correct token is available
     std::shared_ptr<TestAlert> alert2 = std::make_shared<TestAlert>(ALERT2_TOKEN, FUTURE_INSTANT);

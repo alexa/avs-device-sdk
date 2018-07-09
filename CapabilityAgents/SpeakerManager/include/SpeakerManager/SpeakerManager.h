@@ -54,18 +54,7 @@ namespace speakerManager {
  *     }
  * @endcode
  *
- * AVS documentation specifies that Alerts volume should be handled separately.
- * Currently, the AVS API does not support differentiating between different speakers.
- * To provide clients an option to handle Alerts (and any other) volumes independently,
- * only @c SpeakerInterface::Type::AVS_SYNCED speakers will communicate with AVS.
- *
- * A default type, @c SpeakerInterface::Type::LOCAL, is provided. This type will not be modified by directives sent by
- * AVS, nor will they send events on volume/mute change. These @c SpeakerInterfaces can still be modified through the
- * APIs that @c SpeakerManagerInterface provides. Clients may extend the @c SpeakerInterface::Type enum if multiple
- * independent volume controls are needed.
- *
- * If clients wish directives and events to apply to the specific @c SpeakerInterface, it must
- * have a type of @c SpeakerInterface::Type::AVS_SYNCED.
+ * Clients may extend the @c SpeakerInterface::Type enum if multiple independent volume controls are needed.
  */
 class SpeakerManager
         : public avsCommon::avs::CapabilityAgent

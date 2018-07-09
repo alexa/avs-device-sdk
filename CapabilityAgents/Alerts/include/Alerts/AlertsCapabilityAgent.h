@@ -27,10 +27,11 @@
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
+#include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
-#include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
@@ -56,6 +57,8 @@ class AlertsCapabilityAgent
         : public avsCommon::avs::CapabilityAgent
         , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface
         , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
+        , public avsCommon::sdkInterfaces::SpeakerManagerObserverInterface
+        , public avsCommon::sdkInterfaces::FocusManagerObserverInterface
         , public AlertObserverInterface
         , public avsCommon::utils::RequiresShutdown
         , public registrationManager::CustomerDataHandler
@@ -65,8 +68,10 @@ public:
      * Create function.
      *
      * @param messageSender An interface to which this object will send Events to AVS.
+     * @param connectionManager An @c AVSConnectionManagerInterface instance to listen for connection status updates.
      * @param certifiedMessageSender An interface to which this object will send guaranteed Events to AVS.
      * @param focusManager An interface with which this object will request and release Alert channel focus.
+     * @param speakerManager An interface to control volume of the Alerts.
      * @param contextManager An interface to which this object will send context updates as alert states change.
      * @param exceptionEncounteredSender An interface which allows ExceptionEncountered Events to be sent to AVS.
      * @param alertStorage An interface to store, load, modify and delete Alerts.
@@ -77,8 +82,10 @@ public:
      */
     static std::shared_ptr<AlertsCapabilityAgent> create(
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
         std::shared_ptr<certifiedSender::CertifiedSender> certifiedMessageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<storage::AlertStorageInterface> alertStorage,
@@ -86,6 +93,8 @@ public:
         std::shared_ptr<renderer::RendererInterface> alertRenderer,
         std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
 
+    /// @name CapabilityAgent Functions
+    /// @{
     avsCommon::avs::DirectiveHandlerConfiguration getConfiguration() const override;
 
     void handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive) override;
@@ -104,10 +113,24 @@ public:
 
     void onAlertStateChange(const std::string& token, AlertObserverInterface::State state, const std::string& reason)
         override;
+    /// @}
+
+    /// @name FocusManagerObserverInterface Functions
+    /// @{
+    void onFocusChanged(const std::string& channelName, avsCommon::avs::FocusState newFocus) override;
+    /// @}
 
     /// @name CapabilityConfigurationInterface Functions
     /// @{
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
+    /// @}
+
+    /// @name SpeakerManagerObserverInterface Functions
+    /// @{
+    void onSpeakerSettingsChanged(
+        const Source& source,
+        const avsCommon::sdkInterfaces::SpeakerInterface::Type& type,
+        const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings) override;
     /// @}
 
     /**
@@ -149,6 +172,7 @@ private:
      * @param messageSender An interface to which this object will send Events to AVS.
      * @param certifiedMessageSender An interface to which this object will send guaranteed Events to AVS.
      * @param focusManager An interface with which this object will request and release Alert channel focus.
+     * @param speakerManager An interface to control volume of the Alerts.
      * @param contextManager An interface to which this object will send context updates as stored alerts change.
      * @param exceptionEncounteredSender An interface which allows ExceptionEncountered messages to be sent to AVS.
      * @param alertStorage An interface to store, load, modify and delete Alerts.
@@ -160,6 +184,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<certifiedSender::CertifiedSender> certifiedMessageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<storage::AlertStorageInterface> alertStorage,
@@ -214,6 +239,23 @@ private:
      * @param focusState The current focus of the channel.
      */
     void executeOnFocusChanged(avsCommon::avs::FocusState focusState);
+
+    /**
+     * A handler function which will be called by our internal executor when the FocusManager reports channel focus
+     * changes.
+     *
+     * @param channelName Name of the channel whose focus is changed.
+     * @param focusState The current focus of the channel.
+     */
+    void executeOnFocusManagerFocusChanged(const std::string& channelName, avsCommon::avs::FocusState focusState);
+
+    /**
+     * A handler function which will be called by our internal executor when the SpeakerManager reports volume
+     * changes.
+     */
+    void executeOnSpeakerSettingsChanged(
+        const avsCommon::sdkInterfaces::SpeakerInterface::Type& type,
+        const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings);
 
     /**
      * A handler function which will be called by our internal executor when an alert's status changes.
@@ -294,8 +336,40 @@ private:
         std::string* alertToken);
 
     /**
-     * Utility function to send an Event to AVS.  All current Events per AVS documentation are with respect to
-     * a single Alert, so the parameter is the given Alert token.  If isCertified is set to true, then the Event
+     * A helper function to handle the DeleteAlerts directive.
+     *
+     * @param directive The AVS Directive.
+     * @param payload The payload containing the alert data fields.
+     * @return Whether the DeleteAlerts processing was successful.
+     */
+    bool handleDeleteAlerts(
+        const std::shared_ptr<avsCommon::avs::AVSDirective>& directive,
+        const rapidjson::Document& payload);
+
+    /**
+     * A helper function to handle the SetVolume directive.
+     *
+     * @param directive The AVS Directive.
+     * @param payload The payload containing the alert data fields.
+     * @return Whether the SetVolume processing was successful.
+     */
+    bool handleSetVolume(
+        const std::shared_ptr<avsCommon::avs::AVSDirective>& directive,
+        const rapidjson::Document& payload);
+
+    /**
+     * A helper function to handle the AdjustVolume directive.
+     *
+     * @param directive The AVS Directive.
+     * @param payload The payload containing the alert data fields.
+     * @return Whether the AdjustVolume processing was successful.
+     */
+    bool handleAdjustVolume(
+        const std::shared_ptr<avsCommon::avs::AVSDirective>& directive,
+        const rapidjson::Document& payload);
+
+    /**
+     * Utility function to send a single alert related Event to AVS. If isCertified is set to true, then the Event
      * will be guaranteed to be sent to AVS at some point in the future, even if there is no currently active
      * connection.  If it is set to false, and there is no currently active connection, the Event will not be sent.
      *
@@ -304,6 +378,25 @@ private:
      * @param isCertified Whether the event must be guaranteed to be sent.  See function description for details.
      */
     void sendEvent(const std::string& eventName, const std::string& alertToken, bool isCertified = false);
+
+    /**
+     * Utility function to send a multiple alerts related Event to AVS. If isCertified is set to true, then the Event
+     * will be guaranteed to be sent to AVS at some point in the future, even if there is no currently active
+     * connection.  If it is set to false, and there is no currently active connection, the Event will not be sent.
+     *
+     * @param eventName The name of the Event to be sent.
+     * @param tokenList The list of Alert tokens being sent to AVS within the Event.
+     * @param isCertified Whether the event must be guaranteed to be sent.  See function description for details.
+     */
+    void sendBulkEvent(const std::string& eventName, const std::list<std::string>& tokenList, bool isCertified = false);
+
+    /**
+     * The function sends Alerts.VolumeChanged event when forced or there is a difference between current volume and
+     * the volume used to update AVS last time.
+     *
+     * @param forceUpdate should AVS be notified regardless of real difference.
+     */
+    void updateAVSWithLocalVolumeChanges(int8_t volume, bool forceUpdate);
 
     /**
      * A utility function to simplify calling the ExceptionEncounteredSender.
@@ -338,6 +431,30 @@ private:
     std::string getContextString();
 
     /**
+     * Returns current @c SpeakerSettings for the AVS_ALERTS_VOLUME volume type.
+     *
+     * @param[out] speakerSettings @c SpeakerSetting object to receive value
+     * @return true on success, false otherwise
+     */
+    bool getAlertVolumeSettings(avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* speakerSettings);
+
+    /**
+     * Returns current @c SpeakerSettings for the AVS_SPEAKER_VOLUME volume type.
+     *
+     * @param[out] speakerSettings @c SpeakerSetting object to receive value
+     * @return true on success, false otherwise
+     */
+    bool getSpeakerVolumeSettings(avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* speakerSettings);
+
+    /**
+     * Updates the volume of the next alert to sound. Only next alert is affected, the volume of the currently sounding
+     * alert is not changed.
+     *
+     * @param volume Volume for the next alert to sound with
+     */
+    void setNextAlertVolume(int64_t volume);
+
+    /**
      * @name Executor Thread Variables
      *
      * These variables are only accessed by the @c m_executor, with the exception of initialization, and shutdown.
@@ -351,6 +468,8 @@ private:
     std::shared_ptr<certifiedSender::CertifiedSender> m_certifiedSender;
     /// The FocusManager object.
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_focusManager;
+    /// The SpeakerManager object.
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> m_speakerManager;
     /// The ContextManager object.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
 
@@ -368,8 +487,20 @@ private:
     /// This member contains a factory to provide unique audio streams for the various alerts.
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> m_alertsAudioFactory;
 
-    /// Set of capability configurations that will get published using the Capabilities API
+    /// Set of capability configurations that will get published using the Capabilities API.
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
+
+    /// Speaker settings used last time to report alerts volume to AVS.
+    avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings m_lastReportedSpeakerSettings;
+
+    /// Flag indicating whether Content Channel is active now.
+    bool m_contentChannelIsActive;
+
+    /// Flag indicating whether Comms Channel is active now.
+    bool m_commsChannelIsActive;
+
+    /// Flag indicating if there is an active alert sounding at the moment.
+    bool m_alertIsSounding;
 
     /**
      * The @c Executor which queues up operations from asynchronous API calls.

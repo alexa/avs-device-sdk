@@ -22,6 +22,8 @@
 #include <AVSCommon/AVS/FocusState.h>
 
 #include <set>
+#include <string>
+#include <list>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -93,6 +95,15 @@ public:
      * @return Whether we successfully deleted the alert.
      */
     bool deleteAlert(const std::string& alertToken);
+
+    /**
+     * Delete multiple alerts from the schedule by their tokens. All existing alerts are deleted with all-or-none rule.
+     * In case of failure no actual deletion is made. Missing alert is not treated as an error.
+     *
+     * @param tokenList List of tokens of the alerts to be deleted
+     * @return true if all alerts has been deleted, false if any of the deletion failed.
+     */
+    bool deleteAlerts(const std::list<std::string>& tokenList);
 
     /**
      * Utility function to determine if an alert is currently active.

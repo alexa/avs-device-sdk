@@ -1088,6 +1088,34 @@ bool SQLiteAlertStorage::erase(std::shared_ptr<Alert> alert) {
     return eraseAlertByAlertId(&m_db, alert->m_dbId);
 }
 
+bool SQLiteAlertStorage::bulkErase(const std::list<std::shared_ptr<Alert>>& alertList) {
+    if (alertList.empty()) {
+        return true;
+    }
+
+    auto transaction = m_db.beginTransaction();
+    if (!transaction) {
+        ACSDK_ERROR(LX("bulkEraseFailed").d("reason", "Failed to begin transaction."));
+        return false;
+    }
+
+    for (auto& alert : alertList) {
+        if (!erase(alert)) {
+            ACSDK_ERROR(LX("bulkEraseFailed").d("reason", "Failed to erase alert"));
+            if (!transaction->rollback()) {
+                ACSDK_ERROR(LX("bulkEraseFailed").d("reason", "Failed to rollback alerts storage changes"));
+            }
+            return false;
+        }
+    }
+
+    if (!transaction->commit()) {
+        ACSDK_ERROR(LX("bulkEraseFailed").d("reason", "Failed to commit alerts storage changes"));
+        return false;
+    }
+    return true;
+}
+
 bool SQLiteAlertStorage::clearDatabase() {
     const std::vector<std::string> tablesToClear = {
         ALERTS_V2_TABLE_NAME, ALERT_ASSETS_TABLE_NAME, ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME};

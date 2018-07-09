@@ -313,17 +313,21 @@ TEST_F(MRMCapabilityAgentTest, handleMRMDirectiveTest) {
 TEST_F(MRMCapabilityAgentTest, onSpeakerSettingsChangedTest) {
     SpeakerInterface::SpeakerSettings dummySpeakerSettings;
 
-    // Test that the LOCAL option works.
+    // Test that the AVS_ALERTS_VOLUME option works.
     m_mrmCA->onSpeakerSettingsChanged(
-        SpeakerManagerObserverInterface::Source::DIRECTIVE, SpeakerInterface::Type::LOCAL, dummySpeakerSettings);
+        SpeakerManagerObserverInterface::Source::DIRECTIVE,
+        SpeakerInterface::Type::AVS_ALERTS_VOLUME,
+        dummySpeakerSettings);
     ASSERT_TRUE(m_mockMRMHandlerPtr->waitForSpeakerSettingChanged(
-        SpeakerInterface::Type::LOCAL, WAIT_FOR_INVOCATION_LONG_TIMEOUT));
+        SpeakerInterface::Type::AVS_ALERTS_VOLUME, WAIT_FOR_INVOCATION_LONG_TIMEOUT));
 
-    // Test that the AVS_SYNCED option works.
+    // Test that the AVS_SPEAKER_VOLUME option works.
     m_mrmCA->onSpeakerSettingsChanged(
-        SpeakerManagerObserverInterface::Source::DIRECTIVE, SpeakerInterface::Type::AVS_SYNCED, dummySpeakerSettings);
+        SpeakerManagerObserverInterface::Source::DIRECTIVE,
+        SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
+        dummySpeakerSettings);
     ASSERT_TRUE(m_mockMRMHandlerPtr->waitForSpeakerSettingChanged(
-        SpeakerInterface::Type::AVS_SYNCED, WAIT_FOR_INVOCATION_LONG_TIMEOUT));
+        SpeakerInterface::Type::AVS_SPEAKER_VOLUME, WAIT_FOR_INVOCATION_LONG_TIMEOUT));
 }
 
 /**

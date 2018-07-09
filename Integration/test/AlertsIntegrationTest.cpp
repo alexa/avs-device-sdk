@@ -41,6 +41,7 @@
 #include <AVSCommon/AVS/BlockingPolicy.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h>
+#include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
@@ -264,6 +265,18 @@ protected:
         ASSERT_TRUE(m_avsConnectionManager);
 
         m_focusManager = std::make_shared<FocusManager>(FocusManager::getDefaultAudioChannels());
+        std::shared_ptr<avsCommon::sdkInterfaces::test::MockSpeakerManager> mockSpeakerManager =
+            std::make_shared<avsCommon::sdkInterfaces::test::MockSpeakerManager>();
+        ON_CALL(*(mockSpeakerManager.get()), getSpeakerSettings(testing::_, testing::_))
+            .WillByDefault(testing::Invoke([](avsCommon::sdkInterfaces::SpeakerInterface::Type,
+                                              avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings*) {
+                std::promise<bool> promise;
+                promise.set_value(true);
+                return promise.get_future();
+            }));
+
+        m_speakerManager = mockSpeakerManager;
+
         m_testContentClient = std::make_shared<TestClient>();
         ASSERT_TRUE(m_focusManager->acquireChannel(
             FocusManager::CONTENT_CHANNEL_NAME, m_testContentClient, CONTENT_ACTIVITY_ID));
@@ -367,8 +380,10 @@ protected:
 
         m_alertsAgent = AlertsCapabilityAgent::create(
             m_avsConnectionManager,
+            m_avsConnectionManager->getConnectionManager(),
             m_certifiedSender,
             m_focusManager,
+            m_speakerManager,
             m_context->getContextManager(),
             m_exceptionEncounteredSender,
             m_alertStorage,
@@ -531,6 +546,7 @@ protected:
     std::shared_ptr<DirectiveSequencerInterface> m_directiveSequencer;
     std::shared_ptr<MessageInterpreter> m_messageInterpreter;
     std::shared_ptr<FocusManager> m_focusManager;
+    std::shared_ptr<SpeakerManagerInterface> m_speakerManager;
     std::shared_ptr<TestClient> m_testContentClient;
     std::shared_ptr<TestClient> m_testDialogClient;
     std::shared_ptr<TestAlertObserver> m_AlertsAgentObserver;
@@ -976,7 +992,8 @@ TEST_F(AlertsTest, cancelAlertBeforeItIsActive) {
 /**
  * Test when the storage is removed before an alert is set
  *
- * Close the storage before asking for a 5 second timer. SetAlertFailed and DeleteAlertFailed events are then sent.
+ * Close the storage before asking for a 5 second timer. SetAlertFailed and then DeleteAlertSucceeded events are then
+ * sent. Deletion succeeds because missing alert is not treated as an error.
  */
 TEST_F(AlertsTest, RemoveStorageBeforeAlarmIsSet) {
     m_alertStorage->close();
@@ -1012,8 +1029,8 @@ TEST_F(AlertsTest, RemoveStorageBeforeAlarmIsSet) {
             sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         }
     }
-    // DeleteAlertFailed is sent.
-    ASSERT_TRUE(checkSentEventName(sendParams, NAME_DELETE_ALERT_FAILED));
+    // Missing alert is not treated as an error, DeleteAlertSucceeded is sent.
+    ASSERT_TRUE(checkSentEventName(sendParams, NAME_DELETE_ALERT_SUCCEEDED));
 
     ASSERT_EQ(
         m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);

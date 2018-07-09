@@ -554,7 +554,8 @@ ExternalMediaPlayerTest::ExternalMediaPlayerTest() :
 }
 
 void ExternalMediaPlayerTest::SetUp() {
-    m_mockSpeakerInterface = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SYNCED);
+    m_mockSpeakerInterface =
+        std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME);
     m_mockSpeakerManager = std::make_shared<NiceMock<MockSpeakerManager>>();
     m_mockMessageSender = std::make_shared<NiceMock<MockMessageSender>>();
     m_mockFocusManager = std::make_shared<NiceMock<MockFocusManager>>();

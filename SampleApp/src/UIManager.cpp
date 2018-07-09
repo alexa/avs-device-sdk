@@ -154,11 +154,11 @@ static const std::string SPEAKER_CONTROL_MESSAGE =
     "+----------------------------------------------------------------------------+\n"
     "|                          Speaker Options:                                  |\n"
     "|                                                                            |\n"
-    "| Press '1' followed by Enter to modify AVS_SYNCED typed speakers.           |\n"
-    "|       AVS_SYNCED Speakers Control Volume For:                              |\n"
+    "| Press '1' followed by Enter to modify AVS_SPEAKER_VOLUME typed speakers.   |\n"
+    "|       AVS_SPEAKER_VOLUME Speakers Control Volume For:                      |\n"
     "|             Speech, Content, Notification, Bluetooth.                      |\n"
-    "| Press '2' followed by Enter to modify LOCAL typed speakers.                |\n"
-    "|       LOCAL Speakers Control Volume For:                                   |\n"
+    "| Press '2' followed by Enter to modify AVS_ALERTS_VOLUME typed speakers.    |\n"
+    "|       AVS_ALERTS_VOLUME Speakers Control Volume For:                       |\n"
     "|             Alerts.                                                        |\n"
     "+----------------------------------------------------------------------------+\n";
 

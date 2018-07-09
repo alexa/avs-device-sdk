@@ -168,8 +168,8 @@ bool AlertScheduler::deleteAlert(const std::string& alertToken) {
     auto alert = getAlertLocked(alertToken);
 
     if (!alert) {
-        ACSDK_ERROR(LX("handleDeleteAlertFailed").m("could not find alert in map").d("token", alertToken));
-        return false;
+        ACSDK_WARN(LX(__func__).d("Alert does not exist", alertToken));
+        return true;
     }
 
     if (!m_alertStorage->erase(alert)) {
@@ -177,6 +177,50 @@ bool AlertScheduler::deleteAlert(const std::string& alertToken) {
     }
 
     m_scheduledAlerts.erase(alert);
+    setTimerForNextAlertLocked();
+
+    return true;
+}
+
+bool AlertScheduler::deleteAlerts(const std::list<std::string>& tokenList) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    bool deleteActiveAlert = false;
+    std::list<std::shared_ptr<Alert>> alertsToBeRemoved;
+
+    std::lock_guard<std::mutex> lock(m_mutex);
+
+    for (auto& alertToken : tokenList) {
+        if (m_activeAlert && m_activeAlert->getToken() == alertToken) {
+            deleteActiveAlert = true;
+            alertsToBeRemoved.push_back(m_activeAlert);
+            ACSDK_DEBUG3(LX(__func__).m("Active alert is going to be deleted."));
+            continue;
+        }
+
+        auto alert = getAlertLocked(alertToken);
+        if (!alert) {
+            ACSDK_WARN(LX(__func__).d("Alert is missing", alertToken));
+            continue;
+        }
+
+        alertsToBeRemoved.push_back(alert);
+    }
+
+    if (!m_alertStorage->bulkErase(alertsToBeRemoved)) {
+        ACSDK_ERROR(LX("deleteAlertsFailed").d("reason", "Could not erase alerts from database"));
+        return false;
+    }
+
+    if (deleteActiveAlert) {
+        deactivateActiveAlertHelperLocked(Alert::StopReason::AVS_STOP);
+        m_activeAlert.reset();
+    }
+
+    for (auto& alert : alertsToBeRemoved) {
+        m_scheduledAlerts.erase(alert);
+    }
+
     setTimerForNextAlertLocked();
 
     return true;

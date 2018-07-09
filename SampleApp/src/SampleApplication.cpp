@@ -310,14 +310,18 @@ bool SampleApplication::initialize(
     auto httpContentFetcherFactory = std::make_shared<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory>();
 
     m_speakMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
-        httpContentFetcherFactory, avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SYNCED, "SpeakMediaPlayer");
+        httpContentFetcherFactory,
+        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
+        "SpeakMediaPlayer");
     if (!m_speakMediaPlayer) {
         ACSDK_CRITICAL(LX("Failed to create media player for speech!"));
         return false;
     }
 
     m_audioMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
-        httpContentFetcherFactory, avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SYNCED, "AudioMediaPlayer");
+        httpContentFetcherFactory,
+        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
+        "AudioMediaPlayer");
     if (!m_audioMediaPlayer) {
         ACSDK_CRITICAL(LX("Failed to create media player for content!"));
         return false;
@@ -325,7 +329,7 @@ bool SampleApplication::initialize(
 
     m_notificationsMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
         httpContentFetcherFactory,
-        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SYNCED,
+        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
         "NotificationsMediaPlayer");
     if (!m_notificationsMediaPlayer) {
         ACSDK_CRITICAL(LX("Failed to create media player for notifications!"));
@@ -334,7 +338,7 @@ bool SampleApplication::initialize(
 
     m_bluetoothMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
         httpContentFetcherFactory,
-        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SYNCED,
+        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
         "BluetoothMediaPlayer");
 
     if (!m_bluetoothMediaPlayer) {
@@ -342,19 +346,18 @@ bool SampleApplication::initialize(
     }
 
     m_ringtoneMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
-        httpContentFetcherFactory, avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SYNCED, "RingtoneMediaPlayer");
+        httpContentFetcherFactory,
+        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
+        "RingtoneMediaPlayer");
     if (!m_ringtoneMediaPlayer) {
         alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Failed to create media player for ringtones!");
         return false;
     }
 
-    /*
-     * The ALERTS speaker type will cause volume control to be independent and localized. By assigning this type,
-     * Alerts volume/mute changes will not be in sync with AVS. No directives or events will be associated with volume
-     * control.
-     */
     m_alertsMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
-        httpContentFetcherFactory, avsCommon::sdkInterfaces::SpeakerInterface::Type::LOCAL, "AlertsMediaPlayer");
+        httpContentFetcherFactory,
+        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_ALERTS_VOLUME,
+        "AlertsMediaPlayer");
     if (!m_alertsMediaPlayer) {
         ACSDK_CRITICAL(LX("Failed to create media player for alerts!"));
         return false;
