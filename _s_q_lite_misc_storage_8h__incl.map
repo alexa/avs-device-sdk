@@ -1,6 +1,6 @@
-<map id="/Users/psendil/SDK_18/AlexaClientSDK/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteMiscStorage.h" name="/Users/psendil/SDK_18/AlexaClientSDK/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteMiscStorage.h">
-<area shape="rect" id="node2" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="5,119,218,157"/>
-<area shape="rect" id="node5" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="425,119,638,157"/>
-<area shape="rect" id="node12" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="726,125,948,151"/>
-<area shape="rect" id="node14" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="907,205,1132,231"/>
+<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteMiscStorage.h" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteMiscStorage.h">
+<area shape="rect" id="node2" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="5,132,218,171"/>
+<area shape="rect" id="node5" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="425,132,638,171"/>
+<area shape="rect" id="node12" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="726,139,948,164"/>
+<area shape="rect" id="node14" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="907,219,1132,244"/>
 </map>

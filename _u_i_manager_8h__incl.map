@@ -1,15 +1,15 @@
-<map id="/Users/psendil/SDK_18/AlexaClientSDK/SampleApp/include/SampleApp/UIManager.h" name="/Users/psendil/SDK_18/AlexaClientSDK/SampleApp/include/SampleApp/UIManager.h">
-<area shape="rect" id="node2" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="1199,192,1390,231"/>
-<area shape="rect" id="node4" href="$_capabilities_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesObserverInterface.h" alt="" coords="1414,192,1626,231"/>
-<area shape="rect" id="node5" href="$_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="1109,105,1339,144"/>
-<area shape="rect" id="node7" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="565,105,813,144"/>
-<area shape="rect" id="node9" href="$_notifications_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/NotificationsObserverInterface.h" alt="" coords="5,105,221,144"/>
-<area shape="rect" id="node11" href="$_single_setting_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SingleSettingObserverInterface.h" alt="" coords="1362,105,1584,144"/>
-<area shape="rect" id="node12" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="323,192,514,231"/>
-<area shape="rect" id="node13" href="$_speaker_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerObserverInterface.h" alt="" coords="296,105,541,144"/>
-<area shape="rect" id="node14" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1784,105,1978,144"/>
-<area shape="rect" id="node26" href="$_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="838,105,1084,144"/>
-<area shape="rect" id="node10" href="$_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_indicator_state_8h.html" title="AVSCommon/AVS/IndicatorState.h" alt="" coords="35,199,263,224"/>
-<area shape="rect" id="node17" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1649,192,1844,231"/>
-<area shape="rect" id="node21" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="1784,279,1978,317"/>
+<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/SampleApp/include/SampleApp/UIManager.h" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/SampleApp/include/SampleApp/UIManager.h">
+<area shape="rect" id="node2" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="1199,219,1390,257"/>
+<area shape="rect" id="node4" href="$_capabilities_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesObserverInterface.h" alt="" coords="1414,219,1626,257"/>
+<area shape="rect" id="node5" href="$_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="1109,132,1339,171"/>
+<area shape="rect" id="node7" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="565,132,813,171"/>
+<area shape="rect" id="node9" href="$_notifications_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/NotificationsObserverInterface.h" alt="" coords="5,132,221,171"/>
+<area shape="rect" id="node11" href="$_single_setting_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SingleSettingObserverInterface.h" alt="" coords="1362,132,1584,171"/>
+<area shape="rect" id="node12" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="323,219,514,257"/>
+<area shape="rect" id="node13" href="$_speaker_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerObserverInterface.h" alt="" coords="296,132,541,171"/>
+<area shape="rect" id="node14" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1784,132,1978,171"/>
+<area shape="rect" id="node26" href="$_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="838,132,1084,171"/>
+<area shape="rect" id="node10" href="$_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_indicator_state_8h.html" title="AVSCommon/AVS/IndicatorState.h" alt="" coords="35,225,263,251"/>
+<area shape="rect" id="node17" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1649,219,1844,257"/>
+<area shape="rect" id="node21" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="1784,305,1978,344"/>
 </map>

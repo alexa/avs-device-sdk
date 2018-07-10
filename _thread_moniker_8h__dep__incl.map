@@ -1,6 +1,6 @@
-<map id="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h" name="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h">
-<area shape="rect" id="node2" href="$_h_t_t_p2_stream_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/ACL\l/src/Transport/HTTP2Stream.cpp" alt="" coords="5,119,223,171"/>
-<area shape="rect" id="node3" href="$_console_logger_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/AVSCommon\l/Utils/src/Logger/ConsoleLogger.cpp" alt="" coords="246,119,483,171"/>
-<area shape="rect" id="node4" href="$_logger_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/AVSCommon\l/Utils/src/Logger/Logger.cpp" alt="" coords="506,119,732,171"/>
-<area shape="rect" id="node5" href="$_thread_moniker_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/AVSCommon\l/Utils/src/Logger/ThreadMoniker.cpp" alt="" coords="756,119,992,171"/>
+<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h">
+<area shape="rect" id="node2" href="$_h_t_t_p2_stream_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/ACL/src/Transport\l/HTTP2Stream.cpp" alt="" coords="5,132,202,211"/>
+<area shape="rect" id="node3" href="$_console_logger_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/AVSCommon/Utils/src\l/Logger/ConsoleLogger.cpp" alt="" coords="227,132,434,211"/>
+<area shape="rect" id="node4" href="$_logger_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/AVSCommon/Utils/src\l/Logger/Logger.cpp" alt="" coords="458,132,665,211"/>
+<area shape="rect" id="node5" href="$_thread_moniker_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/AVSCommon/Utils/src\l/Logger/ThreadMoniker.cpp" alt="" coords="688,132,895,211"/>
 </map>

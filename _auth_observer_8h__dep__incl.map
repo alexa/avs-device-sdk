@@ -1,5 +1,5 @@
-<map id="/Users/psendil/SDK_18/AlexaClientSDK/Integration/include/Integration/AuthObserver.h" name="/Users/psendil/SDK_18/AlexaClientSDK/Integration/include/Integration/AuthObserver.h">
-<area shape="rect" id="node2" href="$_auth_observer_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Integration\l/src/AuthObserver.cpp" alt="" coords="5,105,214,157"/>
-<area shape="rect" id="node3" href="$_alexa_authorization_delegate_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Integration\l/test/AlexaAuthorizationDelegateTest.cpp" alt="" coords="238,105,502,157"/>
-<area shape="rect" id="node4" href="$_server_disconnect_integration_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/Integration\l/test/ServerDisconnectIntegrationTest.cpp" alt="" coords="526,105,794,157"/>
+<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/Integration/include/Integration/AuthObserver.h" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/Integration/include/Integration/AuthObserver.h">
+<area shape="rect" id="node2" href="$_auth_observer_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/Integration/src/AuthObserver.cpp" alt="" coords="5,139,276,204"/>
+<area shape="rect" id="node3" href="$_alexa_authorization_delegate_test_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/Integration/test\l/AlexaAuthorizationDelegateTest.cpp" alt="" coords="300,132,539,211"/>
+<area shape="rect" id="node4" href="$_server_disconnect_integration_test_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/Integration/test\l/ServerDisconnectIntegrationTest.cpp" alt="" coords="563,132,806,211"/>
 </map>

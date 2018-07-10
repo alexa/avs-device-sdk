@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html" title="alexaClientSDK::avsCommon\l::utils::AudioFormat" alt="" coords="5,5,202,44"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_event.html" title="Base class for a BluetoothEvent. " alt="" coords="5,103,218,141"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_discovered_event.html" title="alexaClientSDK::avsCommon\l::utils::bluetooth::DeviceDiscoveredEvent" alt="" coords="266,5,530,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_removed_event.html" title="alexaClientSDK::avsCommon\l::utils::bluetooth::DeviceRemovedEvent" alt="" coords="271,68,525,107"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_state_changed_event.html" title="alexaClientSDK::avsCommon\l::utils::bluetooth::DeviceState\lChangedEvent" alt="" coords="299,131,496,183"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_media_streaming_state_changed_event.html" title="alexaClientSDK::avsCommon\l::utils::bluetooth::MediaStreaming\lStateChangedEvent" alt="" coords="288,207,507,259"/>
 </map>

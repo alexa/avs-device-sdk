@@ -133,7 +133,7 @@ var searchData=
   ['snoozealert',['snoozeAlert',['../classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_scheduler.html#ac41cb4fd09de579e4a70128dd135a7b3',1,'alexaClientSDK::capabilityAgents::alerts::AlertScheduler']]],
   ['song_5ftimeout_5fduration',['SONG_TIMEOUT_DURATION',['../namespacealexa_client_s_d_k_1_1integration_1_1test.html#ae4913f73f7629dfa3e16dc620509ef88',1,'alexaClientSDK::integration::test']]],
   ['sourceinterface',['SourceInterface',['../classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html#a64e705aab13326da47ab2110961bccfa',1,'alexaClientSDK::mediaPlayer::SourceInterface']]],
-  ['speaker_5ftypes',['SPEAKER_TYPES',['../namespacealexa_client_s_d_k_1_1sample_app.html#af91f315af6683829a0c6b3640fc01d29',1,'alexaClientSDK::sampleApp']]],
+  ['speaker_5ftypes',['SPEAKER_TYPES',['../namespacealexa_client_s_d_k_1_1sample_app.html#abc85e4ef1d5db4be977fc202009aeef5',1,'alexaClientSDK::sampleApp']]],
   ['speakercontrol',['speakerControl',['../classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#ac50d2e9dc240984ae02c434e9bfa93c8',1,'alexaClientSDK::sampleApp::InteractionManager']]],
   ['speakermanagertest',['SpeakerManagerTest',['../classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_speaker_manager_test.html#aa30f40ba24e63872970ade31bef12db2',1,'alexaClientSDK::capabilityAgents::speakerManager::test::SpeakerManagerTest']]],
   ['speechsynthesizertest',['SpeechSynthesizerTest',['../classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#aacae3163cd2cfd9fe118a5616b94bbf5',1,'alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest']]],

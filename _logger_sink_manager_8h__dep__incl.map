@@ -1,6 +1,6 @@
-<map id="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/Utils/include/AVSCommon/Utils/Logger/LoggerSinkManager.h" name="/Users/psendil/SDK_18/AlexaClientSDK/AVSCommon/Utils/include/AVSCommon/Utils/Logger/LoggerSinkManager.h">
-<area shape="rect" id="node2" href="$_logger_sink_manager_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/AVSCommon\l/Utils/src/Logger/LoggerSinkManager.cpp" alt="" coords="5,119,271,171"/>
-<area shape="rect" id="node3" href="$_module_logger_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/AVSCommon\l/Utils/src/Logger/ModuleLogger.cpp" alt="" coords="295,119,526,171"/>
-<area shape="rect" id="node4" href="$_logger_test_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/AVSCommon\l/Utils/test/LoggerTest.cpp" alt="" coords="549,119,775,171"/>
-<area shape="rect" id="node5" href="$_sample_application_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/SampleApplication.cpp" alt="" coords="799,119,1014,171"/>
+<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/LoggerSinkManager.h" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/LoggerSinkManager.h">
+<area shape="rect" id="node2" href="$_logger_sink_manager_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/AVSCommon/Utils/src\l/Logger/LoggerSinkManager.cpp" alt="" coords="5,132,220,211"/>
+<area shape="rect" id="node3" href="$_module_logger_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/AVSCommon/Utils/src\l/Logger/ModuleLogger.cpp" alt="" coords="244,132,451,211"/>
+<area shape="rect" id="node4" href="$_logger_test_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/AVSCommon/Utils/test\l/LoggerTest.cpp" alt="" coords="475,132,686,211"/>
+<area shape="rect" id="node5" href="$_sample_application_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="710,139,1016,204"/>
 </map>

@@ -1,8 +1,8 @@
-<map id="/Users/psendil/SDK_18/AlexaClientSDK/SampleApp/include/SampleApp/InteractionManager.h" name="/Users/psendil/SDK_18/AlexaClientSDK/SampleApp/include/SampleApp/InteractionManager.h">
-<area shape="rect" id="node2" href="$_user_input_manager_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/UserInputManager.h" alt="" coords="231,105,496,157"/>
-<area shape="rect" id="node7" href="$_interaction_manager_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/InteractionManager.cpp" alt="" coords="520,105,735,157"/>
-<area shape="rect" id="node3" href="$_sample_application_8h.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/include/SampleApp/SampleApplication.h" alt="" coords="99,205,364,257"/>
-<area shape="rect" id="node6" href="$_user_input_manager_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/UserInputManager.cpp" alt="" coords="388,205,603,257"/>
-<area shape="rect" id="node4" href="$main_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/main.cpp" alt="" coords="5,305,220,357"/>
-<area shape="rect" id="node5" href="$_sample_application_8cpp.html" title="/Users/psendil/SDK\l_18/AlexaClientSDK/SampleApp\l/src/SampleApplication.cpp" alt="" coords="244,305,459,357"/>
+<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/SampleApp/include/SampleApp/InteractionManager.h" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/SampleApp/include/SampleApp/InteractionManager.h">
+<area shape="rect" id="node2" href="$_user_input_manager_8h.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="295,132,513,211"/>
+<area shape="rect" id="node7" href="$_interaction_manager_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="537,132,770,211"/>
+<area shape="rect" id="node3" href="$_sample_application_8h.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="152,259,371,337"/>
+<area shape="rect" id="node6" href="$_user_input_manager_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/src/UserInputManager.cpp" alt="" coords="396,265,701,331"/>
+<area shape="rect" id="node4" href="$main_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/src/main.cpp" alt="" coords="5,385,230,451"/>
+<area shape="rect" id="node5" href="$_sample_application_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="254,385,560,451"/>
 </map>

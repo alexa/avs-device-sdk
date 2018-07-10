@@ -1,4 +1,4 @@
-<map id="/Users/psendil/SDK_18/AlexaClientSDK/CapabilityAgents" name="/Users/psendil/SDK_18/AlexaClientSDK/CapabilityAgents">
+<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/CapabilityAgents" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/CapabilityAgents">
 <area shape="rect" id="node2" href="dir_cc045affa42b6b559da6861739bda652.html" title="AIP" alt="" coords="579,60,651,108"/>
 <area shape="rect" id="node18" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="895,252,996,300"/>
 <area shape="rect" id="edge23-headlabel" href="dir_000120_000009.html" title="42" alt="" coords="874,234,889,247"/>
@@ -7,7 +7,7 @@
 <area shape="rect" id="edge11-headlabel" href="dir_000090_000183.html" title="1" alt="" coords="1792,35,1799,48"/>
 <area shape="rect" id="node16" href="dir_d29c5f5a2915d6c5388c9daae4f109c7.html" title="Storage" alt="" coords="1277,156,1349,204"/>
 <area shape="rect" id="edge12-headlabel" href="dir_000090_000240.html" title="3" alt="" coords="1334,135,1341,148"/>
-<area shape="rect" id="edge13-headlabel" href="dir_000090_000009.html" title="40" alt="" coords="1008,251,1023,265"/>
+<area shape="rect" id="edge13-headlabel" href="dir_000090_000009.html" title="42" alt="" coords="1008,251,1023,265"/>
 <area shape="rect" id="node19" href="dir_b14333b5607b47fe7356eaa790107bd3.html" title="RegistrationManager" alt="" coords="1373,156,1518,204"/>
 <area shape="rect" id="edge14-headlabel" href="dir_000090_000231.html" title="1" alt="" coords="1411,130,1418,143"/>
 <area shape="rect" id="node4" href="dir_9dde9d78e15cabfb8e2b222ee9474f52.html" title="AudioPlayer" alt="" coords="675,60,768,108"/>
