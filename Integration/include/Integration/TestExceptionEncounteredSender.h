@@ -1,7 +1,5 @@
 /*
- * TestExceptionEncounteredSender.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TEST_EXCEPTION_ENCOUNTERED_SENDER_H_
-#define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TEST_EXCEPTION_ENCOUNTERED_SENDER_H_
+#ifndef ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TESTEXCEPTIONENCOUNTEREDSENDER_H_
+#define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TESTEXCEPTIONENCOUNTEREDSENDER_H_
 
 #include <condition_variable>
 #include <string>
@@ -32,14 +30,14 @@
 #include "AVSCommon/AVS/Attachment/AttachmentManager.h"
 #include "AVSCommon/Utils/JSON/JSONUtils.h"
 
- using namespace alexaClientSDK::avsCommon;
+using namespace alexaClientSDK::avsCommon;
 
 namespace alexaClientSDK {
 namespace integration {
 namespace test {
 
 /**
- * TestExceptionEncounteredSender is a mock of the @c ExceptionEncounteredSenderInterface and allows tests 
+ * TestExceptionEncounteredSender is a mock of the @c ExceptionEncounteredSenderInterface and allows tests
  * to wait for invocations upon those interfaces and inspect the parameters of those invocations.
  */
 class TestExceptionEncounteredSender : public avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface {
@@ -56,8 +54,8 @@ public:
      * @return A new @c AVSDirective, or nullptr if parsing the JSON fails.
      */
     std::shared_ptr<avs::AVSDirective> parseDirective(
-        const std::string& rawJSON, std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager);
-
+        const std::string& rawJSON,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager);
 
     /**
      * Class defining the parameters to calls to the mocked interfaces.
@@ -68,7 +66,6 @@ public:
          * Constructor.
          */
         ExceptionParams();
-
 
         // Enum for the way the directive was passed.
         enum class Type {
@@ -82,7 +79,7 @@ public:
 
         // Type of how the directive was passed.
         Type type;
-        // AVSDirective passed from the Directive Sequencer. 
+        // AVSDirective passed from the Directive Sequencer.
         std::shared_ptr<avsCommon::avs::AVSDirective> directive;
         // Unparsed directive string passed to sendExceptionEncountered.
         std::string exceptionUnparsedDirective;
@@ -93,8 +90,8 @@ public:
     };
 
     /**
-     * Function to retrieve the next DirectiveParams in the test queue or time out if the queue is empty. Takes a duration in seconds 
-     * to wait before timing out.
+     * Function to retrieve the next DirectiveParams in the test queue or time out if the queue is empty. Takes a
+     * duration in seconds to wait before timing out.
      */
     ExceptionParams waitForNext(const std::chrono::seconds duration);
 
@@ -107,8 +104,8 @@ private:
     std::deque<ExceptionParams> m_queue;
 };
 
-} // namespace test
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace integration
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TEST_EXCEPTION_ENCOUNTERED_SENDER_H_
+#endif  // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TESTEXCEPTIONENCOUNTEREDSENDER_H_

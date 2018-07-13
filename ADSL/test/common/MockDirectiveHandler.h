@@ -1,7 +1,5 @@
 /*
- * MockDirectiveHandler.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ADSL_TEST_COMMON_MOCK_DIRECTIVE_HANDLER_H_
-#define ALEXA_CLIENT_SDK_ADSL_TEST_COMMON_MOCK_DIRECTIVE_HANDLER_H_
+#ifndef ALEXA_CLIENT_SDK_ADSL_TEST_COMMON_MOCKDIRECTIVEHANDLER_H_
+#define ALEXA_CLIENT_SDK_ADSL_TEST_COMMON_MOCKDIRECTIVEHANDLER_H_
 
 #include <chrono>
 #include <future>
@@ -37,8 +35,8 @@ namespace test {
 class DirectiveHandlerMockAdapter : public avsCommon::sdkInterfaces::DirectiveHandlerInterface {
 public:
     void preHandleDirective(
-            std::shared_ptr<avsCommon::avs::AVSDirective> directive,
-            std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) override;
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive,
+        std::unique_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) override;
 
     /**
      * Variant of preHandleDirective taking a shared_ptr instead of a unique_ptr.
@@ -47,8 +45,8 @@ public:
      * @param result The object to receive completion/failure notifications.
      */
     virtual void preHandleDirective(
-            std::shared_ptr<avsCommon::avs::AVSDirective> directive,
-            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) = 0;
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive,
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result) = 0;
 };
 
 /**
@@ -71,8 +69,8 @@ public:
      * @return A new MockDirectiveHandler.
      */
     static std::shared_ptr<testing::NiceMock<MockDirectiveHandler>> create(
-            avsCommon::avs::DirectiveHandlerConfiguration config,
-            std::chrono::milliseconds handlingTimeMs = DEFAULT_HANDLING_TIME_MS);
+        avsCommon::avs::DirectiveHandlerConfiguration config,
+        std::chrono::milliseconds handlingTimeMs = DEFAULT_HANDLING_TIME_MS);
 
     /**
      * Constructor.
@@ -80,8 +78,8 @@ public:
      * @param handlingTimeMs The amount of time (in milliseconds) this handler takes to handle directives.
      */
     MockDirectiveHandler(
-            avsCommon::avs::DirectiveHandlerConfiguration config,
-            std::chrono::milliseconds handlingTimeMs);
+        avsCommon::avs::DirectiveHandlerConfiguration config,
+        std::chrono::milliseconds handlingTimeMs);
 
     /// Destructor.
     ~MockDirectiveHandler();
@@ -100,8 +98,8 @@ public:
      * @param result The result object to
      */
     void mockPreHandleDirective(
-            std::shared_ptr<avsCommon::avs::AVSDirective> directive,
-            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result);
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive,
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result);
 
     /**
      * The functional part of mocking handleDirective().
@@ -138,8 +136,8 @@ public:
      * @param result An object to receive the result of the handling operation.
      */
     void doPreHandlingFailed(
-            std::shared_ptr<avsCommon::avs::AVSDirective> directive,
-            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result);
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive,
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface> result);
 
     /**
      * Trigger completion of handling.
@@ -236,7 +234,10 @@ public:
     std::future<void> m_completedFuture;
 
     MOCK_METHOD1(handleDirectiveImmediately, void(std::shared_ptr<avsCommon::avs::AVSDirective>));
-    MOCK_METHOD2(preHandleDirective, void(std::shared_ptr<avsCommon::avs::AVSDirective>,
+    MOCK_METHOD2(
+        preHandleDirective,
+        void(
+            std::shared_ptr<avsCommon::avs::AVSDirective>,
             std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface>));
     MOCK_METHOD1(handleDirective, bool(const std::string&));
     MOCK_METHOD1(cancelDirective, void(const std::string&));
@@ -250,8 +251,8 @@ public:
     static const std::chrono::milliseconds DEFAULT_DONE_TIMEOUT_MS;
 };
 
-} // namespace test
-} // namespace adsl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace adsl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ADSL_TEST_COMMON_MOCK_DIRECTIVE_HANDLER_H_
+#endif  // ALEXA_CLIENT_SDK_ADSL_TEST_COMMON_MOCKDIRECTIVEHANDLER_H_

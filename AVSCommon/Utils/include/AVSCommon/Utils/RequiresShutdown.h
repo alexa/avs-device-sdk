@@ -1,7 +1,5 @@
 /*
- * RequiresShutdown.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_REQUIRES_SHUTDOWN_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_REQUIRES_SHUTDOWN_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_REQUIRESSHUTDOWN_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_REQUIRESSHUTDOWN_H_
 
 #include <atomic>
 #include <memory>
@@ -83,8 +81,8 @@ private:
     bool m_isShutdown;
 };
 
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_REQUIRES_SHUTDOWN_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_REQUIRESSHUTDOWN_H_

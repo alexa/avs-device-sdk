@@ -1,7 +1,5 @@
 /*
- * InProcessAttachmentWriter.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_IN_PROCESS_ATTACHMENT_WRITER_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_IN_PROCESS_ATTACHMENT_WRITER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_INPROCESSATTACHMENTWRITER_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_INPROCESSATTACHMENTWRITER_H_
 
 #include "AVSCommon/Utils/SDS/InProcessSDS.h"
 #include "AVSCommon/Utils/SDS/Writer.h"
@@ -43,16 +41,23 @@ public:
      * Create an InProcessAttachmentWriter.
      *
      * @param sds The underlying @c SharedDataStream which this object will use.
+     * @param policy The policy of the new Writer.
      * @return Returns a new InProcessAttachmentWriter, or nullptr if the operation failed.
      */
-    static std::unique_ptr<InProcessAttachmentWriter> create(std::shared_ptr<SDSType> sds);
+    static std::unique_ptr<InProcessAttachmentWriter> create(
+        std::shared_ptr<SDSType> sds,
+        SDSTypeWriter::Policy policy = SDSTypeWriter::Policy::ALL_OR_NOTHING);
 
     /**
      * Destructor.
      */
     ~InProcessAttachmentWriter();
 
-    std::size_t write(const void* buf, std::size_t numBytes, WriteStatus* writeStatus) override;
+    std::size_t write(
+        const void* buf,
+        std::size_t numBytes,
+        WriteStatus* writeStatus,
+        std::chrono::milliseconds timeout = std::chrono::milliseconds(0)) override;
 
     void close() override;
 
@@ -61,16 +66,19 @@ protected:
      * Constructor.
      *
      * @param sds The underlying @c SharedDataStream which this object will use.
+     * @param policy The policy of the new Writer.
      */
-    InProcessAttachmentWriter(std::shared_ptr<SDSType> sds);
+    InProcessAttachmentWriter(
+        std::shared_ptr<SDSType> sds,
+        SDSTypeWriter::Policy policy = SDSTypeWriter::Policy::ALL_OR_NOTHING);
 
     /// The underlying @c SharedDataStream reader.
     std::shared_ptr<SDSTypeWriter> m_writer;
 };
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_IN_PROCESS_ATTACHMENT_WRITER_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_INPROCESSATTACHMENTWRITER_H_

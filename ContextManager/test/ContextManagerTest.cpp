@@ -1,7 +1,5 @@
 /*
- * ContextManagerTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,6 +12,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
@@ -31,74 +30,74 @@ using namespace avsCommon::sdkInterfaces;
 
 /// Payload for SpeechSynthesizer state when it is playing back audio.
 static const std::string SPEECH_SYNTHESIZER_PAYLOAD_PLAYING =
-        "{"
-            "\"playerActivity\":\"PLAYING\","
-            "\"offsetInMilliseconds\":5,"
-            "\"token\":\"\""
-        "}";
+    "{"
+    "\"playerActivity\":\"PLAYING\","
+    "\"offsetInMilliseconds\":5,"
+    "\"token\":\"\""
+    "}";
 /// Payload for SpeechSynthesizer state when playback has finished.
 static const std::string SPEECH_SYNTHESIZER_PAYLOAD_FINISHED =
-        "{"
-            "\"playerActivity\":\"FINISHED\","
-            "\"offsetInMilliseconds\":0,"
-            "\"token\":\"\""
-        "}";
+    "{"
+    "\"playerActivity\":\"FINISHED\","
+    "\"offsetInMilliseconds\":0,"
+    "\"token\":\"\""
+    "}";
 
 /// Payload for AudioPlayer.
 static const std::string AUDIO_PLAYER_PAYLOAD =
-        "{"
-            "\"playerActivity\":\"FINISHED\","
-            "\"offsetInMilliseconds\":0,"
-            "\"token\":\"\""
-        "}";
+    "{"
+    "\"playerActivity\":\"FINISHED\","
+    "\"offsetInMilliseconds\":0,"
+    "\"token\":\"\""
+    "}";
 
 /// Payload for Alerts.
 static const std::string ALERTS_PAYLOAD =
-        "{"
-            "\"allAlerts\": ["
-                "{"
-                    "\"token\": \"\","
-                    "\"type\": \"TIMER\","
-                    "\"scheduledTime\": \"\""
-                "}"
-            "],"
-            "\"activeAlerts\": ["
-                    "{"
-                    "\"token\": \"\","
-                    "\"type\": \"TIMER\","
-                    "\"scheduledTime\": \"\""
-                "}"
-            "]"
-        "}";
+    "{"
+    "\"allAlerts\": ["
+    "{"
+    "\"token\": \"\","
+    "\"type\": \"TIMER\","
+    "\"scheduledTime\": \"\""
+    "}"
+    "],"
+    "\"activeAlerts\": ["
+    "{"
+    "\"token\": \"\","
+    "\"type\": \"TIMER\","
+    "\"scheduledTime\": \"\""
+    "}"
+    "]"
+    "}";
 
 /// Context used for testing.
 static const std::string CONTEXT_TEST =
-        "{"
-            "\"context\":["
-                "{"
-                    "\"header\":{"
-                        "\"namespace\":\"AudioPlayer\","
-                        "\"name\":\"PlaybackState\""
-                    "},"
-                    "\"payload\":{"
-                        "\"playerActivity\":\"FINISHED\","
-                        "\"offsetInMilliseconds\":0,"
-                        "\"token\":\"\""
-                    "}"
-                "},"
-                "{"
-                    "\"header\":{"
-                        "\"namespace\":\"SpeechSynthesizer\","
-                        "\"name\":\"SpeechState\""
-                    "},"
-                    "\"payload\":{"
-                        "\"playerActivity\":\"FINISHED\","
-                        "\"offsetInMilliseconds\":0,"
-                        "\"token\":\"\""
-                    "}"
-                "}"
-            "]"
-        "}";
+    "{"
+    "\"context\":["
+    "{"
+    "\"header\":{"
+    "\"namespace\":\"AudioPlayer\","
+    "\"name\":\"PlaybackState\""
+    "},"
+    "\"payload\":{"
+    "\"playerActivity\":\"FINISHED\","
+    "\"offsetInMilliseconds\":0,"
+    "\"token\":\"\""
+    "}"
+    "},"
+    "{"
+    "\"header\":{"
+    "\"namespace\":\"SpeechSynthesizer\","
+    "\"name\":\"SpeechState\""
+    "},"
+    "\"payload\":{"
+    "\"playerActivity\":\"FINISHED\","
+    "\"offsetInMilliseconds\":0,"
+    "\"token\":\"\""
+    "}"
+    "}"
+    "]"
+    "}";
 
 /// Default time @c doProvide sleeps before it calls @c setState.
 static const std::chrono::milliseconds DEFAULT_SLEEP_TIME = std::chrono::milliseconds(10);
@@ -141,6 +140,9 @@ static const NamespaceAndName AUDIO_PLAYER(NAMESPACE_AUDIO_PLAYER, NAME_PLAYBACK
 
 /// Alerts namespace and name
 static const NamespaceAndName ALERTS(NAMESPACE_ALERTS, NAME_ALERTS_STATE);
+
+/// Dummy provider namespace and name
+static const NamespaceAndName DUMMY_PROVIDER("Dummy", "DummyName");
 
 /**
  * @c MockContextRequester used to verify @c ContextManager behavior.
@@ -217,13 +219,12 @@ private:
     std::string m_context;
 };
 
-std::shared_ptr<MockContextRequester> MockContextRequester::create
-        (std::shared_ptr<ContextManager> contextManager) {
+std::shared_ptr<MockContextRequester> MockContextRequester::create(std::shared_ptr<ContextManager> contextManager) {
     auto result = std::make_shared<MockContextRequester>(contextManager);
     return result;
 }
 
-MockContextRequester::MockContextRequester(std::shared_ptr<ContextManager> contextManager):
+MockContextRequester::MockContextRequester(std::shared_ptr<ContextManager> contextManager) :
         m_contextManager{contextManager},
         m_contextAvailable{false},
         m_contextFailure{false} {
@@ -247,8 +248,7 @@ void MockContextRequester::onContextFailure(const ContextRequestError error) {
 
 bool MockContextRequester::waitForContext(const std::chrono::milliseconds duration) {
     std::unique_lock<std::mutex> lock(m_mutexSuccess);
-    if (!m_wakeTriggerSuccess.wait_for(lock, duration, [this]() { return (m_contextAvailable || m_contextFailure ); }))
-    {
+    if (!m_wakeTriggerSuccess.wait_for(lock, duration, [this]() { return (m_contextAvailable || m_contextFailure); })) {
         return false;
     }
     return true;
@@ -256,8 +256,7 @@ bool MockContextRequester::waitForContext(const std::chrono::milliseconds durati
 
 bool MockContextRequester::waitForFailure(const std::chrono::milliseconds duration) {
     std::unique_lock<std::mutex> lock(m_mutexFailure);
-    if (!m_wakeTriggerFailure.wait_for(lock, duration, [this]() { return (m_contextAvailable || m_contextFailure ); }))
-    {
+    if (!m_wakeTriggerFailure.wait_for(lock, duration, [this]() { return (m_contextAvailable || m_contextFailure); })) {
         return false;
     }
     return true;
@@ -283,8 +282,11 @@ public:
      * @return A pointer to an instance of the @c MockStateProvider.
      */
     static std::shared_ptr<MockStateProvider> create(
-            std::shared_ptr<ContextManager> contextManager, const NamespaceAndName& namespaceAndName,
-            const std::string& state, const StateRefreshPolicy& refreshPolicy, const std::chrono::milliseconds delayTime);
+        std::shared_ptr<ContextManager> contextManager,
+        const NamespaceAndName& namespaceAndName,
+        const std::string& state,
+        const StateRefreshPolicy& refreshPolicy,
+        const std::chrono::milliseconds delayTime);
 
     /**
      * Constructor. It sets up the state and refresh policy that needs to be sent in response to a @c provideContext
@@ -297,17 +299,20 @@ public:
      * @param delayTime The time @c m_doProvideThread sleeps before updating state via @c setState.
      * @return A pointer to an instance of the @c MockStateProvider.
      */
-    MockStateProvider(std::shared_ptr<ContextManager> contextManager,
-            const NamespaceAndName& namespaceAndName, const std::string& state,
-            const StateRefreshPolicy& refreshPolicy, const std::chrono::milliseconds delayTime);
+    MockStateProvider(
+        std::shared_ptr<ContextManager> contextManager,
+        const NamespaceAndName& namespaceAndName,
+        const std::string& state,
+        const StateRefreshPolicy& refreshPolicy,
+        const std::chrono::milliseconds delayTime);
 
     ~MockStateProvider();
 
-    void provideState(unsigned int currentstateRequestToken) override;
+    void provideState(const NamespaceAndName& stateProviderName, unsigned int currentstateRequestToken) override;
 
     /**
      * Method for m_doProvideThread. It waits for @c m_delayTime and then calls @c setState with the state @c m_state
-     * and the refresh policy @c m_refreshPolicy the @c stateProviderInterface was initialized with. 
+     * and the refresh policy @c m_refreshPolicy the @c stateProviderInterface was initialized with.
      */
     void doProvideState();
 
@@ -329,7 +334,7 @@ private:
     /// The token provided by the @c ContextManager.
     unsigned int m_stateRequestToken;
 
-    /// Thread to execute the doProvide. 
+    /// Thread to execute the doProvide.
     std::thread m_doProvideThread;
 
     /// Mutex to protect the @c m_provideState.
@@ -337,28 +342,34 @@ private:
 
     /// The condition variable used to wake up @c m_doProvideThread when the @c ContextManager requests for state.
     std::condition_variable m_providerWakeTrigger;
-    
+
     /// The time the @c m_doProvideThread sleeps before providing state.
     std::chrono::milliseconds m_delayTime;
 
-    /// Flag to indicate when a @c provideState has been called. 
+    /// Flag to indicate when a @c provideState has been called.
     bool m_provideState;
-    
+
     /// Flag to indicate when the @c MockStateProvider is shutting down. When set, @c m_doProvideThread needs to return.
     bool m_stateProviderShutdown;
 };
 
-std::shared_ptr<MockStateProvider> MockStateProvider::create
-        (std::shared_ptr<ContextManager> contextManager, const NamespaceAndName& stateProviderName,
-        const std::string& state, const StateRefreshPolicy& refreshPolicy, const std::chrono::milliseconds delayTime) {
-    auto result = std::make_shared<MockStateProvider>(contextManager, stateProviderName, state,
-            refreshPolicy, delayTime);
+std::shared_ptr<MockStateProvider> MockStateProvider::create(
+    std::shared_ptr<ContextManager> contextManager,
+    const NamespaceAndName& stateProviderName,
+    const std::string& state,
+    const StateRefreshPolicy& refreshPolicy,
+    const std::chrono::milliseconds delayTime) {
+    auto result =
+        std::make_shared<MockStateProvider>(contextManager, stateProviderName, state, refreshPolicy, delayTime);
     return result;
 }
 
-MockStateProvider::MockStateProvider(std::shared_ptr<ContextManager> contextManager,
-            const NamespaceAndName& stateProviderName, const std::string& state,
-            const StateRefreshPolicy& refreshPolicy, const std::chrono::milliseconds delayTime):
+MockStateProvider::MockStateProvider(
+    std::shared_ptr<ContextManager> contextManager,
+    const NamespaceAndName& stateProviderName,
+    const std::string& state,
+    const StateRefreshPolicy& refreshPolicy,
+    const std::chrono::milliseconds delayTime) :
         m_contextManager{contextManager},
         m_namespaceAndName{stateProviderName},
         m_state{state},
@@ -367,7 +378,7 @@ MockStateProvider::MockStateProvider(std::shared_ptr<ContextManager> contextMana
         m_delayTime{delayTime},
         m_provideState{false},
         m_stateProviderShutdown{false} {
-            m_doProvideThread = std::thread(&MockStateProvider::doProvideState, this);
+    m_doProvideThread = std::thread(&MockStateProvider::doProvideState, this);
 }
 
 MockStateProvider::~MockStateProvider() {
@@ -380,7 +391,7 @@ MockStateProvider::~MockStateProvider() {
     }
 }
 
-void MockStateProvider::provideState(unsigned int stateRequestToken) {
+void MockStateProvider::provideState(const NamespaceAndName& stateProviderName, unsigned int stateRequestToken) {
     m_stateRequestToken = stateRequestToken;
     std::lock_guard<std::mutex> lock(m_providerMutex);
     m_provideState = true;
@@ -396,8 +407,9 @@ void MockStateProvider::doProvideState() {
             return;
         }
         std::this_thread::sleep_for(m_delayTime);
-        EXPECT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(m_namespaceAndName, m_state, m_refreshPolicy,
-                m_stateRequestToken));
+        EXPECT_EQ(
+            SetStateResult::SUCCESS,
+            m_contextManager->setState(m_namespaceAndName, m_state, m_refreshPolicy, m_stateRequestToken));
         m_provideState = false;
         lock.unlock();
     }
@@ -429,10 +441,14 @@ public:
 
 void ContextManagerTest::SetUp() {
     m_contextManager = ContextManager::create();
-    m_speechSynthesizer = MockStateProvider::create(m_contextManager, SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_FINISHED, StateRefreshPolicy::NEVER, DEFAULT_SLEEP_TIME);
-    m_audioPlayer = MockStateProvider::create(m_contextManager, AUDIO_PLAYER,
-            AUDIO_PLAYER_PAYLOAD, StateRefreshPolicy::NEVER, DEFAULT_SLEEP_TIME);
+    m_speechSynthesizer = MockStateProvider::create(
+        m_contextManager,
+        SPEECH_SYNTHESIZER,
+        SPEECH_SYNTHESIZER_PAYLOAD_FINISHED,
+        StateRefreshPolicy::NEVER,
+        DEFAULT_SLEEP_TIME);
+    m_audioPlayer = MockStateProvider::create(
+        m_contextManager, AUDIO_PLAYER, AUDIO_PLAYER_PAYLOAD, StateRefreshPolicy::NEVER, DEFAULT_SLEEP_TIME);
     m_contextManager->setStateProvider(SPEECH_SYNTHESIZER, m_speechSynthesizer);
     m_contextManager->setStateProvider(AUDIO_PLAYER, m_audioPlayer);
     m_contextRequester = MockContextRequester::create(m_contextManager);
@@ -443,8 +459,12 @@ void ContextManagerTest::SetUp() {
  * @c ContextManager. Expect @c SetStateResult @c SUCCESS is returned.
  */
 TEST_F(ContextManagerTest, testSetStateForRegisteredProvider) {
-    ASSERT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING, StateRefreshPolicy::ALWAYS,
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            SPEECH_SYNTHESIZER,
+            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
+            StateRefreshPolicy::ALWAYS,
             m_speechSynthesizer->getCurrentstateRequestToken()));
 }
 
@@ -461,10 +481,12 @@ TEST_F(ContextManagerTest, testSetStateForUnregisteredProvider) {
  * the @c ContextManager. Expect @c SetStateResult @c STATE_PROVIDER_NOT_REGISTERED is returned.
  */
 TEST_F(ContextManagerTest, testSetStateForUnregisteredProviderWithRefreshPolicyAlways) {
-    m_alerts = MockStateProvider::create(m_contextManager, ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::NEVER,
-            DEFAULT_SLEEP_TIME);
-    ASSERT_EQ(SetStateResult::STATE_PROVIDER_NOT_REGISTERED, m_contextManager->setState(ALERTS, ALERTS_PAYLOAD,
-            StateRefreshPolicy::ALWAYS, m_alerts->getCurrentstateRequestToken()));
+    m_alerts = MockStateProvider::create(
+        m_contextManager, ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::NEVER, DEFAULT_SLEEP_TIME);
+    ASSERT_EQ(
+        SetStateResult::STATE_PROVIDER_NOT_REGISTERED,
+        m_contextManager->setState(
+            ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::ALWAYS, m_alerts->getCurrentstateRequestToken()));
 }
 
 /**
@@ -473,11 +495,20 @@ TEST_F(ContextManagerTest, testSetStateForUnregisteredProviderWithRefreshPolicyA
  * timeout period. Check the context that is returned by the @c ContextManager. Expect it should match the test value.
  */
 TEST_F(ContextManagerTest, testGetContext) {
-    ASSERT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING, StateRefreshPolicy::ALWAYS,
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            SPEECH_SYNTHESIZER,
+            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
+            StateRefreshPolicy::ALWAYS,
             m_speechSynthesizer->getCurrentstateRequestToken()));
-    ASSERT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(AUDIO_PLAYER, AUDIO_PLAYER_PAYLOAD,
-            StateRefreshPolicy::ALWAYS, m_audioPlayer->getCurrentstateRequestToken()));
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            AUDIO_PLAYER,
+            AUDIO_PLAYER_PAYLOAD,
+            StateRefreshPolicy::ALWAYS,
+            m_audioPlayer->getCurrentstateRequestToken()));
     m_contextManager->getContext(m_contextRequester);
     ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
     ASSERT_EQ(CONTEXT_TEST, m_contextRequester->getContextString());
@@ -489,11 +520,20 @@ TEST_F(ContextManagerTest, testGetContext) {
  * returned to each of the requesters within the timeout period.
  */
 TEST_F(ContextManagerTest, testMultipleGetContextRequests) {
-    ASSERT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING, StateRefreshPolicy::ALWAYS,
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            SPEECH_SYNTHESIZER,
+            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
+            StateRefreshPolicy::ALWAYS,
             m_speechSynthesizer->getCurrentstateRequestToken()));
-    ASSERT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(AUDIO_PLAYER, AUDIO_PLAYER_PAYLOAD,
-            StateRefreshPolicy::ALWAYS,m_audioPlayer->getCurrentstateRequestToken()));
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            AUDIO_PLAYER,
+            AUDIO_PLAYER_PAYLOAD,
+            StateRefreshPolicy::ALWAYS,
+            m_audioPlayer->getCurrentstateRequestToken()));
     m_contextRequester2 = MockContextRequester::create(m_contextManager);
     m_contextManager->getContext(m_contextRequester);
     m_contextManager->getContext(m_contextRequester2);
@@ -513,18 +553,31 @@ TEST_F(ContextManagerTest, testMultipleGetContextRequests) {
  * timeout period. Check the context that is returned by the @c ContextManager matches the test context.
  */
 TEST_F(ContextManagerTest, testSetProviderTwice) {
-    ASSERT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING, StateRefreshPolicy::ALWAYS,
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            SPEECH_SYNTHESIZER,
+            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
+            StateRefreshPolicy::ALWAYS,
             m_speechSynthesizer->getCurrentstateRequestToken()));
-    ASSERT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(AUDIO_PLAYER, AUDIO_PLAYER_PAYLOAD,
-            StateRefreshPolicy::ALWAYS, m_audioPlayer->getCurrentstateRequestToken()));
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            AUDIO_PLAYER,
+            AUDIO_PLAYER_PAYLOAD,
+            StateRefreshPolicy::ALWAYS,
+            m_audioPlayer->getCurrentstateRequestToken()));
     m_contextManager->getContext(m_contextRequester);
     ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
     ASSERT_EQ(CONTEXT_TEST, m_contextRequester->getContextString());
     // Call setStateProvider for a registered StateProviderInterface.
     m_contextManager->setStateProvider(SPEECH_SYNTHESIZER, m_speechSynthesizer);
-    ASSERT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING, StateRefreshPolicy::ALWAYS,
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            SPEECH_SYNTHESIZER,
+            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
+            StateRefreshPolicy::ALWAYS,
             m_speechSynthesizer->getCurrentstateRequestToken()));
     m_contextManager->getContext(m_contextRequester);
     ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
@@ -537,16 +590,27 @@ TEST_F(ContextManagerTest, testSetProviderTwice) {
  * @c getContext. Expect that failure occurs due to timeout.
  */
 TEST_F(ContextManagerTest, testProvideStateTimeout) {
-    m_alerts = MockStateProvider::create(m_contextManager, ALERTS,
-            ALERTS_PAYLOAD, StateRefreshPolicy::NEVER, TIMEOUT_SLEEP_TIME);
+    m_alerts = MockStateProvider::create(
+        m_contextManager, ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::NEVER, TIMEOUT_SLEEP_TIME);
     m_contextManager->setStateProvider(ALERTS, m_alerts);
-    ASSERT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING, StateRefreshPolicy::ALWAYS,
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            SPEECH_SYNTHESIZER,
+            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
+            StateRefreshPolicy::ALWAYS,
             m_speechSynthesizer->getCurrentstateRequestToken()));
-    ASSERT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(AUDIO_PLAYER, AUDIO_PLAYER_PAYLOAD,
-            StateRefreshPolicy::ALWAYS, m_audioPlayer->getCurrentstateRequestToken()));
-    ASSERT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(ALERTS, ALERTS_PAYLOAD,
-            StateRefreshPolicy::ALWAYS, m_alerts->getCurrentstateRequestToken()));
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            AUDIO_PLAYER,
+            AUDIO_PLAYER_PAYLOAD,
+            StateRefreshPolicy::ALWAYS,
+            m_audioPlayer->getCurrentstateRequestToken()));
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::ALWAYS, m_alerts->getCurrentstateRequestToken()));
     m_contextManager->getContext(m_contextRequester);
     ASSERT_TRUE(m_contextRequester->waitForFailure(FAILURE_TIMEOUT));
 }
@@ -558,8 +622,12 @@ TEST_F(ContextManagerTest, testProvideStateTimeout) {
  */
 TEST_F(ContextManagerTest, testRemoveProvider) {
     m_contextManager->setStateProvider(SPEECH_SYNTHESIZER, nullptr);
-    ASSERT_EQ(SetStateResult::STATE_PROVIDER_NOT_REGISTERED ,m_contextManager->setState(SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING, StateRefreshPolicy::ALWAYS,
+    ASSERT_EQ(
+        SetStateResult::STATE_PROVIDER_NOT_REGISTERED,
+        m_contextManager->setState(
+            SPEECH_SYNTHESIZER,
+            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
+            StateRefreshPolicy::ALWAYS,
             m_speechSynthesizer->getCurrentstateRequestToken()));
 }
 
@@ -571,12 +639,56 @@ TEST_F(ContextManagerTest, testRemoveProvider) {
 TEST_F(ContextManagerTest, testIncorrectToken) {
     m_contextManager->getContext(m_contextRequester);
     ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
-    ASSERT_EQ(SetStateResult::STATE_TOKEN_OUTDATED ,m_contextManager->setState(SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING, StateRefreshPolicy::ALWAYS,
-            m_speechSynthesizer->getCurrentstateRequestToken()+1));
+    ASSERT_EQ(
+        SetStateResult::STATE_TOKEN_OUTDATED,
+        m_contextManager->setState(
+            SPEECH_SYNTHESIZER,
+            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
+            StateRefreshPolicy::ALWAYS,
+            m_speechSynthesizer->getCurrentstateRequestToken() + 1));
 }
 
-} // namespace test
-} // namespace contextManager
-} // namespace alexaClientSDK
+/**
+ * Set the states with a @c StateRefreshPolicy @c ALWAYS for @c StateProviderInterfaces that are registered with the
+ * @c ContextManager. Request for context by calling @c getContext. Expect that the context is returned within the
+ * timeout period.
+ *
+ * There's a dummyProvider with StateRefreshPolicy @c SOMETIMES that returns an empty context.  Check ContextManager is
+ * okay with it and would include the context provided by the dummyProvider.
+ *
+ * Check the context that is returned by the @c ContextManager. Expect it should match the test value.
+ */
+// ACSDK-1217 - ContextManagerTest::testEmptyProvider fails on Windows
+#if !defined(_WIN32) || defined(RESOLVED_ACSDK_1217)
+TEST_F(ContextManagerTest, testEmptyProvider) {
+    auto dummyProvider = MockStateProvider::create(
+        m_contextManager, DUMMY_PROVIDER, "", StateRefreshPolicy::SOMETIMES, DEFAULT_SLEEP_TIME);
+    m_contextManager->setStateProvider(DUMMY_PROVIDER, dummyProvider);
 
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            SPEECH_SYNTHESIZER,
+            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
+            StateRefreshPolicy::ALWAYS,
+            m_speechSynthesizer->getCurrentstateRequestToken()));
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            AUDIO_PLAYER,
+            AUDIO_PLAYER_PAYLOAD,
+            StateRefreshPolicy::ALWAYS,
+            m_audioPlayer->getCurrentstateRequestToken()));
+    ASSERT_EQ(
+        SetStateResult::SUCCESS,
+        m_contextManager->setState(
+            DUMMY_PROVIDER, "", StateRefreshPolicy::ALWAYS, dummyProvider->getCurrentstateRequestToken()));
+    m_contextManager->getContext(m_contextRequester);
+    ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
+    ASSERT_EQ(CONTEXT_TEST, m_contextRequester->getContextString());
+}
+#endif
+
+}  // namespace test
+}  // namespace contextManager
+}  // namespace alexaClientSDK

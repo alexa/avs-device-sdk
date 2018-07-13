@@ -1,7 +1,5 @@
 /*
- * Attachment.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_ATTACHMENT_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_ATTACHMENT_H_
 
 #include <atomic>
 #include <mutex>
@@ -25,6 +23,8 @@
 #include "AVSCommon/AVS/Attachment/AttachmentReader.h"
 #include "AVSCommon/AVS/Attachment/AttachmentWriter.h"
 #include "AVSCommon/Utils/SDS/InProcessSDS.h"
+#include "AVSCommon/Utils/SDS/ReaderPolicy.h"
+#include "AVSCommon/Utils/SDS/WriterPolicy.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -41,7 +41,7 @@ public:
      *
      * @param attachmentId The id for this attachment.
      */
-    Attachment(const std::string & attachmentId);
+    Attachment(const std::string& attachmentId);
 
     /**
      * Destructor.
@@ -53,7 +53,9 @@ public:
      *
      * @return a @unique_ptr to an AttachmentWriter.
      */
-    virtual std::unique_ptr<AttachmentWriter> createWriter() = 0;
+
+    virtual std::unique_ptr<AttachmentWriter> createWriter(
+        utils::sds::WriterPolicy policy = utils::sds::WriterPolicy::ALL_OR_NOTHING) = 0;
 
     /**
      * Creates a reader object, with which the Attachment may be read from.
@@ -61,7 +63,7 @@ public:
      * @param The policy used to configure the reader.
      * @return a @unique_ptr to an AttachmentReader.
      * */
-    virtual std::unique_ptr<AttachmentReader> createReader(AttachmentReader::Policy policy) = 0;
+    virtual std::unique_ptr<AttachmentReader> createReader(utils::sds::ReaderPolicy policy) = 0;
 
     /**
      * An accessor to get the attachmentId.
@@ -95,9 +97,9 @@ protected:
     std::atomic<bool> m_hasCreatedReader;
 };
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_ATTACHMENT_H_

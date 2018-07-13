@@ -1,7 +1,5 @@
 /*
- * ContextRequesterInterface.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,8 +16,8 @@
 /**
  * @file
  */
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_CONTEXT_REQUESTER_INTERFACE_H
-#define ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_CONTEXT_REQUESTER_INTERFACE_H
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_CONTEXTREQUESTERINTERFACE_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_CONTEXTREQUESTERINTERFACE_H_
 
 #include <string>
 #include <ostream>
@@ -44,7 +42,7 @@ enum class ContextRequestError {
  */
 class ContextRequesterInterface {
 public:
-     /**
+    /**
      * Destructor.
      */
     virtual ~ContextRequesterInterface() = default;
@@ -68,7 +66,6 @@ public:
      * @param error The reason why the getContext request failed.
      */
     virtual void onContextFailure(const ContextRequestError error) = 0;
-
 };
 
 /**
@@ -90,8 +87,8 @@ inline std::ostream& operator<<(std::ostream& stream, const ContextRequestError&
     return stream;
 }
 
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_CONTEXT_REQUESTER_INTERFACE_H
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_CONTEXTREQUESTERINTERFACE_H_

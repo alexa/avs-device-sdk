@@ -1,7 +1,5 @@
 /*
- * ConsoleLogger.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +20,8 @@
 
 #include "AVSCommon/Utils/Logger/ConsoleLogger.h"
 #include "AVSCommon/Utils/Logger/LoggerUtils.h"
+#include "AVSCommon/Utils/Logger/ThreadMoniker.h"
+#include "AVSCommon/Utils/SDKVersion.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -31,39 +31,40 @@ namespace logger {
 /// Configuration key for DefaultLogger settings
 static const std::string CONFIG_KEY_DEFAULT_LOGGER = "consoleLogger";
 
-Logger& ConsoleLogger::instance() {
-    static ConsoleLogger singleConsoletLogger;
+std::shared_ptr<Logger> ConsoleLogger::instance() {
+    static std::shared_ptr<Logger> singleConsoletLogger = std::shared_ptr<ConsoleLogger>(new ConsoleLogger);
     return singleConsoletLogger;
 }
 
-/// Mutex to serialize output of log lines to @c std::cout.
-static std::mutex g_coutMutex;
-
 void ConsoleLogger::emit(
-        Level level,
-        std::chrono::system_clock::time_point time,
-        const char *threadMoniker,
-        const char *text) {
-    std::lock_guard<std::mutex> lock(g_coutMutex);
-    std::cout << formatLogString(level, time, threadMoniker, text) << std::endl;
+    Level level,
+    std::chrono::system_clock::time_point time,
+    const char* threadMoniker,
+    const char* text) {
+    std::lock_guard<std::mutex> lock(m_coutMutex);
+    std::cout << m_logFormatter.format(level, time, threadMoniker, text) << std::endl;
 }
 
-ConsoleLogger::ConsoleLogger() :
+ConsoleLogger::ConsoleLogger() : Logger(Level::UNKNOWN) {
 #ifdef DEBUG
-        Logger(Level::DEBUG0)
+    setLevel(Level::DEBUG0);
 #else
-        Logger(Level::INFO)
-#endif // DEBUG
-{
+    setLevel(Level::INFO);
+#endif  // DEBUG
     init(configuration::ConfigurationNode::getRoot()[CONFIG_KEY_DEFAULT_LOGGER]);
+    std::string currentVersionLogEntry("sdkVersion: " + avsCommon::utils::sdkVersion::getCurrentVersion());
+    emit(
+        alexaClientSDK::avsCommon::utils::logger::Level::INFO,
+        std::chrono::system_clock::now(),
+        ThreadMoniker::getThisThreadMoniker().c_str(),
+        currentVersionLogEntry.c_str());
 }
 
-Logger& getConsoleLogger() {
+std::shared_ptr<Logger> getConsoleLogger() {
     return ConsoleLogger::instance();
 }
 
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
-
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

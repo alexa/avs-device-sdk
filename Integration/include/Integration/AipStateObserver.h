@@ -1,7 +1,5 @@
 /*
- * StateObserver.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AIP_STATE_OBSERVER_H_
-#define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AIP_STATE_OBSERVER_H_
+#ifndef ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AIPSTATEOBSERVER_H_
+#define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AIPSTATEOBSERVER_H_
 
 #include <chrono>
 #include <deque>
@@ -30,12 +28,13 @@ namespace integration {
 
 class AipStateObserver : public avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface {
 public:
-	AipStateObserver();
-	void onStateChanged(avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State newState) override;
-	bool checkState(const avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State expectedState, 
-    	const std::chrono::seconds duration = std::chrono::seconds(10));
-	avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State waitForNext (
-			const std::chrono::seconds duration);
+    AipStateObserver();
+    void onStateChanged(avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State newState) override;
+    bool checkState(
+        const avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State expectedState,
+        const std::chrono::seconds duration = std::chrono::seconds(10));
+    avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State waitForNext(
+        const std::chrono::seconds duration);
 
 private:
     avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State m_state;
@@ -44,7 +43,7 @@ private:
     std::deque<avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State> m_queue;
 };
 
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace integration
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AIP_STATE_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_AIPSTATEOBSERVER_H_

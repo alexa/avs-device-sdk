@@ -1,7 +1,5 @@
 /*
- * NamespaceAndName.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_NAMESPACE_AND_NAME_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_NAMESPACE_AND_NAME_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_NAMESPACEANDNAME_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_NAMESPACEANDNAME_H_
 
 #include <string>
 
@@ -40,7 +38,7 @@ public:
      * @param nameSpaceIn The @c namespace value for this instance.
      * @param nameIn The @c name value for this instance.
      */
-    NamespaceAndName(const std::string &nameSpaceIn, const std::string &nameIn);
+    NamespaceAndName(const std::string& nameSpaceIn, const std::string& nameIn);
 
     /// The @c namespace value of this instance.
     const std::string nameSpace;
@@ -56,21 +54,22 @@ public:
  * @param rhs The right hand side of the == operation.
  * @return Whether or not this instance and @c rhs are equivalent.
  */
-    bool operator==(const NamespaceAndName &lhs, const NamespaceAndName &rhs);
+bool operator==(const NamespaceAndName& lhs, const NamespaceAndName& rhs);
 
-} // namespace avs
-} // namespace adsl
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
 namespace std {
 
 /**
  * @ std::hash() specialization defined to allow @c NamespaceAndName to be used as a key in @c std::unordered_map.
  */
-template <> struct hash<alexaClientSDK::avsCommon::avs::NamespaceAndName> {
+template <>
+struct hash<alexaClientSDK::avsCommon::avs::NamespaceAndName> {
     size_t operator()(const alexaClientSDK::avsCommon::avs::NamespaceAndName& in) const;
 };
 
-} // namespace std
+}  // namespace std
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_NAMESPACE_AND_NAME_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_NAMESPACEANDNAME_H_

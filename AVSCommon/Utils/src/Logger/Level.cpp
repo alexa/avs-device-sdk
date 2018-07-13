@@ -1,7 +1,5 @@
 /*
- * Level.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,7 +22,9 @@ namespace avsCommon {
 namespace utils {
 namespace logger {
 
-#define LEVEL_TO_NAME(name) case Level::name: return #name;
+#define LEVEL_TO_NAME(name) \
+    case Level::name:       \
+        return #name;
 
 std::string convertLevelToName(Level in) {
     switch (in) {
@@ -48,7 +48,9 @@ std::string convertLevelToName(Level in) {
     return "UNKNOWN";
 }
 
-#define LEVEL_TO_CHAR(name, ch) case Level::name: return ch;
+#define LEVEL_TO_CHAR(name, ch) \
+    case Level::name:           \
+        return ch;
 
 char convertLevelToChar(Level in) {
     switch (in) {
@@ -72,27 +74,26 @@ char convertLevelToChar(Level in) {
     return '?';
 }
 
-#define NAME_TO_LEVEL(name) {#name, Level::name}
+#define NAME_TO_LEVEL(name) \
+    { #name, Level::name }
 
-Level convertNameToLevel(const std::string &in) {
-    static std::unordered_map<std::string, Level> nameToLevel = {
-            NAME_TO_LEVEL(DEBUG9),
-            NAME_TO_LEVEL(DEBUG8),
-            NAME_TO_LEVEL(DEBUG7),
-            NAME_TO_LEVEL(DEBUG6),
-            NAME_TO_LEVEL(DEBUG5),
-            NAME_TO_LEVEL(DEBUG4),
-            NAME_TO_LEVEL(DEBUG3),
-            NAME_TO_LEVEL(DEBUG2),
-            NAME_TO_LEVEL(DEBUG1),
-            NAME_TO_LEVEL(DEBUG0),
-            NAME_TO_LEVEL(INFO),
-            NAME_TO_LEVEL(WARN),
-            NAME_TO_LEVEL(ERROR),
-            NAME_TO_LEVEL(CRITICAL),
-            NAME_TO_LEVEL(NONE),
-            NAME_TO_LEVEL(UNKNOWN)
-    };
+Level convertNameToLevel(const std::string& in) {
+    static std::unordered_map<std::string, Level> nameToLevel = {NAME_TO_LEVEL(DEBUG9),
+                                                                 NAME_TO_LEVEL(DEBUG8),
+                                                                 NAME_TO_LEVEL(DEBUG7),
+                                                                 NAME_TO_LEVEL(DEBUG6),
+                                                                 NAME_TO_LEVEL(DEBUG5),
+                                                                 NAME_TO_LEVEL(DEBUG4),
+                                                                 NAME_TO_LEVEL(DEBUG3),
+                                                                 NAME_TO_LEVEL(DEBUG2),
+                                                                 NAME_TO_LEVEL(DEBUG1),
+                                                                 NAME_TO_LEVEL(DEBUG0),
+                                                                 NAME_TO_LEVEL(INFO),
+                                                                 NAME_TO_LEVEL(WARN),
+                                                                 NAME_TO_LEVEL(ERROR),
+                                                                 NAME_TO_LEVEL(CRITICAL),
+                                                                 NAME_TO_LEVEL(NONE),
+                                                                 NAME_TO_LEVEL(UNKNOWN)};
     auto it = nameToLevel.find(in);
     if (it != nameToLevel.end()) {
         return it->second;
@@ -100,8 +101,7 @@ Level convertNameToLevel(const std::string &in) {
     return Level::UNKNOWN;
 }
 
-} // namespace logger
-} /// namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
-
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

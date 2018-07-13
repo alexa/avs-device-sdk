@@ -1,7 +1,5 @@
 /*
- * MockTransport.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_TRANSPORT_H_
-#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_TRANSPORT_H_
+#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKTRANSPORT_H_
+#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKTRANSPORT_H_
 
 #include <AVSCommon/AVS/MessageRequest.h>
 
@@ -33,16 +31,17 @@ namespace test {
 
 using ::testing::Return;
 
-class MockTransport: public TransportInterface {
+class MockTransport : public TransportInterface {
 public:
-    MockTransport(): m_id{sNewId++} {};
+    MockTransport() : m_id{sNewId++} {};
 
+    MOCK_METHOD0(doShutdown, void());
     MOCK_METHOD0(connect, bool());
     MOCK_METHOD0(disconnect, void());
     MOCK_METHOD0(isConnected, bool());
     MOCK_METHOD0(isPendingDisconnected, bool());
     MOCK_METHOD1(send, void(std::shared_ptr<avsCommon::avs::MessageRequest>));
-    MOCK_METHOD2(onAttachmentReceived, void(const std::string & contextId, const std::string & message));
+    MOCK_METHOD2(onAttachmentReceived, void(const std::string& contextId, const std::string& message));
 
     const int m_id;
 
@@ -75,9 +74,9 @@ void disconnectMockTransport(MockTransport* transport) {
     ON_CALL(*transport, isConnected()).WillByDefault(Return(false));
 }
 
-} // namespace test
-} // namespace transport
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace transport
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_TRANSPORT_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKTRANSPORT_H_

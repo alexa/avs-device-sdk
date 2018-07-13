@@ -1,22 +1,20 @@
 /*
- * TestableAttachmentManager.h
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates.
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *     http://aws.amazon.com/apache2.0/
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
  */
-#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_ATTACHMENT_MANAGER_H_
-#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_ATTACHMENT_MANAGER_H_
+
+#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_COMMON_TESTABLEATTACHMENTMANAGER_H_
+#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_COMMON_TESTABLEATTACHMENTMANAGER_H_
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 
@@ -35,23 +33,25 @@ public:
      */
     TestableAttachmentManager();
 
-    std::string generateAttachmentId(const std::string & contextId, const std::string & contentId) const override;
+    std::string generateAttachmentId(const std::string& contextId, const std::string& contentId) const override;
 
     bool setAttachmentTimeoutMinutes(std::chrono::minutes timeoutMinutes) override;
 
     std::unique_ptr<avsCommon::avs::attachment::AttachmentWriter> createWriter(
-            const std::string & attachmentId) override;
+        const std::string& attachmentId,
+        avsCommon::utils::sds::WriterPolicy policy) override;
 
     std::unique_ptr<avsCommon::avs::attachment::AttachmentReader> createReader(
-            const std::string & attachmentId, avsCommon::avs::attachment::AttachmentReader::Policy policy) override;
+        const std::string& attachmentId,
+        avsCommon::utils::sds::ReaderPolicy policy) override;
 
 private:
     /// The real AttachmentManager that most functionality routes to.
     std::unique_ptr<avsCommon::avs::attachment::AttachmentManager> m_manager;
 };
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_ATTACHMENT_MANAGER_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_COMMON_TESTABLEATTACHMENTMANAGER_H_

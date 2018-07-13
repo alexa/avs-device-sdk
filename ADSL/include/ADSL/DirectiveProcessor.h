@@ -1,7 +1,5 @@
 /*
- * DirectiveProcessor.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_PROCESSOR_H_
-#define ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_PROCESSOR_H_
+#ifndef ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVEPROCESSOR_H_
+#define ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVEPROCESSOR_H_
 
 #include <condition_variable>
 #include <deque>
@@ -95,6 +93,19 @@ public:
      */
     void shutdown();
 
+    /**
+     * Disable the DirectiveProcessor, queues all outstanding @c AVSDirectives for cancellation and
+     * blocks until the processing of all @c AVSDirectives has completed.
+     */
+    void disable();
+
+    /**
+     * Enable the DirectiveProcessor.
+     *
+     * @return Whether it succeeded to enable the directive processor.
+     */
+    bool enable();
+
 private:
     /**
      * Handle used to identify @c DirectiveProcessor instances referenced by @c DirectiveHandlerResult.
@@ -123,7 +134,9 @@ private:
          * @param processorHandle handle of the @c DirectiveProcessor to forward to the result to.
          * @param directive The @c AVSDirective whose handling result will be specified by this instance.
          */
-        DirectiveHandlerResult(ProcessorHandle processorHandle, std::shared_ptr<avsCommon::avs::AVSDirective> directive);
+        DirectiveHandlerResult(
+            ProcessorHandle processorHandle,
+            std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
         void setCompleted() override;
 
@@ -222,6 +235,9 @@ private:
     /// Whether or not the @c DirectiveProcessor is shutting down.
     bool m_isShuttingDown;
 
+    /// Whether or not the @c DirectiveProcessor is enabled.
+    bool m_isEnabled;
+
     /// The current @c dialogRequestId
     std::string m_dialogRequestId;
 
@@ -259,7 +275,7 @@ private:
     static ProcessorHandle m_nextProcessorHandle;
 };
 
-} // namespace adsl
-} // namespace alexaClientSDK
+}  // namespace adsl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_PROCESSOR_H_
+#endif  // ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVEPROCESSOR_H_

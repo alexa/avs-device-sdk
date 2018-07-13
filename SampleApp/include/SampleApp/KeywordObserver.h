@@ -1,7 +1,5 @@
 /*
- * KeywordObserver.h
- *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_KEYWORD_OBSERVER_H_
-#define ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_KEYWORD_OBSERVER_H_
+#ifndef ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_KEYWORDOBSERVER_H_
+#define ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_KEYWORDOBSERVER_H_
 
 #include <memory>
 #include <string>
@@ -24,6 +22,7 @@
 #include <AVSCommon/AVS/AudioInputStream.h>
 #include <AVSCommon/SDKInterfaces/KeyWordObserverInterface.h>
 #include <DefaultClient/DefaultClient.h>
+#include <ESP/ESPDataProviderInterface.h>
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -38,15 +37,18 @@ public:
      *
      * @param client The default SDK client.
      * @param audioProvider The audio provider from which to stream audio data from.
+     * @parm espProvider The ESP provider to calculate the Ambient and Voice energy from the audio stream.
      */
     KeywordObserver(
-            std::shared_ptr<defaultClient::DefaultClient> client, capabilityAgents::aip::AudioProvider audioProvider);            
+        std::shared_ptr<defaultClient::DefaultClient> client,
+        capabilityAgents::aip::AudioProvider audioProvider,
+        std::shared_ptr<esp::ESPDataProviderInterface> espProvider = nullptr);
 
     void onKeyWordDetected(
-            std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
-            std::string keyword,
-            avsCommon::avs::AudioInputStream::Index beginIndex,
-            avsCommon::avs::AudioInputStream::Index endIndex) override;
+        std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+        std::string keyword,
+        avsCommon::avs::AudioInputStream::Index beginIndex,
+        avsCommon::avs::AudioInputStream::Index endIndex) override;
 
 private:
     /// The default SDK client.
@@ -54,9 +56,12 @@ private:
 
     /// The audio provider.
     capabilityAgents::aip::AudioProvider m_audioProvider;
+
+    /// Echo Spatial Perception (ESP) provider.
+    std::shared_ptr<esp::ESPDataProviderInterface> m_espProvider;
 };
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_KEYWORD_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_KEYWORDOBSERVER_H_

@@ -1,7 +1,5 @@
 /*
- * Level.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LEVEL_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LEVEL_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LEVEL_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LEVEL_H_
 
 #include <string>
 
@@ -99,11 +97,23 @@ char convertLevelToChar(Level level);
  * @return The @c Level corresponding to the specified name. If the @c name is not recognized,
  * returns @c Level::UNKNOWN.
  */
-Level convertNameToLevel(const std::string &name);
+Level convertNameToLevel(const std::string& name);
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+/**
+ * Write a log severity @c Level value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param level The @c Level value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, Level level) {
+    stream << convertLevelToName(level);
+    return stream;
+}
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LEVEL_H_
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
+
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LEVEL_H_

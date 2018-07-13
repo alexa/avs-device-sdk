@@ -1,7 +1,5 @@
 /*
- * ConnectionObserver.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_CONNECTION_OBSERVER_H_
-#define ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_CONNECTION_OBSERVER_H_
+#ifndef ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_CONNECTIONOBSERVER_H_
+#define ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_CONNECTIONOBSERVER_H_
 
 #include <chrono>
 #include <condition_variable>
@@ -31,9 +29,9 @@ namespace sampleApp {
 /**
  * A class that observes the status of authorization and connection to AVS.
  */
-class ConnectionObserver : 
-        public avsCommon::sdkInterfaces::AuthObserverInterface, 
-        public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface{
+class ConnectionObserver
+        : public avsCommon::sdkInterfaces::AuthObserverInterface
+        , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface {
 public:
     /**
      * Constructor.
@@ -41,12 +39,12 @@ public:
     ConnectionObserver();
 
     void onAuthStateChange(
-            avsCommon::sdkInterfaces::AuthObserverInterface::State newState, 
-            avsCommon::sdkInterfaces::AuthObserverInterface::Error error) override;
+        avsCommon::sdkInterfaces::AuthObserverInterface::State newState,
+        avsCommon::sdkInterfaces::AuthObserverInterface::Error error) override;
 
     void onConnectionStatusChanged(
-            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status, 
-            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
 
     /**
      * Waits for the specified authorization state.
@@ -56,8 +54,8 @@ public:
      * @return Whether the state was successfully reached.
      */
     bool waitFor(
-            const avsCommon::sdkInterfaces::AuthObserverInterface::State authState,
-            const std::chrono::seconds duration = std::chrono::seconds(20));
+        const avsCommon::sdkInterfaces::AuthObserverInterface::State authState,
+        const std::chrono::seconds duration = std::chrono::seconds(20));
 
     /**
      * Waits for the specified connection state.
@@ -67,9 +65,9 @@ public:
      * @return Whether the state was successfully reached.
      */
     bool waitFor(
-            const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status connectionStatus,
-            const std::chrono::seconds duration = std::chrono::seconds(20));
-    
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status connectionStatus,
+        const std::chrono::seconds duration = std::chrono::seconds(20));
+
 private:
     /// Internal mutex to serialize access to m_connectionStatus and m_authState states.
     std::mutex m_mutex;
@@ -84,7 +82,7 @@ private:
     avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status m_connectionStatus;
 };
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+}  // namespace sampleApp
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_SAMPLE_APP_INCLUDE_SAMPLE_APP_CONNECTION_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_CONNECTIONOBSERVER_H_

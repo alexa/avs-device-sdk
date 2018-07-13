@@ -1,7 +1,5 @@
 /*
- * ConfigurationNode.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_CONFIGURATION_CONFIGURATION_NODE_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_CONFIGURATION_CONFIGURATION_NODE_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_CONFIGURATION_CONFIGURATIONNODE_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_CONFIGURATION_CONFIGURATIONNODE_H_
 
 #include <chrono>
 #include <iostream>
@@ -53,9 +51,9 @@ namespace configuration {
  * @endcode
  *
  * The configuration is specified via JSON documents with a root object that corresponds to the root
- * @c ConfigurationNode value returned by ConfigurationNode::getRoot().  ConfiguriatonNode Sub-nodes accessed by operator[<key>]
- * correspond to JSON objects values with the of the name <key>.  So, the code example above would return
- * "someStringValue" if the configuration was initialized with the following JSON document:
+ * @c ConfigurationNode value returned by ConfigurationNode::getRoot().  ConfiguriatonNode Sub-nodes accessed by
+ * operator[<key>] correspond to JSON objects values with the of the name <key>.  So, the code example above would
+ * return "someStringValue" if the configuration was initialized with the following JSON document:
  * @code
  *     {
  *         "someComponent" : {
@@ -85,7 +83,7 @@ public:
      *
      * @return Whether the initialization was successful.
      */
-    static bool initialize(const std::vector<std::istream *> &jsonStreams);
+    static bool initialize(const std::vector<std::istream*>& jsonStreams);
 
     /**
      * Uninitialize the global configuration.
@@ -115,7 +113,7 @@ public:
      * @c false if not specified.
      * @return Whether this @c ConfigurationNode has a @c bool value for @c key.
      */
-    bool getBool(const std::string& key, bool *out = nullptr, bool defaultValue = false) const;
+    bool getBool(const std::string& key, bool* out = nullptr, bool defaultValue = false) const;
 
     /**
      * Get @c int value for @c key from this @c ConfigurationNode.
@@ -126,7 +124,7 @@ public:
      * Zero if not specified.
      * @return Whether this @c ConfigurationNode has an @c int value for @c key.
      */
-    bool getInt(const std::string& key, int *out = nullptr, int defaultValue = 0) const;
+    bool getInt(const std::string& key, int* out = nullptr, int defaultValue = 0) const;
 
     /**
      * Get the @c string value for @c key from this @c ConfigurationNode.
@@ -152,11 +150,11 @@ public:
      * value for @c key.  Zero if not specified.
      * @return Whether this @c ConfigurationNode has an integer value for @c key.
      */
-    template<typename InputType, typename OutputType, typename DefaultType>
+    template <typename InputType, typename OutputType, typename DefaultType>
     bool getDuration(
-            const std::string& key,
-            OutputType* out = static_cast<std::chrono::seconds>(0),
-            DefaultType defaultValue = std::chrono::seconds(0)) const;
+        const std::string& key,
+        OutputType* out = static_cast<std::chrono::seconds>(0),
+        DefaultType defaultValue = std::chrono::seconds(0)) const;
 
     /**
      * operator[] to get @c ConfigurationNode value for @c key from this @c ConfigurationNode.
@@ -173,6 +171,25 @@ public:
      * @return Whether the @c ConfigurationNode references a valid object.
      */
     operator bool() const;
+
+    /**
+     * Common logic for getting a value of a specific type.
+     *
+     * @tparam Type The type to be gotten.
+     * @param key The key of the value to get.
+     * @param out Pointer to receive the value. May be nullptr to just test for the presence of the value.
+     * @param defaultValue A default output value if no value of the desired type for @c key is present.
+     * @param isType rapidjson::Value member function to test for the desired type.
+     * @param getType rapidjson::Value member function to get the desired type.
+     * @return Whether a value of the specified @c Type is present for @c key.
+     */
+    template <typename Type>
+    bool getValue(
+        const std::string& key,
+        Type* out,
+        Type defaultValue,
+        bool (rapidjson::Value::*isType)() const,
+        Type (rapidjson::Value::*getType)() const) const;
 
 private:
     /**
@@ -194,25 +211,6 @@ private:
      */
     bool getString(const std::string& key, const char** out, const char* defaultValue) const;
 
-    /**
-     * Common logic for getting a value of a specific type.
-     *
-     * @tparam Type The type to be gotten.
-     * @param key The key of the value to get.
-     * @param out Pointer to receive the value. May be nullptr to just test for the presence of the value.
-     * @param defaultValue A default output value if no value of the desired type for @c key is present.
-     * @param isType rapidjson::Value member function to test for the desired type.
-     * @param getType rapidjson::Value member function to get the desired type.
-     * @return Whether a value of the specified @c Type is present for @c key.
-     */
-    template<typename Type>
-    bool getValue(
-            const std::string& key,
-            Type *out,
-            Type defaultValue,
-            bool (rapidjson::Value::*isType)() const,
-            Type (rapidjson::Value::*getType)() const) const;
-
     /// Object value within the global configuration that this @c ConfigurationNode represents.
     const rapidjson::Value* m_object;
 
@@ -229,7 +227,7 @@ private:
     static ConfigurationNode m_root;
 };
 
-template<typename InputType, typename OutputType, typename DefaultType>
+template <typename InputType, typename OutputType, typename DefaultType>
 bool ConfigurationNode::getDuration(const std::string& key, OutputType* out, DefaultType defaultValue) const {
     int temp;
     auto result = getInt(key, &temp);
@@ -239,9 +237,35 @@ bool ConfigurationNode::getDuration(const std::string& key, OutputType* out, Def
     return result;
 }
 
-} // namespace configuration
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+template <typename Type>
+bool ConfigurationNode::getValue(
+    const std::string& key,
+    Type* out,
+    Type defaultValue,
+    bool (rapidjson::Value::*isType)() const,
+    Type (rapidjson::Value::*getType)() const) const {
+    if (key.empty() || !m_object) {
+        if (out) {
+            *out = defaultValue;
+        }
+        return false;
+    }
+    auto it = m_object->FindMember(key.c_str());
+    if (m_object->MemberEnd() == it || !(it->value.*isType)()) {
+        if (out) {
+            *out = defaultValue;
+        }
+        return false;
+    }
+    if (out) {
+        *out = (it->value.*getType)();
+    }
+    return true;
+}
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_CONFIGURATION_CONFIGURATION_NODE_H_
+}  // namespace configuration
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
+
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_CONFIGURATION_CONFIGURATIONNODE_H_

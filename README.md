@@ -1,3 +1,6 @@
+### IMPORTANT NOTE
+If you are updating from v1.3 or earlier to v1.6, you must update your `AlexaClientSDKConfig.json` to include a Notifications database. An updated sample is available in the quickstart guides for Ubuntu Linux, Raspberry Pi, macOS, and Generic Linux.
+
 ### What is the Alexa Voice Service (AVS)?
 
 The Alexa Voice Service (AVS) enables developers to integrate Alexa directly into their products, bringing the convenience of voice control to any connected device. AVS provides developers with access to a suite of resources to quickly and easily build Alexa-enabled products, including APIs, hardware development kits, software development kits, and documentation.
@@ -6,23 +9,33 @@ The Alexa Voice Service (AVS) enables developers to integrate Alexa directly int
 
 ### Overview of the AVS Device SDK
 
-The AVS Device SDK provides C++-based (11 or later) libraries that leverage the AVS API to create device software for Alexa-enabled products. It is modular and abstracted, providing components for handling discrete functions such as speech capture, audio processing, and communications, with each component exposing the APIs that you can use and customize for your integration. It also includes a sample app, which demonstrates the interactions with AVS.   
+The AVS Device SDK provides C++-based (11 or later) libraries that leverage the AVS API to create device software for Alexa-enabled products. It is modular and abstracted, providing components for handling discrete functions such as speech capture, audio processing, and communications, with each component exposing the APIs that you can use and customize for your integration. It also includes a sample app, which demonstrates the interactions with AVS.
 
 ### Get Started
 
 You can set up the SDK on the following platforms:
-* [Linux or macOS](https://github.com/alexa/avs-device-sdk/wiki/Linux-Quick-Start-Guide)  
-* [Raspberry Pi](https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide) (Raspbian Jessie)  
+* Raspberry Pi (Raspbian Stretch)
+
+1. Download the install script. We recommend running these commands from the home directory (`~/`) or Desktop; however, you can run the script anywhere.
+
+`wget https://raw.githubusercontent.com/xmos/avs-device-sdk/master/tools/Install/setup.sh`
+
+2. Run the setup script:
+
+`sudo bash setup.sh`
+
+You can also prototype with a third party development kit:
+* [XMOS VocalFusion 4-Mic Kit](https://github.com/xmos/vocalfusion-avs-setup) - Learn More [Here](https://developer.amazon.com/alexa-voice-service/dev-kits/xmos-vocal-fusion)
 
 Or if you prefer, you can start with our [SDK API Documentation](https://alexa.github.io/avs-device-sdk/).
 
 ### Learn More About The AVS Device SDK
 
-[Watch this tutorial](https://youtu.be/F5DixCPJYo8) to learn about the how this SDK works and the set up process.  
+[Watch this tutorial](https://youtu.be/F5DixCPJYo8) to learn about the how this SDK works and the set up process.
 
 [![Tutorial](https://img.youtube.com/vi/F5DixCPJYo8/0.jpg)](https://www.youtube.com/watch?v=F5DixCPJYo8)
 
-### SDK Architecture  
+### SDK Architecture
 
 This diagram illustrates the data flows between components that comprise the AVS Device SDK for C++.
 
@@ -32,8 +45,8 @@ This diagram illustrates the data flows between components that comprise the AVS
 
 **Shared Data Stream (SDS)** - A single producer, multi-consumer buffer that allows for the transport of any type of data between a single writer and one or more readers. SDS performs two key tasks:
 
-1. It passes audio data between the audio front end (or Audio Signal Processor), the wake word engine, and the Alexa Communications Library (ACL) before sending to AVS  
-2. It passes data attachments sent by AVS to specific capability agents via the ACL  
+1. It passes audio data between the audio front end (or Audio Signal Processor), the wake word engine, and the Alexa Communications Library (ACL) before sending to AVS
+2. It passes data attachments sent by AVS to specific capability agents via the ACL
 
 SDS is implemented atop a ring buffer on a product-specific memory segment (or user-specified), which allows it to be used for in-process or interprocess communication. Keep in mind, the writer and reader(s) may be in different threads or processes.
 
@@ -61,12 +74,12 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 * [SpeechRecognizer](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechrecognizer) - The interface for speech capture.
 * [SpeechSynthesizer](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechsynthesizer) - The interface for Alexa speech output.
 * [Alerts](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/alerts) - The interface for setting, stopping, and deleting timers and alarms.
-* [AudioPlayer](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/audioplayer) - The interface for managing and controlling audio playback.  
+* [AudioPlayer](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/audioplayer) - The interface for managing and controlling audio playback.
 * [Notifications](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/notifications) - The interface for displaying notifications indicators.
 * [PlaybackController](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/playbackcontroller) - The interface for navigating a playback queue via GUI or buttons.
 * [Speaker](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speaker) - The interface for volume control, including mute and unmute.
-* [System](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system) - The interface for communicating product status/state to AVS.  
-* [TemplateRuntime](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/templateruntime) - The interface for rendering visual metadata.  
+* [System](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system) - The interface for communicating product status/state to AVS.
+* [TemplateRuntime](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/templateruntime) - The interface for rendering visual metadata.
 
 ### Important Considerations
 
@@ -80,18 +93,27 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 
 ### Release Notes and Known Issues
 
-**Note**: Features, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
+**Note**: Feature enhancements, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
-v1.0.3 released 9/19/2017:  
+v1.6.0 released 03/08/2018:
 
-* **Enhancements**  
-  * Implemented `setOffSet` in `MediaPlayer`.    
-  * [Updated `LoggerUtils.cpp`](https://github.com/alexa/avs-device-sdk/issues/77).
+**Enhancements**
+* `rapidJson` is now included with "make install".
+* Updated the `TemplateRuntimeObserverInterface` to support clearing of `displayCards`.
+* Added Windows SDK support, along with an installation script (MinGW-w64).
+* Updated `ContextManager` to ignore context reported by a state provider.
+* The `SharedDataStream` object is now associated by playlist, rather than by URL.
+* Added the `RegistrationManager` component. Now, when a user logs out all persistent user-specific data is cleared from the SDK. The log out functionality can be exercised in the sample app with the new command: `k`.
 
-* **Bug Fixes**  
-  * [Bug fix to address incorrect stop behavior caused when Audio Focus is set to `NONE` and released](https://github.com/alexa/avs-device-sdk/issues/129). 
-  * Bug fix for intermittent failure in `handleMultipleConsecutiveSpeaks`.  
-  * Bug fix for `jsonArrayExist` incorrectly parsing JSON when trying to locate array children.  
-  * Bug fix for ADSL test failures with `sendDirectiveWithoutADialogRequestId`.  
-  * Bug fix for `SpeechSynthesizer` showing the wrong UX state when a burst of `Speak` directives are received.  
-  * Bug fix for recursive loop in `AudioPlayer.Stop`.  
+**Bug Fixes**
+* [Issue 400](https://github.com/alexa/avs-device-sdk/issues/400) Fixed a bug where the alert reminder did not iterate as intended after loss of network connection.
+* [Issue 477](https://github.com/alexa/avs-device-sdk/issues/477) Fixed a bug in which Alexa's weather response was being truncated.
+* Fixed an issue in which there were reports of instability related to the Sensory engine. To correct this, the `portAudio` [`suggestedLatency`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L62) value can now be configured.
+
+**Known Issues**
+* The `ACL` may encounter issues if audio attachments are received but not consumed.
+* `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
+* Music playback doesn't immediately stop when a user barges-in on iHeartRadio.
+* The Windows sample app hangs on exit.
+* GDB receives a `SIGTRAP` when troubleshooting the Windows sample app.
+* `make integration` doesn't work on Windows. Integration tests will need to be run individually.

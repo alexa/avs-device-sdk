@@ -1,7 +1,5 @@
 /*
- * Common.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_TEST_ATTACHMENT_COMMON_COMMON_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_TEST_ATTACHMENT_COMMON_COMMON_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_TEST_ATTACHMENT_COMMON_COMMON_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_TEST_ATTACHMENT_COMMON_COMMON_H_
 
 #include <memory>
 #include <vector>
@@ -57,9 +55,9 @@ std::unique_ptr<avsCommon::utils::sds::InProcessSDS> createSDS(int size);
  */
 std::vector<uint8_t> createTestPattern(int size);
 
-} // namespace test
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_TEST_ATTACHMENT_COMMON_COMMON_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_TEST_ATTACHMENT_COMMON_COMMON_H_

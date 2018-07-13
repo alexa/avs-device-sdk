@@ -1,7 +1,5 @@
 /*
- * JSONParser.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -81,7 +79,6 @@ static std::ostream& operator<<(std::ostream& stream, rapidjson::Type type) {
  * @return @c true If the JSON content was valid, @c false otherwise.
  */
 bool parseJSON(const std::string& jsonContent, rapidjson::Document* document) {
-
     if (!document) {
         ACSDK_ERROR(LX("parseJSONFailed").d("reason", "nullDocument"));
         return false;
@@ -91,8 +88,8 @@ bool parseJSON(const std::string& jsonContent, rapidjson::Document* document) {
 
     if (document->HasParseError()) {
         ACSDK_ERROR(LX("parseJSONFailed")
-                .d("offset", document->GetErrorOffset())
-                .d("error", GetParseError_En(document->GetParseError())));
+                        .d("offset", document->GetErrorOffset())
+                        .d("error", GetParseError_En(document->GetParseError())));
         return false;
     }
     return true;
@@ -105,12 +102,11 @@ bool parseJSON(const std::string& jsonContent, rapidjson::Document* document) {
  * @param[out] value The output parameter where the converted string will be assigned.
  */
 static void serializeJSONObjectToString(const rapidjson::Value& documentNode, std::string* value) {
-
     if (!documentNode.IsObject()) {
         ACSDK_ERROR(LX("serializeJSONObjectToStringFailed")
-                .d("reason", "invalidType")
-                .d("expectedType", rapidjson::Type::kObjectType)
-                .d("type", documentNode.GetType()));
+                        .d("reason", "invalidType")
+                        .d("expectedType", rapidjson::Type::kObjectType)
+                        .d("type", documentNode.GetType()));
         return;
     }
 
@@ -118,16 +114,17 @@ static void serializeJSONObjectToString(const rapidjson::Value& documentNode, st
     rapidjson::Writer<rapidjson::StringBuffer> writer(stringBuffer);
 
     if (!documentNode.Accept(writer)) {
-        ACSDK_ERROR(LX("serializeJSONObjectToStringFailed")
-                .d("reason", "acceptFailed")
-                .d("handler", "Writer"));
+        ACSDK_ERROR(LX("serializeJSONObjectToStringFailed").d("reason", "acceptFailed").d("handler", "Writer"));
         return;
     }
 
     *value = stringBuffer.GetString();
 }
 
-bool findNode(const rapidjson::Value& jsonNode, const std::string& key, rapidjson::Value::ConstMemberIterator* iteratorPtr) {
+bool findNode(
+    const rapidjson::Value& jsonNode,
+    const std::string& key,
+    rapidjson::Value::ConstMemberIterator* iteratorPtr) {
     if (!iteratorPtr) {
         ACSDK_ERROR(LX("findNodeFailed").d("reason", "nullIteratorPtr"));
         return false;
@@ -144,22 +141,12 @@ bool findNode(const rapidjson::Value& jsonNode, const std::string& key, rapidjso
     return true;
 }
 
-// TODO: ACSDK-382  Remove and replace references with the template retrieveValue function
-bool lookupStringValue(const std::string& jsonContent, const std::string& key, std::string* value) {
-    return retrieveValue(jsonContent, key, value);
-}
-
-// TODO: ACSDK-382 Remove and replace references with the template retrieveValue function
-bool lookupInt64Value(const std::string& jsonContent, const std::string& key, int64_t* value) {
-    return retrieveValue(jsonContent, key, value);
-}
-
 // Overloads of convertToValue
 
 bool convertToValue(const rapidjson::Value& documentNode, std::string* value) {
     if (!value) {
-         ACSDK_ERROR(LX("convertToStringValueFailed").d("reason", "nullValue"));
-         return false;
+        ACSDK_ERROR(LX("convertToStringValueFailed").d("reason", "nullValue"));
+        return false;
     }
 
     if (!documentNode.IsString() && !documentNode.IsObject()) {
@@ -167,9 +154,9 @@ bool convertToValue(const rapidjson::Value& documentNode, std::string* value) {
         expectedTypes << rapidjson::Type::kObjectType << "/" << rapidjson::Type::kStringType;
 
         ACSDK_ERROR(LX("convertToStringValueFailed")
-                .d("reason", "invalidType")
-                .d("expectedTypes", expectedTypes.str())
-                .d("type", documentNode.GetType()));
+                        .d("reason", "invalidType")
+                        .d("expectedTypes", expectedTypes.str())
+                        .d("type", documentNode.GetType()));
         return false;
     }
 
@@ -184,8 +171,8 @@ bool convertToValue(const rapidjson::Value& documentNode, std::string* value) {
 
 bool convertToValue(const rapidjson::Value& documentNode, int64_t* value) {
     if (!value) {
-         ACSDK_ERROR(LX("convertToInt64ValueFailed").d("reason", "nullValue"));
-         return false;
+        ACSDK_ERROR(LX("convertToInt64ValueFailed").d("reason", "nullValue"));
+        return false;
     }
 
     if (!documentNode.IsInt64()) {
@@ -198,7 +185,23 @@ bool convertToValue(const rapidjson::Value& documentNode, int64_t* value) {
     return true;
 }
 
-bool jsonArrayExists(const rapidjson::Value & parsedDocument, const std::string & key) {
+bool convertToValue(const rapidjson::Value& documentNode, bool* value) {
+    if (!value) {
+        ACSDK_ERROR(LX("convertToBoolValueFailed").d("reason", "nullValue"));
+        return false;
+    }
+
+    if (!documentNode.IsBool()) {
+        ACSDK_ERROR(LX("convertToBoolValueFailed").d("reason", "invalidValue").d("expectedValue", "Bool"));
+        return false;
+    }
+
+    *value = documentNode.GetBool();
+
+    return true;
+}
+
+bool jsonArrayExists(const rapidjson::Value& parsedDocument, const std::string& key) {
     auto iter = parsedDocument.FindMember(key);
     if (parsedDocument.MemberEnd() == iter) {
         ACSDK_ERROR(LX("lookupArrayExistsFailed").d("reason", "keyNotFound").d("key", key));
@@ -213,8 +216,8 @@ bool jsonArrayExists(const rapidjson::Value & parsedDocument, const std::string 
     return true;
 }
 
-} // namespace jsonUtils
-} // namespace json
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace jsonUtils
+}  // namespace json
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

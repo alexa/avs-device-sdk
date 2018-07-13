@@ -1,7 +1,5 @@
 /*
- * EndpointHandlerTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,7 +12,6 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-
 
 #include <gtest/gtest.h>
 #include <rapidjson/document.h>
@@ -44,7 +41,7 @@ static const std::string ENDPOINTING_NAMESPACE = "System";
 /// This is a string for the correct name the endpointing directive uses.
 static const std::string ENDPOINTING_NAME = "SetEndpoint";
 
-/// This is a string for the wrong name the endpointing directive uses. 
+/// This is a string for the wrong name the endpointing directive uses.
 static const std::string ENDPOINTING_WRONG_NAME = "WrongEndpointer";
 
 /// This string holds the key for the endpoint in the payload.
@@ -118,17 +115,11 @@ TEST_F(EndpointHandlerTest, handleDirectiveProperly) {
     auto directiveSequencer = adsl::DirectiveSequencer::create(m_mockExceptionEncounteredSender);
     directiveSequencer->addDirectiveHandler(endpointHandler);
 
-    auto endpointDirectiveHeader = std::make_shared<AVSMessageHeader>(
-            ENDPOINTING_NAMESPACE,
-            ENDPOINTING_NAME,
-            ENDPOINTING_MESSAGE_ID);
+    auto endpointDirectiveHeader =
+        std::make_shared<AVSMessageHeader>(ENDPOINTING_NAMESPACE, ENDPOINTING_NAME, ENDPOINTING_MESSAGE_ID);
     auto attachmentManager = std::make_shared<StrictMock<attachment::test::MockAttachmentManager>>();
-    std::shared_ptr<AVSDirective> endpointDirective = AVSDirective::create(
-            "",
-            endpointDirectiveHeader,
-            ENDPOINT_PAYLOAD,
-            attachmentManager,
-            "");
+    std::shared_ptr<AVSDirective> endpointDirective =
+        AVSDirective::create("", endpointDirectiveHeader, ENDPOINT_PAYLOAD, attachmentManager, "");
 
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);
@@ -138,7 +129,7 @@ TEST_F(EndpointHandlerTest, handleDirectiveProperly) {
     directiveSequencer->shutdown();
 }
 
-} // namespace test
-} // namespace system
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace system
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK

@@ -1,7 +1,5 @@
 /*
- * ErrorType.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,14 +13,15 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_ERROR_TYPE_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_ERROR_TYPE_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_ERRORTYPE_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_ERRORTYPE_H_
 
 #include <ostream>
 
 namespace alexaClientSDK {
-namespace capabilityAgents {
-namespace audioPlayer {
+namespace avsCommon {
+namespace utils {
+namespace mediaPlayer {
 
 /// Identifies the specific type of error in a @c PlaybackFailed event.
 enum class ErrorType {
@@ -71,8 +70,9 @@ inline std::ostream& operator<<(std::ostream& stream, const ErrorType& errorType
     return stream << errorTypeToString(errorType);
 }
 
-} // namespace audioPlayer
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
+}  // namespace mediaPlayer
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_AUDIO_PLAYER_INCLUDE_AUDIO_PLAYER_ERROR_TYPE_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_ERRORTYPE_H_

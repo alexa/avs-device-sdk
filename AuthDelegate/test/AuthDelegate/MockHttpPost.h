@@ -1,7 +1,5 @@
 /*
- * MockHttpPost.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,28 +13,30 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_AUTHDELEGATE_MOCK_HTTP_POST_H_
-#define ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_AUTHDELEGATE_MOCK_HTTP_POST_H_
+#ifndef ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_AUTHDELEGATE_MOCKHTTPPOST_H_
+#define ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_AUTHDELEGATE_MOCKHTTPPOST_H_
 
 #include <chrono>
 #include <gmock/gmock.h>
 #include <string>
 
-#include "AuthDelegate/HttpPostInterface.h"
+#include "AVSCommon/Utils/LibcurlUtils/HttpPostInterface.h"
 
 namespace alexaClientSDK {
 namespace authDelegate {
 namespace test {
 
 /// Mock HttpPostInterface class
-class MockHttpPost : public HttpPostInterface {
+class MockHttpPost : public avsCommon::utils::libcurlUtils::HttpPostInterface {
 public:
-    MOCK_METHOD4(doPost, long(const std::string& url, const std::string& data, std::chrono::seconds timeout,
-        std::string& body));
+    MOCK_METHOD1(addHTTPHeader, bool(const std::string& header));
+    MOCK_METHOD4(
+        doPost,
+        long(const std::string& url, const std::string& data, std::chrono::seconds timeout, std::string& body));
 };
 
-} // namespace test
-} // namespace authDelegate
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace authDelegate
+}  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_AUTHDELEGATE_MOCK_HTTP_POST_H_
+#endif  // ALEXA_CLIENT_SDK_AUTHDELEGATE_TEST_AUTHDELEGATE_MOCKHTTPPOST_H_

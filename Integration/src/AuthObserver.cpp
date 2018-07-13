@@ -1,7 +1,5 @@
 /*
- * AuthObserver.cpp
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,14 +21,14 @@ namespace integration {
 
 using avsCommon::sdkInterfaces::AuthObserverInterface;
 
-AuthObserver::AuthObserver():
-    m_authState(AuthObserverInterface::State::UNINITIALIZED),
-    m_authError(AuthObserverInterface::Error::NO_ERROR) {
+AuthObserver::AuthObserver() :
+        m_authState(AuthObserverInterface::State::UNINITIALIZED),
+        m_authError(AuthObserverInterface::Error::SUCCESS) {
 }
 
 void AuthObserver::onAuthStateChange(
-        const AuthObserverInterface::State authState,
-        const AuthObserverInterface::Error authError) {
+    const AuthObserverInterface::State authState,
+    const AuthObserverInterface::Error authError) {
     m_authState = authState;
     m_authError = authError;
     m_wakeTrigger.notify_all();
@@ -42,10 +40,8 @@ AuthObserverInterface::State AuthObserver::getAuthState() const {
 
 bool AuthObserver::waitFor(const AuthObserverInterface::State authState, const std::chrono::seconds duration) {
     std::unique_lock<std::mutex> lock(m_mutex);
-    return m_wakeTrigger.wait_for(lock, duration, [this, authState]() {
-        return m_authState == authState;
-    });
+    return m_wakeTrigger.wait_for(lock, duration, [this, authState]() { return m_authState == authState; });
 }
 
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace integration
+}  // namespace alexaClientSDK

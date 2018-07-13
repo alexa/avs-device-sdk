@@ -1,7 +1,5 @@
 /*
- * UUIDGenerationTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,6 +12,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
 #include <string>
 #include <future>
 #include <vector>
@@ -72,8 +71,7 @@ static const unsigned int MAX_TEST_THREADS(10);
 /// The maximum number of retries.
 static const unsigned int MAX_RETRIES(20);
 
-class UUIDGenerationTest : public ::testing::Test {
-};
+class UUIDGenerationTest : public ::testing::Test {};
 
 /**
  * Call @c generateUUID and expect a string of length @c UUID_LENGTH.
@@ -91,7 +89,7 @@ TEST_F(UUIDGenerationTest, testUUIDContainsOnlyHexCharacters) {
     ASSERT_EQ(UUID_LENGTH, uuid.length());
     for (unsigned int i = 0; i < uuid.length(); i++) {
         if (i == HYPHEN1_POSITION || i == HYPHEN2_POSITION || i == HYPHEN3_POSITION || i == HYPHEN4_POSITION) {
-            ASSERT_EQ(HYPHEN,  uuid.substr(i,1));
+            ASSERT_EQ(HYPHEN, uuid.substr(i, 1));
         } else {
             ASSERT_TRUE(isxdigit(uuid[i]));
         }
@@ -102,15 +100,14 @@ TEST_F(UUIDGenerationTest, testUUIDContainsOnlyHexCharacters) {
  * Call @c generateUUID and check that the version is set correctly.
  */
 TEST_F(UUIDGenerationTest, testUUIDVersion) {
-    ASSERT_EQ(UUID_VERSION, generateUUID().substr(UUID_VERSION_OFFSET,1));
+    ASSERT_EQ(UUID_VERSION, generateUUID().substr(UUID_VERSION_OFFSET, 1));
 }
 
 /**
  * Call @c generateUUID and check the variant is set correctly.
  */
 TEST_F(UUIDGenerationTest, testUUIDVariant) {
-    ASSERT_EQ(UUID_VARIANT,  strtoul(generateUUID().substr(UUID_VARIANT_OFFSET,1).c_str(),
-            nullptr, 16) & UUID_VARIANT);
+    ASSERT_EQ(UUID_VARIANT, strtoul(generateUUID().substr(UUID_VARIANT_OFFSET, 1).c_str(), nullptr, 16) & UUID_VARIANT);
 }
 
 /**
@@ -118,10 +115,10 @@ TEST_F(UUIDGenerationTest, testUUIDVariant) {
  */
 TEST_F(UUIDGenerationTest, testUUIDHyphens) {
     std::string uuid = generateUUID();
-    ASSERT_EQ(HYPHEN,  uuid.substr(HYPHEN1_POSITION,1));
-    ASSERT_EQ(HYPHEN,  uuid.substr(HYPHEN2_POSITION,1));
-    ASSERT_EQ(HYPHEN,  uuid.substr(HYPHEN3_POSITION,1));
-    ASSERT_EQ(HYPHEN,  uuid.substr(HYPHEN4_POSITION,1));
+    ASSERT_EQ(HYPHEN, uuid.substr(HYPHEN1_POSITION, 1));
+    ASSERT_EQ(HYPHEN, uuid.substr(HYPHEN2_POSITION, 1));
+    ASSERT_EQ(HYPHEN, uuid.substr(HYPHEN3_POSITION, 1));
+    ASSERT_EQ(HYPHEN, uuid.substr(HYPHEN4_POSITION, 1));
 }
 
 /**
@@ -136,9 +133,9 @@ TEST_F(UUIDGenerationTest, testMultipleRequests) {
         auto uuid = generateUUID();
         uuidsGenerated.insert(uuid);
         ASSERT_EQ(UUID_LENGTH, uuid.length());
-        ASSERT_EQ(UUID_VERSION, uuid.substr(UUID_VERSION_OFFSET,1));
-        ASSERT_EQ(UUID_VARIANT,  strtoul(uuid.substr(UUID_VARIANT_OFFSET,1).c_str(), nullptr, 16) & UUID_VARIANT);
-        ASSERT_EQ(prevSizeOfSet+1, uuidsGenerated.size());
+        ASSERT_EQ(UUID_VERSION, uuid.substr(UUID_VERSION_OFFSET, 1));
+        ASSERT_EQ(UUID_VARIANT, strtoul(uuid.substr(UUID_VARIANT_OFFSET, 1).c_str(), nullptr, 16) & UUID_VARIANT);
+        ASSERT_EQ(prevSizeOfSet + 1, uuidsGenerated.size());
     }
 }
 
@@ -152,7 +149,7 @@ TEST_F(UUIDGenerationTest, testMultipleConcurrentRequests) {
     std::unordered_set<std::string> uuidsGenerated;
 
     for (int i = 0; i < no_of_threads; ++i) {
-        auto future = std::async(std::launch::async, [this]() { return generateUUID(); });
+        auto future = std::async(std::launch::async, []() { return generateUUID(); });
         uuidRequesters.push_back(std::move(future));
     }
 
@@ -161,9 +158,9 @@ TEST_F(UUIDGenerationTest, testMultipleConcurrentRequests) {
         auto uuid = future.get();
         uuidsGenerated.insert(uuid);
         ASSERT_EQ(UUID_LENGTH, uuid.length());
-        ASSERT_EQ(UUID_VERSION, uuid.substr(UUID_VERSION_OFFSET,1));
-        ASSERT_EQ(UUID_VARIANT,  strtoul(uuid.substr(UUID_VARIANT_OFFSET,1).c_str(), nullptr, 16) & UUID_VARIANT);
-        ASSERT_EQ(prevSizeOfSet+1, uuidsGenerated.size());
+        ASSERT_EQ(UUID_VERSION, uuid.substr(UUID_VERSION_OFFSET, 1));
+        ASSERT_EQ(UUID_VARIANT, strtoul(uuid.substr(UUID_VARIANT_OFFSET, 1).c_str(), nullptr, 16) & UUID_VARIANT);
+        ASSERT_EQ(prevSizeOfSet + 1, uuidsGenerated.size());
     }
 }
 
@@ -172,11 +169,10 @@ TEST_F(UUIDGenerationTest, testMultipleConcurrentRequests) {
  */
 TEST_F(UUIDGenerationTest, testAllHexValuesGenerated) {
     std::unordered_set<char> hexCharacters = {
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
-    };
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
     for (unsigned int retry = 0; retry < MAX_RETRIES && !hexCharacters.empty(); retry++) {
         std::string uuid = generateUUID();
-        for (const char &digit : uuid) {
+        for (const char& digit : uuid) {
             hexCharacters.erase(digit);
             if (hexCharacters.empty()) {
                 break;
@@ -187,7 +183,6 @@ TEST_F(UUIDGenerationTest, testAllHexValuesGenerated) {
     ASSERT_TRUE(hexCharacters.empty());
 }
 
-} // namespace test
-} // namespace avsCommon
-} // namespace alexaClientSDK
-
+}  // namespace test
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

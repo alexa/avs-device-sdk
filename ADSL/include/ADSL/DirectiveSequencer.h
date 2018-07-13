@@ -1,7 +1,5 @@
 /*
- * DirectiveSequencer.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_SEQUENCER_H_
-#define ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_SEQUENCER_H_
+#ifndef ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVESEQUENCER_H_
+#define ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVESEQUENCER_H_
 
 #include <condition_variable>
 #include <deque>
@@ -46,7 +44,7 @@ public:
      * @return Returns a new DirectiveSequencer, or nullptr if the operation failed.
      */
     static std::unique_ptr<DirectiveSequencerInterface> create(
-            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
 
     bool addDirectiveHandler(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler) override;
 
@@ -55,6 +53,10 @@ public:
     void setDialogRequestId(const std::string& dialogRequestId) override;
 
     bool onDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive) override;
+
+    void disable() override;
+
+    void enable() override;
 
 private:
     /**
@@ -95,6 +97,9 @@ private:
     /// Whether or not the @c DirectiveReceiver is shutting down.
     bool m_isShuttingDown;
 
+    /// Whether or not the @c DirectiveSequencer is enabled.
+    bool m_isEnabled;
+
     /// Object used to route directives to their assigned handler.
     DirectiveRouter m_directiveRouter;
 
@@ -111,7 +116,7 @@ private:
     std::thread m_receivingThread;
 };
 
-} // namespace adsl
-} // namespace alexaClientSDK
+}  // namespace adsl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVE_SEQUENCER_H_
+#endif  // ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVESEQUENCER_H_

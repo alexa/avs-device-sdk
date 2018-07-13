@@ -1,7 +1,5 @@
 /*
- * SensoryKeywordDetector.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_KWD_SENSORY_INCLUDE_KWD_SENSORY_KEY_WORD_DETECTOR_H_
-#define ALEXA_CLIENT_SDK_KWD_SENSORY_INCLUDE_KWD_SENSORY_KEY_WORD_DETECTOR_H_
+#ifndef ALEXA_CLIENT_SDK_KWD_SENSORY_INCLUDE_SENSORY_SENSORYKEYWORDDETECTOR_H_
+#define ALEXA_CLIENT_SDK_KWD_SENSORY_INCLUDE_SENSORY_SENSORYKEYWORDDETECTOR_H_
 
 #include <atomic>
 #include <string>
@@ -57,13 +55,12 @@ public:
      * @return A new @c SensoryKeywordDetector, or @c nullptr if the operation failed.
      */
     static std::unique_ptr<SensoryKeywordDetector> create(
-            std::shared_ptr<AudioInputStream> stream,
-            avsCommon::utils::AudioFormat audioFormat,
-            std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers, 
-            std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> 
-                keyWordDetectorStateObservers,
-            const std::string& modelFilePath,
-            std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(10));
+        std::shared_ptr<AudioInputStream> stream,
+        avsCommon::utils::AudioFormat audioFormat,
+        std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
+        std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers,
+        const std::string& modelFilePath,
+        std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(10));
 
     /**
      * Destructor.
@@ -86,14 +83,14 @@ private:
      * Sensory in example code.
      */
     SensoryKeywordDetector(
-            std::shared_ptr<AudioInputStream> stream, 
-            std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers, 
-            std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers,
-            avsCommon::utils::AudioFormat audioFormat,
-            std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(10));
+        std::shared_ptr<AudioInputStream> stream,
+        std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
+        std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers,
+        avsCommon::utils::AudioFormat audioFormat,
+        std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(10));
 
     /**
-     * Initializes the stream reader, sets up the Sensory engine, and kicks off a thread to begin processing data from 
+     * Initializes the stream reader, sets up the Sensory engine, and kicks off a thread to begin processing data from
      * the stream. This function should only be called once with each new @c SensoryKeywordDetector.
      *
      * @param modelFilePath The path to the model file.
@@ -151,7 +148,7 @@ private:
     const size_t m_maxSamplesPerPush;
 };
 
-} // namespace kwd
-} // namespace alexaClientSDK
+}  // namespace kwd
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_KWD_SENSORY_INCLUDE_KWD_SENSORY_KEY_WORD_DETECTOR_H_
+#endif  // ALEXA_CLIENT_SDK_KWD_SENSORY_INCLUDE_SENSORY_SENSORYKEYWORDDETECTOR_H_

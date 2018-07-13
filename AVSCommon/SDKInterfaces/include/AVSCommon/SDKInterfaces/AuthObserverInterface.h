@@ -1,7 +1,5 @@
 /*
- * AuthObserverInterface.h
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,8 +16,8 @@
 /**
  * @file
  */
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_AUTH_OBSERVER_INTERFACE_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_AUTH_OBSERVER_INTERFACE_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_AUTHOBSERVERINTERFACE_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_AUTHOBSERVERINTERFACE_H_
 
 #include <ostream>
 
@@ -46,8 +44,8 @@ public:
 
     /// The enum Error encodes possible errors which may occur when changing state.
     enum class Error {
-        /// No error.
-        NO_ERROR,
+        /// Success.
+        SUCCESS,
         /// An unknown body containing no error field has been encountered.
         UNKNOWN_ERROR,
         /// The client authorization failed.
@@ -86,7 +84,7 @@ public:
  * @return The @c ostream that was passed in and written to.
  */
 inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterface::State& state) {
-    switch(state) {
+    switch (state) {
         case AuthObserverInterface::State::UNINITIALIZED:
             stream << "UNINTIALIZED";
             break;
@@ -111,9 +109,9 @@ inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterfac
  * @return The @c ostream that was passed in and written to.
  */
 inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterface::Error& error) {
-    switch(error) {
-        case AuthObserverInterface::Error::NO_ERROR:
-            stream << "NO_ERROR";
+    switch (error) {
+        case AuthObserverInterface::Error::SUCCESS:
+            stream << "SUCCESS";
             break;
         case AuthObserverInterface::Error::UNKNOWN_ERROR:
             stream << "UNKNOWN_ERROR";
@@ -140,8 +138,8 @@ inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterfac
     return stream;
 }
 
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_AUTH_OBSERVER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_AUTHOBSERVERINTERFACE_H_

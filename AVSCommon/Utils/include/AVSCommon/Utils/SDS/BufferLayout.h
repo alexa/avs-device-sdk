@@ -1,7 +1,5 @@
 /*
- * BufferLayout.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_BUFFER_LAYOUT_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_BUFFER_LAYOUT_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_BUFFERLAYOUT_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_BUFFERLAYOUT_H_
 
 #include <cstdint>
 #include <cstddef>
@@ -36,7 +34,7 @@ namespace sds {
  * This is a nested class inside @c SharedDatastream which defines the layout of a @c Buffer for use with a
  * @c SharedDataStream.  This layout begins with a fixed @c Header structure, followed by two arrays of
  * @c Reader @c Indexes, with the remainder allocated to data.  All four of these sections are aligned on a 64-bit
- * boundary. 
+ * boundary.
  */
 template <typename T>
 class SharedDataStream<T>::BufferLayout {
@@ -45,7 +43,7 @@ public:
     static const uint32_t MAGIC_NUMBER = 0x53445348;
 
     /// Version of this header layout.
-    static const uint32_t VERSION = 0;
+    static const uint32_t VERSION = 2;
 
     /**
      * The constructor only initializes a shared pointer to the provided buffer.  Attaching and/or initializing is
@@ -59,7 +57,7 @@ public:
     ~BufferLayout();
 
     /**
-     * This structure defines the header fields for the @c Buffer.  The header fields in the shared @c Buffer are the 
+     * This structure defines the header fields for the @c Buffer.  The header fields in the shared @c Buffer are the
      * mechanism by which SDS instances in different processes share state.  When initializing a new @c Buffer, this
      * struct must be placement-constructed at the base of the @c Buffer.  When accessing a pre-initialized @c Buffer,
      * this struct must be reinterpret_cast from the base of the @c Buffer.
@@ -104,6 +102,12 @@ public:
         Mutex dataAvailableMutex;
 
         /**
+         * This field contains the condition variable used to notify @c Writers that space is available.  Note that
+         * this condition variable does not have a dedicated mutex; the condition is protected by backwardSeekMutex.
+         */
+        ConditionVariable spaceAvailableConditionVariable;
+
+        /**
          * This field contains a mutex used to temporarily hold off @c Readers from seeking backwards in the buffer
          * while a @c Reader is updating @c oldestUnconsumedCursor.  The is necessary to prevent a race condition where
          * a @c Reader::seek() at the same time that a @c Reader is updating @c oldestUnconsumedCursor could result in
@@ -113,6 +117,9 @@ public:
 
         /// This field indicates whether there is an enabled (not closed) @c Writer.
         AtomicBool isWriterEnabled;
+
+        /// This field indicates that a @c Writer had at one point been enabled and then closed.
+        AtomicBool hasWriterBeenClosed;
 
         /**
          * This mutex is used to protect creation of the writer.  In particular, it is locked when attempting to add
@@ -253,7 +260,7 @@ public:
      * @note This function does not require the caller to hold Header::readerEnableMutex.  Reading the enabled flag is
      *     an atomic operation in and of itself.  It is up to the caller to determine whether there are subsequent
      *     operations which depend on the enabled state that might require holding the mutex to avoid a race condition.
-    *
+     *
      * @param id The id of the reader to check the enabled status of.
      * @return @c true if the specified reader is enabled, else @c false.
      */
@@ -410,9 +417,13 @@ template <typename T>
 const std::string SharedDataStream<T>::BufferLayout::TAG = "SdsBufferLayout";
 
 template <typename T>
-SharedDataStream<T>::BufferLayout::BufferLayout(std::shared_ptr<Buffer> buffer):
-        m_buffer{buffer}, m_readerEnabledArray{nullptr}, m_readerCursorArray{nullptr},
-        m_readerCloseIndexArray{nullptr}, m_dataSize{0}, m_data{nullptr} {
+SharedDataStream<T>::BufferLayout::BufferLayout(std::shared_ptr<Buffer> buffer) :
+        m_buffer{buffer},
+        m_readerEnabledArray{nullptr},
+        m_readerCursorArray{nullptr},
+        m_readerCloseIndexArray{nullptr},
+        m_dataSize{0},
+        m_data{nullptr} {
 }
 
 template <typename T>
@@ -455,16 +466,16 @@ bool SharedDataStream<T>::BufferLayout::init(size_t wordSize, size_t maxReaders)
     // Make sure parameters are not too large to store.
     if (wordSize > std::numeric_limits<decltype(Header::wordSize)>::max()) {
         logger::acsdkError(logger::LogEntry(TAG, "initFailed")
-                .d("reason", "wordSizeTooLarge")
-                .d("wordSize", wordSize)
-                .d("wordSizeLimit", std::numeric_limits<decltype(Header::wordSize)>::max()));
+                               .d("reason", "wordSizeTooLarge")
+                               .d("wordSize", wordSize)
+                               .d("wordSizeLimit", std::numeric_limits<decltype(Header::wordSize)>::max()));
         return false;
     }
     if (maxReaders > std::numeric_limits<decltype(Header::maxReaders)>::max()) {
         logger::acsdkError(logger::LogEntry(TAG, "initFailed")
-                .d("reason", "maxReadersTooLarge")
-                .d("maxReaders", maxReaders)
-                .d("maxReadersLimit", std::numeric_limits<decltype(Header::maxReaders)>::max()));
+                               .d("reason", "maxReadersTooLarge")
+                               .d("maxReaders", maxReaders)
+                               .d("maxReadersLimit", std::numeric_limits<decltype(Header::maxReaders)>::max()));
         return false;
     }
 
@@ -472,14 +483,14 @@ bool SharedDataStream<T>::BufferLayout::init(size_t wordSize, size_t maxReaders)
     calculateAndCacheConstants(wordSize, maxReaders);
 
     // Default construction of the Header.
-    auto header = new(getHeader()) Header;
+    auto header = new (getHeader()) Header;
 
     // Default construction of the reader arrays.
     size_t id;
     for (id = 0; id < maxReaders; ++id) {
-        new(m_readerEnabledArray + id) AtomicBool;
-        new(m_readerCursorArray + id) AtomicIndex;
-        new(m_readerCloseIndexArray + id) AtomicIndex;
+        new (m_readerEnabledArray + id) AtomicBool;
+        new (m_readerCursorArray + id) AtomicIndex;
+        new (m_readerCloseIndexArray + id) AtomicIndex;
     }
 
     // Header field initialization.
@@ -489,6 +500,7 @@ bool SharedDataStream<T>::BufferLayout::init(size_t wordSize, size_t maxReaders)
     header->wordSize = wordSize;
     header->maxReaders = maxReaders;
     header->isWriterEnabled = false;
+    header->hasWriterBeenClosed = false;
     header->writeStartCursor = 0;
     header->writeEndCursor = 0;
     header->oldestUnconsumedCursor = 0;
@@ -510,23 +522,23 @@ bool SharedDataStream<T>::BufferLayout::attach() {
     auto header = getHeader();
     if (header->magic != MAGIC_NUMBER) {
         logger::acsdkError(logger::LogEntry(TAG, "attachFailed")
-                .d("reason", "magicNumberMismatch")
-                .d("magicNumber", header->magic)
-                .d("expectedMagicNumber", std::to_string(MAGIC_NUMBER)));
+                               .d("reason", "magicNumberMismatch")
+                               .d("magicNumber", header->magic)
+                               .d("expectedMagicNumber", std::to_string(MAGIC_NUMBER)));
         return false;
     }
     if (header->version != VERSION) {
         logger::acsdkError(logger::LogEntry(TAG, "attachFailed")
-                .d("reason", "incompatibleVersion")
-                .d("version", header->version)
-                .d("expectedVersion", std::to_string(VERSION)));
+                               .d("reason", "incompatibleVersion")
+                               .d("version", header->version)
+                               .d("expectedVersion", std::to_string(VERSION)));
         return false;
     }
     if (header->traitsNameHash != stableHash(T::traitsName)) {
         logger::acsdkError(logger::LogEntry(TAG, "attachFailed")
-                .d("reason", "traitsNameHashMismatch")
-                .d("hash", header->traitsNameHash)
-                .d("expectedHash", stableHash(T::traitsName)));
+                               .d("reason", "traitsNameHashMismatch")
+                               .d("hash", header->traitsNameHash)
+                               .d("expectedHash", stableHash(T::traitsName)));
         return false;
     }
 
@@ -537,10 +549,10 @@ bool SharedDataStream<T>::BufferLayout::attach() {
         return false;
     }
     if (std::numeric_limits<decltype(header->referenceCount)>::max() == header->referenceCount) {
-          logger::acsdkError(logger::LogEntry(TAG, "attachFailed")
-                .d("reason", "bufferMaxUsersExceeded")
-                .d("numUsers", header->referenceCount)
-                .d("maxNumUsers", std::numeric_limits<decltype(header->referenceCount)>::max));
+        logger::acsdkError(logger::LogEntry(TAG, "attachFailed")
+                               .d("reason", "bufferMaxUsersExceeded")
+                               .d("numUsers", header->referenceCount)
+                               .d("maxNumUsers", std::numeric_limits<decltype(header->referenceCount)>::max()));
         return false;
     }
     ++header->referenceCount;
@@ -571,7 +583,7 @@ void SharedDataStream<T>::BufferLayout::detach() {
         m_readerEnabledArray[id].~AtomicBool();
     }
 
-    //Destruction of the Header.
+    // Destruction of the Header.
     header->~Header();
 }
 
@@ -597,9 +609,7 @@ typename SharedDataStream<T>::Index SharedDataStream<T>::BufferLayout::wordsUnti
 
 template <typename T>
 size_t SharedDataStream<T>::BufferLayout::calculateDataOffset(size_t wordSize, size_t maxReaders) {
-    return alignSizeTo(
-            calculateReaderCloseIndexArrayOffset(maxReaders) + (maxReaders * sizeof(AtomicIndex)),
-            wordSize);
+    return alignSizeTo(calculateReaderCloseIndexArrayOffset(maxReaders) + (maxReaders * sizeof(AtomicIndex)), wordSize);
 }
 
 template <typename T>
@@ -611,6 +621,8 @@ void SharedDataStream<T>::BufferLayout::updateOldestUnconsumedCursor() {
 
 template <typename T>
 void SharedDataStream<T>::BufferLayout::updateOldestUnconsumedCursorLocked() {
+    auto header = getHeader();
+
     // Note: as an optimization, we could skip this function if Writer policy is nonblockable (ACSDK-251).
 
     // The only barrier to a blocking writer overrunning a reader is oldestUnconsumedCursor, so we have to be careful
@@ -618,21 +630,26 @@ void SharedDataStream<T>::BufferLayout::updateOldestUnconsumedCursorLocked() {
     // without moving oldestUnconsumedCursor.  Note that readers can continue to read while we are looping; it means
     // oldest may not be completely accurate, but it will always be older than the readers because they are reading
     // away from it.  Also note that backwards seeks (which would break the invariant) are prevented with a mutex which
-    // is held while this function is called.
-    auto header = getHeader();
-    Index oldest = header->writeStartCursor;
+    // is held while this function is called.  Also note that all read cursors may be in the future, so we start with
+    // an unlimited barrier and work back from there.
+    Index oldest = std::numeric_limits<Index>::max();
     for (size_t id = 0; id < header->maxReaders; ++id) {
         // Note that this code is calling isReaderEnabled() without holding readerEnableMutex.  On the surface, this
         // appears to be a race condition because a reader may be disabled and/or re-enabled before the subsequent code
         // reads the cursor, but it turns out to be safe because:
         // - if a reader is enabled, its cursor is valid
-        // - if a reader becomes disabled, its cursor doesn't change
+        // - if a reader becomes disabled, its cursor moves to writeCursor (which will never be the oldest)
         // - if a reader becomes re-enabled, its cursor defaults to writeCursor (which will never be the oldest)
         // - if a reader is created that wants to be at an older index, it gets there by doing a backward seek (which
         //   is locked when this function is called)
         if (isReaderEnabled(id) && getReaderCursorArray()[id] < oldest) {
             oldest = getReaderCursorArray()[id];
         }
+    }
+
+    // If no barrier was found, block at the write cursor so that we retain data until a reader comes along to read it.
+    if (std::numeric_limits<Index>::max() == oldest) {
+        oldest = header->writeStartCursor;
     }
 
     // Now that we've measured the oldest cursor, we can safely update oldestUnconsumedCursor with no risk of an
@@ -643,11 +660,15 @@ void SharedDataStream<T>::BufferLayout::updateOldestUnconsumedCursorLocked() {
     // ('oldestUnconsumedCursor') if it is older than it needs to be.
     if (oldest > header->oldestUnconsumedCursor) {
         header->oldestUnconsumedCursor = oldest;
+
+        // Notify the writer(s).
+        // Note: as an optimization, we could skip this if there are no blocking writers (ACSDK-251).
+        header->spaceAvailableConditionVariable.notify_all();
     }
 }
 
 template <typename T>
-uint32_t SharedDataStream<T>::BufferLayout::stableHash(const char * string) {
+uint32_t SharedDataStream<T>::BufferLayout::stableHash(const char* string) {
     // Simple, stable hash which XORs all bytes of string into the hash value.
     uint32_t hashed = 0;
     size_t pos = 0;
@@ -688,8 +709,7 @@ void SharedDataStream<T>::BufferLayout::calculateAndCacheConstants(size_t wordSi
     auto buffer = reinterpret_cast<uint8_t*>(m_buffer->data());
     m_readerEnabledArray = reinterpret_cast<AtomicBool*>(buffer + calculateReaderEnabledArrayOffset());
     m_readerCursorArray = reinterpret_cast<AtomicIndex*>(buffer + calculateReaderCursorArrayOffset(maxReaders));
-    m_readerCloseIndexArray = reinterpret_cast<AtomicIndex*>(
-            buffer + calculateReaderCloseIndexArrayOffset(maxReaders));
+    m_readerCloseIndexArray = reinterpret_cast<AtomicIndex*>(buffer + calculateReaderCloseIndexArrayOffset(maxReaders));
     m_dataSize = (m_buffer->size() - calculateDataOffset(wordSize, maxReaders)) / wordSize;
     m_data = buffer + calculateDataOffset(wordSize, maxReaders);
 }
@@ -699,9 +719,9 @@ bool SharedDataStream<T>::BufferLayout::isAttached() const {
     return m_data != nullptr;
 }
 
-} // namespace sds
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sds
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_BUFFER_LAYOUT_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_BUFFERLAYOUT_H_

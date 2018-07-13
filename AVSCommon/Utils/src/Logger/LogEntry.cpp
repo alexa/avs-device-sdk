@@ -1,7 +1,5 @@
 /*
- * LogEntry.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -53,7 +51,6 @@ static const std::string BOOL_TRUE = "true";
 
 /// String for boolean FALSE
 static const std::string BOOL_FALSE = "false";
-
 
 LogEntry::LogEntry(const std::string& source, const char* event) : m_hasMetadata(false) {
     m_stream << source << SECTION_SEPARATOR << event;
@@ -140,7 +137,7 @@ void LogEntry::appendEscapedString(const char* in) {
     }
 }
 
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

@@ -1,22 +1,20 @@
 /*
- * TestableMessageObserver.h
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates.
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *     http://aws.amazon.com/apache2.0/
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
  */
-#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_MESSAGE_OBSERVER_H_
-#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_MESSAGE_OBSERVER_H_
+
+#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_COMMON_TESTABLEMESSAGEOBSERVER_H_
+#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_COMMON_TESTABLEMESSAGEOBSERVER_H_
 
 #include <mutex>
 #include <string>
@@ -34,7 +32,7 @@ namespace test {
  */
 class TestableMessageObserver : public avsCommon::sdkInterfaces::MessageObserverInterface {
 public:
-    void receive(const std::string &contextId, const std::string &message) override;
+    void receive(const std::string& contextId, const std::string& message) override;
 
     /**
      * A function to wait for a specific directive to be received.
@@ -43,7 +41,7 @@ public:
      * @param duraton The maximum time the caller should wait for this to occur.
      * @return Whether the directive was received ok within the timeout.
      */
-    bool waitForDirective(const std::string &directiveMessage, const std::chrono::seconds duration);
+    bool waitForDirective(const std::string& directiveMessage, const std::chrono::seconds duration);
 
 private:
     /// Mutex for the cv.
@@ -54,8 +52,8 @@ private:
     std::vector<std::string> m_receivedDirectives;
 };
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_TESTABLE_MESSAGE_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_COMMON_TESTABLEMESSAGEOBSERVER_H_

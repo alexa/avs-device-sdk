@@ -1,7 +1,5 @@
 /*
- * LogEntryStream.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOG_ENTRY_STREAM_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOG_ENTRY_STREAM_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LOGENTRYSTREAM_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LOGENTRYSTREAM_H_
 
 #include <ostream>
 #include "AVSCommon/Utils/Logger/LogEntryBuffer.h"
@@ -30,7 +28,9 @@ namespace logger {
  * A simple override of @c std::ostream specialized to minimizing copying and memory allocations while constructing
  * the text of a LogEntry.
  */
-class LogEntryStream : private LogEntryBuffer, public std::ostream {
+class LogEntryStream
+        : private LogEntryBuffer
+        , public std::ostream {
 public:
     /// Create a new LogEntryStream.
     LogEntryStream();
@@ -43,9 +43,9 @@ public:
     const char* c_str() const;
 };
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOG_ENTRY_STREAM_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LOGENTRYSTREAM_H_

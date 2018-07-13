@@ -1,7 +1,5 @@
 /*
- * NamespaceAndNameTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -44,8 +42,7 @@ static const std::string NAMESPACE_SPEAKER("Speaker");
 static const std::string NAME_SET_VOLUME("SetVolume");
 
 /// NamespaceAndNameTest
-class NamespaceAndNameTest : public ::testing::Test {
-};
+class NamespaceAndNameTest : public ::testing::Test {};
 
 /**
  * Invoke default constructor.  Expect @c nameSpace and @c name properties are both empty strings.
@@ -79,7 +76,7 @@ TEST_F(NamespaceAndNameTest, testInUnorderedMap) {
     ASSERT_NE(testMap[key1], testMap[key2]);
 }
 
-} // namespace test
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

@@ -1,7 +1,5 @@
 /*
- * AVSMessageHeader.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,14 +36,16 @@ std::string AVSMessageHeader::getDialogRequestId() const {
 }
 
 std::string AVSMessageHeader::getAsString() const {
+    // clang-format off
     return std::string() +
            "{\"namespace:\"" + m_namespace +
            "\",name:\"" + m_name +
            "\",messageId:\"" + m_messageId +
            "\",dialogRequestId:\"" + m_dialogRequestId +
            "\"}";
+    // clang-format on
 }
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

@@ -1,7 +1,5 @@
 /*
- * LogEntryStreamTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,7 +24,6 @@ namespace logger {
 namespace test {
 
 using namespace ::testing;
-
 
 /**
  * Class for testing the LogEntryStream class
@@ -95,8 +92,8 @@ TEST_F(LogEntryStreamTest, aLotOfStrings) {
     ASSERT_EQ(strlen(m_stream.c_str()), expected.str().length());
 }
 
-} // namespace test
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

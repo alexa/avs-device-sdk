@@ -1,7 +1,5 @@
 /*
- * Logger.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,7 +23,10 @@ namespace avsCommon {
 namespace utils {
 namespace logger {
 
-/// Configuration key for log level
+/// Configuration key for root level "logger" object.
+static const std::string CONFIG_KEY_LOGGER = "logger";
+
+/// Configuration key for "logLevel" values under "logger" and other per-module objects.
 static const std::string CONFIG_KEY_LOG_LEVEL = "logLevel";
 
 Logger::Logger(Level level) : m_level{level} {
@@ -33,25 +34,29 @@ Logger::Logger(Level level) : m_level{level} {
 
 void Logger::log(Level level, const LogEntry& entry) {
     if (shouldLog(level)) {
-        emit(
-            level,
-            std::chrono::system_clock::now(),
-            ThreadMoniker::getThisThreadMoniker().c_str(),
-            entry.c_str());
+        emit(level, std::chrono::system_clock::now(), ThreadMoniker::getThisThreadMoniker().c_str(), entry.c_str());
     }
 }
 
 void Logger::init(const configuration::ConfigurationNode configuration) {
+    if (!initLogLevel(configuration)) {
+        initLogLevel(configuration::ConfigurationNode::getRoot()[CONFIG_KEY_LOGGER]);
+    }
+}
+
+bool Logger::initLogLevel(const configuration::ConfigurationNode configuration) {
     std::string name;
     if (configuration.getString(CONFIG_KEY_LOG_LEVEL, &name)) {
         Level level = convertNameToLevel(name);
         if (level != Level::UNKNOWN) {
             setLevel(level);
+            return true;
         } else {
             // Log without ACSDK_* macros to avoid recursive invocation of constructor.
             log(Level::ERROR, LogEntry("Logger", "unknownLogLevel").d("name", name));
         }
     }
+    return false;
 }
 
 void Logger::setLevel(Level level) {
@@ -60,9 +65,21 @@ void Logger::setLevel(Level level) {
         m_level = level;
         notifyObserversOnLogLevelChanged();
     }
+#ifndef ACSDK_DEBUG_LOG_ENABLED
+    if (m_level <= Level::DEBUG0) {
+        // Log without ACSDK_* macros to avoid recursive invocation of constructor.
+        log(Level::WARN,
+            LogEntry("Logger", "debugLogLevelSpecifiedWhenDebugLogsCompiledOut")
+                .d("level", m_level)
+                .m("\n"
+                   "\nWARNING: By default DEBUG logs are compiled out of RELEASE builds."
+                   "\nRebuild with the cmake parameter -DCMAKE_BUILD_TYPE=DEBUG to enable debug logs."
+                   "\n"));
+    }
+#endif
 }
 
-void Logger::addLogLevelObserver(LogLevelObserverInterface * observer) {
+void Logger::addLogLevelObserver(LogLevelObserverInterface* observer) {
     {
         std::lock_guard<std::mutex> lock(m_observersMutex);
         m_observers.push_back(observer);
@@ -72,16 +89,14 @@ void Logger::addLogLevelObserver(LogLevelObserverInterface * observer) {
     observer->onLogLevelChanged(m_level);
 }
 
-void Logger::removeLogLevelObserver(LogLevelObserverInterface * observer) {
+void Logger::removeLogLevelObserver(LogLevelObserverInterface* observer) {
     std::lock_guard<std::mutex> lock(m_observersMutex);
 
-    m_observers.erase(
-        std::remove(m_observers.begin(), m_observers.end(), observer),
-        m_observers.end());
+    m_observers.erase(std::remove(m_observers.begin(), m_observers.end(), observer), m_observers.end());
 }
 
 void Logger::notifyObserversOnLogLevelChanged() {
-    std::vector<LogLevelObserverInterface *> observersCopy;
+    std::vector<LogLevelObserverInterface*> observersCopy;
 
     // copy the vector first with the lock
     {
@@ -95,8 +110,7 @@ void Logger::notifyObserversOnLogLevelChanged() {
     }
 }
 
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
-
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

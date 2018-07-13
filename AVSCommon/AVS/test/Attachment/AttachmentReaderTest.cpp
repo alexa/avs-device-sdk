@@ -1,7 +1,5 @@
 /*
- * AttachmentReaderTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -46,7 +44,7 @@ public:
      * Constructor.
      */
     AttachmentReaderTest() :
-            m_readerPolicy{AttachmentReader::Policy::NON_BLOCKING},
+            m_readerPolicy{InProcessSDS::Reader::Policy::NONBLOCKING},
             m_writerPolicy{InProcessSDS::Writer::Policy::ALL_OR_NOTHING} {
     }
 
@@ -72,10 +70,12 @@ public:
      * @param dataOffset The offset into the pattern which is being read from.
      */
     void readAndVerifyResult(
-            std::shared_ptr<InProcessAttachmentReader> reader, size_t resultSize, size_t dataOffset = 0);
+        std::shared_ptr<InProcessAttachmentReader> reader,
+        size_t resultSize,
+        size_t dataOffset = 0);
 
     /// The commonly used AttachmentReader policy.
-    AttachmentReader::Policy m_readerPolicy;
+    ReaderPolicy m_readerPolicy;
     /// The commonly used SDSWriter policy.
     InProcessSDS::Writer::Policy m_writerPolicy;
     /// The commonly used SDS in these tests.
@@ -121,7 +121,6 @@ void AttachmentReaderTest::testMultipleReads(bool closeWriterBeforeReading) {
     int iterationsMax = 10;
 
     while (!done && iterations < iterationsMax) {
-
         auto bytesRead = m_reader->read(result.data(), result.size(), &readStatus);
 
         if (terminalStatus == readStatus) {
@@ -143,7 +142,9 @@ void AttachmentReaderTest::testMultipleReads(bool closeWriterBeforeReading) {
 }
 
 void AttachmentReaderTest::readAndVerifyResult(
-        std::shared_ptr<InProcessAttachmentReader> reader, size_t resultSize, size_t dataOffset) {
+    std::shared_ptr<InProcessAttachmentReader> reader,
+    size_t resultSize,
+    size_t dataOffset) {
     std::vector<uint8_t> result(resultSize);
     auto readStatus = InProcessAttachmentReader::ReadStatus::OK;
     auto numRead = reader->read(result.data(), result.size(), &readStatus);
@@ -209,8 +210,10 @@ TEST_F(AttachmentReaderTest, testAttachmentReaderPartialReadWithSeek) {
     auto reader = InProcessAttachmentReader::create(m_readerPolicy, m_sds, TEST_SDS_SEEK_POSITION);
     ASSERT_NE(reader, nullptr);
 
-    readAndVerifyResult(std::shared_ptr<InProcessAttachmentReader>(
-            std::move(reader)), TEST_SDS_PARTIAL_READ_AMOUNT_IN_BYTES, TEST_SDS_SEEK_POSITION);
+    readAndVerifyResult(
+        std::shared_ptr<InProcessAttachmentReader>(std::move(reader)),
+        TEST_SDS_PARTIAL_READ_AMOUNT_IN_BYTES,
+        TEST_SDS_SEEK_POSITION);
 }
 
 /**
@@ -227,7 +230,7 @@ TEST_F(AttachmentReaderTest, testAttachmentReaderMultipleReadsOfUnfinishedData) 
     testMultipleReads(true);
 }
 
-} // namespace test
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

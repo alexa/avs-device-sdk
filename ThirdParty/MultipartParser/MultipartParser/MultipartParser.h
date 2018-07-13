@@ -23,6 +23,11 @@ private:
 		ERROR,
 		START,
 		START_BOUNDARY,
+		HEADER_START,
+		// Checking for possible duplicate boundary.
+		DUPLICATE_BOUNDARY_START,
+		// Checking for possible duplicate boundary preceded by an empty line.
+		CRLF_DUPLICATE_BOUNDARY_START,
 		HEADER_FIELD_START,
 		HEADER_FIELD,
 		HEADER_VALUE_START,
@@ -43,6 +48,9 @@ private:
 	std::string boundary;
 	bool boundaryIndex[256];
 	std::vector<char> lookbehind;
+	std::string duplicateBoundary;
+	// Buffer from which to replay bytes of what was a potential duplicate boundary
+	std::vector<char> replayBuffer;
 	State state;
 	int flags;
 	size_t index;
@@ -168,14 +176,14 @@ private:
 					flags &= ~PART_BOUNDARY;
 					callback(onPartEnd);
 					callback(onPartBegin);
-					state = HEADER_FIELD_START;
+					state = HEADER_START;
 					return;
 				}
 			} else if (flags & LAST_BOUNDARY) {
 				if (c == HYPHEN) {
-                    callback(onPartEnd);
-                    callback(onEnd);
-                    state = END;
+					callback(onPartEnd);
+					callback(onEnd);
+					state = END;
 				} else {
 					index = 0;
 				}
@@ -262,6 +270,8 @@ public:
 		this->boundary = "\r\n--" + boundary;
 		indexBoundary();
 		lookbehind.resize(boundary.size() + 8);
+		duplicateBoundary = this->boundary + "\r\n";
+		replayBuffer.resize(duplicateBoundary.size() + 1);
 		state = START;
 		errorReason = "No error.";
 	}
@@ -278,8 +288,16 @@ public:
 		size_t boundaryEnd  = boundary.size() - 1;
 		size_t i;
 		char c, cl;
-		
-		for (i = 0; i < len; i++) {
+		// 'i' value to re-instate when done replaying content of replayBuffer.
+		size_t saveI = 0;
+		// 'len' value to re-instate when done replaying content of replayBuffer.
+		size_t saveLen = 0;
+		// 'buffer' value to re-instate when done replaying content of replayBuffer.
+		const char* saveBuffer = nullptr;
+
+		i = 0;
+		while (i < len) {
+
 			c = buffer[i];
 			
 			switch (state) {
@@ -303,7 +321,7 @@ public:
 					}
 					index = 0;
 					callback(onPartBegin);
-					state = HEADER_FIELD_START;
+					state = HEADER_START;
 					break;
 				}
 				if (c != boundary[index + 2]) {
@@ -312,6 +330,46 @@ public:
 				}
 				index++;
 				break;
+			case DUPLICATE_BOUNDARY_START:
+			case CRLF_DUPLICATE_BOUNDARY_START: {
+				size_t offset = (state == DUPLICATE_BOUNDARY_START ? 2 : 0);
+				size_t duplicateIndex = index + offset;
+				if (c != duplicateBoundary[duplicateIndex]) {
+					// Char does not match duplicate boundary.  Abort the check and replay the processed bytes.
+					saveBuffer = buffer;
+					saveLen = len;
+					saveI = i;
+					std::copy(
+							duplicateBoundary.c_str(), duplicateBoundary.c_str() + duplicateIndex + 1,
+							replayBuffer.begin());
+					replayBuffer[duplicateIndex + 1] = c;
+					buffer = &replayBuffer[0];
+					len = duplicateIndex + 2;
+					i = 0;
+					state = HEADER_FIELD;
+					headerFieldMark = i;
+					index = 0;
+				} else if (duplicateIndex + 1 < duplicateBoundary.size()) {
+					// Char matches, continue verifying whether this is a duplicate boundary.
+					index++;
+				} else {
+					// Duplicate boundary detected.  Skip over it.
+					state = HEADER_START;
+				}
+				break;
+			}
+			case HEADER_START:
+				headerFieldMark = i;
+				if (c == HYPHEN) {
+					state = DUPLICATE_BOUNDARY_START;
+					index = 1;
+					break;
+				} else if (c == CR) {
+					state = CRLF_DUPLICATE_BOUNDARY_START;
+					index = 1;
+					break;
+				}
+				// Fall through to HEADER_FIELD_START
 			case HEADER_FIELD_START:
 				state = HEADER_FIELD;
 				headerFieldMark = i;
@@ -385,11 +443,20 @@ public:
 			default:
 				return i;
 			}
+
+			if (++i >= len) {
+				dataCallback(onHeaderField, headerFieldMark, buffer, i, len, false);
+				dataCallback(onHeaderValue, headerValueMark, buffer, i, len, false);
+				dataCallback(onPartData, partDataMark, buffer, i, len, false);
+				// If we have exhausted replayBuffer, resume parsing the original input buffer.
+				if (saveBuffer) {
+				    buffer = saveBuffer;
+					len = saveLen;
+					i = saveI;
+					saveBuffer = nullptr;
+				}
+			}
 		}
-		
-		dataCallback(onHeaderField, headerFieldMark, buffer, i, len, false);
-		dataCallback(onHeaderValue, headerValueMark, buffer, i, len, false);
-		dataCallback(onPartData, partDataMark, buffer, i, len, false);
 		
 		this->index = index;
 		this->state = state;

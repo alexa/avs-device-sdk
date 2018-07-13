@@ -1,7 +1,5 @@
 /*
- * AuthDelegate.cpp
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,10 +23,11 @@
 
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
+#include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
+#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "AuthDelegate/AuthDelegate.h"
-#include "AuthDelegate/HttpPost.h"
 
 namespace alexaClientSDK {
 namespace authDelegate {
@@ -84,7 +83,7 @@ static const std::string POST_DATA_BETWEEN_CLIENT_ID_AND_REFRESH_TOKEN = "&refre
 /// POST data between 'refresh_token' and 'client_secret' that is sent to LWA to refresh the auth token.
 static const std::string POST_DATA_BETWEEN_REFRESH_TOKEN_AND_CLIENT_SECRET = "&client_secret=";
 
-/// This is the property name in the JSON which refers to the access token. 
+/// This is the property name in the JSON which refers to the access token.
 static const std::string JSON_KEY_ACCESS_TOKEN = "access_token";
 
 /// This is the property name in the JSON which refers to the refresh token.
@@ -124,7 +123,7 @@ static const std::unordered_map<std::string, AuthObserverInterface::Error> g_unr
  * @param error The HTTP error code.
  * @return @c true if @c error is unrecoverable, @c false otherwise.
  */
-static bool isUnrecoverable(const std::string & error) {
+static bool isUnrecoverable(const std::string& error) {
     return g_unrecoverableErrorCodeMap.end() != g_unrecoverableErrorCodeMap.find(error);
 }
 
@@ -147,12 +146,12 @@ static bool isUnrecoverable(AuthObserverInterface::Error error) {
  * Helper function that retrieves the Error enum value.
  *
  * @param error The string in the @c error field of packet body.
- * @return the Error enum code corresponding to @c error. If error is "", returns NO_ERROR. If it is an unknown error,
+ * @return the Error enum code corresponding to @c error. If error is "", returns SUCCESS. If it is an unknown error,
  * returns UNKNOWN_ERROR.
  */
-static AuthObserverInterface::Error getErrorCode(const std::string & error) {
+static AuthObserverInterface::Error getErrorCode(const std::string& error) {
     if (error.empty()) {
-        return AuthObserverInterface::Error::NO_ERROR;
+        return AuthObserverInterface::Error::SUCCESS;
     } else {
         auto errorIterator = g_recoverableErrorCodeMap.find(error);
         if (g_recoverableErrorCodeMap.end() != errorIterator) {
@@ -179,47 +178,28 @@ static std::chrono::steady_clock::time_point calculateTimeToRetry(int retryCount
      * @see https://images-na.ssl-images-amazon.com/images/G/01/mwsportal/
      * doc/en_US/offamazonpayments/LoginAndPayWithAmazonIntegrationGuide.pdf
      */
-    static const int retryBackoffTimes[] = {
-        0,     // Retry 1:  0.00s range with 0.5 randomization: [ 0.0s.  0.0s]
-        1000,  // Retry 2:  1.00s range with 0.5 randomization: [ 0.5s,  1.5s]
-        2000,  // Retry 3:  2.00s range with 0.5 randomization: [ 1.0s,  3.0s]
-        4000,  // Retry 4:  5.00s range with 0.5 randomization: [ 2.0s,  6.0s]
-        10000, // Retry 5: 10.00s range with 0.5 randomization: [ 5.0s, 15.0s]
-        30000, // Retry 6: 20.00s range with 0.5 randomization: [15.0s, 45.0s]
-        60000, // Retry 7: 60.00s range with 0.5 randomization: [30.0s, 90.0s]
+    const static std::vector<int> retryBackoffTimes = {
+        0,      // Retry 1:  0.00s range with 50% randomization: [ 0.0s.  0.0s]
+        1000,   // Retry 2:  1.00s range with 50% randomization: [ 0.5s,  1.5s]
+        2000,   // Retry 3:  2.00s range with 50% randomization: [ 1.0s,  3.0s]
+        4000,   // Retry 4:  4.00s range with 50% randomization: [ 2.0s,  6.0s]
+        10000,  // Retry 5: 10.00s range with 50% randomization: [ 5.0s, 15.0s]
+        30000,  // Retry 6: 30.00s range with 50% randomization: [15.0s, 45.0s]
+        60000,  // Retry 7: 60.00s range with 50% randomization: [30.0s, 90.0s]
     };
-    /// Scale of range (relative to table entry) to select a random value from.
-    static const double RETRY_RANDOMIZATION_FACTOR = 0.5;
-    /// Factor to multiply table value by when selecting low end of random values.
-    static const double RETRY_DECREASE_FACTOR = 1 - RETRY_RANDOMIZATION_FACTOR;
-    /// Factor to multiply table value by when selecting high end of random values.
-    static const double RETRY_INCREASE_FACTOR = 1 + RETRY_RANDOMIZATION_FACTOR;
 
-    // Cap count to the size of the table
-    static const int retryTableSize =
-        (sizeof(retryBackoffTimes) / sizeof(retryBackoffTimes[0]));
-    if (retryCount < 0) {
-        retryCount = 0;
-    } else if (retryCount >= retryTableSize) {
-        retryCount = retryTableSize - 1;
-    }
+    // Retry Timer Object.
+    avsCommon::utils::RetryTimer RETRY_TIMER(retryBackoffTimes);
 
-    // Calculate randomized interval to the next retry.
-    std::mt19937 generator(static_cast<unsigned>(std::time(nullptr)));
-    std::uniform_int_distribution<int> distribution(
-        static_cast<int>(retryBackoffTimes[retryCount] * RETRY_DECREASE_FACTOR),
-        static_cast<int>(retryBackoffTimes[retryCount] * RETRY_INCREASE_FACTOR));
-    auto delayMs = std::chrono::milliseconds(distribution(generator));
-    ACSDK_DEBUG(LX("calculatedTimeToRetry").d("delayMs", delayMs.count()));
-
-    return std::chrono::steady_clock::now() + delayMs;
+    return std::chrono::steady_clock::now() + RETRY_TIMER.calculateTimeToRetry(retryCount);
 }
 
 std::unique_ptr<AuthDelegate> AuthDelegate::create() {
-    return AuthDelegate::create(HttpPost::create());
+    return AuthDelegate::create(avsCommon::utils::libcurlUtils::HttpPost::create());
 }
 
-std::unique_ptr<AuthDelegate> AuthDelegate::create(std::unique_ptr<HttpPostInterface> httpPost) {
+std::unique_ptr<AuthDelegate> AuthDelegate::create(
+    std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost) {
     if (!avsCommon::avs::initialization::AlexaClientSDKInit::isInitialized()) {
         ACSDK_ERROR(LX("createFailed").d("reason", "sdkNotInitialized"));
         return nullptr;
@@ -231,14 +211,13 @@ std::unique_ptr<AuthDelegate> AuthDelegate::create(std::unique_ptr<HttpPostInter
     return nullptr;
 }
 
-AuthDelegate::AuthDelegate(std::unique_ptr<HttpPostInterface> httpPost):
-    m_authState{AuthObserverInterface::State::UNINITIALIZED},
-    m_authError{AuthObserverInterface::Error::NO_ERROR},
-    m_isStopping{false},
-    m_expirationTime{std::chrono::time_point<std::chrono::steady_clock>::max()},
-    m_retryCount{0},
-    m_HttpPost{std::move(httpPost)}
-{
+AuthDelegate::AuthDelegate(std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost) :
+        m_authState{AuthObserverInterface::State::UNINITIALIZED},
+        m_authError{AuthObserverInterface::Error::SUCCESS},
+        m_isStopping{false},
+        m_expirationTime{std::chrono::time_point<std::chrono::steady_clock>::max()},
+        m_retryCount{0},
+        m_HttpPost{std::move(httpPost)} {
 }
 
 AuthDelegate::~AuthDelegate() {
@@ -303,12 +282,10 @@ bool AuthDelegate::init() {
     configuration.getString(CONFIG_KEY_LWA_URL, &m_lwaUrl, DEFAULT_LWA_URL);
 
     configuration.getDuration<std::chrono::seconds>(
-            CONFIG_KEY_REQUEST_TIMEOUT, &m_requestTimeout, DEFAULT_REQUEST_TIMEOUT);
+        CONFIG_KEY_REQUEST_TIMEOUT, &m_requestTimeout, DEFAULT_REQUEST_TIMEOUT);
 
     configuration.getDuration<std::chrono::seconds>(
-            CONFIG_KEY_AUTH_TOKEN_REFRESH_HEAD_START,
-            &m_authTokenRefreshHeadStart,
-            DEFAULT_AUTH_TOKEN_REFRESH_HEAD_START);
+        CONFIG_KEY_AUTH_TOKEN_REFRESH_HEAD_START, &m_authTokenRefreshHeadStart, DEFAULT_AUTH_TOKEN_REFRESH_HEAD_START);
 
     if (!m_HttpPost) {
         ACSDK_ERROR(LX("initFailed").d("reason", "nullptrHttPost"));
@@ -320,14 +297,12 @@ bool AuthDelegate::init() {
 }
 
 void AuthDelegate::refreshAndNotifyThreadFunction() {
-    std::function<bool()> isStopping = [this] {
-        return m_isStopping;
-    };
+    std::function<bool()> isStopping = [this] { return m_isStopping; };
 
     while (true) {
         std::unique_lock<std::mutex> lock(m_mutex);
-        bool isAboutToExpire = (AuthObserverInterface::State::REFRESHED == m_authState &&
-                m_expirationTime < m_timeToRefresh);
+        bool isAboutToExpire =
+            (AuthObserverInterface::State::REFRESHED == m_authState && m_expirationTime < m_timeToRefresh);
         auto nextActionTime = (isAboutToExpire ? m_expirationTime : m_timeToRefresh);
         auto nextState = m_authState;
 
@@ -341,7 +316,7 @@ void AuthDelegate::refreshAndNotifyThreadFunction() {
             lock.unlock();
         } else {
             lock.unlock();
-            if (AuthObserverInterface::Error::NO_ERROR == refreshAuthToken()) {
+            if (AuthObserverInterface::Error::SUCCESS == refreshAuthToken()) {
                 nextState = AuthObserverInterface::State::REFRESHED;
             }
         }
@@ -361,16 +336,14 @@ AuthObserverInterface::Error AuthDelegate::refreshAuthToken() {
     }
 
     std::ostringstream postData;
-    postData
-        << POST_DATA_UP_TO_CLIENT_ID << m_clientId
-        << POST_DATA_BETWEEN_CLIENT_ID_AND_REFRESH_TOKEN << m_refreshToken
-        << POST_DATA_BETWEEN_REFRESH_TOKEN_AND_CLIENT_SECRET << m_clientSecret;
+    postData << POST_DATA_UP_TO_CLIENT_ID << m_clientId << POST_DATA_BETWEEN_CLIENT_ID_AND_REFRESH_TOKEN
+             << m_refreshToken << POST_DATA_BETWEEN_REFRESH_TOKEN_AND_CLIENT_SECRET << m_clientSecret;
 
     std::string body;
     auto code = m_HttpPost->doPost(m_lwaUrl, postData.str(), timeout, body);
     auto newError = handleLwaResponse(code, body);
 
-    if (AuthObserverInterface::Error::NO_ERROR == newError) {
+    if (AuthObserverInterface::Error::SUCCESS == newError) {
         m_retryCount = 0;
     } else {
         m_timeToRefresh = calculateTimeToRetry(m_retryCount++);
@@ -386,13 +359,13 @@ AuthObserverInterface::Error AuthDelegate::handleLwaResponse(long code, const st
     rapidjson::Document document;
     if (document.Parse(body.c_str()).HasParseError()) {
         ACSDK_ERROR(LX("handleLwaResponseFailed")
-                .d("reason", "parseJsonFailed")
-                .d("position", document.GetErrorOffset())
-                .d("error", GetParseError_En(document.GetParseError())));
+                        .d("reason", "parseJsonFailed")
+                        .d("position", document.GetErrorOffset())
+                        .d("error", GetParseError_En(document.GetParseError())));
         return AuthObserverInterface::Error::UNKNOWN_ERROR;
     }
 
-    if (HttpPostInterface::HTTP_RESPONSE_CODE_SUCCESS_OK == code) {
+    if (HTTPResponseCode::SUCCESS_OK == code) {
         std::string authToken;
         std::string refreshToken;
         uint64_t expiresInSeconds = 0;
@@ -414,17 +387,17 @@ AuthObserverInterface::Error AuthDelegate::handleLwaResponse(long code, const st
 
         if (authToken.empty() || refreshToken.empty() || expiresInSeconds == 0) {
             ACSDK_ERROR(LX("handleLwaResponseFailed")
-                    .d("authTokenEmpty", authToken.empty())
-                    .d("refreshTokenEmpty", refreshToken.empty())
-                    .d("expiresInSeconds", expiresInSeconds));
+                            .d("authTokenEmpty", authToken.empty())
+                            .d("refreshTokenEmpty", refreshToken.empty())
+                            .d("expiresInSeconds", expiresInSeconds));
             ACSDK_DEBUG(LX("handleLwaresponseFailed").d("body", body));
             return AuthObserverInterface::Error::UNKNOWN_ERROR;
         }
 
         ACSDK_DEBUG(LX("handleLwaResponseSucceeded")
-                .sensitive("refreshToken", refreshToken)
-                .sensitive("authToken", authToken)
-                .d("expiresInSeconds", expiresInSeconds));
+                        .sensitive("refreshToken", refreshToken)
+                        .sensitive("authToken", authToken)
+                        .d("expiresInSeconds", expiresInSeconds));
 
         m_refreshToken = refreshToken;
         m_expirationTime = m_requestTime + std::chrono::seconds(expiresInSeconds);
@@ -433,7 +406,7 @@ AuthObserverInterface::Error AuthDelegate::handleLwaResponse(long code, const st
             std::lock_guard<std::mutex> lock(m_mutex);
             m_authToken = authToken;
         }
-        return AuthObserverInterface::Error::NO_ERROR;
+        return AuthObserverInterface::Error::SUCCESS;
 
     } else {
         std::string error;
@@ -458,7 +431,7 @@ bool AuthDelegate::hasAuthTokenExpired() {
 
 void AuthDelegate::setState(AuthObserverInterface::State newState) {
     std::lock_guard<std::mutex> lock(m_mutex);
-    
+
     if (isUnrecoverable(m_authError)) {
         ACSDK_ERROR(LX("threadStopping").d("reason", "encounteredUnrecoverableError"));
         newState = AuthObserverInterface::State::UNRECOVERABLE_ERROR;
@@ -474,5 +447,5 @@ void AuthDelegate::setState(AuthObserverInterface::State newState) {
     }
 }
 
-} // namespace authDelegate
-} // namespace alexaClientSDK
+}  // namespace authDelegate
+}  // namespace alexaClientSDK

@@ -1,7 +1,5 @@
 /*
- * MockTransportObserver.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_TRANSPORT_OBSERVER_H_
-#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_TRANSPORT_OBSERVER_H_
+#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKTRANSPORTOBSERVER_H_
+#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKTRANSPORTOBSERVER_H_
 
 #include "ACL/MessageRequest.h"
 #include "ACL/Message.h"
@@ -34,7 +32,7 @@ namespace test {
 
 using ::testing::Return;
 
-class MockTransportObserver: public TransportObserverInterface {
+class MockTransportObserver : public TransportObserverInterface {
 public:
     MOCK_METHOD0(onConnected, void());
     MOCK_METHOD1(onDisconnected, void(ConnectionChangedReason));
@@ -42,9 +40,9 @@ public:
     MOCK_METHOD1(onMessageReceived, void(std::shared_ptr<Message>));
 };
 
-} // namespace test
-} // namespace transport
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace transport
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_TRANSPORT_OBSERVER_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKTRANSPORTOBSERVER_H_

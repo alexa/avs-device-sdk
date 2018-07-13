@@ -1,9 +1,5 @@
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOGGERUTILS_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOGGERUTILS_H_
 /*
- * LoggerUtils.h
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +12,9 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LOGGERUTILS_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LOGGERUTILS_H_
 
 #include <chrono>
 
@@ -141,23 +140,19 @@ void acsdkCritical(const LogEntry& entry);
 void logEntry(Level level, const LogEntry& entry);
 
 /**
- * Formats a log message into a printable string with other metadata regarding the log message.
+ * Stream out an array of bytes as a hex dump.
  *
- * @param level The severity Level of this log line.
- * @param time The time that the event to log occurred.
- * @param threadMoniker Moniker of the thread that generated the event.
- * @param text The text of the entry to log.
- * @return The formatted string.
+ * @param stream The stream to render to.
+ * @param prefix A prefix added to each row.
+ * @param width The number of bytes to output per row.
+ * @param data The bytes to render.
+ * @param size The number of bytes to render.
  */
-std::string formatLogString(
-        Level level,
-        std::chrono::system_clock::time_point time,
-        const char *threadMoniker,
-        const char *text);
+void dumpBytesToStream(std::ostream& stream, const char* prefix, size_t width, const unsigned char* data, size_t size);
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_LOGGERUTILS_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LOGGERUTILS_H_

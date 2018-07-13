@@ -1,7 +1,5 @@
 /*
- * DirectiveHandlerInterface.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_DIRECTIVE_HANDLER_INTERFACE_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_DIRECTIVE_HANDLER_INTERFACE_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_DIRECTIVEHANDLERINTERFACE_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_DIRECTIVEHANDLERINTERFACE_H_
 
 #include <memory>
 
@@ -56,7 +54,7 @@ public:
      *
      * @param directive The directive to handle.
      */
-    virtual void handleDirectiveImmediately(std::shared_ptr <avsCommon::avs::AVSDirective> directive) = 0;
+    virtual void handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive) = 0;
 
     /**
      * Notification that a directive has arrived.  This notification gives the DirectiveHandler a chance to
@@ -76,8 +74,8 @@ public:
      * @param result An object to receive the result of the operation.
      */
     virtual void preHandleDirective(
-            std::shared_ptr <avsCommon::avs::AVSDirective> directive,
-            std::unique_ptr <DirectiveHandlerResultInterface> result) = 0;
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive,
+        std::unique_ptr<DirectiveHandlerResultInterface> result) = 0;
 
     /**
      * Handle the action specified by the directive identified by @c messageId. The handling of subsequent directives
@@ -96,7 +94,7 @@ public:
      * @return @c false when @c messageId is not recognized, else @c true.  Any errors related to handling of a valid
      * messageId should be reported using @c DirectiveHandlerResultInterface::setFailed().
      */
-    virtual bool handleDirective(const std::string &messageId) = 0;
+    virtual bool handleDirective(const std::string& messageId) = 0;
 
     /**
      * Cancel an ongoing @c preHandleDirective() or @c handleDirective() operation for the specified @c AVSDirective.
@@ -109,7 +107,7 @@ public:
      *
      * @param messageId The message ID of a directive previously passed to preHandleDirective().
      */
-    virtual void cancelDirective(const std::string &messageId) = 0;
+    virtual void cancelDirective(const std::string& messageId) = 0;
 
     /**
      * Notification that this handler has been de-registered and will not receive any more calls.
@@ -117,7 +115,7 @@ public:
     virtual void onDeregistered() = 0;
 
     /**
-     * Returns the configuration of the directive handler regarding which namespace and name pairs it should handle and 
+     * Returns the configuration of the directive handler regarding which namespace and name pairs it should handle and
      * the appropriate policy for each pair.
      *
      * @return The @c avs::DirectiveHandlerConfiguration of the handler.
@@ -125,8 +123,8 @@ public:
     virtual avs::DirectiveHandlerConfiguration getConfiguration() const = 0;
 };
 
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_DIRECTIVE_HANDLER_INTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_DIRECTIVEHANDLERINTERFACE_H_

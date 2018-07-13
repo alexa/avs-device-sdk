@@ -1,7 +1,5 @@
 /*
- * SharedDataStream.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_SHARED_DATA_STREAM_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_SHARED_DATA_STREAM_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_SHAREDDATASTREAM_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_SHAREDDATASTREAM_H_
 
 #include <cstdint>
 #include <cstddef>
@@ -78,10 +76,10 @@ namespace sds {
  *     methods:
  *     @li @c DefaultConstructible `(std::is_default_constructible<ConditionVariable> == true)`.
  *     @li @c notify_all() unblocks any threads waiting for this condition variable.
- *     @li @c wait(lock) waits indefinitely for @c lock. 
- *     @li @c wait(lock, predicate) waits indefinitely using @c lock for the @c predicate to be satisfied. 
+ *     @li @c wait(lock) waits indefinitely for @c lock.
+ *     @li @c wait(lock, predicate) waits indefinitely using @c lock for the @c predicate to be satisfied.
  *     @li @c wait_for(lock, timeout, predicate) waits using @c lock up to the specified @c timeout for the @c
- *         predicate to be satisfied. 
+ *         predicate to be satisfied.
  *     @li If the stream will be shared between processes, the @c ConditionVariable type *must* be a PODType:
  *         `(std::is_pod<ConditionVariable> == true)`.
  *
@@ -156,9 +154,9 @@ public:
      * @return The new stream if @c buffer was successfully initialized, else @c nullptr.
      */
     static std::unique_ptr<SharedDataStream> create(
-            std::shared_ptr<Buffer> buffer,
-            size_t wordSize = 1,
-            size_t maxReaders = 1);
+        std::shared_ptr<Buffer> buffer,
+        size_t wordSize = 1,
+        size_t maxReaders = 1);
 
     /**
      * This function creates a new @c SharedDataStream using a preinitialized @c Buffer.  This allows a stream to
@@ -251,10 +249,10 @@ public:
      *     previous @c Reader will no longer be used to attempt to read from the stream.
      */
     std::unique_ptr<Reader> createReader(
-            size_t id,
-            typename Reader::Policy policy,
-            bool startWithNewData = false,
-            bool forceReplacement = false);
+        size_t id,
+        typename Reader::Policy policy,
+        bool startWithNewData = false,
+        bool forceReplacement = false);
 
 private:
     /**
@@ -290,11 +288,11 @@ private:
      *     previous @c Reader will no longer be used to attempt to read from the stream.
      */
     std::unique_ptr<Reader> createReaderLocked(
-            size_t id,
-            typename Reader::Policy policy,
-            bool startWithNewData,
-            bool forceReplacement,
-            std::unique_lock<Mutex>* lock);
+        size_t id,
+        typename Reader::Policy policy,
+        bool startWithNewData,
+        bool forceReplacement,
+        std::unique_lock<Mutex>* lock);
 
     /**
      * The tag associated with log entries from this class.
@@ -303,7 +301,6 @@ private:
 
     /// The @c BufferLayout of the shared buffer.
     std::shared_ptr<BufferLayout> m_bufferLayout;
-
 };
 
 template <typename T>
@@ -325,9 +322,9 @@ size_t SharedDataStream<T>::calculateBufferSize(size_t nWords, size_t wordSize, 
 
 template <typename T>
 std::unique_ptr<SharedDataStream<T>> SharedDataStream<T>::create(
-        std::shared_ptr<Buffer> buffer,
-        size_t wordSize,
-        size_t maxReaders) {
+    std::shared_ptr<Buffer> buffer,
+    size_t wordSize,
+    size_t maxReaders) {
     size_t expectedSize = calculateBufferSize(1, wordSize, maxReaders);
     if (0 == expectedSize) {
         // Logged in calcutlateBuffersize().
@@ -337,9 +334,9 @@ std::unique_ptr<SharedDataStream<T>> SharedDataStream<T>::create(
         return nullptr;
     } else if (expectedSize > buffer->size()) {
         logger::acsdkError(logger::LogEntry(TAG, "createFailed")
-                .d("reason", "bufferSizeTooSmall")
-                .d("bufferSize", buffer->size())
-                .d("expectedSize", expectedSize));
+                               .d("reason", "bufferSizeTooSmall")
+                               .d("bufferSize", buffer->size())
+                               .d("expectedSize", expectedSize));
         return nullptr;
     }
 
@@ -378,14 +375,15 @@ size_t SharedDataStream<T>::getWordSize() const {
 }
 
 template <typename T>
-std::unique_ptr<typename SharedDataStream<T>::Writer>
-SharedDataStream<T>::createWriter(typename Writer::Policy policy, bool forceReplacement) {
+std::unique_ptr<typename SharedDataStream<T>::Writer> SharedDataStream<T>::createWriter(
+    typename Writer::Policy policy,
+    bool forceReplacement) {
     auto header = m_bufferLayout->getHeader();
     std::lock_guard<Mutex> lock(header->writerEnableMutex);
     if (header->isWriterEnabled && !forceReplacement) {
         logger::acsdkError(logger::LogEntry(TAG, "createWriterFailed")
-                .d("reason", "existingWriterAttached")
-                .d("forceReplacement", "false"));
+                               .d("reason", "existingWriterAttached")
+                               .d("forceReplacement", "false"));
         return nullptr;
     } else {
         return std::unique_ptr<Writer>(new Writer(policy, m_bufferLayout));
@@ -393,8 +391,9 @@ SharedDataStream<T>::createWriter(typename Writer::Policy policy, bool forceRepl
 }
 
 template <typename T>
-std::unique_ptr<typename SharedDataStream<T>::Reader>
-SharedDataStream<T>::createReader(typename Reader::Policy policy, bool startWithNewData) {
+std::unique_ptr<typename SharedDataStream<T>::Reader> SharedDataStream<T>::createReader(
+    typename Reader::Policy policy,
+    bool startWithNewData) {
     std::unique_lock<Mutex> lock(m_bufferLayout->getHeader()->readerEnableMutex);
     for (size_t id = 0; id < m_bufferLayout->getHeader()->maxReaders; ++id) {
         if (!m_bufferLayout->isReaderEnabled(id)) {
@@ -406,12 +405,11 @@ SharedDataStream<T>::createReader(typename Reader::Policy policy, bool startWith
 }
 
 template <typename T>
-std::unique_ptr<typename SharedDataStream<T>::Reader>
-SharedDataStream<T>::createReader(
-        size_t id,
-        typename Reader::Policy policy,
-        bool startWithNewData,
-        bool forceReplacement) {
+std::unique_ptr<typename SharedDataStream<T>::Reader> SharedDataStream<T>::createReader(
+    size_t id,
+    typename Reader::Policy policy,
+    bool startWithNewData,
+    bool forceReplacement) {
     std::unique_lock<Mutex> lock(m_bufferLayout->getHeader()->readerEnableMutex);
     return createReaderLocked(id, policy, startWithNewData, forceReplacement, &lock);
 }
@@ -422,18 +420,17 @@ SharedDataStream<T>::SharedDataStream(std::shared_ptr<Buffer> buffer) :
 }
 
 template <typename T>
-std::unique_ptr<typename SharedDataStream<T>::Reader>
-SharedDataStream<T>::createReaderLocked(
-        size_t id,
-        typename Reader::Policy policy,
-        bool startWithNewData,
-        bool forceReplacement,
-        std::unique_lock<Mutex> * lock) {
+std::unique_ptr<typename SharedDataStream<T>::Reader> SharedDataStream<T>::createReaderLocked(
+    size_t id,
+    typename Reader::Policy policy,
+    bool startWithNewData,
+    bool forceReplacement,
+    std::unique_lock<Mutex>* lock) {
     if (m_bufferLayout->isReaderEnabled(id) && !forceReplacement) {
         logger::acsdkError(logger::LogEntry(TAG, "createReaderLockedFailed")
-                .d("reason", "readerAlreadyAttached")
-                .d("readerId", id)
-                .d("forceReplacement", "false"));
+                               .d("reason", "readerAlreadyAttached")
+                               .d("readerId", id)
+                               .d("forceReplacement", "false"));
         return nullptr;
     } else {
         // Note: Reader constructor does not call updateUnconsumedCursor() automatically, because we may be seeking to
@@ -460,13 +457,13 @@ SharedDataStream<T>::createReaderLocked(
     }
 }
 
-} // namespace sds
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sds
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
 #include "BufferLayout.h"
 #include "Reader.h"
 #include "Writer.h"
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_SDS_SHARED_DATA_STREAM_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDS_SHAREDDATASTREAM_H_

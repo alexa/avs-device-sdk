@@ -1,7 +1,5 @@
 /*
- * InProcessAttachment.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_IN_PROCESS_ATTACHMENT_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_IN_PROCESS_ATTACHMENT_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_INPROCESSATTACHMENT_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_INPROCESSATTACHMENT_H_
 
 #include "AVSCommon/AVS/Attachment/Attachment.h"
 #include "AVSCommon/AVS/Attachment/InProcessAttachmentReader.h"
@@ -47,20 +45,22 @@ public:
      * @param id The attachment id.
      * @param sds The underlying @c SharedDataStream object.  If not specified, then this class will create its own.
      */
-    InProcessAttachment(const std::string & id, std::unique_ptr<SDSType> sds = nullptr);
+    InProcessAttachment(const std::string& id, std::unique_ptr<SDSType> sds = nullptr);
 
-    std::unique_ptr<AttachmentWriter> createWriter() override;
+    std::unique_ptr<AttachmentWriter> createWriter(
+        InProcessAttachmentWriter::SDSTypeWriter::Policy policy =
+            InProcessAttachmentWriter::SDSTypeWriter::Policy::ALL_OR_NOTHING) override;
 
-    std::unique_ptr<AttachmentReader> createReader(AttachmentReader::Policy policy) override;
+    std::unique_ptr<AttachmentReader> createReader(InProcessAttachmentReader::SDSTypeReader::Policy policy) override;
 
 private:
     // The sds from which we will create the reader and writer.
     std::shared_ptr<SDSType> m_sds;
 };
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_IN_PROCESS_ATTACHMENT_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_INPROCESSATTACHMENT_H_

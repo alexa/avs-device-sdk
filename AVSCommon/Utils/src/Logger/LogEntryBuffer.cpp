@@ -1,7 +1,5 @@
 /*
- * LogEntryBuffer.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -69,7 +67,7 @@ const char* LogEntryBuffer::c_str() const {
     return m_base;
 }
 
-} // namespace logger
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

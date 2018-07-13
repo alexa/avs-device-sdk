@@ -1,7 +1,5 @@
 /*
- * HTTP2Stream.h
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_STREAM_H_
-#define ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_STREAM_H_
+#ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2STREAM_H_
+#define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2STREAM_H_
 
 #include <atomic>
 #include <chrono>
@@ -25,11 +23,21 @@
 #include <string>
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h>
+#include <AVSCommon/Utils/Logger/LogStringFormatter.h>
 #include <AVSCommon/AVS/MessageRequest.h>
+#include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
 
-#include "ACL/Transport/CurlEasyHandleWrapper.h"
 #include "ACL/Transport/MimeParser.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
+
+/// Whether or not curl logs should be emitted.
+#ifdef ACSDK_EMIT_SENSITIVE_LOGS
+
+#define ACSDK_EMIT_CURL_LOGS
+#include <fstream>
+
+#endif
 
 namespace alexaClientSDK {
 namespace acl {
@@ -42,22 +50,14 @@ class HTTP2Transport;
  */
 class HTTP2Stream {
 public:
-    enum HTTPResponseCodes{
-        /// No HTTP response received.
-        NO_RESPONSE_RECEIVED = 0,
-        /// HTTP Success with reponse payload.
-        SUCCESS_OK = 200,
-        /// HTTP Succcess with no response payload.
-        SUCCESS_NO_CONTENT = 204
-    };
-
     /**
      * Constructor.
      *
      * @param messageConsumer The MessageConsumerInterface which should receive messages from AVS.
      * @param attachmentManager The attachment manager.
      */
-    HTTP2Stream(MessageConsumerInterface *messageConsumer,
+    HTTP2Stream(
+        std::shared_ptr<MessageConsumerInterface> messageConsumer,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager);
 
     /**
@@ -70,8 +70,10 @@ public:
      * @param request The MessageRequest to post
      * @returns true if setup was successful
      */
-    bool initPost(const std::string& url, const std::string& authToken,
-          std::shared_ptr<avsCommon::avs::MessageRequest> request);
+    bool initPost(
+        const std::string& url,
+        const std::string& authToken,
+        std::shared_ptr<avsCommon::avs::MessageRequest> request);
 
     /**
      * Initializes streams that are supposed to perform an HTTP GET
@@ -117,19 +119,19 @@ public:
      *
      * @param status The completion status.
      */
-    void notifyRequestObserver(avsCommon::avs::MessageRequest::Status status);
+    void notifyRequestObserver(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status);
 
     /**
      * Callback that gets executed when data is received from the server
      * See CurlEasyHandleWrapper::CurlCallback for details
      */
-    static size_t writeCallback(char *data, size_t size, size_t nmemb, void *userData);
+    static size_t writeCallback(char* data, size_t size, size_t nmemb, void* userData);
 
     /**
      * Callback that gets executed when HTTP headers are received from the server
      * See CurlEasyHandleWrapper::CurlCallback for details
      */
-    static size_t headerCallback(char *data, size_t size, size_t nmemb, void *userData);
+    static size_t headerCallback(char* data, size_t size, size_t nmemb, void* userData);
 
     /**
      * Callback that gets executed when the server requires data.
@@ -141,7 +143,7 @@ public:
      * @param userData Some user data passed in with CURLOPT_READDATA.
      * @return The amount of bytes read.
      */
-    static size_t readCallback(char *data, size_t size, size_t nmemb, void *userData);
+    static size_t readCallback(char* data, size_t size, size_t nmemb, void* userData);
 
     /**
      * Sets the max amount of time in seconds the stream can take. If not set explicitly there is no timeout.
@@ -161,19 +163,21 @@ public:
     bool setConnectionTimeout(const std::chrono::seconds timeoutSeconds);
 
     /**
-     * Update the paused status of the stream.  This will take actual effect at the next point of usage with respect
-     * to the underlying network library implementation.
-     *
-     * @param isPaused The new value to set the paused state.
+     * Un-pend all transfers for this stream
      */
-    void setPaused(bool isPaused);
+    void unPause();
 
     /**
-     * Queries whether this stream is paused.
-     *
-     * @return Whether the stream is paused or not.
+     * Return whether this stream has pending transfers.
      */
     bool isPaused() const;
+
+    /**
+     * Set the logical stream ID for this stream.
+     *
+     * @param logicalStreamId The new value for this streams logical stream ID.
+     */
+    void setLogicalStreamId(int logicalStreamId);
 
     /**
      * Get the logical ID of this stream.
@@ -189,7 +193,7 @@ public:
      * @tparam TickPeriod @c std::ratio specifying ticks per second.
      * @param duration Max time the stream may make no progress before @c getHasProgressTimedOut() returns true.
      */
-    template<class TickType, class TickPeriod = std::ratio<1>>
+    template <class TickType, class TickPeriod = std::ratio<1>>
     void setProgressTimeout(std::chrono::duration<TickType, TickPeriod> duration);
 
     /**
@@ -198,6 +202,14 @@ public:
      * @return Whether or not the progress timeout has been reached.
      */
     bool hasProgressTimedOut() const;
+
+    /**
+     * Return a reference to the LogStringFormatter owned by this object.  This is to allow a callback that uses this
+     * object to get access to a known good LogStringFormatter.
+     *
+     * @return A reference to a LogStringFormatter.
+     */
+    const avsCommon::utils::logger::LogStringFormatter& getLogFormatter() const;
 
 private:
     /**
@@ -208,11 +220,44 @@ private:
     bool setCommonOptions(const std::string& url, const std::string& authToken);
 
     /**
-     * A static counter to ensure each newly created stream has a different id.  The notion of a streamId is needed
-     * to provide a per-HTTP/2-stream context for any given attachment received from AVS.  AVS can only guarantee that
-     * the identifying 'contentId' for an attachment is unique within a HTTP/2 stream, hence this variable.
+     * Helper function for calling @c curl_easy_setopt and checking the result.
+     *
+     * @param option The option parameter to pass through to curl_easy_setopt.
+     * @param optionName The name of the option to be set (for logging)
+     * @param param The param option to pass through to curl_easy_setopt.
+     * @return @c true of the operation was successful.
      */
-    static unsigned int m_streamIdCounter;
+    template <typename ParamType>
+    bool setopt(CURLoption option, const char* optionName, ParamType param);
+
+    /**
+     * Initialize capturing this streams activities in a log file.
+     */
+    void initStreamLog();
+
+#ifdef ACSDK_EMIT_CURL_LOGS
+
+    /**
+     * Callback that is invoked when @c libcurl has debug information to provide.
+     *
+     * @param handle @c libcurl handle of the transfer being reported upon.
+     * @param type The type of data being reported.
+     * @param data Pointer to the data being provided.
+     * @param size Size (in bytes) of the data being reported.
+     * @param user User pointer used to pass which HTTP2Stream is being reported on.
+     * @return Always returns zero.
+     */
+    static int debugFunction(CURL* handle, curl_infotype type, char* data, size_t size, void* user);
+
+    /// File to log the stream I/O to
+    std::unique_ptr<std::ofstream> m_streamLog;
+    /// File to dump data streamed in
+    std::unique_ptr<std::ofstream> m_streamInDump;
+    /// File to dump data streamed out
+    std::unique_ptr<std::ofstream> m_streamOutDump;
+
+#endif  // ACSDK_EMIT_CURL_LOGS
+
     /**
      * The logical id for this particular object instance.  (see note for @c m_streamIdCounter in this class).
      * @note This is NOT the actual HTTP/2 stream id.  Instead, this is an id which this class generates which is
@@ -221,12 +266,12 @@ private:
      */
     unsigned int m_logicalStreamId;
     /// The underlying curl easy handle.
-    CurlEasyHandleWrapper m_transfer;
+    avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper m_transfer;
     /// An DirectiveParser instance used to parse multipart MIME messages.
     MimeParser m_parser;
     /// The current request being sent on this HTTP/2 stream.
     std::shared_ptr<avsCommon::avs::MessageRequest> m_currentRequest;
-    /// A local variable to track if this stream is paused with respect to libcurl management.
+    /// Whether this stream has any paused transfers.
     bool m_isPaused;
     /**
      * The exception message being received from AVS by this stream.  It may be built up over several calls if either
@@ -237,14 +282,16 @@ private:
     std::atomic<std::chrono::steady_clock::rep> m_progressTimeout;
     /// Last time something was transferred.
     std::atomic<std::chrono::steady_clock::rep> m_timeOfLastTransfer;
+    /// Object to format log strings correctly.
+    avsCommon::utils::logger::LogStringFormatter m_logFormatter;
 };
 
-template<class TickType, class TickPeriod>
+template <class TickType, class TickPeriod>
 void HTTP2Stream::setProgressTimeout(std::chrono::duration<TickType, TickPeriod> duration) {
     m_progressTimeout = std::chrono::duration_cast<std::chrono::steady_clock::duration>(duration).count();
 };
 
-} // acl
-} // alexaClientSDK
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXACLIENTSDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2_STREAM_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2STREAM_H_

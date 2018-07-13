@@ -1,7 +1,5 @@
 /*
- * AttachmentReader.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,11 +13,13 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_READER_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_READER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_ATTACHMENTREADER_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_ATTACHMENTREADER_H_
 
 #include <chrono>
 #include <cstddef>
+
+#include "AVSCommon/Utils/SDS/ReaderPolicy.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -31,16 +31,6 @@ namespace attachment {
  */
 class AttachmentReader {
 public:
-    /**
-     * An enum class to allow configuration of the type of reader.
-     */
-    enum class Policy {
-        /// A read of n bytes will not return until n bytes are available, or a timeout occurs.
-        BLOCKING,
-        /// A read of n bytes will return immediately, whether n bytes were available or not.
-        NON_BLOCKING
-    };
-
     /**
      * An enum class to communicate the possible states following a @c read() call.
      */
@@ -84,8 +74,27 @@ public:
      * reader policy.
      * @return The number of bytes read as a result of this call.
      */
-    virtual std::size_t read(void* buf, std::size_t numBytes, ReadStatus* readStatus,
-                             std::chrono::milliseconds timeoutMs = std::chrono::milliseconds(0)) = 0;
+    virtual std::size_t read(
+        void* buf,
+        std::size_t numBytes,
+        ReadStatus* readStatus,
+        std::chrono::milliseconds timeoutMs = std::chrono::milliseconds(0)) = 0;
+
+    /**
+     * The seek function.
+     *
+     * @param offset The offset to seek to within the @c Attachment.
+     * @return @c true if the specified position points at unexpired data, or @c false otherwise. Note that it is valid
+     * to seek into a future index that has not been written to yet.
+     */
+    virtual bool seek(uint64_t offset) = 0;
+
+    /**
+     * Utility function to return the number of bytes in an attachment.
+     *
+     * @return Number of unread bytes in the attachment by this attachment reader.
+     */
+    virtual uint64_t getNumUnreadBytes() = 0;
 
     /**
      * The close function.  An implementation will take care of any resource management when a reader no longer
@@ -96,9 +105,9 @@ public:
     virtual void close(ClosePoint closePoint = ClosePoint::AFTER_DRAINING_CURRENT_BUFFER) = 0;
 };
 
-} // namespace attachment
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace attachment
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_ATTACHMENT_ATTACHMENT_READER_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_ATTACHMENT_ATTACHMENTREADER_H_

@@ -3,8 +3,7 @@ find_package(Threads ${THREADS_PACKAGE_CONFIG})
 
 add_definitions("-DACSDK_LOG_MODULE=authDelegate")
 add_library(AuthDelegate SHARED
-    AuthDelegate.cpp
-    HttpPost.cpp)
+    AuthDelegate.cpp)
 target_include_directories(AuthDelegate PUBLIC
     ${AuthDelegate_SOURCE_DIR}/include)
 target_include_directories(AuthDelegate PRIVATE

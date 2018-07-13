@@ -1,7 +1,5 @@
 /*
- * AVSMessage.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,7 +20,8 @@ namespace avsCommon {
 namespace avs {
 
 AVSMessage::AVSMessage(std::shared_ptr<AVSMessageHeader> avsMessageHeader, std::string payload) :
-        m_header{avsMessageHeader}, m_payload{std::move(payload)} {
+        m_header{avsMessageHeader},
+        m_payload{std::move(payload)} {
 }
 
 std::string AVSMessage::getNamespace() const {
@@ -49,6 +48,6 @@ std::string AVSMessage::getHeaderAsString() const {
     return m_header->getAsString();
 }
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

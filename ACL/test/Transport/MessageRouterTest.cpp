@@ -1,7 +1,5 @@
 /*
- * MessageRouterTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,6 +12,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
 #include "MessageRouterTest.h"
 
 #include <gtest/gtest.h>
@@ -25,22 +24,22 @@ namespace test {
 using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 
 TEST_F(MessageRouterTest, getConnectionStatusReturnsDisconnectedBeforeConnect) {
-    ASSERT_EQ(m_router.getConnectionStatus().first, ConnectionStatusObserverInterface::Status::DISCONNECTED);
+    ASSERT_EQ(m_router->getConnectionStatus().first, ConnectionStatusObserverInterface::Status::DISCONNECTED);
 }
 
 TEST_F(MessageRouterTest, getConnectionStatusReturnsPendingAfterConnectingStarts) {
     setupStateToPending();
-    ASSERT_EQ(m_router.getConnectionStatus().first, ConnectionStatusObserverInterface::Status::PENDING);
+    ASSERT_EQ(m_router->getConnectionStatus().first, ConnectionStatusObserverInterface::Status::PENDING);
 }
 
 TEST_F(MessageRouterTest, getConnectionStatusReturnsConnectedAfterConnectionEstablished) {
     setupStateToConnected();
-    ASSERT_EQ(m_router.getConnectionStatus().first, ConnectionStatusObserverInterface::Status::CONNECTED);
+    ASSERT_EQ(m_router->getConnectionStatus().first, ConnectionStatusObserverInterface::Status::CONNECTED);
 }
 
 TEST_F(MessageRouterTest, getConnectionStatusReturnsConnectedAfterDisconnected) {
-    m_router.onDisconnected(ConnectionStatusObserverInterface::ChangedReason::ACL_DISABLED);
-    ASSERT_EQ(m_router.getConnectionStatus().first, ConnectionStatusObserverInterface::Status::DISCONNECTED);
+    m_router->onDisconnected(m_mockTransport, ConnectionStatusObserverInterface::ChangedReason::ACL_DISABLED);
+    ASSERT_EQ(m_router->getConnectionStatus().first, ConnectionStatusObserverInterface::Status::DISCONNECTED);
 }
 
 TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfConnectionPendingAfterConnect) {
@@ -49,10 +48,11 @@ TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfConnectionPe
     // wait for the result to propagate by scheduling a task on the client executor
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
-    ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionStatus(),
-            ConnectionStatusObserverInterface::Status::PENDING);
-    ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionChangedReason(),
-            ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
+    ASSERT_EQ(
+        m_mockMessageRouterObserver->getLatestConnectionStatus(), ConnectionStatusObserverInterface::Status::PENDING);
+    ASSERT_EQ(
+        m_mockMessageRouterObserver->getLatestConnectionChangedReason(),
+        ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
 }
 
 TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfNewConnection) {
@@ -61,10 +61,11 @@ TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfNewConnectio
     // wait for the result to propagate by scheduling a task on the client executor
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
-    ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionStatus(),
-            ConnectionStatusObserverInterface::Status::CONNECTED);
-    ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionChangedReason(),
-            ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
+    ASSERT_EQ(
+        m_mockMessageRouterObserver->getLatestConnectionStatus(), ConnectionStatusObserverInterface::Status::CONNECTED);
+    ASSERT_EQ(
+        m_mockMessageRouterObserver->getLatestConnectionChangedReason(),
+        ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
 }
 
 TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfTransportDisconnection) {
@@ -72,28 +73,30 @@ TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfTransportDis
 
     auto reason = ConnectionStatusObserverInterface::ChangedReason::ACL_DISABLED;
     disconnectMockTransport(m_mockTransport.get());
-    m_router.onDisconnected(reason);
+    m_router->onDisconnected(m_mockTransport, reason);
 
     // wait for the result to propagate by scheduling a task on the client executor
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
-    ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionStatus(),
-            ConnectionStatusObserverInterface::Status::DISCONNECTED);
+    ASSERT_EQ(
+        m_mockMessageRouterObserver->getLatestConnectionStatus(), ConnectionStatusObserverInterface::Status::PENDING);
     ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionChangedReason(), reason);
 }
 
 TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfRouterDisconnection) {
     setupStateToConnected();
 
-    m_router.disable();
+    m_router->disable();
 
     // wait for the result to propagate by scheduling a task on the client executor
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
-    ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionStatus(),
-            ConnectionStatusObserverInterface::Status::DISCONNECTED);
-    ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionChangedReason(),
-            ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
+    ASSERT_EQ(
+        m_mockMessageRouterObserver->getLatestConnectionStatus(),
+        ConnectionStatusObserverInterface::Status::DISCONNECTED);
+    ASSERT_EQ(
+        m_mockMessageRouterObserver->getLatestConnectionChangedReason(),
+        ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
 }
 
 TEST_F(MessageRouterTest, sendIsSuccessfulWhenConnected) {
@@ -105,7 +108,7 @@ TEST_F(MessageRouterTest, sendIsSuccessfulWhenConnected) {
     EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(1);
 
     // TODO: ACSDK-421: Revert this to use send().
-    m_router.sendMessage(messageRequest);
+    m_router->sendMessage(messageRequest);
 
     // Since we connected we will be disconnected when the router is destroyed
     EXPECT_CALL(*m_mockTransport, disconnect()).Times(AnyNumber());
@@ -118,13 +121,13 @@ TEST_F(MessageRouterTest, sendFailsWhenDisconnected) {
     EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(0);
 
     // TODO: ACSDK-421: Revert this to use send().
-    m_router.sendMessage(messageRequest);
+    m_router->sendMessage(messageRequest);
 }
 
 TEST_F(MessageRouterTest, sendFailsWhenPending) {
     // Ensure a transport exists
     initializeMockTransport(m_mockTransport.get());
-    m_router.enable();
+    m_router->enable();
 
     auto messageRequest = createMessageRequest();
 
@@ -132,7 +135,7 @@ TEST_F(MessageRouterTest, sendFailsWhenPending) {
     EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(1);
 
     // TODO: ACSDK-421: Revert this to use send().
-    m_router.sendMessage(messageRequest);
+    m_router->sendMessage(messageRequest);
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 }
 
@@ -141,22 +144,22 @@ TEST_F(MessageRouterTest, sendMessageDoesNotSendAfterDisconnected) {
 
     auto messageRequest = createMessageRequest();
 
-    EXPECT_CALL(*m_mockTransport, disconnect()).Times(AtLeast(1));
-    m_router.disable();
+    EXPECT_CALL(*m_mockTransport, doShutdown()).Times(AtLeast(1));
+    m_router->disable();
 
     // Expect to have the message sent to the transport
     EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(0);
 
     // TODO: ACSDK-421: Revert this to use send().
-    m_router.sendMessage(messageRequest);
+    m_router->sendMessage(messageRequest);
 }
 
 TEST_F(MessageRouterTest, disconnectDisconnectsConnectedTransports) {
     setupStateToConnected();
 
-    EXPECT_CALL(*m_mockTransport, disconnect()).Times(1);
+    EXPECT_CALL(*m_mockTransport, doShutdown()).Times(1);
 
-    m_router.disable();
+    m_router->disable();
 }
 
 TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
@@ -172,32 +175,34 @@ TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
     auto newTransport = std::make_shared<NiceMock<MockTransport>>();
     initializeMockTransport(newTransport.get());
 
-    m_router.setMockTransport(newTransport);
+    m_router->setMockTransport(newTransport);
 
     // Reset the MessageRouterObserver, there should be no interactions with the observer
-    m_router.onServerSideDisconnect();
+    m_router->onServerSideDisconnect(oldTransport);
 
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
-    ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionStatus(),
-            ConnectionStatusObserverInterface::Status::PENDING);
-    ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionChangedReason(),
-            ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT);
+    ASSERT_EQ(
+        m_mockMessageRouterObserver->getLatestConnectionStatus(), ConnectionStatusObserverInterface::Status::PENDING);
+    ASSERT_EQ(
+        m_mockMessageRouterObserver->getLatestConnectionChangedReason(),
+        ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT);
 
     // mock the new transports connection
     connectMockTransport(newTransport.get());
-    m_router.onConnected();
+    m_router->onConnected(newTransport);
 
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
-    ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionStatus(),
-            ConnectionStatusObserverInterface::Status::CONNECTED);
-    ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionChangedReason(),
-            ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
+    ASSERT_EQ(
+        m_mockMessageRouterObserver->getLatestConnectionStatus(), ConnectionStatusObserverInterface::Status::CONNECTED);
+    ASSERT_EQ(
+        m_mockMessageRouterObserver->getLatestConnectionChangedReason(),
+        ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
 
     // mock the old transport disconnecting completely
     disconnectMockTransport(oldTransport.get());
-    m_router.onDisconnected(ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
+    m_router->onDisconnected(oldTransport, ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
 
     auto messageRequest = createMessageRequest();
 
@@ -206,7 +211,7 @@ TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
     EXPECT_CALL(*newTransport.get(), send(messageRequest)).Times(1);
 
     // TODO: ACSDK-421: Revert this to use send().
-    m_router.sendMessage(messageRequest);
+    m_router->sendMessage(messageRequest);
 
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 }
@@ -216,7 +221,7 @@ TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
  */
 TEST_F(MessageRouterTest, onReceiveTest) {
     m_mockMessageRouterObserver->reset();
-    m_router.consumeMessage(CONTEXT_ID, MESSAGE);
+    m_router->consumeMessage(CONTEXT_ID, MESSAGE);
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
     ASSERT_TRUE(m_mockMessageRouterObserver->wasNotifiedOfReceive());
     ASSERT_EQ(CONTEXT_ID, m_mockMessageRouterObserver->getAttachmentContextId());
@@ -233,6 +238,6 @@ TEST_F(MessageRouterTest, onConnectionStatusChangedTest) {
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
     ASSERT_TRUE(m_mockMessageRouterObserver->wasNotifiedOfStatusChange());
 }
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK

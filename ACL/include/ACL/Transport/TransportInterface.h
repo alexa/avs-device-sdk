@@ -1,7 +1,5 @@
 /*
- * TransportInterface.h
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,12 +13,13 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_TRANSPORT_INTERFACE_H_
-#define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_TRANSPORT_INTERFACE_H_
+#ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_TRANSPORTINTERFACE_H_
+#define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_TRANSPORTINTERFACE_H_
 
 #include <memory>
 
 #include <AVSCommon/AVS/MessageRequest.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 
 namespace alexaClientSDK {
 namespace acl {
@@ -29,12 +28,12 @@ namespace acl {
  * This class defines the interface which must be implemented to represent the creation and management of a
  * specific connection to AVS.
  */
-class TransportInterface {
+class TransportInterface : public avsCommon::utils::RequiresShutdown {
 public:
     /**
-     * Destructor.
+     * TransportInterface constructor.
      */
-    virtual ~TransportInterface() = default;
+    TransportInterface();
 
     /**
      * Initiate a connection to AVS.  This function may operate asynchronously, meaning its return value
@@ -64,10 +63,12 @@ public:
      * @param request The requested message.
      */
     virtual void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) = 0;
-
 };
 
-} // alexaClientSDK
-} // acl
+inline TransportInterface::TransportInterface() : RequiresShutdown{"TransportInterface"} {
+}
 
-#endif // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_TRANSPORT_INTERFACE_H_
+}  // namespace acl
+}  // namespace alexaClientSDK
+
+#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_TRANSPORTINTERFACE_H_

@@ -1,19 +1,16 @@
 /*
- * DirectiveSequencer.cpp
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates.
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *     http://aws.amazon.com/apache2.0/
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
  */
 
 #include <algorithm>
@@ -22,6 +19,7 @@
 
 #include <AVSCommon/AVS/ExceptionErrorType.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Metrics.h>
 
 #include "ADSL/DirectiveSequencer.h"
 
@@ -41,9 +39,10 @@ namespace adsl {
 using namespace avsCommon;
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils;
 
 std::unique_ptr<DirectiveSequencerInterface> DirectiveSequencer::create(
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) {
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) {
     if (!exceptionSender) {
         ACSDK_INFO(LX("createFailed").d("reason", "nullptrExceptionSender"));
         return nullptr;
@@ -69,11 +68,11 @@ bool DirectiveSequencer::onDirective(std::shared_ptr<AVSDirective> directive) {
         return false;
     }
     std::lock_guard<std::mutex> lock(m_mutex);
-    if (m_isShuttingDown) {
+    if (m_isShuttingDown || !m_isEnabled) {
         ACSDK_WARN(LX("onDirectiveFailed")
-                .d("directive", directive->getHeaderAsString())
-                .d("action", "ignored")
-                .d("reason", "isShuttingDown"));
+                       .d("directive", directive->getHeaderAsString())
+                       .d("action", "ignored")
+                       .d("reason", m_isShuttingDown ? "isShuttingDown" : "disabled"));
         return false;
     }
     ACSDK_INFO(LX("onDirective").d("directive", directive->getHeaderAsString()));
@@ -83,17 +82,18 @@ bool DirectiveSequencer::onDirective(std::shared_ptr<AVSDirective> directive) {
 }
 
 DirectiveSequencer::DirectiveSequencer(
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) :
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) :
         DirectiveSequencerInterface{"DirectiveSequencer"},
         m_mutex{},
         m_exceptionSender{exceptionSender},
-        m_isShuttingDown{false} {
+        m_isShuttingDown{false},
+        m_isEnabled{true} {
     m_directiveProcessor = std::make_shared<DirectiveProcessor>(&m_directiveRouter);
     m_receivingThread = std::thread(&DirectiveSequencer::receivingLoop, this);
 }
 
 void DirectiveSequencer::doShutdown() {
-    ACSDK_INFO(LX("doShutdown"));
+    ACSDK_DEBUG9(LX("doShutdown"));
     {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_isShuttingDown = true;
@@ -107,10 +107,25 @@ void DirectiveSequencer::doShutdown() {
     m_exceptionSender.reset();
 }
 
+void DirectiveSequencer::disable() {
+    ACSDK_DEBUG9(LX("disable"));
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_isEnabled = false;
+    m_directiveProcessor->setDialogRequestId("");
+    m_directiveProcessor->disable();
+    m_wakeReceivingLoop.notify_one();
+}
+
+void DirectiveSequencer::enable() {
+    ACSDK_DEBUG9(LX("disable"));
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_isEnabled = true;
+    m_directiveProcessor->enable();
+    m_wakeReceivingLoop.notify_one();
+}
+
 void DirectiveSequencer::receivingLoop() {
-    auto wake = [this]() {
-        return !m_receivingQueue.empty() || m_isShuttingDown;
-    };
+    auto wake = [this]() { return !m_receivingQueue.empty() || m_isShuttingDown; };
 
     std::unique_lock<std::mutex> lock(m_mutex);
     while (true) {
@@ -122,7 +137,7 @@ void DirectiveSequencer::receivingLoop() {
     }
 }
 
-void DirectiveSequencer::receiveDirectiveLocked(std::unique_lock<std::mutex> &lock) {
+void DirectiveSequencer::receiveDirectiveLocked(std::unique_lock<std::mutex>& lock) {
     if (m_receivingQueue.empty()) {
         return;
     }
@@ -130,32 +145,40 @@ void DirectiveSequencer::receiveDirectiveLocked(std::unique_lock<std::mutex> &lo
     m_receivingQueue.pop_front();
     lock.unlock();
 
+    if (directive->getName() == "StopCapture" || directive->getName() == "Speak") {
+        ACSDK_METRIC_MSG(TAG, directive, Metrics::Location::ADSL_DEQUEUE);
+    }
+
     bool handled = false;
 
-    /**
-     * Previously it was expected that all directives resulting from a Recognize event
-     * would be tagged with the dialogRequestId of that event.  In practice that is not
-     * the observed behavior.
-     */
-#ifdef DIALOG_REQUST_ID_IN_ALL_RESPONSE_DIRECTIVES
+/**
+ * Previously it was expected that all directives resulting from a Recognize event
+ * would be tagged with the dialogRequestId of that event.  In practice that is not
+ * the observed behavior.
+ */
+#ifdef DIALOG_REQUEST_ID_IN_ALL_RESPONSE_DIRECTIVES
     if (directive->getDialogRequestId().empty()) {
         handled = m_directiveRouter.handleDirectiveImmediately(directive);
     } else {
-        handled = m_directiveProcessor->onDirective(directive);
+        handled = m_directiveRouter.handleDirectiveWithPolicyHandleImmediately(directive);
+        if (!handled) {
+            handled = m_directiveProcessor->onDirective(directive);
+        }
     }
 #else
-    handled = m_directiveProcessor->onDirective(directive);
+    handled = m_directiveRouter.handleDirectiveWithPolicyHandleImmediately(directive);
+    if (!handled) {
+        handled = m_directiveProcessor->onDirective(directive);
+    }
 #endif
 
     if (!handled) {
         ACSDK_INFO(LX("sendingExceptionEncountered").d("messageId", directive->getMessageId()));
         m_exceptionSender->sendExceptionEncountered(
-                directive->getUnparsedDirective(),
-                ExceptionErrorType::UNSUPPORTED_OPERATION,
-                "Unsupported operation");
+            directive->getUnparsedDirective(), ExceptionErrorType::UNSUPPORTED_OPERATION, "Unsupported operation");
     }
     lock.lock();
 }
 
-} // namespace directiveSequencer
-} // namespace alexaClientSDK
+}  // namespace adsl
+}  // namespace alexaClientSDK

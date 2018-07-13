@@ -1,7 +1,5 @@
 /*
- * PortAudioMicrophoneWrapper.cpp
- *
- * Copyright (c) 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,6 +13,12 @@
  * permissions and limitations under the License.
  */
 
+#include <cstring>
+#include <string>
+
+#include <rapidjson/document.h>
+
+#include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include "SampleApp/PortAudioMicrophoneWrapper.h"
 #include "SampleApp/ConsolePrinter.h"
 
@@ -28,15 +32,17 @@ static const int NUM_OUTPUT_CHANNELS = 0;
 static const double SAMPLE_RATE = 16000;
 static const unsigned long PREFERRED_SAMPLES_PER_CALLBACK = paFramesPerBufferUnspecified;
 
+static const std::string SAMPLE_APP_CONFIG_ROOT_KEY("sampleApp");
+static const std::string PORTAUDIO_CONFIG_ROOT_KEY("portAudio");
+static const std::string PORTAUDIO_CONFIG_SUGGESTED_LATENCY_KEY("suggestedLatency");
+
 std::unique_ptr<PortAudioMicrophoneWrapper> PortAudioMicrophoneWrapper::create(
-        std::shared_ptr<AudioInputStream> stream) {
+    std::shared_ptr<AudioInputStream> stream) {
     if (!stream) {
         ConsolePrinter::simplePrint("Invalid stream passed to PortAudioMicrophoneWrapper");
         return nullptr;
     }
-    std::unique_ptr<PortAudioMicrophoneWrapper> portAudioMicrophoneWrapper(
-        new PortAudioMicrophoneWrapper(stream)
-    );
+    std::unique_ptr<PortAudioMicrophoneWrapper> portAudioMicrophoneWrapper(new PortAudioMicrophoneWrapper(stream));
     if (!portAudioMicrophoneWrapper->initialize()) {
         ConsolePrinter::simplePrint("Failed to initialize PortAudioMicrophoneWrapper");
         return nullptr;
@@ -44,8 +50,9 @@ std::unique_ptr<PortAudioMicrophoneWrapper> PortAudioMicrophoneWrapper::create(
     return portAudioMicrophoneWrapper;
 }
 
-PortAudioMicrophoneWrapper::PortAudioMicrophoneWrapper(std::shared_ptr<AudioInputStream> stream) : 
-        m_audioInputStream{stream}, m_paStream{nullptr} {
+PortAudioMicrophoneWrapper::PortAudioMicrophoneWrapper(std::shared_ptr<AudioInputStream> stream) :
+        m_audioInputStream{stream},
+        m_paStream{nullptr} {
 }
 
 PortAudioMicrophoneWrapper::~PortAudioMicrophoneWrapper() {
@@ -66,16 +73,43 @@ bool PortAudioMicrophoneWrapper::initialize() {
         ConsolePrinter::simplePrint("Failed to initialize PortAudio");
         return false;
     }
-    err = Pa_OpenDefaultStream(
-        &m_paStream,
-        NUM_INPUT_CHANNELS,
-        NUM_OUTPUT_CHANNELS,
-        paInt16,
-        SAMPLE_RATE,
-        PREFERRED_SAMPLES_PER_CALLBACK,
-        PortAudioCallback,
-        this
-    );
+
+    PaTime suggestedLatency;
+    bool latencyInConfig = getConfigSuggestedLatency(suggestedLatency);
+
+    if (!latencyInConfig) {
+        err = Pa_OpenDefaultStream(
+            &m_paStream,
+            NUM_INPUT_CHANNELS,
+            NUM_OUTPUT_CHANNELS,
+            paInt16,
+            SAMPLE_RATE,
+            PREFERRED_SAMPLES_PER_CALLBACK,
+            PortAudioCallback,
+            this);
+    } else {
+        ConsolePrinter::simplePrint(
+            "PortAudio suggestedLatency has been configured to " + std::to_string(suggestedLatency) + " Seconds");
+
+        PaStreamParameters inputParameters;
+        std::memset(&inputParameters, 0, sizeof(inputParameters));
+        inputParameters.device = Pa_GetDefaultInputDevice();
+        inputParameters.channelCount = NUM_INPUT_CHANNELS;
+        inputParameters.sampleFormat = paInt16;
+        inputParameters.suggestedLatency = suggestedLatency;
+        inputParameters.hostApiSpecificStreamInfo = nullptr;
+
+        err = Pa_OpenStream(
+            &m_paStream,
+            &inputParameters,
+            nullptr,
+            SAMPLE_RATE,
+            PREFERRED_SAMPLES_PER_CALLBACK,
+            paNoFlag,
+            PortAudioCallback,
+            this);
+    }
+
     if (err != paNoError) {
         ConsolePrinter::simplePrint("Failed to open PortAudio default stream");
         return false;
@@ -104,12 +138,12 @@ bool PortAudioMicrophoneWrapper::stopStreamingMicrophoneData() {
 }
 
 int PortAudioMicrophoneWrapper::PortAudioCallback(
-        const void* inputBuffer,
-        void* outputBuffer,
-        unsigned long numSamples,
-        const PaStreamCallbackTimeInfo* timeInfo,
-        PaStreamCallbackFlags statusFlags,
-        void* userData) {
+    const void* inputBuffer,
+    void* outputBuffer,
+    unsigned long numSamples,
+    const PaStreamCallbackTimeInfo* timeInfo,
+    PaStreamCallbackFlags statusFlags,
+    void* userData) {
     PortAudioMicrophoneWrapper* wrapper = static_cast<PortAudioMicrophoneWrapper*>(userData);
     ssize_t returnCode = wrapper->m_writer->write(inputBuffer, numSamples);
     if (returnCode <= 0) {
@@ -119,6 +153,21 @@ int PortAudioMicrophoneWrapper::PortAudioCallback(
     return paContinue;
 }
 
+bool PortAudioMicrophoneWrapper::getConfigSuggestedLatency(PaTime& suggestedLatency) {
+    bool latencyInConfig = false;
+    auto config = avsCommon::utils::configuration::ConfigurationNode::getRoot()[SAMPLE_APP_CONFIG_ROOT_KEY]
+                                                                               [PORTAUDIO_CONFIG_ROOT_KEY];
+    if (config) {
+        latencyInConfig = config.getValue(
+            PORTAUDIO_CONFIG_SUGGESTED_LATENCY_KEY,
+            &suggestedLatency,
+            suggestedLatency,
+            &rapidjson::Value::IsDouble,
+            &rapidjson::Value::GetDouble);
+    }
 
-} // namespace sampleApp
-} // namespace alexaClientSDK
+    return latencyInConfig;
+}
+
+}  // namespace sampleApp
+}  // namespace alexaClientSDK

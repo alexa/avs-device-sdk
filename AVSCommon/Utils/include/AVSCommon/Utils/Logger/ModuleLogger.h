@@ -1,7 +1,5 @@
 /*
- * ModuleLogger.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_MODULE_LOGGER_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_MODULE_LOGGER_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_MODULELOGGER_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_MODULELOGGER_H_
 
 #include "AVSCommon/Utils/Logger/Logger.h"
 
@@ -28,7 +26,10 @@ namespace logger {
 /**
  * @c Logger implementation providing per module configuration. Forwards logs to another @c Logger.
  */
-class ModuleLogger : public Logger, protected LogLevelObserverInterface, protected SinkObserverInterface {
+class ModuleLogger
+        : public Logger
+        , protected LogLevelObserverInterface
+        , protected SinkObserverInterface {
 public:
     /**
      * Constructor.
@@ -40,28 +41,32 @@ public:
 
     void setLevel(Level level) override;
 
-    void emit(
-            Level level,
-            std::chrono::system_clock::time_point time,
-            const char *threadId,
-            const char *text) override;
+    void emit(Level level, std::chrono::system_clock::time_point time, const char* threadId, const char* text) override;
 
 private:
     void onLogLevelChanged(Level level) override;
 
-    void onSinkChanged(Logger& sink) override;
+    void onSinkChanged(const std::shared_ptr<Logger>& sink) override;
 
-    /// flag to determine if the m_sink's logLevel is to be used
-    bool m_useSinkLogLevel;
+    /**
+     * Combine @c m_moduleLogLevel and @c m_sinkLogLevel to determine the appropriate value for m_logLevel.
+     */
+    void updateLogLevel();
+
+    /// Log level specified for this module logger.
+    Level m_moduleLogLevel;
+
+    /// Log level specified for the sink to forward logs to.
+    Level m_sinkLogLevel;
 
 protected:
     /// The @c Logger to forward logs to.
-    std::atomic<Logger*> m_sink;
+    std::shared_ptr<Logger> m_sink;
 };
 
-} // namespace logger
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace logger
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_LOGGER_MODULE_LOGGER_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_MODULELOGGER_H_

@@ -1,7 +1,5 @@
 /*
- * AuthDelegate.h
- *
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_AUTH_DELEGATE_H_
-#define ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_AUTH_DELEGATE_H_
+#ifndef ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_AUTHDELEGATE_H_
+#define ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_AUTHDELEGATE_H_
 
 #include <chrono>
 #include <condition_variable>
@@ -28,8 +26,8 @@
 
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
-
-#include "AuthDelegate/HttpPostInterface.h"
+#include <AVSCommon/Utils/LibcurlUtils/HttpPostInterface.h>
+#include <AVSCommon/Utils/RetryTimer.h>
 
 namespace alexaClientSDK {
 namespace authDelegate {
@@ -41,7 +39,6 @@ namespace authDelegate {
  */
 class AuthDelegate : public avsCommon::sdkInterfaces::AuthDelegateInterface {
 public:
-
     /**
      * Create an AuthDelegate.
      * This function cannot be called if:
@@ -66,7 +63,8 @@ public:
      *     @c nullptr is undefined.
      * @return If successful, returns a new AuthDelegate, otherwise @c nullptr.
      */
-    static std::unique_ptr<AuthDelegate> create(std::unique_ptr<HttpPostInterface> httpPost);
+    static std::unique_ptr<AuthDelegate> create(
+        std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost);
 
     /**
      * Deleted copy constructor
@@ -92,13 +90,12 @@ public:
     std::string getAuthToken() override;
 
 private:
-
     /**
      * AuthDelegate constructor.
      *
      * @param httpPost Instance that implement HttpPostInterface. Must not be @c nullptr, or the behavior is undefined.
      */
-    AuthDelegate(std::unique_ptr<HttpPostInterface> httpPost);
+    AuthDelegate(std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost);
 
     /**
      * init() is used by create() to perform initialization after construction but before returning the
@@ -114,7 +111,7 @@ private:
     /**
      * Attempt to refresh the auth token.
      *
-     * @return @c NO_ERROR if the authorization token is successfully refreshed. Otherwise, return the error encountered
+     * @return @c SUCCESS if the authorization token is successfully refreshed. Otherwise, return the error encountered
      * in the process.
      */
     avsCommon::sdkInterfaces::AuthObserverInterface::Error refreshAuthToken();
@@ -124,7 +121,7 @@ private:
      *
      * @param code The response code returned from the LWA request
      * @param body The response body (if any) returned from the LWA request.
-     * @return @c NO_ERROR if the auth token was refreshed, otherwise the error encountered in the process.
+     * @return @c SUCCESS if the auth token was refreshed, otherwise the error encountered in the process.
      */
     avsCommon::sdkInterfaces::AuthObserverInterface::Error handleLwaResponse(long code, const std::string& body);
 
@@ -137,10 +134,8 @@ private:
      * @param suffix The string immediately succeeding the value to parse
      * @return The substring found between prefix and suffix.
      */
-    std::string parseResponseValue(
-            const std::string& response,
-            const std::string& prefix,
-            const std::string& suffix) const;
+    std::string parseResponseValue(const std::string& response, const std::string& prefix, const std::string& suffix)
+        const;
 
     /**
      * Determine if the auth token has expired.
@@ -151,7 +146,7 @@ private:
 
     /**
      * Set the authorization state to be reported to our client.  If the state has changed, notify the client.
-     * 
+     *
      * @param newState The new state.
      */
     void setState(avsCommon::sdkInterfaces::AuthObserverInterface::State newState);
@@ -232,11 +227,10 @@ private:
      * HTTP/POST client with which to make @c LWA requests.
      * Access is not synchronized because it is only accessed by @c m_refreshAndNotifyThread.
      */
-    std::unique_ptr<HttpPostInterface> m_HttpPost;
+    std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> m_HttpPost;
 };
 
-} // namespace authDelegate
-} // namespace alexaClientSDK
+}  // namespace authDelegate
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_AUTH_DELEGATE_H_
-
+#endif  // ALEXA_CLIENT_SDK_AUTHDELEGATE_INCLUDE_AUTHDELEGATE_AUTHDELEGATE_H_

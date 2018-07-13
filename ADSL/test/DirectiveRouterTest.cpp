@@ -1,7 +1,5 @@
 /*
- * DirectiveRouterTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -110,18 +108,18 @@ public:
 void DirectiveRouterTest::SetUp() {
     m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
 
-    auto avsMessageHeader_0_0 = std::make_shared<AVSMessageHeader>(
-            NAMESPACE_AND_NAME_0_0, MESSAGE_ID_0_0, DIALOG_REQUEST_ID_0);
+    auto avsMessageHeader_0_0 =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AND_NAME_0_0, MESSAGE_ID_0_0, DIALOG_REQUEST_ID_0);
     m_directive_0_0 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader_0_0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
-    auto avsMessageHeader_0_1 = std::make_shared<AVSMessageHeader>(
-            NAMESPACE_AND_NAME_0_1, MESSAGE_ID_0_1, DIALOG_REQUEST_ID_0);
+        UNPARSED_DIRECTIVE, avsMessageHeader_0_0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
+    auto avsMessageHeader_0_1 =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AND_NAME_0_1, MESSAGE_ID_0_1, DIALOG_REQUEST_ID_0);
     m_directive_0_1 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader_0_1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
-    auto avsMessageHeader_1_0 = std::make_shared<AVSMessageHeader>(
-            NAMESPACE_AND_NAME_1_0, MESSAGE_ID_1_0, DIALOG_REQUEST_ID_0);
+        UNPARSED_DIRECTIVE, avsMessageHeader_0_1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
+    auto avsMessageHeader_1_0 =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AND_NAME_1_0, MESSAGE_ID_1_0, DIALOG_REQUEST_ID_0);
     m_directive_1_0 = AVSDirective::create(
-            UNPARSED_DIRECTIVE, avsMessageHeader_1_0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
+        UNPARSED_DIRECTIVE, avsMessageHeader_1_0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 }
 
 void DirectiveRouterTest::TearDown() {
@@ -308,7 +306,6 @@ TEST_F(DirectiveRouterTest, testResultOfHandleDirectiveFailure) {
  * to complete quickly.
  */
 TEST_F(DirectiveRouterTest, testHandlerMethodsCanRunConcurrently) {
-
     DirectiveHandlerConfiguration handler0Config;
     handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::BLOCKING;
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
@@ -320,7 +317,7 @@ TEST_F(DirectiveRouterTest, testHandlerMethodsCanRunConcurrently) {
 
     auto sleeperFunction = [&sleeper]() {
         ASSERT_EQ(sleeper.wait_for(LONG_TIMEOUT), std::future_status::ready)
-                << "ERROR: Timeout reached while waiting for concurrent handler.";
+            << "ERROR: Timeout reached while waiting for concurrent handler.";
     };
 
     auto wakerFunction = [&waker]() {
@@ -329,22 +326,18 @@ TEST_F(DirectiveRouterTest, testHandlerMethodsCanRunConcurrently) {
     };
 
     EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(_)).Times(0);
-    EXPECT_CALL(*(handler0.get()), preHandleDirective(m_directive_0_0, _))
-            .WillOnce(InvokeWithoutArgs(sleeperFunction));
-    EXPECT_CALL(*(handler0.get()), handleDirective(MESSAGE_ID_0_0))
-            .WillOnce(InvokeWithoutArgs(wakerFunction));
+    EXPECT_CALL(*(handler0.get()), preHandleDirective(m_directive_0_0, _)).WillOnce(InvokeWithoutArgs(sleeperFunction));
+    EXPECT_CALL(*(handler0.get()), handleDirective(MESSAGE_ID_0_0)).WillOnce(InvokeWithoutArgs(wakerFunction));
     EXPECT_CALL(*(handler0.get()), cancelDirective(_)).Times(0);
     EXPECT_CALL(*(handler0.get()), onDeregistered()).Times(1);
 
-    std::thread sleeperThread([this]() {
-        ASSERT_TRUE(m_router.preHandleDirective(m_directive_0_0, nullptr));
-    });
+    std::thread sleeperThread([this]() { ASSERT_TRUE(m_router.preHandleDirective(m_directive_0_0, nullptr)); });
     auto policy = BlockingPolicy::NONE;
     ASSERT_TRUE(m_router.handleDirective(m_directive_0_0, &policy));
     ASSERT_EQ(policy, BlockingPolicy::BLOCKING);
     sleeperThread.join();
 }
 
-} // namespace test
-} // namespace adsl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace adsl
+}  // namespace alexaClientSDK

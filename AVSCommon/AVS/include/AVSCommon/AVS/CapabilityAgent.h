@@ -1,7 +1,5 @@
 /*
- * CapabilityAgent.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,9 +13,10 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_CAPABILITY_AGENT_H
-#define ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_CAPABILITY_AGENT_H
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_CAPABILITYAGENT_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_CAPABILITYAGENT_H_
 
+#include <atomic>
 #include <unordered_map>
 #include <string>
 #include <memory>
@@ -45,11 +44,11 @@ namespace avs {
  * @li @c ContextRequesterInterface: To request context from the @c ContextManager,
  * as necessary.
  */
-class CapabilityAgent :
-        public sdkInterfaces::DirectiveHandlerInterface,
-        public sdkInterfaces::ChannelObserverInterface,
-        public sdkInterfaces::StateProviderInterface,
-        public sdkInterfaces::ContextRequesterInterface {
+class CapabilityAgent
+        : public sdkInterfaces::DirectiveHandlerInterface
+        , public sdkInterfaces::ChannelObserverInterface
+        , public sdkInterfaces::StateProviderInterface
+        , public sdkInterfaces::ContextRequesterInterface {
 public:
     /**
      * Destructor.
@@ -66,20 +65,21 @@ public:
      * @c DirectiveAndResultInterface as the argument.
      */
     void preHandleDirective(
-            std::shared_ptr<AVSDirective> directive,
-            std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> result) override final;
+        std::shared_ptr<AVSDirective> directive,
+        std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> result) override final;
 
-    bool handleDirective(const std::string &messageId) override final;
+    bool handleDirective(const std::string& messageId) override final;
 
-    void cancelDirective(const std::string &messageId) override final;
+    void cancelDirective(const std::string& messageId) override final;
 
     void onDeregistered() override;
 
     void onFocusChanged(FocusState newFocus) override;
 
-    void provideState(const unsigned int stateRequestToken) override;
+    void provideState(const avsCommon::avs::NamespaceAndName& stateProviderName, const unsigned int stateRequestToken)
+        override;
 
-    void onContextAvailable(const std::string &jsonContext) override;
+    void onContextAvailable(const std::string& jsonContext) override;
 
     void onContextFailure(const sdkInterfaces::ContextRequestError error) override;
 
@@ -91,8 +91,8 @@ protected:
      * @param exceptionEncounteredSender Object to use to send ExceptionEncountered messages.
      */
     CapabilityAgent(
-            const std::string &nameSpace,
-            std::shared_ptr<sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
+        const std::string& nameSpace,
+        std::shared_ptr<sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
 
     /**
      * CapabilityAgent maintains a map from messageId to instances of DirectiveInfo so that CapabilityAgents
@@ -107,8 +107,8 @@ protected:
          * @param resultIn The @c DirectiveHandlerResultInterface instance with which to populate this DirectiveInfo.
          */
         DirectiveInfo(
-                std::shared_ptr <AVSDirective> directiveIn,
-                std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> resultIn);
+            std::shared_ptr<AVSDirective> directiveIn,
+            std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> resultIn);
 
         /**
          * Destructor.
@@ -120,6 +120,9 @@ protected:
 
         /// @c DirectiveHandlerResultInterface.
         std::shared_ptr<sdkInterfaces::DirectiveHandlerResultInterface> result;
+
+        /// Flag to indicate whether the directive is cancelled.
+        std::atomic<bool> isCancelled;
     };
 
     /**
@@ -132,8 +135,8 @@ protected:
      * @return A DirectiveInfo instance with which to track the processing of @c directive.
      */
     virtual std::shared_ptr<DirectiveInfo> createDirectiveInfo(
-            std::shared_ptr <AVSDirective> directive,
-            std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> result);
+        std::shared_ptr<AVSDirective> directive,
+        std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> result);
 
     /**
      * Notification that a directive has arrived.  This notification gives the DirectiveHandler a chance to
@@ -186,7 +189,19 @@ protected:
      *
      * @param messageId The message Id of the @c AVSDirective.
      */
-    void removeDirective(const std::string &messageId);
+    void removeDirective(const std::string& messageId);
+
+    /**
+     * Send ExceptionEncountered and report a failure to handle the @c AVSDirective.
+     *
+     * @param info The @c AVSDirective that encountered the error and ancillary information.
+     * @param message The error message to include in the ExceptionEncountered message.
+     * @param type The type of Exception that was encountered.
+     */
+    void sendExceptionEncounteredAndReportFailed(
+        std::shared_ptr<DirectiveInfo> info,
+        const std::string& message,
+        avsCommon::avs::ExceptionErrorType type = avsCommon::avs::ExceptionErrorType::INTERNAL_ERROR);
 
     /**
      * Builds a JSON event string which includes the header, the @c payload and an optional @c context.
@@ -202,10 +217,10 @@ protected:
      * else a pair of empty strings.
      */
     const std::pair<std::string, std::string> buildJsonEventString(
-            const std::string &eventName,
-            const std::string &dialogRequestIdString = "",
-            const std::string &payload = "{}",
-            const std::string &context = "");
+        const std::string& eventName,
+        const std::string& dialogRequestIdString = "",
+        const std::string& payload = "{}",
+        const std::string& context = "");
 
     /// The namespace of the capability agent.
     const std::string m_namespace;
@@ -223,14 +238,14 @@ private:
     std::shared_ptr<DirectiveInfo> getDirectiveInfo(const std::string& messageId);
 
     /// Map of message Id to @c DirectiveAndResultInterface.
-    std::unordered_map <std::string, std::shared_ptr<DirectiveInfo>> m_directiveInfoMap;
+    std::unordered_map<std::string, std::shared_ptr<DirectiveInfo>> m_directiveInfoMap;
 
     /// Mutex to protect message Id to @c DirectiveAndResultInterface mapping.
     std::mutex m_mutex;
 };
 
-} // namespace avs
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace avs
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_AVS_INCLUDE_AVS_COMMON_AVS_CAPABILITY_AGENT_H
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_CAPABILITYAGENT_H_

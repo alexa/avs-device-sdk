@@ -1,7 +1,5 @@
 /*
- * ConfigurationNodeTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,6 +12,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
 // @file ConfigurationNodeTest.cpp
 
 #include <sstream>
@@ -82,6 +81,7 @@ static const std::string NEW_STRING_VALUE2_1_1 = "new-stringValue2.1.1";
 static const std::string BAD_JSON = "{ bad json }";
 
 /// First JSON string to parse, serving as default for configuration values.
+// clang-format off
 static const std::string FIRST_JSON = R"(
     {
         "object1" : {
@@ -95,8 +95,10 @@ static const std::string FIRST_JSON = R"(
             }
         }
     })";
+// clang-format on
 
 /// Second JSON string to parse, overlaying configuration values from FIRST_JSON.
+// clang-format off
 static const std::string SECOND_JSON = R"(
     {
         "object1" : {
@@ -106,8 +108,10 @@ static const std::string SECOND_JSON = R"(
             "int1.1" : 11
         }
     })";
+// clang-format on
 
 /// Third JSON string to parse, overlaying configuration values from FIRST_JSON and SECOND_JSON.
+// clang-format off
 static const std::string THIRD_JSON = R"(
     {
         "object2" : {
@@ -118,12 +122,12 @@ static const std::string THIRD_JSON = R"(
             }
         }
     })";
+// clang-format on
 
 /**
  * Class for testing the ConfigurationNode class
  */
-class ConfigurationNodeTest : public ::testing::Test {
-};
+class ConfigurationNodeTest : public ::testing::Test {};
 
 /**
  * Verify initialization a configuration. Verify both the implementation of accessor methods and the results
@@ -171,7 +175,7 @@ TEST_F(ConfigurationNodeTest, testInitializationAndAccess) {
     int nonExistentInt21 = 0;
     ASSERT_NE(nonExistentInt21, NON_EXISTENT_INT_VALUE2_1);
     ASSERT_FALSE(ConfigurationNode::getRoot()[OBJECT2].getInt(
-            NON_EXISTENT_INT2_1, &nonExistentInt21, NON_EXISTENT_INT_VALUE2_1));
+        NON_EXISTENT_INT2_1, &nonExistentInt21, NON_EXISTENT_INT_VALUE2_1));
     ASSERT_EQ(nonExistentInt21, NON_EXISTENT_INT_VALUE2_1);
 
     // Verify extraction if an integer value.
@@ -187,8 +191,7 @@ TEST_F(ConfigurationNodeTest, testInitializationAndAccess) {
     // Verify retrieval of default value when type does not match an existing value.
     nonExistentInt21 = 0;
     ASSERT_NE(nonExistentInt21, NON_EXISTENT_INT_VALUE2_1);
-    ASSERT_FALSE(ConfigurationNode::getRoot()[OBJECT2].getInt(
-            STRING2_1, &nonExistentInt21, NON_EXISTENT_INT_VALUE2_1));
+    ASSERT_FALSE(ConfigurationNode::getRoot()[OBJECT2].getInt(STRING2_1, &nonExistentInt21, NON_EXISTENT_INT_VALUE2_1));
     ASSERT_EQ(nonExistentInt21, NON_EXISTENT_INT_VALUE2_1);
 
     // Verify overwrite of string value in nested Configuration node.
@@ -197,8 +200,8 @@ TEST_F(ConfigurationNodeTest, testInitializationAndAccess) {
     ASSERT_EQ(string211, NEW_STRING_VALUE2_1_1);
 }
 
-} // namespace test
-} // namespace configuration
-} // namespace avsCommon
-} // namespace utils
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace configuration
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK

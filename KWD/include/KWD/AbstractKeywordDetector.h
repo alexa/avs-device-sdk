@@ -1,7 +1,5 @@
 /*
- * AbstractKeywordDetector.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_KWD_INCLUDE_KWD_ABSTRACT_KEY_WORD_DETECTOR_H_
-#define ALEXA_CLIENT_SDK_KWD_INCLUDE_KWD_ABSTRACT_KEY_WORD_DETECTOR_H_
+#ifndef ALEXA_CLIENT_SDK_KWD_INCLUDE_KWD_ABSTRACTKEYWORDDETECTOR_H_
+#define ALEXA_CLIENT_SDK_KWD_INCLUDE_KWD_ABSTRACTKEYWORDDETECTOR_H_
 
 #include <mutex>
 #include <unordered_set>
@@ -65,6 +63,7 @@ public:
      * Destructor.
      */
     virtual ~AbstractKeywordDetector() = default;
+
 protected:
     /**
      * Constructor.
@@ -73,12 +72,11 @@ protected:
      * @param keyWordDetectorStateObservers The observers to notify of state changes in the engine.
      */
     AbstractKeywordDetector(
-            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>> keyWordObservers = 
-                std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>>(), 
-            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>> 
-                keyWordDetectorStateObservers = 
-                    std::unordered_set<
-                        std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>());
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>> keyWordObservers =
+            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>>(),
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>
+            keyWordDetectorStateObservers =
+                std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>());
 
     /**
      * Notifies all keyword observers of the keyword detection.
@@ -89,10 +87,10 @@ protected:
      * @param endIndex The absolute end index of the last part of the keyword within the stream of the @c stream.
      */
     void notifyKeyWordObservers(
-            std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
-            std::string keyword,
-            avsCommon::avs::AudioInputStream::Index beginIndex,
-            avsCommon::avs::AudioInputStream::Index endIndex) const;
+        std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+        std::string keyword,
+        avsCommon::avs::AudioInputStream::Index beginIndex,
+        avsCommon::avs::AudioInputStream::Index endIndex) const;
 
     /**
      * Notifies all keyword detector state observers of state changes in the derived detector.
@@ -100,7 +98,7 @@ protected:
      * @param state The state of the detector.
      */
     void notifyKeyWordDetectorStateObservers(
-            avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface::KeyWordDetectorState state);
+        avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface::KeyWordDetectorState state);
 
     /**
      * Reads from the specified stream into the specified buffer and does the appropriate error checking and observer
@@ -116,7 +114,7 @@ protected:
     ssize_t readFromStream(
         std::shared_ptr<avsCommon::avs::AudioInputStream::Reader> reader,
         std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
-        void * buf, 
+        void* buf,
         size_t nWords,
         std::chrono::milliseconds timeout,
         bool* errorOccurred);
@@ -128,6 +126,7 @@ protected:
      * @return @c true if the endiannesses don't match and @c false otherwise.
      */
     static bool isByteswappingRequired(avsCommon::utils::AudioFormat audioFormat);
+
 private:
     /**
      * The observers to notify on key word detections. This should be locked with m_keyWordObserversMutex prior to
@@ -139,7 +138,7 @@ private:
      * The observers to notify of state changes in the engine. This should be locked with
      * m_keyWordDetectorStateObserversMutex prior to usage.
      */
-    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>> 
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>
         m_keyWordDetectorStateObservers;
 
     /// Lock to protect m_keyWordObservers when users wish to add or remove observers
@@ -155,7 +154,7 @@ private:
     avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface::KeyWordDetectorState m_detectorState;
 };
 
-} // namespace kwd
-} // namespace alexaClientSDK
+}  // namespace kwd
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_KWD_INCLUDE_KWD_ABSTRACT_KEY_WORD_DETECTOR_H_
+#endif  // ALEXA_CLIENT_SDK_KWD_INCLUDE_KWD_ABSTRACTKEYWORDDETECTOR_H_

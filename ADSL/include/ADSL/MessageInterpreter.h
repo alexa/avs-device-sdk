@@ -1,7 +1,5 @@
 /*
- * MessageInterpreter.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_MESSAGE_INTERPRETER_H_
-#define ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_MESSAGE_INTERPRETER_H_
+#ifndef ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_MESSAGEINTERPRETER_H_
+#define ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_MESSAGEINTERPRETER_H_
 
 #include <memory>
 
@@ -33,24 +31,23 @@ namespace adsl {
  */
 class MessageInterpreter : public avsCommon::sdkInterfaces::MessageObserverInterface {
 public:
-   /**
-    * Constructor.
-    *
-    * @param exceptionEncounteredSender The exceptions encountered messages sender, which will allow us to send
-    *        exception encountered back to AVS.
-    * @param directiveSequencerInterface The DirectiveSequencerInterface implementation, which will receive
-    *        @c AVSDirectives.
-    * @param attachmentManager The @c AttachmentManager which created @c AVSDirectives will use to acquire Attachments.
-    */
+    /**
+     * Constructor.
+     *
+     * @param exceptionEncounteredSender The exceptions encountered messages sender, which will allow us to send
+     *        exception encountered back to AVS.
+     * @param directiveSequencerInterface The DirectiveSequencerInterface implementation, which will receive
+     *        @c AVSDirectives.
+     * @param attachmentManager The @c AttachmentManager which created @c AVSDirectives will use to acquire Attachments.
+     */
     MessageInterpreter(
-            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager);
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager);
 
-    void receive(const std::string & contextId, const std::string & message) override;
+    void receive(const std::string& contextId, const std::string& message) override;
 
 private:
-
     /**
      * Logs an error and sends an exception to AVS. This signifies that an error occurred when attempting to
      * parse a value with a particular @c key.
@@ -69,7 +66,7 @@ private:
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> m_attachmentManager;
 };
 
-} // namespace directiveSequencer
-} // namespace alexaClientSDK
+}  // namespace adsl
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_ADSL_INCLUDE_MESSAGE_INTERPRETER_H_
+#endif  // ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_MESSAGEINTERPRETER_H_

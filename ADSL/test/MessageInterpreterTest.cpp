@@ -1,7 +1,5 @@
 /*
- * MessageInterpreterTest.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -53,6 +51,7 @@ static const std::string INVALID_JSON = "invalidTestJSON }}";
 static const std::string TEST_ATTACHMENT_CONTEXT_ID = "testContextId";
 
 /// A sample AVS speak directive with all valid JSON keys.
+// clang-format off
 static const std::string SPEAK_DIRECTIVE = R"({
     "directive": {
         "header": {
@@ -64,8 +63,10 @@ static const std::string SPEAK_DIRECTIVE = R"({
         "payload": )" + PAYLOAD_TEST + R"(
     }
 })";
+// clang-format on
 
 /// A sample AVS speak directive with invalid directive JSON keys.
+// clang-format off
 static const std::string DIRECTIVE_INVALID_DIRECTIVE_KEY = R"({
     "Foo_directive": {
         "header": {
@@ -77,8 +78,10 @@ static const std::string DIRECTIVE_INVALID_DIRECTIVE_KEY = R"({
         "payload":{}
     }
 })";
+// clang-format on
 
 /// A sample AVS speak directive with invalid header key.
+// clang-format off
 static const std::string DIRECTIVE_INVALID_HEADER_KEY = R"({
     "directive": {
         "Foo_header": {
@@ -90,8 +93,10 @@ static const std::string DIRECTIVE_INVALID_HEADER_KEY = R"({
         "payload":{}
     }
 })";
+// clang-format on
 
 /// A sample AVS speak directive with invalid namespace key.
+// clang-format off
 static const std::string DIRECTIVE_INVALID_NAMESPACE_KEY = R"({
     "directive": {
         "header": {
@@ -103,8 +108,10 @@ static const std::string DIRECTIVE_INVALID_NAMESPACE_KEY = R"({
         "payload":{}
     }
 })";
+// clang-format on
 
 /// A sample AVS speak directive with invalid name key.
+// clang-format off
 static const std::string DIRECTIVE_INVALID_NAME_KEY = R"({
     "directive": {
         "header": {
@@ -116,8 +123,10 @@ static const std::string DIRECTIVE_INVALID_NAME_KEY = R"({
         "payload":{}
     }
 })";
+// clang-format on
 
 /// A sample AVS speak directive with invalid messageId key.
+// clang-format off
 static const std::string DIRECTIVE_INVALID_MESSAGEID_KEY = R"({
     "directive": {
         "header": {
@@ -129,8 +138,10 @@ static const std::string DIRECTIVE_INVALID_MESSAGEID_KEY = R"({
         "payload":{}
     }
 })";
+// clang-format on
 
 /// A sample AVS speak directive with no payload key.
+// clang-format off
 static const std::string DIRECTIVE_NO_PAYLOAD = R"({
     "directive": {
         "header": {
@@ -140,8 +151,10 @@ static const std::string DIRECTIVE_NO_PAYLOAD = R"({
         }
     }
 })";
+// clang-format on
 
 /// A sample AVS speak directive with invalid payload key.
+// clang-format off
 static const std::string DIRECTIVE_INVALID_PAYLOAD_KEY = R"({
     "directive": {
         "header": {
@@ -153,8 +166,10 @@ static const std::string DIRECTIVE_INVALID_PAYLOAD_KEY = R"({
         "Foo_payload":{}
     }
 })";
+// clang-format on
 
 /// A sample AVS speak directive with no dialogRequestId key.
+// clang-format off
 static const std::string DIRECTIVE_NO_DIALOG_REQUEST_ID_KEY = R"({
     "directive": {
         "header": {
@@ -165,6 +180,7 @@ static const std::string DIRECTIVE_NO_DIALOG_REQUEST_ID_KEY = R"({
         "payload": )" + PAYLOAD_TEST + R"(
     }
 })";
+// clang-format on
 
 /**
  * Test fixture for testing MessageInterpreter class.
@@ -175,9 +191,8 @@ protected:
         m_mockExceptionEncounteredSender = std::make_shared<MockExceptionEncounteredSender>();
         m_mockDirectiveSequencer = std::make_shared<MockDirectiveSequencer>();
         m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
-        m_messageInterpreter = std::make_shared<MessageInterpreter>(m_mockExceptionEncounteredSender,
-            m_mockDirectiveSequencer, m_attachmentManager);
-
+        m_messageInterpreter = std::make_shared<MessageInterpreter>(
+            m_mockExceptionEncounteredSender, m_mockDirectiveSequencer, m_attachmentManager);
     }
     /// The mock ExceptionEncounteredSender.
     std::shared_ptr<MockExceptionEncounteredSender> m_mockExceptionEncounteredSender;
@@ -194,10 +209,8 @@ protected:
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
 TEST_F(MessageIntepreterTest, messageIsInValidJSON) {
-    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _))
-            .Times(1);
-    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
-            .Times(0);
+    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
+    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, INVALID_JSON);
 }
 
@@ -206,10 +219,8 @@ TEST_F(MessageIntepreterTest, messageIsInValidJSON) {
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
 TEST_F(MessageIntepreterTest, messageHasInvalidDirectiveKey) {
-    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _))
-            .Times(1);
-    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
-            .Times(0);
+    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
+    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_INVALID_DIRECTIVE_KEY);
 }
 
@@ -218,10 +229,8 @@ TEST_F(MessageIntepreterTest, messageHasInvalidDirectiveKey) {
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
 TEST_F(MessageIntepreterTest, messageHasInvalidHeaderKey) {
-    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _))
-            .Times(1);
-    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
-            .Times(0);
+    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
+    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_INVALID_HEADER_KEY);
 }
 
@@ -230,10 +239,8 @@ TEST_F(MessageIntepreterTest, messageHasInvalidHeaderKey) {
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
 TEST_F(MessageIntepreterTest, messageHasInvalidNamespaceKey) {
-    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _))
-            .Times(1);
-    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
-            .Times(0);
+    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
+    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_INVALID_NAMESPACE_KEY);
 }
 
@@ -242,10 +249,8 @@ TEST_F(MessageIntepreterTest, messageHasInvalidNamespaceKey) {
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
 TEST_F(MessageIntepreterTest, messageHasInvalidNameKey) {
-    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _))
-            .Times(1);
-    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
-            .Times(0);
+    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
+    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_INVALID_NAME_KEY);
 }
 
@@ -254,10 +259,8 @@ TEST_F(MessageIntepreterTest, messageHasInvalidNameKey) {
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
 TEST_F(MessageIntepreterTest, messageHasInvalidMessageIdKey) {
-    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _))
-            .Times(1);
-    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
-            .Times(0);
+    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
+    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_INVALID_MESSAGEID_KEY);
 }
 
@@ -266,17 +269,16 @@ TEST_F(MessageIntepreterTest, messageHasInvalidMessageIdKey) {
  * AVSDirective should be created and passed to the directive sequencer.
  */
 TEST_F(MessageIntepreterTest, messageHasNoDialogRequestIdKey) {
-    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _))
-            .Times(0);
+    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(0);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
-            .Times(1)
-            .WillOnce(Invoke([](std::shared_ptr<AVSDirective> avsDirective) -> bool {
-                    EXPECT_EQ(avsDirective->getNamespace(), NAMESPACE_TEST);
-                    EXPECT_EQ(avsDirective->getName(), NAME_TEST);
-                    EXPECT_EQ(avsDirective->getMessageId(), MESSAGE_ID_TEST);
-                    EXPECT_TRUE(avsDirective->getDialogRequestId().empty());
-                    return true;
-            }));
+        .Times(1)
+        .WillOnce(Invoke([](std::shared_ptr<AVSDirective> avsDirective) -> bool {
+            EXPECT_EQ(avsDirective->getNamespace(), NAMESPACE_TEST);
+            EXPECT_EQ(avsDirective->getName(), NAME_TEST);
+            EXPECT_EQ(avsDirective->getMessageId(), MESSAGE_ID_TEST);
+            EXPECT_TRUE(avsDirective->getDialogRequestId().empty());
+            return true;
+        }));
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_NO_DIALOG_REQUEST_ID_KEY);
 }
 
@@ -285,10 +287,8 @@ TEST_F(MessageIntepreterTest, messageHasNoDialogRequestIdKey) {
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
 TEST_F(MessageIntepreterTest, messageHasNoPayloadKey) {
-    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _))
-            .Times(1);
-    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
-            .Times(0);
+    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
+    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_NO_PAYLOAD);
 }
 
@@ -297,10 +297,8 @@ TEST_F(MessageIntepreterTest, messageHasNoPayloadKey) {
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
 TEST_F(MessageIntepreterTest, messageHasInvalidPayloadKey) {
-    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _))
-            .Times(1);
-    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
-            .Times(0);
+    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
+    EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_INVALID_PAYLOAD_KEY);
 }
 
@@ -309,20 +307,19 @@ TEST_F(MessageIntepreterTest, messageHasInvalidPayloadKey) {
  * and passed to the directive sequencer.
  */
 TEST_F(MessageIntepreterTest, messageIsValidDirective) {
-    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _))
-            .Times(0);
+    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(0);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
-            .Times(1)
-            .WillOnce(Invoke([](std::shared_ptr<AVSDirective> avsDirective) -> bool {
-                    EXPECT_EQ(avsDirective->getNamespace(), NAMESPACE_TEST);
-                    EXPECT_EQ(avsDirective->getName(), NAME_TEST);
-                    EXPECT_EQ(avsDirective->getMessageId(), MESSAGE_ID_TEST);
-                    EXPECT_EQ(avsDirective->getDialogRequestId(), DIALOG_REQUEST_ID_TEST);
-                    return true;
-            }));
+        .Times(1)
+        .WillOnce(Invoke([](std::shared_ptr<AVSDirective> avsDirective) -> bool {
+            EXPECT_EQ(avsDirective->getNamespace(), NAMESPACE_TEST);
+            EXPECT_EQ(avsDirective->getName(), NAME_TEST);
+            EXPECT_EQ(avsDirective->getMessageId(), MESSAGE_ID_TEST);
+            EXPECT_EQ(avsDirective->getDialogRequestId(), DIALOG_REQUEST_ID_TEST);
+            return true;
+        }));
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, SPEAK_DIRECTIVE);
 }
 
-} // namespace test
-} // namespace adsl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace adsl
+}  // namespace alexaClientSDK

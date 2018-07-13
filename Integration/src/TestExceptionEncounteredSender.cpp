@@ -1,7 +1,5 @@
 /*
- * TestExceptionEncounteredSender.cpp
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,18 +38,17 @@ static const std::string JSON_MESSAGE_DIALOG_REQUEST_ID_KEY = "dialogRequestId";
 /// JSON key to get the payload object of a message.
 static const std::string JSON_MESSAGE_PAYLOAD_KEY = "payload";
 
-
 void TestExceptionEncounteredSender::sendExceptionEncountered(
-        const std::string& unparsedDirective,
-        avs::ExceptionErrorType error,
-        const std::string& message) {
-
+    const std::string& unparsedDirective,
+    avs::ExceptionErrorType error,
+    const std::string& message) {
     std::unique_lock<std::mutex> lock(m_mutex);
     ExceptionParams dp;
     dp.type = ExceptionParams::Type::EXCEPTION;
     dp.directive = parseDirective(
-            unparsedDirective,
-            std::make_shared<avsCommon::avs::attachment::AttachmentManager>(avsCommon::avs::attachment::AttachmentManager::AttachmentType::IN_PROCESS));
+        unparsedDirective,
+        std::make_shared<avsCommon::avs::attachment::AttachmentManager>(
+            avsCommon::avs::attachment::AttachmentManager::AttachmentType::IN_PROCESS));
     dp.exceptionUnparsedDirective = unparsedDirective;
     dp.exceptionError = error;
     dp.exceptionMessage = message;
@@ -59,10 +56,9 @@ void TestExceptionEncounteredSender::sendExceptionEncountered(
     m_wakeTrigger.notify_all();
 }
 
-
 std::shared_ptr<avsCommon::avs::AVSDirective> TestExceptionEncounteredSender::parseDirective(
-        const std::string& rawJSON, std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager) {
-
+    const std::string& rawJSON,
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager) {
     std::string directiveJSON;
     std::string headerJSON;
     std::string payloadJSON;
@@ -71,22 +67,23 @@ std::shared_ptr<avsCommon::avs::AVSDirective> TestExceptionEncounteredSender::pa
     std::string messageId;
     std::string dialogRequestId;
 
-    if (!jsonUtils::lookupStringValue(rawJSON, JSON_MESSAGE_DIRECTIVE_KEY, &directiveJSON) ||
-            !jsonUtils::lookupStringValue(directiveJSON, JSON_MESSAGE_HEADER_KEY, &headerJSON) ||
-            !jsonUtils::lookupStringValue(directiveJSON, JSON_MESSAGE_PAYLOAD_KEY, &payloadJSON) ||
-            !jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_NAMESPACE_KEY, &nameSpace) ||
-            !jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_NAME_KEY, &name) ||
-            !jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_MESSAGE_ID_KEY, &messageId)) {
+    if (!jsonUtils::retrieveValue(rawJSON, JSON_MESSAGE_DIRECTIVE_KEY, &directiveJSON) ||
+        !jsonUtils::retrieveValue(directiveJSON, JSON_MESSAGE_HEADER_KEY, &headerJSON) ||
+        !jsonUtils::retrieveValue(directiveJSON, JSON_MESSAGE_PAYLOAD_KEY, &payloadJSON) ||
+        !jsonUtils::retrieveValue(headerJSON, JSON_MESSAGE_NAMESPACE_KEY, &nameSpace) ||
+        !jsonUtils::retrieveValue(headerJSON, JSON_MESSAGE_NAME_KEY, &name) ||
+        !jsonUtils::retrieveValue(headerJSON, JSON_MESSAGE_MESSAGE_ID_KEY, &messageId)) {
         return nullptr;
     }
 
-    jsonUtils::lookupStringValue(headerJSON, JSON_MESSAGE_NAMESPACE_KEY, &dialogRequestId);
+    jsonUtils::retrieveValue(headerJSON, JSON_MESSAGE_NAMESPACE_KEY, &dialogRequestId);
 
     auto header = std::make_shared<avsCommon::avs::AVSMessageHeader>(nameSpace, name, messageId, dialogRequestId);
     return avsCommon::avs::AVSDirective::create(rawJSON, header, payloadJSON, attachmentManager, "");
 }
 
-TestExceptionEncounteredSender::ExceptionParams TestExceptionEncounteredSender::waitForNext(const std::chrono::seconds duration) {
+TestExceptionEncounteredSender::ExceptionParams TestExceptionEncounteredSender::waitForNext(
+    const std::chrono::seconds duration) {
     ExceptionParams ret;
     std::unique_lock<std::mutex> lock(m_mutex);
     if (!m_wakeTrigger.wait_for(lock, duration, [this]() { return !m_queue.empty(); })) {
@@ -101,6 +98,6 @@ TestExceptionEncounteredSender::ExceptionParams TestExceptionEncounteredSender::
 TestExceptionEncounteredSender::ExceptionParams::ExceptionParams() : type{Type::UNSET} {
 }
 
-} // namespace test
-} // namespace integration
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace integration
+}  // namespace alexaClientSDK

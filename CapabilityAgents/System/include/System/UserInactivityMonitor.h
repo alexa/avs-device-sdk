@@ -1,7 +1,5 @@
 /*
- * UserInactivityMonitor.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_SYSTEM_INCLUDE_SYSTEM_USER_INACTIVITY_MONITOR_H_
-#define ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_SYSTEM_INCLUDE_SYSTEM_USER_INACTIVITY_MONITOR_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SYSTEM_INCLUDE_SYSTEM_USERINACTIVITYMONITOR_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SYSTEM_INCLUDE_SYSTEM_USERINACTIVITYMONITOR_H_
 
 #include <atomic>
 #include <chrono>
@@ -34,9 +32,9 @@ namespace capabilityAgents {
 namespace system {
 
 /// This class implementes a @c CapabilityAgent that handles the @c SetEndpoint directive.
-class UserInactivityMonitor :
-    public avsCommon::sdkInterfaces::UserActivityNotifierInterface,
-    public avsCommon::avs::CapabilityAgent {
+class UserInactivityMonitor
+        : public avsCommon::sdkInterfaces::UserActivityNotifierInterface
+        , public avsCommon::avs::CapabilityAgent {
 public:
     /**
      * Create an instance of @c UserInactivityMonitor.
@@ -47,9 +45,9 @@ public:
      * @return @c nullptr if the inputs are not defined, else a new instance of @c UserInactivityMonitor.
      */
     static std::shared_ptr<UserInactivityMonitor> create(
-            std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-            const std::chrono::milliseconds& sendPeriod = std::chrono::hours(1));
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        const std::chrono::milliseconds& sendPeriod = std::chrono::hours(1));
 
     /// @name DirectiveHandlerInterface and CapabilityAgent Functions
     /// @{
@@ -59,7 +57,7 @@ public:
     void handleDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) override;
     void cancelDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) override;
     /// @}
-    
+
     /// @name UserActivityNotifierInterface functions
     /// @{
     void onUserActive() override;
@@ -73,9 +71,9 @@ private:
      * @param sendPeriod The period of send events in seconds.
      */
     UserInactivityMonitor(
-            std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-            const std::chrono::milliseconds& sendPeriod);
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        const std::chrono::milliseconds& sendPeriod);
 
     /**
      *
@@ -86,16 +84,16 @@ private:
      * @param report The report that we will pass to @c setFailed in case @c isFailure is @c true.
      */
     void removeDirectiveGracefully(
-            std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info,
-            bool isFailure = false,
-            const std::string &report = "");
+        std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info,
+        bool isFailure = false,
+        const std::string& report = "");
 
     /// Send inactivity report by comparing to the last time active. We will register this function with the timer.
     void sendInactivityReport();
 
     /// The @c MessageSender interface to send inactivity event.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
-    
+
     /**
      * Time point to keep user inactivity. Access synchronized by @c m_timeMutex, and blocks tracked by @c
      * m_recentUpdateBlocked.
@@ -110,12 +108,10 @@ private:
 
     /// Timer for sending events every hour.
     avsCommon::utils::timing::Timer m_eventTimer;
-
 };
 
+}  // namespace system
+}  // namespace capabilityAgents
+}  // namespace alexaClientSDK
 
-} // namespace system
-} // namespace capabilityAgents
-} // namespace alexaClientSDK
-
-#endif // ALEXA_CLIENT_SDK_CAPABILITY_AGENTS_SYSTEM_INCLUDE_SYSTEM_USER_INACTIVITY_MONITOR_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SYSTEM_INCLUDE_SYSTEM_USERINACTIVITYMONITOR_H_

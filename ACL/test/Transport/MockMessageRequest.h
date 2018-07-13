@@ -1,7 +1,5 @@
 /*
- * MockMessageRequest.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,10 +12,12 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_MESSAGE_REQUEST_H_
-#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_MESSAGE_REQUEST_H_
+
+#ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKMESSAGEREQUEST_H_
+#define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKMESSAGEREQUEST_H_
 
 #include <AVSCommon/AVS/MessageRequest.h>
+#include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
 
 #include <gmock/gmock.h>
 
@@ -36,14 +36,14 @@ public:
     /**
      * Constructor.
      */
-    MockMessageRequest() : avsCommon::avs::MessageRequest{"", nullptr} { }
-    MOCK_METHOD1(onExceptionReceived, void(const std::string & exceptionMessage));
-    MOCK_METHOD1(onSendCompleted, void(Status status));
-
+    MockMessageRequest() : avsCommon::avs::MessageRequest{"", nullptr} {
+    }
+    MOCK_METHOD1(exceptionReceived, void(const std::string& exceptionMessage));
+    MOCK_METHOD1(sendCompleted, void(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status));
 };
 
-} // namespace test
-} // namespace acl
-} // namespace alexaClientSDK
+}  // namespace test
+}  // namespace acl
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCK_MESSAGE_REQUEST_H_
+#endif  // ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKMESSAGEREQUEST_H_

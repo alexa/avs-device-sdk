@@ -1,7 +1,5 @@
 /*
- * ContextManagerInterface.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_CONTEXT_MANAGER_INTERFACE_H
-#define ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_CONTEXT_MANAGER_INTERFACE_H
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_CONTEXTMANAGERINTERFACE_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_CONTEXTMANAGERINTERFACE_H_
 
 #include <memory>
 
@@ -42,7 +40,8 @@ enum class SetStateResult {
     STATE_PROVIDER_NOT_REGISTERED,
 
     /**
-     * @c setState request failed because the @c StateProviderInterface provided the wrong token to the @c ContextManager.
+     * @c setState request failed because the @c StateProviderInterface provided the wrong token to the @c
+     * ContextManager.
      */
     STATE_TOKEN_OUTDATED
 };
@@ -61,7 +60,7 @@ public:
     virtual ~ContextManagerInterface() = default;
 
     /**
-     * Registers a @c StateProviderInterface with the @c ContextManager. When the context manager receives a 
+     * Registers a @c StateProviderInterface with the @c ContextManager. When the context manager receives a
      * @c getContext request, it queries the registered @c StateProviderInterfaces for updated state, if needed.
      * If a @c StateProviderInterface tries to register a @c NamespaceAndName that is already present, the older
      * @c StateProviderInterface will be replaced with the new one.
@@ -71,8 +70,9 @@ public:
      * @param namespaceAndName The namespace and name of the @c StateProviderInterface.
      * @param stateProvider The @c StateProviderInterface that will be mapped against the @c namespaceAndName.
      */
-    virtual void setStateProvider(const avs::NamespaceAndName& namespaceAndName,
-            std::shared_ptr<StateProviderInterface> stateProvider) = 0;
+    virtual void setStateProvider(
+        const avs::NamespaceAndName& namespaceAndName,
+        std::shared_ptr<StateProviderInterface> stateProvider) = 0;
 
     /**
      * Sets the state information. The refresh policy indicates to the @c ContextManager whether on a @c getContext
@@ -91,14 +91,18 @@ public:
      * The @c jsonState is the json value that is associated with the key "payload".
      *
      * @param namespaceAndName The namespace and name of the @c StateProviderInterface whose state is being updated.
-     * @param jsonState The state of the @c StateProviderInterface.
+     * @param jsonState The state of the @c StateProviderInterface.  The @c StateProviderInterface with a @c
+     * refreshPolicy of SOMETIMES can pass in an empty string to indicate no contexts needs to be sent by the provider.
      * @param refreshPolicy The refresh policy for the state.
      * @param stateRequestToken The token that was provided in a @c provideState request. Defaults to 0.
      *
      * @return The status of the setState operation.
      */
-    virtual SetStateResult setState(const avs::NamespaceAndName& namespaceAndName, const std::string& jsonState,
-            const avs::StateRefreshPolicy& refreshPolicy, const unsigned int stateRequestToken = 0) = 0;
+    virtual SetStateResult setState(
+        const avs::NamespaceAndName& namespaceAndName,
+        const std::string& jsonState,
+        const avs::StateRefreshPolicy& refreshPolicy,
+        const unsigned int stateRequestToken = 0) = 0;
 
     /**
      * Request the @c ContextManager for context. If a request to the @c StateProviderInterfaces for updated states
@@ -113,8 +117,8 @@ public:
     virtual void getContext(std::shared_ptr<ContextRequesterInterface> contextRequester) = 0;
 };
 
-} // namespace sdkInterfaces
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace sdkInterfaces
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif // ALEXA_CLIENT_SDK_AVS_COMMON_SDK_INTERFACES_INCLUDE_AVS_COMMON_SDK_INTERFACES_CONTEXT_MANAGER_INTERFACE_H
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_CONTEXTMANAGERINTERFACE_H_

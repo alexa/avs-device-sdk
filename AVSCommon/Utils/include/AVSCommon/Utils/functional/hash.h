@@ -1,7 +1,5 @@
 /*
- * hash.h
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,9 +13,10 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_FUNCTIONAL_HASH_H_
-#define ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_FUNCTIONAL_HASH_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_FUNCTIONAL_HASH_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_FUNCTIONAL_HASH_H_
 
+#include <cstdlib>
 #include <climits>
 #include <functional>
 
@@ -34,15 +33,16 @@ namespace functional {
  * @param seed Accumulated value from multiple calls.
  * @param value The next value whose hash is to be combined.
  */
-template<typename Type> void hashCombine(size_t& seed, Type const& value) {
+template <typename Type>
+void hashCombine(size_t& seed, Type const& value) {
     constexpr int bitsMinus1 = (CHAR_BIT * sizeof(size_t)) - 1;
     std::hash<Type> hasher;
     seed = hasher(value) ^ ((seed << 1) | ((seed >> bitsMinus1) & 1));
 }
 
-} // namespace functional
-} // namespace utils
-} // namespace avsCommon
-} // namespace alexaClientSDK
+}  // namespace functional
+}  // namespace utils
+}  // namespace avsCommon
+}  // namespace alexaClientSDK
 
-#endif //ALEXA_CLIENT_SDK_AVS_COMMON_UTILS_INCLUDE_AVS_COMMON_UTILS_FUNCTIONAL_HASH_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_FUNCTIONAL_HASH_H_
