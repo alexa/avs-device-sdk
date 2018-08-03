@@ -16,6 +16,8 @@
 #include <cmath>
 #include <cstring>
 #include <unordered_map>
+#include <iostream>
+#include <fstream>
 
 #include <AVSCommon/AVS/Attachment/AttachmentReader.h>
 #include <AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h>
@@ -41,6 +43,8 @@ using namespace avsCommon::utils;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::utils::memory;
 using namespace avsCommon::utils::configuration;
+
+static const unsigned SAMPLE_RATE = 24000;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("MediaPlayer");
@@ -168,6 +172,12 @@ MediaPlayer::~MediaPlayer() {
     g_main_loop_unref(m_mainLoop);
 
     g_main_context_unref(m_workerContext);
+
+    if (m_fileStream) {
+        delete m_fileStream;
+        m_fileStream = nullptr;
+        ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileOutput", "fileClosed"));
+    }
 }
 
 MediaPlayer::SourceId MediaPlayer::setSource(
@@ -548,7 +558,9 @@ MediaPlayer::MediaPlayer(
         m_playPending{false},
         m_pausePending{false},
         m_resumePending{false},
-        m_pauseImmediately{false} {
+        m_pauseImmediately{false},
+        m_fileStream{nullptr},
+        m_samplesWritten{0} {
 }
 
 void MediaPlayer::workerLoop() {
@@ -581,6 +593,15 @@ bool MediaPlayer::init() {
         return false;
     }
 
+    if (name() == "SpeakMediaPlayer") {
+        m_fileStream = new std::ofstream{"/tmp/out.raw", std::ios::binary};
+        if (!m_fileStream->is_open()) {
+            ACSDK_CRITICAL(LX("Failed to open output audio file"));
+            return false;
+        }
+        ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileOutput", "fileOpen"));
+    }
+
     if (!setupPipeline()) {
         ACSDK_ERROR(LX("initPlayerFailed").d("reason", "setupPipelineFailed"));
         return false;
@@ -589,6 +610,27 @@ bool MediaPlayer::init() {
     m_mainLoopThread = std::thread(&MediaPlayer::workerLoop, this);
 
     return true;
+}
+
+GstFlowReturn MediaPlayer::WriterCallback(GstElement *sink, void *data)
+{
+    MediaPlayer *player = (MediaPlayer*)data;
+    GstSample *sample;
+    GstBuffer *buffer;
+    GstMapInfo map;
+
+    g_signal_emit_by_name(sink, "pull-sample", &sample);
+    buffer = gst_sample_get_buffer(sample);
+    gst_buffer_map(buffer, &map, GST_MAP_READ);
+    player->m_fileStream->write((char*)map.data, map.size);
+    if (player->m_samplesWritten % SAMPLE_RATE == 0) {
+        ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileOutput", "timeElapsed").d("seconds", player->m_samplesWritten / SAMPLE_RATE));
+    }
+    player->m_samplesWritten += map.size / 2;
+    gst_buffer_unmap(buffer, &map);
+    gst_sample_unref(sample);
+
+    return GST_FLOW_OK;
 }
 
 bool MediaPlayer::setupPipeline() {
@@ -607,6 +649,9 @@ bool MediaPlayer::setupPipeline() {
     std::string audioSinkElement;
     ConfigurationNode::getRoot()[MEDIAPLAYER_CONFIGURATION_ROOT_KEY].getString(
         MEDIAPLAYER_AUDIO_SINK_KEY, &audioSinkElement, "autoaudiosink");
+    if (m_fileStream) {
+        audioSinkElement = "appsink";
+    }
     m_pipeline.audioSink = gst_element_factory_make(audioSinkElement.c_str(), "audio_sink");
     if (!m_pipeline.audioSink) {
         ACSDK_ERROR(LX("setupPipelineFailed")
@@ -669,6 +714,16 @@ bool MediaPlayer::setupPipeline() {
         }
     } else {
         ACSDK_DEBUG9(LX("noOutputConversion"));
+    }
+
+    // https://gstreamer.freedesktop.org/documentation/tutorials/basic/short-cutting-the-pipeline.html
+    // except for return value of new-sample callback function - needs to return OK to avoid the sink blocking
+    if (m_fileStream) {
+        g_object_set(m_pipeline.audioSink, "emit-signals", TRUE, "caps", caps, NULL);
+        if (g_signal_connect(m_pipeline.audioSink, "new-sample", G_CALLBACK(WriterCallback), this) == 0) {
+            ACSDK_CRITICAL(LX("Failed to connect GStreamer appsink callback"));
+            return false;
+        }
     }
 
     // clean up caps object
@@ -1498,6 +1553,16 @@ void MediaPlayer::sendPlaybackFinished() {
         m_urlConverter->shutdown();
     }
     m_urlConverter.reset();
+
+    if (m_fileStream) {
+      signed short silence[SAMPLE_RATE];
+      std::memset(silence, 0, sizeof(silence));
+      for (int i = 0; i < 60; i++) {
+        m_fileStream->write((char*)silence, sizeof(silence));
+        m_samplesWritten += SAMPLE_RATE;
+      }
+      ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileOutput", "insertSilence"));
+    }
 }
 
 void MediaPlayer::sendPlaybackPaused() {

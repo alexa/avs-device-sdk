@@ -25,6 +25,8 @@
 #include <string>
 #include <thread>
 #include <queue>
+#include <iostream>
+#include <fstream>
 
 #include <gst/gst.h>
 #include <gst/app/gstappsrc.h>
@@ -564,6 +566,14 @@ private:
 
     /// Stream offset before we teardown the pipeline
     std::chrono::milliseconds m_offsetBeforeTeardown;
+
+    /**
+     * HACK Write to file instead of a real audio device.
+     */
+    std::ofstream *m_fileStream;
+    unsigned m_samplesWritten;
+
+    static GstFlowReturn WriterCallback(GstElement *sink, void *data);
 };
 
 }  // namespace mediaPlayer
