@@ -160,9 +160,6 @@ void SQLiteBluetoothStorageTest::TearDown() {
 }
 
 void SQLiteBluetoothStorageTest::getOrderedMacHelper(bool ascending) {
-    const std::string TEST_MAC_2 = std::string(TEST_MAC).replace(0, 1, "a");
-    const std::string TEST_UUID_2 = std::string(TEST_UUID).replace(0, 1, "a");
-
     ASSERT_TRUE(m_db->insertByMac(TEST_MAC, TEST_UUID));
     ASSERT_TRUE(m_db->insertByMac(TEST_MAC_2, TEST_UUID_2));
 
@@ -271,18 +268,14 @@ TEST_F(SQLiteBluetoothStorageTest, clearOnEmptySucceeds) {
 
 /// Test getUuid with one row containing UUID.
 TEST_F(SQLiteBluetoothStorageTest, getUuidWithOneSucceeds) {
-    const std::unordered_map<std::string, std::string> data{
-        {TEST_MAC, TEST_UUID},
-    };
+    const std::unordered_map<std::string, std::string> data{{TEST_MAC, TEST_UUID}};
 
     getMacOrUuidHelper(&SQLiteBluetoothStorage::getUuid, TEST_MAC, TEST_UUID, data);
 }
 
 /// Test getUuid with multiple rows, one of which contains the UUID.
 TEST_F(SQLiteBluetoothStorageTest, getUuidWithMultipleSucceeds) {
-    const std::unordered_map<std::string, std::string> data{
-        {TEST_MAC, TEST_UUID}, {TEST_MAC_2, TEST_UUID_2},
-    };
+    const std::unordered_map<std::string, std::string> data{{TEST_MAC, TEST_UUID}, {TEST_MAC_2, TEST_UUID_2}};
 
     getMacOrUuidHelper(&SQLiteBluetoothStorage::getUuid, TEST_MAC, TEST_UUID, data);
 }

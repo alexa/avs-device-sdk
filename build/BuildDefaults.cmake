@@ -34,13 +34,19 @@ include(TestOptions)
 include(Bluetooth)
 
 # Setup platform dependant variables.
-include (Platforms)
+include(Platforms)
 
 # Setup ESP variables.
-include (ESP)
+include(ESP)
 
 # Setup Comms variables.
-include (Comms)
+include(Comms)
+
+# Setup android variables.
+include(Android)
+
+# Setup ffmpeg variables.
+include(FFmpeg)
 
 # Setup MRM variables.
 include (MRM)

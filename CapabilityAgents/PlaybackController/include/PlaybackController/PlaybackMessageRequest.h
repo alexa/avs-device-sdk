@@ -20,6 +20,7 @@
 #include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
 
 #include "PlaybackController.h"
+#include "PlaybackCommand.h"
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -41,7 +42,7 @@ public:
      * @c onSendCompleted is invoked.
      */
     PlaybackMessageRequest(
-        avsCommon::avs::PlaybackButton button,
+        const PlaybackCommand& command,
         const std::string& jsonContent,
         std::shared_ptr<PlaybackController> playbackController);
 
@@ -54,8 +55,8 @@ private:
     /// The @c PlaybackController to be notified when @c onSendCompleted is called.
     std::shared_ptr<PlaybackController> m_playbackController;
 
-    /// The @c Button pressed for this message request.
-    avsCommon::avs::PlaybackButton m_button;
+    /// The command associated with the @c Button pressed for this message request.
+    const PlaybackCommand& m_command;
 };
 
 }  // namespace playbackController

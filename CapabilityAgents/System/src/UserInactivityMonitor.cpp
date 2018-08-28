@@ -36,6 +36,9 @@ using namespace rapidjson;
 /// String to identify log entries originating from this file.
 static const std::string TAG("UserInactivityMonitor");
 
+/// Number of seconds in one hour.
+static const int SECONDS_IN_HOUR = 3600;
+
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -96,12 +99,9 @@ UserInactivityMonitor::UserInactivityMonitor(
         CapabilityAgent{USER_INACTIVITY_MONITOR_NAMESPACE, exceptionEncounteredSender},
         RequiresShutdown{"UserInactivityMonitor"},
         m_messageSender{messageSender},
-        m_lastTimeActive{std::chrono::steady_clock::now()} {
-    m_eventTimer.start(
-        sendPeriod,
-        Timer::PeriodType::ABSOLUTE,
-        Timer::FOREVER,
-        std::bind(&UserInactivityMonitor::sendInactivityReport, this));
+        m_lastTimeActive{std::chrono::steady_clock::now()},
+        m_sendPeriod{sendPeriod} {
+    startTimer();
 }
 
 void UserInactivityMonitor::sendInactivityReport() {
@@ -115,14 +115,23 @@ void UserInactivityMonitor::sendInactivityReport() {
         std::lock_guard<std::mutex> timeLock(m_mutex);
         m_lastTimeActive = std::chrono::steady_clock::now();
         lastTimeActive = m_lastTimeActive;
-    }
 
+        // Recent update was blocked means user was active, so we don't need to send an event.
+        return;
+    }
     Document inactivityPayload(kObjectType);
     SizeType payloadKeySize = INACTIVITY_EVENT_PAYLOAD_KEY.length();
     const Pointer::Token payloadKey[] = {{INACTIVITY_EVENT_PAYLOAD_KEY.c_str(), payloadKeySize, kPointerInvalidIndex}};
-    auto inactiveTime =
+
+    // AVS requires inactivity time to be a multiple of 3600.
+    auto inactiveSeconds =
         std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - lastTimeActive);
-    Pointer(payloadKey, 1).Set(inactivityPayload, static_cast<int64_t>(inactiveTime.count()));
+
+    // Rounded hours.
+    auto inactiveHours = ((inactiveSeconds.count() + SECONDS_IN_HOUR / 2) / SECONDS_IN_HOUR);
+
+    Pointer(payloadKey, 1).Set(inactivityPayload, static_cast<int64_t>(inactiveHours * SECONDS_IN_HOUR));
+
     std::string inactivityPayloadString;
     jsonUtils::convertToValue(inactivityPayload, &inactivityPayloadString);
 
@@ -130,6 +139,14 @@ void UserInactivityMonitor::sendInactivityReport() {
     m_messageSender->sendMessage(std::make_shared<MessageRequest>(inactivityEvent.second));
 
     notifyObservers();
+}
+
+void UserInactivityMonitor::startTimer() {
+    m_eventTimer.start(
+        m_sendPeriod,
+        Timer::PeriodType::ABSOLUTE,
+        Timer::FOREVER,
+        std::bind(&UserInactivityMonitor::sendInactivityReport, this));
 }
 
 DirectiveHandlerConfiguration UserInactivityMonitor::getConfiguration() const {
@@ -159,7 +176,12 @@ void UserInactivityMonitor::cancelDirective(std::shared_ptr<CapabilityAgent::Dir
 }
 
 void UserInactivityMonitor::onUserActive() {
+    ACSDK_DEBUG5(LX(__func__));
     std::unique_lock<std::mutex> timeLock(m_mutex, std::defer_lock);
+
+    m_eventTimer.stop();
+    startTimer();
+
     if (timeLock.try_lock()) {
         m_lastTimeActive = std::chrono::steady_clock::now();
     } else {

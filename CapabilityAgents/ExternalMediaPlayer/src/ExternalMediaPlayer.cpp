@@ -155,11 +155,18 @@ static DirectiveHandlerConfiguration g_configuration = {{PLAY_DIRECTIVE, Blockin
                                                         {FAVORITE_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
                                                         {UNFAVORITE_DIRECTIVE, BlockingPolicy::NON_BLOCKING}};
 
-static std::unordered_map<avsCommon::avs::PlaybackButton, RequestType> g_buttonToRequestType = {
-    {avsCommon::avs::PlaybackButton::PLAY, RequestType::PAUSE_RESUME_TOGGLE},
-    {avsCommon::avs::PlaybackButton::PAUSE, RequestType::PAUSE_RESUME_TOGGLE},
-    {avsCommon::avs::PlaybackButton::NEXT, RequestType::NEXT},
-    {avsCommon::avs::PlaybackButton::PREVIOUS, RequestType::PREVIOUS}};
+static std::unordered_map<PlaybackButton, RequestType> g_buttonToRequestType = {
+    {PlaybackButton::PLAY, RequestType::PAUSE_RESUME_TOGGLE},
+    {PlaybackButton::PAUSE, RequestType::PAUSE_RESUME_TOGGLE},
+    {PlaybackButton::NEXT, RequestType::NEXT},
+    {PlaybackButton::PREVIOUS, RequestType::PREVIOUS}};
+
+static std::unordered_map<PlaybackToggle, std::pair<RequestType, RequestType>> g_toggleToRequestType = {
+    {PlaybackToggle::SHUFFLE, std::make_pair(RequestType::ENABLE_SHUFFLE, RequestType::DISABLE_SHUFFLE)},
+    {PlaybackToggle::LOOP, std::make_pair(RequestType::ENABLE_REPEAT, RequestType::DISABLE_REPEAT)},
+    {PlaybackToggle::REPEAT, std::make_pair(RequestType::ENABLE_REPEAT_ONE, RequestType::DISABLE_REPEAT_ONE)},
+    {PlaybackToggle::THUMBS_UP, std::make_pair(RequestType::FAVORITE, RequestType::DESELECT_FAVORITE)},
+    {PlaybackToggle::THUMBS_DOWN, std::make_pair(RequestType::UNFAVORITE, RequestType::DESELECT_UNFAVORITE)}};
 
 std::shared_ptr<ExternalMediaPlayer> ExternalMediaPlayer::create(
     const AdapterMediaPlayerMap& mediaPlayers,
@@ -469,7 +476,7 @@ void ExternalMediaPlayer::onButtonPressed(PlaybackButton button) {
     if (!m_playerInFocus.empty()) {
         auto adapterIt = m_adapters.find(m_playerInFocus);
 
-        if (adapterIt == m_adapters.end()) {
+        if (m_adapters.end() == adapterIt) {
             // Should never reach here as playerInFocus is always set based on a contract with AVS.
             ACSDK_ERROR(LX("AdapterNotFound").d("player", m_playerInFocus));
             return;
@@ -477,12 +484,42 @@ void ExternalMediaPlayer::onButtonPressed(PlaybackButton button) {
 
         auto buttonIt = g_buttonToRequestType.find(button);
 
-        if (buttonIt == g_buttonToRequestType.end()) {
-            ACSDK_ERROR(LX("ButtonToRequestTypeNotFound").d("button", PlaybackButtonToString(button)));
+        if (g_buttonToRequestType.end() == buttonIt) {
+            ACSDK_ERROR(LX("ButtonToRequestTypeNotFound").d("button", button));
             return;
         }
 
-        ((*adapterIt).second)->handlePlayControl((*buttonIt).second);
+        adapterIt->second->handlePlayControl(buttonIt->second);
+    }
+}
+
+void ExternalMediaPlayer::onTogglePressed(PlaybackToggle toggle, bool action) {
+    if (!m_playerInFocus.empty()) {
+        auto adapterIt = m_adapters.find(m_playerInFocus);
+
+        if (m_adapters.end() == adapterIt) {
+            // Should never reach here as playerInFocus is always set based on a contract with AVS.
+            ACSDK_ERROR(LX("AdapterNotFound").d("player", m_playerInFocus));
+            return;
+        }
+
+        auto toggleIt = g_toggleToRequestType.find(toggle);
+
+        if (g_toggleToRequestType.end() == toggleIt) {
+            ACSDK_ERROR(LX("ToggleToRequestTypeNotFound").d("toggle", toggle));
+            return;
+        }
+
+        auto adapter = adapterIt->second;
+
+        // toggleStates map is <SELECTED,DESELECTED>
+        auto toggleStates = toggleIt->second;
+
+        if (action) {
+            adapter->handlePlayControl(toggleStates.first);
+        } else {
+            adapterIt->second->handlePlayControl(toggleStates.second);
+        }
     }
 }
 

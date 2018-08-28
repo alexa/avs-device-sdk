@@ -19,6 +19,7 @@
 #include <memory>
 
 #include <AVSCommon/Utils/HTTPContent.h>
+#include <AVSCommon/Utils/SDKVersion.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -53,7 +54,18 @@ public:
     virtual std::unique_ptr<avsCommon::utils::HTTPContent> getContent(
         FetchOptions option,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer = nullptr) = 0;
+
+    /**
+     * Returns a string that represents the User-Agent to be used in HTTP requests.
+     *
+     * @return User-Agent string to be used in HTTP requests.
+     */
+    inline static std::string getUserAgent();
 };
+
+std::string HTTPContentFetcherInterface::getUserAgent() {
+    return "AvsDeviceSdk/" + utils::sdkVersion::getCurrentVersion();
+}
 
 }  // namespace sdkInterfaces
 }  // namespace avsCommon

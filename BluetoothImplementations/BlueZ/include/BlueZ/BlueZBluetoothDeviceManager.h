@@ -40,6 +40,8 @@ public:
     static std::unique_ptr<BlueZBluetoothDeviceManager> create(
         std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus);
 
+    virtual ~BlueZBluetoothDeviceManager() override;
+
     /// @name BluetoothDeviceManagerInterface Functions
     /// @{
 

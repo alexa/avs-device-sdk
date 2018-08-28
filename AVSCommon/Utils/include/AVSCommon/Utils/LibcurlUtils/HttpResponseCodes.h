@@ -23,6 +23,10 @@ enum HTTPResponseCode {
     SUCCESS_OK = 200,
     /// HTTP Succcess with no response payload.
     SUCCESS_NO_CONTENT = 204,
+    /// This is used to detect the first Redirection (3xx) code
+    REDIRECTION_START_CODE = 300,
+    /// This is used to detect the last Redirection (3xx) code
+    REDIRECTION_END_CODE = 308,
     /// HTTP code for invalid request by user.
     BAD_REQUEST = 400,
     /// HTTP code for forbidden request by user.

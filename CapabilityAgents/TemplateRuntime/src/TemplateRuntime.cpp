@@ -38,7 +38,7 @@ static const std::string TEMPLATERUNTIME_CAPABILITY_INTERFACE_TYPE = "AlexaInter
 /// TemplateRuntime interface name
 static const std::string TEMPLATERUNTIME_CAPABILITY_INTERFACE_NAME = "TemplateRuntime";
 /// TemplateRuntime interface version
-static const std::string TEMPLATERUNTIME_CAPABILITY_INTERFACE_VERSION = "1.0";
+static const std::string TEMPLATERUNTIME_CAPABILITY_INTERFACE_VERSION = "1.1";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG{"TemplateRuntime"};

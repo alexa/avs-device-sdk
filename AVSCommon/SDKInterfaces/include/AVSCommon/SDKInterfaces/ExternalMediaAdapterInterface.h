@@ -74,6 +74,9 @@ enum class RequestType {
     /// Enable Repeat of a track.
     ENABLE_REPEAT_ONE,
 
+    /// Disable Repeat of a track.
+    DISABLE_REPEAT_ONE,
+
     /// Enable Loop on.
     ENABLE_REPEAT,
 
@@ -86,11 +89,17 @@ enum class RequestType {
     /// Disable shuffle.
     DISABLE_SHUFFLE,
 
-    /// Mark a track as favorite.(thumbs up)
+    /// Mark a track as favorite.(thumbs up true)
     FAVORITE,
 
-    /// Mark a track as not a favorite.(thumbs down)
+    /// Unmark a track as favorite.(thumbs up false)
+    DESELECT_FAVORITE,
+
+    /// Mark a track as not a favorite.(thumbs down true)
     UNFAVORITE,
+
+    /// Unmark a track as not a favorite.(thumbs down false)
+    DESELECT_UNFAVORITE,
 
     /// Seek to a given offset.
     SEEK,
@@ -385,6 +394,11 @@ public:
      * @param adapaterName The name of the adapter.
      */
     ExternalMediaAdapterInterface(const std::string& adapaterName);
+
+    /**
+     * Destructor.
+     */
+    virtual ~ExternalMediaAdapterInterface() = default;
 
     /// Method to initialize a third party library.
     virtual void init() = 0;

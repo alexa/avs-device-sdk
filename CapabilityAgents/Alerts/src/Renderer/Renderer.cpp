@@ -186,7 +186,7 @@ void Renderer::pause() {
 void Renderer::play() {
     ACSDK_DEBUG9(LX("play"));
     if (shouldPlayDefault()) {
-        m_currentSourceId = m_mediaPlayer->setSource(m_defaultAudio, shouldMediaPlayerRepeat());
+        m_currentSourceId = m_mediaPlayer->setSource(m_defaultAudioFactory(), shouldMediaPlayerRepeat());
     } else {
         m_currentSourceId = m_mediaPlayer->setSource(m_urls[m_numberOfStreamsRenderedThisLoop]);
     }
@@ -216,7 +216,7 @@ void Renderer::executeStart(
     m_remainingLoopCount = loopCount;
     m_directiveLoopCount = loopCount;
     m_loopPause = loopPause;
-    m_defaultAudio = audioFactory();
+    m_defaultAudioFactory = audioFactory;
 
     ACSDK_DEBUG9(
         LX("executeStart")

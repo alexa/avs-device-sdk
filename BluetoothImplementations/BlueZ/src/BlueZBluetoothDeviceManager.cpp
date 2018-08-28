@@ -15,6 +15,8 @@
 
 #include "BlueZ/BlueZBluetoothDeviceManager.h"
 
+#include <AVSCommon/Utils/Logger/Logger.h>
+
 namespace alexaClientSDK {
 namespace bluetoothImplementations {
 namespace blueZ {
@@ -22,6 +24,16 @@ namespace blueZ {
 using namespace avsCommon::sdkInterfaces::bluetooth;
 using namespace avsCommon::sdkInterfaces::bluetooth::services;
 using namespace avsCommon::utils;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG{"BlueZBluetoothDeviceManager"};
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::shared_ptr<BluetoothHostControllerInterface> BlueZBluetoothDeviceManager::getHostController() {
     return m_deviceManager->getHostController();
@@ -43,6 +55,11 @@ std::unique_ptr<BlueZBluetoothDeviceManager> BlueZBluetoothDeviceManager::create
 BlueZBluetoothDeviceManager::BlueZBluetoothDeviceManager(std::shared_ptr<BlueZDeviceManager> deviceManager) :
         m_deviceManager{deviceManager} {
 }
+
+BlueZBluetoothDeviceManager::~BlueZBluetoothDeviceManager() {
+    ACSDK_DEBUG5(LX(__func__));
+    m_deviceManager->shutdown();
+};
 
 }  // namespace blueZ
 }  // namespace bluetoothImplementations

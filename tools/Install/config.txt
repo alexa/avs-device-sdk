@@ -2,3 +2,10 @@
 DEVICE_SERIAL_NUMBER="123456"
 CLIENT_ID=""
 PRODUCT_ID=""
+
+# Uncomment and fill the lines below to configure android build.
+# PLATFORM="android"
+# API_LEVEL=""
+# TARGET_SYSTEM=""
+# DEVICE_INSTALL_PATH=""
+# BUILD_TYPE=""

@@ -126,6 +126,11 @@ void InternetConnectionMonitor::testConnection() {
         updateConnectionStatus(false);
         return;
     }
+    if (!httpContent->isReady(std::chrono::duration_cast<std::chrono::milliseconds>(m_period))) {
+        ACSDK_ERROR(LX("testConnectionFailed").d("reason", "getHttpContentTimeout"));
+        updateConnectionStatus(false);
+        return;
+    }
     if (!(*httpContent)) {
         ACSDK_ERROR(LX("testConnectionFailed").d("reason", "badHTTPContentReceived"));
         updateConnectionStatus(false);

@@ -29,11 +29,24 @@ namespace sdkInterfaces {
 class PlaybackHandlerInterface {
 public:
     /**
+     * Destructor.
+     */
+    virtual ~PlaybackHandlerInterface() = default;
+
+    /**
      * Used to notify the handler when a playback button is pressed.
      *
      * @param button The button that has been pressed.
      */
-    virtual void onButtonPressed(avs::PlaybackButton button) = 0;
+    virtual void onButtonPressed(alexaClientSDK::avsCommon::avs::PlaybackButton button) = 0;
+
+    /**
+     * Used to notify the handler when a playback toggle is pressed.
+     *
+     * @param toggle The toggle that has been pressed.
+     * @param action The boolean action for the toggle state
+     */
+    virtual void onTogglePressed(alexaClientSDK::avsCommon::avs::PlaybackToggle toggle, bool action) = 0;
 };
 
 }  // namespace sdkInterfaces

@@ -171,21 +171,48 @@ static bool isCapabilityMapCorrectlyFormed(const std::unordered_map<std::string,
 /**
  * Get the error message from HTTP response.
  *
- * @return The error message from the HTTP response if the json is valid, else ""
+ * @return The error message from the HTTP response if the json is valid, else "".
  */
 static std::string getErrorMsgFromHttpResponse(const std::string& httpResponse);
 
 /**
  * Get a capability info string from the capability json.
  *
- * @param capabilityJson The capability json
- * @param jsonMemberKey the member key in the json where the capability info can be found
- * @return The capability info string if found, else "" ("" is ok as a return for errors because a null string itself is
- * also an error)
+ * @param capabilityJson The capability json.
+ * @param jsonMemberKey the member key in the json where the capability info can be found.
+ * @return The capability info string if found, else "".
+ * @note "" is ok as a return value for this function if there are errors because a null string itself implies an error.
  */
 static std::string getCapabilityInfoStringFromJson(
     const rapidjson::Value& capabilityJson,
     const std::string& jsonMemberKey);
+
+/**
+ * Get a capability configurations json as a string from the capability json.
+ *
+ * @param capabilityJson The capability json.
+ * @return The capability configurations json as a string if found, else "".
+ * @note "" is ok as a return value for this function if there are errors because a null string itself implies an error.
+ */
+static std::string getCapabilityConfigsStringFromJson(const rapidjson::Value& capabilityJson);
+
+/**
+ * Get a string from the json.
+ *
+ * @param jsonValue The json value object.
+ * @param [out] *jsonString The json as a string.
+ * @return true if a string was able to be obatined from the json, else false.
+ */
+static bool getStringFromJson(const rapidjson::Value& jsonValue, std::string* jsonString);
+
+/**
+ * Get a json object from a string representing the json.
+ *
+ * @param jsonString The json as a string.
+ * @param [out] *jsonValue The json value object.
+ * @return true if the string represents a proper json, else false.
+ */
+static bool getJsonFromString(const std::string& jsonString, rapidjson::Value* jsonValue);
 
 /**
  * Helper method that will log a fail for saving Capabilities API data to misc DB and then attempt to clear the table.
@@ -312,6 +339,7 @@ std::shared_ptr<CapabilitiesDelegate> CapabilitiesDelegate::create(
     const std::shared_ptr<AuthDelegateInterface>& authDelegate,
     const std::shared_ptr<MiscStorageInterface>& miscStorage,
     const std::shared_ptr<HttpPutInterface>& httpPut,
+    const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager,
     const ConfigurationNode& configurationRoot,
     std::shared_ptr<DeviceInfo> deviceInfo) {
     const std::string errorEvent = "createFailed";
@@ -326,7 +354,7 @@ std::shared_ptr<CapabilitiesDelegate> CapabilitiesDelegate::create(
     }
 
     std::shared_ptr<CapabilitiesDelegate> instance(
-        new CapabilitiesDelegate(authDelegate, miscStorage, httpPut, deviceInfo));
+        new CapabilitiesDelegate(authDelegate, miscStorage, httpPut, customerDataManager, deviceInfo));
     if (!(instance->init(configurationRoot))) {
         ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "CapabilitiesDelegateInitFailed"));
         return nullptr;
@@ -340,8 +368,10 @@ CapabilitiesDelegate::CapabilitiesDelegate(
     const std::shared_ptr<AuthDelegateInterface>& authDelegate,
     const std::shared_ptr<MiscStorageInterface>& miscStorage,
     const std::shared_ptr<HttpPutInterface>& httpPut,
+    const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager,
     const std::shared_ptr<DeviceInfo>& deviceInfo) :
         RequiresShutdown{"CapabilitiesDelegate"},
+        CustomerDataHandler{customerDataManager},
         m_capabilitiesState{CapabilitiesObserverInterface::State::UNINITIALIZED},
         m_capabilitiesError{CapabilitiesObserverInterface::Error::UNINITIALIZED},
         m_authDelegate{authDelegate},
@@ -363,6 +393,31 @@ void CapabilitiesDelegate::doShutdown() {
     {
         std::lock_guard<std::mutex> lock(m_capabilitiesMutex);
         m_capabilitiesObservers.clear();
+    }
+}
+
+void CapabilitiesDelegate::clearData() {
+    ACSDK_DEBUG5(LX(__func__));
+    bool capabilitiesTableExists = false;
+    if (m_miscStorage->tableExists(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE, &capabilitiesTableExists)) {
+        if (capabilitiesTableExists) {
+            if (!m_miscStorage->clearTable(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE)) {
+                ACSDK_ERROR(LX("clearDataFailed")
+                                .d("reason",
+                                   "Unable to clear the table " + CAPABILITIES_PUBLISH_TABLE + " for component " +
+                                       COMPONENT_NAME + ". Please clear the table for proper future functioning."));
+            } else if (!m_miscStorage->deleteTable(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE)) {
+                ACSDK_ERROR(LX("clearDataFailed")
+                                .d("reason",
+                                   "Unable to delete the table " + CAPABILITIES_PUBLISH_TABLE + " for component " +
+                                       COMPONENT_NAME + ". Please delete the table for proper future functioning."));
+            }
+        }
+    } else {
+        ACSDK_ERROR(LX("clearDataFailed")
+                        .d("reason",
+                           "Unable to check if the table " + CAPABILITIES_PUBLISH_TABLE + " for component " +
+                               COMPONENT_NAME + "exists. Please delete the table for proper future functioning."));
     }
 }
 
@@ -582,6 +637,8 @@ std::string CapabilitiesDelegate::getCapabilitiesPublishMessageBodyFromRegistere
         return "";
     }
 
+    const std::string errorEvent = "getCapabilitiesPublishMessageBodyFromRegisteredCapabilitiesFailed";
+    const std::string errorReasonKey = "reason";
     rapidjson::Document capabilitiesPublishMessageBody(kObjectType);
     auto& allocator = capabilitiesPublishMessageBody.GetAllocator();
 
@@ -593,6 +650,7 @@ std::string CapabilitiesDelegate::getCapabilitiesPublishMessageBodyFromRegistere
 
         /// You should not have been able to register incomplete capabilties. But, checking just in case.
         if (!isCapabilityMapCorrectlyFormed(capabilityMap)) {
+            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "capabilityIsInvalid"));
             return "";
         }
 
@@ -600,56 +658,130 @@ std::string CapabilitiesDelegate::getCapabilitiesPublishMessageBodyFromRegistere
         auto foundValueIterator = capabilityMap.find(CAPABILITY_INTERFACE_TYPE_KEY);
         if (foundValueIterator != capabilityMap.end()) {
             capability.AddMember(StringRef(CAPABILITY_INTERFACE_TYPE_KEY), foundValueIterator->second, allocator);
+        } else {
+            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "capabilityInterfaceTypeNotFound"));
+            return "";
         }
         foundValueIterator = capabilityMap.find(CAPABILITY_INTERFACE_NAME_KEY);
         if (foundValueIterator != capabilityMap.end()) {
             capability.AddMember(StringRef(CAPABILITY_INTERFACE_NAME_KEY), foundValueIterator->second, allocator);
+        } else {
+            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "capabilityInterfaceNameNotFound"));
+            return "";
         }
         foundValueIterator = capabilityMap.find(CAPABILITY_INTERFACE_VERSION_KEY);
         if (foundValueIterator != capabilityMap.end()) {
             capability.AddMember(StringRef(CAPABILITY_INTERFACE_VERSION_KEY), foundValueIterator->second, allocator);
+        } else {
+            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "capabilityInterfaceVersionNotFound"));
+            return "";
         }
         if (capabilityMap.size() == CAPABILITY_MAP_MAXIMUM_ENTRIES) {
             foundValueIterator = capabilityMap.find(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY);
             if (foundValueIterator != capabilityMap.end()) {
-                capability.AddMember(
-                    StringRef(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY), foundValueIterator->second, allocator);
+                std::string capabilityConfigurationsString = foundValueIterator->second;
+                rapidjson::Value capabilityConfigurationsJson;
+                if (getJsonFromString(capabilityConfigurationsString, &capabilityConfigurationsJson)) {
+                    capability.AddMember(
+                        StringRef(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY), capabilityConfigurationsJson, allocator);
+                } else {
+                    ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "capabilityInterfaceConfigurationsIsInvalid"));
+                    return "";
+                }
+            } else {
+                ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "capabilityInterfaceConfigurationsNotFound"));
+                return "";
             }
         }
         capabilities.PushBack(capability, allocator);
     }
     capabilitiesPublishMessageBody.AddMember(StringRef(CAPABILITIES_KEY), capabilities, allocator);
 
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    if (!capabilitiesPublishMessageBody.Accept(writer)) {
-        ACSDK_ERROR(LX("getCapabilitiesPublishMessageBodyFromRegisteredCapabilitiesFailed")
-                        .d("reason", "writerRefusedCapabilitiesPublishMessageBodyJson"));
+    std::string capabilitiesPublishMessageString;
+    if (!getStringFromJson(capabilitiesPublishMessageBody, &capabilitiesPublishMessageString)) {
+        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "unableToGetCapabilitiesPublishMessageBodyString"));
         return "";
     }
 
     m_envelopeVersion = ENVELOPE_VERSION_VALUE;
     m_capabilityConfigs = m_registeredCapabilityConfigs;
 
-    const char* bufferData = buffer.GetString();
-    if (!bufferData) {
-        ACSDK_ERROR(LX("getCapabilitiesPublishMessageBodyFromRegisteredCapabilitiesFailed")
-                        .d("reason", "nullptrCapabilitiesPublishMessageBodyJsonBufferString"));
-        return "";
-    }
-
-    return std::string(bufferData);
+    return capabilitiesPublishMessageString;
 }
 
 std::string getCapabilityInfoStringFromJson(const rapidjson::Value& capabilityJson, const std::string& jsonMemberKey) {
+    const std::string event = "getCapabilityInfoStringFromJsonFailed";
+    const std::string reasonKey = "reason";
+
     if (!capabilityJson.HasMember(jsonMemberKey)) {
+        ACSDK_ERROR(LX(event).d(reasonKey, "jsonMemberNotAvailable: " + jsonMemberKey));
         return "";
     }
     const rapidjson::Value& capabilityTypeJson = (capabilityJson.FindMember(jsonMemberKey))->value;
     if (!capabilityTypeJson.IsString()) {
+        ACSDK_ERROR(LX(event).d(reasonKey, "jsonMemberNotString: " + jsonMemberKey));
         return "";
     }
     return capabilityTypeJson.GetString();
+}
+
+std::string getCapabilityConfigsStringFromJson(const rapidjson::Value& capabilityJson) {
+    const std::string event = "getCapabilityConfigsStringFromJsonFailed";
+    const std::string reasonKey = "reason";
+    if (!capabilityJson.HasMember(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY)) {
+        ACSDK_DEBUG0(LX(event).m("Interface configurations not available"));
+        return "";
+    }
+    const rapidjson::Value& capabilityConfigJson =
+        (capabilityJson.FindMember(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY))->value;
+    std::string capabilityConfigsString;
+    if (!getStringFromJson(capabilityConfigJson, &capabilityConfigsString)) {
+        ACSDK_ERROR(LX(event).d(reasonKey, "jsonParsingFailed"));
+        return "";
+    }
+    return capabilityConfigsString;
+}
+
+bool getStringFromJson(const rapidjson::Value& jsonValue, std::string* jsonString) {
+    const std::string event = "getStringFromJsonFailed";
+    const std::string reasonKey = "reason";
+    if (!jsonString) {
+        ACSDK_ERROR(LX(event).m("jsonString is nullptr."));
+        return false;
+    }
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    if (!jsonValue.Accept(writer)) {
+        ACSDK_ERROR(LX(event).d(reasonKey, "writerRefusedJson"));
+        return false;
+    }
+    const char* bufferData = buffer.GetString();
+    if (!bufferData) {
+        ACSDK_ERROR(LX(event).d(reasonKey, "nullptrJsonBufferString"));
+        return false;
+    }
+    *jsonString = std::string(bufferData);
+    return true;
+}
+
+bool getJsonFromString(const std::string& jsonString, rapidjson::Value* jsonValue) {
+    const std::string event = "getJsonFromStringFailed";
+    const std::string reasonKey = "reason";
+    if (!jsonValue) {
+        ACSDK_ERROR(LX(event).m("jsonValue is nullptr."));
+        return false;
+    }
+    if (jsonString.empty()) {
+        ACSDK_ERROR(LX(event).d(reasonKey, "jsonStringEmpty"));
+        return false;
+    }
+    rapidjson::Document jsonDoc;
+    if (jsonDoc.Parse(jsonString).HasParseError()) {
+        ACSDK_ERROR(LX(event).d(reasonKey, "jsonStringNotValidJson"));
+        return false;
+    }
+    *jsonValue = rapidjson::Value(jsonDoc, jsonDoc.GetAllocator());
+    return true;
 }
 
 std::string CapabilitiesDelegate::getCapabilitiesPublishMessageBodyFromOverride() {
@@ -730,24 +862,12 @@ std::string CapabilitiesDelegate::getCapabilitiesPublishMessageBodyFromOverride(
         capabilityMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, capabilityVersion});
 
         if (numOfMembers == CAPABILITY_MAP_MAXIMUM_ENTRIES) {
-            if (!capabilityJson.HasMember(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY)) {
-                ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Capability has an unexpected component"));
+            std::string capabilityConfigurations = getCapabilityConfigsStringFromJson(capabilityJson);
+            if (capabilityConfigurations.empty()) {
+                ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Error in processing capability configurations"));
                 return "";
             }
-            const rapidjson::Value& capabilityConfigJson =
-                (capabilityJson.FindMember(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY))->value;
-            rapidjson::StringBuffer buffer;
-            rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-            if (!capabilityConfigJson.Accept(writer)) {
-                ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Error in processing capability configuration"));
-                return "";
-            }
-            const char* bufferData = buffer.GetString();
-            if (!bufferData) {
-                ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Error in processing capability configuration"));
-                return "";
-            }
-            capabilityMap.insert({CAPABILITY_INTERFACE_CONFIGURATIONS_KEY, std::string(bufferData)});
+            capabilityMap.insert({CAPABILITY_INTERFACE_CONFIGURATIONS_KEY, capabilityConfigurations});
         }
 
         std::string capabilityKey = getCapabilityKey(capabilityMap);
@@ -905,10 +1025,9 @@ void CapabilitiesDelegate::getPreviouslySentCapabilitiesPublishData() {
                 (capabilityJson.FindMember(CAPABILITY_INTERFACE_VERSION_KEY))->value.GetString();
             capabilityMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, capabilityVersion});
 
-            if (capabilityJson.HasMember(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY)) {
-                std::string capabilityConfigs =
-                    (capabilityJson.FindMember(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY))->value.GetString();
-                capabilityMap.insert({CAPABILITY_INTERFACE_CONFIGURATIONS_KEY, capabilityConfigs});
+            std::string capabilityConfigurations = getCapabilityConfigsStringFromJson(capabilityJson);
+            if (!capabilityConfigurations.empty()) {
+                capabilityMap.insert({CAPABILITY_INTERFACE_CONFIGURATIONS_KEY, capabilityConfigurations});
             }
 
             std::string capabilityKey = getCapabilityKey(capabilityMap);

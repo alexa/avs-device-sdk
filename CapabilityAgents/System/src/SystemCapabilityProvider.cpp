@@ -29,7 +29,7 @@ static const std::string SYSTEM_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
 /// System interface name
 static const std::string SYSTEM_CAPABILITY_INTERFACE_NAME = "System";
 /// System interface version
-static const std::string SYSTEM_CAPABILITY_INTERFACE_VERSION = "1.0";
+static const std::string SYSTEM_CAPABILITY_INTERFACE_VERSION = "1.1";
 
 /**
  * Creates the System capability configuration.

@@ -15,6 +15,7 @@
 
 #include <iostream>
 
+#include "AVSCommon/Utils/Configuration/ConfigurationNode.h"
 #include <AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h>
 #include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
@@ -41,6 +42,10 @@ static const std::string TAG("CurlEasyHandleWrapper");
 static std::string JSON_MIME_TYPE = "application/json";
 /// MIME Content-Type for octet stream data
 static std::string OCTET_MIME_TYPE = "application/octet-stream";
+/// Key for looking up the @c LibCurlUtil @c ConfigurationNode.
+static const std::string LIBCURLUTILS_CONFIG_KEY = "libcurlUtils";
+/// Key for looking up a configuration value for @c CURLOPT_INTERFACE
+static const std::string INTERFACE_CONFIG_KEY = "CURLOPT_INTERFACE";
 
 CurlEasyHandleWrapper::CurlEasyHandleWrapper() :
         m_handle{curl_easy_init()},
@@ -261,14 +266,33 @@ void CurlEasyHandleWrapper::cleanupResources() {
 }
 
 bool CurlEasyHandleWrapper::setDefaultOptions() {
-    if (prepareForTLS(m_handle)) {
+    // Using a do-while(false) loop here so we can break from the loop and do some cleanup in case of failures.
+    do {
+        if (!prepareForTLS(m_handle)) {
+            ACSDK_ERROR(LX("setDefaultOptions").d("reason", "prepareForTLS failed"));
+            break;
+        }
+
         /*
          * The documentation from libcurl recommends setting CURLOPT_NOSIGNAL to 1 for multi-threaded applications.
          * https://curl.haxx.se/libcurl/c/threadsafe.html
          */
-        return setopt(CURLOPT_NOSIGNAL, 1);
-    }
-    ACSDK_ERROR(LX("setDefaultOptions").d("reason", "prepareForTLS failed"));
+        if (!setopt(CURLOPT_NOSIGNAL, 1)) {
+            break;
+        }
+
+        auto config = configuration::ConfigurationNode::getRoot()[LIBCURLUTILS_CONFIG_KEY];
+        std::string interfaceName;
+        if (config.getString(INTERFACE_CONFIG_KEY, &interfaceName) &&
+            !setopt(CURLOPT_INTERFACE, interfaceName.c_str())) {
+            break;
+        }
+
+        // Everything is good, return true here.
+        return true;
+    } while (false);
+
+    // Cleanup after breaking do-while(false) loop.
     curl_easy_cleanup(m_handle);
     m_handle = nullptr;
     return false;

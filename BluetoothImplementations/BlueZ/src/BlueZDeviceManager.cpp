@@ -461,16 +461,24 @@ void BlueZDeviceManager::removeDevice(const char* devicePath) {
     }
 }
 
-BlueZDeviceManager::~BlueZDeviceManager() {
+void BlueZDeviceManager::doShutdown() {
     ACSDK_DEBUG5(LX(__func__));
 
-    // Disconnect every device.
-    for (auto iter : m_devices) {
-        std::shared_ptr<BlueZBluetoothDevice> device = iter.second;
-        device->disconnect().get();
+    {
+        std::lock_guard<std::mutex> guard(m_devicesMutex);
+
+        // Disconnect every device.
+        for (auto iter : m_devices) {
+            std::shared_ptr<BlueZBluetoothDevice> device = iter.second;
+            device->disconnect().get();
+        }
+
+        m_devices.clear();
     }
 
+    // Destroy all objects requiring m_connection first.
     finalizeMedia();
+    m_pairingAgent.reset();
 
     m_connection->close();
     if (m_eventLoop) {
@@ -482,8 +490,13 @@ BlueZDeviceManager::~BlueZDeviceManager() {
     }
 }
 
+BlueZDeviceManager::~BlueZDeviceManager() {
+    ACSDK_DEBUG5(LX(__func__));
+}
+
 BlueZDeviceManager::BlueZDeviceManager(
     const std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus>& eventBus) :
+        RequiresShutdown{"BlueZDeviceManager"},
         m_eventBus{eventBus},
         m_streamingState{avsCommon::utils::bluetooth::MediaStreamingState::IDLE} {
 }

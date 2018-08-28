@@ -2,14 +2,18 @@ set(SampleApp_SOURCES)
 list(APPEND SampleApp_SOURCES 
     ConnectionObserver.cpp
     ConsolePrinter.cpp
+    ConsoleReader.cpp
     GuiRenderer.cpp
     InteractionManager.cpp
     KeywordObserver.cpp
-    PortAudioMicrophoneWrapper.cpp
     UIManager.cpp
     UserInputManager.cpp
     SampleApplication.cpp
     main.cpp)
+
+if (PORTAUDIO)
+    list(APPEND SampleApp_SOURCES PortAudioMicrophoneWrapper.cpp)
+endif()
 
 IF (HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
     file(GLOB_RECURSE SRC_FILE ${CMAKE_CURRENT_SOURCE_DIR}/ExternalMediaAdapterRegistration/*.cpp)
@@ -22,7 +26,6 @@ add_executable(SampleApp ${SampleApp_SOURCES})
 
 target_include_directories(SampleApp PUBLIC 
     "${SampleApp_SOURCE_DIR}/include"
-    "${MediaPlayer_SOURCE_DIR}/include"
     "${AudioResources_SOURCE_DIR}/include"
     "${RegistrationManager_SOURCE_DIR}/include"
     "${ESP_SOURCE_DIR}/include"
@@ -32,10 +35,23 @@ target_link_libraries(SampleApp
     DefaultClient
     CapabilitiesDelegate
     CBLAuthDelegate
-    MediaPlayer
     SQLiteStorage
     ESP
     "${PORTAUDIO_LIB_PATH}")
+
+if (ANDROID)
+    target_include_directories(SampleApp PUBLIC "${AndroidUtilities}/include")
+    target_link_libraries(SampleApp AndroidUtilities)
+    if (ANDROID_MEDIA_PLAYER)
+        target_include_directories(SampleApp PUBLIC "${AndroidSLESMediaPlayer}/include")
+        target_link_libraries(SampleApp AndroidSLESMediaPlayer)
+    endif()
+endif()
+
+if (GSTREAMER_MEDIA_PLAYER)
+    target_include_directories(SampleApp PUBLIC "${MediaPlayer_SOURCE_DIR}/include")
+    target_link_libraries(SampleApp MediaPlayer)
+endif()
 
 if(KWD)
     target_link_libraries(SampleApp KeywordDetectorProvider)

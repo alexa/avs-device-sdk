@@ -1730,25 +1730,25 @@ TEST_F(AudioInputProcessorTest, recognizeBargeInWhileRecognizingCloseTalk) {
 }
 
 /**
- * This function verifies that @c AudioInputProcessor::recognize() fails in @c State::RECOGNIZING when the previous
+ * This function verifies that @c AudioInputProcessor::recognize() works in @c State::RECOGNIZING when the previous
  * recognize used the NEAR_FIELD profile.
  */
 TEST_F(AudioInputProcessorTest, recognizeBargeInWhileRecognizingNearField) {
     auto audioProvider = *m_audioProvider;
     audioProvider.profile = ASRProfile::NEAR_FIELD;
     ASSERT_TRUE(testRecognizeSucceeds(audioProvider, Initiator::TAP));
-    ASSERT_TRUE(testRecognizeFails(*m_audioProvider, Initiator::TAP));
+    ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::TAP));
 }
 
 /**
- * This function verifies that @c AudioInputProcessor::recognize() fails in @c State::RECOGNIZING when the previous
+ * This function verifies that @c AudioInputProcessor::recognize() works in @c State::RECOGNIZING when the previous
  * recognize used the FAR_FIELD profile.
  */
 TEST_F(AudioInputProcessorTest, recognizeBargeInWhileRecognizingFarField) {
     auto audioProvider = *m_audioProvider;
     audioProvider.profile = ASRProfile::FAR_FIELD;
     ASSERT_TRUE(testRecognizeSucceeds(audioProvider, Initiator::TAP));
-    ASSERT_TRUE(testRecognizeFails(*m_audioProvider, Initiator::TAP));
+    ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::TAP));
 }
 
 /**
@@ -1794,6 +1794,40 @@ TEST_F(AudioInputProcessorTest, stopCaptureWhenRecognizing) {
     std::vector<uint8_t> buf(SDS_WORDS * SDS_WORDSIZE);
     EXPECT_EQ(m_recognizeEvent->getReader()->read(buf.data(), buf.size(), &readStatus), 0U);
     ASSERT_EQ(readStatus, avsCommon::avs::attachment::AttachmentReader::ReadStatus::CLOSED);
+}
+
+/*
+ * This function verifies that @c AudioInputProcessor::stopCapture() works in @c State::RECOGNIZING and check if
+ * subsequent StopCapture directive will be ignored.
+ */
+TEST_F(AudioInputProcessorTest, stopCaptureWhenRecognizingFollowByStopCaptureDirective) {
+    ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::TAP, 0));
+    ASSERT_TRUE(testStopCaptureSucceeds());
+
+    auto readStatus = avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK;
+    std::vector<uint8_t> buf(SDS_WORDS * SDS_WORDSIZE);
+    EXPECT_EQ(m_recognizeEvent->getReader()->read(buf.data(), buf.size(), &readStatus), 0U);
+    ASSERT_EQ(readStatus, avsCommon::avs::attachment::AttachmentReader::ReadStatus::CLOSED);
+
+    std::mutex mutex;
+    std::condition_variable conditionVariable;
+    bool done = false;
+
+    auto avsDirective = createAVSDirective(STOP_CAPTURE, true);
+    auto result = avsCommon::utils::memory::make_unique<avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult>();
+    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> directiveHandler = m_audioInputProcessor;
+
+    EXPECT_CALL(*result, setCompleted()).WillOnce(InvokeWithoutArgs([&] {
+        std::lock_guard<std::mutex> lock(mutex);
+        done = true;
+        conditionVariable.notify_one();
+    }));
+    directiveHandler->preHandleDirective(avsDirective, std::move(result));
+    EXPECT_TRUE(directiveHandler->handleDirective(avsDirective->getMessageId()));
+
+    std::unique_lock<std::mutex> lock(mutex);
+    auto setCompletedResult = conditionVariable.wait_for(lock, TEST_TIMEOUT, [&done] { return done; });
+    EXPECT_TRUE(setCompletedResult);
 }
 
 /// This function verifies that @c AudioInputProcessor::resetState() works in @c State::IDLE.

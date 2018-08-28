@@ -525,6 +525,10 @@ bool HTTP2Stream::hasProgressTimedOut() const {
     return (getNow() - m_timeOfLastTransfer) > m_progressTimeout;
 }
 
+std::string HTTP2Stream::getFailureBody() const {
+    return m_exceptionBeingProcessed;
+}
+
 const avsCommon::utils::logger::LogStringFormatter& HTTP2Stream::getLogFormatter() const {
     return m_logFormatter;
 }

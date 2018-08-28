@@ -61,7 +61,7 @@ public:
     virtual void removeAuthObserver(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> observer) = 0;
 
     /**
-     * Get the current LWA authoriation token.
+     * Get the current LWA authorization token.
      *
      * @return The current authorization token.  The returned value will be empty if an authorization token
      * has yet to be acquired or if the most recently acquired token has expired.

@@ -95,11 +95,11 @@ void PostConnectSynchronizer::onDisconnect() {
 }
 
 void PostConnectSynchronizer::onContextAvailable(const std::string& jsonContext) {
-    ACSDK_DEBUG5(LX("onContectAvailable").sensitive("context", jsonContext));
+    ACSDK_DEBUG5(LX("onContextAvailable").sensitive("context", jsonContext));
 
     if (!setState(State::SENDING)) {
         // This is expected if m_state is STOPPING.
-        ACSDK_DEBUG5(LX("onContextAvailableIgnored").d("reason", "stateStateSendingFailed"));
+        ACSDK_DEBUG5(LX("onContextAvailableIgnored").d("reason", "setStateSendingFailed"));
         return;
     }
 
@@ -145,11 +145,11 @@ void PostConnectSynchronizer::onSendCompleted(MessageRequestObserverInterface::S
 }
 
 void PostConnectSynchronizer::onExceptionReceived(const std::string& exceptionMessage) {
-    ACSDK_ERROR(LX("onExceptionReceived").d("exception", exceptionMessage));
-
-    if (!setState(State::RUNNING)) {
-        ACSDK_ERROR(LX("onExceptionReceivedIgnored").d("reason", "setStateRunningFailed"));
-    }
+    // Exceptions are ignored here because the @c onSendCompleted() notification will also
+    // be received with a failure status.  If both are processed, the first will trigger
+    // a return to the RUNNING and then FETCHING states and the second will try and
+    // abort the FETCHING state
+    ACSDK_ERROR(LX("onExceptionReceivedIgnored").d("exception", exceptionMessage));
 }
 
 PostConnectSynchronizer::PostConnectSynchronizer(

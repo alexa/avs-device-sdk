@@ -223,7 +223,7 @@ TEST_F(SpeakerManagerTest, testNullExceptionSender) {
 TEST_F(SpeakerManagerTest, testNoSpeakers) {
     m_speakerManager = SpeakerManager::create({}, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
 
-    ASSERT_EQ(m_speakerManager, nullptr);
+    ASSERT_NE(m_speakerManager, nullptr);
 }
 
 /**

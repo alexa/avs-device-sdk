@@ -18,6 +18,7 @@
 
 #include <chrono>
 #include <cstddef>
+#include <ostream>
 
 #include "AVSCommon/Utils/SDS/ReaderPolicy.h"
 
@@ -104,6 +105,40 @@ public:
      */
     virtual void close(ClosePoint closePoint = ClosePoint::AFTER_DRAINING_CURRENT_BUFFER) = 0;
 };
+
+/**
+ * Write an @c Attachment::ReadStatus value to the given stream.
+ *
+ * @param stream The stream to write the value to.
+ * @param status The value to write to the stream as a string.
+ * @return The stream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const AttachmentReader::ReadStatus& status) {
+    switch (status) {
+        case AttachmentReader::ReadStatus::OK:
+            stream << "OK";
+            break;
+        case AttachmentReader::ReadStatus::OK_WOULDBLOCK:
+            stream << "OK_WOULDBLOCK";
+            break;
+        case AttachmentReader::ReadStatus::OK_TIMEDOUT:
+            stream << "OK_TIMEDOUT";
+            break;
+        case AttachmentReader::ReadStatus::CLOSED:
+            stream << "CLOSED";
+            break;
+        case AttachmentReader::ReadStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:
+            stream << "ERROR_BYTES_LESS_THAN_WORD_SIZE";
+            break;
+        case AttachmentReader::ReadStatus::ERROR_OVERRUN:
+            stream << "ERROR_OVERRUN";
+            break;
+        case AttachmentReader::ReadStatus::ERROR_INTERNAL:
+            stream << "ERROR_INTERNAL";
+            break;
+    }
+    return stream;
+}
 
 }  // namespace attachment
 }  // namespace avs

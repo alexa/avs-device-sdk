@@ -33,6 +33,9 @@ namespace mediaPlayer {
  * A player observer will receive notifications when the player starts playing or when it stops playing a stream.
  * A pointer to the @c MediaPlayerObserverInterface needs to be provided to a @c MediaPlayer for it to notify the
  * observer.
+ *
+ * @warning An observer should never call a method from the observed media player while handling a callback.
+ * This may cause a deadlock while trying to re-acquire a mutex.
  */
 class MediaPlayerObserverInterface {
 public:

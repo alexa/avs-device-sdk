@@ -51,6 +51,7 @@
 #include <CertifiedSender/CertifiedSender.h>
 #include <CertifiedSender/SQLiteMessageStorage.h>
 #include <ExternalMediaPlayer/ExternalMediaPlayer.h>
+#include <InteractionModel/InteractionModelCapabilityAgent.h>
 #include <MRM/MRMCapabilityAgent.h>
 #include <Notifications/NotificationsCapabilityAgent.h>
 #include <Notifications/NotificationRenderer.h>
@@ -596,6 +597,9 @@ private:
 
     /// The bluetooth capability agent.
     std::shared_ptr<capabilityAgents::bluetooth::Bluetooth> m_bluetooth;
+
+    /// The interaction model capability agent.
+    std::shared_ptr<capabilityAgents::interactionModel::InteractionModelCapabilityAgent> m_interactionCapabilityAgent;
 
     /// The notifications capability agent.
     std::shared_ptr<capabilityAgents::notifications::NotificationsCapabilityAgent> m_notificationsCapabilityAgent;

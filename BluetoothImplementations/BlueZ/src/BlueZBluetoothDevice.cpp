@@ -130,10 +130,13 @@ bool BlueZBluetoothDevice::updateFriendlyName() {
 }
 
 BlueZBluetoothDevice::~BlueZBluetoothDevice() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX(__func__).d("mac", getMac()));
+    m_executor.shutdown();
+
     for (auto& entry : m_servicesMap) {
         entry.second->cleanup();
     }
+    m_servicesMap.clear();
 }
 
 bool BlueZBluetoothDevice::init() {
@@ -317,14 +320,12 @@ std::unordered_set<std::string> BlueZBluetoothDevice::getServiceUuids(GVariant* 
 std::unordered_set<std::string> BlueZBluetoothDevice::getServiceUuids() {
     ACSDK_DEBUG5(LX(__func__));
 
-    std::unordered_set<std::string> uuids;
-
     // DBus returns this as (a{v},). We have to drill into the tuple to retrieve the array.
     ManagedGVariant uuidsTuple;
     if (!m_propertiesProxy->getVariantProperty(
             BlueZConstants::BLUEZ_DEVICE_INTERFACE, BLUEZ_DEVICE_PROPERTY_UUIDS, &uuidsTuple)) {
         ACSDK_ERROR(LX(__func__).d("reason", "getVariantPropertyFailed"));
-        return {};
+        return std::unordered_set<std::string>();
     }
 
     GVariantTupleReader tupleReader(uuidsTuple);
@@ -333,7 +334,7 @@ std::unordered_set<std::string> BlueZBluetoothDevice::getServiceUuids() {
     if (!array.hasValue()) {
         // The format isn't what we were expecting. Print the original tuple for debugging.
         ACSDK_ERROR(LX(__func__).d("reason", "unexpectedVariantFormat").d("variant", uuidsTuple.dumpToString(false)));
-        return {};
+        return std::unordered_set<std::string>();
     }
 
     return getServiceUuids(array.get());
@@ -562,7 +563,6 @@ void BlueZBluetoothDevice::onPropertyChanged(const GVariantMapReader& changesMap
 
     m_executor.submit(
         [this, pairedChanged, paired, connectedChanged, connected, a2dpSourceAvailable, aliasChanged, aliasStr] {
-
             if (aliasChanged) {
                 ACSDK_DEBUG5(LX("nameChanged").d("oldName", m_friendlyName).d("newName", aliasStr));
                 m_friendlyName = aliasStr;

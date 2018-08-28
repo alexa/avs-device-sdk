@@ -285,6 +285,7 @@ AudioInputProcessor::AudioInputProcessor(
         m_focusState{avsCommon::avs::FocusState::NONE},
         m_preparingToSend{false},
         m_initialDialogUXStateReceived{false},
+        m_localStopCapturePerformed{false},
         m_precedingExpectSpeechInitiator{nullptr} {
     m_capabilityConfigurations.insert(getSpeechRecognizerCapabilityConfiguration());
 }
@@ -493,12 +494,11 @@ bool AudioInputProcessor::executeRecognize(
                 ACSDK_ERROR(LX("executeRecognizeFailed").d("reason", "New audio provider can not override"));
                 return false;
             }
-
-            // Note: AVS only sends StopCapture for NEAR_FIELD/FAR_FIELD; it does not send StopCapture for CLOSE_TALK.
-            if (m_lastAudioProvider && ASRProfile::CLOSE_TALK != m_lastAudioProvider.profile) {
-                // TODO: Enable barge-in during recognize once AVS sends dialogRequestId with StopCapture(ACSDK-355).
-                ACSDK_ERROR(LX("executeRecognizeFailed").d("reason", "Barge-in is not permitted while recognizing"));
-                return false;
+            // For barge-in, we should close the previous reader before creating another one.
+            if (m_reader) {
+                m_reader->close(
+                    avsCommon::avs::attachment::AttachmentReader::ClosePoint::AFTER_DRAINING_CURRENT_BUFFER);
+                m_reader.reset();
             }
             break;
         case ObserverInterface::State::BUSY:
@@ -554,6 +554,9 @@ bool AudioInputProcessor::executeRecognize(
 
     // Note that we're preparing to send a Recognize event.
     m_preparingToSend = true;
+
+    // Reset flag when we send a new recognize event.
+    m_localStopCapturePerformed = false;
 
     // Update state if we're changing wakewords.
     if (!keyword.empty() && m_wakeword != keyword) {
@@ -676,18 +679,35 @@ bool AudioInputProcessor::executeStopCapture(bool stopImmediately, std::shared_p
     }
     if (m_state != ObserverInterface::State::RECOGNIZING) {
         static const char* errorMessage = "StopCapture only allowed in RECOGNIZING state.";
+        auto returnValue = false;
         if (info) {
             if (info->result) {
-                info->result->setFailed(errorMessage);
+                if (m_localStopCapturePerformed) {
+                    // Since a local StopCapture was performed, we can safely ignore the StopCapture from AVS.
+                    m_localStopCapturePerformed = false;
+                    returnValue = true;
+                    info->result->setCompleted();
+                    ACSDK_INFO(LX("executeStopCapture")
+                                   .m("StopCapture directive ignored because local StopCapture was performed."));
+
+                } else {
+                    info->result->setFailed(errorMessage);
+                    ACSDK_ERROR(LX("executeStopCaptureFailed")
+                                    .d("reason", "invalidState")
+                                    .d("expectedState", "RECOGNIZING")
+                                    .d("state", m_state));
+                }
             }
             removeDirective(info);
         }
-        ACSDK_ERROR(LX("executeStopCaptureFailed")
-                        .d("reason", "invalidState")
-                        .d("expectedState", "RECOGNIZING")
-                        .d("state", m_state));
-        return false;
+        return returnValue;
     }
+
+    // If info is nullptr, this indicates that a local StopCapture is performed.
+    if (nullptr == info) {
+        m_localStopCapturePerformed = true;
+    }
+
     // Create a lambda to do the StopCapture.
     std::function<void()> stopCapture = [=] {
         ACSDK_DEBUG(LX("stopCapture").d("stopImmediately", stopImmediately));

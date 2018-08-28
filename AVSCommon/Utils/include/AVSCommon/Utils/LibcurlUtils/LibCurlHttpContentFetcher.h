@@ -73,12 +73,6 @@ private:
     std::promise<std::string> m_contentTypePromise;
 
     /**
-     * A flag to indicate that the body callback has begun. This is used so that we know when header parsing has
-     * finished and we can satisfy the promises.
-     */
-    bool m_bodyCallbackBegan;
-
-    /**
      * The writer used to write the HTTP body to, if desired by the caller of @c getContent().
      */
     std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> m_streamWriter;
@@ -97,6 +91,9 @@ private:
 
     /// Flag to indicate that the data-fetch operation has completed.
     std::atomic<bool> m_done;
+
+    /// Flag to indicate that the @c LibCurlHttpContentFetcher is being shutdown.
+    std::atomic<bool> m_isShutdown;
 
     /**
      * Internal thread that does the curl_easy_perform. The reason for using a thread is that curl_easy_perform may

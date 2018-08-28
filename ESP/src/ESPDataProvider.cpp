@@ -157,8 +157,6 @@ ESPDataProvider::ESPDataProvider(
         m_isEnabled{true},
         m_isShuttingDown{false},
         m_frameSize{frameSize} {
-    m_vad.blkReset();
-    m_frameEnergyCompute.blkReset();
     m_thread = std::thread(&ESPDataProvider::espLoop, this);
 }
 

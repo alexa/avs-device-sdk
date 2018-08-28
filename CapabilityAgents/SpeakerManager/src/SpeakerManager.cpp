@@ -91,9 +91,6 @@ std::shared_ptr<SpeakerManager> SpeakerManager::create(
     } else if (!exceptionEncounteredSender) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullExceptionEncounteredSender"));
         return nullptr;
-    } else if (speakers.size() == 0) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "noSpeakersRegistered"));
-        return nullptr;
     }
 
     auto speakerManager = std::shared_ptr<SpeakerManager>(

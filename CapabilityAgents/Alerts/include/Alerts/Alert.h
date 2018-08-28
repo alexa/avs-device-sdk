@@ -37,11 +37,6 @@ namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace alerts {
 
-// forward declaration for the friend relationship.
-namespace storage {
-class SQLiteAlertStorage;
-}
-
 /**
  * A class to manage the concept of an AVS Alert.
  *
@@ -127,7 +122,7 @@ public:
         /**
          * Constructor.
          */
-        AssetConfiguration() : loopCount{0}, loopPause{std::chrono::milliseconds{0}}, hasRenderingFailed{false} {
+        AssetConfiguration() : loopPause{std::chrono::milliseconds{0}} {
         }
 
         /// A map of the custom assets, mapping from asset.id to the asset itself.
@@ -139,11 +134,51 @@ public:
         std::vector<std::string> assetPlayOrderItems;
         /// The background asset id, if specified by AVS.
         std::string backgroundAssetId;
-        /// The number of times the sequence of assets should be rendered.
-        int loopCount;
         /// The pause time, in milliseconds, that should be taken between each loop of asset rendering.
         std::chrono::milliseconds loopPause;
-        /// A flag to capture if rendering any of these urls failed.
+    };
+
+    /**
+     * A struct to encapsulate an alert's static data. These data members are not expected to change after
+     * initialization. The purpose of this struct is to provide access to data members expected to be persisted
+     * on-device.
+     */
+    struct StaticData {
+        /**
+         * Constructor.
+         */
+        StaticData() : dbId{0} {
+        }
+        /// The AVS token for the alert.
+        std::string token;
+
+        /// The database id for the alert.
+        int dbId;
+
+        /// The assets associated with this alert.
+        AssetConfiguration assetConfiguration;
+    };
+
+    /**
+     * A struct to encapsulate an alert's dynamic data. These data members are expected to change.
+     * The purpose of this struct is to provide access to data members expected to be persisted on-device.
+     */
+    struct DynamicData {
+        /**
+         * Constructor.
+         */
+        DynamicData() : state{State::SET}, loopCount{0}, hasRenderingFailed{false} {
+        }
+        /// The state of the alert.
+        State state;
+
+        /// A TimePoint reflecting the time when the alert should become active.
+        avsCommon::utils::timing::TimePoint timePoint;
+
+        /// The number of times the sequence of assets should be rendered.
+        int loopCount;
+
+        /// A flag to capture if rendering any of asset urls failed.
         bool hasRenderingFailed;
     };
 
@@ -255,14 +290,6 @@ public:
     ParseFromJsonStatus parseFromJson(const rapidjson::Value& payload, std::string* errorMessage);
 
     /**
-     * Sets the time when the alert should activate.
-     *
-     * @param time_ISO_8601 The time, in ISO-8601 format, when this alert should activate.
-     * @return Whether the alert was successfully updated.
-     */
-    bool setTime_ISO_8601(const std::string& time_ISO_8601);
-
-    /**
      * Set the renderer on the alert.
      *
      * @param renderer The renderer to set on the alert.
@@ -349,6 +376,24 @@ public:
     StopReason getStopReason() const;
 
     /**
+     * Gets the data associated with this alert.
+     * @param dynamicData A pointer to a DynamicData struct. If this is not nullptr, it will be populated with this
+     * alert's DynamicData.
+     * @param staticData A pointer to a StaticData struct. If this is not nullptr, it will be populated with this
+     * alert's StaticData.
+     */
+    void getAlertData(StaticData* staticData, DynamicData* dynamicData) const;
+
+    /**
+     * Sets the data associated with this alert.
+     * @param dynamicData A pointer to a DynamicData struct. If this is not nullptr, this alert's DynamicData will be
+     * set.
+     * @param staticData A pointer to a StaticData struct. If this is not nullptr, this alert's StaticData will be set.
+     * @return True if the alert data was successfully set.
+     */
+    bool setAlertData(StaticData* staticData, DynamicData* dynamicData);
+
+    /**
      * Returns the database id for the alert, if one is set.
      *
      * @return The database id for the alert, if one is set.
@@ -383,28 +428,8 @@ public:
      *
      * @return The background custom asset id, as specified by AVS.
      */
+
     std::string getBackgroundAssetId() const;
-
-    /**
-     * Sets the number of times the custom assets should be looped.
-     *
-     * @param loopCount The number of times the custom assets should be looped.
-     */
-    void setLoopCount(int loopCount);
-
-    /**
-     * Sets the time, in milliseconds, to be paused between custom-asset loop rendering.
-     *
-     * @param ms The time, in milliseconds, to be paused between custom-asset loop rendering.
-     */
-    void setLoopPause(std::chrono::milliseconds pauseDuration);
-
-    /**
-     * Sets the background custom asset id, as specified by AVS.
-     *
-     * @param The background custom asset id, as specified by AVS.
-     */
-    void setBackgroundAssetId(const std::string& backgroundAssetId);
 
     /**
      * Returns the utility structure, containing the Context data associated with this alert.
@@ -419,9 +444,6 @@ public:
     void printDiagnostic();
 
 private:
-    /// A friend relationship, since our storage interface needs access to all fields.
-    friend class storage::SQLiteAlertStorage;
-
     std::string getScheduledTime_ISO_8601Locked() const;
 
     /**
@@ -436,22 +458,10 @@ private:
 
     /// The mutex that enforces thread safety for all member variables.
     mutable std::mutex m_mutex;
-
-    /// The AVS token for the alert.
-    std::string m_token;
-    /// A TimePoint reflecting the time when the alert should become active.
-    avsCommon::utils::timing::TimePoint m_timePoint;
-
-    /// The database id for the alert.
-    int m_dbId;
-
-    /// The assets associated with this alert.
-    AssetConfiguration m_assetConfiguration;
-
-    /// The state of the alert.
-    State m_state;
-    /// The render state of the alert.
-    renderer::RendererObserverInterface::State m_rendererState;
+    /// Persistable Alert attributes that are expected to remain constant.
+    StaticData m_staticData;
+    /// Persistable Alert attributes that are expected to be readable/writable.
+    DynamicData m_dynamicData;
     /// The reason the alert has been stopped.
     StopReason m_stopReason;
     /// The current focus state of the alert.

@@ -114,6 +114,21 @@
     //     "audioSink":"autoaudiosink"
     // },
 
+    // Example of specifiying curl options that is different from the default values used by libcurl.
+    // "libcurlUtils":{
+    //
+    //     By default libcurl is built with paths to a CA bundle and a directory containing CA certificates. You can
+    //     direct the AVS Device SDK to configure libcurl to use an additional path to directories containing CA
+    //     certificates via the CURLOPT_CAPATH setting.  Additional details of this curl option can be found in:
+    //     https://curl.haxx.se/libcurl/c/CURLOPT_CAPATH.html
+    //     "CURLOPT_CAPATH":"INSERT_YOUR_CA_CERTIFICATE_PATH_HERE",
+    //
+    //     You can specify the AVS Device SDK to use a specific outgoing network interface.  More information of
+    //     this curl option can be found here:
+    //     https://curl.haxx.se/libcurl/c/CURLOPT_INTERFACE.html
+    //     "CURLOPT_INTERFACE":"INSERT_YOUR_INTERFACE_HERE"
+    // },
+
     // Example of specifying a default log level for all ModuleLoggers.  If not specified, ModuleLoggers get
     // their log level from the sink logger.
     // "logging":{

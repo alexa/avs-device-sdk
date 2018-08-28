@@ -77,6 +77,11 @@ public:
      * @param rhs The 'right hand side' to not copy.
      */
     TransportInterface& operator=(const TransportInterface& rhs) = delete;
+
+    /**
+     * Destructor.
+     */
+    virtual ~TransportInterface() = default;
 };
 
 inline TransportInterface::TransportInterface() : RequiresShutdown{"TransportInterface"} {

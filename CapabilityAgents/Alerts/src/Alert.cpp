@@ -77,9 +77,6 @@ static const std::string TAG("Alert");
 Alert::Alert(
     std::function<std::unique_ptr<std::istream>()> defaultAudioFactory,
     std::function<std::unique_ptr<std::istream>()> shortAudioFactory) :
-        m_dbId{0},
-        m_state{State::SET},
-        m_rendererState{RendererObserverInterface::State::UNSET},
         m_stopReason{StopReason::UNSET},
         m_focusState{avsCommon::avs::FocusState::NONE},
         m_hasTimerExpired{false},
@@ -101,9 +98,14 @@ Alert::Alert(
  */
 static Alert::ParseFromJsonStatus parseAlertAssetConfigurationFromJson(
     const rapidjson::Value& payload,
-    Alert::AssetConfiguration* assetConfiguration) {
+    Alert::AssetConfiguration* assetConfiguration,
+    Alert::DynamicData* dynamicData) {
     if (!assetConfiguration) {
         ACSDK_ERROR(LX("parseAlertAssetConfigurationFromJson : assetConfiguration is nullptr."));
+        return Alert::ParseFromJsonStatus::OK;
+    }
+    if (!dynamicData) {
+        ACSDK_ERROR(LX("parseAlertAssetConfigurationFromJson : dynamicData is nullptr."));
         return Alert::ParseFromJsonStatus::OK;
     }
 
@@ -193,18 +195,18 @@ static Alert::ParseFromJsonStatus parseAlertAssetConfigurationFromJson(
         return Alert::ParseFromJsonStatus::OK;
     }
 
-    localAssetConfig.loopCount = static_cast<int>(loopCount);
     localAssetConfig.loopPause = std::chrono::milliseconds{loopPauseInMilliseconds};
     localAssetConfig.backgroundAssetId = backgroundAssetId;
 
     // ok, great - let's assign to the out parameter.
     *assetConfiguration = localAssetConfig;
+    dynamicData->loopCount = static_cast<int>(loopCount);
 
     return Alert::ParseFromJsonStatus::OK;
 }
 
 Alert::ParseFromJsonStatus Alert::parseFromJson(const rapidjson::Value& payload, std::string* errorMessage) {
-    if (!retrieveValue(payload, KEY_TOKEN, &m_token)) {
+    if (!retrieveValue(payload, KEY_TOKEN, &m_staticData.token)) {
         ACSDK_ERROR(LX("parseFromJsonFailed").m("could not parse token."));
         *errorMessage = "missing property: " + KEY_TOKEN;
         return ParseFromJsonStatus::MISSING_REQUIRED_PROPERTY;
@@ -217,20 +219,14 @@ Alert::ParseFromJsonStatus Alert::parseFromJson(const rapidjson::Value& payload,
         return ParseFromJsonStatus::MISSING_REQUIRED_PROPERTY;
     }
 
-    if (!m_timePoint.setTime_ISO_8601(parsedScheduledTime_ISO_8601)) {
+    if (!m_dynamicData.timePoint.setTime_ISO_8601(parsedScheduledTime_ISO_8601)) {
         ACSDK_ERROR(LX("parseFromJsonFailed")
                         .m("could not convert time to unix.")
                         .d("parsed time string", parsedScheduledTime_ISO_8601));
         return ParseFromJsonStatus::INVALID_VALUE;
     }
 
-    return parseAlertAssetConfigurationFromJson(payload, &m_assetConfiguration);
-}
-
-bool Alert::setTime_ISO_8601(const std::string& time_ISO_8601) {
-    std::lock_guard<std::mutex> lock(m_mutex);
-
-    return m_timePoint.setTime_ISO_8601(time_ISO_8601);
+    return parseAlertAssetConfigurationFromJson(payload, &m_staticData.assetConfiguration, &m_dynamicData);
 }
 
 void Alert::setRenderer(std::shared_ptr<renderer::RendererInterface> renderer) {
@@ -252,7 +248,7 @@ void Alert::setObserver(AlertObserverInterface* observer) {
 void Alert::setFocusState(FocusState focusState) {
     std::unique_lock<std::mutex> lock(m_mutex);
     auto rendererCopy = m_renderer;
-    auto alertState = m_state;
+    auto alertState = m_dynamicData.state;
 
     if (focusState == m_focusState) {
         return;
@@ -271,30 +267,30 @@ void Alert::setFocusState(FocusState focusState) {
 bool Alert::setStateActive() {
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    if (State::ACTIVATING != m_state) {
-        ACSDK_ERROR(LX("setStateActiveFailed").d("current state", stateToString(m_state)));
+    if (State::ACTIVATING != m_dynamicData.state) {
+        ACSDK_ERROR(LX("setStateActiveFailed").d("current state", stateToString(m_dynamicData.state)));
         return false;
     }
 
-    m_state = State::ACTIVE;
+    m_dynamicData.state = State::ACTIVE;
     return true;
 }
 
 void Alert::reset() {
     std::lock_guard<std::mutex> lock(m_mutex);
-    m_state = Alert::State::SET;
+    m_dynamicData.state = Alert::State::SET;
 }
 
 void Alert::activate() {
     ACSDK_DEBUG9(LX("activate"));
     std::unique_lock<std::mutex> lock(m_mutex);
 
-    if (Alert::State::ACTIVATING == m_state || Alert::State::ACTIVE == m_state) {
+    if (Alert::State::ACTIVATING == m_dynamicData.state || Alert::State::ACTIVE == m_dynamicData.state) {
         ACSDK_ERROR(LX("activateFailed").m("Alert is already active."));
         return;
     }
 
-    m_state = Alert::State::ACTIVATING;
+    m_dynamicData.state = Alert::State::ACTIVATING;
 
     if (!m_maxLengthTimer.isActive()) {
         if (!m_maxLengthTimer.start(MAXIMUM_ALERT_RENDERING_TIME, std::bind(&Alert::onMaxTimerExpiration, this))
@@ -313,7 +309,7 @@ void Alert::deactivate(StopReason reason) {
     std::unique_lock<std::mutex> lock(m_mutex);
     auto rendererCopy = m_renderer;
 
-    m_state = Alert::State::STOPPING;
+    m_dynamicData.state = Alert::State::STOPPING;
     m_stopReason = reason;
     m_maxLengthTimer.stop();
 
@@ -322,12 +318,49 @@ void Alert::deactivate(StopReason reason) {
     rendererCopy->stop();
 }
 
+void Alert::getAlertData(StaticData* staticData, DynamicData* dynamicData) const {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
+    if (!dynamicData && !staticData) {
+        return;
+    }
+
+    if (staticData) {
+        *staticData = m_staticData;
+    }
+
+    if (dynamicData) {
+        *dynamicData = m_dynamicData;
+    }
+}
+
+bool Alert::setAlertData(StaticData* staticData, DynamicData* dynamicData) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    if (!dynamicData && !staticData) {
+        return false;
+    }
+
+    if (staticData) {
+        m_staticData = *staticData;
+    }
+
+    if (dynamicData) {
+        if (dynamicData->loopCount < 0) {
+            ACSDK_ERROR(
+                LX("setAlertDataFailed").d("loopCountValue", dynamicData->loopCount).m("loopCount less than zero."));
+            return false;
+        }
+        m_dynamicData = *dynamicData;
+    }
+    return true;
+}
+
 void Alert::onRendererStateChange(RendererObserverInterface::State state, const std::string& reason) {
     ACSDK_DEBUG1(LX("onRendererStateChange")
                      .d("state", state)
                      .d("reason", reason)
                      .d("m_hasTimerExpired", m_hasTimerExpired)
-                     .d("m_state", m_state));
+                     .d("m_dynamicData.state", m_dynamicData.state));
     bool shouldNotifyObserver = false;
     bool shouldRetryRendering = false;
     AlertObserverInterface::State notifyState = AlertObserverInterface::State::ERROR;
@@ -342,7 +375,7 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
             break;
 
         case RendererObserverInterface::State::STARTED:
-            if (State::ACTIVATING == m_state) {
+            if (State::ACTIVATING == m_dynamicData.state) {
                 shouldNotifyObserver = true;
                 notifyState = AlertObserverInterface::State::STARTED;
 
@@ -353,17 +386,17 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
 
         case RendererObserverInterface::State::STOPPED:
             if (m_hasTimerExpired) {
-                m_state = State::COMPLETED;
+                m_dynamicData.state = State::COMPLETED;
                 shouldNotifyObserver = true;
                 notifyState = AlertObserverInterface::State::COMPLETED;
             } else {
-                if (Alert::State::STOPPING == m_state) {
-                    m_state = State::STOPPED;
+                if (Alert::State::STOPPING == m_dynamicData.state) {
+                    m_dynamicData.state = State::STOPPED;
                     shouldNotifyObserver = true;
                     notifyState = AlertObserverInterface::State::STOPPED;
                     notifyReason = stopReasonToString(m_stopReason);
-                } else if (Alert::State::SNOOZING == m_state) {
-                    m_state = State::SNOOZED;
+                } else if (Alert::State::SNOOZING == m_dynamicData.state) {
+                    m_dynamicData.state = State::SNOOZED;
                     shouldNotifyObserver = true;
                     notifyState = AlertObserverInterface::State::SNOOZED;
                 }
@@ -371,7 +404,7 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
             break;
 
         case RendererObserverInterface::State::COMPLETED:
-            m_state = State::COMPLETED;
+            m_dynamicData.state = State::COMPLETED;
             shouldNotifyObserver = true;
             notifyState = AlertObserverInterface::State::COMPLETED;
             break;
@@ -379,11 +412,11 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
         case RendererObserverInterface::State::ERROR:
             // If the renderer failed while handling a url, let's presume there are network issues and render
             // the on-device background audio sound instead.
-            if (!m_assetConfiguration.assetPlayOrderItems.empty() && !m_assetConfiguration.hasRenderingFailed) {
+            if (!m_staticData.assetConfiguration.assetPlayOrderItems.empty() && !m_dynamicData.hasRenderingFailed) {
                 ACSDK_ERROR(LX("onRendererStateChangeFailed")
                                 .d("reason", reason)
                                 .m("Renderer failed to handle a url. Retrying with local background audio sound."));
-                m_assetConfiguration.hasRenderingFailed = true;
+                m_dynamicData.hasRenderingFailed = true;
                 shouldRetryRendering = true;
             } else {
                 shouldNotifyObserver = true;
@@ -396,7 +429,7 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
     lock.unlock();
 
     if (shouldNotifyObserver && observerCopy) {
-        observerCopy->onAlertStateChange(m_token, notifyState, notifyReason);
+        observerCopy->onAlertStateChange(m_staticData.token, notifyState, notifyReason);
     }
 
     if (shouldRetryRendering) {
@@ -405,12 +438,12 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
 }
 
 std::string Alert::getToken() const {
-    return m_token;
+    return m_staticData.token;
 }
 
 int64_t Alert::getScheduledTime_Unix() const {
     std::lock_guard<std::mutex> lock(m_mutex);
-    return m_timePoint.getTime_Unix();
+    return m_dynamicData.timePoint.getTime_Unix();
 }
 
 std::string Alert::getScheduledTime_ISO_8601() const {
@@ -419,29 +452,29 @@ std::string Alert::getScheduledTime_ISO_8601() const {
 }
 
 std::string Alert::getScheduledTime_ISO_8601Locked() const {
-    return m_timePoint.getTime_ISO_8601();
+    return m_dynamicData.timePoint.getTime_ISO_8601();
 }
 
 Alert::State Alert::getState() const {
     std::lock_guard<std::mutex> lock(m_mutex);
-    return m_state;
+    return m_dynamicData.state;
 }
 
 int Alert::getId() const {
     std::lock_guard<std::mutex> lock(m_mutex);
-    return m_dbId;
+    return m_staticData.dbId;
 }
 
 void Alert::snooze(const std::string& updatedScheduledTime_ISO_8601) {
     std::unique_lock<std::mutex> lock(m_mutex);
     auto rendererCopy = m_renderer;
 
-    if (!m_timePoint.setTime_ISO_8601(updatedScheduledTime_ISO_8601)) {
+    if (!m_dynamicData.timePoint.setTime_ISO_8601(updatedScheduledTime_ISO_8601)) {
         ACSDK_ERROR(LX("snoozeFailed").m("could not convert time string").d("value", updatedScheduledTime_ISO_8601));
         return;
     }
 
-    m_state = State::SNOOZING;
+    m_dynamicData.state = State::SNOOZING;
     lock.unlock();
 
     rendererCopy->stop();
@@ -454,41 +487,22 @@ Alert::StopReason Alert::getStopReason() const {
 
 int Alert::getLoopCount() const {
     std::lock_guard<std::mutex> lock(m_mutex);
-    return m_assetConfiguration.loopCount;
+    return m_dynamicData.loopCount;
 }
 
 std::chrono::milliseconds Alert::getLoopPause() const {
     std::lock_guard<std::mutex> lock(m_mutex);
-    return m_assetConfiguration.loopPause;
+    return m_staticData.assetConfiguration.loopPause;
 }
 
 std::string Alert::getBackgroundAssetId() const {
     std::lock_guard<std::mutex> lock(m_mutex);
-    return m_assetConfiguration.backgroundAssetId;
-}
-
-void Alert::setLoopCount(int loopCount) {
-    if (loopCount < 0) {
-        ACSDK_ERROR(LX("setLoopCountFailed").d("loopCountValue", loopCount).m("loopCount less than zero."));
-        return;
-    }
-    std::lock_guard<std::mutex> lock(m_mutex);
-    m_assetConfiguration.loopCount = loopCount;
-}
-
-void Alert::setLoopPause(std::chrono::milliseconds ms) {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    m_assetConfiguration.loopPause = ms;
-}
-
-void Alert::setBackgroundAssetId(const std::string& backgroundAssetId) {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    m_assetConfiguration.backgroundAssetId = backgroundAssetId;
+    return m_staticData.assetConfiguration.backgroundAssetId;
 }
 
 Alert::AssetConfiguration Alert::getAssetConfiguration() const {
     std::lock_guard<std::mutex> lock(m_mutex);
-    return m_assetConfiguration;
+    return m_staticData.assetConfiguration;
 }
 
 void Alert::startRenderer() {
@@ -497,23 +511,24 @@ void Alert::startRenderer() {
 
     std::unique_lock<std::mutex> lock(m_mutex);
     auto rendererCopy = m_renderer;
-    auto loopCount = m_assetConfiguration.loopCount;
-    auto loopPause = m_assetConfiguration.loopPause;
+    auto loopCount = m_dynamicData.loopCount;
+    auto loopPause = m_staticData.assetConfiguration.loopPause;
 
     // If there are no assets to play (due to the alert not providing any assets), or there was a previous error
-    // (indicated by m_assetConfiguration.hasRenderingFailed), we call rendererCopy->start(..) with an empty vector of
-    // urls.  This causes the default audio to be rendered.
+    // (indicated by m_staticData.assetConfiguration.hasRenderingFailed), we call rendererCopy->start(..) with an
+    // empty vector of urls.  This causes the default audio to be rendered.
     auto audioFactory = getDefaultAudioFactory();
     if (avsCommon::avs::FocusState::BACKGROUND == m_focusState) {
         audioFactory = getShortAudioFactory();
-        if (!m_assetConfiguration.backgroundAssetId.empty() && !m_assetConfiguration.hasRenderingFailed) {
-            urls.push_back(m_assetConfiguration.assets[m_assetConfiguration.backgroundAssetId].url);
+        if (!m_staticData.assetConfiguration.backgroundAssetId.empty() && !m_dynamicData.hasRenderingFailed) {
+            urls.push_back(
+                m_staticData.assetConfiguration.assets[m_staticData.assetConfiguration.backgroundAssetId].url);
         }
         loopPause = BACKGROUND_ALERT_SOUND_PAUSE_TIME;
-    } else if (!m_assetConfiguration.assets.empty() && !m_assetConfiguration.hasRenderingFailed) {
+    } else if (!m_staticData.assetConfiguration.assets.empty() && !m_dynamicData.hasRenderingFailed) {
         // Only play the named timer urls when it's in foreground.
-        for (auto item : m_assetConfiguration.assetPlayOrderItems) {
-            urls.push_back(m_assetConfiguration.assets[item].url);
+        for (auto item : m_staticData.assetConfiguration.assetPlayOrderItems) {
+            urls.push_back(m_staticData.assetConfiguration.assets[item].url);
         }
     }
 
@@ -527,7 +542,7 @@ void Alert::onMaxTimerExpiration() {
     ACSDK_DEBUG1(LX("onMaxTimerExpiration"));
     std::unique_lock<std::mutex> lock(m_mutex);
     auto rendererCopy = m_renderer;
-    m_state = Alert::State::STOPPING;
+    m_dynamicData.state = Alert::State::STOPPING;
     m_hasTimerExpired = true;
 
     lock.unlock();
@@ -540,7 +555,7 @@ bool Alert::isPastDue(int64_t currentUnixTime, std::chrono::seconds timeLimit) {
 
     int64_t cutoffTime = currentUnixTime - timeLimit.count();
 
-    return (m_timePoint.getTime_Unix() < cutoffTime);
+    return (m_dynamicData.timePoint.getTime_Unix() < cutoffTime);
 }
 
 std::function<std::unique_ptr<std::istream>()> Alert::getDefaultAudioFactory() const {
@@ -554,7 +569,7 @@ std::function<std::unique_ptr<std::istream>()> Alert::getShortAudioFactory() con
 Alert::ContextInfo Alert::getContextInfo() const {
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    return ContextInfo(m_token, getTypeName(), getScheduledTime_ISO_8601Locked());
+    return ContextInfo(m_staticData.token, getTypeName(), getScheduledTime_ISO_8601Locked());
 }
 
 std::string Alert::stateToString(Alert::State state) {
@@ -622,31 +637,32 @@ std::string Alert::parseFromJsonStatusToString(Alert::ParseFromJsonStatus parseF
 
 void Alert::printDiagnostic() {
     std::string assetInfoString;
-    for (auto asset : m_assetConfiguration.assets) {
+    for (auto asset : m_staticData.assetConfiguration.assets) {
         assetInfoString += "\nid:" + asset.second.id + ", url:" + asset.second.url;
     }
 
     std::string assetPlayOrderItemsInfoString;
-    for (auto assetOrderItem : m_assetConfiguration.assetPlayOrderItems) {
+    for (auto assetOrderItem : m_staticData.assetConfiguration.assetPlayOrderItems) {
         assetPlayOrderItemsInfoString += "id:" + assetOrderItem + ", ";
     }
 
     std::stringstream ss;
 
     ss << std::endl
-       << " ** Alert | id:" << std::to_string(m_dbId) << std::endl
+       << " ** Alert | id:" << std::to_string(m_staticData.dbId) << std::endl
        << "          | type:" << getTypeName() << std::endl
-       << "          | token:" << m_token << std::endl
+       << "          | token:" << m_staticData.token << std::endl
        << "          | scheduled time (8601):" << getScheduledTime_ISO_8601() << std::endl
        << "          | scheduled time (Unix):" << getScheduledTime_Unix() << std::endl
-       << "          | state:" << stateToString(m_state) << std::endl
-       << "          | number assets:" << m_assetConfiguration.assets.size() << std::endl
-       << "          | number assets play order items:" << m_assetConfiguration.assetPlayOrderItems.size() << std::endl
+       << "          | state:" << stateToString(m_dynamicData.state) << std::endl
+       << "          | number assets:" << m_staticData.assetConfiguration.assets.size() << std::endl
+       << "          | number assets play order items:" << m_staticData.assetConfiguration.assetPlayOrderItems.size()
+       << std::endl
        << "          | asset info:" << assetInfoString << std::endl
        << "          | asset order info:" << assetPlayOrderItemsInfoString << std::endl
-       << "          | background asset id:" << m_assetConfiguration.backgroundAssetId << std::endl
-       << "          | loop count:" << m_assetConfiguration.loopCount << std::endl
-       << "          | loop pause in milliseconds:" << m_assetConfiguration.loopPause.count() << std::endl;
+       << "          | background asset id:" << m_staticData.assetConfiguration.backgroundAssetId << std::endl
+       << "          | loop count:" << m_dynamicData.loopCount << std::endl
+       << "          | loop pause in milliseconds:" << m_staticData.assetConfiguration.loopPause.count() << std::endl;
 
     ACSDK_INFO(LX(ss.str()));
 }

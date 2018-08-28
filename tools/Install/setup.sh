@@ -1,20 +1,22 @@
 #!/bin/bash
 
-# 
+#
 # Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License").
 # You may not use this file except in compliance with the License.
 # A copy of the License is located at
-# 
+#
 #  http://aws.amazon.com/apache2.0
-# 
+#
 # or in the "license" file accompanying this file. This file is distributed
 # on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
 # express or implied. See the License for the specific language governing
 # permissions and limitations under the License.
-# 
+#
 
+set -o errexit  # Exit the script if any statement fails.
+set -o nounset  # Exit the script if any uninitialized variable is used.
 
 LOCALE=${LOCALE:-'en-US'}
 
@@ -49,31 +51,89 @@ LIB_SUFFIX="a"
 
 GSTREAMER_AUDIO_SINK="autoaudiosink"
 
+build_port_audio() {
+  # build port audio
+  echo
+  echo "==============> BUILDING PORT AUDIO =============="
+  echo
+  pushd $THIRD_PARTY_PATH
+  wget -c $PORT_AUDIO_DOWNLOAD_URL
+  tar zxf $PORT_AUDIO_FILE
+
+  pushd portaudio
+  ./configure --without-jack
+  make
+  popd
+  popd
+}
+
 get_platform() {
   uname_str=`uname -a`
+  result=""
 
-  if [[ "$uname_str" ==  "Linux raspberrypi"* ]]
+  if [[ "$uname_str" ==  "Linux "* ]] && [[ -f /etc/os-release ]]
   then
-    result="pi"
+    sys_id=`cat /etc/os-release | grep "^ID="`
+    if [[ "$sys_id" == "ID=raspbian" ]]
+    then
+      echo "Raspberry pi"
+    fi
   elif [[ "$uname_str" ==  "MINGW64"* ]]
   then
-    result="mingw64"
-  else
-    result=""
+    echo "Windows mingw64"
   fi
 }
 
-get_platform
-PLATFORM=$result
+if [ $# -eq 0 ]
+then
+  echo  'bash setup.sh <config-file>'
+  echo  'the config file must contain the following:'
+  echo  '   CLIENT_ID=<OAuth client ID>'
+  echo  '   PRODUCT_ID=<your product name for device>'
+  echo  '   DEVICE_SERIAL_NUMBER=<your device serial number>'
 
-if [ "$PLATFORM" == "pi" ]
+  exit 1
+fi
+
+source $1
+
+# The target platform for the build.
+PLATFORM=${PLATFORM:-$(get_platform)}
+
+if [ "$PLATFORM" == "Raspberry pi" ]
 then
   source pi.sh
-elif [ "$PLATFORM" == "mingw64" ]
+elif [ "$PLATFORM" == "Windows mingw64" ]
 then
   source mingw.sh
-else
-  echo "The installation script doesn't support current system. (System: $(uname -a))"
+  else
+    PLATFORM_LOWER=$(echo "${PLATFORM}" | tr '[:upper:]' '[:lower:]')
+    if [ "$PLATFORM_LOWER" == "android" ]
+    then
+      PLATFORM="Android"
+      source android.sh
+    else
+      echo "The installation script doesn't support current system. (System: $(uname -a))"
+      exit 1
+    fi
+fi
+
+if [[ ! "$CLIENT_ID" =~ amzn1\.application-oa2-client\.[0-9a-z]{32} ]]
+then
+  echo 'client ID is invalid!'
+  exit 1
+fi
+
+if [[ ! "$PRODUCT_ID" =~ [0-9a-zA-Z_]+ ]]
+then
+  echo 'product ID is invalid!'
+  echo $PRODUCT_ID
+  exit 1
+fi
+
+if [[ ! "$DEVICE_SERIAL_NUMBER" =~ [0-9a-zA-Z_]+ ]]
+then
+  echo 'device serial number is invalid!'
   exit 1
 fi
 
@@ -81,7 +141,7 @@ echo "##########################################################################
 echo "################################################################################"
 echo ""
 echo ""
-echo "AVS Device SDK Raspberry Pi Script - Terms and Agreements"
+echo "AVS Device SDK $PLATFORM Script - Terms and Agreements"
 echo ""
 echo ""
 echo "The AVS Device SDK is dependent on several third-party libraries, environments, "
@@ -117,101 +177,55 @@ else
   exit 1
 fi
 
-if [ $# -eq 0 ]
-then
-  echo  'bash setup.sh <config-file>'
-  echo  'the config file must contain the following:'
-  echo  '   CLIENT_ID=<OAuth client ID>'
-  echo  '   PRODUCT_NAME=<your product name for device>'
-  echo  '   DEVICE_SERIAL_NUMBER=<your device serial number>'
-
-  exit 1
-fi
-
-source $1
-
-set -e
-
-if [[ ! "$CLIENT_ID" =~ amzn1\.application-oa2-client\.[0-9a-z]{32} ]]
-then
-   echo 'client ID is invalid!'
-   exit 1
-fi
-
-if [[ ! "$PRODUCT_ID" =~ [0-9a-zA-Z_]+ ]]
-then 
-   echo 'product ID is invalid!'
-   exit 1
-fi
-
-if [[ ! "$DEVICE_SERIAL_NUMBER" =~ [0-9a-zA-Z_]+ ]]
-then 
-   echo 'device serial number is invalid!'
-   exit 1
-fi
-
 if [ ! -d "$BUILD_PATH" ]
 then
 
-    # Make sure required packages are installed
-    echo "==============> INSTALLING REQUIRED TOOLS AND PACKAGE ============"
-    echo
+  # Make sure required packages are installed
+  echo "==============> INSTALLING REQUIRED TOOLS AND PACKAGE ============"
+  echo
 
-    install_dependencies
+  install_dependencies
 
-    # create / paths
-    echo
-    echo "==============> CREATING PATHS AND GETTING SOUND FILES ============"
-    echo
+  # create / paths
+  echo
+  echo "==============> CREATING PATHS AND GETTING SOUND FILES ============"
+  echo
 
-    mkdir -p $SOURCE_PATH
-    mkdir -p $THIRD_PARTY_PATH
-    mkdir -p $BUILD_PATH
-    mkdir -p $SOUNDS_PATH
-    mkdir -p $DB_PATH
+  mkdir -p $SOURCE_PATH
+  mkdir -p $THIRD_PARTY_PATH
+  mkdir -p $SOUNDS_PATH
+  mkdir -p $DB_PATH
 
-    # build port audio
-    echo
-    echo "==============> BUILDING PORT AUDIO =============="
-    echo
+  run_os_specifics
 
-    cd $THIRD_PARTY_PATH
-    wget -c $PORT_AUDIO_DOWNLOAD_URL
-    tar zxf $PORT_AUDIO_FILE
-
-    cd portaudio
-    ./configure --without-jack
-    make
-
-    run_os_specifics
-
-    #get sdk 
+  if [ ! -d "${SOURCE_PATH}/avs-device-sdk" ]
+  then
+    #get sdk
     echo
     echo "==============> CLONING SDK =============="
     echo
 
     cd $SOURCE_PATH
-    git clone git://github.com/alexa/avs-device-sdk.git
+    git clone --single-branch git://github.com/alexa/avs-device-sdk.git
+  fi
 
-    # make the SDK
-    echo
-    echo "==============> BUILDING SDK =============="
-    echo
+  # make the SDK
+  echo
+  echo "==============> BUILDING SDK =============="
+  echo
 
-    cd $BUILD_PATH
-    cmake "$SOURCE_PATH/avs-device-sdk" \
-    "${CMAKE_PLATFORM_SPECIFIC[@]}" \
-    -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
-    -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.$LIB_SUFFIX" \
-    -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
-    -DCMAKE_BUILD_TYPE=DEBUG
+  mkdir -p $BUILD_PATH
+  cd $BUILD_PATH
+  cmake "$SOURCE_PATH/avs-device-sdk" \
+      -DCMAKE_BUILD_TYPE=DEBUG \
+      "${CMAKE_PLATFORM_SPECIFIC[@]}"
 
-    cd $BUILD_PATH
-    make SampleApp -j2
+  cd $BUILD_PATH
+  make SampleApp -j2
 
 else
-    cd $BUILD_PATH
-    make SampleApp -j2
+  cd $BUILD_PATH
+  make SampleApp -j2
 fi
 
 echo
@@ -286,7 +300,7 @@ cat $OUTPUT_CONFIG_FILE
 
 generate_start_script
 
-cat << EOF > "$TEST_SCRIPT" 
+cat << EOF > "$TEST_SCRIPT"
 echo
 echo "==============> BUILDING Tests =============="
 echo

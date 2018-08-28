@@ -16,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_HTTPCONTENT_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_HTTPCONTENT_H_
 
+#include <chrono>
 #include <future>
 #include <memory>
 #include <string>
@@ -39,6 +40,14 @@ struct HTTPContent {
      */
     operator bool() const;
 
+    /**
+     * This function checks if the @c statusCode is ready to be read.
+     *
+     * @param timeout The timeout to wait for to see if @c statusCode is ready.
+     * @return @c true if @c statuscode is ready, else @c false.
+     */
+    bool isReady(const std::chrono::milliseconds timeout) const;
+
     /// A @c long representing the HTTP status code.
     mutable std::future<long> statusCode;
 
@@ -51,6 +60,11 @@ struct HTTPContent {
 
 inline HTTPContent::operator bool() const {
     return statusCode.get() == 200;
+}
+
+inline bool HTTPContent::isReady(const std::chrono::milliseconds timeout) const {
+    auto status = statusCode.wait_for(timeout);
+    return std::future_status::ready == status;
 }
 
 }  // namespace utils

@@ -18,6 +18,7 @@
 
 #include <memory>
 
+#include <Audio/MicrophoneInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
@@ -26,8 +27,8 @@
 #include <RegistrationManager/CustomerDataManager.h>
 
 #include "KeywordObserver.h"
-#include "PortAudioMicrophoneWrapper.h"
 #include "UIManager.h"
+#include "GuiRenderer.h"
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -45,10 +46,11 @@ public:
      */
     InteractionManager(
         std::shared_ptr<defaultClient::DefaultClient> client,
-        std::shared_ptr<sampleApp::PortAudioMicrophoneWrapper> micWrapper,
+        std::shared_ptr<applicationUtilities::resources::audio::MicrophoneInterface> micWrapper,
         std::shared_ptr<sampleApp::UIManager> userInterface,
         capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
         capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
+        std::shared_ptr<sampleApp::GuiRenderer> guiRenderer = nullptr,
         capabilityAgents::aip::AudioProvider wakeWordAudioProvider = capabilityAgents::aip::AudioProvider::null(),
         std::shared_ptr<esp::ESPDataProviderInterface> espProvider = nullptr,
         std::shared_ptr<esp::ESPDataModifierInterface> espModifier = nullptr,
@@ -112,6 +114,41 @@ public:
      * Should be called whenever a user presses 'PREVIOUS' for playback.
      */
     void playbackPrevious();
+
+    /**
+     * Should be called whenever a user presses 'SKIP_FORWARD' for playback.
+     */
+    void playbackSkipForward();
+
+    /**
+     * Should be called whenever a user presses 'SKIP_BACKWARD' for playback.
+     */
+    void playbackSkipBackward();
+
+    /**
+     * Should be called whenever a user presses 'SHUFFLE' for playback.
+     */
+    void playbackShuffle();
+
+    /**
+     * Should be called whenever a user presses 'LOOP' for playback.
+     */
+    void playbackLoop();
+
+    /**
+     * Should be called whenever a user presses 'REPEAT' for playback.
+     */
+    void playbackRepeat();
+
+    /**
+     * Should be called whenever a user presses 'THUMBS_UP' for playback.
+     */
+    void playbackThumbsUp();
+
+    /**
+     * Should be called whenever a user presses 'THUMBS_DOWN' for playback.
+     */
+    void playbackThumbsDown();
 
     /**
      * Should be called whenever a user presses 'SETTINGS' for settings options.
@@ -226,10 +263,13 @@ private:
     std::shared_ptr<defaultClient::DefaultClient> m_client;
 
     /// The microphone managing object.
-    std::shared_ptr<sampleApp::PortAudioMicrophoneWrapper> m_micWrapper;
+    std::shared_ptr<applicationUtilities::resources::audio::MicrophoneInterface> m_micWrapper;
 
     /// The user interface manager.
     std::shared_ptr<sampleApp::UIManager> m_userInterface;
+
+    /// The gui renderer.
+    std::shared_ptr<sampleApp::GuiRenderer> m_guiRenderer;
 
     /// The ESP provider.
     std::shared_ptr<esp::ESPDataProviderInterface> m_espProvider;
@@ -267,6 +307,9 @@ private:
     /// @{
     void doShutdown() override;
     /// @}
+
+    /// sends Gui Toggle event
+    void sendGuiToggleEvent(const std::string& toggleName, avsCommon::avs::PlaybackToggle toggleType);
 };
 
 }  // namespace sampleApp

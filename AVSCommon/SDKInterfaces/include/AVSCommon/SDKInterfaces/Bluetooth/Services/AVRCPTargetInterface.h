@@ -105,6 +105,11 @@ public:
      * @return A boolean indicating the success of the function.
      */
     virtual bool previous() = 0;
+
+    /**
+     * Destructor.
+     */
+    virtual ~AVRCPTargetInterface() = default;
 };
 
 }  // namespace services

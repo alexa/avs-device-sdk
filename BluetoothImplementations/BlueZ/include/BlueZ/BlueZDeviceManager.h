@@ -26,6 +26,7 @@
 #include <AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h>
 #include <AVSCommon/Utils/Bluetooth/BluetoothEventBus.h>
 #include <AVSCommon/Utils/Bluetooth/BluetoothEvents.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
 #include "BlueZ/BlueZHostController.h"
@@ -46,6 +47,7 @@ class BlueZBluetoothDevice;
  */
 class BlueZDeviceManager
         : public avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface
+        , public avsCommon::utils::RequiresShutdown
         , public std::enable_shared_from_this<BlueZDeviceManager> {
 public:
     /**
@@ -60,7 +62,7 @@ public:
     /**
      * Destructor.
      */
-    virtual ~BlueZDeviceManager();
+    virtual ~BlueZDeviceManager() override;
 
     /// @name BluetoothDeviceManagerInterface Functions
     /// @{
@@ -70,6 +72,11 @@ public:
         override;
 
     ///@}
+
+    // @name RequiresShutdown Functions
+    /// @{
+    void doShutdown() override;
+    /// @}
 
     /**
      * Get the @c BluetoothEventBus used by this device manager to post bluetooth related events.

@@ -37,6 +37,13 @@ static const char PLAY = '1';
 static const char PAUSE = '2';
 static const char NEXT = '3';
 static const char PREVIOUS = '4';
+static const char SKIP_FORWARD = '5';
+static const char SKIP_BACKWARD = '6';
+static const char SHUFFLE = '7';
+static const char LOOP = '8';
+static const char REPEAT = '9';
+static const char THUMBS_UP = '+';
+static const char THUMBS_DOWN = '-';
 static const char SETTINGS = 'c';
 static const char SPEAKER_CONTROL = 'p';
 static const char FIRMWARE_VERSION = 'f';
@@ -64,6 +71,9 @@ static const int8_t INCREASE_VOLUME = 10;
 
 static const int8_t DECREASE_VOLUME = -10;
 
+/// Time to wait for console input
+static const auto READ_CONSOLE_TIMEOUT = std::chrono::milliseconds(100);
+
 /// String to identify log entries originating from this file.
 static const std::string TAG("UserInputManager");
 
@@ -74,34 +84,54 @@ static const std::string TAG("UserInputManager");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-std::unique_ptr<UserInputManager> UserInputManager::create(std::shared_ptr<InteractionManager> interactionManager) {
+std::unique_ptr<UserInputManager> UserInputManager::create(
+    std::shared_ptr<InteractionManager> interactionManager,
+    std::shared_ptr<ConsoleReader> consoleReader) {
     if (!interactionManager) {
         ACSDK_CRITICAL(LX("Invalid InteractionManager passed to UserInputManager"));
         return nullptr;
     }
-    return std::unique_ptr<UserInputManager>(new UserInputManager(interactionManager));
-}
 
-UserInputManager::UserInputManager(std::shared_ptr<InteractionManager> interactionManager) :
-        m_interactionManager{interactionManager},
-        m_limitedInteraction{false} {
-}
-
-void UserInputManager::run() {
-    if (!m_interactionManager) {
-        return;
+    if (!consoleReader) {
+        ACSDK_CRITICAL(LX("Invalid ConsoleReader passed to UserInputManager"));
+        return nullptr;
     }
+
+    return std::unique_ptr<UserInputManager>(new UserInputManager(interactionManager, consoleReader));
+}
+
+UserInputManager::UserInputManager(
+    std::shared_ptr<InteractionManager> interactionManager,
+    std::shared_ptr<ConsoleReader> consoleReader) :
+        m_interactionManager{interactionManager},
+        m_consoleReader{consoleReader},
+        m_limitedInteraction{false},
+        m_restart{false} {
+}
+
+bool UserInputManager::readConsoleInput(char* input) {
+    while (input && !m_restart) {
+        if (m_consoleReader->read(READ_CONSOLE_TIMEOUT, input)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+SampleAppReturnCode UserInputManager::run() {
+    bool userTriggeredLogout = false;
     m_interactionManager->begin();
     while (true) {
         char x;
-        std::cin >> x;
+        if (!readConsoleInput(&x)) {
+            break;
+        }
         x = ::tolower(x);
         if (x == QUIT) {
-            return;
+            break;
         } else if (x == RESET) {
             if (confirmReset()) {
-                // Exit sample app after device reset.
-                return;
+                userTriggeredLogout = true;
             }
         } else if (x == MIC_TOGGLE) {
             m_interactionManager->microphoneToggle();
@@ -130,6 +160,20 @@ void UserInputManager::run() {
             m_interactionManager->playbackNext();
         } else if (x == PREVIOUS) {
             m_interactionManager->playbackPrevious();
+        } else if (x == SKIP_FORWARD) {
+            m_interactionManager->playbackSkipForward();
+        } else if (x == SKIP_BACKWARD) {
+            m_interactionManager->playbackSkipBackward();
+        } else if (x == SHUFFLE) {
+            m_interactionManager->playbackShuffle();
+        } else if (x == LOOP) {
+            m_interactionManager->playbackLoop();
+        } else if (x == REPEAT) {
+            m_interactionManager->playbackRepeat();
+        } else if (x == THUMBS_UP) {
+            m_interactionManager->playbackThumbsUp();
+        } else if (x == THUMBS_DOWN) {
+            m_interactionManager->playbackThumbsDown();
         } else if (x == SETTINGS) {
             m_interactionManager->settings();
             char y;
@@ -229,6 +273,14 @@ void UserInputManager::run() {
             m_interactionManager->errorValue();
         }
     }
+    if (!userTriggeredLogout && m_restart) {
+        return SampleAppReturnCode::RESTART;
+    }
+    return SampleAppReturnCode::OK;
+}
+
+void UserInputManager::onLogout() {
+    m_restart = true;
 }
 
 void UserInputManager::onAuthStateChange(AuthObserverInterface::State newState, AuthObserverInterface::Error newError) {

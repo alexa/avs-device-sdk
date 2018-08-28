@@ -119,6 +119,11 @@ public:
      * @param speaker
      */
     virtual void addSpeaker(std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker) = 0;
+
+    /**
+     * Destructor.
+     */
+    virtual ~SpeakerManagerInterface() = default;
 };
 
 }  // namespace sdkInterfaces

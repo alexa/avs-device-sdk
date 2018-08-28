@@ -14,18 +14,21 @@
  */
 
 #include "ESP/ESPDataProviderInterface.h"
-#include "SampleApp/InteractionManager.h"
 #include "RegistrationManager/CustomerDataManager.h"
+#include "SampleApp/InteractionManager.h"
 
 namespace alexaClientSDK {
 namespace sampleApp {
 
+using namespace avsCommon::avs;
+
 InteractionManager::InteractionManager(
     std::shared_ptr<defaultClient::DefaultClient> client,
-    std::shared_ptr<sampleApp::PortAudioMicrophoneWrapper> micWrapper,
+    std::shared_ptr<applicationUtilities::resources::audio::MicrophoneInterface> micWrapper,
     std::shared_ptr<sampleApp::UIManager> userInterface,
     capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
     capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
+    std::shared_ptr<sampleApp::GuiRenderer> guiRenderer,
     capabilityAgents::aip::AudioProvider wakeWordAudioProvider,
     std::shared_ptr<esp::ESPDataProviderInterface> espProvider,
     std::shared_ptr<esp::ESPDataModifierInterface> espModifier,
@@ -34,6 +37,7 @@ InteractionManager::InteractionManager(
         m_client{client},
         m_micWrapper{micWrapper},
         m_userInterface{userInterface},
+        m_guiRenderer{guiRenderer},
         m_espProvider{espProvider},
         m_espModifier{espModifier},
         m_callManager{callManager},
@@ -131,19 +135,56 @@ void InteractionManager::stopForegroundActivity() {
 }
 
 void InteractionManager::playbackPlay() {
-    m_executor.submit([this]() { m_client->getPlaybackRouter()->playButtonPressed(); });
+    m_executor.submit([this]() { m_client->getPlaybackRouter()->buttonPressed(PlaybackButton::PLAY); });
 }
 
 void InteractionManager::playbackPause() {
-    m_executor.submit([this]() { m_client->getPlaybackRouter()->pauseButtonPressed(); });
+    m_executor.submit([this]() { m_client->getPlaybackRouter()->buttonPressed(PlaybackButton::PAUSE); });
 }
 
 void InteractionManager::playbackNext() {
-    m_executor.submit([this]() { m_client->getPlaybackRouter()->nextButtonPressed(); });
+    m_executor.submit([this]() { m_client->getPlaybackRouter()->buttonPressed(PlaybackButton::NEXT); });
 }
 
 void InteractionManager::playbackPrevious() {
-    m_executor.submit([this]() { m_client->getPlaybackRouter()->previousButtonPressed(); });
+    m_executor.submit([this]() { m_client->getPlaybackRouter()->buttonPressed(PlaybackButton::PREVIOUS); });
+}
+
+void InteractionManager::playbackSkipForward() {
+    m_executor.submit([this]() { m_client->getPlaybackRouter()->buttonPressed(PlaybackButton::SKIP_FORWARD); });
+}
+
+void InteractionManager::playbackSkipBackward() {
+    m_executor.submit([this]() { m_client->getPlaybackRouter()->buttonPressed(PlaybackButton::SKIP_BACKWARD); });
+}
+
+void InteractionManager::playbackShuffle() {
+    sendGuiToggleEvent(GuiRenderer::TOGGLE_NAME_SHUFFLE, PlaybackToggle::SHUFFLE);
+}
+
+void InteractionManager::playbackLoop() {
+    sendGuiToggleEvent(GuiRenderer::TOGGLE_NAME_LOOP, PlaybackToggle::LOOP);
+}
+
+void InteractionManager::playbackRepeat() {
+    sendGuiToggleEvent(GuiRenderer::TOGGLE_NAME_REPEAT, PlaybackToggle::REPEAT);
+}
+
+void InteractionManager::playbackThumbsUp() {
+    sendGuiToggleEvent(GuiRenderer::TOGGLE_NAME_THUMBSUP, PlaybackToggle::THUMBS_UP);
+}
+
+void InteractionManager::playbackThumbsDown() {
+    sendGuiToggleEvent(GuiRenderer::TOGGLE_NAME_THUMBSDOWN, PlaybackToggle::THUMBS_DOWN);
+}
+
+void InteractionManager::sendGuiToggleEvent(const std::string& toggleName, PlaybackToggle toggleType) {
+    bool action = false;
+    if (m_guiRenderer) {
+        action = !m_guiRenderer->getGuiToggleState(toggleName);
+    }
+    m_executor.submit(
+        [this, toggleType, action]() { m_client->getPlaybackRouter()->togglePressed(toggleType, action); });
 }
 
 void InteractionManager::speakerControl() {

@@ -30,6 +30,8 @@
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
+#include "PlaybackCommand.h"
+
 namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace playbackController {
@@ -63,9 +65,10 @@ public:
     void onContextFailure(const avsCommon::sdkInterfaces::ContextRequestError error) override;
     /// @}
 
-    /// @name PlaybackHandlerInterface functions.
+    /// @name PlaybackControllerInterface Functions
     /// @{
     void onButtonPressed(avsCommon::avs::PlaybackButton button) override;
+    void onTogglePressed(avsCommon::avs::PlaybackToggle toggle, bool action) override;
     /// @}
 
     /// @name CapabilityConfigurationInterface Functions
@@ -76,11 +79,11 @@ public:
     /**
      * Manage completion of event being sent.
      *
-     * @param Button The @Button that was pressed to generate the message sent.
+     * @param PlaybackCommand The @PlaybackButton or @PlaybackToggle that was pressed to generate the message sent.
      * @param messageStatus The status of submitted @c MessageRequest.
      */
     void messageSent(
-        avsCommon::avs::PlaybackButton,
+        const PlaybackCommand&,
         avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status messageStatus);
 
 private:
@@ -100,6 +103,13 @@ private:
     /// @}
 
     /**
+     * Process the @c PlaybackCommand for the pressed button.
+     *
+     * @param The @c PlaybackCommand associated with the button pressed.
+     */
+    void handleCommand(const PlaybackCommand& command);
+
+    /**
      * @name Executor Thread Variables
      *
      * These member variables are only accessed by functions in the @c m_executor worker thread, and do not require any
@@ -113,8 +123,8 @@ private:
     /// The @c ContextManager used to generate system context for events.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
 
-    /// The queue for storing buttons pressed.
-    std::queue<avsCommon::avs::PlaybackButton> m_buttons;
+    /// The queue for storing the commands.
+    std::queue<const PlaybackCommand*> m_commands;
     /// @}
 
     /// Set of capability configurations that will get published using the Capabilities API

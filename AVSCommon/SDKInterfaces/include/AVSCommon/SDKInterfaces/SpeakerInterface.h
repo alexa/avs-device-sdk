@@ -100,6 +100,11 @@ public:
      * @return The @c Type.
      */
     virtual Type getSpeakerType() = 0;
+
+    /**
+     * Destructor.
+     */
+    virtual ~SpeakerInterface() = default;
 };
 
 /**

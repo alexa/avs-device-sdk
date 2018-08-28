@@ -261,8 +261,8 @@ private:
     /// The time to pause between the rendering of the @c m_urls sequence.
     std::chrono::milliseconds m_loopPause;
 
-    /// A pointer to a stream to use as the default audio to use when the audio assets aren't available.
-    std::shared_ptr<std::istream> m_defaultAudio;
+    /// A pointer to a stream factory to use as the default audio to use when the audio assets aren't available.
+    std::function<std::unique_ptr<std::istream>()> m_defaultAudioFactory;
 
     /// A flag to capture if the renderer has been asked to stop by its owner.
     bool m_isStopping;

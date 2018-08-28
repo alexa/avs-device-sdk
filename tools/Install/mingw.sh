@@ -20,7 +20,10 @@ fi
 
 LIB_SUFFIX="dll.a"
 START_SCRIPT="$INSTALL_BASE/startsample.bat"
-CMAKE_PLATFORM_SPECIFIC=(-G 'MSYS Makefiles' -Dgtest_disable_pthreads=ON)
+CMAKE_PLATFORM_SPECIFIC=(-G 'MSYS Makefiles' -Dgtest_disable_pthreads=ON \
+    -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
+    -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.$LIB_SUFFIX" \
+    -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include")
 CONFIG_DB_PATH=`cygpath.exe -m $DB_PATH`
 
 GSTREAMER_AUDIO_SINK="directsoundsink"
@@ -56,7 +59,7 @@ install_dependencies() {
 }
 
 run_os_specifics() {
-  :
+  build_port_audio
 }
 
 generate_start_script() {

@@ -231,9 +231,10 @@ void SpeechSynthesizer::provideState(
     const avsCommon::avs::NamespaceAndName& stateProviderName,
     const unsigned int stateRequestToken) {
     ACSDK_DEBUG9(LX("provideState").d("token", stateRequestToken));
-    std::lock_guard<std::mutex> lock(m_mutex);
-    auto state = m_currentState;
-    m_executor.submit([this, state, stateRequestToken]() { executeProvideState(state, stateRequestToken); });
+    m_executor.submit([this, stateRequestToken]() {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        executeProvideState(stateRequestToken);
+    });
 }
 
 void SpeechSynthesizer::onContextAvailable(const std::string& jsonContext) {
@@ -560,15 +561,13 @@ void SpeechSynthesizer::executeStateChange() {
     }
 }
 
-void SpeechSynthesizer::executeProvideState(
-    const SpeechSynthesizerObserverInterface::SpeechSynthesizerState& state,
-    const unsigned int& stateRequestToken) {
+void SpeechSynthesizer::executeProvideState(const unsigned int& stateRequestToken) {
     ACSDK_DEBUG(LX("executeProvideState").d("stateRequestToken", stateRequestToken));
     int64_t offsetInMilliseconds = 0;
     StateRefreshPolicy refreshPolicy = StateRefreshPolicy::NEVER;
     std::string speakDirectiveToken;
 
-    if (SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING == state) {
+    if (SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING == m_currentState) {
         if (!m_currentInfo) {
             ACSDK_ERROR(LX("executeProvideStateFailed").d("reason", "currentInfoIsNull"));
             return;
@@ -769,7 +768,7 @@ void SpeechSynthesizer::setCurrentStateLocked(SpeechSynthesizerObserverInterface
     switch (newState) {
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING:
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED:
-            executeProvideState(m_currentState, 0);
+            executeProvideState(0);
             break;
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::LOSING_FOCUS:
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS:

@@ -33,6 +33,8 @@
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/LibcurlUtils/HttpPutInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
+#include <RegistrationManager/CustomerDataHandler.h>
+#include <RegistrationManager/CustomerDataManager.h>
 
 namespace alexaClientSDK {
 namespace capabilitiesDelegate {
@@ -44,6 +46,7 @@ class CapabilitiesDelegate
         : public avsCommon::sdkInterfaces::CapabilitiesDelegateInterface
         , public avsCommon::sdkInterfaces::AuthObserverInterface
         , public avsCommon::utils::RequiresShutdown
+        , public registrationManager::CustomerDataHandler
         , public std::enable_shared_from_this<CapabilitiesDelegate> {
 public:
     /**
@@ -52,6 +55,7 @@ public:
      * @param authDelegate The auth delegate instance needed for CapabilitiesDelegate.
      * @param miscStorage The miscDB instance needed for CapabilitiesDelegate.
      * @param httpPut The HTTP PUT handler instance needed for CapabilitiesDelegate.
+     * @param customerDataManager Object that will track the CustomerDataHandler.
      * @param configurationRoot The global config object.
      * @param deviceInfo The deviceInfo instance for CapabilitiesDelegate.
      * @return If successful, returns a new CapabilitiesDelegate, otherwise @c nullptr.
@@ -60,6 +64,7 @@ public:
         const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
         const std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface>& miscStorage,
         const std::shared_ptr<avsCommon::utils::libcurlUtils::HttpPutInterface>& httpPut,
+        const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager,
         const avsCommon::utils::configuration::ConfigurationNode& configurationRoot,
         std::shared_ptr<avsCommon::utils::DeviceInfo> deviceInfo);
 
@@ -89,6 +94,11 @@ public:
     void doShutdown() override;
     /// @}
 
+    /// @name CustomerDataHandler Functions
+    /// @{
+    void clearData() override;
+    /// @}
+
 private:
     /**
      * CapabilitiesDelegate constructor.
@@ -96,12 +106,14 @@ private:
      * @param authDelegate The auth delegate instance needed for CapabilitiesDelegate.
      * @param miscStorage The miscDB instance needed for CapabilitiesDelegate.
      * @param httpPut The HTTP PUT handler instance needed for CapabilitiesDelegate.
+     * @param customerDataManager Object that will track the CustomerDataHandler.
      * @param deviceInfo The deviceInfo instance for CapabilitiesDelegate.
      */
     CapabilitiesDelegate(
         const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
         const std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface>& miscStorage,
         const std::shared_ptr<avsCommon::utils::libcurlUtils::HttpPutInterface>& httpPut,
+        const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager,
         const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo);
 
     /**

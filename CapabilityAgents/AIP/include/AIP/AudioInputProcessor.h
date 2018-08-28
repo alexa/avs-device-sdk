@@ -592,6 +592,12 @@ private:
     bool m_initialDialogUXStateReceived;
 
     /**
+     * This flag indicates if a stop has been done locally on the device and that it's safe to ignore the StopCapture
+     * directive.
+     */
+    bool m_localStopCapturePerformed;
+
+    /**
      * The initiator value from the preceding ExpectSpeech directive. The ExpectSpeech directive's initiator
      * will need to be consumed and sent back in a subsequent Recognize event. This should be cleared if the
      * ExpectSpeech times out. An empty initiator is possible, in which case an empty initiator should be sent back to

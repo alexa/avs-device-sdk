@@ -9,7 +9,7 @@ target_include_directories(CapabilitiesDelegate PUBLIC
     ${CapabilitiesDelegate_SOURCE_DIR}/include)
 target_include_directories(CapabilitiesDelegate PRIVATE
     ${RAPIDJSON_INCLUDE_DIR})
-target_link_libraries(CapabilitiesDelegate AVSCommon Integration ${CURL_LIBRARIES})
+target_link_libraries(CapabilitiesDelegate AVSCommon ACL RegistrationManager ${CURL_LIBRARIES})
 
 # install target
 asdk_install()

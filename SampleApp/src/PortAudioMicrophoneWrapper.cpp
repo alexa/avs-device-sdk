@@ -81,7 +81,7 @@ bool PortAudioMicrophoneWrapper::initialize() {
     PaError err;
     err = Pa_Initialize();
     if (err != paNoError) {
-        ACSDK_CRITICAL(LX("Failed to initialize PortAudio"));
+        ACSDK_CRITICAL(LX("Failed to initialize PortAudio").d("errorCode", err));
         return false;
     }
 
@@ -122,7 +122,7 @@ bool PortAudioMicrophoneWrapper::initialize() {
     }
 
     if (err != paNoError) {
-        ACSDK_CRITICAL(LX("Failed to open PortAudio default stream"));
+        ACSDK_CRITICAL(LX("Failed to open PortAudio default stream").d("errorCode", err));
         return false;
     }
     return true;

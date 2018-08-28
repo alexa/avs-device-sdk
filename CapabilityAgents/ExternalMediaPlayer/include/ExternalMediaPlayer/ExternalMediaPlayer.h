@@ -120,6 +120,8 @@ public:
     /// @name Overridden PlaybackHandlerInterface methods.
     /// @{
     virtual void onButtonPressed(avsCommon::avs::PlaybackButton button) override;
+
+    virtual void onTogglePressed(avsCommon::avs::PlaybackToggle toggle, bool action) override;
     /// @}
 
     /// @name Overridden ExternalMediaPlayerInterface methods.

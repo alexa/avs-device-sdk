@@ -484,6 +484,13 @@ bool DefaultClient::initialize(
         return false;
     }
 
+    m_interactionCapabilityAgent = capabilityAgents::interactionModel::InteractionModelCapabilityAgent::create(
+        m_directiveSequencer, m_exceptionSender);
+    if (!m_interactionCapabilityAgent) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateInteractionModelCapabilityAgent"));
+        return false;
+    }
+
 #ifdef ENABLE_COMMS
     if (!ringtoneMediaPlayer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullRingtoneMediaPlayer"));
@@ -738,6 +745,13 @@ bool DefaultClient::initialize(
         return false;
     }
 
+    if (!m_directiveSequencer->addDirectiveHandler(m_interactionCapabilityAgent)) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterDirectiveHandler")
+                        .d("directiveHandler", "InteractionModelCapabilityAgent"));
+        return false;
+    }
+
     // The CallManager is an optional component, so it may be nullptr.
     if (m_callManager) {
         if (!m_directiveSequencer->addDirectiveHandler(m_callManager)) {
@@ -827,6 +841,12 @@ bool DefaultClient::initialize(
         ACSDK_ERROR(LX("initializeFailed")
                         .d("reason", "unableToRegisterCapability")
                         .d("capabilitiesDelegate", "SpeechSynthesizer"));
+        return false;
+    }
+
+    if (!(capabilitiesDelegate->registerCapability(m_interactionCapabilityAgent))) {
+        ACSDK_ERROR(
+            LX("initializeFailed").d("reason", "unableToRegisterCapability").d("capabilitiesDelegate", "Interaction"));
         return false;
     }
 

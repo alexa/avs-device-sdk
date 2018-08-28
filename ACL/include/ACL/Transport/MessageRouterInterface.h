@@ -88,6 +88,11 @@ public:
      * and when messages arrive from AVS.
      */
     virtual void setObserver(std::shared_ptr<MessageRouterObserverInterface> observer) = 0;
+
+    /**
+     * Destructor.
+     */
+    virtual ~MessageRouterInterface() = default;
 };
 
 inline MessageRouterInterface::MessageRouterInterface(const std::string& name) : RequiresShutdown(name) {

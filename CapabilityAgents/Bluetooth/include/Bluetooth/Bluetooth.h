@@ -194,7 +194,7 @@ public:
 
     /// @name CustomerDataHandler Functions
     /// @{
-    virtual void clearData() override;
+    void clearData() override;
     /// @}
 
 protected:

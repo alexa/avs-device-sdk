@@ -1,5 +1,44 @@
 ## ChangeLog
 
+### v1.9.0 released 08/28/2018:
+
+**Enhancements**
+
+* Added Android SDK support, which includes new implementations of the MediaPlayer, audio recorder, and logger.
+* Added the [InteractionModel](https://developer.amazon.com/docs/alexa-voice-service/interaction-model.html) interface, which enables Alexa Routines.
+* Optional configuration changes have been introduced. Now a [network interface can be specified](https://github.com/alexa/avs-device-sdk/blob/v1.9/Integration/AlexaClientSDKConfig.json#L129) to connect to the SDK via curl.
+* [Build options can be configured](https://github.com/alexa/avs-device-sdk/wiki/Build-Options#build-for-Android) to support Android.
+* Added GUI 1.1 support. The `PlaybackController` has been extended to support new control functionality, and the `System` interface has been updated to support `SoftwareInfo`.
+
+**Bug Fixes**
+
+* Installation script execution time has been reduced. Now a single branch clone is used, such as the master branch.
+* [Issue 846](https://github.com/alexa/avs-device-sdk/issues/846) - Fixed a bug where audio stuttered on slow network connections.
+* Removed the `SpeakerManager` constructor check for non-zero speakers.
+* [Issue 891](https://github.com/alexa/avs-device-sdk/issues/891) - Resolved incorrect offset in the `PlaybackFinished` event.
+* [Issue 727](https://github.com/alexa/avs-device-sdk/issues/727) - Fixed an issue where the sample app behaved erratically upon network disconnection/reconnection.
+* [Issue 910](https://github.com/alexa/avs-device-sdk/issues/910) - Fixed a GCC 8+ compilation issue. Note: issues related to `-Wclass-memaccess` will still trigger warnings, but won't fail compilation.
+* [Issue 871](https://github.com/alexa/avs-device-sdk/issues/871) [Issue 880](https://github.com/alexa/avs-device-sdk/issues/880) - Fixed compiler warnings.
+* Fixed an issue where `PlaybackStutterStarted` and `PlaybackStutterFinished` events were not being sent due to a missing Gstreamer queue element.
+* Fixed a bug where the `CapabilitiesDelegate` database was not being cleared upon logout.
+* Fixed in issue that caused the following compiler warning “class has virtual functions but non-virtual destructor”.
+* Fixed a bug where `BlueZDeviceManager` was not properly destroyed.
+* Fixed a bug that occurred when the initializer list was converted to `std::unordered_set`.
+* Fixed a build error that occurred when building with `BUILD_TESTING=Off`.
+
+**Known Issues**
+* The `ACL` may encounter issues if audio attachments are received but not consumed.
+* `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
+* The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.
+* Connecting a product to streaming media via Bluetooth will sometimes stop media playback within the source application. Resuming playback through the source application or toggling next/previous will correct playback.
+* When a source device is streaming silence via Bluetooth, the Alexa companion app indicates that audio content is streaming.
+* The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation is not yet supported.
+* On some products, interrupted Bluetooth playback may not resume if other content is locally streamed.
+* On Raspberry Pi, when streaming audio via Bluetooth, sometimes the audio stream stutters.
+* These `CapabilitiesDelegateTest` tests have been temporarily disabled to prevent build errors for the Android build: `CapabilitiesDelegateTest.withCapabilitiesHappyCase`, `CapabilitiesDelegateTest.republish`, `CapabilitiesDelegateTest.testClearData`.
+* `make integration` is currently not available for Android. In order to run integration tests on Android, you'll need to manually upload the test binary file along with any input file. At that point, the adb can be used to run the integration tests.
+* On Raspberry Pi running Android Things with HDMI output audio, beginning of speech is truncated when Alexa responds to user TTS.
+
 ### v1.8.1 released 07/09/2018:
 
 **Enhancements**

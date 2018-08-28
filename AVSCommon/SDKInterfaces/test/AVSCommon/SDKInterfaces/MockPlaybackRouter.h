@@ -30,10 +30,8 @@ namespace test {
  */
 class MockPlaybackRouter : public PlaybackRouterInterface {
 public:
-    MOCK_METHOD0(playButtonPressed, void());
-    MOCK_METHOD0(pauseButtonPressed, void());
-    MOCK_METHOD0(nextButtonPressed, void());
-    MOCK_METHOD0(previousButtonPressed, void());
+    MOCK_METHOD1(buttonPressed, void(avsCommon::avs::PlaybackButton button));
+    MOCK_METHOD2(togglePressed, void(avsCommon::avs::PlaybackToggle toggle, bool action));
     MOCK_METHOD1(setHandler, void(std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> handler));
     MOCK_METHOD0(switchToDefaultHandler, void());
 };

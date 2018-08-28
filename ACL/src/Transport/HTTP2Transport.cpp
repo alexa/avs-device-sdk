@@ -452,6 +452,12 @@ bool HTTP2Transport::establishConnection() {
     // Set numTransferLeft to 1 because the downchannel stream has been added already.
     int numTransfersLeft = 1;
 
+    // Zero indicates no response yet.
+    long downchannelResponseCode = 0;
+
+    // Start of time interval used to limit log spam when waiting for activity.
+    auto lastActivityLogTime = std::chrono::steady_clock::now();
+
     /*
      * Calls curl_multi_perform until down channel stream receives an HTTP2 response code. If the down channel stream
      * Call perform() to further networking transfers until the down channel stream receives an HTTP2 response
@@ -470,7 +476,7 @@ bool HTTP2Transport::establishConnection() {
             ACSDK_ERROR(LX("establishConnectionFailed").d("reason", "performFailed"));
             setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
         }
-        long downchannelResponseCode = m_downchannelStream->getResponseCode();
+        downchannelResponseCode = m_downchannelStream->getResponseCode();
         /* if the downchannel response code is > 0 then we have some response from the backend
          * if its < 0 there was a problem getting the response code from the easy handle
          * if its == 0 then keep looping since we have not yet received a response
@@ -488,6 +494,12 @@ bool HTTP2Transport::establishConnection() {
                             .d("reason", "negativeResponseCode")
                             .d("responseCode", downchannelResponseCode));
             setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
+        } else {
+            auto now = std::chrono::steady_clock::now();
+            if (now - lastActivityLogTime > WAIT_FOR_ACTIVITY_TIMEOUT) {
+                lastActivityLogTime = now;
+                ACSDK_DEBUG9(LX("establishConnectionWaitingForActivity"));
+            }
         }
         // wait for activity on the downchannel stream, kinda like poll()
         int numTransfersUpdated = 0;
@@ -498,7 +510,9 @@ bool HTTP2Transport::establishConnection() {
             setIsStopping(ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
         }
     }
-
+    ACSDK_ERROR(LX("establishConnectionFailed")
+                    .d("code", downchannelResponseCode)
+                    .d("body", m_downchannelStream->getFailureBody()));
     return false;
 }
 
@@ -510,6 +524,7 @@ bool HTTP2Transport::setupDownchannelStream() {
     }
 
     const std::string authToken = m_authDelegate->getAuthToken();
+
     if (authToken.empty()) {
         ACSDK_ERROR(LX("setupDownchannelStreamFiled").d("reason", "getAuthTokenFailed"));
         return false;

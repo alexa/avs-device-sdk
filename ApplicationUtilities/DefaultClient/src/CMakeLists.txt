@@ -19,6 +19,7 @@ target_link_libraries(DefaultClient
     AIP
     Alerts
     Bluetooth
+    InteractionModel
     Notifications
     PlaybackController
     SpeakerManager

@@ -145,6 +145,11 @@ TEST_F(UserInactivityMonitorTest, createWithError) {
 TEST_F(UserInactivityMonitorTest, handleDirectiveProperly) {
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);
+    std::promise<void> notifyObserverPromise1;
+    std::promise<void> notifyObserverPromise2;
+    auto notifyObserverFuture1 = notifyObserverPromise1.get_future();
+    auto notifyObserverFuture2 = notifyObserverPromise2.get_future();
+
     EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequestAndReleaseTrigger, Eq(true))));
 
     auto userInactivityMonitor = UserInactivityMonitor::create(
@@ -154,8 +159,12 @@ TEST_F(UserInactivityMonitorTest, handleDirectiveProperly) {
     // let's verify that observers are notified when the UserInactivityReport Event is sent.
     auto userInactivityObserver1 = std::make_shared<MockUserInactivityMonitorObserver>();
     auto userInactivityObserver2 = std::make_shared<MockUserInactivityMonitorObserver>();
-    EXPECT_CALL(*(userInactivityObserver1.get()), onUserInactivityReportSent());
-    EXPECT_CALL(*(userInactivityObserver2.get()), onUserInactivityReportSent());
+    EXPECT_CALL(*(userInactivityObserver1.get()), onUserInactivityReportSent())
+        .WillOnce(InvokeWithoutArgs([&notifyObserverPromise1] { notifyObserverPromise1.set_value(); }));
+    ;
+    EXPECT_CALL(*(userInactivityObserver2.get()), onUserInactivityReportSent())
+        .WillOnce(InvokeWithoutArgs([&notifyObserverPromise2] { notifyObserverPromise2.set_value(); }));
+    ;
     userInactivityMonitor->addObserver(userInactivityObserver1);
     userInactivityMonitor->addObserver(userInactivityObserver2);
 
@@ -170,6 +179,8 @@ TEST_F(UserInactivityMonitorTest, handleDirectiveProperly) {
 
     directiveSequencer->onDirective(userInactivityDirective);
     exitTrigger.wait_for(exitLock, USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD);
+    notifyObserverFuture1.wait_for(USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD);
+    notifyObserverFuture2.wait_for(USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD);
 
     directiveSequencer->shutdown();
 }

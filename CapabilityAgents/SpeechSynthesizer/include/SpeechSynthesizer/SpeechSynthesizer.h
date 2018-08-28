@@ -259,12 +259,9 @@ private:
      * Request to provide an update of the SpeechSynthesizer's state to the ContextManager (on the @c m_executor
      * thread).
      *
-     * @param state The state of the @c SpeechSynthesizer.
      * @param stateRequestToken The token to pass through when setting the state.
      */
-    void executeProvideState(
-        const SpeechSynthesizerObserverInterface::SpeechSynthesizerState& state,
-        const unsigned int& stateRequestToken);
+    void executeProvideState(const unsigned int& stateRequestToken);
 
     /**
      * Handle (on the @c m_executor thread) notification that speech playback has started.

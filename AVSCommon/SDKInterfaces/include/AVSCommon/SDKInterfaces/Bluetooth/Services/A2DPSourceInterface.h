@@ -38,6 +38,11 @@ public:
      * @return A shared_ptr to a @c FormattedAudioStreamAdapter object to be consumed.
      */
     virtual std::shared_ptr<avsCommon::utils::bluetooth::FormattedAudioStreamAdapter> getSourceStream() = 0;
+
+    /**
+     * Destructor.
+     */
+    virtual ~A2DPSourceInterface() = default;
 };
 
 }  // namespace services

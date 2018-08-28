@@ -207,6 +207,13 @@ public:
     bool hasProgressTimedOut() const;
 
     /**
+     * Return the body (if any) returned for a failed request.
+     *
+     * @return The body (if any) returned for a failed request.
+     */
+    std::string getFailureBody() const;
+
+    /**
      * Return a reference to the LogStringFormatter owned by this object.  This is to allow a callback that uses this
      * object to get access to a known good LogStringFormatter.
      *

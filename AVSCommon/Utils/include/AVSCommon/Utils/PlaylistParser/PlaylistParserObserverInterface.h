@@ -32,7 +32,7 @@ namespace playlistParser {
 enum class PlaylistParseResult {
 
     /// The playlist has been fully parsed successfully. This indicates that parsing of the playlist has completed.
-    SUCCESS,
+    FINISHED,
 
     /**
      * The playlist parsing has encountered an error and will abort parsing. In this case, the url in the callback will
@@ -84,8 +84,8 @@ public:
  */
 inline std::ostream& operator<<(std::ostream& stream, const PlaylistParseResult& result) {
     switch (result) {
-        case PlaylistParseResult::SUCCESS:
-            stream << "SUCCESS";
+        case PlaylistParseResult::FINISHED:
+            stream << "FINISHED";
             break;
         case PlaylistParseResult::ERROR:
             stream << "ERROR";

@@ -33,6 +33,9 @@ static const std::string TAG("UrlContentToAttachmentConverter");
 static const std::chrono::milliseconds UNVALID_DURATION =
     avsCommon::utils::playlistParser::PlaylistParserObserverInterface::INVALID_DURATION;
 
+/// Timeout for future ready.
+static const std::chrono::milliseconds WAIT_FOR_FUTURE_READY_TIMEOUT(100);
+
 std::shared_ptr<UrlContentToAttachmentConverter> UrlContentToAttachmentConverter::create(
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
     const std::string& url,
@@ -120,7 +123,7 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(
                 }
             });
             break;
-        case avsCommon::utils::playlistParser::PlaylistParseResult::SUCCESS:
+        case avsCommon::utils::playlistParser::PlaylistParseResult::FINISHED:
             m_executor.submit([this, url]() {
                 if (!m_streamWriterClosed && !writeUrlContentIntoStream(url)) {
                     ACSDK_ERROR(LX("writeUrlContentToStreamFailed"));
@@ -166,11 +169,16 @@ bool UrlContentToAttachmentConverter::writeUrlContentIntoStream(std::string url)
         ACSDK_ERROR(LX("getContentFailed").d("reason", "nullHTTPContentReceived"));
         return false;
     }
+
+    do {
+        if (m_shuttingDown) {
+            ACSDK_DEBUG9(LX("writeUrlContentIntoStream").d("info", "shuttingDown"));
+            return true;
+        }
+    } while (!httpContent->isReady(WAIT_FOR_FUTURE_READY_TIMEOUT));
+
     if (!(*httpContent)) {
         ACSDK_ERROR(LX("getContentFailed").d("reason", "badHTTPContentReceived"));
-        return false;
-    }
-    if (m_shuttingDown) {
         return false;
     }
     ACSDK_DEBUG9(LX("writeUrlContentIntoStreamSuccess"));
@@ -178,8 +186,6 @@ bool UrlContentToAttachmentConverter::writeUrlContentIntoStream(std::string url)
 }
 
 void UrlContentToAttachmentConverter::doShutdown() {
-    m_streamWriter->close();
-
     {
         std::lock_guard<std::mutex> lock{m_mutex};
         m_observer.reset();
@@ -188,6 +194,7 @@ void UrlContentToAttachmentConverter::doShutdown() {
     m_executor.shutdown();
     m_playlistParser->shutdown();
     m_playlistParser.reset();
+    m_streamWriter->close();
     m_streamWriter.reset();
     if (!m_startedStreaming) {
         m_startStreamingPointPromise.set_value(std::chrono::seconds::zero());

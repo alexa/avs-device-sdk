@@ -36,6 +36,11 @@ public:
      * Remove an observer to be notified of internet connection changes.
      */
     virtual void removeInternetConnectionObserver(std::shared_ptr<InternetConnectionObserverInterface> observer) = 0;
+
+    /**
+     * Destructor.
+     */
+    virtual ~InternetConnectionMonitorInterface() = default;
 };
 
 }  // namespace sdkInterfaces

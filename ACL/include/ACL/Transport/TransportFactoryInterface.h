@@ -49,6 +49,11 @@ public:
         const std::string& avsEndpoint,
         std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
         std::shared_ptr<TransportObserverInterface> transportObserverInterface) = 0;
+
+    /**
+     * Destructor.
+     */
+    virtual ~TransportFactoryInterface() = default;
 };
 
 }  // namespace acl

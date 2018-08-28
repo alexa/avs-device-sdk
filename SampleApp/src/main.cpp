@@ -13,10 +13,14 @@
  * permissions and limitations under the License.
  */
 
+#include "SampleApp/ConsoleReader.h"
 #include "SampleApp/SampleApplication.h"
+#include "SampleApp/SampleApplicationReturnCodes.h"
 
 #include <cstdlib>
 #include <string>
+
+using namespace alexaClientSDK::sampleApp;
 
 /**
  * Function that evaluates if the SampleApp invocation uses old-style or new-style opt-arg style invocation.
@@ -52,37 +56,37 @@ int main(int argc, char* argv[]) {
         for (int i = 1; i < argc; i++) {
             if (strcmp(argv[i], "-C") == 0) {
                 if (i + 1 == argc) {
-                    alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("No config specified for -C option");
-                    return EXIT_FAILURE;
+                    ConsolePrinter::simplePrint("No config specified for -C option");
+                    return SampleAppReturnCode::ERROR;
                 }
                 configFiles.push_back(std::string(argv[++i]));
-                alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("configFile " + std::string(argv[i]));
+                ConsolePrinter::simplePrint("configFile " + std::string(argv[i]));
             } else if (strcmp(argv[i], "-K") == 0) {
                 if (i + 1 == argc) {
-                    alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("No wakeword input specified for -K option");
-                    return EXIT_FAILURE;
+                    ConsolePrinter::simplePrint("No wakeword input specified for -K option");
+                    return SampleAppReturnCode::ERROR;
                 }
                 pathToKWDInputFolder = std::string(argv[++i]);
             } else if (strcmp(argv[i], "-L") == 0) {
                 if (i + 1 == argc) {
-                    alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("No debugLevel specified for -L option");
-                    return EXIT_FAILURE;
+                    ConsolePrinter::simplePrint("No debugLevel specified for -L option");
+                    return SampleAppReturnCode::ERROR;
                 }
                 logLevel = std::string(argv[++i]);
             } else {
-                alexaClientSDK::sampleApp::ConsolePrinter::simplePrint(
+                ConsolePrinter::simplePrint(
                     "USAGE: " + std::string(argv[0]) + " -C <config1.json> -C <config2.json> ... -C <configN.json> " +
                     " -K <path_to_inputs_folder> -L <log_level>");
-                return EXIT_FAILURE;
+                return SampleAppReturnCode::ERROR;
             }
         }
     } else {
 #if defined(KWD_KITTAI) || defined(KWD_SENSORY)
         if (argc < 3) {
-            alexaClientSDK::sampleApp::ConsolePrinter::simplePrint(
+            ConsolePrinter::simplePrint(
                 "USAGE: " + std::string(argv[0]) +
                 " <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder> [log_level]");
-            return EXIT_FAILURE;
+            return SampleAppReturnCode::ERROR;
         } else {
             pathToKWDInputFolder = std::string(argv[2]);
             if (4 == argc) {
@@ -91,9 +95,9 @@ int main(int argc, char* argv[]) {
         }
 #else
         if (argc < 2) {
-            alexaClientSDK::sampleApp::ConsolePrinter::simplePrint(
+            ConsolePrinter::simplePrint(
                 "USAGE: " + std::string(argv[0]) + " <path_to_AlexaClientSDKConfig.json> [log_level]");
-            return EXIT_FAILURE;
+            return SampleAppReturnCode::ERROR;
         }
         if (3 == argc) {
             logLevel = std::string(argv[2]);
@@ -101,18 +105,23 @@ int main(int argc, char* argv[]) {
 #endif
 
         configFiles.push_back(std::string(argv[1]));
-        alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("configFile " + std::string(argv[1]));
+        ConsolePrinter::simplePrint("configFile " + std::string(argv[1]));
     }
 
-    auto sampleApplication =
-        alexaClientSDK::sampleApp::SampleApplication::create(configFiles, pathToKWDInputFolder, logLevel);
-    if (!sampleApplication) {
-        alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Failed to create to SampleApplication!");
-        return EXIT_FAILURE;
-    }
+    auto consoleReader = std::make_shared<ConsoleReader>();
 
-    // This will run until the user specifies the "quit" command.
-    sampleApplication->run();
+    std::unique_ptr<SampleApplication> sampleApplication;
+    SampleAppReturnCode returnCode = SampleAppReturnCode::OK;
 
-    return EXIT_SUCCESS;
+    do {
+        sampleApplication = SampleApplication::create(consoleReader, configFiles, pathToKWDInputFolder, logLevel);
+        if (!sampleApplication) {
+            ConsolePrinter::simplePrint("Failed to create to SampleApplication!");
+            return SampleAppReturnCode::ERROR;
+        }
+        returnCode = sampleApplication->run();
+        sampleApplication.reset();
+    } while (SampleAppReturnCode::RESTART == returnCode);
+
+    return returnCode;
 }

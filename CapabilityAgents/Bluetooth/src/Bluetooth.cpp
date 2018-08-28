@@ -1192,7 +1192,6 @@ void Bluetooth::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveInfo> 
         }
 
         executeSetHandlingCompleted(info);
-
     });
 }
 
@@ -1591,7 +1590,6 @@ void Bluetooth::onPlaybackStarted(MediaPlayerObserverInterface::SourceId id) {
 void Bluetooth::onPlaybackStopped(MediaPlayerObserverInterface::SourceId id) {
     ACSDK_DEBUG5(LX(__func__).d("sourceId", id));
     m_executor.submit([this] {
-
         // Playback has been stopped, cleanup the source.
         cleanupMediaSource();
         if (m_activeDevice) {
