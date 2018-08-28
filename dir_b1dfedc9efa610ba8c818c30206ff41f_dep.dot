@@ -1,0 +1,18 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/ACL" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_b1dfedc9efa610ba8c818c30206ff41f {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_b1dfedc9efa610ba8c818c30206ff41f.html"];
+    dir_b1dfedc9efa610ba8c818c30206ff41f [shape=plaintext label="ACL"];
+    dir_1088b026815130b3cc8e9ac3f4525272 [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_1088b026815130b3cc8e9ac3f4525272.html"];
+    dir_b7bc15c7de8e43583c698b7747a94971 [shape=box label="src" color="red" fillcolor="white" style="filled" URL="dir_b7bc15c7de8e43583c698b7747a94971.html"];
+    dir_2df864b0a635213c7e15391c7fd2f9dc [shape=box label="test" color="red" fillcolor="white" style="filled" URL="dir_2df864b0a635213c7e15391c7fd2f9dc.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_2df864b0a635213c7e15391c7fd2f9dc->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="29", labeldistance=1.5 headhref="dir_000006_000009.html"];
+  dir_2df864b0a635213c7e15391c7fd2f9dc->dir_1088b026815130b3cc8e9ac3f4525272 [headlabel="14", labeldistance=1.5 headhref="dir_000006_000001.html"];
+  dir_b7bc15c7de8e43583c698b7747a94971->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="21", labeldistance=1.5 headhref="dir_000004_000009.html"];
+  dir_b7bc15c7de8e43583c698b7747a94971->dir_1088b026815130b3cc8e9ac3f4525272 [headlabel="19", labeldistance=1.5 headhref="dir_000004_000001.html"];
+  dir_1088b026815130b3cc8e9ac3f4525272->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="42", labeldistance=1.5 headhref="dir_000001_000009.html"];
+}

@@ -1,0 +1,12 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Timing" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_ee116be5d1129358ffaec72096859541 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Utils" fontname="Helvetica", fontsize="10", URL="dir_ee116be5d1129358ffaec72096859541.html"]
+  dir_b87968e904c49b1e151e63fd16be423f [shape=box, label="Timing", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_b87968e904c49b1e151e63fd16be423f.html"];
+  }
+  dir_432ae366851f981ad5bcb252f92369c5 [shape=box label="Logger" URL="dir_432ae366851f981ad5bcb252f92369c5.html"];
+  dir_432ae366851f981ad5bcb252f92369c5->dir_b87968e904c49b1e151e63fd16be423f [headlabel="1", labeldistance=1.5 headhref="dir_000081_000090.html"];
+  dir_b87968e904c49b1e151e63fd16be423f->dir_432ae366851f981ad5bcb252f92369c5 [headlabel="1", labeldistance=1.5 headhref="dir_000090_000081.html"];
+}

@@ -1,0 +1,21 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/CapabilityAgents/Notifications/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_51ceba3e0236022a3ce16bfbc638804e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Notifications" fontname="Helvetica", fontsize="10", URL="dir_51ceba3e0236022a3ce16bfbc638804e.html"]
+  subgraph clusterdir_e7db36e79723a69813d4111ac7822a9d {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_e7db36e79723a69813d4111ac7822a9d.html"];
+    dir_e7db36e79723a69813d4111ac7822a9d [shape=plaintext label="include"];
+    dir_a67aa551fa12014e267c750fd1c4faf6 [shape=box label="Notifications" color="black" fillcolor="white" style="filled" URL="dir_a67aa551fa12014e267c750fd1c4faf6.html"];
+  }
+  }
+  dir_d29c5f5a2915d6c5388c9daae4f109c7 [shape=box label="Storage" fillcolor="white" style="filled" color="red" URL="dir_d29c5f5a2915d6c5388c9daae4f109c7.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3 [shape=box label="RegistrationManager" fillcolor="white" style="filled" color="red" URL="dir_b14333b5607b47fe7356eaa790107bd3.html"];
+  dir_a67aa551fa12014e267c750fd1c4faf6->dir_d29c5f5a2915d6c5388c9daae4f109c7 [headlabel="1", labeldistance=1.5 headhref="dir_000055_000259.html"];
+  dir_a67aa551fa12014e267c750fd1c4faf6->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000055_000009.html"];
+  dir_a67aa551fa12014e267c750fd1c4faf6->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="1", labeldistance=1.5 headhref="dir_000055_000245.html"];
+  dir_d29c5f5a2915d6c5388c9daae4f109c7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000259_000009.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000245_000009.html"];
+}

@@ -1,0 +1,11 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/AVSCommon/AVS/src/ExternalMediaPlayer" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_d94cc11696d13ea67fe90a2d6eb692db {
+    graph [ bgcolor="#ddddee", pencolor="black", label="src" fontname="Helvetica", fontsize="10", URL="dir_d94cc11696d13ea67fe90a2d6eb692db.html"]
+  dir_198b64896bfde6c030483a7573c2d398 [shape=box, label="ExternalMediaPlayer", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_198b64896bfde6c030483a7573c2d398.html"];
+  }
+  dir_a8d3deb3c1282038af9ce4454694c1e1 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_a8d3deb3c1282038af9ce4454694c1e1.html"];
+  dir_198b64896bfde6c030483a7573c2d398->dir_a8d3deb3c1282038af9ce4454694c1e1 [headlabel="2", labeldistance=1.5 headhref="dir_000060_000047.html"];
+}

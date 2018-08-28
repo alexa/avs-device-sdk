@@ -1,0 +1,11 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Bluetooth" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_ee116be5d1129358ffaec72096859541 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Utils" fontname="Helvetica", fontsize="10", URL="dir_ee116be5d1129358ffaec72096859541.html"]
+  dir_6eadaab29cdb7047f6853df6d41739df [shape=box, label="Bluetooth", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_6eadaab29cdb7047f6853df6d41739df.html"];
+  }
+  dir_97afc8111b754cf401b73024f872f45d [shape=box label="SDKInterfaces" fillcolor="white" style="filled" color="red" URL="dir_97afc8111b754cf401b73024f872f45d.html"];
+  dir_6eadaab29cdb7047f6853df6d41739df->dir_97afc8111b754cf401b73024f872f45d [headlabel="3", labeldistance=1.5 headhref="dir_000075_000020.html"];
+}

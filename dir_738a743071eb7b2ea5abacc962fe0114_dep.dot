@@ -1,0 +1,11 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/AVSCommon/Utils/src/Stream" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_93a54634d0ab52618b36b15672961616 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="src" fontname="Helvetica", fontsize="10", URL="dir_93a54634d0ab52618b36b15672961616.html"]
+  dir_738a743071eb7b2ea5abacc962fe0114 [shape=box, label="Stream", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_738a743071eb7b2ea5abacc962fe0114.html"];
+  }
+  dir_957fc395b73dfe8b64ee3f74464f588a [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_957fc395b73dfe8b64ee3f74464f588a.html"];
+  dir_738a743071eb7b2ea5abacc962fe0114->dir_957fc395b73dfe8b64ee3f74464f588a [headlabel="3", labeldistance=1.5 headhref="dir_000101_000072.html"];
+}

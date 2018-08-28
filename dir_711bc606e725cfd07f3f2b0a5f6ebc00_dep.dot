@@ -1,0 +1,11 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/ACL/include/ACL/Transport" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_ce0d3eda4bb43bdcf8c1c51ff13ee585 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="ACL" fontname="Helvetica", fontsize="10", URL="dir_ce0d3eda4bb43bdcf8c1c51ff13ee585.html"]
+  dir_711bc606e725cfd07f3f2b0a5f6ebc00 [shape=box, label="Transport", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_711bc606e725cfd07f3f2b0a5f6ebc00.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_711bc606e725cfd07f3f2b0a5f6ebc00->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="35", labeldistance=1.5 headhref="dir_000003_000009.html"];
+}

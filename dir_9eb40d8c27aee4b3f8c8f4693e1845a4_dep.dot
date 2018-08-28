@@ -1,0 +1,11 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/CapabilityAgents/InteractionModel/include/InteractionModel" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_92e60c09f9f8fe9882a06476c48c92c8 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_92e60c09f9f8fe9882a06476c48c92c8.html"]
+  dir_9eb40d8c27aee4b3f8c8f4693e1845a4 [shape=box, label="InteractionModel", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_9eb40d8c27aee4b3f8c8f4693e1845a4.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_9eb40d8c27aee4b3f8c8f4693e1845a4->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000150_000009.html"];
+}

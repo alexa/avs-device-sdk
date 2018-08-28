@@ -1,0 +1,15 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/CapabilityAgents/ExternalMediaPlayer/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_a76b392fe5ef3dcdb4d5296d7cae461e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="ExternalMediaPlayer" fontname="Helvetica", fontsize="10", URL="dir_a76b392fe5ef3dcdb4d5296d7cae461e.html"]
+  subgraph clusterdir_68d5dfd4dd8e84823fb789e3f3a36d40 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_68d5dfd4dd8e84823fb789e3f3a36d40.html"];
+    dir_68d5dfd4dd8e84823fb789e3f3a36d40 [shape=plaintext label="include"];
+    dir_a57fd16011950b030fb628b56164f104 [shape=box label="ExternalMediaPlayer" color="black" fillcolor="white" style="filled" URL="dir_a57fd16011950b030fb628b56164f104.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_a57fd16011950b030fb628b56164f104->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="14", labeldistance=1.5 headhref="dir_000145_000009.html"];
+}

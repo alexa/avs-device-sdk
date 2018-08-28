@@ -1,0 +1,15 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/PlaylistParser/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_655fbec917b1f23289d3ed8ec9803bf1 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="PlaylistParser" fontname="Helvetica", fontsize="10", URL="dir_655fbec917b1f23289d3ed8ec9803bf1.html"]
+  subgraph clusterdir_057ee5c37ac9c880ef5f0b623529f2e3 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_057ee5c37ac9c880ef5f0b623529f2e3.html"];
+    dir_057ee5c37ac9c880ef5f0b623529f2e3 [shape=plaintext label="include"];
+    dir_0ae71fe8a08302c61b29252af9be9328 [shape=box label="PlaylistParser" color="black" fillcolor="white" style="filled" URL="dir_0ae71fe8a08302c61b29252af9be9328.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_0ae71fe8a08302c61b29252af9be9328->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="15", labeldistance=1.5 headhref="dir_000241_000009.html"];
+}

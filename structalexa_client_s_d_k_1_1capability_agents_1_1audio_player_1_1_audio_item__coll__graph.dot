@@ -1,0 +1,10 @@
+digraph "alexaClientSDK::capabilityAgents::audioPlayer::AudioItem"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="alexaClientSDK::capability\lAgents::audioPlayer::AudioItem",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" stream" ,fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::capability\lAgents::audioPlayer::AudioItem\l::Stream",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream.html",tooltip="Contains the parameters of the stream. "];
+  Node3 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" progressReport" ,fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::capability\lAgents::audioPlayer::AudioItem\l::Stream::ProgressReport",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream_1_1_progress_report.html",tooltip="Contains values for progress reports. "];
+}

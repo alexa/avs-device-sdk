@@ -1,0 +1,15 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/KWD/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_d0ae40f34093660421d9f00fd3d110f5 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="KWD" fontname="Helvetica", fontsize="10", URL="dir_d0ae40f34093660421d9f00fd3d110f5.html"]
+  subgraph clusterdir_8dea89c1bb4f7e14d42e016f897bd2de {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_8dea89c1bb4f7e14d42e016f897bd2de.html"];
+    dir_8dea89c1bb4f7e14d42e016f897bd2de [shape=plaintext label="include"];
+    dir_ebdf99d72507758dd36f6f35ec8f7330 [shape=box label="KWD" color="black" fillcolor="white" style="filled" URL="dir_ebdf99d72507758dd36f6f35ec8f7330.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_ebdf99d72507758dd36f6f35ec8f7330->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000211_000009.html"];
+}

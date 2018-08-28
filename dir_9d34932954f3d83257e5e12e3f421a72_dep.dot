@@ -1,0 +1,21 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/MediaPlayer" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_9d34932954f3d83257e5e12e3f421a72 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_9d34932954f3d83257e5e12e3f421a72.html"];
+    dir_9d34932954f3d83257e5e12e3f421a72 [shape=plaintext label="MediaPlayer"];
+    dir_b97c8a12362aabf73b92afdea21f65db [shape=box label="AndroidSLESMediaPlayer" color="red" fillcolor="white" style="filled" URL="dir_b97c8a12362aabf73b92afdea21f65db.html"];
+    dir_e1f7d5df1447213cfb529aad5fa2c859 [shape=box label="GStreamerMediaPlayer" color="red" fillcolor="white" style="filled" URL="dir_e1f7d5df1447213cfb529aad5fa2c859.html"];
+  }
+  dir_748b5abbb33df61eda67007924a1a0cb [shape=box label="ApplicationUtilities" fillcolor="white" style="filled" color="red" URL="dir_748b5abbb33df61eda67007924a1a0cb.html"];
+  dir_655fbec917b1f23289d3ed8ec9803bf1 [shape=box label="PlaylistParser" fillcolor="white" style="filled" color="red" URL="dir_655fbec917b1f23289d3ed8ec9803bf1.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_748b5abbb33df61eda67007924a1a0cb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="40", labeldistance=1.5 headhref="dir_000030_000009.html"];
+  dir_655fbec917b1f23289d3ed8ec9803bf1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="27", labeldistance=1.5 headhref="dir_000239_000009.html"];
+  dir_b97c8a12362aabf73b92afdea21f65db->dir_748b5abbb33df61eda67007924a1a0cb [headlabel="15", labeldistance=1.5 headhref="dir_000229_000030.html"];
+  dir_b97c8a12362aabf73b92afdea21f65db->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="2", labeldistance=1.5 headhref="dir_000229_000239.html"];
+  dir_b97c8a12362aabf73b92afdea21f65db->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="41", labeldistance=1.5 headhref="dir_000229_000009.html"];
+  dir_e1f7d5df1447213cfb529aad5fa2c859->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="4", labeldistance=1.5 headhref="dir_000234_000239.html"];
+  dir_e1f7d5df1447213cfb529aad5fa2c859->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="28", labeldistance=1.5 headhref="dir_000234_000009.html"];
+}

@@ -1,0 +1,29 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/MediaPlayer/AndroidSLESMediaPlayer" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_9d34932954f3d83257e5e12e3f421a72 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="MediaPlayer" fontname="Helvetica", fontsize="10", URL="dir_9d34932954f3d83257e5e12e3f421a72.html"]
+  subgraph clusterdir_b97c8a12362aabf73b92afdea21f65db {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_b97c8a12362aabf73b92afdea21f65db.html"];
+    dir_b97c8a12362aabf73b92afdea21f65db [shape=plaintext label="AndroidSLESMediaPlayer"];
+    dir_7b5c7f5aa6c9c2118e08133913118a4b [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_7b5c7f5aa6c9c2118e08133913118a4b.html"];
+    dir_6a9b6ece2a2b3e9844f10f06f8c54dc4 [shape=box label="src" color="black" fillcolor="white" style="filled" URL="dir_6a9b6ece2a2b3e9844f10f06f8c54dc4.html"];
+    dir_09f8576ebf0d3cd6a2f3f83ce5a8feb1 [shape=box label="test" color="black" fillcolor="white" style="filled" URL="dir_09f8576ebf0d3cd6a2f3f83ce5a8feb1.html"];
+  }
+  }
+  dir_748b5abbb33df61eda67007924a1a0cb [shape=box label="ApplicationUtilities" fillcolor="white" style="filled" color="red" URL="dir_748b5abbb33df61eda67007924a1a0cb.html"];
+  dir_655fbec917b1f23289d3ed8ec9803bf1 [shape=box label="PlaylistParser" fillcolor="white" style="filled" color="red" URL="dir_655fbec917b1f23289d3ed8ec9803bf1.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_748b5abbb33df61eda67007924a1a0cb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="40", labeldistance=1.5 headhref="dir_000030_000009.html"];
+  dir_655fbec917b1f23289d3ed8ec9803bf1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="27", labeldistance=1.5 headhref="dir_000239_000009.html"];
+  dir_7b5c7f5aa6c9c2118e08133913118a4b->dir_748b5abbb33df61eda67007924a1a0cb [headlabel="5", labeldistance=1.5 headhref="dir_000230_000030.html"];
+  dir_7b5c7f5aa6c9c2118e08133913118a4b->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="1", labeldistance=1.5 headhref="dir_000230_000239.html"];
+  dir_7b5c7f5aa6c9c2118e08133913118a4b->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="11", labeldistance=1.5 headhref="dir_000230_000009.html"];
+  dir_6a9b6ece2a2b3e9844f10f06f8c54dc4->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="1", labeldistance=1.5 headhref="dir_000232_000239.html"];
+  dir_6a9b6ece2a2b3e9844f10f06f8c54dc4->dir_7b5c7f5aa6c9c2118e08133913118a4b [headlabel="17", labeldistance=1.5 headhref="dir_000232_000230.html"];
+  dir_6a9b6ece2a2b3e9844f10f06f8c54dc4->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="15", labeldistance=1.5 headhref="dir_000232_000009.html"];
+  dir_09f8576ebf0d3cd6a2f3f83ce5a8feb1->dir_748b5abbb33df61eda67007924a1a0cb [headlabel="10", labeldistance=1.5 headhref="dir_000233_000030.html"];
+  dir_09f8576ebf0d3cd6a2f3f83ce5a8feb1->dir_7b5c7f5aa6c9c2118e08133913118a4b [headlabel="9", labeldistance=1.5 headhref="dir_000233_000230.html"];
+  dir_09f8576ebf0d3cd6a2f3f83ce5a8feb1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="15", labeldistance=1.5 headhref="dir_000233_000009.html"];
+}

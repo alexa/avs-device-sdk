@@ -1,0 +1,11 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/Storage/SQLiteStorage/include/SQLiteStorage" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_e9e65e5cdb5cac6022982370ecf72758 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_e9e65e5cdb5cac6022982370ecf72758.html"]
+  dir_527e0f2196f10a6ada1f9f8fee22d911 [shape=box, label="SQLiteStorage", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_527e0f2196f10a6ada1f9f8fee22d911.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_527e0f2196f10a6ada1f9f8fee22d911->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000262_000009.html"];
+}

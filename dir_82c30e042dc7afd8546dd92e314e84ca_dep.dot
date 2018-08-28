@@ -1,0 +1,15 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/RegistrationManager/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_b14333b5607b47fe7356eaa790107bd3 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="RegistrationManager" fontname="Helvetica", fontsize="10", URL="dir_b14333b5607b47fe7356eaa790107bd3.html"]
+  subgraph clusterdir_82c30e042dc7afd8546dd92e314e84ca {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_82c30e042dc7afd8546dd92e314e84ca.html"];
+    dir_82c30e042dc7afd8546dd92e314e84ca [shape=plaintext label="include"];
+    dir_6a568f4c47ff8f5c05d806b725a69572 [shape=box label="RegistrationManager" color="black" fillcolor="white" style="filled" URL="dir_6a568f4c47ff8f5c05d806b725a69572.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_6a568f4c47ff8f5c05d806b725a69572->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000247_000009.html"];
+}

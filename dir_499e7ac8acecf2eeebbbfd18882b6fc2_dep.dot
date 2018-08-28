@@ -1,0 +1,14 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/KWD/KittAi/src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_07f50320bebe2b4870f5c0b96b76b257 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="KittAi" fontname="Helvetica", fontsize="10", URL="dir_07f50320bebe2b4870f5c0b96b76b257.html"]
+  dir_499e7ac8acecf2eeebbbfd18882b6fc2 [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_499e7ac8acecf2eeebbbfd18882b6fc2.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_729485d88e0eb81a3a496bdd4eb780b4 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_729485d88e0eb81a3a496bdd4eb780b4.html"];
+  dir_729485d88e0eb81a3a496bdd4eb780b4->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000213_000009.html"];
+  dir_499e7ac8acecf2eeebbbfd18882b6fc2->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000215_000009.html"];
+  dir_499e7ac8acecf2eeebbbfd18882b6fc2->dir_729485d88e0eb81a3a496bdd4eb780b4 [headlabel="1", labeldistance=1.5 headhref="dir_000215_000213.html"];
+}

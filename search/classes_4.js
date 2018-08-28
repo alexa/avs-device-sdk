@@ -2,7 +2,8 @@ var searchData=
 [
   ['endpointhandler',['EndpointHandler',['../classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_endpoint_handler.html',1,'alexaClientSDK::capabilityAgents::system']]],
   ['endpointhandlertest',['EndpointHandlerTest',['../classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_endpoint_handler_test.html',1,'alexaClientSDK::capabilityAgents::system::test']]],
-  ['error',['Error',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader_1_1_error.html',1,'alexaClientSDK::avsCommon::utils::sds::SharedDataStream&lt; T &gt;::Reader&lt; T &gt;::Error'],['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer_1_1_error.html',1,'alexaClientSDK::avsCommon::utils::sds::SharedDataStream&lt; T &gt;::Writer::Error']]],
+  ['error',['Error',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer_1_1_error.html',1,'alexaClientSDK::avsCommon::utils::sds::SharedDataStream::Writer']]],
+  ['error',['Error',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader_1_1_error.html',1,'alexaClientSDK::avsCommon::utils::sds::SharedDataStream::Reader']]],
   ['errorobserverinterface',['ErrorObserverInterface',['../classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter_1_1_error_observer_interface.html',1,'alexaClientSDK::playlistParser::UrlContentToAttachmentConverter']]],
   ['espdata',['ESPData',['../classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_e_s_p_data.html',1,'alexaClientSDK::capabilityAgents::aip']]],
   ['espdatamodifierinterface',['ESPDataModifierInterface',['../classalexa_client_s_d_k_1_1esp_1_1_e_s_p_data_modifier_interface.html',1,'alexaClientSDK::esp']]],

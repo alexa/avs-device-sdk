@@ -1,0 +1,11 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/CapabilityAgents/TemplateRuntime/include/TemplateRuntime" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_c812ba13d40d97c773fd9f77093be04d {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_c812ba13d40d97c773fd9f77093be04d.html"]
+  dir_029029bde7d05d489ea7e2dc05d6ef88 [shape=box, label="TemplateRuntime", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_029029bde7d05d489ea7e2dc05d6ef88.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_029029bde7d05d489ea7e2dc05d6ef88->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="11", labeldistance=1.5 headhref="dir_000187_000009.html"];
+}

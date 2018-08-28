@@ -1,0 +1,8 @@
+digraph "alexaClientSDK::bluetoothImplementations::blueZ::DBusObject&lt; T &gt;"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="alexaClientSDK::bluetooth\lImplementations::blueZ\l::DBusObject\< T \>",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::bluetooth\lImplementations::blueZ\l::DBusObjectBase",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_object_base.html"];
+}

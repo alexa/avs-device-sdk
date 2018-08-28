@@ -1,0 +1,11 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/AVSCommon/AVS/test/AVSCommon/AVS/Attachment" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_7bdff736f20bfd31c081269ae0dc0c4a {
+    graph [ bgcolor="#ddddee", pencolor="black", label="AVS" fontname="Helvetica", fontsize="10", URL="dir_7bdff736f20bfd31c081269ae0dc0c4a.html"]
+  dir_1977e7305461c7cf8192fd3f175ab4fc [shape=box, label="Attachment", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_1977e7305461c7cf8192fd3f175ab4fc.html"];
+  }
+  dir_a8d3deb3c1282038af9ce4454694c1e1 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_a8d3deb3c1282038af9ce4454694c1e1.html"];
+  dir_1977e7305461c7cf8192fd3f175ab4fc->dir_a8d3deb3c1282038af9ce4454694c1e1 [headlabel="1", labeldistance=1.5 headhref="dir_000063_000047.html"];
+}

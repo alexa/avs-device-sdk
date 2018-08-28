@@ -1,0 +1,11 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/ADSL/include/ADSL" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_0ad8890ca26b658b7f4a1511f46d3706 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_0ad8890ca26b658b7f4a1511f46d3706.html"]
+  dir_02d2e4cabccc4f164a834c9d2dadd160 [shape=box, label="ADSL", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_02d2e4cabccc4f164a834c9d2dadd160.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_02d2e4cabccc4f164a834c9d2dadd160->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="11", labeldistance=1.5 headhref="dir_000016_000009.html"];
+}

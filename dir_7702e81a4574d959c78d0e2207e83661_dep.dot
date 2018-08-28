@@ -1,0 +1,15 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/CapabilityAgents/AIP/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_cc045affa42b6b559da6861739bda652 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="AIP" fontname="Helvetica", fontsize="10", URL="dir_cc045affa42b6b559da6861739bda652.html"]
+  subgraph clusterdir_7702e81a4574d959c78d0e2207e83661 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_7702e81a4574d959c78d0e2207e83661.html"];
+    dir_7702e81a4574d959c78d0e2207e83661 [shape=plaintext label="include"];
+    dir_99c44a41b01529fab191699ee73b1155 [shape=box label="AIP" color="black" fillcolor="white" style="filled" URL="dir_99c44a41b01529fab191699ee73b1155.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_99c44a41b01529fab191699ee73b1155->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="21", labeldistance=1.5 headhref="dir_000124_000009.html"];
+}

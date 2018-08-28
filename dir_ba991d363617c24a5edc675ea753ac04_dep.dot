@@ -1,0 +1,19 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/ApplicationUtilities/AndroidUtilities/test" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_29f233ec03ca42c38c01971e03438246 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="AndroidUtilities" fontname="Helvetica", fontsize="10", URL="dir_29f233ec03ca42c38c01971e03438246.html"]
+  subgraph clusterdir_ba991d363617c24a5edc675ea753ac04 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_ba991d363617c24a5edc675ea753ac04.html"];
+    dir_ba991d363617c24a5edc675ea753ac04 [shape=plaintext label="test"];
+    dir_e934f49e86460ee8cd6cf98b58604644 [shape=box label="AndroidUtilities" color="black" fillcolor="white" style="filled" URL="dir_e934f49e86460ee8cd6cf98b58604644.html"];
+  }
+  }
+  dir_2ef52002849e5065fc0e1bb38b143549 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_2ef52002849e5065fc0e1bb38b143549.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_ba991d363617c24a5edc675ea753ac04->dir_2ef52002849e5065fc0e1bb38b143549 [headlabel="5", labeldistance=1.5 headhref="dir_000035_000032.html"];
+  dir_ba991d363617c24a5edc675ea753ac04->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000035_000009.html"];
+  dir_ba991d363617c24a5edc675ea753ac04->dir_e934f49e86460ee8cd6cf98b58604644 [headlabel="2", labeldistance=1.5 headhref="dir_000035_000036.html"];
+  dir_2ef52002849e5065fc0e1bb38b143549->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000032_000009.html"];
+}

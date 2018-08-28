@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['issue_5ftemplate',['issue_template',['../md__private_tmp_release_1_88_81_avs-cpp-sdk-tools_cm_auto_c_m_private_repo_avs-cpp-sdk_issue_template.html',1,'']]]
+  ['issue_5ftemplate',['issue_template',['../md__home_ANT.AMAZON.COM_user_Documents_workspace_avs-cpp-sdk-tools_cm_autoCM_publicRepo_avs-device-sdk_issue_template.html',1,'']]]
 ];

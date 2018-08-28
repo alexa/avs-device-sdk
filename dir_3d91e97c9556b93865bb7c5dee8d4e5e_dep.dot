@@ -1,0 +1,18 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/ApplicationUtilities/Resources/Audio" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_64fbf9e5512ec11acc25e4f2d433d2a3 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Resources" fontname="Helvetica", fontsize="10", URL="dir_64fbf9e5512ec11acc25e4f2d433d2a3.html"]
+  subgraph clusterdir_3d91e97c9556b93865bb7c5dee8d4e5e {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_3d91e97c9556b93865bb7c5dee8d4e5e.html"];
+    dir_3d91e97c9556b93865bb7c5dee8d4e5e [shape=plaintext label="Audio"];
+    dir_0fab1f71be7e23bf3bab649bfb25be86 [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_0fab1f71be7e23bf3bab649bfb25be86.html"];
+    dir_b51783db643fb76509d872fb0290629a [shape=box label="src" color="black" fillcolor="white" style="filled" URL="dir_b51783db643fb76509d872fb0290629a.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_0fab1f71be7e23bf3bab649bfb25be86->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000043_000009.html"];
+  dir_b51783db643fb76509d872fb0290629a->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000046_000009.html"];
+  dir_b51783db643fb76509d872fb0290629a->dir_0fab1f71be7e23bf3bab649bfb25be86 [headlabel="17", labeldistance=1.5 headhref="dir_000046_000043.html"];
+}

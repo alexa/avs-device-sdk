@@ -1,0 +1,14 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/CapabilityAgents/AudioPlayer/src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_9dde9d78e15cabfb8e2b222ee9474f52 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="AudioPlayer" fontname="Helvetica", fontsize="10", URL="dir_9dde9d78e15cabfb8e2b222ee9474f52.html"]
+  dir_1ba0001985c9431d239bd98545ae888e [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_1ba0001985c9431d239bd98545ae888e.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_0b9723c2c8bc9e838121a6fbc73cf49e [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_0b9723c2c8bc9e838121a6fbc73cf49e.html"];
+  dir_1ba0001985c9431d239bd98545ae888e->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000136_000009.html"];
+  dir_1ba0001985c9431d239bd98545ae888e->dir_0b9723c2c8bc9e838121a6fbc73cf49e [headlabel="3", labeldistance=1.5 headhref="dir_000136_000134.html"];
+  dir_0b9723c2c8bc9e838121a6fbc73cf49e->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="23", labeldistance=1.5 headhref="dir_000134_000009.html"];
+}

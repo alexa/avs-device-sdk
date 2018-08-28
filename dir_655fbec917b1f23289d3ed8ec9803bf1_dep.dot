@@ -1,0 +1,18 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/PlaylistParser" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_655fbec917b1f23289d3ed8ec9803bf1 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_655fbec917b1f23289d3ed8ec9803bf1.html"];
+    dir_655fbec917b1f23289d3ed8ec9803bf1 [shape=plaintext label="PlaylistParser"];
+    dir_057ee5c37ac9c880ef5f0b623529f2e3 [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_057ee5c37ac9c880ef5f0b623529f2e3.html"];
+    dir_625880adbff518e99f53035dcc4daae5 [shape=box label="src" color="black" fillcolor="white" style="filled" URL="dir_625880adbff518e99f53035dcc4daae5.html"];
+    dir_a53c2cb537b7e7636764989c8305debb [shape=box label="test" color="red" fillcolor="white" style="filled" URL="dir_a53c2cb537b7e7636764989c8305debb.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_625880adbff518e99f53035dcc4daae5->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="8", labeldistance=1.5 headhref="dir_000242_000009.html"];
+  dir_625880adbff518e99f53035dcc4daae5->dir_057ee5c37ac9c880ef5f0b623529f2e3 [headlabel="5", labeldistance=1.5 headhref="dir_000242_000240.html"];
+  dir_a53c2cb537b7e7636764989c8305debb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000243_000009.html"];
+  dir_a53c2cb537b7e7636764989c8305debb->dir_057ee5c37ac9c880ef5f0b623529f2e3 [headlabel="2", labeldistance=1.5 headhref="dir_000243_000240.html"];
+  dir_057ee5c37ac9c880ef5f0b623529f2e3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="15", labeldistance=1.5 headhref="dir_000240_000009.html"];
+}

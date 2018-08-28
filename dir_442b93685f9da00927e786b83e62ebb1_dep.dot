@@ -1,0 +1,14 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/CapabilityAgents/SpeakerManager/src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_bc46a16e1ec7aec8565980dcd59aba5c {
+    graph [ bgcolor="#ddddee", pencolor="black", label="SpeakerManager" fontname="Helvetica", fontsize="10", URL="dir_bc46a16e1ec7aec8565980dcd59aba5c.html"]
+  dir_442b93685f9da00927e786b83e62ebb1 [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_442b93685f9da00927e786b83e62ebb1.html"];
+  }
+  dir_58f46be1458388d2fc10aa8246ff1704 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_58f46be1458388d2fc10aa8246ff1704.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_442b93685f9da00927e786b83e62ebb1->dir_58f46be1458388d2fc10aa8246ff1704 [headlabel="2", labeldistance=1.5 headhref="dir_000173_000171.html"];
+  dir_442b93685f9da00927e786b83e62ebb1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000173_000009.html"];
+  dir_58f46be1458388d2fc10aa8246ff1704->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000171_000009.html"];
+}

@@ -1,0 +1,14 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/ContextManager/src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_ed284a04dd0d49c135ac897057737ac2 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="ContextManager" fontname="Helvetica", fontsize="10", URL="dir_ed284a04dd0d49c135ac897057737ac2.html"]
+  dir_3f847ec2a127cb22ced45ff676455a92 [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_3f847ec2a127cb22ced45ff676455a92.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_0f8ea464962f792f3167c26165597ec0 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_0f8ea464962f792f3167c26165597ec0.html"];
+  dir_3f847ec2a127cb22ced45ff676455a92->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000198_000009.html"];
+  dir_3f847ec2a127cb22ced45ff676455a92->dir_0f8ea464962f792f3167c26165597ec0 [headlabel="1", labeldistance=1.5 headhref="dir_000198_000196.html"];
+  dir_0f8ea464962f792f3167c26165597ec0->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="5", labeldistance=1.5 headhref="dir_000196_000009.html"];
+}

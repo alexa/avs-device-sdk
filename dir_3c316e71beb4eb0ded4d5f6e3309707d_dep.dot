@@ -1,0 +1,14 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/KWD/Sensory/src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_3b650c7af5a92e78b431c566d27e27fb {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Sensory" fontname="Helvetica", fontsize="10", URL="dir_3b650c7af5a92e78b431c566d27e27fb.html"]
+  dir_3c316e71beb4eb0ded4d5f6e3309707d [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_3c316e71beb4eb0ded4d5f6e3309707d.html"];
+  }
+  dir_53b42e3f321e6fe3756d7d815e459c61 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_53b42e3f321e6fe3756d7d815e459c61.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_53b42e3f321e6fe3756d7d815e459c61->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000222_000009.html"];
+  dir_3c316e71beb4eb0ded4d5f6e3309707d->dir_53b42e3f321e6fe3756d7d815e459c61 [headlabel="1", labeldistance=1.5 headhref="dir_000224_000222.html"];
+  dir_3c316e71beb4eb0ded4d5f6e3309707d->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000224_000009.html"];
+}

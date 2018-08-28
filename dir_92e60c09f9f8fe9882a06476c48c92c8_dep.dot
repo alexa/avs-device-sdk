@@ -1,0 +1,15 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/CapabilityAgents/InteractionModel/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_011a3f6e181db4516776f7256f22dadd {
+    graph [ bgcolor="#ddddee", pencolor="black", label="InteractionModel" fontname="Helvetica", fontsize="10", URL="dir_011a3f6e181db4516776f7256f22dadd.html"]
+  subgraph clusterdir_92e60c09f9f8fe9882a06476c48c92c8 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_92e60c09f9f8fe9882a06476c48c92c8.html"];
+    dir_92e60c09f9f8fe9882a06476c48c92c8 [shape=plaintext label="include"];
+    dir_9eb40d8c27aee4b3f8c8f4693e1845a4 [shape=box label="InteractionModel" color="black" fillcolor="white" style="filled" URL="dir_9eb40d8c27aee4b3f8c8f4693e1845a4.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_9eb40d8c27aee4b3f8c8f4693e1845a4->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000150_000009.html"];
+}

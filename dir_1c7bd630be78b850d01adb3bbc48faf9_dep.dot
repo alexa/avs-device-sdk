@@ -1,0 +1,17 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_7b5c7f5aa6c9c2118e08133913118a4b {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_7b5c7f5aa6c9c2118e08133913118a4b.html"]
+  dir_1c7bd630be78b850d01adb3bbc48faf9 [shape=box, label="AndroidSLESMediaPlayer", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_1c7bd630be78b850d01adb3bbc48faf9.html"];
+  }
+  dir_748b5abbb33df61eda67007924a1a0cb [shape=box label="ApplicationUtilities" fillcolor="white" style="filled" color="red" URL="dir_748b5abbb33df61eda67007924a1a0cb.html"];
+  dir_655fbec917b1f23289d3ed8ec9803bf1 [shape=box label="PlaylistParser" fillcolor="white" style="filled" color="red" URL="dir_655fbec917b1f23289d3ed8ec9803bf1.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_748b5abbb33df61eda67007924a1a0cb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="40", labeldistance=1.5 headhref="dir_000030_000009.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_748b5abbb33df61eda67007924a1a0cb [headlabel="5", labeldistance=1.5 headhref="dir_000231_000030.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="1", labeldistance=1.5 headhref="dir_000231_000239.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="11", labeldistance=1.5 headhref="dir_000231_000009.html"];
+  dir_655fbec917b1f23289d3ed8ec9803bf1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="27", labeldistance=1.5 headhref="dir_000239_000009.html"];
+}

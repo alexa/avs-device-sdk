@@ -1,0 +1,16 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/BluetoothImplementations/BlueZ/test" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_734f87f436384b5f4d3ce6cedeff05c0 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="BlueZ" fontname="Helvetica", fontsize="10", URL="dir_734f87f436384b5f4d3ce6cedeff05c0.html"]
+  subgraph clusterdir_746e94396b4d62eddf48b1557d37ad77 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_746e94396b4d62eddf48b1557d37ad77.html"];
+    dir_746e94396b4d62eddf48b1557d37ad77 [shape=plaintext label="test"];
+    dir_8627af5bed3aa07afae506ab234c7450 [shape=box label="Mock" color="red" fillcolor="white" style="filled" URL="dir_8627af5bed3aa07afae506ab234c7450.html"];
+  }
+  }
+  dir_dcc26bf29d4b694c2f1fb3cf2aba65ed [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_dcc26bf29d4b694c2f1fb3cf2aba65ed.html"];
+  dir_8627af5bed3aa07afae506ab234c7450->dir_dcc26bf29d4b694c2f1fb3cf2aba65ed [headlabel="1", labeldistance=1.5 headhref="dir_000114_000110.html"];
+  dir_746e94396b4d62eddf48b1557d37ad77->dir_8627af5bed3aa07afae506ab234c7450 [headlabel="1", labeldistance=1.5 headhref="dir_000113_000114.html"];
+}

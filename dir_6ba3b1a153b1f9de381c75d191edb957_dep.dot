@@ -1,0 +1,13 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_ee116be5d1129358ffaec72096859541 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Utils" fontname="Helvetica", fontsize="10", URL="dir_ee116be5d1129358ffaec72096859541.html"]
+  dir_6ba3b1a153b1f9de381c75d191edb957 [shape=box, label="LibcurlUtils", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_6ba3b1a153b1f9de381c75d191edb957.html"];
+  }
+  dir_432ae366851f981ad5bcb252f92369c5 [shape=box label="Logger" URL="dir_432ae366851f981ad5bcb252f92369c5.html"];
+  dir_97afc8111b754cf401b73024f872f45d [shape=box label="SDKInterfaces" fillcolor="white" style="filled" color="red" URL="dir_97afc8111b754cf401b73024f872f45d.html"];
+  dir_6ba3b1a153b1f9de381c75d191edb957->dir_432ae366851f981ad5bcb252f92369c5 [headlabel="2", labeldistance=1.5 headhref="dir_000080_000081.html"];
+  dir_6ba3b1a153b1f9de381c75d191edb957->dir_97afc8111b754cf401b73024f872f45d [headlabel="3", labeldistance=1.5 headhref="dir_000080_000020.html"];
+}

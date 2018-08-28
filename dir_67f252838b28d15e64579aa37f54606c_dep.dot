@@ -1,0 +1,11 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/SDS" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_ee116be5d1129358ffaec72096859541 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Utils" fontname="Helvetica", fontsize="10", URL="dir_ee116be5d1129358ffaec72096859541.html"]
+  dir_67f252838b28d15e64579aa37f54606c [shape=box, label="SDS", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_67f252838b28d15e64579aa37f54606c.html"];
+  }
+  dir_432ae366851f981ad5bcb252f92369c5 [shape=box label="Logger" URL="dir_432ae366851f981ad5bcb252f92369c5.html"];
+  dir_67f252838b28d15e64579aa37f54606c->dir_432ae366851f981ad5bcb252f92369c5 [headlabel="4", labeldistance=1.5 headhref="dir_000086_000081.html"];
+}

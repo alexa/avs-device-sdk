@@ -1,0 +1,15 @@
+digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/CapabilityAgents/MRM/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_7a74a0502dcf66bb0b102b2d461f259b {
+    graph [ bgcolor="#ddddee", pencolor="black", label="MRM" fontname="Helvetica", fontsize="10", URL="dir_7a74a0502dcf66bb0b102b2d461f259b.html"]
+  subgraph clusterdir_1d34836c1c16121ffa207834b8fd3e01 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_1d34836c1c16121ffa207834b8fd3e01.html"];
+    dir_1d34836c1c16121ffa207834b8fd3e01 [shape=plaintext label="include"];
+    dir_1327818da398cbaed9d22e37536d9725 [shape=box label="MRM" color="black" fillcolor="white" style="filled" URL="dir_1327818da398cbaed9d22e37536d9725.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_1327818da398cbaed9d22e37536d9725->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="16", labeldistance=1.5 headhref="dir_000155_000009.html"];
+}
