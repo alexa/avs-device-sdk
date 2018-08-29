@@ -141,3 +141,5 @@ v1.9.0 released 08/28/2018:
 * These `CapabilitiesDelegateTest` tests have been temporarily disabled to prevent build errors for the Android build: `CapabilitiesDelegateTest.withCapabilitiesHappyCase`, `CapabilitiesDelegateTest.republish`, `CapabilitiesDelegateTest.testClearData`.
 * `make integration` is currently not available for Android. In order to run integration tests on Android, you'll need to manually upload the test binary file along with any input file. At that point, the adb can be used to run the integration tests.
 * On Raspberry Pi running Android Things with HDMI output audio, beginning of speech is truncated when Alexa responds to user TTS.
+* When the sample app is restarted and network connection is lost, Alerts don't play.
+* When network connection is lost, lost connection status is not returned via local TTS.
