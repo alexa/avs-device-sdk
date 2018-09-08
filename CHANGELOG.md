@@ -27,6 +27,7 @@
 * Fixed a build error that occurred when building with `BUILD_TESTING=Off`.
 
 **Known Issues**
+* If a device is not connected to the Internet at the time that an alarm or reminder is scheduled to sound, the SDK will not play any sound for the alarm or reminder at that scheduled time.
 * The `ACL` may encounter issues if audio attachments are received but not consumed.
 * `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
 * The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.
