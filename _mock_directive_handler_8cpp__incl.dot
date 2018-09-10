@@ -1,8 +1,8 @@
-digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/ADSL/test/common/MockDirectiveHandler.cpp"
+digraph "/workplace/avs-device-sdk/ADSL/test/common/MockDirectiveHandler.cpp"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/ADSL\l/test/common/MockDirectiveHandler.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 [label="/workplace/avs-device\l-sdk/ADSL/test/common\l/MockDirectiveHandler.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 [label="MockDirectiveHandler.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_mock_directive_handler_8h.html"];
   Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

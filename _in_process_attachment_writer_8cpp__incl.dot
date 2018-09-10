@@ -1,8 +1,8 @@
-digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/AVSCommon/AVS/src/Attachment/InProcessAttachmentWriter.cpp"
+digraph "/workplace/avs-device-sdk/AVSCommon/AVS/src/Attachment/InProcessAttachmentWriter.cpp"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/AVSCommon\l/AVS/src/Attachment/InProcessAttachmentWriter.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 [label="/workplace/avs-device\l-sdk/AVSCommon/AVS/src\l/Attachment/InProcessAttachment\lWriter.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 [label="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_in_process_attachment_writer_8h.html"];
   Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

@@ -179,5 +179,5 @@ var searchData=
   ['iterativeplaylistparserinterface_2eh',['IterativePlaylistParserInterface.h',['../_iterative_playlist_parser_interface_8h.html',1,'']]],
   ['iterativeplaylistparsertest',['IterativePlaylistParserTest',['../classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_iterative_playlist_parser_test.html',1,'alexaClientSDK::playlistParser::test']]],
   ['iterativeplaylistparsertest_2ecpp',['IterativePlaylistParserTest.cpp',['../_iterative_playlist_parser_test_8cpp.html',1,'']]],
-  ['issue_5ftemplate',['issue_template',['../md__home_ANT.AMAZON.COM_user_Documents_workspace_avs-cpp-sdk-tools_cm_autoCM_publicRepo_avs-device-sdk_issue_template.html',1,'']]]
+  ['issue_5ftemplate',['issue_template',['../md__workplace_avs-device-sdk_issue_template.html',1,'']]]
 ];

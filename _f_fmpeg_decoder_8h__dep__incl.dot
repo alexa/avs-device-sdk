@@ -1,18 +1,18 @@
-digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/FFmpegDecoder.h"
+digraph "/workplace/avs-device-sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/FFmpegDecoder.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/MediaPlayer\l/AndroidSLESMediaPlayer/include/AndroidSLESMedia\lPlayer/FFmpegDecoder.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/FFmpegDecoder.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/MediaPlayer\l/AndroidSLESMediaPlayer/include/AndroidSLESMedia\lPlayer/AndroidSLESMediaPlayer.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_8h.html"];
+  Node2 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/AndroidSLESMediaPlayer.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_8h.html"];
   Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/MediaPlayer\l/AndroidSLESMediaPlayer/src/AndroidSLESMedia\lPlayer.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_8cpp.html"];
+  Node3 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaPlayer.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_8cpp.html"];
   Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/MediaPlayer\l/AndroidSLESMediaPlayer/test/AndroidSLESMedia\lPlayerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_test_8cpp.html"];
+  Node4 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaPlayerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_test_8cpp.html"];
   Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/MediaPlayer\l/AndroidSLESMediaPlayer/src/FFmpegDecoder.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_fmpeg_decoder_8cpp.html"];
+  Node5 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/FFmpegDecoder.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_fmpeg_decoder_8cpp.html"];
   Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/MediaPlayer\l/AndroidSLESMediaPlayer/test/FFmpegDecoderTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_fmpeg_decoder_test_8cpp.html"];
+  Node6 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/FFmpegDecoderTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_fmpeg_decoder_test_8cpp.html"];
 }

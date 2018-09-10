@@ -53,8 +53,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
                onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
           <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)"
-               onblur="searchBox.OnSearchFieldFocus(false)"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
                onkeyup="searchBox.OnSearchFieldChange(event)"/>
           </span><span class="right">
             <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0"
+<iframe src="javascript:void(0)" frameborder="0" 
         name="MSearchResults" id="MSearchResults">
 </iframe>
 </div>
@@ -94,6 +94,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li><a href="https://github.com/alexa/avs-device-sdk/wiki/macOS-Quick-Start-Guide">macOS</a></li>
 <li><a href="https://github.com/alexa/avs-device-sdk/wiki/Windows-Quick-Start-Guide-with-Script">Windows 64-bit</a></li>
 <li><a href="https://github.com/alexa/avs-device-sdk/wiki/Linux-Reference-Guide">Generic Linux</a></li>
+<li><a href="https://github.com/alexa/avs-device-sdk/wiki/Android-Quick-Start-Guide">Android</a></li>
 </ul>
 <p>You can also prototype with a third party development kit:</p><ul>
 <li><a href="https://github.com/xmos/vocalfusion-avs-setup">XMOS VocalFusion 4-Mic Kit</a> - Learn More <a href="https://developer.amazon.com/alexa-voice-service/dev-kits/xmos-vocal-fusion">Here</a></li>
@@ -106,9 +107,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Or if you prefer, you can start with our <a href="https://alexa.github.io/avs-device-sdk/">SDK API Documentation</a>.</p>
 <h3>Learn More About The AVS Device SDK</h3>
 <p><a href="https://youtu.be/F5DixCPJYo8">Watch this tutorial</a> to learn about the how this SDK works and the set up process.</p>
-<iframe width="560" height="315"
-src="https://www.youtube.com/embed/F5DixCPJYo8" frameborder="0"
-gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/F5DixCPJYo8" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 <h3>SDK Architecture</h3>
 <p>This diagram illustrates the data flows between components that comprise the AVS Device SDK for C++.</p>
 <div class="image">
@@ -194,6 +193,7 @@ gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 <li>Fixed a build error that occurred when building with <code>BUILD_TESTING=Off</code>.</li>
 </ul>
 <p><b>Known Issues</b></p><ul>
+<li>If a device is not connected to the Internet at the time that an alarm or reminder is scheduled to sound, the SDK will not play any sound for the alarm or reminder at that scheduled time.</li>
 <li>The <code>ACL</code> may encounter issues if audio attachments are received but not consumed.</li>
 <li><code>SpeechSynthesizerState</code> currently uses <code>GAINING_FOCUS</code> and <code>LOSING_FOCUS</code> as a workaround for handling intermediate state. These states may be removed in a future release.</li>
 <li>The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.</li>
@@ -204,7 +204,9 @@ gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 <li>On Raspberry Pi, when streaming audio via Bluetooth, sometimes the audio stream stutters.</li>
 <li>These <code>CapabilitiesDelegateTest</code> tests have been temporarily disabled to prevent build errors for the Android build: <code>CapabilitiesDelegateTest.withCapabilitiesHappyCase</code>, <code>CapabilitiesDelegateTest.republish</code>, <code>CapabilitiesDelegateTest.testClearData</code>.</li>
 <li><code>make integration</code> is currently not available for Android. In order to run integration tests on Android, you'll need to manually upload the test binary file along with any input file. At that point, the adb can be used to run the integration tests.</li>
-<li>On Raspberry Pi running Android Things with HDMI output audio, beginning of speech is truncated when Alexa responds to user TTS. </li>
+<li>On Raspberry Pi running Android Things with HDMI output audio, beginning of speech is truncated when Alexa responds to user TTS.</li>
+<li>When the sample app is restarted and network connection is lost, Alerts don't play.</li>
+<li>When network connection is lost, lost connection status is not returned via local TTS. </li>
 </ul>
 </div></div><!-- contents -->
 <html>

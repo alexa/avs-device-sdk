@@ -402,5 +402,5 @@ var searchData=
   ['customerdatamanager_2eh',['CustomerDataManager.h',['../_customer_data_manager_8h.html',1,'']]],
   ['customerdatamanagertest',['CustomerDataManagerTest',['../classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_customer_data_manager_test.html',1,'alexaClientSDK::registrationManager::test']]],
   ['customerdatamanagertest_2ecpp',['CustomerDataManagerTest.cpp',['../_customer_data_manager_test_8cpp.html',1,'']]],
-  ['changelog',['ChangeLog',['../md__home_ANT.AMAZON.COM_user_Documents_workspace_avs-cpp-sdk-tools_cm_autoCM_publicRepo_avs-device-sdk_CHANGELOG.html',1,'']]]
+  ['changelog',['ChangeLog',['../md__workplace_avs-device-sdk_CHANGELOG.html',1,'']]]
 ];

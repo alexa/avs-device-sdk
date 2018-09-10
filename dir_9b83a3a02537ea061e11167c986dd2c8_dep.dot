@@ -1,4 +1,4 @@
-digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/MediaPlayer/GStreamerMediaPlayer/include/MediaPlayer" {
+digraph "/workplace/avs-device-sdk/MediaPlayer/GStreamerMediaPlayer/include/MediaPlayer" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];

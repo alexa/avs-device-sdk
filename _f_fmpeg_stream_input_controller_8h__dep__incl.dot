@@ -1,12 +1,12 @@
-digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/FFmpegStreamInputController.h"
+digraph "/workplace/avs-device-sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/FFmpegStreamInputController.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/MediaPlayer\l/AndroidSLESMediaPlayer/include/AndroidSLESMedia\lPlayer/FFmpegStreamInputController.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/FFmpegStreamInputController.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/MediaPlayer\l/AndroidSLESMediaPlayer/src/AndroidSLESMedia\lPlayer.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_8cpp.html"];
+  Node2 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaPlayer.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_8cpp.html"];
   Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/MediaPlayer\l/AndroidSLESMediaPlayer/src/FFmpegStreamInput\lController.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_fmpeg_stream_input_controller_8cpp.html"];
+  Node3 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/FFmpegStreamInputController.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_fmpeg_stream_input_controller_8cpp.html"];
   Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/MediaPlayer\l/AndroidSLESMediaPlayer/test/FFmpegStreamInput\lControllerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_fmpeg_stream_input_controller_test_8cpp.html"];
+  Node4 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/FFmpegStreamInputController\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_fmpeg_stream_input_controller_test_8cpp.html"];
 }

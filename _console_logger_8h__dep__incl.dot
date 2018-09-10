@@ -1,14 +1,14 @@
-digraph "/avs-cpp-sdk-tools/cm/autoCM_publicRepo/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ConsoleLogger.h"
+digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ConsoleLogger.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/AVSCommon\l/Utils/include/AVSCommon/Utils/Logger\l/ConsoleLogger.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/Logger/ConsoleLogger.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/AVSCommon\l/Utils/src/Logger/ConsoleLogger.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_console_logger_8cpp.html"];
+  Node2 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/Logger/ConsoleLogger.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_console_logger_8cpp.html"];
   Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/Capability\lAgents/AudioPlayer/test/AudioPlayerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_audio_player_test_8cpp.html"];
+  Node3 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/AudioPlayer/test/AudioPlayer\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_audio_player_test_8cpp.html"];
   Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/Capability\lAgents/ExternalMediaPlayer/test/ExternalMedia\lPlayerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_external_media_player_test_8cpp.html"];
+  Node4 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/ExternalMediaPlayer/test\l/ExternalMediaPlayerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_external_media_player_test_8cpp.html"];
   Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="/home/ANT.AMAZON.COM\l/user/Documents/workspace\l/avs-cpp-sdk-tools/cm/autoCM\l_publicRepo/avs-device-sdk/Capability\lAgents/Notifications/test/NotificationsCapability\lAgentTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifications_capability_agent_test_8cpp.html"];
+  Node5 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/Notifications/test/Notifications\lCapabilityAgentTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifications_capability_agent_test_8cpp.html"];
 }
