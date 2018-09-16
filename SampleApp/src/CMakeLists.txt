@@ -1,5 +1,6 @@
+set(CMAKE_VERBOSE_MAKEFILE ON)
 set(SampleApp_SOURCES)
-list(APPEND SampleApp_SOURCES 
+list(APPEND SampleApp_SOURCES
     ConnectionObserver.cpp
     ConsolePrinter.cpp
     ConsoleReader.cpp
@@ -22,16 +23,23 @@ IF (HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
     endforeach(myfile)
 ENDIF()
 
-add_executable(SampleApp ${SampleApp_SOURCES})
+add_executable(SampleApp ${SampleApp_SOURCES} AIDaemon-dbus-generated.c base64.cpp)
 
-target_include_directories(SampleApp PUBLIC 
+target_include_directories(SampleApp PUBLIC
+    "/usr/include/glib-2.0"
+    "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+    "/usr/include/gio-unix-2.0"
+    "${SampleApp_SOURCE_DIR}/include/AIDaemon"
     "${SampleApp_SOURCE_DIR}/include"
     "${AudioResources_SOURCE_DIR}/include"
     "${RegistrationManager_SOURCE_DIR}/include"
     "${ESP_SOURCE_DIR}/include"
     "${PORTAUDIO_INCLUDE_DIR}")
 
-target_link_libraries(SampleApp 
+target_link_libraries(SampleApp
+    glib-2.0
+    gio-2.0
+    gobject-2.0
     DefaultClient
     CapabilitiesDelegate
     CBLAuthDelegate
@@ -59,13 +67,12 @@ endif()
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     target_link_libraries(SampleApp
-        "-framework CoreAudio" 
-        "-framework AudioToolbox" 
-        "-framework AudioUnit" 
-        "-framework CoreServices" 
+        "-framework CoreAudio"
+        "-framework AudioToolbox"
+        "-framework AudioUnit"
+        "-framework CoreServices"
         "-framework Carbon")
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     target_link_libraries(SampleApp
       rt m pthread asound)
 endif()
-

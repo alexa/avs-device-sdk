@@ -2,7 +2,7 @@ add_subdirectory("Authorization")
 
 if ((PORTAUDIO AND GSTREAMER_MEDIA_PLAYER) OR (ANDROID_MEDIA_PLAYER AND ANDROID_MICROPHONE))
     cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
-    project(SampleApp LANGUAGES CXX)
+    project(SampleApp LANGUAGES C CXX)
 
     include(../build/BuildDefaults.cmake)
 

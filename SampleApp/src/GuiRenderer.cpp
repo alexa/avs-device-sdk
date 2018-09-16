@@ -20,6 +20,10 @@
 #include "SampleApp/ConsolePrinter.h"
 #include "SampleApp/GuiRenderer.h"
 
+#include "AIDaemon/AIDaemon-IPC.h"
+
+extern void sendMessagesIPC(std::string MethodID, rapidjson::Document *data);
+
 namespace alexaClientSDK {
 namespace sampleApp {
 
@@ -154,6 +158,7 @@ void GuiRenderer::renderTemplateCard(const std::string& jsonPayload, avsCommon::
 
 #endif
 
+    sendMessagesIPC(IPC_METHODID_DIRECTIVE, &payload);
     ConsolePrinter::simplePrint(buffer);
 }
 
