@@ -1,4 +1,7 @@
 set(CMAKE_VERBOSE_MAKEFILE ON)
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists_AIDaemon.txt)
+
 set(SampleApp_SOURCES)
 list(APPEND SampleApp_SOURCES
     ConnectionObserver.cpp
@@ -23,29 +26,24 @@ IF (HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
     endforeach(myfile)
 ENDIF()
 
-add_executable(SampleApp ${SampleApp_SOURCES} AIDaemon-dbus-generated.c base64.cpp)
+add_executable(SampleApp ${SampleApp_SOURCES} ${AIDAEMON_SOURCES})
 
 target_include_directories(SampleApp PUBLIC
-    "/usr/include/glib-2.0"
-    "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
-    "/usr/include/gio-unix-2.0"
-    "${SampleApp_SOURCE_DIR}/include/AIDaemon"
     "${SampleApp_SOURCE_DIR}/include"
     "${AudioResources_SOURCE_DIR}/include"
     "${RegistrationManager_SOURCE_DIR}/include"
     "${ESP_SOURCE_DIR}/include"
-    "${PORTAUDIO_INCLUDE_DIR}")
+    "${PORTAUDIO_INCLUDE_DIR}"
+    "${AIDAEMON_INCLUDES}")
 
 target_link_libraries(SampleApp
-    glib-2.0
-    gio-2.0
-    gobject-2.0
     DefaultClient
     CapabilitiesDelegate
     CBLAuthDelegate
     SQLiteStorage
     ESP
-    "${PORTAUDIO_LIB_PATH}")
+    "${PORTAUDIO_LIB_PATH}"
+    "${AIDAEMON_LIBRARIES}")
 
 if (ANDROID)
     target_include_directories(SampleApp PUBLIC "${AndroidUtilities}/include")
