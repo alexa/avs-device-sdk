@@ -139,6 +139,10 @@ public:
             MediaPlayerCreateFunction createFunction);
     };
 
+    #ifdef OBIGO_AIDAEMON
+    std::shared_ptr<InteractionManager> getInteractionManager() { return m_interactionManager;}
+    #endif //OBIGO_AIDAEMON
+
 private:
     /**
      * Initialize a SampleApplication.

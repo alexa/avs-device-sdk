@@ -41,6 +41,7 @@ guint                           m_idBus;
 GMainLoop                       *m_pLoop;
 AIDaemon                        *m_pDBusInterface = nullptr;
 AIDaemonSkeleton                *m_pskeleton = nullptr;
+std::shared_ptr<InteractionManager> m_gInteractionManager;
 #endif //OBIGO_AIDAEMON
 
 
@@ -119,8 +120,7 @@ gboolean on_handle_send_messages(
 
     std::string IPCData;
     if (!jsonUtils::retrieveValue(payload, AIDAEMON::IPC_DATA, &IPCData)) {
-        ConsolePrinter::simplePrint("ERROR: Cannot get IPC data");
-        return false;
+        ConsolePrinter::simplePrint("There is not IPC data");
     } else {
         logbuffer << "IPC data : " << IPCData;
         ConsolePrinter::simplePrint(logbuffer.str());
@@ -128,6 +128,16 @@ gboolean on_handle_send_messages(
     }
 
     aidaemon__complete_send_messages(object, invocation);
+
+    if (Method == AIDAEMON::IPC_METHODID_REQ_VR_START) {
+        m_gInteractionManager->tap();
+    } else if (Method == AIDAEMON::IPC_METHODID_REQ_VR_STOP) {
+        m_gInteractionManager->stopForegroundActivity();
+    } else {
+        ConsolePrinter::simplePrint("ERROR: Cannot Handle this Method");
+    }
+
+
 
     return true;
 }
@@ -283,6 +293,9 @@ int main(int argc, char* argv[]) {
             ConsolePrinter::simplePrint("Failed to create to SampleApplication!");
             return SampleAppReturnCode::ERROR;
         }
+        #ifdef OBIGO_AIDAEMON
+        m_gInteractionManager = sampleApplication->getInteractionManager();
+        #endif //OBIGO_AIDAEMON
         returnCode = sampleApplication->run();
         sampleApplication.reset();
     } while (SampleAppReturnCode::RESTART == returnCode);
