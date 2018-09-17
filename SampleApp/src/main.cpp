@@ -17,6 +17,7 @@
 #include "SampleApp/SampleApplication.h"
 #include "SampleApp/SampleApplicationReturnCodes.h"
 
+#ifdef OBIGO_AIDAEMON
 #include "AIDaemon/AIDaemon-dbus-generated.h"
 #include "AIDaemon/base64.h"
 #include "AIDaemon/AIDaemon-IPC.h"
@@ -26,19 +27,22 @@
 #include <rapidjson/writer.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 
+#include <thread>
+#endif //OBIGO_AIDAEMON
+
 #include <cstdlib>
 #include <string>
-#include <thread>
 
 using namespace alexaClientSDK::sampleApp;
 
+#ifdef OBIGO_AIDAEMON
 std::thread                     *m_pServerThread = nullptr;
 guint                           m_idBus;
 GMainLoop                       *m_pLoop;
 AIDaemon                        *m_pDBusInterface = nullptr;
 AIDaemonSkeleton                *m_pskeleton = nullptr;
-const static std::string        SERVER_OBJECT = "/com/obigo/Nissan/AIDaemon";
-const static std::string        SERVER_INTERFACE = "com.obigo.Nissan.AIDaemon";
+#endif //OBIGO_AIDAEMON
+
 
 /**
  * Function that evaluates if the SampleApp invocation uses old-style or new-style opt-arg style invocation.
@@ -57,14 +61,15 @@ bool usesOptStyleArgs(int argc, char* argv[]) {
     return false;
 }
 
+#ifdef OBIGO_AIDAEMON
 void sendMessagesIPC(std::string MethodID, rapidjson::Document *data) {
     ConsolePrinter::simplePrint(__PRETTY_FUNCTION__);
 
     rapidjson::Document ipcdata(rapidjson::kObjectType);
     rapidjson::Document::AllocatorType& allocator = ipcdata.GetAllocator();
 
-    ipcdata.AddMember(rapidjson::StringRef(IPC_METHODID), MethodID, allocator);
-    ipcdata.AddMember(rapidjson::StringRef(IPC_DATA), *data, allocator);
+    ipcdata.AddMember(rapidjson::StringRef(AIDAEMON::IPC_METHODID), MethodID, allocator);
+    ipcdata.AddMember(rapidjson::StringRef(AIDAEMON::IPC_DATA), *data, allocator);
 
     rapidjson::StringBuffer ipcdataBuf;
     rapidjson::Writer<rapidjson::StringBuffer> writer(ipcdataBuf);
@@ -103,7 +108,7 @@ gboolean on_handle_send_messages(
     }
 
     std::string Method;
-    if (!jsonUtils::retrieveValue(payload, IPC_METHODID, &Method)) {
+    if (!jsonUtils::retrieveValue(payload, AIDAEMON::IPC_METHODID, &Method)) {
         ConsolePrinter::simplePrint("ERROR: Cannot get IPC methodid");
         return false;
     } else {
@@ -113,7 +118,7 @@ gboolean on_handle_send_messages(
     }
 
     std::string IPCData;
-    if (!jsonUtils::retrieveValue(payload, IPC_DATA, &IPCData)) {
+    if (!jsonUtils::retrieveValue(payload, AIDAEMON::IPC_DATA, &IPCData)) {
         ConsolePrinter::simplePrint("ERROR: Cannot get IPC data");
         return false;
     } else {
@@ -161,7 +166,7 @@ void OnBusAcquired( GDBusConnection * connection, const gchar * name, gpointer u
     gboolean result = g_dbus_interface_skeleton_export(
         G_DBUS_INTERFACE_SKELETON(m_pskeleton),
         connection,
-        SERVER_OBJECT.c_str(),
+        AIDAEMON::SERVER_OBJECT.c_str(),
         nullptr);
     logbuffer << "Export Result : " << result;
     ConsolePrinter::simplePrint(logbuffer.str());
@@ -174,7 +179,7 @@ bool makeDBusServer() {
     if (m_pServerThread != nullptr) return false;
 
     m_pServerThread = new std::thread([&] {
-          m_idBus = g_bus_own_name(G_BUS_TYPE_SESSION, SERVER_INTERFACE.c_str(),
+          m_idBus = g_bus_own_name(G_BUS_TYPE_SESSION, AIDAEMON::SERVER_INTERFACE.c_str(),
                                   G_BUS_NAME_OWNER_FLAGS_NONE, OnBusAcquired,
                                   nullptr, nullptr, nullptr, nullptr);
           if (! m_idBus) {
@@ -192,6 +197,7 @@ bool makeDBusServer() {
         });
     return true;
 }
+#endif //OBIGO_AIDAEMON
 
 /**
  * This serves as the starting point for the application. This code instantiates the @c UserInputManager and processes
@@ -267,7 +273,9 @@ int main(int argc, char* argv[]) {
     std::unique_ptr<SampleApplication> sampleApplication;
     SampleAppReturnCode returnCode = SampleAppReturnCode::OK;
 
-    makeDBusServer();
+    #ifdef OBIGO_AIDAEMON
+        makeDBusServer();
+    #endif //OBIGO_AIDAEMON
 
     do {
         sampleApplication = SampleApplication::create(consoleReader, configFiles, pathToKWDInputFolder, logLevel);

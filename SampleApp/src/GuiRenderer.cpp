@@ -158,7 +158,10 @@ void GuiRenderer::renderTemplateCard(const std::string& jsonPayload, avsCommon::
 
 #endif
 
-    sendMessagesIPC(IPC_METHODID_DIRECTIVE, &payload);
+#ifdef OBIGO_AIDAEMON
+    sendMessagesIPC(AIDAEMON::IPC_METHODID_NOTI_DIRECTIVE, &payload);
+#endif //OBIGO_AIDAEMON
+
     ConsolePrinter::simplePrint(buffer);
 }
 

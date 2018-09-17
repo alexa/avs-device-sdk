@@ -14,6 +14,10 @@ if ((PORTAUDIO AND GSTREAMER_MEDIA_PLAYER) OR (ANDROID_MEDIA_PLAYER AND ANDROID_
         add_definitions("-DGSTREAMER_MEDIA_PLAYER")
     endif()
 
+    if (OBIGO_AIDAEMON)
+        add_definitions("-DOBIGO_AIDAEMON")
+    endif()    
+
     add_subdirectory("src")
 else()
     message("To build the sample app, please enable microphone and media player modules.")

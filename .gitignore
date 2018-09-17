@@ -1,3 +1,7 @@
 .DS_Store
 package/x86/lib
 package/x86/SampleApp
+package/x86/AVS-DB
+AIDaemon.json
+.tags
+.tags1
