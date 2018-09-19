@@ -86,6 +86,34 @@ void sendMessagesIPC(std::string MethodID, rapidjson::Document *data) {
     aidaemon__emit_send_messages(m_pDBusInterface, encoded.c_str());
 }
 
+void sendMessagesIPC(std::string MethodID, int data) {
+    ConsolePrinter::simplePrint(__PRETTY_FUNCTION__);
+
+    rapidjson::Document ipcdata(rapidjson::kObjectType);
+    rapidjson::Document::AllocatorType& allocator = ipcdata.GetAllocator();
+
+    ipcdata.AddMember(rapidjson::StringRef(AIDAEMON::IPC_METHODID), MethodID, allocator);
+    if (data == AIDAEMON::NULL_DATA) {
+        rapidjson::Document nulldata;
+        ipcdata.AddMember(rapidjson::StringRef(AIDAEMON::IPC_DATA), nulldata, allocator);
+    } else {
+        ipcdata.AddMember(rapidjson::StringRef(AIDAEMON::IPC_DATA), data, allocator);
+    }
+    
+    rapidjson::StringBuffer ipcdataBuf;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(ipcdataBuf);
+    if (!ipcdata.Accept(writer)) {
+        ConsolePrinter::simplePrint("ERROR: Build json");
+        return;
+    }
+
+    std::string tempipcdata = ipcdataBuf.GetString();
+    std::string encoded = base64_encode(reinterpret_cast<const unsigned char*>(tempipcdata.c_str()), tempipcdata.length());
+    ConsolePrinter::simplePrint(encoded.c_str());
+
+    aidaemon__emit_send_messages(m_pDBusInterface, encoded.c_str());
+}
+
 gboolean on_handle_send_messages(
     AIDaemon *object,
     GDBusMethodInvocation *invocation,
@@ -129,15 +157,13 @@ gboolean on_handle_send_messages(
 
     aidaemon__complete_send_messages(object, invocation);
 
-    if (Method == AIDAEMON::IPC_METHODID_REQ_VR_START) {
+    if (Method == AIDAEMON::METHODID_REQ_VR_START) {
         m_gInteractionManager->tap();
-    } else if (Method == AIDAEMON::IPC_METHODID_REQ_VR_STOP) {
+    } else if (Method == AIDAEMON::METHODID_REQ_EVENT_CANCEL) {
         m_gInteractionManager->stopForegroundActivity();
     } else {
         ConsolePrinter::simplePrint("ERROR: Cannot Handle this Method");
     }
-
-
 
     return true;
 }
