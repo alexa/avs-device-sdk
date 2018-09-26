@@ -1124,6 +1124,18 @@ void DefaultClient::stopCommsCall() {
     }
 }
 
+#ifdef OBIGO_AIDAEMON
+bool DefaultClient::addDirectiveHandler(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler) {
+    if (!m_directiveSequencer->addDirectiveHandler(handler)) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterDirectiveHandler")
+                        .d("directiveHandler", "addDirectiveHandler"));
+        return false;
+    }
+    return true;
+}
+#endif //OBIGO_AIDAEMON
+
 DefaultClient::~DefaultClient() {
     if (m_directiveSequencer) {
         ACSDK_DEBUG5(LX("DirectiveSequencerShutdown"));

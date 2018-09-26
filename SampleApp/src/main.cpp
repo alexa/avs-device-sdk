@@ -17,10 +17,33 @@
 #include "SampleApp/SampleApplication.h"
 #include "SampleApp/SampleApplicationReturnCodes.h"
 
+#ifdef OBIGO_AIDAEMON
+#include "AIDaemon/AIDaemon-dbus-generated.h"
+#include "AIDaemon/base64.h"
+#include "AIDaemon/AIDaemon-IPC.h"
+#include <rapidjson/document.h>
+#include <rapidjson/error/en.h>
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/writer.h>
+#include <AVSCommon/Utils/JSON/JSONUtils.h>
+
+#include <thread>
+#endif //OBIGO_AIDAEMON
+
 #include <cstdlib>
 #include <string>
 
 using namespace alexaClientSDK::sampleApp;
+
+#ifdef OBIGO_AIDAEMON
+std::thread                     *m_pServerThread = nullptr;
+guint                           m_idBus;
+GMainLoop                       *m_pLoop;
+AIDaemon                        *m_pDBusInterface = nullptr;
+AIDaemonSkeleton                *m_pskeleton = nullptr;
+std::shared_ptr<InteractionManager> m_gInteractionManager;
+#endif //OBIGO_AIDAEMON
+
 
 /**
  * Function that evaluates if the SampleApp invocation uses old-style or new-style opt-arg style invocation.
@@ -38,6 +61,179 @@ bool usesOptStyleArgs(int argc, char* argv[]) {
 
     return false;
 }
+
+#ifdef OBIGO_AIDAEMON
+void sendMessagesIPC(std::string MethodID, rapidjson::Document *data) {
+    ConsolePrinter::simplePrint(__PRETTY_FUNCTION__);
+
+    rapidjson::Document ipcdata(rapidjson::kObjectType);
+    rapidjson::Document::AllocatorType& allocator = ipcdata.GetAllocator();
+
+    ipcdata.AddMember(rapidjson::StringRef(AIDAEMON::IPC_METHODID), MethodID, allocator);
+    ipcdata.AddMember(rapidjson::StringRef(AIDAEMON::IPC_DATA), *data, allocator);
+
+    rapidjson::StringBuffer ipcdataBuf;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(ipcdataBuf);
+    if (!ipcdata.Accept(writer)) {
+        ConsolePrinter::simplePrint("ERROR: Build json");
+        return;
+    }
+
+    std::string tempipcdata = ipcdataBuf.GetString();
+    std::string encoded = base64_encode(reinterpret_cast<const unsigned char*>(tempipcdata.c_str()), tempipcdata.length());
+    ConsolePrinter::simplePrint(encoded.c_str());
+
+    aidaemon__emit_send_messages(m_pDBusInterface, encoded.c_str());
+}
+
+void sendMessagesIPC(std::string MethodID, int data) {
+    ConsolePrinter::simplePrint(__PRETTY_FUNCTION__);
+
+    rapidjson::Document ipcdata(rapidjson::kObjectType);
+    rapidjson::Document::AllocatorType& allocator = ipcdata.GetAllocator();
+
+    ipcdata.AddMember(rapidjson::StringRef(AIDAEMON::IPC_METHODID), MethodID, allocator);
+    if (data == AIDAEMON::NULL_DATA) {
+        rapidjson::Document nulldata;
+        ipcdata.AddMember(rapidjson::StringRef(AIDAEMON::IPC_DATA), nulldata, allocator);
+    } else {
+        ipcdata.AddMember(rapidjson::StringRef(AIDAEMON::IPC_DATA), data, allocator);
+    }
+    
+    rapidjson::StringBuffer ipcdataBuf;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(ipcdataBuf);
+    if (!ipcdata.Accept(writer)) {
+        ConsolePrinter::simplePrint("ERROR: Build json");
+        return;
+    }
+
+    std::string tempipcdata = ipcdataBuf.GetString();
+    std::string encoded = base64_encode(reinterpret_cast<const unsigned char*>(tempipcdata.c_str()), tempipcdata.length());
+    ConsolePrinter::simplePrint(encoded.c_str());
+
+    aidaemon__emit_send_messages(m_pDBusInterface, encoded.c_str());
+}
+
+gboolean on_handle_send_messages(
+    AIDaemon *object,
+    GDBusMethodInvocation *invocation,
+    const gchar *arg_Data,
+    gpointer user_data ) {
+
+    using namespace alexaClientSDK::avsCommon::utils::json;
+
+    std::stringstream logbuffer;
+
+    ConsolePrinter::simplePrint(__PRETTY_FUNCTION__);
+
+    std::string decoded = base64_decode((char*)(arg_Data));
+    ConsolePrinter::simplePrint(decoded);
+
+    rapidjson::Document payload;
+    rapidjson::ParseResult result = payload.Parse(decoded);
+    if (!result) {
+        ConsolePrinter::simplePrint("ERROR: IPC data not parseable");
+        return false;
+    }
+
+    std::string Method;
+    if (!jsonUtils::retrieveValue(payload, AIDAEMON::IPC_METHODID, &Method)) {
+        ConsolePrinter::simplePrint("ERROR: Cannot get IPC methodid");
+        return false;
+    } else {
+        logbuffer << "IPC methodid : " << Method;
+        ConsolePrinter::simplePrint(logbuffer.str());
+        logbuffer.str("");
+    }
+
+    std::string IPCData;
+    if (!jsonUtils::retrieveValue(payload, AIDAEMON::IPC_DATA, &IPCData)) {
+        ConsolePrinter::simplePrint("There is not IPC data");
+    } else {
+        logbuffer << "IPC data : " << IPCData;
+        ConsolePrinter::simplePrint(logbuffer.str());
+        logbuffer.str("");
+    }
+
+    aidaemon__complete_send_messages(object, invocation);
+
+    if (Method == AIDAEMON::METHODID_REQ_VR_START) {
+        m_gInteractionManager->tap();
+    } else if (Method == AIDAEMON::METHODID_REQ_EVENT_CANCEL) {
+        m_gInteractionManager->stopForegroundActivity();
+    } else {
+        ConsolePrinter::simplePrint("ERROR: Cannot Handle this Method");
+    }
+
+    return true;
+}
+
+void OnBusAcquired( GDBusConnection * connection, const gchar * name, gpointer user_data ) {
+    ConsolePrinter::simplePrint(__PRETTY_FUNCTION__);
+
+    std::stringstream logbuffer;
+
+    logbuffer << "DBus Connection : " << connection;
+    ConsolePrinter::simplePrint(logbuffer.str());
+    logbuffer.str("");
+
+    logbuffer << "DBus Name : " << name;
+    ConsolePrinter::simplePrint(logbuffer.str());
+    logbuffer.str("");
+
+    if (m_pDBusInterface != nullptr) return;
+    if (m_pskeleton != nullptr) return;
+
+    m_pDBusInterface = aidaemon__skeleton_new() ;
+    logbuffer << "DBus skeleton : " << m_pDBusInterface;
+    ConsolePrinter::simplePrint(logbuffer.str());
+    logbuffer.str("");
+
+    gulong handlerID = g_signal_connect (m_pDBusInterface, "handle-send-messages", G_CALLBACK (on_handle_send_messages), nullptr);
+    logbuffer << "DBus HandlerID : " << handlerID;
+    ConsolePrinter::simplePrint(logbuffer.str());
+    logbuffer.str("");
+
+    m_pskeleton = AIDAEMON__SKELETON (m_pDBusInterface);
+    logbuffer << "AIDaemon skeleton : " << m_pskeleton;
+    ConsolePrinter::simplePrint(logbuffer.str());
+    logbuffer.str("");
+
+    gboolean result = g_dbus_interface_skeleton_export(
+        G_DBUS_INTERFACE_SKELETON(m_pskeleton),
+        connection,
+        AIDAEMON::SERVER_OBJECT.c_str(),
+        nullptr);
+    logbuffer << "Export Result : " << result;
+    ConsolePrinter::simplePrint(logbuffer.str());
+    logbuffer.str("");
+}
+
+bool makeDBusServer() {
+    ConsolePrinter::simplePrint(__PRETTY_FUNCTION__);
+
+    if (m_pServerThread != nullptr) return false;
+
+    m_pServerThread = new std::thread([&] {
+          m_idBus = g_bus_own_name(G_BUS_TYPE_SESSION, AIDAEMON::SERVER_INTERFACE.c_str(),
+                                  G_BUS_NAME_OWNER_FLAGS_NONE, OnBusAcquired,
+                                  nullptr, nullptr, nullptr, nullptr);
+          if (! m_idBus) {
+              ConsolePrinter::simplePrint("Fail to get bus");
+          } else {
+              ConsolePrinter::simplePrint("Success to get bus");
+              m_pLoop = g_main_loop_new(nullptr, false);
+            if (m_pLoop) {
+                ConsolePrinter::simplePrint("Success to create a new GMainLoop");
+    			g_main_loop_run(m_pLoop);
+    		} else {
+                ConsolePrinter::simplePrint("Fail to create a new GMainLoop");
+    		}
+          }
+        });
+    return true;
+}
+#endif //OBIGO_AIDAEMON
 
 /**
  * This serves as the starting point for the application. This code instantiates the @c UserInputManager and processes
@@ -113,12 +309,19 @@ int main(int argc, char* argv[]) {
     std::unique_ptr<SampleApplication> sampleApplication;
     SampleAppReturnCode returnCode = SampleAppReturnCode::OK;
 
+    #ifdef OBIGO_AIDAEMON
+        makeDBusServer();
+    #endif //OBIGO_AIDAEMON
+
     do {
         sampleApplication = SampleApplication::create(consoleReader, configFiles, pathToKWDInputFolder, logLevel);
         if (!sampleApplication) {
             ConsolePrinter::simplePrint("Failed to create to SampleApplication!");
             return SampleAppReturnCode::ERROR;
         }
+        #ifdef OBIGO_AIDAEMON
+        m_gInteractionManager = sampleApplication->getInteractionManager();
+        #endif //OBIGO_AIDAEMON
         returnCode = sampleApplication->run();
         sampleApplication.reset();
     } while (SampleAppReturnCode::RESTART == returnCode);

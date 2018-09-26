@@ -2,7 +2,7 @@ add_subdirectory("Authorization")
 
 if ((PORTAUDIO AND GSTREAMER_MEDIA_PLAYER) OR (ANDROID_MEDIA_PLAYER AND ANDROID_MICROPHONE))
     cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
-    project(SampleApp LANGUAGES CXX)
+    project(SampleApp LANGUAGES C CXX)
 
     include(../build/BuildDefaults.cmake)
 
@@ -13,6 +13,10 @@ if ((PORTAUDIO AND GSTREAMER_MEDIA_PLAYER) OR (ANDROID_MEDIA_PLAYER AND ANDROID_
     if (GSTREAMER_MEDIA_PLAYER)
         add_definitions("-DGSTREAMER_MEDIA_PLAYER")
     endif()
+
+    if (OBIGO_AIDAEMON)
+        add_definitions("-DOBIGO_AIDAEMON")
+    endif()    
 
     add_subdirectory("src")
 else()

@@ -23,6 +23,14 @@
 
 #include "SampleApp/ConsolePrinter.h"
 
+#ifdef OBIGO_AIDAEMON
+#include "AIDaemon/AIDaemon-IPC.h"
+#endif //OBIGO_AIDAEMON
+
+#ifdef OBIGO_AIDAEMON
+extern void sendMessagesIPC(std::string MethodID, int data);
+#endif //OBIGO_AIDAEMON
+
 namespace alexaClientSDK {
 namespace sampleApp {
 
@@ -412,16 +420,28 @@ void UIManager::printState() {
         switch (m_dialogState) {
             case DialogUXState::IDLE:
                 ConsolePrinter::prettyPrint("Alexa is currently idle!");
+                #ifdef OBIGO_AIDAEMON
+                sendMessagesIPC(AIDAEMON::METHODID_NOTI_VR_STATE, AIDAEMON::NOTI_VR_STATE_IDLE);
+                #endif
                 return;
             case DialogUXState::LISTENING:
                 ConsolePrinter::prettyPrint("Listening...");
+                #ifdef OBIGO_AIDAEMON
+                sendMessagesIPC(AIDAEMON::METHODID_NOTI_VR_STATE, AIDAEMON::NOTI_VR_STATE_LISTENING);
+                #endif
                 return;
             case DialogUXState::THINKING:
                 ConsolePrinter::prettyPrint("Thinking...");
+                #ifdef OBIGO_AIDAEMON
+                sendMessagesIPC(AIDAEMON::METHODID_NOTI_VR_STATE, AIDAEMON::NOTI_VR_STATE_THINKING);
+                #endif
                 return;
                 ;
             case DialogUXState::SPEAKING:
                 ConsolePrinter::prettyPrint("Speaking...");
+                #ifdef OBIGO_AIDAEMON
+                sendMessagesIPC(AIDAEMON::METHODID_NOTI_TTS_START, AIDAEMON::NULL_DATA);
+                #endif
                 return;
             /*
              * This is an intermediate state after a SPEAK directive is completed. In the case of a speech burst the
@@ -429,6 +449,9 @@ void UIManager::printState() {
              * nothing for this state.
              */
             case DialogUXState::FINISHED:
+                #ifdef OBIGO_AIDAEMON
+                sendMessagesIPC(AIDAEMON::METHODID_NOTI_TTS_FINISH, AIDAEMON::NULL_DATA);
+                #endif
                 return;
         }
     }

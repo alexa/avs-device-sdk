@@ -464,6 +464,15 @@ public:
      */
     void stopCommsCall();
 
+#ifdef OBIGO_AIDAEMON
+    /**
+     * Adds a handler to handle directive.
+     *
+     * @param handler The handler to add.
+     */
+    bool addDirectiveHandler(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);   
+#endif //OBIGO_AIDAEMON
+
     /**
      * Destructor.
      */

@@ -1,5 +1,9 @@
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists_AIDaemon.txt)
+
 set(SampleApp_SOURCES)
-list(APPEND SampleApp_SOURCES 
+list(APPEND SampleApp_SOURCES
     ConnectionObserver.cpp
     ConsolePrinter.cpp
     ConsoleReader.cpp
@@ -22,22 +26,24 @@ IF (HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
     endforeach(myfile)
 ENDIF()
 
-add_executable(SampleApp ${SampleApp_SOURCES})
+add_executable(SampleApp ${SampleApp_SOURCES} ${AIDAEMON_SOURCES})
 
-target_include_directories(SampleApp PUBLIC 
+target_include_directories(SampleApp PUBLIC
     "${SampleApp_SOURCE_DIR}/include"
     "${AudioResources_SOURCE_DIR}/include"
     "${RegistrationManager_SOURCE_DIR}/include"
     "${ESP_SOURCE_DIR}/include"
-    "${PORTAUDIO_INCLUDE_DIR}")
+    "${PORTAUDIO_INCLUDE_DIR}"
+    "${AIDAEMON_INCLUDES}")
 
-target_link_libraries(SampleApp 
+target_link_libraries(SampleApp
     DefaultClient
     CapabilitiesDelegate
     CBLAuthDelegate
     SQLiteStorage
     ESP
-    "${PORTAUDIO_LIB_PATH}")
+    "${PORTAUDIO_LIB_PATH}"
+    "${AIDAEMON_LIBRARIES}")
 
 if (ANDROID)
     target_include_directories(SampleApp PUBLIC "${AndroidUtilities}/include")
@@ -59,13 +65,12 @@ endif()
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     target_link_libraries(SampleApp
-        "-framework CoreAudio" 
-        "-framework AudioToolbox" 
-        "-framework AudioUnit" 
-        "-framework CoreServices" 
+        "-framework CoreAudio"
+        "-framework AudioToolbox"
+        "-framework AudioUnit"
+        "-framework CoreServices"
         "-framework Carbon")
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     target_link_libraries(SampleApp
       rt m pthread asound)
 endif()
-

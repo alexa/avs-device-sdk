@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<node name="/" xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd">
+
+<!--
+   com.obigo.Nissan.AIDaemon
+   @short_description: This interface is offered to provide AI Daemon information.
+   @since: 1.0
+
+   This interface provides information about AI Daemon information.
+
+-->
+
+<interface name="com.obigo.Nissan.AIDaemon">
+
+<!--
+  Send:
+  @messages: The Json string to pass to service agent.
+  @since: 1.0
+
+  This method is invoked to pass json string from Obigo Framework to AI Daemon.
+
+-->
+<method name="SendMessages">
+    <annotation name="org.freedesktop.DBus.GLib.Async" value=""/>
+    <arg name="Data" type="s" direction="in"/>
+</method>
+
+<!--
+  Receive:
+  @messages: The Json string to pass from AI Daemon.
+  @since: 1.0
+
+  This signal is emitted when occured event from AI Daemon.
+
+-->
+<signal name="SendMessages">
+    <annotation name="org.freedesktop.DBus.GLib.Async" value=""/>
+    <arg name="Data" type="s" direction="in"/>
+</signal>
+
+</interface>
+</node>
