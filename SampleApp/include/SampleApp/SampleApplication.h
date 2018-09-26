@@ -27,6 +27,10 @@
 #include "UserInputManager.h"
 #include "SampleApp/GuiRenderer.h"
 
+#ifdef OBIGO_AIDAEMON
+#include "AIDaemon/DirectiveHandler.h"
+#endif // OBIGO_AIDAEMON
+
 #ifdef KWD
 #include <KWD/AbstractKeywordDetector.h>
 #endif
@@ -224,6 +228,11 @@ private:
 
     /// The singleton map from @c playerId to @c ExternalMediaAdapter creation functions.
     static capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap m_adapterToCreateFuncMap;
+
+#ifdef OBIGO_AIDAEMON
+    /// Directive Handler.
+    std::shared_ptr<sampleApp::DirectiveHandler> m_directiveHandler;    
+#endif //OBIGO_AIDAEMON
 
 #ifdef KWD
     /// The Wakeword Detector which can wake up the client using audio input.

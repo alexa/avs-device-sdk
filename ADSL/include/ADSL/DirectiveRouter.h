@@ -158,6 +158,17 @@ private:
      */
     avsCommon::avs::HandlerAndPolicy getHandlerAndPolicyLocked(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
+#ifdef OBIGO_AIDAEMON
+    /**
+     * Look up the @c HandlerAndPolicy value for the specified @c AVSDirective.
+     * @note The calling thread must have already acquired @c m_mutex.
+     *
+     * @param directive The directive to look up a value for.
+     * @return The corresponding @c HandlerAndPolicy value for the specified directive.
+     */
+    avsCommon::avs::HandlerAndPolicy getHandlerAndPolicyLockedForAll(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
+#endif //OBIGO_AIDAEMON
+
     /**
      * Increment the reference count for the specified handler.
      *

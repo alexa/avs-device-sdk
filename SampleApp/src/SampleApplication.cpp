@@ -592,6 +592,11 @@ bool SampleApplication::initialize(
         client->addTemplateRuntimeObserver(m_guiRenderer);
     }
 
+#ifdef OBIGO_AIDAEMON
+    m_directiveHandler = std::make_shared<DirectiveHandler>();
+    client->addDirectiveHandler(m_directiveHandler);
+#endif // OBIGO_AIDAEMON    
+
     /*
      * Creating the buffer (Shared Data Stream) that will hold user audio data. This is the main input into the SDK.
      */

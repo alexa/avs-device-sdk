@@ -20,14 +20,6 @@
 #include "SampleApp/ConsolePrinter.h"
 #include "SampleApp/GuiRenderer.h"
 
-#ifdef OBIGO_AIDAEMON
-#include "AIDaemon/AIDaemon-IPC.h"
-#endif //OBIGO_AIDAEMON
-
-#ifdef OBIGO_AIDAEMON
-extern void sendMessagesIPC(std::string MethodID, rapidjson::Document *data);
-#endif //OBIGO_AIDAEMON
-
 namespace alexaClientSDK {
 namespace sampleApp {
 
@@ -161,10 +153,6 @@ void GuiRenderer::renderTemplateCard(const std::string& jsonPayload, avsCommon::
     buffer += RENDER_FOOTER;
 
 #endif
-
-#ifdef OBIGO_AIDAEMON
-    sendMessagesIPC(AIDAEMON::METHODID_NOTI_DIRECTIVE, &payload);
-#endif //OBIGO_AIDAEMON
 
     ConsolePrinter::simplePrint(buffer);
 }

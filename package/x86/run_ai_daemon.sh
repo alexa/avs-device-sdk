@@ -46,4 +46,4 @@ pulseaudio --start
 export LD_LIBRARY_PATH=${DIR}/lib/avs:${DIR}/lib/curl:${DIR}/lib/nghttp2:${DIR}/lib/avs/portaudio:/usr/lib:${LD_LIBRARY_PATH}
 echo "${LD_LIBRARY_PATH}"
 
-./SampleApp ${AI_DAEMON_CONFIG_JSON} DEBUG9
+./SampleApp -C ${AI_DAEMON_CONFIG_JSON} -L DEBUG9

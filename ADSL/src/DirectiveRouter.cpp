@@ -159,6 +159,14 @@ bool DirectiveRouter::handleDirectiveImmediately(std::shared_ptr<avsCommon::avs:
 bool DirectiveRouter::handleDirectiveWithPolicyHandleImmediately(
     std::shared_ptr<avsCommon::avs::AVSDirective> directive) {
     std::unique_lock<std::mutex> lock(m_mutex);
+
+#ifdef OBIGO_AIDAEMON
+    auto  handlerAndPolicyForAll = getHandlerAndPolicyLockedForAll(directive);
+    if (handlerAndPolicyForAll) {
+        handlerAndPolicyForAll.handler->handleDirectiveImmediately(directive);
+    }
+#endif //OBIGO_AIDAEMON    
+
     auto handlerAndPolicy = getHandlerAndPolicyLocked(directive);
     if (!handlerAndPolicy) {
         ACSDK_WARN(LX("handleDirectiveWithPolicyHandleImmediatelyFailed")
@@ -298,6 +306,23 @@ HandlerAndPolicy DirectiveRouter::getHandlerAndPolicyLocked(std::shared_ptr<avsC
 
     return it->second;
 }
+
+#ifdef OBIGO_AIDAEMON
+HandlerAndPolicy DirectiveRouter::getHandlerAndPolicyLockedForAll(std::shared_ptr<avsCommon::avs::AVSDirective> directive) {
+    if (!directive) {
+        ACSDK_WARN(LX("getHandlerAndPolicyLockedForAll").d("reason", "nullptrDirective"));
+        return HandlerAndPolicy();
+    }
+
+    // First, look for an exact match.  If not found, then look for a wildcard handler for the AVS namespace.
+    auto it = m_configuration.find(NamespaceAndName("*", "*"));
+    if (m_configuration.end() == it) {
+        return HandlerAndPolicy();
+    }
+
+    return it->second;
+}
+#endif //OBIGO_AIDAEMON
 
 void DirectiveRouter::incrementHandlerReferenceCountLocked(std::shared_ptr<DirectiveHandlerInterface> handler) {
     const auto it = m_handlerReferenceCounts.find(handler);

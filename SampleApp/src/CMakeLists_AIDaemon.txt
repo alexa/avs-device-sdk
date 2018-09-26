@@ -3,7 +3,8 @@ set(AIDAEMON_SOURCES)
 if (OBIGO_AIDAEMON)
     list(APPEND AIDAEMON_SOURCES
         AIDaemon-dbus-generated.c
-        base64.cpp)
+        base64.cpp
+        DirectiveHandler.cpp)
 endif()
 
 set(AIDAEMON_INCLUDES)
