@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::capabilityAgents::alerts::storage::AlertStorageInterface" name="alexaClientSDK::capabilityAgents::alerts::storage::AlertStorageInterface">
 <area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html" title="alexaClientSDK::capability\lAgents::alerts::storage\l::SQLiteAlertStorage" alt="" coords="241,5,419,57"/>
 <area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert_storage.html" title="alexaClientSDK::capability\lAgents::alerts::test::MockAlert\lStorage" alt="" coords="231,81,429,133"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_stub_alert_storage.html" title="alexaClientSDK::capability\lAgents::alerts::test::StubAlert\lStorage" alt="" coords="233,157,427,209"/>
 </map>

@@ -1,5 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::TemplateRuntime\lObserverInterface" alt="" coords="5,40,225,92"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_gui.html" title="alexaClientSDK::capability\lAgents::templateRuntime\l::test::MockGui" alt="" coords="278,5,456,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_gui_renderer.html" title="alexaClientSDK::sampleApp\l::GuiRenderer" alt="" coords="273,81,461,120"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_global_settings_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::GlobalSettings\lObserverInterface" alt="" coords="5,44,208,96"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1_settings_updated_event_sender.html" title="alexaClientSDK::capability\lAgents::settings::SettingsUpdated\lEventSender" alt="" coords="256,5,478,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1test_1_1_mock_global_settings_observer.html" title="alexaClientSDK::capability\lAgents::settings::test\l::MockGlobalSettingsObserver" alt="" coords="266,81,468,133"/>
 </map>

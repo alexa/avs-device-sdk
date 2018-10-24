@@ -1,0 +1,36 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/src/RevokeAuthorizationObserver.cpp" name="/workplace/avs&#45;device&#45;sdk/SampleApp/src/RevokeAuthorizationObserver.cpp">
+<area shape="rect" id="node2" href="$_revoke_authorization_observer_8h.html" title="SampleApp/RevokeAuthorization\lObserver.h" alt="" coords="2359,105,2577,144"/>
+<area shape="rect" id="node3" href="$_revoke_authorization_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RevokeAuthorizationObserver\lInterface.h" alt="" coords="2264,192,2467,244"/>
+<area shape="rect" id="node4" href="$_registration_manager_8h.html" title="RegistrationManager\l/RegistrationManager.h" alt="" coords="2491,199,2650,237"/>
+<area shape="rect" id="node7" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="2371,899,2562,937"/>
+<area shape="rect" id="node11" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="1471,465,1705,504"/>
+<area shape="rect" id="node15" href="$_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="2123,292,2328,331"/>
+<area shape="rect" id="node47" href="$_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="2484,292,2658,331"/>
+<area shape="rect" id="node50" href="$_registration_observer_interface_8h.html" title="RegistrationManager\l/RegistrationObserverInterface.h" alt="" coords="2782,292,2996,331"/>
+<area shape="rect" id="node9" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="2239,985,2430,1024"/>
+<area shape="rect" id="node12" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="1580,552,1828,591"/>
+<area shape="rect" id="node14" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="1332,725,1529,764"/>
+<area shape="rect" id="node16" href="$_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="1333,559,1555,584"/>
+<area shape="rect" id="node40" href="$_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="2049,379,2239,417"/>
+<area shape="rect" id="node46" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2586,899,2774,937"/>
+<area shape="rect" id="node18" href="$_attachment_manager_interface_8h.html" title="Attachment/AttachmentManager\lInterface.h" alt="" coords="746,639,958,677"/>
+<area shape="rect" id="node38" href="$_a_v_s_message_8h.html" title="AVSMessage.h" alt="" coords="1585,905,1697,931"/>
+<area shape="rect" id="node20" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="751,725,953,764"/>
+<area shape="rect" id="node23" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="223,985,425,1024"/>
+<area shape="rect" id="node26" href="$_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="94,812,295,851"/>
+<area shape="rect" id="node25" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="119,1072,281,1111"/>
+<area shape="rect" id="node27" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1028,812,1190,851"/>
+<area shape="rect" id="node37" href="$_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="595,1079,698,1104"/>
+<area shape="rect" id="node30" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="807,905,953,931"/>
+<area shape="rect" id="node32" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="721,1072,897,1111"/>
+<area shape="rect" id="node34" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="995,992,1103,1017"/>
+<area shape="rect" id="node35" href="$_reader_8h.html" title="Reader.h" alt="" coords="601,992,676,1017"/>
+<area shape="rect" id="node36" href="$_writer_8h.html" title="Writer.h" alt="" coords="846,992,914,1017"/>
+<area shape="rect" id="node33" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="765,1159,941,1197"/>
+<area shape="rect" id="node39" href="$_a_v_s_message_header_8h.html" title="AVSMessageHeader.h" alt="" coords="1636,992,1791,1017"/>
+<area shape="rect" id="node41" href="$_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="2028,465,2260,504"/>
+<area shape="rect" id="node45" href="$_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="1780,465,2004,504"/>
+<area shape="rect" id="node43" href="$_namespace_and_name_8h.html" title="NamespaceAndName.h" alt="" coords="2096,732,2259,757"/>
+<area shape="rect" id="node44" href="$_blocking_policy_8h.html" title="BlockingPolicy.h" alt="" coords="1903,559,2020,584"/>
+<area shape="rect" id="node49" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="2424,812,2592,851"/>
+</map>

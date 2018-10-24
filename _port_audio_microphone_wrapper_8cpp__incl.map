@@ -1,23 +1,24 @@
-<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/SampleApp/src/PortAudioMicrophoneWrapper.cpp" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/SampleApp/src/PortAudioMicrophoneWrapper.cpp">
-<area shape="rect" id="node5" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1082,712,1296,751"/>
-<area shape="rect" id="node11" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="825,625,1001,664"/>
-<area shape="rect" id="node22" href="$_port_audio_microphone_wrapper_8h.html" title="SampleApp/PortAudioMicrophone\lWrapper.h" alt="" coords="2165,132,2387,171"/>
-<area shape="rect" id="node38" href="$_console_printer_8h.html" title="SampleApp/ConsolePrinter.h" alt="" coords="878,465,1071,491"/>
-<area shape="rect" id="node14" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="388,799,564,837"/>
-<area shape="rect" id="node15" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="629,712,805,751"/>
-<area shape="rect" id="node20" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="408,712,605,751"/>
-<area shape="rect" id="node21" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1252,885,1428,924"/>
-<area shape="rect" id="node16" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="5,799,181,837"/>
-<area shape="rect" id="node18" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="96,885,272,924"/>
-<area shape="rect" id="node24" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="2010,219,2208,257"/>
-<area shape="rect" id="node25" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="2028,305,2190,344"/>
-<area shape="rect" id="node27" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1955,392,2101,417"/>
-<area shape="rect" id="node30" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1608,539,1784,577"/>
-<area shape="rect" id="node31" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="1826,465,1934,491"/>
-<area shape="rect" id="node32" href="$_reader_8h.html" title="Reader.h" alt="" coords="2292,465,2367,491"/>
-<area shape="rect" id="node35" href="$_writer_8h.html" title="Writer.h" alt="" coords="2045,465,2112,491"/>
-<area shape="rect" id="node34" href="$_reader_policy_8h.html" title="ReaderPolicy.h" alt="" coords="2434,545,2545,571"/>
-<area shape="rect" id="node36" href="$_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="2042,545,2144,571"/>
-<area shape="rect" id="node39" href="$_log_string_formatter_8h.html" title="AVSCommon/Utils/Logger\l/LogStringFormatter.h" alt="" coords="951,539,1127,577"/>
-<area shape="rect" id="node40" href="$_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="1557,712,1731,751"/>
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/src/PortAudioMicrophoneWrapper.cpp" name="/workplace/avs&#45;device&#45;sdk/SampleApp/src/PortAudioMicrophoneWrapper.cpp">
+<area shape="rect" id="node5" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="710,685,924,724"/>
+<area shape="rect" id="node11" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1707,599,1883,637"/>
+<area shape="rect" id="node22" href="$_port_audio_microphone_wrapper_8h.html" title="SampleApp/PortAudioMicrophone\lWrapper.h" alt="" coords="736,105,958,144"/>
+<area shape="rect" id="node39" href="$_console_printer_8h.html" title="SampleApp/ConsolePrinter.h" alt="" coords="1594,439,1787,464"/>
+<area shape="rect" id="node14" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1712,772,1888,811"/>
+<area shape="rect" id="node15" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2075,685,2251,724"/>
+<area shape="rect" id="node20" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1702,685,1898,724"/>
+<area shape="rect" id="node21" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2195,859,2371,897"/>
+<area shape="rect" id="node16" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2075,772,2251,811"/>
+<area shape="rect" id="node18" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1063,859,1239,897"/>
+<area shape="rect" id="node24" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="914,192,1112,231"/>
+<area shape="rect" id="node38" href="$_microphone_interface_8h.html" title="Audio/MicrophoneInterface.h" alt="" coords="536,199,728,224"/>
+<area shape="rect" id="node25" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="932,279,1094,317"/>
+<area shape="rect" id="node27" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="860,365,1007,391"/>
+<area shape="rect" id="node30" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1192,512,1368,551"/>
+<area shape="rect" id="node31" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="998,439,1106,464"/>
+<area shape="rect" id="node32" href="$_reader_8h.html" title="Reader.h" alt="" coords="626,439,702,464"/>
+<area shape="rect" id="node35" href="$_writer_8h.html" title="Writer.h" alt="" coords="797,439,864,464"/>
+<area shape="rect" id="node34" href="$_reader_policy_8h.html" title="ReaderPolicy.h" alt="" coords="381,519,491,544"/>
+<area shape="rect" id="node36" href="$_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="691,519,794,544"/>
+<area shape="rect" id="node40" href="$_log_string_formatter_8h.html" title="AVSCommon/Utils/Logger\l/LogStringFormatter.h" alt="" coords="1912,512,2088,551"/>
+<area shape="rect" id="node41" href="$_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="2325,685,2499,724"/>
 </map>

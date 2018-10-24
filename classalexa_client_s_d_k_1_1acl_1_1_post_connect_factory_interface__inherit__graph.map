@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::acl::PostConnectFactoryInterface" name="alexaClientSDK::acl::PostConnectFactoryInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_post_connect_synchronizer_factory.html" title="alexaClientSDK::acl\l::PostConnectSynchronizerFactory" alt="" coords="5,92,233,131"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_post_connect_synchronizer_factory.html" title="alexaClientSDK::acl\l::PostConnectSynchronizerFactory" alt="" coords="255,5,482,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_post_connect_factory.html" title="alexaClientSDK::acl\l::test::MockPostConnectFactory" alt="" coords="263,68,474,107"/>
 </map>

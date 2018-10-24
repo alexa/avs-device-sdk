@@ -1,7 +1,7 @@
-<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/ContextManager/include/ContextManager/ContextManager.h" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/ContextManager/include/ContextManager/ContextManager.h">
-<area shape="rect" id="node13" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1333,132,1524,171"/>
-<area shape="rect" id="node14" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="1119,219,1314,257"/>
-<area shape="rect" id="node17" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1625,219,1816,257"/>
-<area shape="rect" id="node18" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1477,305,1706,344"/>
-<area shape="rect" id="node19" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="1389,219,1601,257"/>
+<map id="/workplace/avs&#45;device&#45;sdk/ContextManager/include/ContextManager/ContextManager.h" name="/workplace/avs&#45;device&#45;sdk/ContextManager/include/ContextManager/ContextManager.h">
+<area shape="rect" id="node13" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1333,105,1524,144"/>
+<area shape="rect" id="node14" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="1119,192,1314,231"/>
+<area shape="rect" id="node17" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1625,192,1816,231"/>
+<area shape="rect" id="node18" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1477,279,1706,317"/>
+<area shape="rect" id="node19" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="1389,192,1601,231"/>
 </map>

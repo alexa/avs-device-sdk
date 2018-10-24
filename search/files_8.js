@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['indicatorstate_2eh',['IndicatorState.h',['../_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_indicator_state_8h.html',1,'']]],
-  ['indicatorstate_2eh',['IndicatorState.h',['../_capability_agents_2_notifications_2include_2_notifications_2_indicator_state_8h.html',1,'']]],
+  ['indicatorstate_2eh',['IndicatorState.h',['../_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_indicator_state_8h.html',1,'(Global Namespace)'],['../_capability_agents_2_notifications_2include_2_notifications_2_indicator_state_8h.html',1,'(Global Namespace)']]],
   ['initiator_2eh',['Initiator.h',['../_initiator_8h.html',1,'']]],
+  ['inmemoryequalizerconfiguration_2ecpp',['InMemoryEqualizerConfiguration.cpp',['../_in_memory_equalizer_configuration_8cpp.html',1,'']]],
+  ['inmemoryequalizerconfiguration_2eh',['InMemoryEqualizerConfiguration.h',['../_in_memory_equalizer_configuration_8h.html',1,'']]],
+  ['inmemoryequalizerconfigurationtest_2ecpp',['InMemoryEqualizerConfigurationTest.cpp',['../_in_memory_equalizer_configuration_test_8cpp.html',1,'']]],
   ['inprocessattachment_2ecpp',['InProcessAttachment.cpp',['../_in_process_attachment_8cpp.html',1,'']]],
   ['inprocessattachment_2eh',['InProcessAttachment.h',['../_in_process_attachment_8h.html',1,'']]],
   ['inprocessattachmentreader_2ecpp',['InProcessAttachmentReader.cpp',['../_in_process_attachment_reader_8cpp.html',1,'']]],
@@ -19,9 +21,6 @@ var searchData=
   ['internetconnectionmonitor_2eh',['InternetConnectionMonitor.h',['../_internet_connection_monitor_8h.html',1,'']]],
   ['internetconnectionmonitorinterface_2eh',['InternetConnectionMonitorInterface.h',['../_internet_connection_monitor_interface_8h.html',1,'']]],
   ['internetconnectionobserverinterface_2eh',['InternetConnectionObserverInterface.h',['../_internet_connection_observer_interface_8h.html',1,'']]],
-  ['intervalcalculator_2ecpp',['IntervalCalculator.cpp',['../_interval_calculator_8cpp.html',1,'']]],
-  ['intervalcalculator_2eh',['IntervalCalculator.h',['../_interval_calculator_8h.html',1,'']]],
-  ['intervalcalculatortest_2ecpp',['IntervalCalculatorTest.cpp',['../_interval_calculator_test_8cpp.html',1,'']]],
   ['issue_5ftemplate_2emd',['issue_template.md',['../issue__template_8md.html',1,'']]],
   ['istreamsource_2ecpp',['IStreamSource.cpp',['../_i_stream_source_8cpp.html',1,'']]],
   ['istreamsource_2eh',['IStreamSource.h',['../_i_stream_source_8h.html',1,'']]],

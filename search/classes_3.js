@@ -3,6 +3,7 @@ var searchData=
   ['dbusconnection',['DBusConnection',['../classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_connection.html',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
   ['dbusobject',['DBusObject',['../classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_object.html',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
   ['dbusobject_3c_20mediaendpoint_20_3e',['DBusObject&lt; MediaEndpoint &gt;',['../classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_object.html',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
+  ['dbusobject_3c_20mprisplayer_20_3e',['DBusObject&lt; MPRISPlayer &gt;',['../classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_object.html',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
   ['dbusobject_3c_20pairingagent_20_3e',['DBusObject&lt; PairingAgent &gt;',['../classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_object.html',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
   ['dbusobjectbase',['DBusObjectBase',['../classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_object_base.html',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
   ['dbuspropertiesproxy',['DBusPropertiesProxy',['../classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_properties_proxy.html',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
@@ -29,6 +30,7 @@ var searchData=
   ['directivesequencer',['DirectiveSequencer',['../classalexa_client_s_d_k_1_1adsl_1_1_directive_sequencer.html',1,'alexaClientSDK::adsl']]],
   ['directivesequencerinterface',['DirectiveSequencerInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['directivesequencertest',['DirectiveSequencerTest',['../classalexa_client_s_d_k_1_1adsl_1_1test_1_1_directive_sequencer_test.html',1,'alexaClientSDK::adsl::test']]],
+  ['downchannelhandler',['DownchannelHandler',['../classalexa_client_s_d_k_1_1acl_1_1_downchannel_handler.html',1,'alexaClientSDK::acl']]],
   ['dummyespdataprovider',['DummyESPDataProvider',['../classalexa_client_s_d_k_1_1esp_1_1_dummy_e_s_p_data_provider.html',1,'alexaClientSDK::esp']]],
   ['dynamicdata',['DynamicData',['../structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_dynamic_data.html',1,'alexaClientSDK::capabilityAgents::alerts::Alert']]]
 ];

@@ -1,6 +1,6 @@
 <map id="alexaClientSDK::avsCommon::avs::attachment::AttachmentManagerInterface" name="alexaClientSDK::avsCommon::avs::attachment::AttachmentManagerInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager.html" title="alexaClientSDK::avsCommon\l::avs::attachment::AttachmentManager" alt="" coords="304,12,554,51"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1test_1_1_mock_attachment_manager.html" title="Mock class that implements the AttachmentManager. " alt="" coords="330,75,527,127"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_attachment_manager.html" title="alexaClientSDK::capability\lAgents::speechSynthesizer\l::test::MockAttachmentManager" alt="" coords="324,151,534,203"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_attachment_manager.html" title="alexaClientSDK::acl\l::test::TestableAttachment\lManager" alt="" coords="602,5,777,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager.html" title="alexaClientSDK::avsCommon\l::avs::attachment::AttachmentManager" alt="" coords="304,5,554,44"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1test_1_1_mock_attachment_manager.html" title="Mock class that implements the AttachmentManager. " alt="" coords="330,68,527,120"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_attachment_manager.html" title="alexaClientSDK::capability\lAgents::speechSynthesizer\l::test::MockAttachmentManager" alt="" coords="324,144,534,196"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_testable_attachment_manager.html" title="alexaClientSDK::avsCommon\l::utils::TestableAttachmentManager" alt="" coords="602,5,832,44"/>
 </map>

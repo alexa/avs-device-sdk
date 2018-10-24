@@ -1,20 +1,20 @@
-<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/AFML/src/FocusManager.cpp" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/AFML/src/FocusManager.cpp">
-<area shape="rect" id="node2" href="$_focus_manager_8h.html" title="AFML/FocusManager.h" alt="" coords="841,125,1000,151"/>
-<area shape="rect" id="node27" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1717,119,1893,157"/>
-<area shape="rect" id="node8" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="987,379,1179,417"/>
-<area shape="rect" id="node11" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="692,292,883,331"/>
-<area shape="rect" id="node15" href="$_channel_8h.html" title="AFML/Channel.h" alt="" coords="1097,299,1219,324"/>
-<area shape="rect" id="node17" href="$_activity_tracker_interface_8h.html" title="AFML/ActivityTrackerInterface.h" alt="" coords="1009,212,1219,237"/>
-<area shape="rect" id="node18" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="179,205,374,244"/>
-<area shape="rect" id="node9" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="997,465,1210,491"/>
-<area shape="rect" id="node14" href="$_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="684,385,912,411"/>
-<area shape="rect" id="node20" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="314,292,508,331"/>
-<area shape="rect" id="node23" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="179,379,374,417"/>
-<area shape="rect" id="node29" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1859,379,2073,417"/>
-<area shape="rect" id="node32" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="2347,292,2523,331"/>
-<area shape="rect" id="node33" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1919,205,2095,244"/>
-<area shape="rect" id="node38" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="2337,205,2534,244"/>
-<area shape="rect" id="node39" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1345,292,1521,331"/>
-<area shape="rect" id="node34" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1935,292,2111,331"/>
-<area shape="rect" id="node36" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1659,379,1835,417"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AFML/src/FocusManager.cpp" name="/workplace/avs&#45;device&#45;sdk/AFML/src/FocusManager.cpp">
+<area shape="rect" id="node2" href="$_focus_manager_8h.html" title="AFML/FocusManager.h" alt="" coords="841,99,1000,124"/>
+<area shape="rect" id="node27" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1717,92,1893,131"/>
+<area shape="rect" id="node8" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="987,352,1179,391"/>
+<area shape="rect" id="node11" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="692,265,883,304"/>
+<area shape="rect" id="node15" href="$_channel_8h.html" title="AFML/Channel.h" alt="" coords="1097,272,1219,297"/>
+<area shape="rect" id="node17" href="$_activity_tracker_interface_8h.html" title="AFML/ActivityTrackerInterface.h" alt="" coords="1009,185,1219,211"/>
+<area shape="rect" id="node18" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="179,179,374,217"/>
+<area shape="rect" id="node9" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="997,439,1210,464"/>
+<area shape="rect" id="node14" href="$_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="684,359,912,384"/>
+<area shape="rect" id="node20" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="314,265,508,304"/>
+<area shape="rect" id="node23" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="179,352,374,391"/>
+<area shape="rect" id="node29" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1859,352,2073,391"/>
+<area shape="rect" id="node32" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="2347,265,2523,304"/>
+<area shape="rect" id="node33" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1919,179,2095,217"/>
+<area shape="rect" id="node38" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="2337,179,2534,217"/>
+<area shape="rect" id="node39" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1345,265,1521,304"/>
+<area shape="rect" id="node34" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1935,265,2111,304"/>
+<area shape="rect" id="node36" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1659,352,1835,391"/>
 </map>

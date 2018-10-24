@@ -1,17 +1,19 @@
-<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/CapabilitiesDelegate.h" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/CapabilitiesDelegate.h">
-<area shape="rect" id="node8" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="776,145,967,184"/>
-<area shape="rect" id="node9" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="675,232,866,271"/>
-<area shape="rect" id="node11" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="139,232,365,271"/>
-<area shape="rect" id="node13" href="$_capabilities_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesDelegateInterface.h" alt="" coords="384,145,594,184"/>
-<area shape="rect" id="node14" href="$_capabilities_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesObserverInterface.h" alt="" coords="439,232,651,271"/>
-<area shape="rect" id="node15" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="648,319,861,357"/>
-<area shape="rect" id="node16" href="$_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="1042,239,1251,264"/>
-<area shape="rect" id="node22" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2076,145,2270,184"/>
-<area shape="rect" id="node31" href="$_http_put_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPutInterface.h" alt="" coords="1274,232,1474,271"/>
-<area shape="rect" id="node33" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1578,319,1765,357"/>
-<area shape="rect" id="node12" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="237,319,429,357"/>
-<area shape="rect" id="node17" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="935,319,1149,357"/>
-<area shape="rect" id="node25" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1941,232,2135,271"/>
-<area shape="rect" id="node28" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="2024,319,2218,357"/>
-<area shape="rect" id="node32" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="1275,325,1402,351"/>
+<map id="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/CapabilitiesDelegate.h" name="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/CapabilitiesDelegate.h">
+<area shape="rect" id="node8" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="867,119,1058,157"/>
+<area shape="rect" id="node9" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="934,205,1125,244"/>
+<area shape="rect" id="node11" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="1486,205,1712,244"/>
+<area shape="rect" id="node13" href="$_capabilities_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesDelegateInterface.h" alt="" coords="1435,119,1645,157"/>
+<area shape="rect" id="node14" href="$_capabilities_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesObserverInterface.h" alt="" coords="1149,205,1361,244"/>
+<area shape="rect" id="node15" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="25,292,237,331"/>
+<area shape="rect" id="node16" href="$_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="600,212,808,237"/>
+<area shape="rect" id="node22" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2522,119,2716,157"/>
+<area shape="rect" id="node31" href="$_http_put_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPutInterface.h" alt="" coords="300,205,500,244"/>
+<area shape="rect" id="node33" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2024,292,2211,331"/>
+<area shape="rect" id="node34" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="1667,292,1835,331"/>
+<area shape="rect" id="node35" href="$_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="1837,205,2011,244"/>
+<area shape="rect" id="node12" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="514,292,707,331"/>
+<area shape="rect" id="node17" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="883,292,1096,331"/>
+<area shape="rect" id="node25" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2387,205,2581,244"/>
+<area shape="rect" id="node28" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="2470,292,2664,331"/>
+<area shape="rect" id="node32" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="312,299,440,324"/>
 </map>

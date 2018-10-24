@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['escaped_5fmetadata_5fvalue',['ESCAPED_METADATA_VALUE',['../_logger_test_8cpp.html#a7c2f5d286a7b3fbceb44824b41779a3f',1,'LoggerTest.cpp']]]
+  ['debug_5fcount',['DEBUG_COUNT',['../_logger_test_8cpp.html#a03c663beb6b635b8c7b08f10a7fcecbf',1,'LoggerTest.cpp']]]
 ];

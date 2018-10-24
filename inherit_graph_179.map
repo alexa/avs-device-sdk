@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html" title="alexaClientSDK::certified\lSender::MessageStorageInterface" alt="" coords="5,123,230,161"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_stub_message_storage.html" title="alexaClientSDK::capability\lAgents::alerts::test::StubMessage\lStorage" alt="" coords="284,5,505,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1settings_1_1test_1_1_mock_message_storage.html" title="alexaClientSDK::capability\lAgents::settings::test\l::MockMessageStorage" alt="" coords="306,81,483,133"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html" title="alexaClientSDK::certified\lSender::SQLiteMessageStorage" alt="" coords="288,157,501,196"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_mock_message_storage.html" title="alexaClientSDK::certified\lSender::test::MockMessageStorage" alt="" coords="278,220,511,259"/>
+</map>

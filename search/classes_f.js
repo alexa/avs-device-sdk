@@ -2,8 +2,10 @@ var searchData=
 [
   ['pairingagent',['PairingAgent',['../classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_pairing_agent.html',1,'alexaClientSDK::bluetoothImplementations::blueZ']]],
   ['parseresult',['ParseResult',['../structalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_test_parser_observer_1_1_parse_result.html',1,'alexaClientSDK::playlistParser::test::TestParserObserver']]],
+  ['pinghandler',['PingHandler',['../classalexa_client_s_d_k_1_1acl_1_1_ping_handler.html',1,'alexaClientSDK::acl']]],
   ['pipelineinterface',['PipelineInterface',['../classalexa_client_s_d_k_1_1media_player_1_1_pipeline_interface.html',1,'alexaClientSDK::mediaPlayer']]],
   ['playbackcommand',['PlaybackCommand',['../classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_command.html',1,'alexaClientSDK::capabilityAgents::playbackController']]],
+  ['playbackconfiguration',['PlaybackConfiguration',['../classalexa_client_s_d_k_1_1media_player_1_1android_1_1_playback_configuration.html',1,'alexaClientSDK::mediaPlayer::android']]],
   ['playbackcontroller',['PlaybackController',['../classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html',1,'alexaClientSDK::capabilityAgents::playbackController']]],
   ['playbackcontrollertest',['PlaybackControllerTest',['../classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1test_1_1_playback_controller_test.html',1,'alexaClientSDK::capabilityAgents::playbackController::test']]],
   ['playbackhandlerinterface',['PlaybackHandlerInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
@@ -23,5 +25,13 @@ var searchData=
   ['postconnectsendmessageinterface',['PostConnectSendMessageInterface',['../classalexa_client_s_d_k_1_1acl_1_1_post_connect_send_message_interface.html',1,'alexaClientSDK::acl']]],
   ['postconnectsynchronizer',['PostConnectSynchronizer',['../classalexa_client_s_d_k_1_1acl_1_1_post_connect_synchronizer.html',1,'alexaClientSDK::acl']]],
   ['postconnectsynchronizerfactory',['PostConnectSynchronizerFactory',['../classalexa_client_s_d_k_1_1acl_1_1_post_connect_synchronizer_factory.html',1,'alexaClientSDK::acl']]],
-  ['progressreport',['ProgressReport',['../structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream_1_1_progress_report.html',1,'alexaClientSDK::capabilityAgents::audioPlayer::AudioItem::Stream']]]
+  ['progressreport',['ProgressReport',['../structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream_1_1_progress_report.html',1,'alexaClientSDK::capabilityAgents::audioPlayer::AudioItem::Stream']]],
+  ['progresstimer',['ProgressTimer',['../classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html',1,'alexaClientSDK::capabilityAgents::audioPlayer']]],
+  ['progresstimertest',['ProgressTimerTest',['../classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_progress_timer_test.html',1,'alexaClientSDK::capabilityAgents::audioPlayer::test']]],
+  ['promisefuturepair',['PromiseFuturePair',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html',1,'alexaClientSDK::avsCommon::utils']]],
+  ['promisefuturepair_3c_20messagerequestobserverinterface_3a_3astatus_20_3e',['PromiseFuturePair&lt; MessageRequestObserverInterface::Status &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html',1,'alexaClientSDK::avsCommon::utils']]],
+  ['promisefuturepair_3c_20std_3a_3ashared_5fptr_3c_20alexaclientsdk_3a_3aacl_3a_3ahttp2transport_20_3e_20_3e',['PromiseFuturePair&lt; std::shared_ptr&lt; alexaClientSDK::acl::HTTP2Transport &gt; &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html',1,'alexaClientSDK::avsCommon::utils']]],
+  ['promisefuturepair_3c_20std_3a_3ashared_5fptr_3c_20alexaclientsdk_3a_3aavscommon_3a_3asdkinterfaces_3a_3aauthobserverinterface_20_3e_20_3e',['PromiseFuturePair&lt; std::shared_ptr&lt; alexaClientSDK::avsCommon::sdkInterfaces::AuthObserverInterface &gt; &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html',1,'alexaClientSDK::avsCommon::utils']]],
+  ['promisefuturepair_3c_20std_3a_3astring_20_3e',['PromiseFuturePair&lt; std::string &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html',1,'alexaClientSDK::avsCommon::utils']]],
+  ['promisefuturepair_3c_20void_20_3e',['PromiseFuturePair&lt; void &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair_3_01void_01_4.html',1,'alexaClientSDK::avsCommon::utils']]]
 ];

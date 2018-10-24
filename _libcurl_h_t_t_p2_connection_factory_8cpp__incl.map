@@ -1,0 +1,24 @@
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/src/LibcurlUtils/LibcurlHTTP2ConnectionFactory.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/src/LibcurlUtils/LibcurlHTTP2ConnectionFactory.cpp">
+<area shape="rect" id="node2" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="536,205,712,244"/>
+<area shape="rect" id="node21" href="$_libcurl_h_t_t_p2_connection_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/LibcurlHTTP2Connection.h" alt="" coords="1489,205,1689,244"/>
+<area shape="rect" id="node41" href="$_libcurl_h_t_t_p2_connection_factory_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/LibcurlHTTP2ConnectionFactory.h" alt="" coords="1155,119,1383,157"/>
+<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="434,379,648,417"/>
+<area shape="rect" id="node13" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="672,379,848,417"/>
+<area shape="rect" id="node14" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="133,292,309,331"/>
+<area shape="rect" id="node19" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="661,292,858,331"/>
+<area shape="rect" id="node20" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="872,379,1048,417"/>
+<area shape="rect" id="node15" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="40,379,216,417"/>
+<area shape="rect" id="node17" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="40,465,216,504"/>
+<area shape="rect" id="node26" href="$_h_t_t_p2_connection_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ConnectionInterface.h" alt="" coords="1303,292,1501,331"/>
+<area shape="rect" id="node38" href="$_curl_multi_handle_wrapper_8h.html" title="CurlMultiHandleWrapper.h" alt="" coords="1810,385,1987,411"/>
+<area shape="rect" id="node27" href="$_h_t_t_p2_request_config_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestConfig.h" alt="" coords="1325,379,1501,417"/>
+<area shape="rect" id="node29" href="$_h_t_t_p2_request_type_8h.html" title="HTTP2RequestType.h" alt="" coords="1455,472,1608,497"/>
+<area shape="rect" id="node37" href="$_h_t_t_p2_request_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestInterface.h" alt="" coords="1606,379,1786,417"/>
+<area shape="rect" id="node30" href="$_h_t_t_p2_request_source_interface_8h.html" title="HTTP2RequestSourceInterface.h" alt="" coords="1733,472,1952,497"/>
+<area shape="rect" id="node34" href="$_h_t_t_p2_response_sink_interface_8h.html" title="HTTP2ResponseSinkInterface.h" alt="" coords="2027,472,2239,497"/>
+<area shape="rect" id="node32" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="1731,552,1908,591"/>
+<area shape="rect" id="node33" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="1722,639,1899,677"/>
+<area shape="rect" id="node35" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="2115,552,2308,591"/>
+<area shape="rect" id="node36" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="1481,552,1708,591"/>
+<area shape="rect" id="node42" href="$_h_t_t_p2_connection_factory_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ConnectionFactoryInterface.h" alt="" coords="1148,205,1390,244"/>
+</map>

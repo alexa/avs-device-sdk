@@ -1,13 +1,13 @@
-<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/AVSCommon/Utils/src/FormattedAudioStreamAdapter.cpp" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/AVSCommon/Utils/src/FormattedAudioStreamAdapter.cpp">
-<area shape="rect" id="node2" href="$_formatted_audio_stream_adapter_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapter.h" alt="" coords="1105,132,1325,171"/>
-<area shape="rect" id="node8" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="480,132,656,171"/>
-<area shape="rect" id="node5" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1205,312,1427,337"/>
-<area shape="rect" id="node7" href="$_formatted_audio_stream_adapter_listener_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapterListener.h" alt="" coords="1252,219,1519,257"/>
-<area shape="rect" id="node13" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="711,219,925,257"/>
-<area shape="rect" id="node17" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="22,305,198,344"/>
-<area shape="rect" id="node18" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="355,219,531,257"/>
-<area shape="rect" id="node22" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="83,219,280,257"/>
-<area shape="rect" id="node23" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1166,392,1342,431"/>
-<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="552,305,728,344"/>
-<area shape="rect" id="node20" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="552,392,728,431"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/src/FormattedAudioStreamAdapter.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/src/FormattedAudioStreamAdapter.cpp">
+<area shape="rect" id="node2" href="$_formatted_audio_stream_adapter_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapter.h" alt="" coords="1105,105,1325,144"/>
+<area shape="rect" id="node8" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="480,105,656,144"/>
+<area shape="rect" id="node5" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1205,285,1427,311"/>
+<area shape="rect" id="node7" href="$_formatted_audio_stream_adapter_listener_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapterListener.h" alt="" coords="1252,192,1519,231"/>
+<area shape="rect" id="node13" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="711,192,925,231"/>
+<area shape="rect" id="node17" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="22,279,198,317"/>
+<area shape="rect" id="node18" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="355,192,531,231"/>
+<area shape="rect" id="node22" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="83,192,280,231"/>
+<area shape="rect" id="node23" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1166,365,1342,404"/>
+<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="552,279,728,317"/>
+<area shape="rect" id="node20" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="552,365,728,404"/>
 </map>

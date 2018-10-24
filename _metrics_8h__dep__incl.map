@@ -1,8 +1,8 @@
-<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics.h" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics.h">
-<area shape="rect" id="node2" href="$_directive_sequencer_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/ADSL/src/DirectiveSequencer.cpp" alt="" coords="5,139,282,204"/>
-<area shape="rect" id="node3" href="$_message_interpreter_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/ADSL/src/MessageInterpreter.cpp" alt="" coords="306,139,582,204"/>
-<area shape="rect" id="node4" href="$_event_builder_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/AVSCommon/AVS/src\l/EventBuilder.cpp" alt="" coords="606,132,813,211"/>
-<area shape="rect" id="node5" href="$_metrics_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/AVSCommon/Utils/src\l/Metrics.cpp" alt="" coords="836,132,1043,211"/>
-<area shape="rect" id="node6" href="$_audio_input_processor_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="1067,132,1287,211"/>
-<area shape="rect" id="node7" href="$_speech_synthesizer_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/src/SpeechSynthesizer.cpp" alt="" coords="1312,132,1616,211"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics.h">
+<area shape="rect" id="node2" href="$_directive_sequencer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ADSL/src/DirectiveSequencer.cpp" alt="" coords="5,132,256,171"/>
+<area shape="rect" id="node3" href="$_message_interpreter_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ADSL/src/MessageInterpreter.cpp" alt="" coords="280,132,531,171"/>
+<area shape="rect" id="node4" href="$_event_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/EventBuilder.cpp" alt="" coords="555,125,736,177"/>
+<area shape="rect" id="node5" href="$_metrics_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Metrics.cpp" alt="" coords="760,125,920,177"/>
+<area shape="rect" id="node6" href="$_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="944,125,1164,177"/>
+<area shape="rect" id="node7" href="$_speech_synthesizer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/src\l/SpeechSynthesizer.cpp" alt="" coords="1187,119,1352,184"/>
 </map>

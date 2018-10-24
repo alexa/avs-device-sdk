@@ -1,8 +1,9 @@
 <map id="alexaClientSDK::avsCommon::utils::logger::Logger" name="alexaClientSDK::avsCommon::utils::logger::Logger">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_console_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::ConsoleLogger" alt="" coords="250,5,447,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_module_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::ModuleLogger" alt="" coords="250,68,447,107"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lMockLogger" alt="" coords="250,131,447,183"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_test_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lTestLogger" alt="" coords="250,207,447,259"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1sample_app_1_1_console_printer.html" title="alexaClientSDK::sampleApp\l::ConsolePrinter" alt="" coords="254,283,443,321"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_module_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lMockModuleLogger" alt="" coords="495,61,692,113"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1_android_logger.html" title="alexaClientSDK::application\lUtilities::androidUtilities\l::AndroidLogger" alt="" coords="256,5,442,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_console_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::ConsoleLogger" alt="" coords="250,81,447,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_module_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::ModuleLogger" alt="" coords="250,144,447,183"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lMockLogger" alt="" coords="250,207,447,259"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_test_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lTestLogger" alt="" coords="250,283,447,335"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1sample_app_1_1_console_printer.html" title="alexaClientSDK::sampleApp\l::ConsolePrinter" alt="" coords="254,359,443,397"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_module_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lMockModuleLogger" alt="" coords="495,137,692,189"/>
 </map>

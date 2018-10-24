@@ -1,21 +1,21 @@
-<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/AVSCommon/AVS/src/DialogUXStateAggregator.cpp" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/AVSCommon/AVS/src/DialogUXStateAggregator.cpp">
-<area shape="rect" id="node2" href="$_dialog_u_x_state_aggregator_8h.html" title="AVSCommon/AVS/DialogUXState\lAggregator.h" alt="" coords="908,132,1130,171"/>
-<area shape="rect" id="node5" href="$_audio_input_processor_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioInputProcessorObserver\lInterface.h" alt="" coords="2526,305,2730,357"/>
-<area shape="rect" id="node7" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="5,312,253,351"/>
-<area shape="rect" id="node9" href="$_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="2272,312,2502,351"/>
-<area shape="rect" id="node10" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="2222,405,2419,444"/>
-<area shape="rect" id="node11" href="$_speech_synthesizer_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeechSynthesizerObserverInterface.h" alt="" coords="398,219,656,257"/>
-<area shape="rect" id="node12" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="680,219,875,257"/>
-<area shape="rect" id="node24" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="932,219,1106,257"/>
-<area shape="rect" id="node15" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="736,312,931,351"/>
-<area shape="rect" id="node19" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="492,405,687,444"/>
-<area shape="rect" id="node25" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1433,312,1609,351"/>
-<area shape="rect" id="node26" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1433,405,1609,444"/>
-<area shape="rect" id="node29" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1208,492,1422,531"/>
-<area shape="rect" id="node31" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1892,579,2068,617"/>
-<area shape="rect" id="node32" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1496,492,1672,531"/>
-<area shape="rect" id="node37" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1747,492,1944,531"/>
-<area shape="rect" id="node38" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="971,665,1147,704"/>
-<area shape="rect" id="node33" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1496,579,1672,617"/>
-<area shape="rect" id="node35" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1589,665,1765,704"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/src/DialogUXStateAggregator.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/src/DialogUXStateAggregator.cpp">
+<area shape="rect" id="node2" href="$_dialog_u_x_state_aggregator_8h.html" title="AVSCommon/AVS/DialogUXState\lAggregator.h" alt="" coords="1858,105,2080,144"/>
+<area shape="rect" id="node6" href="$_audio_input_processor_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioInputProcessorObserver\lInterface.h" alt="" coords="1937,279,2140,331"/>
+<area shape="rect" id="node8" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="2275,379,2523,417"/>
+<area shape="rect" id="node10" href="$_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="1857,552,2087,591"/>
+<area shape="rect" id="node12" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="2164,285,2361,324"/>
+<area shape="rect" id="node13" href="$_speech_synthesizer_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeechSynthesizerObserverInterface.h" alt="" coords="2435,192,2693,231"/>
+<area shape="rect" id="node14" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="167,192,361,231"/>
+<area shape="rect" id="node25" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="622,192,796,231"/>
+<area shape="rect" id="node17" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="167,285,361,324"/>
+<area shape="rect" id="node20" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="167,379,361,417"/>
+<area shape="rect" id="node26" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="929,285,1105,324"/>
+<area shape="rect" id="node27" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="929,379,1105,417"/>
+<area shape="rect" id="node30" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1174,465,1388,504"/>
+<area shape="rect" id="node32" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1571,552,1747,591"/>
+<area shape="rect" id="node33" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="975,465,1151,504"/>
+<area shape="rect" id="node37" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1463,465,1660,504"/>
+<area shape="rect" id="node38" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="725,639,901,677"/>
+<area shape="rect" id="node34" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1045,552,1221,591"/>
+<area shape="rect" id="node35" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="985,639,1161,677"/>
 </map>

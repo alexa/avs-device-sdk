@@ -1,4 +1,10 @@
-<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/SampleApp/include/SampleApp/GuiRenderer.h" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/SampleApp/include/SampleApp/GuiRenderer.h">
-<area shape="rect" id="node2" href="$_gui_renderer_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/src/GuiRenderer.cpp" alt="" coords="5,132,276,197"/>
-<area shape="rect" id="node3" href="$_sample_application_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="300,132,606,197"/>
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/GuiRenderer.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/GuiRenderer.h">
+<area shape="rect" id="node2" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="230,105,453,157"/>
+<area shape="rect" id="node4" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="310,305,530,357"/>
+<area shape="rect" id="node9" href="$_gui_renderer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/GuiRenderer.cpp" alt="" coords="528,112,773,151"/>
+<area shape="rect" id="node3" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="5,205,224,257"/>
+<area shape="rect" id="node8" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="247,205,454,257"/>
+<area shape="rect" id="node7" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="14,305,216,357"/>
+<area shape="rect" id="node5" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="190,405,388,444"/>
+<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="412,405,692,444"/>
 </map>

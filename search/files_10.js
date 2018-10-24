@@ -19,6 +19,13 @@ var searchData=
   ['requiresshutdown_2ecpp',['RequiresShutdown.cpp',['../_requires_shutdown_8cpp.html',1,'']]],
   ['requiresshutdown_2eh',['RequiresShutdown.h',['../_requires_shutdown_8h.html',1,'']]],
   ['requiresshutdowntest_2ecpp',['RequiresShutdownTest.cpp',['../_requires_shutdown_test_8cpp.html',1,'']]],
+  ['result_2eh',['Result.h',['../_result_8h.html',1,'']]],
   ['retrytimer_2ecpp',['RetryTimer.cpp',['../_retry_timer_8cpp.html',1,'']]],
-  ['retrytimer_2eh',['RetryTimer.h',['../_retry_timer_8h.html',1,'']]]
+  ['retrytimer_2eh',['RetryTimer.h',['../_retry_timer_8h.html',1,'']]],
+  ['revokeauthorizationhandler_2ecpp',['RevokeAuthorizationHandler.cpp',['../_revoke_authorization_handler_8cpp.html',1,'']]],
+  ['revokeauthorizationhandler_2eh',['RevokeAuthorizationHandler.h',['../_revoke_authorization_handler_8h.html',1,'']]],
+  ['revokeauthorizationhandlertest_2ecpp',['RevokeAuthorizationHandlerTest.cpp',['../_revoke_authorization_handler_test_8cpp.html',1,'']]],
+  ['revokeauthorizationobserver_2ecpp',['RevokeAuthorizationObserver.cpp',['../_revoke_authorization_observer_8cpp.html',1,'']]],
+  ['revokeauthorizationobserver_2eh',['RevokeAuthorizationObserver.h',['../_revoke_authorization_observer_8h.html',1,'']]],
+  ['revokeauthorizationobserverinterface_2eh',['RevokeAuthorizationObserverInterface.h',['../_revoke_authorization_observer_interface_8h.html',1,'']]]
 ];

@@ -1,15 +1,15 @@
-<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/ACL/include/ACL/Transport/MessageRouterInterface.h" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/ACL/include/ACL/Transport/MessageRouterInterface.h">
-<area shape="rect" id="node5" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="146,132,340,171"/>
-<area shape="rect" id="node15" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="548,305,736,344"/>
-<area shape="rect" id="node16" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1228,312,1477,337"/>
-<area shape="rect" id="node26" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1234,219,1425,257"/>
-<area shape="rect" id="node27" href="$_message_router_observer_interface_8h.html" title="ACL/Transport/MessageRouter\lObserverInterface.h" alt="" coords="933,132,1138,171"/>
-<area shape="rect" id="node29" href="$_transport_interface_8h.html" title="ACL/Transport/TransportInterface.h" alt="" coords="554,225,785,251"/>
-<area shape="rect" id="node30" href="$_transport_observer_interface_8h.html" title="ACL/Transport/TransportObserver\lInterface.h" alt="" coords="615,132,837,171"/>
-<area shape="rect" id="node7" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="285,219,479,257"/>
-<area shape="rect" id="node10" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="146,305,340,344"/>
-<area shape="rect" id="node20" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1624,392,1825,431"/>
-<area shape="rect" id="node24" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1063,392,1309,431"/>
-<area shape="rect" id="node23" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1508,479,1669,517"/>
-<area shape="rect" id="node28" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="911,219,1159,257"/>
+<map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/MessageRouterInterface.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/MessageRouterInterface.h">
+<area shape="rect" id="node5" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="146,105,340,144"/>
+<area shape="rect" id="node15" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="548,279,736,317"/>
+<area shape="rect" id="node16" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1228,285,1477,311"/>
+<area shape="rect" id="node27" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1234,192,1425,231"/>
+<area shape="rect" id="node28" href="$_message_router_observer_interface_8h.html" title="ACL/Transport/MessageRouter\lObserverInterface.h" alt="" coords="933,105,1138,144"/>
+<area shape="rect" id="node30" href="$_transport_interface_8h.html" title="ACL/Transport/TransportInterface.h" alt="" coords="554,199,785,224"/>
+<area shape="rect" id="node31" href="$_transport_observer_interface_8h.html" title="ACL/Transport/TransportObserver\lInterface.h" alt="" coords="615,105,837,144"/>
+<area shape="rect" id="node7" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="285,192,479,231"/>
+<area shape="rect" id="node10" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="146,279,340,317"/>
+<area shape="rect" id="node20" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1624,365,1825,404"/>
+<area shape="rect" id="node25" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1063,365,1309,404"/>
+<area shape="rect" id="node24" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1576,452,1737,491"/>
+<area shape="rect" id="node29" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="911,192,1159,231"/>
 </map>

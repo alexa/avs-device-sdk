@@ -1,10 +1,12 @@
-<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/SampleApp/include/SampleApp/ConsolePrinter.h" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/SampleApp/include/SampleApp/ConsolePrinter.h">
-<area shape="rect" id="node2" href="$_sample_application_8h.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="152,132,371,211"/>
-<area shape="rect" id="node5" href="$_console_printer_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/src/ConsolePrinter.cpp" alt="" coords="395,139,678,204"/>
-<area shape="rect" id="node6" href="$_gui_renderer_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/src/GuiRenderer.cpp" alt="" coords="702,139,973,204"/>
-<area shape="rect" id="node7" href="$_port_audio_microphone_wrapper_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/src/PortAudioMicrophone\lWrapper.cpp" alt="" coords="998,132,1296,211"/>
-<area shape="rect" id="node8" href="$_u_i_manager_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/src/UIManager.cpp" alt="" coords="1321,139,1581,204"/>
-<area shape="rect" id="node9" href="$_user_input_manager_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/src/UserInputManager.cpp" alt="" coords="1605,139,1910,204"/>
-<area shape="rect" id="node3" href="$main_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/src/main.cpp" alt="" coords="5,259,230,324"/>
-<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/private/tmp/release\l/1.8.1/avs&#45;cpp&#45;sdk&#45;tools\l/cm/autoCM_privateRepo/avs\l&#45;cpp&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="254,259,560,324"/>
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/ConsolePrinter.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/ConsolePrinter.h">
+<area shape="rect" id="node2" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="126,105,345,157"/>
+<area shape="rect" id="node5" href="$_console_printer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/ConsolePrinter.cpp" alt="" coords="369,112,626,151"/>
+<area shape="rect" id="node6" href="$_console_reader_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/ConsoleReader.cpp" alt="" coords="650,112,911,151"/>
+<area shape="rect" id="node7" href="$_gui_renderer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/GuiRenderer.cpp" alt="" coords="935,112,1180,151"/>
+<area shape="rect" id="node8" href="$_port_audio_microphone_wrapper_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/PortAudio\lMicrophoneWrapper.cpp" alt="" coords="1204,105,1407,157"/>
+<area shape="rect" id="node9" href="$_sample_equalizer_mode_controller_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleEqualizer\lModeController.cpp" alt="" coords="1431,105,1676,157"/>
+<area shape="rect" id="node10" href="$_u_i_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UIManager.cpp" alt="" coords="1701,112,1935,151"/>
+<area shape="rect" id="node11" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="1959,105,2162,157"/>
+<area shape="rect" id="node3" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="5,205,204,244"/>
+<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="227,205,507,244"/>
 </map>

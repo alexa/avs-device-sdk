@@ -1,13 +1,13 @@
-<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/CapabilityAgents/Alerts/include/Alerts/Renderer/Renderer.h" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/CapabilityAgents/Alerts/include/Alerts/Renderer/Renderer.h">
-<area shape="rect" id="node2" href="$_renderer_interface_8h.html" title="Alerts/Renderer/Renderer\lInterface.h" alt="" coords="328,145,502,184"/>
-<area shape="rect" id="node3" href="$_renderer_observer_interface_8h.html" title="Alerts/Renderer/Renderer\lObserverInterface.h" alt="" coords="24,232,198,271"/>
-<area shape="rect" id="node9" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="526,145,720,184"/>
-<area shape="rect" id="node19" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1211,232,1419,271"/>
-<area shape="rect" id="node26" href="$_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="822,145,1039,184"/>
-<area shape="rect" id="node12" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="526,232,720,271"/>
-<area shape="rect" id="node15" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="239,319,433,357"/>
-<area shape="rect" id="node21" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1479,319,1681,357"/>
-<area shape="rect" id="node24" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1099,325,1320,351"/>
-<area shape="rect" id="node23" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1610,405,1772,444"/>
-<area shape="rect" id="node27" href="$_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="979,232,1187,271"/>
+<map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Alerts/include/Alerts/Renderer/Renderer.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Alerts/include/Alerts/Renderer/Renderer.h">
+<area shape="rect" id="node2" href="$_renderer_interface_8h.html" title="Alerts/Renderer/Renderer\lInterface.h" alt="" coords="249,119,423,157"/>
+<area shape="rect" id="node3" href="$_renderer_observer_interface_8h.html" title="Alerts/Renderer/Renderer\lObserverInterface.h" alt="" coords="23,205,197,244"/>
+<area shape="rect" id="node9" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="506,119,701,157"/>
+<area shape="rect" id="node19" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1030,205,1239,244"/>
+<area shape="rect" id="node26" href="$_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="727,119,944,157"/>
+<area shape="rect" id="node12" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="608,205,802,244"/>
+<area shape="rect" id="node15" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="473,292,668,331"/>
+<area shape="rect" id="node21" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1314,292,1515,331"/>
+<area shape="rect" id="node25" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1539,299,1761,324"/>
+<area shape="rect" id="node24" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1381,379,1543,417"/>
+<area shape="rect" id="node27" href="$_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="1503,205,1712,244"/>
 </map>

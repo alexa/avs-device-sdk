@@ -1,7 +1,7 @@
-<map id="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h" name="/private/tmp/release/1.8.1/avs&#45;cpp&#45;sdk&#45;tools/cm/autoCM_privateRepo/avs&#45;cpp&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h">
-<area shape="rect" id="node3" href="$_bluetooth_service_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/Bluetooth\lServiceInterface.h" alt="" coords="63,145,259,197"/>
-<area shape="rect" id="node6" href="$_formatted_audio_stream_adapter_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapter.h" alt="" coords="357,152,576,191"/>
-<area shape="rect" id="node4" href="$_s_d_p_record_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/SDPRecord\lInterface.h" alt="" coords="5,245,216,297"/>
-<area shape="rect" id="node8" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="482,345,704,371"/>
-<area shape="rect" id="node10" href="$_formatted_audio_stream_adapter_listener_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapterListener.h" alt="" coords="333,252,600,291"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h">
+<area shape="rect" id="node3" href="$_bluetooth_service_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/Bluetooth\lServiceInterface.h" alt="" coords="63,119,259,171"/>
+<area shape="rect" id="node6" href="$_formatted_audio_stream_adapter_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapter.h" alt="" coords="357,125,576,164"/>
+<area shape="rect" id="node4" href="$_s_d_p_record_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/SDPRecord\lInterface.h" alt="" coords="5,219,216,271"/>
+<area shape="rect" id="node8" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="482,319,704,344"/>
+<area shape="rect" id="node10" href="$_formatted_audio_stream_adapter_listener_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapterListener.h" alt="" coords="333,225,600,264"/>
 </map>

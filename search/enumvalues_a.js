@@ -1,5 +1,9 @@
 var searchData=
 [
+  ['layout_5f5point1',['LAYOUT_5POINT1',['../classalexa_client_s_d_k_1_1media_player_1_1android_1_1_playback_configuration.html#ad26d422a2e3694dbf4d5eeaf5ff6e233a7a1168d445bc31419dfc35992e3c506c',1,'alexaClientSDK::mediaPlayer::android::PlaybackConfiguration']]],
+  ['layout_5fmono',['LAYOUT_MONO',['../classalexa_client_s_d_k_1_1media_player_1_1android_1_1_playback_configuration.html#ad26d422a2e3694dbf4d5eeaf5ff6e233a6c36cb88a621f37f006a753f97f51b97',1,'alexaClientSDK::mediaPlayer::android::PlaybackConfiguration']]],
+  ['layout_5fstereo',['LAYOUT_STEREO',['../classalexa_client_s_d_k_1_1media_player_1_1android_1_1_playback_configuration.html#ad26d422a2e3694dbf4d5eeaf5ff6e233a547376f62092d7f2bf12034195f8518c',1,'alexaClientSDK::mediaPlayer::android::PlaybackConfiguration']]],
+  ['layout_5fsurround',['LAYOUT_SURROUND',['../classalexa_client_s_d_k_1_1media_player_1_1android_1_1_playback_configuration.html#ad26d422a2e3694dbf4d5eeaf5ff6e233aeb35dc2f98d7ae2c0c128982d6e656be',1,'alexaClientSDK::mediaPlayer::android::PlaybackConfiguration']]],
   ['listening',['LISTENING',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066ac0ff938e396e72c225bd66562b80a77e',1,'alexaClientSDK::avsCommon::sdkInterfaces::DialogUXStateObserverInterface']]],
   ['little',['LITTLE',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html#a0415c3e88ef5a43e176055c88e554b21a1314341b466dcb5e2c880b76414c49fe',1,'alexaClientSDK::avsCommon::utils::AudioFormat']]],
   ['local_5fapi',['LOCAL_API',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html#a38d6a50cc5799f07612827e1a163babba72cc8b4c3036490c66ab2fde91b3ced2',1,'alexaClientSDK::avsCommon::sdkInterfaces::SpeakerManagerObserverInterface']]],

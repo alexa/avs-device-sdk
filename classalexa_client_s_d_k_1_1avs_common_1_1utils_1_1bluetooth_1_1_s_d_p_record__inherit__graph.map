@@ -1,6 +1,7 @@
 <map id="alexaClientSDK::avsCommon::utils::bluetooth::SDPRecord" name="alexaClientSDK::avsCommon::utils::bluetooth::SDPRecord">
 <area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a2_d_p_sink_record.html" title="A SDP record representing A2DPSink. " alt="" coords="506,5,732,44"/>
 <area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a2_d_p_source_record.html" title="A SDP record representing A2DPSource. " alt="" coords="519,68,718,120"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a_v_r_c_p_target_record.html" title="A SDP record representing AVRCPTarget. " alt="" coords="516,144,721,196"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_s_d_p_record_interface.html" title="Used to implement ServiceDiscoveryProtocol records. This allows identification of the service..." alt="" coords="5,68,213,120"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a_v_r_c_p_controller_record.html" title="A SDP record representing AVRCPController. " alt="" coords="506,144,731,196"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a_v_r_c_p_target_record.html" title="A SDP record representing AVRCPTarget. " alt="" coords="516,220,721,272"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_s_d_p_record_interface.html" title="Used to implement ServiceDiscoveryProtocol records. This allows identification of the service..." alt="" coords="5,107,213,159"/>
 </map>

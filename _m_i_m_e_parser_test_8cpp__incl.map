@@ -1,0 +1,26 @@
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/MIMEParserTest.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/MIMEParserTest.cpp">
+<area shape="rect" id="node10" href="$_utils_2test_2_a_v_s_common_2_utils_2_common_2_common_8h.html" title="AVSCommon/Utils/Common\l/Common.h" alt="" coords="1840,212,2029,251"/>
+<area shape="rect" id="node11" href="$_h_t_t_p2_mime_request_encoder_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2MimeRequestEncoder.h" alt="" coords="992,212,1202,251"/>
+<area shape="rect" id="node21" href="$_h_t_t_p2_mime_response_decoder_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2MimeResponseDecoder.h" alt="" coords="506,112,726,151"/>
+<area shape="rect" id="node28" href="$_mock_h_t_t_p2_mime_request_encode_source_8h.html" title="AVSCommon/Utils/HTTP2\l/MockHTTP2MimeRequestEncode\lSource.h" alt="" coords="1437,205,1664,257"/>
+<area shape="rect" id="node29" href="$_mock_h_t_t_p2_mime_response_decode_sink_8h.html" title="AVSCommon/Utils/HTTP2\l/MockHTTP2MimeResponseDecode\lSink.h" alt="" coords="1646,105,1884,157"/>
+<area shape="rect" id="node30" href="$_http_response_codes_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpResponseCodes.h" alt="" coords="2155,112,2354,151"/>
+<area shape="rect" id="node31" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2553,112,2729,151"/>
+<area shape="rect" id="node14" href="$_h_t_t_p2_mime_request_source_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2MimeRequestSourceInterface.h" alt="" coords="1022,305,1277,344"/>
+<area shape="rect" id="node20" href="$_h_t_t_p2_request_source_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestSourceInterface.h" alt="" coords="775,305,998,344"/>
+<area shape="rect" id="node17" href="$_h_t_t_p2_get_mime_headers_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2GetMimeHeadersResult.h" alt="" coords="1139,392,1360,431"/>
+<area shape="rect" id="node19" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="837,392,1014,431"/>
+<area shape="rect" id="node18" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="881,479,1058,517"/>
+<area shape="rect" id="node23" href="$_h_t_t_p2_mime_response_sink_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2MimeResponseSinkInterface.h" alt="" coords="491,212,740,251"/>
+<area shape="rect" id="node25" href="$_h_t_t_p2_response_sink_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseSinkInterface.h" alt="" coords="261,305,477,344"/>
+<area shape="rect" id="node26" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="336,392,528,431"/>
+<area shape="rect" id="node27" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="35,392,261,431"/>
+<area shape="rect" id="node33" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2553,212,2729,251"/>
+<area shape="rect" id="node37" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2704,305,2917,344"/>
+<area shape="rect" id="node40" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1941,392,2117,431"/>
+<area shape="rect" id="node41" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2352,305,2528,344"/>
+<area shape="rect" id="node45" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="2027,305,2224,344"/>
+<area shape="rect" id="node46" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="3128,479,3304,517"/>
+<area shape="rect" id="node42" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2141,392,2317,431"/>
+<area shape="rect" id="node43" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="2141,479,2317,517"/>
+</map>

@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['inmemoryequalizerconfiguration',['InMemoryEqualizerConfiguration',['../classalexa_client_s_d_k_1_1equalizer_1_1_in_memory_equalizer_configuration.html',1,'alexaClientSDK::equalizer']]],
+  ['inmemoryequalizerconfigurationtest',['InMemoryEqualizerConfigurationTest',['../classalexa_client_s_d_k_1_1equalizer_1_1test_1_1_in_memory_equalizer_configuration_test.html',1,'alexaClientSDK::equalizer::test']]],
   ['inprocessattachment',['InProcessAttachment',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment.html',1,'alexaClientSDK::avsCommon::avs::attachment']]],
   ['inprocessattachmentreader',['InProcessAttachmentReader',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html',1,'alexaClientSDK::avsCommon::avs::attachment']]],
   ['inprocessattachmentwriter',['InProcessAttachmentWriter',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_writer.html',1,'alexaClientSDK::avsCommon::avs::attachment']]],

@@ -1,0 +1,4 @@
+<map id="alexaClientSDK::bluetoothImplementations::blueZ::BlueZA2DPSink" name="alexaClientSDK::bluetoothImplementations::blueZ::BlueZA2DPSink">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a2_d_p_sink_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::bluetooth\l::services::A2DPSinkInterface" alt="" coords="291,5,489,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_bluetooth_service_interface.html" title="Interface representing a BluetoothService. " alt="" coords="5,5,243,57"/>
+</map>

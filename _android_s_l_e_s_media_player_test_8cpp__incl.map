@@ -1,0 +1,33 @@
+<map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/test/AndroidSLESMediaPlayerTest.cpp" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/test/AndroidSLESMediaPlayerTest.cpp">
+<area shape="rect" id="node9" href="$_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="2721,492,2923,531"/>
+<area shape="rect" id="node12" href="$_in_process_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachment.h" alt="" coords="2646,299,2848,337"/>
+<area shape="rect" id="node22" href="$_h_t_t_p_content_fetcher_factory_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HTTPContentFetcherFactory.h" alt="" coords="736,205,942,244"/>
+<area shape="rect" id="node25" href="$_logger_sink_manager_8h.html" title="AVSCommon/Utils/Logger\l/LoggerSinkManager.h" alt="" coords="2110,399,2286,437"/>
+<area shape="rect" id="node27" href="$_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="308,299,525,337"/>
+<area shape="rect" id="node30" href="$_android_s_l_e_s_media_player_8h.html" title="AndroidSLESMediaPlayer\l/AndroidSLESMediaPlayer.h" alt="" coords="1682,112,1871,151"/>
+<area shape="rect" id="node36" href="$_android_s_l_e_s_engine_8h.html" title="AndroidUtilities/Android\lSLESEngine.h" alt="" coords="1310,299,1470,337"/>
+<area shape="rect" id="node44" href="$_f_fmpeg_decoder_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegDecoder.h" alt="" coords="3194,399,3370,437"/>
+<area shape="rect" id="node48" href="$_android_logger_8h.html" title="AndroidUtilities/Android\lLogger.h" alt="" coords="2667,205,2827,244"/>
+<area shape="rect" id="node49" href="$med__alerts__notification__01_8___t_t_h___8mp3_8h.html" title="Audio/Data/med_alerts\l_notification_01._TTH\l_.mp3.h" alt="" coords="3709,105,3866,157"/>
+<area shape="rect" id="node50" href="$med__system__alerts__melodic__01__short_8___t_t_h___8wav_8h.html" title="Audio/Data/med_system\l_alerts_melodic_01_short.\l_TTH_.wav.h" alt="" coords="3890,105,4068,157"/>
+<area shape="rect" id="node13" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="2692,399,2893,437"/>
+<area shape="rect" id="node17" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="2433,492,2595,531"/>
+<area shape="rect" id="node20" href="$_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="2411,399,2617,437"/>
+<area shape="rect" id="node21" href="$_in_process_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h" alt="" coords="2917,399,3119,437"/>
+<area shape="rect" id="node23" href="$_h_t_t_p_content_fetcher_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface.h" alt="" coords="788,399,1003,437"/>
+<area shape="rect" id="node24" href="$_h_t_t_p_content_fetcher_interface_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface\lFactoryInterface.h" alt="" coords="851,292,1054,344"/>
+<area shape="rect" id="node26" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2030,492,2206,531"/>
+<area shape="rect" id="node28" href="$_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="35,399,244,437"/>
+<area shape="rect" id="node29" href="$_media_player_interface_8h.html" title="MediaPlayerInterface.h" alt="" coords="1179,405,1337,431"/>
+<area shape="rect" id="node32" href="$_equalizer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerInterface.h" alt="" coords="1748,205,1939,244"/>
+<area shape="rect" id="node33" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="1963,205,2153,244"/>
+<area shape="rect" id="node34" href="$_iterative_playlist_parser_interface_8h.html" title="AVSCommon/Utils/Playlist\lParser/IterativePlaylistParser\lInterface.h" alt="" coords="419,392,612,444"/>
+<area shape="rect" id="node35" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1696,399,1884,437"/>
+<area shape="rect" id="node37" href="$_android_s_l_e_s_object_8h.html" title="AndroidUtilities/Android\lSLESObject.h" alt="" coords="1411,399,1571,437"/>
+<area shape="rect" id="node38" href="$_equalizer_band_mapper_interface_8h.html" title="EqualizerImplementations\l/EqualizerBandMapperInterface.h" alt="" coords="2177,205,2397,244"/>
+<area shape="rect" id="node39" href="$_url_content_to_attachment_converter_8h.html" title="PlaylistParser/UrlContent\lToAttachmentConverter.h" alt="" coords="2421,205,2593,244"/>
+<area shape="rect" id="node40" href="$_android_s_l_e_s_media_queue_8h.html" title="AndroidSLESMediaPlayer\l/AndroidSLESMediaQueue.h" alt="" coords="2252,299,2445,337"/>
+<area shape="rect" id="node43" href="$_playback_configuration_8h.html" title="AndroidSLESMediaPlayer\l/PlaybackConfiguration.h" alt="" coords="3910,492,4086,531"/>
+<area shape="rect" id="node41" href="$_decoder_interface_8h.html" title="AndroidSLESMediaPlayer\l/DecoderInterface.h" alt="" coords="3710,492,3886,531"/>
+<area shape="rect" id="node47" href="$_f_fmpeg_input_controller_interface_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegInputControllerInterface.h" alt="" coords="3360,492,3585,531"/>
+</map>
