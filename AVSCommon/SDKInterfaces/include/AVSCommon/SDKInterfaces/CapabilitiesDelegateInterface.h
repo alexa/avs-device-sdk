@@ -85,6 +85,12 @@ public:
      */
     virtual void removeCapabilitiesObserver(
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface> observer) = 0;
+
+    /**
+     * Invalidates the capabilities reported to the AVS last. Capabilities information should be rebuilt and reported
+     * to the AVS during the next synchronization.
+     */
+    virtual void invalidateCapabilities() = 0;
 };
 
 }  // namespace sdkInterfaces

@@ -165,6 +165,11 @@ public:
     void printResetConfirmation();
 
     /**
+     * Prints a confirmation message prompting the user to confirm their intent to reauthorize the device.
+     */
+    void printReauthorizeConfirmation();
+
+    /**
      * Prints an error message while trying to configure ESP in a device where ESP is not supported.
      */
     void printESPNotSupported();

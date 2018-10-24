@@ -5,6 +5,7 @@ find_package(CURL ${CURL_PACKAGE_CONFIG})
 add_definitions("-DACSDK_LOG_MODULE=avsCommon")
 
 add_subdirectory("AVS")
+add_subdirectory("SDKInterfaces")
 add_subdirectory("Utils")
 
 add_library(AVSCommon SHARED
@@ -36,6 +37,10 @@ add_library(AVSCommon SHARED
     Utils/src/FileUtils.cpp
     Utils/src/FormattedAudioStreamAdapter.cpp
     Utils/src/JSONUtils.cpp
+    Utils/src/HTTP2/HTTP2GetMimeHeadersResult.cpp
+    Utils/src/HTTP2/HTTP2MimeRequestEncoder.cpp
+    Utils/src/HTTP2/HTTP2MimeResponseDecoder.cpp
+    Utils/src/HTTP2/HTTP2SendDataResult.cpp
     Utils/src/LibcurlUtils/CallbackData.cpp
     Utils/src/LibcurlUtils/CurlEasyHandleWrapper.cpp
     Utils/src/LibcurlUtils/CurlMultiHandleWrapper.cpp
@@ -44,6 +49,9 @@ add_library(AVSCommon SHARED
     Utils/src/LibcurlUtils/HttpPut.cpp
     Utils/src/LibcurlUtils/HTTPResponse.cpp
     Utils/src/LibcurlUtils/LibCurlHttpContentFetcher.cpp
+    Utils/src/LibcurlUtils/LibcurlHTTP2Connection.cpp
+    Utils/src/LibcurlUtils/LibcurlHTTP2ConnectionFactory.cpp
+    Utils/src/LibcurlUtils/LibcurlHTTP2Request.cpp
     Utils/src/LibcurlUtils/LibcurlUtils.cpp
     Utils/src/Logger/ConsoleLogger.cpp
     Utils/src/Logger/Level.cpp
@@ -62,6 +70,7 @@ add_library(AVSCommon SHARED
     Utils/src/RequiresShutdown.cpp
     Utils/src/RetryTimer.cpp
     Utils/src/SafeCTimeAccess.cpp
+    Utils/src/Stopwatch.cpp
     Utils/src/Stream/StreamFunctions.cpp
     Utils/src/Stream/Streambuf.cpp
     Utils/src/StringUtils.cpp
@@ -77,6 +86,7 @@ target_include_directories(AVSCommon PUBLIC
     "${AVSCommon_SOURCE_DIR}/SDKInterfaces/include"
     "${AVSCommon_SOURCE_DIR}/Utils/include"
     "${RAPIDJSON_INCLUDE_DIR}"
+    "${MultipartParser_SOURCE_DIR}"
     ${CURL_INCLUDE_DIRS})
 
 target_link_libraries(AVSCommon

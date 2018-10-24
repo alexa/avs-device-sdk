@@ -262,11 +262,12 @@ public:
                     aipBegin = endIndex;
                 }
             }
+            auto now = std::chrono::steady_clock::now();
 // Else we don't have any indices to pass along; AIP will begin recording ASAP.
 #ifdef KWD_KITTAI
-            m_aip->recognize(audioProvider, Initiator::TAP, aipBegin, aipEnd, keyword);
+            m_aip->recognize(audioProvider, Initiator::TAP, now, aipBegin, aipEnd, keyword);
 #elif KWD_SENSORY
-            m_aip->recognize(audioProvider, Initiator::WAKEWORD, aipBegin, aipEnd, keyword);
+            m_aip->recognize(audioProvider, Initiator::WAKEWORD, now, aipBegin, aipEnd, keyword);
 #endif
         }
     }

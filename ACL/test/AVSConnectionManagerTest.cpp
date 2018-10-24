@@ -60,7 +60,6 @@ public:
     MOCK_METHOD0(disable, void());
     MOCK_METHOD0(doShutdown, void());
     MOCK_METHOD0(getConnectionStatus, MessageRouterInterface::ConnectionStatus());
-    // TODO: ACSDK-421: Revert this to use send().
     MOCK_METHOD1(sendMessage, void(std::shared_ptr<avsCommon::avs::MessageRequest> request));
     MOCK_METHOD1(setAVSEndpoint, void(const std::string& avsEndpoint));
     MOCK_METHOD1(setObserver, void(std::shared_ptr<MessageRouterObserverInterface> observer));
@@ -198,10 +197,8 @@ TEST_F(AVSConnectionManagerTest, enableAndDisableFunction) {
  * Tests sendMessage with a @c nullptr request, expecting no errors.
  */
 TEST_F(AVSConnectionManagerTest, sendMessageRequestTest) {
-    // TODO: ACSDK-421: Revert this to use send().
     EXPECT_CALL(*m_messageRouter, sendMessage(_)).Times(1);
     m_avsConnectionManager->sendMessage(nullptr);
-    // TODO: ACSDK-421: Revert this to use send().
     EXPECT_CALL(*m_messageRouter, sendMessage(_)).Times(1);
     std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest;
     messageRequest = std::make_shared<avsCommon::avs::MessageRequest>("Test message");

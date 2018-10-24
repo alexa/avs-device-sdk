@@ -30,6 +30,7 @@
 #include <gst/app/gstappsrc.h>
 #include <gst/base/gstbasesink.h>
 
+#include <AVSCommon/SDKInterfaces/Audio/EqualizerInterface.h>
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
@@ -54,6 +55,7 @@ class MediaPlayer
         , public avsCommon::utils::mediaPlayer::MediaPlayerInterface
         , public avsCommon::sdkInterfaces::SpeakerInterface
         , private PipelineInterface
+        , public avsCommon::sdkInterfaces::audio::EqualizerInterface
         , public playlistParser::UrlContentToAttachmentConverter::ErrorObserverInterface
         , public std::enable_shared_from_this<MediaPlayer> {
 public:
@@ -61,12 +63,15 @@ public:
      * Creates an instance of the @c MediaPlayer.
      *
      * @param contentFetcherFactory Used to create objects that can fetch remote HTTP content.
+     * @param enableEqualizer Flag, indicating whether equalizer should be enabled for this instance.
      * @param type The type used to categorize the speaker for volume control.
+     * @param name Readable name for the new instance.
      * @return An instance of the @c MediaPlayer if successful else a @c nullptr.
      */
     static std::shared_ptr<MediaPlayer> create(
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory =
             nullptr,
+        bool enableEqualizer = false,
         avsCommon::sdkInterfaces::SpeakerInterface::Type type =
             avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
         std::string name = "");
@@ -166,6 +171,9 @@ private:
         /// The capabilities element.
         GstElement* caps;
 
+        /// The equalizer element.
+        GstElement* equalizer;
+
         /// The sink element.
         GstElement* audioSink;
 
@@ -187,10 +195,13 @@ private:
      * Constructor.
      *
      * @param contentFetcherFactory Used to create objects that can fetch remote HTTP content.
+     * @param enableEqualizer Flag, indicating whether equalizer should be enabled for this instance.
      * @param type The type used to categorize the speaker for volume control.
+     * @param name Readable name of this instance.
      */
     MediaPlayer(
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
+        bool enableEqualizer,
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         std::string name);
 
@@ -511,6 +522,21 @@ private:
      */
     void cleanUpSource();
 
+    /// @name Overridden EqualizerInterface methods.
+    /// @{
+    void setEqualizerBandLevels(avsCommon::sdkInterfaces::audio::EqualizerBandLevelMap bandLevelMap) override;
+    int getMinimumBandLevel() override;
+    int getMaximumBandLevel() override;
+    /// }@
+
+    /**
+     * Clamps the band level to comply with GST plugin range
+     *
+     * @param level Level to clamp.
+     * @return Clamped band level withing the supported range
+     */
+    int clampEqualizerLevel(int level);
+
     /// The volume to restore to when exiting muted state. Used in GStreamer crash fix for zero volume on PCM data.
     gdouble m_lastVolume;
 
@@ -525,6 +551,9 @@ private:
 
     /// Used to create objects that can fetch remote HTTP content.
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> m_contentFetcherFactory;
+
+    /// Flag indicating if equalizer is enabled for this Media Player
+    bool m_equalizerEnabled;
 
     /// An instance of the @c AudioPipeline.
     AudioPipeline m_pipeline;

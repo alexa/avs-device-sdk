@@ -22,6 +22,7 @@
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
 #include <AVSCommon/Utils/Metrics.h>
+#include <AVSCommon/Utils/String/StringUtils.h>
 #include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
 #include <AVSCommon/AVS/Attachment/AttachmentUtils.h>
 
@@ -40,7 +41,7 @@ static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_TYPE = "AlexaInte
 /// SpeechRecognizer interface name
 static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_NAME = "SpeechRecognizer";
 /// SpeechRecognizer interface version
-static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_VERSION = "2.0";
+static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_VERSION = "2.1";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AudioInputProcessor");
@@ -64,6 +65,9 @@ static const avsCommon::avs::NamespaceAndName STOP_CAPTURE{NAMESPACE, "StopCaptu
 /// The ExpectSpeech directive signature.
 static const avsCommon::avs::NamespaceAndName EXPECT_SPEECH{NAMESPACE, "ExpectSpeech"};
 
+/// The SetEndOfSpeechOffset directive signature.
+static const avsCommon::avs::NamespaceAndName SET_END_OF_SPEECH_OFFSET{NAMESPACE, "SetEndOfSpeechOffset"};
+
 /// The SpeechRecognizer context state signature.
 static const avsCommon::avs::NamespaceAndName RECOGNIZER_STATE{NAMESPACE, "RecognizerState"};
 
@@ -75,6 +79,13 @@ static const std::string AUDIO_ATTACHMENT_FIELD_NAME = "audio";
 
 /// The field name for the wake word engine metadata.
 static const std::string KWD_METADATA_FIELD_NAME = "wakewordEngineMetadata";
+
+/// The field name for the start of speech timestamp, reported in milliseconds since epoch. This field is provided to
+/// the Recognize event and it's sent back as part of SetEndOfSpeechOffset payload.
+static const std::string START_OF_SPEECH_OFFSET_FIELD_NAME = "startOfSpeechTimestamp";
+
+/// The field name for the end of speech offset, reported in milliseconds, as part of SetEndOfSpeechOffset payload.
+static const std::string END_OF_SPEECH_OFFSET_FIELD_NAME = "endOfSpeechOffsetInMilliseconds";
 
 /**
  * Creates the SpeechRecognizer capability configuration.
@@ -125,7 +136,6 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
         defaultAudioProvider));
 
     if (aip) {
-        contextManager->setStateProvider(RECOGNIZER_STATE, aip);
         dialogUXStateAggregator->addObserver(aip);
     }
 
@@ -136,6 +146,7 @@ avsCommon::avs::DirectiveHandlerConfiguration AudioInputProcessor::getConfigurat
     avsCommon::avs::DirectiveHandlerConfiguration configuration;
     configuration[STOP_CAPTURE] = avsCommon::avs::BlockingPolicy::NON_BLOCKING;
     configuration[EXPECT_SPEECH] = avsCommon::avs::BlockingPolicy::NON_BLOCKING;
+    configuration[SET_END_OF_SPEECH_OFFSET] = avsCommon::avs::BlockingPolicy::NON_BLOCKING;
     return configuration;
 }
 
@@ -158,6 +169,7 @@ void AudioInputProcessor::removeObserver(std::shared_ptr<ObserverInterface> obse
 std::future<bool> AudioInputProcessor::recognize(
     AudioProvider audioProvider,
     Initiator initiator,
+    std::chrono::steady_clock::time_point startOfSpeechTimestamp,
     avsCommon::avs::AudioInputStream::Index begin,
     avsCommon::avs::AudioInputStream::Index keywordEnd,
     std::string keyword,
@@ -184,9 +196,11 @@ std::future<bool> AudioInputProcessor::recognize(
         m_executor.submit([this, espData]() { executePrepareEspPayload(espData); });
     }
 
-    return m_executor.submit([this, audioProvider, initiator, begin, keywordEnd, keyword, KWDMetadata]() {
-        return executeRecognize(audioProvider, initiator, begin, keywordEnd, keyword, KWDMetadata);
-    });
+    return m_executor.submit(
+        [this, audioProvider, initiator, startOfSpeechTimestamp, begin, keywordEnd, keyword, KWDMetadata]() {
+            return executeRecognize(
+                audioProvider, initiator, startOfSpeechTimestamp, begin, keywordEnd, keyword, KWDMetadata);
+        });
 }
 
 std::future<bool> AudioInputProcessor::stopCapture() {
@@ -195,12 +209,6 @@ std::future<bool> AudioInputProcessor::stopCapture() {
 
 std::future<void> AudioInputProcessor::resetState() {
     return m_executor.submit([this]() { executeResetState(); });
-}
-
-void AudioInputProcessor::provideState(
-    const avsCommon::avs::NamespaceAndName& stateProviderName,
-    unsigned int stateRequestToken) {
-    m_executor.submit([this, stateRequestToken]() { executeProvideState(true, stateRequestToken); });
 }
 
 void AudioInputProcessor::onContextAvailable(const std::string& jsonContext) {
@@ -228,6 +236,8 @@ void AudioInputProcessor::handleDirective(std::shared_ptr<DirectiveInfo> info) {
         handleStopCaptureDirective(info);
     } else if (info->directive->getName() == EXPECT_SPEECH.name) {
         handleExpectSpeechDirective(info);
+    } else if (info->directive->getName() == SET_END_OF_SPEECH_OFFSET.name) {
+        handleSetEndOfSpeechOffsetDirective(info);
     } else {
         std::string errorMessage =
             "unexpected directive " + info->directive->getNamespace() + ":" + info->directive->getName();
@@ -344,6 +354,39 @@ void AudioInputProcessor::handleExpectSpeechDirective(std::shared_ptr<DirectiveI
     m_executor.submit([this, timeout, info]() { executeExpectSpeech(std::chrono::milliseconds{timeout}, info); });
 }
 
+void AudioInputProcessor::handleSetEndOfSpeechOffsetDirective(std::shared_ptr<DirectiveInfo> info) {
+    auto payload = info->directive->getPayload();
+    int64_t endOfSpeechOffset = 0;
+    int64_t startOfSpeechTimestamp = 0;
+    bool foundEnd = json::jsonUtils::retrieveValue(payload, END_OF_SPEECH_OFFSET_FIELD_NAME, &endOfSpeechOffset);
+    bool foundStart =
+        json::jsonUtils::retrieveValue(payload, START_OF_SPEECH_OFFSET_FIELD_NAME, &startOfSpeechTimestamp);
+    if (foundEnd && foundStart) {
+        ACSDK_DEBUG0(LX("handleSetEndOfSpeechOffsetDirective")
+                         .d("startTimeSpeech(ms)", startOfSpeechTimestamp)
+                         .d("endTimeSpeech(ms)", startOfSpeechTimestamp + endOfSpeechOffset));
+        info->result->setCompleted();
+    } else if (foundEnd) {
+        // TODO(ACSDK-1917): Remove this case after AVS bug fix.
+        ACSDK_DEBUG0(LX("handleSetEndOfSpeechOffsetDirective")
+                         .d("startTimeSpeech(ms)", "missing")
+                         .d("endTimeSpeech(ms)", endOfSpeechOffset));
+        info->result->setCompleted();
+    } else {
+        std::string missing;
+        if (!foundEnd && !foundStart) {
+            missing = END_OF_SPEECH_OFFSET_FIELD_NAME + " and " + START_OF_SPEECH_OFFSET_FIELD_NAME;
+        } else if (!foundEnd) {
+            missing = END_OF_SPEECH_OFFSET_FIELD_NAME;
+        } else {
+            missing = START_OF_SPEECH_OFFSET_FIELD_NAME;
+        }
+
+        ACSDK_ERROR(LX("handleSetEndOfSpeechOffsetDirective").d("missing", missing));
+        info->result->setFailed("Missing parameter(s): " + missing);
+    }
+}
+
 void AudioInputProcessor::executePrepareEspPayload(const ESPData espData) {
     m_espPayload.clear();
     if (!espData.verify()) {
@@ -371,6 +414,7 @@ void AudioInputProcessor::executePrepareEspPayload(const ESPData espData) {
 bool AudioInputProcessor::executeRecognize(
     AudioProvider provider,
     Initiator initiator,
+    std::chrono::steady_clock::time_point startOfSpeechTimestamp,
     avsCommon::avs::AudioInputStream::Index begin,
     avsCommon::avs::AudioInputStream::Index end,
     const std::string& keyword,
@@ -403,6 +447,13 @@ bool AudioInputProcessor::executeRecognize(
         begin -= preroll;
     }
 
+    if (!keyword.empty()) {
+        if (falseWakewordDetection) {
+            initiatorPayloadJson << ",";
+        }
+        initiatorPayloadJson << R"("wakeWord":")" << string::stringToUpperCase(keyword) << R"(")";
+    }
+
     // Build the initiator json.
     std::ostringstream initiatorJson;
     // clang-format off
@@ -415,12 +466,13 @@ bool AudioInputProcessor::executeRecognize(
                R"(})";
     // clang-format on
 
-    return executeRecognize(provider, initiatorJson.str(), begin, keyword, KWDMetadata);
+    return executeRecognize(provider, initiatorJson.str(), startOfSpeechTimestamp, begin, keyword, KWDMetadata);
 }
 
 bool AudioInputProcessor::executeRecognize(
     AudioProvider provider,
     const std::string& initiatorJson,
+    std::chrono::steady_clock::time_point startOfSpeechTimestamp,
     avsCommon::avs::AudioInputStream::Index begin,
     const std::string& keyword,
     std::shared_ptr<const std::vector<char>> KWDMetadata) {
@@ -511,19 +563,21 @@ bool AudioInputProcessor::executeRecognize(
     // clang-format off
     payload << R"({)"
                    R"("profile":")" << provider.profile << R"(",)"
-                   R"("format":")" << avsEncodingFormat << R"(")";
+                   R"("format":")" << avsEncodingFormat << R"(",)";
 
     // The initiator (or lack thereof) from a previous ExpectSpeech has precedence.
     if (m_precedingExpectSpeechInitiator) {
         if (!m_precedingExpectSpeechInitiator->empty()) {
-            payload << "," << R"(")" << INITIATOR_KEY << R"(":)" << *m_precedingExpectSpeechInitiator;
+            payload << R"(")" << INITIATOR_KEY << R"(":)" << *m_precedingExpectSpeechInitiator << ",";
         }
         m_precedingExpectSpeechInitiator.reset();
     } else if (!initiatorJson.empty()) {
-        payload << "," << initiatorJson;
+        payload << initiatorJson << ",";
     }
 
-    payload << R"(})";
+    payload << R"(")" << START_OF_SPEECH_OFFSET_FIELD_NAME << R"(":")"
+            << startOfSpeechTimestamp.time_since_epoch().count()
+            << R"(")" << R"(})";
     // clang-format on
 
     // Set up an attachment reader for the event.
@@ -557,12 +611,6 @@ bool AudioInputProcessor::executeRecognize(
 
     // Reset flag when we send a new recognize event.
     m_localStopCapturePerformed = false;
-
-    // Update state if we're changing wakewords.
-    if (!keyword.empty() && m_wakeword != keyword) {
-        m_wakeword = keyword;
-        executeProvideState();
-    }
 
     //  Start assembling the context; we'll service the callback after assembling our Recognize event.
     m_contextManager->getContext(shared_from_this());
@@ -622,7 +670,6 @@ void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContex
             buildJsonEventString("ReportEchoSpatialPerceptionData", dialogRequestId, m_espPayload);
         m_espPayload.clear();
         m_espRequest = std::make_shared<avsCommon::avs::MessageRequest>(msgIdAndESPJsonEvent.second);
-        m_espRequest->addObserver(shared_from_this());
     }
     auto msgIdAndJsonEvent = buildJsonEventString("Recognize", dialogRequestId, m_recognizePayload, jsonContext);
     m_recognizeRequest = std::make_shared<avsCommon::avs::MessageRequest>(msgIdAndJsonEvent.second);
@@ -830,17 +877,6 @@ bool AudioInputProcessor::executeExpectSpeechTimedOut() {
     return true;
 }
 
-void AudioInputProcessor::executeProvideState(bool sendToken, unsigned int stateRequestToken) {
-    std::ostringstream context;
-    context << R"({"wakeword" : ")" << m_wakeword << R"("})";
-    if (sendToken) {
-        m_contextManager->setState(
-            RECOGNIZER_STATE, context.str(), avsCommon::avs::StateRefreshPolicy::NEVER, stateRequestToken);
-    } else {
-        m_contextManager->setState(RECOGNIZER_STATE, context.str(), avsCommon::avs::StateRefreshPolicy::NEVER);
-    }
-}
-
 void AudioInputProcessor::executeOnDialogUXStateChanged(
     avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) {
     if (!m_initialDialogUXStateReceived) {
@@ -913,6 +949,10 @@ void AudioInputProcessor::onSendCompleted(avsCommon::sdkInterfaces::MessageReque
     if (status == avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS ||
         status == avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT ||
         status == avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::PENDING) {
+        // Stop listening from audio input source when the recognize event steam is closed.
+        ACSDK_DEBUG5(LX("stopCapture").d("reason", "streamClosed"));
+        stopCapture();
+
         return;
     }
     ACSDK_DEBUG(LX("resetState").d("dueToStatus", status));

@@ -1638,6 +1638,47 @@ TEST_F(AudioPlayerTest, testProgressReportIntervalElapsedIntervalLessThanOffset)
     ASSERT_TRUE(result);
 }
 
+/**
+ * Test when @c AudioPlayer goes to BACKGROUND focus that it changes to PAUSED state.  And when another PLAY directive
+ * with REPLACE_ALL behavior comes in, that it would go to STOPPED state, and will not start playing again until the
+ * focus goes back to FOREGROUND.
+ */
+
+TEST_F(AudioPlayerTest, testPlayOnlyAfterForegroundFocus) {
+    EXPECT_CALL(*(m_mockMediaPlayer.get()), getOffset(_))
+        .WillRepeatedly(Return(m_mockMediaPlayer->getOffset(m_mockMediaPlayer->getCurrentSourceId())));
+    sendPlayDirective();
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+    m_audioPlayer->onPlaybackStarted(m_mockMediaPlayer->getCurrentSourceId());
+    m_audioPlayer->onFocusChanged(FocusState::BACKGROUND);
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PAUSED, WAIT_TIMEOUT));
+
+    // send a REPLACE_ALL Play directive
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST_2);
+
+    std::shared_ptr<AVSDirective> playDirective =
+        AVSDirective::create("", avsMessageHeader, REPLACE_ALL_PAYLOAD_TEST, m_attachmentManager, CONTEXT_ID_TEST_2);
+
+    m_wakeAcquireChannelPromise = std::promise<void>();
+    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
+    m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST_2);
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, WAIT_TIMEOUT));
+
+    {
+        // Enforce the sequence.
+        InSequence dummy;
+
+        // Make sure play() is not called
+        EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(0);
+        ASSERT_FALSE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+
+        // Now check play() is only called when focus to back to FOREGROUND
+        EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(1);
+        m_audioPlayer->onFocusChanged(FocusState::FOREGROUND);
+        ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+    }
+}
+
 }  // namespace test
 }  // namespace audioPlayer
 }  // namespace capabilityAgents

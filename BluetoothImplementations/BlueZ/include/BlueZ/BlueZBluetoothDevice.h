@@ -16,7 +16,11 @@
 #ifndef ALEXA_CLIENT_SDK_BLUETOOTHIMPLEMENTATIONS_BLUEZ_INCLUDE_BLUEZ_BLUEZBLUETOOTHDEVICE_H_
 #define ALEXA_CLIENT_SDK_BLUETOOTHIMPLEMENTATIONS_BLUEZ_INCLUDE_BLUEZ_BLUEZBLUETOOTHDEVICE_H_
 
+#include <future>
+#include <memory>
 #include <mutex>
+#include <string>
+#include <vector>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -25,7 +29,6 @@
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Bluetooth/SDPRecords.h>
-#include "BlueZ/BlueZA2DPSource.h"
 #include "BlueZ/DBusPropertiesProxy.h"
 
 namespace alexaClientSDK {
@@ -78,8 +81,11 @@ public:
 
     std::vector<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::SDPRecordInterface>>
     getSupportedServices() override;
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::A2DPSinkInterface> getA2DPSink() override;
     std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::A2DPSourceInterface> getA2DPSource() override;
     std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPTargetInterface> getAVRCPTarget() override;
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPControllerInterface> getAVRCPController()
+        override;
     /// @}
 
     /**
@@ -222,6 +228,32 @@ private:
      */
     void transitionToState(BlueZDeviceState newState, bool sendEvent);
 
+    /**
+     * Helper function to check if a service exists in the @c m_servicesMap.
+     *
+     * @param uuid The service UUID to check.
+     * @return A bool indicating whether it exists.
+     */
+    bool serviceExists(const std::string& uuid);
+
+    /**
+     * Helper function to insert service into @c m_servicesMap.
+     *
+     * @param service The service to insert.
+     * @return bool Indicates whether insertion was successful.
+     */
+    bool insertService(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::BluetoothServiceInterface> service);
+
+    /**
+     * Helper function to insert service into @c m_servicesMap.
+     *
+     * @tparam ServiceType The type of the @c BluetoothServiceInterface.
+     * @return The instance of the service if successful, else nullptr.
+     */
+    template <typename ServiceType>
+    std::shared_ptr<ServiceType> getService();
+
     /// Proxy to interact with the org.bluez.Device1 interface.
     std::shared_ptr<DBusProxy> m_deviceProxy;
 
@@ -236,6 +268,9 @@ private:
 
     /// The friendly name.
     std::string m_friendlyName;
+
+    /// Mutex to protect access to @c m_servicesMap.
+    std::mutex m_servicesMapMutex;
 
     /// A map of UUID to services.
     std::unordered_map<

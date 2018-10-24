@@ -631,12 +631,5 @@ TEST_F(CapabilitiesDelegateTest, testClearData) {
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
-#ifdef ANDROID
-    // TODO(ACSDK-1766): These 3 tests are failing on Android. Disable them for now.
-    ::testing::GTEST_FLAG(filter) =
-        "-CapabilitiesDelegateTest.withCapabilitiesHappyCase:"
-        "CapabilitiesDelegateTest.republish:"
-        "CapabilitiesDelegateTest.testClearData";
-#endif
     return RUN_ALL_TESTS();
 }

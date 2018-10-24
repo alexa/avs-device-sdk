@@ -148,6 +148,8 @@ static const std::string RECOGNIZE_LIONS_AUDIO_FILE_NAME = "/recognize_lions_tes
 static const std::string RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME = "/recognize_whats_up_test.wav";
 /// This is a 16 bit 16 kHz little endian linear PCM audio file of "Set a timer for 5 seconds" to be recognized.
 static const std::string RECOGNIZE_TIMER_AUDIO_FILE_NAME = "/recognize_timer_test.wav";
+/// This is a 16 bit 16 kHz little endian linear PCM audio file of "flashbriefing" to be recognized.
+static const std::string RECOGNIZE_FLASHBRIEFING_AUDIO_FILE_NAME = "/recognize_flashbriefing_test.wav";
 
 // String to be used as a basic DialogRequestID.
 #define FIRST_DIALOG_REQUEST_ID "DialogRequestID123"
@@ -868,7 +870,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveInTheMiddle) {
 
     // Send audio for a flashbriefing which will send back SetMute, Speak, SetMute, Play and Play.
     m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
-    std::string file = g_inputPath + RECOGNIZE_WHATS_UP_AUDIO_FILE_NAME;
+    std::string file = g_inputPath + RECOGNIZE_FLASHBRIEFING_AUDIO_FILE_NAME;
     setupMessageWithAttachmentAndSend(
         CT_FIRST_RECOGNIZE_EVENT_JSON,
         file,

@@ -9,11 +9,16 @@ list(APPEND SampleApp_SOURCES
     UIManager.cpp
     UserInputManager.cpp
     SampleApplication.cpp
+    SampleEqualizerModeController.cpp
     main.cpp)
 
 if (PORTAUDIO)
     list(APPEND SampleApp_SOURCES PortAudioMicrophoneWrapper.cpp)
 endif()
+
+IF (A4B)
+    list(APPEND SampleApp_SOURCES RevokeAuthorizationObserver.cpp)
+ENDIF()
 
 IF (HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
     file(GLOB_RECURSE SRC_FILE ${CMAKE_CURRENT_SOURCE_DIR}/ExternalMediaAdapterRegistration/*.cpp)
@@ -37,6 +42,7 @@ target_link_libraries(SampleApp
     CBLAuthDelegate
     SQLiteStorage
     ESP
+    EqualizerImplementations
     "${PORTAUDIO_LIB_PATH}")
 
 if (ANDROID)

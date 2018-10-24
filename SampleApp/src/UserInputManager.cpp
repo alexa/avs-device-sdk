@@ -49,6 +49,7 @@ static const char SPEAKER_CONTROL = 'p';
 static const char FIRMWARE_VERSION = 'f';
 static const char ESP_CONTROL = 'e';
 static const char RESET = 'k';
+static const char REAUTHORIZE = 'z';
 #ifdef ENABLE_COMMS
 static const char COMMS_CONTROL = 'd';
 #endif
@@ -62,7 +63,9 @@ static const std::unordered_map<char, std::string> LOCALE_VALUES({{'1', "en-US"}
                                                                   {'5', "en-CA"},
                                                                   {'6', "ja-JP"},
                                                                   {'7', "en-AU"},
-                                                                  {'8', "fr-FR"}});
+                                                                  {'8', "fr-FR"},
+                                                                  {'9', "it-IT"},
+                                                                  {'a', "es-ES"}});
 
 static const std::unordered_map<char, SpeakerInterface::Type> SPEAKER_TYPES(
     {{'1', SpeakerInterface::Type::AVS_SPEAKER_VOLUME}, {'2', SpeakerInterface::Type::AVS_ALERTS_VOLUME}});
@@ -133,6 +136,8 @@ SampleAppReturnCode UserInputManager::run() {
             if (confirmReset()) {
                 userTriggeredLogout = true;
             }
+        } else if (x == REAUTHORIZE) {
+            confirmReauthorizeDevice();
         } else if (x == MIC_TOGGLE) {
             m_interactionManager->microphoneToggle();
         } else if (x == STOP) {
@@ -345,6 +350,30 @@ bool UserInputManager::confirmReset() {
             default:
                 m_interactionManager->errorValue();
                 m_interactionManager->confirmResetDevice();
+                break;
+        }
+    } while (true);
+
+    return false;
+}
+
+bool UserInputManager::confirmReauthorizeDevice() {
+    m_interactionManager->confirmReauthorizeDevice();
+    char y;
+    do {
+        std::cin >> y;
+        // Check the Setting which has to be changed.
+        switch (y) {
+            case 'Y':
+            case 'y':
+                m_interactionManager->resetDevice();
+                return true;
+            case 'N':
+            case 'n':
+                return false;
+            default:
+                m_interactionManager->errorValue();
+                m_interactionManager->confirmReauthorizeDevice();
                 break;
         }
     } while (true);

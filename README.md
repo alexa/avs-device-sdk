@@ -80,6 +80,7 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 * [System](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system) - The interface for communicating product status/state to AVS.
 * [TemplateRuntime](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/templateruntime) - The interface for rendering visual metadata.
 * [Bluetooth](https://developer.amazon.com/docs/alexa-voice-service/bluetooth.html) - The interface for managing Bluetooth connections between peer devices and Alexa-enabled products.
+* [EqualizerController](https://developer.amazon.com/docs/alexa-voice-service/equalizercontroller.html) - The interface for adjusting equalizer settings, such as decibel (dB) levels and modes.
 
 ### Security Best Practices
 
@@ -104,43 +105,46 @@ In addition to adopting the [Security Best Practices for Alexa](https://develope
 
 **Note**: Feature enhancements, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
-v1.9.0 released 08/28/2018:
+v1.10.0 released 10/24/2018:
 
 **Enhancements**
 
-* Added Android SDK support, which includes new implementations of the MediaPlayer, audio recorder, and logger.
-* Added the [InteractionModel](https://developer.amazon.com/docs/alexa-voice-service/interaction-model.html) interface, which enables Alexa Routines.
-* Optional configuration changes have been introduced. Now a [network interface can be specified](https://github.com/alexa/avs-device-sdk/blob/v1.9/Integration/AlexaClientSDKConfig.json#L129) to connect to the SDK via curl.
-* [Build options can be configured](https://github.com/alexa/avs-device-sdk/wiki/Build-Options#build-for-Android) to support Android.
-* Added GUI 1.1 support. The `PlaybackController` has been extended to support new control functionality, and the `System` interface has been updated to support `SoftwareInfo`.
+* New optional configuration for [EqualizerController](https://github.com/alexa/avs-device-sdk/blob/v1.10.0/Integration/AlexaClientSDKConfig.json#L154). The EqualizerController interface allows you to adjust equalizer settings on your product, such as decibel (dB) levels and modes.
+* Added reference implementation of the EqualizerController for GStreamer-based (MacOS, Linux, and Raspberry Pi) and OpenSL ES-based (Android) MediaPlayers. Note: In order to use with Android, it must support OpenSL ES.
+* New optional configuration for the [TemplateRuntime display card value](https://github.com/alexa/avs-device-sdk/blob/v1.10.0/Integration/AlexaClientSDKConfig.json#L144).
+* A configuration file generator script, `genConfig.sh` is now included with the SDK in the **tools/Install** directory. `genConfig.sh` and it's associated arguments populate `AlexaClientSDKConfig.json` with the data required to authorize with LWA.
+* Added Bluetooth A2DP source and AVRCP target support for Linux.
+* Added Amazon for Business (A4B) support, which includes support for handling the new [RevokeAuthorization](https://developer.amazon.com/docs/alexa-voice-service/system.html#revokeauth) directive in the Settings interface. A new CMake option has been added to enable A4B within the SDK, `-DA4B`.
+* Added locale support for IT and ES.
+* The Alexa Communication Library (ACL), `CBLAUthDelegate`, and sample app have been enhanced to detect de-authorization using the new `z` command.
+* Added `ExternalMediaPlayerObserver`, which receives notification of player state, track, and username changes.
+* `HTTP2ConnectionInterface` was factored out of `HTTP2Transport` to enable unit testing of `HTTP2Transport` and re-use of `HTTP2Connection` logic.
 
 **Bug Fixes**
 
-* Installation script execution time has been reduced. Now a single branch clone is used, such as the master branch.
-* [Issue 846](https://github.com/alexa/avs-device-sdk/issues/846) - Fixed a bug where audio stuttered on slow network connections.
-* Removed the `SpeakerManager` constructor check for non-zero speakers.
-* [Issue 891](https://github.com/alexa/avs-device-sdk/issues/891) - Resolved incorrect offset in the `PlaybackFinished` event.
-* [Issue 727](https://github.com/alexa/avs-device-sdk/issues/727) - Fixed an issue where the sample app behaved erratically upon network disconnection/reconnection.
-* [Issue 910](https://github.com/alexa/avs-device-sdk/issues/910) - Fixed a GCC 8+ compilation issue. Note: issues related to `-Wclass-memaccess` will still trigger warnings, but won't fail compilation.
-* [Issue 871](https://github.com/alexa/avs-device-sdk/issues/871) [Issue 880](https://github.com/alexa/avs-device-sdk/issues/880) - Fixed compiler warnings.
-* Fixed an issue where `PlaybackStutterStarted` and `PlaybackStutterFinished` events were not being sent due to a missing Gstreamer queue element.
-* Fixed a bug where the `CapabilitiesDelegate` database was not being cleared upon logout.
-* Fixed in issue that caused the following compiler warning “class has virtual functions but non-virtual destructor”.
-* Fixed a bug where `BlueZDeviceManager` was not properly destroyed.
-* Fixed a bug that occurred when the initializer list was converted to `std::unordered_set`.
-* Fixed a build error that occurred when building with `BUILD_TESTING=Off`.
+* Fixed a bug in which `ExternalMediaPlayer` adapter playback wasn't being recognized by AVS.
+* [Issue 973](https://github.com/alexa/avs-device-sdk/issues/973) - Fixed issues related to `AudioPlayer` where progress reports were being sent out of order or with incorrect offsets.
+* An `EXPECTING`, state has been added to `DialogUXState` in order to handle `EXPECT_SPEECH` state for hold-to-talk devices.
+* [Issue 948](https://github.com/alexa/avs-device-sdk/issues/948) - Fixed a bug in which the sample app was stuck in a listening state.
+* Fixed a bug where there was a delay between receiving a `DeleteAlert` directive, and deleting the alert.
+* [Issue 839](https://github.com/alexa/avs-device-sdk/issues/839) - Fixed an issue where speech was being truncated due to the `DialogUXStateAggregator` transitioning between a `THINKING` and `IDLE` state.
+* Fixed a bug in which the `AudioPlayer` attempted to play when it wasn't in the `FOREGROUND` focus.
+* `CapabilitiesDelegateTest` now works on Android.
+* [Issue 950](https://github.com/alexa/avs-device-sdk/issues/950) - Improved Android Media Player audio quality.
+* [Issue 908](https://github.com/alexa/avs-device-sdk/issues/908) - Fixed compile error on g++ 7.x in which includes were missing.
 
 **Known Issues**
-* If a device is not connected to the Internet at the time that an alarm or reminder is scheduled to sound, the SDK will not play any sound for the alarm or reminder at that scheduled time.
+
+* On GCC 8+, issues related to `-Wclass-memaccess` will trigger warnings. However, this won't cause the build to fail, and these warnings can be ignored.
+* In order to use Bluetooth source and sink PulseAudio, you must manually load and unload PulseAudio modules after the SDK starts.
+* When connecting a new device to AVS, *currently connected devices must be manually disconnected*. For example, if a user says "Alexa, connect my phone", and an Alexa-enabled speaker is already connected, there is no indication to the user a device is already connected.
 * The `ACL` may encounter issues if audio attachments are received but not consumed.
 * `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
 * The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.
 * Connecting a product to streaming media via Bluetooth will sometimes stop media playback within the source application. Resuming playback through the source application or toggling next/previous will correct playback.
-* When a source device is streaming silence via Bluetooth, the Alexa companion app indicates that audio content is streaming.
+* When a source device is streaming silence via Bluetooth, the Alexa app indicates that audio content is streaming.
 * The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation is not yet supported.
 * On some products, interrupted Bluetooth playback may not resume if other content is locally streamed.
-* On Raspberry Pi, when streaming audio via Bluetooth, sometimes the audio stream stutters.
-* These `CapabilitiesDelegateTest` tests have been temporarily disabled to prevent build errors for the Android build: `CapabilitiesDelegateTest.withCapabilitiesHappyCase`, `CapabilitiesDelegateTest.republish`, `CapabilitiesDelegateTest.testClearData`.
 * `make integration` is currently not available for Android. In order to run integration tests on Android, you'll need to manually upload the test binary file along with any input file. At that point, the adb can be used to run the integration tests.
 * On Raspberry Pi running Android Things with HDMI output audio, beginning of speech is truncated when Alexa responds to user TTS.
 * When the sample app is restarted and network connection is lost, Alerts don't play.

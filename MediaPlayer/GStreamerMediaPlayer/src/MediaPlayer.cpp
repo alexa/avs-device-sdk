@@ -91,6 +91,21 @@ static const int8_t GST_ADJUST_VOLUME_MAX = 1;
 /// Represents the zero volume to avoid the actual 0.0 value. Used as a fix for GStreamer crashing on 0 volume for PCM.
 static const gdouble VOLUME_ZERO = 0.0000001;
 
+/// Mimimum level for equalizer bands
+static const int MIN_EQUALIZER_LEVEL = -24;
+
+/// Maximum level for equalizer bands
+static const int MAX_EQUALIZER_LEVEL = 12;
+
+/// The GStreamer property name for the frequency band 100 Hz.
+static char GSTREAMER_BASS_BAND_NAME[] = "band0";
+
+/// The GStreamer property name for the frequency band 1.1 kHz.
+static char GSTREAMER_MIDRANGE_BAND_NAME[] = "band1";
+
+/// The GStreamer property name for the frequency band 11 kHz.
+static char GSTREAMER_TREBLE_BAND_NAME[] = "band2";
+
 /**
  * Processes tags found in the tagList.
  * Called through gst_tag_list_foreach.
@@ -143,10 +158,11 @@ static void collectOneTag(const GstTagList* tagList, const gchar* tag, gpointer 
 
 std::shared_ptr<MediaPlayer> MediaPlayer::create(
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
+    bool enableEqualizer,
     SpeakerInterface::Type type,
     std::string name) {
     ACSDK_DEBUG9(LX("createCalled"));
-    std::shared_ptr<MediaPlayer> mediaPlayer(new MediaPlayer(contentFetcherFactory, type, name));
+    std::shared_ptr<MediaPlayer> mediaPlayer(new MediaPlayer(contentFetcherFactory, enableEqualizer, type, name));
     if (mediaPlayer->init()) {
         return mediaPlayer;
     } else {
@@ -537,12 +553,14 @@ GstElement* MediaPlayer::getPipeline() const {
 
 MediaPlayer::MediaPlayer(
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
+    bool enableEqualizer,
     SpeakerInterface::Type type,
     std::string name) :
         RequiresShutdown{name},
         m_lastVolume{GST_SET_VOLUME_MAX},
         m_isMuted{false},
         m_contentFetcherFactory{contentFetcherFactory},
+        m_equalizerEnabled{enableEqualizer},
         m_speakerType{type},
         m_playbackStartedSent{false},
         m_playbackFinishedSent{false},
@@ -613,6 +631,14 @@ bool MediaPlayer::setupPipeline() {
     if (!m_pipeline.volume) {
         ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createVolumeElementFailed"));
         return false;
+    }
+
+    if (m_equalizerEnabled) {
+        m_pipeline.equalizer = gst_element_factory_make("equalizer-3bands", "equalizer");
+        if (!m_pipeline.equalizer) {
+            ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createEqualizerElementFailed"));
+            return false;
+        }
     }
 
     std::string audioSinkElement;
@@ -700,32 +726,34 @@ bool MediaPlayer::setupPipeline() {
         m_pipeline.audioSink,
         nullptr);
 
+    GstElement* pipelineTailElement = m_pipeline.audioSink;
+
+    if (m_equalizerEnabled) {
+        // Add equalizer to a pipeline tail
+        gst_bin_add(GST_BIN(m_pipeline.pipeline), m_pipeline.equalizer);
+        pipelineTailElement = m_pipeline.equalizer;
+        if (!gst_element_link(m_pipeline.equalizer, m_pipeline.audioSink)) {
+            ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "failed to linke equalizer to audiosink."));
+            return false;
+        }
+    }
+
     if (m_pipeline.resample != nullptr && m_pipeline.caps != nullptr) {
-        // Set up pipeline with the resampler
+        // Add resampler to the pipeline tail
         gst_bin_add_many(GST_BIN(m_pipeline.pipeline), m_pipeline.resample, m_pipeline.caps, nullptr);
 
-        if (!gst_element_link_many(
-                m_pipeline.decodedQueue,
-                m_pipeline.converter,
-                m_pipeline.volume,
-                m_pipeline.resample,
-                m_pipeline.caps,
-                nullptr)) {
-            ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createVolumeToConverterLinkFailed"));
+        if (!gst_element_link_many(m_pipeline.resample, m_pipeline.caps, pipelineTailElement, nullptr)) {
+            ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "Failed to link converter."));
             return false;
         }
+        pipelineTailElement = m_pipeline.resample;
+    }
 
-        if (!gst_element_link_filtered(m_pipeline.caps, m_pipeline.audioSink, caps)) {
-            ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createFilteredLinkFailed"));
-            return false;
-        }
-    } else {
-        // No output format specified, set up a normal pipeline
-        if (!gst_element_link_many(
-                m_pipeline.decodedQueue, m_pipeline.converter, m_pipeline.volume, m_pipeline.audioSink, nullptr)) {
-            ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createResampleToSinkLinkFailed"));
-            return false;
-        }
+    // Complete the pipeline linking
+    if (!gst_element_link_many(
+            m_pipeline.decodedQueue, m_pipeline.converter, m_pipeline.volume, pipelineTailElement, nullptr)) {
+        ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "Failed to link pipeline."));
+        return false;
     }
 
     return true;
@@ -764,6 +792,7 @@ void MediaPlayer::resetPipeline() {
     m_pipeline.volume = nullptr;
     m_pipeline.resample = nullptr;
     m_pipeline.caps = nullptr;
+    m_pipeline.equalizer = nullptr;
     m_pipeline.audioSink = nullptr;
 }
 
@@ -1652,5 +1681,57 @@ void MediaPlayer::cleanUpSource() {
     }
     m_source.reset();
 }
+
+int MediaPlayer::clampEqualizerLevel(int level) {
+    return std::min(std::max(level, MIN_EQUALIZER_LEVEL), MAX_EQUALIZER_LEVEL);
+}
+
+void MediaPlayer::setEqualizerBandLevels(audio::EqualizerBandLevelMap bandLevelMap) {
+    if (!m_equalizerEnabled) {
+        return;
+    }
+    std::promise<void> promise;
+    auto future = promise.get_future();
+    std::function<gboolean()> callback = [this, &promise, bandLevelMap]() {
+        auto it = bandLevelMap.find(audio::EqualizerBand::BASS);
+        if (bandLevelMap.end() != it) {
+            g_object_set(
+                G_OBJECT(m_pipeline.equalizer),
+                GSTREAMER_BASS_BAND_NAME,
+                static_cast<gdouble>(clampEqualizerLevel(it->second)),
+                NULL);
+        }
+        it = bandLevelMap.find(audio::EqualizerBand::MIDRANGE);
+        if (bandLevelMap.end() != it) {
+            g_object_set(
+                G_OBJECT(m_pipeline.equalizer),
+                GSTREAMER_MIDRANGE_BAND_NAME,
+                static_cast<gdouble>(clampEqualizerLevel(it->second)),
+                NULL);
+        }
+        it = bandLevelMap.find(audio::EqualizerBand::TREBLE);
+        if (bandLevelMap.end() != it) {
+            g_object_set(
+                G_OBJECT(m_pipeline.equalizer),
+                GSTREAMER_TREBLE_BAND_NAME,
+                static_cast<gdouble>(clampEqualizerLevel(it->second)),
+                NULL);
+        }
+        promise.set_value();
+        return false;
+    };
+    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+        future.get();
+    }
+}
+
+int MediaPlayer::getMinimumBandLevel() {
+    return MIN_EQUALIZER_LEVEL;
+}
+
+int MediaPlayer::getMaximumBandLevel() {
+    return MAX_EQUALIZER_LEVEL;
+}
+
 }  // namespace mediaPlayer
 }  // namespace alexaClientSDK

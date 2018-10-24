@@ -151,9 +151,7 @@ void SpeakerManager::doShutdown() {
     m_messageSender.reset();
     m_contextManager.reset();
     m_observers.clear();
-    for (auto typeAndSpeaker : m_speakerMap) {
-        typeAndSpeaker.second.reset();
-    }
+    m_speakerMap.clear();
 }
 
 void SpeakerManager::preHandleDirective(std::shared_ptr<CapabilityAgent::DirectiveInfo> info) {

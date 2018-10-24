@@ -100,7 +100,7 @@ static const std::string RECOGNIZE_LONG_TIMER_AUDIO_FILE_NAME = "/recognize_long
 // This is a 16 bit 16 kHz little endian linear PCM audio file of "Set a timer for 15 seconds" to be recognized.
 static const std::string RECOGNIZE_VERY_LONG_TIMER_AUDIO_FILE_NAME = "/recognize_very_long_timer_test.wav";
 // This is a 16 bit 16 kHz little endian linear PCM audio file of "Stop" to be recognized.
-static const std::string RECOGNIZE_STOP_AUDIO_FILE_NAME = "/recognize_stop_timer_test.wav";
+static const std::string RECOGNIZE_STOP_AUDIO_FILE_NAME = "/recognize_stop_test.wav";
 // This is a 16 bit 16 kHz little endian linear PCM audio file of "Cancel the timer" to be recognized.
 static const std::string RECOGNIZE_CANCEL_TIMER_AUDIO_FILE_NAME = "/recognize_cancel_timer_test.wav";
 // This string to be used for Speak Directives which use the NAMESPACE_SPEECH_SYNTHESIZER namespace.
@@ -274,7 +274,6 @@ protected:
                 promise.set_value(true);
                 return promise.get_future();
             }));
-
         m_speakerManager = mockSpeakerManager;
 
         m_testContentClient = std::make_shared<TestClient>();

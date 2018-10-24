@@ -73,6 +73,13 @@ public:
     virtual bool open() = 0;
 
     /**
+     * Returns true if this object is already managing an open database, false otherwise.
+     *
+     * @return True if this object is already managing an open database, false otherwise.
+     */
+    virtual bool isOpened() = 0;
+
+    /**
      * Close the currently open database, if one is open.
      */
     virtual void close() = 0;

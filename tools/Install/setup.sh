@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #
 # Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -18,7 +18,7 @@
 set -o errexit  # Exit the script if any statement fails.
 set -o nounset  # Exit the script if any uninitialized variable is used.
 
-LOCALE=${LOCALE:-'en-US'}
+CLONE_URL=${CLONE_URL:- 'git://github.com/alexa/avs-device-sdk.git'}
 
 PORT_AUDIO_FILE="pa_stable_v190600_20161030.tgz"
 PORT_AUDIO_DOWNLOAD_URL="http://www.portaudio.com/archives/$PORT_AUDIO_FILE"
@@ -48,6 +48,10 @@ OUTPUT_CONFIG_FILE="$BUILD_PATH/Integration/AlexaClientSDKConfig.json"
 TEMP_CONFIG_FILE="$BUILD_PATH/Integration/tmp_AlexaClientSDKConfig.json"
 TEST_SCRIPT="$INSTALL_BASE/test.sh"
 LIB_SUFFIX="a"
+ANDROID_CONFIG_FILE=""
+
+# Default device serial number if nothing is specified
+DEVICE_SERIAL_NUMBER="123456"
 
 GSTREAMER_AUDIO_SINK="autoaudiosink"
 
@@ -84,18 +88,56 @@ get_platform() {
   fi
 }
 
-if [ $# -eq 0 ]
-then
-  echo  'bash setup.sh <config-file>'
-  echo  'the config file must contain the following:'
-  echo  '   CLIENT_ID=<OAuth client ID>'
-  echo  '   PRODUCT_ID=<your product name for device>'
-  echo  '   DEVICE_SERIAL_NUMBER=<your device serial number>'
+show_help() {
+  echo  'Usage: setup.sh <config-json-file> [OPTIONS]'
+  echo  'The <config-json-file> can be downloaded from developer portal and must contain the following:'
+  echo  '   "clientId": "<OAuth client ID>"'
+  echo  '   "productId": "<your product name for device>"'
+  echo  ''
+  echo  'Optional parameters'
+  echo  '  -s <serial-number>  If nothing is provided, the default device serial number is 123456'
+  echo  '  -a <file-name>      The file that contains Android installation configurations (e.g. androidConfig.txt)'
+  echo  '  -h                  Display this help and exit'
+}
 
-  exit 1
+if [[ $# -lt 1 ]]; then
+    show_help
+    exit 1
 fi
 
-source $1
+CONFIG_JSON_FILE=$1
+if [ ! -f "$CONFIG_JSON_FILE" ]; then
+    echo "Config json file not found!"
+    show_help
+    exit 1
+fi
+shift 1
+
+OPTIONS=s:a:h
+while getopts "$OPTIONS" opt ; do
+    case $opt in
+        s )
+            DEVICE_SERIAL_NUMBER="$OPTARG"
+            ;;
+        a )
+            ANDROID_CONFIG_FILE="$OPTARG"
+            if [ ! -f "$ANDROID_CONFIG_FILE" ]; then
+                echo "Android config file is not found!"
+                exit 1
+            fi
+            source $ANDROID_CONFIG_FILE
+            ;;
+        h )
+            show_help
+            exit 1
+            ;;
+    esac
+done
+
+if [[ ! "$DEVICE_SERIAL_NUMBER" =~ [0-9a-zA-Z_]+ ]]; then
+   echo 'Device serial number is invalid!'
+   exit 1
+fi
 
 # The target platform for the build.
 PLATFORM=${PLATFORM:-$(get_platform)}
@@ -116,25 +158,6 @@ then
       echo "The installation script doesn't support current system. (System: $(uname -a))"
       exit 1
     fi
-fi
-
-if [[ ! "$CLIENT_ID" =~ amzn1\.application-oa2-client\.[0-9a-z]{32} ]]
-then
-  echo 'client ID is invalid!'
-  exit 1
-fi
-
-if [[ ! "$PRODUCT_ID" =~ [0-9a-zA-Z_]+ ]]
-then
-  echo 'product ID is invalid!'
-  echo $PRODUCT_ID
-  exit 1
-fi
-
-if [[ ! "$DEVICE_SERIAL_NUMBER" =~ [0-9a-zA-Z_]+ ]]
-then
-  echo 'device serial number is invalid!'
-  exit 1
 fi
 
 echo "################################################################################"
@@ -206,7 +229,7 @@ then
     echo
 
     cd $SOURCE_PATH
-    git clone --single-branch git://github.com/alexa/avs-device-sdk.git
+    git clone --single-branch $CLONE_URL avs-device-sdk
   fi
 
   # make the SDK
@@ -232,35 +255,6 @@ echo
 echo "==============> SAVING CONFIGURATION FILE =============="
 echo
 
-# Set variables for configuration file
-
-# Variables for cblAuthDelegate
-SDK_CBL_AUTH_DELEGATE_DATABASE_FILE_PATH=$CONFIG_DB_PATH/cblAuthDelegate.db
-
-# Variables for deviceInfo
-SDK_CONFIG_DEVICE_SERIAL_NUMBER=$DEVICE_SERIAL_NUMBER
-SDK_CONFIG_CLIENT_ID=$CLIENT_ID
-SDK_CONFIG_PRODUCT_ID=$PRODUCT_ID
-
-# Variables for miscDatabase
-SDK_MISC_DATABASE_FILE_PATH=$CONFIG_DB_PATH/miscDatabase.db
-
-# Variables for alertsCapabilityAgent
-SDK_SQLITE_DATABASE_FILE_PATH=$CONFIG_DB_PATH/alerts.db
-
-# Variables for settings
-SDK_SQLITE_SETTINGS_DATABASE_FILE_PATH=$CONFIG_DB_PATH/settings.db
-SETTING_LOCALE_VALUE=$LOCALE
-
-# Variables for bluetooth
-SDK_BLUETOOTH_DATABASE_FILE_PATH=$CONFIG_DB_PATH/bluetooth.db
-
-# Variables for certifiedSender
-SDK_CERTIFIED_SENDER_DATABASE_FILE_PATH=$CONFIG_DB_PATH/certifiedSender.db
-
-# Variables for notifications
-SDK_NOTIFICATIONS_DATABASE_FILE_PATH=$CONFIG_DB_PATH/notifications.db
-
 # Create configuration file with audioSink configuration at the beginning of the file
 cat << EOF > "$OUTPUT_CONFIG_FILE"
  {
@@ -269,20 +263,8 @@ cat << EOF > "$OUTPUT_CONFIG_FILE"
     },
 EOF
 
-# Check if temporary file exists
-if [ -f $TEMP_CONFIG_FILE ]; then
-  rm $TEMP_CONFIG_FILE
-fi
-
-# Create temporary configuration file with variables filled out
-while IFS='' read -r line || [[ -n "$line" ]]; do
-    while [[ "$line" =~ (\$\{[a-zA-Z_][a-zA-Z_0-9]*\}) ]]; do
-        LHS=${BASH_REMATCH[1]}
-        RHS="$(eval echo "\"$LHS\"")"
-        line=${line//$LHS/$RHS}
-    done
-    echo "$line" >> $TEMP_CONFIG_FILE
-done < $INPUT_CONFIG_FILE
+cd $INSTALL_BASE
+bash genConfig.sh config.json $DEVICE_SERIAL_NUMBER $CONFIG_DB_PATH $SOURCE_PATH/avs-device-sdk $TEMP_CONFIG_FILE
 
 # Delete first line from temp file to remove opening bracket
 sed -i -e "1d" $TEMP_CONFIG_FILE

@@ -23,6 +23,8 @@
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
 
+#include <condition_variable>
+#include <mutex>
 #include <string>
 #include <vector>
 
@@ -264,8 +266,15 @@ private:
     /// A pointer to a stream factory to use as the default audio to use when the audio assets aren't available.
     std::function<std::unique_ptr<std::istream>()> m_defaultAudioFactory;
 
-    /// A flag to capture if the renderer has been asked to stop by its owner.
+    /// A flag to capture if the renderer has been asked to stop by its owner. @c m_waitMutex must be locked when
+    /// modifying this variable.
     bool m_isStopping;
+
+    /// The condition variable used to wait for @c stop() or @c m_loopPause timeouts.
+    std::condition_variable m_waitCondition;
+
+    /// The mutex for @c m_waitCondition.
+    std::mutex m_waitMutex;
 
     /// The id associated with the media that our MediaPlayer is currently handling.
     SourceId m_currentSourceId;

@@ -17,6 +17,10 @@
 #include <chrono>
 
 #include <AVSCommon/AVS/NamespaceAndName.h>
+#include <AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSinkInterface.h>
+#include <AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h>
+#include <AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPControllerInterface.h>
+#include <AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPTargetInterface.h>
 #include <AVSCommon/Utils/Bluetooth/SDPRecords.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
@@ -256,9 +260,9 @@ static const std::string AVS_AVRCP = "AVRCP";
 /// A mapping of AVS profile identifiers to the Bluetooth service UUID.
 // clang-format off
 static const std::unordered_map<std::string, std::string> AVS_PROFILE_MAP{
-    {AVS_A2DP_SOURCE, A2DPSourceRecord::UUID},
-    {AVS_A2DP_SINK, A2DPSinkRecord::UUID},
-    {AVS_AVRCP, AVRCPTargetRecord::UUID}};
+    {AVS_A2DP_SOURCE, std::string(A2DPSourceInterface::UUID)},
+    {AVS_A2DP_SINK, std::string(A2DPSinkInterface::UUID)},
+    {AVS_AVRCP, std::string(AVRCPTargetInterface::UUID)}};
 // clang-format on
 
 /// Bluetooth capability constants
@@ -383,14 +387,19 @@ static bool extractAvsProfiles(
     }
 
     for (const auto& sdp : device->getSupportedServices()) {
-        if (A2DPSourceRecord::UUID == sdp->getUuid()) {
+        if (A2DPSourceInterface::UUID == sdp->getUuid()) {
             rapidjson::Value profile(rapidjson::kObjectType);
             profile.AddMember("name", AVS_A2DP_SOURCE, allocator);
             profile.AddMember("version", sdp->getVersion(), allocator);
             supportedProfiles->PushBack(profile, allocator);
-        } else if (AVRCPTargetRecord::UUID == sdp->getUuid()) {
+        } else if (AVRCPTargetInterface::UUID == sdp->getUuid()) {
             rapidjson::Value profile(rapidjson::kObjectType);
             profile.AddMember("name", AVS_AVRCP, allocator);
+            profile.AddMember("version", sdp->getVersion(), allocator);
+            supportedProfiles->PushBack(profile, allocator);
+        } else if (A2DPSinkInterface::UUID == sdp->getUuid()) {
+            rapidjson::Value profile(rapidjson::kObjectType);
+            profile.AddMember("name", AVS_A2DP_SINK, allocator);
             profile.AddMember("version", sdp->getVersion(), allocator);
             supportedProfiles->PushBack(profile, allocator);
         }
@@ -431,7 +440,8 @@ std::shared_ptr<Bluetooth> Bluetooth::create(
     std::unique_ptr<BluetoothDeviceManagerInterface> deviceManager,
     std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
     std::shared_ptr<MediaPlayerInterface> mediaPlayer,
-    std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager) {
+    std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+    std::shared_ptr<BluetoothAVRCPTransformer> avrcpTransformer) {
     ACSDK_DEBUG5(LX(__func__));
 
     if (!contextManager) {
@@ -462,7 +472,8 @@ std::shared_ptr<Bluetooth> Bluetooth::create(
             deviceManager,
             eventBus,
             mediaPlayer,
-            customerDataManager));
+            customerDataManager,
+            avrcpTransformer));
 
         if (bluetooth->init()) {
             return bluetooth;
@@ -507,7 +518,8 @@ Bluetooth::Bluetooth(
     std::unique_ptr<BluetoothDeviceManagerInterface>& deviceManager,
     std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
     std::shared_ptr<MediaPlayerInterface> mediaPlayer,
-    std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager) :
+    std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+    std::shared_ptr<BluetoothAVRCPTransformer> avrcpTransformer) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         RequiresShutdown{"Bluetooth"},
         CustomerDataHandler{customerDataManager},
@@ -521,6 +533,7 @@ Bluetooth::Bluetooth(
         m_mediaPlayer{mediaPlayer},
         m_db{bluetoothStorage},
         m_eventBus{eventBus},
+        m_avrcpTransformer{avrcpTransformer},
         m_mediaStream{nullptr} {
     m_capabilityConfigurations.insert(getBluetoothCapabilityConfiguration());
 }
@@ -1364,13 +1377,13 @@ void Bluetooth::executeConnectByDeviceId(const std::string& uuid) {
         return;
     }
 
-    // If the device can't act as a source, we don't connect for now.
-    bool supportsA2DPSource = supportsAvsProfile(device, AVS_A2DP_SOURCE);
-    if (!supportsA2DPSource) {
-        ACSDK_INFO(LX(__func__).d("reason", "A2DPSourceNotSupported").m("Connect Request Rejected"));
+    bool supportsA2DP = supportsAvsProfile(device, AVS_A2DP);
+
+    if (!supportsA2DP) {
+        ACSDK_INFO(LX(__func__).d("reason", "noSupportedA2DPRoles").m("Connect Request Rejected"));
     }
 
-    if (supportsA2DPSource && executeFunctionOnDevice(device, &BluetoothDeviceInterface::connect)) {
+    if (supportsA2DP && executeFunctionOnDevice(device, &BluetoothDeviceInterface::connect)) {
         executeOnDeviceConnect(device);
         executeSendConnectByDeviceIdSucceeded(device, Requester::CLOUD);
     } else {
@@ -1447,6 +1460,17 @@ void Bluetooth::executeOnDeviceDisconnect(avsCommon::avs::Requester requester) {
     if (!m_activeDevice) {
         ACSDK_WARN(LX(__func__).d("reason", "noActiveDevice"));
         return;
+    }
+
+    if (StreamingState::INACTIVE != m_streamingState) {
+        ACSDK_DEBUG5(LX(__func__)
+                         .d("currentState", streamingStateToString(m_streamingState))
+                         .d("newState", streamingStateToString(StreamingState::INACTIVE)));
+        // Needs to be sent while we still have an activeDevice in the Context.
+        if (StreamingState::ACTIVE == m_streamingState) {
+            executeSendStreamingEnded(m_activeDevice);
+        }
+        m_streamingState = StreamingState::INACTIVE;
     }
 
     auto device = m_activeDevice;
@@ -2107,15 +2131,16 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
                 }
                 case avsCommon::sdkInterfaces::bluetooth::DeviceState::CONNECTED: {
                     m_executor.submit([this, device] {
-                        if (!supportsAvsProfile(device, AVS_A2DP_SOURCE)) {
+                        if (!supportsAvsProfile(device, AVS_A2DP)) {
                             /*
                              * This shouldn't be possible but we add the check in in case we
-                             * missed any edge cases. We can potentially force a disconnect,
-                             * but we'll leave it connected to simplify the logic.
-                             * AVS won't be made aware of it, and it's
-                             * up to the peer device to disconnect the device.
+                             * missed any edge cases. We will attempt to disconnect,
+                             * AVS won't be made aware of it, and if unsuccessful, it is up to the
+                             * user/client to disconnect.
                              */
-                            ACSDK_WARN(LX("deviceConnected").d("reason", "deviceDoesNotSupportA2DPSource"));
+                            ACSDK_WARN(LX("deviceConnected")
+                                           .d("reason", "deviceDoesNotSupportA2DP")
+                                           .m("Please disconnect device"));
 
                             if (device->disconnect().get()) {
                                 executeOnDeviceDisconnect(Requester::DEVICE);
@@ -2141,28 +2166,61 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
             break;
         }
         case avsCommon::utils::bluetooth::BluetoothEventType::STREAMING_STATE_CHANGED: {
-            if (MediaStreamingState::ACTIVE == event.getMediaStreamingState()) {
-                ACSDK_DEBUG5(LX(__func__).m("Streaming is active"));
+            if (event.getDevice() != m_activeDevice) {
+                ACSDK_ERROR(LX(__func__)
+                                .d("reason", "mismatchedDevices")
+                                .d("eventDevice", event.getDevice() ? event.getDevice()->getMac() : "null")
+                                .d("activeDevice", m_activeDevice ? m_activeDevice->getMac() : "null"));
+                break;
+            }
 
-                m_executor.submit([this] {
-                    if (m_streamingState == StreamingState::INACTIVE || m_streamingState == StreamingState::PAUSED ||
-                        m_streamingState == StreamingState::PENDING_PAUSED) {
-                        // Obtain Focus.
-                        if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), ACTIVITY_ID)) {
-                            ACSDK_ERROR(LX(__func__).d("reason", "acquireChannelFailed"));
+            if (!event.getA2DPRole()) {
+                ACSDK_ERROR(LX(__func__).d("reason", "nullRole"));
+                break;
+            }
+
+            if (A2DPRole::SINK == *event.getA2DPRole()) {
+                if (MediaStreamingState::ACTIVE == event.getMediaStreamingState()) {
+                    ACSDK_DEBUG5(LX(__func__).m("Streaming is active"));
+
+                    m_executor.submit([this] {
+                        if (m_streamingState == StreamingState::INACTIVE ||
+                            m_streamingState == StreamingState::PAUSED ||
+                            m_streamingState == StreamingState::PENDING_PAUSED) {
+                            // Obtain Focus.
+                            if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), ACTIVITY_ID)) {
+                                ACSDK_ERROR(LX(__func__).d("reason", "acquireChannelFailed"));
+                            }
                         }
-                    }
-                });
-                /*
-                 * TODO: Using MediaStreamingState signal as a proxy for playback state. There is latency with this.
-                 * We should be observing a separate playback based signal instead for these decisions.
-                 */
-            } else if (MediaStreamingState::IDLE == event.getMediaStreamingState()) {
-                m_executor.submit([this] {
-                    if (FocusState::FOREGROUND == m_focusState) {
-                        m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
-                    }
-                });
+                    });
+                    /*
+                     * TODO: Using MediaStreamingState signal as a proxy for playback state. There is latency with this.
+                     * We should be observing a separate playback based signal instead for these decisions.
+                     */
+                } else if (MediaStreamingState::IDLE == event.getMediaStreamingState()) {
+                    m_executor.submit([this] {
+                        if (FocusState::FOREGROUND == m_focusState) {
+                            m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
+                        }
+                    });
+                }
+            } else if (A2DPRole::SOURCE == *event.getA2DPRole()) {
+                // Ignore the PENDING state and only act on ACTIVE.
+                if (MediaStreamingState::ACTIVE == event.getMediaStreamingState()) {
+                    m_executor.submit([this] {
+                        if (StreamingState::ACTIVE != m_streamingState) {
+                            m_streamingState = StreamingState::ACTIVE;
+                            executeSendStreamingStarted(m_activeDevice);
+                        }
+                    });
+                } else if (MediaStreamingState::IDLE == event.getMediaStreamingState()) {
+                    m_executor.submit([this] {
+                        if (StreamingState::ACTIVE == m_streamingState) {
+                            m_streamingState = StreamingState::PAUSED;
+                            executeSendStreamingEnded(m_activeDevice);
+                        }
+                    });
+                }
             }
             break;
         }

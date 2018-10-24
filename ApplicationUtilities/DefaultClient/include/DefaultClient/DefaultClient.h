@@ -33,6 +33,9 @@
 #include <AVSCommon/AVS/DialogUXStateAggregator.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
 #include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
+#include <AVSCommon/SDKInterfaces/Audio/EqualizerConfigurationInterface.h>
+#include <AVSCommon/SDKInterfaces/Audio/EqualizerModeControllerInterface.h>
+#include <AVSCommon/SDKInterfaces/Audio/EqualizerStorageInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/AudioPlayerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CallManagerInterface.h>
@@ -50,6 +53,8 @@
 #include <Bluetooth/BluetoothStorageInterface.h>
 #include <CertifiedSender/CertifiedSender.h>
 #include <CertifiedSender/SQLiteMessageStorage.h>
+#include <Equalizer/EqualizerCapabilityAgent.h>
+#include <EqualizerImplementations/EqualizerController.h>
 #include <ExternalMediaPlayer/ExternalMediaPlayer.h>
 #include <InteractionModel/InteractionModelCapabilityAgent.h>
 #include <MRM/MRMCapabilityAgent.h>
@@ -66,6 +71,12 @@
 #include <System/SoftwareInfoSender.h>
 #include <System/UserInactivityMonitor.h>
 #include <TemplateRuntime/TemplateRuntime.h>
+
+#ifdef ENABLE_REVOKE_AUTH
+#include <System/RevokeAuthorizationHandler.h>
+#endif
+
+#include "EqualizerRuntimeSetup.h"
 
 namespace alexaClientSDK {
 namespace defaultClient {
@@ -105,18 +116,23 @@ public:
      * @param bluetoothSpeaker The speaker to control volume of bluetooth.
      * @param ringtoneSpeaker The speaker to control volume of Comms ringtones.
      * @param additionalSpeakers A list of additional speakers to receive volume changes.
+     * @param equalizerRuntimeSetup Equalizer component runtime setup
      * @param audioFactory The audioFactory is a component that provides unique audio streams.
      * @param authDelegate The component that provides the client with valid LWA authorization.
      * @param alertStorage The storage interface that will be used to store alerts.
      * @param messageStorage The storage interface that will be used to store certified sender messages.
      * @param notificationsStorage The storage interface that will be used to store notification indicators.
      * @param settingsStorage The storage interface that will be used to store settings.
+     * @param bluetoothStorage The storage interface that will be used to store bluetooth data.
      * @param alexaDialogStateObservers Observers that can be used to be notified of Alexa dialog related UX state
      * changes.
      * @param connectionObservers Observers that can be used to be notified of connection status changes.
      * @param isGuiSupported Whether the device supports GUI.
      * @param capabilitiesDelegate The component that provides the client with the ability to send messages to the
      * Capabilities API.
+     * @param contextManager The @c ContextManager which will provide the context for various components.
+     * @param transportFactory The object passed in here will be used whenever a new transport object
+     * for AVS communication is needed.
      * @param firmwareVersion The firmware version to report to @c AVS or @c INVALID_FIRMWARE_VERSION.
      * @param sendSoftwareInfoOnConnected Whether to send SoftwareInfo upon connecting to @c AVS.
      * @param softwareInfoSenderObserver Object to receive notifications about sending SoftwareInfo.
@@ -145,6 +161,7 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
         const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
+        std::shared_ptr<EqualizerRuntimeSetup> equalizerRuntimeSetup,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
@@ -159,6 +176,8 @@ public:
         std::shared_ptr<avsCommon::utils::network::InternetConnectionMonitor> internetConnectionMonitor,
         bool isGuiSupported,
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<alexaClientSDK::acl::TransportFactoryInterface> transportFactory,
         avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion =
             avsCommon::sdkInterfaces::softwareInfo::INVALID_FIRMWARE_VERSION,
         bool sendSoftwareInfoOnConnected = false,
@@ -334,6 +353,22 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::NotificationsObserverInterface> observer);
 
     /**
+     * Adds an observer to be notified of ExternalMediaPlayer changes
+     *
+     * @param observer The observer to add.
+     */
+    void addExternalMediaPlayerObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaPlayerObserverInterface> observer);
+
+    /**
+     * Removes an observer to be notified of ExternalMediaPlayer changes.
+     *
+     * @param observer The observer to remove.
+     */
+    void removeExternalMediaPlayerObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaPlayerObserverInterface> observer);
+
+    /**
      * Calls the changeSetting function of Settings object.
      *
      * @param key The name of the setting to be changed.
@@ -382,6 +417,33 @@ public:
      */
     std::shared_ptr<registrationManager::RegistrationManager> getRegistrationManager();
 
+#ifdef ENABLE_REVOKE_AUTH
+    /**
+     * Adds a RevokeAuthorizationObserver to be alerted when a revoke authorization request occurs.
+     *
+     * @param observer The observer to be notified of revoke authorization requests.
+     */
+    void addRevokeAuthorizationObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::RevokeAuthorizationObserverInterface> observer);
+
+    /**
+     * Removes a RevokeAuthorizationObserver from being alerted when a revoke authorization request occurs.
+     *
+     * @param observer The observer to no longer be notified of revoke authorization requests.
+     */
+    void removeRevokeAuthorizationObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::RevokeAuthorizationObserverInterface> observer);
+#endif
+
+    /**
+     * Get a shared_ptr to the EqualizerController.
+     *
+     * @note Be sure to release all references to the returned @c EqualizerController before releasing the last
+     * reference to the @c DefaultClient.
+     * @return shared_ptr to the EqualizerController.
+     */
+    std::shared_ptr<equalizer::EqualizerController> getEqualizerController();
+
     /**
      * Update the firmware version.
      *
@@ -399,6 +461,7 @@ public:
      * @param keyword The keyword that was detected.
      * @param espData The ESP measurement data.
      * @param KWDMetadata Wake word engine metadata.
+     * @param startOfSpeechTimestamp Moment in time when user started talking to Alexa.
      * @return A future indicating whether the interaction was successfully started.
      */
     std::future<bool> notifyOfWakeWord(
@@ -406,6 +469,7 @@ public:
         avsCommon::avs::AudioInputStream::Index beginIndex,
         avsCommon::avs::AudioInputStream::Index endIndex,
         std::string keyword,
+        std::chrono::steady_clock::time_point startOfSpeechTimestamp,
         const capabilityAgents::aip::ESPData espData = capabilityAgents::aip::ESPData::getEmptyESPData(),
         std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr);
 
@@ -415,19 +479,26 @@ public:
      *
      * @param tapToTalkAudioProvider The audio provider containing the audio data stream along with its metadata.
      * @param beginIndex An optional parameter indicating where in the stream to start reading from.
+     * @param startOfSpeechTimestamp Moment in time when user started talking to Alexa. This parameter is optional
+     * and it is used to measure user perceived latency.
      * @return A future indicating whether the interaction was successfully started.
      */
     std::future<bool> notifyOfTapToTalk(
         capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
-        avsCommon::avs::AudioInputStream::Index beginIndex = INVALID_INDEX);
+        avsCommon::avs::AudioInputStream::Index beginIndex = INVALID_INDEX,
+        std::chrono::steady_clock::time_point startOfSpeechTimestamp = std::chrono::steady_clock::now());
 
     /**
      * Begins a hold to talk initiated Alexa interaction.
      *
      * @param holdToTalkAudioProvider The audio provider containing the audio data stream along with its metadata.
+     * @param startOfSpeechTimestamp Moment in time when user started talking to Alexa. This parameter is optional
+     * and it is used to measure user perceived latency.
      * @return A future indicating whether the interaction was successfully started.
      */
-    std::future<bool> notifyOfHoldToTalkStart(capabilityAgents::aip::AudioProvider holdToTalkAudioProvider);
+    std::future<bool> notifyOfHoldToTalkStart(
+        capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
+        std::chrono::steady_clock::time_point startOfSpeechTimestamp = std::chrono::steady_clock::now());
 
     /**
      * Ends a hold to talk interaction by forcing the client to stop streaming audio data to the cloud and ending any
@@ -495,18 +566,23 @@ private:
      * @param bluetoothSpeaker The speaker to control bluetooth volume.
      * @param ringtoneSpeaker The speaker to control volume of Comms ringtones.
      * @param additionalSpeakers A list of additional speakers to receive volume changes.
+     * @param equalizerRuntimeSetup Equalizer component runtime setup
      * @param audioFactory The audioFactory is a component the provides unique audio streams.
      * @param authDelegate The component that provides the client with valid LWA authorization.
      * @param alertStorage The storage interface that will be used to store alerts.
      * @param messageStorage The storage interface that will be used to store certified sender messages.
      * @param notificationsStorage The storage interface that will be used to store notification indicators.
      * @param settingsStorage The storage interface that will be used to store settings.
+     * @param bluetoothStorage The storage interface that will be used to store bluetooth data.
      * @param alexaDialogStateObservers Observers that can be used to be notified of Alexa dialog related UX state
      * changes.
      * @param connectionObservers Observers that can be used to be notified of connection status changes.
      * @param isGuiSupported Whether the device supports GUI.
      * @param capabilitiesDelegate The component that provides the client with the ability to send messages to the
      * Capabilities API.
+     * @param contextManager The @c ContextManager which will provide the context for various components.
+     * @param transportFactory The object passed in here will be used whenever a new transport object
+     * for AVS communication is needed.
      * @param firmwareVersion The firmware version to report to @c AVS or @c INVALID_FIRMWARE_VERSION.
      * @param sendSoftwareInfoOnConnected Whether to send SoftwareInfo upon connecting to @c AVS.
      * @param softwareInfoSenderObserver Object to receive notifications about sending SoftwareInfo.
@@ -533,6 +609,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
         const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
+        std::shared_ptr<EqualizerRuntimeSetup> equalizerRuntimeSetup,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
@@ -547,6 +624,8 @@ private:
         std::shared_ptr<avsCommon::utils::network::InternetConnectionMonitor> internetConnectionMonitor,
         bool isGuiSupported,
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<alexaClientSDK::acl::TransportFactoryInterface> transportFactory,
         avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
         bool sendSoftwareInfoOnConnected,
         std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver);
@@ -631,17 +710,28 @@ private:
     /// The MRM capability agent.
     std::shared_ptr<capabilityAgents::mrm::MRMCapabilityAgent> m_mrmCapabilityAgent;
 
+    /// The Equalizer capability agent.
+    std::shared_ptr<capabilityAgents::equalizer::EqualizerCapabilityAgent> m_equalizerCapabilityAgent;
+
+    /// The @c EqualizerController instance.
+    std::shared_ptr<equalizer::EqualizerController> m_equalizerController;
+
+    /// Equalizer runtime setup to be used in the SDK.
+    std::shared_ptr<EqualizerRuntimeSetup> m_equalizerRuntimeSetup;
+
     /// Mutex to serialize access to m_softwareInfoSender.
     std::mutex m_softwareInfoSenderMutex;
 
     /// The System.SoftwareInfoSender capability agent.
     std::shared_ptr<capabilityAgents::system::SoftwareInfoSender> m_softwareInfoSender;
 
+#ifdef ENABLE_REVOKE_AUTH
+    /// The System.RevokeAuthorizationHandler directive handler.
+    std::shared_ptr<capabilityAgents::system::RevokeAuthorizationHandler> m_revokeAuthorizationHandler;
+#endif
+
     /// The RegistrationManager used to control customer registration.
     std::shared_ptr<registrationManager::RegistrationManager> m_registrationManager;
-
-    /// The PostConnectFactory object used to create PostConnectInterface instances.
-    std::shared_ptr<acl::PostConnectSynchronizerFactory> m_postConnectSynchronizerFactory;
 };
 
 }  // namespace defaultClient

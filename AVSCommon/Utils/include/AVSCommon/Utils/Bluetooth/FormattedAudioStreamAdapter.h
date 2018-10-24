@@ -19,8 +19,8 @@
 #include <memory>
 #include <mutex>
 
-#include <AVSCommon/Utils/AudioFormat.h>
-#include <AVSCommon/Utils/Bluetooth/FormattedAudioStreamAdapterListener.h>
+#include "AVSCommon/Utils/AudioFormat.h"
+#include "AVSCommon/Utils/Bluetooth/FormattedAudioStreamAdapterListener.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {

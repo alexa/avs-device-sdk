@@ -88,6 +88,10 @@ void Renderer::start(
 }
 
 void Renderer::stop() {
+    std::lock_guard<std::mutex> lock(m_waitMutex);
+    m_isStopping = true;
+    m_waitCondition.notify_all();
+
     m_executor.submit([this]() { executeStop(); });
 }
 
@@ -180,7 +184,9 @@ bool Renderer::shouldPause() {
 }
 void Renderer::pause() {
     ACSDK_DEBUG9(LX("pause"));
-    std::this_thread::sleep_for(m_loopPause);
+    std::unique_lock<std::mutex> lock(m_waitMutex);
+    // Wait for stop() or m_loopPause to elapse.
+    m_waitCondition.wait_for(lock, m_loopPause, [this]() { return m_isStopping; });
 }
 
 void Renderer::play() {
@@ -223,7 +229,10 @@ void Renderer::executeStart(
             .d("m_urls.size", m_urls.size())
             .d("m_remainingLoopCount", m_remainingLoopCount)
             .d("m_loopPause (ms)", std::chrono::duration_cast<std::chrono::milliseconds>(m_loopPause).count()));
+
+    std::unique_lock<std::mutex> lock(m_waitMutex);
     m_isStopping = false;
+    lock.unlock();
 
     m_numberOfStreamsRenderedThisLoop = 0;
 
@@ -232,9 +241,7 @@ void Renderer::executeStart(
 
 void Renderer::executeStop() {
     ACSDK_DEBUG1(LX("executeStop"));
-    if (m_mediaPlayer->stop(m_currentSourceId)) {
-        m_isStopping = true;
-    } else {
+    if (!m_mediaPlayer->stop(m_currentSourceId)) {
         std::string errorMessage = "mediaPlayer stop request failed.";
         ACSDK_ERROR(LX("executeStopFailed").d("SourceId", m_currentSourceId).m(errorMessage));
         notifyObserver(RendererObserverInterface::State::ERROR, errorMessage);
@@ -279,8 +286,13 @@ void Renderer::executeOnPlaybackFinished(SourceId sourceId) {
     RendererObserverInterface::State finalState = RendererObserverInterface::State::STOPPED;
 
     ++m_numberOfStreamsRenderedThisLoop;
+    auto localIsStopping = false;
+    {
+        std::lock_guard<std::mutex> lock(m_waitMutex);
+        localIsStopping = m_isStopping;
+    }
 
-    if (!m_isStopping && shouldRenderNext()) {
+    if (!localIsStopping && shouldRenderNext()) {
         if (renderNextAudioAsset()) {
             return;
         }

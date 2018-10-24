@@ -43,6 +43,9 @@ public:
     /// Name of the BlueZ interface responsible for media playback control
     static constexpr auto BLUEZ_MEDIA_INTERFACE = "org.bluez.Media1";
 
+    /// Name of the BlueZ interface responsible for media playback control
+    static constexpr auto BLUEZ_MEDIA_PLAYER_INTERFACE = "org.bluez.MediaPlayer1";
+
     /// Name of the BlueZ interface responsible for pairing agents control
     static constexpr auto BLUEZ_AGENTMANAGER_INTERFACE = "org.bluez.AgentManager1";
 

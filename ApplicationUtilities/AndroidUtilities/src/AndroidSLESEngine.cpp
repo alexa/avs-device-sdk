@@ -143,10 +143,15 @@ std::unique_ptr<AndroidSLESObject> AndroidSLESEngine::createOutputMix() const {
     return AndroidSLESObject::create(outputMixObject);
 }
 
-std::unique_ptr<AndroidSLESObject> AndroidSLESEngine::createPlayer(SLDataSource& source, SLDataSink& sink) const {
-    constexpr uint32_t interfaceSize = 3;
-    const SLInterfaceID interfaceIds[interfaceSize] = {SL_IID_BUFFERQUEUE, SL_IID_VOLUME, SL_IID_PREFETCHSTATUS};
-    const SLboolean requiredInterfaces[interfaceSize] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_FALSE};
+std::unique_ptr<AndroidSLESObject> AndroidSLESEngine::createPlayer(
+    SLDataSource& source,
+    SLDataSink& sink,
+    bool requireEqualizer) const {
+    constexpr uint32_t interfaceSize = 4;
+    const SLInterfaceID interfaceIds[interfaceSize] = {
+        SL_IID_BUFFERQUEUE, SL_IID_VOLUME, SL_IID_PREFETCHSTATUS, SL_IID_EQUALIZER};
+    const SLboolean requiredInterfaces[interfaceSize] = {
+        SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_FALSE, requireEqualizer ? SL_BOOLEAN_TRUE : SL_BOOLEAN_FALSE};
 
     SLObjectItf playerObject;
     auto result = (*m_engine)->CreateAudioPlayer(

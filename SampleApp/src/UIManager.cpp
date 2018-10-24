@@ -93,6 +93,10 @@ static const std::string HELP_MESSAGE =
     "|       will erase any data stored in the device and you will have to        |\n"
     "|       re-register your device.                                             |\n"
     "|       This option will also exit the application.                          |\n"
+    "| Reauthorize device:                                                        |\n"
+    "|       Press 'z' followed by Enter at any time to re-authorize your device. |\n"
+    "|       This will erase any data stored in the device and initiate           |\n"
+    "|       re-authorization.                                                    |\n"
     "| Quit:                                                                      |\n"
     "|       Press 'q' followed by Enter at any time to quit the application.     |\n"
     "+----------------------------------------------------------------------------+\n";
@@ -104,6 +108,9 @@ static const std::string LIMITED_HELP_HEADER =
 
 static const std::string AUTH_FAILED_STR =
     "| Status : Unrecoverable authorization failure.                              |\n";
+
+static const std::string REAUTH_REQUIRED_STR =
+    "| Status : Re-authorization required.                                        |\n";
 
 static const std::string CAPABILITIES_API_FAILED_STR =
     "| Status : Unrecoverable Capabilities API call failure.                      |\n";
@@ -125,6 +132,10 @@ static const std::string LIMITED_HELP_MESSAGE =
     "|       will erase any data stored in the device and you will have to        |\n"
     "|       re-register your device.                                             |\n"
     "|       This option will also exit the application.                          |\n"
+    "| Reauthorize device:                                                        |\n"
+    "|       Press 'z' followed by Enter at any time to re-authorize your device. |\n"
+    "|       This will erase any data stored in the device and initiate           |\n"
+    "|       re-authorization.                                                    |\n"
     "| Quit:                                                                      |\n"
     "|       Press 'q' followed by Enter at any time to quit the application.     |\n"
     "+----------------------------------------------------------------------------+\n";
@@ -148,6 +159,8 @@ static const std::string LOCALE_MESSAGE =
     "| Press '6' followed by Enter to change the language to Japanese.            |\n"
     "| Press '7' followed by Enter to change the language to Australian English.  |\n"
     "| Press '8' followed by Enter to change the language to French.              |\n"
+    "| Press '9' followed by Enter to change the language to Italian.             |\n"
+    "| Press 'a' followed by Enter to change the language to Spanish.             |\n"
     "+----------------------------------------------------------------------------+\n";
 
 static const std::string SPEAKER_CONTROL_MESSAGE =
@@ -202,6 +215,17 @@ static const std::string RESET_CONFIRMATION =
     "|                                                                            |\n"
     "| Press 'Y' followed by Enter to reset the device.                           |\n"
     "| Press 'N' followed by Enter to cancel the device reset operation.          |\n"
+    "+----------------------------------------------------------------------------+\n";
+
+static const std::string REAUTHORIZE_CONFIRMATION =
+    "+----------------------------------------------------------------------------+\n"
+    "|                 Device Re-authorization Confirmation:                      |\n"
+    "|                                                                            |\n"
+    "| This operation will remove all your personal information, device settings, |\n"
+    "| and downloaded content. Are you sure you want to reauthorize your device?  |\n"
+    "|                                                                            |\n"
+    "| Press 'Y' followed by Enter to reset the device.                           |\n"
+    "| Press 'N' followed by Enter to cancel re-authorization.                    |\n"
     "+----------------------------------------------------------------------------+\n";
 
 static const std::string RESET_WARNING =
@@ -303,13 +327,39 @@ void UIManager::onAuthStateChange(AuthObserverInterface::State newState, AuthObs
                     ConsolePrinter::prettyPrint("Authorized!");
                     break;
                 case AuthObserverInterface::State::EXPIRED:
-                    ConsolePrinter::prettyPrint("AUTHORIZATION EXPIRED");
+                    ConsolePrinter::prettyPrint("AUTHORIZATION EXPIRED. RETRYING...");
                     break;
                 case AuthObserverInterface::State::UNRECOVERABLE_ERROR:
-                    std::ostringstream oss;
-                    oss << "UNRECOVERABLE AUTHORIZATION ERROR: " << newError;
-                    ConsolePrinter::prettyPrint({oss.str(), ENTER_LIMITED});
-                    setFailureStatus(AUTH_FAILED_STR);
+                    switch (newError) {
+                        case AuthObserverInterface::Error::SUCCESS:
+                        case AuthObserverInterface::Error::UNKNOWN_ERROR:
+                        case AuthObserverInterface::Error::AUTHORIZATION_FAILED:
+                        case AuthObserverInterface::Error::UNAUTHORIZED_CLIENT:
+                        case AuthObserverInterface::Error::SERVER_ERROR:
+                        case AuthObserverInterface::Error::INVALID_REQUEST:
+                        case AuthObserverInterface::Error::INVALID_VALUE:
+                        case AuthObserverInterface::Error::UNSUPPORTED_GRANT_TYPE:
+                        case AuthObserverInterface::Error::AUTHORIZATION_PENDING:
+                        case AuthObserverInterface::Error::SLOW_DOWN:
+                        case AuthObserverInterface::Error::INTERNAL_ERROR:
+                        case AuthObserverInterface::Error::INVALID_CBL_CLIENT_ID: {
+                            std::ostringstream oss;
+                            oss << "UNRECOVERABLE AUTHORIZATION ERROR: " << newError;
+                            ConsolePrinter::prettyPrint({oss.str(), ENTER_LIMITED});
+                            setFailureStatus(AUTH_FAILED_STR);
+                            break;
+                        }
+                        case AuthObserverInterface::Error::AUTHORIZATION_EXPIRED:
+                            ConsolePrinter::prettyPrint(
+                                {"AUTHORIZATION FAILED", "RE-AUTHORIZATION REQUIRED", ENTER_LIMITED});
+                            setFailureStatus(REAUTH_REQUIRED_STR);
+                            break;
+                        case AuthObserverInterface::Error::INVALID_CODE_PAIR:
+                            ConsolePrinter::prettyPrint(
+                                {"AUTHORIZATION CODE EXPIRED", "(RE)-AUTHORIZATION REQUIRED", ENTER_LIMITED});
+                            setFailureStatus(REAUTH_REQUIRED_STR);
+                            break;
+                    }
                     break;
             }
         }
@@ -395,6 +445,10 @@ void UIManager::printResetConfirmation() {
     m_executor.submit([]() { ConsolePrinter::simplePrint(RESET_CONFIRMATION); });
 }
 
+void UIManager::printReauthorizeConfirmation() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint(REAUTHORIZE_CONFIRMATION); });
+}
+
 void UIManager::printResetWarning() {
     m_executor.submit([]() { ConsolePrinter::prettyPrint(RESET_WARNING); });
 }
@@ -416,10 +470,12 @@ void UIManager::printState() {
             case DialogUXState::LISTENING:
                 ConsolePrinter::prettyPrint("Listening...");
                 return;
+            case DialogUXState::EXPECTING:
+                ConsolePrinter::prettyPrint("Expecting...");
+                return;
             case DialogUXState::THINKING:
                 ConsolePrinter::prettyPrint("Thinking...");
                 return;
-                ;
             case DialogUXState::SPEAKING:
                 ConsolePrinter::prettyPrint("Speaking...");
                 return;

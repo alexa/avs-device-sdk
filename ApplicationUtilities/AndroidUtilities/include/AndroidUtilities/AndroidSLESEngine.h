@@ -59,9 +59,11 @@ public:
      *
      * @param[in] source The audio data source specification (Read-Only).
      * @param[in] sink The audio data sink specification (Read-Only).
+     * @param[in] requireEqualizer set to true if equalizer support is required.
      * @return A unique pointer to an @c AndroidSLESObject object if succeeds; otherwise return @c nullptr.
      */
-    std::unique_ptr<AndroidSLESObject> createPlayer(SLDataSource& source, SLDataSink& sink) const;
+    std::unique_ptr<AndroidSLESObject> createPlayer(SLDataSource& source, SLDataSink& sink, bool requireEqualizer)
+        const;
 
     /**
      * Creates an OpenSL ES output mix.

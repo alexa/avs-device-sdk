@@ -866,6 +866,10 @@ bool SQLiteMiscStorage::load(
     return true;
 }
 
+bool SQLiteMiscStorage::isOpened() {
+    return m_db.isDatabaseReady();
+}
+
 }  // namespace sqliteStorage
 }  // namespace storage
 }  // namespace alexaClientSDK

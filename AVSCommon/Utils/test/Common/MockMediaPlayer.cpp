@@ -84,6 +84,7 @@ bool MockMediaPlayer::mockPlay(SourceId sourceId) {
     if (!source) {
         return false;
     }
+    EXPECT_TRUE(source->stopwatch.start());
     source->started.trigger();
     return true;
 }
@@ -93,6 +94,8 @@ bool MockMediaPlayer::mockPause(SourceId sourceId) {
     if (!source) {
         return false;
     }
+    // Ideally we would EXPECT_TRUE on pause(), however ACSDK-734 doesn't guarantee that will be okay.
+    source->stopwatch.pause();
     source->resumed.resetStateReached();
     source->paused.trigger();
     return true;
@@ -103,6 +106,7 @@ bool MockMediaPlayer::mockResume(SourceId sourceId) {
     if (!source) {
         return false;
     }
+    EXPECT_TRUE(source->stopwatch.resume());
     source->paused.resetStateReached();
     source->resumed.trigger();
     return true;
@@ -113,6 +117,8 @@ bool MockMediaPlayer::mockStop(SourceId sourceId) {
     if (!source) {
         return false;
     }
+
+    source->stopwatch.stop();
     source->stopped.trigger();
     return true;
 }
@@ -122,6 +128,7 @@ bool MockMediaPlayer::mockFinished(SourceId sourceId) {
     if (!source) {
         return false;
     }
+    source->stopwatch.stop();
     source->finished.trigger();
     return true;
 }
@@ -131,6 +138,7 @@ bool MockMediaPlayer::mockError(SourceId sourceId) {
     if (!source) {
         return false;
     }
+    source->stopwatch.stop();
     source->error.trigger();
     return true;
 }
@@ -150,7 +158,7 @@ std::chrono::milliseconds MockMediaPlayer::mockGetOffset(SourceId sourceId) {
     if (!source) {
         return MEDIA_PLAYER_INVALID_OFFSET;
     }
-    return source->offset;
+    return source->stopwatch.getElapsed() + source->offset;
 }
 
 bool MockMediaPlayer::waitUntilNextSetSource(const std::chrono::milliseconds timeout) {

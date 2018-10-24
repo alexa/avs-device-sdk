@@ -50,6 +50,8 @@ public:
 
     bool open() override;
 
+    bool isOpened() override;
+
     void close() override;
 
     bool createTable(

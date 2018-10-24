@@ -61,6 +61,14 @@ std::string byteVectorToString(const std::vector<uint8_t>& byteVector);
  */
 std::string stringToLowerCase(const std::string& input);
 
+/**
+ * A utility function to convert a string into upper case.
+ *
+ * @param input The input string to be converted.
+ * @return The converted string in upper case.
+ */
+std::string stringToUpperCase(const std::string& input);
+
 }  // namespace string
 }  // namespace utils
 }  // namespace avsCommon

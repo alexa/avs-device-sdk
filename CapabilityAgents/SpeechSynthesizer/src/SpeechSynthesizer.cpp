@@ -349,10 +349,12 @@ void SpeechSynthesizer::doShutdown() {
             if (m_currentInfo) {
                 m_currentInfo->sendPlaybackFinishedMessage = false;
             }
-            stopPlaying();
-            m_currentState = SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED;
             lock.unlock();
+            stopPlaying();
             releaseForegroundFocus();
+
+            lock.lock();
+            m_currentState = SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED;
         }
     }
     {
@@ -549,8 +551,14 @@ void SpeechSynthesizer::executeStateChange() {
             startPlaying();
             break;
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED:
+            // This happens when focus state is changed to BACKGROUND or NONE, requiring the @c SpeechSynthesizer to
+            // trigger termination of playing the audio playback.
             if (m_currentInfo) {
                 m_currentInfo->sendPlaybackFinishedMessage = false;
+                m_currentInfo->sendCompletedMessage = false;
+                if (m_currentInfo->result) {
+                    m_currentInfo->result->setFailed("Stopped due to SpeechSynthesizer going into FINISHED state.");
+                }
             }
             stopPlaying();
             break;
@@ -813,12 +821,23 @@ void SpeechSynthesizer::sendExceptionEncounteredAndReportFailed(
     std::shared_ptr<SpeakDirectiveInfo> speakInfo,
     avsCommon::avs::ExceptionErrorType type,
     const std::string& message) {
-    m_exceptionEncounteredSender->sendExceptionEncountered(speakInfo->directive->getUnparsedDirective(), type, message);
-    if (speakInfo && speakInfo->result) {
-        speakInfo->result->setFailed(message);
+    if (speakInfo) {
+        if (speakInfo->directive) {
+            m_exceptionEncounteredSender->sendExceptionEncountered(
+                speakInfo->directive->getUnparsedDirective(), type, message);
+            removeDirective(speakInfo->directive->getMessageId());
+        } else {
+            ACSDK_ERROR(LX("sendExceptionEncounteredAndReportFailed").d("reason", "speakInfoHasNoDirective"));
+        }
+        if (speakInfo->result) {
+            speakInfo->result->setFailed(message);
+        } else {
+            ACSDK_ERROR(LX("sendExceptionEncounteredAndReportFailed").d("reason", "speakInfoHasNoResult"));
+        }
+        speakInfo->clear();
+    } else {
+        ACSDK_ERROR(LX("sendExceptionEncounteredAndReportFailed").d("reason", "speakInfoNotFound"));
     }
-    speakInfo->clear();
-    removeDirective(speakInfo->directive->getMessageId());
     std::unique_lock<std::mutex> lock(m_mutex);
     if (SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING == m_currentState ||
         SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS == m_currentState) {

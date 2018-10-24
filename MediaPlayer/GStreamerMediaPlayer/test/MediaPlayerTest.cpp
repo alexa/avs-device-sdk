@@ -119,7 +119,7 @@ public:
                 auto contentTypeFuture = contentTypePromise.get_future();
                 contentTypePromise.set_value(urlAndContentType->second);
                 return avsCommon::utils::memory::make_unique<avsCommon::utils::HTTPContent>(
-                    avsCommon::utils::HTTPContent{std::move(statusFuture), std::move(contentTypeFuture), nullptr});
+                    std::move(statusFuture), std::move(contentTypeFuture), nullptr);
             }
         } else {
             auto urlAndContent = urlsToContent.find(m_url);
@@ -137,7 +137,7 @@ public:
                 return nullptr;
             }
             return avsCommon::utils::memory::make_unique<avsCommon::utils::HTTPContent>(
-                avsCommon::utils::HTTPContent{std::move(statusFuture), std::move(contentTypeFuture), attachment});
+                std::move(statusFuture), std::move(contentTypeFuture), attachment);
         }
     }
 

@@ -42,6 +42,9 @@ public:
         OK_WOULDBLOCK,
         /// On a request for n bytes, less than n bytes were available on a blocking read.
         OK_TIMEDOUT,
+        /// The writer has overwritten the new data on reader's current position. Reader position is reset
+        /// to current writer position.
+        OK_OVERRUN_RESET,
         /// The underlying data representation is no longer readable.
         CLOSED,
         /// The writer has corrupted the reader data.  The attachment is no longer valid.
@@ -123,6 +126,9 @@ inline std::ostream& operator<<(std::ostream& stream, const AttachmentReader::Re
             break;
         case AttachmentReader::ReadStatus::OK_TIMEDOUT:
             stream << "OK_TIMEDOUT";
+            break;
+        case AttachmentReader::ReadStatus::OK_OVERRUN_RESET:
+            stream << "OK_OVERRUN_RESET";
             break;
         case AttachmentReader::ReadStatus::CLOSED:
             stream << "CLOSED";

@@ -86,6 +86,12 @@ static const std::string PLAYLISTCONTROLLER_NAMESPACE = "Alexa.PlaylistControlle
 static const std::string SEEKCONTROLLER_NAMESPACE = "Alexa.SeekController";
 static const std::string FAVORITESCONTROLLER_NAMESPACE = "Alexa.FavoritesController";
 
+// field values used in Adapter State response
+static const std::string PLAYER_USER_NAME = "userName";
+static const std::string PLAYER_ID = "testPlayerId";
+static const std::string PLAYER_TRACK = "testTrack";
+static const std::string PLAYER_STATE = "IDLE";
+
 // The @c External media player play directive signature.
 static const NamespaceAndName PLAY_DIRECTIVE{EXTERNALMEDIAPLAYER_NAMESPACE, "Play"};
 static const NamespaceAndName LOGIN_DIRECTIVE{EXTERNALMEDIAPLAYER_NAMESPACE, "Login"};
@@ -172,6 +178,28 @@ static const std::string IDLE_PLAYBACK_STATE =
         "}]"
     "}";
 // clang-format on
+
+/**
+ * Method to create an adapter state struct response to getState();
+ *
+ * @return an adpater state partially filled with test values
+ */
+static AdapterState createAdapterState() {
+    AdapterSessionState sessionState;
+    sessionState.loggedIn = false;
+    sessionState.userName = PLAYER_USER_NAME;
+    sessionState.playerId = PLAYER_ID;
+
+    AdapterPlaybackState playbackState;
+    playbackState.playerId = PLAYER_ID;
+    playbackState.state = PLAYER_STATE;
+    playbackState.trackName = PLAYER_TRACK;
+
+    AdapterState adapterState;
+    adapterState.sessionState = sessionState;
+    adapterState.playbackState = playbackState;
+    return adapterState;
+}
 
 /// Message Id for testing.
 static const std::string MESSAGE_ID_TEST("MessageId_Test");
@@ -264,6 +292,32 @@ MockExternalMediaPlayerAdapter::getInstance(
     MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter =
         std::shared_ptr<MockExternalMediaPlayerAdapter>(new MockExternalMediaPlayerAdapter());
     return MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter;
+}
+
+class MockExternalMediaPlayerObserver : public ExternalMediaPlayerObserverInterface {
+public:
+    static std::shared_ptr<MockExternalMediaPlayerObserver> getInstance();
+    MOCK_METHOD2(
+        onLoginStateProvided,
+        void(const std::string&, const avsCommon::sdkInterfaces::externalMediaPlayer::ObservableSessionProperties));
+    MOCK_METHOD2(
+        onPlaybackStateProvided,
+        void(
+            const std::string&,
+            const avsCommon::sdkInterfaces::externalMediaPlayer::ObservablePlaybackStateProperties));
+
+private:
+    /**
+     * Constructor
+     */
+    MockExternalMediaPlayerObserver();
+};
+
+std::shared_ptr<MockExternalMediaPlayerObserver> MockExternalMediaPlayerObserver::getInstance() {
+    return std::shared_ptr<MockExternalMediaPlayerObserver>(new MockExternalMediaPlayerObserver());
+}
+
+MockExternalMediaPlayerObserver::MockExternalMediaPlayerObserver() {
 }
 
 /**
@@ -945,6 +999,106 @@ TEST_F(ExternalMediaPlayerTest, testLogin) {
 
     m_externalMediaPlayer->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
     m_externalMediaPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
+}
+
+/**
+ * Test observers of session state are correctly notified
+ */
+TEST_F(ExternalMediaPlayerTest, testLoginStateChangeObserverIsNotified) {
+    // add a mock observer
+    auto observer = MockExternalMediaPlayerObserver::getInstance();
+    m_externalMediaPlayer->addObserver(observer);
+
+    EXPECT_CALL(
+        *(m_mockContextManager.get()), setState(SESSION_STATE, _, StateRefreshPolicy::ALWAYS, PROVIDE_STATE_TOKEN_TEST))
+        .Times(1)
+        .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetState));
+
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), getState())
+        .WillRepeatedly(Return(createAdapterState()));
+
+    ObservableSessionProperties observableSessionProperties{false, PLAYER_USER_NAME};
+    EXPECT_CALL(*(observer), onLoginStateProvided(PLAYER_ID, observableSessionProperties)).Times(1);
+
+    m_externalMediaPlayer->provideState(SESSION_STATE, PROVIDE_STATE_TOKEN_TEST);
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+}
+
+/**
+ * Test observers of playback state are correctly notified
+ */
+TEST_F(ExternalMediaPlayerTest, testPlaybackStateChangeObserverIsNotified) {
+    // add a mock observer
+    auto observer = MockExternalMediaPlayerObserver::getInstance();
+    m_externalMediaPlayer->addObserver(observer);
+
+    EXPECT_CALL(
+        *(m_mockContextManager.get()),
+        setState(PLAYBACK_STATE, _, StateRefreshPolicy::ALWAYS, PROVIDE_STATE_TOKEN_TEST))
+        .Times(1)
+        .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetState));
+
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), getState())
+        .WillRepeatedly(Return(createAdapterState()));
+
+    ObservablePlaybackStateProperties observablePlaybackStateProperties{PLAYER_STATE, PLAYER_TRACK};
+    EXPECT_CALL(*(observer), onPlaybackStateProvided(PLAYER_ID, observablePlaybackStateProperties)).Times(1);
+
+    m_externalMediaPlayer->provideState(PLAYBACK_STATE, PROVIDE_STATE_TOKEN_TEST);
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+}
+
+/**
+ * Test that after removal login observers are not called anymore
+ */
+TEST_F(ExternalMediaPlayerTest, testLoginStateChangeObserverRemoval) {
+    // add a mock observer
+    auto observer = MockExternalMediaPlayerObserver::getInstance();
+    m_externalMediaPlayer->addObserver(observer);
+
+    EXPECT_CALL(
+        *(m_mockContextManager.get()), setState(SESSION_STATE, _, StateRefreshPolicy::ALWAYS, PROVIDE_STATE_TOKEN_TEST))
+        .Times(2)
+        .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetState));
+
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), getState())
+        .WillRepeatedly(Return(createAdapterState()));
+    EXPECT_CALL(*(observer), onLoginStateProvided(_, _)).Times(1);
+    m_externalMediaPlayer->provideState(SESSION_STATE, PROVIDE_STATE_TOKEN_TEST);
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+
+    m_externalMediaPlayer->removeObserver(observer);
+
+    EXPECT_CALL(*(observer), onLoginStateProvided(_, _)).Times(0);
+    m_externalMediaPlayer->provideState(SESSION_STATE, PROVIDE_STATE_TOKEN_TEST);
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+}
+
+/**
+ * Test that after removal playback state observers are not called anymore
+ */
+TEST_F(ExternalMediaPlayerTest, testPlaybackStateChangeObserverRemoval) {
+    // add a mock observer
+    auto observer = MockExternalMediaPlayerObserver::getInstance();
+    m_externalMediaPlayer->addObserver(observer);
+
+    EXPECT_CALL(
+        *(m_mockContextManager.get()),
+        setState(PLAYBACK_STATE, _, StateRefreshPolicy::ALWAYS, PROVIDE_STATE_TOKEN_TEST))
+        .Times(2)
+        .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetState));
+
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), getState())
+        .WillRepeatedly(Return(createAdapterState()));
+    EXPECT_CALL(*(observer), onPlaybackStateProvided(_, _)).Times(1);
+    m_externalMediaPlayer->provideState(PLAYBACK_STATE, PROVIDE_STATE_TOKEN_TEST);
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+
+    m_externalMediaPlayer->removeObserver(observer);
+
+    EXPECT_CALL(*(observer), onPlaybackStateProvided(_, _)).Times(0);
+    m_externalMediaPlayer->provideState(PLAYBACK_STATE, PROVIDE_STATE_TOKEN_TEST);
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
 }
 
 /**

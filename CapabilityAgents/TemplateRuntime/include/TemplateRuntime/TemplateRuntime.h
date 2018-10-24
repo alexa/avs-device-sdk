@@ -209,6 +209,11 @@ private:
     /// @}
 
     /**
+     * Initializes the object by reading the values from configuration.
+     */
+    bool initialize();
+
+    /**
      * Remove a directive from the map of message IDs to DirectiveInfo instances.
      *
      * @param info The @c DirectiveInfo containing the @c AVSDirective whose message ID is to be removed.
@@ -379,6 +384,15 @@ private:
 
     /// This is the worker thread for the @c TemplateRuntime CA.
     avsCommon::utils::threading::Executor m_executor;
+
+    /// The timeout value in ms for clearing the diplay card when TTS is FINSIHED
+    std::chrono::milliseconds m_ttsFinishedTimeout;
+
+    /// The timeout value in ms for clearing the diplay card when AudioPlay is FINSIHED
+    std::chrono::milliseconds m_audioPlaybackFinishedTimeout;
+
+    /// The timeout value in ms for clearing the diplay card when AudioPlay is STOPPED or PAUSED
+    std::chrono::milliseconds m_audioPlaybackStoppedPausedTimeout;
 };
 
 }  // namespace templateRuntime

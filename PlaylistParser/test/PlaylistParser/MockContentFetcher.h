@@ -270,7 +270,7 @@ public:
                 auto contentTypeFuture = contentTypePromise.get_future();
                 contentTypePromise.set_value(it1->second);
                 return avsCommon::utils::memory::make_unique<avsCommon::utils::HTTPContent>(
-                    avsCommon::utils::HTTPContent{std::move(statusFuture), std::move(contentTypeFuture), nullptr});
+                    std::move(statusFuture), std::move(contentTypeFuture), nullptr);
             }
         } else if (fetchOption == FetchOptions::ENTIRE_BODY) {
             auto it2 = urlsToContent.find(m_url);
@@ -293,8 +293,7 @@ public:
                 auto contentTypeFuture = contentTypePromise.get_future();
                 contentTypePromise.set_value("");
                 return avsCommon::utils::memory::make_unique<avsCommon::utils::HTTPContent>(
-                    avsCommon::utils::HTTPContent{
-                        std::move(statusFuture), std::move(contentTypeFuture), writeStringIntoAttachment(it2->second)});
+                    std::move(statusFuture), std::move(contentTypeFuture), writeStringIntoAttachment(it2->second));
             }
         } else {
             return nullptr;

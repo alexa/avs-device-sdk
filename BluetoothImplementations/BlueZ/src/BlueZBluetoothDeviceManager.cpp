@@ -13,9 +13,9 @@
  * permissions and limitations under the License.
  */
 
-#include "BlueZ/BlueZBluetoothDeviceManager.h"
-
 #include <AVSCommon/Utils/Logger/Logger.h>
+
+#include "BlueZ/BlueZBluetoothDeviceManager.h"
 
 namespace alexaClientSDK {
 namespace bluetoothImplementations {

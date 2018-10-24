@@ -209,10 +209,15 @@ static bool getStringFromJson(const rapidjson::Value& jsonValue, std::string* js
  * Get a json object from a string representing the json.
  *
  * @param jsonString The json as a string.
+ * @param allocator The allocator object used to build @c jsonValue. Note: Make sure that the allocator gets destroyed
+ *                  only after @c jsonValue has been destroyed.
  * @param [out] *jsonValue The json value object.
  * @return true if the string represents a proper json, else false.
  */
-static bool getJsonFromString(const std::string& jsonString, rapidjson::Value* jsonValue);
+static bool getJsonFromString(
+    const std::string& jsonString,
+    rapidjson::Value::AllocatorType& allocator,
+    rapidjson::Value* jsonValue);
 
 /**
  * Helper method that will log a fail for saving Capabilities API data to misc DB and then attempt to clear the table.
@@ -387,6 +392,7 @@ void CapabilitiesDelegate::doShutdown() {
         std::lock_guard<std::mutex> lock(m_publishWaitMutex);
         m_isCapabilitiesDelegateShutdown = true;
         m_publishWaitDone.notify_one();
+        m_authStatusReady.notify_one();
     }
     m_executor.shutdown();
     m_authDelegate->removeAuthObserver(shared_from_this());
@@ -446,7 +452,7 @@ bool CapabilitiesDelegate::init(const ConfigurationNode& configurationRoot) {
         m_capabilitiesApiEndpoint = DEFAULT_CAPABILITIES_API_ENDPOINT;
     }
 
-    if (!m_miscStorage->open()) {
+    if (!m_miscStorage->isOpened() && !m_miscStorage->open()) {
         ACSDK_DEBUG0(LX(infoEvent).m("Couldn't open misc database. Creating."));
         if (!m_miscStorage->createDatabase()) {
             ACSDK_ERROR(LX(errorEvent).m("Could not create misc database."));
@@ -547,10 +553,11 @@ CapabilitiesDelegate::CapabilitiesPublishReturnCode CapabilitiesDelegate::publis
     }
 
     std::string authToken = getAuthToken();
-    if (authToken.empty()) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "getAuthTokenFailed"));
+
+    if (isShuttingDown()) {
+        ACSDK_DEBUG9(LX("publishCapabilitiesFailed").d("reason", "shutdownWhileAuthorizing"));
         setCapabilitiesState(
-            CapabilitiesObserverInterface::State::FATAL_ERROR, CapabilitiesObserverInterface::Error::FORBIDDEN);
+            CapabilitiesObserverInterface::State::UNINITIALIZED, CapabilitiesObserverInterface::Error::SUCCESS);
         return CapabilitiesDelegate::CapabilitiesPublishReturnCode::FATAL_ERROR;
     }
 
@@ -587,6 +594,7 @@ CapabilitiesDelegate::CapabilitiesPublishReturnCode CapabilitiesDelegate::publis
             ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "authenticationFailed"));
             setCapabilitiesState(
                 CapabilitiesObserverInterface::State::FATAL_ERROR, CapabilitiesObserverInterface::Error::FORBIDDEN);
+            m_authDelegate->onAuthFailure(authToken);
             return CapabilitiesDelegate::CapabilitiesPublishReturnCode::FATAL_ERROR;
         case HTTPResponseCode::SERVER_INTERNAL_ERROR:
             ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "internalServiceError"));
@@ -595,10 +603,13 @@ CapabilitiesDelegate::CapabilitiesPublishReturnCode CapabilitiesDelegate::publis
                 CapabilitiesObserverInterface::Error::SERVER_INTERNAL_ERROR);
             return CapabilitiesDelegate::CapabilitiesPublishReturnCode::RETRIABLE_ERROR;
         default:
-            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "httpRequestFailed " + httpResponse.serialize()));
+            ACSDK_ERROR(LX(errorEvent)
+                            .d("responseCode", httpResponse.code)
+                            .d(errorReasonKey, "httpRequestFailed " + httpResponse.serialize()));
             setCapabilitiesState(
-                CapabilitiesObserverInterface::State::FATAL_ERROR, CapabilitiesObserverInterface::Error::UNKNOWN_ERROR);
-            return CapabilitiesDelegate::CapabilitiesPublishReturnCode::FATAL_ERROR;
+                CapabilitiesObserverInterface::State::RETRIABLE_ERROR,
+                CapabilitiesObserverInterface::Error::UNKNOWN_ERROR);
+            return CapabilitiesDelegate::CapabilitiesPublishReturnCode::RETRIABLE_ERROR;
     }
 }
 
@@ -614,10 +625,12 @@ void CapabilitiesDelegate::publishCapabilitiesAsyncWithRetries() {
                 acl::TransportDefines::RETRY_TIMER.calculateTimeToRetry(retryCount++);
             ACSDK_ERROR(LX("capabilitiesPublishFailed").d("reason", "serverError").d("retryCount", retryCount));
 
-            std::unique_lock<std::mutex> lock(m_publishWaitMutex);
-            m_publishWaitDone.wait_for(lock, retryBackoff, [this] { return m_isCapabilitiesDelegateShutdown; });
+            {
+                std::unique_lock<std::mutex> lock(m_publishWaitMutex);
+                m_publishWaitDone.wait_for(lock, retryBackoff, [this] { return isShuttingDownLocked(); });
+            }
 
-            if (m_isCapabilitiesDelegateShutdown) {
+            if (isShuttingDown()) {
                 capabilitiesPublishReturnCode =
                     CapabilitiesDelegateInterface::CapabilitiesPublishReturnCode::FATAL_ERROR;
             } else {
@@ -681,7 +694,7 @@ std::string CapabilitiesDelegate::getCapabilitiesPublishMessageBodyFromRegistere
             if (foundValueIterator != capabilityMap.end()) {
                 std::string capabilityConfigurationsString = foundValueIterator->second;
                 rapidjson::Value capabilityConfigurationsJson;
-                if (getJsonFromString(capabilityConfigurationsString, &capabilityConfigurationsJson)) {
+                if (getJsonFromString(capabilityConfigurationsString, allocator, &capabilityConfigurationsJson)) {
                     capability.AddMember(
                         StringRef(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY), capabilityConfigurationsJson, allocator);
                 } else {
@@ -764,7 +777,10 @@ bool getStringFromJson(const rapidjson::Value& jsonValue, std::string* jsonStrin
     return true;
 }
 
-bool getJsonFromString(const std::string& jsonString, rapidjson::Value* jsonValue) {
+bool getJsonFromString(
+    const std::string& jsonString,
+    rapidjson::Value::AllocatorType& allocator,
+    rapidjson::Value* jsonValue) {
     const std::string event = "getJsonFromStringFailed";
     const std::string reasonKey = "reason";
     if (!jsonValue) {
@@ -780,7 +796,8 @@ bool getJsonFromString(const std::string& jsonString, rapidjson::Value* jsonValu
         ACSDK_ERROR(LX(event).d(reasonKey, "jsonStringNotValidJson"));
         return false;
     }
-    *jsonValue = rapidjson::Value(jsonDoc, jsonDoc.GetAllocator());
+    *jsonValue = rapidjson::Value(jsonDoc, allocator);
+
     return true;
 }
 
@@ -952,8 +969,7 @@ void CapabilitiesDelegate::onAuthStateChange(
     AuthObserverInterface::Error newError) {
     std::lock_guard<std::mutex> lock(m_authStatusMutex);
     m_currentAuthState = newState;
-    if ((AuthObserverInterface::State::REFRESHED == m_currentAuthState) ||
-        (AuthObserverInterface::State::UNRECOVERABLE_ERROR == m_currentAuthState)) {
+    if ((AuthObserverInterface::State::REFRESHED == m_currentAuthState)) {
         m_authStatusReady.notify_one();
     }
 }
@@ -962,15 +978,13 @@ std::string CapabilitiesDelegate::getAuthToken() {
     {
         std::unique_lock<std::mutex> lock(m_authStatusMutex);
         m_authStatusReady.wait(lock, [this]() {
-            return (
-                (AuthObserverInterface::State::REFRESHED == m_currentAuthState) ||
-                (AuthObserverInterface::State::UNRECOVERABLE_ERROR == m_currentAuthState));
+            return (isShuttingDown() || (AuthObserverInterface::State::REFRESHED == m_currentAuthState));
         });
-    }
 
-    if (AuthObserverInterface::State::UNRECOVERABLE_ERROR == m_currentAuthState) {
-        ACSDK_ERROR(LX("getAuthTokenFailed").d("reason", "Unrecoverable error by auth delegate"));
-        return "";
+        if (isShuttingDown()) {
+            ACSDK_DEBUG9(LX("getAuthTokenFailed").d("reason", "shutdownWhileWaitingForToken"));
+            return "";
+        }
     }
 
     return m_authDelegate->getAuthToken();
@@ -1155,6 +1169,24 @@ bool CapabilitiesDelegate::saveCapabilitiesPublishData() {
     }
 
     return true;
+}
+
+bool CapabilitiesDelegate::isShuttingDown() {
+    std::lock_guard<std::mutex> lock(m_publishWaitMutex);
+    return isShuttingDownLocked();
+}
+
+bool CapabilitiesDelegate::isShuttingDownLocked() {
+    return m_isCapabilitiesDelegateShutdown;
+}
+
+void CapabilitiesDelegate::invalidateCapabilities() {
+    if (!m_miscStorage->clearTable(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE)) {
+        ACSDK_ERROR(LX("invalidateCapabilities")
+                        .d("reason",
+                           "Unable to clear the table " + CAPABILITIES_PUBLISH_TABLE + " for component " +
+                               COMPONENT_NAME + ". Please clear the table for proper future functioning."));
+    }
 }
 
 }  // namespace capabilitiesDelegate

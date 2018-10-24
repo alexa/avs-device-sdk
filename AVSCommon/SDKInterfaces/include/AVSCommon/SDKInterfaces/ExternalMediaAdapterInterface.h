@@ -287,7 +287,7 @@ struct AdapterPlaybackState {
     /// The playerId of an adapter which is the pre-negotiated business id for a partner music provider.
     std::string playerId;
 
-    /// The state of the default player - IDLE/STOPPED/PLAYING...
+    /// The players current state
     std::string state;
 
     /// The set of states the default player can move into from its current state.

@@ -18,8 +18,9 @@
 
 #include <gmock/gmock.h>
 
-#include "AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h"
-#include "AVSCommon/Utils/RequiresShutdown.h"
+#include <AVSCommon/Utils/RequiresShutdown.h>
+#include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
+#include <AVSCommon/Utils/Timing/Stopwatch.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -353,6 +354,9 @@ private:
 
         /// Tracks if playbackError state has been reached.
         SourceState error;
+
+        /// Tracks how far mocked playback has progressed, using elapsed real time.
+        avsCommon::utils::timing::Stopwatch stopwatch;
     };
 
     /**

@@ -16,10 +16,12 @@
 #ifndef ALEXA_CLIENT_SDK_BLUETOOTHIMPLEMENTATIONS_BLUEZ_INCLUDE_BLUEZ_GVARIANTMAPREADER_H_
 #define ALEXA_CLIENT_SDK_BLUETOOTHIMPLEMENTATIONS_BLUEZ_INCLUDE_BLUEZ_GVARIANTMAPREADER_H_
 
-#include "BlueZ/ManagedGVariant.h"
-#include "BlueZ/ManagedGError.h"
+#include <functional>
 
 #include <gio/gio.h>
+
+#include "BlueZ/ManagedGVariant.h"
+#include "BlueZ/ManagedGError.h"
 
 namespace alexaClientSDK {
 namespace bluetoothImplementations {

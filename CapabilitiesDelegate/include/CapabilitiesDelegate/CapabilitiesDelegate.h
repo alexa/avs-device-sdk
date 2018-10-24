@@ -82,6 +82,8 @@ public:
 
     void removeCapabilitiesObserver(
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface> observer) override;
+
+    void invalidateCapabilities() override;
     /// @}
 
     /// @name AuthObserverInterface method overrides.
@@ -209,6 +211,21 @@ private:
     void setCapabilitiesState(
         avsCommon::sdkInterfaces::CapabilitiesObserverInterface::State newState,
         avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error newError);
+
+    /**
+     * Return whether or not this instance is shutting down.
+     *
+     * @return Whether or not this instance is shutting down.
+     */
+    bool isShuttingDown();
+
+    /**
+     * Return whether or not this instance is shutting down.
+     * @note This must be called with @c m_publishWaitMutex acquired.
+     *
+     * @return Whether or not this instance is shutting down.
+     */
+    bool isShuttingDownLocked();
 
     /// Mutex used to serialize access to Capabilities state and Capabilities state observers.
     std::mutex m_capabilitiesMutex;

@@ -32,6 +32,10 @@ static const auto DEFAULT_TIMEOUT = std::chrono::seconds(5);
 /// Short time out for when callbacks are expected not to occur.
 static const auto SHORT_TIMEOUT = std::chrono::milliseconds(50);
 
+/// Time out for testing if transitionFromThinking timeout has occurred.  This needs to be longer than the SHORT_TIMEOUT
+/// defined in DialogUXStateAggregator.cpp.
+static const auto TRANSITION_FROM_THINKING_TIMEOUT = std::chrono::milliseconds(300);
+
 /// A test observer that mocks out the DialogUXStateObserverInterface##onDialogUXStateChanged() call.
 class TestObserver : public DialogUXStateObserverInterface {
 public:
@@ -114,12 +118,15 @@ public:
      * Checks that a state change does not occur by waiting for the timeout duration.
      *
      * @param observer The UX state observer.
+     * @param timeout An optional timeout parameter to wait for to make sure no state change has occured.
      */
-    void assertNoStateChange(std::shared_ptr<TestObserver> observer) {
+    void assertNoStateChange(
+        std::shared_ptr<TestObserver> observer,
+        std::chrono::milliseconds timeout = SHORT_TIMEOUT) {
         ASSERT_TRUE(observer);
         bool stateChanged = false;
         // Will wait for the short timeout duration before succeeding
-        observer->waitForStateChange(SHORT_TIMEOUT, &stateChanged);
+        observer->waitForStateChange(timeout, &stateChanged);
         ASSERT_FALSE(stateChanged);
     }
 };
@@ -203,12 +210,12 @@ TEST_F(DialogUXAggregatorTest, aipIdleLeadsToIdle) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 }
 
-/// Tests that the AIP expecting speech state leads to the LISTENING state.
+/// Tests that the AIP expecting speech state leads to the EXPECTING state.
 TEST_F(DialogUXAggregatorTest, aipExpectingSpeechLeadsToListeningState) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH);
-    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::EXPECTING);
 }
 
 /// Tests that the AIP busy state leads to the THINKING state.
@@ -293,7 +300,7 @@ TEST_F(DialogUXAggregatorTest, busyThenReceiveThenSpeakGoesToSpeakButNotIdle) {
     assertNoStateChange(m_testObserver);
 }
 
-/// Tests that both SpeechSynthesizer and AudioInputProcessor finished/idle state leadss to the IDLE state.
+/// Tests that both SpeechSynthesizer and AudioInputProcessor finished/idle state leads to the IDLE state.
 TEST_F(DialogUXAggregatorTest, speakingAndRecognizingFinishedGoesToIdle) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
@@ -369,6 +376,25 @@ TEST_F(DialogUXAggregatorTest, simpleReceiveDoesNothing) {
     m_aggregator->receive("", "");
 
     assertNoStateChange(m_testObserver);
+}
+
+/// Tests that the THINKING state remains in THINKING if SpeechSynthesizer reports GAINING_FOCUS and a new message is
+/// received.
+TEST_F(DialogUXAggregatorTest, thinkingThenReceiveRemainsInThinkingIfSpeechSynthesizerReportsGainingFocus) {
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
+
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
+
+    m_aggregator->receive("", "");
+
+    m_aggregator->onStateChanged(
+        sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS);
+
+    // Make sure after SpeechSynthesizer reports GAINING_FOCUS, that it would stay in THINKING state
+    m_aggregator->receive("", "");
+
+    assertNoStateChange(m_testObserver, TRANSITION_FROM_THINKING_TIMEOUT);
 }
 
 }  // namespace test

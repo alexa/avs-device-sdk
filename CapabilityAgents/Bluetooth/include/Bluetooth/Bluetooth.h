@@ -46,6 +46,7 @@
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Bluetooth/FormattedAudioStreamAdapter.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include "Bluetooth/BluetoothAVRCPTransformer.h"
 #include "Bluetooth/BluetoothStorageInterface.h"
 #include <RegistrationManager/CustomerDataHandler.h>
 #include <RegistrationManager/CustomerDataManager.h>
@@ -90,16 +91,8 @@ namespace bluetooth {
  * Profiles listed under here refer to the Capability Agent's support of these profiles in relation to AVS.
  * This does not speak about support for them at other layers (the stack, client applications, etc).
  *
- * -# AVRCP (Controller)
- * -# A2DP (Sink)
- *
- * AVRCP
- *
- * Currently we support the AVS device sending AVRCP commands to a connected device.
- *
- * A2DP
- *
- * Currently we support playing music sent to the AVS enabled-device.
+ * -# AVRCP (Controller, Target)
+ * -# A2DP (Sink, Source)
  */
 class Bluetooth
         : public std::enable_shared_from_this<Bluetooth>
@@ -143,6 +136,7 @@ public:
      * @param eventBus A bus to abstract Bluetooth stack specific messages.
      * @param mediaPlayer The Media Player which will handle playback.
      * @param customerDataManager Object that will track the CustomerDataHandler.
+     * @param avrcpTransformer Transforms incoming AVRCP commands if supported.
      */
     static std::shared_ptr<Bluetooth> create(
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
@@ -153,7 +147,8 @@ public:
         std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> deviceManager,
         std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
-        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager);
+        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+        std::shared_ptr<BluetoothAVRCPTransformer> avrcpTransformer = nullptr);
 
     /// @name CapabilityAgent Functions
     /// @{
@@ -216,6 +211,7 @@ private:
      * @param eventBus A bus to abstract Bluetooth stack specific messages.
      * @param mediaPlayer The Media Player which will handle playback.
      * @param customerDataManager Object that will track the CustomerDataHandler.
+     * @param avrcpTransformer Transforms incoming AVRCP commands.
      */
     Bluetooth(
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
@@ -226,7 +222,8 @@ private:
         std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface>& deviceManager,
         std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
-        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager);
+        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+        std::shared_ptr<BluetoothAVRCPTransformer> avrcpTransformer);
 
     /**
      * Initializes the agent.
@@ -633,6 +630,9 @@ private:
 
     /// An eventbus used to abstract Bluetooth stack specific messages.
     std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> m_eventBus;
+
+    /// Transforms incoming AVRCP commands.
+    std::shared_ptr<BluetoothAVRCPTransformer> m_avrcpTransformer;
 
     /// The A2DP media stream.
     std::shared_ptr<avsCommon::utils::bluetooth::FormattedAudioStreamAdapter> m_mediaStream;

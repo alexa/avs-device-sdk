@@ -23,6 +23,8 @@
 #include <vector>
 
 #include <AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h>
+#include <AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSinkInterface.h>
+#include <AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPControllerInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPTargetInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/Services/BluetoothServiceInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/Services/SDPRecordInterface.h>
@@ -174,8 +176,14 @@ public:
     /// @return A pointer to an instance of the @c A2DPSourceInterface if supported, else a nullptr.
     virtual std::shared_ptr<services::A2DPSourceInterface> getA2DPSource() = 0;
 
+    /// @return A pointer to an instance of the @c A2DPSinkInterface if supported, else a nullptr.
+    virtual std::shared_ptr<services::A2DPSinkInterface> getA2DPSink() = 0;
+
     /// @return A pointer to an instance of the @c AVRCPTargetInterface if supported, else a nullptr.
     virtual std::shared_ptr<services::AVRCPTargetInterface> getAVRCPTarget() = 0;
+
+    /// @return A pointer to an instance of the @c AVRCPControllerInterface if supported, else a nullptr.
+    virtual std::shared_ptr<services::AVRCPControllerInterface> getAVRCPController() = 0;
 };
 
 }  // namespace bluetooth

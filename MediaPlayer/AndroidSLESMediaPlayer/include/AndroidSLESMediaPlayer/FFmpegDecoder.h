@@ -24,8 +24,13 @@
 #include <string>
 #include <utility>
 
+extern "C" {
+#include <libavutil/samplefmt.h>
+}
+
 #include "AndroidSLESMediaPlayer/DecoderInterface.h"
 #include "AndroidSLESMediaPlayer/FFmpegInputControllerInterface.h"
+#include "AndroidSLESMediaPlayer/PlaybackConfiguration.h"
 
 struct AVCodec;
 struct AVCodecContext;
@@ -39,6 +44,9 @@ struct SwrContext;
 namespace alexaClientSDK {
 namespace mediaPlayer {
 namespace android {
+
+/// The layout mask representing which channels should be enabled.
+using LayoutMask = int64_t;
 
 /**
  * Class responsible for decoding and re-sampling the audio from an input controller.
@@ -56,13 +64,16 @@ public:
      * Creates a new decoder buffer queue that reads input data using the given controller.
      *
      * @param inputController The controller used to retrieve input data.
+     * @param outputConfig The decoder output configuration.
      * @return The new decoder buffer queue if create succeeds, @c nullptr otherwise.
      */
-    static std::unique_ptr<FFmpegDecoder> create(std::unique_ptr<FFmpegInputControllerInterface> inputController);
+    static std::unique_ptr<FFmpegDecoder> create(
+        std::unique_ptr<FFmpegInputControllerInterface> inputController,
+        const PlaybackConfiguration& outputConfig);
 
     /// @name DecoderInterface method overrides.
     /// @{
-    std::pair<Status, size_t> read(int16_t* buffer, size_t size) override;
+    std::pair<Status, size_t> read(Byte* buffer, size_t size) override;
     void abort() override;
     /// @}
 
@@ -86,8 +97,15 @@ private:
      * Constructor.
      *
      * @param inputController A controller for the input encoded data.
+     * @param format The output sample format.
+     * @param layout The output channels layout.
+     * @param sampleRate The output sample rate in Hz.
      */
-    FFmpegDecoder(std::unique_ptr<FFmpegInputControllerInterface> inputController);
+    FFmpegDecoder(
+        std::unique_ptr<FFmpegInputControllerInterface> inputController,
+        AVSampleFormat format,
+        LayoutMask layout,
+        int sampleRate);
 
     /**
      * This enumeration represents the states that the decoder can be in. The possible transitions are:
@@ -131,8 +149,14 @@ private:
      */
     class UnreadData {
     public:
-        /// Constructor
-        UnreadData();
+        /**
+         * Constructor
+         *
+         * @param format The output sample format.
+         * @param layout The output channels layout.
+         * @param sampleRate The output sample rate in Hz.
+         */
+        UnreadData(AVSampleFormat format, LayoutMask layout, int sampleRate);
 
         /**
          * Get the internal frame.
@@ -185,11 +209,11 @@ private:
      *
      * @param buffer The buffer where the data will be written to.
      * @param size The buffer size in bytes.
-     * @param wordsRead The number of words that has been read already. This is used to calculate the write offset and
+     * @param bytesRead The number of bytes that has been read already. This is used to calculate the write offset and
      * the amount of data that can still be written to the buffer.
-     * @return The number of words copied to @c buffer.
+     * @return The number of bytes copied to @c buffer.
      */
-    size_t readData(int16_t* buffer, size_t size, size_t wordsRead);
+    size_t readData(Byte* buffer, size_t size, size_t bytesRead);
 
     /**
      * Call the resampler for the given input frame. This method will fill @c m_unreadData with the resampled data.
@@ -240,6 +264,15 @@ private:
 
     /// A controller for the input data.
     std::unique_ptr<FFmpegInputControllerInterface> m_inputController;
+
+    /// The output sample format.
+    const AVSampleFormat m_outputFormat;
+
+    /// The output channel layout.
+    const LayoutMask m_outputLayout;
+
+    /// The output sample rate.
+    const int m_outputRate;
 
     /// Input format context object.
     std::shared_ptr<AVFormatContext> m_formatContext;

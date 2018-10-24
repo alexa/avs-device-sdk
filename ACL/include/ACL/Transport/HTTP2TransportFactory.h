@@ -21,6 +21,7 @@
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
+#include <AVSCommon/Utils/HTTP2/HTTP2ConnectionFactoryInterface.h>
 
 #include "ACL/Transport/MessageConsumerInterface.h"
 #include "ACL/Transport/PostConnectFactoryInterface.h"
@@ -38,9 +39,12 @@ public:
     /**
      * HTTP2TransportFactory constructor.
      *
+     * @param connectionFactory Object used to create instances of HTTP2ConnectionInterface.
      * @param postConnectFactory Object used to create instances of the PostConnectInterface.
      */
-    HTTP2TransportFactory(std::shared_ptr<PostConnectFactoryInterface> postConnectFactory);
+    HTTP2TransportFactory(
+        std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionFactoryInterface> connectionFactory,
+        std::shared_ptr<PostConnectFactoryInterface> postConnectFactory);
 
     /// @name TransportFactoryInterface methods.
     /// @{
@@ -58,6 +62,9 @@ public:
     HTTP2TransportFactory() = delete;
 
 private:
+    /// Save a pointer to the object used to create instances of the HTTP2ConnectionInterface.
+    std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionFactoryInterface> m_connectionFactory;
+
     /// Save a pointer to the object used to create instances of the PostConnectInterface.
     std::shared_ptr<PostConnectFactoryInterface> m_postConnectFactory;
 };

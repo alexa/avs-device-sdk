@@ -355,7 +355,10 @@ AlertsCapabilityAgent::AlertsCapabilityAgent(
         m_contextManager{contextManager},
         m_isConnected{false},
         m_alertScheduler{alertStorage, alertRenderer, ALERT_PAST_DUE_CUTOFF_MINUTES},
-        m_alertsAudioFactory{alertsAudioFactory} {
+        m_alertsAudioFactory{alertsAudioFactory},
+        m_contentChannelIsActive{false},
+        m_commsChannelIsActive{false},
+        m_alertIsSounding{false} {
     m_capabilityConfigurations.insert(getAlertsCapabilityConfiguration());
 }
 

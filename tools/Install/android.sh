@@ -342,7 +342,7 @@ download_dependency() {
           fi
       fi
       if [ ! -d ${LIB_DIR_NAME} ]; then
-          gunzip -c ${LIB_FILE} | tar xopf -
+          tar -zxf ${LIB_FILE}
           mv ${ORIGINAL_PATH} ${LIB_DIR_NAME}
       fi
       popd > /dev/null

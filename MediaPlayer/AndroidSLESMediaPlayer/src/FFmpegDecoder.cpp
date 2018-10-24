@@ -31,6 +31,7 @@ extern "C" {
 
 #include "AndroidSLESMediaPlayer/FFmpegDecoder.h"
 #include "AndroidSLESMediaPlayer/FFmpegDeleter.h"
+#include "AndroidSLESMediaPlayer/PlaybackConfiguration.h"
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("FFmpegDecoder");
@@ -46,11 +47,11 @@ namespace alexaClientSDK {
 namespace mediaPlayer {
 namespace android {
 
-/// The target output sample rate.
-static constexpr int OUTPUT_SAMPLE_RATE{48000};
-
 /// Represent scenario where there is no flag enabled.
 static constexpr int NO_FLAGS{0};
+
+/// For @c av_samples_get_buffer_size we want to disable alignment to avoid empty samples (see ACSDK-1890).
+static constexpr int NO_ALIGNMENT{1};
 
 /// Represent the timeout for the initialization step.
 ///
@@ -63,21 +64,63 @@ static const int NO_ERROR = 0;
 
 using namespace avsCommon::utils;
 
-std::unique_ptr<FFmpegDecoder> FFmpegDecoder::create(std::unique_ptr<FFmpegInputControllerInterface> inputController) {
+static AVSampleFormat convertFormat(PlaybackConfiguration::SampleFormat format) {
+    switch (format) {
+        case PlaybackConfiguration::SampleFormat::UNSIGNED_8:
+            return AVSampleFormat::AV_SAMPLE_FMT_U8;
+        case PlaybackConfiguration::SampleFormat::SIGNED_16:
+            return AVSampleFormat::AV_SAMPLE_FMT_S16;
+        case PlaybackConfiguration::SampleFormat::SIGNED_32:
+            return AVSampleFormat::AV_SAMPLE_FMT_S32;
+    }
+    ACSDK_ERROR(LX("invalidFormat").d("format", static_cast<int>(format)));
+    return AVSampleFormat::AV_SAMPLE_FMT_S16;
+}
+
+static LayoutMask convertLayout(PlaybackConfiguration::ChannelLayout layout) {
+    switch (layout) {
+        case PlaybackConfiguration::ChannelLayout::LAYOUT_MONO:
+            return AV_CH_LAYOUT_MONO;
+        case PlaybackConfiguration::ChannelLayout::LAYOUT_STEREO:
+            return AV_CH_LAYOUT_STEREO;
+        case PlaybackConfiguration::ChannelLayout::LAYOUT_SURROUND:
+            return AV_CH_LAYOUT_SURROUND;
+        case PlaybackConfiguration::ChannelLayout::LAYOUT_5POINT1:
+            return AV_CH_LAYOUT_5POINT1;
+    }
+    ACSDK_ERROR(LX("invalidLayout").d("layout", static_cast<int>(layout)));
+    return AV_CH_LAYOUT_STEREO;
+}
+
+std::unique_ptr<FFmpegDecoder> FFmpegDecoder::create(
+    std::unique_ptr<FFmpegInputControllerInterface> inputController,
+    const PlaybackConfiguration& outputConfig) {
     if (!inputController) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullInputController"));
         return nullptr;
     }
 
-    return std::unique_ptr<FFmpegDecoder>(new FFmpegDecoder(std::move(inputController)));
+    AVSampleFormat format = convertFormat(outputConfig.sampleFormat());
+    auto layout = convertLayout(outputConfig.channelLayout());
+    int sampleRate = outputConfig.sampleRate();
+
+    return std::unique_ptr<FFmpegDecoder>(new FFmpegDecoder(std::move(inputController), format, layout, sampleRate));
 }
 
-FFmpegDecoder::FFmpegDecoder(std::unique_ptr<FFmpegInputControllerInterface> input) :
+FFmpegDecoder::FFmpegDecoder(
+    std::unique_ptr<FFmpegInputControllerInterface> input,
+    AVSampleFormat format,
+    LayoutMask layout,
+    int sampleRate) :
         m_state{DecodingState::INITIALIZING},
-        m_inputController{std::move(input)} {
+        m_inputController{std::move(input)},
+        m_outputFormat{format},
+        m_outputLayout{layout},
+        m_outputRate{sampleRate},
+        m_unreadData{format, layout, sampleRate} {
 }
 
-std::pair<FFmpegDecoder::Status, size_t> FFmpegDecoder::read(int16_t* buffer, size_t size) {
+std::pair<FFmpegDecoder::Status, size_t> FFmpegDecoder::read(Byte* buffer, size_t size) {
     if (!buffer || size == 0) {
         ACSDK_ERROR(LX("readFailed").d("reason", "invalidInput").d("buffer", buffer).d("size", size));
         return {Status::ERROR, 0};
@@ -94,19 +137,19 @@ std::pair<FFmpegDecoder::Status, size_t> FFmpegDecoder::read(int16_t* buffer, si
     }
 
     m_retryCount = 0;
-    size_t wordsRead = 0;
+    size_t bytesRead = 0;
     auto decodedFrame = std::shared_ptr<AVFrame>(av_frame_alloc(), AVFrameDeleter());
     while (m_state != DecodingState::FINISHED && m_state != DecodingState::INVALID) {
         if (!m_unreadData.isEmpty()) {
-            auto lastReadSize = readData(buffer, size, wordsRead);
+            auto lastReadSize = readData(buffer, size, bytesRead);
             if (lastReadSize == 0) {
-                if (wordsRead == 0) {
+                if (bytesRead == 0) {
                     ACSDK_ERROR(LX("readFailed").d("reason", "bufferTooSmall").d("bufferSize", size));
-                    return {Status::ERROR, wordsRead};
+                    return {Status::ERROR, bytesRead};
                 }
                 break;
             }
-            wordsRead += lastReadSize;
+            bytesRead += lastReadSize;
         } else {
             if (m_state == DecodingState::INITIALIZING) {
                 initialize();
@@ -133,7 +176,7 @@ std::pair<FFmpegDecoder::Status, size_t> FFmpegDecoder::read(int16_t* buffer, si
     auto status = (DecodingState::INVALID == m_state)
                       ? Status::ERROR
                       : (DecodingState::FINISHED == m_state) ? Status::DONE : Status::OK;
-    return {status, wordsRead};
+    return {status, bytesRead};
 }
 
 static int shouldInterrupt(void* decoderPtr) {
@@ -214,9 +257,9 @@ void FFmpegDecoder::initialize() {
     m_swrContext = std::shared_ptr<SwrContext>(
         swr_alloc_set_opts(
             nullptr,
-            AV_CH_LAYOUT_STEREO,             // output channels
-            AV_SAMPLE_FMT_S16,               // output format (signed 16 bits)
-            OUTPUT_SAMPLE_RATE,              // output sample rate
+            m_outputLayout,                  // output channels
+            m_outputFormat,                  // output format (signed 16 bits)
+            m_outputRate,                    // output sample rate
             m_codecContext->channel_layout,  // input channel layout
             m_codecContext->sample_fmt,      // input sample format
             m_codecContext->sample_rate,     // input sample rate
@@ -237,12 +280,12 @@ void FFmpegDecoder::initialize() {
     setState(DecodingState::DECODING);
 }
 
-size_t FFmpegDecoder::readData(int16_t* buffer, size_t size, size_t wordsRead) {
+size_t FFmpegDecoder::readData(Byte* buffer, size_t size, size_t bytesRead) {
     // TODO(ACSDK-1517): use av_samples_copy to partially copy the frame and avoid buffer too small issue.
     auto& frame = m_unreadData.getFrame();
 
-    size_t sampleSizeBytes =
-        av_samples_get_buffer_size(nullptr, frame.channels, frame.nb_samples, (AVSampleFormat)frame.format, NO_FLAGS);
+    size_t sampleSizeBytes = av_samples_get_buffer_size(
+        nullptr, frame.channels, frame.nb_samples, (AVSampleFormat)frame.format, NO_ALIGNMENT);
     if ((sampleSizeBytes % (sizeof(buffer[0]) * frame.channels)) != 0) {
         // Sample size should be format size * number of channels. This may cause glitches in the audio.
         ACSDK_WARN(LX("readDataTruncated")
@@ -252,13 +295,12 @@ size_t FFmpegDecoder::readData(int16_t* buffer, size_t size, size_t wordsRead) {
                        .d("channels", frame.channels));
     }
 
-    size_t sampleSizeWords = sampleSizeBytes / sizeof(buffer[0]);
-    if (size >= wordsRead + sampleSizeWords) {
+    if (size >= bytesRead + sampleSizeBytes) {
         // Have enough space. Read the entire frame.
-        size_t writeOffset = wordsRead;
+        size_t writeOffset = bytesRead;
         memcpy(buffer + writeOffset, frame.data[0], sampleSizeBytes);
         m_unreadData.setOffset(frame.nb_samples);
-        return sampleSizeWords;
+        return sampleSizeBytes;
     }
 
     return 0;
@@ -267,7 +309,7 @@ size_t FFmpegDecoder::readData(int16_t* buffer, size_t size, size_t wordsRead) {
 void FFmpegDecoder::resample(std::shared_ptr<AVFrame> inputFrame) {
     int outSamples = av_rescale_rnd(
         swr_get_delay(m_swrContext.get(), m_codecContext->sample_rate) + inputFrame->nb_samples,
-        OUTPUT_SAMPLE_RATE,
+        m_outputRate,
         m_codecContext->sample_rate,
         AV_ROUND_UP);
     m_unreadData.resize(outSamples);
@@ -383,10 +425,13 @@ bool FFmpegDecoder::transitionStateUsingStatus(
     return true;
 }
 
-FFmpegDecoder::UnreadData::UnreadData() : m_capacity{0}, m_offset{0}, m_frame{av_frame_alloc(), AVFrameDeleter()} {
-    m_frame->sample_rate = OUTPUT_SAMPLE_RATE;
-    m_frame->channel_layout = AV_CH_LAYOUT_STEREO;
-    m_frame->format = AV_SAMPLE_FMT_S16;
+FFmpegDecoder::UnreadData::UnreadData(AVSampleFormat format, LayoutMask layout, int sampleRate) :
+        m_capacity{0},
+        m_offset{0},
+        m_frame{av_frame_alloc(), AVFrameDeleter()} {
+    m_frame->format = format;
+    m_frame->sample_rate = sampleRate;
+    m_frame->channel_layout = layout;
 }
 
 AVFrame& FFmpegDecoder::UnreadData::getFrame() {
@@ -399,10 +444,11 @@ int FFmpegDecoder::UnreadData::getOffset() const {
 
 void FFmpegDecoder::UnreadData::resize(size_t minimumCapacity) {
     if (m_capacity < minimumCapacity) {
+        auto oldFrame = m_frame;
         m_frame = std::shared_ptr<AVFrame>(av_frame_alloc(), AVFrameDeleter());
-        m_frame->sample_rate = OUTPUT_SAMPLE_RATE;
-        m_frame->channel_layout = AV_CH_LAYOUT_STEREO;
-        m_frame->format = AV_SAMPLE_FMT_S16;
+        m_frame->format = oldFrame->format;
+        m_frame->sample_rate = oldFrame->sample_rate;
+        m_frame->channel_layout = oldFrame->channel_layout;
         m_capacity = minimumCapacity;
     }
     m_frame->nb_samples = m_capacity;
@@ -419,8 +465,7 @@ void FFmpegDecoder::UnreadData::setOffset(int offset) {
 
 #define STATE_TO_STREAM(name, stream)        \
     case FFmpegDecoder::DecodingState::name: \
-        stream << #name;                     \
-        break;
+        return stream << #name;
 
 std::ostream& operator<<(std::ostream& stream, const FFmpegDecoder::DecodingState state) {
     switch (state) {
@@ -431,7 +476,7 @@ std::ostream& operator<<(std::ostream& stream, const FFmpegDecoder::DecodingStat
         STATE_TO_STREAM(INVALID, stream)
         STATE_TO_STREAM(INITIALIZING, stream)
     }
-    return stream;
+    return stream << "INVALID";
 }
 
 }  // namespace android

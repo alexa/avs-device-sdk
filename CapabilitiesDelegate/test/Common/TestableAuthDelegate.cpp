@@ -39,6 +39,9 @@ std::string TestAuthDelegate::getAuthToken() {
     return m_authToken;
 }
 
+void TestAuthDelegate::onAuthFailure(const std::string& token) {
+}
+
 void TestAuthDelegate::setAuthToken(const std::string& authToken) {
     m_authToken = authToken;
 }

@@ -86,6 +86,13 @@ private:
      */
     bool confirmReset();
 
+    /**
+     * Prompt the user to confirm before initiating re-authorization of the device.
+     *
+     * @return @c true if re-authorization was confirmed and initiated.
+     */
+    bool confirmReauthorizeDevice();
+
     /// @name AuthObserverInterface Function
     /// @{
     void onAuthStateChange(AuthObserverInterface::State newState, AuthObserverInterface::Error newError) override;

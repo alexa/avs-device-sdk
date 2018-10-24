@@ -51,6 +51,9 @@ include(FFmpeg)
 # Setup MRM variables.
 include (MRM)
 
+# Setup A4B variables.
+include (A4B)
+
 if (HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
     include (ExternalMediaPlayerAdapters)
 endif()

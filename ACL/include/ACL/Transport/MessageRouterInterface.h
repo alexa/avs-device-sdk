@@ -23,7 +23,6 @@
 #include "AVSCommon/Utils/Threading/Executor.h"
 #include "AVSCommon/Utils/RequiresShutdown.h"
 #include "AVSCommon/AVS/MessageRequest.h"
-// TODO: ACSDK-421: Revert this to implement send().
 #include "AVSCommon/SDKInterfaces/MessageSenderInterface.h"
 
 #include "ACL/Transport/MessageRouterObserverInterface.h"
@@ -38,7 +37,6 @@ namespace acl {
  *
  * Implementations of this class are required to be thread-safe.
  */
-// TODO: ACSDK-421: Remove the inheritance from MessageSenderInterface.
 class MessageRouterInterface
         : public avsCommon::sdkInterfaces::MessageSenderInterface
         , public avsCommon::utils::RequiresShutdown {

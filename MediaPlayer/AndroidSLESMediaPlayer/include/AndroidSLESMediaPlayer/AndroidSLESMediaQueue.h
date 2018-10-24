@@ -27,6 +27,7 @@
 #include <AndroidUtilities/AndroidSLESObject.h>
 
 #include "AndroidSLESMediaPlayer/DecoderInterface.h"
+#include "AndroidSLESMediaPlayer/PlaybackConfiguration.h"
 
 namespace alexaClientSDK {
 namespace mediaPlayer {
@@ -45,6 +46,8 @@ namespace android {
  */
 class AndroidSLESMediaQueue {
 public:
+    using Byte = DecoderInterface::Byte;
+
     /// Represent the event types that will be sent to the @c StatusCallback when the queue change state.
     enum class QueueEvent {
         /// Sent when the queue encountered an unrecoverable error.
@@ -71,12 +74,14 @@ public:
      * @param decoder The decoder object used to get raw audio.
      * @param onStatusChanged A function object that should point to a valid callback function called whenever the
      * queue state changes.
+     * @param playbackConfiguration The playback configuration parameters.
      * @return Pointer to the new object if object could be successfully created; otherwise, return a @c nullptr.
      */
     static std::unique_ptr<AndroidSLESMediaQueue> create(
         std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESObject> queueObject,
         std::unique_ptr<DecoderInterface> decoder,
-        EventCallback onStatusChanged);
+        EventCallback onStatusChanged,
+        const PlaybackConfiguration& playbackConfiguration);
 
     /**
      * The callback function to be called when the media player is no longer reading from a buffer.
@@ -106,10 +111,10 @@ public:
     size_t getNumBytesPlayed() const;
 
     /// The number of buffers to use.
-    static constexpr size_t NUMBER_OF_BUFFERS{2u};
+    static constexpr size_t NUMBER_OF_BUFFERS{4u};
 
     /// Buffer size for the decoded data. This has to be big enough to be used with the decoder.
-    static constexpr size_t BUFFER_SIZE{65536u};
+    static constexpr size_t BUFFER_SIZE{131072u};
 
 private:
     /**
@@ -130,8 +135,22 @@ private:
     /// Fill buffer with decoded raw audio and enqueue it back to the media player.
     void fillBuffer();
 
-    /// Enqueue all buffers to be filled. This should only be called when all buffers are clean.
-    void fillAllBuffers();
+    /**
+     * Enqueue all buffers to be filled. This should only be called when all buffers are clean.
+     *
+     * @param playbackConfig The playback configuration parameters.
+     */
+    void fillAllBuffers(const PlaybackConfiguration& configuration);
+
+    /**
+     * Enqueue a buffer with one silent sample.
+     *
+     * @note This is a workaround of an issue found on Android where play after stop triggers an assertion error. It
+     * looks like the prefetch status is not being reset by stop playback and clear buffers.(see ACSDK-1895 for more
+     * details)
+     * @param configuration The playback configuration used to generate the silence samples.
+     */
+    void enqueueSilence(const PlaybackConfiguration& configuration);
 
     /// Executor used to serialize buffer filling.
     avsCommon::utils::threading::Executor m_executor;
@@ -143,7 +162,7 @@ private:
     SLAndroidSimpleBufferQueueItf m_queueInterface;
 
     /// Internal buffers.
-    std::array<std::array<int16_t, BUFFER_SIZE>, NUMBER_OF_BUFFERS> m_buffers;
+    std::array<std::array<Byte, BUFFER_SIZE>, NUMBER_OF_BUFFERS> m_buffers;
 
     /// Tracks the length of each buffer in words which is used to estimate the playback position and bytes buffered.
     std::vector<size_t> m_bufferSizes;

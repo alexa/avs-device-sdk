@@ -40,6 +40,7 @@ namespace blueZ {
 template <class T>
 class DBusObject : public DBusObjectBase {
 public:
+    virtual ~DBusObject() = default;
     /**
      * Callback type to be used by member functions handling DBus method calls
      *

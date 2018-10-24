@@ -47,6 +47,10 @@ bool TestMiscStorage::open() {
     return true;
 }
 
+bool TestMiscStorage::isOpened() {
+    return true;
+}
+
 void TestMiscStorage::close() {
 }
 

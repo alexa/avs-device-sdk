@@ -13,8 +13,9 @@
  * permissions and limitations under the License.
  */
 
-#include <AVSCommon/Utils/Bluetooth/BluetoothEventBus.h>
-#include <AVSCommon/Utils/Logger/Logger.h>
+#include "AVSCommon/Utils/Logger/Logger.h"
+
+#include "AVSCommon/Utils/Bluetooth/BluetoothEventBus.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {

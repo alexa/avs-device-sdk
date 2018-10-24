@@ -78,6 +78,12 @@ inline std::ostream& operator<<(std::ostream& stream, const AVRCPCommand cmd) {
 /// Used to implement an instance of AVRCPTarget (Audio/Video Remote Control Profile).
 class AVRCPTargetInterface : public BluetoothServiceInterface {
 public:
+    /// The Service UUID.
+    static constexpr const char* UUID = "0000110c-0000-1000-8000-00805f9b34fb";
+
+    /// The Service Name.
+    static constexpr const char* NAME = "A/V_RemoteControlTarget";
+
     /**
      * Sends a play command to the device supporting AVRCPTarget.
      *

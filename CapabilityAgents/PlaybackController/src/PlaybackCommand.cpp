@@ -225,7 +225,7 @@ std::string ToggleCommand::getEventName() const {
 
 std::string ToggleCommand::getEventPayload() const {
     return JSON_BEGIN + PLAYBACK_CONTROLLER_EVENT_NAME_KEY + JSON_COLON + m_name + JSON_COMMA +
-          PLAYBACK_CONTROLLER_EVENT_ACTION_KEY + JSON_COLON + getActionString() + JSON_END;
+           PLAYBACK_CONTROLLER_EVENT_ACTION_KEY + JSON_COLON + getActionString() + JSON_END;
 }
 
 std::string ToggleCommand::getActionString() const {

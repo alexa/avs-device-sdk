@@ -97,6 +97,7 @@ public:
     void addAuthObserver(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> observer) override;
     void removeAuthObserver(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> observer) override;
     std::string getAuthToken() override;
+    void onAuthFailure(const std::string& token) override;
     /// @}
 
     /// @name CustomerDataHandler methods
@@ -351,6 +352,9 @@ private:
 
     /// True if the refresh token has not yet been used to create an access token.
     bool m_newRefreshToken;
+
+    /// True if an authorization failure was reported for the current value of m_accessToken.
+    bool m_authFailureReported;
 };
 
 }  // namespace cblAuthDelegate

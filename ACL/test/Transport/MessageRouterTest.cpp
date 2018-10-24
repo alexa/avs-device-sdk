@@ -107,7 +107,6 @@ TEST_F(MessageRouterTest, sendIsSuccessfulWhenConnected) {
     // Expect to have the message sent to the transport
     EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(1);
 
-    // TODO: ACSDK-421: Revert this to use send().
     m_router->sendMessage(messageRequest);
 
     // Since we connected we will be disconnected when the router is destroyed
@@ -120,7 +119,6 @@ TEST_F(MessageRouterTest, sendFailsWhenDisconnected) {
     // Expect to have the message sent to the transport
     EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(0);
 
-    // TODO: ACSDK-421: Revert this to use send().
     m_router->sendMessage(messageRequest);
 }
 
@@ -134,7 +132,6 @@ TEST_F(MessageRouterTest, sendFailsWhenPending) {
     // Expect to have the message sent to the transport.
     EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(1);
 
-    // TODO: ACSDK-421: Revert this to use send().
     m_router->sendMessage(messageRequest);
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 }
@@ -150,7 +147,6 @@ TEST_F(MessageRouterTest, sendMessageDoesNotSendAfterDisconnected) {
     // Expect to have the message sent to the transport
     EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(0);
 
-    // TODO: ACSDK-421: Revert this to use send().
     m_router->sendMessage(messageRequest);
 }
 
@@ -210,7 +206,6 @@ TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
 
     EXPECT_CALL(*newTransport.get(), send(messageRequest)).Times(1);
 
-    // TODO: ACSDK-421: Revert this to use send().
     m_router->sendMessage(messageRequest);
 
     waitOnMessageRouter(SHORT_TIMEOUT_MS);

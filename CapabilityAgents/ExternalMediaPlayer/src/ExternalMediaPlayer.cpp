@@ -65,6 +65,43 @@ static const std::string PLAYLISTCONTROLLER_NAMESPACE = "Alexa.PlaylistControlle
 static const std::string SEEKCONTROLLER_NAMESPACE = "Alexa.SeekController";
 static const std::string FAVORITESCONTROLLER_NAMESPACE = "Alexa.FavoritesController";
 
+// Capability constants
+/// The AlexaInterface constant type.
+static const std::string ALEXA_INTERFACE_TYPE = "AlexaInterface";
+
+/// ExternalMediaPlayer capability constants
+/// ExternalMediaPlayer interface type
+static const std::string EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_TYPE = ALEXA_INTERFACE_TYPE;
+/// ExternalMediaPlayer interface name
+static const std::string EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_NAME = "ExternalMediaPlayer";
+/// ExternalMediaPlayer interface version
+static const std::string EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_VERSION = "1.0";
+
+/// Alexa.PlaybackStateReporter name.
+static const std::string PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_NAME = PLAYBACKSTATEREPORTER_STATE_NAMESPACE;
+/// Alexa.PlaybackStateReporter version.
+static const std::string PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_VERSION = "1.0";
+
+/// Alexa.PlaybackController name.
+static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_NAME = PLAYBACKCONTROLLER_NAMESPACE;
+/// Alexa.PlaybackController version.
+static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION = "1.0";
+
+/// Alexa.PlaylistController name.
+static const std::string PLAYLISTCONTROLLER_CAPABILITY_INTERFACE_NAME = PLAYLISTCONTROLLER_NAMESPACE;
+/// Alexa.PlaylistController version.
+static const std::string PLAYLISTCONTROLLER_CAPABILITY_INTERFACE_VERSION = "1.0";
+
+/// Alexa.SeekController name.
+static const std::string SEEKCONTROLLER_CAPABILITY_INTERFACE_NAME = SEEKCONTROLLER_NAMESPACE;
+/// Alexa.SeekController version.
+static const std::string SEEKCONTROLLER_CAPABILITY_INTERFACE_VERSION = "1.0";
+
+/// Alexa.FavoritesController name.
+static const std::string FAVORITESCONTROLLER_CAPABILITY_INTERFACE_NAME = FAVORITESCONTROLLER_NAMESPACE;
+/// Alexa.FavoritesController version.
+static const std::string FAVORITESCONTROLLER_CAPABILITY_INTERFACE_VERSION = "1.0";
+
 // The @c External media player play directive signature.
 static const NamespaceAndName PLAY_DIRECTIVE{EXTERNALMEDIAPLAYER_NAMESPACE, "Play"};
 static const NamespaceAndName LOGIN_DIRECTIVE{EXTERNALMEDIAPLAYER_NAMESPACE, "Login"};
@@ -109,6 +146,13 @@ static const int64_t MAX_PAST_OFFSET = -86400000;
 
 /// The max relative time in the past that we can  seek to in milliseconds(+12 hours in ms).
 static const int64_t MAX_FUTURE_OFFSET = 86400000;
+
+/**
+ * Creates the ExternalMediaPlayer capability configuration.
+ *
+ * @return The ExternalMediaPlayer capability configuration.
+ */
+static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getExternalMediaPlayerCapabilityConfiguration();
 
 /// The @c m_directiveToHandlerMap Map of the directives to their handlers.
 std::unordered_map<NamespaceAndName, std::pair<RequestType, ExternalMediaPlayer::DirectiveHandler>>
@@ -168,6 +212,25 @@ static std::unordered_map<PlaybackToggle, std::pair<RequestType, RequestType>> g
     {PlaybackToggle::THUMBS_UP, std::make_pair(RequestType::FAVORITE, RequestType::DESELECT_FAVORITE)},
     {PlaybackToggle::THUMBS_DOWN, std::make_pair(RequestType::UNFAVORITE, RequestType::DESELECT_UNFAVORITE)}};
 
+/**
+ * Generate a @c CapabilityConfiguration object.
+ *
+ * @param type The Capability interface type.
+ * @param interface The Capability interface name.
+ * @param version The Capability interface verison.
+ */
+static std::shared_ptr<CapabilityConfiguration> generateCapabilityConfiguration(
+    const std::string& type,
+    const std::string& interface,
+    const std::string& version) {
+    std::unordered_map<std::string, std::string> configMap;
+    configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, type});
+    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, interface});
+    configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, version});
+
+    return std::make_shared<CapabilityConfiguration>(configMap);
+}
+
 std::shared_ptr<ExternalMediaPlayer> ExternalMediaPlayer::create(
     const AdapterMediaPlayerMap& mediaPlayers,
     const AdapterSpeakerMap& speakers,
@@ -226,6 +289,38 @@ ExternalMediaPlayer::ExternalMediaPlayer(
         m_speakerManager{speakerManager},
         m_contextManager{contextManager},
         m_playbackRouter{playbackRouter} {
+    // Register all supported capabilities.
+    m_capabilityConfigurations.insert(getExternalMediaPlayerCapabilityConfiguration());
+
+    m_capabilityConfigurations.insert(generateCapabilityConfiguration(
+        ALEXA_INTERFACE_TYPE,
+        PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_NAME,
+        PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_VERSION));
+
+    m_capabilityConfigurations.insert(generateCapabilityConfiguration(
+        ALEXA_INTERFACE_TYPE,
+        PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_NAME,
+        PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION));
+
+    m_capabilityConfigurations.insert(generateCapabilityConfiguration(
+        ALEXA_INTERFACE_TYPE,
+        PLAYLISTCONTROLLER_CAPABILITY_INTERFACE_NAME,
+        PLAYLISTCONTROLLER_CAPABILITY_INTERFACE_VERSION));
+
+    m_capabilityConfigurations.insert(generateCapabilityConfiguration(
+        ALEXA_INTERFACE_TYPE, SEEKCONTROLLER_CAPABILITY_INTERFACE_NAME, SEEKCONTROLLER_CAPABILITY_INTERFACE_VERSION));
+
+    m_capabilityConfigurations.insert(generateCapabilityConfiguration(
+        ALEXA_INTERFACE_TYPE,
+        FAVORITESCONTROLLER_CAPABILITY_INTERFACE_NAME,
+        FAVORITESCONTROLLER_CAPABILITY_INTERFACE_VERSION));
+}
+
+std::shared_ptr<CapabilityConfiguration> getExternalMediaPlayerCapabilityConfiguration() {
+    return generateCapabilityConfiguration(
+        EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_TYPE,
+        EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_NAME,
+        EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_VERSION);
 }
 
 void ExternalMediaPlayer::provideState(
@@ -614,9 +709,11 @@ std::string ExternalMediaPlayer::provideSessionState() {
         if (!adapter.second) {
             continue;
         }
-
-        rapidjson::Value playerJson = buildSessionState(adapter.second->getState().sessionState, stateAlloc);
+        auto state = adapter.second->getState().sessionState;
+        rapidjson::Value playerJson = buildSessionState(state, stateAlloc);
         players.PushBack(playerJson, stateAlloc);
+        ObservableSessionProperties update{state.loggedIn, state.userName};
+        notifyObservers(state.playerId, &update);
     }
 
     state.AddMember(rapidjson::StringRef(PLAYERS), players, stateAlloc);
@@ -646,8 +743,11 @@ std::string ExternalMediaPlayer::providePlaybackState() {
         if (!adapter.second) {
             continue;
         }
-        rapidjson::Value playerJson = buildPlaybackState(adapter.second->getState().playbackState, stateAlloc);
+        auto state = adapter.second->getState().playbackState;
+        rapidjson::Value playerJson = buildPlaybackState(state, stateAlloc);
         players.PushBack(playerJson, stateAlloc);
+        ObservablePlaybackStateProperties update{state.state, state.trackName};
+        notifyObservers(state.playerId, &update);
     }
 
     state.AddMember(PLAYERS, players, stateAlloc);
@@ -697,6 +797,65 @@ void ExternalMediaPlayer::createAdapters(
             m_adapters[entry.first] = adapter;
         } else {
             ACSDK_ERROR(LX("adapterCreationFailed").d(PLAYER_ID, entry.first));
+        }
+    }
+}
+
+std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> ExternalMediaPlayer::
+    getCapabilityConfigurations() {
+    return m_capabilityConfigurations;
+}
+
+void ExternalMediaPlayer::addObserver(std::shared_ptr<ExternalMediaPlayerObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    m_observers.insert(observer);
+}
+
+void ExternalMediaPlayer::removeObserver(std::shared_ptr<ExternalMediaPlayerObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("removeObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    m_observers.erase(observer);
+}
+
+void ExternalMediaPlayer::notifyObservers(
+    const std::string& playerId,
+    const ObservableSessionProperties* sessionProperties) {
+    notifyObservers(playerId, sessionProperties, nullptr);
+}
+
+void ExternalMediaPlayer::notifyObservers(
+    const std::string& playerId,
+    const ObservablePlaybackStateProperties* playbackProperties) {
+    notifyObservers(playerId, nullptr, playbackProperties);
+}
+
+void ExternalMediaPlayer::notifyObservers(
+    const std::string& playerId,
+    const ObservableSessionProperties* sessionProperties,
+    const ObservablePlaybackStateProperties* playbackProperties) {
+    if (playerId.empty()) {
+        ACSDK_ERROR(LX("notifyObserversFailed").d("reason", "emptyPlayerId"));
+        return;
+    }
+
+    std::unique_lock<std::mutex> lock{m_observersMutex};
+    auto observers = m_observers;
+    lock.unlock();
+
+    for (auto& observer : observers) {
+        if (sessionProperties) {
+            observer->onLoginStateProvided(playerId, *sessionProperties);
+        }
+
+        if (playbackProperties) {
+            observer->onPlaybackStateProvided(playerId, *playbackProperties);
         }
     }
 }

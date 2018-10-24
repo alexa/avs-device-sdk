@@ -36,6 +36,8 @@ public:
      * of the specific PostConnect object type.
      *
      * @param transport The transport to which the post connect is associated..
+     *
+     * @return A boolean to indicate that the post connect process has been successfully initiated
      */
     virtual bool doPostConnect(std::shared_ptr<HTTP2Transport> transport) = 0;
 

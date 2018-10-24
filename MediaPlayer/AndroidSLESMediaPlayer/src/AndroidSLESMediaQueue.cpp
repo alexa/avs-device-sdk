@@ -13,8 +13,9 @@
  * permissions and limitations under the License.
  */
 
-#include <SLES/OpenSLES_Android.h>
 #include <fstream>
+
+#include <SLES/OpenSLES_Android.h>
 
 #include "AndroidSLESMediaPlayer/AndroidSLESMediaQueue.h"
 
@@ -32,6 +33,13 @@ namespace alexaClientSDK {
 namespace mediaPlayer {
 namespace android {
 
+/// Represents the most significant byte of silence for unsigned samples. Since we only support UNSIGNED_8, this
+/// byte can be used as silence representation. For samples with 2+ bytes, shift this value by the number of extra bits.
+constexpr AndroidSLESMediaQueue::Byte PCM_UNSIGNED_SILENCE = 0x80;
+
+/// Represents the most significant byte of silence for signed samples.
+constexpr AndroidSLESMediaQueue::Byte PCM_SIGNED_SILENCE = 0x0;
+
 using namespace applicationUtilities::androidUtilities;
 
 static void queueCallback(SLAndroidSimpleBufferQueueItf slQueue, void* mediaQueue) {
@@ -41,7 +49,8 @@ static void queueCallback(SLAndroidSimpleBufferQueueItf slQueue, void* mediaQueu
 std::unique_ptr<AndroidSLESMediaQueue> AndroidSLESMediaQueue::create(
     std::shared_ptr<AndroidSLESObject> queueObject,
     std::unique_ptr<DecoderInterface> decoder,
-    EventCallback callbackFunction) {
+    EventCallback callbackFunction,
+    const PlaybackConfiguration& playbackConfig) {
     if (!queueObject) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullAndroidSLESObject"));
         return nullptr;
@@ -74,7 +83,7 @@ std::unique_ptr<AndroidSLESMediaQueue> AndroidSLESMediaQueue::create(
     }
 
     // Kickoff decoding and buffer enqueue.
-    mediaQueue->fillAllBuffers();
+    mediaQueue->fillAllBuffers(playbackConfig);
 
     return mediaQueue;
 }
@@ -146,7 +155,8 @@ void AndroidSLESMediaQueue::fillBuffer() {
                 auto bytesRead = wordsRead * sizeof(m_buffers[index][0]);
                 auto result = (*m_queueInterface)->Enqueue(m_queueInterface, m_buffers[index].data(), bytesRead);
                 if (result != SL_RESULT_SUCCESS) {
-                    ACSDK_ERROR(LX("fillBufferFailed").d("reason", "enqueueFailed").d("result", result));
+                    ACSDK_ERROR(
+                        LX("fillBufferFailed").d("reason", "enqueueFailed").d("result", result).d("bytes", bytesRead));
                     m_eventCallback(QueueEvent::ERROR, "reason=enqueueBufferFailed");
                     m_failure = true;
                     return;
@@ -179,10 +189,32 @@ void AndroidSLESMediaQueue::fillBuffer() {
     }
 }
 
-void AndroidSLESMediaQueue::fillAllBuffers() {
-    for (size_t i = 0; i < m_buffers.size(); ++i) {
+// Add silent sample to workaround android play after stop issue (see ACSDK-1895 for more details).
+void AndroidSLESMediaQueue::enqueueSilence(const PlaybackConfiguration& configuration) {
+    Byte silenceByte = configuration.sampleFormat() == PlaybackConfiguration::SampleFormat::UNSIGNED_8
+                           ? PCM_UNSIGNED_SILENCE
+                           : PCM_SIGNED_SILENCE;
+    std::vector<Byte> silenceSample(configuration.numberChannels() * configuration.sampleSizeBytes(), silenceByte);
+    memcpy(m_buffers[m_index].data(), silenceSample.data(), silenceSample.size());
+    auto result = (*m_queueInterface)->Enqueue(m_queueInterface, m_buffers[m_index].data(), silenceSample.size());
+    if (result != SL_RESULT_SUCCESS) {
+        ACSDK_ERROR(LX("enqueueSilenceFailed")
+                        .d("reason", "enqueueFailed")
+                        .d("result", result)
+                        .d("bytes", silenceSample.size()));
+        m_eventCallback(QueueEvent::ERROR, "reason=enqueueBufferFailed");
+        m_failure = true;
+        return;
+    }
+    m_index++;
+}
+
+void AndroidSLESMediaQueue::fillAllBuffers(const PlaybackConfiguration& configuration) {
+    enqueueSilence(configuration);
+    for (; m_index < m_buffers.size(); ++m_index) {
         m_executor.submit([this]() { fillBuffer(); });
     }
+    m_index = 0;
 }
 
 size_t AndroidSLESMediaQueue::getNumBytesPlayed() const {

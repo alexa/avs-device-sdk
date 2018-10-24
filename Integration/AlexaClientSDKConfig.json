@@ -139,7 +139,65 @@
     // provided by the logging.logLevel value (as in the above example) or the log level of the sink logger.
     // "acl":{
     //     "logLevel":"DEBUG9"
+    // },
+
+    // // Example for specifiying the Template Runtime display card timeout values.
+    // "templateRuntimeCapabilityAgent": {
+    //     // If present, shall overide the default timeout for clearing the RenderTemplate display card when SpeechSynthesizer is in FINISHED state.
+    //     "displayCardTTSFinishedTimeout": 2000,
+    //     // If present, shall overide the default timeout in ms for clearing the RenderPlayerInfo display card when AudioPlayer is in FINISHED state.
+    //     "displayCardAudioPlaybackFinishedTimeout": 2000,
+    //     // If present, shall overide the default timeout in ms for clearing the RenderPlayerInfo display card when AudioPlayer is in STOPPED or PAUSED state.
+    //     "displayCardAudioPlaybackStoppedPausedTimeout": 60000
     // }
+
+    // // The equalizer function allows you to adjust equalizer settings, such as decibel (dB) levels and modes.
+    // // By default, the equalizer is enabled. The default settings are:
+    // // * `"enabled":true`. By default, the equalizer is active.
+    // // * All `"bands"` are active: `BASS`, `MIDRANGE`, `TREBLE`.
+    // // * "modes" are disabled. See below for more information.
+    // // * Minimum band level (`"minLevel"`): -6 dB
+    // // * Maximum band level (`"maxLevel"`): +6 dB
+    // // * Default state (defaultState): All "bands" are set to 0dB, and no "mode" is active.
+
+    // "equalizer": {
+    //     // Enables or disables the equalizer. Setting this value to `false` will disable the equalizer locally, and report to AVS that it is disabled.
+    //     "enabled": true,
+    //     // The equalizer bands supported by the device. Currently, there are only three available options: `BASS`, `MIDRANGE` and `TREBLE`.
+    //     // By default, all bands are enabled. However, if you specify a band or bands, then only those will be supported.
+    //     // bands will be supported.
+    //     "bands": {
+    //         "BASS": true,
+    //         "MIDRANGE": true,
+    //         "TREBLE": true
+    //     },
+    //     // The equalizer modes supported by the device. AVS doesn't define specific behavior for modes,
+    //     // the `EqualizerModeControllerInterface` defines this behavior. AVS provides the following options for modes: "MOVIE", "MUSIC", "NIGHT",
+    //     // "SPORT", "TV". By default, all modes are disabled (`false`), unless specifically marked as enabled (`true`).
+    //     "modes": {
+    //         "NIGHT": false,
+    //         "MOVIE": false,
+    //         "MUSIC": false,
+    //         "SPORT": false,
+    //         "TV": false
+    //     },
+    //     // The equalizer factory settings. These default values are used for a newly registered device, or when a user requests that Alexa reset a band.
+    //     "defaultState": {
+    //         // The default mode to be applied. When no default mode is desired, set the `"mode"` value to `"NONE"`, which is a custom value.
+    //         "mode": "NONE",
+    //         // Defines band level defaults (integer dB)
+    //         "bands": {
+    //             "BASS": 0,
+    //             "MIDRANGE": 0,
+    //             "TREBLE": 0
+    //         }
+    //     },
+    //     // Minimum value an equalizer band could have (integer dB).
+    //     "minLevel": -6,
+    //     // Maximum value an equalizer band could have (integer dB).
+    //     "maxLevel": 6
+    // }
+
  }
 
 

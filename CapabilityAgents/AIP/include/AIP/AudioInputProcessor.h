@@ -16,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AIP_INCLUDE_AIP_AUDIOINPUTPROCESSOR_H_
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AIP_INCLUDE_AIP_AUDIOINPUTPROCESSOR_H_
 
+#include <chrono>
 #include <memory>
 #include <unordered_set>
 #include <vector>
@@ -142,6 +143,8 @@ public:
      *
      * @param audioProvider The @c AudioProvider to stream audio from.
      * @param initiator The type of interface that initiated this recognize event.
+     * @param startOfSpeechTimestamp Moment in time when user started talking to Alexa. This parameter is optional
+     * and it is used to measure user perceived latency.
      * @param begin The @c Index in @c audioProvider.stream where audio streaming should begin.  This parameter is
      *     optional, and defaults to @c INVALID_INDEX.  When this parameter is not specified, @c recognize() will
      *     stream audio starting at the time of the @c recognize() call.  If the @c initiator is @c WAKEWORD, and this
@@ -160,6 +163,7 @@ public:
     std::future<bool> recognize(
         AudioProvider audioProvider,
         Initiator initiator,
+        std::chrono::steady_clock::time_point startOfSpeechTimestamp = std::chrono::steady_clock::now(),
         avsCommon::avs::AudioInputStream::Index begin = INVALID_INDEX,
         avsCommon::avs::AudioInputStream::Index keywordEnd = INVALID_INDEX,
         std::string keyword = "",
@@ -183,12 +187,6 @@ public:
      * @return A future which indicates when the @c AudioInputProcessor is back to the @c IDLE state.
      */
     std::future<void> resetState();
-
-    /// @name StateProviderInterface Functions
-    /// @{
-    void provideState(const avsCommon::avs::NamespaceAndName& stateProviderName, unsigned int stateRequestToken)
-        override;
-    /// @}
 
     /// @name ContextRequesterInterface Functions
     /// @{
@@ -284,6 +282,13 @@ private:
     void handleExpectSpeechDirective(std::shared_ptr<DirectiveInfo> info);
 
     /**
+     * This function handles a SET_END_OF_SPEECH_OFFSET directive.
+     *
+     * @param info The @c DirectiveInfo containing the @c AVSDirective and the @c DirectiveHandlerResultInterface.
+     */
+    void handleSetEndOfSpeechOffsetDirective(std::shared_ptr<DirectiveInfo> info);
+
+    /**
      * @name Executor Thread Functions
      *
      * These functions (and only these functions) are called by @c m_executor on a single worker thread.  All other
@@ -309,27 +314,22 @@ private:
      *
      * @param audioProvider The @c AudioProvider to stream audio from.
      * @param initiator The type of interface that initiated this recognize event.
-     * @param begin The @c Index in @c audioProvider.stream where audio streaming should begin.  This parameter is
-     *     optional, and defaults to @c INVALID_INDEX.  When this parameter is not specified, @c recognize() will
-     *     stream audio starting at the time of the @c recognize() call.  If the @c initiator is @c WAKEWORD, and this
-     *     and @c keywordEnd are specified, streaming will begin between 0 and 500ms prior to the @c Index specified by
-     *     this parameter to attempt false wakeword validation.
-     * @param keywordEnd The @c Index in @c audioProvider.stream where the wakeword ends.  This parameter is optional,
-     *     and defaults to @c INVALID_INDEX.  This parameter is ignored if initiator is not @c WAKEWORD.
-     * @param keyword The text of the keyword which was recognized.  This parameter is optional, and defaults to an
-     *     empty string.  This parameter is ignored if initiator is not @c WAKEWORD.  The only value currently
-     *     accepted by AVS for keyword is "ALEXA".  See
-     *     https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/context#recognizerstate
+     * @param startOfSpeechTimestamp Moment in time when user started talking to Alexa.
+     * @param begin The @c Index in @c audioProvider.stream where audio streaming should begin. When this parameter is
+     *     @c INVALID_INDEX, @c recognize() will stream audio starting at the time of the @c recognize() call.
+     * @param keywordEnd The @c Index in @c audioProvider.stream where the wakeword ends.
+     * @param keyword The text of the keyword which was recognized.
      * @param KWDMetadata Wake word engine metadata.
      * @return @c true if the Recognize Event was started successfully, else @c false.
      */
     bool executeRecognize(
         AudioProvider provider,
         Initiator initiator,
-        avsCommon::avs::AudioInputStream::Index begin = INVALID_INDEX,
-        avsCommon::avs::AudioInputStream::Index keywordEnd = INVALID_INDEX,
-        const std::string& keyword = "",
-        std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr);
+        std::chrono::steady_clock::time_point startOfSpeechTimestamp,
+        avsCommon::avs::AudioInputStream::Index begin,
+        avsCommon::avs::AudioInputStream::Index keywordEnd,
+        const std::string& keyword,
+        std::shared_ptr<const std::vector<char>> KWDMetadata);
 
     /**
      * This function builds and sends a @c Recognize event.  This version of the function expects a pre-built string
@@ -341,6 +341,7 @@ private:
      *
      * @param audioProvider The @c AudioProvider to stream audio from.
      * @param initiatorJson A JSON string describing the type of interface that initiated this recognize event.
+     * @param startOfSpeechTimestamp Moment in time when user started talking to Alexa.
      * @param begin The @c Index in @c audioProvider.stream where audio streaming should begin.  This parameter is
      *     optional, and defaults to @c INVALID_INDEX.  When this parameter is not specified, @c recognize() will
      *     stream audio starting at the time of the @c recognize() call.  If the @c initiator is @c WAKEWORD, and this
@@ -356,6 +357,7 @@ private:
     bool executeRecognize(
         AudioProvider provider,
         const std::string& initiatorJson,
+        std::chrono::steady_clock::time_point startOfSpeechTimestamp = std::chrono::steady_clock::now(),
         avsCommon::avs::AudioInputStream::Index begin = INVALID_INDEX,
         const std::string& keyword = "",
         std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr);
@@ -434,17 +436,6 @@ private:
      * @return @c true if called in the correct state and the ExpectSpeechTimedOut event was sent, else @c false.
      */
     bool executeExpectSpeechTimedOut();
-
-    /**
-     * This function provides updated context information for SpeechRecognizer to @c ContextManager.  This function is
-     * called when @c ContextManager calls @c provideState(), and is also called internally by @c setState().
-     *
-     * @param sendToken flag indicating whether @c stateRequestToken contains a valid token which should be passed
-     *     along to @c ContextManager.  This flag defaults to @c false.
-     * @param stateRequestToken The token @c ContextManager passed to the @c provideState() call, which will be passed
-     *     along to the ContextManager::setState() call.  This parameter is not used if @c sendToken is @c false.
-     */
-    void executeProvideState(bool sendToken = false, unsigned int stateRequestToken = 0);
 
     /**
      * This function is called whenever the AVS UX dialog state of the system changes. This function will block
@@ -568,13 +559,6 @@ private:
 
     /// The current focus state of the @c AudioInputProcessor on the dialog channel.
     avsCommon::avs::FocusState m_focusState;
-
-    /**
-     * The most recent wakeword used.  This variable defaults to "ALEXA", and is updated whenever a wakeword-enabled
-     * call to @c executeRecognize() is made.  The @c executeProvideState() function uses this variable to populate the
-     * wakeword field in the RecognizerState context.
-     */
-    std::string m_wakeword;
 
     /**
      * This flag is set to @c true upon entering the @c RECOGNIZING state, and remains true until the @c Recognize

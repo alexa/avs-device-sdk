@@ -79,7 +79,7 @@ static std::condition_variable bufferCondition;
 class MockDecoder : public DecoderInterface {
 public:
     /// Mock read call.
-    MOCK_METHOD2(read, std::pair<Status, size_t>(int16_t*, size_t));
+    MOCK_METHOD2(read, std::pair<Status, size_t>(Byte*, size_t));
 
     /// Mock abort call.
     MOCK_METHOD0(abort, void());
@@ -217,7 +217,8 @@ TEST_F(AndroidSLESMediaQueueTest, testCreateSucceed) {
         std::move(decoder),
         [this](AndroidSLESMediaQueue::QueueEvent queueStatus, const std::string& reason) {
             m_callback.callback(queueStatus, reason);
-        });
+        },
+        PlaybackConfiguration());
     EXPECT_NE(mediaQueue, nullptr);
 }
 
@@ -225,9 +226,12 @@ TEST_F(AndroidSLESMediaQueueTest, testCreateSucceed) {
 TEST_F(AndroidSLESMediaQueueTest, testCreateFailMissingSlObject) {
     auto decoder = avsCommon::utils::memory::make_unique<NiceMock<MockDecoder>>();
     auto mediaQueue = AndroidSLESMediaQueue::create(
-        nullptr, std::move(decoder), [this](AndroidSLESMediaQueue::QueueEvent queueStatus, const std::string& reason) {
+        nullptr,
+        std::move(decoder),
+        [this](AndroidSLESMediaQueue::QueueEvent queueStatus, const std::string& reason) {
             m_callback.callback(queueStatus, reason);
-        });
+        },
+        PlaybackConfiguration());
     EXPECT_EQ(mediaQueue, nullptr);
 }
 
@@ -240,23 +244,27 @@ TEST_F(AndroidSLESMediaQueueTest, testCreateFailMissingInterface) {
         std::move(decoder),
         [this](AndroidSLESMediaQueue::QueueEvent queueStatus, const std::string& reason) {
             m_callback.callback(queueStatus, reason);
-        });
+        },
+        PlaybackConfiguration());
     EXPECT_EQ(mediaQueue, nullptr);
 }
 
 /// Check that create fail if the decoder is missing.
 TEST_F(AndroidSLESMediaQueueTest, testCreateFailMissingDecoder) {
     auto mediaQueue = AndroidSLESMediaQueue::create(
-        m_slObject, nullptr, [this](AndroidSLESMediaQueue::QueueEvent queueStatus, const std::string& reason) {
+        m_slObject,
+        nullptr,
+        [this](AndroidSLESMediaQueue::QueueEvent queueStatus, const std::string& reason) {
             m_callback.callback(queueStatus, reason);
-        });
+        },
+        PlaybackConfiguration());
     EXPECT_EQ(mediaQueue, nullptr);
 }
 
 /// Check that create fail if the callback function is missing.
 TEST_F(AndroidSLESMediaQueueTest, testCreateFailMissingCallback) {
     auto decoder = avsCommon::utils::memory::make_unique<NiceMock<MockDecoder>>();
-    auto mediaQueue = AndroidSLESMediaQueue::create(m_slObject, std::move(decoder), nullptr);
+    auto mediaQueue = AndroidSLESMediaQueue::create(m_slObject, std::move(decoder), nullptr, PlaybackConfiguration());
     EXPECT_EQ(mediaQueue, nullptr);
 }
 
@@ -264,16 +272,16 @@ TEST_F(AndroidSLESMediaQueueTest, testCreateFailMissingCallback) {
 TEST_F(AndroidSLESMediaQueueTest, testCreateFailRegisterCallback) {
     m_queueMock->get().RegisterCallback = mockRegisterCallbackFailed;
     auto decoder = avsCommon::utils::memory::make_unique<NiceMock<MockDecoder>>();
-    auto mediaQueue = AndroidSLESMediaQueue::create(m_slObject, std::move(decoder), nullptr);
+    auto mediaQueue = AndroidSLESMediaQueue::create(m_slObject, std::move(decoder), nullptr, PlaybackConfiguration());
     EXPECT_EQ(mediaQueue, nullptr);
 }
 
 /// Test buffer queue events when the media queue succeeds to read data from the decoder.
 TEST_F(AndroidSLESMediaQueueTest, testOnBufferQueueSucceed) {
     // Always return valid read.
-    constexpr size_t wordsRead{1000};  // Arbitrary number of words that is > 0.
-    constexpr size_t wordSize{2};      // Media queue uses int16_t which is 2 bytes long.
-    std::pair<DecoderInterface::Status, size_t> ok = {DecoderInterface::Status::OK, wordsRead};
+    // Arbitrary number of bytes that is > 0.
+    constexpr size_t bytesRead{1000};
+    std::pair<DecoderInterface::Status, size_t> ok = {DecoderInterface::Status::OK, bytesRead};
     auto decoder = avsCommon::utils::memory::make_unique<NiceMock<MockDecoder>>();
     EXPECT_CALL(*decoder, read(_, _)).WillRepeatedly(Return(ok));
 
@@ -282,22 +290,26 @@ TEST_F(AndroidSLESMediaQueueTest, testOnBufferQueueSucceed) {
         std::move(decoder),
         [this](AndroidSLESMediaQueue::QueueEvent queueStatus, const std::string& reason) {
             m_callback.callback(queueStatus, reason);
-        });
+        },
+        PlaybackConfiguration());
     EXPECT_NE(mediaQueue, nullptr);
+
+    // This first buffer free is for the silence buffer workaround.
+    bufferFree(*mediaQueue);
 
     bufferFree(*mediaQueue);
     size_t buffersPlayed = 1;
     EXPECT_FALSE(m_callback.waitCallback(AndroidSLESMediaQueue::QueueEvent::FINISHED_PLAYING));
     EXPECT_EQ(counter, static_cast<int>(NUMBER_OF_BUFFERS));
-    EXPECT_EQ(mediaQueue->getNumBytesBuffered(), NUMBER_OF_BUFFERS * wordsRead * wordSize);
-    EXPECT_EQ(mediaQueue->getNumBytesPlayed(), buffersPlayed * wordsRead * wordSize);
+    EXPECT_EQ(mediaQueue->getNumBytesBuffered(), NUMBER_OF_BUFFERS * bytesRead);
+    EXPECT_EQ(mediaQueue->getNumBytesPlayed(), buffersPlayed * bytesRead);
 }
 
 /// Test buffer queue events when the media queue succeeds to read data from the decoder till the end of the stream.
 TEST_F(AndroidSLESMediaQueueTest, testEnqueueTillDone) {
-    constexpr size_t wordsRead{1000};  // Arbitrary number of words that is > 0.
-    constexpr size_t wordSize{2};      // Media queue uses int16_t which is 2 bytes long.
-    std::pair<DecoderInterface::Status, size_t> ok = {DecoderInterface::Status::OK, wordsRead};
+    // Arbitrary number of bytes that is > 0.
+    constexpr size_t bytesRead{1000};
+    std::pair<DecoderInterface::Status, size_t> ok = {DecoderInterface::Status::OK, bytesRead};
     std::pair<DecoderInterface::Status, size_t> done = {DecoderInterface::Status::DONE, 0};
 
     // Return valid read for NUMBER_OF_BUFFERS times, then return done.
@@ -313,14 +325,18 @@ TEST_F(AndroidSLESMediaQueueTest, testEnqueueTillDone) {
         std::move(decoder),
         [this](AndroidSLESMediaQueue::QueueEvent queueStatus, const std::string& reason) {
             m_callback.callback(queueStatus, reason);
-        });
+        },
+        PlaybackConfiguration());
     EXPECT_NE(mediaQueue, nullptr);
+
+    // This first buffer free is for the silence buffer workaround.
+    bufferFree(*mediaQueue);
 
     for (size_t i = 0; i <= AndroidSLESMediaQueue::NUMBER_OF_BUFFERS; ++i) {
         bufferFree(*mediaQueue);
     }
     EXPECT_TRUE(m_callback.waitCallback(AndroidSLESMediaQueue::QueueEvent::FINISHED_PLAYING));
-    EXPECT_EQ(mediaQueue->getNumBytesPlayed(), AndroidSLESMediaQueue::NUMBER_OF_BUFFERS * wordsRead * wordSize);
+    EXPECT_EQ(mediaQueue->getNumBytesPlayed(), AndroidSLESMediaQueue::NUMBER_OF_BUFFERS * bytesRead);
     EXPECT_EQ(mediaQueue->getNumBytesBuffered(), 0u);
 }
 
@@ -335,7 +351,8 @@ TEST_F(AndroidSLESMediaQueueTest, testDecoderFailure) {
         std::move(decoder),
         [this](AndroidSLESMediaQueue::QueueEvent queueStatus, const std::string& reason) {
             m_callback.callback(queueStatus, reason);
-        });
+        },
+        PlaybackConfiguration());
     EXPECT_NE(mediaQueue, nullptr);
     EXPECT_TRUE(m_callback.waitCallback(AndroidSLESMediaQueue::QueueEvent::ERROR));
 }
@@ -343,8 +360,9 @@ TEST_F(AndroidSLESMediaQueueTest, testDecoderFailure) {
 /// Test buffer queue events emits an error event when it fails to enqueue a buffer
 TEST_F(AndroidSLESMediaQueueTest, testEnqueueFailure) {
     // Always return valid read.
-    constexpr size_t wordsRead{1000};  // Arbitrary number of words that is > 0.
-    std::pair<DecoderInterface::Status, size_t> ok = {DecoderInterface::Status::OK, wordsRead};
+    // Arbitrary number of bytes that is > 0.
+    constexpr size_t bytesRead{1000};
+    std::pair<DecoderInterface::Status, size_t> ok = {DecoderInterface::Status::OK, bytesRead};
     auto decoder = avsCommon::utils::memory::make_unique<NiceMock<MockDecoder>>();
     EXPECT_CALL(*decoder, read(_, _)).WillRepeatedly(Return(ok));
 
@@ -353,7 +371,8 @@ TEST_F(AndroidSLESMediaQueueTest, testEnqueueFailure) {
         std::move(decoder),
         [this](AndroidSLESMediaQueue::QueueEvent queueStatus, const std::string& reason) {
             m_callback.callback(queueStatus, reason);
-        });
+        },
+        PlaybackConfiguration());
     EXPECT_NE(mediaQueue, nullptr);
 
     m_queueMock->get().Enqueue = mockEnqueueFailed;

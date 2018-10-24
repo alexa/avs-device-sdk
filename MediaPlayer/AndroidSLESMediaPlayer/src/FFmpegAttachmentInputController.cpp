@@ -115,6 +115,9 @@ int FFmpegAttachmentInputController::read(uint8_t* buffer, int bufferSize) {
         case AttachmentReader::ReadStatus::OK_TIMEDOUT:
             ACSDK_DEBUG3(LX(__func__).d("status", readStatus).d("readSize", readSize));
             return readSize ? readSize : AVERROR(EAGAIN);
+        case AttachmentReader::ReadStatus::OK_OVERRUN_RESET:
+            ACSDK_DEBUG3(LX(__func__).d("status", readStatus));
+            return AVERROR(EAGAIN);
         case AttachmentReader::ReadStatus::CLOSED:
             ACSDK_DEBUG5(LX(__func__).m("Found EOF"));
             return AVERROR_EOF;

@@ -243,6 +243,10 @@ void InteractionManager::resetDevice() {
     result.wait();
 }
 
+void InteractionManager::confirmReauthorizeDevice() {
+    m_executor.submit([this]() { m_userInterface->printReauthorizeConfirmation(); });
+}
+
 void InteractionManager::espControl() {
     m_executor.submit([this]() {
         if (m_espProvider) {

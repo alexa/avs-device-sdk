@@ -57,7 +57,7 @@ public:
      * @param interfaceID The object C interface ID.
      * @param[out] retObject The returned object.
      * @return true if it succeeds and false if it fails.
-     * @warning The object interface is actually a pointer to the OpenSLObject internal object. Make sure the
+     * @warning The object interface is actually a pointer to the OpenSLObject internal object. Make sure that
      * its lifecycle is not longer than the parent OpenSLObject.
      */
     bool getInterface(SLInterfaceID interfaceID, void* retObject);

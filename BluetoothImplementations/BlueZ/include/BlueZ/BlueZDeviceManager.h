@@ -31,6 +31,7 @@
 
 #include "BlueZ/BlueZHostController.h"
 #include "BlueZ/BlueZUtils.h"
+#include "BlueZ/MPRISPlayer.h"
 #include "BlueZ/PairingAgent.h"
 
 #include <gio/gio.h>
@@ -310,6 +311,9 @@ private:
 
     /// Pairing agent used for device pairing.
     std::shared_ptr<PairingAgent> m_pairingAgent;
+
+    /// DBus MediaPlayer used for AVRCPTarget.
+    std::shared_ptr<MPRISPlayer> m_mediaPlayer;
 
     /// The EventBus to communicate with SDK components.
     std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> m_eventBus;

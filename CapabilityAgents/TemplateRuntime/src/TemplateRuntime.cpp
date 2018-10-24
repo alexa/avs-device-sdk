@@ -30,6 +30,7 @@ namespace templateRuntime {
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils;
+using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::json;
 
 /// TemplateRuntime capability constants
@@ -42,6 +43,16 @@ static const std::string TEMPLATERUNTIME_CAPABILITY_INTERFACE_VERSION = "1.1";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG{"TemplateRuntime"};
+
+/// The key in our config file to find the root of template runtime configuration.
+static const std::string TEMPLATERUNTIME_CONFIGURATION_ROOT_KEY = "templateRuntimeCapabilityAgent";
+/// The key in our config file to set the display card timeout value when TTS is in FINISHED state
+static const std::string TEMPLATERUNTIME_TTS_FINISHED_KEY = "displayCardTTSFinishedTimeout";
+/// The key in our config file to set the display card timeout value when AudioPlayer is in FINISHED state
+static const std::string TEMPLATERUNTIME_AUDIOPLAYBACK_FINISHED_KEY = "displayCardAudioPlaybackFinishedTimeout";
+/// The key in our config file to set the display card timeout value when AudioPlayer is in STOPPED or PAUSE state
+static const std::string TEMPLATERUNTIME_AUDIOPLAYBACK_STOPPED_PAUSED_KEY =
+    "displayCardAudioPlaybackStoppedPausedTimeout";
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -74,14 +85,14 @@ static const std::string AUDIO_ITEM_ID_TAG{"audioItemId"};
 /// Maximum queue size allowed for m_audioItems.
 static const size_t MAXIMUM_QUEUE_SIZE{100};
 
-/// Timeout for clearing the RenderTemplate display card when SpeechSynthesizer is in FINISHED state.
-static const std::chrono::milliseconds TTS_FINISHED_TIMEOUT_MS{2000};
+/// Default timeout for clearing the RenderTemplate display card when SpeechSynthesizer is in FINISHED state.
+static const std::chrono::milliseconds DEFAULT_TTS_FINISHED_TIMEOUT_MS{2000};
 
-/// Timeout for clearing the RenderPlayerInfo display card when AudioPlayer is in FINISHED state.
-static const std::chrono::milliseconds AUDIO_FINISHED_TIMEOUT_MS{2000};
+/// Default timeout for clearing the RenderPlayerInfo display card when AudioPlayer is in FINISHED state.
+static const std::chrono::milliseconds DEFAULT_AUDIO_FINISHED_TIMEOUT_MS{2000};
 
-/// Timeout for clearing the RenderPlayerInfo display card when AudioPlayer is in STOPPED/PAUSED state.
-static const std::chrono::milliseconds AUDIO_STOPPED_PAUSED_TIMEOUT_MS{60000};
+/// Default timeout for clearing the RenderPlayerInfo display card when AudioPlayer is in STOPPED/PAUSED state.
+static const std::chrono::milliseconds DEFAULT_AUDIO_STOPPED_PAUSED_TIMEOUT_MS{60000};
 
 /**
  * Creates the TemplateRuntime capability configuration.
@@ -110,8 +121,36 @@ std::shared_ptr<TemplateRuntime> TemplateRuntime::create(
     }
     std::shared_ptr<TemplateRuntime> templateRuntime(
         new TemplateRuntime(audioPlayerInterface, focusManager, exceptionSender));
+
+    if (!templateRuntime->initialize()) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "Initialization error."));
+        return nullptr;
+    }
     audioPlayerInterface->addObserver(templateRuntime);
     return templateRuntime;
+}
+
+/**
+ * Initializes the object by reading the values from configuration.
+ */
+bool TemplateRuntime::initialize() {
+    auto configurationRoot = ConfigurationNode::getRoot()[TEMPLATERUNTIME_CONFIGURATION_ROOT_KEY];
+
+    // If key is present, then read and initilize the value from config or set to default.
+    configurationRoot.getDuration<std::chrono::milliseconds>(
+        TEMPLATERUNTIME_TTS_FINISHED_KEY, &m_ttsFinishedTimeout, DEFAULT_TTS_FINISHED_TIMEOUT_MS);
+
+    // If key is present, then read and initilize the value from config or set to default.
+    configurationRoot.getDuration<std::chrono::milliseconds>(
+        TEMPLATERUNTIME_AUDIOPLAYBACK_FINISHED_KEY, &m_audioPlaybackFinishedTimeout, DEFAULT_AUDIO_FINISHED_TIMEOUT_MS);
+
+    // If key is present, then read and initilize the value from config or set to default.
+    configurationRoot.getDuration<std::chrono::milliseconds>(
+        TEMPLATERUNTIME_AUDIOPLAYBACK_STOPPED_PAUSED_KEY,
+        &m_audioPlaybackStoppedPausedTimeout,
+        DEFAULT_AUDIO_STOPPED_PAUSED_TIMEOUT_MS);
+
+    return true;
 }
 
 void TemplateRuntime::handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) {
@@ -170,7 +209,7 @@ void TemplateRuntime::onDialogUXStateChanged(
         if (avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE == newState &&
             TemplateRuntime::State::DISPLAYING == m_state) {
             if (m_lastDisplayedDirective && m_lastDisplayedDirective->directive->getName() == RENDER_TEMPLATE) {
-                executeStartTimer(TTS_FINISHED_TIMEOUT_MS);
+                executeStartTimer(m_ttsFinishedTimeout);
             }
         }
     });
@@ -412,9 +451,9 @@ void TemplateRuntime::executeAudioPlayerStartTimer(avsCommon::avs::PlayerActivit
     if (avsCommon::avs::PlayerActivity::PLAYING == state) {
         executeStopTimer();
     } else if (avsCommon::avs::PlayerActivity::PAUSED == state || avsCommon::avs::PlayerActivity::STOPPED == state) {
-        executeStartTimer(AUDIO_STOPPED_PAUSED_TIMEOUT_MS);
+        executeStartTimer(m_audioPlaybackStoppedPausedTimeout);
     } else if (avsCommon::avs::PlayerActivity::FINISHED == state) {
-        executeStartTimer(AUDIO_FINISHED_TIMEOUT_MS);
+        executeStartTimer(m_audioPlaybackFinishedTimeout);
     }
 }
 

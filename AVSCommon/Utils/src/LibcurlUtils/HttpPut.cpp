@@ -50,13 +50,6 @@ static size_t readCallback(char* dataBuffer, size_t blockSize, size_t numBlocks,
  */
 static size_t writeCallback(char* dataBuffer, size_t blockSize, size_t numBlocks, void* dataStream);
 
-#ifdef ACSDK_EMIT_SENSITIVE_LOGS
-/**
- * Debug callback function used for CURLOPT_DEBUGFUNCTION option in libcurl
- */
-static int debugCallback(CURL* handle, curl_infotype infoType, char* dataBuffer, size_t blockSize, void* dataStream);
-#endif
-
 std::unique_ptr<HttpPut> HttpPut::create() {
     std::unique_ptr<HttpPut> httpPut(new HttpPut());
     if (httpPut->m_curl.isValid()) {
@@ -110,13 +103,6 @@ HTTPResponse HttpPut::doPut(const std::string& url, const std::vector<std::strin
         return httpResponse;
     }
 
-#ifdef ACSDK_EMIT_SENSITIVE_LOGS
-    CallbackData debugData;
-    if (!m_curl.setDebugCallback(debugCallback, &debugData)) {
-        ACSDK_INFO(LX("doPutWarning").d(errorReasonKey, "unableToSetDebugCallback"));
-    }
-#endif
-
     CURLcode curlResult = m_curl.perform();
     if (curlResult != CURLE_OK) {
         ACSDK_ERROR(
@@ -163,42 +149,6 @@ size_t writeCallback(char* dataBuffer, size_t blockSize, size_t numBlocks, void*
 
     return callbackData->appendData(dataBuffer, realSize);
 }
-
-#ifdef ACSDK_EMIT_SENSITIVE_LOGS
-int debugCallback(CURL* handle, curl_infotype infoType, char* dataBuffer, size_t blockSize, void* dataStream) {
-    std::string sectionHeader;
-    switch (infoType) {
-        case CURLINFO_TEXT:
-            sectionHeader = "Information";
-            break;
-        case CURLINFO_HEADER_OUT:
-            sectionHeader = "RequestHeader";
-            break;
-        case CURLINFO_DATA_OUT:
-            sectionHeader = "RequestBody";
-            break;
-        case CURLINFO_SSL_DATA_OUT:
-            sectionHeader = "RequestSSLData";
-            break;
-        case CURLINFO_HEADER_IN:
-            sectionHeader = "ResponseHeader";
-            break;
-        case CURLINFO_DATA_IN:
-            sectionHeader = "ResponseBody";
-            break;
-        case CURLINFO_SSL_DATA_IN:
-            sectionHeader = "ResponseSSLData";
-            break;
-        default:
-            return 0;
-    }
-
-    sectionHeader = sectionHeader + "(" + std::to_string(blockSize) + " " + (blockSize == 1 ? "byte" : "bytes") + ")";
-    ACSDK_DEBUG9(LX("httpPutData").d(sectionHeader, dataBuffer));
-
-    return 0;
-}
-#endif
 
 }  // namespace libcurlUtils
 }  // namespace utils

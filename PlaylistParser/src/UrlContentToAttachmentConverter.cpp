@@ -177,8 +177,9 @@ bool UrlContentToAttachmentConverter::writeUrlContentIntoStream(std::string url)
         }
     } while (!httpContent->isReady(WAIT_FOR_FUTURE_READY_TIMEOUT));
 
-    if (!(*httpContent)) {
-        ACSDK_ERROR(LX("getContentFailed").d("reason", "badHTTPContentReceived"));
+    if (!httpContent->isStatusCodeSuccess()) {
+        ACSDK_ERROR(
+            LX("getContentFailed").d("reason", "badHTTPContentReceived").d("statusCode", httpContent->getStatusCode()));
         return false;
     }
     ACSDK_DEBUG9(LX("writeUrlContentIntoStreamSuccess"));

@@ -131,13 +131,15 @@ void InternetConnectionMonitor::testConnection() {
         updateConnectionStatus(false);
         return;
     }
-    if (!(*httpContent)) {
-        ACSDK_ERROR(LX("testConnectionFailed").d("reason", "badHTTPContentReceived"));
+    if (!httpContent->isStatusCodeSuccess()) {
+        ACSDK_ERROR(LX("testConnectionFailed")
+                        .d("reason", "badHTTPContentReceived")
+                        .d("statusCode", httpContent->getStatusCode()));
         updateConnectionStatus(false);
         return;
     }
 
-    auto reader = httpContent->dataStream->createReader(sds::ReaderPolicy::BLOCKING);
+    auto reader = httpContent->getDataStream()->createReader(sds::ReaderPolicy::BLOCKING);
     if (!reader) {
         ACSDK_ERROR(LX("testConnectionFailed").d("reason", "failedToCreateStreamReader"));
         return;
@@ -159,6 +161,10 @@ void InternetConnectionMonitor::testConnection() {
             case avs::attachment::AttachmentReader::ReadStatus::OK_WOULDBLOCK:
             case avs::attachment::AttachmentReader::ReadStatus::OK_TIMEDOUT:
                 testContent.append(buffer.data(), bytesRead);
+                break;
+            case avs::attachment::AttachmentReader::ReadStatus::OK_OVERRUN_RESET:
+                // Current AttachmentReader policy renders this outcome impossible.
+                ACSDK_ERROR(LX("testConnectionFailed").d("reason", "overrunReset"));
                 break;
             case avs::attachment::AttachmentReader::ReadStatus::ERROR_OVERRUN:
             case avs::attachment::AttachmentReader::ReadStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:

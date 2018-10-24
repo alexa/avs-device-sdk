@@ -34,6 +34,9 @@ namespace android {
  */
 class DecoderInterface {
 public:
+    /// Represents one byte of data.
+    using Byte = uint8_t;
+
     /// Represent the decoder read status.
     enum class Status {
         /// The read request was successful and there is still more data to be read.
@@ -48,11 +51,11 @@ public:
      * Fill buffer with decoded audio data.
      *
      * @param[out] Buffer where the data will be copied to.
-     * @param size The buffer size in number of words.
+     * @param size The buffer size in number of bytes.
      *
-     * @return The decoding status and the number of words read.
+     * @return The decoding status and the number of bytes read.
      */
-    virtual std::pair<Status, size_t> read(int16_t* buffer, size_t size) = 0;
+    virtual std::pair<Status, size_t> read(Byte* buffer, size_t size) = 0;
 
     /**
      * Abort the decoding process.

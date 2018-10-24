@@ -104,6 +104,12 @@ std::string stringToLowerCase(const std::string& input) {
     return lowerCaseString;
 }
 
+std::string stringToUpperCase(const std::string& input) {
+    std::string upperCaseString = input;
+    std::transform(upperCaseString.begin(), upperCaseString.end(), upperCaseString.begin(), ::toupper);
+    return upperCaseString;
+}
+
 }  // namespace string
 }  // namespace utils
 }  // namespace avsCommon

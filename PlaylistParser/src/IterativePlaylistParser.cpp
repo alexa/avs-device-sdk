@@ -107,14 +107,17 @@ IterativePlaylistParser::PlaylistEntry IterativePlaylistParser::next() {
                 break;
             }
         } while (!httpContent->isReady(WAIT_FOR_FUTURE_READY_TIMEOUT));
-        if (!(*httpContent)) {
-            ACSDK_ERROR(LX("getHTTPContent").d("reason", "badHTTPContentReceived").sensitive("url", urlAndInfo.url));
+        if (!httpContent->isStatusCodeSuccess()) {
+            ACSDK_ERROR(LX("getHTTPContent")
+                            .d("reason", "badHTTPContentReceived")
+                            .d("statusCode", httpContent->getStatusCode())
+                            .sensitive("url", urlAndInfo.url));
             return PlaylistEntry{.url = urlAndInfo.url,
                                  .duration = urlAndInfo.length,
                                  .parseResult = avsCommon::utils::playlistParser::PlaylistParseResult::ERROR};
         }
 
-        std::string contentType = httpContent->contentType.get();
+        std::string contentType = httpContent->getContentType();
         ACSDK_DEBUG9(LX("IterativePlaylistParser")
                          .d("contentType", contentType)
                          .sensitive("url", urlAndInfo.url)

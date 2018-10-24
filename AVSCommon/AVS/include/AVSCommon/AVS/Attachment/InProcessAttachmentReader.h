@@ -47,6 +47,8 @@ public:
      * @param index If being constructed from an existing @c SharedDataStream, the index indicates where to read from.
      * @param reference The position in the stream @c offset is applied to.  This parameter defaults to 0, indicating
      *     no offset from the specified reference.
+     * @param resetOnOverrun If overrun is detected on @c read, whether to close the attachment (default behavior) or
+     *     to reset the read position to where current write position is (and skip all the bytes in between).
      * @return Returns a new InProcessAttachmentReader, or nullptr if the operation failed.  This parameter defaults
      *     to @c ABSOLUTE, indicating offset is relative to the very beginning of the Attachment.
      */
@@ -54,7 +56,8 @@ public:
         SDSTypeReader::Policy policy,
         std::shared_ptr<SDSType> sds,
         SDSTypeIndex offset = 0,
-        SDSTypeReader::Reference reference = SDSTypeReader::Reference::ABSOLUTE);
+        SDSTypeReader::Reference reference = SDSTypeReader::Reference::ABSOLUTE,
+        bool resetOnOverrun = false);
 
     /**
      * Destructor.
@@ -79,11 +82,16 @@ private:
      *
      * @param policy The @c ReaderPolicy of this object.
      * @param sds The underlying @c SharedDataStream which this object will use.
+     * @param resetOnOverrun If overrun is detected on @c read, whether to close the attachment (default behavior) or
+     *     to reset the read position to where current write position is (and skip all the bytes in between).
      */
-    InProcessAttachmentReader(SDSTypeReader::Policy policy, std::shared_ptr<SDSType> sds);
+    InProcessAttachmentReader(SDSTypeReader::Policy policy, std::shared_ptr<SDSType> sds, bool resetOnOverrun);
 
     /// The underlying @c SharedDataStream reader.
     std::shared_ptr<SDSTypeReader> m_reader;
+
+    // On @c read overrun, Whether to close the attachment, or reset it to catch up with the write
+    bool m_resetOnOverrun;
 };
 
 }  // namespace attachment

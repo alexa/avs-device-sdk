@@ -23,8 +23,8 @@
 #include <string>
 #include <vector>
 
-#include <AVSCommon/Utils/Bluetooth/BluetoothEvents.h>
-#include <AVSCommon/Utils/Bluetooth/BluetoothEventListenerInterface.h>
+#include "AVSCommon/Utils/Bluetooth/BluetoothEvents.h"
+#include "AVSCommon/Utils/Bluetooth/BluetoothEventListenerInterface.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {

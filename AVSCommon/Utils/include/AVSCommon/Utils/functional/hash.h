@@ -40,6 +40,21 @@ void hashCombine(size_t& seed, Type const& value) {
     seed = hasher(value) ^ ((seed << 1) | ((seed >> bitsMinus1) & 1));
 }
 
+/**
+ * Functor to support std::hash implementations for enum classes. Example:
+ * @code
+ * enum class MyEnum { ONE, TWO, THREE };
+ * std::unordered_map<MyEnum, std::string, EnumClassHash> myMap;
+ * return myMap[TWO];
+ * @endcode
+ */
+struct EnumClassHash {
+    template <typename T>
+    std::size_t operator()(T t) const {
+        return static_cast<std::size_t>(t);
+    }
+};
+
 }  // namespace functional
 }  // namespace utils
 }  // namespace avsCommon

@@ -46,6 +46,8 @@ using namespace ::testing;
 using namespace avsCommon::avs;
 using namespace avsCommon::utils::logger;
 
+using Byte = FFmpegDecoder::Byte;
+
 /// Configure @c MockAttachmentReader to simulate getting the entire file before being read.
 static const std::vector<size_t> RECEIVE_SIZES{std::numeric_limits<size_t>::max()};
 
@@ -56,7 +58,7 @@ static std::string inputFolder;
 static const std::string MP3_FILE_PATH("/fox_dog.mp3");
 
 /// Some arbitrary size that should fit valid audio samples.
-constexpr size_t BUFFER_SIZE = 4096;
+constexpr size_t BUFFER_SIZE = 8192;
 
 /**
  * Test class for FFmpegDecoder
@@ -99,11 +101,12 @@ protected:
 
 void FFmpegDecoderTest::writeInput(size_t maxBytes) {
     auto inputWriter = m_inAttachment->createWriter();
-    char buffer[BUFFER_SIZE];
+    constexpr size_t bufferSize = 4096;
+    char buffer[bufferSize];
     std::ifstream mediaFile{m_inputFileName, std::ios_base::binary};
     m_inputSize = 0;
-    while (!mediaFile.eof() && m_inputSize + BUFFER_SIZE < maxBytes) {
-        mediaFile.read(buffer, BUFFER_SIZE);
+    while (!mediaFile.eof() && m_inputSize + bufferSize < maxBytes) {
+        mediaFile.read(buffer, bufferSize);
         attachment::AttachmentWriter::WriteStatus status;
         m_inputSize += inputWriter->write(buffer, mediaFile.gcount(), &status);
     }
@@ -129,25 +132,25 @@ void FFmpegDecoderTest::writeCorruptedInput(size_t skipInterval) {
 /// Test decoder create.
 TEST_F(FFmpegDecoderTest, testCreateSucceed) {
     writeInput();
-    auto decoder = FFmpegDecoder::create(std::move(m_reader));
+    auto decoder = FFmpegDecoder::create(std::move(m_reader), PlaybackConfiguration());
     EXPECT_NE(decoder, nullptr);
 }
 
 /// Test decoder create with null reader.
 TEST_F(FFmpegDecoderTest, testCreateFailedNullReader) {
     writeInput();
-    auto decoder = FFmpegDecoder::create(nullptr);
+    auto decoder = FFmpegDecoder::create(nullptr, PlaybackConfiguration());
     EXPECT_EQ(decoder, nullptr);
 }
 
 /// Test decoding an entire file.
 TEST_F(FFmpegDecoderTest, testDecodeFullFile) {
     writeInput();
-    auto decoder = FFmpegDecoder::create(std::move(m_reader));
+    auto decoder = FFmpegDecoder::create(std::move(m_reader), PlaybackConfiguration());
     ASSERT_NE(decoder, nullptr);
 
     FFmpegDecoder::Status status = FFmpegDecoder::Status::OK;
-    int16_t buffer[BUFFER_SIZE];
+    Byte buffer[BUFFER_SIZE];
     size_t totalWordsRead = 0;
     while (status == FFmpegDecoder::Status::OK) {
         size_t wordsRead;
@@ -165,11 +168,11 @@ TEST_F(FFmpegDecoderTest, testTruncatedInput) {
     mediaFile.seekg(0, std::ios_base::seek_dir::end);
     writeInput(mediaFile.tellg() / 2);  // Write only half of the file.
 
-    auto decoder = FFmpegDecoder::create(std::move(m_reader));
+    auto decoder = FFmpegDecoder::create(std::move(m_reader), PlaybackConfiguration());
     ASSERT_NE(decoder, nullptr);
 
     FFmpegDecoder::Status status = FFmpegDecoder::Status::OK;
-    int16_t buffer[BUFFER_SIZE];
+    Byte buffer[BUFFER_SIZE];
     size_t totalWordsRead = 0;
     while (status == FFmpegDecoder::Status::OK) {
         size_t wordsRead;
@@ -188,11 +191,11 @@ TEST_F(FFmpegDecoderTest, testCorruptedInput) {
     mediaFile.seekg(0, std::ios_base::seek_dir::end);
     writeCorruptedInput(interval);  // Write file with missing bits.
 
-    auto decoder = FFmpegDecoder::create(std::move(m_reader));
+    auto decoder = FFmpegDecoder::create(std::move(m_reader), PlaybackConfiguration());
     ASSERT_NE(decoder, nullptr);
 
     FFmpegDecoder::Status status = FFmpegDecoder::Status::OK;
-    int16_t buffer[BUFFER_SIZE];
+    Byte buffer[BUFFER_SIZE];
     size_t totalWordsRead = 0;
     while (status == FFmpegDecoder::Status::OK) {
         size_t wordsRead;
@@ -207,16 +210,16 @@ TEST_F(FFmpegDecoderTest, testCorruptedInput) {
 /// Test that the decoder will error if input has invalid media.
 TEST_F(FFmpegDecoderTest, testInvalidInput) {
     // Create input with 0101's
-    std::vector<int16_t> input{BUFFER_SIZE, 0x5555};
+    std::vector<Byte> input(BUFFER_SIZE, 0x55);
     attachment::AttachmentWriter::WriteStatus writeStatus;
     auto writer = m_inAttachment->createWriter();
     m_inputSize = writer->write(input.data(), BUFFER_SIZE, &writeStatus);
     EXPECT_EQ(m_inputSize, BUFFER_SIZE);
 
-    auto decoder = FFmpegDecoder::create(std::move(m_reader));
+    auto decoder = FFmpegDecoder::create(std::move(m_reader), PlaybackConfiguration());
     ASSERT_NE(decoder, nullptr);
 
-    int16_t buffer[BUFFER_SIZE];
+    Byte buffer[BUFFER_SIZE];
     FFmpegDecoder::Status status;
     size_t wordsRead;
     std::tie(status, wordsRead) = decoder->read(buffer, BUFFER_SIZE);
@@ -230,11 +233,11 @@ TEST_F(FFmpegDecoderTest, testInvalidInput) {
 /// Check that read with a buffer that is too small fails.
 TEST_F(FFmpegDecoderTest, testReadSmallBuffer) {
     writeInput();
-    auto decoder = FFmpegDecoder::create(std::move(m_reader));
+    auto decoder = FFmpegDecoder::create(std::move(m_reader), PlaybackConfiguration());
     ASSERT_NE(decoder, nullptr);
 
     constexpr size_t smallBufferSize = 1;  // Some arbitrary size that doesn't fit any valid frame.
-    int16_t buffer[smallBufferSize];
+    Byte buffer[smallBufferSize];
     FFmpegDecoder::Status status;
     size_t wordsRead;
     std::tie(status, wordsRead) = decoder->read(buffer, smallBufferSize);
@@ -245,12 +248,12 @@ TEST_F(FFmpegDecoderTest, testReadSmallBuffer) {
 
 /// Check that we can abort the decoding during initialization.
 TEST_F(FFmpegDecoderTest, testAbortInitialization) {
-    auto decoder = FFmpegDecoder::create(std::move(m_reader));
+    auto decoder = FFmpegDecoder::create(std::move(m_reader), PlaybackConfiguration());
     ASSERT_NE(decoder, nullptr);
 
     std::atomic<FFmpegDecoder::Status> status{FFmpegDecoder::Status::OK};
     std::thread decoderThread{[&decoder, &status]() {
-        int16_t buffer[BUFFER_SIZE];
+        Byte buffer[BUFFER_SIZE];
         size_t wordsRead;
         std::tie(status, wordsRead) = decoder->read(buffer, BUFFER_SIZE);
     }};

@@ -113,11 +113,22 @@ void CapabilityAgent::sendExceptionEncounteredAndReportFailed(
     std::shared_ptr<DirectiveInfo> info,
     const std::string& message,
     avsCommon::avs::ExceptionErrorType type) {
-    m_exceptionEncounteredSender->sendExceptionEncountered(info->directive->getUnparsedDirective(), type, message);
-    if (info && info->result) {
-        info->result->setFailed(message);
+    if (info) {
+        if (info->directive) {
+            m_exceptionEncounteredSender->sendExceptionEncountered(
+                info->directive->getUnparsedDirective(), type, message);
+            removeDirective(info->directive->getMessageId());
+        } else {
+            ACSDK_ERROR(LX("sendExceptionEncounteredAndReportFailed").d("reason", "infoHasNoDirective"));
+        }
+        if (info->result) {
+            info->result->setFailed(message);
+        } else {
+            ACSDK_ERROR(LX("sendExceptionEncounteredAndReportFailed").d("reason", "infoHasNoResult"));
+        }
+    } else {
+        ACSDK_ERROR(LX("sendExceptionEncounteredAndReportFailed").d("reason", "infoNotFound"));
     }
-    removeDirective(info->directive->getMessageId());
 }
 
 void CapabilityAgent::onDeregistered() {

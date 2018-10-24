@@ -1,7 +1,9 @@
 add_definitions("-DACSDK_LOG_MODULE=bluetoothImplementationsBlueZ")
 
 add_library(BluetoothImplementationsBlueZ SHARED
+    BlueZA2DPSink.cpp
     BlueZA2DPSource.cpp
+    BlueZAVRCPController.cpp
     BlueZAVRCPTarget.cpp
     BlueZBluetoothDevice.cpp
     BlueZBluetoothDeviceManager.cpp
@@ -15,6 +17,7 @@ add_library(BluetoothImplementationsBlueZ SHARED
     GVariantTupleReader.cpp
     MediaContext.cpp
     MediaEndpoint.cpp
+    MPRISPlayer.cpp
     PairingAgent.cpp
     )
 

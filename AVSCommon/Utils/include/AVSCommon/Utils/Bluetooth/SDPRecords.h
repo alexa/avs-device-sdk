@@ -18,7 +18,7 @@
 
 #include <string>
 
-#include <AVSCommon/SDKInterfaces/Bluetooth/Services/SDPRecordInterface.h>
+#include "AVSCommon/SDKInterfaces/Bluetooth/Services/SDPRecordInterface.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -68,12 +68,6 @@ protected:
 /// A SDP record representing A2DPSource.
 class A2DPSourceRecord : public SDPRecord {
 public:
-    /// The service UUID.
-    static const std::string UUID;
-
-    /// The service name.
-    static const std::string NAME;
-
     /**
      * Constructor
      *
@@ -85,12 +79,6 @@ public:
 /// A SDP record representing A2DPSink.
 class A2DPSinkRecord : public SDPRecord {
 public:
-    /// The service UUID.
-    static const std::string UUID;
-
-    /// The service name.
-    static const std::string NAME;
-
     /**
      * Constructor
      *
@@ -102,18 +90,23 @@ public:
 /// A SDP record representing AVRCPTarget.
 class AVRCPTargetRecord : public SDPRecord {
 public:
-    /// The service UUID.
-    static const std::string UUID;
-
-    /// The service name.
-    static const std::string NAME;
-
     /**
      * Constructor
      *
      * @param version The version of the service.
      */
     AVRCPTargetRecord(const std::string& version);
+};
+
+/// A SDP record representing AVRCPController.
+class AVRCPControllerRecord : public SDPRecord {
+public:
+    /**
+     * Constructor
+     *
+     * @param version The version of the service.
+     */
+    AVRCPControllerRecord(const std::string& version);
 };
 
 }  // namespace bluetooth

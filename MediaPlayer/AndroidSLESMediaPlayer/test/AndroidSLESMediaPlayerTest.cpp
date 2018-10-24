@@ -173,8 +173,7 @@ protected:
         m_reader = std::make_shared<MockAttachmentReader>(MP3_INPUT_CSTR, MP3_INPUT_SIZE);
         m_engine = AndroidSLESEngine::create();
         auto factory = std::make_shared<MockContentFetcherFactory>();
-        m_player =
-            AndroidSLESMediaPlayer::create(factory, m_engine, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, "Player");
+        m_player = AndroidSLESMediaPlayer::create(factory, m_engine, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, false);
         m_observer = std::make_shared<NiceMock<MockObserver>>();
         m_player->setObserver(m_observer);
     }
@@ -208,16 +207,14 @@ protected:
 
 /// Test create with null factory.
 TEST_F(AndroidSLESMediaPlayerTest, testCreateNullFactory) {
-    auto player =
-        AndroidSLESMediaPlayer::create(nullptr, m_engine, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, "player");
+    auto player = AndroidSLESMediaPlayer::create(nullptr, m_engine, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, false);
     EXPECT_EQ(player, nullptr);
 }
 
 /// Test create with null engine.
 TEST_F(AndroidSLESMediaPlayerTest, testCreateNullEngine) {
     auto factory = std::make_shared<MockContentFetcherFactory>();
-    auto player =
-        AndroidSLESMediaPlayer::create(factory, nullptr, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, "player");
+    auto player = AndroidSLESMediaPlayer::create(factory, nullptr, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, false);
     EXPECT_EQ(player, nullptr);
 }
 

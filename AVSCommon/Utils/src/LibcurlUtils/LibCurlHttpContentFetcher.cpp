@@ -208,11 +208,17 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
                 auto curlMultiHandle = avsCommon::utils::libcurlUtils::CurlMultiHandleWrapper::create();
                 if (!curlMultiHandle) {
                     ACSDK_ERROR(LX("getContentFailed").d("reason", "curlMultiHandleWrapperCreateFailed"));
+                    // Set the promises because of errors.
+                    m_statusCodePromise.set_value(0);
+                    m_contentTypePromise.set_value("");
                     return;
                 }
                 curlMultiHandle->addHandle(m_curlWrapper.getCurlHandle());
 
                 int numTransfersLeft = 1;
+                long finalResponseCode = 0;
+                char* contentType = nullptr;
+
                 while (numTransfersLeft && !m_isShutdown) {
                     auto result = curlMultiHandle->perform(&numTransfersLeft);
                     if (CURLM_CALL_MULTI_PERFORM == result) {
@@ -222,8 +228,6 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
                         break;
                     }
 
-                    long finalResponseCode = 0;
-                    char* contentType = nullptr;
                     auto curlReturnValue =
                         curl_easy_getinfo(m_curlWrapper.getCurlHandle(), CURLINFO_RESPONSE_CODE, &finalResponseCode);
                     if (curlReturnValue != CURLE_OK) {
@@ -233,17 +237,14 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
                     if (0 != finalResponseCode && (finalResponseCode < HTTPResponseCode::REDIRECTION_START_CODE ||
                                                    finalResponseCode > HTTPResponseCode::REDIRECTION_END_CODE)) {
                         ACSDK_DEBUG9(LX("getContent").d("responseCode", finalResponseCode).sensitive("url", m_url));
-                        m_statusCodePromise.set_value(finalResponseCode);
                         curlReturnValue =
                             curl_easy_getinfo(m_curlWrapper.getCurlHandle(), CURLINFO_CONTENT_TYPE, &contentType);
                         if (curlReturnValue == CURLE_OK && contentType) {
                             ACSDK_DEBUG9(LX("getContent").d("contentType", contentType).sensitive("url", m_url));
-                            m_contentTypePromise.set_value(std::string(contentType));
                         } else {
                             ACSDK_ERROR(LX("curlEasyGetInfoFailed").d("error", curl_easy_strerror(curlReturnValue)));
                             ACSDK_ERROR(
                                 LX("getContent").d("contentType", "failedToGetContentType").sensitive("url", m_url));
-                            m_contentTypePromise.set_value("");
                         }
                         break;
                     }
@@ -257,6 +258,13 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
                         break;
                     }
                 }
+                m_statusCodePromise.set_value(finalResponseCode);
+                if (contentType) {
+                    m_contentTypePromise.set_value(std::string(contentType));
+                } else {
+                    m_contentTypePromise.set_value("");
+                }
+
                 // Abort any curl operation by removing the curl handle.
                 curlMultiHandle->removeHandle(m_curlWrapper.getCurlHandle());
             });
@@ -287,6 +295,9 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
                 auto curlMultiHandle = avsCommon::utils::libcurlUtils::CurlMultiHandleWrapper::create();
                 if (!curlMultiHandle) {
                     ACSDK_ERROR(LX("getContentFailed").d("reason", "curlMultiHandleWrapperCreateFailed"));
+                    // Set the promises because of errors.
+                    m_statusCodePromise.set_value(0);
+                    m_contentTypePromise.set_value("");
                     return;
                 }
                 curlMultiHandle->addHandle(m_curlWrapper.getCurlHandle());
@@ -336,7 +347,7 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
             return nullptr;
     }
     return avsCommon::utils::memory::make_unique<avsCommon::utils::HTTPContent>(
-        avsCommon::utils::HTTPContent{std::move(httpStatusCodeFuture), std::move(contentTypeFuture), stream});
+        std::move(httpStatusCodeFuture), std::move(contentTypeFuture), stream);
 }
 
 LibCurlHttpContentFetcher::~LibCurlHttpContentFetcher() {

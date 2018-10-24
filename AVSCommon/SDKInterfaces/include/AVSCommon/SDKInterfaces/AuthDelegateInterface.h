@@ -67,6 +67,13 @@ public:
      * has yet to be acquired or if the most recently acquired token has expired.
      */
     virtual std::string getAuthToken() = 0;
+
+    /**
+     * Receive notification that an operation using the specified auth token experienced an authorization failure.
+     *
+     * @param token The token used to authorize the forbidden operation.
+     */
+    virtual void onAuthFailure(const std::string& token) = 0;
 };
 
 }  // namespace sdkInterfaces

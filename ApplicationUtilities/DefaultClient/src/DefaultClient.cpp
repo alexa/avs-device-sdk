@@ -14,9 +14,6 @@
  */
 
 #include "DefaultClient/DefaultClient.h"
-
-#include <ACL/Transport/HTTP2TransportFactory.h>
-#include <ACL/Transport/PostConnectSynchronizer.h>
 #include <ADSL/MessageInterpreter.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
@@ -31,13 +28,13 @@
 #include <MRMHandler/MRMHandler.h>
 #endif
 
-#include <ContextManager/ContextManager.h>
 #include <Settings/SettingsUpdatedEventSender.h>
 #include <System/EndpointHandler.h>
 #include <System/SystemCapabilityProvider.h>
 #include <System/UserInactivityMonitor.h>
 
 #ifdef BLUETOOTH_BLUEZ
+#include <Bluetooth/BluetoothAVRCPTransformer.h>
 #include <BlueZ/BlueZBluetoothDeviceManager.h>
 #endif
 
@@ -80,6 +77,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
     const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
+    std::shared_ptr<EqualizerRuntimeSetup> equalizerRuntimeSetup,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
     std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
@@ -94,6 +92,8 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::utils::network::InternetConnectionMonitor> internetConnectionMonitor,
     bool isGuiSupported,
     std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+    std::shared_ptr<alexaClientSDK::acl::TransportFactoryInterface> transportFactory,
     avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
     bool sendSoftwareInfoOnConnected,
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver) {
@@ -117,6 +117,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             bluetoothSpeaker,
             ringtoneSpeaker,
             additionalSpeakers,
+            equalizerRuntimeSetup,
             audioFactory,
             authDelegate,
             alertStorage,
@@ -129,6 +130,8 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             internetConnectionMonitor,
             isGuiSupported,
             capabilitiesDelegate,
+            contextManager,
+            transportFactory,
             firmwareVersion,
             sendSoftwareInfoOnConnected,
             softwareInfoSenderObserver)) {
@@ -159,6 +162,7 @@ bool DefaultClient::initialize(
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
     const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
+    std::shared_ptr<EqualizerRuntimeSetup> equalizerRuntimeSetup,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
     std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
@@ -173,6 +177,8 @@ bool DefaultClient::initialize(
     std::shared_ptr<avsCommon::utils::network::InternetConnectionMonitor> internetConnectionMonitor,
     bool isGuiSupported,
     std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+    std::shared_ptr<alexaClientSDK::acl::TransportFactoryInterface> transportFactory,
     avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
     bool sendSoftwareInfoOnConnected,
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver) {
@@ -221,6 +227,16 @@ bool DefaultClient::initialize(
         return false;
     }
 
+    if (!contextManager) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullContextManager"));
+        return false;
+    }
+
+    if (!transportFactory) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullTransportFactory"));
+        return false;
+    }
+
     m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>();
 
     for (auto observer : alexaDialogStateObservers) {
@@ -233,28 +249,6 @@ bool DefaultClient::initialize(
      */
     auto attachmentManager = std::make_shared<avsCommon::avs::attachment::AttachmentManager>(
         avsCommon::avs::attachment::AttachmentManager::AttachmentType::IN_PROCESS);
-
-    /*
-     * Creating the Context Manager - This component manages the context of each of the components to update to AVS.
-     * It is required for each of the capability agents so that they may provide their state just before any event is
-     * fired off.
-     */
-    auto contextManager = contextManager::ContextManager::create();
-    if (!contextManager) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateContextManager"));
-        return false;
-    }
-
-    /*
-     * Create a factory for creating objects that handle tasks that need to be performed right after establishing
-     * a connection to AVS.
-     */
-    m_postConnectSynchronizerFactory = acl::PostConnectSynchronizerFactory::create(contextManager);
-
-    /*
-     * Create a factory to create objects that establish a connection with AVS.
-     */
-    auto transportFactory = std::make_shared<acl::HTTP2TransportFactory>(m_postConnectSynchronizerFactory);
 
     /*
      * Creating the message router - This component actually maintains the connection to AVS over HTTP2. It is created
@@ -613,6 +607,49 @@ bool DefaultClient::initialize(
 #endif
 
     /*
+     * Creating the Equalizer Capability Agent and related implementations if enabled
+     */
+
+    m_equalizerRuntimeSetup = equalizerRuntimeSetup;
+    if (nullptr != m_equalizerRuntimeSetup) {
+        auto equalizerController = equalizer::EqualizerController::create(
+            equalizerRuntimeSetup->getModeController(),
+            equalizerRuntimeSetup->getConfiguration(),
+            equalizerRuntimeSetup->getStorage());
+
+        if (!equalizerController) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateEqualizerController"));
+            return false;
+        }
+
+        m_equalizerCapabilityAgent = capabilityAgents::equalizer::EqualizerCapabilityAgent::create(
+            equalizerController,
+            capabilitiesDelegate,
+            equalizerRuntimeSetup->getStorage(),
+            customerDataManager,
+            m_exceptionSender,
+            contextManager,
+            m_connectionManager);
+        if (!m_equalizerCapabilityAgent) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateEqualizerCapabilityAgent"));
+            return false;
+        }
+
+        m_equalizerController = equalizerController;
+        // Register equalizers
+        for (auto& equalizer : m_equalizerRuntimeSetup->getAllEqualizers()) {
+            equalizerController->registerEqualizer(equalizer);
+        }
+
+        // Add all equalizer controller listeners
+        for (auto& listener : m_equalizerRuntimeSetup->getAllEqualizerControllerListeners()) {
+            equalizerController->addListener(listener);
+        }
+    } else {
+        ACSDK_DEBUG3(LX(__func__).m("Equalizer is disabled"));
+    }
+
+    /*
      * Creating the Endpoint Handler - This component is responsible for handling directives from AVS instructing the
      * client to change the endpoint to connect to.
      */
@@ -631,6 +668,18 @@ bool DefaultClient::initialize(
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSystemCapabilityProvider"));
         return false;
     }
+
+#ifdef ENABLE_REVOKE_AUTH
+    /*
+     * Creating the RevokeAuthorizationHandler - This component is responsible for handling RevokeAuthorization
+     * directives from AVS to notify the client to clear out authorization and re-enter the registration flow.
+     */
+    m_revokeAuthorizationHandler = capabilityAgents::system::RevokeAuthorizationHandler::create(m_exceptionSender);
+    if (!m_revokeAuthorizationHandler) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateRevokeAuthorizationHandler"));
+        return false;
+    }
+#endif
 
     if (avsCommon::sdkInterfaces::softwareInfo::isValidFirmwareVersion(firmwareVersion)) {
         auto tempSender = capabilityAgents::system::SoftwareInfoSender::create(
@@ -653,6 +702,8 @@ bool DefaultClient::initialize(
     auto eventBus = std::make_shared<avsCommon::utils::bluetooth::BluetoothEventBus>();
 
     auto bluetoothDeviceManager = bluetoothImplementations::blueZ::BlueZBluetoothDeviceManager::create(eventBus);
+    auto bluetoothAVRCPTransformer =
+        capabilityAgents::bluetooth::BluetoothAVRCPTransformer::create(eventBus, m_playbackRouter);
 
     /*
      * Creating the Bluetooth Capability Agent - This component is responsible for handling directives from AVS
@@ -667,7 +718,8 @@ bool DefaultClient::initialize(
         std::move(bluetoothDeviceManager),
         eventBus,
         bluetoothMediaPlayer,
-        customerDataManager);
+        customerDataManager,
+        bluetoothAVRCPTransformer);
 #endif
 
     /*
@@ -714,6 +766,15 @@ bool DefaultClient::initialize(
                         .d("directiveHandler", "EndpointHandler"));
         return false;
     }
+
+#ifdef ENABLE_REVOKE_AUTH
+    if (!m_directiveSequencer->addDirectiveHandler(m_revokeAuthorizationHandler)) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterDirectiveHandler")
+                        .d("directiveHandler", "RevokeAuthorizationHandler"));
+        return false;
+    }
+#endif
 
     if (!m_directiveSequencer->addDirectiveHandler(m_userInactivityMonitor)) {
         ACSDK_ERROR(LX("initializeFailed")
@@ -776,6 +837,15 @@ bool DefaultClient::initialize(
         }
     }
 
+    if (nullptr != m_equalizerCapabilityAgent) {
+        if (!m_directiveSequencer->addDirectiveHandler(m_equalizerCapabilityAgent)) {
+            ACSDK_ERROR(LX("initializeFailed")
+                            .d("reason", "unableToRegisterDirectiveHandler")
+                            .d("directiveHandler", "Equalizer"));
+            return false;
+        }
+    }
+
     /*
      * Register capabilities for publishing to the Capabilities API.
      */
@@ -795,6 +865,13 @@ bool DefaultClient::initialize(
     if (!(capabilitiesDelegate->registerCapability(m_audioPlayer))) {
         ACSDK_ERROR(
             LX("initializeFailed").d("reason", "unableToRegisterCapability").d("capabilitiesDelegate", "AudioPlayer"));
+        return false;
+    }
+
+    if (!(capabilitiesDelegate->registerCapability(m_externalMediaPlayer))) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterCapability")
+                        .d("capabilitiesDelegate", "ExternalMediaPlayer"));
         return false;
     }
 
@@ -876,6 +953,15 @@ bool DefaultClient::initialize(
         if (!(capabilitiesDelegate->registerCapability(m_mrmCapabilityAgent))) {
             ACSDK_ERROR(
                 LX("initializeFailed").d("reason", "unableToRegisterCapability").d("capabilitiesDelegate", "MRM"));
+            return false;
+        }
+    }
+
+    if (nullptr != m_equalizerCapabilityAgent) {
+        if (!(capabilitiesDelegate->registerCapability(m_equalizerCapabilityAgent))) {
+            ACSDK_ERROR(LX("initializeFailed")
+                            .d("reason", "unableToRegisterCapability")
+                            .d("capabilitiesDelegate", "Equalizer"));
             return false;
         }
     }
@@ -1004,6 +1090,36 @@ void DefaultClient::removeNotificationsObserver(
     m_notificationsCapabilityAgent->removeObserver(observer);
 }
 
+void DefaultClient::addExternalMediaPlayerObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaPlayerObserverInterface> observer) {
+    m_externalMediaPlayer->addObserver(observer);
+}
+
+void DefaultClient::removeExternalMediaPlayerObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaPlayerObserverInterface> observer) {
+    m_externalMediaPlayer->removeObserver(observer);
+}
+
+#ifdef ENABLE_REVOKE_AUTH
+void DefaultClient::addRevokeAuthorizationObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::RevokeAuthorizationObserverInterface> observer) {
+    if (!m_revokeAuthorizationHandler) {
+        ACSDK_ERROR(LX("addRevokeAuthorizationObserver").d("reason", "revokeAuthorizationNotSupported"));
+        return;
+    }
+    m_revokeAuthorizationHandler->addObserver(observer);
+}
+
+void DefaultClient::removeRevokeAuthorizationObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::RevokeAuthorizationObserverInterface> observer) {
+    if (!m_revokeAuthorizationHandler) {
+        ACSDK_ERROR(LX("removeRevokeAuthorizationObserver").d("reason", "revokeAuthorizationNotSupported"));
+        return;
+    }
+    m_revokeAuthorizationHandler->removeObserver(observer);
+}
+#endif
+
 void DefaultClient::changeSetting(const std::string& key, const std::string& value) {
     m_settings->changeSetting(key, value);
 }
@@ -1018,6 +1134,10 @@ std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> DefaultClient
 
 std::shared_ptr<registrationManager::RegistrationManager> DefaultClient::getRegistrationManager() {
     return m_registrationManager;
+}
+
+std::shared_ptr<equalizer::EqualizerController> DefaultClient::getEqualizerController() {
+    return m_equalizerController;
 }
 
 void DefaultClient::addSpeakerManagerObserver(
@@ -1058,6 +1178,7 @@ std::future<bool> DefaultClient::notifyOfWakeWord(
     avsCommon::avs::AudioInputStream::Index beginIndex,
     avsCommon::avs::AudioInputStream::Index endIndex,
     std::string keyword,
+    std::chrono::steady_clock::time_point startOfSpeechTimestamp,
     const capabilityAgents::aip::ESPData espData,
     std::shared_ptr<const std::vector<char>> KWDMetadata) {
     if (!m_connectionManager->isConnected()) {
@@ -1083,6 +1204,7 @@ std::future<bool> DefaultClient::notifyOfWakeWord(
     return m_audioInputProcessor->recognize(
         wakeWordAudioProvider,
         capabilityAgents::aip::Initiator::WAKEWORD,
+        startOfSpeechTimestamp,
         beginIndex,
         endIndex,
         keyword,
@@ -1092,12 +1214,17 @@ std::future<bool> DefaultClient::notifyOfWakeWord(
 
 std::future<bool> DefaultClient::notifyOfTapToTalk(
     capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
-    avsCommon::avs::AudioInputStream::Index beginIndex) {
-    return m_audioInputProcessor->recognize(tapToTalkAudioProvider, capabilityAgents::aip::Initiator::TAP, beginIndex);
+    avsCommon::avs::AudioInputStream::Index beginIndex,
+    std::chrono::steady_clock::time_point startOfSpeechTimestamp) {
+    return m_audioInputProcessor->recognize(
+        tapToTalkAudioProvider, capabilityAgents::aip::Initiator::TAP, startOfSpeechTimestamp, beginIndex);
 }
 
-std::future<bool> DefaultClient::notifyOfHoldToTalkStart(capabilityAgents::aip::AudioProvider holdToTalkAudioProvider) {
-    return m_audioInputProcessor->recognize(holdToTalkAudioProvider, capabilityAgents::aip::Initiator::PRESS_AND_HOLD);
+std::future<bool> DefaultClient::notifyOfHoldToTalkStart(
+    capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
+    std::chrono::steady_clock::time_point startOfSpeechTimestamp) {
+    return m_audioInputProcessor->recognize(
+        holdToTalkAudioProvider, capabilityAgents::aip::Initiator::PRESS_AND_HOLD, startOfSpeechTimestamp);
 }
 
 std::future<bool> DefaultClient::notifyOfHoldToTalkEnd() {
@@ -1208,6 +1335,16 @@ DefaultClient::~DefaultClient() {
     if (m_mrmCapabilityAgent) {
         ACSDK_DEBUG5(LX("MRMCapabilityAgentShutdown"));
         m_mrmCapabilityAgent->shutdown();
+    }
+    if (nullptr != m_equalizerCapabilityAgent) {
+        for (auto& equalizer : m_equalizerRuntimeSetup->getAllEqualizers()) {
+            m_equalizerController->unregisterEqualizer(equalizer);
+        }
+        for (auto& listener : m_equalizerRuntimeSetup->getAllEqualizerControllerListeners()) {
+            m_equalizerController->removeListener(listener);
+        }
+        ACSDK_DEBUG5(LX("EqualizerCapabilityAgentShutdown"));
+        m_equalizerCapabilityAgent->shutdown();
     }
 }
 

@@ -73,12 +73,14 @@ bool extractPlaylistContent(std::unique_ptr<avsCommon::utils::HTTPContent> httpC
         ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "nullHTTPContentReceived"));
         return false;
     }
-    if (!(*httpContent)) {
-        ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "badHTTPContentReceived"));
+    if (!httpContent->isStatusCodeSuccess()) {
+        ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed")
+                        .d("reason", "badHTTPContentReceived")
+                        .d("statusCode", httpContent->getStatusCode()));
         return false;
     }
 
-    auto reader = httpContent->dataStream->createReader(avsCommon::utils::sds::ReaderPolicy::BLOCKING);
+    auto reader = httpContent->getDataStream()->createReader(avsCommon::utils::sds::ReaderPolicy::BLOCKING);
     if (!reader) {
         ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "failedToCreateStreamReader"));
         return false;
@@ -96,11 +98,15 @@ bool extractPlaylistContent(std::unique_ptr<avsCommon::utils::HTTPContent> httpC
                 if (bytesRead == 0) {
                     break;
                 }
-                /* FALL THROUGH - to add any data received even if closed */
+            /* FALL THROUGH - to add any data received even if closed */
             case avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK:
             case avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK_WOULDBLOCK:
             case avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK_TIMEDOUT:
                 playlistContent.append(buffer.data(), bytesRead);
+                break;
+            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK_OVERRUN_RESET:
+                // Current AttachmentReader policy renders this outcome impossible.
+                ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("failure", "overrunReset"));
                 break;
             case avsCommon::avs::attachment::AttachmentReader::ReadStatus::ERROR_OVERRUN:
             case avsCommon::avs::attachment::AttachmentReader::ReadStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:

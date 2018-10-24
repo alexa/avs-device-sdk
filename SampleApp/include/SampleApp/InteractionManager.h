@@ -213,6 +213,11 @@ public:
     void confirmResetDevice();
 
     /**
+     * Prompts the user to confirm the intent to re-authorize the device.
+     */
+    void confirmReauthorizeDevice();
+
+    /**
      * Should be called whenever a user requests for ESP control.
      */
     void espControl();

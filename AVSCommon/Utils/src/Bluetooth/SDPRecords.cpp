@@ -12,6 +12,10 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+#include "AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSinkInterface.h"
+#include "AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h"
+#include "AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPControllerInterface.h"
+#include "AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPTargetInterface.h"
 
 #include "AVSCommon/Utils/Bluetooth/SDPRecords.h"
 
@@ -40,30 +44,20 @@ std::string SDPRecord::getVersion() const {
     return m_version;
 }
 
-// Constants are defined as part of the Bluetooth specification.
-
-// A2DPSource.
-const std::string A2DPSourceRecord::UUID = "0000110a-0000-1000-8000-00805f9b34fb";
-const std::string A2DPSourceRecord::NAME = "AudioSource";
-
 A2DPSourceRecord::A2DPSourceRecord(const std::string& version) :
-        SDPRecord{A2DPSourceRecord::NAME, A2DPSourceRecord::UUID, version} {
+        SDPRecord{A2DPSourceInterface::NAME, A2DPSourceInterface::UUID, version} {
 }
-
-// A2DPSink.
-const std::string A2DPSinkRecord::UUID = "0000110b-0000-1000-8000-00805f9b34fb";
-const std::string A2DPSinkRecord::NAME = "AudioSink";
 
 A2DPSinkRecord::A2DPSinkRecord(const std::string& version) :
-        SDPRecord{A2DPSinkRecord::NAME, A2DPSinkRecord::UUID, version} {
+        SDPRecord{A2DPSinkInterface::NAME, A2DPSinkInterface::UUID, version} {
 }
 
-// AVRCPTargetRecord.
-const std::string AVRCPTargetRecord::UUID = "0000110c-0000-1000-8000-00805f9b34fb";
-const std::string AVRCPTargetRecord::NAME = "A/V_RemoteControlTarget";
-
 AVRCPTargetRecord::AVRCPTargetRecord(const std::string& version) :
-        SDPRecord{AVRCPTargetRecord::NAME, AVRCPTargetRecord::UUID, version} {
+        SDPRecord{AVRCPTargetInterface::NAME, AVRCPTargetInterface::UUID, version} {
+}
+
+AVRCPControllerRecord::AVRCPControllerRecord(const std::string& version) :
+        SDPRecord{AVRCPControllerInterface::NAME, AVRCPControllerInterface::UUID, version} {
 }
 
 }  // namespace bluetooth

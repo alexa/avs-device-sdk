@@ -41,10 +41,9 @@ public:
     /// @name HttpPutInterface method overrides.
     /// @{
     void addAuthObserver(std::shared_ptr<AuthObserverInterface> observer) override;
-
     void removeAuthObserver(std::shared_ptr<AuthObserverInterface> observer) override;
-
     std::string getAuthToken() override;
+    void onAuthFailure(const std::string& token) override;
     /// @}
 
     /**

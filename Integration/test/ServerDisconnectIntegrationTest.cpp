@@ -23,19 +23,20 @@
 
 #include <ACL/AVSConnectionManager.h>
 #include <ACL/Transport/HTTP2TransportFactory.h>
+#include <ACL/Transport/PostConnectSynchronizerFactory.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/AVS/MessageRequest.h>
+#include <AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2ConnectionFactory.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <ContextManager/ContextManager.h>
-#include <ACL/Transport/PostConnectSynchronizerFactory.h>
 
 #include "Integration/AuthDelegateTestContext.h"
 #include "Integration/AuthObserver.h"
-#include "Integration/SDKTestContext.h"
 #include "Integration/ConnectionStatusObserver.h"
 #include "Integration/JsonHeader.h"
 #include "Integration/ObservableMessageRequest.h"
+#include "Integration/SDKTestContext.h"
 
 namespace alexaClientSDK {
 namespace integration {
@@ -47,6 +48,7 @@ using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::avs::initialization;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils::libcurlUtils;
 
 using alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface;
 
@@ -146,7 +148,8 @@ std::unique_ptr<AVSCommunication> AVSCommunication::create(std::shared_ptr<AuthD
     avsCommunication->m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
 
     auto postConnectFactory = acl::PostConnectSynchronizerFactory::create(avsCommunication->m_contextManager);
-    auto transportFactory = std::make_shared<acl::HTTP2TransportFactory>(postConnectFactory);
+    auto http2ConnectionFactory = std::make_shared<LibcurlHTTP2ConnectionFactory>();
+    auto transportFactory = std::make_shared<acl::HTTP2TransportFactory>(http2ConnectionFactory, postConnectFactory);
     avsCommunication->m_messageRouter = std::make_shared<MessageRouter>(
         authDelegate,
         std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS),

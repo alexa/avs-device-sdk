@@ -126,14 +126,16 @@ void PlaylistParser::doDepthFirstSearch(
                 return;
             }
         } while (!httpContent->isReady(WAIT_FOR_FUTURE_READY_TIMEOUT));
-        if (!(*httpContent)) {
-            ACSDK_ERROR(LX("getHTTPContent").d("reason", "badHTTPContentReceived"));
+        if (!httpContent->isStatusCodeSuccess()) {
+            ACSDK_ERROR(LX("getHTTPContent")
+                            .d("reason", "badHTTPContentReceived")
+                            .d("statusCode", httpContent->getStatusCode()));
             observer->onPlaylistEntryParsed(
                 id, urlAndInfo.url, avsCommon::utils::playlistParser::PlaylistParseResult::ERROR, urlAndInfo.length);
             return;
         }
 
-        std::string contentType = httpContent->contentType.get();
+        std::string contentType = httpContent->getContentType();
         ACSDK_DEBUG9(LX("PlaylistParser")
                          .d("contentType", contentType)
                          .sensitive("url", urlAndInfo.url)

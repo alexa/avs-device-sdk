@@ -82,7 +82,6 @@ public:
     static const PlaybackCommand& toggleToCommand(avsCommon::avs::PlaybackToggle toggle, bool action);
 
 protected:
-
     /// The distinct AVS name of a command
     const std::string m_name;
 
@@ -106,7 +105,7 @@ public:
      * @param name Event name.
      */
     ButtonCommand_v1_0(const std::string& name);
-    
+
     /// @name PlaybackCommand functions
     /// @{
     std::string getEventName() const override;

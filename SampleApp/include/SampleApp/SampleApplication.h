@@ -23,9 +23,10 @@
 
 #include "ConsolePrinter.h"
 #include "ConsoleReader.h"
+#include "DefaultClient/EqualizerRuntimeSetup.h"
+#include "SampleApp/GuiRenderer.h"
 #include "SampleApplicationReturnCodes.h"
 #include "UserInputManager.h"
-#include "SampleApp/GuiRenderer.h"
 
 #ifdef KWD
 #include <KWD/AbstractKeywordDetector.h>
@@ -82,11 +83,13 @@ public:
      * Method to create mediaPlayers for the optional music provider adapters plugged into the SDK.
      *
      * @param httpContentFetcherFactory The HTTPContentFetcherFactory to be used while creating the mediaPlayers.
+     * @param equalizerRuntimeSetup Equalizer runtime setup to register equalizers
      * @param additionalSpeakers The speakerInterface to add the created mediaPlayer.
      * @return @c true if the mediaPlayer of all the registered adapters could be created @c false otherwise.
      */
     bool createMediaPlayersForAdapters(
         std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
+        std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup,
         std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers);
 
     /**
@@ -116,6 +119,7 @@ public:
      */
     using MediaPlayerCreateFunction = std::shared_ptr<ApplicationMediaPlayer> (*)(
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
+        bool enableEqualizer,
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         std::string name);
 
@@ -160,6 +164,7 @@ private:
      * Create an application media player.
      *
      * @param contentFetcherFactory Used to create objects that can fetch remote HTTP content.
+     * @param enableEqualizer Flag indicating if equalizer should be enabled for this media player.
      * @param type The type used to categorize the speaker for volume control.
      * @param name The media player instance name used for logging purpose.
      * @return A pointer to the @c ApplicationMediaPlayer and to its speaker if it succeeds; otherwise, return @c
@@ -168,6 +173,7 @@ private:
     std::pair<std::shared_ptr<ApplicationMediaPlayer>, std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>
     createApplicationMediaPlayer(
         std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
+        bool enableEqualizer,
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         const std::string& name);
 

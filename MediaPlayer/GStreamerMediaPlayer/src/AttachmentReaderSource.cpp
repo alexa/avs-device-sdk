@@ -135,6 +135,7 @@ gboolean AttachmentReaderSource::handleReadData() {
                 updateOnReadDataHandler();
             }
             return true;
+        case AttachmentReader::ReadStatus::OK_OVERRUN_RESET:  // gstreamer requires stable stream.
         case AttachmentReader::ReadStatus::ERROR_OVERRUN:
         case AttachmentReader::ReadStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:
         case AttachmentReader::ReadStatus::ERROR_INTERNAL:

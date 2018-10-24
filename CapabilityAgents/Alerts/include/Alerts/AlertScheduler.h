@@ -151,6 +151,13 @@ public:
      */
     void shutdown();
 
+    /**
+     * Utility method to get list of all alerts being tracked by @c AlertScheduler
+     *
+     * @return list of all alerts being tracked by @c AlertScheduler
+     */
+    std::list<std::shared_ptr<Alert>> getAllAlerts();
+
 private:
     /**
      * A handler function which will be called by our internal executor when a managed alert changes state.

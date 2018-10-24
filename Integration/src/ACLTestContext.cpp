@@ -17,11 +17,12 @@
 
 #include <gtest/gtest.h>
 
-#include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <ACL/Transport/HTTP2TransportFactory.h>
+#include <ACL/Transport/PostConnectSynchronizerFactory.h>
+#include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
+#include <AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2ConnectionFactory.h>
 #include <CBLAuthDelegate/CBLAuthDelegate.h>
 #include <CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h>
-#include <ACL/Transport/PostConnectSynchronizerFactory.h>
 
 #include "Integration/ACLTestContext.h"
 
@@ -34,6 +35,7 @@ using namespace avsCommon::avs::attachment;
 using namespace avsCommon::avs::initialization;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::configuration;
+using namespace avsCommon::utils::libcurlUtils;
 using namespace authorization::cblAuthDelegate;
 using namespace contextManager;
 using namespace registrationManager;
@@ -107,7 +109,8 @@ ACLTestContext::ACLTestContext(const std::string& filePath, const std::string& o
     }
 
     auto postConnectFactory = acl::PostConnectSynchronizerFactory::create(m_contextManager);
-    auto transportFactory = std::make_shared<acl::HTTP2TransportFactory>(postConnectFactory);
+    auto http2ConnectionFactory = std::make_shared<LibcurlHTTP2ConnectionFactory>();
+    auto transportFactory = std::make_shared<acl::HTTP2TransportFactory>(http2ConnectionFactory, postConnectFactory);
     m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
     m_messageRouter = std::make_shared<MessageRouter>(getAuthDelegate(), m_attachmentManager, transportFactory);
     m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();

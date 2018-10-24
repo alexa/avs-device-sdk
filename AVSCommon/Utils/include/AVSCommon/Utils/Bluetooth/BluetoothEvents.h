@@ -16,8 +16,10 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_BLUETOOTH_BLUETOOTHEVENTS_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_BLUETOOTH_BLUETOOTHEVENTS_H_
 
-#include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceInterface.h>
-#include <AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h>
+#include "AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceInterface.h"
+#include "AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h"
+#include "AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPTargetInterface.h"
+#include "AVSCommon/Utils/Bluetooth/A2DPRole.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -36,7 +38,10 @@ enum class BluetoothEventType {
     DEVICE_STATE_CHANGED,
 
     /// Represents when the A2DP streaming state changes.
-    STREAMING_STATE_CHANGED
+    STREAMING_STATE_CHANGED,
+
+    /// Represents when an AVRCP command has been received.
+    AVRCP_COMMAND_RECEIVED
 };
 
 /// Helper struct to allow enum class to be a key in collections
@@ -72,8 +77,8 @@ public:
     BluetoothEventType getType() const;
 
     /**
-     * Get @c BluetoothDeviceInterface assoctiated with the event. The value depends on the event type
-     * @return @c BluetoothDeviceInterface assoctiated with the event or @c nullptr
+     * Get @c BluetoothDeviceInterface associated with the event. The value depends on the event type
+     * @return @c BluetoothDeviceInterface associated with the event or @c nullptr
      */
     std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> getDevice() const;
 
@@ -84,49 +89,75 @@ public:
     avsCommon::sdkInterfaces::bluetooth::DeviceState getDeviceState() const;
 
     /**
-     * Get @c MediaStreamingState assoctiated with the event
-     * @return @c MediaStreamingState assoctiated with the event
+     * Get @c MediaStreamingState associated with the event
+     * @return @c MediaStreamingState associated with the event
      */
     MediaStreamingState getMediaStreamingState() const;
+
+    /**
+     * Get @c A2DPRole associated with the event
+     * @return @c A2DPRole associated with the event or null if not applicable.
+     */
+    std::shared_ptr<A2DPRole> getA2DPRole() const;
+
+    /**
+     * Get @c AVRCPCommand associated with the event
+     * @return @c AVRCPCommand associated with the event or null if not applicable
+     */
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand> getAVRCPCommand() const;
 
 protected:
     /**
      * Constructor
      * @param type Event type
-     * @param device @c BluetoothDeviceInterface assoctiated with the event
+     * @param device @c BluetoothDeviceInterface associated with the event
      * @param deviceState @c DeviceState associated with the event
-     * @param mediaStreamingState @c MediaStreamingState assoctiated with the event
+     * @param mediaStreamingState @c MediaStreamingState associated with the event
+     * @param role The A2DP role the AVS device is acting as
+     * @param avrcpCommand The received AVRCPCommand if applicable
      */
     BluetoothEvent(
         BluetoothEventType type,
         std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device = nullptr,
         avsCommon::sdkInterfaces::bluetooth::DeviceState deviceState =
             avsCommon::sdkInterfaces::bluetooth::DeviceState::IDLE,
-        MediaStreamingState mediaStreamingState = MediaStreamingState::IDLE);
+        MediaStreamingState mediaStreamingState = MediaStreamingState::IDLE,
+        std::shared_ptr<A2DPRole> role = nullptr,
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand> avrcpCommand = nullptr);
 
 private:
     /// Event type
     BluetoothEventType m_type;
 
-    /// @c BluetoothDeviceInterface assoctiated with the event
+    /// @c BluetoothDeviceInterface associated with the event
     std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> m_device;
 
     /// @c DeviceState associated with the event
     avsCommon::sdkInterfaces::bluetooth::DeviceState m_deviceState;
 
-    /// @c MediaStreamingState assoctiated with the event
+    /// @c MediaStreamingState associated with the event
     MediaStreamingState m_mediaStreamingState;
+
+    /// @c A2DPRole associated with the event
+    std::shared_ptr<A2DPRole> m_a2dpRole;
+
+    /// @C AVRCPCommand that is received
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand> m_avrcpCommand;
 };
 
 inline BluetoothEvent::BluetoothEvent(
     BluetoothEventType type,
     std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device,
     avsCommon::sdkInterfaces::bluetooth::DeviceState deviceState,
-    MediaStreamingState mediaStreamingState) :
+    MediaStreamingState mediaStreamingState,
+    std::shared_ptr<A2DPRole> a2dpRole,
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand> avrcpCommand) :
         m_type{type},
         m_device{device},
         m_deviceState{deviceState},
-        m_mediaStreamingState{mediaStreamingState} {
+        m_mediaStreamingState{mediaStreamingState},
+        m_a2dpRole{a2dpRole},
+        m_avrcpCommand{avrcpCommand} {
 }
 
 inline BluetoothEventType BluetoothEvent::getType() const {
@@ -144,6 +175,15 @@ inline avsCommon::sdkInterfaces::bluetooth::DeviceState BluetoothEvent::getDevic
 
 inline MediaStreamingState BluetoothEvent::getMediaStreamingState() const {
     return m_mediaStreamingState;
+}
+
+inline std::shared_ptr<A2DPRole> BluetoothEvent::getA2DPRole() const {
+    return m_a2dpRole;
+}
+
+inline std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand> BluetoothEvent::getAVRCPCommand()
+    const {
+    return m_avrcpCommand;
 }
 
 /**
@@ -179,7 +219,7 @@ class DeviceRemovedEvent : public BluetoothEvent {
 public:
     /**
      * Constructor
-     * @param device Device assoctiated with the event
+     * @param device Device associated with the event
      */
     explicit DeviceRemovedEvent(
         const std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>& device);
@@ -202,7 +242,7 @@ class DeviceStateChangedEvent : public BluetoothEvent {
 public:
     /**
      * Constructor
-     * @param device Device assoctiated with the event
+     * @param device Device associated with the event
      * @param newState New state of the devices
      */
     DeviceStateChangedEvent(
@@ -224,18 +264,44 @@ class MediaStreamingStateChangedEvent : public BluetoothEvent {
 public:
     /**
      * Constructor
-     * @param device Device assoctiated with the event
      * @param newState New media streaming state
+     * @param role The A2DPRole associated with the device running the SDK
+     * @param device The peer device that is connected and whose streaming status changed
      */
-    explicit MediaStreamingStateChangedEvent(MediaStreamingState newState);
+    explicit MediaStreamingStateChangedEvent(
+        MediaStreamingState newState,
+        A2DPRole role,
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
 };
 
-inline MediaStreamingStateChangedEvent::MediaStreamingStateChangedEvent(MediaStreamingState newState) :
+inline MediaStreamingStateChangedEvent::MediaStreamingStateChangedEvent(
+    MediaStreamingState newState,
+    A2DPRole role,
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device) :
         BluetoothEvent(
             BluetoothEventType::STREAMING_STATE_CHANGED,
+            device,
+            avsCommon::sdkInterfaces::bluetooth::DeviceState::IDLE,
+            newState,
+            std::make_shared<A2DPRole>(role)){};
+
+/**
+ * Event indicating that an AVRCP command was received.
+ */
+class AVRCPCommandReceivedEvent : public BluetoothEvent {
+public:
+    explicit AVRCPCommandReceivedEvent(avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand command);
+};
+
+inline AVRCPCommandReceivedEvent::AVRCPCommandReceivedEvent(
+    avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand command) :
+        BluetoothEvent(
+            BluetoothEventType::AVRCP_COMMAND_RECEIVED,
             nullptr,
             avsCommon::sdkInterfaces::bluetooth::DeviceState::IDLE,
-            newState) {
+            MediaStreamingState::IDLE,
+            nullptr,
+            std::make_shared<avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand>(command)) {
 }
 
 }  // namespace bluetooth

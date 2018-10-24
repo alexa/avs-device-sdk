@@ -32,6 +32,12 @@ namespace services {
  */
 class A2DPSourceInterface : public BluetoothServiceInterface {
 public:
+    /// The Service UUID.
+    static constexpr const char* UUID = "0000110a-0000-1000-8000-00805f9b34fb";
+
+    /// The Service Name.
+    static constexpr const char* NAME = "AudioSource";
+
     /**
      * Returns the stream containing the decoded raw PCM data sent by the connected device.
      *

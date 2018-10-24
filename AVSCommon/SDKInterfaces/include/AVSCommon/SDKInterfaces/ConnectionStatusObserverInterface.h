@@ -45,6 +45,15 @@ public:
      * This enum expresses the reasons a connection status may change.
      */
     enum class ChangedReason {
+        /// The non-reason, to be used when no reason is specified (i.e. the 'unset' value).
+        NONE,
+
+        /// The status changed to due to a successful operation.
+        SUCCESS,
+
+        /// The status changed due to an error from which there is no recovery.
+        UNRECOVERABLE_ERROR,
+
         /// The connection status changed due to the client interacting with the Connection public api.
         ACL_CLIENT_REQUEST,
 
@@ -133,6 +142,15 @@ inline std::ostream& operator<<(std::ostream& stream, ConnectionStatusObserverIn
  */
 inline std::ostream& operator<<(std::ostream& stream, ConnectionStatusObserverInterface::ChangedReason reason) {
     switch (reason) {
+        case ConnectionStatusObserverInterface::ChangedReason::NONE:
+            stream << "NONE";
+            break;
+        case ConnectionStatusObserverInterface::ChangedReason::SUCCESS:
+            stream << "SUCCESS";
+            break;
+        case ConnectionStatusObserverInterface::ChangedReason::UNRECOVERABLE_ERROR:
+            stream << "UNRECOVERABLE_ERROR";
+            break;
         case ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST:
             stream << "ACL_CLIENT_REQUEST";
             break;

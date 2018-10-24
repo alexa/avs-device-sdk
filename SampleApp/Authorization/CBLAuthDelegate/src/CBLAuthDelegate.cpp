@@ -350,6 +350,17 @@ std::string CBLAuthDelegate::getAuthToken() {
     return m_accessToken;
 }
 
+void CBLAuthDelegate::onAuthFailure(const std::string& token) {
+    ACSDK_DEBUG0(LX("onAuthFailure").sensitive("token", token));
+
+    std::lock_guard<std::mutex> lock(m_mutex);
+    if (token.empty() || token == m_accessToken) {
+        ACSDK_DEBUG9(LX("onAuthFailure").m("setting m_authFailureReported"));
+        m_authFailureReported = true;
+        m_wake.notify_one();
+    }
+}
+
 void CBLAuthDelegate::clearData() {
     ACSDK_DEBUG3(LX("clearData"));
     stop();
@@ -370,7 +381,8 @@ CBLAuthDelegate::CBLAuthDelegate(
         m_authError{AuthObserverInterface::Error::SUCCESS},
         m_tokenExpirationTime{std::chrono::time_point<std::chrono::steady_clock>::max()},
         m_retryCount{0},
-        m_newRefreshToken{false} {
+        m_newRefreshToken{false},
+        m_authFailureReported{false} {
     ACSDK_DEBUG5(LX("CBLAuthDelegate"));
 }
 
@@ -494,9 +506,11 @@ CBLAuthDelegate::FlowState CBLAuthDelegate::handleRequestingToken() {
     auto interval = MIN_TOKEN_REQUEST_INTERVAL;
 
     while (!isStopping()) {
-        // If the code pair expired, go back and get a new pair
+        // If the code pair expired, stop.  The application needs to restart authorization.
         if (std::chrono::steady_clock::now() >= m_codePairExpirationTime) {
-            return FlowState::REQUESTING_CODE_PAIR;
+            setAuthError(AuthObserverInterface::Error::INVALID_CODE_PAIR);
+            setAuthState(AuthObserverInterface::State::UNRECOVERABLE_ERROR);
+            return FlowState::STOPPING;
         }
 
         m_authRequester->onCheckingForAuthorization();
@@ -506,20 +520,19 @@ CBLAuthDelegate::FlowState CBLAuthDelegate::handleRequestingToken() {
                 m_newRefreshToken = true;
                 return FlowState::REFRESHING_TOKEN;
             case AuthObserverInterface::Error::UNKNOWN_ERROR:
-            case AuthObserverInterface::Error::AUTHORIZATION_FAILED:
             case AuthObserverInterface::Error::SERVER_ERROR:
             case AuthObserverInterface::Error::AUTHORIZATION_PENDING:
                 break;
             case AuthObserverInterface::Error::SLOW_DOWN:
                 interval = std::min(interval * TOKEN_REQUEST_SLOW_DOWN_FACTOR, MAX_TOKEN_REQUEST_INTERVAL);
                 break;
-            case AuthObserverInterface::Error::AUTHORIZATION_EXPIRED:
-            case AuthObserverInterface::Error::INVALID_CODE_PAIR:
-                return FlowState::REQUESTING_CODE_PAIR;
+            case AuthObserverInterface::Error::AUTHORIZATION_FAILED:
             case AuthObserverInterface::Error::UNAUTHORIZED_CLIENT:
             case AuthObserverInterface::Error::INVALID_REQUEST:
             case AuthObserverInterface::Error::INVALID_VALUE:
+            case AuthObserverInterface::Error::AUTHORIZATION_EXPIRED:
             case AuthObserverInterface::Error::UNSUPPORTED_GRANT_TYPE:
+            case AuthObserverInterface::Error::INVALID_CODE_PAIR:
             case AuthObserverInterface::Error::INTERNAL_ERROR:
             case AuthObserverInterface::Error::INVALID_CBL_CLIENT_ID: {
                 setAuthState(AuthObserverInterface::State::UNRECOVERABLE_ERROR);
@@ -546,11 +559,19 @@ CBLAuthDelegate::FlowState CBLAuthDelegate::handleRefreshingToken() {
 
         auto nextActionTime = (isAboutToExpire ? m_tokenExpirationTime : m_timeToRefresh);
 
-        if (m_wake.wait_until(lock, nextActionTime, [this] { return m_isStopping; })) {
+        m_wake.wait_until(lock, nextActionTime, [this] { return m_authFailureReported || m_isStopping; });
+
+        if (m_isStopping) {
             break;
         }
 
         auto nextState = m_authState;
+
+        if (m_authFailureReported) {
+            m_authFailureReported = false;
+            isAboutToExpire = false;
+        }
+
         if (isAboutToExpire) {
             m_accessToken.clear();
             lock.unlock();
@@ -566,24 +587,22 @@ CBLAuthDelegate::FlowState CBLAuthDelegate::handleRefreshingToken() {
                     nextState = AuthObserverInterface::State::REFRESHED;
                     break;
                 case AuthObserverInterface::Error::UNKNOWN_ERROR:
-                case AuthObserverInterface::Error::AUTHORIZATION_FAILED:
                 case AuthObserverInterface::Error::SERVER_ERROR:
                 case AuthObserverInterface::Error::AUTHORIZATION_PENDING:
                 case AuthObserverInterface::Error::SLOW_DOWN:
                     m_timeToRefresh = calculateTimeToRetry(m_retryCount++);
                     break;
-                case AuthObserverInterface::Error::AUTHORIZATION_EXPIRED:
-                case AuthObserverInterface::Error::INVALID_CODE_PAIR:
-                    clearRefreshToken();
-                    return FlowState::REQUESTING_CODE_PAIR;
                 case AuthObserverInterface::Error::INVALID_REQUEST:
                     if (newRefreshToken) {
                         setAuthError(AuthObserverInterface::Error::INVALID_CBL_CLIENT_ID);
                     }
                 // Falls through
+                case AuthObserverInterface::Error::AUTHORIZATION_FAILED:
                 case AuthObserverInterface::Error::UNAUTHORIZED_CLIENT:
                 case AuthObserverInterface::Error::INVALID_VALUE:
+                case AuthObserverInterface::Error::AUTHORIZATION_EXPIRED:
                 case AuthObserverInterface::Error::UNSUPPORTED_GRANT_TYPE:
+                case AuthObserverInterface::Error::INVALID_CODE_PAIR:
                 case AuthObserverInterface::Error::INTERNAL_ERROR:
                 case AuthObserverInterface::Error::INVALID_CBL_CLIENT_ID: {
                     setAuthState(AuthObserverInterface::State::UNRECOVERABLE_ERROR);

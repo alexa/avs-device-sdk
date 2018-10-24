@@ -678,10 +678,12 @@ DirectiveHandlerConfiguration NotificationsCapabilityAgent::getConfiguration() c
 }
 
 void NotificationsCapabilityAgent::setHandlingCompleted(std::shared_ptr<DirectiveInfo> info) {
-    if (info && info->result) {
-        info->result->setCompleted();
+    if (info) {
+        if (info->result) {
+            info->result->setCompleted();
+        }
+        removeDirective(info->directive->getMessageId());
     }
-    removeDirective(info->directive->getMessageId());
 }
 
 bool NotificationsCapabilityAgent::parseDirectivePayload(

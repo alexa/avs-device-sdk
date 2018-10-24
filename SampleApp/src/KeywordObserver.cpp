@@ -47,7 +47,10 @@ void KeywordObserver::onKeyWordDetected(
         }
 
         if (m_client) {
-            m_client->notifyOfWakeWord(m_audioProvider, beginIndex, endIndex, keyword, espData, KWDMetadata);
+            // TODO(ACSDK-1976): We need to take into consideration the keyword duration.
+            auto startOfSpeechTimestamp = std::chrono::steady_clock::now();
+            m_client->notifyOfWakeWord(
+                m_audioProvider, beginIndex, endIndex, keyword, startOfSpeechTimestamp, espData, KWDMetadata);
         }
     }
 }

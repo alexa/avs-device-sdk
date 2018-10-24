@@ -526,6 +526,18 @@ std::shared_ptr<Alert> AlertScheduler::getAlertLocked(const std::string& token) 
     return nullptr;
 }
 
+std::list<std::shared_ptr<Alert>> AlertScheduler::getAllAlerts() {
+    ACSDK_DEBUG5(LX(__func__));
+
+    std::lock_guard<std::mutex> lock(m_mutex);
+
+    auto list = std::list<std::shared_ptr<Alert>>(m_scheduledAlerts.begin(), m_scheduledAlerts.end());
+    if (m_activeAlert) {
+        list.push_back(m_activeAlert);
+    }
+    return list;
+}
+
 }  // namespace alerts
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
