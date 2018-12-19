@@ -16,10 +16,13 @@
 #ifndef ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVEPROCESSOR_H_
 #define ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVEPROCESSOR_H_
 
+#include <array>
 #include <condition_variable>
 #include <deque>
+#include <functional>
 #include <memory>
 #include <mutex>
+#include <set>
 #include <string>
 #include <thread>
 #include <unordered_map>
@@ -122,6 +125,9 @@ private:
      */
     using ProcessorHandle = unsigned int;
 
+    /// The type of the handling queue items.
+    using DirectiveAndPolicy = std::pair<std::shared_ptr<avsCommon::avs::AVSDirective>, avsCommon::avs::BlockingPolicy>;
+
     /**
      * Implementation of @c DirectiveHandlerResultInterface that forwards the completion / failure status
      * to the @c DirectiveProcessor from which it originated.
@@ -189,14 +195,14 @@ private:
     bool processCancelingQueueLocked(std::unique_lock<std::mutex>& lock);
 
     /**
-     * Process (handle) the next @c AVSDirective in @c m_handlingQueue.
+     * Process (handle) all the items in @c m_handlingQueue which are not blocked.
      * @note This method must only be called by threads that have acquired @c m_mutex.
      *
      * @param lock A @c unique_lock on m_mutex from the callers context, allowing this method to release
      * (and re-acquire) the lock around callbacks that need to be invoked.
      * @return  Whether an @c AVSDirective from m_handlingQueue was processed.
      */
-    bool handleDirectiveLocked(std::unique_lock<std::mutex>& lock);
+    bool handleQueuedDirectivesLocked(std::unique_lock<std::mutex>& lock);
 
     /**
      * Set the current @c dialogRequestId. This cancels the processing of any @c AVSDirectives with a non-empty
@@ -223,6 +229,47 @@ private:
      */
     void queueAllDirectivesForCancellationLocked();
 
+    /**
+     * Save a pointer to the given directive as a directive which is being handled.
+     * A pointer to the directive is saved per @c BlockingPolicy::Channel used by the policy.
+     * This pointer can be used later to indicate which @c BlockingPolicy::Channel
+     * is blocked by which @c AVSDirective.
+     *
+     * @param directive The @c AVSDirective being handled.
+     * @param policy The @c BlockingPolicy assiciated with the given directive.
+     */
+    void setDirectiveBeingHandledLocked(
+        const std::shared_ptr<avsCommon::avs::AVSDirective>& directive,
+        const avsCommon::avs::BlockingPolicy policy);
+
+    /**
+     * Clear the pointer to the directive being handled.
+     * @note See the above @c saveDirectiveBeingHandledLocked comment
+     * for further explanation.
+     *
+     * @param policy The @c BlockingPolicy with which the saved directive is associated.
+     */
+    void clearDirectiveBeingHandledLocked(const avsCommon::avs::BlockingPolicy policy);
+
+    /**
+     * Clear the pointer to the directive being handled.
+     *
+     * @note See the above @c saveDirectiveBeingHandledLocked comment
+     * for further explanation.
+     * @param shouldClear Matcher to indicate which saved directive we should free.
+     *
+     * @return An @c std::set of the freed directives.
+     */
+    std::set<std::shared_ptr<avsCommon::avs::AVSDirective>> clearDirectiveBeingHandledLocked(
+        std::function<bool(const std::shared_ptr<avsCommon::avs::AVSDirective>&)> shouldClear);
+
+    /**
+     * Get the next unblocked @c DirectiveAndPolicy form the handling queue.
+     *
+     * @return An @c std::iterator to the next unblocked @c DirectiveAndPolicy.
+     */
+    std::deque<DirectiveAndPolicy>::iterator getNextUnblockedDirectiveLocked();
+
     /// Handle value identifying this instance.
     int m_handle;
 
@@ -247,11 +294,12 @@ private:
     /// The directive (if any) for which a preHandleDirective() call is in progress.
     std::shared_ptr<avsCommon::avs::AVSDirective> m_directiveBeingPreHandled;
 
-    /// Queue of @c AVSDirectives waiting to be handled.
-    std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>> m_handlingQueue;
-
-    /// Whether @c handleDirective() has been called for the directive at the @c front() of @c m_handlingQueue.
-    bool m_isHandlingDirective;
+    /**
+     * Queue of @c AVSDirectives waiting to be handled.
+     * @Note: A queue per channel would be more efficient, but as we don't expect more than few
+     * directives on the queue, we prefer simplicity.
+     */
+    std::deque<DirectiveAndPolicy> m_handlingQueue;
 
     /// Condition variable used to wake @c processingLoop() when it is waiting.
     std::condition_variable m_wakeProcessingLoop;
@@ -273,6 +321,15 @@ private:
 
     /// Next available @c ProcessorHandle value.
     static ProcessorHandle m_nextProcessorHandle;
+
+    /**
+     * The directives which are being handled on various channels. A directive is consider as 'being handled'
+     * while the @c handleDirective method of the directive handler is running, and, if the directive is blocking
+     * until directive handling has been completed. i.e. @c DirectiveHandlerResult::setCompleted
+     * or @c DirectiveHandlerResult::setFailed have been called.
+     */
+    std::array<std::shared_ptr<avsCommon::avs::AVSDirective>, avsCommon::avs::BlockingPolicy::Medium::COUNT>
+        m_directivesBeingHandled;
 };
 
 }  // namespace adsl

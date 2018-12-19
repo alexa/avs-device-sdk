@@ -180,7 +180,7 @@ TEST_F(DirectiveRouterTest, testUnroutedDirective) {
  */
 TEST_F(DirectiveRouterTest, testSettingADirectiveHandler) {
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::NON_BLOCKING;
+    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
     ASSERT_TRUE(m_router.addDirectiveHandler(handler0));
 
@@ -199,23 +199,24 @@ TEST_F(DirectiveRouterTest, testSettingADirectiveHandler) {
  */
 TEST_F(DirectiveRouterTest, testRegisteringMultipeHandler) {
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::NON_BLOCKING;
+    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler0Config[{NAMESPACE_AND_NAME_0_0}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
 
     DirectiveHandlerConfiguration handler1Config;
-    handler1Config[{NAMESPACE_AND_NAME_0_1}] = BlockingPolicy::NON_BLOCKING;
+    handler1Config[{NAMESPACE_AND_NAME_0_1}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler1 = MockDirectiveHandler::create(handler1Config);
 
     DirectiveHandlerConfiguration handler2Config;
-    handler2Config[{NAMESPACE_AND_NAME_0_ANY}] = BlockingPolicy::NON_BLOCKING;
+    handler2Config[{NAMESPACE_AND_NAME_0_ANY}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler2 = MockDirectiveHandler::create(handler2Config);
 
     DirectiveHandlerConfiguration handler3Config;
-    handler3Config[{NAMESPACE_AND_NAME_1_0}] = BlockingPolicy::NON_BLOCKING;
+    handler3Config[{NAMESPACE_AND_NAME_1_0}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler3 = MockDirectiveHandler::create(handler3Config);
 
     DirectiveHandlerConfiguration handler4Config;
-    handler4Config[{NAMESPACE_AND_NAME_2_ANY}] = BlockingPolicy::NON_BLOCKING;
+    handler4Config[{NAMESPACE_AND_NAME_2_ANY}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler4 = MockDirectiveHandler::create(handler4Config);
 
     ASSERT_TRUE(m_router.addDirectiveHandler(handler0));
@@ -272,19 +273,21 @@ TEST_F(DirectiveRouterTest, testRegisteringMultipeHandler) {
  */
 TEST_F(DirectiveRouterTest, testRemovingChangingAndNotChangingHandlers) {
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::NON_BLOCKING;
+    auto audioBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler0Config[{NAMESPACE_AND_NAME_0_0}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
 
     DirectiveHandlerConfiguration handler1Config;
-    handler1Config[{NAMESPACE_AND_NAME_0_1}] = BlockingPolicy::NON_BLOCKING;
+    handler1Config[{NAMESPACE_AND_NAME_0_1}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler1 = MockDirectiveHandler::create(handler1Config);
 
     DirectiveHandlerConfiguration handler2Config;
-    handler2Config[{NAMESPACE_AND_NAME_1_0}] = BlockingPolicy::NON_BLOCKING;
+    handler2Config[{NAMESPACE_AND_NAME_1_0}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler2 = MockDirectiveHandler::create(handler2Config);
 
     DirectiveHandlerConfiguration handler3Config;
-    handler3Config[{NAMESPACE_AND_NAME_1_0}] = BlockingPolicy::BLOCKING;
+    handler3Config[{NAMESPACE_AND_NAME_1_0}] = audioBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler3 = MockDirectiveHandler::create(handler3Config);
 
     EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(_)).Times(0);
@@ -322,27 +325,29 @@ TEST_F(DirectiveRouterTest, testRemovingChangingAndNotChangingHandlers) {
     ASSERT_TRUE(m_router.addDirectiveHandler(handler1));
     ASSERT_TRUE(m_router.addDirectiveHandler(handler3));
 
-    auto policy = BlockingPolicy::NONE;
-    ASSERT_FALSE(m_router.handleDirective(m_directive_0_0, &policy));
-    ASSERT_EQ(policy, BlockingPolicy::NONE);
-    ASSERT_TRUE(m_router.handleDirective(m_directive_0_1, &policy));
-    ASSERT_EQ(policy, BlockingPolicy::NON_BLOCKING);
-    ASSERT_TRUE(m_router.handleDirective(m_directive_1_0, &policy));
-    ASSERT_EQ(policy, BlockingPolicy::BLOCKING);
+    auto policy = m_router.getPolicy(m_directive_0_0);
+    ASSERT_FALSE(m_router.handleDirective(m_directive_0_0));
+    ASSERT_FALSE(policy.isValid());
+    policy = m_router.getPolicy(m_directive_0_1);
+    ASSERT_TRUE(m_router.handleDirective(m_directive_0_1));
+    ASSERT_EQ(policy, audioNonBlockingPolicy);
+    policy = m_router.getPolicy(m_directive_1_0);
+    ASSERT_TRUE(m_router.handleDirective(m_directive_1_0));
+    ASSERT_EQ(policy, audioBlockingPolicy);
 }
 
 /**
  * Register two @c AVSDirectives to be routed to different handlers with different blocking policies. Configure the
  * mock handlers to return false from @c handleDirective(). Exercise routing via handleDirective(). Expect that
- * @c DirectiveRouter::handleDirective() returns @c false and BlockingPolicy::NONE to indicate failure.
+ * @c DirectiveRouter::handleDirective() returns @c false and BlockingPolicy::nonePolicy() to indicate failure.
  */
 TEST_F(DirectiveRouterTest, testResultOfHandleDirectiveFailure) {
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::NON_BLOCKING;
+    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
 
     DirectiveHandlerConfiguration handler1Config;
-    handler1Config[{NAMESPACE_AND_NAME_0_1}] = BlockingPolicy::BLOCKING;
+    handler1Config[{NAMESPACE_AND_NAME_0_1}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     std::shared_ptr<MockDirectiveHandler> handler1 = MockDirectiveHandler::create(handler1Config);
 
     ASSERT_TRUE(m_router.addDirectiveHandler(handler0));
@@ -360,11 +365,8 @@ TEST_F(DirectiveRouterTest, testResultOfHandleDirectiveFailure) {
     EXPECT_CALL(*(handler1.get()), cancelDirective(_)).Times(0);
     EXPECT_CALL(*(handler1.get()), onDeregistered()).Times(1);
 
-    auto policy = BlockingPolicy::NONE;
-    ASSERT_FALSE(m_router.handleDirective(m_directive_0_0, &policy));
-    ASSERT_EQ(policy, BlockingPolicy::NONE);
-    ASSERT_FALSE(m_router.handleDirective(m_directive_0_1, &policy));
-    ASSERT_EQ(policy, BlockingPolicy::NONE);
+    ASSERT_FALSE(m_router.handleDirective(m_directive_0_0));
+    ASSERT_FALSE(m_router.handleDirective(m_directive_0_1));
 }
 
 /**
@@ -374,7 +376,7 @@ TEST_F(DirectiveRouterTest, testResultOfHandleDirectiveFailure) {
  */
 TEST_F(DirectiveRouterTest, testHandlerMethodsCanRunConcurrently) {
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::BLOCKING;
+    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
 
     ASSERT_TRUE(m_router.addDirectiveHandler(handler0));
@@ -399,9 +401,9 @@ TEST_F(DirectiveRouterTest, testHandlerMethodsCanRunConcurrently) {
     EXPECT_CALL(*(handler0.get()), onDeregistered()).Times(1);
 
     std::thread sleeperThread([this]() { ASSERT_TRUE(m_router.preHandleDirective(m_directive_0_0, nullptr)); });
-    auto policy = BlockingPolicy::NONE;
-    ASSERT_TRUE(m_router.handleDirective(m_directive_0_0, &policy));
-    ASSERT_EQ(policy, BlockingPolicy::BLOCKING);
+    ASSERT_TRUE(m_router.handleDirective(m_directive_0_0));
+    auto policy = m_router.getPolicy(m_directive_0_0);
+    ASSERT_EQ(policy, BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true));
     sleeperThread.join();
 }
 

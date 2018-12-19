@@ -185,8 +185,10 @@ void TemplateRuntime::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
 DirectiveHandlerConfiguration TemplateRuntime::getConfiguration() const {
     ACSDK_DEBUG5(LX("getConfiguration"));
     DirectiveHandlerConfiguration configuration;
-    configuration[TEMPLATE] = BlockingPolicy::HANDLE_IMMEDIATELY;
-    configuration[PLAYER_INFO] = BlockingPolicy::HANDLE_IMMEDIATELY;
+    auto visualNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_VISUAL, false);
+
+    configuration[TEMPLATE] = visualNonBlockingPolicy;
+    configuration[PLAYER_INFO] = visualNonBlockingPolicy;
     return configuration;
 }
 

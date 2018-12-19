@@ -69,6 +69,8 @@ static const int OUTPUT_DEFAULT_INT_VALUE = 42;
 static const std::string EXPECTED_STRING_VALUE = "expectedValue";
 /// Expected int value.
 static const int EXPECTED_INT_VALUE = 123;
+/// Expected uint64_t value.
+static const uint64_t EXPECTED_UNSIGNED_INT64_VALUE = UINT64_MAX;
 /// Expected int value converted to a string.
 static const std::string EXPECTED_INT_VALUE_STRINGIFIED = "123";
 
@@ -345,6 +347,35 @@ TEST_F(JSONUtilTest, convertToInt64ValueWithInt64) {
 TEST_F(JSONUtilTest, convertToInt64ValueWithDouble) {
     rapidjson::Value expected(A_DOUBLE);
     int64_t actual;
+    ASSERT_FALSE(convertToValue(expected, &actual));
+}
+
+/**
+ * Tests convertToValue<uint64_t> with null output param.
+ * Returns false.
+ */
+TEST_F(JSONUtilTest, convertToUint64ValueWithNullOutputParam) {
+    rapidjson::Value node(EXPECTED_UNSIGNED_INT64_VALUE);
+    uint64_t* value = nullptr;
+    ASSERT_FALSE(convertToValue(node, value));
+}
+
+/**
+ * Tests convertToValue<uint64_t> with valid uint64_t. Returns true and contains the correct value.
+ */
+TEST_F(JSONUtilTest, convertToUint64ValueWithUint64) {
+    rapidjson::Value expected(EXPECTED_UNSIGNED_INT64_VALUE);
+    uint64_t actual;
+    ASSERT_TRUE(convertToValue(expected, &actual));
+    ASSERT_EQ(expected.GetUint64(), actual);
+}
+
+/**
+ * Tests convertToValue<uint64_t> with double. Returns false.
+ */
+TEST_F(JSONUtilTest, convertToUint64ValueWithDouble) {
+    rapidjson::Value expected(A_DOUBLE);
+    uint64_t actual;
     ASSERT_FALSE(convertToValue(expected, &actual));
 }
 

@@ -49,7 +49,7 @@ public:
      * This function checks if the status code is HTTP success or not.  This function blocks until status code is
      * set.
      *
-     * @return @c true if status code is 200, else @c false.
+     * @return @c true if status code is 2xx, else @c false.
      */
     bool isStatusCodeSuccess();
 
@@ -107,7 +107,8 @@ inline long HTTPContent::getStatusCode() {
 }
 
 inline bool HTTPContent::isStatusCodeSuccess() {
-    return 200 == getStatusCode();
+    auto statusCode = getStatusCode();
+    return (statusCode >= 200) && (statusCode < 300);
 }
 
 inline bool HTTPContent::isReady(const std::chrono::milliseconds timeout) const {

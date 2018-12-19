@@ -437,9 +437,10 @@ TEST_F(SpeakerManagerTest, testGetConfiguration) {
         SpeakerManager::create({speaker}, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
 
     auto configuration = m_speakerManager->getConfiguration();
-    ASSERT_EQ(configuration[SET_VOLUME], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[ADJUST_VOLUME], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[SET_MUTE], BlockingPolicy::NON_BLOCKING);
+    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    ASSERT_EQ(configuration[SET_VOLUME], audioNonBlockingPolicy);
+    ASSERT_EQ(configuration[ADJUST_VOLUME], audioNonBlockingPolicy);
+    ASSERT_EQ(configuration[SET_MUTE], audioNonBlockingPolicy);
 }
 
 /**

@@ -79,12 +79,24 @@ private:
      */
     void controlSpeaker();
 
+#ifdef ENABLE_PCC
+    /**
+     * Implement phone control options.
+     */
+    void controlPhone();
+#endif
+
     /**
      * Implement device reset confirmation.
      *
      * @return @c true if device was reset; otherwise, return @c false.
      */
     bool confirmReset();
+
+    /**
+     * Settings menu.
+     */
+    void settingsMenu();
 
     /**
      * Prompt the user to confirm before initiating re-authorization of the device.

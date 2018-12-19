@@ -56,6 +56,13 @@
             "locale":"${SETTING_LOCALE_VALUE}"
         }
     },
+    "deviceSettings":{
+        // Path to Device Settings database file. e.g. /home/ubuntu/Build/deviceSettings.db
+        // Note: The directory specified must be valid.
+        // The database file (deviceSettings.db) will be created by SampleApp, do not create it yourself.
+        // The database file should only be used for device settings (don't use it for other components of SDK)
+        "databaseFilePath":"${SDK_SQLITE_DEVICE_SETTINGS_DATABASE_FILE_PATH}"
+    },
     "bluetooth" : {
         // Path to Bluetooth database file. e.g. /home/ubuntu/Build/bluetooth.db
         // Note: The directory specified must be valid.

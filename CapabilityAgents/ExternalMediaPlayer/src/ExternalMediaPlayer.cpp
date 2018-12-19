@@ -178,26 +178,29 @@ std::unordered_map<NamespaceAndName, std::pair<RequestType, ExternalMediaPlayer:
         {UNFAVORITE_DIRECTIVE, std::make_pair(RequestType::UNFAVORITE, &ExternalMediaPlayer::handlePlayControl)},
         {SEEK_DIRECTIVE, std::make_pair(RequestType::SEEK, &ExternalMediaPlayer::handleSeek)},
         {ADJUSTSEEK_DIRECTIVE, std::make_pair(RequestType::ADJUST_SEEK, &ExternalMediaPlayer::handleAdjustSeek)}};
+// TODO: ARC-227 Verify default values
+auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+auto neitherNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
 
-static DirectiveHandlerConfiguration g_configuration = {{PLAY_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {LOGIN_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {LOGOUT_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {RESUME_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {PAUSE_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {NEXT_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {PREVIOUS_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {STARTOVER_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {REWIND_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {FASTFORWARD_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {ENABLEREPEATONE_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {ENABLEREPEAT_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {DISABLEREPEAT_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {ENABLESHUFFLE_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {DISABLESHUFFLE_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {SEEK_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {ADJUSTSEEK_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {FAVORITE_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {UNFAVORITE_DIRECTIVE, BlockingPolicy::NON_BLOCKING}};
+static DirectiveHandlerConfiguration g_configuration = {{PLAY_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {LOGIN_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {LOGOUT_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {RESUME_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {PAUSE_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {NEXT_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {PREVIOUS_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {STARTOVER_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {REWIND_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {FASTFORWARD_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {ENABLEREPEATONE_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {ENABLEREPEAT_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {DISABLEREPEAT_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {ENABLESHUFFLE_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {DISABLESHUFFLE_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {SEEK_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {ADJUSTSEEK_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {FAVORITE_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {UNFAVORITE_DIRECTIVE, neitherNonBlockingPolicy}};
 
 static std::unordered_map<PlaybackButton, RequestType> g_buttonToRequestType = {
     {PlaybackButton::PLAY, RequestType::PAUSE_RESUME_TOGGLE},

@@ -139,10 +139,11 @@ std::shared_ptr<CapabilityConfiguration> getSpeakerCapabilityConfiguration() {
 }
 
 DirectiveHandlerConfiguration SpeakerManager::getConfiguration() const {
+    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     DirectiveHandlerConfiguration configuration;
-    configuration[SET_VOLUME] = BlockingPolicy::NON_BLOCKING;
-    configuration[ADJUST_VOLUME] = BlockingPolicy::NON_BLOCKING;
-    configuration[SET_MUTE] = BlockingPolicy::NON_BLOCKING;
+    configuration[SET_VOLUME] = audioNonBlockingPolicy;
+    configuration[ADJUST_VOLUME] = audioNonBlockingPolicy;
+    configuration[SET_MUTE] = audioNonBlockingPolicy;
     return configuration;
 }
 

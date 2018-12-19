@@ -133,7 +133,8 @@ void MRMCapabilityAgent::handleDirectiveImmediately(std::shared_ptr<avsCommon::a
 DirectiveHandlerConfiguration MRMCapabilityAgent::getConfiguration() const {
     ACSDK_DEBUG5(LX(__func__));
     DirectiveHandlerConfiguration configuration;
-    configuration[WHA_NAMESPACE_WILDCARD] = BlockingPolicy::NON_BLOCKING;
+    // TODO: ARC-227 verify default values
+    configuration[WHA_NAMESPACE_WILDCARD] = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
     return configuration;
 }
 

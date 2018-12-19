@@ -128,6 +128,7 @@ void ProgressTimer::start() {
         } else {
             ACSDK_DEBUG5(LX("startNotStartingThread").d("reason", "noTarget"));
             setState(State::IDLE);
+            m_context.reset();
             return;
         }
     }

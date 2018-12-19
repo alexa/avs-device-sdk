@@ -542,18 +542,21 @@ DirectiveHandlerConfiguration Bluetooth::getConfiguration() const {
     ACSDK_DEBUG5(LX(__func__));
 
     DirectiveHandlerConfiguration configuration;
-    configuration[SCAN_DEVICES] = BlockingPolicy::NON_BLOCKING;
-    configuration[ENTER_DISCOVERABLE_MODE] = BlockingPolicy::NON_BLOCKING;
-    configuration[EXIT_DISCOVERABLE_MODE] = BlockingPolicy::NON_BLOCKING;
-    configuration[PAIR_DEVICE] = BlockingPolicy::NON_BLOCKING;
-    configuration[UNPAIR_DEVICE] = BlockingPolicy::NON_BLOCKING;
-    configuration[CONNECT_BY_DEVICE_ID] = BlockingPolicy::NON_BLOCKING;
-    configuration[CONNECT_BY_PROFILE] = BlockingPolicy::NON_BLOCKING;
-    configuration[DISCONNECT_DEVICE] = BlockingPolicy::NON_BLOCKING;
-    configuration[PLAY] = BlockingPolicy::NON_BLOCKING;
-    configuration[STOP] = BlockingPolicy::NON_BLOCKING;
-    configuration[NEXT] = BlockingPolicy::NON_BLOCKING;
-    configuration[PREVIOUS] = BlockingPolicy::NON_BLOCKING;
+    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    auto neitherNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
+
+    configuration[SCAN_DEVICES] = neitherNonBlockingPolicy;
+    configuration[ENTER_DISCOVERABLE_MODE] = neitherNonBlockingPolicy;
+    configuration[EXIT_DISCOVERABLE_MODE] = neitherNonBlockingPolicy;
+    configuration[PAIR_DEVICE] = neitherNonBlockingPolicy;
+    configuration[UNPAIR_DEVICE] = neitherNonBlockingPolicy;
+    configuration[CONNECT_BY_DEVICE_ID] = neitherNonBlockingPolicy;
+    configuration[CONNECT_BY_PROFILE] = neitherNonBlockingPolicy;
+    configuration[DISCONNECT_DEVICE] = neitherNonBlockingPolicy;
+    configuration[PLAY] = audioNonBlockingPolicy;
+    configuration[STOP] = audioNonBlockingPolicy;
+    configuration[NEXT] = audioNonBlockingPolicy;
+    configuration[PREVIOUS] = audioNonBlockingPolicy;
 
     return configuration;
 }
@@ -1438,8 +1441,16 @@ void Bluetooth::executeConnectByProfile(const std::string& profileName, const st
 void Bluetooth::executeOnDeviceConnect(std::shared_ptr<BluetoothDeviceInterface> device) {
     ACSDK_DEBUG5(LX(__func__));
 
+    // Currently there is an active device. Disconnect it since the new device will have priority.
     if (m_activeDevice) {
-        ACSDK_WARN(LX(__func__).d("reason", "activeDeviceExists"));
+        ACSDK_DEBUG(LX(__func__).d("reason", "activeDeviceExists"));
+        if (m_activeDevice->disconnect().get()) {
+            executeOnDeviceDisconnect(Requester::DEVICE);
+        } else {
+            // Failed to disconnect activeDevice, user will have to manually disconnect the device.
+            ACSDK_ERROR(
+                LX(__func__).d("reason", "disconnectExistingActiveDeviceFailed").d("mac", m_activeDevice->getMac()));
+        }
     }
 
     m_activeDevice = device;
@@ -2133,8 +2144,7 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
                     m_executor.submit([this, device] {
                         if (!supportsAvsProfile(device, AVS_A2DP)) {
                             /*
-                             * This shouldn't be possible but we add the check in in case we
-                             * missed any edge cases. We will attempt to disconnect,
+                             * This device does not support A2DP. We will attempt to disconnect,
                              * AVS won't be made aware of it, and if unsuccessful, it is up to the
                              * user/client to disconnect.
                              */
@@ -2154,9 +2164,16 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
 
                             return;
                         }
-
-                        if (!m_activeDevice) {
+                        /*
+                         * Otherwise set the device as the new active device. We don't need to call connect()
+                         * again because the device is already connected from the Bluetooth stack's perspective.
+                         */
+                        else if (device != m_activeDevice) {
                             executeOnDeviceConnect(device);
+                            /*
+                             * Default to sending a ConnectByDeviceId event since this wasn't a result of a profile
+                             * specific connection.
+                             */
                             executeSendConnectByDeviceIdSucceeded(device, Requester::DEVICE);
                         }
                     });

@@ -997,6 +997,41 @@ TEST_F(SpeechSynthesizerTest, testGivenPlayingStateFocusBecomesNone) {
     EXPECT_TRUE(std::future_status::ready == m_wakeSetFailedFuture.wait_for(STATE_CHANGE_TIMEOUT));
 }
 
+/**
+ * Testing SpeechSynthesizer will call setFailed() if the SpeechSynthesizer got a onPlaybackStopped() callback while
+ * it is in PLAYING state.
+ */
+TEST_F(SpeechSynthesizerTest, testOnPlayedStopped) {
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
+        NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
+    std::shared_ptr<AVSDirective> directive =
+        AVSDirective::create("", avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, CONTEXT_ID_TEST);
+
+    EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _, NAMESPACE_SPEECH_SYNTHESIZER))
+        .Times(1)
+        .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
+    EXPECT_CALL(
+        *(m_mockSpeechPlayer.get()),
+        attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>(), nullptr))
+        .Times(AtLeast(1));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(AtLeast(1));
+    EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
+        .Times(1)
+        .WillOnce(Return(OFFSET_IN_CHRONO_MILLISECONDS_TEST));
+    EXPECT_CALL(*(m_mockDirHandlerResult.get()), setFailed(_))
+        .Times(1)
+        .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnSetFailed));
+    EXPECT_CALL(*(m_mockDirHandlerResult.get()), setCompleted()).Times(0);
+
+    m_speechSynthesizer->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirHandlerResult));
+    m_speechSynthesizer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
+    EXPECT_TRUE(std::future_status::ready == m_wakeAcquireChannelFuture.wait_for(WAIT_TIMEOUT));
+    m_speechSynthesizer->onFocusChanged(FocusState::FOREGROUND);
+    EXPECT_TRUE(m_mockSpeechPlayer->waitUntilPlaybackStarted());
+    m_speechSynthesizer->onPlaybackStopped(m_mockSpeechPlayer->getCurrentSourceId());
+    EXPECT_TRUE(std::future_status::ready == m_wakeSetFailedFuture.wait_for(STATE_CHANGE_TIMEOUT));
+}
+
 }  // namespace test
 }  // namespace speechSynthesizer
 }  // namespace capabilityAgents

@@ -50,7 +50,7 @@ std::unique_ptr<DBusConnection> DBusConnection::create(GBusType connectionType) 
     return std::unique_ptr<DBusConnection>(new DBusConnection(connection));
 }
 
-uint DBusConnection::subscribeToSignal(
+unsigned int DBusConnection::subscribeToSignal(
     const char* serviceName,
     const char* interfaceName,
     const char* member,

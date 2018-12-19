@@ -169,6 +169,22 @@ bool convertToValue(const rapidjson::Value& documentNode, std::string* value) {
     return true;
 }
 
+bool convertToValue(const rapidjson::Value& documentNode, uint64_t* value) {
+    if (!value) {
+        ACSDK_ERROR(LX("convertToUnsignedInt64ValueFailed").d("reason", "nullValue"));
+        return false;
+    }
+
+    if (!documentNode.IsUint64()) {
+        ACSDK_ERROR(LX("convertToUnsignedInt64ValueFailed").d("reason", "invalidValue").d("expectedValue", "Uint64"));
+        return false;
+    }
+
+    *value = documentNode.GetUint64();
+
+    return true;
+}
+
 bool convertToValue(const rapidjson::Value& documentNode, int64_t* value) {
     if (!value) {
         ACSDK_ERROR(LX("convertToInt64ValueFailed").d("reason", "nullValue"));

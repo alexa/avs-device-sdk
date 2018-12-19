@@ -1679,6 +1679,59 @@ TEST_F(AudioPlayerTest, testPlayOnlyAfterForegroundFocus) {
     }
 }
 
+/**
+ * Test when @c AudioPlayer starts to play but loses focus before the onPlaybackStarted callback is received.
+ * After onPlaybackStarted is received, playback should stop.
+ */
+TEST_F(AudioPlayerTest, testPlaybackStartedCallbackAfterFocusLost) {
+    EXPECT_CALL(*(m_mockMediaPlayer.get()), getOffset(_))
+        .WillRepeatedly(Return(m_mockMediaPlayer->getOffset(m_mockMediaPlayer->getCurrentSourceId())));
+
+    auto avsMessageHeader =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST, PLAY_REQUEST_ID_TEST);
+
+    std::shared_ptr<AVSDirective> playDirective = AVSDirective::create(
+        "",
+        avsMessageHeader,
+        createEnqueuePayloadTest(OFFSET_IN_MILLISECONDS_TEST),
+        m_attachmentManager,
+        CONTEXT_ID_TEST);
+    EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _, NAMESPACE_AUDIO_PLAYER))
+        .Times(1)
+        .WillOnce(InvokeWithoutArgs(this, &AudioPlayerTest::wakeOnAcquireChannel));
+
+    EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
+
+    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
+    m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
+
+    {
+        // Enforce the sequence.
+        InSequence dummy;
+
+        // Wait for acquireFocus().
+        ASSERT_EQ(std::future_status::ready, m_wakeAcquireChannelFuture.wait_for(WAIT_TIMEOUT));
+        m_audioPlayer->onFocusChanged(FocusState::FOREGROUND);
+
+        std::promise<void> playCalledPromise;
+        std::future<void> playCalled = playCalledPromise.get_future();
+
+        // Override play() behavior in MockMediaPlayer. We don't want play() to automatically call onPlaybackStarted.
+        ON_CALL(*m_mockMediaPlayer, play(_)).WillByDefault(InvokeWithoutArgs([&playCalledPromise] {
+            playCalledPromise.set_value();
+            return true;
+        }));
+
+        ASSERT_THAT(playCalled.wait_for(WAIT_TIMEOUT), Ne(std::future_status::timeout));
+
+        m_audioPlayer->onFocusChanged(FocusState::NONE);
+        m_audioPlayer->onPlaybackStarted(m_mockMediaPlayer->getCurrentSourceId());
+        ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+
+        ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, WAIT_TIMEOUT));
+    }
+}
+
 }  // namespace test
 }  // namespace audioPlayer
 }  // namespace capabilityAgents

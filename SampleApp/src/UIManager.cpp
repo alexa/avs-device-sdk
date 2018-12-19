@@ -19,14 +19,27 @@
 #include "SampleApp/UIManager.h"
 
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
-#include "AVSCommon/Utils/SDKVersion.h"
+#include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/SDKVersion.h>
 
 #include "SampleApp/ConsolePrinter.h"
+#include "Settings/SettingStringConversion.h"
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("UIManager");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 namespace alexaClientSDK {
 namespace sampleApp {
 
 using namespace avsCommon::sdkInterfaces;
+using namespace settings;
 
 static const std::string VERSION = avsCommon::utils::sdkVersion::getCurrentVersion();
 
@@ -83,6 +96,10 @@ static const std::string HELP_MESSAGE =
     "|       Press 'c' followed by Enter at any time to see the settings screen.  |\n"
     "| Speaker Control:                                                           |\n"
     "|       Press 'p' followed by Enter at any time to adjust speaker settings.  |\n"
+#ifdef ENABLE_PCC
+    "| Phone Control:                                                             |\n"
+    "|       Press 'a' followed by Enter at any time to control the phone.        |\n"
+#endif
     "| Firmware Version:                                                          |\n"
     "|       Press 'f' followed by Enter at any time to report a different        |\n"
     "|       firmware version.                                                    |\n"
@@ -145,6 +162,8 @@ static const std::string SETTINGS_MESSAGE =
     "|                          Setting Options:                                  |\n"
     "| Change Language:                                                           |\n"
     "|       Press '1' followed by Enter to see language options.                 |\n"
+    "| Change Do Not Disturb mode:                                                |\n"
+    "|       Press '2' followed by Enter to see Do Not Disturb options.           |\n"
     "+----------------------------------------------------------------------------+\n";
 
 static const std::string LOCALE_MESSAGE =
@@ -161,6 +180,7 @@ static const std::string LOCALE_MESSAGE =
     "| Press '8' followed by Enter to change the language to French.              |\n"
     "| Press '9' followed by Enter to change the language to Italian.             |\n"
     "| Press 'a' followed by Enter to change the language to Spanish.             |\n"
+    "| Press 'b' followed by Enter to change the language to Mexican Spanish.     |\n"
     "+----------------------------------------------------------------------------+\n";
 
 static const std::string SPEAKER_CONTROL_MESSAGE =
@@ -193,6 +213,42 @@ static const std::string VOLUME_CONTROL_MESSAGE =
     "| Press 'i' to display this help screen.                                     |\n"
     "| Press 'q' to exit Volume Control Mode.                                     |\n"
     "+----------------------------------------------------------------------------+\n";
+
+#ifdef ENABLE_PCC
+static const std::string PHONE_CONTROL_MESSAGE =
+    "+----------------------------------------------------------------------------+\n"
+    "|                   Phone Control Options:                                   |\n"
+    "|                                                                            |\n"
+    "| Press '1' followed by Enter to send CallActivated event                    |\n"
+    "| Press '2' followed by Enter to send CallTerminated event                   |\n"
+    "| Press '3' followed by Enter to send CallFailed event                       |\n"
+    "| Press '4' followed by Enter to send CallReceived event                     |\n"
+    "| Press '5' followed by Enter to send CallerIdReceived event                 |\n"
+    "| Press '6' followed by Enter to send InboundRingingStarted event            |\n"
+    "| Press '7' followed by Enter to send DialStarted event                      |\n"
+    "| Press '8' followed by Enter to send OutboundRingingStarted event           |\n"
+    "| Press '9' followed by Enter to send SendDtmfSucceeded event                |\n"
+    "| Press '0' followed by Enter to send SendDtmfFailed event                   |\n"
+    "| Press 'i' to display this help screen.                                     |\n"
+    "| Press 'q' to exit Phone Control Mode.                                      |\n"
+    "+----------------------------------------------------------------------------+\n";
+
+static const std::string ENTER_CALL_ID_MESSAGE =
+    "+----------------------------------------------------------------------------+\n"
+    "|                              Call ID:                                      |\n"
+    "|                                                                            |\n"
+    "| Enter call ID followed by Enter                                            |\n"
+    "|                                                                            |\n"
+    "+----------------------------------------------------------------------------+\n";
+
+static const std::string ENTER_CALLER_ID_MESSAGE =
+    "+----------------------------------------------------------------------------+\n"
+    "|                              Caller ID:                                    |\n"
+    "|                                                                            |\n"
+    "| Enter caller ID followed by Enter                                          |\n"
+    "|                                                                            |\n"
+    "+----------------------------------------------------------------------------+\n";
+#endif
 
 static const std::string ESP_CONTROL_MESSAGE =
     "+----------------------------------------------------------------------------+\n"
@@ -228,11 +284,24 @@ static const std::string REAUTHORIZE_CONFIRMATION =
     "| Press 'N' followed by Enter to cancel re-authorization.                    |\n"
     "+----------------------------------------------------------------------------+\n";
 
+static const std::string DONOTDISTURB_CONFIRMATION_HEADER =
+    "+----------------------------------------------------------------------------+\n"
+    "|                 Do Not Disturb Mode Configuration:                         |";
+
+static const std::string ENABLE_SETTING_MENU =
+    "|                                                                            |\n"
+    "| Press 'E' followed by Enter to enable this configuration.                  |\n"
+    "| Press 'D' followed by Enter to disable this configuration.                 |\n"
+    "+----------------------------------------------------------------------------+\n";
+
 static const std::string RESET_WARNING =
     "Device was reset! Please don't forget to deregister it. For more details "
     "visit https://www.amazon.com/gp/help/customer/display.html?nodeId=201357520";
 
 static const std::string ENTER_LIMITED = "Entering limited interaction mode.";
+
+/// The name of the do not disturb confirmation setting.
+static const std::string DO_NOT_DISTURB_NAME = "DoNotDisturb";
 
 UIManager::UIManager() :
         m_dialogState{DialogUXState::IDLE},
@@ -416,6 +485,20 @@ void UIManager::printVolumeControlScreen() {
     m_executor.submit([]() { ConsolePrinter::simplePrint(VOLUME_CONTROL_MESSAGE); });
 }
 
+#ifdef ENABLE_PCC
+void UIManager::printPhoneControlScreen() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint(PHONE_CONTROL_MESSAGE); });
+}
+
+void UIManager::printCallIdScreen() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint(ENTER_CALL_ID_MESSAGE); });
+}
+
+void UIManager::printCallerIdScreen() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint(ENTER_CALLER_ID_MESSAGE); });
+}
+#endif
+
 void UIManager::printESPControlScreen(bool support, const std::string& voiceEnergy, const std::string& ambientEnergy) {
     m_executor.submit([support, voiceEnergy, ambientEnergy]() {
         std::string screen = ESP_CONTROL_MESSAGE;
@@ -453,8 +536,28 @@ void UIManager::printResetWarning() {
     m_executor.submit([]() { ConsolePrinter::prettyPrint(RESET_WARNING); });
 }
 
+void UIManager::printDoNotDisturbScreen() {
+    m_executor.submit([]() {
+        ConsolePrinter::simplePrint(DONOTDISTURB_CONFIRMATION_HEADER);
+        ConsolePrinter::simplePrint(ENABLE_SETTING_MENU);
+    });
+}
+
 void UIManager::microphoneOn() {
     m_executor.submit([this]() { printState(); });
+}
+
+void UIManager::onBooleanSettingNotification(
+    const std::string& name,
+    bool state,
+    settings::SettingNotifications notification) {
+    std::string msg;
+    if (settings::SettingNotifications::LOCAL_CHANGE_FAILED == notification ||
+        settings::SettingNotifications::AVS_CHANGE_FAILED == notification) {
+        msg = "ERROR: Failed to set " + name + ". ";
+    }
+    msg += name + " is " + std::string(state ? "ON" : "OFF");
+    m_executor.submit([msg]() { ConsolePrinter::prettyPrint(msg); });
 }
 
 void UIManager::printState() {
@@ -507,6 +610,19 @@ void UIManager::setFailureStatus(const std::string& status) {
         m_failureStatus = status;
         printLimitedHelp();
     }
+}
+
+bool UIManager::configureSettingsNotifications(std::shared_ptr<settings::DeviceSettingsManager> settingsManager) {
+    m_callbacks = SettingCallbacks<DeviceSettingsManager>::create(settingsManager);
+    if (!m_callbacks) {
+        ACSDK_ERROR(LX("configureSettingsNotificationsFailed").d("reason", "createCallbacksFailed"));
+        return false;
+    }
+    bool ok =
+        m_callbacks->add<DeviceSettingsIndex::DO_NOT_DISTURB>([this](bool enable, SettingNotifications notifications) {
+            onBooleanSettingNotification(DO_NOT_DISTURB_NAME, enable, notifications);
+        });
+    return ok;
 }
 
 }  // namespace sampleApp

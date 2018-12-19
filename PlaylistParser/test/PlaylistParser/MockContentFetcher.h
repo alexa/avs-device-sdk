@@ -148,32 +148,6 @@ static const size_t TEST_PLS_PLAYLIST_URL_EXPECTED_PARSES = 2;
 static const std::vector<std::string> TEST_PLS_PLAYLIST_URLS = {"http://stream.radiotime.com/sample.mp3",
                                                                 "http://live-mp3-128.kexp.org"};
 
-static const std::string TEST_HLS_RECURSIVE_PLAYLIST_URL{"recursiveSample.m3u8"};
-
-static const std::string TEST_HLS_RECURSIVE_PLAYLIST_CONTENT = TEST_HLS_PLAYLIST_CONTENT + TEST_M3U_PLAYLIST_URL;
-
-static const size_t TEST_HLS_RECURSIVE_PLAYLIST_URL_EXPECTED_PARSES =
-    TEST_HLS_PLAYLIST_URL_EXPECTED_PARSES + TEST_M3U_PLAYLIST_URL_EXPECTED_PARSES;
-
-static const std::vector<std::string> TEST_HLS_RECURSIVE_PLAYLIST_URLS = {
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684358.aac",
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684359.aac",
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684360.aac",
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684360.aac",
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684360.aac",
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684360.aac",
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684360.aac",
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684360.aac",
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684360.aac",
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684360.aac",
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684360.aac",
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684360.aac",
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684360.aac",
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684360.aac",
-    "http://76.74.255.139/bismarck/live/bismarck.mov_9684360.aac",
-    "http://stream.radiotime.com/sample.mp3",
-    "http://live-mp3-128.kexp.org"};
-
 /// A test playlist in HLS format.
 static const std::string TEST_HLS_LIVE_STREAM_PLAYLIST_URL{"http://sanjayisthecoolest.com/liveStream.m3u8"};
 
@@ -225,7 +199,6 @@ static const std::unordered_map<std::string, std::string> urlsToContentTypes{
     {TEST_M3U_RELATIVE_PLAYLIST_URL, "audio/mpegurl"},
     {TEST_HLS_PLAYLIST_URL, "application/vnd.apple.mpegurl"},
     {TEST_PLS_PLAYLIST_URL, "audio/x-scpls"},
-    {TEST_HLS_RECURSIVE_PLAYLIST_URL, "audio/mpegurl"},
     {TEST_HLS_LIVE_STREAM_PLAYLIST_URL, "audio/mpegurl"},
     // Not playlist content types
     {TEST_MEDIA_URL, "audio/mpeg"},
@@ -246,7 +219,6 @@ static std::unordered_map<std::string, std::string> urlsToContent{
     {TEST_M3U_RELATIVE_PLAYLIST_URL, TEST_M3U_RELATIVE_PLAYLIST_CONTENT},
     {TEST_HLS_PLAYLIST_URL, TEST_HLS_PLAYLIST_CONTENT},
     {TEST_PLS_PLAYLIST_URL, TEST_PLS_CONTENT},
-    {TEST_HLS_RECURSIVE_PLAYLIST_URL, TEST_HLS_RECURSIVE_PLAYLIST_CONTENT},
     {TEST_HLS_LIVE_STREAM_PLAYLIST_URL, TEST_HLS_LIVE_STREAM_PLAYLIST_CONTENT_1}};
 
 /// A mock content fetcher
@@ -257,7 +229,8 @@ public:
 
     std::unique_ptr<avsCommon::utils::HTTPContent> getContent(
         FetchOptions fetchOption,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer) {
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer,
+        const std::vector<std::string>& customHeaders = std::vector<std::string>()) {
         if (fetchOption == FetchOptions::CONTENT_TYPE) {
             auto it1 = urlsToContentTypes.find(m_url);
             if (it1 == urlsToContentTypes.end()) {

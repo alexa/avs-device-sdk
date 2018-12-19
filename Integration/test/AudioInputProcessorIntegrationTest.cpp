@@ -380,8 +380,8 @@ protected:
         m_exceptionEncounteredSender = std::make_shared<TestExceptionEncounteredSender>();
 
         DirectiveHandlerConfiguration handlerConfig;
-        handlerConfig[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
-        handlerConfig[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
+        handlerConfig[SET_MUTE_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+        handlerConfig[SPEAK_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
         m_directiveHandler = std::make_shared<TestDirectiveHandler>(handlerConfig);
 
         m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);

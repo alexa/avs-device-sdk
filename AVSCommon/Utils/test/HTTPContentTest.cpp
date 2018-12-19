@@ -33,6 +33,9 @@ using namespace ::testing;
 /// A status code that represents success.
 const static long SUCCESS_STATUS_CODE{200};
 
+/// A status code that represents partial content.
+const static long SUCCESS_PARTIAL_CONTENT_STATUS_CODE{206};
+
 /// A status code that represents failure.
 const static long BAD_STATUS_CODE{0};
 
@@ -69,6 +72,14 @@ void HTTPContentTest::SetUp() {
 /// Test that isStatusCodeSuccess returns true for @c SUCCESS_STATUS_CODE.
 TEST_F(HTTPContentTest, readStatusCodeSuccess) {
     m_statusCodePromise.set_value(SUCCESS_STATUS_CODE);
+    m_contentTypePromise.set_value(TEST_CONTENT_TYPE);
+
+    EXPECT_TRUE(m_httpContent->isStatusCodeSuccess());
+}
+
+/// Test that isStatusCodeSuccess returns true for @c SUCCESS_PARTIAL_CONTENT_STATUS_CODE.
+TEST_F(HTTPContentTest, readStatusCodePartialContentSuccess) {
+    m_statusCodePromise.set_value(SUCCESS_PARTIAL_CONTENT_STATUS_CODE);
     m_contentTypePromise.set_value(TEST_CONTENT_TYPE);
 
     EXPECT_TRUE(m_httpContent->isStatusCodeSuccess());

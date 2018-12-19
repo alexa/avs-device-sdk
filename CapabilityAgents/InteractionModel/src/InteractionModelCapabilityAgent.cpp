@@ -106,7 +106,8 @@ InteractionModelCapabilityAgent::~InteractionModelCapabilityAgent() {
 
 DirectiveHandlerConfiguration InteractionModelCapabilityAgent::getConfiguration() const {
     DirectiveHandlerConfiguration configuration;
-    configuration[NEW_DIALOG_REQUEST] = BlockingPolicy::HANDLE_IMMEDIATELY;
+    // TODO: ARC-227 Verify default values.
+    configuration[NEW_DIALOG_REQUEST] = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
     return configuration;
 }
 void InteractionModelCapabilityAgent::handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) {

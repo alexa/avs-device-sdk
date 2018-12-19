@@ -49,11 +49,13 @@ public:
      *
      * @param option Flag indicating desired content.
      * @param writer An optional writer parameter to be used when writing to an external stream.
+     * @param customHeaders An optional list of headers to be attached to the request.
      * @return A new @c HTTPContent object or @c nullptr if a failure occured.
      */
     virtual std::unique_ptr<avsCommon::utils::HTTPContent> getContent(
         FetchOptions option,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer = nullptr) = 0;
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer = nullptr,
+        const std::vector<std::string>& customHeaders = std::vector<std::string>()) = 0;
 
     /**
      * Returns a string that represents the User-Agent to be used in HTTP requests.

@@ -168,6 +168,9 @@ private:
 
         /// A flag to indicate if the directive complete message has to be sent to the @c DirectiveSequencer.
         bool sendCompletedMessage;
+
+        /// A flag to indicate if setFailed() has been sent to the @c DirectiveSequencer.
+        bool isSetFailedCalled;
     };
 
     /**
@@ -500,7 +503,6 @@ private:
 
     /// This flag indicates whether the initial dialog UX State has been received.
     bool m_initialDialogUXStateReceived;
-    /// @}
 
     /// Set of capability configurations that will get published using the Capabilities API
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;

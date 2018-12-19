@@ -54,7 +54,13 @@ static const char REAUTHORIZE = 'z';
 static const char COMMS_CONTROL = 'd';
 #endif
 
-enum class SettingsValues : char { LOCALE = '1' };
+#ifdef ENABLE_PCC
+static const char PHONE_CONTROL = 'a';
+#endif
+static constexpr char ENABLE = 'E';
+static constexpr char DISABLE = 'D';
+
+enum class SettingsValues : char { LOCALE = '1', DO_NOT_DISTURB = '2' };
 
 static const std::unordered_map<char, std::string> LOCALE_VALUES({{'1', "en-US"},
                                                                   {'2', "en-GB"},
@@ -65,7 +71,8 @@ static const std::unordered_map<char, std::string> LOCALE_VALUES({{'1', "en-US"}
                                                                   {'7', "en-AU"},
                                                                   {'8', "fr-FR"},
                                                                   {'9', "it-IT"},
-                                                                  {'a', "es-ES"}});
+                                                                  {'a', "es-ES"},
+                                                                  {'b', "es-MX"}});
 
 static const std::unordered_map<char, SpeakerInterface::Type> SPEAKER_TYPES(
     {{'1', SpeakerInterface::Type::AVS_SPEAKER_VOLUME}, {'2', SpeakerInterface::Type::AVS_ALERTS_VOLUME}});
@@ -144,6 +151,12 @@ SampleAppReturnCode UserInputManager::run() {
             m_interactionManager->stopForegroundActivity();
         } else if (x == SPEAKER_CONTROL) {
             controlSpeaker();
+#ifdef ENABLE_PCC
+        } else if (x == PHONE_CONTROL) {
+            controlPhone();
+#endif
+        } else if (x == SETTINGS) {
+            settingsMenu();
         } else if (x == INFO) {
             if (m_limitedInteraction) {
                 m_interactionManager->limitedHelp();
@@ -179,26 +192,6 @@ SampleAppReturnCode UserInputManager::run() {
             m_interactionManager->playbackThumbsUp();
         } else if (x == THUMBS_DOWN) {
             m_interactionManager->playbackThumbsDown();
-        } else if (x == SETTINGS) {
-            m_interactionManager->settings();
-            char y;
-            std::cin >> y;
-            // Check the Setting which has to be changed.
-            switch (y) {
-                case (char)SettingsValues::LOCALE: {
-                    char localeValue;
-                    m_interactionManager->locale();
-                    std::cin >> localeValue;
-                    auto searchLocale = LOCALE_VALUES.find(localeValue);
-                    if (searchLocale != LOCALE_VALUES.end()) {
-                        m_interactionManager->changeSetting("locale", searchLocale->second);
-                    } else {
-                        m_interactionManager->errorValue();
-                    }
-                    break;
-                }
-                    m_interactionManager->help();
-            }
         } else if (x == FIRMWARE_VERSION) {
             std::string text;
             std::getline(std::cin, text);
@@ -333,6 +326,65 @@ void UserInputManager::controlSpeaker() {
     }
 }
 
+#ifdef ENABLE_PCC
+void UserInputManager::controlPhone() {
+    std::string callerId;
+
+    m_interactionManager->callId();
+    std::string callId;
+    std::cin >> callId;
+    m_interactionManager->phoneControl();
+    char phoneChoice;
+    std::cin >> phoneChoice;
+    switch (phoneChoice) {
+        case '1':
+            m_interactionManager->sendCallActivated(callId);
+            break;
+        case '2':
+            m_interactionManager->sendCallTerminated(callId);
+            break;
+        case '3':
+            m_interactionManager->sendCallFailed(callId);
+            break;
+        case '4':
+            m_interactionManager->callerId();
+            std::cin >> callerId;
+            m_interactionManager->sendCallReceived(callId, callerId);
+            break;
+        case '5':
+            m_interactionManager->callerId();
+            std::cin >> callerId;
+            m_interactionManager->sendCallerIdReceived(callId, callerId);
+            break;
+        case '6':
+            m_interactionManager->sendInboundRingingStarted(callId);
+            break;
+        case '7':
+            m_interactionManager->sendOutboundCallRequested(callId);
+            break;
+        case '8':
+            m_interactionManager->sendOutboundRingingStarted(callId);
+            break;
+        case '9':
+            m_interactionManager->sendSendDtmfSucceeded(callId);
+            break;
+        case '0':
+            m_interactionManager->sendSendDtmfFailed(callId);
+            break;
+        case 'q':
+            m_interactionManager->help();
+            break;
+        case 'i':
+            m_interactionManager->phoneControl();
+            break;
+        default:
+            m_interactionManager->errorValue();
+            break;
+    }
+}
+
+#endif
+
 bool UserInputManager::confirmReset() {
     m_interactionManager->confirmResetDevice();
     char y;
@@ -379,6 +431,46 @@ bool UserInputManager::confirmReauthorizeDevice() {
     } while (true);
 
     return false;
+}
+
+void boolSettingMenu(std::function<void(bool)> setFunction) {
+    char y;
+    std::cin >> y;
+    switch (y) {
+        case ENABLE:
+            setFunction(true);
+            return;
+        case DISABLE:
+            setFunction(false);
+            return;
+    }
+}
+
+void UserInputManager::settingsMenu() {
+    m_interactionManager->settings();
+    char y;
+    std::cin >> y;
+    // Check the Setting which has to be changed.
+    switch (y) {
+        case (char)SettingsValues::LOCALE: {
+            char localeValue;
+            m_interactionManager->locale();
+            std::cin >> localeValue;
+            auto searchLocale = LOCALE_VALUES.find(localeValue);
+            if (searchLocale != LOCALE_VALUES.end()) {
+                m_interactionManager->changeSetting("locale", searchLocale->second);
+            } else {
+                m_interactionManager->errorValue();
+            }
+            return;
+        }
+        case (char)SettingsValues::DO_NOT_DISTURB: {
+            m_interactionManager->doNotDisturb();
+            boolSettingMenu([this](bool enable) { m_interactionManager->setDoNotDisturbMode(enable); });
+            return;
+        }
+    }
+    m_interactionManager->help();
 }
 
 }  // namespace sampleApp

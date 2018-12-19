@@ -43,10 +43,19 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::playlistParser;
 
 /// Define invalid duration.
-static const auto INVALID_DURATION = PlaylistParserObserverInterface::INVALID_DURATION;
+static const auto INVALID_DURATION = std::chrono::milliseconds(-1);
 
 /// This string represents the FFmpeg HTTP User-Agent option key.
 static const char* USER_AGENT_OPTION{"user_agent"};
+
+/// This string represents the FFmpeg option to reconnect when the connection is dropped during streaming.
+static const char* RECONNECT_OPTION{"reconnect"};
+
+/// This string represents setting a boolean option to TRUE.
+static const char* TRUE_BOOLEAN_OPTION{"1"};
+
+/// Represent scenario where there is no flag enabled.
+static constexpr int NO_FLAGS{0};
 
 std::unique_ptr<FFmpegUrlInputController> FFmpegUrlInputController::create(
     std::shared_ptr<IterativePlaylistParserInterface> playlistParser,
@@ -102,6 +111,9 @@ bool FFmpegUrlInputController::next() {
 }
 
 bool FFmpegUrlInputController::findFirstEntry() {
+    // offset is used to determine which source_url to play.
+    // We loop through all our urls, subtracting their durations from the offset until we reach an offset less than the
+    // duration of a url. This means that we've found our first url to play and the offset at which to play at.
     auto offset = m_offset;
     while (!m_done) {
         ACSDK_DEBUG5(LX("findFirstEntry").d("offset", offset.count()));
@@ -113,25 +125,31 @@ bool FFmpegUrlInputController::findFirstEntry() {
 
         m_done = entry.parseResult == PlaylistParseResult::FINISHED;
 
+        // urls with an invalid duration can be caused by either a non playlist url or a url with incorrect metadata.
         if (entry.duration == INVALID_DURATION) {
-            if (offset.count()) {
-                ACSDK_WARN(LX("invalidDuration").m("Cannot find media duration. Start playing from the beginning"));
+            // If INVALID_DURATION is not encountered on the first song then this is most likely a result of incorrect
+            // metadata. Start playback from the beginning of this url as offset can not be trusted.
+            if (offset != m_offset) {
+                if (offset.count()) {
+                    ACSDK_WARN(LX("invalidDuration").m("Cannot find media duration. Start playing from the beginning"));
+                }
+                m_offset = std::chrono::milliseconds::zero();
             }
             ACSDK_DEBUG5(LX("foundFirst")
                              .d("offset(ms)", m_offset.count())
                              .d("duration(ms)", "INVALID")
                              .sensitive("url", entry.url));
-            m_offset = std::chrono::milliseconds::zero();
             m_currentUrl = entry.url;
             return true;
         }
 
-        if ((offset - entry.duration) < std::chrono::milliseconds::zero()) {
+        if (offset < entry.duration) {
             ACSDK_DEBUG5(LX("foundFirst")
                              .d("offset(ms)", m_offset.count())
                              .d("duration(ms)", entry.duration.count())
                              .sensitive("url", entry.url));
             m_currentUrl = entry.url;
+            m_offset = offset;
             return true;
         }
 
@@ -167,13 +185,14 @@ android::FFmpegUrlInputController::getCurrentFormatContext() {
     }
 
     AVDictionary* options = nullptr;
-    av_dict_set(&options, USER_AGENT_OPTION, HTTPContentFetcherInterface::getUserAgent().c_str(), 0);
+    av_dict_set(&options, USER_AGENT_OPTION, HTTPContentFetcherInterface::getUserAgent().c_str(), NO_FLAGS);
+    av_dict_set(&options, RECONNECT_OPTION, TRUE_BOOLEAN_OPTION, NO_FLAGS);
     auto error = avformat_open_input(&avFormatContext, m_currentUrl.c_str(), nullptr, &options);
     auto optionsPtr = std::unique_ptr<AVDictionary, AVDictionaryDeleter>(options);
 
     if (!optionsPtr) {
         // FFmpeg will put the options that could not be set back into the options dictionary.
-        auto option = av_dict_get(optionsPtr.get(), USER_AGENT_OPTION, nullptr, 0);
+        auto option = av_dict_get(optionsPtr.get(), USER_AGENT_OPTION, nullptr, NO_FLAGS);
         if (option) {
             // Do not modify or free the option pointer.
             ACSDK_WARN(LX(__func__).d("issue", "unableSetUserAgent").d(option->key, option->value));

@@ -20,9 +20,12 @@
 #include <AVSCommon/Utils/PlaylistParser/PlaylistParserObserverInterface.h>
 
 #include "PlaylistParser/IterativePlaylistParser.h"
+#include "PlaylistParser/PlaylistUtils.h"
 
 namespace alexaClientSDK {
 namespace playlistParser {
+
+using namespace avsCommon::utils::playlistParser;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("IterativePlaylistParser");
@@ -40,8 +43,8 @@ static const std::string M3U_CONTENT_TYPE = "mpegurl";
 /// The HTML content-type of a PLS playlist.
 static const std::string PLS_CONTENT_TYPE = "scpls";
 
-static const std::chrono::milliseconds INVALID_DURATION =
-    avsCommon::utils::playlistParser::PlaylistParserObserverInterface::INVALID_DURATION;
+/// An invalid duration.
+static const auto INVALID_DURATION = std::chrono::milliseconds(-1);
 
 std::unique_ptr<IterativePlaylistParser> IterativePlaylistParser::create(
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory) {
@@ -54,14 +57,14 @@ std::unique_ptr<IterativePlaylistParser> IterativePlaylistParser::create(
 
 bool IterativePlaylistParser::initializeParsing(std::string url) {
     if (url.empty()) {
-        ACSDK_ERROR(LX("parsePlaylistFailed").d("reason", "emptyUrl"));
+        ACSDK_ERROR(LX("initializeParsingFailed").d("reason", "emptyUrl"));
         return false;
     }
 
     m_abort = false;
     m_lastUrl.clear();
-    m_urlsToParse.clear();
-    m_urlsToParse.push_back({url, INVALID_DURATION});
+    m_playQueue.clear();
+    m_playQueue.push_back(PlayItem(url));
     return true;
 }
 
@@ -71,35 +74,27 @@ IterativePlaylistParser::IterativePlaylistParser(
         m_abort{false} {
 }
 
-IterativePlaylistParser::PlaylistEntry IterativePlaylistParser::next() {
-    while (!m_urlsToParse.empty() && !m_abort) {
-        auto urlAndInfo = m_urlsToParse.front();
-        m_urlsToParse.pop_front();
-        if (urlAndInfo.length != INVALID_DURATION) {
+PlaylistEntry IterativePlaylistParser::next() {
+    while (!m_playQueue.empty() && !m_abort) {
+        auto playItem = m_playQueue.front();
+        m_playQueue.pop_front();
+        if (playItem.type == PlayItem::Type::MEDIA_INFO) {
             // This is a media URL and not a playlist
             ACSDK_DEBUG9(LX("foundMediaURL"));
-            return PlaylistEntry{
-                .url = urlAndInfo.url,
-                .duration = urlAndInfo.length,
-                .parseResult = m_urlsToParse.empty()
-                                   ? avsCommon::utils::playlistParser::PlaylistParseResult::FINISHED
-                                   : avsCommon::utils::playlistParser::PlaylistParseResult::STILL_ONGOING};
+            return playItem.playlistEntry;
         }
-        auto contentFetcher = m_contentFetcherFactory->create(urlAndInfo.url);
+        auto playlistURL = playItem.playlistURL;
+        auto contentFetcher = m_contentFetcherFactory->create(playItem.playlistURL);
         if (!contentFetcher) {
-            ACSDK_ERROR(LX("nextFailed").d("reason", "createContentFetcherFailed").sensitive("url", urlAndInfo.url));
-            return PlaylistEntry{.url = urlAndInfo.url,
-                                 .duration = urlAndInfo.length,
-                                 .parseResult = avsCommon::utils::playlistParser::PlaylistParseResult::ERROR};
+            ACSDK_ERROR(LX("nextFailed").d("reason", "createContentFetcherFailed").sensitive("url", playlistURL));
+            return PlaylistEntry::createErrorEntry(playlistURL);
         }
 
         auto httpContent = contentFetcher->getContent(
             avsCommon::sdkInterfaces::HTTPContentFetcherInterface::FetchOptions::CONTENT_TYPE);
         if (!httpContent) {
-            ACSDK_ERROR(LX("getHTTPContent").d("reason", "nullHTTPContentReceived").sensitive("url", urlAndInfo.url));
-            return PlaylistEntry{.url = urlAndInfo.url,
-                                 .duration = urlAndInfo.length,
-                                 .parseResult = avsCommon::utils::playlistParser::PlaylistParseResult::ERROR};
+            ACSDK_ERROR(LX("nextFailed").d("reason", "nullHTTPContentReceived").sensitive("url", playlistURL));
+            return PlaylistEntry::createErrorEntry(playlistURL);
         }
         do {
             if (m_abort) {
@@ -108,128 +103,116 @@ IterativePlaylistParser::PlaylistEntry IterativePlaylistParser::next() {
             }
         } while (!httpContent->isReady(WAIT_FOR_FUTURE_READY_TIMEOUT));
         if (!httpContent->isStatusCodeSuccess()) {
-            ACSDK_ERROR(LX("getHTTPContent")
+            ACSDK_ERROR(LX("nextFailed")
                             .d("reason", "badHTTPContentReceived")
                             .d("statusCode", httpContent->getStatusCode())
-                            .sensitive("url", urlAndInfo.url));
-            return PlaylistEntry{.url = urlAndInfo.url,
-                                 .duration = urlAndInfo.length,
-                                 .parseResult = avsCommon::utils::playlistParser::PlaylistParseResult::ERROR};
+                            .sensitive("url", playlistURL));
+            return PlaylistEntry::createErrorEntry(playlistURL);
         }
 
         std::string contentType = httpContent->getContentType();
-        ACSDK_DEBUG9(LX("IterativePlaylistParser")
-                         .d("contentType", contentType)
-                         .sensitive("url", urlAndInfo.url)
-                         .d("length", urlAndInfo.length.count()));
+        ACSDK_DEBUG9(LX("contentReceived").d("contentType", contentType).sensitive("url", playlistURL));
         std::transform(contentType.begin(), contentType.end(), contentType.begin(), ::tolower);
         // Checking the HTML content type to see if the URL is a playlist.
         if (contentType.find(M3U_CONTENT_TYPE) != std::string::npos) {
             std::string playlistContent;
-            if (!getPlaylistContent(m_contentFetcherFactory->create(urlAndInfo.url), &playlistContent)) {
-                ACSDK_ERROR(LX("failedToRetrieveContent").sensitive("url", urlAndInfo.url));
-                return PlaylistEntry{.url = urlAndInfo.url,
-                                     .duration = urlAndInfo.length,
-                                     .parseResult = avsCommon::utils::playlistParser::PlaylistParseResult::ERROR};
+            if (!getPlaylistContent(m_contentFetcherFactory->create(playlistURL), &playlistContent)) {
+                ACSDK_ERROR(LX("nextFailed").d("reason", "failedToRetrieveContent").sensitive("url", playlistURL));
+                return PlaylistEntry::createErrorEntry(playlistURL);
             }
             // This playlist may either be M3U or EXT_M3U so some additional parsing is required.
             bool isExtendedM3U = isPlaylistExtendedM3U(playlistContent);
             if (isExtendedM3U) {
-                ACSDK_DEBUG9(LX("isExtendedM3U").sensitive("url", urlAndInfo.url));
+                ACSDK_DEBUG9(LX("isExtendedM3U").sensitive("url", playlistURL));
             } else {
-                ACSDK_DEBUG9(LX("isPlainM3UPlaylist").sensitive("url", urlAndInfo.url));
+                ACSDK_DEBUG9(LX("isPlainM3UPlaylist").sensitive("url", playlistURL));
             }
-            auto M3UContent = parseM3UContent(urlAndInfo.url, playlistContent);
-            const auto& childrenUrls = M3UContent.childrenUrls;
-            if (childrenUrls.empty()) {
-                ACSDK_ERROR(LX("noChildrenURLs"));
-                return PlaylistEntry{.url = urlAndInfo.url,
-                                     .duration = urlAndInfo.length,
-                                     .parseResult = avsCommon::utils::playlistParser::PlaylistParseResult::ERROR};
+            auto m3uContent = parseM3UContent(playlistURL, playlistContent);
+            if (m3uContent.empty()) {
+                ACSDK_ERROR(LX("nextFailed").d("reason", "noChildrenURLs"));
+                return PlaylistEntry::createErrorEntry(playlistURL);
             }
-            ACSDK_DEBUG9((LX("foundChildrenURLsInPlaylist").d("num", childrenUrls.size())));
+            ACSDK_DEBUG9((
+                LX("foundChildrenURLsInPlaylist").d("num", m3uContent.entries.size() + m3uContent.variantURLs.size())));
             if (isExtendedM3U) {
-                if (M3UContent.streamInfTagPresent) {
+                if (m3uContent.isMasterPlaylist()) {
                     // Indicates that we found a Variant Stream and that only one URL should be chosen from here
-                    ACSDK_DEBUG9(LX("encounteredVariantStream").sensitive("url", urlAndInfo.url));
+                    ACSDK_DEBUG9(LX("encounteredVariantStream").sensitive("url", playlistURL));
                     // Because we don't do any selective choosing based on bitrates or codecs, only push the first
                     // URL as a default.
-                    m_urlsToParse.push_front(childrenUrls.front());
+                    m_playQueue.push_front(PlayItem(m3uContent.variantURLs.front()));
                 } else {
+                    auto entries = m3uContent.entries;
                     // m_lastUrl is set when we actually parse some urls from the playlist - here, it is our
                     // first pass at this playlist
                     if (m_lastUrl.empty()) {
-                        for (auto reverseIt = childrenUrls.rbegin(); reverseIt != childrenUrls.rend(); ++reverseIt) {
-                            m_urlsToParse.push_front(*reverseIt);
+                        for (auto reverseIt = entries.rbegin(); reverseIt != entries.rend(); ++reverseIt) {
+                            m_playQueue.push_front(*reverseIt);
                         }
-                        m_lastUrl = childrenUrls.back().url;
+                        m_lastUrl = entries.back().url;
                     } else {
                         // Setting this to 0 as an intial value so that if we don't see the last URL we parsed in
                         // the latest pass of the playlist, we stream all the URLs within the playlist as a sort of
                         // recovery mechanism. This way, if we parse this so far into the future that all the URLs
                         // we had previously seen are gone, we'll still stream the latest URLs.
                         int startPointForNewURLsAdded = 0;
-                        for (int i = childrenUrls.size() - 1; i >= 0; --i) {
-                            if (childrenUrls.at(i).url == m_lastUrl) {
+                        for (int i = entries.size() - 1; i >= 0; --i) {
+                            if (entries.at(i).url == m_lastUrl) {
                                 // We need to add the URLs past this point
                                 startPointForNewURLsAdded = i + 1;
                             }
                         }
-                        for (int i = childrenUrls.size() - 1; i >= startPointForNewURLsAdded; --i) {
+                        for (int i = entries.size() - 1; i >= startPointForNewURLsAdded; --i) {
                             ACSDK_DEBUG9(LX("foundNewURLInLivePlaylist"));
-                            m_urlsToParse.push_front(childrenUrls.at(i));
-                            m_lastUrl = m_urlsToParse.back().url;
+                            auto entry = entries.at(i);
+                            m_playQueue.push_front(entry);
                         }
+                        m_lastUrl = entries.back().url;
                     }
-                    if (!M3UContent.endlistTagPresent) {
+                    if (m3uContent.isLive) {
                         ACSDK_DEBUG9(LX("encounteredLiveHLSPlaylist")
-                                         .sensitive("url", urlAndInfo.url)
+                                         .sensitive("url", playlistURL)
                                          .d("info", "willRetryURLInFuture"));
                         /*
                          * Because this URL represents a live playlist which can have additional chunks added to it,
                          * we need to make a request to this URL again in the future to continue playback of
                          * additional chunks that get added.
                          */
-                        m_urlsToParse.push_back(urlAndInfo);
+                        m_playQueue.push_back(playlistURL);
                     }
                 }
             } else {
-                for (auto reverseIt = childrenUrls.rbegin(); reverseIt != childrenUrls.rend(); ++reverseIt) {
-                    m_urlsToParse.push_front(*reverseIt);
+                auto entries = m3uContent.entries;
+                for (auto reverseIt = entries.rbegin(); reverseIt != entries.rend(); ++reverseIt) {
+                    m_playQueue.push_front(*reverseIt);
                 }
             }
         } else if (contentType.find(PLS_CONTENT_TYPE) != std::string::npos) {
-            ACSDK_DEBUG9(LX("isPLSPlaylist").sensitive("url", urlAndInfo.url));
+            ACSDK_DEBUG9(LX("isPLSPlaylist").sensitive("url", playlistURL));
             std::string playlistContent;
-            if (!getPlaylistContent(m_contentFetcherFactory->create(urlAndInfo.url), &playlistContent)) {
-                return PlaylistEntry{.url = urlAndInfo.url,
-                                     .duration = urlAndInfo.length,
-                                     .parseResult = avsCommon::utils::playlistParser::PlaylistParseResult::ERROR};
+            if (!getPlaylistContent(m_contentFetcherFactory->create(playlistURL), &playlistContent)) {
+                ACSDK_ERROR(LX("nextFailed").d("reason", "failedToRetrieveContent").sensitive("url", playlistURL));
+                return PlaylistEntry::createErrorEntry(playlistURL);
             }
-            auto childrenUrls = parsePLSContent(urlAndInfo.url, playlistContent);
+            auto childrenUrls = parsePLSContent(playlistURL, playlistContent);
             if (childrenUrls.empty()) {
-                return PlaylistEntry{.url = urlAndInfo.url,
-                                     .duration = urlAndInfo.length,
-                                     .parseResult = avsCommon::utils::playlistParser::PlaylistParseResult::ERROR};
+                ACSDK_ERROR(LX("nextFailed").d("reason", "noChildrenURLs"));
+                return PlaylistEntry::createErrorEntry(playlistURL);
             }
             for (auto reverseIt = childrenUrls.rbegin(); reverseIt != childrenUrls.rend(); ++reverseIt) {
-                m_urlsToParse.push_front({*reverseIt, INVALID_DURATION});
+                auto parseResult = (reverseIt == childrenUrls.rbegin()) ? PlaylistParseResult::FINISHED
+                                                                        : PlaylistParseResult::STILL_ONGOING;
+                m_playQueue.push_front(PlaylistEntry(*reverseIt, INVALID_DURATION, parseResult));
             }
         } else {
             ACSDK_DEBUG9(LX("foundNonPlaylistURL"));
             // This is a non-playlist URL or a playlist that we don't support (M3U, EXT_M3U, PLS).
-            return PlaylistEntry{
-                .url = urlAndInfo.url,
-                .duration = urlAndInfo.length,
-                .parseResult = m_urlsToParse.empty()
-                                   ? avsCommon::utils::playlistParser::PlaylistParseResult::FINISHED
-                                   : avsCommon::utils::playlistParser::PlaylistParseResult::STILL_ONGOING};
+            auto parseResult = m_playQueue.empty() ? PlaylistParseResult::FINISHED : PlaylistParseResult::STILL_ONGOING;
+            return PlaylistEntry(playlistURL, INVALID_DURATION, parseResult);
         }
     }
     ACSDK_DEBUG0(LX("nextFailed").d("reason", "parseAborted"));
-    return PlaylistEntry{.url = "",
-                         .duration = INVALID_DURATION,
-                         .parseResult = avsCommon::utils::playlistParser::PlaylistParseResult::ERROR};
+    return PlaylistEntry::createErrorEntry("");
 }
 
 bool IterativePlaylistParser::getPlaylistContent(

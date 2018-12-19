@@ -28,7 +28,12 @@
 
 #include "KeywordObserver.h"
 #include "UIManager.h"
+
 #include "GuiRenderer.h"
+
+#ifdef ENABLE_PCC
+#include "PhoneCaller.h"
+#endif
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -48,6 +53,9 @@ public:
         std::shared_ptr<defaultClient::DefaultClient> client,
         std::shared_ptr<applicationUtilities::resources::audio::MicrophoneInterface> micWrapper,
         std::shared_ptr<sampleApp::UIManager> userInterface,
+#ifdef ENABLE_PCC
+        std::shared_ptr<sampleApp::PhoneCaller> phoneCaller,
+#endif
         capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
         capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
         std::shared_ptr<sampleApp::GuiRenderer> guiRenderer = nullptr,
@@ -161,6 +169,11 @@ public:
     void locale();
 
     /**
+     * Should be called whenever a user requests 'DO_NOT_DISTURB' change.
+     */
+    void doNotDisturb();
+
+    /**
      * Should be called whenever a user presses invalid option.
      */
     void errorValue();
@@ -263,6 +276,43 @@ public:
      */
     void onDialogUXStateChanged(DialogUXState newState) override;
 
+#ifdef ENABLE_PCC
+    /**
+     * Should be called whenever a user selects Phone Control.
+     */
+    void phoneControl();
+
+    /**
+     * Should be called whenever collecting a Call Id.
+     */
+    void callId();
+
+    /**
+     * Should be called whenever collecting a Caller Id.
+     */
+    void callerId();
+
+    /**
+     * PhoneCallController commands
+     */
+    void sendCallActivated(const std::string& callId);
+    void sendCallTerminated(const std::string& callId);
+    void sendCallFailed(const std::string& callId);
+    void sendCallReceived(const std::string& callId, const std::string& callerId);
+    void sendCallerIdReceived(const std::string& callId, const std::string& callerId);
+    void sendInboundRingingStarted(const std::string& callId);
+    void sendOutboundCallRequested(const std::string& callId);
+    void sendOutboundRingingStarted(const std::string& callId);
+    void sendSendDtmfSucceeded(const std::string& callId);
+    void sendSendDtmfFailed(const std::string& callId);
+
+#endif
+
+    /**
+     * Sets the do not disturb mode state.
+     */
+    void setDoNotDisturbMode(bool enable);
+
 private:
     /// The default SDK client.
     std::shared_ptr<defaultClient::DefaultClient> m_client;
@@ -284,6 +334,11 @@ private:
 
     /// The call manager.
     std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> m_callManager;
+
+#ifdef ENABLE_PCC
+    /// The Phone Caller
+    std::shared_ptr<sampleApp::PhoneCaller> m_phoneCaller;
+#endif
 
     /// The hold to talk audio provider.
     capabilityAgents::aip::AudioProvider m_holdToTalkAudioProvider;

@@ -21,37 +21,18 @@
 #include <queue>
 #include <string>
 
+#include "PlaylistEntry.h"
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
 namespace playlistParser {
 
 /**
- * An enum class used to specify the result of a parsing operation.
- */
-enum class PlaylistParseResult {
-
-    /// The playlist has been fully parsed successfully. This indicates that parsing of the playlist has completed.
-    FINISHED,
-
-    /**
-     * The playlist parsing has encountered an error and will abort parsing. In this case, the url in the callback will
-     * not be valid.
-     */
-    ERROR,
-
-    /// The playlist parsing is still ongoing.
-    STILL_ONGOING
-};
-
-/**
  * An observer of the playlist parser.
  */
 class PlaylistParserObserverInterface {
 public:
-    /// An invalid duration.
-    static constexpr std::chrono::milliseconds INVALID_DURATION = std::chrono::milliseconds(-1);
-
     /**
      * Destructor.
      */
@@ -61,18 +42,12 @@ public:
      * Notification that an entry has been parsed.
      *
      * @param requestId The id of the callback to connect this callback to an original request.
-     * @param url An entry that has been extracted.
-     * @param parseResult The result of parsing the playlist.
-     * @param duration A duration in milliseconds of the playlist entry, if it was able to be deduced based on
-     * available playlist metadata.
+     * @param playlistEntry The parsing result. The @c url field will be valid if @c parseResult is different than
+     * ERROR.
      *
      * @note This function is always called from a single thread in PlayListParser.
      */
-    virtual void onPlaylistEntryParsed(
-        int requestId,
-        std::string url,
-        PlaylistParseResult parseResult,
-        std::chrono::milliseconds duration = INVALID_DURATION) = 0;
+    virtual void onPlaylistEntryParsed(int requestId, PlaylistEntry playlistEntry) = 0;
 };
 
 /**

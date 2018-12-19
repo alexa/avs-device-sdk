@@ -671,9 +671,10 @@ void NotificationsCapabilityAgent::executeSetState(NotificationsCapabilityAgentS
 }
 
 DirectiveHandlerConfiguration NotificationsCapabilityAgent::getConfiguration() const {
+    auto neitherNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
     DirectiveHandlerConfiguration configuration;
-    configuration[SET_INDICATOR] = BlockingPolicy::HANDLE_IMMEDIATELY;
-    configuration[CLEAR_INDICATOR] = BlockingPolicy::HANDLE_IMMEDIATELY;
+    configuration[SET_INDICATOR] = neitherNonBlockingPolicy;
+    configuration[CLEAR_INDICATOR] = neitherNonBlockingPolicy;
     return configuration;
 }
 

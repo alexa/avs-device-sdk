@@ -106,7 +106,8 @@ public:
 
     std::unique_ptr<avsCommon::utils::HTTPContent> getContent(
         FetchOptions fetchOption,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer) override {
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer,
+        const std::vector<std::string>& customHeaders = std::vector<std::string>()) override {
         if (fetchOption == FetchOptions::CONTENT_TYPE) {
             auto urlAndContentType = urlsToContentTypes.find(m_url);
             if (urlAndContentType == urlsToContentTypes.end()) {

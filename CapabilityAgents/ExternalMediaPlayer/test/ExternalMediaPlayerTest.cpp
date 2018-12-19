@@ -562,6 +562,13 @@ public:
      */
     SetStateResult wakeOnSetState();
 
+    /**
+     * This is is invoked to clear the promise set by a setState call for repeat testing
+     *
+     * @return @c SUCCESS.
+     */
+    SetStateResult resetWakeOnSetState();
+
     /// @c ExternalMediaPlayer to test
     std::shared_ptr<ExternalMediaPlayer> m_externalMediaPlayer;
 
@@ -652,6 +659,12 @@ void ExternalMediaPlayerTest::TearDown() {
 
 SetStateResult ExternalMediaPlayerTest::wakeOnSetState() {
     m_wakeSetStatePromise.set_value();
+    return SetStateResult::SUCCESS;
+}
+
+SetStateResult ExternalMediaPlayerTest::resetWakeOnSetState() {
+    m_wakeSetStatePromise = std::promise<void>();
+    m_wakeSetStateFuture = m_wakeSetStatePromise.get_future();
     return SetStateResult::SUCCESS;
 }
 
@@ -795,25 +808,29 @@ TEST_F(ExternalMediaPlayerTest, testCreateWithAdapterCreationFailures) {
  */
 TEST_F(ExternalMediaPlayerTest, testGetConfiguration) {
     auto configuration = m_externalMediaPlayer->getConfiguration();
-    ASSERT_EQ(configuration[PLAY_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[LOGIN_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[LOGOUT_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[RESUME_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[PAUSE_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[NEXT_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[PREVIOUS_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[STARTOVER_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[REWIND_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[FASTFORWARD_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[ENABLEREPEATONE_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[ENABLEREPEAT_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[DISABLEREPEAT_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[ENABLESHUFFLE_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[DISABLESHUFFLE_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[SEEK_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[ADJUSTSEEK_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[FAVORITE_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
-    ASSERT_EQ(configuration[UNFAVORITE_DIRECTIVE], BlockingPolicy::NON_BLOCKING);
+    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    auto neitherNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
+
+    // TODO: ARC-227 Verify default values
+    ASSERT_EQ(configuration[PLAY_DIRECTIVE], audioNonBlockingPolicy);
+    ASSERT_EQ(configuration[LOGIN_DIRECTIVE], neitherNonBlockingPolicy);
+    ASSERT_EQ(configuration[LOGOUT_DIRECTIVE], neitherNonBlockingPolicy);
+    ASSERT_EQ(configuration[RESUME_DIRECTIVE], audioNonBlockingPolicy);
+    ASSERT_EQ(configuration[PAUSE_DIRECTIVE], audioNonBlockingPolicy);
+    ASSERT_EQ(configuration[NEXT_DIRECTIVE], audioNonBlockingPolicy);
+    ASSERT_EQ(configuration[PREVIOUS_DIRECTIVE], audioNonBlockingPolicy);
+    ASSERT_EQ(configuration[STARTOVER_DIRECTIVE], audioNonBlockingPolicy);
+    ASSERT_EQ(configuration[REWIND_DIRECTIVE], audioNonBlockingPolicy);
+    ASSERT_EQ(configuration[FASTFORWARD_DIRECTIVE], audioNonBlockingPolicy);
+    ASSERT_EQ(configuration[ENABLEREPEATONE_DIRECTIVE], neitherNonBlockingPolicy);
+    ASSERT_EQ(configuration[ENABLEREPEAT_DIRECTIVE], neitherNonBlockingPolicy);
+    ASSERT_EQ(configuration[DISABLEREPEAT_DIRECTIVE], neitherNonBlockingPolicy);
+    ASSERT_EQ(configuration[ENABLESHUFFLE_DIRECTIVE], neitherNonBlockingPolicy);
+    ASSERT_EQ(configuration[DISABLESHUFFLE_DIRECTIVE], neitherNonBlockingPolicy);
+    ASSERT_EQ(configuration[SEEK_DIRECTIVE], audioNonBlockingPolicy);
+    ASSERT_EQ(configuration[ADJUSTSEEK_DIRECTIVE], audioNonBlockingPolicy);
+    ASSERT_EQ(configuration[FAVORITE_DIRECTIVE], neitherNonBlockingPolicy);
+    ASSERT_EQ(configuration[UNFAVORITE_DIRECTIVE], neitherNonBlockingPolicy);
 }
 
 /**
@@ -1036,7 +1053,7 @@ TEST_F(ExternalMediaPlayerTest, testPlaybackStateChangeObserverIsNotified) {
         *(m_mockContextManager.get()),
         setState(PLAYBACK_STATE, _, StateRefreshPolicy::ALWAYS, PROVIDE_STATE_TOKEN_TEST))
         .Times(1)
-        .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetState));
+        .WillRepeatedly(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetState));
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), getState())
         .WillRepeatedly(Return(createAdapterState()));
@@ -1059,13 +1076,14 @@ TEST_F(ExternalMediaPlayerTest, testLoginStateChangeObserverRemoval) {
     EXPECT_CALL(
         *(m_mockContextManager.get()), setState(SESSION_STATE, _, StateRefreshPolicy::ALWAYS, PROVIDE_STATE_TOKEN_TEST))
         .Times(2)
-        .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetState));
+        .WillRepeatedly(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetState));
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), getState())
         .WillRepeatedly(Return(createAdapterState()));
     EXPECT_CALL(*(observer), onLoginStateProvided(_, _)).Times(1);
     m_externalMediaPlayer->provideState(SESSION_STATE, PROVIDE_STATE_TOKEN_TEST);
     ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    this->resetWakeOnSetState();
 
     m_externalMediaPlayer->removeObserver(observer);
 
@@ -1086,13 +1104,14 @@ TEST_F(ExternalMediaPlayerTest, testPlaybackStateChangeObserverRemoval) {
         *(m_mockContextManager.get()),
         setState(PLAYBACK_STATE, _, StateRefreshPolicy::ALWAYS, PROVIDE_STATE_TOKEN_TEST))
         .Times(2)
-        .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetState));
+        .WillRepeatedly(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetState));
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), getState())
         .WillRepeatedly(Return(createAdapterState()));
     EXPECT_CALL(*(observer), onPlaybackStateProvided(_, _)).Times(1);
     m_externalMediaPlayer->provideState(PLAYBACK_STATE, PROVIDE_STATE_TOKEN_TEST);
     ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    this->resetWakeOnSetState();
 
     m_externalMediaPlayer->removeObserver(observer);
 

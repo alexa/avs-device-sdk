@@ -17,6 +17,10 @@
 #include "RegistrationManager/CustomerDataManager.h"
 #include "SampleApp/InteractionManager.h"
 
+#ifdef ENABLE_PCC
+#include <SampleApp/PhoneCaller.h>
+#endif
+
 namespace alexaClientSDK {
 namespace sampleApp {
 
@@ -26,6 +30,9 @@ InteractionManager::InteractionManager(
     std::shared_ptr<defaultClient::DefaultClient> client,
     std::shared_ptr<applicationUtilities::resources::audio::MicrophoneInterface> micWrapper,
     std::shared_ptr<sampleApp::UIManager> userInterface,
+#ifdef ENABLE_PCC
+    std::shared_ptr<sampleApp::PhoneCaller> phoneCaller,
+#endif
     capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
     capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
     std::shared_ptr<sampleApp::GuiRenderer> guiRenderer,
@@ -41,6 +48,9 @@ InteractionManager::InteractionManager(
         m_espProvider{espProvider},
         m_espModifier{espModifier},
         m_callManager{callManager},
+#ifdef ENABLE_PCC
+        m_phoneCaller{phoneCaller},
+#endif
         m_holdToTalkAudioProvider{holdToTalkAudioProvider},
         m_tapToTalkAudioProvider{tapToTalkAudioProvider},
         m_wakeWordAudioProvider{wakeWordAudioProvider},
@@ -71,6 +81,10 @@ void InteractionManager::settings() {
 
 void InteractionManager::locale() {
     m_executor.submit([this]() { m_userInterface->printLocaleScreen(); });
+}
+
+void InteractionManager::doNotDisturb() {
+    m_executor.submit([this]() { m_userInterface->printDoNotDisturbScreen(); });
 }
 
 void InteractionManager::errorValue() {
@@ -332,6 +346,103 @@ void InteractionManager::onDialogUXStateChanged(DialogUXState state) {
     if (DialogUXState::LISTENING != state) {
         m_isTapOccurring = false;
     }
+}
+
+#ifdef ENABLE_PCC
+void InteractionManager::phoneControl() {
+    m_executor.submit([this]() { m_userInterface->printPhoneControlScreen(); });
+}
+
+void InteractionManager::callId() {
+    m_executor.submit([this]() { m_userInterface->printCallIdScreen(); });
+}
+
+void InteractionManager::callerId() {
+    m_executor.submit([this]() { m_userInterface->printCallerIdScreen(); });
+}
+
+void InteractionManager::sendCallActivated(const std::string& callId) {
+    m_executor.submit([this, callId]() {
+        if (m_phoneCaller) {
+            m_phoneCaller->sendCallActivated(callId);
+        }
+    });
+}
+void InteractionManager::sendCallTerminated(const std::string& callId) {
+    m_executor.submit([this, callId]() {
+        if (m_phoneCaller) {
+            m_phoneCaller->sendCallTerminated(callId);
+        }
+    });
+}
+
+void InteractionManager::sendCallFailed(const std::string& callId) {
+    m_executor.submit([this, callId]() {
+        if (m_phoneCaller) {
+            m_phoneCaller->sendCallFailed(callId);
+        }
+    });
+}
+
+void InteractionManager::sendCallReceived(const std::string& callId, const std::string& callerId) {
+    m_executor.submit([this, callId, callerId]() {
+        if (m_phoneCaller) {
+            m_phoneCaller->sendCallReceived(callId, callerId);
+        }
+    });
+}
+
+void InteractionManager::sendCallerIdReceived(const std::string& callId, const std::string& callerId) {
+    m_executor.submit([this, callId, callerId]() {
+        if (m_phoneCaller) {
+            m_phoneCaller->sendCallerIdReceived(callId, callerId);
+        }
+    });
+}
+
+void InteractionManager::sendInboundRingingStarted(const std::string& callId) {
+    m_executor.submit([this, callId]() {
+        if (m_phoneCaller) {
+            m_phoneCaller->sendInboundRingingStarted(callId);
+        }
+    });
+}
+
+void InteractionManager::sendOutboundCallRequested(const std::string& callId) {
+    m_executor.submit([this, callId]() {
+        if (m_phoneCaller) {
+            m_phoneCaller->sendDialStarted(callId);
+        }
+    });
+}
+
+void InteractionManager::sendOutboundRingingStarted(const std::string& callId) {
+    m_executor.submit([this, callId]() {
+        if (m_phoneCaller) {
+            m_phoneCaller->sendOutboundRingingStarted(callId);
+        }
+    });
+}
+
+void InteractionManager::sendSendDtmfSucceeded(const std::string& callId) {
+    m_executor.submit([this, callId]() {
+        if (m_phoneCaller) {
+            m_phoneCaller->sendSendDtmfSucceeded(callId);
+        }
+    });
+}
+
+void InteractionManager::sendSendDtmfFailed(const std::string& callId) {
+    m_executor.submit([this, callId]() {
+        if (m_phoneCaller) {
+            m_phoneCaller->sendSendDtmfFailed(callId);
+        }
+    });
+}
+#endif
+
+void InteractionManager::setDoNotDisturbMode(bool enable) {
+    m_client->getSettingsManager()->setValue<settings::DO_NOT_DISTURB>(enable);
 }
 
 void InteractionManager::doShutdown() {

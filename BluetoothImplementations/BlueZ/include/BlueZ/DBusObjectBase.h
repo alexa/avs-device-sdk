@@ -75,7 +75,7 @@ private:
     const std::string m_xmlInterfaceIntrospection;
 
     /// The ID of the object registered to DBus. 0 if object is not registered.
-    uint m_registrationId;
+    unsigned int m_registrationId;
 
     /// @c GDBusInterfaceVTable object containing the reference to interface description parsed from the XML
     GDBusInterfaceVTable m_interfaceVtable;

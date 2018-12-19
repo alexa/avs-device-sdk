@@ -444,8 +444,8 @@ bool getToken(TestDirectiveHandler::DirectiveParams params, std::string& returnT
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, sendEventWithDirective) {
     DirectiveHandlerConfiguration config;
-    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
-    config[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
+    config[SET_MUTE_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    config[SPEAK_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
 
     auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
@@ -474,8 +474,9 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendEventWithDirective) {
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveGroupWithoutBlocking) {
     DirectiveHandlerConfiguration config;
-    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
-    config[SPEAK_PAIR] = BlockingPolicy::NON_BLOCKING;
+    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    config[SET_MUTE_PAIR] = audioNonBlockingPolicy;
+    config[SPEAK_PAIR] = audioNonBlockingPolicy;
 
     auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
@@ -519,8 +520,9 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveGroupWithoutBlocking) {
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithDifferentDialogRequestID) {
     DirectiveHandlerConfiguration config;
-    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
-    config[SPEAK_PAIR] = BlockingPolicy::NON_BLOCKING;
+    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    config[SET_MUTE_PAIR] = audioNonBlockingPolicy;
+    config[SPEAK_PAIR] = audioNonBlockingPolicy;
 
     auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
@@ -568,8 +570,8 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithDifferentDialogReque
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, dropQueueAfterBargeIn) {
     DirectiveHandlerConfiguration config;
-    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
-    config[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
+    config[SET_MUTE_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    config[SPEAK_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
 
     auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
@@ -630,8 +632,9 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, dropQueueAfterBargeIn) {
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithoutADialogRequestID) {
     DirectiveHandlerConfiguration config;
-    config[SPEAK_PAIR] = BlockingPolicy::NON_BLOCKING;
-    config[SET_ALERT_PAIR] = BlockingPolicy::NON_BLOCKING;
+    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    config[SPEAK_PAIR] = audioNonBlockingPolicy;
+    config[SET_ALERT_PAIR] = audioNonBlockingPolicy;
 
     auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
@@ -711,8 +714,8 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectiveWithoutADialogRequestID)
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectivesForPreHandling) {
     DirectiveHandlerConfiguration config;
-    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
-    config[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
+    config[SET_MUTE_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    config[SPEAK_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
 
     auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
@@ -755,8 +758,8 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, sendDirectivesForPreHandling) {
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, cancelDirectivesWhileInQueue) {
     DirectiveHandlerConfiguration config;
-    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
-    config[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
+    config[SET_MUTE_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    config[SPEAK_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
 
     auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
@@ -799,8 +802,8 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, cancelDirectivesWhileInQueue) {
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveAtTheFront) {
     DirectiveHandlerConfiguration config;
-    config[SET_MUTE_PAIR] = BlockingPolicy::BLOCKING;
-    config[SPEAK_PAIR] = BlockingPolicy::NON_BLOCKING;
+    config[SET_MUTE_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    config[SPEAK_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
 
     auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
@@ -861,8 +864,8 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveAtTheFront) {
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveInTheMiddle) {
     DirectiveHandlerConfiguration config;
-    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
-    config[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
+    config[SET_MUTE_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    config[SPEAK_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
 
     auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
@@ -917,7 +920,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, oneBlockingDirectiveInTheMiddle) {
 TEST_F(AlexaDirectiveSequencerLibraryTest, noDirectiveHandlerRegisteredForADirectiveAtTheFront) {
     // Don't Register a DirectiveHandler for SetMute.
     DirectiveHandlerConfiguration config;
-    config[SPEAK_PAIR] = BlockingPolicy::NON_BLOCKING;
+    config[SPEAK_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
 
     auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
@@ -945,7 +948,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, noDirectiveHandlerRegisteredForADirec
 TEST_F(AlexaDirectiveSequencerLibraryTest, noDirectiveHandlerRegisteredForADirectiveInTheMiddle) {
     // Don't Register a DirectiveHandler for Speak.
     DirectiveHandlerConfiguration config;
-    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
+    config[SET_MUTE_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
 
     auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
@@ -973,12 +976,13 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, noDirectiveHandlerRegisteredForADirec
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, twoDirectiveHandlersRegisteredForADirective) {
     DirectiveHandlerConfiguration handlerAConfig;
-    handlerAConfig[SET_MUTE_PAIR] = BlockingPolicy::BLOCKING;
+    auto audioBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    handlerAConfig[SET_MUTE_PAIR] = audioBlockingPolicy;
 
     auto directiveHandlerA = std::make_shared<TestDirectiveHandler>(handlerAConfig);
 
     DirectiveHandlerConfiguration handlerbConfig;
-    handlerbConfig[SET_MUTE_PAIR] = BlockingPolicy::BLOCKING;
+    handlerbConfig[SET_MUTE_PAIR] = audioBlockingPolicy;
     auto directiveHandlerB = std::make_shared<TestDirectiveHandler>(handlerbConfig);
 
     ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(directiveHandlerA));
@@ -1016,9 +1020,10 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, twoDirectiveHandlersRegisteredForADir
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, multiturnScenario) {
     DirectiveHandlerConfiguration config;
-    config[SET_MUTE_PAIR] = BlockingPolicy::NON_BLOCKING;
-    config[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
-    config[EXPECT_SPEECH_PAIR] = BlockingPolicy::NON_BLOCKING;
+    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    config[SET_MUTE_PAIR] = audioNonBlockingPolicy;
+    config[SPEAK_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    config[EXPECT_SPEECH_PAIR] = audioNonBlockingPolicy;
 
     auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
@@ -1069,7 +1074,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, multiturnScenario) {
  */
 TEST_F(AlexaDirectiveSequencerLibraryTest, getAttachmentWithContentId) {
     DirectiveHandlerConfiguration config;
-    config[SPEAK_PAIR] = BlockingPolicy::BLOCKING;
+    config[SPEAK_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
 
     auto directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 

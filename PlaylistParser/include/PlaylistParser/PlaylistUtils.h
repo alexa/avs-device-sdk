@@ -25,30 +25,8 @@
 namespace alexaClientSDK {
 namespace playlistParser {
 
-/// A struct to contain a URL encountered in a playlist and metadata surrounding it.
-struct UrlAndInfo {
-    std::string url;
-    std::chrono::milliseconds length;
-};
-
-/// A struct used to encapsulate information retrieved from an M3U playlist.
-struct M3UContent {
-    std::vector<UrlAndInfo> childrenUrls;
-    bool endlistTagPresent;
-    bool streamInfTagPresent;
-    M3UContent() : endlistTagPresent{false}, streamInfTagPresent{false} {};
-};
-
 /// Timeout for future ready.
 static const std::chrono::milliseconds WAIT_FOR_FUTURE_READY_TIMEOUT(100);
-
-/**
- * Parses an M3U playlist and returns the "children" URLs in the order they appeared in the playlist.
- *
- * @param content The content to parse.
- * @return A vector of URLs and their relevant metadata in the order they appeared in the playlist.
- */
-M3UContent parseM3UContent(const std::string& playlistURL, const std::string& content);
 
 /**
  * Parses an PLS playlist and returns the "children" URLs in the order they appeared in the playlist.
@@ -57,14 +35,6 @@ M3UContent parseM3UContent(const std::string& playlistURL, const std::string& co
  * @return A vector of URLs in the order they appeared in the playlist.
  */
 std::vector<std::string> parsePLSContent(const std::string& playlistURL, const std::string& content);
-
-/**
- * Determines the playlist type of an M3U playlist.
- *
- * @param playlistContent The M3U playlist in @c std::string format.
- * @return @c true if the playlist is extended M3U or @c false otherwise
- */
-bool isPlaylistExtendedM3U(const std::string& playlistContent);
 
 /**
  * Removes a carriage return from the end of a line. This is required to handle Windows style line breaks ('\r\n').
@@ -105,15 +75,6 @@ bool isURLAbsolute(const std::string& url);
  * @return @c true If everything was successful and @c false otherwise.
  */
 bool getAbsoluteURLFromRelativePathToURL(std::string baseURL, std::string relativePath, std::string* absoluteURL);
-
-/**
- * Used to parse the time length out of a playlist entry metadata line that starts with #EXTINF.
- *
- * @param line The line to parse.
- * @return The time length of the entry or @c PlaylistParserObserverInterface::INVALID_DURATION if the time length
- * was unable to be parsed.
- */
-std::chrono::milliseconds parseRuntime(std::string line);
 
 }  // namespace playlistParser
 }  // namespace alexaClientSDK

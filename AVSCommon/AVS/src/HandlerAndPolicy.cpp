@@ -23,16 +23,13 @@ namespace avs {
 
 using namespace sdkInterfaces;
 
-HandlerAndPolicy::HandlerAndPolicy() : policy{BlockingPolicy::NONE} {
-}
-
 HandlerAndPolicy::HandlerAndPolicy(std::shared_ptr<DirectiveHandlerInterface> handlerIn, BlockingPolicy policyIn) :
         handler{handlerIn},
         policy{policyIn} {
 }
 
 HandlerAndPolicy::operator bool() const {
-    return handler && (policy != BlockingPolicy::NONE);
+    return handler && policy.isValid();
 }
 
 bool operator==(const HandlerAndPolicy& lhs, const HandlerAndPolicy& rhs) {

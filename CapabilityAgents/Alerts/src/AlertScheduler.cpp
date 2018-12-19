@@ -15,6 +15,7 @@
 
 #include "Alerts/AlertScheduler.h"
 
+#include <AVSCommon/Utils/Error/FinallyGuard.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Timing/TimeUtils.h>
 
@@ -25,6 +26,7 @@ namespace alerts {
 using namespace avsCommon::avs;
 using namespace avsCommon::utils::logger;
 using namespace avsCommon::utils::timing;
+using namespace avsCommon::utils::error;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AlertScheduler");
@@ -113,18 +115,15 @@ bool AlertScheduler::scheduleAlert(std::shared_ptr<Alert> alert) {
 
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    if (getAlertLocked(alert->getToken())) {
-        // This is the best default behavior.  If we send SetAlertFailed for a duplicate Alert,
-        // then AVS will follow up with a DeleteAlert Directive - just to ensure the client does not
-        // have a bad version of the Alert hanging around.  We already have the Alert, so let's return true,
-        // so that SetAlertSucceeded will be sent back to AVS.
-        ACSDK_INFO(LX("scheduleAlert").m("Duplicate SetAlert from AVS."));
-        return true;
-    }
-
     if (alert->isPastDue(unixEpochNow, m_alertPastDueTimeLimit)) {
         ACSDK_ERROR(LX("scheduleAlertFailed").d("reason", "parsed alert is past-due.  Ignoring."));
         return false;
+    }
+
+    auto oldAlert = getAlertLocked(alert->getToken());
+    if (oldAlert) {
+        // Update the alert schedule.
+        return updateAlert(oldAlert, alert->getScheduledTime_ISO_8601());
     }
 
     // it's a new alert.
@@ -138,6 +137,34 @@ bool AlertScheduler::scheduleAlert(std::shared_ptr<Alert> alert) {
 
     if (!m_activeAlert) {
         setTimerForNextAlertLocked();
+    }
+
+    return true;
+}
+
+bool AlertScheduler::updateAlert(const std::shared_ptr<Alert>& alert, const std::string& newScheduledTime) {
+    ACSDK_DEBUG5(LX(__func__).d("token", alert->getToken()).d("newScheduledTime", newScheduledTime));
+    // Remove old alert.
+    m_scheduledAlerts.erase(alert);
+
+    // Re-insert the alert and update timer before exiting this function.
+    FinallyGuard guard{[this, &alert] {
+        m_scheduledAlerts.insert(alert);
+        if (!m_activeAlert) {
+            setTimerForNextAlertLocked();
+        }
+    }};
+
+    auto oldScheduledTime = alert->getScheduledTime_ISO_8601();
+    if (!alert->updateScheduledTime(newScheduledTime)) {
+        ACSDK_ERROR(LX("updateAlertFailed").m("Update alert time failed."));
+        return false;
+    }
+
+    if (!m_alertStorage->modify(alert)) {
+        ACSDK_ERROR(LX("updateAlertFailed").d("reason", "could not update alert in database."));
+        alert->updateScheduledTime(oldScheduledTime);
+        return false;
     }
 
     return true;

@@ -150,8 +150,8 @@ void UserInactivityMonitor::startTimer() {
 }
 
 DirectiveHandlerConfiguration UserInactivityMonitor::getConfiguration() const {
-    return DirectiveHandlerConfiguration{
-        {NamespaceAndName{USER_INACTIVITY_MONITOR_NAMESPACE, RESET_DIRECTIVE_NAME}, BlockingPolicy::NON_BLOCKING}};
+    return DirectiveHandlerConfiguration{{NamespaceAndName{USER_INACTIVITY_MONITOR_NAMESPACE, RESET_DIRECTIVE_NAME},
+                                          BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false)}};
 }
 
 void UserInactivityMonitor::handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) {

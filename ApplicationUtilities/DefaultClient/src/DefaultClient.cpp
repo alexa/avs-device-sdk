@@ -19,9 +19,18 @@
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
 #include <AVSCommon/Utils/Bluetooth/BluetoothEventBus.h>
 
+#ifdef ENABLE_OPUS
+#include <SpeechEncoder/OpusEncoderContext.h>
+#endif
+
 #ifdef ENABLE_COMMS
 #include <CallManager/CallManager.h>
 #include <CallManager/SipUserAgent.h>
+#endif
+
+#ifdef ENABLE_PCC
+#include <AVSCommon/SDKInterfaces/Phone/PhoneCallerInterface.h>
+#include <PhoneCallController/PhoneCallController.h>
 #endif
 
 #ifdef ENABLE_MRM
@@ -77,6 +86,10 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
     const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
+#ifdef ENABLE_PCC
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
+#endif
     std::shared_ptr<EqualizerRuntimeSetup> equalizerRuntimeSetup,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
@@ -84,6 +97,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<certifiedSender::MessageStorageInterface> messageStorage,
     std::shared_ptr<capabilityAgents::notifications::NotificationsStorageInterface> notificationsStorage,
     std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
+    std::unique_ptr<settings::storage::DeviceSettingStorageInterface> deviceSettingStorage,
     std::shared_ptr<capabilityAgents::bluetooth::BluetoothStorageInterface> bluetoothStorage,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
         alexaDialogStateObservers,
@@ -117,6 +131,10 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             bluetoothSpeaker,
             ringtoneSpeaker,
             additionalSpeakers,
+#ifdef ENABLE_PCC
+            phoneSpeaker,
+            phoneCaller,
+#endif
             equalizerRuntimeSetup,
             audioFactory,
             authDelegate,
@@ -124,6 +142,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             messageStorage,
             notificationsStorage,
             settingsStorage,
+            std::move(deviceSettingStorage),
             bluetoothStorage,
             alexaDialogStateObservers,
             connectionObservers,
@@ -162,6 +181,10 @@ bool DefaultClient::initialize(
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
     const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
+#ifdef ENABLE_PCC
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
+#endif
     std::shared_ptr<EqualizerRuntimeSetup> equalizerRuntimeSetup,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
@@ -169,6 +192,7 @@ bool DefaultClient::initialize(
     std::shared_ptr<certifiedSender::MessageStorageInterface> messageStorage,
     std::shared_ptr<capabilityAgents::notifications::NotificationsStorageInterface> notificationsStorage,
     std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
+    std::shared_ptr<settings::storage::DeviceSettingStorageInterface> deviceSettingStorage,
     std::shared_ptr<capabilityAgents::bluetooth::BluetoothStorageInterface> bluetoothStorage,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
         alexaDialogStateObservers,
@@ -224,6 +248,23 @@ bool DefaultClient::initialize(
 
     if (!capabilitiesDelegate) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullCapabilitiesDelegate"));
+        return false;
+    }
+
+    if (!deviceSettingStorage) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullDeviceSettingStorage"));
+        return false;
+    }
+    m_deviceSettingStorage = deviceSettingStorage;
+    if (!m_deviceSettingStorage->open()) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "deviceSettingStorageOpenFailed"));
+        return false;
+    }
+
+    m_deviceSettingsManager = std::make_shared<settings::DeviceSettingsManager>();
+
+    if (!m_deviceSettingsManager) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "createDeviceSettingsManagerFailed"));
         return false;
     }
 
@@ -350,10 +391,21 @@ bool DefaultClient::initialize(
         return false;
     }
 
-    /*
-     * Creating the Audio Input Processor - This component is the Capability Agent that implments the SpeechRecognizer
-     * interface of AVS.
-     */
+/*
+ * Creating the Audio Input Processor - This component is the Capability Agent that implements the
+ * SpeechRecognizer interface of AVS.
+ */
+#ifdef ENABLE_OPUS
+    m_audioInputProcessor = capabilityAgents::aip::AudioInputProcessor::create(
+        m_directiveSequencer,
+        m_connectionManager,
+        contextManager,
+        m_audioFocusManager,
+        m_dialogUXStateAggregator,
+        m_exceptionSender,
+        m_userInactivityMonitor,
+        std::make_shared<speechencoder::SpeechEncoder>(std::make_shared<speechencoder::OpusEncoderContext>()));
+#else
     m_audioInputProcessor = capabilityAgents::aip::AudioInputProcessor::create(
         m_directiveSequencer,
         m_connectionManager,
@@ -362,6 +414,8 @@ bool DefaultClient::initialize(
         m_dialogUXStateAggregator,
         m_exceptionSender,
         m_userInactivityMonitor);
+#endif
+
     if (!m_audioInputProcessor) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateAudioInputProcessor"));
         return false;
@@ -426,6 +480,11 @@ bool DefaultClient::initialize(
 
     std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> allSpeakers = {
         speakSpeaker, audioSpeaker, alertsSpeaker, notificationsSpeaker, bluetoothSpeaker, ringtoneSpeaker};
+
+#ifdef ENABLE_PCC
+    allSpeakers.push_back(phoneSpeaker);
+#endif
+
     allSpeakers.insert(allSpeakers.end(), additionalSpeakers.begin(), additionalSpeakers.end());
 
     /*
@@ -484,6 +543,18 @@ bool DefaultClient::initialize(
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateInteractionModelCapabilityAgent"));
         return false;
     }
+
+#ifdef ENABLE_PCC
+    /*
+     * Creating the PhoneCallController - This component is the Capability Agent that implements the
+     * PhoneCallController interface of AVS
+     */
+    m_phoneCallControllerCapabilityAgent = capabilityAgents::phoneCallController::PhoneCallController::create(
+        contextManager, m_connectionManager, phoneCaller, phoneSpeaker, m_audioFocusManager, m_exceptionSender);
+    if (!m_phoneCallControllerCapabilityAgent) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreatePhoneCallControllerCapabilityAgent"));
+    }
+#endif
 
 #ifdef ENABLE_COMMS
     if (!ringtoneMediaPlayer) {
@@ -605,6 +676,19 @@ bool DefaultClient::initialize(
     }
 
 #endif
+
+    /*
+     * Creating the DoNotDisturb Capability Agent
+     */
+    m_dndCapabilityAgent = capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent::create(
+        customerDataManager, m_exceptionSender, m_connectionManager, m_deviceSettingsManager, m_deviceSettingStorage);
+
+    if (!m_dndCapabilityAgent) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateDNDCapabilityAgent"));
+        return false;
+    }
+
+    addConnectionObserver(m_dndCapabilityAgent);
 
     /*
      * Creating the Equalizer Capability Agent and related implementations if enabled
@@ -760,6 +844,16 @@ bool DefaultClient::initialize(
         return false;
     }
 
+#ifdef ENABLE_PCC
+    if (m_phoneCallControllerCapabilityAgent &&
+        !m_directiveSequencer->addDirectiveHandler(m_phoneCallControllerCapabilityAgent)) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterDirectiveHandler")
+                        .d("directiveHandler", "PhoneCallControllerCapabilityAgent"));
+        return false;
+    }
+#endif
+
     if (!m_directiveSequencer->addDirectiveHandler(endpointHandler)) {
         ACSDK_ERROR(LX("initializeFailed")
                         .d("reason", "unableToRegisterDirectiveHandler")
@@ -846,6 +940,12 @@ bool DefaultClient::initialize(
         }
     }
 
+    if (!m_directiveSequencer->addDirectiveHandler(m_dndCapabilityAgent)) {
+        ACSDK_ERROR(
+            LX("initializeFailed").d("reason", "unableToRegisterDirectiveHandler").d("directiveHandler", "DND"));
+        return false;
+    }
+
     /*
      * Register capabilities for publishing to the Capabilities API.
      */
@@ -894,6 +994,17 @@ bool DefaultClient::initialize(
                         .d("capabilitiesDelegate", "PlaybackController"));
         return false;
     }
+
+#ifdef ENABLE_PCC
+    // PhoneCallController is an optional component, so it may be nullptr
+    if (m_phoneCallControllerCapabilityAgent &&
+        !(capabilitiesDelegate->registerCapability(m_phoneCallControllerCapabilityAgent))) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterCapability")
+                        .d("capabilitiesDelegate", "PhoneCallController"));
+        return false;
+    }
+#endif
 
     if (!(capabilitiesDelegate->registerCapability(m_settings))) {
         ACSDK_ERROR(
@@ -957,6 +1068,18 @@ bool DefaultClient::initialize(
         }
     }
 
+#ifdef ENABLE_COMMS
+    auto callManager = capabilityAgents::callManager::CallManager::getInstance();
+    if (callManager) {
+        if (!(capabilitiesDelegate->registerCapability(callManager))) {
+            ACSDK_ERROR(LX("initializeFailed")
+                            .d("reason", "unableToRegisterCapability")
+                            .d("capabilitiesDelegate", "CallManager"));
+            return false;
+        }
+    }
+#endif
+
     if (nullptr != m_equalizerCapabilityAgent) {
         if (!(capabilitiesDelegate->registerCapability(m_equalizerCapabilityAgent))) {
             ACSDK_ERROR(LX("initializeFailed")
@@ -964,6 +1087,12 @@ bool DefaultClient::initialize(
                             .d("capabilitiesDelegate", "Equalizer"));
             return false;
         }
+    }
+
+    if (!(capabilitiesDelegate->registerCapability(m_dndCapabilityAgent))) {
+        ACSDK_ERROR(
+            LX("initializeFailed").d("reason", "unableToRegisterCapability").d("capabilitiesDelegate", "DoNotDisturb"));
+        return false;
     }
 
     return true;
@@ -1126,6 +1255,10 @@ void DefaultClient::changeSetting(const std::string& key, const std::string& val
 
 void DefaultClient::sendDefaultSettings() {
     m_settings->sendDefaultSettings();
+}
+
+std::shared_ptr<settings::DeviceSettingsManager> DefaultClient::getSettingsManager() {
+    return m_deviceSettingsManager;
 }
 
 std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> DefaultClient::getPlaybackRouter() const {
@@ -1336,6 +1469,17 @@ DefaultClient::~DefaultClient() {
         ACSDK_DEBUG5(LX("MRMCapabilityAgentShutdown"));
         m_mrmCapabilityAgent->shutdown();
     }
+#ifdef ENABLE_PCC
+    if (m_phoneCallControllerCapabilityAgent) {
+        ACSDK_DEBUG5(LX("PhoneCallControllerCapabilityAgentShutdown"));
+        m_phoneCallControllerCapabilityAgent->shutdown();
+    }
+#endif
+    if (m_dndCapabilityAgent) {
+        ACSDK_DEBUG5(LX("DNDCapabilityAgentShutdown"));
+        removeConnectionObserver(m_dndCapabilityAgent);
+        m_dndCapabilityAgent->shutdown();
+    }
     if (nullptr != m_equalizerCapabilityAgent) {
         for (auto& equalizer : m_equalizerRuntimeSetup->getAllEqualizers()) {
             m_equalizerController->unregisterEqualizer(equalizer);
@@ -1345,6 +1489,11 @@ DefaultClient::~DefaultClient() {
         }
         ACSDK_DEBUG5(LX("EqualizerCapabilityAgentShutdown"));
         m_equalizerCapabilityAgent->shutdown();
+    }
+
+    if (m_deviceSettingStorage) {
+        ACSDK_DEBUG5(LX("CloseSettingStorage"));
+        m_deviceSettingStorage->close();
     }
 }
 

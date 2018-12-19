@@ -1,5 +1,44 @@
 ## ChangeLog
 
+### v1.11.0 released 12/19/2018:
+
+**Enhancements**
+
+* Added support for the new Alexa [DoNotDisturb](https://developer.amazon.com/docs/alexa-voice-service/donotdisturb.html) interface, which enables users to toggle the do not disturb (DND) function on their Alexa built-in products.
+* The SDK now supports [Opus](https://opus-codec.org/license/) encoding, which is optional. To enable Opus, you must [set the CMake flag to `-DOPUS=ON`](https://github.com/alexa/avs-device-sdk/wiki/Build-Options#Opus-encoding), and include the [libopus library](https://github.com/alexa/avs-device-sdk/wiki/Dependencies#core-dependencies) dependency in your build.
+* The MediaPlayer reference implementation has been expanded to support the SAMPLE-AES and AES-128 encryption methods for HLS streaming.
+  * AES-128 encryption is dependent on libcrypto, which is part of the required openSSL library, and is enabled by default.
+  * To enable [SAMPLE-AES](https://github.com/alexa/avs-device-sdk/wiki/Dependencies#core-dependencies/Enable-SAMPLE-AES-decryption) encryption, you must set the `-DSAMPLE_AES=ON` in your CMake command, and include the [FFMPEG](https://github.com/alexa/avs-device-sdk/wiki/Dependencies#core-dependencies/Enable-SAMPLE-AES-decryption) library dependency in your build.
+* A new configuration for [deviceSettings](https://github.com/alexa/avs-device-sdk/blob/v1.11.0/Integration/AlexaClientSDKConfig.json#L59) has been added.This configuration allows you to specify the location of the device settings database.
+* Added locale support for es-MX.
+
+**Bug Fixes**
+
+* Fixed an issue where music wouldn't resume playback in the Android app.
+* Now all equalizer capabilities are fully disabled when equalizer is turned off in configuration file. Previously, devices were unconditionally required to provide support for equalizer in order to run the SDK.
+* [Issue 1106](https://github.com/alexa/avs-device-sdk/issues/1106) - Fixed an issue in which the `CBLAuthDelegate` wasn't using the correct timeout during request refresh.
+* [Issue 1128](https://github.com/alexa/avs-device-sdk/issues/1128) - Fixed an issue in which the `AudioPlayer` instance persisted at shutdown, due to a shared dependency with the `ProgressTimer`.
+* Fixed in issue that occurred when a connection to streaming content was interrupted, the SDK did not attempt to resume the connection, and appeared to assume that the content had been fully downloaded. This triggered the next track to be played, assuming it was a playlist.
+* [Issue 1040](https://github.com/alexa/avs-device-sdk/issues/1040) - Fixed an issue where alarms would continue to play after user barge-in.
+
+**Known Issues**
+
+* `PlaylistParser` and `IterativePlaylistParser` generate two HTTP requests (one to fetch the content type, and one to fetch the audio data) for each audio stream played.
+* Music playback history isn't being displayed in the Alexa app for certain account and device types.
+* On GCC 8+, issues related to `-Wclass-memaccess` will trigger warnings. However, this won't cause the build to fail, and these warnings can be ignored.
+* In order to use Bluetooth source and sink PulseAudio, you must manually load and unload PulseAudio modules after the SDK starts.
+* The `ACL` may encounter issues if audio attachments are received but not consumed.
+* `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
+* The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.
+* Connecting a product to streaming media via Bluetooth will sometimes stop media playback within the source application. Resuming playback through the source application or toggling next/previous will correct playback.
+* When a source device is streaming silence via Bluetooth, the Alexa app indicates that audio content is streaming.
+* The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation is not yet supported.
+* On some products, interrupted Bluetooth playback may not resume if other content is locally streamed.
+* `make integration` is currently not available for Android. In order to run integration tests on Android, you'll need to manually upload the test binary file along with any input file. At that point, the adb can be used to run the integration tests.
+* On Raspberry Pi running Android Things with HDMI output audio, beginning of speech is truncated when Alexa responds to user TTS.
+* When the sample app is restarted and network connection is lost, alerts don't play.
+* When network connection is lost, lost connection status is not returned via local Text-to Speech (TTS).
+
 ### v1.10.0 released 10/24/2018:
 
 **Enhancements**
@@ -32,7 +71,7 @@
 
 * On GCC 8+, issues related to `-Wclass-memaccess` will trigger warnings. However, this won't cause the build to fail, and these warnings can be ignored.
 * In order to use Bluetooth source and sink PulseAudio, you must manually load and unload PulseAudio modules after the SDK starts.
-* When connecting a new device to AVS, *currently connected devices must be manually disconnected*. For example, if a user says "Alexa, connect my phone", and an Alexa-enabled speaker is already connected, there is no indication to the user a device is already connected.
+* When connecting a new device to AVS, *currently connected devices must be manually disconnected*. For example, if a user says "Alexa, connect my phone", and an Alexa Built-in speaker is already connected, there is no indication to the user a device is already connected.
 * The `ACL` may encounter issues if audio attachments are received but not consumed.
 * `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
 * The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.

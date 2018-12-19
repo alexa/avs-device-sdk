@@ -189,9 +189,11 @@ void AudioPlayer::onDeregistered() {
 
 DirectiveHandlerConfiguration AudioPlayer::getConfiguration() const {
     DirectiveHandlerConfiguration configuration;
-    configuration[PLAY] = BlockingPolicy::NON_BLOCKING;
-    configuration[STOP] = BlockingPolicy::NON_BLOCKING;
-    configuration[CLEAR_QUEUE] = BlockingPolicy::NON_BLOCKING;
+    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+
+    configuration[PLAY] = audioNonBlockingPolicy;
+    configuration[STOP] = audioNonBlockingPolicy;
+    configuration[CLEAR_QUEUE] = audioNonBlockingPolicy;
     return configuration;
 }
 
@@ -733,6 +735,14 @@ void AudioPlayer::executeOnPlaybackStarted(SourceId id) {
         return;
     }
 
+    // Race condition exists where focus can be lost before the executeOnPlaybackStarted callback.
+    if (avsCommon::avs::FocusState::NONE == m_focus) {
+        ACSDK_WARN(LX(__func__).d("reason", "callbackAfterFocusLost").d("action", "stopping"));
+        if (!m_mediaPlayer->stop(m_sourceId)) {
+            ACSDK_ERROR(LX(__func__).d("reason", "stopFailed"));
+        }
+    }
+
     /*
      * When @c AudioPlayer is the active player, @c PlaybackController which is
      * the default playback handler, should handle playback button presses.
@@ -1103,7 +1113,6 @@ void AudioPlayer::changeActivity(PlayerActivity activity) {
 }
 
 void AudioPlayer::sendEventWithTokenAndOffset(const std::string& eventName, std::chrono::milliseconds offset) {
-    ACSDK_DEBUG1(LX("sendEventWithTokenAndOffset").d("eventName", eventName).d("offset", offset.count()));
     rapidjson::Document payload(rapidjson::kObjectType);
     payload.AddMember(TOKEN_KEY, m_token, payload.GetAllocator());
     // Note: offset is an optional parameter, which defaults to MEDIA_PLAYER_INVALID_OFFSET.  Per documentation, this
@@ -1111,6 +1120,7 @@ void AudioPlayer::sendEventWithTokenAndOffset(const std::string& eventName, std:
     if (MEDIA_PLAYER_INVALID_OFFSET == offset) {
         offset = getOffset();
     }
+    ACSDK_DEBUG1(LX("sendEventWithTokenAndOffset").d("eventName", eventName).d("offset", offset.count()));
     payload.AddMember(
         OFFSET_KEY,
         (int64_t)std::chrono::duration_cast<std::chrono::milliseconds>(offset).count(),

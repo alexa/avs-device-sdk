@@ -98,7 +98,7 @@ public:
      * @return True, if successful, false otherwise.
      */
     bool convertTimeToUtcIso8601Rfc3339(
-        const std::chrono::high_resolution_clock::time_point& tp,
+        const std::chrono::system_clock::time_point& tp,
         std::string* iso8601TimeString);
 
 private:

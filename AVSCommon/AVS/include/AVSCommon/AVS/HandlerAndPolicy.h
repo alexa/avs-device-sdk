@@ -32,7 +32,7 @@ public:
     /**
      * Constructor to initialize with default property values.
      */
-    HandlerAndPolicy();
+    HandlerAndPolicy() = default;
 
     /**
      * Constructor to initialize with specific property values.

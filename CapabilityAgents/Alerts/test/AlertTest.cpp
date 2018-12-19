@@ -246,15 +246,38 @@ TEST_F(AlertTest, testSetTimeISO8601) {
     ASSERT_EQ(m_alert->getScheduledTime_Unix(), unixTime);
 }
 
+TEST_F(AlertTest, testUpdateScheduleActiveFailed) {
+    m_alert->activate();
+    m_alert->setStateActive();
+    ASSERT_EQ(m_alert->getState(), Alert::State::ACTIVE);
+
+    auto oldScheduledTime = m_alert->getScheduledTime_ISO_8601();
+    ASSERT_FALSE(m_alert->updateScheduledTime("2030-02-02T12:56:34+0000"));
+    ASSERT_EQ(m_alert->getState(), Alert::State::ACTIVE);
+    ASSERT_EQ(m_alert->getScheduledTime_ISO_8601(), oldScheduledTime);
+}
+
+TEST_F(AlertTest, testUpdateScheduleBadTime) {
+    auto oldScheduledTime = m_alert->getScheduledTime_ISO_8601();
+    ASSERT_FALSE(m_alert->updateScheduledTime(INVALID_FORMAT_SCHED_TIME));
+    ASSERT_EQ(m_alert->getScheduledTime_ISO_8601(), oldScheduledTime);
+}
+
+TEST_F(AlertTest, testUpdateScheduleHappyCase) {
+    m_alert->reset();
+    ASSERT_TRUE(m_alert->updateScheduledTime("2030-02-02T12:56:34+0000"));
+    ASSERT_EQ(m_alert->getState(), Alert::State::SET);
+}
+
 TEST_F(AlertTest, testSnoozeBadTime) {
     m_alert->reset();
-    m_alert->snooze(INVALID_FORMAT_SCHED_TIME);
+    ASSERT_FALSE(m_alert->snooze(INVALID_FORMAT_SCHED_TIME));
     ASSERT_NE(m_alert->getState(), Alert::State::SNOOZING);
 }
 
 TEST_F(AlertTest, testSnoozeHappyCase) {
     m_alert->reset();
-    m_alert->snooze("2030-02-02T12:56:34+0000");
+    ASSERT_TRUE(m_alert->snooze("2030-02-02T12:56:34+0000"));
     ASSERT_EQ(m_alert->getState(), Alert::State::SNOOZING);
 }
 
@@ -286,10 +309,14 @@ TEST_F(AlertTest, testSetLoopPause) {
 }
 
 TEST_F(AlertTest, testSetBackgroundAssetId) {
+    std::unordered_map<std::string, Alert::Asset> assets;
+    assets["testAssetId"] = Alert::Asset("testAssetId", "http://test.com/a");
+
     std::string backgroundAssetId{"testAssetId"};
     Alert::StaticData staticData;
     m_alert->getAlertData(&staticData, nullptr);
     staticData.assetConfiguration.backgroundAssetId = backgroundAssetId;
+    staticData.assetConfiguration.assets = assets;
     m_alert->setAlertData(&staticData, nullptr);
     ASSERT_EQ(m_alert->getBackgroundAssetId(), backgroundAssetId);
 }
@@ -337,6 +364,76 @@ TEST_F(AlertTest, testParseFromJsonStatusToString) {
         m_alert->parseFromJsonStatusToString(Alert::ParseFromJsonStatus::MISSING_REQUIRED_PROPERTY),
         "MISSING_REQUIRED_PROPERTY");
     ASSERT_EQ(m_alert->parseFromJsonStatusToString(Alert::ParseFromJsonStatus::INVALID_VALUE), "INVALID_VALUE");
+}
+
+TEST_F(AlertTest, testHasAssetHappy) {
+    std::unordered_map<std::string, Alert::Asset> assets;
+    assets["A"] = Alert::Asset("A", "http://test.com/a");
+    assets["B"] = Alert::Asset("B", "http://test.com/a");
+
+    std::vector<std::string> playOrderItems;
+    playOrderItems.push_back("A");
+    playOrderItems.push_back("B");
+
+    Alert::AssetConfiguration c;
+    c.assets = assets;
+    c.assetPlayOrderItems = playOrderItems;
+    c.backgroundAssetId = "A";
+    c.loopPause = std::chrono::milliseconds(100);
+
+    Alert::StaticData d;
+    d.token = "aaa";
+    d.dbId = 1;
+    d.assetConfiguration = c;
+
+    ASSERT_TRUE(m_alert->setAlertData(&d, nullptr));
+}
+
+TEST_F(AlertTest, testHasAssetBgAssetIdNotFoundOnAssets) {
+    std::unordered_map<std::string, Alert::Asset> assets;
+    assets["A"] = Alert::Asset("A", "http://test.com/a");
+    assets["B"] = Alert::Asset("B", "http://test.com/a");
+
+    std::vector<std::string> playOrderItems;
+    playOrderItems.push_back("A");
+    playOrderItems.push_back("B");
+
+    Alert::AssetConfiguration c;
+    c.assets = assets;
+    c.assetPlayOrderItems = playOrderItems;
+    c.backgroundAssetId = "C";
+    c.loopPause = std::chrono::milliseconds(100);
+
+    Alert::StaticData d;
+    d.token = "aaa";
+    d.dbId = 1;
+    d.assetConfiguration = c;
+
+    ASSERT_FALSE(m_alert->setAlertData(&d, nullptr));
+}
+
+TEST_F(AlertTest, testHasAssetOrderItemNotFoundOnAssets) {
+    std::unordered_map<std::string, Alert::Asset> assets;
+    assets["A"] = Alert::Asset("A", "http://test.com/a");
+    assets["B"] = Alert::Asset("B", "http://test.com/a");
+
+    std::vector<std::string> playOrderItems;
+    playOrderItems.push_back("A");
+    playOrderItems.push_back("B");
+    playOrderItems.push_back("C");
+
+    Alert::AssetConfiguration c;
+    c.assets = assets;
+    c.assetPlayOrderItems = playOrderItems;
+    c.backgroundAssetId = "A";
+    c.loopPause = std::chrono::milliseconds(100);
+
+    Alert::StaticData d;
+    d.token = "aaa";
+    d.dbId = 1;
+    d.assetConfiguration = c;
+
+    ASSERT_FALSE(m_alert->setAlertData(&d, nullptr));
 }
 
 }  // namespace test

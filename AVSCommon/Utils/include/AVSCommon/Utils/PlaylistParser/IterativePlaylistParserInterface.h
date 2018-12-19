@@ -33,20 +33,6 @@ namespace playlistParser {
 class IterativePlaylistParserInterface {
 public:
     /**
-     * A playlist entry representation.
-     */
-    struct PlaylistEntry {
-        /// The URL for the entry.
-        std::string url;
-
-        /// The duration of the content if its known; INVALID_DURATION otherwise.
-        std::chrono::milliseconds duration;
-
-        /// The latest parsing result.
-        avsCommon::utils::playlistParser::PlaylistParseResult parseResult;
-    };
-
-    /**
      * Initialize the playlist parsing. Once succesfully initialized, the method @c next can be used to retrieve
      * playlist entries.
      *

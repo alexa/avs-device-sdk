@@ -25,8 +25,8 @@
 
 #include <AVSCommon/Utils/Memory/Memory.h>
 
-#include "PlaylistParser/MockContentFetcher.h"
 #include "PlaylistParser/IterativePlaylistParser.h"
+#include "PlaylistParser/MockContentFetcher.h"
 
 namespace alexaClientSDK {
 namespace playlistParser {
@@ -154,13 +154,6 @@ TEST_F(IterativePlaylistParserTest, testParsingRelativePlaylist) {
 }
 
 /**
- * Tests parsing of a recursive M3U/HLS playlist.
- */
-TEST_F(IterativePlaylistParserTest, testParsingRecursiveHlsPlaylist) {
-    testPlaylist(TEST_HLS_RECURSIVE_PLAYLIST_URL, TEST_HLS_RECURSIVE_PLAYLIST_URLS);
-}
-
-/**
  * Tests parsing of a live stream HLS playlist.
  */
 TEST_F(IterativePlaylistParserTest, testParsingLiveStreamPlaylist) {
@@ -197,7 +190,7 @@ TEST_F(IterativePlaylistParserTest, testNextFailsAfterAbort) {
     m_parser->abort();
 
     auto entry = m_parser->next();
-    auto expectedDuration = PlaylistParserObserverInterface::INVALID_DURATION;
+    auto expectedDuration = std::chrono::milliseconds(-1);
     EXPECT_EQ(entry.parseResult, PlaylistParseResult::ERROR);
     EXPECT_EQ(entry.url, "");
     EXPECT_EQ(entry.duration, expectedDuration);

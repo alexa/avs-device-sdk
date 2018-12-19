@@ -692,6 +692,13 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
     return true;
 }
 
+/**
+ * Loads asset data into the map.
+ *
+ * @param db The database object to read data from.
+ * @param alertAssetsMap The map that will receive the assets.
+ * @return @c true if data was loaded successfully
+ */
 static bool loadAlertAssets(SQLiteDatabase* db, std::map<int, std::vector<Alert::Asset>>* alertAssetsMap) {
     const std::string sqlString = "SELECT * FROM " + ALERT_ASSETS_TABLE_NAME + ";";
 
@@ -734,6 +741,13 @@ static bool loadAlertAssets(SQLiteDatabase* db, std::map<int, std::vector<Alert:
     return true;
 }
 
+/**
+ * Reads the assets order from the database and stores this data on the given map.
+ *
+ * @param db The database object to read data from.
+ * @param alertAssetOrderItemsMap The map that will receive data.
+ * @return @c true if data was loaded successfully from the database
+ */
 static bool loadAlertAssetPlayOrderItems(
     SQLiteDatabase* db,
     std::map<int, std::set<AssetOrderItem, AssetOrderItemCompare>>* alertAssetOrderItemsMap) {
@@ -786,6 +800,20 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
 
     if (dbVersion != ALERTS_DATABASE_VERSION_ONE && dbVersion != ALERTS_DATABASE_VERSION_TWO) {
         ACSDK_ERROR(LX("loadHelperFailed").d("Invalid version", dbVersion));
+        return false;
+    }
+
+    // Loads the assets map from the database
+    std::map<int, std::vector<Alert::Asset>> alertAssetsMap;
+    if (!loadAlertAssets(&m_db, &alertAssetsMap)) {
+        ACSDK_ERROR(LX("loadHelperFailed").m("Could not load alert assets."));
+        return false;
+    }
+
+    // Loads the asset order item map from the database
+    std::map<int, std::set<AssetOrderItem, AssetOrderItemCompare>> alertAssetOrderItemsMap;
+    if (!loadAlertAssetPlayOrderItems(&m_db, &alertAssetOrderItemsMap)) {
+        ACSDK_ERROR(LX("loadHelperFailed").m("Could not load alert asset play order items."));
         return false;
     }
 
@@ -869,6 +897,20 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
         staticData.assetConfiguration.loopPause = std::chrono::milliseconds{loopPauseInMilliseconds};
         staticData.assetConfiguration.backgroundAssetId = backgroundAssetId;
 
+        // alertAssetsMap is an alert id to asset map
+        if (alertAssetsMap.find(id) != alertAssetsMap.end()) {
+            for (auto& mapEntry : alertAssetsMap[id]) {
+                staticData.assetConfiguration.assets[mapEntry.id] = mapEntry;
+            }
+        }
+
+        // alertAssetOrderItemsMap is an alert id to asset order items map
+        if (alertAssetOrderItemsMap.find(id) != alertAssetOrderItemsMap.end()) {
+            for (auto& mapEntry : alertAssetOrderItemsMap[id]) {
+                staticData.assetConfiguration.assetPlayOrderItems.push_back(mapEntry.name);
+            }
+        }
+
         if (!dbFieldToAlertState(state, &dynamicData.state)) {
             ACSDK_ERROR(LX("loadHelperFailed").m("Could not convert alert state."));
             return false;
@@ -885,31 +927,6 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
     }
 
     statement->finalize();
-
-    std::map<int, std::vector<Alert::Asset>> alertAssetsMap;
-    if (!loadAlertAssets(&m_db, &alertAssetsMap)) {
-        ACSDK_ERROR(LX("loadHelperFailed").m("Could not load alert assets."));
-        return false;
-    }
-
-    std::map<int, std::set<AssetOrderItem, AssetOrderItemCompare>> alertAssetOrderItemsMap;
-    if (!loadAlertAssetPlayOrderItems(&m_db, &alertAssetOrderItemsMap)) {
-        ACSDK_ERROR(LX("loadHelperFailed").m("Could not load alert asset play order items."));
-        return false;
-    }
-
-    for (auto alert : *alertContainer) {
-        if (alertAssetsMap.find(alert->getId()) != alertAssetsMap.end()) {
-            for (auto& mapEntry : alertAssetsMap[alert->getId()]) {
-                alert->getAssetConfiguration().assets[mapEntry.id] = mapEntry;
-            }
-        }
-        if (alertAssetOrderItemsMap.find(alert->getId()) != alertAssetOrderItemsMap.end()) {
-            for (auto& mapEntry : alertAssetOrderItemsMap[alert->getId()]) {
-                alert->getAssetConfiguration().assetPlayOrderItems.push_back(mapEntry.name);
-            }
-        }
-    }
 
     return true;
 }

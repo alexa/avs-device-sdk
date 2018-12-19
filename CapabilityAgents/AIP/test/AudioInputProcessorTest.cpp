@@ -42,8 +42,9 @@
 #include "AIP/AudioInputProcessor.h"
 #include "MockObserver.h"
 
-using namespace testing;
+using namespace alexaClientSDK::avsCommon::avs;
 using namespace alexaClientSDK::avsCommon::utils::json;
+using namespace testing;
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -72,12 +73,6 @@ avsCommon::avs::NamespaceAndName DIRECTIVES[] = {STOP_CAPTURE, EXPECT_SPEECH, SE
 
 /// The SpeechRecognizer context state signature.
 static const avsCommon::avs::NamespaceAndName RECOGNIZER_STATE{NAMESPACE, "RecognizerState"};
-
-/// Number of directives @c AudioInputProcessor should handle.
-static const size_t NUM_DIRECTIVES = sizeof(DIRECTIVES) / sizeof(*DIRECTIVES);
-
-/// The @c BlockingPolicy for all @c AudioInputProcessor directives.
-static const auto BLOCKING_POLICY = avsCommon::avs::BlockingPolicy::NON_BLOCKING;
 
 /// Sample rate for audio input stream.
 static const unsigned int SAMPLE_RATE_HZ = 16000;
@@ -864,6 +859,7 @@ void AudioInputProcessorTest::SetUp() {
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
         m_mockUserInactivityMonitor,
+        nullptr,
         *m_audioProvider);
     ASSERT_NE(m_audioInputProcessor, nullptr);
     m_audioInputProcessor->addObserver(m_dialogUXStateAggregator);
@@ -1396,6 +1392,7 @@ void AudioInputProcessorTest::makeDefaultAudioProviderNotAlwaysReadable() {
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
         m_mockUserInactivityMonitor,
+        nullptr,
         *m_audioProvider);
     EXPECT_NE(m_audioInputProcessor, nullptr);
     m_audioInputProcessor->addObserver(m_mockObserver);
@@ -1469,6 +1466,7 @@ TEST_F(AudioInputProcessorTest, createWithoutDirectiveSequencer) {
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
         m_mockUserInactivityMonitor,
+        nullptr,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
@@ -1484,6 +1482,7 @@ TEST_F(AudioInputProcessorTest, createWithoutMessageSender) {
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
         m_mockUserInactivityMonitor,
+        nullptr,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
@@ -1499,6 +1498,7 @@ TEST_F(AudioInputProcessorTest, createWithoutContextManager) {
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
         m_mockUserInactivityMonitor,
+        nullptr,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
@@ -1514,6 +1514,7 @@ TEST_F(AudioInputProcessorTest, createWithoutFocusManager) {
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
         m_mockUserInactivityMonitor,
+        nullptr,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
@@ -1529,6 +1530,7 @@ TEST_F(AudioInputProcessorTest, createWithoutStateAggregator) {
         nullptr,
         m_mockExceptionEncounteredSender,
         m_mockUserInactivityMonitor,
+        nullptr,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
@@ -1547,6 +1549,7 @@ TEST_F(AudioInputProcessorTest, createWithoutExceptionSender) {
         m_dialogUXStateAggregator,
         nullptr,
         m_mockUserInactivityMonitor,
+        nullptr,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
@@ -1565,6 +1568,7 @@ TEST_F(AudioInputProcessorTest, createWithoutUserInactivityMonitor) {
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
         nullptr,
+        nullptr,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
@@ -1579,23 +1583,19 @@ TEST_F(AudioInputProcessorTest, createWithoutAudioProvider) {
         m_mockFocusManager,
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
-        m_mockUserInactivityMonitor,
-        AudioProvider::null());
+        m_mockUserInactivityMonitor);
     EXPECT_NE(m_audioInputProcessor, nullptr);
 }
 
 /// Function to verify that @c AudioInputProcessor::getconfiguration() returns the expected configuration data.
 TEST_F(AudioInputProcessorTest, getConfiguration) {
+    DirectiveHandlerConfiguration expectedConfiguration{
+        {STOP_CAPTURE, BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false)},
+        {EXPECT_SPEECH, BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true)},
+        {SET_END_OF_SPEECH_OFFSET, BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false)}};
+
     auto configuration = m_audioInputProcessor->getConfiguration();
-    EXPECT_EQ(configuration.size(), NUM_DIRECTIVES);
-    for (auto namespaceAndName : DIRECTIVES) {
-        auto directive = configuration.find(namespaceAndName);
-        EXPECT_NE(directive, configuration.end());
-        if (configuration.end() == directive) {
-            continue;
-        }
-        EXPECT_EQ(directive->second, BLOCKING_POLICY);
-    }
+    EXPECT_EQ(configuration, expectedConfiguration);
 }
 
 /**

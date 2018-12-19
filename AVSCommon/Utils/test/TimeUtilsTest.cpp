@@ -101,7 +101,7 @@ static void testIso8601ConversionHelper(
     const std::chrono::microseconds us) {
     TimeUtils timeUtils;
     std::string resultString;
-    std::chrono::high_resolution_clock::time_point tp;
+    std::chrono::system_clock::time_point tp;
     tp += sec;
     tp += us;
     EXPECT_TRUE(timeUtils.convertTimeToUtcIso8601Rfc3339(tp, &resultString));

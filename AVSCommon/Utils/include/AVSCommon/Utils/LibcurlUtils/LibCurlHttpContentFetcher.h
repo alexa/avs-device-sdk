@@ -43,7 +43,8 @@ public:
      */
     std::unique_ptr<avsCommon::utils::HTTPContent> getContent(
         FetchOptions option,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer = nullptr) override;
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer = nullptr,
+        const std::vector<std::string>& customHeaders = std::vector<std::string>()) override;
 
     /*
      * Destructor.
@@ -59,6 +60,14 @@ private:
 
     /// A no-op callback to not parse HTTP bodies.
     static size_t noopCallback(char* data, size_t size, size_t nmemb, void* userData);
+
+    /**
+     * Helper method to get custom HTTP headers list.
+     *
+     * @param customHeaders Custom HTTP headers to add.
+     * @return @c curl_slist of custom headers if customHeaders are not empty, otherwise NULL.
+     */
+    curl_slist* getCustomHeaderList(std::vector<std::string> customHeaders);
 
     /// The URL to fetch from.
     std::string m_url;
@@ -82,6 +91,15 @@ private:
      * code.
      */
     long m_lastStatusCode;
+
+    /// The length of the content of the ongoing request.
+    ssize_t m_currentContentLength;
+
+    /// Number of bytes that has been received in the ongoing request.
+    ssize_t m_currentContentReceivedLength;
+
+    /// Number of bytes that has been received since the first request.
+    ssize_t m_totalContentReceivedLength;
 
     /**
      * The last content type parsed in an HTTP response header. Since we follow redirects, we only want the last content

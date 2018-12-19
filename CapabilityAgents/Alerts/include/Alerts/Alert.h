@@ -115,7 +115,7 @@ public:
         std::string url;
     };
 
-    /*
+    /**
      * A utility structure to encapsulate the data reflecting custom assets for an alert.
      */
     struct AssetConfiguration {
@@ -317,11 +317,22 @@ public:
     void deactivate(StopReason reason);
 
     /**
+     * Performs relevant operations to update this alarm to the new time provided.
+     *
+     * @note Use @c snooze for active alarms. This method will fail since it does not stop alarm rendering.
+     * @note The caller should validate the new schedule which should not be more than 30 minutes in the past.
+     * @param newScheduledTime The new time for the alarm to occur, in ISO-8601 format.
+     * @return @c true if it succeeds; @c false otherwise.
+     */
+    bool updateScheduledTime(const std::string& newScheduledTime);
+
+    /**
      * Performs relevant operations to snooze this alarm to the new time provided.
      *
-     * @param updatedScheduledTime_ISO_8601 The new time for the alarm to occur, in ISO-8601 format.
+     * @param updatedScheduledTime The new time for the alarm to occur, in ISO-8601 format.
+     * @return @c true if it succeeds; @c false otherwise.
      */
-    void snooze(const std::string& updatedScheduledTime_ISO_8601);
+    bool snooze(const std::string& updatedScheduledTime);
 
     /**
      * Sets the focus state for the alert.

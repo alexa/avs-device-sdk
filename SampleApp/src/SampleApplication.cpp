@@ -26,6 +26,10 @@
 #include "SampleApp/RevokeAuthorizationObserver.h"
 #endif
 
+#ifdef ENABLE_PCC
+#include "SampleApp/PhoneCaller.h"
+#endif
+
 #ifdef KWD
 #include <KWDProvider/KeywordDetectorProvider.h>
 #endif
@@ -81,6 +85,7 @@
 #include <Notifications/SQLiteNotificationsStorage.h>
 #include <SampleApp/SampleEqualizerModeController.h>
 #include <SQLiteStorage/SQLiteMiscStorage.h>
+#include <Settings/Storage/SQLiteDeviceSettingStorage.h>
 #include <Settings/SQLiteSettingStorage.h>
 
 #include <EqualizerImplementations/EqualizerController.h>
@@ -282,16 +287,17 @@ bool SampleApplication::createMediaPlayersForAdapters(
     std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup,
     std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers) {
 #ifdef GSTREAMER_MEDIA_PLAYER
+    bool equalizerEnabled = nullptr != equalizerRuntimeSetup;
     for (auto& entry : m_playerToMediaPlayerMap) {
-        auto mediaPlayer =
-            entry.second.second(httpContentFetcherFactory, true, entry.second.first, entry.first + "MediaPlayer");
+        auto mediaPlayer = entry.second.second(
+            httpContentFetcherFactory, equalizerEnabled, entry.second.first, entry.first + "MediaPlayer");
         if (mediaPlayer) {
             m_externalMusicProviderMediaPlayersMap[entry.first] = mediaPlayer;
             m_externalMusicProviderSpeakersMap[entry.first] = mediaPlayer;
             additionalSpeakers.push_back(
                 std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface>(mediaPlayer));
             m_adapterMediaPlayers.push_back(mediaPlayer);
-            if (nullptr != equalizerRuntimeSetup) {
+            if (equalizerEnabled) {
                 equalizerRuntimeSetup->addEqualizer(mediaPlayer);
             }
         } else {
@@ -388,7 +394,9 @@ bool SampleApplication::initialize(
     auto equalizerConfiguration = equalizer::SDKConfigEqualizerConfiguration::create(equalizerConfigBranch);
     std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup = nullptr;
 
-    if (nullptr != equalizerConfiguration && equalizerConfiguration->isEnabled()) {
+    bool equalizerEnabled = false;
+    if (equalizerConfiguration && equalizerConfiguration->isEnabled()) {
+        equalizerEnabled = true;
         equalizerRuntimeSetup = std::make_shared<defaultClient::EqualizerRuntimeSetup>();
         auto equalizerStorage = equalizer::MiscDBEqualizerStorage::create(miscStorage);
         auto equalizerModeController = sampleApp::SampleEqualizerModeController::create();
@@ -420,7 +428,7 @@ bool SampleApplication::initialize(
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker;
     std::tie(m_audioMediaPlayer, audioSpeaker) = createApplicationMediaPlayer(
         httpContentFetcherFactory,
-        true,
+        equalizerEnabled,
         avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
         "AudioMediaPlayer");
     if (!m_audioMediaPlayer || !audioSpeaker) {
@@ -473,6 +481,21 @@ bool SampleApplication::initialize(
         return false;
     }
 
+#ifdef ENABLE_PCC
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker;
+    std::shared_ptr<ApplicationMediaPlayer> phoneMediaPlayer;
+    std::tie(phoneMediaPlayer, phoneSpeaker) = createApplicationMediaPlayer(
+        httpContentFetcherFactory,
+        false,
+        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
+        "PhoneMediaPlayer");
+
+    if (!phoneMediaPlayer || !phoneSpeaker) {
+        ACSDK_CRITICAL(LX("Failed to create media player for phone!"));
+        return false;
+    }
+#endif
+
     std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> additionalSpeakers;
 
     if (!createMediaPlayersForAdapters(httpContentFetcherFactory, equalizerRuntimeSetup, additionalSpeakers)) {
@@ -501,9 +524,14 @@ bool SampleApplication::initialize(
         alexaClientSDK::capabilityAgents::notifications::SQLiteNotificationsStorage::create(config);
 
     /*
-     * Creating settings storage object to be used for storing <key, value> pairs of AVS Settings.
+     * Creating settings storage object to be used for storing <key, value> pairs of AVS Settings (DEPRECATED).
      */
     auto settingsStorage = alexaClientSDK::capabilityAgents::settings::SQLiteSettingStorage::create(config);
+
+    /*
+     * Creating new device settings storage object to be used for storing AVS Settings.
+     */
+    auto deviceSettingsStorage = alexaClientSDK::settings::storage::SQLiteDeviceSettingStorage::create(config);
 
     // Create HTTP Put handler
     std::shared_ptr<avsCommon::utils::libcurlUtils::HttpPut> httpPut =
@@ -524,6 +552,10 @@ bool SampleApplication::initialize(
      * CustomerDataHandler
      */
     auto customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
+
+#ifdef ENABLE_PCC
+    auto phoneCaller = std::make_shared<alexaClientSDK::sampleApp::PhoneCaller>();
+#endif
 
     /*
      * Creating the deviceInfo object
@@ -631,6 +663,10 @@ bool SampleApplication::initialize(
             bluetoothSpeaker,
             ringtoneSpeaker,
             additionalSpeakers,
+#ifdef ENABLE_PCC
+            phoneSpeaker,
+            phoneCaller,
+#endif
             equalizerRuntimeSetup,
             audioFactory,
             authDelegate,
@@ -638,6 +674,7 @@ bool SampleApplication::initialize(
             std::move(messageStorage),
             std::move(notificationsStorage),
             std::move(settingsStorage),
+            std::move(deviceSettingsStorage),
             std::move(bluetoothStorage),
             {userInterfaceManager},
             {userInterfaceManager},
@@ -661,6 +698,8 @@ bool SampleApplication::initialize(
     client->addSpeakerManagerObserver(userInterfaceManager);
 
     client->addNotificationsObserver(userInterfaceManager);
+
+    userInterfaceManager->configureSettingsNotifications(client->getSettingsManager());
 
     /*
      * Add GUI Renderer as an observer if display cards are supported.
@@ -781,6 +820,9 @@ bool SampleApplication::initialize(
         client,
         micWrapper,
         userInterfaceManager,
+#ifdef ENABLE_PCC
+        phoneCaller,
+#endif
         holdToTalkAudioProvider,
         tapToTalkAudioProvider,
         m_guiRenderer,
@@ -791,7 +833,15 @@ bool SampleApplication::initialize(
 #else
     // If wake word is not enabled, then creating the interaction manager without a wake word audio provider.
     m_interactionManager = std::make_shared<alexaClientSDK::sampleApp::InteractionManager>(
-        client, micWrapper, userInterfaceManager, holdToTalkAudioProvider, tapToTalkAudioProvider, m_guiRenderer);
+        client,
+        micWrapper,
+        userInterfaceManager,
+#ifdef ENABLE_PCC
+        phoneCaller,
+#endif
+        holdToTalkAudioProvider,
+        tapToTalkAudioProvider,
+        m_guiRenderer);
 #endif
 
     client->addAlexaDialogStateObserver(m_interactionManager);
@@ -851,6 +901,9 @@ SampleApplication::createApplicationMediaPlayer(
         enableEqualizer,
         mediaPlayer::android::PlaybackConfiguration(),
         name);
+    if (!mediaPlayer) {
+        return {nullptr, nullptr};
+    }
     auto speaker = mediaPlayer->getSpeaker();
     return {std::move(mediaPlayer), speaker};
 #endif

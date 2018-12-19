@@ -667,13 +667,12 @@ avsCommon::utils::libcurlUtils::HTTPResponse CBLAuthDelegate::requestRefresh() {
     auto timeout = m_configuration->getRequestTimeout();
     if (AuthObserverInterface::State::REFRESHED == m_authState) {
         auto timeUntilExpired = std::chrono::duration_cast<std::chrono::seconds>(m_tokenExpirationTime - m_requestTime);
-        if (timeout > timeUntilExpired) {
+        if ((timeout > timeUntilExpired) && (timeUntilExpired > std::chrono::seconds::zero())) {
             timeout = timeUntilExpired;
         }
     }
 
-    return m_httpPost->doPost(
-        m_configuration->getRequestTokenUrl(), headerLines, postData, m_configuration->getRequestTimeout());
+    return m_httpPost->doPost(m_configuration->getRequestTokenUrl(), headerLines, postData, timeout);
 }
 
 AuthObserverInterface::Error CBLAuthDelegate::receiveCodePairResponse(const HTTPResponse& response) {

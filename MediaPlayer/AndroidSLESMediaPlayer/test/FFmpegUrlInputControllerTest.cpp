@@ -58,10 +58,7 @@ static const std::chrono::milliseconds ZERO_OFFSET = std::chrono::milliseconds::
 static std::string INPUT_FOLDER;
 
 /// Constant struct used to mock return of playlist @c next() method. Calls to @c getContext with this entry will fail.
-static const IterativePlaylistParserInterface::PlaylistEntry INVALID_URL_ENTRY{
-    .parseResult = PlaylistParseResult::STILL_ONGOING,
-    .url = MEDIA_URL_1,
-    .duration = DURATION};
+static const PlaylistEntry INVALID_URL_ENTRY = PlaylistEntry::createErrorEntry(MEDIA_URL_1);
 
 class MockPlaylistParser : public IterativePlaylistParserInterface {
 public:
@@ -112,8 +109,7 @@ TEST_F(FFmpegUrlInputControllerTest, testCreateInvalidUrlFailed) {
 
 /// Test input controller getContext.
 TEST_F(FFmpegUrlInputControllerTest, testGetContextSucceed) {
-    IterativePlaylistParserInterface::PlaylistEntry validEntry{
-        .url = INPUT_FOLDER + MP3_FILE_PATH, .duration = DURATION, .parseResult = PlaylistParseResult::FINISHED};
+    PlaylistEntry validEntry = PlaylistEntry(INPUT_FOLDER + MP3_FILE_PATH, DURATION, PlaylistParseResult::FINISHED);
     EXPECT_CALL(*m_parser, initializeParsing(_)).WillOnce(Return(true));
     EXPECT_CALL(*m_parser, next()).WillOnce(Return(validEntry));
     auto reader = FFmpegUrlInputController::create(std::move(m_parser), PLAYLIST_URL, ZERO_OFFSET);
@@ -128,8 +124,7 @@ TEST_F(FFmpegUrlInputControllerTest, testGetContextSucceed) {
 
 /// Test input controller getContext with non-zero offset.
 TEST_F(FFmpegUrlInputControllerTest, testGetContextOffsetSucceed) {
-    IterativePlaylistParserInterface::PlaylistEntry validEntry{
-        .url = INPUT_FOLDER + MP3_FILE_PATH, .duration = DURATION, .parseResult = PlaylistParseResult::FINISHED};
+    PlaylistEntry validEntry = PlaylistEntry(INPUT_FOLDER + MP3_FILE_PATH, DURATION, PlaylistParseResult::FINISHED);
     EXPECT_CALL(*m_parser, initializeParsing(_)).WillOnce(Return(true));
     EXPECT_CALL(*m_parser, next()).WillOnce(Return(validEntry));
     std::chrono::milliseconds skipHalf{DURATION / 2};
@@ -157,8 +152,7 @@ TEST_F(FFmpegUrlInputControllerTest, testGetContextInvalidUrl) {
 
 /// Test get context after switching files.
 TEST_F(FFmpegUrlInputControllerTest, testGetContextAfterNext) {
-    IterativePlaylistParserInterface::PlaylistEntry validEntry{
-        .url = INPUT_FOLDER + MP3_FILE_PATH, .duration = DURATION, .parseResult = PlaylistParseResult::FINISHED};
+    PlaylistEntry validEntry = PlaylistEntry(INPUT_FOLDER + MP3_FILE_PATH, DURATION, PlaylistParseResult::FINISHED);
 
     // Parser will return INVALID_URL_ENTRY first, then validEntry
     EXPECT_CALL(*m_parser, next()).WillOnce(Return(validEntry));
@@ -179,8 +173,8 @@ TEST_F(FFmpegUrlInputControllerTest, testGetContextAfterNext) {
 
 /// Test has next when parser isn't done.
 TEST_F(FFmpegUrlInputControllerTest, testHasNext) {
-    IterativePlaylistParserInterface::PlaylistEntry validEntry{
-        .url = INPUT_FOLDER + MP3_FILE_PATH, .duration = DURATION, .parseResult = PlaylistParseResult::STILL_ONGOING};
+    PlaylistEntry validEntry =
+        PlaylistEntry(INPUT_FOLDER + MP3_FILE_PATH, DURATION, PlaylistParseResult::STILL_ONGOING);
     EXPECT_CALL(*m_parser, initializeParsing(_)).WillOnce(Return(true));
     EXPECT_CALL(*m_parser, next()).WillOnce(Return(validEntry));
     auto reader = FFmpegUrlInputController::create(std::move(m_parser), PLAYLIST_URL, ZERO_OFFSET);
@@ -191,8 +185,7 @@ TEST_F(FFmpegUrlInputControllerTest, testHasNext) {
 
 /// Test has next after playlist parser is done.
 TEST_F(FFmpegUrlInputControllerTest, testDone) {
-    IterativePlaylistParserInterface::PlaylistEntry validEntry{
-        .url = INPUT_FOLDER + MP3_FILE_PATH, .duration = DURATION, .parseResult = PlaylistParseResult::FINISHED};
+    PlaylistEntry validEntry = PlaylistEntry(INPUT_FOLDER + MP3_FILE_PATH, DURATION, PlaylistParseResult::FINISHED);
     EXPECT_CALL(*m_parser, initializeParsing(_)).WillOnce(Return(true));
     EXPECT_CALL(*m_parser, next()).WillOnce(Return(validEntry));
     auto reader = FFmpegUrlInputController::create(std::move(m_parser), PLAYLIST_URL, ZERO_OFFSET);

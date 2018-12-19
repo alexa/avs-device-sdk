@@ -169,6 +169,16 @@ private:
     void executeOnAlertStateChange(std::string alertToken, State state, std::string reason);
 
     /**
+     * Update an alert with the new schedule. This function cannot update an active alert (use snooze instead).
+     *
+     * @param alert The alert to be rescheduled. The alert MUST be inactive.
+     * @param newScheduledTime The new time in ISO-8601 format.
+     * @note The caller should validate the new schedule which should not be more than 30 minutes in the past.
+     * @return Whether the alert was successfully rescheduled.
+     */
+    bool updateAlert(const std::shared_ptr<Alert>& alert, const std::string& newScheduledTime);
+
+    /**
      * A utility function which wraps the executor submission to notify our observer.
      *
      * @param alertToken The AVS token identifying the alert.

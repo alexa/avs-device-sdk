@@ -250,12 +250,15 @@ std::shared_ptr<AlertsCapabilityAgent> AlertsCapabilityAgent::create(
 }
 
 avsCommon::avs::DirectiveHandlerConfiguration AlertsCapabilityAgent::getConfiguration() const {
+    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    auto neitherNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
+
     avsCommon::avs::DirectiveHandlerConfiguration configuration;
-    configuration[SET_ALERT] = avsCommon::avs::BlockingPolicy::NON_BLOCKING;
-    configuration[DELETE_ALERT] = avsCommon::avs::BlockingPolicy::NON_BLOCKING;
-    configuration[DELETE_ALERTS] = avsCommon::avs::BlockingPolicy::NON_BLOCKING;
-    configuration[SET_VOLUME] = avsCommon::avs::BlockingPolicy::NON_BLOCKING;
-    configuration[ADJUST_VOLUME] = avsCommon::avs::BlockingPolicy::NON_BLOCKING;
+    configuration[SET_ALERT] = neitherNonBlockingPolicy;
+    configuration[DELETE_ALERT] = neitherNonBlockingPolicy;
+    configuration[DELETE_ALERTS] = neitherNonBlockingPolicy;
+    configuration[SET_VOLUME] = audioNonBlockingPolicy;
+    configuration[ADJUST_VOLUME] = audioNonBlockingPolicy;
     return configuration;
 }
 

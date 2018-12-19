@@ -7,11 +7,13 @@ add_library(AIP SHARED
 target_include_directories(AIP PUBLIC
     "${AIP_SOURCE_DIR}/include"
     "${AFML_SOURCE_DIR}/include"
+    "${SpeechEncoder_SOURCE_DIR}/include"
     "${AVSCommon_INCLUDE_DIRS}")
 target_link_libraries(AIP
     AVSCommon
     ADSL
-    AFML)
+    AFML
+    SpeechEncoder)
 
 # install target
 asdk_install()

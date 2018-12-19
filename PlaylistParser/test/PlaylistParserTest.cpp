@@ -57,13 +57,9 @@ public:
         std::chrono::milliseconds duration;
     };
 
-    void onPlaylistEntryParsed(
-        int requestId,
-        std::string url,
-        avsCommon::utils::playlistParser::PlaylistParseResult parseResult,
-        std::chrono::milliseconds duration) {
+    void onPlaylistEntryParsed(int requestId, PlaylistEntry entry) {
         std::lock_guard<std::mutex> lock{m_mutex};
-        m_parseResults.push_back({requestId, url, parseResult, duration});
+        m_parseResults.push_back({requestId, entry.url, entry.parseResult, entry.duration});
         m_callbackOccurred.notify_one();
     }
 
@@ -196,24 +192,6 @@ TEST_F(PlaylistParserTest, testParsingPlsPlaylist) {
     ASSERT_EQ(TEST_PLS_PLAYLIST_URL_EXPECTED_PARSES, results.size());
     for (unsigned int i = 0; i < results.size(); ++i) {
         ASSERT_EQ(results.at(i).url, TEST_PLS_PLAYLIST_URLS.at(i));
-        if (i == results.size() - 1) {
-            ASSERT_EQ(results.at(i).parseResult, avsCommon::utils::playlistParser::PlaylistParseResult::FINISHED);
-        } else {
-            ASSERT_EQ(results.at(i).parseResult, avsCommon::utils::playlistParser::PlaylistParseResult::STILL_ONGOING);
-        }
-    }
-}
-
-/**
- * Tests parsing of a recursive M3U/HLS playlist.
- * Calls @c parsePlaylist and expects that the result of the parsing is successful.
- */
-TEST_F(PlaylistParserTest, testParsingRecursiveHlsPlaylist) {
-    ASSERT_TRUE(playlistParser->parsePlaylist(TEST_HLS_RECURSIVE_PLAYLIST_URL, testObserver));
-    auto results = testObserver->waitForNCallbacks(TEST_HLS_RECURSIVE_PLAYLIST_URL_EXPECTED_PARSES);
-    ASSERT_EQ(TEST_HLS_RECURSIVE_PLAYLIST_URL_EXPECTED_PARSES, results.size());
-    for (unsigned int i = 0; i < results.size(); ++i) {
-        ASSERT_EQ(results.at(i).url, TEST_HLS_RECURSIVE_PLAYLIST_URLS.at(i));
         if (i == results.size() - 1) {
             ASSERT_EQ(results.at(i).parseResult, avsCommon::utils::playlistParser::PlaylistParseResult::FINISHED);
         } else {

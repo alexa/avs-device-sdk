@@ -20,14 +20,15 @@
 #include <memory>
 
 #include <AVSCommon/AVS/Attachment/InProcessAttachment.h>
-#include <AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
+#include <AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h>
 
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
 #include <AVSCommon/Utils/PlaylistParser/PlaylistParserObserverInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
+#include "PlaylistParser/ContentDecrypter.h"
 #include "PlaylistParser/PlaylistParser.h"
 
 namespace alexaClientSDK {
@@ -110,11 +111,12 @@ private:
         std::shared_ptr<ErrorObserverInterface> observer,
         std::chrono::milliseconds startTime);
 
-    void onPlaylistEntryParsed(
-        int requestId,
-        std::string url,
-        avsCommon::utils::playlistParser::PlaylistParseResult parseResult,
-        std::chrono::milliseconds duration = PlaylistParserObserverInterface::INVALID_DURATION) override;
+    void onPlaylistEntryParsed(int requestId, avsCommon::utils::playlistParser::PlaylistEntry playlistEntry) override;
+
+    /**
+     * Notify the observer that an error has occured.
+     **/
+    void notifyError();
 
     /**
      * @name Executor Thread Functions
@@ -126,11 +128,62 @@ private:
     /// @{
 
     /**
-     * Downloads the content from the url and writes it into the internal stream.
+     * Downloads the content from the url, decrypts (if required) and writes it into the internal stream.
      *
+     * @param url The URL to download.
+     * @param headers HTTP headers to pass to server.
+     * @param encryptionInfo The Encryption info for the URL to download.
      * @return @c true if the content was successfully streamed and written or @c false otherwise.
      */
-    bool writeUrlContentIntoStream(std::string url);
+    bool writeDecryptedUrlContentIntoStream(
+        std::string url,
+        std::vector<std::string> headers,
+        avsCommon::utils::playlistParser::EncryptionInfo encryptionInfo);
+
+    /**
+     * Downloads the content from the url and writes to the stream.
+     *
+     * @param url The URL to download.
+     * @param headers HTTP headers to pass to server.
+     * @param streamWriter The attachment writer to write downloaded content.
+     * @return @c true if the content was successfully downloaded or @c false otherwise.
+     */
+    bool download(
+        const std::string& url,
+        const std::vector<std::string>& headers,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> streamWriter);
+
+    /**
+     * Downloads the content from the url to unsigned char vector.
+     *
+     * @param url The URL to download.
+     * @param headers HTTP headers to pass to server.
+     * @param[out] content Sets the content of the pointer if download is successful.
+     * @return @c true if the content was successfully downloaded or @c false otherwise.
+     */
+    bool download(const std::string& url, const std::vector<std::string>& headers, ByteVector* content);
+
+    /**
+     * Reads content from the reader to unsigned char vector.
+     *
+     * @param reader The AttachmentReder to read content from.
+     * @param[out] content Sets the content of the pointer if read is successful.
+     * @return @c true if the content was successfully read or @c false otherwise.
+     */
+    bool readContent(std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader, ByteVector* content);
+
+    /**
+     * Helper to decide if decryption is required.
+     *
+     * @param encryptionInfo EncryptionInfo of the Media URL.
+     * @return @c true if content should be decrypted or @c false otherwise.
+     */
+    bool shouldDecrypt(const avsCommon::utils::playlistParser::EncryptionInfo& encryptionInfo) const;
+
+    /**
+     * Helper method to close writing to stream.
+     **/
+    void closeStreamWriter();
 
     /// @}
 
@@ -157,6 +210,9 @@ private:
 
     /// Flag to indicate if a shutdown is occurring.
     std::atomic<bool> m_shuttingDown;
+
+    /// Helper to decrypt encrypted content.
+    std::shared_ptr<ContentDecrypter> m_contentDecrypter;
 
     /**
      * @name @c onPlaylistEntryParsed Callback Variables

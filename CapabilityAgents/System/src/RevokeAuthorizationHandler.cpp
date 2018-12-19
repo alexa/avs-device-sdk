@@ -81,7 +81,8 @@ RevokeAuthorizationHandler::RevokeAuthorizationHandler(
 
 avsCommon::avs::DirectiveHandlerConfiguration RevokeAuthorizationHandler::getConfiguration() const {
     return avsCommon::avs::DirectiveHandlerConfiguration{
-        {NamespaceAndName{REVOKE_NAMESPACE, REVOKE_DIRECTIVE_NAME}, avsCommon::avs::BlockingPolicy::NON_BLOCKING}};
+        {NamespaceAndName{REVOKE_NAMESPACE, REVOKE_DIRECTIVE_NAME},
+         avsCommon::avs::BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false)}};
 }
 
 void RevokeAuthorizationHandler::preHandleDirective(

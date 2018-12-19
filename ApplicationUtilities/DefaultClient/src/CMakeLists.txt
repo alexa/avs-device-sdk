@@ -6,7 +6,9 @@ add_library(DefaultClient SHARED
     EqualizerRuntimeSetup.cpp
     )
 target_include_directories(DefaultClient PUBLIC
-    "${DefaultClient_SOURCE_DIR}/include" "${MRM_SOURCE_DIR}/include")
+    "${DefaultClient_SOURCE_DIR}/include"
+    "${MRM_SOURCE_DIR}/include"
+    "${DeviceSettings_SOURCE_DIR}/include")
 
 if(BLUETOOTH_BLUEZ)
     target_link_libraries(DefaultClient
@@ -24,6 +26,7 @@ target_link_libraries(DefaultClient
     AVSSystem
     Bluetooth
     ContextManager
+    DoNotDisturbCA
     Equalizer
     ExternalMediaPlayer
     InteractionModel
@@ -33,6 +36,7 @@ target_link_libraries(DefaultClient
     SpeakerManager
     SpeechSynthesizer
     Settings
+    DeviceSettings
     TemplateRuntime
     )
 
@@ -40,8 +44,16 @@ if (COMMS)
     target_link_libraries(DefaultClient CallManager)
 endif()
 
+if (PCC)
+    target_link_libraries(DefaultClient PhoneCallController)
+endif()
+
 if (MRM)
     target_link_libraries(DefaultClient MRM MRMHandler)
+endif()
+
+if (OPUS)
+    target_link_libraries(DefaultClient OpusEncoderContext)
 endif()
 
 # install target

@@ -221,7 +221,7 @@ bool TimeUtils::getCurrentUnixTime(int64_t* currentTime) {
 }
 
 bool TimeUtils::convertTimeToUtcIso8601Rfc3339(
-    const std::chrono::high_resolution_clock::time_point& tp,
+    const std::chrono::system_clock::time_point& tp,
     std::string* iso8601TimeString) {
     // The length of the RFC 3339 string for the time is maximum 28 characters, include an extra byte for the '\0'
     // terminator.

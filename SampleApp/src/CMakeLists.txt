@@ -20,6 +20,10 @@ IF (A4B)
     list(APPEND SampleApp_SOURCES RevokeAuthorizationObserver.cpp)
 ENDIF()
 
+if (PCC)
+    list(APPEND SampleApp_SOURCES PhoneCaller.cpp)
+endif()
+
 IF (HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
     file(GLOB_RECURSE SRC_FILE ${CMAKE_CURRENT_SOURCE_DIR}/ExternalMediaAdapterRegistration/*.cpp)
     foreach(myfile ${SRC_FILE})
@@ -36,7 +40,7 @@ target_include_directories(SampleApp PUBLIC
     "${ESP_SOURCE_DIR}/include"
     "${PORTAUDIO_INCLUDE_DIR}")
 
-target_link_libraries(SampleApp 
+target_link_libraries(SampleApp
     DefaultClient
     CapabilitiesDelegate
     CBLAuthDelegate
@@ -44,6 +48,10 @@ target_link_libraries(SampleApp
     ESP
     EqualizerImplementations
     "${PORTAUDIO_LIB_PATH}")
+
+if (PCC)
+    target_link_libraries(SampleApp AVSCommon)
+endif()
 
 if (ANDROID)
     target_include_directories(SampleApp PUBLIC "${AndroidUtilities}/include")

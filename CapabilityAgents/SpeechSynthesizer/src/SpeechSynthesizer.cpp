@@ -145,8 +145,8 @@ std::shared_ptr<SpeechSynthesizer> SpeechSynthesizer::create(
 }
 
 avsCommon::avs::DirectiveHandlerConfiguration SpeechSynthesizer::getConfiguration() const {
-    avsCommon::avs::DirectiveHandlerConfiguration configuration;
-    configuration[SPEAK] = avsCommon::avs::BlockingPolicy::BLOCKING;
+    DirectiveHandlerConfiguration configuration;
+    configuration[SPEAK] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     return configuration;
 }
 
@@ -290,6 +290,19 @@ void SpeechSynthesizer::onPlaybackError(
 
 void SpeechSynthesizer::onPlaybackStopped(SourceId id) {
     ACSDK_DEBUG9(LX("onPlaybackStopped").d("callbackSourceId", id));
+
+    // MediaPlayer is for some reason stopping the playback of the speech.  Call setFailed if isSetFailedCalled flag is
+    // not set yet.
+    m_executor.submit([this]() {
+        if (m_currentInfo) {
+            m_currentInfo->sendPlaybackFinishedMessage = false;
+            m_currentInfo->sendCompletedMessage = false;
+            if (m_currentInfo->result && !m_currentInfo->isSetFailedCalled) {
+                m_currentInfo->result->setFailed("Stopped due to MediaPlayer stopping.");
+                m_currentInfo->isSetFailedCalled = true;
+            }
+        }
+    });
     onPlaybackFinished(id);
 }
 
@@ -298,7 +311,8 @@ SpeechSynthesizer::SpeakDirectiveInfo::SpeakDirectiveInfo(std::shared_ptr<Direct
         result{directiveInfo->result},
         sendPlaybackStartedMessage{false},
         sendPlaybackFinishedMessage{false},
-        sendCompletedMessage{false} {
+        sendCompletedMessage{false},
+        isSetFailedCalled{false} {
 }
 
 void SpeechSynthesizer::SpeakDirectiveInfo::clear() {
@@ -306,6 +320,7 @@ void SpeechSynthesizer::SpeakDirectiveInfo::clear() {
     sendPlaybackStartedMessage = false;
     sendPlaybackFinishedMessage = false;
     sendCompletedMessage = false;
+    isSetFailedCalled = false;
 }
 
 SpeechSynthesizer::SpeechSynthesizer(
@@ -558,6 +573,7 @@ void SpeechSynthesizer::executeStateChange() {
                 m_currentInfo->sendCompletedMessage = false;
                 if (m_currentInfo->result) {
                     m_currentInfo->result->setFailed("Stopped due to SpeechSynthesizer going into FINISHED state.");
+                    m_currentInfo->isSetFailedCalled = true;
                 }
             }
             stopPlaying();
@@ -831,6 +847,7 @@ void SpeechSynthesizer::sendExceptionEncounteredAndReportFailed(
         }
         if (speakInfo->result) {
             speakInfo->result->setFailed(message);
+
         } else {
             ACSDK_ERROR(LX("sendExceptionEncounteredAndReportFailed").d("reason", "speakInfoHasNoResult"));
         }
@@ -842,6 +859,10 @@ void SpeechSynthesizer::sendExceptionEncounteredAndReportFailed(
     if (SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING == m_currentState ||
         SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS == m_currentState) {
         lock.unlock();
+        // set flag to indicate setFailed has been called.
+        if (speakInfo) {
+            speakInfo->isSetFailedCalled = true;
+        }
         stopPlaying();
     }
 }

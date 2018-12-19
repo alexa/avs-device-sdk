@@ -40,6 +40,8 @@
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
+#include <SpeechEncoder/SpeechEncoder.h>
+
 #include "AudioProvider.h"
 #include "ESPData.h"
 #include "Initiator.h"
@@ -83,7 +85,9 @@ public:
      * @param focusManager The channel focus manager used to manage usage of the dialog channel.
      * @param dialogUXStateAggregator The dialog state aggregator which tracks UX states related to dialog.
      * @param exceptionEncounteredSender The object to use for sending AVS Exception messages.
-     * @param UserInactivityMonitor The object to use for resetting user inactivity.
+     * @param userInactivityNotifier The object to use for resetting user inactivity.
+     * @param speechEncoder The Speech Encoder used to encode audio inputs. This parameter is optional and
+     *     defaults to nullptr, which disable the encoding feature.
      * @param defaultAudioProvider A default @c avsCommon::AudioProvider to use for ExpectSpeech if the previous
      *     provider is not readable (@c avsCommon::AudioProvider::alwaysReadable).  This parameter is optional and
      *     defaults to an invalid @c avsCommon::AudioProvider.
@@ -97,6 +101,7 @@ public:
         std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityNotifier,
+        std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder = nullptr,
         AudioProvider defaultAudioProvider = AudioProvider::null());
 
     /**
@@ -236,6 +241,8 @@ private:
      * @param focusManager The channel focus manager used to manage usage of the dialog channel.
      * @param exceptionEncounteredSender The object to use for sending ExceptionEncountered messages.
      * @param userInactivityMonitor The object to use for resetting user inactivity.
+     * @param speechEncoder The Speech Encoder used to encode audio inputs. This parameter is optional and
+     *     will disable the encoding feature if set to nullptr.
      * @param defaultAudioProvider A default @c avsCommon::AudioProvider to use for ExpectSpeech if the previous
      *     provider is not readable (@c AudioProvider::alwaysReadable).  This parameter is optional, and ignored if set
      *     to @c AudioProvider::null().
@@ -251,6 +258,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityMonitor,
+        std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder,
         AudioProvider defaultAudioProvider);
 
     /// @name RequiresShutdown Functions
@@ -483,6 +491,9 @@ private:
 
     /// Timer which runs in the @c EXPECTING_SPEECH state.
     avsCommon::utils::timing::Timer m_expectingSpeechTimer;
+
+    /// The Speech Encoder to encode input stream.
+    std::shared_ptr<speechencoder::SpeechEncoder> m_encoder;
 
     /**
      * @name Executor Thread Variables

@@ -143,7 +143,7 @@ avsCommon::avs::DirectiveHandlerConfiguration SoftwareInfoSender::getConfigurati
     ACSDK_DEBUG5(LX("getConfiguration"));
 
     static avsCommon::avs::DirectiveHandlerConfiguration configuration = {
-        {REPORT_SOFTWARE_INFO, BlockingPolicy::NON_BLOCKING}};
+        {REPORT_SOFTWARE_INFO, BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false)}};
     return configuration;
 }
 

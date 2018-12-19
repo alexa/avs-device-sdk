@@ -13,6 +13,7 @@ add_library(AVSCommon SHARED
     AVS/src/AVSMessage.cpp
     AVS/src/AVSMessageHeader.cpp
     AVS/src/AbstractAVSConnectionManager.cpp
+    AVS/src/BlockingPolicy.cpp
     AVS/src/ExternalMediaPlayer/AdapterUtils.cpp
     AVS/src/AlexaClientSDKInit.cpp
     AVS/src/Attachment/Attachment.cpp
@@ -36,7 +37,8 @@ add_library(AVSCommon SHARED
     Utils/src/Executor.cpp
     Utils/src/FileUtils.cpp
     Utils/src/FormattedAudioStreamAdapter.cpp
-    Utils/src/JSONUtils.cpp
+    Utils/src/JSON/JSONGenerator.cpp
+    Utils/src/JSON/JSONUtils.cpp
     Utils/src/HTTP2/HTTP2GetMimeHeadersResult.cpp
     Utils/src/HTTP2/HTTP2MimeRequestEncoder.cpp
     Utils/src/HTTP2/HTTP2MimeResponseDecoder.cpp

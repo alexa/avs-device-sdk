@@ -289,10 +289,12 @@ avsCommon::avs::DirectiveHandlerConfiguration EqualizerCapabilityAgent::getConfi
     ACSDK_DEBUG5(LX(__func__));
 
     DirectiveHandlerConfiguration configuration;
-    configuration[DIRECTIVE_SETBANDS] = BlockingPolicy::NON_BLOCKING;
-    configuration[DIRECTIVE_ADJUSTBANDS] = BlockingPolicy::NON_BLOCKING;
-    configuration[DIRECTIVE_RESETBANDS] = BlockingPolicy::NON_BLOCKING;
-    configuration[DIRECTIVE_SETMODE] = BlockingPolicy::NON_BLOCKING;
+    auto neitherNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
+
+    configuration[DIRECTIVE_SETBANDS] = neitherNonBlockingPolicy;
+    configuration[DIRECTIVE_ADJUSTBANDS] = neitherNonBlockingPolicy;
+    configuration[DIRECTIVE_RESETBANDS] = neitherNonBlockingPolicy;
+    configuration[DIRECTIVE_SETMODE] = neitherNonBlockingPolicy;
 
     return configuration;
 }

@@ -310,9 +310,10 @@ protected:
         m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>();
 
         DirectiveHandlerConfiguration config;
-        config[SET_MUTE_PAIR] = BlockingPolicy::BLOCKING;
-        config[ADJUST_VOLUME_PAIR] = BlockingPolicy::BLOCKING;
-        config[EXPECT_SPEECH_PAIR] = BlockingPolicy::BLOCKING;
+        auto audioBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+        config[SET_MUTE_PAIR] = audioBlockingPolicy;
+        config[ADJUST_VOLUME_PAIR] = audioBlockingPolicy;
+        config[EXPECT_SPEECH_PAIR] = audioBlockingPolicy;
         m_directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
         m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);
