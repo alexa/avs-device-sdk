@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -207,6 +207,10 @@ CapabilitiesObserverInterface Methods</h2></td></tr>
 <tr class="separator:aee0ce9863a5f0525c5dcb391e8688f33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5905b75b164604980e39f77ccb17e69a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html#a5905b75b164604980e39f77ccb17e69a">printCommsNotSupported</a> ()</td></tr>
 <tr class="separator:a5905b75b164604980e39f77ccb17e69a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b10accdb929579e46483b575141979f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html#a3b10accdb929579e46483b575141979f">configureSettingsNotifications</a> (std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a699bbcbbc5c8be3539d4ed111557798d">settings::DeviceSettingsManager</a> &gt; settingsManager)</td></tr>
+<tr class="separator:a3b10accdb929579e46483b575141979f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbf232028b65b2e9773c9456e0412264"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html#afbf232028b65b2e9773c9456e0412264">printDoNotDisturbScreen</a> ()</td></tr>
+<tr class="separator:afbf232028b65b2e9773c9456e0412264"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -336,6 +340,32 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3b10accdb929579e46483b575141979f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b10accdb929579e46483b575141979f">&#9670;&nbsp;</a></span>configureSettingsNotifications()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::sampleApp::UIManager::configureSettingsNotifications </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a699bbcbbc5c8be3539d4ed111557798d">settings::DeviceSettingsManager</a> &gt;&#160;</td>
+          <td class="paramname"><em>settingsManager</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configure settings notifications.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Pointer</td><td>to the settings manager </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>if it succeeds to configure the settings notifications; <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
 <a id="af8001ce51b81bb4ff7c859c24844cfd4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af8001ce51b81bb4ff7c859c24844cfd4">&#9670;&nbsp;</a></span>microphoneOff()</h2>
 
@@ -780,6 +810,24 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="afbf232028b65b2e9773c9456e0412264"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbf232028b65b2e9773c9456e0412264">&#9670;&nbsp;</a></span>printDoNotDisturbScreen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::UIManager::printDoNotDisturbScreen </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prints menu for do not disturb mode. </p>
+
+</div>
+</div>
 <a id="aa54e27dcd794ec4e65f458a381df7710"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa54e27dcd794ec4e65f458a381df7710">&#9670;&nbsp;</a></span>printErrorScreen()</h2>
 
@@ -1077,7 +1125,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

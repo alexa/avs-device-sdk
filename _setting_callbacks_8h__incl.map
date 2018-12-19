@@ -1,0 +1,17 @@
+<map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingCallbacks.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingCallbacks.h">
+<area shape="rect" id="node5" href="$_setting_observer_interface_8h.html" title="SettingObserverInterface.h" alt="" coords="2356,432,2537,457"/>
+<area shape="rect" id="node6" href="$_setting_callback_adapter_8h.html" title="SettingCallbackAdapter.h" alt="" coords="2102,105,2274,131"/>
+<area shape="rect" id="node7" href="$_settings_manager_8h.html" title="SettingsManager.h" alt="" coords="1831,179,1964,204"/>
+<area shape="rect" id="node11" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="356,425,532,464"/>
+<area shape="rect" id="node18" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="799,252,975,291"/>
+<area shape="rect" id="node28" href="$_setting_interface_8h.html" title="SettingInterface.h" alt="" coords="1800,345,1926,371"/>
+<area shape="rect" id="node14" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="93,512,269,551"/>
+<area shape="rect" id="node16" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="93,599,269,637"/>
+<area shape="rect" id="node20" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="799,339,975,377"/>
+<area shape="rect" id="node22" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="708,425,922,464"/>
+<area shape="rect" id="node25" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1045,512,1221,551"/>
+<area shape="rect" id="node26" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="996,425,1193,464"/>
+<area shape="rect" id="node27" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1143,599,1319,637"/>
+<area shape="rect" id="node31" href="$_guarded_value_8h.html" title="AVSCommon/Utils/GuardedValue.h" alt="" coords="1454,432,1685,457"/>
+<area shape="rect" id="node32" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1940,432,2124,457"/>
+</map>

@@ -19,8 +19,8 @@ var searchData=
   ['begin_5findices_5fof_5falexas_5fin_5ffour_5falexas_5faudio_5ffile',['BEGIN_INDICES_OF_ALEXAS_IN_FOUR_ALEXAS_AUDIO_FILE',['../namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a66f162853d4f985b4b796ba29432840e',1,'alexaClientSDK::kwd::test']]],
   ['beginindex',['beginIndex',['../structalexa_client_s_d_k_1_1kwd_1_1test_1_1test_key_word_observer_1_1detection_result.html#a9aa66d6887ccea053fadac647ed06556',1,'alexaClientSDK::kwd::test::testKeyWordObserver::detectionResult']]],
   ['below_5fmin_5flevel',['BELOW_MIN_LEVEL',['../namespacealexa_client_s_d_k_1_1equalizer_1_1test.html#a671618aa35ae8f28e591733f007ab009',1,'alexaClientSDK::equalizer::test::BELOW_MIN_LEVEL()'],['../namespacealexa_client_s_d_k_1_1equalizer_1_1test.html#a671618aa35ae8f28e591733f007ab009',1,'alexaClientSDK::equalizer::test::BELOW_MIN_LEVEL()']]],
+  ['bit_5frate',['BIT_RATE',['../namespacealexa_client_s_d_k_1_1speechencoder.html#a998ff4d9100adae9136a5605cb9f0e09',1,'alexaClientSDK::speechencoder']]],
   ['bits_5fin_5fhex_5fdigit',['BITS_IN_HEX_DIGIT',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#a84d0af91d9812874964b1cbc82e22e93',1,'alexaClientSDK::avsCommon::utils::uuidGeneration']]],
-  ['blocking_5fpolicy',['BLOCKING_POLICY',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a07666b810e30459848d400754e2d57cb',1,'alexaClientSDK::capabilityAgents::aip::test']]],
   ['bluetooth_5fcapability_5finterface_5fname',['BLUETOOTH_CAPABILITY_INTERFACE_NAME',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#a3b3975726b1dfbce7bae32e654e13465',1,'alexaClientSDK::capabilityAgents::bluetooth']]],
   ['bluetooth_5fcapability_5finterface_5ftype',['BLUETOOTH_CAPABILITY_INTERFACE_TYPE',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#a412f0290b6386f26782fcfe99d369c77',1,'alexaClientSDK::capabilityAgents::bluetooth']]],
   ['bluetooth_5fcapability_5finterface_5fversion',['BLUETOOTH_CAPABILITY_INTERFACE_VERSION',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#ac5fb894ce7d7fa3d0de6e6e9c2af7d1c',1,'alexaClientSDK::capabilityAgents::bluetooth']]],
@@ -63,5 +63,7 @@ var searchData=
   ['buffercondition',['bufferCondition',['../namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#afc1fc78bf60de38081d9950a660cf69d',1,'alexaClientSDK::mediaPlayer::android::test']]],
   ['buffermutex',['bufferMutex',['../namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#a9deb4374d006c7b901f3d56a0c285641',1,'alexaClientSDK::mediaPlayer::android::test']]],
   ['button_5fcommand_5fevent_5fname',['BUTTON_COMMAND_EVENT_NAME',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1playback_controller.html#ae32afa756d0bf2dcb8a9d470d8387bde',1,'alexaClientSDK::capabilityAgents::playbackController']]],
-  ['byte_5fto_5fbits',['BYTE_TO_BITS',['../namespacealexa_client_s_d_k_1_1media_player_1_1android.html#ac53250f4c2839f10b544666ad7a6b701',1,'alexaClientSDK::mediaPlayer::android']]]
+  ['byte_5fto_5fbits',['BYTE_TO_BITS',['../namespacealexa_client_s_d_k_1_1media_player_1_1android.html#ac53250f4c2839f10b544666ad7a6b701',1,'alexaClientSDK::mediaPlayer::android']]],
+  ['byterange',['byteRange',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_entry.html#a1d01b38fda698ba2e4132257caa96ba1',1,'alexaClientSDK::avsCommon::utils::playlistParser::PlaylistEntry']]],
+  ['byterange_5fattr',['BYTERANGE_ATTR',['../namespacealexa_client_s_d_k_1_1playlist_parser.html#a3bfe3d543fdaa34d3d90f229ada663d0',1,'alexaClientSDK::playlistParser']]]
 ];

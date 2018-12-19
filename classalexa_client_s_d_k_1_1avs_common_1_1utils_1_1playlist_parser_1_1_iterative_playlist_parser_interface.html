@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -66,7 +66,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_iterative_playlist_parser_interface-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -85,16 +84,11 @@ Inheritance diagram for alexaClientSDK::avsCommon::utils::playlistParser::Iterat
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_iterative_playlist_parser_interface_1_1_playlist_entry.html">PlaylistEntry</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a00f7883f6e433beba3e7a3b1d79a54e6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_iterative_playlist_parser_interface.html#a00f7883f6e433beba3e7a3b1d79a54e6">initializeParsing</a> (std::string url)=0</td></tr>
 <tr class="separator:a00f7883f6e433beba3e7a3b1d79a54e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90ec91cba9759bd458a23061cb1a330a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_iterative_playlist_parser_interface_1_1_playlist_entry.html">PlaylistEntry</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_iterative_playlist_parser_interface.html#a90ec91cba9759bd458a23061cb1a330a">next</a> ()=0</td></tr>
+<tr class="memitem:a90ec91cba9759bd458a23061cb1a330a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_entry.html">PlaylistEntry</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_iterative_playlist_parser_interface.html#a90ec91cba9759bd458a23061cb1a330a">next</a> ()=0</td></tr>
 <tr class="separator:a90ec91cba9759bd458a23061cb1a330a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18fa65364a41b8302e403f75b7be174c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_iterative_playlist_parser_interface.html#a18fa65364a41b8302e403f75b7be174c">abort</a> ()=0</td></tr>
 <tr class="separator:a18fa65364a41b8302e403f75b7be174c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,7 +199,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_iterative_playlist_parser_interface_1_1_playlist_entry.html">PlaylistEntry</a> alexaClientSDK::avsCommon::utils::playlistParser::IterativePlaylistParserInterface::next </td>
+          <td class="memname">virtual <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_entry.html">PlaylistEntry</a> alexaClientSDK::avsCommon::utils::playlistParser::IterativePlaylistParserInterface::next </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -220,7 +214,7 @@ Public Member Functions</h2></td></tr>
 <p>Get the next element in the playlist.</p>
 <dl class="section return"><dt>Returns</dt><dd>The parsing result. The <code>url</code> field will be valid if <code>parseResult</code> is different than ERROR. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_iterative_playlist_parser.html#ab76cf21b42a51adb1dc1171f25128c99">alexaClientSDK::playlistParser::IterativePlaylistParser</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_iterative_playlist_parser.html#ab75abe092ab3c838b9023eedf233d3e2">alexaClientSDK::playlistParser::IterativePlaylistParser</a>.</p>
 
 </div>
 </div>
@@ -231,7 +225,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

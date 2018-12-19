@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -99,8 +99,8 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a5c1e66c49c3bf1dbc6ceda042c444793"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html#a5c1e66c49c3bf1dbc6ceda042c444793">~HTTPContentFetcherInterface</a> ()=default</td></tr>
 <tr class="separator:a5c1e66c49c3bf1dbc6ceda042c444793"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6337b0ed4777d7a1e72251c880842c79"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_h_t_t_p_content.html">avsCommon::utils::HTTPContent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html#a6337b0ed4777d7a1e72251c880842c79">getContent</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html#aa2dbdbb9bbf0442fff5b43d7baa40190">FetchOptions</a> option, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_writer.html">avsCommon::avs::attachment::AttachmentWriter</a> &gt; writer=nullptr)=0</td></tr>
-<tr class="separator:a6337b0ed4777d7a1e72251c880842c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9385eac40a72304bc6d6952edb9c9a4"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_h_t_t_p_content.html">avsCommon::utils::HTTPContent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html#ac9385eac40a72304bc6d6952edb9c9a4">getContent</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html#aa2dbdbb9bbf0442fff5b43d7baa40190">FetchOptions</a> option, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_writer.html">avsCommon::avs::attachment::AttachmentWriter</a> &gt; writer=nullptr, const std::vector&lt; std::string &gt; &amp;customHeaders=std::vector&lt; std::string &gt;())=0</td></tr>
+<tr class="separator:ac9385eac40a72304bc6d6952edb9c9a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -168,8 +168,8 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6337b0ed4777d7a1e72251c880842c79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6337b0ed4777d7a1e72251c880842c79">&#9670;&nbsp;</a></span>getContent()</h2>
+<a id="ac9385eac40a72304bc6d6952edb9c9a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9385eac40a72304bc6d6952edb9c9a4">&#9670;&nbsp;</a></span>getContent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -187,7 +187,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_writer.html">avsCommon::avs::attachment::AttachmentWriter</a> &gt;&#160;</td>
-          <td class="paramname"><em>writer</em> = <code>nullptr</code>&#160;</td>
+          <td class="paramname"><em>writer</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>customHeaders</em> = <code>std::vector&lt;&#160;std::string&#160;&gt;()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -206,12 +212,11 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">option</td><td>Flag indicating desired content. </td></tr>
     <tr><td class="paramname">writer</td><td>An optional writer parameter to be used when writing to an external stream. </td></tr>
+    <tr><td class="paramname">customHeaders</td><td>An optional list of headers to be attached to the request. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A new <code>HTTPContent</code> object or <code>nullptr</code> if a failure occured. </dd></dl>
-
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_mock_content_fetcher.html#a4f2fa27b7d0864a25491198b79170df6">alexaClientSDK::playlistParser::test::MockContentFetcher</a>.</p>
 
 </div>
 </div>
@@ -249,7 +254,7 @@ Static Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

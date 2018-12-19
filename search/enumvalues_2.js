@@ -22,5 +22,6 @@ var searchData=
   ['connection_5ftimedout',['CONNECTION_TIMEDOUT',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#aec54cdb601e5f93a516400d99663d11ea1e5d3c84593c457cee72e18634f28914',1,'alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface']]],
   ['content_5ftype',['CONTENT_TYPE',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html#aa2dbdbb9bbf0442fff5b43d7baa40190a69f4c5323778d9d6383109d492070656',1,'alexaClientSDK::avsCommon::sdkInterfaces::HTTPContentFetcherInterface']]],
   ['continue',['CONTINUE',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2.html#ad3c6d434b19587fa69b7d36d1fd08ba2a2f453cfe638e57e27bb0c9512436111e',1,'alexaClientSDK::avsCommon::utils::http2']]],
+  ['count',['COUNT',['../structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_blocking_policy_1_1_medium.html#a62a8eb926fee107af24e964130f45299aceea6f76ae0d7aa000af0c1f52814e2f',1,'alexaClientSDK::avsCommon::avs::BlockingPolicy::Medium']]],
   ['critical',['CRITICAL',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a99cd1c61610c76a57cb8d10d6df6b870',1,'alexaClientSDK::avsCommon::utils::logger']]]
 ];

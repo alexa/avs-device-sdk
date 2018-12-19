@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -113,6 +113,7 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1test_1_1_stub_misc_storage.html#aa090b8c99c2aab019a0f6a67ea256a10">alexaClientSDK::avsCommon::sdkInterfaces::storage::test::StubMiscStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_shutdown_monitor.html#a41f84b86c550ddc3960c8aefa8ca6009">alexaClientSDK::avsCommon::utils::ShutdownMonitor</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_test_misc_storage.html#a72e912cc77ecd12754b6a7d06676770f">alexaClientSDK::capabilitiesDelegate::test::TestMiscStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_setting_callbacks.html#a95e4964e5ffeb5543222f327df0f361c">alexaClientSDK::settings::SettingCallbacks&lt; ManagerT &gt;</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html#a49258ab475b8f914c29bf260edd83a00">alexaClientSDK::storage::sqliteStorage::SQLiteMiscStorage</a>
 </li>
 <li>addAlertsObserver()
@@ -194,6 +195,9 @@ $(function() {
 <li>addLogLevelObserver()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html#a7944e2205b5a60d6d94489b89bc0f2a9">alexaClientSDK::avsCommon::utils::logger::Logger</a>
 </li>
+<li>addMember()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1_json_generator.html#af7d0f31789b0241c4626f3a3b09e4415">alexaClientSDK::avsCommon::utils::json::JsonGenerator</a>
+</li>
 <li>addMessageObserver()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html#a0ba0607327e74828015f65549f5b0778">alexaClientSDK::acl::AVSConnectionManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html#a59cef4c3ad790f2e83cf749c58f6d762">alexaClientSDK::avsCommon::sdkInterfaces::AVSConnectionManagerInterface</a>
@@ -224,9 +228,17 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_user_inactivity_monitor.html#aef085cf2b506fb6a190f605f8d750f40">alexaClientSDK::capabilityAgents::system::UserInactivityMonitor</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html#ac6715180de2a75388a6d877ff55b17c2">alexaClientSDK::capabilityAgents::templateRuntime::TemplateRuntime</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_registration_manager.html#a000367076de03aaa5db417c656cc1847">alexaClientSDK::registrationManager::RegistrationManager</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_setting_interface.html#aafcf4c4bdb2afe20a9b26648484b5f70">alexaClientSDK::settings::SettingInterface&lt; ValueT &gt;</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_settings_manager.html#a4b5f4148b96beb370c986387cd56d20b">alexaClientSDK::settings::SettingsManager&lt; SettingsT &gt;</a>
 </li>
 <li>addPostHeader()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a29f38d8cc80e03c239b835d22a1cb71a">alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper</a>
+</li>
+<li>addRawJsonMember()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1_json_generator.html#a574da0475e24a7270ceb05778919eb4a">alexaClientSDK::avsCommon::utils::json::JsonGenerator</a>
+</li>
+<li>addSetting()
+: <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_settings_manager.html#a3a5d3220939bcf5eb1c6bba4cebdd1fd">alexaClientSDK::settings::SettingsManager&lt; SettingsT &gt;</a>
 </li>
 <li>addSettingObserver()
 : <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a24d1c376d8545acb72c67950d395e947">alexaClientSDK::defaultClient::DefaultClient</a>
@@ -248,6 +260,10 @@ $(function() {
 </li>
 <li>addTemplateRuntimeObserver()
 : <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#aff7445241c598c5eaaa4dab827b3e4f8">alexaClientSDK::defaultClient::DefaultClient</a>
+</li>
+<li>addToManager()
+: <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_setting_callback_adapter.html#a603ef6a66117ad1128ab7ab529c1f6fc">alexaClientSDK::settings::SettingCallbackAdapter&lt; ManagerT, id &gt;</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_setting_callback_adapter_interface.html#ab914d71b44cf4e7dd82e48ec0a32aecb">alexaClientSDK::settings::SettingCallbackAdapterInterface&lt; ManagerT &gt;</a>
 </li>
 <li>adjustBandLevels()
 : <a class="el" href="classalexa_client_s_d_k_1_1equalizer_1_1_equalizer_controller.html#a1be4e5bfb8c918a21a5b5c8d1833efaf">alexaClientSDK::equalizer::EqualizerController</a>
@@ -394,6 +410,11 @@ $(function() {
 <li>AVRCPTargetRecord()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a_v_r_c_p_target_record.html#a3b74377d32c4900d7756b1e7d0b811c0">alexaClientSDK::avsCommon::utils::bluetooth::AVRCPTargetRecord</a>
 </li>
+<li>avsChange()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_d_n_d_setting_protocol.html#a04773b53c7f3aa021b374d2e8130b8eb">alexaClientSDK::capabilityAgents::doNotDisturb::DNDSettingProtocol</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_setting_protocol_interface.html#a794a9aec03a6c01de6142db0981ee253">alexaClientSDK::settings::SettingProtocolInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1test_1_1_mock_setting_protocol.html#a901565fc74eea0d90d4944607b344a45">alexaClientSDK::settings::test::MockSettingProtocol</a>
+</li>
 <li>AVSMessage()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message.html#a72ec5253158d65661e36e3c0d6bbe9b5">alexaClientSDK::avsCommon::avs::AVSMessage</a>
 </li>
@@ -405,7 +426,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

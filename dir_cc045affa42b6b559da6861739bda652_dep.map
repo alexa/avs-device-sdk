@@ -1,13 +1,17 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/AIP" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/AIP">
-<area shape="rect" id="node2" href="dir_7702e81a4574d959c78d0e2207e83661.html" title="include" alt="" coords="37,157,109,205"/>
-<area shape="rect" id="node5" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="96,253,197,301"/>
-<area shape="rect" id="edge5-headlabel" href="dir_000131_000015.html" title="21" alt="" coords="116,227,131,240"/>
-<area shape="rect" id="node3" href="dir_15792639ff4eff63dfc041d0e0e489e3.html" title="src" alt="" coords="37,61,109,109"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000133_000131.html" title="2" alt="" coords="78,132,85,145"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000133_000015.html" title="10" alt="" coords="143,227,158,241"/>
-<area shape="rect" id="node4" href="dir_c126307dad2bc8e0908757440f56d24d.html" title="test" alt="" coords="133,61,205,109"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000134_000131.html" title="2" alt="" coords="113,143,120,157"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000134_000015.html" title="12" alt="" coords="164,232,179,245"/>
-<area shape="rect" id="clust2" href="dir_cc045affa42b6b559da6861739bda652.html" alt="" coords="27,51,312,216"/>
-<area shape="rect" id="clust1" href="dir_7cf910bd1d7603f12ef47ff650cec893.html" title="CapabilityAgents" alt="" coords="16,16,323,227"/>
+<area shape="rect" id="node2" href="dir_7702e81a4574d959c78d0e2207e83661.html" title="include" alt="" coords="101,157,173,205"/>
+<area shape="rect" id="node5" href="dir_6b07903b29b547047bfa8a8b819c80bf.html" title="SpeechEncoder" alt="" coords="5,253,122,301"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000132_000292.html" title="1" alt="" coords="96,237,104,250"/>
+<area shape="rect" id="node6" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="134,349,235,397"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000132_000015.html" title="21" alt="" coords="175,323,190,336"/>
+<area shape="rect" id="node3" href="dir_15792639ff4eff63dfc041d0e0e489e3.html" title="src" alt="" coords="101,61,173,109"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000134_000132.html" title="2" alt="" coords="142,132,149,145"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000134_000292.html" title="1" alt="" coords="73,230,80,243"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000134_000015.html" title="11" alt="" coords="193,325,207,339"/>
+<area shape="rect" id="node4" href="dir_c126307dad2bc8e0908757440f56d24d.html" title="test" alt="" coords="197,61,269,109"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000135_000132.html" title="2" alt="" coords="176,143,184,157"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000135_000015.html" title="12" alt="" coords="214,332,229,345"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000292_000015.html" title="11" alt="" coords="138,325,152,338"/>
+<area shape="rect" id="clust2" href="dir_cc045affa42b6b559da6861739bda652.html" alt="" coords="90,51,375,216"/>
+<area shape="rect" id="clust1" href="dir_7cf910bd1d7603f12ef47ff650cec893.html" title="CapabilityAgents" alt="" coords="79,16,386,227"/>
 </map>

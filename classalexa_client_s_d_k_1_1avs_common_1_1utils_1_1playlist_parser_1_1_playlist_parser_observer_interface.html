@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,7 +67,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">alexaClientSDK::avsCommon::utils::playlistParser::PlaylistParserObserverInterface Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -89,14 +88,8 @@ Inheritance diagram for alexaClientSDK::avsCommon::utils::playlistParser::Playli
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9930eca43e330858b3df227d78030e42"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html#a9930eca43e330858b3df227d78030e42">~PlaylistParserObserverInterface</a> ()=default</td></tr>
 <tr class="separator:a9930eca43e330858b3df227d78030e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b7892ff8f8f9a69dcbdb2ad3938182b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html#a3b7892ff8f8f9a69dcbdb2ad3938182b">onPlaylistEntryParsed</a> (int requestId, std::string url, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser.html#ab60fb31cb5497bc9f16feda4fc24fe8a">PlaylistParseResult</a> parseResult, std::chrono::milliseconds duration=<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html#ab8960fc65f0ca81c3d0b41c13d5ffbcc">INVALID_DURATION</a>)=0</td></tr>
-<tr class="separator:a3b7892ff8f8f9a69dcbdb2ad3938182b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:ab8960fc65f0ca81c3d0b41c13d5ffbcc"><td class="memItemLeft" align="right" valign="top">static constexpr std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html#ab8960fc65f0ca81c3d0b41c13d5ffbcc">INVALID_DURATION</a> = std::chrono::milliseconds(-1)</td></tr>
-<tr class="memdesc:ab8960fc65f0ca81c3d0b41c13d5ffbcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">An invalid duration.  <a href="#ab8960fc65f0ca81c3d0b41c13d5ffbcc">More...</a><br /></td></tr>
-<tr class="separator:ab8960fc65f0ca81c3d0b41c13d5ffbcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58eb861746bafd263e8dc08ba6958e4d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html#a58eb861746bafd263e8dc08ba6958e4d">onPlaylistEntryParsed</a> (int requestId, <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_entry.html">PlaylistEntry</a> playlistEntry)=0</td></tr>
+<tr class="separator:a58eb861746bafd263e8dc08ba6958e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An observer of the playlist parser. </p>
@@ -128,8 +121,8 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3b7892ff8f8f9a69dcbdb2ad3938182b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b7892ff8f8f9a69dcbdb2ad3938182b">&#9670;&nbsp;</a></span>onPlaylistEntryParsed()</h2>
+<a id="a58eb861746bafd263e8dc08ba6958e4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58eb861746bafd263e8dc08ba6958e4d">&#9670;&nbsp;</a></span>onPlaylistEntryParsed()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -146,20 +139,8 @@ Static Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>url</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser.html#ab60fb31cb5497bc9f16feda4fc24fe8a">PlaylistParseResult</a>&#160;</td>
-          <td class="paramname"><em>parseResult</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::chrono::milliseconds&#160;</td>
-          <td class="paramname"><em>duration</em> = <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html#ab8960fc65f0ca81c3d0b41c13d5ffbcc">INVALID_DURATION</a></code>&#160;</td>
+          <td class="paramtype"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_entry.html">PlaylistEntry</a>&#160;</td>
+          <td class="paramname"><em>playlistEntry</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -177,40 +158,13 @@ Static Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">requestId</td><td>The id of the callback to connect this callback to an original request. </td></tr>
-    <tr><td class="paramname">url</td><td>An entry that has been extracted. </td></tr>
-    <tr><td class="paramname">parseResult</td><td>The result of parsing the playlist. </td></tr>
-    <tr><td class="paramname">duration</td><td>A duration in milliseconds of the playlist entry, if it was able to be deduced based on available playlist metadata.</td></tr>
+    <tr><td class="paramname">playlistEntry</td><td>The parsing result. The <code>url</code> field will be valid if <code>parseResult</code> is different than ERROR.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This function is always called from a single thread in PlayListParser. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_test_parser_observer.html#ad6cc0ba892e653448d91230bcb814786">alexaClientSDK::playlistParser::test::TestParserObserver</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="ab8960fc65f0ca81c3d0b41c13d5ffbcc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab8960fc65f0ca81c3d0b41c13d5ffbcc">&#9670;&nbsp;</a></span>INVALID_DURATION</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr std::chrono::milliseconds alexaClientSDK::avsCommon::utils::playlistParser::PlaylistParserObserverInterface::INVALID_DURATION = std::chrono::milliseconds(-1)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>An invalid duration. </p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_test_parser_observer.html#acffa9997dca5354342bf12ebb4376b3b">alexaClientSDK::playlistParser::test::TestParserObserver</a>.</p>
 
 </div>
 </div>
@@ -221,7 +175,7 @@ Static Public Attributes</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

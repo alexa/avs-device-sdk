@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -94,6 +94,8 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_m_p_r_i_s_player_test.html#a3009636260437fe16dfe4ed1c4fa2a63">alexaClientSDK::bluetoothImplementations::blueZ::test::MPRISPlayerTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a93d6e7a535f6616cf49f9d855edacac2">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a4e87e5e33b407f8e66138448b6de5598">alexaClientSDK::mediaPlayer::BaseStreamSource</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1speechencoder_1_1_encoder_context.html#a6514e93612699495bc0e68aebcf73128">alexaClientSDK::speechencoder::EncoderContext</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1speechencoder_1_1_opus_encoder_context.html#afd76dffce1b79d554e9ff77f526abbd2">alexaClientSDK::speechencoder::OpusEncoderContext</a>
 </li>
 <li>initialize()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_alexa_client_s_d_k_init.html#a185a7b0c738fb29837e8c42e62ad0df1">alexaClientSDK::avsCommon::avs::initialization::AlexaClientSDKInit</a>
@@ -108,6 +110,9 @@ $(function() {
 <li>initializeParsing()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_iterative_playlist_parser_interface.html#a00f7883f6e433beba3e7a3b1d79a54e6">alexaClientSDK::avsCommon::utils::playlistParser::IterativePlaylistParserInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_iterative_playlist_parser.html#ada74c2ce5d4ea3e6e472c4334806c449">alexaClientSDK::playlistParser::IterativePlaylistParser</a>
+</li>
+<li>initVector
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_encryption_info.html#a057c4a61bfecfe98793790ac5940fc99">alexaClientSDK::avsCommon::utils::playlistParser::EncryptionInfo</a>
 </li>
 <li>InMemoryEqualizerConfiguration()
 : <a class="el" href="classalexa_client_s_d_k_1_1equalizer_1_1_in_memory_equalizer_configuration.html#a51fa42831e4b1d08d5321b0a38c60467">alexaClientSDK::equalizer::InMemoryEqualizerConfiguration</a>
@@ -140,9 +145,6 @@ $(function() {
 <li>interval
 : <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream_1_1_progress_report.html#ad36eafd4151cae0e46fc7012668a20e5">alexaClientSDK::capabilityAgents::audioPlayer::AudioItem::Stream::ProgressReport</a>
 </li>
-<li>INVALID_DURATION
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html#ab8960fc65f0ca81c3d0b41c13d5ffbcc">alexaClientSDK::avsCommon::utils::playlistParser::PlaylistParserObserverInterface</a>
-</li>
 <li>INVALID_FD
 : <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_media_context.html#a2146a17033de05828f926a8a4fb9ea8a">alexaClientSDK::bluetoothImplementations::blueZ::MediaContext</a>
 </li>
@@ -166,6 +168,9 @@ $(function() {
 <li>isBandSupported()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_equalizer_configuration_interface.html#a74c5706d897edaa9e03e95008d0f0b07">alexaClientSDK::avsCommon::sdkInterfaces::audio::EqualizerConfigurationInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1equalizer_1_1_in_memory_equalizer_configuration.html#a2281a169ecf9f41f2d0a32d87f059753">alexaClientSDK::equalizer::InMemoryEqualizerConfiguration</a>
+</li>
+<li>isBlocking()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_blocking_policy.html#a1e962bba9a97194f54f51ac80b750de1">alexaClientSDK::avsCommon::avs::BlockingPolicy</a>
 </li>
 <li>isByteswappingRequired()
 : <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_abstract_keyword_detector.html#a551aa63df26601c02ebc941422d8413a">alexaClientSDK::kwd::AbstractKeywordDetector</a>
@@ -213,6 +218,9 @@ $(function() {
 <li>isExecutorReady()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_router.html#a0dffc16714c977d7184b57b27ed93cba">alexaClientSDK::acl::test::TestableMessageRouter</a>
 </li>
+<li>isFinalized()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1_json_generator.html#aa04871a34b83ea26b248804282d9400d">alexaClientSDK::avsCommon::utils::json::JsonGenerator</a>
+</li>
 <li>isGuest
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_session_state.html#a108688d22bdca4e49c74fac92153a1ca">alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::AdapterSessionState</a>
 </li>
@@ -231,6 +239,12 @@ $(function() {
 </li>
 <li>isLittleEndian()
 : <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_playback_configuration.html#aebe480800a475a27951593e3988a26fd">alexaClientSDK::mediaPlayer::android::PlaybackConfiguration</a>
+</li>
+<li>isLive
+: <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a412e3b72a2c27e9911373f755950603a">alexaClientSDK::playlistParser::M3UContent</a>
+</li>
+<li>isMasterPlaylist()
+: <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a62e3ebb32a5d7a90172ac08d760d8417">alexaClientSDK::playlistParser::M3UContent</a>
 </li>
 <li>isModeSupported()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_equalizer_configuration_interface.html#acc64bcbe86ffe22b82ba1d9bd2760433">alexaClientSDK::avsCommon::sdkInterfaces::audio::EqualizerConfigurationInterface</a>
@@ -314,7 +328,9 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_directive_handler_1_1_directive_params.html#aeccced36637b348e1aafd70e89be4a3f">alexaClientSDK::integration::test::TestDirectiveHandler::DirectiveParams</a>
 </li>
 <li>isValid()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a2aa345bbddc974cf1cb11f3de90bb01d">alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_blocking_policy.html#a353c284aa2770b2ef635ea888b600d59">alexaClientSDK::avsCommon::avs::BlockingPolicy</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a2aa345bbddc974cf1cb11f3de90bb01d">alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_encryption_info.html#a5e8c54169bc703402058bd7499f5a313">alexaClientSDK::avsCommon::utils::playlistParser::EncryptionInfo</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_auth_delegate_test_context.html#a3726a1666610dbc541be1ebf6e249c4d">alexaClientSDK::integration::test::AuthDelegateTestContext</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_statement.html#afe141a216dd4e00ec7a9a6c5c9963de5">alexaClientSDK::storage::sqliteStorage::SQLiteStatement</a>
 </li>
@@ -326,7 +342,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

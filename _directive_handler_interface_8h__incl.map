@@ -1,9 +1,9 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h">
 <area shape="rect" id="node3" href="$_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="2235,205,2458,231"/>
-<area shape="rect" id="node42" href="$_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="2694,785,2927,824"/>
-<area shape="rect" id="node46" href="$_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="2234,119,2459,157"/>
+<area shape="rect" id="node42" href="$_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="2684,785,2916,824"/>
+<area shape="rect" id="node47" href="$_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="2234,119,2459,157"/>
 <area shape="rect" id="node7" href="$_attachment_manager_interface_8h.html" title="Attachment/AttachmentManager\lInterface.h" alt="" coords="486,279,698,317"/>
-<area shape="rect" id="node40" href="$_a_v_s_message_8h.html" title="AVSMessage.h" alt="" coords="2212,879,2324,904"/>
+<area shape="rect" id="node40" href="$_a_v_s_message_8h.html" title="AVSMessage.h" alt="" coords="2244,879,2356,904"/>
 <area shape="rect" id="node9" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="1527,365,1729,404"/>
 <area shape="rect" id="node12" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="441,612,642,651"/>
 <area shape="rect" id="node16" href="$_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="491,452,693,491"/>
@@ -12,7 +12,7 @@
 <area shape="rect" id="node39" href="$_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="1715,705,1818,731"/>
 <area shape="rect" id="node20" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1159,539,1305,564"/>
 <area shape="rect" id="node22" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1019,699,1195,737"/>
-<area shape="rect" id="node34" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="978,619,1086,644"/>
+<area shape="rect" id="node34" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="977,619,1085,644"/>
 <area shape="rect" id="node35" href="$_reader_8h.html" title="Reader.h" alt="" coords="1194,619,1270,644"/>
 <area shape="rect" id="node38" href="$_writer_8h.html" title="Writer.h" alt="" coords="1380,619,1447,644"/>
 <area shape="rect" id="node23" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1019,785,1195,824"/>
@@ -23,7 +23,7 @@
 <area shape="rect" id="node33" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="384,1045,560,1084"/>
 <area shape="rect" id="node29" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="635,959,811,997"/>
 <area shape="rect" id="node30" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="635,1045,811,1084"/>
-<area shape="rect" id="node41" href="$_a_v_s_message_header_8h.html" title="AVSMessageHeader.h" alt="" coords="2154,965,2310,991"/>
-<area shape="rect" id="node44" href="$_namespace_and_name_8h.html" title="NamespaceAndName.h" alt="" coords="2677,879,2840,904"/>
-<area shape="rect" id="node45" href="$_blocking_policy_8h.html" title="BlockingPolicy.h" alt="" coords="2536,879,2653,904"/>
+<area shape="rect" id="node41" href="$_a_v_s_message_header_8h.html" title="AVSMessageHeader.h" alt="" coords="2104,965,2259,991"/>
+<area shape="rect" id="node44" href="$_namespace_and_name_8h.html" title="NamespaceAndName.h" alt="" coords="2620,879,2783,904"/>
+<area shape="rect" id="node45" href="$_blocking_policy_8h.html" title="BlockingPolicy.h" alt="" coords="2945,879,3063,904"/>
 </map>

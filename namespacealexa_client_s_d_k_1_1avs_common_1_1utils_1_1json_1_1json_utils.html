@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -84,6 +84,8 @@ Functions</h2></td></tr>
 <tr class="separator:aa97f53eadfa124bb8797e1325b4dbe52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ab6c031209d9171aa85512fe7033ef1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#a3ab6c031209d9171aa85512fe7033ef1">convertToValue</a> (const rapidjson::Value &amp;documentNode, int64_t *value)</td></tr>
 <tr class="separator:a3ab6c031209d9171aa85512fe7033ef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a412fc3128b7a5ed2dc7fe6f4bc721d1e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#a412fc3128b7a5ed2dc7fe6f4bc721d1e">convertToValue</a> (const rapidjson::Value &amp;documentNode, uint64_t *value)</td></tr>
+<tr class="separator:a412fc3128b7a5ed2dc7fe6f4bc721d1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5847e7c123fda65a6a95c3bf3e97999"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#aa5847e7c123fda65a6a95c3bf3e97999">convertToValue</a> (const rapidjson::Value &amp;documentNode, bool *value)</td></tr>
 <tr class="separator:aa5847e7c123fda65a6a95c3bf3e97999"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8fee520868204e654e46ccc3887651d"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
@@ -104,7 +106,7 @@ Functions</h2></td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="aa97f53eadfa124bb8797e1325b4dbe52"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa97f53eadfa124bb8797e1325b4dbe52">&#9670;&nbsp;</a></span>convertToValue() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa97f53eadfa124bb8797e1325b4dbe52">&#9670;&nbsp;</a></span>convertToValue() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -141,7 +143,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a3ab6c031209d9171aa85512fe7033ef1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ab6c031209d9171aa85512fe7033ef1">&#9670;&nbsp;</a></span>convertToValue() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ab6c031209d9171aa85512fe7033ef1">&#9670;&nbsp;</a></span>convertToValue() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -177,8 +179,45 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a412fc3128b7a5ed2dc7fe6f4bc721d1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a412fc3128b7a5ed2dc7fe6f4bc721d1e">&#9670;&nbsp;</a></span>convertToValue() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::utils::json::jsonUtils::convertToValue </td>
+          <td>(</td>
+          <td class="paramtype">const rapidjson::Value &amp;&#160;</td>
+          <td class="paramname"><em>documentNode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t *&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Converts a given rapidjson value node to a 64-bit unsigned integer. The node must be unsigned int type.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">documentNode</td><td>A logical node within a parsed JSON document which rapidjson understands. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>The output parameter which will be assigned the unsigned int value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the node was successfully converted, <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
 <a id="aa5847e7c123fda65a6a95c3bf3e97999"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5847e7c123fda65a6a95c3bf3e97999">&#9670;&nbsp;</a></span>convertToValue() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5847e7c123fda65a6a95c3bf3e97999">&#9670;&nbsp;</a></span>convertToValue() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -580,7 +619,7 @@ template&lt;typename T &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

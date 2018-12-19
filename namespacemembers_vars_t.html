@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -69,6 +69,7 @@ $(function() {
 , <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth.html#afcfe140f063b96471314d69785ac8609">alexaClientSDK::avsCommon::utils::bluetooth</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ad01f6f0e39c688b091431e24036559bd">alexaClientSDK::bluetoothImplementations::blueZ</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#aac56461ead92a073d24b57fabaf58945">alexaClientSDK::capabilityAgents::bluetooth</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a6e1deee97249472a677b346e9dcc8e01">alexaClientSDK::capabilityAgents::doNotDisturb</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1equalizer.html#a666b750f0b8fbe77379f7911e59598c1">alexaClientSDK::capabilityAgents::equalizer</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#a5fcc14286ca89bed7895457eefe05db3">alexaClientSDK::capabilityAgents::interactionModel</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1settings.html#acbd5628a3f977e7e2888c927a3c55ffc">alexaClientSDK::capabilityAgents::settings</a>
@@ -243,18 +244,6 @@ $(function() {
 <li>TEST_HLS_PLAYLIST_URLS
 : <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser_1_1test.html#ae7945571edd52ab4f9272c71843525ad">alexaClientSDK::playlistParser::test</a>
 </li>
-<li>TEST_HLS_RECURSIVE_PLAYLIST_CONTENT
-: <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser_1_1test.html#a6ae22bd7eebd1a3a1e6a8bb74103620f">alexaClientSDK::playlistParser::test</a>
-</li>
-<li>TEST_HLS_RECURSIVE_PLAYLIST_URL
-: <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser_1_1test.html#a03d430463a0f0e4c94faad67053a7059">alexaClientSDK::playlistParser::test</a>
-</li>
-<li>TEST_HLS_RECURSIVE_PLAYLIST_URL_EXPECTED_PARSES
-: <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser_1_1test.html#a6270767c1032818202b720309e16177a">alexaClientSDK::playlistParser::test</a>
-</li>
-<li>TEST_HLS_RECURSIVE_PLAYLIST_URLS
-: <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser_1_1test.html#adc9c42288ad61c6660b51b6998ebd302">alexaClientSDK::playlistParser::test</a>
-</li>
 <li>TEST_LOOP_COUNT
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1test.html#a17d87c2582cc9de972ac1b4e795b55ab">alexaClientSDK::capabilityAgents::alerts::renderer::test</a>
 </li>
@@ -372,7 +361,8 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test.html#a7086e216e7e91137af5fa81a714bbc7f">alexaClientSDK::avsCommon::utils::logger::test</a>
 </li>
 <li>TEST_TIMEOUT
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1test.html#adbfbb08966e985c62aa5bbe862003e33">alexaClientSDK::capabilityAgents::alerts::renderer::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#aeb1513ac26c83401608ffeecae1ee2dd">alexaClientSDK::adsl::test</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1test.html#adbfbb08966e985c62aa5bbe862003e33">alexaClientSDK::capabilityAgents::alerts::renderer::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#ac604ab0beeadebf3b3d5f06979cb820b">alexaClientSDK::capabilityAgents::alerts::test</a>
 </li>
 <li>TEST_URL1
@@ -395,6 +385,9 @@ $(function() {
 </li>
 <li>testData
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1test.html#a1ba008f08d5dfa9029d863b36d0a056c">alexaClientSDK::avsCommon::utils::test</a>
+</li>
+<li>testDatabase
+: <a class="el" href="namespacealexa_client_s_d_k_1_1settings_1_1storage_1_1test.html#a78e515ac22b6216b47e3dd227ce6a587">alexaClientSDK::settings::storage::test</a>
 </li>
 <li>testEventWithContextAndNoDialogReqId
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1test.html#ab8326f0a2dc6032d1dc5278c4b7b724b">alexaClientSDK::avsCommon::test</a>
@@ -501,6 +494,9 @@ $(function() {
 <li>TRIPLICATE_BOUNDARY_LINES
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1test.html#a77f153d814eda97ae54b0e33a4121c7f">alexaClientSDK::avsCommon::test</a>
 </li>
+<li>TRUE_BOOLEAN_OPTION
+: <a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android.html#aa9198b3a60524bd87e31345c4087ac7d">alexaClientSDK::mediaPlayer::android</a>
+</li>
 <li>TRUNCATED_MAC_ADDRESS_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#abca8161940856980b9a459def5fa45be">alexaClientSDK::capabilityAgents::bluetooth</a>
 </li>
@@ -510,12 +506,15 @@ $(function() {
 <li>TYPE
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#a29fc4413abe4c766cddf9363b35db765">alexaClientSDK::avsCommon::avs::externalMediaPlayer</a>
 </li>
+<li>TYPE_KEY
+: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a32e0f808067c1599cbb4598d2f750706">alexaClientSDK::capabilityAgents::aip</a>
+</li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

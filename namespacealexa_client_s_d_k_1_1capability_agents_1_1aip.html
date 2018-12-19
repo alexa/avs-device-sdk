@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -107,6 +107,8 @@ Enumerations</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a9bba266e6b0d85bbcc952295c1370bc1"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a9bba266e6b0d85bbcc952295c1370bc1">operator&lt;&lt;</a> (std::ostream &amp;stream, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2d">ASRProfile</a> profile)</td></tr>
 <tr class="separator:a9bba266e6b0d85bbcc952295c1370bc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5556314706757fd4965ac60ef20738f0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a5556314706757fd4965ac60ef20738f0">asrProfileToString</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2d">ASRProfile</a> profile)</td></tr>
+<tr class="separator:a5556314706757fd4965ac60ef20738f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3635b66f06140e73705befc6b73cd4ec"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a3635b66f06140e73705befc6b73cd4ec">initiatorToString</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad67c47f25039dbd276b53220ff3bc0f4">Initiator</a> initiator)</td></tr>
 <tr class="separator:a3635b66f06140e73705befc6b73cd4ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af27d2ed2429c8bc4696b07d3f9179271"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af27d2ed2429c8bc4696b07d3f9179271">TAG</a> (&quot;AudioInputProcessor&quot;)</td></tr>
@@ -146,14 +148,44 @@ Variables</h2></td></tr>
 <tr class="memitem:a1732424dfb90cdd08d5e20c07ddd63bb"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a1732424dfb90cdd08d5e20c07ddd63bb">INITIATOR_KEY</a> = &quot;initiator&quot;</td></tr>
 <tr class="memdesc:a1732424dfb90cdd08d5e20c07ddd63bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator.  <a href="#a1732424dfb90cdd08d5e20c07ddd63bb">More...</a><br /></td></tr>
 <tr class="separator:a1732424dfb90cdd08d5e20c07ddd63bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a50ac3ef5c5b7ffff9d4b37dceb4997"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a2a50ac3ef5c5b7ffff9d4b37dceb4997">PROFILE_KEY</a> = &quot;profile&quot;</td></tr>
+<tr class="memdesc:a2a50ac3ef5c5b7ffff9d4b37dceb4997"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's profile.  <a href="#a2a50ac3ef5c5b7ffff9d4b37dceb4997">More...</a><br /></td></tr>
+<tr class="separator:a2a50ac3ef5c5b7ffff9d4b37dceb4997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75e0e68b050058b87d12bb7cd0b07d1c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a75e0e68b050058b87d12bb7cd0b07d1c">FORMAT_KEY</a> = &quot;format&quot;</td></tr>
+<tr class="memdesc:a75e0e68b050058b87d12bb7cd0b07d1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's format.  <a href="#a75e0e68b050058b87d12bb7cd0b07d1c">More...</a><br /></td></tr>
+<tr class="separator:a75e0e68b050058b87d12bb7cd0b07d1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32e0f808067c1599cbb4598d2f750706"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a32e0f808067c1599cbb4598d2f750706">TYPE_KEY</a> = &quot;type&quot;</td></tr>
+<tr class="memdesc:a32e0f808067c1599cbb4598d2f750706"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's type.  <a href="#a32e0f808067c1599cbb4598d2f750706">More...</a><br /></td></tr>
+<tr class="separator:a32e0f808067c1599cbb4598d2f750706"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbf5dcfa5810b05aab72efc1a0005e3f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#abbf5dcfa5810b05aab72efc1a0005e3f">PAYLOAD_KEY</a> = &quot;payload&quot;</td></tr>
+<tr class="memdesc:abbf5dcfa5810b05aab72efc1a0005e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's payload.  <a href="#abbf5dcfa5810b05aab72efc1a0005e3f">More...</a><br /></td></tr>
+<tr class="separator:abbf5dcfa5810b05aab72efc1a0005e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34efcba44c38cc415a44c40efa7a7e61"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a34efcba44c38cc415a44c40efa7a7e61">WAKEWORD_INDICES_KEY</a> = &quot;wakeWordIndices&quot;</td></tr>
+<tr class="memdesc:a34efcba44c38cc415a44c40efa7a7e61"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's wakeword indices.  <a href="#a34efcba44c38cc415a44c40efa7a7e61">More...</a><br /></td></tr>
+<tr class="separator:a34efcba44c38cc415a44c40efa7a7e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90336aeeac4edbe1bde7273b885bf610"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a90336aeeac4edbe1bde7273b885bf610">START_INDEX_KEY</a> = &quot;startIndexInSamples&quot;</td></tr>
+<tr class="memdesc:a90336aeeac4edbe1bde7273b885bf610"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's wakeword start index.  <a href="#a90336aeeac4edbe1bde7273b885bf610">More...</a><br /></td></tr>
+<tr class="separator:a90336aeeac4edbe1bde7273b885bf610"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a8d6d789c8c9cfc467aefffbc2f5a9e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a4a8d6d789c8c9cfc467aefffbc2f5a9e">END_INDEX_KEY</a> = &quot;endIndexInSamples&quot;</td></tr>
+<tr class="memdesc:a4a8d6d789c8c9cfc467aefffbc2f5a9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's wakeword end index.  <a href="#a4a8d6d789c8c9cfc467aefffbc2f5a9e">More...</a><br /></td></tr>
+<tr class="separator:a4a8d6d789c8c9cfc467aefffbc2f5a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba10069d387ef5cbecd60feb793a2288"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#aba10069d387ef5cbecd60feb793a2288">WAKE_WORD_KEY</a> = &quot;wakeWord&quot;</td></tr>
+<tr class="memdesc:aba10069d387ef5cbecd60feb793a2288"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's wake word.  <a href="#aba10069d387ef5cbecd60feb793a2288">More...</a><br /></td></tr>
+<tr class="separator:aba10069d387ef5cbecd60feb793a2288"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cb092b3b7868ce0034d8ef486e72315"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a0cb092b3b7868ce0034d8ef486e72315">VOICE_ENERGY_KEY</a> = &quot;voiceEnergy&quot;</td></tr>
+<tr class="memdesc:a0cb092b3b7868ce0034d8ef486e72315"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the ESP voice energy.  <a href="#a0cb092b3b7868ce0034d8ef486e72315">More...</a><br /></td></tr>
+<tr class="separator:a0cb092b3b7868ce0034d8ef486e72315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7a153c70d8b5fbad0db8abeb3bbd71b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ac7a153c70d8b5fbad0db8abeb3bbd71b">AMBIENT_ENERGY_KEY</a> = &quot;ambientEnergy&quot;</td></tr>
+<tr class="memdesc:ac7a153c70d8b5fbad0db8abeb3bbd71b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the ESP ambient energy.  <a href="#ac7a153c70d8b5fbad0db8abeb3bbd71b">More...</a><br /></td></tr>
+<tr class="separator:ac7a153c70d8b5fbad0db8abeb3bbd71b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac08df1f16af6efea21abbf7a6fcb171c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ac08df1f16af6efea21abbf7a6fcb171c">AUDIO_ATTACHMENT_FIELD_NAME</a> = &quot;audio&quot;</td></tr>
 <tr class="memdesc:ac08df1f16af6efea21abbf7a6fcb171c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field name for the user voice attachment.  <a href="#ac08df1f16af6efea21abbf7a6fcb171c">More...</a><br /></td></tr>
 <tr class="separator:ac08df1f16af6efea21abbf7a6fcb171c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9715649e3977c3460ae6a3a39aff6955"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a9715649e3977c3460ae6a3a39aff6955">KWD_METADATA_FIELD_NAME</a> = &quot;wakewordEngineMetadata&quot;</td></tr>
 <tr class="memdesc:a9715649e3977c3460ae6a3a39aff6955"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field name for the wake word engine metadata.  <a href="#a9715649e3977c3460ae6a3a39aff6955">More...</a><br /></td></tr>
 <tr class="separator:a9715649e3977c3460ae6a3a39aff6955"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a159a107242c718759e1a7bff97a0cc3c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a159a107242c718759e1a7bff97a0cc3c">START_OF_SPEECH_OFFSET_FIELD_NAME</a> = &quot;startOfSpeechTimestamp&quot;</td></tr>
-<tr class="separator:a159a107242c718759e1a7bff97a0cc3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a690d88d522bcccad01aea068231b4226"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a690d88d522bcccad01aea068231b4226">START_OF_SPEECH_TIMESTAMP_FIELD_NAME</a> = &quot;startOfSpeechTimestamp&quot;</td></tr>
+<tr class="separator:a690d88d522bcccad01aea068231b4226"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a725d778b768a1f467a70b0b7ee79196f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a725d778b768a1f467a70b0b7ee79196f">END_OF_SPEECH_OFFSET_FIELD_NAME</a> = &quot;endOfSpeechOffsetInMilliseconds&quot;</td></tr>
 <tr class="memdesc:a725d778b768a1f467a70b0b7ee79196f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field name for the end of speech offset, reported in milliseconds, as part of SetEndOfSpeechOffset payload.  <a href="#a725d778b768a1f467a70b0b7ee79196f">More...</a><br /></td></tr>
 <tr class="separator:a725d778b768a1f467a70b0b7ee79196f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -222,6 +254,40 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a5556314706757fd4965ac60ef20738f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5556314706757fd4965ac60ef20738f0">&#9670;&nbsp;</a></span>asrProfileToString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::capabilityAgents::aip::asrProfileToString </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a12e954e666da508165ebfb7ce4466b2d">ASRProfile</a>&#160;</td>
+          <td class="paramname"><em>profile</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Convert the <code>ASRProfile</code> to an AVS-compliant string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">profile</td><td>The profile value to convert to a string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>String representing the profile value. If the profile given is not valid, an empty string will be returned. </dd></dl>
+
+</div>
+</div>
 <a id="a7c48c331a3ddfea634f02418d05d5d69"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7c48c331a3ddfea634f02418d05d5d69">&#9670;&nbsp;</a></span>getSpeechRecognizerCapabilityConfiguration()</h2>
 
@@ -357,6 +423,30 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="ac7a153c70d8b5fbad0db8abeb3bbd71b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7a153c70d8b5fbad0db8abeb3bbd71b">&#9670;&nbsp;</a></span>AMBIENT_ENERGY_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::AMBIENT_ENERGY_KEY = &quot;ambientEnergy&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The field identifying the ESP ambient energy. </p>
+
+</div>
+</div>
 <a id="ac08df1f16af6efea21abbf7a6fcb171c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac08df1f16af6efea21abbf7a6fcb171c">&#9670;&nbsp;</a></span>AUDIO_ATTACHMENT_FIELD_NAME</h2>
 
@@ -405,6 +495,30 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a4a8d6d789c8c9cfc467aefffbc2f5a9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a8d6d789c8c9cfc467aefffbc2f5a9e">&#9670;&nbsp;</a></span>END_INDEX_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::END_INDEX_KEY = &quot;endIndexInSamples&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The field identifying the initiator's wakeword end index. </p>
+
+</div>
+</div>
 <a id="a725d778b768a1f467a70b0b7ee79196f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a725d778b768a1f467a70b0b7ee79196f">&#9670;&nbsp;</a></span>END_OF_SPEECH_OFFSET_FIELD_NAME</h2>
 
@@ -450,6 +564,30 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The ExpectSpeech directive signature. </p>
+
+</div>
+</div>
+<a id="a75e0e68b050058b87d12bb7cd0b07d1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75e0e68b050058b87d12bb7cd0b07d1c">&#9670;&nbsp;</a></span>FORMAT_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::FORMAT_KEY = &quot;format&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The field identifying the initiator's format. </p>
 
 </div>
 </div>
@@ -522,6 +660,54 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The namespace for this capability agent. </p>
+
+</div>
+</div>
+<a id="abbf5dcfa5810b05aab72efc1a0005e3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbf5dcfa5810b05aab72efc1a0005e3f">&#9670;&nbsp;</a></span>PAYLOAD_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::PAYLOAD_KEY = &quot;payload&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The field identifying the initiator's payload. </p>
+
+</div>
+</div>
+<a id="a2a50ac3ef5c5b7ffff9d4b37dceb4997"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a50ac3ef5c5b7ffff9d4b37dceb4997">&#9670;&nbsp;</a></span>PROFILE_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::PROFILE_KEY = &quot;profile&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The field identifying the initiator's profile. </p>
 
 </div>
 </div>
@@ -644,8 +830,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a159a107242c718759e1a7bff97a0cc3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a159a107242c718759e1a7bff97a0cc3c">&#9670;&nbsp;</a></span>START_OF_SPEECH_OFFSET_FIELD_NAME</h2>
+<a id="a90336aeeac4edbe1bde7273b885bf610"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90336aeeac4edbe1bde7273b885bf610">&#9670;&nbsp;</a></span>START_INDEX_KEY</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -654,7 +840,31 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::START_OF_SPEECH_OFFSET_FIELD_NAME = &quot;startOfSpeechTimestamp&quot;</td>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::START_INDEX_KEY = &quot;startIndexInSamples&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The field identifying the initiator's wakeword start index. </p>
+
+</div>
+</div>
+<a id="a690d88d522bcccad01aea068231b4226"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a690d88d522bcccad01aea068231b4226">&#9670;&nbsp;</a></span>START_OF_SPEECH_TIMESTAMP_FIELD_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::START_OF_SPEECH_TIMESTAMP_FIELD_NAME = &quot;startOfSpeechTimestamp&quot;</td>
         </tr>
       </table>
   </td>
@@ -691,11 +901,107 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a32e0f808067c1599cbb4598d2f750706"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32e0f808067c1599cbb4598d2f750706">&#9670;&nbsp;</a></span>TYPE_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::TYPE_KEY = &quot;type&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The field identifying the initiator's type. </p>
+
+</div>
+</div>
+<a id="a0cb092b3b7868ce0034d8ef486e72315"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cb092b3b7868ce0034d8ef486e72315">&#9670;&nbsp;</a></span>VOICE_ENERGY_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::VOICE_ENERGY_KEY = &quot;voiceEnergy&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The field identifying the ESP voice energy. </p>
+
+</div>
+</div>
+<a id="aba10069d387ef5cbecd60feb793a2288"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba10069d387ef5cbecd60feb793a2288">&#9670;&nbsp;</a></span>WAKE_WORD_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::WAKE_WORD_KEY = &quot;wakeWord&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The field identifying the initiator's wake word. </p>
+
+</div>
+</div>
+<a id="a34efcba44c38cc415a44c40efa7a7e61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34efcba44c38cc415a44c40efa7a7e61">&#9670;&nbsp;</a></span>WAKEWORD_INDICES_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::WAKEWORD_INDICES_KEY = &quot;wakeWordIndices&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The field identifying the initiator's wakeword indices. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

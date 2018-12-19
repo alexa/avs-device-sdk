@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -55,7 +55,7 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
+<iframe src="javascript:void(0)" frameborder="0"
         name="MSearchResults" id="MSearchResults">
 </iframe>
 </div>
@@ -89,11 +89,11 @@ $(function() {
 <p>Or if you prefer, you can start with our <a href="https://alexa.github.io/avs-device-sdk/">SDK API Documentation</a>.</p>
 <h3>Learn More About The AVS Device SDK</h3>
 <p><a href="https://youtu.be/F5DixCPJYo8">Watch this tutorial</a> to learn about the how this SDK works and the set up process.</p>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/F5DixCPJYo8" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/F5DixCPJYo8" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 <h3>SDK Architecture</h3>
 <p>This diagram illustrates the data flows between components that comprise the AVS Device SDK for C++.</p>
 <div class="image">
-    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/Alexa_Device_SDK_Architecture.png" alt="SDK Architecture Diagram" width="75%"/>
+<img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/Alexa_Device_SDK_Architecture.png" alt="SDK Architecture Diagram" width="75%"/>
 </div>
 <p><b>Audio Signal Processor (ASP)</b> - Third-party software that applies signal processing algorithms to both input and output audio channels. The applied algorithms are designed to produce clean audio data and include, but are not limited to acoustic echo cancellation (AEC), beam forming (fixed or adaptive), voice activity detection (VAD), and dynamic range compression (DRC). If a multi-microphone array is present, the ASP constructs and outputs a single audio stream for the array.</p>
 <p><b>Shared Data Stream (SDS)</b> - A single producer, multi-consumer buffer that allows for the transport of any type of data between a single writer and one or more readers. SDS performs two key tasks:</p>
@@ -116,17 +116,19 @@ $(function() {
 <p>Focus management is not specific to Capability Agents or Directive Handlers, and can be used by non-Alexa related agents as well. This allows all agents using the AFML to have a consistent focus across a device.</p>
 <p><b>Capability Agents</b>: Handle Alexa-driven interactions; specifically directives and events. Each capability agent corresponds to a specific interface exposed by the AVS API. These interfaces include:</p>
 <ul>
-<li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechrecognizer">SpeechRecognizer</a> - The interface for speech capture.</li>
-<li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechsynthesizer">SpeechSynthesizer</a> - The interface for Alexa speech output.</li>
 <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/alerts">Alerts</a> - The interface for setting, stopping, and deleting timers and alarms.</li>
 <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/audioplayer">AudioPlayer</a> - The interface for managing and controlling audio playback.</li>
+<li><a href="https://developer.amazon.com/docs/alexa-voice-service/bluetooth.html">Bluetooth</a> - The interface for managing Bluetooth connections between peer devices and Alexa-enabled products.</li>
+<li><a href="https://developer.amazon.com/docs/alexa-voice-service/">DoNotDisturb</a> - The interface for enabling the do not disturb feature.</li>
+<li><a href="https://developer.amazon.com/docs/alexa-voice-service/equalizercontroller.html">EqualizerController</a> - The interface for adjusting equalizer settings, such as decibel (dB) levels and modes.</li>
+<li><a href="https://developer.amazon.com/docs/alexa-voice-service/interactionmodel-interface.html">InteractionModel</a> - This interface allows a client to support complex interactions initiated by Alexa, such as Alexa Routines.</li>
 <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/notifications">Notifications</a> - The interface for displaying notifications indicators.</li>
 <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/playbackcontroller">PlaybackController</a> - The interface for navigating a playback queue via GUI or buttons.</li>
 <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speaker">Speaker</a> - The interface for volume control, including mute and unmute.</li>
+<li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechrecognizer">SpeechRecognizer</a> - The interface for speech capture.</li>
+<li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechsynthesizer">SpeechSynthesizer</a> - The interface for Alexa speech output.</li>
 <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system">System</a> - The interface for communicating product status/state to AVS.</li>
 <li><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/templateruntime">TemplateRuntime</a> - The interface for rendering visual metadata.</li>
-<li><a href="https://developer.amazon.com/docs/alexa-voice-service/bluetooth.html">Bluetooth</a> - The interface for managing Bluetooth connections between peer devices and Alexa-enabled products.</li>
-<li><a href="https://developer.amazon.com/docs/alexa-voice-service/equalizercontroller.html">EqualizerController</a> - The interface for adjusting equalizer settings, such as decibel (dB) levels and modes.</li>
 </ul>
 <h3>Security Best Practices</h3>
 <p>In addition to adopting the <a href="https://developer.amazon.com/docs/alexa-voice-service/security-best-practices.html">Security Best Practices for Alexa</a>, when building the SDK:</p>
@@ -150,38 +152,34 @@ $(function() {
 </ul>
 <h3>Release Notes and Known Issues</h3>
 <p><b>Note</b>: Feature enhancements, updates, and resolved issues from previous releases are available to view in https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md "CHANGELOG.md".</p>
-<p>v1.10.0 released 10/24/2018:</p>
+<p>v1.11.0 released 12/19/2018:</p>
 <p><b>Enhancements</b></p>
 <ul>
-<li>New optional configuration for <a href="https://github.com/alexa/avs-device-sdk/blob/v1.10.0/Integration/AlexaClientSDKConfig.json#L154">EqualizerController</a>. The EqualizerController interface allows you to adjust equalizer settings on your product, such as decibel (dB) levels and modes.</li>
-<li>Added reference implementation of the EqualizerController for GStreamer-based (MacOS, Linux, and Raspberry Pi) and OpenSL ES-based (Android) MediaPlayers. Note: In order to use with Android, it must support OpenSL ES.</li>
-<li>New optional configuration for the <a href="https://github.com/alexa/avs-device-sdk/blob/v1.10.0/Integration/AlexaClientSDKConfig.json#L144">TemplateRuntime display card value</a>.</li>
-<li>A configuration file generator script, <code>genConfig.sh</code> is now included with the SDK in the <b>tools/Install</b> directory. <code>genConfig.sh</code> and it's associated arguments populate <code>AlexaClientSDKConfig.json</code> with the data required to authorize with LWA.</li>
-<li>Added Bluetooth A2DP source and AVRCP target support for Linux.</li>
-<li>Added Amazon for Business (A4B) support, which includes support for handling the new <a href="https://developer.amazon.com/docs/alexa-voice-service/system.html#revokeauth">RevokeAuthorization</a> directive in the Settings interface. A new CMake option has been added to enable A4B within the SDK, <code>-DA4B</code>.</li>
-<li>Added locale support for IT and ES.</li>
-<li>The Alexa Communication Library (ACL), <code>CBLAUthDelegate</code>, and sample app have been enhanced to detect de-authorization using the new <code>z</code> command.</li>
-<li>Added <code>ExternalMediaPlayerObserver</code>, which receives notification of player state, track, and username changes.</li>
-<li><code>HTTP2ConnectionInterface</code> was factored out of <code>HTTP2Transport</code> to enable unit testing of <code>HTTP2Transport</code> and re-use of <code>HTTP2Connection</code> logic.</li>
+<li>Added support for the new Alexa <a href="https://developer.amazon.com/docs/alexa-voice-service/donotdisturb.html">DoNotDisturb</a> interface, which enables users to toggle the do not disturb (DND) function on their Alexa built-in products.</li>
+<li>The SDK now supports <a href="https://opus-codec.org/license/">Opus</a> encoding, which is optional. To enable Opus, you must <a href="https://github.com/alexa/avs-device-sdk/wiki/Build-Options#Opus-encoding">set the CMake flag to <code>-DOPUS=ON</code></a>, and include the <a href="https://github.com/alexa/avs-device-sdk/wiki/Dependencies#core-dependencies">libopus library</a> dependency in your build.</li>
+<li>The MediaPlayer reference implementation has been expanded to support the SAMPLE-AES and AES-128 encryption methods for HLS streaming.<ul>
+<li>AES-128 encryption is dependent on libcrypto, which is part of the required openSSL library, and is enabled by default.</li>
+<li>To enable <a href="https://github.com/alexa/avs-device-sdk/wiki/Dependencies#core-dependencies/Enable-SAMPLE-AES-decryption">SAMPLE-AES</a> encryption, you must set the <code>-DSAMPLE_AES=ON</code> in your CMake command, and include the <a href="https://github.com/alexa/avs-device-sdk/wiki/Dependencies#core-dependencies/Enable-SAMPLE-AES-decryption">FFMPEG</a> library dependency in your build.</li>
+</ul>
+</li>
+<li>A new configuration for <a href="https://github.com/alexa/avs-device-sdk/blob/v1.11.0/Integration/AlexaClientSDKConfig.json#L59">deviceSettings</a> has been added.This configuration allows you to specify the location of the device settings database.</li>
+<li>Added locale support for es-MX.</li>
 </ul>
 <p><b>Bug Fixes</b></p>
 <ul>
-<li>Fixed a bug in which <code>ExternalMediaPlayer</code> adapter playback wasn't being recognized by AVS.</li>
-<li><a href="https://github.com/alexa/avs-device-sdk/issues/973">Issue 973</a> - Fixed issues related to <code>AudioPlayer</code> where progress reports were being sent out of order or with incorrect offsets.</li>
-<li>An <code>EXPECTING</code>, state has been added to <code>DialogUXState</code> in order to handle <code>EXPECT_SPEECH</code> state for hold-to-talk devices.</li>
-<li><a href="https://github.com/alexa/avs-device-sdk/issues/948">Issue 948</a> - Fixed a bug in which the sample app was stuck in a listening state.</li>
-<li>Fixed a bug where there was a delay between receiving a <code>DeleteAlert</code> directive, and deleting the alert.</li>
-<li><a href="https://github.com/alexa/avs-device-sdk/issues/839">Issue 839</a> - Fixed an issue where speech was being truncated due to the <code>DialogUXStateAggregator</code> transitioning between a <code>THINKING</code> and <code>IDLE</code> state.</li>
-<li>Fixed a bug in which the <code>AudioPlayer</code> attempted to play when it wasn't in the <code>FOREGROUND</code> focus.</li>
-<li><code>CapabilitiesDelegateTest</code> now works on Android.</li>
-<li><a href="https://github.com/alexa/avs-device-sdk/issues/950">Issue 950</a> - Improved Android Media Player audio quality.</li>
-<li><a href="https://github.com/alexa/avs-device-sdk/issues/908">Issue 908</a> - Fixed compile error on g++ 7.x in which includes were missing.</li>
+<li>Fixed an issue where music wouldn't resume playback in the Android app.</li>
+<li>Now all equalizer capabilities are fully disabled when equalizer is turned off in configuration file. Previously, devices were unconditionally required to provide support for equalizer in order to run the SDK.</li>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/1106">Issue 1106</a> - Fixed an issue in which the <code>CBLAuthDelegate</code> wasn't using the correct timeout during request refresh.</li>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/1128">Issue 1128</a> - Fixed an issue in which the <code>AudioPlayer</code> instance persisted at shutdown, due to a shared dependency with the <code>ProgressTimer</code>.</li>
+<li>Fixed in issue that occurred when a connection to streaming content was interrupted, the SDK did not attempt to resume the connection, and appeared to assume that the content had been fully downloaded. This triggered the next track to be played, assuming it was a playlist.</li>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/1040">Issue 1040</a> - Fixed an issue where alarms would continue to play after user barge-in.</li>
 </ul>
 <p><b>Known Issues</b></p>
 <ul>
+<li><code>PlaylistParser</code> and <code>IterativePlaylistParser</code> generate two HTTP requests (one to fetch the content type, and one to fetch the audio data) for each audio stream played.</li>
+<li>Music playback history isn't being displayed in the Alexa app for certain account and device types.</li>
 <li>On GCC 8+, issues related to <code>-Wclass-memaccess</code> will trigger warnings. However, this won't cause the build to fail, and these warnings can be ignored.</li>
 <li>In order to use Bluetooth source and sink PulseAudio, you must manually load and unload PulseAudio modules after the SDK starts.</li>
-<li>When connecting a new device to AVS, <em>currently connected devices must be manually disconnected</em>. For example, if a user says "Alexa, connect my phone", and an Alexa-enabled speaker is already connected, there is no indication to the user a device is already connected.</li>
 <li>The <code>ACL</code> may encounter issues if audio attachments are received but not consumed.</li>
 <li><code>SpeechSynthesizerState</code> currently uses <code>GAINING_FOCUS</code> and <code>LOSING_FOCUS</code> as a workaround for handling intermediate state. These states may be removed in a future release.</li>
 <li>The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.</li>
@@ -191,14 +189,14 @@ $(function() {
 <li>On some products, interrupted Bluetooth playback may not resume if other content is locally streamed.</li>
 <li><code>make integration</code> is currently not available for Android. In order to run integration tests on Android, you'll need to manually upload the test binary file along with any input file. At that point, the adb can be used to run the integration tests.</li>
 <li>On Raspberry Pi running Android Things with HDMI output audio, beginning of speech is truncated when Alexa responds to user TTS.</li>
-<li>When the sample app is restarted and network connection is lost, Alerts don't play.</li>
-<li>When network connection is lost, lost connection status is not returned via local TTS. </li>
+<li>When the sample app is restarted and network connection is lost, alerts don't play.</li>
+<li>When network connection is lost, lost connection status is not returned via local Text-to Speech (TTS). </li>
 </ul>
 </div></div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

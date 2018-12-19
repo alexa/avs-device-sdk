@@ -1,0 +1,22 @@
+<map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/Storage/DeviceSettingStorageInterface.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/Storage/DeviceSettingStorageInterface.h">
+<area shape="rect" id="node2" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="464,245,691,311"/>
+<area shape="rect" id="node13" href="$_d_n_d_setting_protocol_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/include\l/DoNotDisturbCA/DNDSettingProtocol.h" alt="" coords="125,125,383,191"/>
+<area shape="rect" id="node16" href="$_do_not_disturb_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/include\l/DoNotDisturbCA/DoNotDisturbCapability\lAgent.h" alt="" coords="458,119,724,197"/>
+<area shape="rect" id="node18" href="$_s_q_lite_device_setting_storage_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/include\l/Settings/Storage/SQLiteDevice\lSettingStorage.h" alt="" coords="996,125,1205,191"/>
+<area shape="rect" id="node21" href="$_mock_device_setting_storage_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/Settings\l/MockDeviceSettingStorage.h" alt="" coords="748,132,945,184"/>
+<area shape="rect" id="node3" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="312,359,540,411"/>
+<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="357,459,580,511"/>
+<area shape="rect" id="node11" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="625,359,840,411"/>
+<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="478,559,696,611"/>
+<area shape="rect" id="node10" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="248,559,454,611"/>
+<area shape="rect" id="node6" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="601,659,821,711"/>
+<area shape="rect" id="node9" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="375,659,577,711"/>
+<area shape="rect" id="node7" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="580,759,778,797"/>
+<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="802,759,1082,797"/>
+<area shape="rect" id="node12" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="604,465,879,504"/>
+<area shape="rect" id="node14" href="$_d_n_d_setting_protocol_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/src/DNDSetting\lProtocol.cpp" alt="" coords="5,245,206,311"/>
+<area shape="rect" id="node15" href="$_do_not_disturb_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/src/DoNotDisturb\lCapabilityAgent.cpp" alt="" coords="230,245,440,311"/>
+<area shape="rect" id="node17" href="$_do_not_disturb_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/test/DoNotDisturb\lCapabilityAgentTest.cpp" alt="" coords="716,245,930,311"/>
+<area shape="rect" id="node19" href="$_s_q_lite_device_setting_storage_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/src/Storage\l/SQLiteDeviceSettingStorage.cpp" alt="" coords="1004,252,1224,304"/>
+<area shape="rect" id="node20" href="$_s_q_lite_device_settings_storage_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SQLiteDevice\lSettingsStorageTest.cpp" alt="" coords="1248,252,1457,304"/>
+</map>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -85,8 +85,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af61bb5826411156f0af1689ad6ba77cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa230b5b6de2161dd261e9fcf6ba3a3c8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#aa230b5b6de2161dd261e9fcf6ba3a3c8">getCurrentUnixTime</a> (int64_t *currentTime)</td></tr>
 <tr class="separator:aa230b5b6de2161dd261e9fcf6ba3a3c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a113d8d123e21c111a8984c721468a016"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#a113d8d123e21c111a8984c721468a016">convertTimeToUtcIso8601Rfc3339</a> (const std::chrono::high_resolution_clock::time_point &amp;tp, std::string *iso8601TimeString)</td></tr>
-<tr class="separator:a113d8d123e21c111a8984c721468a016"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae479873f1c13bcd199ed33bc550999aa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#ae479873f1c13bcd199ed33bc550999aa">convertTimeToUtcIso8601Rfc3339</a> (const std::chrono::system_clock::time_point &amp;tp, std::string *iso8601TimeString)</td></tr>
+<tr class="separator:ae479873f1c13bcd199ed33bc550999aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class used to safely access the time utilities. </p>
@@ -153,8 +153,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a113d8d123e21c111a8984c721468a016"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a113d8d123e21c111a8984c721468a016">&#9670;&nbsp;</a></span>convertTimeToUtcIso8601Rfc3339()</h2>
+<a id="ae479873f1c13bcd199ed33bc550999aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae479873f1c13bcd199ed33bc550999aa">&#9670;&nbsp;</a></span>convertTimeToUtcIso8601Rfc3339()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -162,7 +162,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">bool alexaClientSDK::avsCommon::utils::timing::TimeUtils::convertTimeToUtcIso8601Rfc3339 </td>
           <td>(</td>
-          <td class="paramtype">const std::chrono::high_resolution_clock::time_point &amp;&#160;</td>
+          <td class="paramtype">const std::chrono::system_clock::time_point &amp;&#160;</td>
           <td class="paramname"><em>tp</em>, </td>
         </tr>
         <tr>
@@ -265,7 +265,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -77,101 +77,190 @@ $(function() {
 <p>A struct used to encapsulate information retrieved from an M3U playlist.  
  <a href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_playlist_utils_8h_source.html">PlaylistUtils.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_m3_u_parser_8h_source.html">M3UParser.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:acd6c684aa08617738ae7203e4e91d690"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#acd6c684aa08617738ae7203e4e91d690">M3UContent</a> ()</td></tr>
-<tr class="separator:acd6c684aa08617738ae7203e4e91d690"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37e4d5b7d007f224582a78a1cd8be225"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a37e4d5b7d007f224582a78a1cd8be225">M3UContent</a> (const std::vector&lt; std::string &gt; <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a6a1e48fc13a9e4384c7c3ce7ce761f3d">variantURLs</a>)</td></tr>
+<tr class="separator:a37e4d5b7d007f224582a78a1cd8be225"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70b8d34c2700232a7e703e976c2497b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a70b8d34c2700232a7e703e976c2497b4">M3UContent</a> (const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_entry.html">avsCommon::utils::playlistParser::PlaylistEntry</a> &gt; <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a17adcfc35dd689bd02ad7f0d889aef17">entries</a>, bool <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a412e3b72a2c27e9911373f755950603a">isLive</a>)</td></tr>
+<tr class="separator:a70b8d34c2700232a7e703e976c2497b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62e3ebb32a5d7a90172ac08d760d8417"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a62e3ebb32a5d7a90172ac08d760d8417">isMasterPlaylist</a> () const</td></tr>
+<tr class="separator:a62e3ebb32a5d7a90172ac08d760d8417"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19211bf0c6023408c23e75b7c0537d4a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a19211bf0c6023408c23e75b7c0537d4a">empty</a> () const</td></tr>
+<tr class="separator:a19211bf0c6023408c23e75b7c0537d4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a477c4130e7d074758e055b758e55a8a0"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_url_and_info.html">UrlAndInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a477c4130e7d074758e055b758e55a8a0">childrenUrls</a></td></tr>
-<tr class="separator:a477c4130e7d074758e055b758e55a8a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa48504f830ed609f15a15679985bccc7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#aa48504f830ed609f15a15679985bccc7">endlistTagPresent</a></td></tr>
-<tr class="separator:aa48504f830ed609f15a15679985bccc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae398db5818b70b6a4b57ce1465c54a6a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#ae398db5818b70b6a4b57ce1465c54a6a">streamInfTagPresent</a></td></tr>
-<tr class="separator:ae398db5818b70b6a4b57ce1465c54a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a1e48fc13a9e4384c7c3ce7ce761f3d"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a6a1e48fc13a9e4384c7c3ce7ce761f3d">variantURLs</a></td></tr>
+<tr class="memdesc:a6a1e48fc13a9e4384c7c3ce7ce761f3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">If this is a master playlist, variantURLs has list of media playlists.  <a href="#a6a1e48fc13a9e4384c7c3ce7ce761f3d">More...</a><br /></td></tr>
+<tr class="separator:a6a1e48fc13a9e4384c7c3ce7ce761f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17adcfc35dd689bd02ad7f0d889aef17"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_entry.html">avsCommon::utils::playlistParser::PlaylistEntry</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a17adcfc35dd689bd02ad7f0d889aef17">entries</a></td></tr>
+<tr class="memdesc:a17adcfc35dd689bd02ad7f0d889aef17"><td class="mdescLeft">&#160;</td><td class="mdescRight">If this is a media playlist, entries has list of parsed entries.  <a href="#a17adcfc35dd689bd02ad7f0d889aef17">More...</a><br /></td></tr>
+<tr class="separator:a17adcfc35dd689bd02ad7f0d889aef17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a412e3b72a2c27e9911373f755950603a"><td class="memItemLeft" align="right" valign="top">const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a412e3b72a2c27e9911373f755950603a">isLive</a></td></tr>
+<tr class="memdesc:a412e3b72a2c27e9911373f755950603a"><td class="mdescLeft">&#160;</td><td class="mdescRight">If EXT-X-ENDLIST tag exists, isLive is set to false.  <a href="#a412e3b72a2c27e9911373f755950603a">More...</a><br /></td></tr>
+<tr class="separator:a412e3b72a2c27e9911373f755950603a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A struct used to encapsulate information retrieved from an M3U playlist. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="acd6c684aa08617738ae7203e4e91d690"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd6c684aa08617738ae7203e4e91d690">&#9670;&nbsp;</a></span>M3UContent()</h2>
+<a id="a37e4d5b7d007f224582a78a1cd8be225"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37e4d5b7d007f224582a78a1cd8be225">&#9670;&nbsp;</a></span>M3UContent() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">alexaClientSDK::playlistParser::M3UContent::M3UContent </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt;&#160;</td>
+          <td class="paramname"><em>variantURLs</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>Constructor for parsed content of master playlist.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">variantURLs</td><td>The variant URLs pointing to media playlists. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a70b8d34c2700232a7e703e976c2497b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70b8d34c2700232a7e703e976c2497b4">&#9670;&nbsp;</a></span>M3UContent() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::playlistParser::M3UContent::M3UContent </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_entry.html">avsCommon::utils::playlistParser::PlaylistEntry</a> &gt;&#160;</td>
+          <td class="paramname"><em>entries</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isLive</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constructor for parsed content of media playlist.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">entries</td><td>List of PlaylistEntry from parsed content. </td></tr>
+    <tr><td class="paramname">isLive</td><td><code>true</code> for live HLS playlists. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a19211bf0c6023408c23e75b7c0537d4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19211bf0c6023408c23e75b7c0537d4a">&#9670;&nbsp;</a></span>empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::playlistParser::M3UContent::empty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Helper method to check if no URLs are parsed. </p>
+
+</div>
+</div>
+<a id="a62e3ebb32a5d7a90172ac08d760d8417"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62e3ebb32a5d7a90172ac08d760d8417">&#9670;&nbsp;</a></span>isMasterPlaylist()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::playlistParser::M3UContent::isMasterPlaylist </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Helper method to check if content is a master playlist. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a477c4130e7d074758e055b758e55a8a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a477c4130e7d074758e055b758e55a8a0">&#9670;&nbsp;</a></span>childrenUrls</h2>
+<a id="a17adcfc35dd689bd02ad7f0d889aef17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17adcfc35dd689bd02ad7f0d889aef17">&#9670;&nbsp;</a></span>entries</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_url_and_info.html">UrlAndInfo</a>&gt; alexaClientSDK::playlistParser::M3UContent::childrenUrls</td>
+          <td class="memname">const std::vector&lt;<a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_entry.html">avsCommon::utils::playlistParser::PlaylistEntry</a>&gt; alexaClientSDK::playlistParser::M3UContent::entries</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>If this is a media playlist, entries has list of parsed entries. </p>
+
 </div>
 </div>
-<a id="aa48504f830ed609f15a15679985bccc7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa48504f830ed609f15a15679985bccc7">&#9670;&nbsp;</a></span>endlistTagPresent</h2>
+<a id="a412e3b72a2c27e9911373f755950603a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a412e3b72a2c27e9911373f755950603a">&#9670;&nbsp;</a></span>isLive</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool alexaClientSDK::playlistParser::M3UContent::endlistTagPresent</td>
+          <td class="memname">const bool alexaClientSDK::playlistParser::M3UContent::isLive</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>If EXT-X-ENDLIST tag exists, isLive is set to false. </p>
+
 </div>
 </div>
-<a id="ae398db5818b70b6a4b57ce1465c54a6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae398db5818b70b6a4b57ce1465c54a6a">&#9670;&nbsp;</a></span>streamInfTagPresent</h2>
+<a id="a6a1e48fc13a9e4384c7c3ce7ce761f3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a1e48fc13a9e4384c7c3ce7ce761f3d">&#9670;&nbsp;</a></span>variantURLs</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool alexaClientSDK::playlistParser::M3UContent::streamInfTagPresent</td>
+          <td class="memname">const std::vector&lt;std::string&gt; alexaClientSDK::playlistParser::M3UContent::variantURLs</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>If this is a master playlist, variantURLs has list of media playlists. </p>
+
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/PlaylistParser/include/PlaylistParser/<a class="el" href="_playlist_utils_8h_source.html">PlaylistUtils.h</a></li>
+<hr/>The documentation for this struct was generated from the following files:<ul>
+<li>/workplace/avs-device-sdk/PlaylistParser/include/PlaylistParser/<a class="el" href="_m3_u_parser_8h_source.html">M3UParser.h</a></li>
+<li>/workplace/avs-device-sdk/PlaylistParser/src/<a class="el" href="_m3_u_parser_8cpp.html">M3UParser.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

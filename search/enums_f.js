@@ -2,7 +2,10 @@ var searchData=
 [
   ['sampleappreturncode',['SampleAppReturnCode',['../namespacealexa_client_s_d_k_1_1sample_app.html#a091908d2e9931dcf16819bd967de7e70',1,'alexaClientSDK::sampleApp']]],
   ['sampleformat',['SampleFormat',['../classalexa_client_s_d_k_1_1media_player_1_1android_1_1_playback_configuration.html#a66a4a30a065b604abfdc9cfd0ba07e1d',1,'alexaClientSDK::mediaPlayer::android::PlaybackConfiguration']]],
+  ['setsettingresult',['SetSettingResult',['../_set_setting_result_8h.html#a15f12c618d4b135e4f8eb35afe8a2ac5',1,'SetSettingResult.h']]],
   ['setstateresult',['SetStateResult',['../namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a10a3cb8dea046c68b6cd5b82c0bedbdb',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
+  ['settingnotifications',['SettingNotifications',['../namespacealexa_client_s_d_k_1_1settings.html#a65b348e86299aa3f3fcdf4a5f924e025',1,'alexaClientSDK::settings']]],
+  ['settingstatus',['SettingStatus',['../namespacealexa_client_s_d_k_1_1settings.html#a4a578c80906f233911b5c7e07bf1d4d4',1,'alexaClientSDK::settings']]],
   ['settingsvalues',['SettingsValues',['../namespacealexa_client_s_d_k_1_1sample_app.html#acf0d771f547caeda5a3a7d2bacaaa57e',1,'alexaClientSDK::sampleApp']]],
   ['source',['Source',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html#a38d6a50cc5799f07612827e1a163babb',1,'alexaClientSDK::avsCommon::sdkInterfaces::SpeakerManagerObserverInterface']]],
   ['speechsynthesizerstate',['SpeechSynthesizerState',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_synthesizer_observer_interface.html#a8ab366983aede83468f6fecd144057fe',1,'alexaClientSDK::avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface']]],

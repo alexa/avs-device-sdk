@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -72,23 +72,24 @@ $(function() {
 <div class="title">JSONUtils.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;rapidjson/document.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
+<code>#include &lt;rapidjson/document.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="_logger_utils_8h_source.html">AVSCommon/Utils/Logger/LoggerUtils.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for JSONUtils.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_j_s_o_n_utils_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_j_s_o_n_2_j_s_o_n_utils_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_j_s_o_n_2_j_s_o_n_utils_8h" id="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_j_s_o_n_2_j_s_o_n_utils_8h">
-<area shape="rect" id="node4" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="860,119,1036,157"/>
-<area shape="rect" id="node6" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="697,205,873,244"/>
-<area shape="rect" id="node11" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="833,292,1047,331"/>
-<area shape="rect" id="node14" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="400,379,576,417"/>
-<area shape="rect" id="node15" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="98,292,274,331"/>
-<area shape="rect" id="node20" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="375,292,572,331"/>
-<area shape="rect" id="node21" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="494,465,670,504"/>
-<area shape="rect" id="node16" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="98,379,274,417"/>
-<area shape="rect" id="node18" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="294,465,470,504"/>
+<area shape="rect" id="node5" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="139,119,315,157"/>
+<area shape="rect" id="node7" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="539,205,715,244"/>
+<area shape="rect" id="node12" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="326,292,539,331"/>
+<area shape="rect" id="node15" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1030,379,1206,417"/>
+<area shape="rect" id="node16" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="665,292,841,331"/>
+<area shape="rect" id="node21" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="915,292,1112,331"/>
+<area shape="rect" id="node22" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1103,465,1279,504"/>
+<area shape="rect" id="node17" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="635,379,811,417"/>
+<area shape="rect" id="node19" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="566,465,742,504"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -99,52 +100,52 @@ This graph shows which files directly or indirectly include this file:</div>
 <area shape="rect" id="node2" href="_audio_activity_tracker_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AFML/test/AudioActivity\lTrackerTest.cpp" alt="" coords="5,125,196,177"/>
 <area shape="rect" id="node3" href="_visual_activity_tracker_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AFML/test/VisualActivity\lTrackerTest.cpp" alt="" coords="220,125,413,177"/>
 <area shape="rect" id="node4" href="_a_v_s_directive_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/AVSDirective.cpp" alt="" coords="437,125,618,177"/>
-<area shape="rect" id="node5" href="_exception_encountered_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/ExceptionEncounteredSender.cpp" alt="" coords="642,125,869,177"/>
-<area shape="rect" id="node6" href="_exception_encountered_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/test\l/ExceptionEncounteredSenderTest.cpp" alt="" coords="892,125,1144,177"/>
-<area shape="rect" id="node7" href="_j_s_o_n_utils_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/JSONUtils.cpp" alt="" coords="1168,125,1327,177"/>
-<area shape="rect" id="node8" href="_j_s_o_n_util_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/JSONUtilTest.cpp" alt="" coords="1352,125,1511,177"/>
-<area shape="rect" id="node9" href="_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="1535,125,1755,177"/>
-<area shape="rect" id="node10" href="_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="1779,119,1978,184"/>
-<area shape="rect" id="node11" href="_alert_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alerts/src/Alert.cpp" alt="" coords="2002,125,2154,177"/>
-<area shape="rect" id="node12" href="_alerts_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alerts/src/AlertsCapability\lAgent.cpp" alt="" coords="2179,119,2356,184"/>
-<area shape="rect" id="node13" href="_stream_format_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/include/AudioPlayer\l/StreamFormat.h" alt="" coords="2430,119,2649,184"/>
-<area shape="rect" id="node17" href="_audio_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/src/AudioPlayer.cpp" alt="" coords="1978,465,2197,517"/>
-<area shape="rect" id="node18" href="_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="2546,459,2744,524"/>
-<area shape="rect" id="node19" href="_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="2781,465,2991,517"/>
-<area shape="rect" id="node20" href="_clear_behavior_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/include/AudioPlayer\l/ClearBehavior.h" alt="" coords="2289,232,2507,297"/>
-<area shape="rect" id="node21" href="_play_behavior_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/include/AudioPlayer\l/PlayBehavior.h" alt="" coords="2532,232,2750,297"/>
-<area shape="rect" id="node22" href="_bluetooth_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Bluetooth/src/Bluetooth.cpp" alt="" coords="3601,125,3790,177"/>
-<area shape="rect" id="node23" href="_equalizer_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Equalizer/src/EqualizerCapability\lAgent.cpp" alt="" coords="3814,119,4033,184"/>
-<area shape="rect" id="node24" href="_external_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/src\l/ExternalMediaPlayer.cpp" alt="" coords="4057,119,4230,184"/>
-<area shape="rect" id="node25" href="_external_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/test\l/ExternalMediaPlayerTest.cpp" alt="" coords="4254,119,4452,184"/>
-<area shape="rect" id="node26" href="_interaction_model_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/InteractionModel/src\l/InteractionModelCapabilityAgent.cpp" alt="" coords="4476,119,4718,184"/>
-<area shape="rect" id="node27" href="_notifications_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Notifications/src/Notifications\lCapabilityAgent.cpp" alt="" coords="4742,119,4937,184"/>
-<area shape="rect" id="node28" href="_notifications_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Notifications/test/Notifications\lCapabilityAgentTest.cpp" alt="" coords="4961,119,5160,184"/>
-<area shape="rect" id="node29" href="_playback_controller_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/PlaybackController/test\l/PlaybackControllerTest.cpp" alt="" coords="5185,119,5371,184"/>
-<area shape="rect" id="node30" href="_settings_updated_event_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Settings/src/SettingsUpdated\lEventSender.cpp" alt="" coords="5396,119,5593,184"/>
-<area shape="rect" id="node31" href="_settings_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Settings/test/SettingsTest.cpp" alt="" coords="5617,125,5817,177"/>
-<area shape="rect" id="node32" href="_speaker_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeakerManager/src/SpeakerManager.cpp" alt="" coords="5841,125,6120,177"/>
-<area shape="rect" id="node33" href="_endpoint_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/EndpointHandler.cpp" alt="" coords="6145,125,6363,177"/>
-<area shape="rect" id="node34" href="_revoke_authorization_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/RevokeAuthorization\lHandler.cpp" alt="" coords="6388,119,6606,184"/>
-<area shape="rect" id="node35" href="_software_info_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/SoftwareInfoSender.cpp" alt="" coords="6630,125,6867,177"/>
-<area shape="rect" id="node36" href="_software_info_send_request_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/SoftwareInfoSend\lRequest.cpp" alt="" coords="6891,119,7092,184"/>
-<area shape="rect" id="node37" href="_user_inactivity_monitor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/UserInactivityMonitor.cpp" alt="" coords="7116,125,7360,177"/>
-<area shape="rect" id="node38" href="_user_inactivity_monitor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/UserInactivityMonitor\lTest.cpp" alt="" coords="7384,119,7607,184"/>
-<area shape="rect" id="node39" href="_template_runtime_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/TemplateRuntime/src/Template\lRuntime.cpp" alt="" coords="7631,119,7840,184"/>
-<area shape="rect" id="node40" href="_template_runtime_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/TemplateRuntime/test\l/TemplateRuntimeTest.cpp" alt="" coords="7864,119,8042,184"/>
-<area shape="rect" id="node41" href="_equalizer_utils_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/EqualizerImplementations\l/src/EqualizerUtils.cpp" alt="" coords="8066,125,8269,177"/>
-<area shape="rect" id="node42" href="_test_directive_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/include\l/Integration/TestDirectiveHandler.h" alt="" coords="2926,125,3151,177"/>
-<area shape="rect" id="node44" href="_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="3123,239,3295,291"/>
-<area shape="rect" id="node45" href="_alexa_directive_sequencer_library_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaDirectiveSequencerLibrary\lTest.cpp" alt="" coords="3318,232,3534,297"/>
-<area shape="rect" id="node46" href="_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="3835,232,4047,297"/>
-<area shape="rect" id="node47" href="_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="3558,232,3761,297"/>
-<area shape="rect" id="node48" href="_test_exception_encountered_sender_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/include\l/Integration/TestExceptionEncountered\lSender.h" alt="" coords="3276,119,3526,184"/>
-<area shape="rect" id="node50" href="_gui_renderer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/GuiRenderer.cpp" alt="" coords="8293,132,8538,171"/>
-<area shape="rect" id="node14" href="_audio_item_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/include/AudioPlayer\l/AudioItem.h" alt="" coords="2046,232,2265,297"/>
-<area shape="rect" id="node15" href="_audio_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/include/AudioPlayer\l/AudioPlayer.h" alt="" coords="2296,345,2514,411"/>
-<area shape="rect" id="node16" href="_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="2291,459,2519,524"/>
-<area shape="rect" id="node43" href="_test_directive_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/TestDirectiveHandler.cpp" alt="" coords="2927,239,3099,291"/>
-<area shape="rect" id="node49" href="_test_exception_encountered_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/TestExceptionEncounteredSender.cpp" alt="" coords="4071,239,4322,291"/>
+<area shape="rect" id="node5" href="_blocking_policy_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/BlockingPolicy.cpp" alt="" coords="642,125,823,177"/>
+<area shape="rect" id="node6" href="_exception_encountered_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/ExceptionEncounteredSender.cpp" alt="" coords="848,125,1074,177"/>
+<area shape="rect" id="node7" href="_exception_encountered_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/test\l/ExceptionEncounteredSenderTest.cpp" alt="" coords="1098,125,1349,177"/>
+<area shape="rect" id="node8" href="_j_s_o_n_generator_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/JSON/JSONGenerator.cpp" alt="" coords="1374,125,1580,177"/>
+<area shape="rect" id="node9" href="_j_s_o_n_utils_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/JSON/JSONUtils.cpp" alt="" coords="1604,125,1776,177"/>
+<area shape="rect" id="node10" href="_j_s_o_n_util_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/JSONUtilTest.cpp" alt="" coords="1801,125,1961,177"/>
+<area shape="rect" id="node11" href="_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="1984,125,2204,177"/>
+<area shape="rect" id="node12" href="_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="2228,119,2427,184"/>
+<area shape="rect" id="node13" href="_alert_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alerts/src/Alert.cpp" alt="" coords="2451,125,2604,177"/>
+<area shape="rect" id="node14" href="_alerts_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alerts/src/AlertsCapability\lAgent.cpp" alt="" coords="2628,119,2805,184"/>
+<area shape="rect" id="node15" href="_stream_format_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/include/AudioPlayer\l/StreamFormat.h" alt="" coords="2829,119,3047,184"/>
+<area shape="rect" id="node17" href="_clear_behavior_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/include/AudioPlayer\l/ClearBehavior.h" alt="" coords="3072,119,3290,184"/>
+<area shape="rect" id="node18" href="_play_behavior_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/include/AudioPlayer\l/PlayBehavior.h" alt="" coords="3314,119,3533,184"/>
+<area shape="rect" id="node19" href="_audio_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/src/AudioPlayer.cpp" alt="" coords="3557,125,3775,177"/>
+<area shape="rect" id="node20" href="_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="3799,119,3997,184"/>
+<area shape="rect" id="node21" href="_bluetooth_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Bluetooth/src/Bluetooth.cpp" alt="" coords="4021,125,4210,177"/>
+<area shape="rect" id="node22" href="_do_not_disturb_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/src/DoNotDisturb\lCapabilityAgent.cpp" alt="" coords="4233,119,4443,184"/>
+<area shape="rect" id="node23" href="_equalizer_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Equalizer/src/EqualizerCapability\lAgent.cpp" alt="" coords="4467,119,4687,184"/>
+<area shape="rect" id="node24" href="_external_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/src\l/ExternalMediaPlayer.cpp" alt="" coords="4711,119,4883,184"/>
+<area shape="rect" id="node25" href="_external_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/test\l/ExternalMediaPlayerTest.cpp" alt="" coords="4907,119,5105,184"/>
+<area shape="rect" id="node26" href="_interaction_model_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/InteractionModel/src\l/InteractionModelCapabilityAgent.cpp" alt="" coords="5129,119,5371,184"/>
+<area shape="rect" id="node27" href="_notifications_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Notifications/src/Notifications\lCapabilityAgent.cpp" alt="" coords="5395,119,5591,184"/>
+<area shape="rect" id="node28" href="_notifications_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Notifications/test/Notifications\lCapabilityAgentTest.cpp" alt="" coords="5615,119,5814,184"/>
+<area shape="rect" id="node29" href="_playback_controller_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/PlaybackController/test\l/PlaybackControllerTest.cpp" alt="" coords="5838,119,6025,184"/>
+<area shape="rect" id="node30" href="_settings_updated_event_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Settings/src/SettingsUpdated\lEventSender.cpp" alt="" coords="6049,119,6246,184"/>
+<area shape="rect" id="node31" href="_settings_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Settings/test/SettingsTest.cpp" alt="" coords="6270,125,6470,177"/>
+<area shape="rect" id="node32" href="_speaker_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeakerManager/src/SpeakerManager.cpp" alt="" coords="6495,125,6774,177"/>
+<area shape="rect" id="node33" href="_endpoint_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/EndpointHandler.cpp" alt="" coords="6798,125,7017,177"/>
+<area shape="rect" id="node34" href="_revoke_authorization_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/RevokeAuthorization\lHandler.cpp" alt="" coords="7041,119,7259,184"/>
+<area shape="rect" id="node35" href="_software_info_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/SoftwareInfoSender.cpp" alt="" coords="7284,125,7521,177"/>
+<area shape="rect" id="node36" href="_software_info_send_request_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/SoftwareInfoSend\lRequest.cpp" alt="" coords="7545,119,7745,184"/>
+<area shape="rect" id="node37" href="_user_inactivity_monitor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/UserInactivityMonitor.cpp" alt="" coords="7770,125,8013,177"/>
+<area shape="rect" id="node38" href="_user_inactivity_monitor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/UserInactivityMonitor\lTest.cpp" alt="" coords="8037,119,8260,184"/>
+<area shape="rect" id="node39" href="_template_runtime_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/TemplateRuntime/src/Template\lRuntime.cpp" alt="" coords="8285,119,8493,184"/>
+<area shape="rect" id="node40" href="_template_runtime_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/TemplateRuntime/test\l/TemplateRuntimeTest.cpp" alt="" coords="8517,119,8695,184"/>
+<area shape="rect" id="node41" href="_equalizer_utils_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/EqualizerImplementations\l/src/EqualizerUtils.cpp" alt="" coords="8719,125,8923,177"/>
+<area shape="rect" id="node42" href="_test_directive_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/include\l/Integration/TestDirectiveHandler.h" alt="" coords="9047,125,9272,177"/>
+<area shape="rect" id="node43" href="_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="8856,239,9028,291"/>
+<area shape="rect" id="node44" href="_alexa_directive_sequencer_library_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaDirectiveSequencerLibrary\lTest.cpp" alt="" coords="9052,232,9267,297"/>
+<area shape="rect" id="node45" href="_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="9291,232,9503,297"/>
+<area shape="rect" id="node46" href="_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="9527,239,9736,291"/>
+<area shape="rect" id="node47" href="_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="9761,232,9964,297"/>
+<area shape="rect" id="node48" href="_test_exception_encountered_sender_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/include\l/Integration/TestExceptionEncountered\lSender.h" alt="" coords="9296,119,9546,184"/>
+<area shape="rect" id="node49" href="_gui_renderer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/GuiRenderer.cpp" alt="" coords="9722,132,9967,171"/>
+<area shape="rect" id="node50" href="_setting_string_conversion_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SettingString\lConversionTest.cpp" alt="" coords="9991,125,10195,177"/>
+<area shape="rect" id="node16" href="_audio_item_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/include/AudioPlayer\l/AudioItem.h" alt="" coords="2829,232,3047,297"/>
 </map>
 </div>
 </div>
@@ -176,6 +177,8 @@ Functions</h2></td></tr>
 <tr class="separator:aa97f53eadfa124bb8797e1325b4dbe52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ab6c031209d9171aa85512fe7033ef1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#a3ab6c031209d9171aa85512fe7033ef1">alexaClientSDK::avsCommon::utils::json::jsonUtils::convertToValue</a> (const rapidjson::Value &amp;documentNode, int64_t *value)</td></tr>
 <tr class="separator:a3ab6c031209d9171aa85512fe7033ef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a412fc3128b7a5ed2dc7fe6f4bc721d1e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#a412fc3128b7a5ed2dc7fe6f4bc721d1e">alexaClientSDK::avsCommon::utils::json::jsonUtils::convertToValue</a> (const rapidjson::Value &amp;documentNode, uint64_t *value)</td></tr>
+<tr class="separator:a412fc3128b7a5ed2dc7fe6f4bc721d1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5847e7c123fda65a6a95c3bf3e97999"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#aa5847e7c123fda65a6a95c3bf3e97999">alexaClientSDK::avsCommon::utils::json::jsonUtils::convertToValue</a> (const rapidjson::Value &amp;documentNode, bool *value)</td></tr>
 <tr class="separator:aa5847e7c123fda65a6a95c3bf3e97999"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8fee520868204e654e46ccc3887651d"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
@@ -191,7 +194,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

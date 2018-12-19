@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,6 +67,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -76,12 +77,22 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_encryption_info.html">EncryptionInfo</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_iterative_playlist_parser_interface.html">IterativePlaylistParserInterface</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_entry.html">PlaylistEntry</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface.html">PlaylistParserInterface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html">PlaylistParserObserverInterface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:aaf393ec6797d10541b558b52bb9c5514"><td class="memItemLeft" align="right" valign="top">typedef std::tuple&lt; long, long &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser.html#aaf393ec6797d10541b558b52bb9c5514">ByteRange</a></td></tr>
+<tr class="memdesc:aaf393ec6797d10541b558b52bb9c5514"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for holding start and end offsets of byte range of an URL to download.  <a href="#aaf393ec6797d10541b558b52bb9c5514">More...</a><br /></td></tr>
+<tr class="separator:aaf393ec6797d10541b558b52bb9c5514"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -96,6 +107,23 @@ Functions</h2></td></tr>
 <tr class="memitem:a2f0858ab757f68fc68c8a412162671b8"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser.html#a2f0858ab757f68fc68c8a412162671b8">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser.html#ab60fb31cb5497bc9f16feda4fc24fe8a">PlaylistParseResult</a> &amp;result)</td></tr>
 <tr class="separator:a2f0858ab757f68fc68c8a412162671b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="aaf393ec6797d10541b558b52bb9c5514"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf393ec6797d10541b558b52bb9c5514">&#9670;&nbsp;</a></span>ByteRange</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::tuple&lt;long, long&gt; <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser.html#aaf393ec6797d10541b558b52bb9c5514">alexaClientSDK::avsCommon::utils::playlistParser::ByteRange</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Alias for holding start and end offsets of byte range of an URL to download. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ab60fb31cb5497bc9f16feda4fc24fe8a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab60fb31cb5497bc9f16feda4fc24fe8a">&#9670;&nbsp;</a></span>PlaylistParseResult</h2>
@@ -178,7 +206,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

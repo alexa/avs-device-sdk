@@ -1,7 +1,6 @@
 var searchData=
 [
   ['uimanager',['UIManager',['../classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html',1,'alexaClientSDK::sampleApp']]],
-  ['urlandinfo',['UrlAndInfo',['../structalexa_client_s_d_k_1_1playlist_parser_1_1_url_and_info.html',1,'alexaClientSDK::playlistParser']]],
   ['urlcontenttoattachmentconverter',['UrlContentToAttachmentConverter',['../classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter.html',1,'alexaClientSDK::playlistParser']]],
   ['userinactivitymonitor',['UserInactivityMonitor',['../classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_user_inactivity_monitor.html',1,'alexaClientSDK::capabilityAgents::system']]],
   ['userinactivitymonitorinterface',['UserInactivityMonitorInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_user_inactivity_monitor_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],

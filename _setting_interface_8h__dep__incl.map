@@ -1,0 +1,26 @@
+<map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingInterface.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingInterface.h">
+<area shape="rect" id="node2" href="$_device_settings_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/include\l/Settings/DeviceSettingsManager.h" alt="" coords="486,205,715,257"/>
+<area shape="rect" id="node20" href="$_setting_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/include\l/Settings/Setting.h" alt="" coords="351,105,503,157"/>
+<area shape="rect" id="node22" href="$_settings_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/include\l/Settings/SettingsManager.h" alt="" coords="638,105,826,157"/>
+<area shape="rect" id="node25" href="$_mock_setting_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/Settings\l/MockSetting.h" alt="" coords="850,105,1025,157"/>
+<area shape="rect" id="node3" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="477,432,705,497"/>
+<area shape="rect" id="node14" href="$_do_not_disturb_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/include\l/DoNotDisturbCA/DoNotDisturbCapability\lAgent.h" alt="" coords="273,305,539,384"/>
+<area shape="rect" id="node17" href="$_u_i_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UIManager.h" alt="" coords="852,439,1026,491"/>
+<area shape="rect" id="node19" href="$_settings_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/Settings\lManagerTest.cpp" alt="" coords="665,319,840,371"/>
+<area shape="rect" id="node4" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="232,545,460,597"/>
+<area shape="rect" id="node5" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="704,645,926,697"/>
+<area shape="rect" id="node12" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="484,545,698,597"/>
+<area shape="rect" id="node6" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="706,745,924,797"/>
+<area shape="rect" id="node11" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="476,745,682,797"/>
+<area shape="rect" id="node7" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="705,845,925,897"/>
+<area shape="rect" id="node10" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="479,845,681,897"/>
+<area shape="rect" id="node8" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="716,945,914,984"/>
+<area shape="rect" id="node9" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="320,945,600,984"/>
+<area shape="rect" id="node13" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="404,652,679,691"/>
+<area shape="rect" id="node15" href="$_do_not_disturb_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/src/DoNotDisturb\lCapabilityAgent.cpp" alt="" coords="243,432,453,497"/>
+<area shape="rect" id="node16" href="$_do_not_disturb_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/test/DoNotDisturb\lCapabilityAgentTest.cpp" alt="" coords="5,432,219,497"/>
+<area shape="rect" id="node18" href="$_u_i_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UIManager.cpp" alt="" coords="852,552,1087,591"/>
+<area shape="rect" id="node21" href="$_setting_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SettingTest.cpp" alt="" coords="171,212,390,251"/>
+<area shape="rect" id="node23" href="$_setting_callback_adapter_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/include\l/Settings/SettingCallbackAdapter.h" alt="" coords="818,205,1044,257"/>
+<area shape="rect" id="node24" href="$_setting_callbacks_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/include\l/Settings/SettingCallbacks.h" alt="" coords="864,319,1051,371"/>
+</map>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -2388,38 +2388,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a86237d026af98d28a23e396416bb02b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86237d026af98d28a23e396416bb02b7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/70]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bargeInOnMultipleSpeaksAtTheBeginning&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test ability for the SpeechSynthesizer to handle a barge in at the begining of consucutive speaks.</p>
-<p>This test is intended to test the SpeechSynthesizer's ability to receive multiple directives, play each using a MediaPlayer then return to a finished state and notify the DirectiveSequencer that the directive was handled. This is done by sending a Recognize event to AVS with audio of "What's up?" which returns four sets of SetMute and Speak. Once the first Speak reaches the SpeechSynthesizer, the dialogRequestID is changed and all directives are cancelled. </p>
-
-</div>
-</div>
 <a id="a2a5e41dda765ace310252f7b8119a279"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a5e41dda765ace310252f7b8119a279">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/70]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a5e41dda765ace310252f7b8119a279">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2445,6 +2415,36 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Test when the Alerts channel is acqired by a different client when an alert is active</p>
 <p>Set a 5 second timer, ensure it goes off, then have a test client acquire the Alerts channel. Ensure that the alert is stopped. </p>
+
+</div>
+</div>
+<a id="a86237d026af98d28a23e396416bb02b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86237d026af98d28a23e396416bb02b7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bargeInOnMultipleSpeaksAtTheBeginning&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test ability for the SpeechSynthesizer to handle a barge in at the begining of consucutive speaks.</p>
+<p>This test is intended to test the SpeechSynthesizer's ability to receive multiple directives, play each using a MediaPlayer then return to a finished state and notify the DirectiveSequencer that the directive was handled. This is done by sending a Recognize event to AVS with audio of "What's up?" which returns four sets of SetMute and Speak. Once the first Speak reaches the SpeechSynthesizer, the dialogRequestID is changed and all directives are cancelled. </p>
 
 </div>
 </div>
@@ -3020,37 +3020,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="ae0429bde5f283291028a3eb013b1bf12"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0429bde5f283291028a3eb013b1bf12">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[55/70]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getAttachmentWithContentId&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test ability to get an attachment from <code>AttachmentManager</code>. </p>
-
-</div>
-</div>
 <a id="a6025c434512ad72bbe73cf1f4f19eaa1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6025c434512ad72bbe73cf1f4f19eaa1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[56/70]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6025c434512ad72bbe73cf1f4f19eaa1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[55/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3076,6 +3047,35 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Test AudioInputProcessor's ability to handle no audio being written triggered by a tap to talk button.</p>
 <p>To do this, no audio is fed into a stream after button sends recognize to AudioInputProcessor. The AudioInputProcessor is then observed to send a Recognize event to AVS which responds with no directive. </p>
+
+</div>
+</div>
+<a id="ae0429bde5f283291028a3eb013b1bf12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0429bde5f283291028a3eb013b1bf12">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[56/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">getAttachmentWithContentId&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test ability to get an attachment from <code>AttachmentManager</code>. </p>
 
 </div>
 </div>
@@ -8660,7 +8660,7 @@ template&lt;typename T &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

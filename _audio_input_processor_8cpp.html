@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -78,6 +78,7 @@ $(function() {
 <code>#include &lt;<a class="el" href="_capability_configuration_8h_source.html">AVSCommon/AVS/CapabilityConfiguration.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_focus_state_8h_source.html">AVSCommon/AVS/FocusState.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_message_request_8h_source.html">AVSCommon/AVS/MessageRequest.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_j_s_o_n_generator_8h_source.html">AVSCommon/Utils/JSON/JSONGenerator.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_memory_8h_source.html">AVSCommon/Utils/Memory/Memory.h</a>&gt;</code><br />
@@ -85,49 +86,46 @@ $(function() {
 <code>#include &lt;<a class="el" href="_string_utils_8h_source.html">AVSCommon/Utils/String/StringUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_u_u_i_d_generation_8h_source.html">AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_attachment_utils_8h_source.html">AVSCommon/AVS/Attachment/AttachmentUtils.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_speech_encoder_8h_source.html">SpeechEncoder/SpeechEncoder.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_audio_input_processor_8h_source.html">AIP/AudioInputProcessor.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AudioInputProcessor.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_audio_input_processor_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capability_agents_2_a_i_p_2src_2_audio_input_processor_8cpp" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_capability_agents_2_a_i_p_2src_2_audio_input_processor_8cpp" id="_2workplace_2avs-device-sdk_2_capability_agents_2_a_i_p_2src_2_audio_input_processor_8cpp">
-<area shape="rect" id="node3" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="519,285,712,324"/>
-<area shape="rect" id="node6" href="_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="1067,472,1280,497"/>
-<area shape="rect" id="node7" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="2751,292,3000,317"/>
-<area shape="rect" id="node16" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="4593,285,4763,324"/>
-<area shape="rect" id="node19" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="3658,465,3834,504"/>
-<area shape="rect" id="node26" href="_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="312,285,494,324"/>
-<area shape="rect" id="node28" href="_metrics_8h.html" title="AVSCommon/Utils/Metrics.h" alt="" coords="3965,472,4153,497"/>
-<area shape="rect" id="node30" href="_string_utils_8h.html" title="AVSCommon/Utils/String\l/StringUtils.h" alt="" coords="4716,552,4885,591"/>
-<area shape="rect" id="node31" href="_u_u_i_d_generation_8h.html" title="AVSCommon/Utils/UUIDGeneration\l/UUIDGeneration.h" alt="" coords="5,105,238,144"/>
-<area shape="rect" id="node32" href="_attachment_utils_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentUtils.h" alt="" coords="3458,285,3660,324"/>
-<area shape="rect" id="node33" href="_audio_input_processor_8h.html" title="AIP/AudioInputProcessor.h" alt="" coords="2123,112,2304,137"/>
-<area shape="rect" id="node13" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="3357,379,3559,417"/>
-<area shape="rect" id="node15" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="2935,379,3181,417"/>
-<area shape="rect" id="node18" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="3735,379,3911,417"/>
-<area shape="rect" id="node21" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="3354,552,3567,591"/>
-<area shape="rect" id="node22" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="3602,639,3778,677"/>
-<area shape="rect" id="node23" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="3965,552,4140,591"/>
-<area shape="rect" id="node24" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="3591,552,3788,591"/>
-<area shape="rect" id="node25" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2601,552,2776,591"/>
-<area shape="rect" id="node29" href="_a_v_s_message_8h.html" title="AVSCommon/AVS/AVSMessage.h" alt="" coords="4164,559,4389,584"/>
-<area shape="rect" id="node34" href="_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="3178,192,3383,231"/>
-<area shape="rect" id="node35" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="2208,285,2401,324"/>
-<area shape="rect" id="node36" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2360,379,2625,417"/>
-<area shape="rect" id="node37" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="1139,379,1331,417"/>
-<area shape="rect" id="node38" href="_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="1578,192,1804,231"/>
-<area shape="rect" id="node39" href="_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="1321,192,1554,231"/>
-<area shape="rect" id="node40" href="_dialog_u_x_state_aggregator_8h.html" title="AVSCommon/AVS/DialogUXState\lAggregator.h" alt="" coords="1930,192,2151,231"/>
-<area shape="rect" id="node41" href="_audio_input_processor_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioInputProcessorObserver\lInterface.h" alt="" coords="736,279,940,331"/>
-<area shape="rect" id="node42" href="_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="964,285,1194,324"/>
-<area shape="rect" id="node43" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1269,285,1463,324"/>
-<area shape="rect" id="node44" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="3131,285,3305,324"/>
-<area shape="rect" id="node45" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1732,465,1923,504"/>
-<area shape="rect" id="node46" href="_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="1646,379,1851,417"/>
-<area shape="rect" id="node47" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1947,465,2134,504"/>
-<area shape="rect" id="node48" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="1486,285,1677,324"/>
-<area shape="rect" id="node49" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2765,192,2956,231"/>
-<area shape="rect" id="node50" href="_user_inactivity_monitor_interface_8h.html" title="AVSCommon/SDKInterfaces\l/UserInactivityMonitorInterface.h" alt="" coords="3105,465,3317,504"/>
+<area shape="rect" id="node3" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="3283,372,3476,411"/>
+<area shape="rect" id="node6" href="_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="4986,472,5199,497"/>
+<area shape="rect" id="node7" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1608,285,1857,311"/>
+<area shape="rect" id="node16" href="_j_s_o_n_generator_8h.html" title="AVSCommon/Utils/JSON\l/JSONGenerator.h" alt="" coords="684,105,854,144"/>
+<area shape="rect" id="node20" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="916,105,1086,144"/>
+<area shape="rect" id="node23" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1145,279,1320,317"/>
+<area shape="rect" id="node30" href="_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="4015,372,4197,411"/>
+<area shape="rect" id="node32" href="_metrics_8h.html" title="AVSCommon/Utils/Metrics.h" alt="" coords="1396,285,1584,311"/>
+<area shape="rect" id="node34" href="_string_utils_8h.html" title="AVSCommon/Utils/String\l/StringUtils.h" alt="" coords="2208,372,2377,411"/>
+<area shape="rect" id="node35" href="_u_u_i_d_generation_8h.html" title="AVSCommon/Utils/UUIDGeneration\l/UUIDGeneration.h" alt="" coords="5,105,238,144"/>
+<area shape="rect" id="node36" href="_attachment_utils_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentUtils.h" alt="" coords="1932,279,2133,317"/>
+<area shape="rect" id="node37" href="_speech_encoder_8h.html" title="SpeechEncoder/SpeechEncoder.h" alt="" coords="4340,285,4565,311"/>
+<area shape="rect" id="node43" href="_audio_input_processor_8h.html" title="AIP/AudioInputProcessor.h" alt="" coords="3181,199,3362,224"/>
+<area shape="rect" id="node13" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1932,372,2133,411"/>
+<area shape="rect" id="node15" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1611,372,1857,411"/>
+<area shape="rect" id="node22" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1145,192,1320,231"/>
+<area shape="rect" id="node25" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1171,372,1385,411"/>
+<area shape="rect" id="node26" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="425,465,600,504"/>
+<area shape="rect" id="node27" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="635,372,811,411"/>
+<area shape="rect" id="node28" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="414,372,611,411"/>
+<area shape="rect" id="node29" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2401,372,2576,411"/>
+<area shape="rect" id="node33" href="_a_v_s_message_8h.html" title="AVSCommon/AVS/AVSMessage.h" alt="" coords="2701,379,2926,404"/>
+<area shape="rect" id="node39" href="_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="4642,372,4839,411"/>
+<area shape="rect" id="node40" href="_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="4592,472,4814,497"/>
+<area shape="rect" id="node41" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="4221,372,4415,411"/>
+<area shape="rect" id="node42" href="_encoder_context_8h.html" title="EncoderContext.h" alt="" coords="4490,379,4618,404"/>
+<area shape="rect" id="node44" href="_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="2158,279,2363,317"/>
+<area shape="rect" id="node45" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="3680,279,3873,317"/>
+<area shape="rect" id="node46" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="4996,372,5189,411"/>
+<area shape="rect" id="node47" href="_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="2982,279,3208,317"/>
+<area shape="rect" id="node48" href="_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="3897,279,4130,317"/>
+<area shape="rect" id="node49" href="_dialog_u_x_state_aggregator_8h.html" title="AVSCommon/AVS/DialogUXState\lAggregator.h" alt="" coords="3334,279,3555,317"/>
+<area shape="rect" id="node50" href="_audio_input_processor_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioInputProcessorObserver\lInterface.h" alt="" coords="3500,365,3704,417"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -143,7 +141,7 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_input_processor_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_registration_manager_8cpp.html#a73216df79c9ad2b23fd2eef0a8f10d1b">TAG</a>, event)</td></tr>
+<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_audio_input_processor_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_u_i_manager_8cpp.html#ada5473a95becdcf63a8f83e7f05fefe7">TAG</a>, event)</td></tr>
 <tr class="separator:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -185,14 +183,44 @@ Variables</h2></td></tr>
 <tr class="memitem:a1732424dfb90cdd08d5e20c07ddd63bb"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a1732424dfb90cdd08d5e20c07ddd63bb">alexaClientSDK::capabilityAgents::aip::INITIATOR_KEY</a> = &quot;initiator&quot;</td></tr>
 <tr class="memdesc:a1732424dfb90cdd08d5e20c07ddd63bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a1732424dfb90cdd08d5e20c07ddd63bb">More...</a><br /></td></tr>
 <tr class="separator:a1732424dfb90cdd08d5e20c07ddd63bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a50ac3ef5c5b7ffff9d4b37dceb4997"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a2a50ac3ef5c5b7ffff9d4b37dceb4997">alexaClientSDK::capabilityAgents::aip::PROFILE_KEY</a> = &quot;profile&quot;</td></tr>
+<tr class="memdesc:a2a50ac3ef5c5b7ffff9d4b37dceb4997"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's profile.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a2a50ac3ef5c5b7ffff9d4b37dceb4997">More...</a><br /></td></tr>
+<tr class="separator:a2a50ac3ef5c5b7ffff9d4b37dceb4997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75e0e68b050058b87d12bb7cd0b07d1c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a75e0e68b050058b87d12bb7cd0b07d1c">alexaClientSDK::capabilityAgents::aip::FORMAT_KEY</a> = &quot;format&quot;</td></tr>
+<tr class="memdesc:a75e0e68b050058b87d12bb7cd0b07d1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's format.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a75e0e68b050058b87d12bb7cd0b07d1c">More...</a><br /></td></tr>
+<tr class="separator:a75e0e68b050058b87d12bb7cd0b07d1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32e0f808067c1599cbb4598d2f750706"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a32e0f808067c1599cbb4598d2f750706">alexaClientSDK::capabilityAgents::aip::TYPE_KEY</a> = &quot;type&quot;</td></tr>
+<tr class="memdesc:a32e0f808067c1599cbb4598d2f750706"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's type.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a32e0f808067c1599cbb4598d2f750706">More...</a><br /></td></tr>
+<tr class="separator:a32e0f808067c1599cbb4598d2f750706"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbf5dcfa5810b05aab72efc1a0005e3f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#abbf5dcfa5810b05aab72efc1a0005e3f">alexaClientSDK::capabilityAgents::aip::PAYLOAD_KEY</a> = &quot;payload&quot;</td></tr>
+<tr class="memdesc:abbf5dcfa5810b05aab72efc1a0005e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's payload.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#abbf5dcfa5810b05aab72efc1a0005e3f">More...</a><br /></td></tr>
+<tr class="separator:abbf5dcfa5810b05aab72efc1a0005e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34efcba44c38cc415a44c40efa7a7e61"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a34efcba44c38cc415a44c40efa7a7e61">alexaClientSDK::capabilityAgents::aip::WAKEWORD_INDICES_KEY</a> = &quot;wakeWordIndices&quot;</td></tr>
+<tr class="memdesc:a34efcba44c38cc415a44c40efa7a7e61"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's wakeword indices.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a34efcba44c38cc415a44c40efa7a7e61">More...</a><br /></td></tr>
+<tr class="separator:a34efcba44c38cc415a44c40efa7a7e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90336aeeac4edbe1bde7273b885bf610"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a90336aeeac4edbe1bde7273b885bf610">alexaClientSDK::capabilityAgents::aip::START_INDEX_KEY</a> = &quot;startIndexInSamples&quot;</td></tr>
+<tr class="memdesc:a90336aeeac4edbe1bde7273b885bf610"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's wakeword start index.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a90336aeeac4edbe1bde7273b885bf610">More...</a><br /></td></tr>
+<tr class="separator:a90336aeeac4edbe1bde7273b885bf610"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a8d6d789c8c9cfc467aefffbc2f5a9e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a4a8d6d789c8c9cfc467aefffbc2f5a9e">alexaClientSDK::capabilityAgents::aip::END_INDEX_KEY</a> = &quot;endIndexInSamples&quot;</td></tr>
+<tr class="memdesc:a4a8d6d789c8c9cfc467aefffbc2f5a9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's wakeword end index.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a4a8d6d789c8c9cfc467aefffbc2f5a9e">More...</a><br /></td></tr>
+<tr class="separator:a4a8d6d789c8c9cfc467aefffbc2f5a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba10069d387ef5cbecd60feb793a2288"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#aba10069d387ef5cbecd60feb793a2288">alexaClientSDK::capabilityAgents::aip::WAKE_WORD_KEY</a> = &quot;wakeWord&quot;</td></tr>
+<tr class="memdesc:aba10069d387ef5cbecd60feb793a2288"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's wake word.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#aba10069d387ef5cbecd60feb793a2288">More...</a><br /></td></tr>
+<tr class="separator:aba10069d387ef5cbecd60feb793a2288"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cb092b3b7868ce0034d8ef486e72315"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a0cb092b3b7868ce0034d8ef486e72315">alexaClientSDK::capabilityAgents::aip::VOICE_ENERGY_KEY</a> = &quot;voiceEnergy&quot;</td></tr>
+<tr class="memdesc:a0cb092b3b7868ce0034d8ef486e72315"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the ESP voice energy.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a0cb092b3b7868ce0034d8ef486e72315">More...</a><br /></td></tr>
+<tr class="separator:a0cb092b3b7868ce0034d8ef486e72315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7a153c70d8b5fbad0db8abeb3bbd71b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ac7a153c70d8b5fbad0db8abeb3bbd71b">alexaClientSDK::capabilityAgents::aip::AMBIENT_ENERGY_KEY</a> = &quot;ambientEnergy&quot;</td></tr>
+<tr class="memdesc:ac7a153c70d8b5fbad0db8abeb3bbd71b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the ESP ambient energy.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ac7a153c70d8b5fbad0db8abeb3bbd71b">More...</a><br /></td></tr>
+<tr class="separator:ac7a153c70d8b5fbad0db8abeb3bbd71b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac08df1f16af6efea21abbf7a6fcb171c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ac08df1f16af6efea21abbf7a6fcb171c">alexaClientSDK::capabilityAgents::aip::AUDIO_ATTACHMENT_FIELD_NAME</a> = &quot;audio&quot;</td></tr>
 <tr class="memdesc:ac08df1f16af6efea21abbf7a6fcb171c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field name for the user voice attachment.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ac08df1f16af6efea21abbf7a6fcb171c">More...</a><br /></td></tr>
 <tr class="separator:ac08df1f16af6efea21abbf7a6fcb171c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9715649e3977c3460ae6a3a39aff6955"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a9715649e3977c3460ae6a3a39aff6955">alexaClientSDK::capabilityAgents::aip::KWD_METADATA_FIELD_NAME</a> = &quot;wakewordEngineMetadata&quot;</td></tr>
 <tr class="memdesc:a9715649e3977c3460ae6a3a39aff6955"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field name for the wake word engine metadata.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a9715649e3977c3460ae6a3a39aff6955">More...</a><br /></td></tr>
 <tr class="separator:a9715649e3977c3460ae6a3a39aff6955"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a159a107242c718759e1a7bff97a0cc3c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a159a107242c718759e1a7bff97a0cc3c">alexaClientSDK::capabilityAgents::aip::START_OF_SPEECH_OFFSET_FIELD_NAME</a> = &quot;startOfSpeechTimestamp&quot;</td></tr>
-<tr class="separator:a159a107242c718759e1a7bff97a0cc3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a690d88d522bcccad01aea068231b4226"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a690d88d522bcccad01aea068231b4226">alexaClientSDK::capabilityAgents::aip::START_OF_SPEECH_TIMESTAMP_FIELD_NAME</a> = &quot;startOfSpeechTimestamp&quot;</td></tr>
+<tr class="separator:a690d88d522bcccad01aea068231b4226"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a725d778b768a1f467a70b0b7ee79196f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a725d778b768a1f467a70b0b7ee79196f">alexaClientSDK::capabilityAgents::aip::END_OF_SPEECH_OFFSET_FIELD_NAME</a> = &quot;endOfSpeechOffsetInMilliseconds&quot;</td></tr>
 <tr class="memdesc:a725d778b768a1f467a70b0b7ee79196f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field name for the end of speech offset, reported in milliseconds, as part of SetEndOfSpeechOffset payload.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a725d778b768a1f467a70b0b7ee79196f">More...</a><br /></td></tr>
 <tr class="separator:a725d778b768a1f467a70b0b7ee79196f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -209,7 +237,7 @@ Variables</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">event</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_registration_manager_8cpp.html#a73216df79c9ad2b23fd2eef0a8f10d1b">TAG</a>, event)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_u_i_manager_8cpp.html#ada5473a95becdcf63a8f83e7f05fefe7">TAG</a>, event)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -227,7 +255,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

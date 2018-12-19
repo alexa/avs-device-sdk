@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -76,9 +76,6 @@ $(function() {
 <li>Layout
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html#adb010268af911ce6cb96b3172030f679">alexaClientSDK::avsCommon::utils::AudioFormat</a>
 </li>
-<li>length
-: <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_url_and_info.html#ad5b2a2a348ca2953daaa3d5242c1354b">alexaClientSDK::playlistParser::UrlAndInfo</a>
-</li>
 <li>LibcurlHTTP2Connection()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_libcurl_h_t_t_p2_connection.html#a6f6d84f8f5f6450f71ce8a052403b155">alexaClientSDK::avsCommon::utils::libcurlUtils::LibcurlHTTP2Connection</a>
 </li>
@@ -110,9 +107,18 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html#aa5113b9e4236b77ef4177e6f46bb6474">alexaClientSDK::certifiedSender::SQLiteMessageStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html#a0b947528c633ac8a99079d16892ce9ee">alexaClientSDK::storage::sqliteStorage::SQLiteMiscStorage</a>
 </li>
+<li>loadSetting()
+: <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1storage_1_1_device_setting_storage_interface.html#a8acefcc2b5eee9733f4b17d8037570fa">alexaClientSDK::settings::storage::DeviceSettingStorageInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1storage_1_1_s_q_lite_device_setting_storage.html#a36294c60fc3906f4b8b45151ac0afdc0">alexaClientSDK::settings::storage::SQLiteDeviceSettingStorage</a>
+</li>
 <li>loadState()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_equalizer_storage_interface.html#ac649d2a9dd16aaeb2570ad43e784f756">alexaClientSDK::avsCommon::sdkInterfaces::audio::EqualizerStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1equalizer_1_1_misc_d_b_equalizer_storage.html#a9905461c9e635b62f6140b27deb7529d">alexaClientSDK::equalizer::MiscDBEqualizerStorage</a>
+</li>
+<li>localChange()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_d_n_d_setting_protocol.html#aad75281bbce14797648428c4b37ea9a4">alexaClientSDK::capabilityAgents::doNotDisturb::DNDSettingProtocol</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_setting_protocol_interface.html#a5a304fbc24615ac1ffe3fea3f6b3af83">alexaClientSDK::settings::SettingProtocolInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1test_1_1_mock_setting_protocol.html#a634163db08b40598aed999cc6df22760">alexaClientSDK::settings::test::MockSettingProtocol</a>
 </li>
 <li>locale()
 : <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#acd0202ff30ed270b9757246702735d95">alexaClientSDK::sampleApp::InteractionManager</a>
@@ -130,7 +136,7 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html#a72f95ccea556c6c00c5c058ed10a24f9">alexaClientSDK::avsCommon::utils::logger::Logger</a>
 </li>
 <li>LogEntry()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html#a64cb7fceb37d4f8bdcc0dc22f3c9d08e">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html#a4d12bedae6cf66218292254cbb42cc8a">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>
 </li>
 <li>LogEntryBuffer()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_buffer.html#ab7d4cdadcb0181ea0c869f8e7a6e0cac">alexaClientSDK::avsCommon::utils::logger::LogEntryBuffer</a>
@@ -162,7 +168,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

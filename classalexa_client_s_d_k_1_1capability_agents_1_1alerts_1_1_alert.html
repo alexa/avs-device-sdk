@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -181,8 +181,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aacb884a7749a82a05f5095c4d880d253"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21d4eee1d0c78dee6ce1b6512bfa7d00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a21d4eee1d0c78dee6ce1b6512bfa7d00">deactivate</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a3f3b31fc54d94c3ada26cc9c6e51f158">StopReason</a> reason)</td></tr>
 <tr class="separator:a21d4eee1d0c78dee6ce1b6512bfa7d00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad455dce4bba73f549fd6f58884422c98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#ad455dce4bba73f549fd6f58884422c98">snooze</a> (const std::string &amp;updatedScheduledTime_ISO_8601)</td></tr>
-<tr class="separator:ad455dce4bba73f549fd6f58884422c98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4588efe1e21aa97be5e91fa714bb90a7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a4588efe1e21aa97be5e91fa714bb90a7">updateScheduledTime</a> (const std::string &amp;newScheduledTime)</td></tr>
+<tr class="separator:a4588efe1e21aa97be5e91fa714bb90a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06d681e83c484e92ae79e81c8c541436"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a06d681e83c484e92ae79e81c8c541436">snooze</a> (const std::string &amp;updatedScheduledTime)</td></tr>
+<tr class="separator:a06d681e83c484e92ae79e81c8c541436"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ca69902b11c2035c63f2655aa187889"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#a8ca69902b11c2035c63f2655aa187889">setFocusState</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a> focusState)</td></tr>
 <tr class="separator:a8ca69902b11c2035c63f2655aa187889"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abffaca6bb0535ce93d3c5dde06b10397"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#abffaca6bb0535ce93d3c5dde06b10397">setStateActive</a> ()</td></tr>
@@ -1052,17 +1054,17 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad455dce4bba73f549fd6f58884422c98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad455dce4bba73f549fd6f58884422c98">&#9670;&nbsp;</a></span>snooze()</h2>
+<a id="a06d681e83c484e92ae79e81c8c541436"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06d681e83c484e92ae79e81c8c541436">&#9670;&nbsp;</a></span>snooze()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void alexaClientSDK::capabilityAgents::alerts::Alert::snooze </td>
+          <td class="memname">bool alexaClientSDK::capabilityAgents::alerts::Alert::snooze </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>updatedScheduledTime_ISO_8601</em></td><td>)</td>
+          <td class="paramname"><em>updatedScheduledTime</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1070,10 +1072,11 @@ Static Public Member Functions</h2></td></tr>
 <p>Performs relevant operations to snooze this alarm to the new time provided.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">updatedScheduledTime_ISO_8601</td><td>The new time for the alarm to occur, in ISO-8601 format. </td></tr>
+    <tr><td class="paramname">updatedScheduledTime</td><td>The new time for the alarm to occur, in ISO-8601 format. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if it succeeds; <code>false</code> otherwise. </dd></dl>
 
 </div>
 </div>
@@ -1145,6 +1148,35 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a4588efe1e21aa97be5e91fa714bb90a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4588efe1e21aa97be5e91fa714bb90a7">&#9670;&nbsp;</a></span>updateScheduledTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::capabilityAgents::alerts::Alert::updateScheduledTime </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>newScheduledTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Performs relevant operations to update this alarm to the new time provided.</p>
+<dl class="section note"><dt>Note</dt><dd>Use <code>snooze</code> for active alarms. This method will fail since it does not stop alarm rendering. </dd>
+<dd>
+The caller should validate the new schedule which should not be more than 30 minutes in the past. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newScheduledTime</td><td>The new time for the alarm to occur, in ISO-8601 format. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if it succeeds; <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/workplace/avs-device-sdk/CapabilityAgents/Alerts/include/Alerts/<a class="el" href="_alert_8h_source.html">Alert.h</a></li>
 <li>/workplace/avs-device-sdk/CapabilityAgents/Alerts/src/<a class="el" href="_alert_8cpp.html">Alert.cpp</a></li>
@@ -1153,7 +1185,7 @@ Static Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

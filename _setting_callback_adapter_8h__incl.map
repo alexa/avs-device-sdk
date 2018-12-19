@@ -1,0 +1,16 @@
+<map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingCallbackAdapter.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingCallbackAdapter.h">
+<area shape="rect" id="node4" href="$_settings_manager_8h.html" title="SettingsManager.h" alt="" coords="1138,105,1270,131"/>
+<area shape="rect" id="node31" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="43,352,213,391"/>
+<area shape="rect" id="node8" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1377,352,1553,391"/>
+<area shape="rect" id="node16" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1459,179,1635,217"/>
+<area shape="rect" id="node26" href="$_setting_interface_8h.html" title="SettingInterface.h" alt="" coords="840,272,966,297"/>
+<area shape="rect" id="node11" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1201,439,1377,477"/>
+<area shape="rect" id="node13" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1444,525,1620,564"/>
+<area shape="rect" id="node18" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1503,265,1679,304"/>
+<area shape="rect" id="node20" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1900,352,2114,391"/>
+<area shape="rect" id="node23" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1596,439,1772,477"/>
+<area shape="rect" id="node24" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1679,352,1876,391"/>
+<area shape="rect" id="node25" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1151,525,1327,564"/>
+<area shape="rect" id="node29" href="$_guarded_value_8h.html" title="AVSCommon/Utils/GuardedValue.h" alt="" coords="546,359,777,384"/>
+<area shape="rect" id="node30" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="339,359,522,384"/>
+</map>

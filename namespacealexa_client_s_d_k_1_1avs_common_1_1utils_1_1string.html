@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,10 @@ Functions</h2></td></tr>
 <tr class="separator:aa54773055b57c6d6e0793819ccc47c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b0a38568aab26aa9371470c4493f234"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1string.html#a5b0a38568aab26aa9371470c4493f234">stringToInt</a> (const char *str, int *result)</td></tr>
 <tr class="separator:a5b0a38568aab26aa9371470c4493f234"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d96285d85475e9d145a8e01311cf4a1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1string.html#a8d96285d85475e9d145a8e01311cf4a1">stringToInt64</a> (const std::string &amp;str, int64_t *result)</td></tr>
+<tr class="separator:a8d96285d85475e9d145a8e01311cf4a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f7407a74bb9f68ed89e46444ba78ae7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1string.html#a6f7407a74bb9f68ed89e46444ba78ae7">stringToInt64</a> (const char *str, int64_t *result)</td></tr>
+<tr class="separator:a6f7407a74bb9f68ed89e46444ba78ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e9905aba0bab1ca8d423ee2dda1e289"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1string.html#a8e9905aba0bab1ca8d423ee2dda1e289">byteVectorToString</a> (const std::vector&lt; uint8_t &gt; &amp;byteVector)</td></tr>
 <tr class="separator:a8e9905aba0bab1ca8d423ee2dda1e289"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01a26b31f8413cc8b4cf637f81014b17"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1string.html#a01a26b31f8413cc8b4cf637f81014b17">stringToLowerCase</a> (const std::string &amp;input)</td></tr>
@@ -184,6 +188,80 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>A utility function to convert a c-string to an integer. If the string is successfully parsed, then the out parameter will be updated.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">str</td><td>The C-string input. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">result</td><td>The resulting integer, if successfully parsed from the string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the string was parsed as an integer, otherwise <code>false</code>. </dd></dl>
+
+</div>
+</div>
+<a id="a8d96285d85475e9d145a8e01311cf4a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d96285d85475e9d145a8e01311cf4a1">&#9670;&nbsp;</a></span>stringToInt64() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::utils::string::stringToInt64 </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int64_t *&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A utility function to convert a string to an integer 64 bits. If the string is successfully parsed, then the out parameter will be updated.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">str</td><td>The string input. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">result</td><td>The resulting integer, if successfully parsed from the string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> If the string was parsed as an integer, otherwise <code>false</code>. </dd></dl>
+
+</div>
+</div>
+<a id="a6f7407a74bb9f68ed89e46444ba78ae7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f7407a74bb9f68ed89e46444ba78ae7">&#9670;&nbsp;</a></span>stringToInt64() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::utils::string::stringToInt64 </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int64_t *&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A utility function to convert a c-string to an integer 64 bits. If the string is successfully parsed, then the out parameter will be updated.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">str</td><td>The C-string input. </td></tr>
@@ -302,7 +380,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

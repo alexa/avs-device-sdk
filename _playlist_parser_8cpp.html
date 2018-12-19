@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,7 @@ $(function() {
 <code>#include &lt;sstream&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_playlist_parser_observer_interface_8h_source.html">AVSCommon/Utils/PlaylistParser/PlaylistParserObserverInterface.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="_m3_u_parser_8h_source.html">PlaylistParser/M3UParser.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_playlist_parser_8h_source.html">PlaylistParser/PlaylistParser.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_playlist_utils_8h_source.html">PlaylistParser/PlaylistUtils.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -86,34 +87,34 @@ Include dependency graph for PlaylistParser.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_playlist_parser_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_playlist_parser_2src_2_playlist_parser_8cpp" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_playlist_parser_2src_2_playlist_parser_8cpp" id="_2workplace_2avs-device-sdk_2_playlist_parser_2src_2_playlist_parser_8cpp">
-<area shape="rect" id="node5" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="775,365,951,404"/>
-<area shape="rect" id="node23" href="_playlist_parser_observer_interface_8h.html" title="AVSCommon/Utils/Playlist\lParser/PlaylistParserObserver\lInterface.h" alt="" coords="404,625,605,677"/>
-<area shape="rect" id="node25" href="_playlist_parser_8h.html" title="PlaylistParser/PlaylistParser.h" alt="" coords="1687,105,1885,131"/>
-<area shape="rect" id="node50" href="_playlist_utils_8h.html" title="PlaylistParser/PlaylistUtils.h" alt="" coords="920,192,1106,217"/>
-<area shape="rect" id="node10" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="629,632,842,671"/>
-<area shape="rect" id="node15" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="917,539,1093,577"/>
-<area shape="rect" id="node16" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="481,452,657,491"/>
-<area shape="rect" id="node21" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="896,452,1093,491"/>
-<area shape="rect" id="node22" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2086,452,2262,491"/>
-<area shape="rect" id="node17" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="197,539,373,577"/>
-<area shape="rect" id="node19" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="103,632,279,671"/>
-<area shape="rect" id="node27" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1373,632,1575,671"/>
-<area shape="rect" id="node30" href="_h_t_t_p_content_fetcher_interface_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface\lFactoryInterface.h" alt="" coords="1684,179,1888,231"/>
-<area shape="rect" id="node42" href="_playlist_parser_interface_8h.html" title="AVSCommon/Utils/Playlist\lParser/PlaylistParserInterface.h" alt="" coords="511,539,720,577"/>
-<area shape="rect" id="node43" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2315,632,2503,671"/>
-<area shape="rect" id="node44" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="3014,452,3209,491"/>
-<area shape="rect" id="node29" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1772,725,1934,764"/>
-<area shape="rect" id="node31" href="_h_t_t_p_content_fetcher_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface.h" alt="" coords="1679,279,1893,317"/>
-<area shape="rect" id="node32" href="_h_t_t_p_content_8h.html" title="AVSCommon/Utils/HTTPContent.h" alt="" coords="1706,372,1933,397"/>
-<area shape="rect" id="node41" href="_s_d_k_version_8h.html" title="AVSCommon/Utils/SDKVersion.h" alt="" coords="1320,372,1537,397"/>
-<area shape="rect" id="node34" href="_in_process_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachment.h" alt="" coords="1752,452,1954,491"/>
-<area shape="rect" id="node35" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="2029,539,2231,577"/>
-<area shape="rect" id="node37" href="_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1926,632,2088,671"/>
-<area shape="rect" id="node39" href="_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="1522,539,1728,577"/>
-<area shape="rect" id="node40" href="_in_process_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h" alt="" coords="1752,539,1954,577"/>
-<area shape="rect" id="node36" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="1701,632,1903,671"/>
-<area shape="rect" id="node46" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2880,539,3074,577"/>
-<area shape="rect" id="node48" href="_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="3014,632,3209,671"/>
+<area shape="rect" id="node5" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1944,105,2120,144"/>
+<area shape="rect" id="node23" href="_playlist_parser_observer_interface_8h.html" title="AVSCommon/Utils/Playlist\lParser/PlaylistParserObserver\lInterface.h" alt="" coords="2748,465,2948,517"/>
+<area shape="rect" id="node26" href="_m3_u_parser_8h.html" title="PlaylistParser/M3UParser.h" alt="" coords="2696,385,2880,411"/>
+<area shape="rect" id="node27" href="_playlist_parser_8h.html" title="PlaylistParser/PlaylistParser.h" alt="" coords="802,112,1000,137"/>
+<area shape="rect" id="node50" href="_playlist_utils_8h.html" title="PlaylistParser/PlaylistUtils.h" alt="" coords="2428,205,2614,231"/>
+<area shape="rect" id="node10" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1722,379,1936,417"/>
+<area shape="rect" id="node15" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1757,292,1933,331"/>
+<area shape="rect" id="node16" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2228,199,2404,237"/>
+<area shape="rect" id="node21" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1747,199,1944,237"/>
+<area shape="rect" id="node22" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1091,292,1267,331"/>
+<area shape="rect" id="node17" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2293,292,2469,331"/>
+<area shape="rect" id="node19" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="2293,379,2469,417"/>
+<area shape="rect" id="node25" href="_playlist_entry_8h.html" title="PlaylistEntry.h" alt="" coords="2797,572,2902,597"/>
+<area shape="rect" id="node29" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1119,652,1321,691"/>
+<area shape="rect" id="node32" href="_h_t_t_p_content_fetcher_interface_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface\lFactoryInterface.h" alt="" coords="1282,192,1486,244"/>
+<area shape="rect" id="node41" href="_playlist_parser_interface_8h.html" title="AVSCommon/Utils/Playlist\lParser/PlaylistParserInterface.h" alt="" coords="1959,379,2168,417"/>
+<area shape="rect" id="node42" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="727,379,915,417"/>
+<area shape="rect" id="node43" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="517,199,712,237"/>
+<area shape="rect" id="node31" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1002,739,1163,777"/>
+<area shape="rect" id="node33" href="_h_t_t_p_content_fetcher_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface.h" alt="" coords="1342,292,1557,331"/>
+<area shape="rect" id="node34" href="_h_t_t_p_content_8h.html" title="AVSCommon/Utils/HTTPContent.h" alt="" coords="1320,385,1547,411"/>
+<area shape="rect" id="node40" href="_s_d_k_version_8h.html" title="AVSCommon/Utils/SDKVersion.h" alt="" coords="1760,572,1978,597"/>
+<area shape="rect" id="node36" href="_in_process_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachment.h" alt="" coords="1275,472,1477,511"/>
+<area shape="rect" id="node37" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="875,565,1077,604"/>
+<area shape="rect" id="node38" href="_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="1152,565,1357,604"/>
+<area shape="rect" id="node39" href="_in_process_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h" alt="" coords="1382,565,1583,604"/>
+<area shape="rect" id="node45" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="357,292,552,331"/>
+<area shape="rect" id="node47" href="_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="224,379,418,417"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -127,7 +128,7 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_playlist_parser_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_registration_manager_8cpp.html#a73216df79c9ad2b23fd2eef0a8f10d1b">TAG</a>, event)</td></tr>
+<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_playlist_parser_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_u_i_manager_8cpp.html#ada5473a95becdcf63a8f83e7f05fefe7">TAG</a>, event)</td></tr>
 <tr class="separator:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -147,8 +148,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a863b8b4734d96a7f29deda10473fae14"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#a863b8b4734d96a7f29deda10473fae14">alexaClientSDK::playlistParser::g_id</a> = 0</td></tr>
 <tr class="memdesc:a863b8b4734d96a7f29deda10473fae14"><td class="mdescLeft">&#160;</td><td class="mdescRight">The id of each request.  <a href="namespacealexa_client_s_d_k_1_1playlist_parser.html#a863b8b4734d96a7f29deda10473fae14">More...</a><br /></td></tr>
 <tr class="separator:a863b8b4734d96a7f29deda10473fae14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44068fd7f1c56d94e4c557ffe57ea24a"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#a44068fd7f1c56d94e4c557ffe57ea24a">alexaClientSDK::playlistParser::INVALID_DURATION</a></td></tr>
-<tr class="separator:a44068fd7f1c56d94e4c557ffe57ea24a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6e1d33017a9c5e810e4365d006c0c6a"><td class="memItemLeft" align="right" valign="top">static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#ad6e1d33017a9c5e810e4365d006c0c6a">alexaClientSDK::playlistParser::INVALID_DURATION</a> = std::chrono::milliseconds(-1)</td></tr>
+<tr class="memdesc:ad6e1d33017a9c5e810e4365d006c0c6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">An invalid duration.  <a href="namespacealexa_client_s_d_k_1_1playlist_parser.html#ad6e1d33017a9c5e810e4365d006c0c6a">More...</a><br /></td></tr>
+<tr class="separator:ad6e1d33017a9c5e810e4365d006c0c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -162,7 +164,7 @@ Variables</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">event</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_registration_manager_8cpp.html#a73216df79c9ad2b23fd2eef0a8f10d1b">TAG</a>, event)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_u_i_manager_8cpp.html#ada5473a95becdcf63a8f83e7f05fefe7">TAG</a>, event)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -180,7 +182,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

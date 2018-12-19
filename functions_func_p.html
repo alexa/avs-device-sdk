@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -157,6 +157,12 @@ $(function() {
 <li>playbackThumbsUp()
 : <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a9b9e60f6bc38b657f11e146e5c8ad502">alexaClientSDK::sampleApp::InteractionManager</a>
 </li>
+<li>PlayItem()
+: <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_play_item.html#a6ac7c433b666e4b19c5b38cfe4891863">alexaClientSDK::playlistParser::PlayItem</a>
+</li>
+<li>PlaylistEntry()
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_entry.html#abd97da8cbfa846d0b491d6d8f238af58">alexaClientSDK::avsCommon::utils::playlistParser::PlaylistEntry</a>
+</li>
 <li>pop()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_task_queue.html#a562e065d83f32e284bbd8b7df6bf9bbb">alexaClientSDK::avsCommon::utils::threading::TaskQueue</a>
 </li>
@@ -171,6 +177,7 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html#a695225803da43c58e2943233ed0a450c">alexaClientSDK::capabilityAgents::alerts::AlertsCapabilityAgent</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#ad4e9e451b17a498e02ba904214a12eae">alexaClientSDK::capabilityAgents::audioPlayer::AudioPlayer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth.html#ad2569f11c6d958436b2177e180028725">alexaClientSDK::capabilityAgents::bluetooth::Bluetooth</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_do_not_disturb_capability_agent.html#ab7121557cf0eabfd2331d7c837b950b9">alexaClientSDK::capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1equalizer_1_1_equalizer_capability_agent.html#a6235d5725c261f2fc2bd79b4b9abf08f">alexaClientSDK::capabilityAgents::equalizer::EqualizerCapabilityAgent</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a155ab4a13a22cef56d02f7e53310dd46">alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPlayer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1_interaction_model_capability_agent.html#a0852ecd2c570171e5e60863d44a36aba">alexaClientSDK::capabilityAgents::interactionModel::InteractionModelCapabilityAgent</a>
@@ -204,6 +211,9 @@ $(function() {
 </li>
 <li>printDiagnostic()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#acd2c7b8705a6d9e1a2cd8ef216a5a047">alexaClientSDK::capabilityAgents::alerts::Alert</a>
+</li>
+<li>printDoNotDisturbScreen()
+: <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html#afbf232028b65b2e9773c9456e0412264">alexaClientSDK::sampleApp::UIManager</a>
 </li>
 <li>printErrorScreen()
 : <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html#aa54e27dcd794ec4e65f458a381df7710">alexaClientSDK::sampleApp::UIManager</a>
@@ -253,6 +263,10 @@ $(function() {
 <li>printWelcomeScreen()
 : <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html#afe9e6730bf054582ee51af8e069eede6">alexaClientSDK::sampleApp::UIManager</a>
 </li>
+<li>processSamples()
+: <a class="el" href="classalexa_client_s_d_k_1_1speechencoder_1_1_encoder_context.html#a494124a607f7c543a8fab84e7a455d82">alexaClientSDK::speechencoder::EncoderContext</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1speechencoder_1_1_opus_encoder_context.html#a1f98040f4b1b3e9f6ff2543f16a92628">alexaClientSDK::speechencoder::OpusEncoderContext</a>
+</li>
 <li>ProgressTimer()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a3dcd4c796edbc826163b0255e918109f">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer</a>
 </li>
@@ -301,7 +315,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

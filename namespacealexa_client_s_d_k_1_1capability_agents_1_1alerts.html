@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -118,6 +118,10 @@ Functions</h2></td></tr>
 <tr class="separator:a1fcad2e54466854a333f4897056263db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5e5a11e1b282515ca4c96f9cfd051f3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html#ae9d9bccbd753f88f8f747cfc31fbbfc7">Alert::ParseFromJsonStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#ae5e5a11e1b282515ca4c96f9cfd051f3">parseAlertAssetConfigurationFromJson</a> (const rapidjson::Value &amp;payload, <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset_configuration.html">Alert::AssetConfiguration</a> *assetConfiguration, <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_dynamic_data.html">Alert::DynamicData</a> *dynamicData)</td></tr>
 <tr class="separator:ae5e5a11e1b282515ca4c96f9cfd051f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8374dc4cfa60e6218748bf82ecf435fc"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#a8374dc4cfa60e6218748bf82ecf435fc">hasAsset</a> (const std::string &amp;key, const std::unordered_map&lt; std::string, <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset.html">Alert::Asset</a> &gt; &amp;assets)</td></tr>
+<tr class="separator:a8374dc4cfa60e6218748bf82ecf435fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea3b12fa4619f4a22d98b987c3cf017f"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#aea3b12fa4619f4a22d98b987c3cf017f">validateStaticData</a> (const <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_static_data.html">Alert::StaticData</a> &amp;staticData)</td></tr>
+<tr class="separator:aea3b12fa4619f4a22d98b987c3cf017f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87dd1b51e0568c9c274d80354025ab27"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#a87dd1b51e0568c9c274d80354025ab27">TAG</a> (&quot;AlertsCapabilityAgent&quot;)</td></tr>
 <tr class="memdesc:a87dd1b51e0568c9c274d80354025ab27"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a87dd1b51e0568c9c274d80354025ab27">More...</a><br /></td></tr>
 <tr class="separator:a87dd1b51e0568c9c274d80354025ab27"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -402,6 +406,51 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Creates the alerts capability configuration.</p>
 <dl class="section return"><dt>Returns</dt><dd>The alerts capability configuration. </dd></dl>
+
+</div>
+</div>
+<a id="a8374dc4cfa60e6218748bf82ecf435fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8374dc4cfa60e6218748bf82ecf435fc">&#9670;&nbsp;</a></span>hasAsset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool alexaClientSDK::capabilityAgents::alerts::hasAsset </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::unordered_map&lt; std::string, <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset.html">Alert::Asset</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>assets</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Checks if the assets map contains a certain key and that the object mapped by the key is valid.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The key to search in the assets map </td></tr>
+    <tr><td class="paramname">assets</td><td>The assets map </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the key was found in the assets, if the asset's id is the same as the key and asset url is not empty </dd></dl>
 
 </div>
 </div>
@@ -717,6 +766,40 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
+<a id="aea3b12fa4619f4a22d98b987c3cf017f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea3b12fa4619f4a22d98b987c3cf017f">&#9670;&nbsp;</a></span>validateStaticData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool alexaClientSDK::capabilityAgents::alerts::validateStaticData </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_static_data.html">Alert::StaticData</a> &amp;&#160;</td>
+          <td class="paramname"><em>staticData</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Validates the static data</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">staticData</td><td>Static data struct to validate </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the data is valid </dd></dl>
 
 </div>
 </div>
@@ -1952,7 +2035,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

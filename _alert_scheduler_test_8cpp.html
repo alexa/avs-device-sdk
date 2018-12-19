@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -77,36 +77,37 @@ $(function() {
 <div class="textblock"><code>#include &lt;gtest/gtest.h&gt;</code><br />
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
 <code>#include &lt;gmock/gmock-actions.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="_time_utils_8h_source.html">AVSCommon/Utils/Timing/TimeUtils.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_alert_scheduler_8h_source.html">Alerts/AlertScheduler.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AlertSchedulerTest.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_alert_scheduler_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capability_agents_2_alerts_2test_2_alert_scheduler_test_8cpp" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_capability_agents_2_alerts_2test_2_alert_scheduler_test_8cpp" id="_2workplace_2avs-device-sdk_2_capability_agents_2_alerts_2test_2_alert_scheduler_test_8cpp">
-<area shape="rect" id="node5" href="_alert_scheduler_8h.html" title="Alerts/AlertScheduler.h" alt="" coords="714,105,871,131"/>
-<area shape="rect" id="node6" href="_alert_storage_interface_8h.html" title="Alerts/Storage/AlertStorage\lInterface.h" alt="" coords="1101,179,1285,217"/>
-<area shape="rect" id="node8" href="_alert_observer_interface_8h.html" title="Alerts/AlertObserverInterface.h" alt="" coords="5,339,210,364"/>
-<area shape="rect" id="node36" href="_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="285,339,498,364"/>
-<area shape="rect" id="node7" href="_alert_8h.html" title="Alerts/Alert.h" alt="" coords="1144,265,1242,291"/>
-<area shape="rect" id="node10" href="_renderer_8h.html" title="Alerts/Renderer/Renderer.h" alt="" coords="1553,339,1737,364"/>
-<area shape="rect" id="node12" href="_renderer_observer_interface_8h.html" title="Alerts/Renderer/Renderer\lObserverInterface.h" alt="" coords="631,499,805,537"/>
-<area shape="rect" id="node37" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="2717,412,2891,451"/>
-<area shape="rect" id="node40" href="_time_point_8h.html" title="AVSCommon/Utils/Timing\l/TimePoint.h" alt="" coords="930,412,1104,451"/>
-<area shape="rect" id="node11" href="_renderer_interface_8h.html" title="Alerts/Renderer/Renderer\lInterface.h" alt="" coords="1614,412,1788,451"/>
-<area shape="rect" id="node17" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2240,412,2434,451"/>
-<area shape="rect" id="node27" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1469,499,1677,537"/>
-<area shape="rect" id="node34" href="_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="1323,412,1540,451"/>
-<area shape="rect" id="node20" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2476,499,2670,537"/>
-<area shape="rect" id="node23" href="_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="2442,585,2637,624"/>
-<area shape="rect" id="node29" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="645,585,847,624"/>
-<area shape="rect" id="node33" href="_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1221,592,1442,617"/>
-<area shape="rect" id="node32" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="665,672,827,711"/>
-<area shape="rect" id="node35" href="_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="1183,499,1392,537"/>
-<area shape="rect" id="node38" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2778,499,2954,537"/>
-<area shape="rect" id="node39" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2794,585,2970,624"/>
-<area shape="rect" id="node41" href="_time_utils_8h.html" title="AVSCommon/Utils/Timing\l/TimeUtils.h" alt="" coords="930,499,1104,537"/>
-<area shape="rect" id="node44" href="_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="1954,592,2165,617"/>
-<area shape="rect" id="node45" href="_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="922,585,1096,624"/>
+<area shape="rect" id="node5" href="_time_utils_8h.html" title="AVSCommon/Utils/Timing\l/TimeUtils.h" alt="" coords="590,499,764,537"/>
+<area shape="rect" id="node15" href="_alert_scheduler_8h.html" title="Alerts/AlertScheduler.h" alt="" coords="978,105,1135,131"/>
+<area shape="rect" id="node10" href="_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="309,592,519,617"/>
+<area shape="rect" id="node12" href="_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="1167,585,1341,624"/>
+<area shape="rect" id="node16" href="_alert_storage_interface_8h.html" title="Alerts/Storage/AlertStorage\lInterface.h" alt="" coords="1464,179,1647,217"/>
+<area shape="rect" id="node18" href="_alert_observer_interface_8h.html" title="Alerts/AlertObserverInterface.h" alt="" coords="571,339,775,364"/>
+<area shape="rect" id="node41" href="_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="798,339,1011,364"/>
+<area shape="rect" id="node17" href="_alert_8h.html" title="Alerts/Alert.h" alt="" coords="1391,265,1488,291"/>
+<area shape="rect" id="node19" href="_renderer_8h.html" title="Alerts/Renderer/Renderer.h" alt="" coords="1187,339,1372,364"/>
+<area shape="rect" id="node21" href="_renderer_observer_interface_8h.html" title="Alerts/Renderer/Renderer\lObserverInterface.h" alt="" coords="1273,499,1447,537"/>
+<area shape="rect" id="node42" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="2499,412,2673,451"/>
+<area shape="rect" id="node45" href="_time_point_8h.html" title="AVSCommon/Utils/Timing\l/TimePoint.h" alt="" coords="998,412,1172,451"/>
+<area shape="rect" id="node20" href="_renderer_interface_8h.html" title="Alerts/Renderer/Renderer\lInterface.h" alt="" coords="1449,412,1623,451"/>
+<area shape="rect" id="node23" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2149,412,2343,451"/>
+<area shape="rect" id="node32" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="787,499,996,537"/>
+<area shape="rect" id="node39" href="_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="756,412,973,451"/>
+<area shape="rect" id="node26" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2385,499,2579,537"/>
+<area shape="rect" id="node29" href="_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="2436,585,2630,624"/>
+<area shape="rect" id="node34" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="789,585,991,624"/>
+<area shape="rect" id="node38" href="_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="543,592,765,617"/>
+<area shape="rect" id="node37" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="725,672,887,711"/>
+<area shape="rect" id="node40" href="_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="257,499,465,537"/>
+<area shape="rect" id="node43" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2033,499,2209,537"/>
+<area shape="rect" id="node44" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2033,585,2209,624"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -139,12 +140,20 @@ Namespaces</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a2b01ea8f785fa2832d56b933597ca374"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a2b01ea8f785fa2832d56b933597ca374">alexaClientSDK::capabilityAgents::alerts::test::getFutureInstant</a> (int yearsPlus)</td></tr>
 <tr class="separator:a2b01ea8f785fa2832d56b933597ca374"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a332cc4b285275ba81e95989e386909dc"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a332cc4b285275ba81e95989e386909dc">alexaClientSDK::capabilityAgents::alerts::test::getTimeNow</a> ()</td></tr>
+<tr class="separator:a332cc4b285275ba81e95989e386909dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ed8bcac8de834a8b47498559f0c2f48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a9ed8bcac8de834a8b47498559f0c2f48">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, initialize)</td></tr>
 <tr class="separator:a9ed8bcac8de834a8b47498559f0c2f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26433214f64490123a166695e39a9a52"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a26433214f64490123a166695e39a9a52">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, updateGetFocus)</td></tr>
 <tr class="separator:a26433214f64490123a166695e39a9a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7571fdee7d5aca1ba0578508ecf43810"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a7571fdee7d5aca1ba0578508ecf43810">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, scheduleAlert)</td></tr>
 <tr class="separator:a7571fdee7d5aca1ba0578508ecf43810"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81d8de772f9a4160727834e5ee95136c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a81d8de772f9a4160727834e5ee95136c">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, rescheduleAlert)</td></tr>
+<tr class="separator:a81d8de772f9a4160727834e5ee95136c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26709a364a3a7a6ab65dcf75b04fdee4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a26709a364a3a7a6ab65dcf75b04fdee4">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, rescheduleAlertNow)</td></tr>
+<tr class="separator:a26709a364a3a7a6ab65dcf75b04fdee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ca0fa47f3e1ca54b053475b035f331c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a2ca0fa47f3e1ca54b053475b035f331c">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, rescheduleAlertFails)</td></tr>
+<tr class="separator:a2ca0fa47f3e1ca54b053475b035f331c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae55677ca39562f7b0747279d5bebf5c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#ae55677ca39562f7b0747279d5bebf5c2">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, snoozeAlert)</td></tr>
 <tr class="separator:ae55677ca39562f7b0747279d5bebf5c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f1635131e66cd4b35293ab8d2f5bfa9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a0f1635131e66cd4b35293ab8d2f5bfa9">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, deleteAlertSingle)</td></tr>
@@ -219,7 +228,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.10.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

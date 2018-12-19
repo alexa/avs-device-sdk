@@ -3,9 +3,10 @@
 <area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title="alexaClientSDK::avsCommon\l::avs::DialogUXStateAggregator" alt="" coords="290,81,501,120"/>
 <area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_manager_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CallManagerInterface" alt="" coords="274,144,517,183"/>
 <area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html" title="alexaClientSDK::capability\lAgents::alerts::AlertsCapabilityAgent" alt="" coords="277,207,514,245"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html" title="alexaClientSDK::capability\lAgents::system::SoftwareInfoSender" alt="" coords="277,269,514,308"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html" title="alexaClientSDK::certified\lSender::CertifiedSender" alt="" coords="311,332,480,371"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1integration_1_1_connection_status_observer.html" title="alexaClientSDK::integration\l::ConnectionStatusObserver" alt="" coords="301,395,490,433"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1sample_app_1_1_connection_observer.html" title="alexaClientSDK::sampleApp\l::ConnectionObserver" alt="" coords="301,457,490,496"/>
-<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title="alexaClientSDK::sampleApp\l::UIManager" alt="" coords="301,520,490,559"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_do_not_disturb_capability_agent.html" title="alexaClientSDK::capability\lAgents::doNotDisturb::DoNotDisturb\lCapabilityAgent" alt="" coords="278,269,513,321"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html" title="alexaClientSDK::capability\lAgents::system::SoftwareInfoSender" alt="" coords="277,345,514,384"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html" title="alexaClientSDK::certified\lSender::CertifiedSender" alt="" coords="311,408,480,447"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1integration_1_1_connection_status_observer.html" title="alexaClientSDK::integration\l::ConnectionStatusObserver" alt="" coords="301,471,490,509"/>
+<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1sample_app_1_1_connection_observer.html" title="alexaClientSDK::sampleApp\l::ConnectionObserver" alt="" coords="301,533,490,572"/>
+<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title="alexaClientSDK::sampleApp\l::UIManager" alt="" coords="301,596,490,635"/>
 </map>
