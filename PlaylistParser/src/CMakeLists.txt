@@ -12,6 +12,8 @@ add_library(PlaylistParser SHARED
     PlaylistUtils.cpp
     UrlContentToAttachmentConverter.cpp)
 
+set_target_properties(PlaylistParser PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
+
 target_include_directories(PlaylistParser PUBLIC
     "${PlaylistParser_SOURCE_DIR}/include" 
     "${ACL_SOURCE_DIR}/include"

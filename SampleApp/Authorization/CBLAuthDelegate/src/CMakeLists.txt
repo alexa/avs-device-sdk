@@ -6,6 +6,7 @@ add_library(CBLAuthDelegate SHARED
     CBLAuthDelegate.cpp
     CBLAuthDelegateConfiguration.cpp
     SQLiteCBLAuthDelegateStorage.cpp)
+set_target_properties(CBLAuthDelegate PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
 target_include_directories(CBLAuthDelegate PUBLIC
     "${CBLAuthDelegate_SOURCE_DIR}/include")
 target_include_directories(CBLAuthDelegate PRIVATE

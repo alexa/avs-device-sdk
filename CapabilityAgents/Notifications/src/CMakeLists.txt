@@ -6,6 +6,8 @@ add_library(Notifications SHARED
 		NotificationsCapabilityAgent.cpp
         SQLiteNotificationsStorage.cpp)
 
+set_target_properties(Notifications PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
+
 target_include_directories(Notifications PUBLIC
 		"${AudioResources_SOURCE_DIR}/include"
         "${Notifications_SOURCE_DIR}/include"

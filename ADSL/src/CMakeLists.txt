@@ -7,6 +7,7 @@ add_library(ADSL SHARED
     DirectiveRouter.cpp
     DirectiveSequencer.cpp
     MessageInterpreter.cpp)
+set_target_properties(ADSL PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
 target_include_directories(ADSL PUBLIC
     "${ADSL_SOURCE_DIR}/include"
     "${AVSCommon_INCLUDE_DIRS}")

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(DoNotDisturbCA LANGUAGES CXX)
+project(DoNotDisturbCA VERSION ${PROJECT_VERSION} LANGUAGES CXX)
 
 include(../../build/BuildDefaults.cmake)
 

@@ -8,6 +8,8 @@ add_library(MediaPlayer SHARED
     Normalizer.cpp
     OffsetManager.cpp)
 
+set_target_properties(MediaPlayer PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
+
 target_include_directories(MediaPlayer PUBLIC
     "${MediaPlayer_SOURCE_DIR}/include"
     "${GST_INCLUDE_DIRS}"

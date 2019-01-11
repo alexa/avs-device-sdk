@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
-project(SpeechEncoder LANGUAGES CXX)
+project(SpeechEncoder VERSION ${PROJECT_VERSION} LANGUAGES CXX)
 
 add_subdirectory("src")
 add_subdirectory("test")

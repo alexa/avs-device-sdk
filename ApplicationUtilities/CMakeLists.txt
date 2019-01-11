@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
-project(ApplicationUtilities LANGUAGES CXX)
+project(ApplicationUtilities VERSION ${PROJECT_VERSION} LANGUAGES CXX)
 
 include(../build/BuildDefaults.cmake)
 

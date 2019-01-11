@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
-project(InteractionModel LANGUAGES CXX)
+project(InteractionModel VERSION ${PROJECT_VERSION} LANGUAGES CXX)
 
 include(../../build/BuildDefaults.cmake)
 

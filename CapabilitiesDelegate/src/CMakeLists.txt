@@ -5,6 +5,7 @@ find_package(CURL ${CURL_PACKAGE_CONFIG})
 add_definitions("-DACSDK_LOG_MODULE=capabilitiesDelegate")
 add_library(CapabilitiesDelegate SHARED
     CapabilitiesDelegate.cpp)
+set_target_properties(CapabilitiesDelegate PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
 target_include_directories(CapabilitiesDelegate PUBLIC
     ${CapabilitiesDelegate_SOURCE_DIR}/include)
 target_include_directories(CapabilitiesDelegate PRIVATE

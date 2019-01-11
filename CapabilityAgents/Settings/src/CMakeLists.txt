@@ -5,6 +5,8 @@ add_library(Settings SHARED
         SettingsUpdatedEventSender.cpp
         SQLiteSettingStorage.cpp)
 
+set_target_properties(Settings PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
+
 target_include_directories(Settings PUBLIC
         "${Settings_SOURCE_DIR}/include"
         "${SpeechSynthesizer_SOURCE_DIR}/include"

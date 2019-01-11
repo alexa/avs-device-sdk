@@ -7,6 +7,8 @@ add_library(
     SQLiteBluetoothStorage.cpp
 )
 
+set_target_properties(Bluetooth PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
+
 target_include_directories(Bluetooth PUBLIC
     "${Bluetooth_SOURCE_DIR}/include")
 

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
-project(MRM LANGUAGES CXX)
+project(MRM VERSION ${PROJECT_VERSION} LANGUAGES CXX)
 
 include(../../build/BuildDefaults.cmake)
 

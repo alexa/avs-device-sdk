@@ -4,6 +4,7 @@ add_library(SQLiteStorage SHARED
         SQLiteMiscStorage.cpp
         SQLiteStatement.cpp
         SQLiteUtils.cpp)
+set_target_properties(SQLiteStorage PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
 
 set(PKG_CONFIG_USE_CMAKE_PREFIX_PATH ON)
 find_package(PkgConfig)

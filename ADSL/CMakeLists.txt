@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
-project(ADSL LANGUAGES CXX)
+project(ADSL VERSION ${PROJECT_VERSION} LANGUAGES CXX)
 
 include(../build/BuildDefaults.cmake)
 

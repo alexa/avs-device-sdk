@@ -6,6 +6,8 @@ add_library(AudioResources SHARED
         NotificationsAudioFactory.cpp
         CommunicationsAudioFactory.cpp)
 
+set_target_properties(AudioResources PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
+
 target_include_directories(AudioResources PUBLIC
         "${AudioResources_SOURCE_DIR}/include"
 	"${AVSCommon_SOURCE_DIR}/Utils/include")

@@ -1,4 +1,4 @@
-project(AVSCommon)
+project(AVSCommon VERSION ${PROJECT_VERSION})
 
 find_package(CURL ${CURL_PACKAGE_CONFIG})
 
@@ -81,6 +81,8 @@ add_library(AVSCommon SHARED
     Utils/src/TimeUtils.cpp
     Utils/src/Timer.cpp
     Utils/src/UUIDGeneration.cpp)
+
+set_target_properties(AVSCommon PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
 
 target_include_directories(AVSCommon PUBLIC
     "${AVSCommon_SOURCE_DIR}/AVS/include"

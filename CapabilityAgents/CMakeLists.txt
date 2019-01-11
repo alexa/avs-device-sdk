@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(CapabilityAgents LANGUAGES CXX)
+project(CapabilityAgents VERSION ${PROJECT_VERSION} LANGUAGES CXX)
 
 include(../build/BuildDefaults.cmake)
 

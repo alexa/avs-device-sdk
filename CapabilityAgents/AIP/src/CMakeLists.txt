@@ -4,6 +4,7 @@ add_definitions("-DACSDK_LOG_MODULE=aip")
 add_library(AIP SHARED
     AudioInputProcessor.cpp
     ESPData.cpp)
+set_target_properties(AIP PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
 target_include_directories(AIP PUBLIC
     "${AIP_SOURCE_DIR}/include"
     "${AFML_SOURCE_DIR}/include"

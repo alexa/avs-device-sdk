@@ -10,6 +10,8 @@ add_library(AndroidSLESMediaPlayer SHARED
         FFmpegUrlInputController.cpp
         PlaybackConfiguration.cpp)
 
+set_target_properties(AndroidSLESMediaPlayer PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
+
 target_include_directories(AndroidSLESMediaPlayer PUBLIC
         ${AndroidSLESMediaPlayer_SOURCE_DIR}/include
         ${AndroidUtilities_SOURCE_DIR}/include

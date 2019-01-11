@@ -9,6 +9,8 @@ add_library(EqualizerImplementations SHARED
         SDKConfigEqualizerConfiguration.cpp
     )
 
+set_target_properties(EqualizerImplementations PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
+
 target_include_directories(EqualizerImplementations PUBLIC
     "${EqualizerImplementations_SOURCE_DIR}/include"
     )

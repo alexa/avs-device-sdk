@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(SpeechSynthesizer LANGUAGES CXX)
+project(SpeechSynthesizer VERSION ${PROJECT_VERSION} LANGUAGES CXX)
 
 include(../../build/BuildDefaults.cmake)
 

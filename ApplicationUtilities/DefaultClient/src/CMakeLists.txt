@@ -5,6 +5,9 @@ add_library(DefaultClient SHARED
     DefaultClient.cpp
     EqualizerRuntimeSetup.cpp
     )
+
+set_target_properties(DefaultClient PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
+
 target_include_directories(DefaultClient PUBLIC
     "${DefaultClient_SOURCE_DIR}/include"
     "${MRM_SOURCE_DIR}/include"

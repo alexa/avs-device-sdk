@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(Equalizer LANGUAGES CXX)
+project(Equalizer VERSION ${PROJECT_VERSION} LANGUAGES CXX)
 
 include(../../build/BuildDefaults.cmake)
 

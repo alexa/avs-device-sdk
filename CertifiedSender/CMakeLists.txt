@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
-project(CertifiedSender LANGUAGES CXX)
+project(CertifiedSender VERSION ${PROJECT_VERSION} LANGUAGES CXX)
 
 include(../build/BuildDefaults.cmake)
 

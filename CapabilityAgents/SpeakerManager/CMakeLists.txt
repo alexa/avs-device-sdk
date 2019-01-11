@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(SpeakerManager LANGUAGES CXX)
+project(SpeakerManager VERSION ${PROJECT_VERSION} LANGUAGES CXX)
 
 include(../../build/BuildDefaults.cmake)
 

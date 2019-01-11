@@ -7,6 +7,7 @@ if (ESP_PROVIDER)
 else()
     add_library(ESP SHARED DummyESPDataProvider.cpp)
 endif()
+set_target_properties(ESP PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
 
 target_include_directories(ESP PUBLIC
     "${ESP_SOURCE_DIR}/include"

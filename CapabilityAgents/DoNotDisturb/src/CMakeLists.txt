@@ -5,6 +5,8 @@ add_library(DoNotDisturbCA SHARED
         DNDSettingProtocol.cpp
         DoNotDisturbCapabilityAgent.cpp)
 
+set_target_properties(DoNotDisturbCA PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
+
 target_include_directories(DoNotDisturbCA PUBLIC
         "${DoNotDisturbCA_SOURCE_DIR}/include")
 

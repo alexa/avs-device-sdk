@@ -12,6 +12,8 @@ if (A4B)
         "${CMAKE_CURRENT_LIST_DIR}/RevokeAuthorizationHandler.cpp")
 endif()
 
+set_target_properties(AVSSystem PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
+
 target_include_directories(AVSSystem
     PUBLIC "${AVSSystem_SOURCE_DIR}/include")
 

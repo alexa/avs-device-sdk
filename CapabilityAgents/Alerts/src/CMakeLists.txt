@@ -9,6 +9,7 @@ add_library(Alerts SHARED
         AlertScheduler.cpp
         Reminder.cpp
         Timer.cpp)
+set_target_properties(Alerts PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} )
 
 target_include_directories(Alerts PUBLIC
         "${Alerts_SOURCE_DIR}/include"
