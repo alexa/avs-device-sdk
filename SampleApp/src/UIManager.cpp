@@ -231,19 +231,19 @@ void UIManager::printState() {
         switch (m_dialogState) {
             case DialogUXState::IDLE:
                 ConsolePrinter::prettyPrint("Alexa is currently idle!");
-                // system("/home/pi/Pi_hat/pi_hat_ctrl SET_LED_RGB 19 23 3");
-		return;
+                system("/home/pi/Pi_hat/pi_hat_ctrl SET_LED_RGB 19 23 3");
+		        return;
             case DialogUXState::LISTENING:
                 ConsolePrinter::prettyPrint("Listening...");
-                // system("/home/pi/Pi_hat/pi_hat_ctrl SET_LED_RGB 1 15 22");
-	        return;
+                system("/home/pi/Pi_hat/pi_hat_ctrl SET_LED_RGB 1 15 22");
+	            return;
             case DialogUXState::THINKING:
                 ConsolePrinter::prettyPrint("Thinking...");
                 return;
             case DialogUXState::SPEAKING:
                 ConsolePrinter::prettyPrint("Speaking...");
-		// system("/home/pi/Pi_hat/pi_hat_ctrl SET_LED_SPEAKING &");
-		return;
+		        system("/home/pi/Pi_hat/pi_hat_ctrl SET_LED_SPEAKING");
+		        return;
             /*
              * This is an intermediate state after a SPEAK directive is completed. In the case of a speech burst the
              * next SPEAK could kick in or if its the last SPEAK directive ALEXA moves to the IDLE state. So we do
