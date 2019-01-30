@@ -52,6 +52,8 @@ START_AUTH_SCRIPT="$INSTALL_BASE/avs_auth.sh"
 TEST_SCRIPT="$INSTALL_BASE/avs_test.sh"
 LIB_SUFFIX="a"
 
+PI_HAT_CTRL_PATH="$THIRD_PARTY_PATH/pi_hat_ctrl"
+
 SENSORY_MODEL_HASH=5d811d92fb89043f4a4a7b7d0d26d7c3c83899b0
 ALIASES=$HOME/.bash_aliases
 
@@ -254,17 +256,6 @@ then
     popd > /dev/null
     bash ./alexa-rpi/bin/license.sh
 
-    if [ $# -ge 1 ] && [ $1 = "xvf3510" ] ; then
-        echo
-        echo "==============> BUILDING PI HAT CONTROL =============="
-        echo
-
-        mkdir -p $THIRD_PARTY_PATH/pi_hat_ctrl
-        pushd $SOURCE_PATH/avs-device-sdk/ThirdParty/pi_hat_control > /dev/null
-        gcc gcc pi_hat_ctrl.c -o $THIRD_PARTY_PATH/pi_hat_ctrl/pi_hat_ctrl -lwiringPi -lm
-        popd > /dev/null
-    fi
-
     #get sdk
     echo
     echo "==============> CLONING SDK =============="
@@ -273,20 +264,44 @@ then
     cd $SOURCE_PATH
     git clone -b xmos_v1.6 git://github.com/xmos/avs-device-sdk.git
 
+
+    if [ $# -ge 1 ] && [ $1 = "xvf3510" ] ; then
+        echo
+        echo "==============> BUILDING PI HAT CONTROL =============="
+        echo
+
+        mkdir -p $PI_HAT_CTRL_PATH
+        pushd $SOURCE_PATH/avs-device-sdk/ThirdParty/pi_hat_control > /dev/null
+        gcc gcc pi_hat_ctrl.c -o $PI_HAT_CTRL_PATH/pi_hat_ctrl -lwiringPi -lm
+        popd > /dev/null
+    fi
+
     # make the SDK
     echo
     echo "==============> BUILDING SDK =============="
     echo
 
     cd $BUILD_PATH
-    cmake "$SOURCE_PATH/avs-device-sdk" \
-    -DSENSORY_KEY_WORD_DETECTOR=ON \
-    -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH=$THIRD_PARTY_PATH/alexa-rpi/lib/libsnsr.a \
-    -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR=$THIRD_PARTY_PATH/alexa-rpi/include \
-    -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
-    -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.$LIB_SUFFIX" \
-    -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
-    -DCMAKE_BUILD_TYPE=DEBUG
+    if [ $# -ge 1 ] && [ $1 = "xvf3510" ] ; then
+        cmake "$SOURCE_PATH/avs-device-sdk" \
+        -DSENSORY_KEY_WORD_DETECTOR=ON \
+        -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH=$THIRD_PARTY_PATH/alexa-rpi/lib/libsnsr.a \
+        -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR=$THIRD_PARTY_PATH/alexa-rpi/include \
+        -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
+        -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.$LIB_SUFFIX" \
+        -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
+        -DCMAKE_BUILD_TYPE=DEBUG \
+        -DPI_HAT_CTRL=ON
+    else
+        cmake "$SOURCE_PATH/avs-device-sdk" \
+        -DSENSORY_KEY_WORD_DETECTOR=ON \
+        -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH=$THIRD_PARTY_PATH/alexa-rpi/lib/libsnsr.a \
+        -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR=$THIRD_PARTY_PATH/alexa-rpi/include \
+        -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
+        -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.$LIB_SUFFIX" \
+        -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
+        -DCMAKE_BUILD_TYPE=DEBUG
+    fi
 
     cd $BUILD_PATH
     make SampleApp -j2
