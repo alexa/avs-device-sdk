@@ -254,6 +254,17 @@ then
     popd > /dev/null
     bash ./alexa-rpi/bin/license.sh
 
+    if [ $# -ge 1 ] && [ $1 = "xvf3510" ] ; then
+        echo
+        echo "==============> BUILDING PI HAT CONTROL =============="
+        echo
+
+        mkdir -p $THIRD_PARTY_PATH/pi_hat_ctrl
+        pushd $SOURCE_PATH/avs-device-sdk/ThirdParty/pi_hat_control > /dev/null
+        gcc gcc pi_hat_ctrl.c -o $THIRD_PARTY_PATH/pi_hat_ctrl/pi_hat_ctrl -lwiringPi -lm
+        popd > /dev/null
+    fi
+
     #get sdk
     echo
     echo "==============> CLONING SDK =============="
