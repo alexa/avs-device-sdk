@@ -92,7 +92,7 @@ typedef struct {
 } hsl;
 
 
-void sleep(unsigned milliseconds);
+void sleep_ms(unsigned milliseconds);
 void set_led_rgb (char **argv);
 rgb hsv2rgb(hsv input);
 void set_led_hsv (hsv input);
@@ -113,7 +113,7 @@ int get_int_n_in();
 void set_led_speaking();
 
 
-void sleep(unsigned milliseconds){
+void sleep_ms(unsigned milliseconds){
 	usleep(milliseconds*1000);
 }
 
@@ -568,7 +568,7 @@ void set_led_speaking(){
 			wiringPiI2CWriteReg8(fd, 0x06, (int)round((rgb_res.blue)*255/int_coef)); // Blue
 			// Update the register
 			wiringPiI2CWriteReg8(fd, 0x07, 0x00);
-			sleep(10);
+			sleep_ms(10);
 		}
 		for (unsigned fraction = 0 ; fraction < LED_TRANSITIONS ; ++fraction ) {
 			// FROM LIGHT_BLUE TO LIGHT_GREEN :
@@ -585,7 +585,7 @@ void set_led_speaking(){
 			wiringPiI2CWriteReg8(fd, 0x06, (int)round((rgb_res.blue)*255/int_coef)); // Blue
 			// Update the register
 			wiringPiI2CWriteReg8(fd, 0x07, 0x00);
-			sleep(10);
+			sleep_ms(10);
 	}
 		for (unsigned fraction = 0 ; fraction < LED_TRANSITIONS ; ++fraction ) {
 			// FROM LIGHT_GREEN TO DARK_GREEN :
@@ -602,7 +602,7 @@ void set_led_speaking(){
 			wiringPiI2CWriteReg8(fd, 0x06, (int)round((rgb_res.blue)*255/int_coef)); // Blue
 			// Update the register
 			wiringPiI2CWriteReg8(fd, 0x07, 0x00);
-			sleep(10);
+			sleep_ms(10);
 		}
 		for (unsigned fraction = 0 ; fraction < LED_TRANSITIONS ; ++fraction ) {
 			// FROM DARK_GREEN TO DARK_BLUE :
@@ -619,7 +619,7 @@ void set_led_speaking(){
 			wiringPiI2CWriteReg8(fd, 0x06, (int)round((rgb_res.blue)*255/int_coef)); // Blue
 			// Update the register
 			wiringPiI2CWriteReg8(fd, 0x07, 0x00);
-			sleep(10);
+			sleep_ms(10);
 		}
 
 	}
