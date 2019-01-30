@@ -101,7 +101,7 @@ rgb hsl2rgb(hsl input);
 void set_led_hsl (hsl input);
 void parse_led_hsl (char **argv);
 void set_mute_mic(char **argv);
-void set_dac_reset(char **argv)
+void set_dac_reset(char **argv);
 void init_dac();
 int get_button_mute();
 int get_button_vol_dwn();
