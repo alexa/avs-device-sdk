@@ -285,16 +285,24 @@ void UIManager::printState() {
         switch (m_dialogState) {
             case DialogUXState::IDLE:
                 ConsolePrinter::prettyPrint("Alexa is currently idle!");
+#ifdef PI_HAT_CTRL
+                system("/home/pi/sdk-folder/third-party/pi_hat_ctrl/pi_hat_ctrl SET_LED_RGB 19 23 3");
+#endif
                 return;
             case DialogUXState::LISTENING:
                 ConsolePrinter::prettyPrint("Listening...");
+#ifdef PI_HAT_CTRL
+                system("/home/pi/sdk-folder/third-party/pi_hat_ctrl/pi_hat_ctrl SET_LED_RGB 1 15 22");
+#endif
                 return;
             case DialogUXState::THINKING:
                 ConsolePrinter::prettyPrint("Thinking...");
                 return;
-                ;
             case DialogUXState::SPEAKING:
                 ConsolePrinter::prettyPrint("Speaking...");
+#ifdef PI_HAT_CTRL
+                system("/home/pi/sdk-folder/third-party/pi_hat_ctrl/pi_hat_ctrl SET_LED_SPEAKING");
+#endif
                 return;
             /*
              * This is an intermediate state after a SPEAK directive is completed. In the case of a speech burst the
@@ -313,6 +321,13 @@ void UIManager::printESPDataOverrideNotSupported() {
 
 void UIManager::printESPNotSupported() {
     m_executor.submit([]() { ConsolePrinter::simplePrint("ESP is not supported in this device."); });
+}
+
+UIManager::~UIManager(){
+#ifdef PI_HAT_CTRL
+    //Turn LED off
+    system("/home/pi/sdk-folder/third-party/pi_hat_ctrl/pi_hat_ctrl SET_LED_RGB 0 0 0");
+#endif
 }
 
 }  // namespace sampleApp

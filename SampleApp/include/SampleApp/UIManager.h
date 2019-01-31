@@ -148,6 +148,8 @@ private:
 
     /// An internal executor that performs execution of callable objects passed to it sequentially but asynchronously.
     avsCommon::utils::threading::Executor m_executor;
+
+    ~UIManager();
 };
 
 }  // namespace sampleApp
