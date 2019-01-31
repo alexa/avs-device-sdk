@@ -323,5 +323,12 @@ void UIManager::printESPNotSupported() {
     m_executor.submit([]() { ConsolePrinter::simplePrint("ESP is not supported in this device."); });
 }
 
+UIManager::~UIManager(){
+#ifdef PI_HAT_CTRL
+    //Turn LED off
+    system("/home/pi/sdk-folder/third-party/pi_hat_ctrl/pi_hat_ctrl SET_LED_RGB 0 0 0");
+#endif
+}
+
 }  // namespace sampleApp
 }  // namespace alexaClientSDK
