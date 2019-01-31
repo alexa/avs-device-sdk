@@ -256,6 +256,11 @@ void InteractionManager::onDialogUXStateChanged(DialogUXState state) {
 
 void InteractionManager::doShutdown() {
     m_client.reset();
+    //Turn LED off
+#ifdef PI_HAT_CTRL
+    system("/home/pi/sdk-folder/third-party/pi_hat_ctrl/pi_hat_ctrl SET_LED_RGB 0 0 0");
+#endif
+
 }
 
 }  // namespace sampleApp
