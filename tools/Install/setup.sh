@@ -180,8 +180,11 @@ chmod a+rx $AUTH_DETAILS
 # Create autostart script
 AUTOSTART_SESSION="avsrun"
 AUTOSTART_DIR=$HOME/.config/lxsession/LXDE-pi
-mkdir -p $AUTOSTART_DIR
 AUTOSTART=$AUTOSTART_DIR/autostart
+if [ ! -f $AUTOSTART ]; then
+    mkdir -p $AUTOSTART_DIR
+    cp /etc/xdg/lxsession/LXDE-pi/autostart $AUTOSTART
+fi
 STARTUP_SCRIPT=$CURRENT_DIR/.avsrun-startup.sh
 cat << EOF > "$STARTUP_SCRIPT"
 #!/bin/bash
