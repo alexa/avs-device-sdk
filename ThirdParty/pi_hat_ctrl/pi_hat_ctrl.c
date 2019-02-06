@@ -531,18 +531,19 @@ void set_led_speaking(){
 	rgb rgb_res;
 
 	double int_coef = 10;
-	double hsv_XMOS_dark_blue__h = 199;
+    	
+    double hsv_XMOS_dark_blue__h = 199;
     double hsv_XMOS_dark_blue__s = 0.95;
-    double hsv_XMOS_dark_blue__v = 0.863;
+    double hsv_XMOS_dark_blue__v = 0.2;
     double hsv_XMOS_light_blue__h = 198;
-    double hsv_XMOS_light_blue__s = 0.726;
+    double hsv_XMOS_light_blue__s = 0.6;
     double hsv_XMOS_light_blue__v = 0.945;
-    double hsv_XMOS_light_green__h = 73;
+    double hsv_XMOS_light_green__h = 72;
     double hsv_XMOS_light_green__s = 0.892;
-    double hsv_XMOS_light_green__v = 0.91;
+    double hsv_XMOS_light_green__v = 0.99;
     double hsv_XMOS_dark_green__h = 78;
-    double hsv_XMOS_dark_green__s = 0.995;
-    double hsv_XMOS_dark_green__v = 0.859;
+    double hsv_XMOS_dark_green__s = 0.999;
+    double hsv_XMOS_dark_green__v = 0.2;
 
     // SETUP I2C
     int fd = wiringPiI2CSetup(IS31FL3193_ADR);
