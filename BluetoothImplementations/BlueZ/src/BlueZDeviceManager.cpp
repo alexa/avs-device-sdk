@@ -266,7 +266,7 @@ void BlueZDeviceManager::onMediaStreamPropertyChanged(const std::string& path, c
     ACSDK_DEBUG5(LX(__func__).d("mediaStreamUuid", uuid));
 
     char* newStateStr;
-    avsCommon::utils::bluetooth::MediaStreamingState newState;
+    avsCommon::utils::bluetooth::MediaStreamingState newState = avsCommon::utils::bluetooth::MediaStreamingState::IDLE;
     if (changesMap.getCString(MEDIATRANSPORT_PROPERTY_STATE, &newStateStr)) {
         ACSDK_DEBUG5(LX("Media transport state changed").d("newState", newStateStr));
 
