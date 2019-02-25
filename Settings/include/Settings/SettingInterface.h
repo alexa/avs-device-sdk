@@ -49,6 +49,11 @@ public:
     using ObserverType = SettingObserverInterface<SettingInterface<ValueType>>;
 
     /**
+     * Destructor.
+     */
+    virtual ~SettingInterface() = default;
+
+    /**
      * Request to set the managed setting to the given @c value. Note that this is an asynchronous operation.
      *
      * @param value The target value.
