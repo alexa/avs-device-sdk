@@ -38,6 +38,11 @@ public:
         avsCommon::utils::AudioFormat audioFormat,
         const unsigned char* buffer,
         size_t size) = 0;
+
+    /**
+     * Destructor.
+     */
+    virtual ~FormattedAudioStreamAdapterListener() = default;
 };
 
 }  // namespace bluetooth

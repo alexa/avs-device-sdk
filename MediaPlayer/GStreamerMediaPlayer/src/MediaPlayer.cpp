@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -216,12 +216,12 @@ MediaPlayer::SourceId MediaPlayer::setSource(std::shared_ptr<std::istream> strea
     return ERROR_SOURCE_ID;
 }
 
-MediaPlayer::SourceId MediaPlayer::setSource(const std::string& url, std::chrono::milliseconds offset) {
+MediaPlayer::SourceId MediaPlayer::setSource(const std::string& url, std::chrono::milliseconds offset, bool repeat) {
     ACSDK_DEBUG9(LX("setSourceForUrlCalled").sensitive("url", url));
     std::promise<MediaPlayer::SourceId> promise;
     auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, url, offset, &promise]() {
-        handleSetUrlSource(url, offset, &promise);
+    std::function<gboolean()> callback = [this, url, offset, &promise, repeat]() {
+        handleSetUrlSource(url, offset, &promise, repeat);
         return false;
     };
     if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
@@ -761,7 +761,7 @@ bool MediaPlayer::setupPipeline() {
 
 void MediaPlayer::tearDownTransientPipelineElements(bool notifyStop) {
     ACSDK_DEBUG9(LX("tearDownTransientPipelineElements"));
-    saveOffsetBeforeTeardown();
+    m_offsetBeforeTeardown = getCurrentStreamOffset();
     if (notifyStop) {
         sendPlaybackStopped();
     }
@@ -937,24 +937,6 @@ void MediaPlayer::handlePadAdded(std::promise<void>* promise, GstElement* decode
 
 gboolean MediaPlayer::onBusMessage(GstBus* bus, GstMessage* message, gpointer mediaPlayer) {
     return static_cast<MediaPlayer*>(mediaPlayer)->handleBusMessage(message);
-}
-
-void MediaPlayer::saveOffsetBeforeTeardown() {
-    gint64 position = -1;
-    if (!gst_element_query_position(m_pipeline.pipeline, GST_FORMAT_TIME, &position)) {
-        // Query Failed.
-        ACSDK_ERROR(LX("saveOffsetBeforeTeardown - gst_element_query_position failed"));
-        m_offsetBeforeTeardown = MEDIA_PLAYER_INVALID_OFFSET;
-        return;
-    }
-    std::chrono::milliseconds startStreamingPoint = std::chrono::milliseconds::zero();
-    if (m_urlConverter) {
-        startStreamingPoint = m_urlConverter->getStartStreamingPoint();
-    }
-    m_offsetBeforeTeardown =
-        (startStreamingPoint +
-         std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::nanoseconds(position)));
-    ACSDK_DEBUG(LX("saveOffsetBeforeTeardown").d("offset", m_offsetBeforeTeardown.count()));
 }
 
 gboolean MediaPlayer::handleBusMessage(GstMessage* message) {
@@ -1173,12 +1155,13 @@ void MediaPlayer::sendStreamTagsToObserver(std::unique_ptr<const VectorOfTags> v
 void MediaPlayer::handleSetAttachmentReaderSource(
     std::shared_ptr<AttachmentReader> reader,
     std::promise<MediaPlayer::SourceId>* promise,
-    const avsCommon::utils::AudioFormat* audioFormat) {
+    const avsCommon::utils::AudioFormat* audioFormat,
+    bool repeat) {
     ACSDK_DEBUG(LX("handleSetAttachmentReaderSourceCalled"));
 
     tearDownTransientPipelineElements(true);
 
-    std::shared_ptr<SourceInterface> source = AttachmentReaderSource::create(this, reader, audioFormat);
+    std::shared_ptr<SourceInterface> source = AttachmentReaderSource::create(this, reader, audioFormat, repeat);
 
     if (!source) {
         ACSDK_ERROR(LX("handleSetAttachmentReaderSourceFailed").d("reason", "sourceIsNullptr"));
@@ -1236,7 +1219,8 @@ void MediaPlayer::handleSetIStreamSource(
 void MediaPlayer::handleSetUrlSource(
     const std::string& url,
     std::chrono::milliseconds offset,
-    std::promise<SourceId>* promise) {
+    std::promise<SourceId>* promise,
+    bool repeat) {
     ACSDK_DEBUG(LX("handleSetSourceForUrlCalled"));
 
     tearDownTransientPipelineElements(true);
@@ -1261,7 +1245,7 @@ void MediaPlayer::handleSetUrlSource(
         promise->set_value(ERROR_SOURCE_ID);
         return;
     }
-    handleSetAttachmentReaderSource(reader, promise);
+    handleSetAttachmentReaderSource(reader, promise, nullptr, repeat);
 }
 
 void MediaPlayer::handlePlay(SourceId id, std::promise<bool>* promise) {
@@ -1492,9 +1476,7 @@ void MediaPlayer::handleResume(MediaPlayer::SourceId id, std::promise<bool>* pro
 }
 
 void MediaPlayer::handleGetOffset(SourceId id, std::promise<std::chrono::milliseconds>* promise) {
-    ACSDK_DEBUG(LX("handleGetOffsetCalled").d("idPassed", id).d("currentId", (m_currentId)));
-    gint64 position = -1;
-    GstState state;
+    ACSDK_DEBUG9(LX("handleGetOffsetCalled").d("idPassed", id).d("currentId", (m_currentId)));
 
     // Check if pipeline is set.
     if (!m_pipeline.pipeline) {
@@ -1508,41 +1490,47 @@ void MediaPlayer::handleGetOffset(SourceId id, std::promise<std::chrono::millise
         return;
     }
 
-    auto stateChangeRet = gst_element_get_state(m_pipeline.pipeline, &state, NULL, TIMEOUT_ZERO_NANOSECONDS);
+    promise->set_value(getCurrentStreamOffset());
+}
 
+std::chrono::milliseconds MediaPlayer::getCurrentStreamOffset() {
+    ACSDK_DEBUG9(LX("getCurrentStreamOffsetCalled"));
+
+    auto offsetInMilliseconds = MEDIA_PLAYER_INVALID_OFFSET;
+    gint64 position = -1;
+    GstState state = GST_STATE_NULL;
+    auto stateChangeRet = gst_element_get_state(m_pipeline.pipeline, &state, NULL, TIMEOUT_ZERO_NANOSECONDS);
     if (GST_STATE_CHANGE_FAILURE == stateChangeRet) {
         // Getting the state failed.
-        ACSDK_ERROR(LX("handleGetOffsetFailed").d("reason", "getElementGetStateFailure"));
+        ACSDK_ERROR(LX("getCurrentStreamOffsetFailed").d("reason", "getElementGetStateFailure"));
     } else if (GST_STATE_CHANGE_SUCCESS != stateChangeRet) {
         // Getting the state was not successful (GST_STATE_CHANGE_ASYNC or GST_STATE_CHANGE_NO_PREROLL).
-        ACSDK_INFO(LX("handleGetOffset")
+        ACSDK_WARN(LX("getCurrentStreamOffsetError")
                        .d("reason", "getElementGetStateUnsuccessful")
                        .d("stateChangeReturn", gst_element_state_change_return_get_name(stateChangeRet)));
     } else if (GST_STATE_PAUSED != state && GST_STATE_PLAYING != state) {
         // Invalid State.
-        std::ostringstream expectedStates;
-        expectedStates << gst_element_state_get_name(GST_STATE_PAUSED) << "/"
-                       << gst_element_state_get_name(GST_STATE_PLAYING);
-        ACSDK_ERROR(LX("handleGetOffsetFailed")
-                        .d("reason", "invalidPipelineState")
-                        .d("state", gst_element_state_get_name(state))
-                        .d("expectedStates", expectedStates.str()));
+        ACSDK_DEBUG9(LX("getCurrentStreamOffsetInvalid")
+                         .d("reason", "invalidPipelineState")
+                         .d("state", gst_element_state_get_name(state))
+                         .d("expectedStates", "PAUSED/PLAYING"));
     } else if (!gst_element_query_position(m_pipeline.pipeline, GST_FORMAT_TIME, &position)) {
         // Query Failed.
-        ACSDK_ERROR(LX("handleGetOffsetInMillisecondsFailed").d("reason", "gstElementQueryPositionError"));
+        ACSDK_ERROR(LX("getCurrentStreamOffsetFailed").d("reason", "gstElementQueryPositionError"));
     } else {
         // Query succeeded.
         std::chrono::milliseconds startStreamingPoint = std::chrono::milliseconds::zero();
         if (m_urlConverter) {
             startStreamingPoint = m_urlConverter->getStartStreamingPoint();
         }
-        promise->set_value(
-            startStreamingPoint +
-            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::nanoseconds(position)));
-        return;
+        offsetInMilliseconds =
+            (startStreamingPoint +
+             std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::nanoseconds(position)));
+
+        ACSDK_DEBUG9(LX("getCurrentStreamOffset").d("offsetInMilliseconds", offsetInMilliseconds.count()));
     }
 
-    promise->set_value(MEDIA_PLAYER_INVALID_OFFSET);
+    return offsetInMilliseconds;
 }
 
 void MediaPlayer::handleSetObserver(

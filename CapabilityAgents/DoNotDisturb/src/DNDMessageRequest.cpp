@@ -42,6 +42,7 @@ DNDMessageRequest::DNDMessageRequest(const std::string& jsonContent) :
 void DNDMessageRequest::sendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status) {
     MessageRequest::sendCompleted(status);
     if (!m_isCompleted) {
+        ACSDK_DEBUG9(LX(__func__).d("Completed with status", status));
         m_promise.set_value(status);
     } else {
         ACSDK_ERROR(LX("sendCompletedFailed").d("reason", "sendCompleted must be called only once."));
@@ -55,6 +56,7 @@ std::shared_future<MessageRequestObserverInterface::Status> DNDMessageRequest::g
 
 DNDMessageRequest::~DNDMessageRequest() {
     if (!m_isCompleted) {
+        ACSDK_WARN(LX(__func__).m("Destroying while message delivery has not been completed yet."));
         m_promise.set_value(MessageRequestObserverInterface::Status::CANCELED);
     }
 }

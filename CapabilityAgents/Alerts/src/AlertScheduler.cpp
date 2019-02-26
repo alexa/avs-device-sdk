@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -48,9 +48,19 @@ AlertScheduler::AlertScheduler(
         m_focusState{avsCommon::avs::FocusState::NONE} {
 }
 
-void AlertScheduler::onAlertStateChange(const std::string& alertToken, State state, const std::string& reason) {
-    ACSDK_DEBUG9(LX("onAlertStateChange").d("alertToken", alertToken).d("state", state).d("reason", reason));
-    m_executor.submit([this, alertToken, state, reason]() { executeOnAlertStateChange(alertToken, state, reason); });
+void AlertScheduler::onAlertStateChange(
+    const std::string& alertToken,
+    const std::string& alertType,
+    State state,
+    const std::string& reason) {
+    ACSDK_DEBUG9(LX("onAlertStateChange")
+                     .d("alertToken", alertToken)
+                     .d("alertType", alertType)
+                     .d("state", state)
+                     .d("reason", reason));
+    m_executor.submit([this, alertToken, alertType, state, reason]() {
+        executeOnAlertStateChange(alertToken, alertType, state, reason);
+    });
 }
 
 bool AlertScheduler::initialize(std::shared_ptr<AlertObserverInterface> observer) {
@@ -83,7 +93,7 @@ bool AlertScheduler::initialize(std::shared_ptr<AlertObserverInterface> observer
     for (auto& alert : alerts) {
         if (alert->isPastDue(unixEpochNow, m_alertPastDueTimeLimit)) {
             std::string alertToken = alert->getToken();
-            notifyObserver(alertToken, AlertObserverInterface::State::PAST_DUE);
+            notifyObserver(alertToken, alert->getTypeName(), AlertObserverInterface::State::PAST_DUE);
             m_alertStorage->erase(alert);
         } else {
             // if it was active when the system last powered down, then re-init the state to set
@@ -273,7 +283,8 @@ void AlertScheduler::updateFocus(avsCommon::avs::FocusState focusState) {
             if (m_activeAlert) {
                 m_activeAlert->setFocusState(m_focusState);
                 auto token = m_activeAlert->getToken();
-                notifyObserver(token, AlertObserverInterface::State::FOCUS_ENTERED_FOREGROUND);
+                auto type = m_activeAlert->getTypeName();
+                notifyObserver(token, type, AlertObserverInterface::State::FOCUS_ENTERED_FOREGROUND);
             } else {
                 activateNextAlertLocked();
             }
@@ -283,7 +294,8 @@ void AlertScheduler::updateFocus(avsCommon::avs::FocusState focusState) {
             if (m_activeAlert) {
                 m_activeAlert->setFocusState(m_focusState);
                 auto token = m_activeAlert->getToken();
-                notifyObserver(token, AlertObserverInterface::State::FOCUS_ENTERED_BACKGROUND);
+                auto type = m_activeAlert->getTypeName();
+                notifyObserver(token, type, AlertObserverInterface::State::FOCUS_ENTERED_BACKGROUND);
             } else {
                 activateNextAlertLocked();
             }
@@ -354,20 +366,24 @@ void AlertScheduler::shutdown() {
     m_scheduledAlerts.clear();
 }
 
-void AlertScheduler::executeOnAlertStateChange(std::string alertToken, State state, std::string reason) {
+void AlertScheduler::executeOnAlertStateChange(
+    std::string alertToken,
+    std::string alertType,
+    State state,
+    std::string reason) {
     ACSDK_DEBUG9(LX("executeOnAlertStateChange").d("alertToken", alertToken).d("state", state).d("reason", reason));
     std::lock_guard<std::mutex> lock(m_mutex);
 
     switch (state) {
         case State::READY:
-            notifyObserver(alertToken, state, reason);
+            notifyObserver(alertToken, alertType, state, reason);
             break;
 
         case State::STARTED:
             if (m_activeAlert && Alert::State::ACTIVATING == m_activeAlert->getState()) {
                 m_activeAlert->setStateActive();
                 m_alertStorage->modify(m_activeAlert);
-                notifyObserver(alertToken, state, reason);
+                notifyObserver(alertToken, alertType, state, reason);
             }
             break;
 
@@ -375,7 +391,7 @@ void AlertScheduler::executeOnAlertStateChange(std::string alertToken, State sta
             m_alertStorage->erase(m_activeAlert);
             m_activeAlert.reset();
 
-            notifyObserver(alertToken, state, reason);
+            notifyObserver(alertToken, alertType, state, reason);
             setTimerForNextAlertLocked();
 
             break;
@@ -384,7 +400,7 @@ void AlertScheduler::executeOnAlertStateChange(std::string alertToken, State sta
             m_alertStorage->erase(m_activeAlert);
             m_activeAlert.reset();
 
-            notifyObserver(alertToken, state, reason);
+            notifyObserver(alertToken, alertType, state, reason);
             setTimerForNextAlertLocked();
 
             break;
@@ -393,9 +409,8 @@ void AlertScheduler::executeOnAlertStateChange(std::string alertToken, State sta
             m_alertStorage->modify(m_activeAlert);
             m_scheduledAlerts.insert(m_activeAlert);
             m_activeAlert.reset();
-            m_alertRenderer->setObserver(nullptr);
 
-            notifyObserver(alertToken, state, reason);
+            notifyObserver(alertToken, alertType, state, reason);
             setTimerForNextAlertLocked();
 
             break;
@@ -432,7 +447,7 @@ void AlertScheduler::executeOnAlertStateChange(std::string alertToken, State sta
                 }
             }
 
-            notifyObserver(alertToken, state, reason);
+            notifyObserver(alertToken, alertType, state, reason);
 
             break;
     }
@@ -440,17 +455,25 @@ void AlertScheduler::executeOnAlertStateChange(std::string alertToken, State sta
 
 void AlertScheduler::notifyObserver(
     const std::string& alertToken,
+    const std::string& alertType,
     AlertObserverInterface::State state,
     const std::string& reason) {
-    ACSDK_DEBUG9(LX("notifyObserver").d("alertToken", alertToken).d("state", state).d("reason", reason));
-    m_executor.submit([this, alertToken, state, reason]() { executeNotifyObserver(alertToken, state, reason); });
+    ACSDK_DEBUG9(LX("notifyObserver")
+                     .d("alertToken", alertToken)
+                     .d("alertType", alertType)
+                     .d("state", state)
+                     .d("reason", reason));
+    m_executor.submit([this, alertToken, alertType, state, reason]() {
+        executeNotifyObserver(alertToken, alertType, state, reason);
+    });
 }
 
 void AlertScheduler::executeNotifyObserver(
-    std::string alertToken,
+    const std::string& alertToken,
+    const std::string& alertType,
     AlertObserverInterface::State state,
-    std::string reason) {
-    m_observer->onAlertStateChange(alertToken, state, reason);
+    const std::string& reason) {
+    m_observer->onAlertStateChange(alertToken, alertType, state, reason);
 }
 
 void AlertScheduler::deactivateActiveAlertHelperLocked(Alert::StopReason reason) {
@@ -496,20 +519,23 @@ void AlertScheduler::setTimerForNextAlertLocked() {
 
     if (secondsToWait == std::chrono::seconds::zero()) {
         auto token = alert->getToken();
-        notifyObserver(token, AlertObserverInterface::State::READY);
+        auto type = alert->getTypeName();
+        notifyObserver(token, type, AlertObserverInterface::State::READY);
     } else {
         // start the timer for the next alert.
         if (!m_scheduledAlertTimer
-                 .start(secondsToWait, std::bind(&AlertScheduler::onAlertReady, this, alert->getToken()))
+                 .start(
+                     secondsToWait,
+                     std::bind(&AlertScheduler::onAlertReady, this, alert->getToken(), alert->getTypeName()))
                  .valid()) {
             ACSDK_ERROR(LX("executeScheduleNextAlertForRenderingFailed").d("reason", "startTimerFailed"));
         }
     }
 }
 
-void AlertScheduler::onAlertReady(const std::string& alertToken) {
-    ACSDK_DEBUG9(LX("onAlertReady").d("alertToken", alertToken));
-    notifyObserver(alertToken, AlertObserverInterface::State::READY);
+void AlertScheduler::onAlertReady(const std::string& alertToken, const std::string& alertType) {
+    ACSDK_DEBUG9(LX("onAlertReady").d("alertToken", alertToken).d("alertType", alertType));
+    notifyObserver(alertToken, alertType, AlertObserverInterface::State::READY);
 }
 
 void AlertScheduler::activateNextAlertLocked() {

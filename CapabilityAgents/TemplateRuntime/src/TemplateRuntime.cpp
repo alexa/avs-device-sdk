@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -155,11 +155,16 @@ bool TemplateRuntime::initialize() {
 
 void TemplateRuntime::handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) {
     ACSDK_DEBUG5(LX("handleDirectiveImmediately"));
-    preHandleDirective(std::make_shared<DirectiveInfo>(directive, nullptr));
+    handleDirective(std::make_shared<DirectiveInfo>(directive, nullptr));
 }
 
 void TemplateRuntime::preHandleDirective(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG5(LX("preHandleDirective"));
+    // do nothing.
+}
+
+void TemplateRuntime::handleDirective(std::shared_ptr<DirectiveInfo> info) {
+    ACSDK_DEBUG5(LX("handleDirective"));
     if (!info || !info->directive) {
         ACSDK_ERROR(LX("preHandleDirectiveFailed").d("reason", "nullDirectiveInfo"));
         return;
@@ -171,11 +176,6 @@ void TemplateRuntime::preHandleDirective(std::shared_ptr<DirectiveInfo> info) {
     } else {
         handleUnknownDirective(info);
     }
-}
-
-void TemplateRuntime::handleDirective(std::shared_ptr<DirectiveInfo> info) {
-    ACSDK_DEBUG5(LX("handleDirective"));
-    // Do nothing here as directives are handled in the preHandle stage.
 }
 
 void TemplateRuntime::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
@@ -208,10 +208,14 @@ void TemplateRuntime::onDialogUXStateChanged(
     avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) {
     ACSDK_DEBUG5(LX("onDialogUXStateChanged").d("state", newState));
     m_executor.submit([this, newState]() {
-        if (avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE == newState &&
-            TemplateRuntime::State::DISPLAYING == m_state) {
-            if (m_lastDisplayedDirective && m_lastDisplayedDirective->directive->getName() == RENDER_TEMPLATE) {
+        if (TemplateRuntime::State::DISPLAYING == m_state && m_lastDisplayedDirective &&
+            m_lastDisplayedDirective->directive->getName() == RENDER_TEMPLATE) {
+            if (avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE == newState) {
                 executeStartTimer(m_ttsFinishedTimeout);
+            } else if (
+                avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::EXPECTING == newState ||
+                avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::SPEAKING == newState) {
+                executeStopTimer();
             }
         }
     });

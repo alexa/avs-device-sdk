@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -111,8 +111,11 @@ public:
 
     void onFocusChanged(avsCommon::avs::FocusState focusState) override;
 
-    void onAlertStateChange(const std::string& token, AlertObserverInterface::State state, const std::string& reason)
-        override;
+    void onAlertStateChange(
+        const std::string& token,
+        const std::string& alertType,
+        AlertObserverInterface::State state,
+        const std::string& reason) override;
     /// @}
 
     /// @name FocusManagerObserverInterface Functions
@@ -261,11 +264,13 @@ private:
      * A handler function which will be called by our internal executor when an alert's status changes.
      *
      * @param alertToken The AVS token identifying the alert.
+     * @param alertType The type of the alert.
      * @param state The state of the alert.
      * @param reason The reason the the state changed, if applicable.
      */
     void executeOnAlertStateChange(
         const std::string& alertToken,
+        const std::string& alertType,
         AlertObserverInterface::State state,
         const std::string& reason);
 
@@ -287,11 +292,13 @@ private:
      * A handler function which will be called by our internal executor to notify observers of alert changes.
      *
      * @param alertToken The AVS token identifying the alert.
+     * @param alertType The type of the alert.
      * @param state The state of the alert.
      * @param reason The reason the the state changed, if applicable.
      */
     void executeNotifyObservers(
         const std::string& alertToken,
+        const std::string& alertType,
         AlertObserverInterface::State state,
         const std::string& reason = "");
 

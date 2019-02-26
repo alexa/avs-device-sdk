@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -473,7 +473,7 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
     lock.unlock();
 
     if (shouldNotifyObserver && observerCopy) {
-        observerCopy->onAlertStateChange(m_staticData.token, notifyState, notifyReason);
+        observerCopy->onAlertStateChange(m_staticData.token, getTypeName(), notifyState, notifyReason);
     }
 
     if (shouldRetryRendering) {
@@ -598,8 +598,7 @@ void Alert::startRenderer() {
 
     lock.unlock();
 
-    rendererCopy->setObserver(shared_from_this());
-    rendererCopy->start(audioFactory, urls, loopCount, loopPause);
+    rendererCopy->start(shared_from_this(), audioFactory, urls, loopCount, loopPause);
 }
 
 void Alert::onMaxTimerExpiration() {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -304,10 +304,17 @@ void AlertsCapabilityAgent::onFocusChanged(const std::string& channelName, avsCo
 
 void AlertsCapabilityAgent::onAlertStateChange(
     const std::string& alertToken,
+    const std::string& alertType,
     AlertObserverInterface::State state,
     const std::string& reason) {
-    ACSDK_DEBUG9(LX("onAlertStateChange").d("alertToken", alertToken).d("state", state).d("reason", reason));
-    m_executor.submit([this, alertToken, state, reason]() { executeOnAlertStateChange(alertToken, state, reason); });
+    ACSDK_DEBUG9(LX("onAlertStateChange")
+                     .d("alertToken", alertToken)
+                     .d("alertType", alertType)
+                     .d("state", state)
+                     .d("reason", reason));
+    m_executor.submit([this, alertToken, alertType, state, reason]() {
+        executeOnAlertStateChange(alertToken, alertType, state, reason);
+    });
 }
 
 void AlertsCapabilityAgent::addObserver(std::shared_ptr<AlertObserverInterface> observer) {
@@ -752,6 +759,7 @@ void AlertsCapabilityAgent::executeOnFocusManagerFocusChanged(
 
 void AlertsCapabilityAgent::executeOnAlertStateChange(
     const std::string& alertToken,
+    const std::string& alertType,
     AlertObserverInterface::State state,
     const std::string& reason) {
     ACSDK_DEBUG1(LX("executeOnAlertStateChange").d("alertToken", alertToken).d("state", state).d("reason", reason));
@@ -832,7 +840,9 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
         }
     }
 
-    m_executor.submit([this, alertToken, state, reason]() { executeNotifyObservers(alertToken, state, reason); });
+    m_executor.submit([this, alertToken, alertType, state, reason]() {
+        executeNotifyObservers(alertToken, alertType, state, reason);
+    });
 }
 
 void AlertsCapabilityAgent::executeAddObserver(std::shared_ptr<AlertObserverInterface> observer) {
@@ -847,11 +857,16 @@ void AlertsCapabilityAgent::executeRemoveObserver(std::shared_ptr<AlertObserverI
 
 void AlertsCapabilityAgent::executeNotifyObservers(
     const std::string& alertToken,
+    const std::string& alertType,
     AlertObserverInterface::State state,
     const std::string& reason) {
-    ACSDK_DEBUG1(LX("executeNotifyObservers").d("alertToken", alertToken).d("state", state).d("reason", reason));
+    ACSDK_DEBUG1(LX("executeNotifyObservers")
+                     .d("alertToken", alertToken)
+                     .d("alertType", alertType)
+                     .d("state", state)
+                     .d("reason", reason));
     for (auto observer : m_observers) {
-        observer->onAlertStateChange(alertToken, state, reason);
+        observer->onAlertStateChange(alertToken, alertType, state, reason);
     }
 }
 
@@ -946,13 +961,9 @@ void AlertsCapabilityAgent::setNextAlertVolume(int64_t volume) {
 
     ACSDK_DEBUG5(LX(__func__).d("New Alerts volume", volume));
 
-    // Check if there are alerts currently active and change actual volume only if there is none
-    if (!m_alertIsSounding) {
-        m_speakerManager
-            ->setVolume(
-                avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_ALERTS_VOLUME, static_cast<int8_t>(volume))
-            .get();
-    }
+    m_speakerManager
+        ->setVolume(avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_ALERTS_VOLUME, static_cast<int8_t>(volume))
+        .get();
 
     // Always notify AVS of volume changes here
     updateAVSWithLocalVolumeChanges(static_cast<int8_t>(volume), true);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -47,6 +47,12 @@ static const std::string TEST_ASSET_ID2 = "testAssetId2";
 /// AssetUrl strings for testing
 static const std::string TEST_ASSET_URL1 = "testAssetUrl1";
 static const std::string TEST_ASSET_URL2 = "testAssetUrl2";
+
+/// Indicator state table/column name in the database.
+static const std::string INDICATOR_STATE_NAME = "indicatorState";
+
+/// Value to represent the invalid indicator state.
+static const int INVALID_STATE_VALUE = 123;
 
 /// Number to use when generating many NotificationIndicators.
 static const unsigned int NUM_TEST_INDICATORS = 15;
@@ -226,6 +232,57 @@ TEST_F(NotificationsStorageTest, testClearingNotificationIndicators) {
     ASSERT_TRUE(m_storage->clearNotificationIndicators());
 
     ASSERT_FALSE(m_storage->dequeue());
+}
+
+/**
+ * Test that empty database (due to a corruption or crash) results in default indicator state being used
+ * (non-undefined).
+ */
+TEST_F(NotificationsStorageTest, testDefaultValueForEmptyStorage) {
+    createDatabase();
+    ASSERT_TRUE(isOpen(m_storage));
+
+    NotificationIndicator firstIndicator(true, false, TEST_ASSET_ID1, TEST_ASSET_URL1);
+
+    ASSERT_TRUE(m_storage->enqueue(firstIndicator));
+    ASSERT_TRUE(m_storage->clearNotificationIndicators());
+
+    IndicatorState indicatorState = IndicatorState::UNDEFINED;
+    ASSERT_TRUE(m_storage->getIndicatorState(&indicatorState));
+    ASSERT_TRUE(IndicatorState::UNDEFINED != indicatorState);
+}
+
+/**
+ * Test that invalid database value (due to a corruption or crash) results in default indicator state being used
+ * (non-undefined).
+ */
+TEST_F(NotificationsStorageTest, testDefaultValueForInvalidDBContents) {
+    createDatabase();
+    ASSERT_TRUE(isOpen(m_storage));
+
+    NotificationIndicator firstIndicator(true, false, TEST_ASSET_ID1, TEST_ASSET_URL1);
+
+    ASSERT_TRUE(m_storage->enqueue(firstIndicator));
+
+    // Setup direct access to the DB.
+    alexaClientSDK::storage::sqliteStorage::SQLiteDatabase database(TEST_DATABASE_FILE_PATH);
+    ASSERT_TRUE(database.open());
+
+    std::string sqlString = "UPDATE " + INDICATOR_STATE_NAME + " SET " + INDICATOR_STATE_NAME + " = (?);";
+
+    auto updateStatement = database.createStatement(sqlString);
+
+    ASSERT_THAT(updateStatement, NotNull());
+
+    ASSERT_TRUE(updateStatement->bindIntParameter(1, INVALID_STATE_VALUE));
+
+    ASSERT_TRUE(updateStatement->step());
+
+    updateStatement->finalize();
+
+    IndicatorState indicatorState = IndicatorState::UNDEFINED;
+    ASSERT_TRUE(m_storage->getIndicatorState(&indicatorState));
+    ASSERT_TRUE(IndicatorState::UNDEFINED != indicatorState);
 }
 
 /**

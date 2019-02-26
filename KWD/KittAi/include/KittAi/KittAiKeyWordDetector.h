@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@
 #include <AVSCommon/SDKInterfaces/KeyWordDetectorStateObserverInterface.h>
 
 #include "KWD/AbstractKeywordDetector.h"
-#include "snowboy-detect.h"
+#include "KittAi/SnowboyWrapper.h"
 
 namespace alexaClientSDK {
 namespace kwd {
@@ -162,7 +162,7 @@ private:
     std::thread m_detectionThread;
 
     /// The Kitt.ai engine instantiation.
-    std::unique_ptr<snowboy::SnowboyDetect> m_kittAiEngine;
+    std::unique_ptr<SnowboyWrapper> m_kittAiEngine;
 
     /**
      * The max number of samples to push into the underlying engine per iteration. This will be determined based on the

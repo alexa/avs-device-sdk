@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -163,20 +163,24 @@ bool DNDSettingProtocol::restoreValue(ApplyDbChangeFunction applyChange, Setting
         return false;
     }
 
+    std::string valueOrErrorStr;
     std::string valueStr;
     SettingStatus status = SettingStatus::NOT_AVAILABLE;
-    std::tie(status, valueStr) = m_storage->loadSetting(m_key);
+    std::tie(status, valueOrErrorStr) = m_storage->loadSetting(m_key);
+    if (SettingStatus::NOT_AVAILABLE != status) {
+        valueStr = valueOrErrorStr;
+    }
     auto applyStrChange = [valueStr, applyChange] { return applyChange(valueStr); };
     auto revertChange = [applyChange] { return applyChange(INVALID_VALUE).second; };
     switch (status) {
+        case SettingStatus::NOT_AVAILABLE:
+            // Fall-through
         case SettingStatus::LOCAL_CHANGE_IN_PROGRESS:
             return localChange(applyStrChange, revertChange, notifyObservers) == SetSettingResult::ENQUEUED;
         case SettingStatus::AVS_CHANGE_IN_PROGRESS:
             return avsChange(applyStrChange, revertChange, notifyObservers);
         case SettingStatus::SYNCHRONIZED:
             return applyChange(valueStr).first;
-        case SettingStatus::NOT_AVAILABLE:
-            return applyChange(INVALID_VALUE).first;
     }
     return false;
 }

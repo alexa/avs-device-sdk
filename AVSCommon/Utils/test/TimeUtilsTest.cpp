@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -71,6 +71,23 @@ TEST(TimeTest, testTimeConversion) {
 
     ASSERT_TRUE(success);
     ASSERT_EQ(randomDate, convertBack);
+}
+
+TEST(TimeTest, testTimeConversionCurrentTime) {
+    TimeUtils timeUtils;
+    int64_t time = -1;
+    ASSERT_TRUE(timeUtils.getCurrentUnixTime(&time));
+
+    std::time_t currentDate = static_cast<std::time_t>(time);
+    std::tm date;
+
+    auto safeCTimeAccess = SafeCTimeAccess::instance();
+    ASSERT_TRUE(safeCTimeAccess->getGmtime(currentDate, &date));
+    std::time_t convertBack;
+    auto success = timeUtils.convertToUtcTimeT(&date, &convertBack);
+
+    ASSERT_TRUE(success);
+    ASSERT_EQ(currentDate, convertBack);
 }
 
 TEST(TimeTest, testCurrentTime) {

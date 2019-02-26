@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -77,8 +77,8 @@ std::string MockAlert::getTypeName() const {
 
 class MockRenderer : public renderer::RendererInterface {
 public:
-    void setObserver(std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer){};
     void start(
+        std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
         std::function<std::unique_ptr<std::istream>()> audioFactory,
         const std::vector<std::string>& urls = std::vector<std::string>(),
         int loopCount = 0,

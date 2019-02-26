@@ -7,7 +7,9 @@ set(INCLUDES
         "${AVSCommon_SOURCE_DIR}/AVS/test"
         "${AVSCommon_INCLUDE_DIRS}"
         "${AndroidUtilities_INCLUDE_DIRS}"
-        "${AndroidUtilities_SOURCE_DIR}/test")
+        "${AndroidUtilities_SOURCE_DIR}/test"
+        "${PlaylistParser_SOURCE_DIR}/include"
+        "${PlaylistParser_SOURCE_DIR}/test")
 
 set(LIBRARIES AndroidSLESMediaPlayer AVSCommon AndroidUtilities)
 

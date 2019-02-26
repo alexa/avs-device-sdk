@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -163,7 +163,7 @@ static int64_t avioSeek(void* opaque, int64_t offset, int whence) {
 }
 #endif  // ENABLE_SAMPLE_AES
 
-ContentDecrypter::ContentDecrypter(std::shared_ptr<AttachmentWriter> streamWriter) : m_streamWriter(streamWriter) {
+ContentDecrypter::ContentDecrypter() : RequiresShutdown{"ContentDecrypter"}, m_shuttingDown{false} {
 #ifdef ENABLE_SAMPLE_AES
 // av_register_all is deprecated in FFMpeg 4.0.
 #if (LIBAVFORMAT_VERSION_INT < AV_VERSION_INT(58, 9, 100))
@@ -172,7 +172,7 @@ ContentDecrypter::ContentDecrypter(std::shared_ptr<AttachmentWriter> streamWrite
 #endif  // ENABLE_SAMPLE_AES
 }
 
-void ContentDecrypter::writeMediaInitSection(const ByteVector& mis) {
+void ContentDecrypter::writeMediaInitSection(const ByteVector& mis, std::shared_ptr<AttachmentWriter> streamWriter) {
     auto size = mis.size();
     m_mediaInitSection = std::vector<unsigned char>(size);
     // Replace 'enca' with 'mp4a'. This is required to allow gstreamer to play the data.
@@ -187,13 +187,14 @@ void ContentDecrypter::writeMediaInitSection(const ByteVector& mis) {
             m_mediaInitSection[i] = mis[i];
         }
     }
-    writeToStream(m_mediaInitSection);
+    writeToStream(m_mediaInitSection, streamWriter);
 }
 
 bool ContentDecrypter::decryptAndWrite(
     const ByteVector& encryptedContent,
     const ByteVector& key,
-    const EncryptionInfo& encryptionInfo) {
+    const EncryptionInfo& encryptionInfo,
+    std::shared_ptr<AttachmentWriter> streamWriter) {
     ByteVector ivByteArray;
     if (!convertIVToByteArray(encryptionInfo.initVector, &ivByteArray)) {
         ACSDK_ERROR(LX("decryptAndWriteFailed").d("reason", "convertIVToByteArrayFailed"));
@@ -226,7 +227,7 @@ bool ContentDecrypter::decryptAndWrite(
             return false;
     }
 
-    if (!writeToStream(decryptedContent)) {
+    if (!writeToStream(decryptedContent, streamWriter)) {
         ACSDK_ERROR(LX("decryptAndWriteFailed").d("reason", "writeFailed"));
         return false;
     }
@@ -480,12 +481,17 @@ void ContentDecrypter::logAVError(const char* event, const char* reason, int ave
 }
 #endif  // ENABLE_SAMPLE_AES
 
-bool ContentDecrypter::writeToStream(const ByteVector& content) {
+bool ContentDecrypter::writeToStream(const ByteVector& content, std::shared_ptr<AttachmentWriter> streamWriter) {
+    if (!streamWriter) {
+        ACSDK_ERROR(LX("writeToStreamFailed").d("reason", "streamWriterIsNULL"));
+        return false;
+    }
+
     size_t totalBytesWritten = 0;
     auto contentSize = content.size();
     auto writeStatus = AttachmentWriter::WriteStatus::OK;
-    while (totalBytesWritten < contentSize) {
-        auto bytesWritten = m_streamWriter->write(
+    while (totalBytesWritten < contentSize && !m_shuttingDown) {
+        auto bytesWritten = streamWriter->write(
             content.data() + totalBytesWritten, contentSize - totalBytesWritten, &writeStatus, WRITE_TO_STREAM_TIMEOUT);
         totalBytesWritten += bytesWritten;
 
@@ -507,6 +513,10 @@ bool ContentDecrypter::writeToStream(const ByteVector& content) {
 
     ACSDK_DEBUG9(LX("writeToStreamSuccess"));
     return true;
+}
+
+void ContentDecrypter::doShutdown() {
+    m_shuttingDown = true;
 }
 
 }  // namespace playlistParser

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -110,7 +110,8 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<alexaClientSDK::acl::TransportFactoryInterface> transportFactory,
     avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
     bool sendSoftwareInfoOnConnected,
-    std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver) {
+    std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver,
+    std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> bluetoothDeviceManager) {
     std::unique_ptr<DefaultClient> defaultClient(new DefaultClient());
     if (!defaultClient->initialize(
             deviceInfo,
@@ -153,7 +154,8 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             transportFactory,
             firmwareVersion,
             sendSoftwareInfoOnConnected,
-            softwareInfoSenderObserver)) {
+            softwareInfoSenderObserver,
+            std::move(bluetoothDeviceManager))) {
         return nullptr;
     }
 
@@ -205,7 +207,8 @@ bool DefaultClient::initialize(
     std::shared_ptr<alexaClientSDK::acl::TransportFactoryInterface> transportFactory,
     avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
     bool sendSoftwareInfoOnConnected,
-    std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver) {
+    std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver,
+    std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> bluetoothDeviceManager) {
     if (!audioFactory) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullAudioFactory"));
         return false;
@@ -660,6 +663,7 @@ bool DefaultClient::initialize(
         m_userInactivityMonitor,
         contextManager,
         m_audioFocusManager,
+        m_speakerManager,
         deviceInfo->getDeviceSerialNumber());
 
     if (!mrmHandler) {
@@ -782,29 +786,34 @@ bool DefaultClient::initialize(
         }
     }
 
-#ifdef BLUETOOTH_BLUEZ
-    auto eventBus = std::make_shared<avsCommon::utils::bluetooth::BluetoothEventBus>();
+    if (bluetoothDeviceManager) {
+        ACSDK_DEBUG5(LX(__func__).m("Creating Bluetooth CA"));
 
-    auto bluetoothDeviceManager = bluetoothImplementations::blueZ::BlueZBluetoothDeviceManager::create(eventBus);
-    auto bluetoothAVRCPTransformer =
-        capabilityAgents::bluetooth::BluetoothAVRCPTransformer::create(eventBus, m_playbackRouter);
+        // Create a temporary pointer to the eventBus inside of bluetoothDeviceManager so that
+        // the unique ptr for bluetoothDeviceManager can be moved.
+        auto eventBus = bluetoothDeviceManager->getEventBus();
 
-    /*
-     * Creating the Bluetooth Capability Agent - This component is responsible for handling directives from AVS
-     * regarding bluetooth functionality.
-     */
-    m_bluetooth = capabilityAgents::bluetooth::Bluetooth::create(
-        contextManager,
-        m_audioFocusManager,
-        m_connectionManager,
-        m_exceptionSender,
-        std::move(bluetoothStorage),
-        std::move(bluetoothDeviceManager),
-        eventBus,
-        bluetoothMediaPlayer,
-        customerDataManager,
-        bluetoothAVRCPTransformer);
-#endif
+        auto bluetoothAVRCPTransformer =
+            capabilityAgents::bluetooth::BluetoothAVRCPTransformer::create(eventBus, m_playbackRouter);
+
+        /*
+         * Creating the Bluetooth Capability Agent - This component is responsible for handling directives from AVS
+         * regarding bluetooth functionality.
+         */
+        m_bluetooth = capabilityAgents::bluetooth::Bluetooth::create(
+            contextManager,
+            m_audioFocusManager,
+            m_connectionManager,
+            m_exceptionSender,
+            std::move(bluetoothStorage),
+            std::move(bluetoothDeviceManager),
+            std::move(eventBus),
+            bluetoothMediaPlayer,
+            customerDataManager,
+            bluetoothAVRCPTransformer);
+    } else {
+        ACSDK_DEBUG5(LX("bluetoothCapabilityAgentDisabled").d("reason", "nullBluetoothDeviceManager"));
+    }
 
     /*
      * The following two statements show how to register capability agents to the directive sequencer.
@@ -1123,6 +1132,10 @@ void DefaultClient::stopForegroundActivity() {
     m_audioFocusManager->stopForegroundActivity();
 }
 
+void DefaultClient::localStopActiveAlert() {
+    m_alertsCapabilityAgent->onLocalStop();
+}
+
 void DefaultClient::addAlexaDialogStateObserver(
     std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface> observer) {
     m_dialogUXStateAggregator->addObserver(observer);
@@ -1131,6 +1144,15 @@ void DefaultClient::addAlexaDialogStateObserver(
 void DefaultClient::removeAlexaDialogStateObserver(
     std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface> observer) {
     m_dialogUXStateAggregator->removeObserver(observer);
+}
+
+void DefaultClient::addMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) {
+    m_connectionManager->addMessageObserver(observer);
+}
+
+void DefaultClient::removeMessageObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) {
+    m_connectionManager->removeMessageObserver(observer);
 }
 
 void DefaultClient::addConnectionObserver(
@@ -1227,6 +1249,23 @@ void DefaultClient::addExternalMediaPlayerObserver(
 void DefaultClient::removeExternalMediaPlayerObserver(
     std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaPlayerObserverInterface> observer) {
     m_externalMediaPlayer->removeObserver(observer);
+}
+
+void DefaultClient::addBluetoothDeviceObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface> observer) {
+    if (!m_bluetooth) {
+        ACSDK_DEBUG5(LX(__func__).m("bluetooth is disabled, not adding observer"));
+        return;
+    }
+    m_bluetooth->addObserver(observer);
+}
+
+void DefaultClient::removeBluetoothDeviceObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface> observer) {
+    if (!m_bluetooth) {
+        return;
+    }
+    m_bluetooth->removeObserver(observer);
 }
 
 #ifdef ENABLE_REVOKE_AUTH
@@ -1366,6 +1405,20 @@ std::future<bool> DefaultClient::notifyOfHoldToTalkEnd() {
 
 std::future<bool> DefaultClient::notifyOfTapToTalkEnd() {
     return m_audioInputProcessor->stopCapture();
+}
+
+void DefaultClient::addCallStateObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::CallStateObserverInterface> observer) {
+    if (m_callManager) {
+        m_callManager->addObserver(observer);
+    }
+}
+
+void DefaultClient::removeCallStateObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::CallStateObserverInterface> observer) {
+    if (m_callManager) {
+        m_callManager->removeObserver(observer);
+    }
 }
 
 bool DefaultClient::isCommsEnabled() {

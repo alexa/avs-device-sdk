@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -72,7 +72,8 @@ static const std::unordered_map<char, std::string> LOCALE_VALUES({{'1', "en-US"}
                                                                   {'8', "fr-FR"},
                                                                   {'9', "it-IT"},
                                                                   {'a', "es-ES"},
-                                                                  {'b', "es-MX"}});
+                                                                  {'b', "es-MX"},
+                                                                  {'c', "fr-CA"}});
 
 static const std::unordered_map<char, SpeakerInterface::Type> SPEAKER_TYPES(
     {{'1', SpeakerInterface::Type::AVS_SPEAKER_VOLUME}, {'2', SpeakerInterface::Type::AVS_ALERTS_VOLUME}});

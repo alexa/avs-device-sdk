@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,7 +36,13 @@ using namespace avsCommon::utils;
 using namespace avsCommon::utils::configuration;
 using namespace settings;
 
-/// Test Database file name. Initialized at @c main().
+/// The database file name.
+static const std::string TEST_DATABASE_FILE_NAME = "SQLiteDeviceSettingStorageTest.db";
+
+/// The path delimiter used by the OS to identify file locations.
+static const std::string PATH_DELIMITER = "/";
+
+/// Test Database file path. Initialized at @c main().
 static std::string testDatabase;
 
 // clang-format off
@@ -205,7 +211,9 @@ int main(int argc, char** argv) {
     if (argc < 2) {
         std::cerr << "Usage: " << std::string(argv[0]) << " <absolute path to test database file>" << std::endl;
     } else {
-        alexaClientSDK::settings::storage::test::testDatabase = std::string(argv[1]);
+        alexaClientSDK::settings::storage::test::testDatabase =
+            std::string(argv[1]) + alexaClientSDK::settings::storage::test::PATH_DELIMITER +
+            alexaClientSDK::settings::storage::test::TEST_DATABASE_FILE_NAME;
 
         // clang-format off
         alexaClientSDK::settings::storage::test::deviceSettingJSON = R"(

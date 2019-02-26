@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -132,8 +132,9 @@ KittAiKeyWordDetector::KittAiKeyWordDetector(
             sensitivities << KITT_DELIMITER;
         }
     }
-    m_kittAiEngine = avsCommon::utils::memory::make_unique<snowboy::SnowboyDetect>(resourceFilePath, modelPaths.str());
-    m_kittAiEngine->SetSensitivity(sensitivities.str());
+    m_kittAiEngine =
+        avsCommon::utils::memory::make_unique<SnowboyWrapper>(resourceFilePath.c_str(), modelPaths.str().c_str());
+    m_kittAiEngine->SetSensitivity(sensitivities.str().c_str());
     m_kittAiEngine->SetAudioGain(audioGain);
     m_kittAiEngine->ApplyFrontend(applyFrontEnd);
 }

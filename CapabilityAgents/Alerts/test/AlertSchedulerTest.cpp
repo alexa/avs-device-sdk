@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,12 +51,10 @@ static const std::chrono::seconds ALERT_PAST_DUE_TIME_LIMIT{10};
 
 class MockRenderer : public renderer::RendererInterface {
 public:
-    MOCK_METHOD1(
-        setObserver,
-        void(std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer));
-    MOCK_METHOD4(
+    MOCK_METHOD5(
         start,
         void(
+            std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
             std::function<std::unique_ptr<std::istream>()> audioFactory,
             const std::vector<std::string>& urls,
             int loopCount,
@@ -204,7 +202,11 @@ public:
         return m_conditionVariable.wait_for(lock, TEST_TIMEOUT, [this, newState] { return m_state == newState; });
     }
 
-    void onAlertStateChange(const std::string& alertToken, AlertScheduler::State newState, const std::string& reason) {
+    void onAlertStateChange(
+        const std::string& alertToken,
+        const std::string& alertType,
+        AlertScheduler::State newState,
+        const std::string& reason) {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_state = newState;
         m_conditionVariable.notify_all();
@@ -728,7 +730,7 @@ TEST_F(AlertSchedulerTest, onAlertStateChangeStartedInactiveAlert) {
 
     /// check that we ignore inactive alerts
     EXPECT_CALL(*(m_alertStorage.get()), modify(testing::_)).Times(0);
-    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, testState, testReason);
+    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
 }
 
 /**
@@ -742,7 +744,7 @@ TEST_F(AlertSchedulerTest, onAlertStateChangeStartedActiveAlert) {
 
     /// active alerts should be handled
     EXPECT_CALL(*(m_alertStorage.get()), modify(testing::_)).Times(1);
-    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, testState, testReason);
+    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
     ASSERT_TRUE(m_testAlertObserver->waitFor(testState));
 }
 
@@ -756,7 +758,7 @@ TEST_F(AlertSchedulerTest, onAlertStateChangeStopped) {
     doSimpleTestSetup(true, true);
 
     EXPECT_CALL(*(m_alertStorage.get()), erase(testing::_)).Times(1);
-    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, testState, testReason);
+    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
     ASSERT_TRUE(m_testAlertObserver->waitFor(testState));
 }
 
@@ -770,7 +772,7 @@ TEST_F(AlertSchedulerTest, onAlertStateChangeCompleted) {
     doSimpleTestSetup(true, true);
 
     EXPECT_CALL(*(m_alertStorage.get()), erase(testing::_)).Times(1);
-    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, testState, testReason);
+    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
     ASSERT_TRUE(m_testAlertObserver->waitFor(testState));
 }
 
@@ -784,7 +786,7 @@ TEST_F(AlertSchedulerTest, onAlertStateChangeSnoozed) {
     doSimpleTestSetup(true, true);
 
     EXPECT_CALL(*(m_alertStorage.get()), modify(testing::_)).Times(1);
-    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, testState, testReason);
+    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
     ASSERT_TRUE(m_testAlertObserver->waitFor(testState));
 }
 
@@ -798,7 +800,7 @@ TEST_F(AlertSchedulerTest, onAlertStateChangeErrorActiveAlert) {
     doSimpleTestSetup(true, true);
 
     EXPECT_CALL(*(m_alertStorage.get()), erase(testing::_)).Times(1);
-    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, testState, testReason);
+    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
     ASSERT_TRUE(m_testAlertObserver->waitFor(testState));
 }
 
@@ -812,7 +814,7 @@ TEST_F(AlertSchedulerTest, onAlertStateChangeErrorInactiveAlert) {
     doSimpleTestSetup(false, true);
 
     EXPECT_CALL(*(m_alertStorage.get()), erase(testing::_)).Times(1);
-    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, testState, testReason);
+    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
     ASSERT_TRUE(m_testAlertObserver->waitFor(testState));
 }
 

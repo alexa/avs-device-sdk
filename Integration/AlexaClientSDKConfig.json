@@ -150,11 +150,11 @@
 
     // // Example for specifiying the Template Runtime display card timeout values.
     // "templateRuntimeCapabilityAgent": {
-    //     // If present, shall overide the default timeout for clearing the RenderTemplate display card when SpeechSynthesizer is in FINISHED state.
+    //     // If present, shall override the default timeout for clearing the RenderTemplate display card when SpeechSynthesizer is in FINISHED state.
     //     "displayCardTTSFinishedTimeout": 2000,
-    //     // If present, shall overide the default timeout in ms for clearing the RenderPlayerInfo display card when AudioPlayer is in FINISHED state.
+    //     // If present, shall override the default timeout in ms for clearing the RenderPlayerInfo display card when AudioPlayer is in FINISHED state.
     //     "displayCardAudioPlaybackFinishedTimeout": 2000,
-    //     // If present, shall overide the default timeout in ms for clearing the RenderPlayerInfo display card when AudioPlayer is in STOPPED or PAUSED state.
+    //     // If present, shall override the default timeout in ms for clearing the RenderPlayerInfo display card when AudioPlayer is in STOPPED or PAUSED state.
     //     "displayCardAudioPlaybackStoppedPausedTimeout": 60000
     // }
 

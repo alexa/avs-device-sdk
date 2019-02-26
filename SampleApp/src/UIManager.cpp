@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -181,6 +181,7 @@ static const std::string LOCALE_MESSAGE =
     "| Press '9' followed by Enter to change the language to Italian.             |\n"
     "| Press 'a' followed by Enter to change the language to Spanish.             |\n"
     "| Press 'b' followed by Enter to change the language to Mexican Spanish.     |\n"
+    "| Press 'c' followed by Enter to change the language to Canadian French.     |\n"
     "+----------------------------------------------------------------------------+\n";
 
 static const std::string SPEAKER_CONTROL_MESSAGE =
@@ -623,6 +624,32 @@ bool UIManager::configureSettingsNotifications(std::shared_ptr<settings::DeviceS
             onBooleanSettingNotification(DO_NOT_DISTURB_NAME, enable, notifications);
         });
     return ok;
+}
+
+void UIManager::onActiveDeviceConnected(const DeviceAttributes& deviceAttributes) {
+    m_executor.submit([deviceAttributes]() {
+        std::ostringstream oss;
+        oss << "SUPPORTED SERVICES: ";
+        std::string separator = "";
+        for (const auto& supportService : deviceAttributes.supportedServices) {
+            oss << separator << supportService;
+            separator = ", ";
+        }
+        ConsolePrinter::prettyPrint({"BLUETOOTH DEVICE CONNECTED", "Name: " + deviceAttributes.name, oss.str()});
+    });
+}
+
+void UIManager::onActiveDeviceDisconnected(const DeviceAttributes& deviceAttributes) {
+    m_executor.submit([deviceAttributes]() {
+        std::ostringstream oss;
+        oss << "SUPPORTED SERVICES: ";
+        std::string separator = "";
+        for (const auto& supportedService : deviceAttributes.supportedServices) {
+            oss << separator << supportedService;
+            separator = ", ";
+        }
+        ConsolePrinter::prettyPrint({"BLUETOOTH DEVICE DISCONNECTED", "Name: " + deviceAttributes.name, oss.str()});
+    });
 }
 
 }  // namespace sampleApp

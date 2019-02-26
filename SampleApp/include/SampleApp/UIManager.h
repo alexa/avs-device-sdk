@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@
 #include <AVSCommon/SDKInterfaces/SingleSettingObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceObserverInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <CBLAuthDelegate/CBLAuthRequesterInterface.h>
 #include <Settings/DeviceSettingsManager.h>
@@ -45,8 +46,11 @@ class UIManager
         , public avsCommon::sdkInterfaces::SingleSettingObserverInterface
         , public avsCommon::sdkInterfaces::SpeakerManagerObserverInterface
         , public avsCommon::sdkInterfaces::NotificationsObserverInterface
+        , public avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface
         , public authorization::cblAuthDelegate::CBLAuthRequesterInterface {
 public:
+    using DeviceAttributes = avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface::DeviceAttributes;
+
     /**
      * Constructor.
      */
@@ -89,6 +93,12 @@ public:
     void onCapabilitiesStateChange(
         avsCommon::sdkInterfaces::CapabilitiesObserverInterface::State newState,
         avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error newError) override;
+    /// }
+
+    /// @name BluetoothDeviceObserverInterface Methods
+    // @{
+    void onActiveDeviceConnected(const DeviceAttributes& deviceAttributes) override;
+    void onActiveDeviceDisconnected(const DeviceAttributes& deviceAttributes) override;
     /// }
 
     /**

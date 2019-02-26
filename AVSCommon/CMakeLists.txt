@@ -76,7 +76,6 @@ add_library(AVSCommon SHARED
     Utils/src/Stream/StreamFunctions.cpp
     Utils/src/Stream/Streambuf.cpp
     Utils/src/StringUtils.cpp
-    Utils/src/TaskQueue.cpp
     Utils/src/TaskThread.cpp
     Utils/src/TimePoint.cpp
     Utils/src/TimeUtils.cpp

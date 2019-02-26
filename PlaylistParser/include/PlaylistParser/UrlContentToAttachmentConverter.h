@@ -43,6 +43,11 @@ public:
     class ErrorObserverInterface {
     public:
         /**
+         * Destructor.
+         */
+        virtual ~ErrorObserverInterface() = default;
+
+        /**
          * Notification that an error has occurred in the streaming of content.
          */
         virtual void onError() = 0;

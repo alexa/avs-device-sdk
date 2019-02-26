@@ -88,7 +88,7 @@ namespace logger {
  *     static const std::string TAG = "MyClass";
  *     #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
  *
- * When an event is to be logged, a wrapper macro named @c ACDK_<LEVEL> is invoked with an expression that starts
+ * When an event is to be logged, a wrapper macro named @c ACSDK_<LEVEL> is invoked with an expression that starts
  * with an invocation of the @c LX macro.  The value of <LEVEL> is the name of the @c LogLevel value to associate
  * with the @c LogEntry.  Here is an example of a very simple log line that logs a "somethingHappened" event from
  * the source @c TAG with a severity level of @c INFO.

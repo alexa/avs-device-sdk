@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -80,7 +80,7 @@ void ContentDecrypterTest::SetUp() {
     m_writer = m_attachment->createWriter(WriterPolicy::BLOCKING);
     m_reader = m_attachment->createReader(ReaderPolicy::NONBLOCKING);
 
-    m_decrypter = std::make_shared<ContentDecrypter>(m_writer);
+    m_decrypter = std::make_shared<ContentDecrypter>();
 }
 
 void ContentDecrypterTest::TearDown() {
@@ -103,13 +103,13 @@ std::string ContentDecrypterTest::readDecryptedContent(size_t readSize) {
 TEST_F(ContentDecrypterTest, testUnsupportedEncryption) {
     auto noEncryption = EncryptionInfo();
 
-    auto result = m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, KEY, noEncryption);
+    auto result = m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, KEY, noEncryption, m_writer);
 
     EXPECT_FALSE(result);
 }
 
 TEST_F(ContentDecrypterTest, testAESDecryption) {
-    auto result = m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, KEY, AES_ENCRYPTION_INFO);
+    auto result = m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, KEY, AES_ENCRYPTION_INFO, m_writer);
 
     auto decryptedString = readDecryptedContent(DECRYPTED_STRING.size());
     EXPECT_TRUE(result);

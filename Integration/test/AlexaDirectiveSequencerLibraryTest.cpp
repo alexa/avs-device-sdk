@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -371,7 +371,7 @@ protected:
         bool nameFound = false;
         do {
             params = m_exceptionEncounteredSender->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-            if (params.directive->getName() == name) {
+            if (params.directive && params.directive->getName() == name) {
                 nameFound = true;
             }
         } while (params.type != TestExceptionEncounteredSender::ExceptionParams::Type::TIMEOUT && !nameFound);

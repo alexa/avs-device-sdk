@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -113,6 +113,8 @@ void DoNotDisturbCapabilityAgentTest::SetUp() {
     m_settingsStorage = std::make_shared<MockDeviceSettingStorage>();
     EXPECT_CALL(*m_settingsStorage, storeSetting(_, _, _)).WillRepeatedly(Return(true));
     EXPECT_CALL(*m_settingsStorage, updateSettingStatus(_, _)).WillRepeatedly(Return(true));
+    EXPECT_CALL(*m_settingsStorage, loadSetting(_))
+        .WillRepeatedly(Return(std::make_pair(SettingStatus::SYNCHRONIZED, "true")));
 
     m_dndCA = DoNotDisturbCapabilityAgent::create(
         m_customerDataManager, m_mockExceptionEncounteredSender, m_messageSender, m_settingsManager, m_settingsStorage);
@@ -155,24 +157,32 @@ void DoNotDisturbCapabilityAgentTest::TearDown() {
     }
 }
 
-TEST_F(DoNotDisturbCapabilityAgentTest, givenInvalidParameters_create_shouldFail) {
+TEST_F(DoNotDisturbCapabilityAgentTest, givenNullCustomerDataManager_create_shouldFail) {
     auto dndCA = DoNotDisturbCapabilityAgent::create(
         nullptr, m_mockExceptionEncounteredSender, m_messageSender, m_settingsManager, m_settingsStorage);
     EXPECT_THAT(dndCA, IsNull());
+}
 
-    dndCA = DoNotDisturbCapabilityAgent::create(
+TEST_F(DoNotDisturbCapabilityAgentTest, givenNullExceptionSender_create_shouldFail) {
+    auto dndCA = DoNotDisturbCapabilityAgent::create(
         m_customerDataManager, nullptr, m_messageSender, m_settingsManager, m_settingsStorage);
     EXPECT_THAT(dndCA, IsNull());
+}
 
-    dndCA = DoNotDisturbCapabilityAgent::create(
+TEST_F(DoNotDisturbCapabilityAgentTest, givenNullMessageSender_create_shouldFail) {
+    auto dndCA = DoNotDisturbCapabilityAgent::create(
         m_customerDataManager, m_mockExceptionEncounteredSender, nullptr, m_settingsManager, m_settingsStorage);
     EXPECT_THAT(dndCA, IsNull());
+}
 
-    dndCA = DoNotDisturbCapabilityAgent::create(
+TEST_F(DoNotDisturbCapabilityAgentTest, givenNullSettingsManager_create_shouldFail) {
+    auto dndCA = DoNotDisturbCapabilityAgent::create(
         m_customerDataManager, m_mockExceptionEncounteredSender, m_messageSender, nullptr, m_settingsStorage);
     EXPECT_THAT(dndCA, IsNull());
+}
 
-    dndCA = DoNotDisturbCapabilityAgent::create(
+TEST_F(DoNotDisturbCapabilityAgentTest, givenNullSettingsStorage_create_shouldFail) {
+    auto dndCA = DoNotDisturbCapabilityAgent::create(
         m_customerDataManager, m_mockExceptionEncounteredSender, m_messageSender, m_settingsManager, nullptr);
     EXPECT_THAT(dndCA, IsNull());
 }
@@ -257,6 +267,7 @@ TEST_F(DoNotDisturbCapabilityAgentTest, whileSendingChangedEvent_sendChangedFail
             } else if (request->getJsonContent().find(DND_REPORT_EVENT) != std::string::npos) {
                 eventMask <<= 1;
                 eventPromise.set_value(true);
+                request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS);
                 return;
             }
 

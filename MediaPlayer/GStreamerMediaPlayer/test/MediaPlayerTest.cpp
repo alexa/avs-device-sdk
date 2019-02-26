@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -1386,6 +1386,19 @@ TEST_F(MediaPlayerTest, resumeAfterPauseWithPendingPlay) {
     ASSERT_TRUE(m_playerObserver->waitForPlaybackResumed(sourceId));
 
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(sourceId));
+}
+
+/// Tests that playing continues until stop is called when repeat is on
+TEST_F(MediaPlayerTest, testRepeatPlayForUrl) {
+    bool repeat = true;
+    std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);
+    auto sourceId = m_mediaPlayer->setSource(url_single, std::chrono::milliseconds::zero(), repeat);
+    ASSERT_NE(ERROR_SOURCE_ID, sourceId);
+    ASSERT_TRUE(m_mediaPlayer->play(sourceId));
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted(sourceId));
+    ASSERT_FALSE(m_playerObserver->waitForPlaybackFinished(sourceId));
+    ASSERT_TRUE(m_mediaPlayer->stop(sourceId));
+    ASSERT_TRUE(m_playerObserver->waitForPlaybackStopped(sourceId));
 }
 
 }  // namespace test

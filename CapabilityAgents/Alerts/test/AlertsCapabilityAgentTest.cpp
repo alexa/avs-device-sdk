@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -144,10 +144,8 @@ public:
  * Test @c RendererInterface implementation to provide a valid instance for the initialization of other components.
  */
 class StubRenderer : public RendererInterface {
-    void setObserver(std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer) override {
-    }
-
     void start(
+        std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
         std::function<std::unique_ptr<std::istream>()> audioFactory,
         const std::vector<std::string>& urls,
         int loopCount,
@@ -363,7 +361,7 @@ void AlertsCapabilityAgentTest::testStartAlertWithContentVolume(
     m_alertsCA->onFocusChanged(otherChannel, avsCommon::avs::FocusState::BACKGROUND);
 
     // "Start" alert
-    m_alertsCA->onAlertStateChange("", AlertObserverInterface::State::STARTED, "");
+    m_alertsCA->onAlertStateChange("", "", AlertObserverInterface::State::STARTED, "");
 
     std::unique_lock<std::mutex> ulock(m_mutex);
     waitCV.wait_for(ulock, std::chrono::milliseconds(MAX_WAIT_TIME_MS));
@@ -391,7 +389,7 @@ TEST_F(AlertsCapabilityAgentTest, localAlertVolumeChangeNoAlert) {
  * Test local alert volume changes. With alert sounding. Must not send event, volume is treated as local.
  */
 TEST_F(AlertsCapabilityAgentTest, localAlertVolumeChangeAlertPlaying) {
-    m_alertsCA->onAlertStateChange("", AlertObserverInterface::State::STARTED, "");
+    m_alertsCA->onAlertStateChange("", "", AlertObserverInterface::State::STARTED, "");
 
     // We have to wait for the alert state to be processed before updating speaker settings.
     auto future = m_mockMessageSender->getNextMessage();
@@ -448,9 +446,9 @@ TEST_F(AlertsCapabilityAgentTest, avsAlertVolumeChangeAlertPlaying) {
         AVSDirective::create("", avsMessageHeader, VOLUME_PAYLOAD, attachmentManager, "");
 
     EXPECT_CALL(*(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, TEST_VOLUME_VALUE, _))
-        .Times(0);
+        .Times(1);
 
-    m_alertsCA->onAlertStateChange("", AlertObserverInterface::State::STARTED, "");
+    m_alertsCA->onAlertStateChange("", "", AlertObserverInterface::State::STARTED, "");
     auto future = m_mockMessageSender->getNextMessage();
     ASSERT_EQ(future.wait_for(std::chrono::milliseconds(MAX_WAIT_TIME_MS)), std::future_status::ready);
 

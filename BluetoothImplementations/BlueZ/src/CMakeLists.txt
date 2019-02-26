@@ -29,5 +29,14 @@ target_include_directories(BluetoothImplementationsBlueZ PUBLIC
 
 target_link_libraries(BluetoothImplementationsBlueZ "${GIO_LDFLAGS}" "sbc" AVSCommon)
 
+if (BLUETOOTH_BLUEZ_PULSEAUDIO_OVERRIDE_ENDPOINTS)
+    target_sources(BluetoothImplementationsBlueZ PRIVATE PulseAudioBluetoothInitializer.cpp)
+    target_include_directories(BluetoothImplementationsBlueZ PUBLIC
+        "${PULSEAUDIO_INCLUDE_DIRS}")
+    target_link_libraries(BluetoothImplementationsBlueZ "${PULSEAUDIO_LDFLAGS}")
+endif()
+
+
+
 # install target
 asdk_install()

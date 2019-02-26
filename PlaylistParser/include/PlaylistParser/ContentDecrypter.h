@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,7 +16,13 @@
 #ifndef ALEXA_CLIENT_SDK_PLAYLISTPARSER_INCLUDE_PLAYLISTPARSER_CONTENTDECRYPTER_H_
 #define ALEXA_CLIENT_SDK_PLAYLISTPARSER_INCLUDE_PLAYLISTPARSER_CONTENTDECRYPTER_H_
 
+#include <atomic>
+#include <memory>
+#include <string>
+#include <vector>
+
 #include <AVSCommon/AVS/Attachment/AttachmentWriter.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 
 #include "PlaylistParser/PlaylistParser.h"
 
@@ -29,21 +35,23 @@ typedef std::vector<unsigned char> ByteVector;
 /**
  * Helper class to decrypt downloaded media content.
  */
-class ContentDecrypter {
+class ContentDecrypter : public avsCommon::utils::RequiresShutdown {
 public:
     /**
      * Constructor
      *
-     * @param streamWriter The writer to write decrypted content.
      */
-    ContentDecrypter(std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> streamWriter);
+    ContentDecrypter();
 
     /**
      * Initializes media initialization section.
      *
      * @param mediaInitSection The Media initialization section.
+     * @param streamWriter The writer to write media init section.
      */
-    void writeMediaInitSection(const ByteVector& mediaInitSection);
+    void writeMediaInitSection(
+        const ByteVector& mediaInitSection,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> streamWriter);
 
     /**
      * Decrypts contents and writes to stream.
@@ -51,12 +59,14 @@ public:
      * @param encryptedContent The content that needs to be decrypted.
      * @param key The encryption key.
      * @param encryptionInfo The @c EncryptionInfo of the encrypted content.
+     * @param streamWriter The writer to write decrypted content.
      * @return @c true if decryption and write to stream is successful or @c false otherwise.
      */
     bool decryptAndWrite(
         const ByteVector& encryptedContent,
         const ByteVector& key,
-        const avsCommon::utils::playlistParser::EncryptionInfo& encryptionInfo);
+        const avsCommon::utils::playlistParser::EncryptionInfo& encryptionInfo,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> streamWriter);
 
     /**
      * Converts initialization vector from hex to byte array.
@@ -66,6 +76,11 @@ public:
      * @return @c true if conversion is successful or @c false if failed.
      */
     static bool convertIVToByteArray(const std::string& hexIV, ByteVector* ivByteArray);
+
+    /// @name RequiresShutdown methods.
+    /// @{
+    void doShutdown() override;
+    /// @}
 
 private:
     /**
@@ -111,9 +126,12 @@ private:
      * Writes result to stream.
      *
      * @param content The content to be written to stream.
+     * @param streamWriter The writer to write content.
      * @return @c true if conversion is successful or @c false if failed.
      */
-    bool writeToStream(const ByteVector& content);
+    bool writeToStream(
+        const ByteVector& content,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> streamWriter);
 
     /**
      *  Helper function to get more descriptive lib av errors
@@ -148,8 +166,8 @@ private:
     /// Media initialization section
     ByteVector m_mediaInitSection;
 
-    /// Stream writer
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> m_streamWriter;
+    /// Flag to indicate if a shutdown is occurring.
+    std::atomic<bool> m_shuttingDown;
 };
 
 }  // namespace playlistParser

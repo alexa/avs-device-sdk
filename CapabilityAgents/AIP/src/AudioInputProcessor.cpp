@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -286,6 +286,7 @@ void AudioInputProcessor::handleDirective(std::shared_ptr<DirectiveInfo> info) {
                         .d("reason", "unknownDirective")
                         .d("namespace", info->directive->getNamespace())
                         .d("name", info->directive->getName()));
+        removeDirective(info);
     }
 }
 
@@ -384,6 +385,7 @@ void AudioInputProcessor::handleExpectSpeechDirective(std::shared_ptr<DirectiveI
         ACSDK_ERROR(LX("handleExpectSpeechDirectiveFailed")
                         .d("reason", "missingJsonField")
                         .d("field", "timeoutInMilliseconds"));
+        removeDirective(info);
         return;
     }
 
@@ -420,6 +422,7 @@ void AudioInputProcessor::handleSetEndOfSpeechOffsetDirective(std::shared_ptr<Di
         ACSDK_ERROR(LX("handleSetEndOfSpeechOffsetDirective").d("missing", missing));
         info->result->setFailed("Missing parameter(s): " + missing);
     }
+    removeDirective(info);
 }
 
 void AudioInputProcessor::executePrepareEspPayload(const ESPData espData) {

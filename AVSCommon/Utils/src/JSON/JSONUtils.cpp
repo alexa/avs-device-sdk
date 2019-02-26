@@ -176,7 +176,10 @@ bool convertToValue(const rapidjson::Value& documentNode, uint64_t* value) {
     }
 
     if (!documentNode.IsUint64()) {
-        ACSDK_ERROR(LX("convertToUnsignedInt64ValueFailed").d("reason", "invalidValue").d("expectedValue", "Uint64"));
+        ACSDK_ERROR(LX("convertToUnsignedInt64ValueFailed")
+                        .d("reason", "invalidValue")
+                        .d("expectedValue", "Uint64")
+                        .d("type", documentNode.GetType()));
         return false;
     }
 
@@ -192,7 +195,11 @@ bool convertToValue(const rapidjson::Value& documentNode, int64_t* value) {
     }
 
     if (!documentNode.IsInt64()) {
-        ACSDK_ERROR(LX("convertToInt64ValueFailed").d("reason", "invalidValue").d("expectedValue", "Int64"));
+        ACSDK_ERROR(LX("convertToInt64ValueFailed")
+                        .d("reason", "invalidValue")
+                        .d("expectedValue", "Int64")
+                        .d("type", documentNode.GetType()));
+
         return false;
     }
 
@@ -208,7 +215,10 @@ bool convertToValue(const rapidjson::Value& documentNode, bool* value) {
     }
 
     if (!documentNode.IsBool()) {
-        ACSDK_ERROR(LX("convertToBoolValueFailed").d("reason", "invalidValue").d("expectedValue", "Bool"));
+        ACSDK_ERROR(LX("convertToBoolValueFailed")
+                        .d("reason", "invalidValue")
+                        .d("expectedValue", "Bool")
+                        .d("type", documentNode.GetType()));
         return false;
     }
 

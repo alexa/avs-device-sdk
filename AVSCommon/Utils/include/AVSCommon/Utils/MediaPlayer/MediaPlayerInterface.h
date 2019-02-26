@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -39,18 +39,17 @@ class MediaPlayerObserverInterface;
  * A @c MediaPlayerInterface allows for sourcing, playback control, navigation, and querying the state of media content.
  * A @c MediaPlayerInterface implementation must only handle one source at a time.
  *
- * Each playback controlling API call (i.e. @c play(), @c pause(), @c stop(),  @c resume()) which returns @c true will
- * result in a callback to the observer. If @c false is returned from these calls, no callback will occur. Callbacks
- * should not be made on the caller's thread prior to returning from a call.
+ * Each playback controlling API call (i.e. @c play(), @c pause(), @c stop(),  @c resume()) that succeeds will also
+ * result in a callback to the observer. To see how to tell when a method succeeded, please refer to the documentation
+ * of each method.
  *
  * An implementation can call @c onPlaybackError() at any time.  If an @c onPlaybackError() callback occurs while a
  * plaback controlling API call is waiting for a callback, the original callback must not be made, and the
- * implementation should rever to a stopped state.  Any subsequent operations after an @c onPlaybackError() callback
+ * implementation should revert to a stopped state.  Any subsequent operations after an @c onPlaybackError() callback
  * must be preceded by a new @c setSource() call.
  *
  * Implementations must make a call to @c onPlaybackStopped() with the previous @c SourceId when a new source is
- * set if the previous source was in a non-stopped state. Any calls to a @c MediaPlayerInterface after an @c
- * onPlaybackStopped() call will fail, as the MediaPlayer has "reset" its state.
+ * set if the previous source was in a non-stopped state.
  *
  * @c note A @c MediaPlayerInterface implementation must be able to support the various audio formats listed at:
  * https://developer.amazon.com/docs/alexa-voice-service/recommended-media-support.html.
@@ -93,13 +92,15 @@ public:
      *
      * @param url The url to set as the source.
      * @param offset An optional offset parameter to start playing from when a @c play() call is made.
+     * @param repeat An optional parameter to play the url source in a loop.
      *
      * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
      *     returned if the source failed to be set.
      */
     virtual SourceId setSource(
         const std::string& url,
-        std::chrono::milliseconds offset = std::chrono::milliseconds::zero()) = 0;
+        std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
+        bool repeat = false) = 0;
 
     /**
      * Set an @c istream source to play. The source should be set before making calls to any of the playback control

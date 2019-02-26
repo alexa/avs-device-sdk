@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -49,9 +49,8 @@ public:
     static std::shared_ptr<Renderer> create(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer);
 
-    void setObserver(std::shared_ptr<RendererObserverInterface> observer) override;
-
     void start(
+        std::shared_ptr<RendererObserverInterface> observer,
         std::function<std::unique_ptr<std::istream>()> audioFactory,
         const std::vector<std::string>& urls = std::vector<std::string>(),
         int loopCount = 0,
@@ -88,16 +87,10 @@ private:
      */
     /// @{
 
-    /*
-     * This function will handle setting an observer.
-     *
-     * @param observer The observer to set.
-     */
-    void executeSetObserver(std::shared_ptr<RendererObserverInterface> observer);
-
     /**
      * This function will start rendering audio for the currently active alert.
      *
+     * @param observer The observer that will receive renderer events.
      * @param audioFactory A function that produces a stream of audio that is used for the default if nothing
      * else is available.
      * @param urls A container of urls to be rendered per the above description.
@@ -105,6 +98,7 @@ private:
      * @param loopPauseInMilliseconds The number of milliseconds to pause between rendering url sequences.
      */
     void executeStart(
+        std::shared_ptr<RendererObserverInterface> observer,
         std::function<std::unique_ptr<std::istream>()> audioFactory,
         const std::vector<std::string>& urls,
         int loopCount,
@@ -269,6 +263,12 @@ private:
     /// A flag to capture if the renderer has been asked to stop by its owner. @c m_waitMutex must be locked when
     /// modifying this variable.
     bool m_isStopping;
+
+    /// A flag to indicate if last pause was interrupted and is not expected to continue.
+    bool m_pauseWasInterrupted;
+
+    /// A flag to indicate that renderer is going to start playing a new asset once the old one is stopped.
+    bool m_isStartPending;
 
     /// The condition variable used to wait for @c stop() or @c m_loopPause timeouts.
     std::condition_variable m_waitCondition;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,12 +36,14 @@ public:
      * @param pipeline The @c PipelineInterface through which the source of the @c AudioPipeline may be set.
      * @param attachmentReader The @c AttachmentReader from which to create the pipeline source from.
      * @param audioFormat The audioFormat to be used when playing raw PCM data.
+     * @param repeat A parameter indicating whether to play from the source in a loop.
      * @return An instance of the @c AttachmentReaderSource if successful else a @c nullptr.
      */
     static std::unique_ptr<AttachmentReaderSource> create(
         PipelineInterface* pipeline,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
-        const avsCommon::utils::AudioFormat* audioFormat);
+        const avsCommon::utils::AudioFormat* audioFormat,
+        bool repeat);
 
     ~AttachmentReaderSource();
 
@@ -56,10 +58,12 @@ private:
      *
      * @param pipeline The @c PipelineInterface through which the source of the @c AudioPipeline may be set.
      * @param attachmentReader The @c AttachmentReader from which to create the pipeline source from.
+     * @param repeat A parameter indicating whether to play from the source in a loop.
      */
     AttachmentReaderSource(
         PipelineInterface* pipeline,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader);
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+        bool repeat);
 
     /// @name Overridden BaseStreamSource methods.
     /// @{
@@ -77,6 +81,9 @@ private:
 private:
     /// The @c AttachmentReader to read audioData from.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_reader;
+
+    /// Indicates whether to play from the audio source in a loop.
+    const bool m_repeat;
 };
 
 }  // namespace mediaPlayer

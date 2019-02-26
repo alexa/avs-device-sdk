@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -58,7 +58,11 @@ public:
         std::shared_ptr<renderer::RendererInterface> alertRenderer,
         std::chrono::seconds alertPastDueTimeLimitSeconds);
 
-    void onAlertStateChange(const std::string& alertToken, State state, const std::string& reason = "") override;
+    void onAlertStateChange(
+        const std::string& alertToken,
+        const std::string& alertType,
+        State state,
+        const std::string& reason = "") override;
 
     /**
      * Initialization.
@@ -163,10 +167,11 @@ private:
      * A handler function which will be called by our internal executor when a managed alert changes state.
      *
      * @param alertToken The AVS token identifying the alert.
+     * @param alertType The type of alert.
      * @param state The state of the alert.
      * @param reason The reason the the state changed, if applicable.
      */
-    void executeOnAlertStateChange(std::string alertToken, State state, std::string reason);
+    void executeOnAlertStateChange(std::string alertToken, std::string alertType, State state, std::string reason);
 
     /**
      * Update an alert with the new schedule. This function cannot update an active alert (use snooze instead).
@@ -182,11 +187,13 @@ private:
      * A utility function which wraps the executor submission to notify our observer.
      *
      * @param alertToken The AVS token identifying the alert.
+     * @param alertType The type of the alert.
      * @param state The state of the alert.
      * @param reason The reason the the state changed, if applicable.
      */
     void notifyObserver(
         const std::string& alertToken,
+        const std::string& alertType,
         AlertObserverInterface::State state,
         const std::string& reason = "");
 
@@ -194,10 +201,15 @@ private:
      * A handler function which will be called by our internal executor when a managed alert changes state.
      *
      * @param alertToken The AVS token identifying the alert.
+     * @param alertType The type of the alert.
      * @param state The state of the alert.
      * @param reason The reason the the state changed, if applicable.
      */
-    void executeNotifyObserver(std::string alertToken, AlertObserverInterface::State state, std::string reason = "");
+    void executeNotifyObserver(
+        const std::string& alertToken,
+        const std::string& alertType,
+        AlertObserverInterface::State state,
+        const std::string& reason = "");
 
     /**
      * Utility function to set the timer for the next scheduled alert.  This function requires @c m_mutex be locked.
@@ -218,8 +230,9 @@ private:
      * Utility function to be called when an alert is ready to activate.
      *
      * @param alertToken The AVS token of the alert that should become active.
+     * @param alertType The type of the alert.
      */
-    void onAlertReady(const std::string& alertToken);
+    void onAlertReady(const std::string& alertToken, const std::string& alertType);
 
     /**
      * Utility function to query if a given alert is active.  This function requires @c m_mutex be locked.

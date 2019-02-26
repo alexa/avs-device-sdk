@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -80,7 +80,7 @@ public:
     SourceId setSource(
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
         const avsCommon::utils::AudioFormat* format) override;
-    SourceId setSource(const std::string& url, std::chrono::milliseconds offset) override;
+    SourceId setSource(const std::string& url, std::chrono::milliseconds offset, bool repeat) override;
     SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) override;
     bool play(SourceId id) override;
     bool stop(SourceId id) override;

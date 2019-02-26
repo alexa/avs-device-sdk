@@ -5,6 +5,7 @@
 # cmake <path-to-source> -DBLUETOOTH_BLUEZ
 
 option(BLUETOOTH_BLUEZ "Enable BlueZ implementation of the Bluetooth" OFF)
+option(BLUETOOTH_BLUEZ_PULSEAUDIO_OVERRIDE_ENDPOINTS "Override PulseAudio BlueZ Endpoints with SDK ones" OFF)
 
 if(BLUETOOTH_BLUEZ)
      message("Creating ${PROJECT_NAME} with BlueZ implementation of Bluetooth")
@@ -15,6 +16,11 @@ if(BLUETOOTH_BLUEZ)
      add_definitions(-DBLUETOOTH_BLUEZ)
      # When we have other implementations, add another definition to represent whether Bluetooth is enabled.
      # add_definitions(-DBLUETOOTH_ENABLED)
+
+    if(BLUETOOTH_BLUEZ_PULSEAUDIO_OVERRIDE_ENDPOINTS)
+        pkg_check_modules(PULSEAUDIO REQUIRED libpulse>=8.0)
+        add_definitions(-DBLUETOOTH_BLUEZ_PULSEAUDIO_OVERRIDE_ENDPOINTS)
+    endif()
 else()
     message ("Bluetooth implementation not supported")
 endif()

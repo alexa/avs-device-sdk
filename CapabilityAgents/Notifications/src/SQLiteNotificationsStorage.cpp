@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -66,6 +66,9 @@ static const std::string INDICATOR_STATE_NAME = "indicatorState";
 
 static const std::string CREATE_INDICATOR_STATE_TABLE_SQL_STRING =
     std::string("CREATE TABLE ") + INDICATOR_STATE_NAME + " (" + INDICATOR_STATE_NAME + " INT NOT NULL);";
+
+static const NotificationsStorageInterface::IndicatorState DEFAULT_INDICATOR_STATE =
+    NotificationsStorageInterface::IndicatorState::OFF;
 
 std::unique_ptr<SQLiteNotificationsStorage> SQLiteNotificationsStorage::create(
     const avsCommon::utils::configuration::ConfigurationNode& configurationRoot) {
@@ -252,45 +255,54 @@ bool SQLiteNotificationsStorage::peek(NotificationIndicator* notificationIndicat
 bool SQLiteNotificationsStorage::setIndicatorState(IndicatorState state) {
     std::lock_guard<std::mutex> lock{m_databaseMutex};
 
-    // first delete the old record, we only need to maintain one record of IndicatorState at a time.
-    std::string sqlString = "DELETE FROM " + INDICATOR_STATE_NAME + " WHERE ROWID IN (SELECT ROWID FROM " +
-                            INDICATOR_STATE_NAME + " limit 1);";
+    {
+        auto transaction = m_database.beginTransaction();
 
-    auto deleteStatement = m_database.createStatement(sqlString);
+        // first delete the old record, we only need to maintain one record of IndicatorState at a time.
+        std::string sqlString = "DELETE FROM " + INDICATOR_STATE_NAME + " WHERE ROWID IN (SELECT ROWID FROM " +
+                                INDICATOR_STATE_NAME + " limit 1);";
 
-    if (!deleteStatement) {
-        ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not create deleteStatement"));
-        return false;
-    }
+        auto deleteStatement = m_database.createStatement(sqlString);
 
-    if (!deleteStatement->step()) {
-        ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not perform step"));
-        return false;
-    }
+        if (!deleteStatement) {
+            ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not create deleteStatement"));
+            return false;
+        }
 
-    deleteStatement->finalize();
+        if (!deleteStatement->step()) {
+            ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not perform step"));
+            return false;
+        }
 
-    // we should only be storing one record in this table at any given time
-    sqlString = "INSERT INTO " + INDICATOR_STATE_NAME + " (" + INDICATOR_STATE_NAME + ") VALUES (?);";
+        deleteStatement->finalize();
 
-    auto insertStatement = m_database.createStatement(sqlString);
+        // we should only be storing one record in this table at any given time
+        sqlString = "INSERT INTO " + INDICATOR_STATE_NAME + " (" + INDICATOR_STATE_NAME + ") VALUES (?);";
 
-    if (!insertStatement) {
-        ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not create insertStatement"));
-        return false;
-    }
+        auto insertStatement = m_database.createStatement(sqlString);
 
-    if (!insertStatement->bindIntParameter(1, indicatorStateToInt(state))) {
-        ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not bind parameter"));
-        return false;
-    }
+        if (!insertStatement) {
+            ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not create insertStatement"));
+            return false;
+        }
 
-    if (!insertStatement->step()) {
-        ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not perform step"));
-        return false;
-    }
+        if (!insertStatement->bindIntParameter(1, indicatorStateToInt(state))) {
+            ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not bind parameter"));
+            return false;
+        }
 
-    insertStatement->finalize();
+        if (!insertStatement->step()) {
+            ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not perform step"));
+            return false;
+        }
+
+        insertStatement->finalize();
+
+        if (!transaction->commit()) {
+            ACSDK_ERROR(LX("setIndicatorStateFailed").m("Could not commit transaction"));
+            return false;
+        }
+    }  // Leaving transaction scope making it rollback if error occurred.
 
     return true;
 }
@@ -318,18 +330,24 @@ bool SQLiteNotificationsStorage::getIndicatorState(IndicatorState* state) {
     int stepResult = statement->getStepResult();
 
     if (stepResult != SQLITE_ROW) {
-        ACSDK_ERROR(LX("getIndicatorStateFailed").m("No records left in table"));
-        return false;
+        ACSDK_ERROR(
+            LX("getIndicatorStateFailed").d("reason", "No records in the table. Returning default indicator state."));
+        *state = DEFAULT_INDICATOR_STATE;
+        return true;
     }
 
-    *state = avsCommon::avs::intToIndicatorState(statement->getColumnInt(0));
-
-    if (IndicatorState::UNDEFINED == *state) {
-        ACSDK_ERROR(LX("getIndicatorStateFailed").m("Unknown indicator state retrieved from table"));
-        return false;
-    }
+    IndicatorState indicatorState = avsCommon::avs::intToIndicatorState(statement->getColumnInt(0));
 
     statement->finalize();
+
+    if (IndicatorState::UNDEFINED == indicatorState) {
+        ACSDK_ERROR(
+            LX("getIndicatorStateFailed")
+                .d("reason", "Unknown indicator state retrieved from the table. Returning default indicator state."));
+        indicatorState = DEFAULT_INDICATOR_STATE;
+    }
+
+    *state = indicatorState;
 
     return true;
 }

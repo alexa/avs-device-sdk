@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -68,7 +68,12 @@
 
 #endif
 
+#ifdef BLUETOOTH_BLUEZ
+#include <BlueZ/BlueZBluetoothDeviceManager.h>
+#endif
+
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
+#include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceManagerInterface.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
@@ -640,6 +645,25 @@ bool SampleApplication::initialize(
         postConnectSynchronizerFactory);
 
     /*
+     * Create the BluetoothDeviceManager to communicate with the Bluetooth stack.
+     */
+    std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> bluetoothDeviceManager;
+
+#ifdef BLUETOOTH_BLUEZ
+    auto eventBus = std::make_shared<avsCommon::utils::bluetooth::BluetoothEventBus>();
+
+#ifdef BLUETOOTH_BLUEZ_PULSEAUDIO_OVERRIDE_ENDPOINTS
+    /*
+     * Create PulseAudio initializer object. Subscribe to BLUETOOTH_DEVICE_MANAGER_INITIALIZED event before we create
+     * the BT Device Manager, otherwise may miss it.
+     */
+    m_pulseAudioInitializer = bluetoothImplementations::blueZ::PulseAudioBluetoothInitializer::create(eventBus);
+#endif
+
+    bluetoothDeviceManager = bluetoothImplementations::blueZ::BlueZBluetoothDeviceManager::create(eventBus);
+#endif
+
+    /*
      * Creating the DefaultClient - this component serves as an out-of-box default object that instantiates and "glues"
      * together all the modules.
      */
@@ -685,7 +709,8 @@ bool SampleApplication::initialize(
             transportFactory,
             firmwareVersion,
             true,
-            nullptr);
+            nullptr,
+            std::move(bluetoothDeviceManager));
 
     if (!client) {
         ACSDK_CRITICAL(LX("Failed to create default SDK client!"));
@@ -698,6 +723,8 @@ bool SampleApplication::initialize(
     client->addSpeakerManagerObserver(userInterfaceManager);
 
     client->addNotificationsObserver(userInterfaceManager);
+
+    client->addBluetoothDeviceObserver(userInterfaceManager);
 
     userInterfaceManager->configureSettingsNotifications(client->getSettingsManager());
 

@@ -44,11 +44,10 @@ public:
 
     /// @name BluetoothDeviceManagerInterface Functions
     /// @{
-
     std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothHostControllerInterface> getHostController() override;
     std::list<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>> getDiscoveredDevices()
         override;
-
+    std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> getEventBus() override;
     ///@}
 
 private:

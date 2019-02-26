@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@
 #include <AVSCommon/AVS/Requester.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPTargetInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
@@ -104,6 +105,8 @@ class Bluetooth
         , public avsCommon::utils::RequiresShutdown
         , public registrationManager::CustomerDataHandler {
 public:
+    using ObserverInterface = avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface;
+
     /**
      * An enum representing the streaming states.
      */
@@ -191,6 +194,20 @@ public:
     /// @{
     void clearData() override;
     /// @}
+
+    /**
+     * Adds a bluetooth device observer.
+     *
+     * @param observer The @c BluetoothDeviceObserverInterface to add.
+     */
+    void addObserver(std::shared_ptr<ObserverInterface> observer);
+
+    /**
+     * Removes a bluetooth device observer.
+     *
+     * @param observer The @c BluetoothDeviceObserverInterface to remove.
+     */
+    void removeObserver(std::shared_ptr<ObserverInterface> observer);
 
 protected:
     /// @name BluetoothEventBusListenerInterface Functions
@@ -582,6 +599,12 @@ private:
     void executeSendStreamingEnded(
         std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
 
+    /**
+     * Set device attributes for notifying the observers
+     */
+    ObserverInterface::DeviceAttributes generateDeviceAttributes(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
+
     /// Set of capability configurations that will get published using DCF
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
@@ -645,6 +668,9 @@ private:
 
     /// An executor used for serializing requests on the Bluetooth agent's own thread of execution.
     avsCommon::utils::threading::Executor m_executor;
+
+    /// Set of bluetooth device observers that will get notified on connects or disconnects.
+    std::unordered_set<std::shared_ptr<ObserverInterface>> m_observers;
 };
 
 /**

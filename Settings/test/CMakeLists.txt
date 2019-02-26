@@ -7,7 +7,7 @@ set(INCLUDE_PATH
     "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test"
     "${CertifiedSender_SOURCE_DIR}/test")
 
-set(TEST_DB_FILE "${DeviceSettings_SOURCE_DIR}/test/SQLiteDeviceSettingStorageTest.db")
+set(TEST_FOLDER "${DeviceSettings_SOURCE_DIR}/test")
 
 
-discover_unit_tests("${INCLUDE_PATH}" "DeviceSettings" "${TEST_DB_FILE}")
+discover_unit_tests("${INCLUDE_PATH}" "DeviceSettings" "${TEST_FOLDER}")

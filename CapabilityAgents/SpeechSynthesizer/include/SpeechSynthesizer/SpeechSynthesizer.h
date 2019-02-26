@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -171,6 +171,13 @@ private:
 
         /// A flag to indicate if setFailed() has been sent to the @c DirectiveSequencer.
         bool isSetFailedCalled;
+
+        /// A flag to indicate if playback has been initiated.
+        bool isPlaybackInitiated;
+
+        /// A flag to indicate that a cancel was requested but not yet processed, which may happen when a cancel
+        /// was called before playback started.
+        bool isDelayedCancel;
     };
 
     /**
@@ -245,11 +252,17 @@ private:
     void executeHandle(std::shared_ptr<DirectiveInfo> info);
 
     /**
-     * Cancel execution of a SpeechSynthesizer.Speak directive (on the @c m_executor thread).
+     * Cancel execution of a SpeechSynthesizer @c Speak directive (on the @c m_executor thread).
      *
      * @param info The directive to cancel.
      */
     void executeCancel(std::shared_ptr<DirectiveInfo> info);
+
+    /**
+     * Cancel execution of a SpeechSynthesize @c Speak directive (on the @c m_executor thread).
+     * @param speakInfo The speakInfoDirective to cancel.
+     */
+    void executeCancel(std::shared_ptr<SpeakDirectiveInfo> speakInfo);
 
     /**
      * Execute a change of state (on the @c m_executor thread). If the @c m_desiredState is @c PLAYING, playing the

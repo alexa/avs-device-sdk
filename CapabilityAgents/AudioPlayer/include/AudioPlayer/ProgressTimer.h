@@ -54,6 +54,11 @@ public:
          * Notification that it is time to send a ProgressReportIntervalElapsed event.
          */
         virtual void onProgressReportIntervalElapsed() = 0;
+
+        /**
+         * Destructor.
+         */
+        virtual ~ContextInterface() = default;
     };
 
     /// Delay value for no ProgressReportDelayElapsed notifications.
@@ -70,7 +75,7 @@ public:
     /**
      * Destructor.
      */
-    ~ProgressTimer();
+    virtual ~ProgressTimer();
 
     /**
      * Initialize for sending notifications that it is time to send a progress report.

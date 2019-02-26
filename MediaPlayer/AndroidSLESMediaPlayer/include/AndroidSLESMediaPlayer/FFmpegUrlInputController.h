@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -39,12 +39,14 @@ public:
      * @param playlistParser Pointer to a valid playlist parser used to fill up the @c Playlist.
      * @param url The playlist / media url that we would like to decode.
      * @param offset The audio input should start from the given offset.
+     * @param repeat The playlist should play in a loop if this is true.
      * @return A pointer to the @c FFmpegUrlInputReader if succeed; otherwise, @c nullptr.
      */
     static std::unique_ptr<FFmpegUrlInputController> create(
         std::shared_ptr<avsCommon::utils::playlistParser::IterativePlaylistParserInterface> playlistParser,
         const std::string& url,
-        const std::chrono::milliseconds& offset);
+        const std::chrono::milliseconds& offset,
+        bool repeat);
 
     /// @name FFmpegInputControllerInterface methods
     /// @{
@@ -52,6 +54,8 @@ public:
     bool hasNext() const override;
     bool next() override;
     /// @}
+
+    std::string getCurrentUrl() const;
 
     /**
      * Destructor.
@@ -63,11 +67,15 @@ private:
      * Constructor
      *
      * @param parser Pointer to a valid playlist parser used to parse the target URL.
+     * @param url The playlist / media url that we would like to decode.
      * @param offset The audio input should start from the given offset.
+     * @param repeat The playlist should play in a loop if this is true.
      */
     FFmpegUrlInputController(
         std::shared_ptr<avsCommon::utils::playlistParser::IterativePlaylistParserInterface> parser,
-        const std::chrono::milliseconds& offset);
+        const std::string& url,
+        const std::chrono::milliseconds& offset,
+        bool repeat);
 
     /**
      * Finds the first playlist entry. This is unique to the first audio track because of the initial offset logic.
@@ -82,11 +90,17 @@ private:
     /// The current url that we are parsing.
     std::string m_currentUrl;
 
+    /// The source url passed when creating the audio stream.
+    const std::string m_sourceUrl;
+
     /// Music should start playing from the given offset.
     std::chrono::milliseconds m_offset;
 
     /// Flag indicating whether playlist has finished. This is set in the last url received.
     bool m_done;
+
+    /// Flag indicating whether playlist should play in a loop.
+    const bool m_repeat;
 };
 
 }  // namespace android

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -60,7 +60,8 @@ static constexpr int NO_FLAGS{0};
 std::unique_ptr<FFmpegUrlInputController> FFmpegUrlInputController::create(
     std::shared_ptr<IterativePlaylistParserInterface> playlistParser,
     const std::string& url,
-    const std::chrono::milliseconds& offset) {
+    const std::chrono::milliseconds& offset,
+    bool repeat) {
     ACSDK_DEBUG5(LX("createUrlInput").sensitive("url", url).d("offset(ms)", offset.count()));
 
     if (!playlistParser) {
@@ -78,13 +79,18 @@ std::unique_ptr<FFmpegUrlInputController> FFmpegUrlInputController::create(
         return nullptr;
     }
 
-    auto controller = std::unique_ptr<FFmpegUrlInputController>(new FFmpegUrlInputController(playlistParser, offset));
+    auto controller =
+        std::unique_ptr<FFmpegUrlInputController>(new FFmpegUrlInputController(playlistParser, url, offset, repeat));
     if (!controller->findFirstEntry()) {
         ACSDK_ERROR(LX("createFailed").d("reason", "Empty playlist"));
         return nullptr;
     }
 
     return controller;
+}
+
+std::string FFmpegUrlInputController::getCurrentUrl() const {
+    return m_currentUrl;
 }
 
 bool FFmpegUrlInputController::hasNext() const {
@@ -107,6 +113,10 @@ bool FFmpegUrlInputController::next() {
     ACSDK_DEBUG5(LX("foundNext").sensitive("url", entry.url));
     m_done = entry.parseResult == PlaylistParseResult::FINISHED;
     m_currentUrl = entry.url;
+    if (m_done && m_repeat) {
+        m_parser->initializeParsing(m_sourceUrl);
+        m_done = false;
+    }
     return true;
 }
 
@@ -124,6 +134,10 @@ bool FFmpegUrlInputController::findFirstEntry() {
         }
 
         m_done = entry.parseResult == PlaylistParseResult::FINISHED;
+        if (m_done && m_repeat) {
+            m_parser->initializeParsing(m_sourceUrl);
+            m_done = false;
+        }
 
         // urls with an invalid duration can be caused by either a non playlist url or a url with incorrect metadata.
         if (entry.duration == INVALID_DURATION) {
@@ -165,10 +179,14 @@ FFmpegUrlInputController::~FFmpegUrlInputController() {
 
 FFmpegUrlInputController::FFmpegUrlInputController(
     std::shared_ptr<IterativePlaylistParserInterface> parser,
-    const std::chrono::milliseconds& offset) :
+    const std::string& url,
+    const std::chrono::milliseconds& offset,
+    bool repeat) :
         m_parser{parser},
+        m_sourceUrl{url},
         m_offset{offset},
-        m_done{false} {
+        m_done{false},
+        m_repeat{repeat} {
 }
 
 std::tuple<FFmpegInputControllerInterface::Result, std::shared_ptr<AVFormatContext>, std::chrono::milliseconds>

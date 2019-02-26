@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -197,8 +197,9 @@ public:
             avsCommon::sdkInterfaces::softwareInfo::INVALID_FIRMWARE_VERSION,
         bool sendSoftwareInfoOnConnected = false,
         std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver =
+            nullptr,
+        std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> bluetoothDeviceManager =
             nullptr);
-
     /// @name CapabilitiesObserverInterface Methods
     /// @{
     void onCapabilitiesStateChange(
@@ -232,6 +233,12 @@ public:
     void stopForegroundActivity();
 
     /**
+     * This function provides a way for application code to request this object stop any active alert as the result
+     * of a user action, such as pressing a physical 'stop' button on the device.
+     */
+    void localStopActiveAlert();
+
+    /**
      * Adds an observer to be notified of Alexa dialog related UX state.
      *
      * @param observer The observer to add.
@@ -250,6 +257,20 @@ public:
      */
     void removeAlexaDialogStateObserver(
         std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface> observer);
+
+    /**
+     * Adds an observer to be notified when a message arrives from AVS.
+     *
+     * @param observer The observer to add.
+     */
+    void addMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer);
+
+    /**
+     * Removes an observer to be notified when a message arrives from AVS.
+     *
+     * @param observer The observer to remove.
+     */
+    void removeMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer);
 
     /**
      * Adds an observer to be notified of connection status changes.
@@ -382,6 +403,22 @@ public:
      */
     void removeExternalMediaPlayerObserver(
         std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaPlayerObserverInterface> observer);
+
+    /**
+     * Adds an observer to be notified of bluetooth device changes.
+     *
+     * @param observer The @c BluetoothDeviceObserverInterface to add.
+     */
+    void addBluetoothDeviceObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface> observer);
+
+    /**
+     * Removes an observer to be notified of bluetooth device changes.
+     *
+     * @param observer The @c BluetoothDeviceObserverInterface to remove.
+     */
+    void removeBluetoothDeviceObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface> observer);
 
     /**
      * Calls the changeSetting function of Settings object.
@@ -541,6 +578,20 @@ public:
     std::shared_ptr<settings::DeviceSettingsManager> getSettingsManager();
 
     /**
+     * Adds an observer to be notified when the call state has changed.
+     *
+     * @param observer The observer to add.
+     */
+    void addCallStateObserver(std::shared_ptr<avsCommon::sdkInterfaces::CallStateObserverInterface> observer);
+
+    /**
+     * Removes an observer to be notified when the call state has changed.
+     *
+     * @param observer The observer to remove.
+     */
+    void removeCallStateObserver(std::shared_ptr<avsCommon::sdkInterfaces::CallStateObserverInterface> observer);
+
+    /**
      * Lets the caller know if Comms is enabled.
      *
      * @return True if comms is enabled.
@@ -656,7 +707,8 @@ private:
         std::shared_ptr<alexaClientSDK::acl::TransportFactoryInterface> transportFactory,
         avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
         bool sendSoftwareInfoOnConnected,
-        std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver);
+        std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver,
+        std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> bluetoothDeviceManager);
 
     /// The directive sequencer.
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> m_directiveSequencer;

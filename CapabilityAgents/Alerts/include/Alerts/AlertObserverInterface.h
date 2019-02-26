@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -60,10 +60,15 @@ public:
      * A callback function to notify an object that an alert has updated its state.
      *
      * @param alertToken The AVS token of the alert.
+     * @param alertType The type of the alert.
      * @param state The state of the alert.
      * @param reason The reason for the state change.
      */
-    virtual void onAlertStateChange(const std::string& alertToken, State state, const std::string& reason = "") = 0;
+    virtual void onAlertStateChange(
+        const std::string& alertToken,
+        const std::string& alertType,
+        State state,
+        const std::string& reason = "") = 0;
 
     /**
      * Convert a @c State to a @c std::string.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,6 +51,9 @@ static std::chrono::milliseconds TIMEOUT(1000);
 
 /// Timeout when waiting for clearTemplateCard.
 static std::chrono::milliseconds TEMPLATE_TIMEOUT(5000);
+
+/// Timeout when waiting for clearTemplateCard not called.
+static std::chrono::milliseconds TEMPLATE_NOT_CLEAR_TIMEOUT(2500);
 
 /// Timeout when waiting for clearTemplateCard.
 static std::chrono::milliseconds PLAYER_FINISHED_TIMEOUT(5000);
@@ -338,6 +341,7 @@ TEST_F(TemplateRuntimeTest, testUnknownDirective) {
         .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnSetCompleted));
 
     m_templateRuntime->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
+    m_templateRuntime->CapabilityAgent::handleDirective(MESSAGE_ID);
     m_wakeSetCompletedFuture.wait_for(TIMEOUT);
 }
 
@@ -369,6 +373,45 @@ TEST_F(TemplateRuntimeTest, testRenderTemplateDirective) {
     m_templateRuntime->onDialogUXStateChanged(
         avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE);
     m_wakeClearTemplateCardFuture.wait_for(TEMPLATE_TIMEOUT);
+}
+
+/**
+ * Tests RenderTemplate Directive. Expect that the renderTemplateCard callback will be called and clearTemplateCard will
+ * not be called if DialogUXState goes to IDLE state and then goes EXPECTING and SPEAKING state.
+ */
+TEST_F(TemplateRuntimeTest, testRenderTemplateDirectiveWillNotClearCardAfterGoingToExpectingStateAfterGoingToIDLE) {
+    // Create Directive.
+    auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(TEMPLATE.nameSpace, TEMPLATE.name, MESSAGE_ID);
+    std::shared_ptr<AVSDirective> directive =
+        AVSDirective::create("", avsMessageHeader, TEMPLATE_PAYLOAD, attachmentManager, "");
+
+    EXPECT_CALL(*m_mockGui, renderTemplateCard(TEMPLATE_PAYLOAD, _))
+        .Times(Exactly(1))
+        .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnRenderTemplateCard));
+    EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
+        .Times(Exactly(1))
+        .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnSetCompleted));
+    EXPECT_CALL(*m_mockGui, clearTemplateCard()).Times(Exactly(0));
+
+    m_templateRuntime->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
+    m_templateRuntime->CapabilityAgent::handleDirective(MESSAGE_ID);
+    m_wakeSetCompletedFuture.wait_for(TIMEOUT);
+    m_wakeRenderTemplateCardFuture.wait_for(TIMEOUT);
+
+    // first test IDLE->EXPECTING transition
+    m_templateRuntime->onDialogUXStateChanged(
+        avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE);
+    m_templateRuntime->onDialogUXStateChanged(
+        avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::EXPECTING);
+    EXPECT_EQ(m_wakeClearTemplateCardFuture.wait_for(TEMPLATE_NOT_CLEAR_TIMEOUT), std::future_status::timeout);
+
+    // now test IDLE->SPEAKING transition
+    m_templateRuntime->onDialogUXStateChanged(
+        avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE);
+    m_templateRuntime->onDialogUXStateChanged(
+        avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::SPEAKING);
+    EXPECT_EQ(m_wakeClearTemplateCardFuture.wait_for(TEMPLATE_NOT_CLEAR_TIMEOUT), std::future_status::timeout);
 }
 
 /**
@@ -481,6 +524,7 @@ TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveWithoutAudioItemId) {
         .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnSetCompleted));
 
     m_templateRuntime->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
+    m_templateRuntime->CapabilityAgent::handleDirective(MESSAGE_ID);
     m_wakeSetCompletedFuture.wait_for(TIMEOUT);
 }
 
@@ -501,6 +545,7 @@ TEST_F(TemplateRuntimeTest, testMalformedRenderPlayerInfoDirective) {
         .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnSetCompleted));
 
     m_templateRuntime->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
+    m_templateRuntime->CapabilityAgent::handleDirective(MESSAGE_ID);
     m_wakeSetCompletedFuture.wait_for(TIMEOUT);
 }
 

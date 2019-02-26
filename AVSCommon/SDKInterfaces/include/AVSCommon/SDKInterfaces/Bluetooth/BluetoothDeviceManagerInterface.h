@@ -21,6 +21,7 @@
 
 #include "AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceInterface.h"
 #include "AVSCommon/SDKInterfaces/Bluetooth/BluetoothHostControllerInterface.h"
+#include "AVSCommon/Utils/Bluetooth/BluetoothEventBus.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -54,6 +55,13 @@ public:
      */
     virtual std::list<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>>
     getDiscoveredDevices() = 0;
+
+    /**
+     * Get the @c BluetoothEventBus used by this device manager to post bluetooth related events.
+     *
+     * @return A @c BluetoothEventBus object associated with the device manager.
+     */
+    virtual std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> getEventBus() = 0;
 };
 
 }  // namespace bluetooth

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -131,10 +131,11 @@ AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
 
 AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
     const std::string& url,
-    std::chrono::milliseconds offset) {
+    std::chrono::milliseconds offset,
+    bool repeat) {
     std::shared_ptr<playlistParser::IterativePlaylistParser> playlistParser =
         playlistParser::IterativePlaylistParser::create(m_contentFetcherFactory);
-    auto input = FFmpegUrlInputController::create(playlistParser, url, offset);
+    auto input = FFmpegUrlInputController::create(playlistParser, url, offset, repeat);
     auto newId = configureNewRequest(std::move(input), playlistParser, offset);
     if (ERROR == newId) {
         ACSDK_ERROR(LX("setSourceFailed").d("type", "url").d("offset(ms)", offset.count()).sensitive("url", url));
@@ -435,6 +436,9 @@ std::unique_ptr<AndroidSLESMediaPlayer> AndroidSLESMediaPlayer::create(
 
     if (enableEqualizer) {
         if (!player->initializeEqualizer()) {
+            ACSDK_ERROR(LX("createFailed")
+                            .m("Equalizer does not seem to be supported in this environment. You should turn it "
+                               "off in the configuration by setting 'equalizer.enabled' value to false."));
             return nullptr;
         }
     }

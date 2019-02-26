@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,6 +36,11 @@ namespace mediaPlayer {
  *
  * @warning An observer should never call a method from the observed media player while handling a callback.
  * This may cause a deadlock while trying to re-acquire a mutex.
+ *
+ * @warning Be aware that there is a high risk of deadlock if the observer calls media player functions while holding
+ * an exclusive lock. The deadlock may happen because the call to media player functions may end up calling the same
+ * observer which will try to acquire the same lock that it already has. One way to avoid this issue is by using a
+ * recursive lock.
  */
 class MediaPlayerObserverInterface {
 public:

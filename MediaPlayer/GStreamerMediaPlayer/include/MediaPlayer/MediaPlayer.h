@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -87,8 +87,10 @@ public:
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
         const avsCommon::utils::AudioFormat* format = nullptr) override;
     SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) override;
-    SourceId setSource(const std::string& url, std::chrono::milliseconds offset = std::chrono::milliseconds::zero())
-        override;
+    SourceId setSource(
+        const std::string& url,
+        std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
+        bool repeat = false) override;
 
     bool play(SourceId id) override;
     bool stop(SourceId id) override;
@@ -309,11 +311,13 @@ private:
      * @param reader The @c AttachmentReader with which to receive the audio to play.
      * @param promise A promise to fulfill with a @c SourceId value once the source has been set.
      * @param audioFormat The audioFormat to be used to interpret raw audio data.
+     * @param repeat An optional parameter to indicate whether to play from the source in a loop.
      */
     void handleSetAttachmentReaderSource(
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader,
         std::promise<SourceId>* promise,
-        const avsCommon::utils::AudioFormat* audioFormat = nullptr);
+        const avsCommon::utils::AudioFormat* audioFormat = nullptr,
+        bool repeat = false);
 
     /**
      * Worker thread handler for setting the source of audio to play.
@@ -321,8 +325,13 @@ private:
      * @param url The url to set as the source.
      * @param offset The offset from which to start streaming from.
      * @param promise A promise to fulfill with a @c SourceId value once the source has been set.
+     * @param repeat A parameter to indicate whether to play from the url source in a loop.
      */
-    void handleSetUrlSource(const std::string& url, std::chrono::milliseconds offset, std::promise<SourceId>* promise);
+    void handleSetUrlSource(
+        const std::string& url,
+        std::chrono::milliseconds offset,
+        std::promise<SourceId>* promise,
+        bool repeat);
 
     /**
      * Worker thread handler for setting the source of audio to play.
@@ -513,9 +522,11 @@ private:
     static gboolean onErrorCallback(gpointer pointer);
 
     /**
-     * Save offset of stream before we teardown the pipeline.
+     * Get the current offset of the stream.
+     *
+     * @return The current stream offset in milliseconds.
      */
-    void saveOffsetBeforeTeardown();
+    std::chrono::milliseconds getCurrentStreamOffset();
 
     /**
      * Destructs the @c m_source with proper steps.

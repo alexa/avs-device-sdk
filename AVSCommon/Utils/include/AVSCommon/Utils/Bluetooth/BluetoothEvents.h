@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,7 +41,10 @@ enum class BluetoothEventType {
     STREAMING_STATE_CHANGED,
 
     /// Represents when an AVRCP command has been received.
-    AVRCP_COMMAND_RECEIVED
+    AVRCP_COMMAND_RECEIVED,
+
+    /// When the BluetoothDeviceManager has initialized.
+    BLUETOOTH_DEVICE_MANAGER_INITIALIZED
 };
 
 /// Helper struct to allow enum class to be a key in collections
@@ -302,6 +305,18 @@ inline AVRCPCommandReceivedEvent::AVRCPCommandReceivedEvent(
             MediaStreamingState::IDLE,
             nullptr,
             std::make_shared<avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand>(command)) {
+}
+
+/**
+ * Event indicating that the BluetoothDeviceManager has finished initialization. This should only be sent once.
+ */
+class BluetoothDeviceManagerInitializedEvent : public BluetoothEvent {
+public:
+    explicit BluetoothDeviceManagerInitializedEvent();
+};
+
+inline BluetoothDeviceManagerInitializedEvent::BluetoothDeviceManagerInitializedEvent() :
+        BluetoothEvent(BluetoothEventType::BLUETOOTH_DEVICE_MANAGER_INITIALIZED) {
 }
 
 }  // namespace bluetooth

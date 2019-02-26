@@ -1,5 +1,49 @@
 ## ChangeLog
 
+### v1.12.0 released 02/25/2019:
+
+**Enhancements**
+
+* Support was added for the `fr_CA` locale.
+* The Executor has been optimized to run a single thread when there are active job in the queue, and to remain idle when there are not active jobs.
+* An additional parameter of `alertType` has been added to the Alerts capability agent. This will allow observers of alerts to know the type of alert being delivered.
+* Support for programmatic unload and load of PulseAudio Bluetooth modules was added. To enable this feature, there is a [new CMake option](https://github.com/alexa/avs-device-sdk/wiki/CMake-parameters#bluetooth): `BLUETOOTH_BLUEZ_PULSEAUDIO_OVERRIDE_ENDPOINTS`. Note that [libpulse-dev is a required dependency](https://github.com/alexa/avs-device-sdk/wiki/Dependencies#bluetooth) of this feature.
+* An observer interface was added for when an active Bluetooth device connects and disconnects.
+* The `BluetoothDeviceManagerInterface` instantiation was moved from `DefaultClient` to `SampleApp` to allow applications to override it.
+* The `MediaPlayerInterface` now supports repeating playback of URL sources.
+* The Kitt.AI wake word engine (WWE) is now compatible with GCC5+.
+* Stop of ongoing alerts, management of MessageObservers, and management of CallStateObservers have been exposed through DefaultClient.
+
+**Bug Fixes**
+
+* [Issue 953](https://github.com/alexa/avs-device-sdk/issues/953) - The `MediaPlayerInterface` requirement that callbacks not be made upon a callers thread has been removed.
+* [Issue 1136](https://github.com/alexa/avs-device-sdk/issues/1136) - Added a missing default virtual destructor.
+* [Issue 1140](https://github.com/alexa/avs-device-sdk/issues/1140) - Fixed an issue where DND states were not synchronized to the AVS cloud after device reset.
+* [Issue 1143](https://github.com/alexa/avs-device-sdk/issues/1143) - Fixed an issue in which the SpeechSynthesizer couldn't enter a sleeping state.
+* [Issue 1183](https://github.com/alexa/avs-device-sdk/issues/1183) - Fixed an issue where alarm is not sounding for certain timezones
+* Changing an alert's volume from the Alexa app now works when an alert is playing.
+* Added missing shutdown handling for ContentDecrypter to prevent the `Stop` command from triggering a crash when SAMPLE-AES encrypted content was streaming.
+* Fixed a bug where if the Notifications database is empty, due to a crash or corruption, the SDK initialization process enters an infinite loop when it retries to get context from the Notifications capability agent.
+* Fixed a race condition that caused `AlertsRenderer` observers to miss notification that an alert has been completed.
+
+**Known Issues**
+
+* `PlaylistParser` and `IterativePlaylistParser` generate two HTTP requests (one to fetch the content type, and one to fetch the audio data) for each audio stream played.
+* Music playback history isn't being displayed in the Alexa app for certain account and device types.
+* On GCC 8+, issues related to `-Wclass-memaccess` will trigger warnings. However, this won't cause the build to fail and these warnings can be ignored.
+* Android error ("libDefaultClient.so" not found) can be resolved by upgrading to ADB version 1.0.40
+* When network connection is lost, lost connection status is not returned via local TTS.
+* `ACL` may encounter issues if audio attachments are received but not consumed.
+* `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
+* The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.
+* Connecting a product to streaming media via Bluetooth will sometimes stop media playback within the source application. Resuming playback through the source application or toggling next/previous will correct playback.
+* When a source device is streaming silence via Bluetooth, the Alexa app indicates that audio content is streaming.
+* The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation is not yet supported.
+* On some products, interrupted Bluetooth playback may not resume if other content is locally streamed.
+* `make integration` is currently not available for Android. In order to run integration tests on Android, you'll need to manually upload the test binary file along with any input file. At that point, the adb can be used to run the integration tests.
+* On Raspberry Pi running Android Things with HDMI output audio, beginning of speech is truncated when Alexa responds to user text-to-speech (TTS).
+* When the sample app is restarted and network connection is lost, Reminder TTS does not play. Instead, the default alarm tone will play twice.
+
 ### v1.11.0 released 12/19/2018:
 
 **Enhancements**

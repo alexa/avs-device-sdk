@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -97,8 +97,10 @@ public:
         return m_stopRetVal;
     }
 
-    SourceId setSource(const std::string& url, std::chrono::milliseconds offset = std::chrono::milliseconds::zero())
-        override {
+    SourceId setSource(
+        const std::string& url,
+        std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
+        bool repeat = false) override {
         return m_sourceIdRetVal;
     }
 
@@ -145,19 +147,16 @@ RendererTest::RendererTest() :
         m_observer{std::make_shared<MockRendererObserver>()},
         m_mediaPlayer{TestMediaPlayer::create()},
         m_renderer{Renderer::create(m_mediaPlayer)} {
-    m_renderer->setObserver(m_observer);
 }
 
 RendererTest::~RendererTest() {
-    m_mediaPlayer->setObserver(nullptr);
     m_mediaPlayer.reset();
 }
 
 void RendererTest::SetUpTest() {
     std::function<std::unique_ptr<std::istream>()> audioFactory = RendererTest::audioFactoryFunc;
     std::vector<std::string> urls = {TEST_URL1, TEST_URL2};
-    m_renderer->setObserver(m_observer);
-    m_renderer->start(audioFactory, urls, TEST_LOOP_COUNT, TEST_LOOP_PAUSE);
+    m_renderer->start(m_observer, audioFactory, urls, TEST_LOOP_COUNT, TEST_LOOP_PAUSE);
 }
 
 void RendererTest::TearDown() {
@@ -202,6 +201,9 @@ TEST_F(RendererTest, stop) {
  */
 TEST_F(RendererTest, stopError) {
     SetUpTest();
+    m_renderer->onPlaybackStarted(TEST_SOURCE_ID_GOOD);
+    ASSERT_TRUE(m_observer->waitFor(RendererObserverInterface::State::STARTED));
+
     m_mediaPlayer->setStopRetVal(false);
 
     m_renderer->stop();
@@ -236,21 +238,6 @@ TEST_F(RendererTest, onPlaybackStopped) {
 
     /// should stop if the source is good
     m_renderer->onPlaybackStopped(TEST_SOURCE_ID_GOOD);
-    ASSERT_TRUE(m_observer->waitFor(RendererObserverInterface::State::STOPPED));
-}
-
-/**
- * Test if the Renderer correctly handles Playback finishing
- */
-TEST_F(RendererTest, onPlaybackFinished) {
-    avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId blankSourceId{};
-
-    /// shouldn't finish if the source is bad
-    m_renderer->onPlaybackFinished(TEST_SOURCE_ID_BAD);
-    ASSERT_FALSE(m_observer->waitFor(RendererObserverInterface::State::STOPPED));
-
-    /// should finish if the source is good
-    m_renderer->onPlaybackFinished(blankSourceId);
     ASSERT_TRUE(m_observer->waitFor(RendererObserverInterface::State::STOPPED));
 }
 
@@ -297,12 +284,11 @@ TEST_F(RendererTest, onPlaybackError) {
 TEST_F(RendererTest, emptyURLNonZeroLoopPause) {
     std::function<std::unique_ptr<std::istream>()> audioFactory = RendererTest::audioFactoryFunc;
     std::vector<std::string> urls;
-    m_renderer->setObserver(m_observer);
 
     // pass empty URLS with 10s pause and no loop count
     // this simulates playing a default alarm audio on background
     // it is expected to renderer to play the alert sound continuously at loop pause intervals
-    m_renderer->start(audioFactory, urls, TEST_LOOP_COUNT, TEST_BACKGROUND_LOOP_PAUSE);
+    m_renderer->start(m_observer, audioFactory, urls, TEST_LOOP_COUNT, TEST_BACKGROUND_LOOP_PAUSE);
 
     // mediaplayer starts playing the alarm audio, in this case audio is of 0 length
     m_renderer->onPlaybackStarted(TEST_SOURCE_ID_GOOD);

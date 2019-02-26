@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -974,7 +974,8 @@ TEST_F(AudioInputProcessorTest, DISABLED_tapToTalkJoke) {
     }
 }
 
-TEST_F(AudioInputProcessorTest, tapToTalkTimeOpus) {
+// ACSDK-2410 Disable this test temporarily due to running into issues with Raspberry Pi
+TEST_F(AudioInputProcessorTest, DISABLED_tapToTalkTimeOpus) {
     m_compatibleAudioFormat.sampleRateHz = COMPATIBLE_SAMPLE_RATE_OPUS_32;
     m_compatibleAudioFormat.numChannels = COMPATIBLE_NUM_CHANNELS;
     m_compatibleAudioFormat.endianness = COMPATIBLE_ENDIANNESS;

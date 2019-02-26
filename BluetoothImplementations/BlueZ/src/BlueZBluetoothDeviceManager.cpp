@@ -22,8 +22,7 @@ namespace bluetoothImplementations {
 namespace blueZ {
 
 using namespace avsCommon::sdkInterfaces::bluetooth;
-using namespace avsCommon::sdkInterfaces::bluetooth::services;
-using namespace avsCommon::utils;
+using namespace avsCommon::utils::bluetooth;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG{"BlueZBluetoothDeviceManager"};
@@ -44,7 +43,7 @@ std::list<std::shared_ptr<BluetoothDeviceInterface>> BlueZBluetoothDeviceManager
 }
 
 std::unique_ptr<BlueZBluetoothDeviceManager> BlueZBluetoothDeviceManager::create(
-    std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus) {
+    std::shared_ptr<BluetoothEventBus> eventBus) {
     auto deviceManager = BlueZDeviceManager::create(eventBus);
     if (!deviceManager) {
         return nullptr;
@@ -60,6 +59,10 @@ BlueZBluetoothDeviceManager::~BlueZBluetoothDeviceManager() {
     ACSDK_DEBUG5(LX(__func__));
     m_deviceManager->shutdown();
 };
+
+std::shared_ptr<BluetoothEventBus> BlueZBluetoothDeviceManager::getEventBus() {
+    return m_deviceManager->getEventBus();
+}
 
 }  // namespace blueZ
 }  // namespace bluetoothImplementations

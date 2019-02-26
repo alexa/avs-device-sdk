@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,6 +36,10 @@
 #include <MediaPlayer/MediaPlayer.h>
 #elif defined(ANDROID_MEDIA_PLAYER)
 #include <AndroidSLESMediaPlayer/AndroidSLESMediaPlayer.h>
+#endif
+
+#ifdef BLUETOOTH_BLUEZ_PULSEAUDIO_OVERRIDE_ENDPOINTS
+#include <BlueZ/PulseAudioBluetoothInitializer.h>
 #endif
 
 #include <CapabilitiesDelegate/CapabilitiesDelegate.h>
@@ -235,6 +239,11 @@ private:
 #if defined(ANDROID_MEDIA_PLAYER) || defined(ANDROID_MICROPHONE)
     /// The android OpenSL ES engine used to create media players and microphone.
     std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESEngine> m_openSlEngine;
+#endif
+
+#ifdef BLUETOOTH_BLUEZ_PULSEAUDIO_OVERRIDE_ENDPOINTS
+    /// Iniitalizer object to reload PulseAudio Bluetooth modules.
+    std::shared_ptr<bluetoothImplementations::blueZ::PulseAudioBluetoothInitializer> m_pulseAudioInitializer;
 #endif
 };
 

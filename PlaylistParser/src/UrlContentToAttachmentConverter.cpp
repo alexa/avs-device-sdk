@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -83,7 +83,7 @@ UrlContentToAttachmentConverter::UrlContentToAttachmentConverter(
     m_startStreamingPointFuture = m_startStreamingPointPromise.get_future();
     m_stream = std::make_shared<InProcessAttachment>(url);
     m_streamWriter = m_stream->createWriter(avsCommon::utils::sds::WriterPolicy::BLOCKING);
-    m_contentDecrypter = std::make_shared<ContentDecrypter>(m_streamWriter);
+    m_contentDecrypter = std::make_shared<ContentDecrypter>();
 }
 
 std::chrono::milliseconds UrlContentToAttachmentConverter::getStartStreamingPoint() {
@@ -118,7 +118,9 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
                 notifyError();
                 return;
             }
-            m_contentDecrypter->writeMediaInitSection(mediaInitSection);
+            if (!m_shuttingDown) {
+                m_contentDecrypter->writeMediaInitSection(mediaInitSection, m_streamWriter);
+            }
         });
         return;
     }
@@ -208,7 +210,7 @@ bool UrlContentToAttachmentConverter::writeDecryptedUrlContentIntoStream(
             return false;
         }
 
-        if (!m_contentDecrypter->decryptAndWrite(content, key, encryptionInfo)) {
+        if (!m_shuttingDown && !m_contentDecrypter->decryptAndWrite(content, key, encryptionInfo, m_streamWriter)) {
             ACSDK_ERROR(LX("writeDecryptedUrlContentIntoStreamFailed").d("reason", "decryptAndWriteFailed"));
             return false;
         }
@@ -262,7 +264,7 @@ bool UrlContentToAttachmentConverter::readContent(std::shared_ptr<AttachmentRead
     ByteVector contentRead;
     ByteVector buffer(CHUNK_SIZE, 0);
     bool streamClosed = false;
-    while (!streamClosed) {
+    while (!streamClosed && !m_shuttingDown) {
         auto bytesRead = reader->read(buffer.data(), buffer.size(), &readStatus);
         switch (readStatus) {
             case AttachmentReader::ReadStatus::CLOSED:
@@ -329,7 +331,9 @@ void UrlContentToAttachmentConverter::doShutdown() {
         m_observer.reset();
     }
     m_shuttingDown = true;
+    m_contentDecrypter->shutdown();
     m_executor.shutdown();
+    m_contentDecrypter.reset();
     m_playlistParser->shutdown();
     m_playlistParser.reset();
     m_streamWriter->close();

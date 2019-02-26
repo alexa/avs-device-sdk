@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -602,6 +602,8 @@ void Bluetooth::doShutdown() {
 
     m_deviceManager.reset();
     m_eventBus.reset();
+
+    m_observers.clear();
 }
 
 std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> Bluetooth::getCapabilityConfigurations() {
@@ -1360,9 +1362,15 @@ bool Bluetooth::executeUnpairDevice(const std::string& uuid) {
         return false;
     }
 
+    // If the device is connected, disconnect it before unpairing
+    if (device->isConnected()) {
+        executeDisconnectDevice(uuid);
+    }
+
     if (executeFunctionOnDevice(device, &BluetoothDeviceInterface::unpair)) {
         m_lastPairMac.clear();
         m_activeDevice.reset();
+
         executeSendUnpairDeviceSucceeded(device);
         return true;
     } else {
@@ -1455,6 +1463,11 @@ void Bluetooth::executeOnDeviceConnect(std::shared_ptr<BluetoothDeviceInterface>
 
     m_activeDevice = device;
 
+    // Notify observers when a bluetooth device is connected.
+    for (const auto& observer : m_observers) {
+        observer->onActiveDeviceConnected(generateDeviceAttributes(m_activeDevice));
+    }
+
     std::string uuid;
     if (!retrieveUuid(device->getMac(), &uuid)) {
         ACSDK_ERROR(LX(__func__).d("reason", "retrieveUuidFailed"));
@@ -1485,6 +1498,12 @@ void Bluetooth::executeOnDeviceDisconnect(avsCommon::avs::Requester requester) {
     }
 
     auto device = m_activeDevice;
+
+    // Notify observers when a bluetooth device is disconnected.
+    for (const auto& observer : m_observers) {
+        observer->onActiveDeviceDisconnected(generateDeviceAttributes(m_activeDevice));
+    }
+
     m_activeDevice.reset();
     executeSendDisconnectDeviceSucceeded(device, requester);
 }
@@ -2080,6 +2099,34 @@ void Bluetooth::setCurrentStream(std::shared_ptr<avsCommon::utils::bluetooth::Fo
             m_mediaStream.reset();
         }
     }
+}
+
+void Bluetooth::addObserver(std::shared_ptr<ObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+    m_executor.submit([this, observer]() { m_observers.insert(observer); });
+}
+
+void Bluetooth::removeObserver(std::shared_ptr<ObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("removeObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+    m_executor.submit([this, observer]() { m_observers.erase(observer); });
+}
+
+Bluetooth::ObserverInterface::DeviceAttributes Bluetooth::generateDeviceAttributes(
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device) {
+    BluetoothDeviceObserverInterface::DeviceAttributes deviceAttributes;
+
+    deviceAttributes.name = device->getFriendlyName();
+    for (const auto& supportedServices : device->getSupportedServices()) {
+        deviceAttributes.supportedServices.insert(supportedServices->getName());
+    }
+
+    return deviceAttributes;
 }
 
 // Conceptually these are actions that are initiated by the peer device.
