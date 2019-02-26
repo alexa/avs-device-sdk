@@ -1,7 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceManagerInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceManagerInterface.h">
 <area shape="rect" id="node2" href="$_blue_z_bluetooth_device_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/include/BlueZ/BlueZBluetooth\lDeviceManager.h" alt="" coords="195,232,435,297"/>
-<area shape="rect" id="node4" href="$_blue_z_device_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/include/BlueZ/BlueZDeviceManager.h" alt="" coords="916,125,1202,177"/>
+<area shape="rect" id="node4" href="$_blue_z_device_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/include/BlueZ/BlueZDeviceManager.h" alt="" coords="1040,125,1326,177"/>
 <area shape="rect" id="node15" href="$_bluetooth_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Bluetooth/include/Bluetooth\l/Bluetooth.h" alt="" coords="2319,119,2506,184"/>
+<area shape="rect" id="node22" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="2352,745,2632,784"/>
 <area shape="rect" id="node3" href="$_blue_z_bluetooth_device_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZBluetoothDeviceManager.cpp" alt="" coords="5,345,299,397"/>
 <area shape="rect" id="node5" href="$_media_endpoint_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/include/BlueZ/MediaEndpoint.h" alt="" coords="510,239,758,291"/>
 <area shape="rect" id="node6" href="$_blue_z_a2_d_p_source_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZA2DPSource.cpp" alt="" coords="324,345,546,397"/>
@@ -15,14 +16,13 @@
 <area shape="rect" id="node8" href="$_media_endpoint_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/MediaEndpoint.cpp" alt="" coords="570,345,775,397"/>
 <area shape="rect" id="node16" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="2299,232,2526,297"/>
 <area shape="rect" id="node27" href="$_bluetooth_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Bluetooth/src/Bluetooth.cpp" alt="" coords="2550,239,2738,291"/>
-<area shape="rect" id="node17" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="2146,345,2374,397"/>
-<area shape="rect" id="node18" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="2300,445,2523,497"/>
-<area shape="rect" id="node25" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="2452,345,2666,397"/>
-<area shape="rect" id="node19" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="2075,545,2294,597"/>
-<area shape="rect" id="node24" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="2317,545,2524,597"/>
-<area shape="rect" id="node20" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="2075,645,2294,697"/>
-<area shape="rect" id="node23" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="2318,645,2520,697"/>
-<area shape="rect" id="node21" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="2085,745,2284,784"/>
-<area shape="rect" id="node22" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="2363,745,2643,784"/>
-<area shape="rect" id="node26" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="2597,452,2873,491"/>
+<area shape="rect" id="node17" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="2081,345,2309,397"/>
+<area shape="rect" id="node18" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="2232,445,2455,497"/>
+<area shape="rect" id="node25" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="2385,345,2600,397"/>
+<area shape="rect" id="node19" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="2007,545,2226,597"/>
+<area shape="rect" id="node24" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="2249,545,2456,597"/>
+<area shape="rect" id="node20" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="2007,645,2226,697"/>
+<area shape="rect" id="node23" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="2250,645,2452,697"/>
+<area shape="rect" id="node21" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="2017,745,2216,784"/>
+<area shape="rect" id="node26" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="2529,452,2805,491"/>
 </map>

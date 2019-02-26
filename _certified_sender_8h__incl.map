@@ -1,17 +1,16 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CertifiedSender/include/CertifiedSender/CertifiedSender.h" name="/workplace/avs&#45;device&#45;sdk/CertifiedSender/include/CertifiedSender/CertifiedSender.h">
-<area shape="rect" id="node2" href="$_message_storage_interface_8h.html" title="CertifiedSender/MessageStorage\lInterface.h" alt="" coords="1363,292,1581,331"/>
-<area shape="rect" id="node6" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="698,212,947,237"/>
-<area shape="rect" id="node18" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="1603,205,1837,244"/>
-<area shape="rect" id="node19" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="960,292,1208,331"/>
-<area shape="rect" id="node21" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="751,119,942,157"/>
-<area shape="rect" id="node22" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2120,292,2307,331"/>
-<area shape="rect" id="node24" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2546,119,2740,157"/>
-<area shape="rect" id="node33" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="1928,292,2096,331"/>
-<area shape="rect" id="node34" href="$_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="2029,205,2203,244"/>
-<area shape="rect" id="node11" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="147,292,349,331"/>
-<area shape="rect" id="node16" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="373,292,619,331"/>
-<area shape="rect" id="node15" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="99,379,261,417"/>
-<area shape="rect" id="node20" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="1606,292,1803,331"/>
-<area shape="rect" id="node27" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2411,205,2605,244"/>
-<area shape="rect" id="node29" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="2680,292,2875,331"/>
+<area shape="rect" id="node2" href="$_message_storage_interface_8h.html" title="CertifiedSender/MessageStorage\lInterface.h" alt="" coords="600,205,819,244"/>
+<area shape="rect" id="node6" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="277,212,526,237"/>
+<area shape="rect" id="node18" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="844,119,1078,157"/>
+<area shape="rect" id="node19" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="5,205,253,244"/>
+<area shape="rect" id="node21" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="365,119,555,157"/>
+<area shape="rect" id="node22" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1522,205,1710,244"/>
+<area shape="rect" id="node24" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1909,119,2104,157"/>
+<area shape="rect" id="node32" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="1165,205,1333,244"/>
+<area shape="rect" id="node33" href="$_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="1216,119,1390,157"/>
+<area shape="rect" id="node11" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="549,292,750,331"/>
+<area shape="rect" id="node16" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="278,292,525,331"/>
+<area shape="rect" id="node15" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="708,379,870,417"/>
+<area shape="rect" id="node20" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="894,205,1091,244"/>
+<area shape="rect" id="node30" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1909,205,2104,244"/>
 </map>

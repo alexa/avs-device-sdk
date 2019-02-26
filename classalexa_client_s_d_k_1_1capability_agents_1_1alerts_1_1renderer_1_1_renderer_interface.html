@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.11.0</span>
+   &#160;<span id="projectnumber">1.12.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -89,10 +89,8 @@ Inheritance diagram for alexaClientSDK::capabilityAgents::alerts::renderer::Rend
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae6332383bc135c8efa45e04504e0d75b"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#ae6332383bc135c8efa45e04504e0d75b">~RendererInterface</a> ()=default</td></tr>
 <tr class="separator:ae6332383bc135c8efa45e04504e0d75b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafa4aed9ce60d2e8b18b537d71ccd598"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#aafa4aed9ce60d2e8b18b537d71ccd598">setObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">capabilityAgents::alerts::renderer::RendererObserverInterface</a> &gt; observer)=0</td></tr>
-<tr class="separator:aafa4aed9ce60d2e8b18b537d71ccd598"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f588f2407ae119a951126ff2b7fe74f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#a2f588f2407ae119a951126ff2b7fe74f">start</a> (std::function&lt; std::unique_ptr&lt; std::istream &gt;()&gt; audioFactory, const std::vector&lt; std::string &gt; &amp;urls=std::vector&lt; std::string &gt;(), int loopCount=0, std::chrono::milliseconds loopPause=std::chrono::milliseconds{0})=0</td></tr>
-<tr class="separator:a2f588f2407ae119a951126ff2b7fe74f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5f326e84057d3909b7b2b669aa777fb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#ad5f326e84057d3909b7b2b669aa777fb">start</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">capabilityAgents::alerts::renderer::RendererObserverInterface</a> &gt; observer, std::function&lt; std::unique_ptr&lt; std::istream &gt;()&gt; audioFactory, const std::vector&lt; std::string &gt; &amp;urls=std::vector&lt; std::string &gt;(), int loopCount=0, std::chrono::milliseconds loopPause=std::chrono::milliseconds{0})=0</td></tr>
+<tr class="separator:ad5f326e84057d3909b7b2b669aa777fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42a7207451067b22a45ce5f697763d17"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#a42a7207451067b22a45ce5f697763d17">stop</a> ()=0</td></tr>
 <tr class="separator:a42a7207451067b22a45ce5f697763d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -126,43 +124,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aafa4aed9ce60d2e8b18b537d71ccd598"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aafa4aed9ce60d2e8b18b537d71ccd598">&#9670;&nbsp;</a></span>setObserver()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void alexaClientSDK::capabilityAgents::alerts::renderer::RendererInterface::setObserver </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">capabilityAgents::alerts::renderer::RendererObserverInterface</a> &gt;&#160;</td>
-          <td class="paramname"><em>observer</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Set an observer on the renderer. Note that the observer type is a raw pointer, and thus it is expected that this object will outlive its observer.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">observer</td><td>The observer. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_renderer.html#aac773b8c34924bfd31bf086fe09418a3">alexaClientSDK::capabilityAgents::alerts::test::MockRenderer</a>.</p>
-
-</div>
-</div>
-<a id="a2f588f2407ae119a951126ff2b7fe74f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f588f2407ae119a951126ff2b7fe74f">&#9670;&nbsp;</a></span>start()</h2>
+<a id="ad5f326e84057d3909b7b2b669aa777fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5f326e84057d3909b7b2b669aa777fb">&#9670;&nbsp;</a></span>start()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -173,6 +136,12 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual void alexaClientSDK::capabilityAgents::alerts::renderer::RendererInterface::start </td>
           <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">capabilityAgents::alerts::renderer::RendererObserverInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>observer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">std::function&lt; std::unique_ptr&lt; std::istream &gt;()&gt;&#160;</td>
           <td class="paramname"><em>audioFactory</em>, </td>
         </tr>
@@ -212,6 +181,7 @@ Public Member Functions</h2></td></tr>
 <p>TODO : ACSDK-389 Investigate changing explicit file paths to a std::istream-based interface.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">observer</td><td>The observer that will receive renderer events. </td></tr>
     <tr><td class="paramname">audioFactory</td><td>A function that produces a unique stream of audio that is used for the default if nothing else is available. </td></tr>
     <tr><td class="paramname">urls</td><td>A container of urls to be rendered per the above description. </td></tr>
     <tr><td class="paramname">loopCount</td><td>The number of times the urls should be rendered. </td></tr>
@@ -220,7 +190,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_renderer.html#aed3feca7a498e1d6cc6b8ab48801bfc0">alexaClientSDK::capabilityAgents::alerts::test::MockRenderer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a53839eca2fc99e4d676205e215d9cc85">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_renderer.html#a18cf9b122ff84dc0ad45cc443f80b11f">alexaClientSDK::capabilityAgents::alerts::test::MockRenderer</a>.</p>
 
 </div>
 </div>
@@ -259,7 +229,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.12.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

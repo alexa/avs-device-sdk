@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.11.0</span>
+   &#160;<span id="projectnumber">1.12.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -129,6 +129,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_pairing_agent.html">PairingAgent</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_pulse_audio_bluetooth_initializer.html">PulseAudioBluetoothInitializer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -136,12 +138,18 @@ Functions</h2></td></tr>
 <tr class="separator:a58ae2b8b5c9199a35c45ce875a2fa75e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afab29902b2ec236decae54c3dfb901c5"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#afab29902b2ec236decae54c3dfb901c5">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_bluetooth_device.html#a9f74fef47c51e478579bd780c8ba6019">BlueZBluetoothDevice::BlueZDeviceState</a> &amp;state)</td></tr>
 <tr class="separator:afab29902b2ec236decae54c3dfb901c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a786b42cf1652ae71370d7118cb132be6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a786b42cf1652ae71370d7118cb132be6">moduleStateToString</a> (const <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_pulse_audio_bluetooth_initializer.html#a6bf5c3e429844b28153319aa293155e6">PulseAudioBluetoothInitializer::ModuleState</a> &amp;state)</td></tr>
+<tr class="separator:a786b42cf1652ae71370d7118cb132be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a897e9b7720684af030bd55d59ca3f4d7"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a897e9b7720684af030bd55d59ca3f4d7">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_pulse_audio_bluetooth_initializer.html#a6bf5c3e429844b28153319aa293155e6">PulseAudioBluetoothInitializer::ModuleState</a> &amp;state)</td></tr>
+<tr class="separator:a897e9b7720684af030bd55d59ca3f4d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a414af1908e14111c65bc8b557de23f49"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a414af1908e14111c65bc8b557de23f49">truncate</a> (const std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_mac_address_string.html">MacAddressString</a> &gt; &amp;mac, std::string *truncatedMac)</td></tr>
 <tr class="separator:a414af1908e14111c65bc8b557de23f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a4f9388afcf636dad541658ad978849"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a7a4f9388afcf636dad541658ad978849">POLL_TIMEOUT_MS</a> (100)</td></tr>
 <tr class="separator:a7a4f9388afcf636dad541658ad978849"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cff98e068527c41bb7e7f3de9aa0098"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a2cff98e068527c41bb7e7f3de9aa0098">selectCompatibleConfig</a> (uint8_t caps, uint8_t mask, int width)</td></tr>
 <tr class="separator:a2cff98e068527c41bb7e7f3de9aa0098"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcfbede89d636312f4d28c9d3ac1545d"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#abcfbede89d636312f4d28c9d3ac1545d">stateToString</a> (pa_context_state_t state)</td></tr>
+<tr class="separator:abcfbede89d636312f4d28c9d3ac1545d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -344,6 +352,24 @@ Variables</h2></td></tr>
 <tr class="separator:ad01f6f0e39c688b091431e24036559bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a631abcab82f7f9a942dab6900c509904"><td class="memItemLeft" align="right" valign="top">static const gchar&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a631abcab82f7f9a942dab6900c509904">mediaEndpointIntrospectionXml</a> []</td></tr>
 <tr class="separator:a631abcab82f7f9a942dab6900c509904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31ef8891b46ebe41154db9439ce71db5"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a31ef8891b46ebe41154db9439ce71db5">BLUETOOTH_DISCOVER</a> = &quot;module-bluetooth-discover&quot;</td></tr>
+<tr class="memdesc:a31ef8891b46ebe41154db9439ce71db5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The PulseAudio module related to device discovery.  <a href="#a31ef8891b46ebe41154db9439ce71db5">More...</a><br /></td></tr>
+<tr class="separator:a31ef8891b46ebe41154db9439ce71db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1851537340c7d55afdfc10f8b8fc223"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#aa1851537340c7d55afdfc10f8b8fc223">BLUETOOTH_POLICY</a> = &quot;module-bluetooth-policy&quot;</td></tr>
+<tr class="memdesc:aa1851537340c7d55afdfc10f8b8fc223"><td class="mdescLeft">&#160;</td><td class="mdescRight">The PulseAudio module related to stack related policies.  <a href="#aa1851537340c7d55afdfc10f8b8fc223">More...</a><br /></td></tr>
+<tr class="separator:aa1851537340c7d55afdfc10f8b8fc223"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe661470f8a83bc7ed29d0f3b195ea23"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#afe661470f8a83bc7ed29d0f3b195ea23">PA_CONTEXT_CB_SUCCESS</a> {1}</td></tr>
+<tr class="memdesc:afe661470f8a83bc7ed29d0f3b195ea23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return indicating an operation was successful.  <a href="#afe661470f8a83bc7ed29d0f3b195ea23">More...</a><br /></td></tr>
+<tr class="separator:afe661470f8a83bc7ed29d0f3b195ea23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46dd11c34ca5d7067c17ac195a311f9e"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a46dd11c34ca5d7067c17ac195a311f9e">PA_MODULE_CB_EOL_EOL</a> {1}</td></tr>
+<tr class="memdesc:a46dd11c34ca5d7067c17ac195a311f9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return for a module callback indicating that this is the eol.  <a href="#a46dd11c34ca5d7067c17ac195a311f9e">More...</a><br /></td></tr>
+<tr class="separator:a46dd11c34ca5d7067c17ac195a311f9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ee4460af35c383fde48cd727a0c49a6"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a9ee4460af35c383fde48cd727a0c49a6">PA_MODULE_CB_EOL_ERR</a> {-1}</td></tr>
+<tr class="memdesc:a9ee4460af35c383fde48cd727a0c49a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return for a module callback indicating that an error occurred.  <a href="#a9ee4460af35c383fde48cd727a0c49a6">More...</a><br /></td></tr>
+<tr class="separator:a9ee4460af35c383fde48cd727a0c49a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f88520b9bbaff33dd1fdd3485976399"><td class="memItemLeft" align="right" valign="top">static const std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a2f88520b9bbaff33dd1fdd3485976399">TIMEOUT</a> {2}</td></tr>
+<tr class="memdesc:a2f88520b9bbaff33dd1fdd3485976399"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout for blocking operations.  <a href="#a2f88520b9bbaff33dd1fdd3485976399">More...</a><br /></td></tr>
+<tr class="separator:a2f88520b9bbaff33dd1fdd3485976399"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a58ae2b8b5c9199a35c45ce875a2fa75e"></a>
@@ -380,8 +406,87 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a786b42cf1652ae71370d7118cb132be6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a786b42cf1652ae71370d7118cb132be6">&#9670;&nbsp;</a></span>moduleStateToString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::bluetoothImplementations::blueZ::moduleStateToString </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_pulse_audio_bluetooth_initializer.html#a6bf5c3e429844b28153319aa293155e6">PulseAudioBluetoothInitializer::ModuleState</a> &amp;&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Converts the <code>ModuleState</code> enum to a string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">The</td><td><code>ModuleState</code> to convert. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the <code>ModuleState</code>. </dd></dl>
+
+</div>
+</div>
+<a id="a897e9b7720684af030bd55d59ca3f4d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a897e9b7720684af030bd55d59ca3f4d7">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; alexaClientSDK::bluetoothImplementations::blueZ::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_pulse_audio_bluetooth_initializer.html#a6bf5c3e429844b28153319aa293155e6">PulseAudioBluetoothInitializer::ModuleState</a> &amp;&#160;</td>
+          <td class="paramname"><em>state</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Overload for the <code>ModuleState</code> enum. This will write the <code>ModuleState</code> as a string to the provided stream.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">An</td><td>ostream to send the <code>ModuleState</code> as a string. </td></tr>
+    <tr><td class="paramname">The</td><td><code>ModuleState</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The stream. </dd></dl>
+
+</div>
+</div>
 <a id="afab29902b2ec236decae54c3dfb901c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afab29902b2ec236decae54c3dfb901c5">&#9670;&nbsp;</a></span>operator<<()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afab29902b2ec236decae54c3dfb901c5">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -503,6 +608,33 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="abcfbede89d636312f4d28c9d3ac1545d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcfbede89d636312f4d28c9d3ac1545d">&#9670;&nbsp;</a></span>stateToString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::string alexaClientSDK::bluetoothImplementations::blueZ::stateToString </td>
+          <td>(</td>
+          <td class="paramtype">pa_context_state_t&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Converts a pa_context_state_t enum to a string. </p>
+
+</div>
+</div>
 <a id="a414af1908e14111c65bc8b557de23f49"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a414af1908e14111c65bc8b557de23f49">&#9670;&nbsp;</a></span>truncate()</h2>
 
@@ -594,6 +726,54 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>String to identify name property. </p>
+
+</div>
+</div>
+<a id="a31ef8891b46ebe41154db9439ce71db5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31ef8891b46ebe41154db9439ce71db5">&#9670;&nbsp;</a></span>BLUETOOTH_DISCOVER</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::bluetoothImplementations::blueZ::BLUETOOTH_DISCOVER = &quot;module-bluetooth-discover&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The PulseAudio module related to device discovery. </p>
+
+</div>
+</div>
+<a id="aa1851537340c7d55afdfc10f8b8fc223"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1851537340c7d55afdfc10f8b8fc223">&#9670;&nbsp;</a></span>BLUETOOTH_POLICY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::bluetoothImplementations::blueZ::BLUETOOTH_POLICY = &quot;module-bluetooth-policy&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The PulseAudio module related to stack related policies. </p>
 
 </div>
 </div>
@@ -1306,6 +1486,78 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="afe661470f8a83bc7ed29d0f3b195ea23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe661470f8a83bc7ed29d0f3b195ea23">&#9670;&nbsp;</a></span>PA_CONTEXT_CB_SUCCESS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int alexaClientSDK::bluetoothImplementations::blueZ::PA_CONTEXT_CB_SUCCESS {1}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return indicating an operation was successful. </p>
+
+</div>
+</div>
+<a id="a46dd11c34ca5d7067c17ac195a311f9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46dd11c34ca5d7067c17ac195a311f9e">&#9670;&nbsp;</a></span>PA_MODULE_CB_EOL_EOL</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int alexaClientSDK::bluetoothImplementations::blueZ::PA_MODULE_CB_EOL_EOL {1}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return for a module callback indicating that this is the eol. </p>
+
+</div>
+</div>
+<a id="a9ee4460af35c383fde48cd727a0c49a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ee4460af35c383fde48cd727a0c49a6">&#9670;&nbsp;</a></span>PA_MODULE_CB_EOL_ERR</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int alexaClientSDK::bluetoothImplementations::blueZ::PA_MODULE_CB_EOL_ERR {-1}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return for a module callback indicating that an error occurred. </p>
+
+</div>
+</div>
 <a id="a81153ca948bbdc393f9cb61dc1344ff4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a81153ca948bbdc393f9cb61dc1344ff4">&#9670;&nbsp;</a></span>PAUSE_CMD</h2>
 
@@ -1807,7 +2059,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;DBusPropertiesProxy&quot;}</td>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZAVRCPTarget&quot;}</td>
         </tr>
       </table>
   </td>
@@ -1831,7 +2083,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZAVRCPTarget&quot;}</td>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;DBusPropertiesProxy&quot;}</td>
         </tr>
       </table>
   </td>
@@ -1855,7 +2107,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZHostController&quot;}</td>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZUtils&quot;}</td>
         </tr>
       </table>
   </td>
@@ -1879,7 +2131,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZUtils&quot;}</td>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZHostController&quot;}</td>
         </tr>
       </table>
   </td>
@@ -1903,7 +2155,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZA2DPSink&quot;}</td>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZBluetoothDeviceManager&quot;}</td>
         </tr>
       </table>
   </td>
@@ -1927,7 +2179,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZBluetoothDeviceManager&quot;}</td>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZA2DPSink&quot;}</td>
         </tr>
       </table>
   </td>
@@ -2035,11 +2287,35 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a2f88520b9bbaff33dd1fdd3485976399"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f88520b9bbaff33dd1fdd3485976399">&#9670;&nbsp;</a></span>TIMEOUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::chrono::seconds alexaClientSDK::bluetoothImplementations::blueZ::TIMEOUT {2}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Timeout for blocking operations. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.12.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

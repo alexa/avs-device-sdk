@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.11.0</span>
+   &#160;<span id="projectnumber">1.12.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -201,7 +201,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Utility function that wraps localtime conversion to std::time_t.</p>
-<p>This function also creates a copy of the given timeStruct since mktime can change the object.</p>
+<p>This function also creates a copy of the given timeStruct since mktime can change the object. Note that the tm_isdst is set to -1 as we leave it to std::mktime to determine if daylight savings is in effect.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">timeStruct</td><td>Required pointer to timeStruct to be converted to time_t. </td></tr>
@@ -798,7 +798,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.12.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -6,5 +6,6 @@
 <area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_single_setting_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SingleSetting\lObserverInterface" alt="" coords="32,296,229,348"/>
 <area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerManager\lObserverInterface" alt="" coords="21,372,239,424"/>
 <area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_notifications_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::Notifications\lObserverInterface" alt="" coords="32,448,229,500"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_requester_interface.html" title="alexaClientSDK::authorization\l::cblAuthDelegate::CBLAuthRequester\lInterface" alt="" coords="6,524,255,576"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::bluetooth\l::BluetoothDeviceObserverInterface" alt="" coords="14,524,246,576"/>
+<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_requester_interface.html" title="alexaClientSDK::authorization\l::cblAuthDelegate::CBLAuthRequester\lInterface" alt="" coords="6,600,255,652"/>
 </map>

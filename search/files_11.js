@@ -46,6 +46,8 @@ var searchData=
   ['shareddatastreamtest_2ecpp',['SharedDataStreamTest.cpp',['../_shared_data_stream_test_8cpp.html',1,'']]],
   ['singlesettingobserverinterface_2eh',['SingleSettingObserverInterface.h',['../_single_setting_observer_interface_8h.html',1,'']]],
   ['sinkobserverinterface_2eh',['SinkObserverInterface.h',['../_sink_observer_interface_8h.html',1,'']]],
+  ['snowboywrapper_2ecpp',['SnowboyWrapper.cpp',['../_snowboy_wrapper_8cpp.html',1,'']]],
+  ['snowboywrapper_2eh',['SnowboyWrapper.h',['../_snowboy_wrapper_8h.html',1,'']]],
   ['softwareinfosender_2ecpp',['SoftwareInfoSender.cpp',['../_software_info_sender_8cpp.html',1,'']]],
   ['softwareinfosender_2eh',['SoftwareInfoSender.h',['../_software_info_sender_8h.html',1,'']]],
   ['softwareinfosenderobserverinterface_2eh',['SoftwareInfoSenderObserverInterface.h',['../_software_info_sender_observer_interface_8h.html',1,'']]],

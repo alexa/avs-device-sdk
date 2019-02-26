@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.11.0</span>
+   &#160;<span id="projectnumber">1.12.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -65,7 +65,50 @@ $(function() {
 <div class="title">ChangeLog </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h3>v1.11.0 released 12/19/2018:</h3>
+<div class="textblock"><h3>v1.12.0 released 02/25/2019:</h3>
+<p><b>Enhancements</b></p>
+<ul>
+<li>Support was added for the <code>fr_CA</code> locale.</li>
+<li>The Executor has been optimized to run a single thread when there are active job in the queue, and to remain idle when there are not active jobs.</li>
+<li>An additional parameter of <code>alertType</code> has been added to the Alerts capability agent. This will allow observers of alerts to know the type of alert being delivered.</li>
+<li>Support for programmatic unload and load of PulseAudio Bluetooth modules was added. To enable this feature, there is a <a href="https://github.com/alexa/avs-device-sdk/wiki/CMake-parameters#bluetooth">new CMake option</a>: <code>BLUETOOTH_BLUEZ_PULSEAUDIO_OVERRIDE_ENDPOINTS</code>. Note that <a href="https://github.com/alexa/avs-device-sdk/wiki/Dependencies#bluetooth">libpulse-dev is a required dependency</a> of this feature.</li>
+<li>An observer interface was added for when an active Bluetooth device connects and disconnects.</li>
+<li>The <code>BluetoothDeviceManagerInterface</code> instantiation was moved from <code>DefaultClient</code> to <code>SampleApp</code> to allow applications to override it.</li>
+<li>The <code>MediaPlayerInterface</code> now supports repeating playback of URL sources.</li>
+<li>The Kitt.AI wake word engine (WWE) is now compatible with GCC5+.</li>
+<li>Stop of ongoing alerts, management of MessageObservers, and management of CallStateObservers have been exposed through DefaultClient.</li>
+</ul>
+<p><b>Bug Fixes</b></p>
+<ul>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/953">Issue 953</a> - The <code>MediaPlayerInterface</code> requirement that callbacks not be made upon a callers thread has been removed.</li>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/1136">Issue 1136</a> - Added a missing default virtual destructor.</li>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/1140">Issue 1140</a> - Fixed an issue where DND states were not synchronized to the AVS cloud after device reset.</li>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/1143">Issue 1143</a> - Fixed an issue in which the SpeechSynthesizer couldn't enter a sleeping state.</li>
+<li><a href="https://github.com/alexa/avs-device-sdk/issues/1183">Issue 1183</a> - Fixed an issue where alarm is not sounding for certain timezones</li>
+<li>Changing an alert's volume from the Alexa app now works when an alert is playing.</li>
+<li>Added missing shutdown handling for ContentDecrypter to prevent the <code>Stop</code> command from triggering a crash when SAMPLE-AES encrypted content was streaming.</li>
+<li>Fixed a bug where if the Notifications database is empty, due to a crash or corruption, the SDK initialization process enters an infinite loop when it retries to get context from the Notifications capability agent.</li>
+<li>Fixed a race condition that caused <code>AlertsRenderer</code> observers to miss notification that an alert has been completed.</li>
+</ul>
+<p><b>Known Issues</b></p>
+<ul>
+<li><code>PlaylistParser</code> and <code>IterativePlaylistParser</code> generate two HTTP requests (one to fetch the content type, and one to fetch the audio data) for each audio stream played.</li>
+<li>Music playback history isn't being displayed in the Alexa app for certain account and device types.</li>
+<li>On GCC 8+, issues related to <code>-Wclass-memaccess</code> will trigger warnings. However, this won't cause the build to fail and these warnings can be ignored.</li>
+<li>Android error ("libDefaultClient.so" not found) can be resolved by upgrading to ADB version 1.0.40</li>
+<li>When network connection is lost, lost connection status is not returned via local TTS.</li>
+<li><code>ACL</code> may encounter issues if audio attachments are received but not consumed.</li>
+<li><code>SpeechSynthesizerState</code> currently uses <code>GAINING_FOCUS</code> and <code>LOSING_FOCUS</code> as a workaround for handling intermediate state. These states may be removed in a future release.</li>
+<li>The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.</li>
+<li>Connecting a product to streaming media via Bluetooth will sometimes stop media playback within the source application. Resuming playback through the source application or toggling next/previous will correct playback.</li>
+<li>When a source device is streaming silence via Bluetooth, the Alexa app indicates that audio content is streaming.</li>
+<li>The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation is not yet supported.</li>
+<li>On some products, interrupted Bluetooth playback may not resume if other content is locally streamed.</li>
+<li><code>make integration</code> is currently not available for Android. In order to run integration tests on Android, you'll need to manually upload the test binary file along with any input file. At that point, the adb can be used to run the integration tests.</li>
+<li>On Raspberry Pi running Android Things with HDMI output audio, beginning of speech is truncated when Alexa responds to user text-to-speech (TTS).</li>
+<li>When the sample app is restarted and network connection is lost, Reminder TTS does not play. Instead, the default alarm tone will play twice.</li>
+</ul>
+<h3>v1.11.0 released 12/19/2018:</h3>
 <p><b>Enhancements</b></p>
 <ul>
 <li>Added support for the new Alexa <a href="https://developer.amazon.com/docs/alexa-voice-service/donotdisturb.html">DoNotDisturb</a> interface, which enables users to toggle the do not disturb (DND) function on their Alexa built-in products.</li>
@@ -773,7 +816,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.12.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

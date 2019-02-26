@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.11.0</span>
+   &#160;<span id="projectnumber">1.12.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -96,10 +96,8 @@ Collaboration diagram for alexaClientSDK::capabilityAgents::alerts::renderer::Re
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab292575783bb7f041b57418230bfd2b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#ab292575783bb7f041b57418230bfd2b7">setObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">RendererObserverInterface</a> &gt; observer) override</td></tr>
-<tr class="separator:ab292575783bb7f041b57418230bfd2b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53839eca2fc99e4d676205e215d9cc85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a53839eca2fc99e4d676205e215d9cc85">start</a> (std::function&lt; std::unique_ptr&lt; std::istream &gt;()&gt; audioFactory, const std::vector&lt; std::string &gt; &amp;urls=std::vector&lt; std::string &gt;(), int loopCount=0, std::chrono::milliseconds loopPause=std::chrono::milliseconds{0}) override</td></tr>
-<tr class="separator:a53839eca2fc99e4d676205e215d9cc85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f18e0f9306cb57b3d6701e0326785da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a8f18e0f9306cb57b3d6701e0326785da">start</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">RendererObserverInterface</a> &gt; observer, std::function&lt; std::unique_ptr&lt; std::istream &gt;()&gt; audioFactory, const std::vector&lt; std::string &gt; &amp;urls=std::vector&lt; std::string &gt;(), int loopCount=0, std::chrono::milliseconds loopPause=std::chrono::milliseconds{0}) override</td></tr>
+<tr class="separator:a8f18e0f9306cb57b3d6701e0326785da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25f151b98ebebba6f785bd4edd1410fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a25f151b98ebebba6f785bd4edd1410fe">stop</a> () override</td></tr>
 <tr class="separator:a25f151b98ebebba6f785bd4edd1410fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a625c513933bd3f76db04608b7d9de7bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a625c513933bd3f76db04608b7d9de7bb">onPlaybackStarted</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId) override</td></tr>
@@ -113,8 +111,8 @@ Public Member Functions</h2></td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html">alexaClientSDK::capabilityAgents::alerts::renderer::RendererInterface</a></td></tr>
 <tr class="memitem:ae6332383bc135c8efa45e04504e0d75b inherit pub_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#ae6332383bc135c8efa45e04504e0d75b">~RendererInterface</a> ()=default</td></tr>
 <tr class="separator:ae6332383bc135c8efa45e04504e0d75b inherit pub_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafa4aed9ce60d2e8b18b537d71ccd598 inherit pub_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#aafa4aed9ce60d2e8b18b537d71ccd598">setObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">capabilityAgents::alerts::renderer::RendererObserverInterface</a> &gt; observer)=0</td></tr>
-<tr class="separator:aafa4aed9ce60d2e8b18b537d71ccd598 inherit pub_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5f326e84057d3909b7b2b669aa777fb inherit pub_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#ad5f326e84057d3909b7b2b669aa777fb">start</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">capabilityAgents::alerts::renderer::RendererObserverInterface</a> &gt; observer, std::function&lt; std::unique_ptr&lt; std::istream &gt;()&gt; audioFactory, const std::vector&lt; std::string &gt; &amp;urls=std::vector&lt; std::string &gt;(), int loopCount=0, std::chrono::milliseconds loopPause=std::chrono::milliseconds{0})=0</td></tr>
+<tr class="separator:ad5f326e84057d3909b7b2b669aa777fb inherit pub_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a></td></tr>
 <tr class="memitem:a98a4b7578480d29f86b2d7868080200e inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a98a4b7578480d29f86b2d7868080200e">~MediaPlayerObserverInterface</a> ()=default</td></tr>
 <tr class="separator:a98a4b7578480d29f86b2d7868080200e inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -347,34 +345,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ab292575783bb7f041b57418230bfd2b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab292575783bb7f041b57418230bfd2b7">&#9670;&nbsp;</a></span>setObserver()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::setObserver </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">RendererObserverInterface</a> &gt;&#160;</td>
-          <td class="paramname"><em>observer</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a53839eca2fc99e4d676205e215d9cc85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53839eca2fc99e4d676205e215d9cc85">&#9670;&nbsp;</a></span>start()</h2>
+<a id="a8f18e0f9306cb57b3d6701e0326785da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f18e0f9306cb57b3d6701e0326785da">&#9670;&nbsp;</a></span>start()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -385,6 +357,12 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::start </td>
           <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html">RendererObserverInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>observer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">std::function&lt; std::unique_ptr&lt; std::istream &gt;()&gt;&#160;</td>
           <td class="paramname"><em>audioFactory</em>, </td>
         </tr>
@@ -392,7 +370,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>urls</em> = <code>std::vector&lt;&#160;std::string&#160;&gt;()</code>, </td>
+          <td class="paramname"><em>urls</em> = <code>std::vector&lt;std::string&gt;()</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -414,25 +392,10 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Start rendering. This api takes two sets of parameters - a local audio file, and a vector of urls. If the urls container is empty, then the local audio file will be played for either a maximum time of one hour, or until explicitly being stopped.</p>
-<p>If the urls are non-empty, then they will be rendered in sequence, for loopCount number of times, with a pause of loopPauseInMilliseconds in between each sequence.</p>
-<p>If any url fails to render (for example, if the url is invalid, or the media player cannot acquire it), then the renderer will default to the local audio file, with the behavior described above.</p>
-<p>TODO : ACSDK-389 Investigate changing explicit file paths to a std::istream-based interface.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">audioFactory</td><td>A function that produces a unique stream of audio that is used for the default if nothing else is available. </td></tr>
-    <tr><td class="paramname">urls</td><td>A container of urls to be rendered per the above description. </td></tr>
-    <tr><td class="paramname">loopCount</td><td>The number of times the urls should be rendered. </td></tr>
-    <tr><td class="paramname">loopPauseInMilliseconds</td><td>The number of milliseconds to pause between rendering url sequences. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#a2f588f2407ae119a951126ff2b7fe74f">alexaClientSDK::capabilityAgents::alerts::renderer::RendererInterface</a>.</p>
 
 </div>
 </div>
@@ -472,7 +435,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.12.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

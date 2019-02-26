@@ -1,12 +1,11 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/DoNotDisturb/include/DoNotDisturbCA/DNDSettingProtocol.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/DoNotDisturb/include/DoNotDisturbCA/DNDSettingProtocol.h">
-<area shape="rect" id="node5" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="623,205,817,244"/>
-<area shape="rect" id="node15" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="552,119,758,157"/>
-<area shape="rect" id="node16" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="356,212,519,237"/>
-<area shape="rect" id="node17" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1052,212,1236,237"/>
-<area shape="rect" id="node18" href="$_setting_event_metadata_8h.html" title="Settings/SettingEventMetadata.h" alt="" coords="312,125,528,151"/>
-<area shape="rect" id="node19" href="$_setting_event_sender_interface_8h.html" title="Settings/SettingEventSender\lInterface.h" alt="" coords="46,119,237,157"/>
-<area shape="rect" id="node20" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="1025,292,1194,331"/>
-<area shape="rect" id="node21" href="$_setting_protocol_interface_8h.html" title="Settings/SettingProtocol\lInterface.h" alt="" coords="882,119,1046,157"/>
-<area shape="rect" id="node7" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="682,292,876,331"/>
-<area shape="rect" id="node10" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="548,379,743,417"/>
+<area shape="rect" id="node5" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="553,205,747,244"/>
+<area shape="rect" id="node15" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="1410,119,1616,157"/>
+<area shape="rect" id="node16" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="1524,212,1688,237"/>
+<area shape="rect" id="node17" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="828,212,1011,237"/>
+<area shape="rect" id="node18" href="$_setting_event_metadata_8h.html" title="Settings/SettingEventMetadata.h" alt="" coords="1170,125,1386,151"/>
+<area shape="rect" id="node19" href="$_setting_event_sender_interface_8h.html" title="Settings/SettingEventSender\lInterface.h" alt="" coords="1036,205,1227,244"/>
+<area shape="rect" id="node20" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="5,205,175,244"/>
+<area shape="rect" id="node21" href="$_setting_protocol_interface_8h.html" title="Settings/SettingProtocol\lInterface.h" alt="" coords="486,119,649,157"/>
+<area shape="rect" id="node13" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="397,292,591,331"/>
 </map>

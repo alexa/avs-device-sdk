@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.11.0</span>
+   &#160;<span id="projectnumber">1.12.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -85,10 +85,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_slow_destructor.html">SlowDestructor</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by <code>futureWaitsForTaskCleanup</code> delay and timestamp the time of lambda parameter destruction.  <a href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_slow_destructor.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_thread_test.html">TaskThreadTest</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -120,80 +116,62 @@ Functions</h2></td></tr>
 <tr class="separator:aabccb0881d4a18774345ce0ca250b69d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89805a421fcceb5ed7d0735b7205f161"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a89805a421fcceb5ed7d0735b7205f161">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_executor_test.html">ExecutorTest</a>, submitToFront)</td></tr>
 <tr class="separator:a89805a421fcceb5ed7d0735b7205f161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1595a4495fd8fee557656fd227e5fbbf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a1595a4495fd8fee557656fd227e5fbbf">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_executor_test.html">ExecutorTest</a>, testExecutionOrderEqualToSubmitOrder)</td></tr>
+<tr class="separator:a1595a4495fd8fee557656fd227e5fbbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1350bfbfebc8985360bb5ea704541ee3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a1350bfbfebc8985360bb5ea704541ee3">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_executor_test.html">ExecutorTest</a>, futureWaitsForTaskCleanup)</td></tr>
 <tr class="memdesc:a1350bfbfebc8985360bb5ea704541ee3"><td class="mdescLeft">&#160;</td><td class="mdescRight">This test verifies that the executor waits to fulfill its promise until after the task is cleaned up.  <a href="#a1350bfbfebc8985360bb5ea704541ee3">More...</a><br /></td></tr>
 <tr class="separator:a1350bfbfebc8985360bb5ea704541ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96979b18fa7cd01269e6b4866ef137df"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a96979b18fa7cd01269e6b4866ef137df">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_executor_test.html">ExecutorTest</a>, shutdown)</td></tr>
 <tr class="memdesc:a96979b18fa7cd01269e6b4866ef137df"><td class="mdescLeft">&#160;</td><td class="mdescRight">This test verifies that the shutdown function completes the current task and does not accept new tasks.  <a href="#a96979b18fa7cd01269e6b4866ef137df">More...</a><br /></td></tr>
 <tr class="separator:a96979b18fa7cd01269e6b4866ef137df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae23b09de8801e5236de23e2e3ebfe19c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#ae23b09de8801e5236de23e2e3ebfe19c">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_executor_test.html">ExecutorTest</a>, testPushAfterExecutordownFail)</td></tr>
+<tr class="memdesc:ae23b09de8801e5236de23e2e3ebfe19c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that calling submit after shutdown will fail the job.  <a href="#ae23b09de8801e5236de23e2e3ebfe19c">More...</a><br /></td></tr>
+<tr class="separator:ae23b09de8801e5236de23e2e3ebfe19c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03987bfca7b02bcc86c45cb5cfaec468"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a03987bfca7b02bcc86c45cb5cfaec468">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_executor_test.html">ExecutorTest</a>, testShutdownCancelJob)</td></tr>
+<tr class="memdesc:a03987bfca7b02bcc86c45cb5cfaec468"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that shutdown cancel jobs in the queue.  <a href="#a03987bfca7b02bcc86c45cb5cfaec468">More...</a><br /></td></tr>
+<tr class="separator:a03987bfca7b02bcc86c45cb5cfaec468"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8750a11aaa469e4dde6cbd110285428f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a8750a11aaa469e4dde6cbd110285428f">exampleFunction</a> ()</td></tr>
 <tr class="memdesc:a8750a11aaa469e4dde6cbd110285428f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple example function to be referenced in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_executor.html">Executor</a> related tests.  <a href="#a8750a11aaa469e4dde6cbd110285428f">More...</a><br /></td></tr>
 <tr class="separator:a8750a11aaa469e4dde6cbd110285428f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0fe2fb188805c7ea8af54e268a342a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#ae0fe2fb188805c7ea8af54e268a342a9">exampleFunctionParams</a> (int param)</td></tr>
 <tr class="memdesc:ae0fe2fb188805c7ea8af54e268a342a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple example function which takes a parameter to be referenced in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_executor.html">Executor</a> related tests.  <a href="#ae0fe2fb188805c7ea8af54e268a342a9">More...</a><br /></td></tr>
 <tr class="separator:ae0fe2fb188805c7ea8af54e268a342a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d302f777030a8ea36ee37d56a04cb24"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a0d302f777030a8ea36ee37d56a04cb24">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, pushStdFunctionAndVerifyPopReturnsIt)</td></tr>
-<tr class="separator:a0d302f777030a8ea36ee37d56a04cb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04d6f15d3a35d60fda3656e569653ace"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a04d6f15d3a35d60fda3656e569653ace">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, pushStdBindAndVerifyPopReturnsIt)</td></tr>
-<tr class="separator:a04d6f15d3a35d60fda3656e569653ace"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d0929fe29df68f12d235f7933332185"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a4d0929fe29df68f12d235f7933332185">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, pushLambdaAndVerifyPopReturnsIt)</td></tr>
-<tr class="separator:a4d0929fe29df68f12d235f7933332185"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64715ac4a0e9f23ea851a4ce9dfc1881"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a64715ac4a0e9f23ea851a4ce9dfc1881">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, pushFunctionPointerAndVerifyPopReturnsIt)</td></tr>
-<tr class="separator:a64715ac4a0e9f23ea851a4ce9dfc1881"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1cf19a013c2167800d714b2420fc65e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#ae1cf19a013c2167800d714b2420fc65e">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, pushFunctorAndVerifyPopReturnsIt)</td></tr>
-<tr class="separator:ae1cf19a013c2167800d714b2420fc65e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8f57ad13b13aa13f8b59a014e625185"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#af8f57ad13b13aa13f8b59a014e625185">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, pushFunctionWithPrimitiveReturnTypeNoArgsAndVerifyPopReturnsIt)</td></tr>
-<tr class="separator:af8f57ad13b13aa13f8b59a014e625185"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af16b933de05eb79d13ebdd28a9695fc7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#af16b933de05eb79d13ebdd28a9695fc7">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, pushFunctionWithObjectReturnTypeNoArgsAndVerifyPopReturnsIt)</td></tr>
-<tr class="separator:af16b933de05eb79d13ebdd28a9695fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9007a8a74843ddb9fc920ad629ca30fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a9007a8a74843ddb9fc920ad629ca30fc">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, pushFunctionWithNoReturnTypePrimitiveArgsAndVerifyPopReturnsIt)</td></tr>
-<tr class="separator:a9007a8a74843ddb9fc920ad629ca30fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ceca911c1c5363b687a790bdc302f47"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a0ceca911c1c5363b687a790bdc302f47">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, pushFunctionWithNoReturnTypeObjectArgsAndVerifyPopReturnsIt)</td></tr>
-<tr class="separator:a0ceca911c1c5363b687a790bdc302f47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27abc54ffedc84bfd1fd28b18b3071b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a27abc54ffedc84bfd1fd28b18b3071b9">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, pushFunctionWithPrimitiveReturnTypeObjectArgsAndVerifyPopReturnsIt)</td></tr>
-<tr class="separator:a27abc54ffedc84bfd1fd28b18b3071b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adceda40b0b619fd7f3ca6532cc6f6e0d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#adceda40b0b619fd7f3ca6532cc6f6e0d">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, pushFunctionWithObjectReturnTypePrimitiveArgsAndVerifyPopReturnsIt)</td></tr>
-<tr class="separator:adceda40b0b619fd7f3ca6532cc6f6e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b40a60b473a427c4296d79136ebd1a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a4b40a60b473a427c4296d79136ebd1a3">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, pushFunctionWithPrimitiveReturnTypePrimitiveArgsAndVerifyPopReturnsIt)</td></tr>
-<tr class="separator:a4b40a60b473a427c4296d79136ebd1a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb56fbc25e095aa9e320a2952b646be2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#aeb56fbc25e095aa9e320a2952b646be2">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, pushFunctionWithObjectReturnTypeObjectArgsAndVerifyPopReturnsIt)</td></tr>
-<tr class="separator:aeb56fbc25e095aa9e320a2952b646be2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90f586d9149de8d714c9520ea9b0ab15"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a90f586d9149de8d714c9520ea9b0ab15">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, verifyFirstInFirstOutOrderIsMaintained)</td></tr>
-<tr class="separator:a90f586d9149de8d714c9520ea9b0ab15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a453e091c40c30a1b65c284b674a74342"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a453e091c40c30a1b65c284b674a74342">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, popBlocksOnInitiallyEmptyQueue)</td></tr>
-<tr class="separator:a453e091c40c30a1b65c284b674a74342"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1be7ec6bf71888ccd88b4947aa501c4e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a1be7ec6bf71888ccd88b4947aa501c4e">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, popBlocksOnEmptyQueueAfterAllTasksArePopped)</td></tr>
-<tr class="separator:a1be7ec6bf71888ccd88b4947aa501c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9770d12f2f2adc8992de1ecccc32fd8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#aa9770d12f2f2adc8992de1ecccc32fd8">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, isShutdownReturnsFalseWhenRunning)</td></tr>
-<tr class="separator:aa9770d12f2f2adc8992de1ecccc32fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad76d048c27cd9621a4b5d8b5b2e788ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#ad76d048c27cd9621a4b5d8b5b2e788ab">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, isShutdownReturnsTrueAfterShutdown)</td></tr>
-<tr class="separator:ad76d048c27cd9621a4b5d8b5b2e788ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24cda02e50e3f71b2da5445a7f253f05"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a24cda02e50e3f71b2da5445a7f253f05">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, shutdownUnblocksAnEmptyQueue)</td></tr>
-<tr class="separator:a24cda02e50e3f71b2da5445a7f253f05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a178649a217941536547541eed64ec4fe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a178649a217941536547541eed64ec4fe">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>, pushFailsToEnqueueANewTaskOnAShutdownQueue)</td></tr>
-<tr class="separator:a178649a217941536547541eed64ec4fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6a78200d712a094f939ceab122f64c9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#ad6a78200d712a094f939ceab122f64c9">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_thread_test.html">TaskThreadTest</a>, theTaskThreadReadsFromAGivenEmptyQueue)</td></tr>
-<tr class="separator:ad6a78200d712a094f939ceab122f64c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f0cbc43d261fcc463b744da7174a670"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a7f0cbc43d261fcc463b744da7174a670">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_thread_test.html">TaskThreadTest</a>, theTaskThreadReadsFromAGivenNonEmptyQueue)</td></tr>
-<tr class="separator:a7f0cbc43d261fcc463b744da7174a670"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f8f52e0ed04dbcd0d5616143e07d040"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a7f8f52e0ed04dbcd0d5616143e07d040">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_thread_test.html">TaskThreadTest</a>, theTaskThreadShutsDownWhenTheQueueIsDestroyed)</td></tr>
-<tr class="separator:a7f8f52e0ed04dbcd0d5616143e07d040"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae43212a73b9620a598ddd84fe2762e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#aae43212a73b9620a598ddd84fe2762e5">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_thread_test.html">TaskThreadTest</a>, theTaskThreadShutsDownWhenTheQueueIsShutdown)</td></tr>
-<tr class="separator:aae43212a73b9620a598ddd84fe2762e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a909104f0db817e1d818341c24df6ea44"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a909104f0db817e1d818341c24df6ea44">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_thread_test.html">TaskThreadTest</a>, theTaskThreadIsNotStartedUntilStartIsCalled)</td></tr>
-<tr class="separator:a909104f0db817e1d818341c24df6ea44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a008b5e51fdc078a0013b9c9a00650643"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a008b5e51fdc078a0013b9c9a00650643">TEST</a> (TaskThreadTest, testWaitForNothing)</td></tr>
+<tr class="memdesc:a008b5e51fdc078a0013b9c9a00650643"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that wait will return if no job has ever started.  <a href="#a008b5e51fdc078a0013b9c9a00650643">More...</a><br /></td></tr>
+<tr class="separator:a008b5e51fdc078a0013b9c9a00650643"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb35ee09a988f03518702df4bd8d2e9f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#aeb35ee09a988f03518702df4bd8d2e9f">TEST</a> (TaskThreadTest, testStartFailsDueToEmptyFunction)</td></tr>
+<tr class="memdesc:aeb35ee09a988f03518702df4bd8d2e9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that start will fail if function is empty.  <a href="#aeb35ee09a988f03518702df4bd8d2e9f">More...</a><br /></td></tr>
+<tr class="separator:aeb35ee09a988f03518702df4bd8d2e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2dcbe197ce39e9025067bd18a66d040"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#ad2dcbe197ce39e9025067bd18a66d040">TEST</a> (TaskThreadTest, testSimpleJob)</td></tr>
+<tr class="memdesc:ad2dcbe197ce39e9025067bd18a66d040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that start will trigger the provided job and thread will exit once the job is done and return <code>false</code>.  <a href="#ad2dcbe197ce39e9025067bd18a66d040">More...</a><br /></td></tr>
+<tr class="separator:ad2dcbe197ce39e9025067bd18a66d040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9060029e98e877d42c9331b5505e16d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a9060029e98e877d42c9331b5505e16d3">TEST</a> (TaskThreadTest, testSequenceJobs)</td></tr>
+<tr class="separator:a9060029e98e877d42c9331b5505e16d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dc2a2ed0a08df1e42e83fe709c32b94"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a9dc2a2ed0a08df1e42e83fe709c32b94">TEST</a> (TaskThreadTest, testStartNewJob)</td></tr>
+<tr class="separator:a9dc2a2ed0a08df1e42e83fe709c32b94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a938baf712b5efbd2e51decf46d716b14"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a938baf712b5efbd2e51decf46d716b14">TEST</a> (TaskThreadTest, testStartFailDueTooManyThreads)</td></tr>
+<tr class="memdesc:a938baf712b5efbd2e51decf46d716b14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that start will fail if called multiple times while waiting for a job.  <a href="#a938baf712b5efbd2e51decf46d716b14">More...</a><br /></td></tr>
+<tr class="separator:a938baf712b5efbd2e51decf46d716b14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a676e9084a6b0424be1dd20b2af9531bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a676e9084a6b0424be1dd20b2af9531bd">TEST</a> (TaskThreadTest, testMoniker)</td></tr>
+<tr class="memdesc:a676e9084a6b0424be1dd20b2af9531bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that threads related to this task thread will always have the same moniker.  <a href="#a676e9084a6b0424be1dd20b2af9531bd">More...</a><br /></td></tr>
+<tr class="separator:a676e9084a6b0424be1dd20b2af9531bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e8c46c96a68b6e25add832c083c6856"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a2e8c46c96a68b6e25add832c083c6856">TEST</a> (TaskThreadTest, testMonikerDifferentObjects)</td></tr>
+<tr class="memdesc:a2e8c46c96a68b6e25add832c083c6856"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that threads from different <code>TaskThreads</code> will have different monikers.  <a href="#a2e8c46c96a68b6e25add832c083c6856">More...</a><br /></td></tr>
+<tr class="separator:a2e8c46c96a68b6e25add832c083c6856"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a7794a2ae53cf3a964c31d0ba2a572eba"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a7794a2ae53cf3a964c31d0ba2a572eba">VALUE</a> = 1234</td></tr>
 <tr class="memdesc:a7794a2ae53cf3a964c31d0ba2a572eba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple integer value to be reused in tests.  <a href="#a7794a2ae53cf3a964c31d0ba2a572eba">More...</a><br /></td></tr>
 <tr class="separator:a7794a2ae53cf3a964c31d0ba2a572eba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83d0f1c5a61613e11083de02c78b837f"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a83d0f1c5a61613e11083de02c78b837f">SHORT_TIMEOUT_MS</a> = std::chrono::milliseconds(50)</td></tr>
-<tr class="memdesc:a83d0f1c5a61613e11083de02c78b837f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout to use for waiting on calls within testss.  <a href="#a83d0f1c5a61613e11083de02c78b837f">More...</a><br /></td></tr>
+<tr class="memitem:a83d0f1c5a61613e11083de02c78b837f"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#a83d0f1c5a61613e11083de02c78b837f">SHORT_TIMEOUT_MS</a> = std::chrono::milliseconds(100)</td></tr>
+<tr class="memdesc:a83d0f1c5a61613e11083de02c78b837f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout to use for waiting on calls within tests.  <a href="#a83d0f1c5a61613e11083de02c78b837f">More...</a><br /></td></tr>
 <tr class="separator:a83d0f1c5a61613e11083de02c78b837f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1f111aad3bfe8e13d6fa6a14479d5b4"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#ae1f111aad3bfe8e13d6fa6a14479d5b4">TASK</a> = [](int arg) { return arg; }</td></tr>
 <tr class="memdesc:ae1f111aad3bfe8e13d6fa6a14479d5b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple task which takes an integer argument and returns the argument when executed.  <a href="#ae1f111aad3bfe8e13d6fa6a14479d5b4">More...</a><br /></td></tr>
 <tr class="separator:ae1f111aad3bfe8e13d6fa6a14479d5b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae505669e75c3fc058585c035a9d27a74"><td class="memItemLeft" align="right" valign="top">const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#ae505669e75c3fc058585c035a9d27a74">WAIT_TIMEOUT</a> {100}</td></tr>
+<tr class="separator:ae505669e75c3fc058585c035a9d27a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a8750a11aaa469e4dde6cbd110285428f"></a>
@@ -235,8 +213,248 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a008b5e51fdc078a0013b9c9a00650643"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a008b5e51fdc078a0013b9c9a00650643">&#9670;&nbsp;</a></span>TEST() <span class="overload">[1/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">TaskThreadTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testWaitForNothing&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test that wait will return if no job has ever started. </p>
+
+</div>
+</div>
+<a id="aeb35ee09a988f03518702df4bd8d2e9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb35ee09a988f03518702df4bd8d2e9f">&#9670;&nbsp;</a></span>TEST() <span class="overload">[2/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">TaskThreadTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testStartFailsDueToEmptyFunction&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test that start will fail if function is empty. </p>
+
+</div>
+</div>
+<a id="ad2dcbe197ce39e9025067bd18a66d040"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2dcbe197ce39e9025067bd18a66d040">&#9670;&nbsp;</a></span>TEST() <span class="overload">[3/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">TaskThreadTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testSimpleJob&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test that start will trigger the provided job and thread will exit once the job is done and return <code>false</code>. </p>
+
+</div>
+</div>
+<a id="a9060029e98e877d42c9331b5505e16d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9060029e98e877d42c9331b5505e16d3">&#9670;&nbsp;</a></span>TEST() <span class="overload">[4/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">TaskThreadTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testSequenceJobs&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test that start will trigger the provided job and it will execute the job multiple times until the job returns <code>false</code>. </p>
+
+</div>
+</div>
+<a id="a9dc2a2ed0a08df1e42e83fe709c32b94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dc2a2ed0a08df1e42e83fe709c32b94">&#9670;&nbsp;</a></span>TEST() <span class="overload">[5/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">TaskThreadTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testStartNewJob&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test that start will replace the existing next function.</p><ul>
+<li>First function increments the counter, while the second will decrement until it reaches 0. </li>
+</ul>
+
+</div>
+</div>
+<a id="a938baf712b5efbd2e51decf46d716b14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a938baf712b5efbd2e51decf46d716b14">&#9670;&nbsp;</a></span>TEST() <span class="overload">[6/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">TaskThreadTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testStartFailDueTooManyThreads&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test that start will fail if called multiple times while waiting for a job. </p>
+
+</div>
+</div>
+<a id="a676e9084a6b0424be1dd20b2af9531bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a676e9084a6b0424be1dd20b2af9531bd">&#9670;&nbsp;</a></span>TEST() <span class="overload">[7/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">TaskThreadTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testMoniker&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test that threads related to this task thread will always have the same moniker. </p>
+
+</div>
+</div>
+<a id="a2e8c46c96a68b6e25add832c083c6856"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e8c46c96a68b6e25add832c083c6856">&#9670;&nbsp;</a></span>TEST() <span class="overload">[8/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">TaskThreadTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testMonikerDifferentObjects&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test that threads from different <code>TaskThreads</code> will have different monikers. </p>
+
+</div>
+</div>
 <a id="a659e72bba43d502a2c8ffa5b660ceefa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a659e72bba43d502a2c8ffa5b660ceefa">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a659e72bba43d502a2c8ffa5b660ceefa">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -263,36 +481,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ad6a78200d712a094f939ceab122f64c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6a78200d712a094f939ceab122f64c9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_thread_test.html">TaskThreadTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">theTaskThreadReadsFromAGivenEmptyQueue&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="afdbc0a9bdeb37c67ef5f0ce861218e29"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afdbc0a9bdeb37c67ef5f0ce861218e29">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afdbc0a9bdeb37c67ef5f0ce861218e29">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -320,7 +510,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="acf4f32b9f437bf512d95ff7f4f269010"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf4f32b9f437bf512d95ff7f4f269010">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acf4f32b9f437bf512d95ff7f4f269010">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -347,36 +537,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a7f0cbc43d261fcc463b744da7174a670"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f0cbc43d261fcc463b744da7174a670">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_thread_test.html">TaskThreadTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">theTaskThreadReadsFromAGivenNonEmptyQueue&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a41f3383db68fefc40031b61cc21a7b22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41f3383db68fefc40031b61cc21a7b22">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a41f3383db68fefc40031b61cc21a7b22">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -404,7 +566,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aa68056cb81ce48653a02c4dfb3804467"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa68056cb81ce48653a02c4dfb3804467">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa68056cb81ce48653a02c4dfb3804467">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -431,64 +593,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a0d302f777030a8ea36ee37d56a04cb24"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d302f777030a8ea36ee37d56a04cb24">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pushStdFunctionAndVerifyPopReturnsIt&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7f8f52e0ed04dbcd0d5616143e07d040"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f8f52e0ed04dbcd0d5616143e07d040">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_thread_test.html">TaskThreadTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">theTaskThreadShutsDownWhenTheQueueIsDestroyed&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a9927be7db64469fe1f809f33eb739a1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9927be7db64469fe1f809f33eb739a1b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9927be7db64469fe1f809f33eb739a1b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -515,36 +621,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a04d6f15d3a35d60fda3656e569653ace"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04d6f15d3a35d60fda3656e569653ace">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pushStdBindAndVerifyPopReturnsIt&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="ae4cfe9fc7fe03e7619dd9e8cf16a3172"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae4cfe9fc7fe03e7619dd9e8cf16a3172">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4cfe9fc7fe03e7619dd9e8cf16a3172">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -571,64 +649,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aae43212a73b9620a598ddd84fe2762e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae43212a73b9620a598ddd84fe2762e5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_thread_test.html">TaskThreadTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">theTaskThreadShutsDownWhenTheQueueIsShutdown&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4d0929fe29df68f12d235f7933332185"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d0929fe29df68f12d235f7933332185">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pushLambdaAndVerifyPopReturnsIt&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="aed040c3adfdeaa35ad4aea96f827d225"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed040c3adfdeaa35ad4aea96f827d225">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aed040c3adfdeaa35ad4aea96f827d225">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -655,64 +677,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a909104f0db817e1d818341c24df6ea44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a909104f0db817e1d818341c24df6ea44">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_thread_test.html">TaskThreadTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">theTaskThreadIsNotStartedUntilStartIsCalled&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a64715ac4a0e9f23ea851a4ce9dfc1881"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64715ac4a0e9f23ea851a4ce9dfc1881">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pushFunctionPointerAndVerifyPopReturnsIt&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="aa642900475340cf13f5094cfd1cc58c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa642900475340cf13f5094cfd1cc58c1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa642900475340cf13f5094cfd1cc58c1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -740,7 +706,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aef2100d2c2bc05c24a0fa268670377cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef2100d2c2bc05c24a0fa268670377cb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aef2100d2c2bc05c24a0fa268670377cb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -767,36 +733,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ae1cf19a013c2167800d714b2420fc65e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1cf19a013c2167800d714b2420fc65e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pushFunctorAndVerifyPopReturnsIt&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a41621b89a6de63d5dd911dbe24a14d3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41621b89a6de63d5dd911dbe24a14d3f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a41621b89a6de63d5dd911dbe24a14d3f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -823,36 +761,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="af8f57ad13b13aa13f8b59a014e625185"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8f57ad13b13aa13f8b59a014e625185">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pushFunctionWithPrimitiveReturnTypeNoArgsAndVerifyPopReturnsIt&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a04cd8a849eea1f6a7815cf29c2e8a55e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04cd8a849eea1f6a7815cf29c2e8a55e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a04cd8a849eea1f6a7815cf29c2e8a55e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -879,36 +789,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="af16b933de05eb79d13ebdd28a9695fc7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af16b933de05eb79d13ebdd28a9695fc7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[24/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pushFunctionWithObjectReturnTypeNoArgsAndVerifyPopReturnsIt&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="aabccb0881d4a18774345ce0ca250b69d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabccb0881d4a18774345ce0ca250b69d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[25/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aabccb0881d4a18774345ce0ca250b69d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -935,36 +817,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a9007a8a74843ddb9fc920ad629ca30fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9007a8a74843ddb9fc920ad629ca30fc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pushFunctionWithNoReturnTypePrimitiveArgsAndVerifyPopReturnsIt&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a89805a421fcceb5ed7d0735b7205f161"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89805a421fcceb5ed7d0735b7205f161">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a89805a421fcceb5ed7d0735b7205f161">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -991,8 +845,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a0ceca911c1c5363b687a790bdc302f47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ceca911c1c5363b687a790bdc302f47">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/41]</span></h2>
+<a id="a1595a4495fd8fee557656fd227e5fbbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1595a4495fd8fee557656fd227e5fbbf">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1000,153 +854,13 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_executor_test.html">ExecutorTest</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">pushFunctionWithNoReturnTypeObjectArgsAndVerifyPopReturnsIt&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a27abc54ffedc84bfd1fd28b18b3071b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27abc54ffedc84bfd1fd28b18b3071b9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pushFunctionWithPrimitiveReturnTypeObjectArgsAndVerifyPopReturnsIt&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="adceda40b0b619fd7f3ca6532cc6f6e0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adceda40b0b619fd7f3ca6532cc6f6e0d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pushFunctionWithObjectReturnTypePrimitiveArgsAndVerifyPopReturnsIt&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4b40a60b473a427c4296d79136ebd1a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b40a60b473a427c4296d79136ebd1a3">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[31/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pushFunctionWithPrimitiveReturnTypePrimitiveArgsAndVerifyPopReturnsIt&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aeb56fbc25e095aa9e320a2952b646be2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb56fbc25e095aa9e320a2952b646be2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[32/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pushFunctionWithObjectReturnTypeObjectArgsAndVerifyPopReturnsIt&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a90f586d9149de8d714c9520ea9b0ab15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90f586d9149de8d714c9520ea9b0ab15">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[33/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">verifyFirstInFirstOutOrderIsMaintained&#160;</td>
+          <td class="paramtype">testExecutionOrderEqualToSubmitOrder&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -1160,7 +874,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a1350bfbfebc8985360bb5ea704541ee3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1350bfbfebc8985360bb5ea704541ee3">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1350bfbfebc8985360bb5ea704541ee3">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1190,7 +904,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a96979b18fa7cd01269e6b4866ef137df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96979b18fa7cd01269e6b4866ef137df">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/41]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a96979b18fa7cd01269e6b4866ef137df">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1219,8 +933,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a453e091c40c30a1b65c284b674a74342"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a453e091c40c30a1b65c284b674a74342">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[36/41]</span></h2>
+<a id="ae23b09de8801e5236de23e2e3ebfe19c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae23b09de8801e5236de23e2e3ebfe19c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1228,13 +942,13 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_executor_test.html">ExecutorTest</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">popBlocksOnInitiallyEmptyQueue&#160;</td>
+          <td class="paramtype">testPushAfterExecutordownFail&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -1245,10 +959,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Test that calling submit after shutdown will fail the job. </p>
+
 </div>
 </div>
-<a id="a1be7ec6bf71888ccd88b4947aa501c4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1be7ec6bf71888ccd88b4947aa501c4e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[37/41]</span></h2>
+<a id="a03987bfca7b02bcc86c45cb5cfaec468"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03987bfca7b02bcc86c45cb5cfaec468">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/19]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1256,13 +972,13 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_executor_test.html">ExecutorTest</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">popBlocksOnEmptyQueueAfterAllTasksArePopped&#160;</td>
+          <td class="paramtype">testShutdownCancelJob&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -1273,117 +989,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="aa9770d12f2f2adc8992de1ecccc32fd8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9770d12f2f2adc8992de1ecccc32fd8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[38/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">isShutdownReturnsFalseWhenRunning&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad76d048c27cd9621a4b5d8b5b2e788ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad76d048c27cd9621a4b5d8b5b2e788ab">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[39/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">isShutdownReturnsTrueAfterShutdown&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a24cda02e50e3f71b2da5445a7f253f05"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24cda02e50e3f71b2da5445a7f253f05">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[40/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">shutdownUnblocksAnEmptyQueue&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a178649a217941536547541eed64ec4fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a178649a217941536547541eed64ec4fe">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/41]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::threading::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_task_queue_test.html">TaskQueueTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pushFailsToEnqueueANewTaskOnAShutdownQueue&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Test that shutdown cancel jobs in the queue. </p>
 
 </div>
 </div>
@@ -1398,7 +1004,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::chrono::milliseconds alexaClientSDK::avsCommon::utils::threading::test::SHORT_TIMEOUT_MS = std::chrono::milliseconds(50)</td>
+          <td class="memname">const std::chrono::milliseconds alexaClientSDK::avsCommon::utils::threading::test::SHORT_TIMEOUT_MS = std::chrono::milliseconds(100)</td>
         </tr>
       </table>
   </td>
@@ -1408,7 +1014,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Timeout to use for waiting on calls within testss. </p>
+<p>Timeout to use for waiting on calls within tests. </p>
 
 </div>
 </div>
@@ -1460,11 +1066,26 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ae505669e75c3fc058585c035a9d27a74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae505669e75c3fc058585c035a9d27a74">&#9670;&nbsp;</a></span>WAIT_TIMEOUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::chrono::milliseconds alexaClientSDK::avsCommon::utils::threading::test::WAIT_TIMEOUT {100}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Timeout used while waiting for synchronization events. We picked 2s to avoid failure in slower systems (e.g.: valgrind and emulators). </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.12.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

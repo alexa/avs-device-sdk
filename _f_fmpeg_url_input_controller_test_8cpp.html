@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.11.0</span>
+   &#160;<span id="projectnumber">1.12.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -83,44 +83,48 @@ $(function() {
 <code>#include &lt;libavutil/common.h&gt;</code><br />
 <code>#include &lt;libavutil/error.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="_iterative_playlist_parser_interface_8h_source.html">AVSCommon/Utils/PlaylistParser/IterativePlaylistParserInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_memory_8h_source.html">AVSCommon/Utils/Memory/Memory.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="_mock_content_fetcher_8h_source.html">PlaylistParser/MockContentFetcher.h</a>&quot;</code><br />
+<code>#include &lt;<a class="el" href="_iterative_playlist_parser_8h_source.html">PlaylistParser/IterativePlaylistParser.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_f_fmpeg_url_input_controller_8h_source.html">AndroidSLESMediaPlayer/FFmpegUrlInputController.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for FFmpegUrlInputControllerTest.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_f_fmpeg_url_input_controller_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_media_player_2_android_s_l_e_s_media_player_2test_2_f_fmpeg_url_input_controller_test_8cpp" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_media_player_2_android_s_l_e_s_media_player_2test_2_f_fmpeg_url_input_controller_test_8cpp" id="_2workplace_2avs-device-sdk_2_media_player_2_android_s_l_e_s_media_player_2test_2_f_fmpeg_url_input_controller_test_8cpp">
-<area shape="rect" id="node10" href="_iterative_playlist_parser_interface_8h.html" title="AVSCommon/Utils/Playlist\lParser/IterativePlaylistParser\lInterface.h" alt="" coords="447,885,641,937"/>
-<area shape="rect" id="node18" href="_f_fmpeg_url_input_controller_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegUrlInputController.h" alt="" coords="2277,119,2467,157"/>
-<area shape="rect" id="node13" href="_playlist_parser_observer_interface_8h.html" title="PlaylistParserObserverInterface.h" alt="" coords="2175,992,2396,1017"/>
-<area shape="rect" id="node17" href="_playlist_entry_8h.html" title="PlaylistEntry.h" alt="" coords="2248,1079,2352,1104"/>
-<area shape="rect" id="node19" href="_h_t_t_p_content_fetcher_interface_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface\lFactoryInterface.h" alt="" coords="1850,205,2054,257"/>
-<area shape="rect" id="node49" href="_f_fmpeg_input_controller_interface_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegInputControllerInterface.h" alt="" coords="2477,1072,2702,1111"/>
-<area shape="rect" id="node20" href="_h_t_t_p_content_fetcher_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface.h" alt="" coords="1563,305,1778,344"/>
-<area shape="rect" id="node21" href="_h_t_t_p_content_8h.html" title="AVSCommon/Utils/HTTPContent.h" alt="" coords="1242,392,1470,417"/>
-<area shape="rect" id="node48" href="_s_d_k_version_8h.html" title="AVSCommon/Utils/SDKVersion.h" alt="" coords="1875,392,2093,417"/>
-<area shape="rect" id="node23" href="_in_process_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachment.h" alt="" coords="1331,465,1533,504"/>
-<area shape="rect" id="node24" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="1673,552,1874,591"/>
-<area shape="rect" id="node31" href="_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1107,639,1269,677"/>
-<area shape="rect" id="node46" href="_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="1442,552,1648,591"/>
-<area shape="rect" id="node47" href="_in_process_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h" alt="" coords="1217,552,1418,591"/>
-<area shape="rect" id="node27" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1981,799,2182,837"/>
-<area shape="rect" id="node29" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1930,892,2092,931"/>
-<area shape="rect" id="node30" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="1551,639,1753,677"/>
-<area shape="rect" id="node45" href="_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="1311,899,1414,924"/>
-<area shape="rect" id="node33" href="_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1083,725,1229,751"/>
-<area shape="rect" id="node35" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1577,892,1753,931"/>
-<area shape="rect" id="node40" href="_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="867,805,975,831"/>
-<area shape="rect" id="node41" href="_reader_8h.html" title="Reader.h" alt="" coords="1213,805,1288,831"/>
-<area shape="rect" id="node44" href="_writer_8h.html" title="Writer.h" alt="" coords="1122,805,1190,831"/>
-<area shape="rect" id="node36" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1509,985,1685,1024"/>
-<area shape="rect" id="node37" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="917,1072,1131,1111"/>
-<area shape="rect" id="node38" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1443,1072,1619,1111"/>
-<area shape="rect" id="node39" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1693,1072,1869,1111"/>
+<area shape="rect" id="node10" href="_iterative_playlist_parser_interface_8h.html" title="AVSCommon/Utils/Playlist\lParser/IterativePlaylistParser\lInterface.h" alt="" coords="93,465,286,517"/>
+<area shape="rect" id="node18" href="_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="2399,119,2582,157"/>
+<area shape="rect" id="node20" href="_mock_content_fetcher_8h.html" title="PlaylistParser/MockContent\lFetcher.h" alt="" coords="562,212,747,251"/>
+<area shape="rect" id="node44" href="_iterative_playlist_parser_8h.html" title="PlaylistParser/Iterative\lPlaylistParser.h" alt="" coords="1059,119,1213,157"/>
+<area shape="rect" id="node48" href="_f_fmpeg_url_input_controller_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegUrlInputController.h" alt="" coords="1288,119,1477,157"/>
+<area shape="rect" id="node13" href="_playlist_parser_observer_interface_8h.html" title="PlaylistParserObserverInterface.h" alt="" coords="475,572,696,597"/>
+<area shape="rect" id="node17" href="_playlist_entry_8h.html" title="PlaylistEntry.h" alt="" coords="576,659,680,684"/>
+<area shape="rect" id="node22" href="_h_t_t_p_content_fetcher_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface.h" alt="" coords="863,305,1078,344"/>
+<area shape="rect" id="node23" href="_h_t_t_p_content_8h.html" title="AVSCommon/Utils/HTTPContent.h" alt="" coords="857,392,1084,417"/>
+<area shape="rect" id="node43" href="_s_d_k_version_8h.html" title="AVSCommon/Utils/SDKVersion.h" alt="" coords="411,392,629,417"/>
+<area shape="rect" id="node25" href="_in_process_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachment.h" alt="" coords="1595,472,1797,511"/>
+<area shape="rect" id="node26" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="1734,565,1935,604"/>
+<area shape="rect" id="node33" href="_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1635,652,1797,691"/>
+<area shape="rect" id="node41" href="_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="1960,565,2166,604"/>
+<area shape="rect" id="node42" href="_in_process_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h" alt="" coords="1457,565,1658,604"/>
+<area shape="rect" id="node29" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1873,652,2074,691"/>
+<area shape="rect" id="node31" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="2024,885,2186,924"/>
+<area shape="rect" id="node32" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="1358,652,1559,691"/>
+<area shape="rect" id="node40" href="_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="1233,892,1335,917"/>
+<area shape="rect" id="node35" href="_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1463,739,1609,764"/>
+<area shape="rect" id="node37" href="_reader_8h.html" title="Reader.h" alt="" coords="1553,812,1628,837"/>
+<area shape="rect" id="node39" href="_writer_8h.html" title="Writer.h" alt="" coords="1361,812,1428,837"/>
+<area shape="rect" id="node46" href="_h_t_t_p_content_fetcher_interface_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface\lFactoryInterface.h" alt="" coords="1034,205,1238,257"/>
+<area shape="rect" id="node47" href="_m3_u_parser_8h.html" title="PlaylistParser/M3UParser.h" alt="" coords="493,479,678,504"/>
+<area shape="rect" id="node49" href="_f_fmpeg_input_controller_interface_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegInputControllerInterface.h" alt="" coords="1058,652,1283,691"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_content_fetcher_factory.html">alexaClientSDK::mediaPlayer::android::test::MockContentFetcherFactory</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mocks the content fetcher factory.  <a href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_content_fetcher_factory.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_playlist_parser.html">alexaClientSDK::mediaPlayer::android::test::MockPlaylistParser</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_f_fmpeg_url_input_controller_test.html">alexaClientSDK::mediaPlayer::android::test::FFmpegUrlInputControllerTest</a></td></tr>
@@ -170,6 +174,12 @@ Functions</h2></td></tr>
 <tr class="memitem:aa1d7617212881aaa7e3d59b085efa5ac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#aa1d7617212881aaa7e3d59b085efa5ac">alexaClientSDK::mediaPlayer::android::test::TEST_F</a> (FFmpegUrlInputControllerTest, testDone)</td></tr>
 <tr class="memdesc:aa1d7617212881aaa7e3d59b085efa5ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test has next after playlist parser is done.  <a href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#aa1d7617212881aaa7e3d59b085efa5ac">More...</a><br /></td></tr>
 <tr class="separator:aa1d7617212881aaa7e3d59b085efa5ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd69c6e3021db5d194351f9170a26c56"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#abd69c6e3021db5d194351f9170a26c56">alexaClientSDK::mediaPlayer::android::test::TEST_F</a> (FFmpegUrlInputControllerTest, testPlaylistRepeat)</td></tr>
+<tr class="memdesc:abd69c6e3021db5d194351f9170a26c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test parsing playlist with repeat on.  <a href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#abd69c6e3021db5d194351f9170a26c56">More...</a><br /></td></tr>
+<tr class="separator:abd69c6e3021db5d194351f9170a26c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae79127d9d0644ad9b1723bbb9efbb4e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#aae79127d9d0644ad9b1723bbb9efbb4e">alexaClientSDK::mediaPlayer::android::test::TEST_F</a> (FFmpegUrlInputControllerTest, testMediaUrlRepeat)</td></tr>
+<tr class="memdesc:aae79127d9d0644ad9b1723bbb9efbb4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test parsing media url with repeat on.  <a href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#aae79127d9d0644ad9b1723bbb9efbb4e">More...</a><br /></td></tr>
+<tr class="separator:aae79127d9d0644ad9b1723bbb9efbb4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_f_fmpeg_url_input_controller_test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -187,6 +197,8 @@ Variables</h2></td></tr>
 <tr class="memitem:ad5f5d19378212fef1d144ef8f245071b"><td class="memItemLeft" align="right" valign="top">static const std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ad5f5d19378212fef1d144ef8f245071b">alexaClientSDK::mediaPlayer::android::test::DURATION</a> {5}</td></tr>
 <tr class="memdesc:ad5f5d19378212fef1d144ef8f245071b"><td class="mdescLeft">&#160;</td><td class="mdescRight">MP3 approximate duration.  <a href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ad5f5d19378212fef1d144ef8f245071b">More...</a><br /></td></tr>
 <tr class="separator:ad5f5d19378212fef1d144ef8f245071b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a852bcb93aab8ff6ebf17412f849883e9"><td class="memItemLeft" align="right" valign="top">static const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#a852bcb93aab8ff6ebf17412f849883e9">alexaClientSDK::mediaPlayer::android::test::DO_NOT_REPEAT</a> = false</td></tr>
+<tr class="separator:a852bcb93aab8ff6ebf17412f849883e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2501b912b8cfa5b3be316a46ef4b3b9"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ae2501b912b8cfa5b3be316a46ef4b3b9">alexaClientSDK::mediaPlayer::android::test::ZERO_OFFSET</a> = std::chrono::milliseconds::zero()</td></tr>
 <tr class="memdesc:ae2501b912b8cfa5b3be316a46ef4b3b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zero offset.  <a href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ae2501b912b8cfa5b3be316a46ef4b3b9">More...</a><br /></td></tr>
 <tr class="separator:ae2501b912b8cfa5b3be316a46ef4b3b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -230,7 +242,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.12.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

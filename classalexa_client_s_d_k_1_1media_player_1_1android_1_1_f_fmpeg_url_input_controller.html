@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.11.0</span>
+   &#160;<span id="projectnumber">1.12.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -94,6 +94,8 @@ Collaboration diagram for alexaClientSDK::mediaPlayer::android::FFmpegUrlInputCo
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a5c0645e556841a1a83155923ba58a265"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_url_input_controller.html#a5c0645e556841a1a83155923ba58a265">getCurrentUrl</a> () const</td></tr>
+<tr class="separator:a5c0645e556841a1a83155923ba58a265"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16af6f24009eb9e54ce4ab0e78b8a68b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_url_input_controller.html#a16af6f24009eb9e54ce4ab0e78b8a68b">~FFmpegUrlInputController</a> ()</td></tr>
 <tr class="separator:a16af6f24009eb9e54ce4ab0e78b8a68b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">FFmpegInputControllerInterface methods</div></td></tr>
@@ -109,8 +111,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ac55b6e057c13728299aa9b0305152eb5"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_url_input_controller.html">FFmpegUrlInputController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_url_input_controller.html#ac55b6e057c13728299aa9b0305152eb5">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_iterative_playlist_parser_interface.html">avsCommon::utils::playlistParser::IterativePlaylistParserInterface</a> &gt; playlistParser, const std::string &amp;url, const std::chrono::milliseconds &amp;offset)</td></tr>
-<tr class="separator:ac55b6e057c13728299aa9b0305152eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad47e8013cf5cb09e0272352c467d9948"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_url_input_controller.html">FFmpegUrlInputController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_url_input_controller.html#ad47e8013cf5cb09e0272352c467d9948">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_iterative_playlist_parser_interface.html">avsCommon::utils::playlistParser::IterativePlaylistParserInterface</a> &gt; playlistParser, const std::string &amp;url, const std::chrono::milliseconds &amp;offset, bool repeat)</td></tr>
+<tr class="separator:ad47e8013cf5cb09e0272352c467d9948"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -144,8 +146,8 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac55b6e057c13728299aa9b0305152eb5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac55b6e057c13728299aa9b0305152eb5">&#9670;&nbsp;</a></span>create()</h2>
+<a id="ad47e8013cf5cb09e0272352c467d9948"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad47e8013cf5cb09e0272352c467d9948">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -169,7 +171,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::chrono::milliseconds &amp;&#160;</td>
-          <td class="paramname"><em>offset</em>&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>repeat</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -189,6 +197,7 @@ Additional Inherited Members</h2></td></tr>
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html">playlistParser</a></td><td>Pointer to a valid playlist parser used to fill up the <code>Playlist</code>. </td></tr>
     <tr><td class="paramname">url</td><td>The playlist / media url that we would like to decode. </td></tr>
     <tr><td class="paramname">offset</td><td>The audio input should start from the given offset. </td></tr>
+    <tr><td class="paramname">repeat</td><td>The playlist should play in a loop if this is true. </td></tr>
   </table>
   </dd>
 </dl>
@@ -222,6 +231,23 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A tuple with the return result, a pointer to <code>AVFormatContext</code> and the initial playback position. </dd></dl>
 
 <p>Implements <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_input_controller_interface.html#af6451994687a9217b72a8510409425ef">alexaClientSDK::mediaPlayer::android::FFmpegInputControllerInterface</a>.</p>
+
+</div>
+</div>
+<a id="a5c0645e556841a1a83155923ba58a265"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c0645e556841a1a83155923ba58a265">&#9670;&nbsp;</a></span>getCurrentUrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::mediaPlayer::android::FFmpegUrlInputController::getCurrentUrl </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -291,7 +317,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.12.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

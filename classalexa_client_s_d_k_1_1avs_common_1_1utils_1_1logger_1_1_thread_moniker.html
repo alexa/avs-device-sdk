@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.11.0</span>
+   &#160;<span id="projectnumber">1.12.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -66,7 +66,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_thread_moniker-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -76,40 +75,21 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="_thread_moniker_8h_source.html">ThreadMoniker.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:acffa1723c02396497338134a230509bc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_thread_moniker.html#acffa1723c02396497338134a230509bc">ThreadMoniker</a> ()</td></tr>
-<tr class="separator:acffa1723c02396497338134a230509bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a0d0533174d23208bf76f4bebe1ba170d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_thread_moniker.html#a0d0533174d23208bf76f4bebe1ba170d">getThisThreadMoniker</a> ()</td></tr>
-<tr class="separator:a0d0533174d23208bf76f4bebe1ba170d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9a4822f470e49cdf848615010a6c635"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_thread_moniker.html#ac9a4822f470e49cdf848615010a6c635">getThisThreadMoniker</a> ()</td></tr>
+<tr class="separator:ac9a4822f470e49cdf848615010a6c635"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e5f4b4d9bb0f35da3414b19b3785121"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_thread_moniker.html#a2e5f4b4d9bb0f35da3414b19b3785121">generateMoniker</a> ()</td></tr>
+<tr class="separator:a2e5f4b4d9bb0f35da3414b19b3785121"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4838dbff9ef43a0ccc476acab2eebd0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_thread_moniker.html#ae4838dbff9ef43a0ccc476acab2eebd0">setThisThreadMoniker</a> (const std::string &amp;moniker)</td></tr>
+<tr class="separator:ae4838dbff9ef43a0ccc476acab2eebd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class to provide <code>std::this_thread</code> access to unique name for itself. The name <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_thread_moniker.html">ThreadMoniker</a> is used instead of ThreadId to avoid confusion with platform specific thread identifiers or the <code>std::thread::id</code> values rendered as a string. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="acffa1723c02396497338134a230509bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acffa1723c02396497338134a230509bc">&#9670;&nbsp;</a></span>ThreadMoniker()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::avsCommon::utils::logger::ThreadMoniker::ThreadMoniker </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Constructor. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0d0533174d23208bf76f4bebe1ba170d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d0533174d23208bf76f4bebe1ba170d">&#9670;&nbsp;</a></span>getThisThreadMoniker()</h2>
+<div class="textblock"><p>Class to provide <code>std::this_thread</code> access to unique name for itself.</p>
+<p>The name <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_thread_moniker.html">ThreadMoniker</a> is used instead of ThreadId to avoid confusion with platform specific thread identifiers or the <code>std::thread::id</code> values rendered as a string. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2e5f4b4d9bb0f35da3414b19b3785121"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e5f4b4d9bb0f35da3414b19b3785121">&#9670;&nbsp;</a></span>generateMoniker()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -118,7 +98,34 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::avsCommon::utils::logger::ThreadMoniker::getThisThreadMoniker </td>
+          <td class="memname">std::string alexaClientSDK::avsCommon::utils::logger::ThreadMoniker::generateMoniker </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Generate a unique moniker.</p>
+<dl class="section return"><dt>Returns</dt><dd>A new unique moniker. </dd></dl>
+
+</div>
+</div>
+<a id="ac9a4822f470e49cdf848615010a6c635"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9a4822f470e49cdf848615010a6c635">&#9670;&nbsp;</a></span>getThisThreadMoniker()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::avsCommon::utils::logger::ThreadMoniker::getThisThreadMoniker </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -132,7 +139,39 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Get the moniker for <code>std::this_thread</code>.</p>
 <dl class="section return"><dt>Returns</dt><dd>The moniker for <code>std::this_thread</code>. </dd></dl>
-<p>Per-thread static instance so that <code>m_threadMoniker.m_moniker</code> is <code>std::this_thread's</code> moniker. </p>
+
+</div>
+</div>
+<a id="ae4838dbff9ef43a0ccc476acab2eebd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4838dbff9ef43a0ccc476acab2eebd0">&#9670;&nbsp;</a></span>setThisThreadMoniker()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::avsCommon::utils::logger::ThreadMoniker::setThisThreadMoniker </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>moniker</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the moniker for <code>std::this_thread</code>. This method should be called before <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_thread_moniker.html#ac9a4822f470e49cdf848615010a6c635">getThisThreadMoniker()</a></code> in order to take effect.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">moniker</td><td>The moniker for <code>std::this_thread</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -144,7 +183,7 @@ Static Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.12.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

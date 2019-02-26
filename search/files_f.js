@@ -44,5 +44,7 @@ var searchData=
   ['progresstimer_2ecpp',['ProgressTimer.cpp',['../_progress_timer_8cpp.html',1,'']]],
   ['progresstimer_2eh',['ProgressTimer.h',['../_progress_timer_8h.html',1,'']]],
   ['progresstimertest_2ecpp',['ProgressTimerTest.cpp',['../_progress_timer_test_8cpp.html',1,'']]],
-  ['promisefuturepair_2eh',['PromiseFuturePair.h',['../_promise_future_pair_8h.html',1,'']]]
+  ['promisefuturepair_2eh',['PromiseFuturePair.h',['../_promise_future_pair_8h.html',1,'']]],
+  ['pulseaudiobluetoothinitializer_2ecpp',['PulseAudioBluetoothInitializer.cpp',['../_pulse_audio_bluetooth_initializer_8cpp.html',1,'']]],
+  ['pulseaudiobluetoothinitializer_2eh',['PulseAudioBluetoothInitializer.h',['../_pulse_audio_bluetooth_initializer_8h.html',1,'']]]
 ];

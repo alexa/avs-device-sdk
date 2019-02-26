@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.11.0</span>
+   &#160;<span id="projectnumber">1.12.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -99,8 +99,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8fa43da3994f1ba667df17053a75d23f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad94bfc69253d7e9dc386df9b2970c055"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#ad94bfc69253d7e9dc386df9b2970c055">setSource</a> (std::shared_ptr&lt; std::istream &gt; stream, bool repeat) override</td></tr>
 <tr class="separator:ad94bfc69253d7e9dc386df9b2970c055"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a346d6cbadbca3549792e38f0e4b02cab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a346d6cbadbca3549792e38f0e4b02cab">setSource</a> (const std::string &amp;url, std::chrono::milliseconds offset=std::chrono::milliseconds::zero()) override</td></tr>
-<tr class="separator:a346d6cbadbca3549792e38f0e4b02cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f0027d546a697facdb146ec4f5206e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a0f0027d546a697facdb146ec4f5206e5">setSource</a> (const std::string &amp;url, std::chrono::milliseconds offset=std::chrono::milliseconds::zero(), bool repeat=false) override</td></tr>
+<tr class="separator:a0f0027d546a697facdb146ec4f5206e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac483a28357da39a4b8daa0bd4bc990ac"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#ac483a28357da39a4b8daa0bd4bc990ac">play</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId</a> id) override</td></tr>
 <tr class="separator:ac483a28357da39a4b8daa0bd4bc990ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a582f2329c16f66f87e159a09bd15677a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a582f2329c16f66f87e159a09bd15677a">stop</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId</a> id) override</td></tr>
@@ -475,8 +475,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a346d6cbadbca3549792e38f0e4b02cab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a346d6cbadbca3549792e38f0e4b02cab">&#9670;&nbsp;</a></span>setSource() <span class="overload">[3/3]</span></h2>
+<a id="a0f0027d546a697facdb146ec4f5206e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f0027d546a697facdb146ec4f5206e5">&#9670;&nbsp;</a></span>setSource() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -494,7 +494,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::chrono::milliseconds&#160;</td>
-          <td class="paramname"><em>offset</em> = <code>std::chrono::milliseconds::zero()</code>&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>std::chrono::milliseconds::zero()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>repeat</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -513,13 +519,14 @@ Additional Inherited Members</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">url</td><td>The url to set as the source. </td></tr>
-    <tr><td class="paramname">offset</td><td>An optional offset parameter to start playing from when a <code><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#ac483a28357da39a4b8daa0bd4bc990ac">play()</a></code> call is made.</td></tr>
+    <tr><td class="paramname">offset</td><td>An optional offset parameter to start playing from when a <code><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#ac483a28357da39a4b8daa0bd4bc990ac">play()</a></code> call is made. </td></tr>
+    <tr><td class="paramname">repeat</td><td>An optional parameter to play the url source in a loop.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The <code>SourceId</code> that represents the source being handled as a result of this call. <code>ERROR</code> will be returned if the source failed to be set. </dd></dl>
 
-<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ab85755bac7d425c5654891dce92ad5e6">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface</a>.</p>
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#af69e59d203551392f1b4811287d245d2">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface</a>.</p>
 
 </div>
 </div>
@@ -569,7 +576,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.12.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

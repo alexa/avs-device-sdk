@@ -1,4 +1,12 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/src/TaskThread.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/src/TaskThread.cpp">
-<area shape="rect" id="node2" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="121,105,316,144"/>
-<area shape="rect" id="node6" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="241,192,436,231"/>
+<area shape="rect" id="node2" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="673,105,849,144"/>
+<area shape="rect" id="node21" href="$_thread_moniker_8h.html" title="AVSCommon/Utils/Logger\l/ThreadMoniker.h" alt="" coords="1257,105,1433,144"/>
+<area shape="rect" id="node24" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1457,105,1652,144"/>
+<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="260,192,474,231"/>
+<area shape="rect" id="node13" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="975,279,1151,317"/>
+<area shape="rect" id="node14" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="673,192,849,231"/>
+<area shape="rect" id="node19" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="924,192,1121,231"/>
+<area shape="rect" id="node20" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="5,365,181,404"/>
+<area shape="rect" id="node15" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="673,279,849,317"/>
+<area shape="rect" id="node17" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="767,365,943,404"/>
 </map>

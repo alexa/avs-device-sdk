@@ -11,6 +11,7 @@ var searchData=
   ['decoderinterface',['DecoderInterface',['../classalexa_client_s_d_k_1_1media_player_1_1android_1_1_decoder_interface.html',1,'alexaClientSDK::mediaPlayer::android']]],
   ['defaultclient',['DefaultClient',['../classalexa_client_s_d_k_1_1default_client_1_1_default_client.html',1,'alexaClientSDK::defaultClient']]],
   ['detectionresult',['detectionResult',['../structalexa_client_s_d_k_1_1kwd_1_1test_1_1test_key_word_observer_1_1detection_result.html',1,'alexaClientSDK::kwd::test::testKeyWordObserver']]],
+  ['deviceattributes',['DeviceAttributes',['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_obser94c6197e70b66554b18e449b4b42c987.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface']]],
   ['devicediscoveredevent',['DeviceDiscoveredEvent',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_discovered_event.html',1,'alexaClientSDK::avsCommon::utils::bluetooth']]],
   ['deviceinfo',['DeviceInfo',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html',1,'alexaClientSDK::avsCommon::utils']]],
   ['deviceremovedevent',['DeviceRemovedEvent',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_removed_event.html',1,'alexaClientSDK::avsCommon::utils::bluetooth']]],

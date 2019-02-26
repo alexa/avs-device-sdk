@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.11.0</span>
+   &#160;<span id="projectnumber">1.12.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -92,6 +92,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a887e3e4563fefd003f835f74e088564a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12f2241df7f243fb8cad5b9e5de9db6d"><td class="memItemLeft" align="right" valign="top">virtual std::list&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_interface.html">avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_manager_interface.html#a12f2241df7f243fb8cad5b9e5de9db6d">getDiscoveredDevices</a> ()=0</td></tr>
 <tr class="separator:a12f2241df7f243fb8cad5b9e5de9db6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc7f4f6d1e986f3a0a402ad8883b780f"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_event_bus.html">avsCommon::utils::bluetooth::BluetoothEventBus</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_manager_interface.html#abc7f4f6d1e986f3a0a402ad8883b780f">getEventBus</a> ()=0</td></tr>
+<tr class="separator:abc7f4f6d1e986f3a0a402ad8883b780f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This component is a starting point of any platform specific implementation of bluetooth functionality. It is responsible for ownership of <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_interface.html" title="Represents a Bluetooth Device. ">BluetoothDeviceInterface</a></code> objects and <code>BluetootHostController</code> objects. </p>
@@ -152,6 +154,35 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="abc7f4f6d1e986f3a0a402ad8883b780f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc7f4f6d1e986f3a0a402ad8883b780f">&#9670;&nbsp;</a></span>getEventBus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_event_bus.html">avsCommon::utils::bluetooth::BluetoothEventBus</a>&gt; alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface::getEventBus </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the <code>BluetoothEventBus</code> used by this device manager to post bluetooth related events.</p>
+<dl class="section return"><dt>Returns</dt><dd>A <code>BluetoothEventBus</code> object associated with the device manager. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_device_manager.html#a8c5946da10981da8e016c1a9a4179a85">alexaClientSDK::bluetoothImplementations::blueZ::BlueZDeviceManager</a>, and <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_bluetooth_device_manager.html#a5e4b09a26cdb8284d745efe6e816da5b">alexaClientSDK::bluetoothImplementations::blueZ::BlueZBluetoothDeviceManager</a>.</p>
+
+</div>
+</div>
 <a id="a887e3e4563fefd003f835f74e088564a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a887e3e4563fefd003f835f74e088564a">&#9670;&nbsp;</a></span>getHostController()</h2>
 
@@ -187,7 +218,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.12.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

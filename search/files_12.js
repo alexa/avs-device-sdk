@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['taskqueue_2ecpp',['TaskQueue.cpp',['../_task_queue_8cpp.html',1,'']]],
-  ['taskqueue_2eh',['TaskQueue.h',['../_task_queue_8h.html',1,'']]],
-  ['taskqueuetest_2ecpp',['TaskQueueTest.cpp',['../_task_queue_test_8cpp.html',1,'']]],
   ['taskthread_2ecpp',['TaskThread.cpp',['../_task_thread_8cpp.html',1,'']]],
   ['taskthread_2eh',['TaskThread.h',['../_task_thread_8h.html',1,'']]],
   ['taskthreadtest_2ecpp',['TaskThreadTest.cpp',['../_task_thread_test_8cpp.html',1,'']]],

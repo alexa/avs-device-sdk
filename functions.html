@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.11.0</span>
+   &#160;<span id="projectnumber">1.12.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -158,6 +158,12 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_delegate_interface.html#a4828a1a064ec6c1c1d9c2fefad5d5d0d">alexaClientSDK::avsCommon::sdkInterfaces::AuthDelegateInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_test_auth_delegate.html#a0bcf89bf4071ccf85529e0bc5f5ee828">alexaClientSDK::capabilitiesDelegate::test::TestAuthDelegate</a>
 </li>
+<li>addBluetoothDeviceObserver()
+: <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#ab12a0071b7707d0a3fd6586dfeb876fe">alexaClientSDK::defaultClient::DefaultClient</a>
+</li>
+<li>addCallStateObserver()
+: <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a82adebfe57cd088096dbc4e02c918b95">alexaClientSDK::defaultClient::DefaultClient</a>
+</li>
 <li>addCapabilitiesObserver()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html#a0f6ee5105a45f678ec365ad2253e1371">alexaClientSDK::avsCommon::sdkInterfaces::CapabilitiesDelegateInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html#a0c776d1e1fd7f9ffb8ab0df472259aab">alexaClientSDK::capabilitiesDelegate::CapabilitiesDelegate</a>
@@ -226,6 +232,7 @@ $(function() {
 <li>addMessageObserver()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html#a0ba0607327e74828015f65549f5b0778">alexaClientSDK::acl::AVSConnectionManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html#a59cef4c3ad790f2e83cf749c58f6d762">alexaClientSDK::avsCommon::sdkInterfaces::AVSConnectionManagerInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#aba05eb82c3e2667ae982aa9e42b91b01">alexaClientSDK::defaultClient::DefaultClient</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender.html#a1ae2b5cc8b5b12ac7d2ff628b5553c28">alexaClientSDK::integration::test::TestMessageSender</a>
 </li>
 <li>addNotificationsObserver()
@@ -243,6 +250,7 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#adbdb82cbb2fd75347926b8df61c0e2c3">alexaClientSDK::capabilityAgents::aip::AudioInputProcessor</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html#a7bc64ab1cd53261fa0e2580fa25a7d5c">alexaClientSDK::capabilityAgents::alerts::AlertsCapabilityAgent</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#a8e7132e03f99354d8767e33a43d74984">alexaClientSDK::capabilityAgents::audioPlayer::AudioPlayer</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth.html#a9b49e01e6bb91bbbb081aa3150dc38ae">alexaClientSDK::capabilityAgents::bluetooth::Bluetooth</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#a6d108b677d7fe0ce3cad66c908159d4d">alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPlayer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notification_renderer.html#a8c1b7c1018c83e406a041d27eb6bb26d">alexaClientSDK::capabilityAgents::notifications::NotificationRenderer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notification_renderer_interface.html#a107670d432b9a809ec514d2883811943">alexaClientSDK::capabilityAgents::notifications::NotificationRendererInterface</a>
@@ -392,6 +400,9 @@ $(function() {
 <li>ApplyDbChangeFunction
 : <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_setting_protocol_interface.html#a6086a0511bdeb1da96086094dcce6731">alexaClientSDK::settings::SettingProtocolInterface</a>
 </li>
+<li>ApplyFrontend()
+: <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_snowboy_wrapper.html#a9add51520e9462659b6ea25b2958cd22">alexaClientSDK::kwd::SnowboyWrapper</a>
+</li>
 <li>artistId
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_playback_state.html#aee7622c16d52b630aec3f74adad693e8">alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::AdapterPlaybackState</a>
 </li>
@@ -417,7 +428,7 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_state_change_manager.html#af367d946730a12213ed4934435a52232">alexaClientSDK::avsCommon::test::StateChangeManager</a>
 </li>
 <li>Asset()
-: <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset.html#a25c0b58e92d87e564465194a2515ecb8">alexaClientSDK::capabilityAgents::alerts::Alert::Asset</a>
+: <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_asset.html#af3b55e163ddeb2e689d8367b8e752720">alexaClientSDK::capabilityAgents::alerts::Alert::Asset</a>
 </li>
 <li>asset
 : <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notification_indicator.html#ab559317b04615b6b7406eeee7a70c068">alexaClientSDK::capabilityAgents::notifications::NotificationIndicator</a>
@@ -545,7 +556,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.11.0 - Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.12.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

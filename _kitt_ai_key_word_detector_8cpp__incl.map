@@ -1,7 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/KWD/KittAi/src/KittAiKeyWordDetector.cpp" name="/workplace/avs&#45;device&#45;sdk/KWD/KittAi/src/KittAiKeyWordDetector.cpp">
-<area shape="rect" id="node4" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1595,772,1771,811"/>
-<area shape="rect" id="node21" href="$_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="331,105,514,144"/>
-<area shape="rect" id="node23" href="$_kitt_ai_key_word_detector_8h.html" title="KittAi/KittAiKeyWordDetector.h" alt="" coords="1293,112,1496,137"/>
+<area shape="rect" id="node4" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1583,772,1759,811"/>
+<area shape="rect" id="node21" href="$_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="134,105,317,144"/>
+<area shape="rect" id="node23" href="$_kitt_ai_key_word_detector_8h.html" title="KittAi/KittAiKeyWordDetector.h" alt="" coords="1247,112,1449,137"/>
 <area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1212,859,1426,897"/>
 <area shape="rect" id="node13" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1716,945,1892,984"/>
 <area shape="rect" id="node14" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1823,859,1999,897"/>
@@ -9,17 +9,18 @@
 <area shape="rect" id="node20" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="195,1032,371,1071"/>
 <area shape="rect" id="node15" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1967,945,2143,984"/>
 <area shape="rect" id="node17" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1708,1032,1884,1071"/>
-<area shape="rect" id="node27" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1705,279,1927,304"/>
-<area shape="rect" id="node28" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="942,365,1140,404"/>
+<area shape="rect" id="node27" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1706,279,1928,304"/>
+<area shape="rect" id="node28" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="917,365,1115,404"/>
 <area shape="rect" id="node42" href="$_key_word_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordObserverInterface.h" alt="" coords="333,272,531,311"/>
 <area shape="rect" id="node43" href="$_key_word_detector_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordDetectorStateObserver\lInterface.h" alt="" coords="93,265,309,317"/>
-<area shape="rect" id="node44" href="$_abstract_keyword_detector_8h.html" title="KWD/AbstractKeywordDetector.h" alt="" coords="932,192,1150,217"/>
-<area shape="rect" id="node29" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="960,452,1122,491"/>
-<area shape="rect" id="node31" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="928,539,1075,564"/>
+<area shape="rect" id="node44" href="$_abstract_keyword_detector_8h.html" title="KWD/AbstractKeywordDetector.h" alt="" coords="907,192,1125,217"/>
+<area shape="rect" id="node45" href="$_snowboy_wrapper_8h.html" title="KittAi/SnowboyWrapper.h" alt="" coords="1607,192,1779,217"/>
+<area shape="rect" id="node29" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="935,452,1097,491"/>
+<area shape="rect" id="node31" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="909,539,1056,564"/>
 <area shape="rect" id="node34" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1143,685,1319,724"/>
-<area shape="rect" id="node35" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="1171,612,1279,637"/>
+<area shape="rect" id="node35" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="1173,612,1281,637"/>
 <area shape="rect" id="node36" href="$_reader_8h.html" title="Reader.h" alt="" coords="657,612,732,637"/>
-<area shape="rect" id="node40" href="$_writer_8h.html" title="Writer.h" alt="" coords="948,612,1015,637"/>
+<area shape="rect" id="node40" href="$_writer_8h.html" title="Writer.h" alt="" coords="941,612,1008,637"/>
 <area shape="rect" id="node39" href="$_reader_policy_8h.html" title="ReaderPolicy.h" alt="" coords="422,692,533,717"/>
 <area shape="rect" id="node41" href="$_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="833,692,935,717"/>
 </map>

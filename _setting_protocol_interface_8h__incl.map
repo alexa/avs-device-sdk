@@ -1,7 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingProtocolInterface.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingProtocolInterface.h">
-<area shape="rect" id="node6" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="179,105,374,144"/>
-<area shape="rect" id="node15" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="683,112,867,137"/>
-<area shape="rect" id="node16" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="633,279,803,317"/>
-<area shape="rect" id="node8" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="314,192,508,231"/>
-<area shape="rect" id="node11" href="$_task_queue_8h.html" title="AVSCommon/Utils/Threading\l/TaskQueue.h" alt="" coords="179,279,374,317"/>
+<area shape="rect" id="node6" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="377,105,572,144"/>
+<area shape="rect" id="node15" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1099,112,1282,137"/>
+<area shape="rect" id="node16" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="26,105,195,144"/>
+<area shape="rect" id="node13" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="377,192,572,231"/>
 </map>

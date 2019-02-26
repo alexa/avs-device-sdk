@@ -12,6 +12,7 @@ var searchData=
   ['bluetoothavrcptransformertest_2ecpp',['BluetoothAVRCPTransformerTest.cpp',['../_bluetooth_a_v_r_c_p_transformer_test_8cpp.html',1,'']]],
   ['bluetoothdeviceinterface_2eh',['BluetoothDeviceInterface.h',['../_bluetooth_device_interface_8h.html',1,'']]],
   ['bluetoothdevicemanagerinterface_2eh',['BluetoothDeviceManagerInterface.h',['../_bluetooth_device_manager_interface_8h.html',1,'']]],
+  ['bluetoothdeviceobserverinterface_2eh',['BluetoothDeviceObserverInterface.h',['../_bluetooth_device_observer_interface_8h.html',1,'']]],
   ['bluetootheventbus_2ecpp',['BluetoothEventBus.cpp',['../_bluetooth_event_bus_8cpp.html',1,'']]],
   ['bluetootheventbus_2eh',['BluetoothEventBus.h',['../_bluetooth_event_bus_8h.html',1,'']]],
   ['bluetootheventlistenerinterface_2eh',['BluetoothEventListenerInterface.h',['../_bluetooth_event_listener_interface_8h.html',1,'']]],
