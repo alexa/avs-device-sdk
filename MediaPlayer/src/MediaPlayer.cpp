@@ -1554,15 +1554,6 @@ void MediaPlayer::sendPlaybackFinished() {
     }
     m_urlConverter.reset();
 
-    if (m_fileStream) {
-      signed short silence[SAMPLE_RATE];
-      std::memset(silence, 0, sizeof(silence));
-      for (int i = 0; i < 60; i++) {
-        m_fileStream->write((char*)silence, sizeof(silence));
-        m_samplesWritten += SAMPLE_RATE;
-      }
-      ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileOutput", "insertSilence"));
-    }
 }
 
 void MediaPlayer::sendPlaybackPaused() {
