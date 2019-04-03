@@ -1,0 +1,14 @@
+digraph "/workplace/avs-device-sdk/SpeechEncoder/test" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_6b07903b29b547047bfa8a8b819c80bf {
+    graph [ bgcolor="#ddddee", pencolor="black", label="SpeechEncoder" fontname="Helvetica", fontsize="10", URL="dir_6b07903b29b547047bfa8a8b819c80bf.html"]
+  dir_e68af128040433e45633695efcfc359b [shape=box, label="test", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_e68af128040433e45633695efcfc359b.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_42bcecaea8b07e2c1ef02db2f3150d05 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_42bcecaea8b07e2c1ef02db2f3150d05.html"];
+  dir_e68af128040433e45633695efcfc359b->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000301_000015.html"];
+  dir_e68af128040433e45633695efcfc359b->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000301_000294.html"];
+  dir_42bcecaea8b07e2c1ef02db2f3150d05->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000294_000015.html"];
+}

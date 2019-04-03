@@ -6,6 +6,9 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/AIP/include/AIP" {
     graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_7702e81a4574d959c78d0e2207e83661.html"]
   dir_99c44a41b01529fab191699ee73b1155 [shape=box, label="AIP", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_99c44a41b01529fab191699ee73b1155.html"];
   }
+  dir_6b07903b29b547047bfa8a8b819c80bf [shape=box label="SpeechEncoder" fillcolor="white" style="filled" color="red" URL="dir_6b07903b29b547047bfa8a8b819c80bf.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_99c44a41b01529fab191699ee73b1155->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="21", labeldistance=1.5 headhref="dir_000124_000009.html"];
+  dir_6b07903b29b547047bfa8a8b819c80bf->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="11", labeldistance=1.5 headhref="dir_000293_000015.html"];
+  dir_99c44a41b01529fab191699ee73b1155->dir_6b07903b29b547047bfa8a8b819c80bf [headlabel="1", labeldistance=1.5 headhref="dir_000134_000293.html"];
+  dir_99c44a41b01529fab191699ee73b1155->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="21", labeldistance=1.5 headhref="dir_000134_000015.html"];
 }

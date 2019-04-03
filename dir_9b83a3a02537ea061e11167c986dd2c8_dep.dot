@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/MediaPlayer/GStreamerMediaPlayer/include/Medi
   }
   dir_655fbec917b1f23289d3ed8ec9803bf1 [shape=box label="PlaylistParser" fillcolor="white" style="filled" color="red" URL="dir_655fbec917b1f23289d3ed8ec9803bf1.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_9b83a3a02537ea061e11167c986dd2c8->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="1", labeldistance=1.5 headhref="dir_000236_000239.html"];
-  dir_9b83a3a02537ea061e11167c986dd2c8->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000236_000009.html"];
-  dir_655fbec917b1f23289d3ed8ec9803bf1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="27", labeldistance=1.5 headhref="dir_000239_000009.html"];
+  dir_9b83a3a02537ea061e11167c986dd2c8->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="1", labeldistance=1.5 headhref="dir_000262_000265.html"];
+  dir_9b83a3a02537ea061e11167c986dd2c8->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="11", labeldistance=1.5 headhref="dir_000262_000015.html"];
+  dir_655fbec917b1f23289d3ed8ec9803bf1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="36", labeldistance=1.5 headhref="dir_000265_000015.html"];
 }

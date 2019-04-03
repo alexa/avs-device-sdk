@@ -30,5 +30,7 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/Alerts/include/Alerts/Alerts
   Node1 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node13 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/Alerts/src/AlertsCapability\lAgent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_alerts_capability_agent_8cpp.html"];
   Node1 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node14 [label="/workplace/avs-device\l-sdk/Integration/test\l/AlertsIntegrationTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_alerts_integration_test_8cpp.html"];
+  Node14 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/Alerts/test/AlertsCapability\lAgentTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_alerts_capability_agent_test_8cpp.html"];
+  Node1 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="/workplace/avs-device\l-sdk/Integration/test\l/AlertsIntegrationTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_alerts_integration_test_8cpp.html"];
 }

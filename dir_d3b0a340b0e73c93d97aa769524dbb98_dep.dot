@@ -13,9 +13,9 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/Bluetooth/include" {
   dir_d29c5f5a2915d6c5388c9daae4f109c7 [shape=box label="Storage" fillcolor="white" style="filled" color="red" URL="dir_d29c5f5a2915d6c5388c9daae4f109c7.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_b14333b5607b47fe7356eaa790107bd3 [shape=box label="RegistrationManager" fillcolor="white" style="filled" color="red" URL="dir_b14333b5607b47fe7356eaa790107bd3.html"];
-  dir_281dbd0298ff8d441d37c56e5a5934f5->dir_d29c5f5a2915d6c5388c9daae4f109c7 [headlabel="3", labeldistance=1.5 headhref="dir_000140_000259.html"];
-  dir_281dbd0298ff8d441d37c56e5a5934f5->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="23", labeldistance=1.5 headhref="dir_000140_000009.html"];
-  dir_281dbd0298ff8d441d37c56e5a5934f5->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="2", labeldistance=1.5 headhref="dir_000140_000245.html"];
-  dir_d29c5f5a2915d6c5388c9daae4f109c7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000259_000009.html"];
-  dir_b14333b5607b47fe7356eaa790107bd3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000245_000009.html"];
+  dir_281dbd0298ff8d441d37c56e5a5934f5->dir_d29c5f5a2915d6c5388c9daae4f109c7 [headlabel="3", labeldistance=1.5 headhref="dir_000150_000302.html"];
+  dir_281dbd0298ff8d441d37c56e5a5934f5->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="27", labeldistance=1.5 headhref="dir_000150_000015.html"];
+  dir_281dbd0298ff8d441d37c56e5a5934f5->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="2", labeldistance=1.5 headhref="dir_000150_000271.html"];
+  dir_d29c5f5a2915d6c5388c9daae4f109c7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000302_000015.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000271_000015.html"];
 }

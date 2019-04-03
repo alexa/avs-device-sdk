@@ -3,5 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node1 [label="alexaClientSDK::kwd\l::test::testKeyWordObserver\l::detectionResult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1kwd_1_1test_1_1test_key_word_observer_1_1detection_result.html",tooltip="A struct used for bookkeeping of keyword detections. "];
+  Node1 [label="alexaClientSDK::capability\lAgents::alerts::storage\l::AssetOrderItem",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_asset_order_item.html"];
 }

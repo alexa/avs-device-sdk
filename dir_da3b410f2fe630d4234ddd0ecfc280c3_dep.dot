@@ -1,0 +1,21 @@
+digraph "/workplace/avs-device-sdk/CapabilityAgents/Equalizer/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_1ed14522faf145df15a01cd5fae94616 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Equalizer" fontname="Helvetica", fontsize="10", URL="dir_1ed14522faf145df15a01cd5fae94616.html"]
+  subgraph clusterdir_da3b410f2fe630d4234ddd0ecfc280c3 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_da3b410f2fe630d4234ddd0ecfc280c3.html"];
+    dir_da3b410f2fe630d4234ddd0ecfc280c3 [shape=plaintext label="include"];
+    dir_0d32ea32c5a6c0804d014da0ffbc6421 [shape=box label="Equalizer" color="black" fillcolor="white" style="filled" URL="dir_0d32ea32c5a6c0804d014da0ffbc6421.html"];
+  }
+  }
+  dir_63c328d9f040c398ed3a99417a38689e [shape=box label="EqualizerImplementations" fillcolor="white" style="filled" color="red" URL="dir_63c328d9f040c398ed3a99417a38689e.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3 [shape=box label="RegistrationManager" fillcolor="white" style="filled" color="red" URL="dir_b14333b5607b47fe7356eaa790107bd3.html"];
+  dir_63c328d9f040c398ed3a99417a38689e->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="34", labeldistance=1.5 headhref="dir_000221_000015.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000271_000015.html"];
+  dir_0d32ea32c5a6c0804d014da0ffbc6421->dir_63c328d9f040c398ed3a99417a38689e [headlabel="1", labeldistance=1.5 headhref="dir_000160_000221.html"];
+  dir_0d32ea32c5a6c0804d014da0ffbc6421->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="13", labeldistance=1.5 headhref="dir_000160_000015.html"];
+  dir_0d32ea32c5a6c0804d014da0ffbc6421->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="2", labeldistance=1.5 headhref="dir_000160_000271.html"];
+}

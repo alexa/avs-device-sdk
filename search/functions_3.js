@@ -49,7 +49,7 @@ var searchData=
   ['display_5fcard_5fkey',['DISPLAY_CARD_KEY',['../namespacealexa_client_s_d_k_1_1sample_app.html#aefd8f66814c381f356c6a4503c501a16',1,'alexaClientSDK::sampleApp']]],
   ['displaycardcleared',['displayCardCleared',['../classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html#ad39d5e92ce608efc5104e5e5cc9e60bc',1,'alexaClientSDK::capabilityAgents::templateRuntime::TemplateRuntime']]],
   ['dndmessagerequest',['DNDMessageRequest',['../classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_d_n_d_message_request.html#a38658af65906f03780f56e9cb24dfba4',1,'alexaClientSDK::capabilityAgents::doNotDisturb::DNDMessageRequest']]],
-  ['doesobserverownchannel',['doesObserverOwnChannel',['../classalexa_client_s_d_k_1_1afml_1_1_channel.html#a334ff43d1c4c9bd2a51d3e16626685fb',1,'alexaClientSDK::afml::Channel']]],
+  ['doesobserverownchannel',['doesObserverOwnChannel',['../classalexa_client_s_d_k_1_1afml_1_1_channel.html#ae9e8b4f49265eb12c10fb0fe4aa84c22',1,'alexaClientSDK::afml::Channel']]],
   ['dohandledirective',['doHandleDirective',['../classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#aef961ebbeadef8ad00ba30f65b40b109',1,'alexaClientSDK::adsl::test::MockDirectiveHandler']]],
   ['dohandlingcompleted',['doHandlingCompleted',['../classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#af4ea68a7589126a35c3d2f0ac0a594e7',1,'alexaClientSDK::adsl::test::MockDirectiveHandler']]],
   ['dohandlingfailed',['doHandlingFailed',['../classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#ad83543b7318d7aaa9dd5c71d558bc6c2',1,'alexaClientSDK::adsl::test::MockDirectiveHandler']]],

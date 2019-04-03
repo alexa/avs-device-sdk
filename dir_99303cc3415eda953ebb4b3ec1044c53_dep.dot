@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/ADSL/src" {
   }
   dir_0ad8890ca26b658b7f4a1511f46d3706 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_0ad8890ca26b658b7f4a1511f46d3706.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_99303cc3415eda953ebb4b3ec1044c53->dir_0ad8890ca26b658b7f4a1511f46d3706 [headlabel="4", labeldistance=1.5 headhref="dir_000017_000015.html"];
-  dir_99303cc3415eda953ebb4b3ec1044c53->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000017_000009.html"];
-  dir_0ad8890ca26b658b7f4a1511f46d3706->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="11", labeldistance=1.5 headhref="dir_000015_000009.html"];
+  dir_99303cc3415eda953ebb4b3ec1044c53->dir_0ad8890ca26b658b7f4a1511f46d3706 [headlabel="4", labeldistance=1.5 headhref="dir_000012_000010.html"];
+  dir_99303cc3415eda953ebb4b3ec1044c53->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000012_000015.html"];
+  dir_0ad8890ca26b658b7f4a1511f46d3706->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="11", labeldistance=1.5 headhref="dir_000010_000015.html"];
 }

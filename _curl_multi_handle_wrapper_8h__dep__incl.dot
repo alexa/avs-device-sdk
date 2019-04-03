@@ -4,19 +4,13 @@ digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Libcu
   node [fontname="Helvetica",fontsize="10",shape=record];
   Node1 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/LibcurlUtils/CurlMultiHandleWrapper.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="/workplace/avs-device\l-sdk/ACL/include/ACL\l/Transport/HTTP2Transport.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_h_t_t_p2_transport_8h.html"];
+  Node2 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/LibcurlUtils/LibcurlHTTP2Connection.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_libcurl_h_t_t_p2_connection_8h.html"];
   Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="/workplace/avs-device\l-sdk/ACL/src/Transport\l/HTTP2Stream.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_h_t_t_p2_stream_8cpp.html"];
+  Node3 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/LibcurlUtils/LibcurlHTTP2\lConnection.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_libcurl_h_t_t_p2_connection_8cpp.html"];
   Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="/workplace/avs-device\l-sdk/ACL/src/Transport\l/HTTP2Transport.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_h_t_t_p2_transport_8cpp.html"];
-  Node2 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="/workplace/avs-device\l-sdk/ACL/src/Transport\l/HTTP2TransportFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_h_t_t_p2_transport_factory_8cpp.html"];
-  Node2 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="/workplace/avs-device\l-sdk/ACL/src/Transport\l/PostConnectSynchronizer.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_post_connect_synchronizer_8cpp.html"];
-  Node2 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="/workplace/avs-device\l-sdk/ACL/test/Transport\l/HTTP2StreamPoolTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_h_t_t_p2_stream_pool_test_8cpp.html"];
-  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/LibcurlUtils/CurlMultiHandle\lWrapper.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_curl_multi_handle_wrapper_8cpp.html"];
-  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/LibcurlUtils/LibCurlHttp\lContentFetcher.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_lib_curl_http_content_fetcher_8cpp.html"];
+  Node4 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/LibcurlUtils/LibcurlHTTP2\lConnectionFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_libcurl_h_t_t_p2_connection_factory_8cpp.html"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/LibcurlUtils/CurlMultiHandle\lWrapper.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_curl_multi_handle_wrapper_8cpp.html"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/LibcurlUtils/LibCurlHttp\lContentFetcher.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_lib_curl_http_content_fetcher_8cpp.html"];
 }

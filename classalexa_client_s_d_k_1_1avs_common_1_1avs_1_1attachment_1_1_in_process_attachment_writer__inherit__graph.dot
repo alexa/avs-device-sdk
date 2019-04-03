@@ -6,5 +6,5 @@ digraph "alexaClientSDK::avsCommon::avs::attachment::InProcessAttachmentWriter"
   Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 [label="alexaClientSDK::avsCommon\l::avs::attachment::AttachmentWriter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_writer.html"];
   Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="alexaClientSDK::acl\l::test::TestableAttachment\lWriter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_attachment_writer.html"];
+  Node3 [label="alexaClientSDK::avsCommon\l::utils::TestableAttachmentWriter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_testable_attachment_writer.html"];
 }

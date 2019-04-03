@@ -27,6 +27,5 @@ var searchData=
   ['hold',['HOLD',['../namespacealexa_client_s_d_k_1_1sample_app.html#a0628fc6a1001150ff411f386a8a2e1c9',1,'alexaClientSDK::sampleApp']]],
   ['http_5fauthorization_5fheader_5fbearer',['HTTP_AUTHORIZATION_HEADER_BEARER',['../namespacealexa_client_s_d_k_1_1acl_1_1transport_1_1test.html#ab606de94b5b6a5c6d6c608378ac2cb99',1,'alexaClientSDK::acl::transport::test']]],
   ['http_5fboundary_5fheader',['HTTP_BOUNDARY_HEADER',['../namespacealexa_client_s_d_k_1_1acl_1_1transport_1_1test.html#a64d1efe487ad1b647e44a6e602079a01',1,'alexaClientSDK::acl::transport::test']]],
-  ['http_5frequest_5fok',['HTTP_REQUEST_OK',['../namespacealexa_client_s_d_k_1_1playlist_parser_1_1test.html#afb0c8a4654ef5ada4accacf2983f844e',1,'alexaClientSDK::playlistParser::test']]],
   ['http_5fresponse_5ferror_5fvalue',['HTTP_RESPONSE_ERROR_VALUE',['../namespacealexa_client_s_d_k_1_1capabilities_delegate.html#aed97f84b5fa31a75bfaeb06345cbd1a5',1,'alexaClientSDK::capabilitiesDelegate']]]
 ];

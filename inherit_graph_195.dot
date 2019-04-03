@@ -3,5 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node1 [label="std::hash\< alexaClientSDK\l::avsCommon::avs::PlaybackToggle \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structstd_1_1hash_3_01alexa_client_s_d_k_1_1avs_common_1_1avs_1_1_playback_toggle_01_4.html"];
+  Node1 [label="alexaClientSDK::integration\l::test::ACLTestContext",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_c_l_test_context.html"];
 }

@@ -72,7 +72,7 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/System/include/System/UserIn
   Node25 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node25 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node25 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node26 [label="BlockingPolicy.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_blocking_policy_8h.html"];
+  Node26 [label="BlockingPolicy.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_blocking_policy_8h.html"];
   Node26 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node17 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node27 [label="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_directive_handler_result_interface_8h.html"];

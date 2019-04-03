@@ -25,14 +25,17 @@ digraph "/workplace/avs-device-sdk/BluetoothImplementations/BlueZ/include/BlueZ/
   Node8 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node9 [label="BlueZ/GVariantTupleReader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_g_variant_tuple_reader_8h.html"];
+  Node9 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="functional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node9 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node9 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node9 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 [label="BlueZ/GVariantMapReader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_g_variant_map_reader_8h.html"];
-  Node10 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node11 [label="gio/gunixfdlist.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node5 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="BlueZ/GVariantMapReader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_g_variant_map_reader_8h.html"];
+  Node11 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="gio/gunixfdlist.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

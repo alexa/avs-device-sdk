@@ -11,5 +11,5 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/SpeakerManager/include" {
   }
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_a869cc6fda2838386502524bc993d90a->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000172_000009.html"];
+  dir_a869cc6fda2838386502524bc993d90a->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000191_000015.html"];
 }

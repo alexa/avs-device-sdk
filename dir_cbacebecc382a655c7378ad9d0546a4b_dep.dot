@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/SpeechEncoder/include/SpeechEncoder" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_42bcecaea8b07e2c1ef02db2f3150d05 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_42bcecaea8b07e2c1ef02db2f3150d05.html"]
+  dir_cbacebecc382a655c7378ad9d0546a4b [shape=box, label="SpeechEncoder", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_cbacebecc382a655c7378ad9d0546a4b.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_cbacebecc382a655c7378ad9d0546a4b->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000295_000015.html"];
+}

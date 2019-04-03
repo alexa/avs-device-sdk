@@ -7,11 +7,15 @@ digraph "/workplace/avs-device-sdk/MediaPlayer/AndroidSLESMediaPlayer/include/An
   dir_1c7bd630be78b850d01adb3bbc48faf9 [shape=box, label="AndroidSLESMediaPlayer", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_1c7bd630be78b850d01adb3bbc48faf9.html"];
   }
   dir_748b5abbb33df61eda67007924a1a0cb [shape=box label="ApplicationUtilities" fillcolor="white" style="filled" color="red" URL="dir_748b5abbb33df61eda67007924a1a0cb.html"];
+  dir_63c328d9f040c398ed3a99417a38689e [shape=box label="EqualizerImplementations" fillcolor="white" style="filled" color="red" URL="dir_63c328d9f040c398ed3a99417a38689e.html"];
   dir_655fbec917b1f23289d3ed8ec9803bf1 [shape=box label="PlaylistParser" fillcolor="white" style="filled" color="red" URL="dir_655fbec917b1f23289d3ed8ec9803bf1.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_748b5abbb33df61eda67007924a1a0cb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="40", labeldistance=1.5 headhref="dir_000030_000009.html"];
-  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_748b5abbb33df61eda67007924a1a0cb [headlabel="5", labeldistance=1.5 headhref="dir_000231_000030.html"];
-  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="1", labeldistance=1.5 headhref="dir_000231_000239.html"];
-  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="11", labeldistance=1.5 headhref="dir_000231_000009.html"];
-  dir_655fbec917b1f23289d3ed8ec9803bf1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="27", labeldistance=1.5 headhref="dir_000239_000009.html"];
+  dir_748b5abbb33df61eda67007924a1a0cb->dir_63c328d9f040c398ed3a99417a38689e [headlabel="1", labeldistance=1.5 headhref="dir_000026_000221.html"];
+  dir_748b5abbb33df61eda67007924a1a0cb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="49", labeldistance=1.5 headhref="dir_000026_000015.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_748b5abbb33df61eda67007924a1a0cb [headlabel="5", labeldistance=1.5 headhref="dir_000257_000026.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_63c328d9f040c398ed3a99417a38689e [headlabel="1", labeldistance=1.5 headhref="dir_000257_000221.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="1", labeldistance=1.5 headhref="dir_000257_000265.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000257_000015.html"];
+  dir_63c328d9f040c398ed3a99417a38689e->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="34", labeldistance=1.5 headhref="dir_000221_000015.html"];
+  dir_655fbec917b1f23289d3ed8ec9803bf1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="36", labeldistance=1.5 headhref="dir_000265_000015.html"];
 }

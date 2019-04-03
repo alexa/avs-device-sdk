@@ -17,9 +17,11 @@ digraph "alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPla
   Node7 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 [label="alexaClientSDK::avsCommon\l::utils::RequiresShutdown",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html"];
   Node8 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::ExternalMedia\lPlayerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface.html"];
+  Node8 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilityConfiguration\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html"];
   Node9 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::PlaybackHandler\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html"];
+  Node9 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::ExternalMedia\lPlayerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_external_media_player_interface.html"];
   Node10 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 [label="std::enable_shared\l_from_this\< ExternalMediaPlayer \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node10 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::PlaybackHandler\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html"];
+  Node11 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="std::enable_shared\l_from_this\< ExternalMediaPlayer \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

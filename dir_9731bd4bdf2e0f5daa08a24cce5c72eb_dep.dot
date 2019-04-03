@@ -1,0 +1,14 @@
+digraph "/workplace/avs-device-sdk/SpeechEncoder/src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_6b07903b29b547047bfa8a8b819c80bf {
+    graph [ bgcolor="#ddddee", pencolor="black", label="SpeechEncoder" fontname="Helvetica", fontsize="10", URL="dir_6b07903b29b547047bfa8a8b819c80bf.html"]
+  dir_9731bd4bdf2e0f5daa08a24cce5c72eb [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_9731bd4bdf2e0f5daa08a24cce5c72eb.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_42bcecaea8b07e2c1ef02db2f3150d05 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_42bcecaea8b07e2c1ef02db2f3150d05.html"];
+  dir_9731bd4bdf2e0f5daa08a24cce5c72eb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000300_000015.html"];
+  dir_9731bd4bdf2e0f5daa08a24cce5c72eb->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000300_000294.html"];
+  dir_42bcecaea8b07e2c1ef02db2f3150d05->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000294_000015.html"];
+}

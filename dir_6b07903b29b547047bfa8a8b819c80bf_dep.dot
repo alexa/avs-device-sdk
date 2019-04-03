@@ -1,0 +1,21 @@
+digraph "/workplace/avs-device-sdk/SpeechEncoder" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_6b07903b29b547047bfa8a8b819c80bf {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_6b07903b29b547047bfa8a8b819c80bf.html"];
+    dir_6b07903b29b547047bfa8a8b819c80bf [shape=plaintext label="SpeechEncoder"];
+    dir_42bcecaea8b07e2c1ef02db2f3150d05 [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_42bcecaea8b07e2c1ef02db2f3150d05.html"];
+    dir_9380053b18258191a72e7d4db96903c7 [shape=box label="OpusEncoderContext" color="red" fillcolor="white" style="filled" URL="dir_9380053b18258191a72e7d4db96903c7.html"];
+    dir_9731bd4bdf2e0f5daa08a24cce5c72eb [shape=box label="src" color="black" fillcolor="white" style="filled" URL="dir_9731bd4bdf2e0f5daa08a24cce5c72eb.html"];
+    dir_e68af128040433e45633695efcfc359b [shape=box label="test" color="black" fillcolor="white" style="filled" URL="dir_e68af128040433e45633695efcfc359b.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_e68af128040433e45633695efcfc359b->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000301_000015.html"];
+  dir_e68af128040433e45633695efcfc359b->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000301_000294.html"];
+  dir_9731bd4bdf2e0f5daa08a24cce5c72eb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000300_000015.html"];
+  dir_9731bd4bdf2e0f5daa08a24cce5c72eb->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000300_000294.html"];
+  dir_9380053b18258191a72e7d4db96903c7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000296_000015.html"];
+  dir_9380053b18258191a72e7d4db96903c7->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000296_000294.html"];
+  dir_42bcecaea8b07e2c1ef02db2f3150d05->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000294_000015.html"];
+}

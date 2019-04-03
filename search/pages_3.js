@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['what_20is_20the_20alexa_20voice_20service_20_28avs_29_3f',['What is the Alexa Voice Service (AVS)?',['../index.html',1,'']]]
+  ['need_20help_3f',['Need help?',['../md__workplace_avs-device-sdk_CONTRIBUTING.html',1,'']]]
 ];

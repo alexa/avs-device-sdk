@@ -3,5 +3,9 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node1 [label="alexaClientSDK::playlist\lParser::UrlAndInfo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1playlist_parser_1_1_url_and_info.html",tooltip="A struct to contain a URL encountered in a playlist and metadata surrounding it. "];
+  Node1 [label="alexaClientSDK::capability\lAgents::notifications::\lNotificationsStorageInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::capability\lAgents::notifications::\lSQLiteNotificationsStorage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::capability\lAgents::notifications::\ltest::TestNotificationsStorage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html"];
 }

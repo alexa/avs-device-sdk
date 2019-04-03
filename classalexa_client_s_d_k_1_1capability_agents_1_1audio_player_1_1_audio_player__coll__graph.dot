@@ -15,13 +15,15 @@ digraph "alexaClientSDK::capabilityAgents::audioPlayer::AudioPlayer"
   Node6 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node6 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextRequester\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html"];
   Node7 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::AudioPlayerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_player_interface.html"];
+  Node7 [label="alexaClientSDK::capability\lAgents::audioPlayer::ProgressTimer\l::ContextInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_1_1_context_interface.html"];
   Node8 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilityConfiguration\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html"];
+  Node8 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::AudioPlayerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_player_interface.html"];
   Node9 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html"];
+  Node9 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilityConfiguration\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html"];
   Node10 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 [label="alexaClientSDK::avsCommon\l::utils::RequiresShutdown",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html"];
+  Node10 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html"];
   Node11 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node11 [label="std::enable_shared\l_from_this\< AudioPlayer \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node11 [label="alexaClientSDK::avsCommon\l::utils::RequiresShutdown",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html"];
+  Node12 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="std::enable_shared\l_from_this\< AudioPlayer \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

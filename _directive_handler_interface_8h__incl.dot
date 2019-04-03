@@ -152,9 +152,11 @@ digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDK
   Node44 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node42 -> Node45 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node45 [label="BlockingPolicy.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_blocking_policy_8h.html"];
+  Node45 -> Node46 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node46 [label="bitset",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node45 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 -> Node46 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node46 [label="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_directive_handler_result_interface_8h.html"];
-  Node46 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node46 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node47 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node47 [label="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_directive_handler_result_interface_8h.html"];
+  Node47 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node47 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

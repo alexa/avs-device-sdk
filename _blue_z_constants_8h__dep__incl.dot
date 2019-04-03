@@ -16,5 +16,7 @@ digraph "/workplace/avs-device-sdk/BluetoothImplementations/BlueZ/include/BlueZ/
   Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 [label="/workplace/avs-device\l-sdk/BluetoothImplementations\l/BlueZ/src/MediaEndpoint.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_media_endpoint_8cpp.html"];
   Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="/workplace/avs-device\l-sdk/BluetoothImplementations\l/BlueZ/src/PairingAgent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_pairing_agent_8cpp.html"];
+  Node8 [label="/workplace/avs-device\l-sdk/BluetoothImplementations\l/BlueZ/src/MPRISPlayer.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_m_p_r_i_s_player_8cpp.html"];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="/workplace/avs-device\l-sdk/BluetoothImplementations\l/BlueZ/src/PairingAgent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_pairing_agent_8cpp.html"];
 }

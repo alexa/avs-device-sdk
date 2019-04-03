@@ -17,5 +17,7 @@ digraph "alexaClientSDK::avsCommon::sdkInterfaces::MessageSenderInterface"
   Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockMessageSender",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_message_sender.html",tooltip="Mock class that implements the MessageSender. "];
   Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="alexaClientSDK::integration\l::test::TestMessageSender",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender.html"];
+  Node8 [label="alexaClientSDK::capability\lAgents::alerts::test::TestMessage\lSender",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_test_message_sender.html"];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="alexaClientSDK::integration\l::test::TestMessageSender",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender.html"];
 }

@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/System/include/System" {
   }
   dir_b1dfedc9efa610ba8c818c30206ff41f [shape=box label="ACL" fillcolor="white" style="filled" color="red" URL="dir_b1dfedc9efa610ba8c818c30206ff41f.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_03b67ee1b6ab353c932baaa9d86e354a->dir_b1dfedc9efa610ba8c818c30206ff41f [headlabel="1", labeldistance=1.5 headhref="dir_000182_000000.html"];
-  dir_03b67ee1b6ab353c932baaa9d86e354a->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="21", labeldistance=1.5 headhref="dir_000182_000009.html"];
-  dir_b1dfedc9efa610ba8c818c30206ff41f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="92", labeldistance=1.5 headhref="dir_000000_000009.html"];
+  dir_03b67ee1b6ab353c932baaa9d86e354a->dir_b1dfedc9efa610ba8c818c30206ff41f [headlabel="1", labeldistance=1.5 headhref="dir_000202_000000.html"];
+  dir_03b67ee1b6ab353c932baaa9d86e354a->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="24", labeldistance=1.5 headhref="dir_000202_000015.html"];
+  dir_b1dfedc9efa610ba8c818c30206ff41f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="95", labeldistance=1.5 headhref="dir_000000_000015.html"];
 }

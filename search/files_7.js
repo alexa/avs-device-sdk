@@ -44,5 +44,6 @@ var searchData=
   ['httpputinterface_2eh',['HttpPutInterface.h',['../_http_put_interface_8h.html',1,'']]],
   ['httpresponse_2ecpp',['HTTPResponse.cpp',['../_h_t_t_p_response_8cpp.html',1,'']]],
   ['httpresponse_2eh',['HTTPResponse.h',['../_h_t_t_p_response_8h.html',1,'']]],
+  ['httpresponsecode_2eh',['HttpResponseCode.h',['../_http_response_code_8h.html',1,'']]],
   ['httpresponsecodes_2eh',['HttpResponseCodes.h',['../_http_response_codes_8h.html',1,'']]]
 ];

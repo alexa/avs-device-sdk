@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/Audio" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_fd08e2d492364730d424f6256176d09b {
+    graph [ bgcolor="#ddddee", pencolor="black", label="SDKInterfaces" fontname="Helvetica", fontsize="10", URL="dir_fd08e2d492364730d424f6256176d09b.html"]
+  dir_7d945fba5d7574c3838e625b40e73e04 [shape=box, label="Audio", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_7d945fba5d7574c3838e625b40e73e04.html"];
+  }
+  dir_17341252d14ec499eb3e1f7903ffcdf5 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_17341252d14ec499eb3e1f7903ffcdf5.html"];
+  dir_7d945fba5d7574c3838e625b40e73e04->dir_17341252d14ec499eb3e1f7903ffcdf5 [headlabel="7", labeldistance=1.5 headhref="dir_000077_000070.html"];
+}

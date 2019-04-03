@@ -7,7 +7,7 @@ digraph "alexaClientSDK::avsCommon::avs::attachment::AttachmentManagerInterface"
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 [label="alexaClientSDK::avsCommon\l::avs::attachment::AttachmentManager",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager.html"];
   Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="alexaClientSDK::acl\l::test::TestableAttachment\lManager",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_attachment_manager.html"];
+  Node3 [label="alexaClientSDK::avsCommon\l::utils::TestableAttachmentManager",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_testable_attachment_manager.html"];
   Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 [label="alexaClientSDK::avsCommon\l::avs::attachment::test\l::MockAttachmentManager",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1test_1_1_mock_attachment_manager.html",tooltip="Mock class that implements the AttachmentManager. "];
   Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

@@ -54,14 +54,16 @@ digraph "/workplace/avs-device-sdk/BluetoothImplementations/BlueZ/src/GVariantMa
   Node1 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node21 [label="BlueZ/GVariantMapReader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_g_variant_map_reader_8h.html"];
   Node21 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node22 [label="BlueZ/ManagedGVariant.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_managed_g_variant_8h.html"];
-  Node22 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node22 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node22 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node22 [label="functional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node21 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node23 [label="gio/gio.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node21 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node24 [label="BlueZ/ManagedGError.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_managed_g_error_8h.html"];
+  Node24 [label="BlueZ/ManagedGVariant.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_managed_g_variant_8h.html"];
+  Node24 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node24 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node24 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node21 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node21 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node25 [label="BlueZ/ManagedGError.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_managed_g_error_8h.html"];
+  Node25 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node25 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_ee116be5d1129358ffaec72096859541 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Utils" fontname="Helvetica", fontsize="10", URL="dir_ee116be5d1129358ffaec72096859541.html"]
+  dir_6824e81d298af54a27a92358c374ca3f [shape=box, label="HTTP", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_6824e81d298af54a27a92358c374ca3f.html"];
+  }
+  dir_432ae366851f981ad5bcb252f92369c5 [shape=box label="Logger" URL="dir_432ae366851f981ad5bcb252f92369c5.html"];
+  dir_6824e81d298af54a27a92358c374ca3f->dir_432ae366851f981ad5bcb252f92369c5 [headlabel="1", labeldistance=1.5 headhref="dir_000088_000092.html"];
+}

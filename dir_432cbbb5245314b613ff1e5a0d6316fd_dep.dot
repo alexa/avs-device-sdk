@@ -1,0 +1,18 @@
+digraph "/workplace/avs-device-sdk/Settings/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_8ae0dd75af039a94f4269584fb8eef13 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Settings" fontname="Helvetica", fontsize="10", URL="dir_8ae0dd75af039a94f4269584fb8eef13.html"]
+  subgraph clusterdir_432cbbb5245314b613ff1e5a0d6316fd {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_432cbbb5245314b613ff1e5a0d6316fd.html"];
+    dir_432cbbb5245314b613ff1e5a0d6316fd [shape=plaintext label="include"];
+    dir_5ad71ff850730ae2a3f8f6d36f5ecd38 [shape=box label="Settings" color="red" fillcolor="white" style="filled" URL="dir_5ad71ff850730ae2a3f8f6d36f5ecd38.html"];
+  }
+  }
+  dir_d29c5f5a2915d6c5388c9daae4f109c7 [shape=box label="Storage" fillcolor="white" style="filled" color="red" URL="dir_d29c5f5a2915d6c5388c9daae4f109c7.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_5ad71ff850730ae2a3f8f6d36f5ecd38->dir_d29c5f5a2915d6c5388c9daae4f109c7 [headlabel="1", labeldistance=1.5 headhref="dir_000287_000302.html"];
+  dir_5ad71ff850730ae2a3f8f6d36f5ecd38->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000287_000015.html"];
+  dir_d29c5f5a2915d6c5388c9daae4f109c7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000302_000015.html"];
+}

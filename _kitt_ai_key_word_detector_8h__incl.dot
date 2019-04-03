@@ -134,5 +134,5 @@ digraph "/workplace/avs-device-sdk/KWD/KittAi/include/KittAi/KittAiKeyWordDetect
   Node41 -> Node39 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node41 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 -> Node42 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node42 [label="snowboy-detect.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node42 [label="KittAi/SnowboyWrapper.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_snowboy_wrapper_8h.html"];
 }

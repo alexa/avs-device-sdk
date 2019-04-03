@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/ADSL/test/common" {
   dir_02335798eec36b71c251fc26ad440772 [shape=box, label="common", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_02335798eec36b71c251fc26ad440772.html"];
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_02335798eec36b71c251fc26ad440772->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000024_000009.html"];
+  dir_02335798eec36b71c251fc26ad440772->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000020_000015.html"];
 }

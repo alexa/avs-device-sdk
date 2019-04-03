@@ -73,13 +73,16 @@ digraph "/workplace/avs-device-sdk/BluetoothImplementations/BlueZ/src/DBusProxy.
   Node27 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node24 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node28 [label="BlueZ/GVariantTupleReader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_g_variant_tuple_reader_8h.html"];
+  Node28 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 [label="functional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node28 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node28 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node28 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node28 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node24 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node29 [label="BlueZ/GVariantMapReader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_g_variant_map_reader_8h.html"];
-  Node29 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node29 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node29 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node24 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 [label="BlueZ/GVariantMapReader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_g_variant_map_reader_8h.html"];
+  Node30 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node23 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

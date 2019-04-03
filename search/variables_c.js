@@ -322,6 +322,8 @@ var searchData=
   ['max_5fequalizer_5flevel',['MAX_EQUALIZER_LEVEL',['../namespacealexa_client_s_d_k_1_1media_player.html#aa1d44b03c57b037e88035ca7adc30fa1',1,'alexaClientSDK::mediaPlayer']]],
   ['max_5ffirmware_5fversion',['MAX_FIRMWARE_VERSION',['../namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1software_info.html#ad7be7ba94690a6447a25b15f00f1b236',1,'alexaClientSDK::avsCommon::sdkInterfaces::softwareInfo']]],
   ['max_5ffuture_5foffset',['MAX_FUTURE_OFFSET',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#ac96b762831dbecbea931c3a7ab099c14',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer']]],
+  ['max_5fget_5fbody_5fwait',['MAX_GET_BODY_WAIT',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#a3ca3604189ed467fad1ee766125257b3',1,'alexaClientSDK::avsCommon::utils::libcurlUtils']]],
+  ['max_5fget_5fheader_5fwait',['MAX_GET_HEADER_WAIT',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#aa144178293557a48cec87fd8a1eecfb1',1,'alexaClientSDK::avsCommon::utils::libcurlUtils']]],
   ['max_5flevel',['MAX_LEVEL',['../namespacealexa_client_s_d_k_1_1equalizer_1_1test.html#ab98ae8a9513aea09ffefee95e5a21987',1,'alexaClientSDK::equalizer::test::MAX_LEVEL()'],['../namespacealexa_client_s_d_k_1_1equalizer_1_1test.html#ab98ae8a9513aea09ffefee95e5a21987',1,'alexaClientSDK::equalizer::test::MAX_LEVEL()']]],
   ['max_5flevel_5fconfig_5fkey',['MAX_LEVEL_CONFIG_KEY',['../namespacealexa_client_s_d_k_1_1equalizer.html#ad750961e0397e9d0e4fd44612081182d',1,'alexaClientSDK::equalizer']]],
   ['max_5fmessage_5fhandlers',['MAX_MESSAGE_HANDLERS',['../namespacealexa_client_s_d_k_1_1acl.html#ade5efa26d0ffcb62e2577df7a79e5992',1,'alexaClientSDK::acl']]],
