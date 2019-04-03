@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -138,12 +138,14 @@ private:
      * @param url The URL to download.
      * @param headers HTTP headers to pass to server.
      * @param encryptionInfo The Encryption info for the URL to download.
+     * @param contentFetcher The content fetcher to use to retrieve content. Can be a null pointer.
      * @return @c true if the content was successfully streamed and written or @c false otherwise.
      */
     bool writeDecryptedUrlContentIntoStream(
         std::string url,
         std::vector<std::string> headers,
-        avsCommon::utils::playlistParser::EncryptionInfo encryptionInfo);
+        avsCommon::utils::playlistParser::EncryptionInfo encryptionInfo,
+        std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> contentFetcher);
 
     /**
      * Downloads the content from the url and writes to the stream.
@@ -151,12 +153,14 @@ private:
      * @param url The URL to download.
      * @param headers HTTP headers to pass to server.
      * @param streamWriter The attachment writer to write downloaded content.
+     * @param contentFetcher The content fetcher to use to retrieve content. Can be a null pointer.
      * @return @c true if the content was successfully downloaded or @c false otherwise.
      */
     bool download(
         const std::string& url,
         const std::vector<std::string>& headers,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> streamWriter);
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> streamWriter,
+        std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> contentFetcher);
 
     /**
      * Downloads the content from the url to unsigned char vector.
@@ -164,9 +168,14 @@ private:
      * @param url The URL to download.
      * @param headers HTTP headers to pass to server.
      * @param[out] content Sets the content of the pointer if download is successful.
+     * @param contentFetcher The content fetcher to use to retrieve content. Can be a null pointer.
      * @return @c true if the content was successfully downloaded or @c false otherwise.
      */
-    bool download(const std::string& url, const std::vector<std::string>& headers, ByteVector* content);
+    bool download(
+        const std::string& url,
+        const std::vector<std::string>& headers,
+        ByteVector* content,
+        std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> contentFetcher);
 
     /**
      * Reads content from the reader to unsigned char vector.

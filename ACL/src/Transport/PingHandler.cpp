@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
+#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 
 #include "ACL/Transport/HTTP2Transport.h"
 #include "ACL/Transport/PingHandler.h"
@@ -22,6 +22,7 @@
 namespace alexaClientSDK {
 namespace acl {
 
+using namespace avsCommon::utils::http;
 using namespace avsCommon::utils::http2;
 
 /// URL to send pings to
@@ -90,7 +91,8 @@ void PingHandler::reportPingAcknowledged() {
     ACSDK_DEBUG5(LX(__func__));
     if (!m_wasPingAcknowledgedReported) {
         m_wasPingAcknowledgedReported = true;
-        m_context->onPingRequestAcknowledged(HTTPResponseCode::SUCCESS_NO_CONTENT == m_responseCode);
+        m_context->onPingRequestAcknowledged(
+            HTTPResponseCode::SUCCESS_NO_CONTENT == intToHTTPResponseCode(m_responseCode));
     }
 }
 
@@ -107,7 +109,7 @@ HTTP2SendDataResult PingHandler::onSendData(char* bytes, size_t size) {
 bool PingHandler::onReceiveResponseCode(long responseCode) {
     ACSDK_DEBUG5(LX(__func__).d("responseCode", responseCode));
 
-    if (HTTPResponseCode::FORBIDDEN == responseCode) {
+    if (HTTPResponseCode::CLIENT_ERROR_FORBIDDEN == intToHTTPResponseCode(responseCode)) {
         m_context->onForbidden(m_authToken);
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -207,7 +207,7 @@ TEST_F(ProgressTimerTest, testJustInterval) {
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportDelayElapsed()).Times(0);
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportIntervalElapsed()).WillRepeatedly(Invoke(notifyOnTenReports));
 
-    m_timer.init(m_mockContext, ProgressTimer::NO_INTERVAL, MILLIS_10);
+    m_timer.init(m_mockContext, ProgressTimer::NO_DELAY, MILLIS_10);
 
     play();
     ASSERT_TRUE(gotTenReports.waitFor(FAIL_TIMEOUT));
@@ -297,6 +297,25 @@ TEST_F(ProgressTimerTest, testPause) {
         wakeOnTenReports();
     }
 
+    stop();
+}
+
+// Verify that when resumed, a ProgressTimer will not repeat delay progress reports.
+TEST_F(ProgressTimerTest, testResumeDoesNotRepeat) {
+    auto requestProgress = [this] { callOnProgress(); };
+
+    EXPECT_CALL(*(m_mockContext.get()), requestProgress()).WillRepeatedly(Invoke(requestProgress));
+    EXPECT_CALL(*(m_mockContext.get()), onProgressReportDelayElapsed()).Times(1);
+    EXPECT_CALL(*(m_mockContext.get()), onProgressReportIntervalElapsed()).Times(0);
+
+    m_timer.init(m_mockContext, MILLIS_10, ProgressTimer::NO_INTERVAL);
+
+    play();
+    std::this_thread::sleep_for(MILLIS_100);
+    pause();
+    std::this_thread::sleep_for(MILLIS_100);
+    resume();
+    std::this_thread::sleep_for(MILLIS_100);
     stop();
 }
 

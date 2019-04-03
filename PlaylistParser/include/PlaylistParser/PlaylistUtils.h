@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,9 +25,6 @@
 namespace alexaClientSDK {
 namespace playlistParser {
 
-/// Timeout for future ready.
-static const std::chrono::milliseconds WAIT_FOR_FUTURE_READY_TIMEOUT(100);
-
 /**
  * Parses an PLS playlist and returns the "children" URLs in the order they appeared in the playlist.
  *
@@ -47,13 +44,17 @@ void removeCarriageReturnFromLine(std::string* line);
 /**
  * Retrieves playlist content and stores it into a string.
  *
- * @param httpContent Object used to retrieve url content.
+ * @param contentFetcher Object used to retrieve url content.
  * @param [out] content The playlist content.
+ * @param shouldShutDown A pointer to allow for the caller to cancel the content retrieval asynchronously
  * @return @c true if no error occured or @c false otherwise.
  * @note This function should be used to retrieve content specifically from playlist URLs. Attempting to use this
  * on a media URL could be blocking forever as the URL might point to a live stream.
  */
-bool extractPlaylistContent(std::unique_ptr<avsCommon::utils::HTTPContent> httpContent, std::string* content);
+bool readFromContentFetcher(
+    std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> contentFetcher,
+    std::string* content,
+    std::atomic<bool>* shouldShutDown);
 
 /**
  * Determines whether the provided url is an absolute url as opposed to a relative url. This is done by simply

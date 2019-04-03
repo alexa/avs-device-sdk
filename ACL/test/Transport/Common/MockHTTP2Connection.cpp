@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ namespace utils {
 namespace http2 {
 namespace test {
 
+using namespace avsCommon::utils::http;
+    
 MockHTTP2Connection::MockHTTP2Connection(std::string dURL, std::string pingURL) :
         m_downchannelURL{dURL},
         m_pingURL{pingURL},
@@ -50,7 +52,7 @@ std::shared_ptr<HTTP2RequestInterface> MockHTTP2Connection::createAndSendRequest
         std::lock_guard<std::mutex> lock(m_postRequestMutex);
         m_postRequestQueue.push_back(request);
         if (m_postResponseCode != HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED) {
-            request->getSink()->onReceiveResponseCode(m_postResponseCode);
+            request->getSink()->onReceiveResponseCode(responseCodeToInt(m_postResponseCode));
         }
         if (m_postRequestQueue.size() > m_maxPostRequestsEnqueued) {
             m_maxPostRequestsEnqueued = m_postRequestQueue.size();
@@ -120,7 +122,8 @@ std::shared_ptr<MockHTTP2Request> MockHTTP2Connection::waitForPostRequest(const 
     auto request = m_postRequestQueue.back();
 
     // Need to send 200 to MIME decoder in order for it parse the message.
-    request->getMimeDecoder()->onReceiveResponseCode(SUCCESS_OK);
+    request->getMimeDecoder()->onReceiveResponseCode(
+        static_cast<std::underlying_type<HTTPResponseCode>::type>(HTTPResponseCode::SUCCESS_OK));
 
     // Feed the header lines to the MIME decoder.
     for (auto headerLine : request->getSource()->getRequestHeaderLines()) {

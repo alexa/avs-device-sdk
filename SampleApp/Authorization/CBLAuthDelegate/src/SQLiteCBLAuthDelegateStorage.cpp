@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ static const std::string CONFIG_KEY_DB_FILE_PATH_KEY = "databaseFilePath";
 
 /// String for creating the refreshToken table
 static const std::string CREATE_REFRESH_TOKEN_TABLE_SQL_STRING =
-    "CREATE TABLE " REFRESH_TOKEN_COLUMN_NAME " (" REFRESH_TOKEN_COLUMN_NAME " TEXT);";
+    "CREATE TABLE " REFRESH_TOKEN_TABLE_NAME " (" REFRESH_TOKEN_COLUMN_NAME " TEXT);";
 
 std::unique_ptr<SQLiteCBLAuthDelegateStorage> SQLiteCBLAuthDelegateStorage::create(
     const avsCommon::utils::configuration::ConfigurationNode& configurationRoot) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,7 +20,9 @@ namespace avsCommon {
 namespace utils {
 namespace network {
 
+using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils::sds;
 using namespace utils::timing;
 
 /// String to identify log entries originating from this file.
@@ -39,11 +41,17 @@ static const size_t CHUNK_SIZE(1024);
 /// The amount of time to wait before retesting for internet connection availability.
 static const std::chrono::minutes DEFAULT_TEST_PERIOD{5};
 
+/// Timeout for polling loops that check shutdown.
+static const std::chrono::milliseconds WAIT_FOR_ACTIVITY_TIMEOUT{100};
+
 /// The URL to fetch content from.
 static const std::string S3_TEST_URL = "http://spectrum.s3.amazonaws.com/kindle-wifi/wifistub.html";
 
 /// The string that will serve as validation that the HTTP content was received correctly.
 static const std::string VALIDATION_STRING = "81ce4465-7167-4dcb-835b-dcc9e44c112a";
+
+/// Process attachment ID prefix
+static const std::string PROCESS_ATTACHMENT_ID_PREFIX = "download:";
 
 std::unique_ptr<InternetConnectionMonitor> InternetConnectionMonitor::create(
     std::shared_ptr<sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory) {
@@ -59,6 +67,7 @@ InternetConnectionMonitor::InternetConnectionMonitor(
     std::shared_ptr<sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory) :
         m_connected{false},
         m_period{DEFAULT_TEST_PERIOD},
+        m_isShuttingDown{false},
         m_contentFetcherFactory{contentFetcherFactory} {
     /// Using the test URL as the stream id.
     m_stream = std::make_shared<avs::attachment::InProcessAttachment>(S3_TEST_URL);
@@ -113,6 +122,7 @@ void InternetConnectionMonitor::startMonitoring() {
 
 void InternetConnectionMonitor::stopMonitoring() {
     ACSDK_DEBUG5(LX(__func__));
+    m_isShuttingDown = true;
     m_connectionTestTimer.stop();
 }
 
@@ -121,39 +131,56 @@ void InternetConnectionMonitor::testConnection() {
 
     auto contentFetcher = m_contentFetcherFactory->create(S3_TEST_URL);
     auto httpContent = contentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
-    if (!httpContent) {
-        ACSDK_ERROR(LX("testConnectionFailed").d("reason", "nullHTTPContentReceived"));
-        updateConnectionStatus(false);
-        return;
-    }
-    if (!httpContent->isReady(std::chrono::duration_cast<std::chrono::milliseconds>(m_period))) {
-        ACSDK_ERROR(LX("testConnectionFailed").d("reason", "getHttpContentTimeout"));
-        updateConnectionStatus(false);
-        return;
-    }
-    if (!httpContent->isStatusCodeSuccess()) {
-        ACSDK_ERROR(LX("testConnectionFailed")
-                        .d("reason", "badHTTPContentReceived")
-                        .d("statusCode", httpContent->getStatusCode()));
+
+    auto stream = std::make_shared<InProcessAttachment>(PROCESS_ATTACHMENT_ID_PREFIX + S3_TEST_URL);
+    std::shared_ptr<AttachmentWriter> streamWriter = stream->createWriter(WriterPolicy::BLOCKING);
+
+    HTTPContentFetcherInterface::Header header = contentFetcher->getHeader(&m_isShuttingDown);
+
+    if (!header.successful) {
+        ACSDK_ERROR(LX("testConnectionFailed").d("reason", "contentFetcherCouldNotDownloadHeader"));
         updateConnectionStatus(false);
         return;
     }
 
-    auto reader = httpContent->getDataStream()->createReader(sds::ReaderPolicy::BLOCKING);
+    ACSDK_DEBUG9(LX(__func__).d("contentLength", header.contentLength));
+
+    contentFetcher->getBody(streamWriter);
+
+    HTTPContentFetcherInterface::State contentFetcherState = contentFetcher->getState();
+    while (!m_isShuttingDown && (HTTPContentFetcherInterface::State::BODY_DONE != contentFetcherState) &&
+           (HTTPContentFetcherInterface::State::ERROR != contentFetcherState)) {
+        std::this_thread::sleep_for(WAIT_FOR_ACTIVITY_TIMEOUT);
+        contentFetcherState = contentFetcher->getState();
+    }
+    if (m_isShuttingDown) {
+        return;
+    }
+    if (HTTPContentFetcherInterface::State::ERROR == contentFetcherState) {
+        ACSDK_ERROR(LX("testConnectionFailed").d("reason", "contentFetcherCouldNotDownloadBody"));
+        updateConnectionStatus(false);
+        return;
+    }
+
+    std::unique_ptr<AttachmentReader> reader = stream->createReader(ReaderPolicy::NONBLOCKING);
+
     if (!reader) {
         ACSDK_ERROR(LX("testConnectionFailed").d("reason", "failedToCreateStreamReader"));
+        updateConnectionStatus(false);
         return;
     }
     auto readStatus = avs::attachment::AttachmentReader::ReadStatus::OK;
     std::string testContent;
     std::vector<char> buffer(CHUNK_SIZE, 0);
     bool streamClosed = false;
-    while (!streamClosed) {
-        auto bytesRead = reader->read(buffer.data(), buffer.size(), &readStatus);
+    ssize_t bytesReadSoFar = 0;
+    while (!m_isShuttingDown && !streamClosed && (bytesReadSoFar < header.contentLength)) {
+        size_t bytesRead = reader->read(buffer.data(), buffer.size(), &readStatus);
+        bytesReadSoFar += bytesRead;
         switch (readStatus) {
             case avs::attachment::AttachmentReader::ReadStatus::CLOSED:
                 streamClosed = true;
-                if (bytesRead == 0) {
+                if (0 == bytesRead) {
                     break;
                 }
             /* FALL THROUGH - to add any data received even if closed */
@@ -173,7 +200,12 @@ void InternetConnectionMonitor::testConnection() {
                 updateConnectionStatus(false);
                 return;
         }
+        if (bytesReadSoFar >= header.contentLength) {
+            ACSDK_DEBUG9(LX(__func__).m("alreadyReadAllBytes"));
+        }
     }
+
+    ACSDK_DEBUG9(LX(__func__).m("Finished reading"));
 
     // Check that the HTTP content received is what we expected.
     bool found = (testContent.find(VALIDATION_STRING) != std::string::npos);

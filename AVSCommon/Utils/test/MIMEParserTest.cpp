@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,11 +24,11 @@
 #include <gmock/gmock.h>
 
 #include "AVSCommon/Utils/Common/Common.h"
+#include "AVSCommon/Utils/HTTP/HttpResponseCode.h"
 #include "AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h"
 #include "AVSCommon/Utils/HTTP2/HTTP2MimeResponseDecoder.h"
 #include "AVSCommon/Utils/HTTP2/MockHTTP2MimeRequestEncodeSource.h"
 #include "AVSCommon/Utils/HTTP2/MockHTTP2MimeResponseDecodeSink.h"
-#include "AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h"
 #include "AVSCommon/Utils/Logger/LoggerUtils.h"
 
 namespace alexaClientSDK {
@@ -36,6 +36,7 @@ namespace avsCommon {
 namespace test {
 
 using namespace testing;
+using namespace avsCommon::utils::http;
 using namespace avsCommon::utils::http2;
 using namespace avsCommon::utils;
 using namespace avsCommon::utils::logger;
@@ -290,7 +291,8 @@ void runCodecTest(
     const std::string boundaryHeader{BOUNDARY_HEADER_PREFIX + boundary};
     bool resp = decoder.onReceiveHeaderLine(boundaryHeader);
     ASSERT_TRUE(resp);
-    decoder.onReceiveResponseCode(HTTPResponseCode::SUCCESS_OK);
+    decoder.onReceiveResponseCode(
+        static_cast<std::underlying_type<HTTPResponseCode>::type>(HTTPResponseCode::SUCCESS_OK));
     while ((status == HTTP2ReceiveDataStatus::SUCCESS || status == HTTP2ReceiveDataStatus::PAUSE) &&
            index < finalSize) {
         auto sizeToSend = (index + bufferSize) > finalSize ? finalSize - index : bufferSize;
@@ -431,7 +433,8 @@ TEST_F(MIMEParserTest, duplicateBoundaries) {
     size_t index{0};
     HTTP2ReceiveDataStatus status{HTTP2ReceiveDataStatus::SUCCESS};
     bool resp = decoder.onReceiveHeaderLine(boundaryHeader);
-    decoder.onReceiveResponseCode(HTTPResponseCode::SUCCESS_OK);
+    decoder.onReceiveResponseCode(
+        static_cast<std::underlying_type<HTTPResponseCode>::type>(HTTPResponseCode::SUCCESS_OK));
     while (status == HTTP2ReceiveDataStatus::SUCCESS && index < testPayload.size()) {
         auto sizeToSend = (index + bufferSize) > testPayload.size() ? testPayload.size() - index : bufferSize;
         status = decoder.onReceiveData(testPayload.c_str() + index, sizeToSend);
@@ -479,7 +482,8 @@ TEST_F(MIMEParserTest, testABORT) {
 
     // setup decoder
     HTTP2MimeResponseDecoder decoder{sink};
-    decoder.onReceiveResponseCode(HTTPResponseCode::SUCCESS_OK);
+    decoder.onReceiveResponseCode(
+        static_cast<std::underlying_type<HTTPResponseCode>::type>(HTTPResponseCode::SUCCESS_OK));
     // Ensure repeated calls return ABORT
     ASSERT_EQ(decoder.onReceiveData(encodedPayload.c_str(), SMALL), HTTP2ReceiveDataStatus::ABORT);
     sink->m_abort = false;
@@ -575,7 +579,8 @@ TEST_F(MIMEParserTest, testVariableChunkSizes) {
     HTTP2ReceiveDataStatus status{HTTP2ReceiveDataStatus::SUCCESS};
     const std::string boundaryHeader{BOUNDARY_HEADER_PREFIX + boundary};
     bool resp = decoder.onReceiveHeaderLine(boundaryHeader);
-    decoder.onReceiveResponseCode(HTTPResponseCode::SUCCESS_OK);
+    decoder.onReceiveResponseCode(
+        static_cast<std::underlying_type<HTTPResponseCode>::type>(HTTPResponseCode::SUCCESS_OK));
     ASSERT_TRUE(resp);
     while ((status == HTTP2ReceiveDataStatus::SUCCESS || status == HTTP2ReceiveDataStatus::PAUSE) &&
            index < finalSize) {
@@ -612,7 +617,8 @@ static void testPrefixCase(
     HTTP2MimeResponseDecoder decoder{sink};
 
     ASSERT_TRUE(decoder.onReceiveHeaderLine(BOUNDARY_HEADER_PREFIX + MIME_TEST_BOUNDARY_STRING));
-    ASSERT_TRUE(decoder.onReceiveResponseCode(HTTPResponseCode::SUCCESS_OK));
+    ASSERT_TRUE(decoder.onReceiveResponseCode(
+        static_cast<std::underlying_type<HTTPResponseCode>::type>(HTTPResponseCode::SUCCESS_OK)));
 
     std::string data = prefix + BOUNDARY + MIME_NEWLINE + NORMAL_LINES + MIME_BOUNDARY_DASHES;
     auto writeQuantum = data.length();

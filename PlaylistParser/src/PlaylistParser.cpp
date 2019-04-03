@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/PlaylistParser/PlaylistParserObserverInterface.h>
+#include <AVSCommon/Utils/String/StringUtils.h>
 
 #include "PlaylistParser/M3UParser.h"
 #include "PlaylistParser/PlaylistParser.h"
@@ -27,7 +28,11 @@
 namespace alexaClientSDK {
 namespace playlistParser {
 
+using namespace alexaClientSDK::avsCommon;
+using namespace avsCommon::avs::attachment;
+using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::playlistParser;
+using namespace avsCommon::utils::string;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("PlaylistParser");
@@ -52,7 +57,7 @@ static int g_id = 0;
 static const auto INVALID_DURATION = std::chrono::milliseconds(-1);
 
 std::unique_ptr<PlaylistParser> PlaylistParser::create(
-    std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory) {
+    std::shared_ptr<HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory) {
     if (!contentFetcherFactory) {
         return nullptr;
     }
@@ -80,8 +85,7 @@ int PlaylistParser::parsePlaylist(
     return id;
 }
 
-PlaylistParser::PlaylistParser(
-    std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory) :
+PlaylistParser::PlaylistParser(std::shared_ptr<HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory) :
         RequiresShutdown{"PlaylistParser"},
         m_contentFetcherFactory{contentFetcherFactory},
         m_shuttingDown{false} {
@@ -101,44 +105,48 @@ void PlaylistParser::doDepthFirstSearch(
     playQueue.push_front(rootUrl);
     std::string lastUrlParsed;
     while (!playQueue.empty() && !m_shuttingDown) {
+        if (m_shuttingDown) {
+            return;
+        }
+
         auto playItem = playQueue.front();
         playQueue.pop_front();
         if (playItem.type == PlayItem::Type::MEDIA_INFO) {
             // This is a media URL and not a playlist
-            ACSDK_DEBUG9(LX("foundNonPlaylistURL"));
+            ACSDK_DEBUG9(LX(__func__).m("foundNonPlaylistURL"));
             observer->onPlaylistEntryParsed(id, playItem.playlistEntry);
             continue;
         }
+
         auto playlistURL = playItem.playlistURL;
         auto contentFetcher = m_contentFetcherFactory->create(playlistURL);
-        auto httpContent = contentFetcher->getContent(
-            avsCommon::sdkInterfaces::HTTPContentFetcherInterface::FetchOptions::CONTENT_TYPE);
-        if (!httpContent) {
-            ACSDK_ERROR(LX("doDepthFirstSearchFailed").d("reason", "nullHTTPContentReceived"));
-            observer->onPlaylistEntryParsed(id, PlaylistEntry::createErrorEntry(playlistURL));
-            return;
-        }
-        do {
-            if (m_shuttingDown) {
-                ACSDK_DEBUG9(LX("doDepthFirstSearch").d("info", "shuttingDown"));
-                return;
-            }
-        } while (!httpContent->isReady(WAIT_FOR_FUTURE_READY_TIMEOUT));
-        if (!httpContent->isStatusCodeSuccess()) {
-            ACSDK_ERROR(LX("doDepthFirstSearchFailed")
-                            .d("reason", "badHTTPContentReceived")
-                            .d("statusCode", httpContent->getStatusCode()));
+
+        contentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
+
+        HTTPContentFetcherInterface::Header header = contentFetcher->getHeader(&m_shuttingDown);
+        if (!header.successful) {
+            ACSDK_ERROR(LX(__func__).sensitive("url", playlistURL).m("getHeaderFailed"));
             observer->onPlaylistEntryParsed(id, PlaylistEntry::createErrorEntry(playlistURL));
             return;
         }
 
-        std::string contentType = httpContent->getContentType();
-        ACSDK_DEBUG9(LX("gotContentType").d("contentType", contentType).sensitive("url", playlistURL));
-        std::transform(contentType.begin(), contentType.end(), contentType.begin(), ::tolower);
-        // Checking the HTML content type to see if the URL is a playlist.
-        if (contentType.find(M3U_CONTENT_TYPE) != std::string::npos) {
+        if (!isStatusCodeSuccess(header.responseCode)) {
+            ACSDK_DEBUG0(LX("nonSuccessStatusCodeFromGetHeader").d("statusCode", header.responseCode));
+            observer->onPlaylistEntryParsed(id, PlaylistEntry::createErrorEntry(playlistURL));
+            return;
+        }
+
+        ACSDK_DEBUG9(LX("gotHeader")
+                         .d("contentType", header.contentType)
+                         .d("statusCode", header.responseCode)
+                         .m("headersReceived")
+                         .sensitive("url", playlistURL));
+
+        std::string lowerCaseContentType = stringToLowerCase(header.contentType);
+        // Checking the HTTP content type to see if the URL is a playlist.
+        if (lowerCaseContentType.find(M3U_CONTENT_TYPE) != std::string::npos) {
             std::string playlistContent;
-            if (!getPlaylistContent(m_contentFetcherFactory->create(playlistURL), &playlistContent)) {
+            if (!playlistParser::readFromContentFetcher(std::move(contentFetcher), &playlistContent, &m_shuttingDown)) {
                 ACSDK_ERROR(LX("failedToRetrieveContent").sensitive("url", playlistURL));
                 observer->onPlaylistEntryParsed(id, PlaylistEntry::createErrorEntry(playlistURL));
                 return;
@@ -185,7 +193,7 @@ void PlaylistParser::doDepthFirstSearch(
                         }
                         lastUrlParsed = entries.back().url;
                     } else {
-                        // Setting this to 0 as an intial value so that if we don't see the last URL we parsed in the
+                        // Setting this to 0 as an initial value so that if we don't see the last URL we parsed in the
                         // latest pass of the playlist, we stream all the URLs within the playlist as a sort of
                         // recovery mechanism. This way, if we parse this so far into the future that all the URLs we
                         // had previously seen are gone, we'll still stream the latest URLs.
@@ -220,7 +228,7 @@ void PlaylistParser::doDepthFirstSearch(
                     playQueue.push_front(reverseIt->url);
                 }
             }
-        } else if (contentType.find(PLS_CONTENT_TYPE) != std::string::npos) {
+        } else if (lowerCaseContentType.find(PLS_CONTENT_TYPE) != std::string::npos) {
             ACSDK_DEBUG9(LX("isPLSPlaylist").sensitive("url", playlistURL));
             /*
              * This is for sure a PLS playlist, so if PLS is one of the desired playlist types to not be parsed, then
@@ -234,7 +242,7 @@ void PlaylistParser::doDepthFirstSearch(
                 continue;
             }
             std::string playlistContent;
-            if (!getPlaylistContent(m_contentFetcherFactory->create(playlistURL), &playlistContent)) {
+            if (!playlistParser::readFromContentFetcher(std::move(contentFetcher), &playlistContent, &m_shuttingDown)) {
                 observer->onPlaylistEntryParsed(id, PlaylistEntry::createErrorEntry(playlistURL));
                 return;
             }
@@ -247,40 +255,28 @@ void PlaylistParser::doDepthFirstSearch(
                 playQueue.push_front(*reverseIt);
             }
         } else {
+            // AUDIO CONTENT
             ACSDK_DEBUG9(LX("foundNonPlaylistURL"));
             // This is a non-playlist URL or a playlist that we don't support (M3U, EXT_M3U, PLS).
             auto parseResult = playQueue.empty() ? PlaylistParseResult::FINISHED : PlaylistParseResult::STILL_ONGOING;
-            observer->onPlaylistEntryParsed(id, PlaylistEntry(playlistURL, INVALID_DURATION, parseResult));
+            observer->onPlaylistEntryParsed(
+                id,
+                PlaylistEntry(
+                    playlistURL,
+                    INVALID_DURATION,
+                    parseResult,
+                    PlaylistEntry::Type::AUDIO_CONTENT,
+                    std::make_tuple(0, 0),
+                    EncryptionInfo(),
+                    std::move(contentFetcher)));
         }
     }
-}
-
-bool PlaylistParser::getPlaylistContent(
-    std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> contentFetcher,
-    std::string* content) {
-    if (!contentFetcher) {
-        ACSDK_ERROR(LX("getPlaylistContentFailed").d("reason", "nullContentFetcher"));
-        return false;
+    if (playQueue.empty()) {
+        ACSDK_DEBUG9(LX("playQueueEmpty"));
     }
-
-    if (!content) {
-        ACSDK_ERROR(LX("getPlaylistContentFailed").d("reason", "nullString"));
-        return false;
+    if (m_shuttingDown) {
+        ACSDK_DEBUG9(LX("shuttingDown"));
     }
-    auto httpContent =
-        contentFetcher->getContent(avsCommon::sdkInterfaces::HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
-    if (!httpContent) {
-        ACSDK_ERROR(LX("getPlaylistContentFailed").d("reason", "nullHTTPContentReceived"));
-        return false;
-    }
-    do {
-        if (m_shuttingDown) {
-            ACSDK_DEBUG9(LX("getPlaylistContentFailed").d("info", "shuttingDown"));
-            return false;
-        }
-    } while (!httpContent->isReady(WAIT_FOR_FUTURE_READY_TIMEOUT));
-
-    return extractPlaylistContent(std::move(httpContent), content);
 }
 
 void PlaylistParser::doShutdown() {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,6 +25,11 @@
 namespace alexaClientSDK {
 namespace playlistParser {
 
+using namespace avsCommon::avs::attachment;
+using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils::http;
+using namespace avsCommon::utils::sds;
+
 /// String to identify log entries originating from this file.
 static const std::string TAG("PlaylistUtils");
 
@@ -38,68 +43,131 @@ static const std::string TAG("PlaylistUtils");
 /// The number of bytes read from the attachment with each read in the read loop.
 static const size_t CHUNK_SIZE(1024);
 
-/// The first line of a PLS playlist.
-static const std::string PLS_PLAYLIST_HEADER = "[playlist]";
-
 /// The beginning of a line in a PLS file indicating a URL.
 static const std::string PLS_FILE = "File";
 
 /// url scheme pattern.
 static const std::string URL_END_SCHEME_PATTERN = "://";
 
-bool extractPlaylistContent(std::unique_ptr<avsCommon::utils::HTTPContent> httpContent, std::string* content) {
-    if (!content) {
-        ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "nullString"));
-        return false;
-    }
-    if (!httpContent) {
-        ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "nullHTTPContentReceived"));
-        return false;
-    }
-    if (!httpContent->isStatusCodeSuccess()) {
-        ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed")
-                        .d("reason", "badHTTPContentReceived")
-                        .d("statusCode", httpContent->getStatusCode()));
+/// A wait period for a polling loop that constantly check if a content fetcher finished fetching the payload or failed.
+static const std::chrono::milliseconds WAIT_FOR_ACTIVITY_TIMEOUT{100};
+
+/// Process attachment ID
+static const std::string PROCESS_ATTACHMENT_ID = "download:";
+
+/// Timeout to wait for a playlist to arrive from the content fetcher
+static const std::chrono::minutes PLAYLIST_FETCH_TIMEOUT{5};
+
+bool readFromContentFetcher(
+    std::unique_ptr<HTTPContentFetcherInterface> contentFetcher,
+    std::string* content,
+    std::atomic<bool>* shouldShutDown) {
+    ACSDK_DEBUG9(LX(__func__));
+    if (!contentFetcher) {
+        ACSDK_ERROR(LX("readFromContentFetcherFailed").d("reason", "nullContentFetcher"));
         return false;
     }
 
-    auto reader = httpContent->getDataStream()->createReader(avsCommon::utils::sds::ReaderPolicy::BLOCKING);
-    if (!reader) {
-        ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "failedToCreateStreamReader"));
+    if (!content) {
+        ACSDK_ERROR(LX("readFromContentFetcherFailed").d("reason", "nullContent"));
         return false;
     }
-    avsCommon::avs::attachment::AttachmentReader::ReadStatus readStatus =
-        avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK;
-    std::string playlistContent;
+
+    if (*shouldShutDown) {
+        ACSDK_ERROR(LX("readFromContentFetcherFailed").d("reason", "shouldShutdown"));
+        return false;
+    }
+
+    auto header = contentFetcher->getHeader(shouldShutDown);
+    if (!header.successful) {
+        ACSDK_ERROR(LX("readFromContentFetcherFailed").d("reason", "getHeaderFailed"));
+        return false;
+    }
+
+    if (!isStatusCodeSuccess(header.responseCode)) {
+        ACSDK_WARN(LX("readFromContentFetcherFailed")
+                       .d("reason", "failedToReceiveHeader")
+                       .d("statusCode", header.responseCode));
+        return false;
+    }
+
+    auto stream = std::make_shared<InProcessAttachment>(PROCESS_ATTACHMENT_ID);
+    std::shared_ptr<AttachmentWriter> streamWriter = stream->createWriter(WriterPolicy::BLOCKING);
+
+    if (!contentFetcher->getBody(streamWriter)) {
+        ACSDK_ERROR(LX("readFromContentFetcherFailed").d("reason", "getBodyFailed"));
+        return false;
+    }
+
+    auto startTime = std::chrono::steady_clock::now();
+    auto elapsedTime = std::chrono::steady_clock::now() - startTime;
+    HTTPContentFetcherInterface::State contentFetcherState = contentFetcher->getState();
+    while ((PLAYLIST_FETCH_TIMEOUT > elapsedTime) &&
+           (HTTPContentFetcherInterface::State::BODY_DONE != contentFetcherState) &&
+           (HTTPContentFetcherInterface::State::ERROR != contentFetcherState)) {
+        std::this_thread::sleep_for(WAIT_FOR_ACTIVITY_TIMEOUT);
+        if (*shouldShutDown) {
+            return false;
+        }
+        elapsedTime = std::chrono::steady_clock::now() - startTime;
+        contentFetcherState = contentFetcher->getState();
+    }
+    if (PLAYLIST_FETCH_TIMEOUT <= elapsedTime) {
+        ACSDK_ERROR(LX("readFromContentFetcherFailed").d("reason", "waitTimeout"));
+        return false;
+    }
+
+    if (HTTPContentFetcherInterface::State::ERROR == contentFetcherState) {
+        ACSDK_ERROR(LX("readFromContentFetcherFailed").d("reason", "receivingBodyFailed"));
+        return false;
+    }
+
+    ACSDK_DEBUG9(LX("bodyReceived"));
+
+    std::unique_ptr<AttachmentReader> reader = stream->createReader(ReaderPolicy::NONBLOCKING);
+
+    auto readStatus = AttachmentReader::ReadStatus::OK;
     std::vector<char> buffer(CHUNK_SIZE, 0);
     bool streamClosed = false;
-    while (!streamClosed) {
-        auto bytesRead = reader->read(buffer.data(), buffer.size(), &readStatus);
+    AttachmentReader::ReadStatus previousStatus = AttachmentReader::ReadStatus::OK_TIMEDOUT;
+    ssize_t bytesReadSoFar = 0;
+    size_t bytesRead = -1;
+    while (!streamClosed && bytesRead != 0) {
+        bytesRead = reader->read(buffer.data(), buffer.size(), &readStatus);
+        bytesReadSoFar += bytesRead;
+        if (previousStatus != readStatus) {
+            ACSDK_DEBUG9(LX(__func__).d("readStatus", readStatus));
+            previousStatus = readStatus;
+        }
         switch (readStatus) {
-            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::CLOSED:
+            case AttachmentReader::ReadStatus::CLOSED:
                 streamClosed = true;
                 if (bytesRead == 0) {
                     break;
                 }
-            /* FALL THROUGH - to add any data received even if closed */
-            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK:
-            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK_WOULDBLOCK:
-            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK_TIMEDOUT:
-                playlistContent.append(buffer.data(), bytesRead);
+                /* FALL THROUGH - to add any data received even if closed */
+            case AttachmentReader::ReadStatus::OK:
+            case AttachmentReader::ReadStatus::OK_WOULDBLOCK:
+            case AttachmentReader::ReadStatus::OK_TIMEDOUT:
+                content->append(buffer.data(), bytesRead);
                 break;
-            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK_OVERRUN_RESET:
+            case AttachmentReader::ReadStatus::OK_OVERRUN_RESET:
                 // Current AttachmentReader policy renders this outcome impossible.
-                ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("failure", "overrunReset"));
+                ACSDK_ERROR(LX("readFromContentFetcherFailed").d("reason", "overrunReset"));
                 break;
-            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::ERROR_OVERRUN:
-            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:
-            case avsCommon::avs::attachment::AttachmentReader::ReadStatus::ERROR_INTERNAL:
-                ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "readError"));
+            case AttachmentReader::ReadStatus::ERROR_OVERRUN:
+            case AttachmentReader::ReadStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:
+            case AttachmentReader::ReadStatus::ERROR_INTERNAL:
+                ACSDK_ERROR(LX("readFromContentFetcherFailed").d("reason", "readError"));
                 return false;
         }
+        if (0 == bytesRead) {
+            ACSDK_DEBUG9(LX(__func__).m("alreadyReadAllBytes"));
+        }
     }
-    *content = playlistContent;
-    return true;
+
+    ACSDK_DEBUG9(LX("readFromContentFetcherDone").d("URL", contentFetcher->getUrl()).d("content", *content));
+    return !(*content).empty();
 }
 
 std::vector<std::string> parsePLSContent(const std::string& playlistURL, const std::string& content) {

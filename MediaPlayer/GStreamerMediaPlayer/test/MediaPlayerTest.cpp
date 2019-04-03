@@ -101,45 +101,52 @@ static std::unordered_map<std::string, std::string> urlsToContent;
 /// A mock content fetcher
 class MockContentFetcher : public avsCommon::sdkInterfaces::HTTPContentFetcherInterface {
 public:
-    MockContentFetcher(const std::string& url) : m_url{url} {
+    MockContentFetcher(const std::string& url) : m_url{url}, m_state{HTTPContentFetcherInterface::State::INITIALIZED} {
+    }
+
+    std::string getUrl() const override {
+        return m_url;
+    }
+
+    HTTPContentFetcherInterface::Header getHeader(std::atomic<bool>* shouldShutdown) override {
+        HTTPContentFetcherInterface::Header header;
+        auto urlAndContentType = urlsToContentTypes.find(m_url);
+        if (urlAndContentType == urlsToContentTypes.end()) {
+            header.successful = false;
+        } else {
+            header.successful = true;
+            header.responseCode = avsCommon::utils::http::HTTPResponseCode::SUCCESS_OK;
+            header.contentType = urlAndContentType->second;
+            m_state = HTTPContentFetcherInterface::State::HEADER_DONE;
+        }
+        return header;
+    }
+
+    HTTPContentFetcherInterface::State getState() override {
+        return m_state;
+    }
+
+    bool getBody(std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer) override {
+        auto urlAndContent = urlsToContent.find(m_url);
+        if (urlAndContent == urlsToContent.end()) {
+            return false;
+        }
+        auto attachment = writeStringIntoAttachment(urlAndContent->second, std::move(writer));
+        if (!attachment) {
+            return false;
+        }
+        m_state = HTTPContentFetcherInterface::State::BODY_DONE;
+        return true;
+    }
+
+    void shutdown() override {
     }
 
     std::unique_ptr<avsCommon::utils::HTTPContent> getContent(
         FetchOptions fetchOption,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer,
+        std::unique_ptr<avsCommon::avs::attachment::AttachmentWriter> writer,
         const std::vector<std::string>& customHeaders = std::vector<std::string>()) override {
-        if (fetchOption == FetchOptions::CONTENT_TYPE) {
-            auto urlAndContentType = urlsToContentTypes.find(m_url);
-            if (urlAndContentType == urlsToContentTypes.end()) {
-                return nullptr;
-            } else {
-                std::promise<long> statusPromise;
-                auto statusFuture = statusPromise.get_future();
-                statusPromise.set_value(200);
-                std::promise<std::string> contentTypePromise;
-                auto contentTypeFuture = contentTypePromise.get_future();
-                contentTypePromise.set_value(urlAndContentType->second);
-                return avsCommon::utils::memory::make_unique<avsCommon::utils::HTTPContent>(
-                    std::move(statusFuture), std::move(contentTypeFuture), nullptr);
-            }
-        } else {
-            auto urlAndContent = urlsToContent.find(m_url);
-            if (urlAndContent == urlsToContent.end()) {
-                return nullptr;
-            }
-            std::promise<long> statusPromise;
-            auto statusFuture = statusPromise.get_future();
-            statusPromise.set_value(200);
-            std::promise<std::string> contentTypePromise;
-            auto contentTypeFuture = contentTypePromise.get_future();
-            contentTypePromise.set_value("");
-            auto attachment = writeStringIntoAttachment(urlAndContent->second, writer);
-            if (!attachment) {
-                return nullptr;
-            }
-            return avsCommon::utils::memory::make_unique<avsCommon::utils::HTTPContent>(
-                std::move(statusFuture), std::move(contentTypeFuture), attachment);
-        }
+        return nullptr;
     }
 
 private:
@@ -162,6 +169,8 @@ private:
     };
 
     std::string m_url;
+
+    HTTPContentFetcherInterface::State m_state;
 };
 
 /// A mock factory that creates mock content fetchers

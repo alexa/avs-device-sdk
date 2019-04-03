@@ -21,8 +21,6 @@ namespace avsCommon {
 namespace utils {
 namespace libcurlUtils {
 
-using namespace alexaClientSDK::avsCommon::utils;
-
 /// String to identify log entries originating from this file.
 static const std::string TAG("CurlMultiHandleWrapper");
 

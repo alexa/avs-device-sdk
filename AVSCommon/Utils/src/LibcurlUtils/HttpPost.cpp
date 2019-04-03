@@ -15,8 +15,8 @@
 
 #include <sstream>
 
+#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 

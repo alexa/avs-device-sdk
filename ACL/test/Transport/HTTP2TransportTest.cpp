@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,8 +28,8 @@
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/Attachment/AttachmentUtils.h>
 #include <AVSCommon/Utils/PromiseFuturePair.h>
+#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2RequestConfig.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 
 #include "MockAuthDelegate.h"
 #include "MockHTTP2Connection.h"
@@ -49,6 +49,7 @@ using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils;
+using namespace avsCommon::utils::http;
 using namespace avsCommon::utils::http2;
 using namespace avsCommon::utils::http2::test;
 using namespace ::testing;
@@ -478,7 +479,7 @@ TEST_F(HTTP2TransportTest, retryOnDownchannelConnectionFailure) {
 
     // The Mock HTTP2Request replies to any downchannel request with a 500.
     ASSERT_TRUE(m_mockHttp2Connection->respondToDownchannelRequests(
-        static_cast<long>(SERVER_INTERNAL_ERROR), false, RESPONSE_TIMEOUT));
+        static_cast<long>(HTTPResponseCode::SERVER_ERROR_INTERNAL), false, RESPONSE_TIMEOUT));
 
     // Wait for a long time (up to 10 second), terminating the wait when the mock of HTTP2Connection receives a second
     // attempt to create a downchannel request.
@@ -738,7 +739,7 @@ TEST_F(HTTP2TransportTest, onSendCompletedNotification) {
                 HTTP2ResponseFinishedStatus::TIMEOUT,
                 MessageRequestObserverInterface::Status::TIMEDOUT)},
             {std::make_tuple(
-                HTTPResponseCode::BAD_REQUEST,
+                HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST,
                 static_cast<HTTP2ResponseFinishedStatus>(-1),
                 MessageRequestObserverInterface::Status::INTERNAL_ERROR)},
             {std::make_tuple(
@@ -762,15 +763,15 @@ TEST_F(HTTP2TransportTest, onSendCompletedNotification) {
                 HTTP2ResponseFinishedStatus::COMPLETE,
                 MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR)},
             {std::make_tuple(
-                HTTPResponseCode::BAD_REQUEST,
+                HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST,
                 HTTP2ResponseFinishedStatus::COMPLETE,
                 MessageRequestObserverInterface::Status::BAD_REQUEST)},
             {std::make_tuple(
-                HTTPResponseCode::FORBIDDEN,
+                HTTPResponseCode::CLIENT_ERROR_FORBIDDEN,
                 HTTP2ResponseFinishedStatus::COMPLETE,
                 MessageRequestObserverInterface::Status::INVALID_AUTH)},
             {std::make_tuple(
-                HTTPResponseCode::SERVER_INTERNAL_ERROR,
+                HTTPResponseCode::SERVER_ERROR_INTERNAL,
                 HTTP2ResponseFinishedStatus::COMPLETE,
                 MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2)},
             {std::make_tuple(
@@ -837,7 +838,7 @@ TEST_F(HTTP2TransportTest, onExceptionReceivedNon200Content) {
 
     auto request = m_mockHttp2Connection->waitForPostRequest(RESPONSE_TIMEOUT);
     ASSERT_NE(request, nullptr);
-    request->getSink()->onReceiveResponseCode(HTTPResponseCode::SERVER_INTERNAL_ERROR);
+    request->getSink()->onReceiveResponseCode(HTTPResponseCode::SERVER_ERROR_INTERNAL);
     request->getSink()->onReceiveData(NON_MIME_PAYLOAD.c_str(), NON_MIME_PAYLOAD.size());
     request->getSink()->onResponseFinished(HTTP2ResponseFinishedStatus::COMPLETE);
 
@@ -1078,7 +1079,7 @@ TEST_F(HTTP2TransportTest, tearDownPingFailure) {
         auto pingRequest = m_mockHttp2Connection->waitForPingRequest(RESPONSE_TIMEOUT);
         ASSERT_TRUE(pingRequest);
         m_mockHttp2Connection->dequePingRequest();
-        pingRequest->getSink()->onReceiveResponseCode(HTTPResponseCode::BAD_REQUEST);
+        pingRequest->getSink()->onReceiveResponseCode(HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST);
         pingRequest->getSink()->onResponseFinished(HTTP2ResponseFinishedStatus::COMPLETE);
     });
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -251,6 +251,11 @@ void ProgressTimer::mainLoop() {
 
     std::unique_lock<std::mutex> stateLock(m_stateMutex);
 
+    if (NO_DELAY == m_delay && NO_INTERVAL == m_interval) {
+        ACSDK_DEBUG5(LX("mainLoopExiting").d("reason", "noDelayOrInterval"));
+        return;
+    }
+
     while (State::RUNNING == m_state) {
         stateLock.unlock();
         m_gotProgress = false;
@@ -318,8 +323,11 @@ bool ProgressTimer::updateTargetLocked() {
 
     // Handle reporting progress after an initial delay, and without reporting periodic progress.
     if (NO_INTERVAL == m_interval) {
-        // If progress has already reached the initial delay target, there are no more targets...
+        // If progress has already reached the initial delay and there is no interval, there is
+        // no more progress to report and mainLoop() will exit.  Reset m_delay before returning
+        // so that a pesky call to resume() won't trigger more progress reports.
         if (m_target == m_delay) {
+            m_delay = NO_DELAY;
             return false;
         }
 

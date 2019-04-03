@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,9 +30,9 @@
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
+#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/LibcurlUtils/HttpPutInterface.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPResponse.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
 
@@ -41,6 +41,7 @@ namespace capabilitiesDelegate {
 
 using namespace avsCommon::avs;
 using namespace avsCommon::utils;
+using namespace avsCommon::utils::http;
 using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::libcurlUtils;
 using namespace avsCommon::sdkInterfaces;
@@ -584,19 +585,19 @@ CapabilitiesDelegate::CapabilitiesPublishReturnCode CapabilitiesDelegate::publis
             setCapabilitiesState(
                 CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS);
             return CapabilitiesDelegate::CapabilitiesPublishReturnCode::SUCCESS;
-        case HTTPResponseCode::BAD_REQUEST:
+        case HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST:
             ACSDK_ERROR(
                 LX(errorEvent).d(errorReasonKey, "badRequest: " + getErrorMsgFromHttpResponse(httpResponse.body)));
             setCapabilitiesState(
                 CapabilitiesObserverInterface::State::FATAL_ERROR, CapabilitiesObserverInterface::Error::BAD_REQUEST);
             return CapabilitiesDelegate::CapabilitiesPublishReturnCode::FATAL_ERROR;
-        case HTTPResponseCode::FORBIDDEN:
+        case HTTPResponseCode::CLIENT_ERROR_FORBIDDEN:
             ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "authenticationFailed"));
             setCapabilitiesState(
                 CapabilitiesObserverInterface::State::FATAL_ERROR, CapabilitiesObserverInterface::Error::FORBIDDEN);
             m_authDelegate->onAuthFailure(authToken);
             return CapabilitiesDelegate::CapabilitiesPublishReturnCode::FATAL_ERROR;
-        case HTTPResponseCode::SERVER_INTERNAL_ERROR:
+        case HTTPResponseCode::SERVER_ERROR_INTERNAL:
             ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "internalServiceError"));
             setCapabilitiesState(
                 CapabilitiesObserverInterface::State::RETRIABLE_ERROR,

@@ -27,6 +27,7 @@ namespace utils {
 namespace libcurlUtils {
 
 using namespace avsCommon::utils::http2;
+using namespace avsCommon::utils::libcurlUtils;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("LibcurlHTTP2Connection");

@@ -19,8 +19,8 @@
 #include <cstring>
 #include <vector>
 
+#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include <AVSCommon/Utils/LibcurlUtils/CallbackData.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 namespace alexaClientSDK {

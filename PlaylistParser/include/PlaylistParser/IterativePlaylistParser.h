@@ -88,7 +88,7 @@ private:
     std::string m_lastUrl;
 
     /// A flag used to abort an ongoing playlist parsing.
-    std::atomic_bool m_abort;
+    std::atomic<bool> m_abort;
 };
 
 }  // namespace playlistParser

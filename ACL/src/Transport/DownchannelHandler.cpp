@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
+#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeResponseDecoder.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "ACL/Transport/DownchannelHandler.h"
@@ -24,6 +24,7 @@
 namespace alexaClientSDK {
 namespace acl {
 
+using namespace avsCommon::utils::http;
 using namespace avsCommon::utils::http2;
 
 /// Downchannel URL
@@ -105,18 +106,23 @@ void DownchannelHandler::onActivity() {
 
 bool DownchannelHandler::onReceiveResponseCode(long responseCode) {
     ACSDK_DEBUG5(LX(__func__).d("responseCode", responseCode));
-    switch (responseCode) {
+    switch (intToHTTPResponseCode(responseCode)) {
         case HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED:
         case HTTPResponseCode::SUCCESS_NO_CONTENT:
-        case HTTPResponseCode::REDIRECTION_START_CODE:
-        case HTTPResponseCode::REDIRECTION_END_CODE:
-        case HTTPResponseCode::BAD_REQUEST:
-        case HTTPResponseCode::SERVER_INTERNAL_ERROR:
+        case HTTPResponseCode::SUCCESS_END_CODE:
+        case HTTPResponseCode::REDIRECTION_MULTIPLE_CHOICES:
+        case HTTPResponseCode::REDIRECTION_MOVED_PERMANENTLY:
+        case HTTPResponseCode::REDIRECTION_FOUND:
+        case HTTPResponseCode::REDIRECTION_SEE_ANOTHER:
+        case HTTPResponseCode::REDIRECTION_TEMPORARY_REDIRECT:
+        case HTTPResponseCode::REDIRECTION_PERMANENT_REDIRECT:
+        case HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST:
+        case HTTPResponseCode::SERVER_ERROR_INTERNAL:
             break;
         case HTTPResponseCode::SUCCESS_OK:
             m_context->onDownchannelConnected();
             break;
-        case HTTPResponseCode::FORBIDDEN:
+        case HTTPResponseCode::CLIENT_ERROR_FORBIDDEN:
             m_context->onForbidden(m_authToken);
             break;
     }

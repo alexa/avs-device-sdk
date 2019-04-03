@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,8 +28,8 @@
 
 #include <ACL/Transport/MessageConsumerInterface.h>
 #include <AVSCommon/Utils/PromiseFuturePair.h>
+#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 
 #include "MockHTTP2Request.h"
 
@@ -133,7 +133,7 @@ public:
      * @param responseCode The HTTP response code to reply to the request. If set to @c
      * HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED, a response code will not be sent.
      */
-    void setResponseToPOSTRequests(HTTPResponseCode responseCode);
+    void setResponseToPOSTRequests(http::HTTPResponseCode responseCode);
 
     /**
      * Retrieve the first HTTP2 request made on the downchannel.
@@ -253,7 +253,7 @@ private:
     PromiseFuturePair<void> m_receivedPauseOnSend;
 
     /// The response code to be replied for every POST request received.
-    HTTPResponseCode m_postResponseCode;
+    http::HTTPResponseCode m_postResponseCode;
 
     /// The maximum number of POST requests in the queue at any given time.
     std::size_t m_maxPostRequestsEnqueued;

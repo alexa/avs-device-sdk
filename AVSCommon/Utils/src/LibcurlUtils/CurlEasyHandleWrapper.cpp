@@ -15,9 +15,9 @@
 
 #include <iostream>
 
+#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include "AVSCommon/Utils/Configuration/ConfigurationNode.h"
 #include <AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
@@ -32,7 +32,7 @@ namespace avsCommon {
 namespace utils {
 namespace libcurlUtils {
 
-using namespace alexaClientSDK::avsCommon::utils;
+using namespace avsCommon::utils::http;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("CurlEasyHandleWrapper");

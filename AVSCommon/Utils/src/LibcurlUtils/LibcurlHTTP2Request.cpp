@@ -13,7 +13,7 @@
  * permissions and limitations under the License.
  */
 
-#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
+#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include "AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2Request.h"
 #include <AVSCommon/Utils/Logger/Logger.h>
 

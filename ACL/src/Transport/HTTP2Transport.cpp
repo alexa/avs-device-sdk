@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
 #include <functional>
 #include <random>
 
+#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeResponseDecoder.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Timing/TimeUtils.h>
 #include <ACL/Transport/PostConnectInterface.h>
@@ -428,7 +428,7 @@ void HTTP2Transport::onForbidden(const std::string& authToken) {
 }
 
 std::shared_ptr<HTTP2RequestInterface> HTTP2Transport::createAndSendRequest(const HTTP2RequestConfig& cfg) {
-    ACSDK_DEBUG5(LX(__func__).d("type", cfg.getRequestType()).d("url", cfg.getUrl()));
+    ACSDK_DEBUG5(LX(__func__).d("type", cfg.getRequestType()).sensitive("url", cfg.getUrl()));
     return m_http2Connection->createAndSendRequest(cfg);
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
 #include <functional>
 #include <unordered_map>
 
+#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeResponseDecoder.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "ACL/Transport/HTTP2Transport.h"
@@ -31,6 +31,7 @@ namespace acl {
 
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils::http;
 using namespace avsCommon::utils::http2;
 
 /// URL to send events to
@@ -246,7 +247,7 @@ bool MessageRequestHandler::onReceiveResponseCode(long responseCode) {
 
     reportMessageRequestAcknowledged();
 
-    if (HTTPResponseCode::FORBIDDEN == responseCode) {
+    if (HTTPResponseCode::CLIENT_ERROR_FORBIDDEN == intToHTTPResponseCode(responseCode)) {
         m_context->onForbidden(m_authToken);
     }
 
@@ -264,7 +265,7 @@ void MessageRequestHandler::onResponseFinished(HTTP2ResponseFinishedStatus statu
     reportMessageRequestAcknowledged();
     reportMessageRequestFinished();
 
-    if (m_responseCode != HTTPResponseCode::SUCCESS_OK && !nonMimeBody.empty()) {
+    if ((intToHTTPResponseCode(m_responseCode) != HTTPResponseCode::SUCCESS_OK) && !nonMimeBody.empty()) {
         m_messageRequest->exceptionReceived(nonMimeBody);
     }
 
@@ -289,9 +290,9 @@ void MessageRequestHandler::onResponseFinished(HTTP2ResponseFinishedStatus statu
         {HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED, MessageRequestObserverInterface::Status::INTERNAL_ERROR},
         {HTTPResponseCode::SUCCESS_OK, MessageRequestObserverInterface::Status::SUCCESS},
         {HTTPResponseCode::SUCCESS_NO_CONTENT, MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT},
-        {HTTPResponseCode::BAD_REQUEST, MessageRequestObserverInterface::Status::BAD_REQUEST},
-        {HTTPResponseCode::FORBIDDEN, MessageRequestObserverInterface::Status::INVALID_AUTH},
-        {HTTPResponseCode::SERVER_INTERNAL_ERROR, MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2}};
+        {HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST, MessageRequestObserverInterface::Status::BAD_REQUEST},
+        {HTTPResponseCode::CLIENT_ERROR_FORBIDDEN, MessageRequestObserverInterface::Status::INVALID_AUTH},
+        {HTTPResponseCode::SERVER_ERROR_INTERNAL, MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2}};
 
     auto result = MessageRequestObserverInterface::Status::INTERNAL_ERROR;
 

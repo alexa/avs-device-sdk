@@ -472,7 +472,7 @@ void SpeechSynthesizer::executePreHandleAfterValidation(std::shared_ptr<SpeakDir
     auto contentIdPosition = urlValue.find(CID_PREFIX);
     if (contentIdPosition != 0) {
         const std::string message("expectedCIDUrlPrefixNotFound");
-        ACSDK_ERROR(LX("executePreHandleFailed").d("reason", message).d("url", urlValue));
+        ACSDK_ERROR(LX("executePreHandleFailed").d("reason", message).sensitive("url", urlValue));
         sendExceptionEncounteredAndReportFailed(
             speakInfo, avsCommon::avs::ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED, message);
         return;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,9 @@
 #include <ostream>
 #include <queue>
 #include <string>
+
+#include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterface.h>
+#include <AVSCommon/Utils/HTTPContent.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -73,9 +76,9 @@ struct EncryptionInfo {
     /**
      * Constructor.
      *
-     * @param _method The encryption method of media.
-     * @param _url The URL for the encryption key to download.
-     * @param _initVector The intilization vector used for encryption.
+     * @param method The encryption method of media.
+     * @param url The URL for the encryption key to download.
+     * @param initVector The intilization vector used for encryption.
      */
     EncryptionInfo(Method method, std::string url, std::string initVector = std::string());
 
@@ -108,7 +111,10 @@ struct PlaylistEntry {
         MEDIA_INFO,
 
         /// Playlist Entry is about media initialization.
-        MEDIA_INIT_INFO
+        MEDIA_INIT_INFO,
+
+        /// Playlist Entry is audio content, not a playlist.
+        AUDIO_CONTENT
     };
 
     /**
@@ -137,6 +143,7 @@ struct PlaylistEntry {
      * @param _type The Type of the entry.
      * @param _byteRange The byte range of the url to download. Default is (0, 0).
      * @param _encryptionInfo The encryption info of the media. Default value is NONE.
+     * @param _contentFetcher Content fetcher related to the entry.
      */
     PlaylistEntry(
         std::string _url,
@@ -144,7 +151,8 @@ struct PlaylistEntry {
         avsCommon::utils::playlistParser::PlaylistParseResult _parseResult,
         Type _type = Type::MEDIA_INFO,
         ByteRange _byteRange = std::make_tuple(0, 0),
-        EncryptionInfo _encryptionInfo = EncryptionInfo());
+        EncryptionInfo _encryptionInfo = EncryptionInfo(),
+        std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> _contentFetcher = nullptr);
 
     /**
      * Returns true if byterange is valid.
@@ -168,10 +176,15 @@ struct PlaylistEntry {
 
     /// EncryptionInfo of the media.
     EncryptionInfo encryptionInfo;
+
+    /// The content fetcher associated with this playlist item. If a content fetcher is set, then it should be
+    /// considered to be safe to use it. Otherwise, a new content fetcher should be created.
+    std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> contentFetcher;
 };
 
 inline PlaylistEntry PlaylistEntry::createErrorEntry(const std::string& url) {
-    return PlaylistEntry(url, std::chrono::milliseconds(-1), PlaylistParseResult::ERROR);
+    return PlaylistEntry(
+        url, std::chrono::milliseconds(-1), PlaylistParseResult::ERROR, Type::MEDIA_INFO, std::make_tuple(0, 0));
 }
 
 inline PlaylistEntry PlaylistEntry::createMediaInitInfo(std::string url, ByteRange byteRange) {
@@ -204,13 +217,15 @@ inline PlaylistEntry::PlaylistEntry(
     avsCommon::utils::playlistParser::PlaylistParseResult _parseResult,
     Type _type,
     ByteRange _byteRange,
-    EncryptionInfo _encryptionInfo) :
+    EncryptionInfo _encryptionInfo,
+    std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> _contentFetcher) :
         type(_type),
         url(_url),
         duration(_duration),
         parseResult(_parseResult),
         byteRange(_byteRange),
-        encryptionInfo(_encryptionInfo) {
+        encryptionInfo(_encryptionInfo),
+        contentFetcher(_contentFetcher) {
 }
 
 }  // namespace playlistParser

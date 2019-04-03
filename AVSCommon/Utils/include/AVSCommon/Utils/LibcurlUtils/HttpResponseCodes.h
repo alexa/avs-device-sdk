@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,14 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LIBCURLUTILS_HTTPRESPONSECODES_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LIBCURLUTILS_HTTPRESPONSECODES_H_
 
+/**
+ * An enum to represent HTTP response codes.
+ *
+ * ATTENTION - This enum has been deprecated and only exists to provide backward compatibility with code that was
+ * designed to work with past versions of the AVS C++ SDK.
+ *
+ * @deprecated Use the @c alexaClientSDK::avsCommon::utils::http::HTTPResponseCode instead.
+ */
 enum HTTPResponseCode {
     /// No HTTP response received.
     HTTP_RESPONSE_CODE_UNDEFINED = 0,

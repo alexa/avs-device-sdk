@@ -38,11 +38,11 @@ static const std::string TAG("UrlContentToAttachmentConverter");
 /// An invalid duration.
 static const std::chrono::milliseconds INVALID_DURATION = std::chrono::milliseconds(-1);
 
-/// Timeout for future ready.
-static const std::chrono::milliseconds WAIT_FOR_FUTURE_READY_TIMEOUT(100);
-
 /// The number of bytes read from the attachment with each read in the read loop.
 static const size_t CHUNK_SIZE(1024);
+
+/// Timeout for polling loops that check activities running on separate threads.
+static const std::chrono::milliseconds WAIT_FOR_ACTIVITY_TIMEOUT{100};
 
 std::shared_ptr<UrlContentToAttachmentConverter> UrlContentToAttachmentConverter::create(
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
@@ -111,9 +111,9 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
     // Download and cache Media Initialization Section for SAMPLE-AES content.
     if (playlistEntry.type == PlaylistEntry::Type::MEDIA_INIT_INFO &&
         encryptionInfo.method == EncryptionInfo::Method::SAMPLE_AES) {
-        m_executor.submit([this, url, headers]() {
+        m_executor.submit([this, url, headers, playlistEntry]() {
             ByteVector mediaInitSection;
-            if (!download(url, headers, &mediaInitSection)) {
+            if (!download(url, headers, &mediaInitSection, playlistEntry.contentFetcher)) {
                 closeStreamWriter();
                 notifyError();
                 return;
@@ -123,6 +123,8 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
             }
         });
         return;
+    } else if (PlaylistEntry::Type::AUDIO_CONTENT == playlistEntry.type) {
+        ACSDK_DEBUG3(LX("foundAudioContent"));
     }
 
     if (!m_startedStreaming) {
@@ -144,6 +146,7 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
     }
     m_startedStreaming = true;
     ACSDK_DEBUG3(LX("onPlaylistEntryParsed").d("status", parseResult));
+    auto contentFetcher = playlistEntry.contentFetcher;
     switch (parseResult) {
         case avsCommon::utils::playlistParser::PlaylistParseResult::ERROR:
             m_executor.submit([this]() {
@@ -153,8 +156,10 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
             });
             break;
         case avsCommon::utils::playlistParser::PlaylistParseResult::FINISHED:
-            m_executor.submit([this, url, headers, encryptionInfo]() {
-                if (!m_streamWriterClosed && !writeDecryptedUrlContentIntoStream(url, headers, encryptionInfo)) {
+            m_executor.submit([this, url, headers, encryptionInfo, contentFetcher]() {
+                ACSDK_DEBUG9(LX("calling writeDecryptedUrlContentIntoStream"));
+                if (!m_streamWriterClosed &&
+                    !writeDecryptedUrlContentIntoStream(url, headers, encryptionInfo, contentFetcher)) {
                     ACSDK_ERROR(LX("writeUrlContentToStreamFailed"));
                     notifyError();
                 }
@@ -163,8 +168,9 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
             });
             break;
         case avsCommon::utils::playlistParser::PlaylistParseResult::STILL_ONGOING:
-            m_executor.submit([this, url, headers, encryptionInfo]() {
-                if (!m_streamWriterClosed && !writeDecryptedUrlContentIntoStream(url, headers, encryptionInfo)) {
+            m_executor.submit([this, url, headers, encryptionInfo, contentFetcher]() {
+                if (!m_streamWriterClosed &&
+                    !writeDecryptedUrlContentIntoStream(url, headers, encryptionInfo, contentFetcher)) {
                     ACSDK_ERROR(LX("writeUrlContentToStreamFailed").d("info", "closingWriter"));
                     closeStreamWriter();
                     notifyError();
@@ -177,6 +183,7 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
 }
 
 void UrlContentToAttachmentConverter::closeStreamWriter() {
+    ACSDK_DEBUG(LX(__func__));
     m_streamWriter->close();
     m_streamWriterClosed = true;
 }
@@ -193,19 +200,20 @@ void UrlContentToAttachmentConverter::notifyError() {
 bool UrlContentToAttachmentConverter::writeDecryptedUrlContentIntoStream(
     std::string url,
     std::vector<std::string> headers,
-    EncryptionInfo encryptionInfo) {
+    EncryptionInfo encryptionInfo,
+    std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> contentFetcher) {
     ACSDK_DEBUG9(LX("writeDecryptedUrlContentIntoStream").d("info", "beginning"));
 
     auto hasValidEncryption = shouldDecrypt(encryptionInfo);
     if (hasValidEncryption) {
         ByteVector content;
-        if (!download(url, headers, &content)) {
+        if (!download(url, headers, &content, contentFetcher)) {
             ACSDK_ERROR(LX("writeDecryptedUrlContentIntoStreamFailed").d("reason", "downloadContentFailed"));
             return false;
         }
 
         ByteVector key;
-        if (!download(encryptionInfo.keyURL, std::vector<std::string>(), &key)) {
+        if (!download(encryptionInfo.keyURL, std::vector<std::string>(), &key, contentFetcher)) {
             ACSDK_ERROR(LX("writeDecryptedUrlContentIntoStreamFailed").d("reason", "downloadEncryptionKeyFailed"));
             return false;
         }
@@ -215,7 +223,7 @@ bool UrlContentToAttachmentConverter::writeDecryptedUrlContentIntoStream(
             return false;
         }
     } else {
-        if (!download(url, headers, m_streamWriter)) {
+        if (!download(url, headers, m_streamWriter, contentFetcher)) {
             ACSDK_ERROR(LX("writeDecryptedUrlContentIntoStreamFailed").d("reason", "downloadFailed"));
             return false;
         }
@@ -232,10 +240,11 @@ bool UrlContentToAttachmentConverter::shouldDecrypt(const EncryptionInfo& encryp
 bool UrlContentToAttachmentConverter::download(
     const std::string& url,
     const std::vector<std::string>& headers,
-    ByteVector* content) {
+    ByteVector* content,
+    std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> contentFetcher) {
     auto stream = std::make_shared<InProcessAttachment>("download:" + url);
     std::shared_ptr<AttachmentWriter> streamWriter = stream->createWriter(WriterPolicy::BLOCKING);
-    if (!download(url, headers, streamWriter)) {
+    if (!download(url, headers, streamWriter, contentFetcher)) {
         ACSDK_ERROR(LX("downloadFailed").d("reason", "downloadToStreamFailed"));
         return false;
     }
@@ -296,36 +305,47 @@ bool UrlContentToAttachmentConverter::readContent(std::shared_ptr<AttachmentRead
 bool UrlContentToAttachmentConverter::download(
     const std::string& url,
     const std::vector<std::string>& headers,
-    std::shared_ptr<AttachmentWriter> streamWriter) {
+    std::shared_ptr<AttachmentWriter> streamWriter,
+    std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> contentFetcher) {
     if (!streamWriter) {
         ACSDK_ERROR(LX("downloadFailed").d("reason", "nullStreamWriter"));
         return false;
     }
 
-    auto contentFetcher = m_contentFetcherFactory->create(url);
-    auto httpContent =
-        contentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY, streamWriter, headers);
-    if (!httpContent) {
-        ACSDK_ERROR(LX("getContentFailed").d("reason", "nullHTTPContentReceived"));
-        return false;
+    std::shared_ptr<HTTPContentFetcherInterface> localContentFetcher;
+
+    if (contentFetcher) {
+        ACSDK_DEBUG9(LX("usingExistingContentFetcher"));
+        localContentFetcher = contentFetcher;
+    } else {
+        ACSDK_DEBUG9(LX("usingNewContentFetcher"));
+
+        localContentFetcher = m_contentFetcherFactory->create(url);
+
+        localContentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
+
+        HTTPContentFetcherInterface::Header header = localContentFetcher->getHeader(&m_shuttingDown);
+
+        if (!header.successful) {
+            return false;
+        }
     }
 
-    do {
+    localContentFetcher->getBody(streamWriter);
+
+    while (localContentFetcher->getState() == HTTPContentFetcherInterface::State::FETCHING_BODY) {
         if (m_shuttingDown) {
             ACSDK_DEBUG9(LX("writeDecryptedUrlContentIntoStream").d("info", "shuttingDown"));
             return true;
         }
-    } while (!httpContent->isReady(WAIT_FOR_FUTURE_READY_TIMEOUT));
-
-    if (!httpContent->isStatusCodeSuccess()) {
-        ACSDK_ERROR(
-            LX("getContentFailed").d("reason", "badHTTPContentReceived").d("statusCode", httpContent->getStatusCode()));
-        return false;
+        std::this_thread::sleep_for(WAIT_FOR_ACTIVITY_TIMEOUT);
     }
+
     return true;
 }
 
 void UrlContentToAttachmentConverter::doShutdown() {
+    ACSDK_DEBUG9(LX(__func__).m("Starting to shutdown"));
     {
         std::lock_guard<std::mutex> lock{m_mutex};
         m_observer.reset();

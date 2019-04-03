@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/PlaylistParser/PlaylistParserObserverInterface.h>
+#include <AVSCommon/Utils/String/StringUtils.h>
 
 #include "PlaylistParser/IterativePlaylistParser.h"
 #include "PlaylistParser/PlaylistUtils.h"
@@ -25,7 +26,9 @@
 namespace alexaClientSDK {
 namespace playlistParser {
 
+using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::playlistParser;
+using namespace avsCommon::utils::string;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("IterativePlaylistParser");
@@ -90,33 +93,29 @@ PlaylistEntry IterativePlaylistParser::next() {
             return PlaylistEntry::createErrorEntry(playlistURL);
         }
 
-        auto httpContent = contentFetcher->getContent(
-            avsCommon::sdkInterfaces::HTTPContentFetcherInterface::FetchOptions::CONTENT_TYPE);
-        if (!httpContent) {
-            ACSDK_ERROR(LX("nextFailed").d("reason", "nullHTTPContentReceived").sensitive("url", playlistURL));
-            return PlaylistEntry::createErrorEntry(playlistURL);
+        contentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
+        auto header = contentFetcher->getHeader(&m_abort);
+        if (m_abort) {
+            ACSDK_DEBUG9(LX("nextFailed").d("info", "aborting"));
+            break;
         }
-        do {
-            if (m_abort) {
-                ACSDK_DEBUG9(LX("nextFailed").d("info", "aborting"));
-                break;
-            }
-        } while (!httpContent->isReady(WAIT_FOR_FUTURE_READY_TIMEOUT));
-        if (!httpContent->isStatusCodeSuccess()) {
+
+        if (!header.successful || !isStatusCodeSuccess(header.responseCode)) {
             ACSDK_ERROR(LX("nextFailed")
                             .d("reason", "badHTTPContentReceived")
-                            .d("statusCode", httpContent->getStatusCode())
+                            .d("statusCode", header.responseCode)
                             .sensitive("url", playlistURL));
             return PlaylistEntry::createErrorEntry(playlistURL);
         }
 
-        std::string contentType = httpContent->getContentType();
-        ACSDK_DEBUG9(LX("contentReceived").d("contentType", contentType).sensitive("url", playlistURL));
-        std::transform(contentType.begin(), contentType.end(), contentType.begin(), ::tolower);
+        ACSDK_DEBUG9(LX("contentReceived").d("contentType", header.contentType).sensitive("url", playlistURL));
+        std::string lowerCaseContentType = stringToLowerCase(header.contentType);
         // Checking the HTML content type to see if the URL is a playlist.
-        if (contentType.find(M3U_CONTENT_TYPE) != std::string::npos) {
+        if (lowerCaseContentType.find(M3U_CONTENT_TYPE) != std::string::npos) {
             std::string playlistContent;
-            if (!getPlaylistContent(m_contentFetcherFactory->create(playlistURL), &playlistContent)) {
+            auto contentFetcher = m_contentFetcherFactory->create(playlistURL);
+            contentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
+            if (!readFromContentFetcher(std::move(contentFetcher), &playlistContent, &m_abort)) {
                 ACSDK_ERROR(LX("nextFailed").d("reason", "failedToRetrieveContent").sensitive("url", playlistURL));
                 return PlaylistEntry::createErrorEntry(playlistURL);
             }
@@ -187,10 +186,12 @@ PlaylistEntry IterativePlaylistParser::next() {
                     m_playQueue.push_front(*reverseIt);
                 }
             }
-        } else if (contentType.find(PLS_CONTENT_TYPE) != std::string::npos) {
+        } else if (lowerCaseContentType.find(PLS_CONTENT_TYPE) != std::string::npos) {
             ACSDK_DEBUG9(LX("isPLSPlaylist").sensitive("url", playlistURL));
             std::string playlistContent;
-            if (!getPlaylistContent(m_contentFetcherFactory->create(playlistURL), &playlistContent)) {
+            auto contentFetcher = m_contentFetcherFactory->create(playlistURL);
+            contentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
+            if (!readFromContentFetcher(std::move(contentFetcher), &playlistContent, &m_abort)) {
                 ACSDK_ERROR(LX("nextFailed").d("reason", "failedToRetrieveContent").sensitive("url", playlistURL));
                 return PlaylistEntry::createErrorEntry(playlistURL);
             }
@@ -213,30 +214,6 @@ PlaylistEntry IterativePlaylistParser::next() {
     }
     ACSDK_DEBUG0(LX("nextFailed").d("reason", "parseAborted"));
     return PlaylistEntry::createErrorEntry("");
-}
-
-bool IterativePlaylistParser::getPlaylistContent(
-    std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> contentFetcher,
-    std::string* content) {
-    if (!contentFetcher) {
-        ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "nullContentFetcher"));
-        return false;
-    }
-
-    auto httpContent =
-        contentFetcher->getContent(avsCommon::sdkInterfaces::HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
-    if (!httpContent) {
-        ACSDK_ERROR(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "nullHTTPContentReceived"));
-        return false;
-    }
-    do {
-        if (m_abort) {
-            ACSDK_DEBUG9(LX("getContentFromPlaylistUrlIntoStringFailed").d("reason", "abortParsing"));
-            return false;
-        }
-    } while (!httpContent->isReady(WAIT_FOR_FUTURE_READY_TIMEOUT));
-
-    return extractPlaylistContent(std::move(httpContent), content);
 }
 
 void IterativePlaylistParser::abort() {

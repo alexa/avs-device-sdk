@@ -15,13 +15,13 @@
 
 #include "TestableHttpPut.h"
 
-#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
+#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 
 namespace alexaClientSDK {
 namespace capabilitiesDelegate {
 namespace test {
 
-using namespace avsCommon::utils::libcurlUtils;
+using namespace avsCommon::utils::http;
 
 TestHttpPut::TestHttpPut() : m_httpResponseCode{HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED} {
 }
