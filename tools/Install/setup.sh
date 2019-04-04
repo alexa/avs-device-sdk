@@ -204,9 +204,16 @@ while true; do
             break;;
         y|Y|yes|YES )
             grep $AUTOSTART_SESSION $AUTOSTART > /dev/null 2>&1
-            if [ $? != 0 ]; then
-                # Append startup script if not already in autostart file
-                echo "@lxterminal -t $AUTOSTART_SESSION --geometry=150x50 -e $STARTUP_SCRIPT" >> $AUTOSTART
+            if [ $? != 0 ]; then #avsrun not present
+                if ! grep "offline_demo" $AUTOSTART ; then #offline_demo not present
+                    # Append startup script if not already in autostart file
+                    echo "@lxterminal -t $AUTOSTART_SESSION --geometry=150x50 -e $STARTUP_SCRIPT" >> $AUTOSTART
+                fi
+            else #avsrun present
+                if grep "offline_demo" $AUTOSTART ; then #offline_demo present
+                    # Remove startup script from autostart file
+                    sed -i '/'"$AUTOSTART_SESSION"'/d' $AUTOSTART
+                fi
             fi
             break;;
     esac
