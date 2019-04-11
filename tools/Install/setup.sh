@@ -212,6 +212,7 @@ while true; do
             else #avsrun present
                 if grep "offline_demo" $AUTOSTART ; then #offline_demo present
                     # Remove startup script from autostart file
+                    echo "Warning: Not adding avsrun in autostart since offline demo is already present. Start AVS by following instructions on offline_demo startup"
                     sed -i '/'"$AUTOSTART_SESSION"'/d' $AUTOSTART
                 fi
             fi
