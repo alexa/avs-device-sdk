@@ -387,16 +387,29 @@ popd > /dev/null
 EOF
 chmod +x "$TEST_SCRIPT"
 
+if [ ! -f $ALIASES ] ; then
+echo "Create .bash_aliases file"
 cat << EOF > "$ALIASES"
-alias avsrun="$BUILD_PATH/SampleApp/src/SampleApp $CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models"
-alias avsunit="$TEST_SCRIPT"
-alias avssetup="$THIS_SCRIPT"
-alias avsauth="$START_AUTH_SCRIPT"
-echo "Available AVS aliases:"
-echo -e "\tavsrun, avsunit, avssetup, avsauth"
-echo "If authentication fails, please check $BUILD_PATH/Integration/AlexaClientSDKConfig.json"
-echo "Remove .bash_aliases and open a new terminal to remove bindings"
 EOF
+fi
+echo "Delete any existing avs aliases and rewrite them"
+sed -i '/avsrun/d' $ALIASES > /dev/null
+sed -i '/avsunit/d' $ALIASES > /dev/null
+sed -i '/avssetup/d' $ALIASES > /dev/null
+sed -i '/avsauth/d' $ALIASES > /dev/null
+sed -i '/AVS/d' $ALIASES > /dev/null
+sed -i '/AlexaClientSDKConfig.json/d' $ALIASES > /dev/null
+sed -i '/Remove/d' $ALIASES > /dev/null
+
+echo "alias avsrun="$BUILD_PATH/SampleApp/src/SampleApp $CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models"" >> $ALIASES
+echo "alias avsunit="$TEST_SCRIPT"" >> $ALIASES
+echo "alias avssetup="$THIS_SCRIPT"" >> $ALIASES
+echo "alias avsauth="$START_AUTH_SCRIPT"" >> $ALIASES
+echo "echo "Available AVS aliases:"" >> $ALIASES
+echo "echo -e "\tavsrun, avsunit, avssetup, avsauth"" >> $ALIASES
+echo "echo "If authentication fails, please check $BUILD_PATH/Integration/AlexaClientSDKConfig.json"" >> $ALIASES
+echo "echo "Remove .bash_aliases and open a new terminal to remove bindings"" >> $ALIASES
+
 
 echo
 echo "==============> AUTHENTICATION =============="
