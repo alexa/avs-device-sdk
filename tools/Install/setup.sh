@@ -205,14 +205,14 @@ while true; do
         y|Y|yes|YES )
             grep $AUTOSTART_SESSION $AUTOSTART > /dev/null 2>&1
             if [ $? != 0 ]; then #avsrun not present
-                if ! grep "offline_demo" $AUTOSTART ; then #offline_demo not present
+                if ! grep "vocalfusion_3510_sales_demo" $AUTOSTART ; then #vocalfusion_3510_sales_demo not present
                     # Append startup script if not already in autostart file
                     echo "@lxterminal -t $AUTOSTART_SESSION --geometry=150x50 -e $STARTUP_SCRIPT" >> $AUTOSTART
                 fi
             else #avsrun present
-                if grep "offline_demo" $AUTOSTART ; then #offline_demo present
+                if grep "vocalfusion_3510_sales_demo" $AUTOSTART ; then #vocalfusion_3510_sales_demo present
                     # Remove startup script from autostart file
-                    echo "Warning: Not adding avsrun in autostart since offline demo is already present. Start AVS by following instructions on offline_demo startup"
+                    echo "Warning: Not adding avsrun in autostart since offline demo is already present. Start AVS by following instructions on vocalfusion_3510_sales_demo startup"
                     sed -i '/'"$AUTOSTART_SESSION"'/d' $AUTOSTART
                 fi
             fi
@@ -387,16 +387,29 @@ popd > /dev/null
 EOF
 chmod +x "$TEST_SCRIPT"
 
+if [ ! -f $ALIASES ] ; then
+echo "Create .bash_aliases file"
 cat << EOF > "$ALIASES"
-alias avsrun="$BUILD_PATH/SampleApp/src/SampleApp $CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models"
-alias avsunit="$TEST_SCRIPT"
-alias avssetup="$THIS_SCRIPT"
-alias avsauth="$START_AUTH_SCRIPT"
-echo "Available AVS aliases:"
-echo -e "\tavsrun, avsunit, avssetup, avsauth"
-echo "If authentication fails, please check $BUILD_PATH/Integration/AlexaClientSDKConfig.json"
-echo "Remove .bash_aliases and open a new terminal to remove bindings"
 EOF
+fi
+echo "Delete any existing avs aliases and rewrite them"
+sed -i '/avsrun/d' $ALIASES > /dev/null
+sed -i '/avsunit/d' $ALIASES > /dev/null
+sed -i '/avssetup/d' $ALIASES > /dev/null
+sed -i '/avsauth/d' $ALIASES > /dev/null
+sed -i '/AVS/d' $ALIASES > /dev/null
+sed -i '/AlexaClientSDKConfig.json/d' $ALIASES > /dev/null
+sed -i '/Remove/d' $ALIASES > /dev/null
+
+echo "alias avsrun="$BUILD_PATH/SampleApp/src/SampleApp $CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models"" >> $ALIASES
+echo "alias avsunit="$TEST_SCRIPT"" >> $ALIASES
+echo "alias avssetup="$THIS_SCRIPT"" >> $ALIASES
+echo "alias avsauth="$START_AUTH_SCRIPT"" >> $ALIASES
+echo "echo "Available AVS aliases:"" >> $ALIASES
+echo "echo -e "avsrun, avsunit, avssetup, avsauth"" >> $ALIASES
+echo "echo "If authentication fails, please check $BUILD_PATH/Integration/AlexaClientSDKConfig.json"" >> $ALIASES
+echo "echo "Remove .bash_aliases and open a new terminal to remove bindings"" >> $ALIASES
+
 
 echo
 echo "==============> AUTHENTICATION =============="
