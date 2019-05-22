@@ -1,7 +1,7 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h">
-<area shape="rect" id="node2" href="$_console_logger_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/AVSCommon/Utils/src\l/Logger/ConsoleLogger.cpp" alt="" coords="5,119,191,184"/>
-<area shape="rect" id="node3" href="$_logger_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/AVSCommon/Utils/src\l/Logger/Logger.cpp" alt="" coords="214,119,395,184"/>
-<area shape="rect" id="node4" href="$_thread_moniker_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/AVSCommon/Utils/src\l/Logger/ThreadMoniker.cpp" alt="" coords="419,119,603,184"/>
-<area shape="rect" id="node5" href="$_task_thread_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/AVSCommon/Utils/src\l/TaskThread.cpp" alt="" coords="627,119,808,184"/>
-<area shape="rect" id="node6" href="$_task_thread_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/AVSCommon/Utils/test\l/TaskThreadTest.cpp" alt="" coords="832,119,1017,184"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h">
+<area shape="rect" id="node2" href="$_console_logger_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Logger/ConsoleLogger.cpp" alt="" coords="5,119,212,171"/>
+<area shape="rect" id="node3" href="$_logger_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Logger/Logger.cpp" alt="" coords="236,119,395,171"/>
+<area shape="rect" id="node4" href="$_thread_moniker_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Logger/ThreadMoniker.cpp" alt="" coords="419,119,625,171"/>
+<area shape="rect" id="node5" href="$_task_thread_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/TaskThread.cpp" alt="" coords="649,119,808,171"/>
+<area shape="rect" id="node6" href="$_task_thread_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/TaskThreadTest.cpp" alt="" coords="832,119,1001,171"/>
 </map>

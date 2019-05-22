@@ -1,8 +1,8 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/CertifiedSender/test/MessageStorageTest.cpp" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/CertifiedSender/test/MessageStorageTest.cpp">
-<area shape="rect" id="node4" href="$_s_q_lite_message_storage_8h.html" title="CertifiedSender/SQLiteMessage\lStorage.h" alt="" coords="651,119,864,157"/>
-<area shape="rect" id="node19" href="$_file_utils_8h.html" title="AVSCommon/Utils/File\l/FileUtils.h" alt="" coords="1232,205,1388,244"/>
-<area shape="rect" id="node5" href="$_message_storage_interface_8h.html" title="CertifiedSender/MessageStorage\lInterface.h" alt="" coords="939,205,1158,244"/>
-<area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="215,205,429,244"/>
-<area shape="rect" id="node16" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="643,212,864,237"/>
-<area shape="rect" id="node18" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="678,292,904,317"/>
+<map id="/workplace/avs&#45;device&#45;sdk/CertifiedSender/test/MessageStorageTest.cpp" name="/workplace/avs&#45;device&#45;sdk/CertifiedSender/test/MessageStorageTest.cpp">
+<area shape="rect" id="node4" href="$_s_q_lite_message_storage_8h.html" title="CertifiedSender/SQLiteMessage\lStorage.h" alt="" coords="651,105,864,144"/>
+<area shape="rect" id="node19" href="$_file_utils_8h.html" title="AVSCommon/Utils/File\l/FileUtils.h" alt="" coords="1232,192,1388,231"/>
+<area shape="rect" id="node5" href="$_message_storage_interface_8h.html" title="CertifiedSender/MessageStorage\lInterface.h" alt="" coords="939,192,1158,231"/>
+<area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="215,192,429,231"/>
+<area shape="rect" id="node16" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="643,199,864,224"/>
+<area shape="rect" id="node18" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="678,279,904,304"/>
 </map>

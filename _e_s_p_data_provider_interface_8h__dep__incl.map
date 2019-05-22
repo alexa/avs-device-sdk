@@ -1,15 +1,15 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/ESP/include/ESP/ESPDataProviderInterface.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/ESP/include/ESP/ESPDataProviderInterface.h">
-<area shape="rect" id="node2" href="$_dummy_e_s_p_data_provider_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ESP/include/ESP/DummyESPData\lProvider.h" alt="" coords="91,119,349,184"/>
-<area shape="rect" id="node5" href="$_e_s_p_data_provider_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ESP/include/ESP/ESPDataProvider.h" alt="" coords="373,125,645,177"/>
-<area shape="rect" id="node7" href="$_keyword_observer_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="668,119,883,184"/>
-<area shape="rect" id="node13" href="$_interaction_manager_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="1014,345,1220,411"/>
-<area shape="rect" id="node3" href="$_dummy_e_s_p_data_provider_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ESP/src/DummyESPDataProvider.cpp" alt="" coords="5,239,282,291"/>
-<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="428,572,708,624"/>
-<area shape="rect" id="node6" href="$_e_s_p_data_provider_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ESP/src/ESPDataProvider.cpp" alt="" coords="358,239,589,291"/>
-<area shape="rect" id="node8" href="$_interaction_manager_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="664,232,887,297"/>
-<area shape="rect" id="node14" href="$_keyword_observer_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="911,239,1187,291"/>
-<area shape="rect" id="node9" href="$_user_input_manager_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="667,345,885,411"/>
-<area shape="rect" id="node10" href="$_sample_application_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="665,459,884,524"/>
-<area shape="rect" id="node12" href="$_user_input_manager_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/UserInputManager.cpp" alt="" coords="908,465,1187,517"/>
-<area shape="rect" id="node11" href="$main_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="731,572,930,624"/>
+<map id="/workplace/avs&#45;device&#45;sdk/ESP/include/ESP/ESPDataProviderInterface.h" name="/workplace/avs&#45;device&#45;sdk/ESP/include/ESP/ESPDataProviderInterface.h">
+<area shape="rect" id="node2" href="$_dummy_e_s_p_data_provider_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ESP/include/ESP\l/DummyESPDataProvider.h" alt="" coords="227,105,413,157"/>
+<area shape="rect" id="node5" href="$_e_s_p_data_provider_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ESP/include/ESP\l/ESPDataProvider.h" alt="" coords="463,105,616,157"/>
+<area shape="rect" id="node7" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="655,105,870,157"/>
+<area shape="rect" id="node13" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="1014,305,1220,357"/>
+<area shape="rect" id="node3" href="$_dummy_e_s_p_data_provider_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ESP/src/DummyESPDataProvider.cpp" alt="" coords="5,212,282,251"/>
+<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="428,505,708,544"/>
+<area shape="rect" id="node6" href="$_e_s_p_data_provider_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ESP/src/ESPDataProvider.cpp" alt="" coords="358,212,589,251"/>
+<area shape="rect" id="node8" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="664,205,887,257"/>
+<area shape="rect" id="node14" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="911,212,1187,251"/>
+<area shape="rect" id="node9" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="667,305,885,357"/>
+<area shape="rect" id="node10" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="665,405,884,457"/>
+<area shape="rect" id="node12" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="908,405,1110,457"/>
+<area shape="rect" id="node11" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="731,505,930,544"/>
 </map>

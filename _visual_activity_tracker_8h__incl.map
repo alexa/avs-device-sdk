@@ -1,16 +1,16 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AFML/include/AFML/VisualActivityTracker.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AFML/include/AFML/VisualActivityTracker.h">
-<area shape="rect" id="node5" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="1563,205,1755,244"/>
-<area shape="rect" id="node8" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="1381,119,1607,157"/>
-<area shape="rect" id="node10" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1788,205,1978,244"/>
-<area shape="rect" id="node13" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="2064,292,2254,331"/>
-<area shape="rect" id="node16" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1036,205,1223,244"/>
-<area shape="rect" id="node19" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="418,205,612,244"/>
-<area shape="rect" id="node27" href="$_channel_8h.html" title="AFML/Channel.h" alt="" coords="890,212,1012,237"/>
-<area shape="rect" id="node30" href="$_activity_tracker_interface_8h.html" title="AFML/ActivityTrackerInterface.h" alt="" coords="991,125,1202,151"/>
-<area shape="rect" id="node11" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="1793,292,1989,331"/>
-<area shape="rect" id="node14" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1930,379,2159,417"/>
-<area shape="rect" id="node15" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="1557,292,1769,331"/>
-<area shape="rect" id="node25" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="418,292,612,331"/>
-<area shape="rect" id="node28" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="855,292,1047,331"/>
-<area shape="rect" id="node29" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="885,385,1097,411"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AFML/include/AFML/VisualActivityTracker.h" name="/workplace/avs&#45;device&#45;sdk/AFML/include/AFML/VisualActivityTracker.h">
+<area shape="rect" id="node5" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="1563,192,1755,231"/>
+<area shape="rect" id="node8" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="1381,105,1607,144"/>
+<area shape="rect" id="node10" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1788,192,1978,231"/>
+<area shape="rect" id="node13" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="2064,279,2254,317"/>
+<area shape="rect" id="node16" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1036,192,1223,231"/>
+<area shape="rect" id="node19" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="418,192,612,231"/>
+<area shape="rect" id="node27" href="$_channel_8h.html" title="AFML/Channel.h" alt="" coords="890,199,1012,224"/>
+<area shape="rect" id="node30" href="$_activity_tracker_interface_8h.html" title="AFML/ActivityTrackerInterface.h" alt="" coords="991,112,1202,137"/>
+<area shape="rect" id="node11" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="1793,279,1989,317"/>
+<area shape="rect" id="node14" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1930,365,2159,404"/>
+<area shape="rect" id="node15" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="1557,279,1769,317"/>
+<area shape="rect" id="node25" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="418,279,612,317"/>
+<area shape="rect" id="node28" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="855,279,1047,317"/>
+<area shape="rect" id="node29" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="885,372,1097,397"/>
 </map>

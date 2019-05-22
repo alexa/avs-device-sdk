@@ -1,20 +1,20 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/CapabilityAgents/PlaybackController/include/PlaybackController/PlaybackController.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/CapabilityAgents/PlaybackController/include/PlaybackController/PlaybackController.h">
-<area shape="rect" id="node5" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="5,305,198,344"/>
-<area shape="rect" id="node7" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1564,225,1813,251"/>
-<area shape="rect" id="node19" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="1197,219,1423,257"/>
-<area shape="rect" id="node20" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="689,132,880,171"/>
-<area shape="rect" id="node21" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="753,219,949,257"/>
-<area shape="rect" id="node25" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1504,132,1694,171"/>
-<area shape="rect" id="node26" href="$_playback_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackHandlerInterface.h" alt="" coords="1085,132,1276,171"/>
-<area shape="rect" id="node28" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1837,219,2025,257"/>
-<area shape="rect" id="node30" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2495,219,2690,257"/>
-<area shape="rect" id="node38" href="$_playback_command_8h.html" title="PlaybackCommand.h" alt="" coords="973,225,1121,251"/>
-<area shape="rect" id="node12" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1836,305,2037,344"/>
-<area shape="rect" id="node17" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1565,305,1812,344"/>
-<area shape="rect" id="node16" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1786,392,1948,431"/>
-<area shape="rect" id="node22" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="252,219,442,257"/>
-<area shape="rect" id="node23" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="515,305,744,344"/>
-<area shape="rect" id="node24" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="466,219,678,257"/>
-<area shape="rect" id="node27" href="$_playback_buttons_8h.html" title="AVSCommon/AVS/PlaybackButtons.h" alt="" coords="971,312,1216,337"/>
-<area shape="rect" id="node36" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2851,305,3046,344"/>
+<map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/PlaybackController/include/PlaybackController/PlaybackController.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/PlaybackController/include/PlaybackController/PlaybackController.h">
+<area shape="rect" id="node5" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="5,292,198,331"/>
+<area shape="rect" id="node7" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1564,212,1813,237"/>
+<area shape="rect" id="node19" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="1197,205,1423,244"/>
+<area shape="rect" id="node20" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="689,119,880,157"/>
+<area shape="rect" id="node21" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="753,205,949,244"/>
+<area shape="rect" id="node25" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1504,119,1694,157"/>
+<area shape="rect" id="node26" href="$_playback_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackHandlerInterface.h" alt="" coords="1085,119,1276,157"/>
+<area shape="rect" id="node28" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1837,205,2025,244"/>
+<area shape="rect" id="node30" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2495,205,2690,244"/>
+<area shape="rect" id="node38" href="$_playback_command_8h.html" title="PlaybackCommand.h" alt="" coords="973,212,1121,237"/>
+<area shape="rect" id="node12" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1836,292,2037,331"/>
+<area shape="rect" id="node17" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1565,292,1812,331"/>
+<area shape="rect" id="node16" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1786,379,1948,417"/>
+<area shape="rect" id="node22" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="252,205,442,244"/>
+<area shape="rect" id="node23" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="515,292,744,331"/>
+<area shape="rect" id="node24" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="466,205,678,244"/>
+<area shape="rect" id="node27" href="$_playback_buttons_8h.html" title="AVSCommon/AVS/PlaybackButtons.h" alt="" coords="971,299,1216,324"/>
+<area shape="rect" id="node36" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2851,292,3046,331"/>
 </map>

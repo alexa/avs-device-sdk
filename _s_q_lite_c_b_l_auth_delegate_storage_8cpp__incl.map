@@ -1,17 +1,17 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/src/SQLiteCBLAuthDelegateStorage.cpp" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/src/SQLiteCBLAuthDelegateStorage.cpp">
-<area shape="rect" id="node2" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="33,312,259,337"/>
-<area shape="rect" id="node5" href="$_s_q_lite_utils_8h.html" title="SQLiteStorage/SQLiteUtils.h" alt="" coords="194,139,384,164"/>
-<area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1740,219,1954,257"/>
-<area shape="rect" id="node15" href="$_file_utils_8h.html" title="AVSCommon/Utils/File\l/FileUtils.h" alt="" coords="767,132,923,171"/>
-<area shape="rect" id="node16" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1378,132,1554,171"/>
-<area shape="rect" id="node27" href="$_string_utils_8h.html" title="AVSCommon/Utils/String\l/StringUtils.h" alt="" coords="433,305,603,344"/>
-<area shape="rect" id="node28" href="$_s_q_lite_c_b_l_auth_delegate_storage_8h.html" title="CBLAuthDelegate/SQLiteCBLAuth\lDelegateStorage.h" alt="" coords="517,132,743,171"/>
-<area shape="rect" id="node6" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="103,225,325,251"/>
-<area shape="rect" id="node19" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="930,305,1106,344"/>
-<area shape="rect" id="node20" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1202,219,1378,257"/>
-<area shape="rect" id="node25" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="981,219,1178,257"/>
-<area shape="rect" id="node26" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1617,392,1793,431"/>
-<area shape="rect" id="node21" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1202,305,1378,344"/>
-<area shape="rect" id="node23" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1417,392,1593,431"/>
-<area shape="rect" id="node29" href="$_c_b_l_auth_delegate_storage_interface_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lStorageInterface.h" alt="" coords="567,219,805,257"/>
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/src/SQLiteCBLAuthDelegateStorage.cpp" name="/workplace/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/src/SQLiteCBLAuthDelegateStorage.cpp">
+<area shape="rect" id="node2" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="33,299,259,324"/>
+<area shape="rect" id="node5" href="$_s_q_lite_utils_8h.html" title="SQLiteStorage/SQLiteUtils.h" alt="" coords="194,125,384,151"/>
+<area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1740,205,1954,244"/>
+<area shape="rect" id="node15" href="$_file_utils_8h.html" title="AVSCommon/Utils/File\l/FileUtils.h" alt="" coords="767,119,923,157"/>
+<area shape="rect" id="node16" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1378,119,1554,157"/>
+<area shape="rect" id="node27" href="$_string_utils_8h.html" title="AVSCommon/Utils/String\l/StringUtils.h" alt="" coords="433,292,603,331"/>
+<area shape="rect" id="node28" href="$_s_q_lite_c_b_l_auth_delegate_storage_8h.html" title="CBLAuthDelegate/SQLiteCBLAuth\lDelegateStorage.h" alt="" coords="517,119,743,157"/>
+<area shape="rect" id="node6" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="103,212,325,237"/>
+<area shape="rect" id="node19" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="930,292,1106,331"/>
+<area shape="rect" id="node20" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1202,205,1378,244"/>
+<area shape="rect" id="node25" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="981,205,1178,244"/>
+<area shape="rect" id="node26" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1617,379,1793,417"/>
+<area shape="rect" id="node21" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1202,292,1378,331"/>
+<area shape="rect" id="node23" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1417,379,1593,417"/>
+<area shape="rect" id="node29" href="$_c_b_l_auth_delegate_storage_interface_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lStorageInterface.h" alt="" coords="567,205,805,244"/>
 </map>

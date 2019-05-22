@@ -1,8 +1,8 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PostConnectInterface.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PostConnectInterface.h">
-<area shape="rect" id="node3" href="$_post_connect_observer_interface_8h.html" title="ACL/Transport/PostConnect\lObserverInterface.h" alt="" coords="77,119,265,157"/>
-<area shape="rect" id="node4" href="$_post_connect_send_message_interface_8h.html" title="ACL/Transport/PostConnect\lSendMessageInterface.h" alt="" coords="289,119,477,157"/>
-<area shape="rect" id="node5" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="258,205,507,231"/>
-<area shape="rect" id="node11" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="554,279,756,317"/>
-<area shape="rect" id="node16" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="795,279,1042,317"/>
-<area shape="rect" id="node15" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="714,365,876,404"/>
+<map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PostConnectInterface.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PostConnectInterface.h">
+<area shape="rect" id="node3" href="$_post_connect_observer_interface_8h.html" title="ACL/Transport/PostConnect\lObserverInterface.h" alt="" coords="77,105,265,144"/>
+<area shape="rect" id="node4" href="$_post_connect_send_message_interface_8h.html" title="ACL/Transport/PostConnect\lSendMessageInterface.h" alt="" coords="289,105,477,144"/>
+<area shape="rect" id="node5" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="258,192,507,217"/>
+<area shape="rect" id="node11" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="554,265,756,304"/>
+<area shape="rect" id="node16" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="795,265,1042,304"/>
+<area shape="rect" id="node15" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="714,352,876,391"/>
 </map>

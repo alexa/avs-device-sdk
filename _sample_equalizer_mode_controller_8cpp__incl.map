@@ -1,19 +1,19 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/SampleApp/src/SampleEqualizerModeController.cpp" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/SampleApp/src/SampleEqualizerModeController.cpp">
-<area shape="rect" id="node4" href="$_sample_equalizer_mode_controller_8h.html" title="SampleApp/SampleEqualizer\lModeController.h" alt="" coords="530,279,725,317"/>
-<area shape="rect" id="node18" href="$_console_printer_8h.html" title="SampleApp/ConsolePrinter.h" alt="" coords="1004,119,1197,144"/>
-<area shape="rect" id="node7" href="$_equalizer_mode_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerModeController\lInterface.h" alt="" coords="375,365,584,417"/>
-<area shape="rect" id="node8" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="402,472,525,497"/>
-<area shape="rect" id="node12" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="193,552,384,591"/>
-<area shape="rect" id="node16" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="5,552,169,591"/>
-<area shape="rect" id="node17" href="$_result_8h.html" title="Result.h" alt="" coords="52,639,122,664"/>
-<area shape="rect" id="node19" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1359,279,1535,317"/>
-<area shape="rect" id="node35" href="$_log_string_formatter_8h.html" title="AVSCommon/Utils/Logger\l/LogStringFormatter.h" alt="" coords="1013,192,1189,231"/>
-<area shape="rect" id="node23" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1698,372,1912,411"/>
-<area shape="rect" id="node27" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1375,465,1551,504"/>
-<area shape="rect" id="node28" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1935,372,2111,411"/>
-<area shape="rect" id="node33" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1426,372,1623,411"/>
-<area shape="rect" id="node34" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1038,552,1214,591"/>
-<area shape="rect" id="node29" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1727,465,1903,504"/>
-<area shape="rect" id="node31" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1727,552,1903,591"/>
-<area shape="rect" id="node36" href="$_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="788,372,962,411"/>
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/src/SampleEqualizerModeController.cpp" name="/workplace/avs&#45;device&#45;sdk/SampleApp/src/SampleEqualizerModeController.cpp">
+<area shape="rect" id="node4" href="$_sample_equalizer_mode_controller_8h.html" title="SampleApp/SampleEqualizer\lModeController.h" alt="" coords="530,265,725,304"/>
+<area shape="rect" id="node18" href="$_console_printer_8h.html" title="SampleApp/ConsolePrinter.h" alt="" coords="1004,105,1197,131"/>
+<area shape="rect" id="node7" href="$_equalizer_mode_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerModeController\lInterface.h" alt="" coords="375,352,584,404"/>
+<area shape="rect" id="node8" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="402,459,525,484"/>
+<area shape="rect" id="node12" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="193,539,384,577"/>
+<area shape="rect" id="node16" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="5,539,169,577"/>
+<area shape="rect" id="node17" href="$_result_8h.html" title="Result.h" alt="" coords="52,625,122,651"/>
+<area shape="rect" id="node19" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1359,265,1535,304"/>
+<area shape="rect" id="node35" href="$_log_string_formatter_8h.html" title="AVSCommon/Utils/Logger\l/LogStringFormatter.h" alt="" coords="1013,179,1189,217"/>
+<area shape="rect" id="node23" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1698,359,1912,397"/>
+<area shape="rect" id="node27" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1375,452,1551,491"/>
+<area shape="rect" id="node28" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1935,359,2111,397"/>
+<area shape="rect" id="node33" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1426,359,1623,397"/>
+<area shape="rect" id="node34" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1038,539,1214,577"/>
+<area shape="rect" id="node29" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1727,452,1903,491"/>
+<area shape="rect" id="node31" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1727,539,1903,577"/>
+<area shape="rect" id="node36" href="$_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="788,359,962,397"/>
 </map>

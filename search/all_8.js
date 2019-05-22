@@ -209,5 +209,5 @@ var searchData=
   ['iterativeplaylistparsertest_2ecpp',['IterativePlaylistParserTest.cpp',['../_iterative_playlist_parser_test_8cpp.html',1,'']]],
   ['iv_5fattr',['IV_ATTR',['../namespacealexa_client_s_d_k_1_1playlist_parser.html#a823eac033e683f739d8291936e992949',1,'alexaClientSDK::playlistParser']]],
   ['iv_5fhex_5fstring_5flength',['IV_HEX_STRING_LENGTH',['../namespacealexa_client_s_d_k_1_1playlist_parser.html#ab5ed9058e8d03b5893842bd0a23b0f7b',1,'alexaClientSDK::playlistParser::IV_HEX_STRING_LENGTH()'],['../namespacealexa_client_s_d_k_1_1playlist_parser.html#ab5ed9058e8d03b5893842bd0a23b0f7b',1,'alexaClientSDK::playlistParser::IV_HEX_STRING_LENGTH()']]],
-  ['issue_5ftemplate',['issue_template',['../md___users_dhpp_my_docs_temp_doxygen_avs-device-sdk_issue_template.html',1,'']]]
+  ['issue_5ftemplate',['issue_template',['../md__workplace_avs-device-sdk_issue_template.html',1,'']]]
 ];

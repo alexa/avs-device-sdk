@@ -1,8 +1,8 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/ACL/test/Transport/MockMimeResponseSink.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/ACL/test/Transport/MockMimeResponseSink.h">
-<area shape="rect" id="node2" href="$_mock_mime_response_sink_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/Common/MockMimeResponseSink.cpp" alt="" coords="5,119,264,184"/>
-<area shape="rect" id="node3" href="$_mock_h_t_t_p2_request_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MockHTTP2Request.h" alt="" coords="288,119,464,184"/>
-<area shape="rect" id="node4" href="$_mock_h_t_t_p2_request_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/Common/MockHTTP2Request.cpp" alt="" coords="31,232,262,297"/>
-<area shape="rect" id="node5" href="$_mock_h_t_t_p2_connection_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MockHTTP2Connection.h" alt="" coords="287,232,465,297"/>
-<area shape="rect" id="node7" href="$_h_t_t_p2_transport_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="414,345,591,411"/>
-<area shape="rect" id="node6" href="$_mock_h_t_t_p2_connection_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/Common/MockHTTP2Connection.cpp" alt="" coords="140,345,390,411"/>
+<map id="/workplace/avs&#45;device&#45;sdk/ACL/test/Transport/MockMimeResponseSink.h" name="/workplace/avs&#45;device&#45;sdk/ACL/test/Transport/MockMimeResponseSink.h">
+<area shape="rect" id="node2" href="$_mock_mime_response_sink_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/Common/MockMimeResponseSink.cpp" alt="" coords="5,105,264,157"/>
+<area shape="rect" id="node3" href="$_mock_h_t_t_p2_request_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MockHTTP2Request.h" alt="" coords="288,105,450,157"/>
+<area shape="rect" id="node4" href="$_mock_h_t_t_p2_request_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/Common/MockHTTP2Request.cpp" alt="" coords="24,205,256,257"/>
+<area shape="rect" id="node5" href="$_mock_h_t_t_p2_connection_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MockHTTP2Connection.h" alt="" coords="280,205,458,257"/>
+<area shape="rect" id="node7" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="409,305,583,357"/>
+<area shape="rect" id="node6" href="$_mock_h_t_t_p2_connection_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/Common/MockHTTP2Connection.cpp" alt="" coords="135,305,385,357"/>
 </map>

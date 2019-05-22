@@ -1,11 +1,11 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PingHandler.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PingHandler.h">
-<area shape="rect" id="node2" href="$_h_t_t_p2_transport_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/include/ACL/Transport\l/HTTP2Transport.h" alt="" coords="705,119,917,184"/>
-<area shape="rect" id="node5" href="$_h_t_t_p2_transport_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2Transport.cpp" alt="" coords="5,232,182,297"/>
-<area shape="rect" id="node8" href="$_ping_handler_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PingHandler.cpp" alt="" coords="1472,232,1648,297"/>
-<area shape="rect" id="node3" href="$_downchannel_handler_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/DownchannelHandler.cpp" alt="" coords="205,232,382,297"/>
-<area shape="rect" id="node4" href="$_exchange_handler_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/ExchangeHandler.cpp" alt="" coords="405,232,582,297"/>
-<area shape="rect" id="node6" href="$_h_t_t_p2_transport_factory_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2TransportFactory.cpp" alt="" coords="605,232,798,297"/>
-<area shape="rect" id="node7" href="$_message_request_handler_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRequestHandler.cpp" alt="" coords="821,232,1021,297"/>
-<area shape="rect" id="node9" href="$_post_connect_synchronizer_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PostConnectSynchronizer.cpp" alt="" coords="1045,232,1249,297"/>
-<area shape="rect" id="node10" href="$_h_t_t_p2_transport_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="1272,232,1448,297"/>
+<map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PingHandler.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PingHandler.h">
+<area shape="rect" id="node2" href="$_h_t_t_p2_transport_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2Transport.h" alt="" coords="679,105,874,157"/>
+<area shape="rect" id="node5" href="$_h_t_t_p2_transport_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2Transport.cpp" alt="" coords="5,205,163,257"/>
+<area shape="rect" id="node8" href="$_ping_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PingHandler.cpp" alt="" coords="1435,205,1593,257"/>
+<area shape="rect" id="node3" href="$_downchannel_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/DownchannelHandler.cpp" alt="" coords="188,205,365,257"/>
+<area shape="rect" id="node4" href="$_exchange_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/ExchangeHandler.cpp" alt="" coords="389,205,547,257"/>
+<area shape="rect" id="node6" href="$_h_t_t_p2_transport_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2TransportFactory.cpp" alt="" coords="571,205,763,257"/>
+<area shape="rect" id="node7" href="$_message_request_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRequestHandler.cpp" alt="" coords="787,205,987,257"/>
+<area shape="rect" id="node9" href="$_post_connect_synchronizer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PostConnectSynchronizer.cpp" alt="" coords="1010,205,1214,257"/>
+<area shape="rect" id="node10" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="1238,205,1411,257"/>
 </map>

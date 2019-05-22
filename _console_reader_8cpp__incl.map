@@ -1,14 +1,14 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/SampleApp/src/ConsoleReader.cpp" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/SampleApp/src/ConsoleReader.cpp">
-<area shape="rect" id="node3" href="$_console_printer_8h.html" title="SampleApp/ConsolePrinter.h" alt="" coords="1100,105,1293,131"/>
-<area shape="rect" id="node26" href="$_console_reader_8h.html" title="SampleApp/ConsoleReader.h" alt="" coords="1432,272,1629,297"/>
-<area shape="rect" id="node6" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="876,265,1052,304"/>
-<area shape="rect" id="node23" href="$_log_string_formatter_8h.html" title="AVSCommon/Utils/Logger\l/LogStringFormatter.h" alt="" coords="1046,179,1222,217"/>
-<area shape="rect" id="node11" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="333,352,547,391"/>
-<area shape="rect" id="node15" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="960,439,1136,477"/>
-<area shape="rect" id="node16" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="571,352,747,391"/>
-<area shape="rect" id="node21" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="822,352,1019,391"/>
-<area shape="rect" id="node22" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="227,525,403,564"/>
-<area shape="rect" id="node17" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="566,439,742,477"/>
-<area shape="rect" id="node19" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="478,525,654,564"/>
-<area shape="rect" id="node24" href="$_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="1769,352,1943,391"/>
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/src/ConsoleReader.cpp" name="/workplace/avs&#45;device&#45;sdk/SampleApp/src/ConsoleReader.cpp">
+<area shape="rect" id="node3" href="$_console_printer_8h.html" title="SampleApp/ConsolePrinter.h" alt="" coords="1100,92,1293,117"/>
+<area shape="rect" id="node26" href="$_console_reader_8h.html" title="SampleApp/ConsoleReader.h" alt="" coords="1432,259,1629,284"/>
+<area shape="rect" id="node6" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="876,252,1052,291"/>
+<area shape="rect" id="node23" href="$_log_string_formatter_8h.html" title="AVSCommon/Utils/Logger\l/LogStringFormatter.h" alt="" coords="1046,165,1222,204"/>
+<area shape="rect" id="node11" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="333,339,547,377"/>
+<area shape="rect" id="node15" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="960,425,1136,464"/>
+<area shape="rect" id="node16" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="571,339,747,377"/>
+<area shape="rect" id="node21" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="822,339,1019,377"/>
+<area shape="rect" id="node22" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="227,512,403,551"/>
+<area shape="rect" id="node17" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="566,425,742,464"/>
+<area shape="rect" id="node19" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="478,512,654,551"/>
+<area shape="rect" id="node24" href="$_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="1769,339,1943,377"/>
 </map>

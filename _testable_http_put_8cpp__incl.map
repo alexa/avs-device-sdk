@@ -1,15 +1,15 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/CapabilitiesDelegate/test/Common/TestableHttpPut.cpp" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/CapabilitiesDelegate/test/Common/TestableHttpPut.cpp">
-<area shape="rect" id="node2" href="$_testable_http_put_8h.html" title="TestableHttpPut.h" alt="" coords="231,299,358,324"/>
-<area shape="rect" id="node7" href="$_http_response_code_8h.html" title="AVSCommon/Utils/HTTP\l/HttpResponseCode.h" alt="" coords="354,119,523,157"/>
-<area shape="rect" id="node5" href="$_http_put_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPutInterface.h" alt="" coords="58,379,257,417"/>
-<area shape="rect" id="node6" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="180,472,308,497"/>
-<area shape="rect" id="node9" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="681,205,857,244"/>
-<area shape="rect" id="node11" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1020,292,1196,331"/>
-<area shape="rect" id="node15" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="857,379,1071,417"/>
-<area shape="rect" id="node19" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="435,465,611,504"/>
-<area shape="rect" id="node20" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1281,379,1457,417"/>
-<area shape="rect" id="node25" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="484,379,681,417"/>
-<area shape="rect" id="node26" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1752,552,1928,591"/>
-<area shape="rect" id="node21" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1455,465,1631,504"/>
-<area shape="rect" id="node23" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1501,552,1677,591"/>
+<map id="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/test/Common/TestableHttpPut.cpp" name="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/test/Common/TestableHttpPut.cpp">
+<area shape="rect" id="node2" href="$_testable_http_put_8h.html" title="TestableHttpPut.h" alt="" coords="231,285,358,311"/>
+<area shape="rect" id="node7" href="$_http_response_code_8h.html" title="AVSCommon/Utils/HTTP\l/HttpResponseCode.h" alt="" coords="354,105,523,144"/>
+<area shape="rect" id="node5" href="$_http_put_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPutInterface.h" alt="" coords="58,365,257,404"/>
+<area shape="rect" id="node6" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="180,459,308,484"/>
+<area shape="rect" id="node9" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="681,192,857,231"/>
+<area shape="rect" id="node11" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1020,279,1196,317"/>
+<area shape="rect" id="node15" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="857,365,1071,404"/>
+<area shape="rect" id="node19" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="435,452,611,491"/>
+<area shape="rect" id="node20" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1281,365,1457,404"/>
+<area shape="rect" id="node25" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="484,365,681,404"/>
+<area shape="rect" id="node26" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1752,539,1928,577"/>
+<area shape="rect" id="node21" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1455,452,1631,491"/>
+<area shape="rect" id="node23" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1501,539,1677,577"/>
 </map>

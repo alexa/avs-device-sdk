@@ -1,18 +1,18 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/CapabilityAgents/AIP/include/AIP/AudioInputProcessor.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/CapabilityAgents/AIP/include/AIP/AudioInputProcessor.h">
-<area shape="rect" id="node2" href="$_default_client_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="304,119,531,197"/>
-<area shape="rect" id="node13" href="$_audio_input_processor_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/CapabilityAgents/AIP\l/src/AudioInputProcessor.cpp" alt="" coords="555,125,750,191"/>
-<area shape="rect" id="node14" href="$_audio_input_processor_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/CapabilityAgents/AIP\l/test/AudioInputProcessorTest.cpp" alt="" coords="774,125,997,191"/>
-<area shape="rect" id="node15" href="$_alerts_integration_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/AlertsIntegration\lTest.cpp" alt="" coords="1022,125,1261,191"/>
-<area shape="rect" id="node16" href="$_audio_input_processor_integration_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/AudioInput\lProcessorIntegrationTest.cpp" alt="" coords="1285,125,1491,191"/>
-<area shape="rect" id="node17" href="$_audio_player_integration_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/AudioPlayer\lIntegrationTest.cpp" alt="" coords="1515,125,1729,191"/>
-<area shape="rect" id="node3" href="$_default_client_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="152,245,380,311"/>
-<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="305,359,528,424"/>
-<area shape="rect" id="node11" href="$_keyword_observer_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="457,245,672,311"/>
-<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="76,472,295,537"/>
-<area shape="rect" id="node10" href="$_interaction_manager_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="318,472,525,537"/>
-<area shape="rect" id="node6" href="$_sample_application_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="5,585,225,651"/>
-<area shape="rect" id="node9" href="$_user_input_manager_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/UserInputManager.cpp" alt="" coords="249,592,528,644"/>
-<area shape="rect" id="node7" href="$main_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="16,699,214,751"/>
-<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="331,699,611,751"/>
-<area shape="rect" id="node12" href="$_keyword_observer_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="603,365,878,417"/>
+<map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/AIP/include/AIP/AudioInputProcessor.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/AIP/include/AIP/AudioInputProcessor.h">
+<area shape="rect" id="node2" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="229,105,457,171"/>
+<area shape="rect" id="node13" href="$_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="481,112,701,164"/>
+<area shape="rect" id="node14" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="725,105,924,171"/>
+<area shape="rect" id="node15" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="948,112,1120,164"/>
+<area shape="rect" id="node16" href="$_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="1144,105,1356,171"/>
+<area shape="rect" id="node17" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="1379,112,1589,164"/>
+<area shape="rect" id="node3" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="77,219,305,271"/>
+<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="230,319,453,371"/>
+<area shape="rect" id="node11" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="382,219,597,271"/>
+<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="6,419,224,471"/>
+<area shape="rect" id="node10" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="248,419,454,471"/>
+<area shape="rect" id="node6" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="5,519,225,571"/>
+<area shape="rect" id="node9" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="249,519,451,571"/>
+<area shape="rect" id="node7" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="16,619,214,657"/>
+<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="294,619,574,657"/>
+<area shape="rect" id="node12" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="528,325,803,364"/>
 </map>

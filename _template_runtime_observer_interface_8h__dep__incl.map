@@ -1,18 +1,18 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h">
-<area shape="rect" id="node2" href="$_default_client_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="323,259,550,337"/>
-<area shape="rect" id="node13" href="$_template_runtime_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/CapabilityAgents/Template\lRuntime/include/TemplateRuntime\l/TemplateRuntime.h" alt="" coords="625,132,849,211"/>
-<area shape="rect" id="node15" href="$_template_runtime_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/CapabilityAgents/Template\lRuntime/test/TemplateRuntimeTest.cpp" alt="" coords="873,265,1126,331"/>
-<area shape="rect" id="node16" href="$_gui_renderer_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/GuiRenderer.h" alt="" coords="611,385,796,451"/>
-<area shape="rect" id="node3" href="$_default_client_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="5,385,233,451"/>
-<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="399,499,622,564"/>
-<area shape="rect" id="node11" href="$_keyword_observer_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="257,385,472,451"/>
-<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="633,612,851,677"/>
-<area shape="rect" id="node10" href="$_interaction_manager_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="403,612,609,677"/>
-<area shape="rect" id="node6" href="$_sample_application_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="760,725,980,791"/>
-<area shape="rect" id="node9" href="$_user_input_manager_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/UserInputManager.cpp" alt="" coords="457,732,736,784"/>
-<area shape="rect" id="node7" href="$main_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="771,839,969,891"/>
-<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="374,839,654,891"/>
-<area shape="rect" id="node12" href="$_keyword_observer_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="48,505,324,557"/>
-<area shape="rect" id="node14" href="$_template_runtime_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/CapabilityAgents/Template\lRuntime/src/TemplateRuntime.cpp" alt="" coords="624,265,849,331"/>
-<area shape="rect" id="node17" href="$_gui_renderer_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/GuiRenderer.cpp" alt="" coords="646,505,891,557"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h">
+<area shape="rect" id="node2" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="323,232,550,297"/>
+<area shape="rect" id="node13" href="$_template_runtime_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/TemplateRuntime/include\l/TemplateRuntime/TemplateRuntime.h" alt="" coords="625,119,872,184"/>
+<area shape="rect" id="node15" href="$_template_runtime_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/TemplateRuntime/test\l/TemplateRuntimeTest.cpp" alt="" coords="857,232,1035,297"/>
+<area shape="rect" id="node16" href="$_gui_renderer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/GuiRenderer.h" alt="" coords="611,345,796,397"/>
+<area shape="rect" id="node3" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="5,345,233,397"/>
+<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="399,445,622,497"/>
+<area shape="rect" id="node11" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="257,345,472,397"/>
+<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="631,545,850,597"/>
+<area shape="rect" id="node10" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="401,545,608,597"/>
+<area shape="rect" id="node6" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="724,645,944,697"/>
+<area shape="rect" id="node9" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="498,645,700,697"/>
+<area shape="rect" id="node7" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="735,745,933,784"/>
+<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="375,745,655,784"/>
+<area shape="rect" id="node12" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="48,452,324,491"/>
+<area shape="rect" id="node14" href="$_template_runtime_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/TemplateRuntime/src/Template\lRuntime.cpp" alt="" coords="625,232,833,297"/>
+<area shape="rect" id="node17" href="$_gui_renderer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/GuiRenderer.cpp" alt="" coords="646,452,891,491"/>
 </map>

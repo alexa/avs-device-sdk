@@ -1,14 +1,14 @@
-<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/CallStateObserverInterface.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/CallStateObserverInterface.h">
-<area shape="rect" id="node2" href="$_call_manager_interface_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/CallManagerInterface.h" alt="" coords="297,132,538,211"/>
-<area shape="rect" id="node3" href="$_default_client_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="304,259,531,337"/>
-<area shape="rect" id="node4" href="$_default_client_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="152,385,380,451"/>
-<area shape="rect" id="node5" href="$_interaction_manager_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="305,499,528,564"/>
-<area shape="rect" id="node12" href="$_keyword_observer_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="457,385,672,451"/>
-<area shape="rect" id="node6" href="$_user_input_manager_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="76,612,295,677"/>
-<area shape="rect" id="node11" href="$_interaction_manager_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="318,612,525,677"/>
-<area shape="rect" id="node7" href="$_sample_application_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="5,725,225,791"/>
-<area shape="rect" id="node10" href="$_user_input_manager_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/UserInputManager.cpp" alt="" coords="249,732,528,784"/>
-<area shape="rect" id="node8" href="$main_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="16,839,214,891"/>
-<area shape="rect" id="node9" href="$_sample_application_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="331,839,611,891"/>
-<area shape="rect" id="node13" href="$_keyword_observer_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="603,505,878,557"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/CallStateObserverInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/CallStateObserverInterface.h">
+<area shape="rect" id="node2" href="$_call_manager_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/CallManagerInterface.h" alt="" coords="223,119,463,184"/>
+<area shape="rect" id="node3" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="229,232,457,297"/>
+<area shape="rect" id="node4" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="77,345,305,397"/>
+<area shape="rect" id="node5" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="230,445,453,497"/>
+<area shape="rect" id="node12" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="382,345,597,397"/>
+<area shape="rect" id="node6" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="6,545,224,597"/>
+<area shape="rect" id="node11" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="248,545,454,597"/>
+<area shape="rect" id="node7" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="5,645,225,697"/>
+<area shape="rect" id="node10" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="249,645,451,697"/>
+<area shape="rect" id="node8" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="16,745,214,784"/>
+<area shape="rect" id="node9" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="294,745,574,784"/>
+<area shape="rect" id="node13" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="528,452,803,491"/>
 </map>
