@@ -116,7 +116,7 @@ protected:
 };
 
 /// Test input controller create succeed.
-TEST_F(FFmpegUrlInputControllerTest, testCreateSucceed) {
+TEST_F(FFmpegUrlInputControllerTest, test_createSucceed) {
     EXPECT_CALL(*m_parser, initializeParsing(_)).WillOnce(Return(true));
     EXPECT_CALL(*m_parser, next()).WillOnce(Return(INVALID_URL_ENTRY));
     auto reader = FFmpegUrlInputController::create(m_parser, PLAYLIST_URL, ZERO_OFFSET, DO_NOT_REPEAT);
@@ -124,26 +124,26 @@ TEST_F(FFmpegUrlInputControllerTest, testCreateSucceed) {
 }
 
 /// Test input controller create with null playlist parser failed.
-TEST_F(FFmpegUrlInputControllerTest, testCreateNullParserFailed) {
+TEST_F(FFmpegUrlInputControllerTest, test_createNullParserFailed) {
     auto reader = FFmpegUrlInputController::create(nullptr, PLAYLIST_URL, ZERO_OFFSET, DO_NOT_REPEAT);
     EXPECT_EQ(reader, nullptr);
 }
 
 /// Test input controller create with empty url failed.
-TEST_F(FFmpegUrlInputControllerTest, testCreateEmptyUrlFailed) {
+TEST_F(FFmpegUrlInputControllerTest, test_createEmptyUrlFailed) {
     auto reader = FFmpegUrlInputController::create(m_parser, "", ZERO_OFFSET, DO_NOT_REPEAT);
     EXPECT_EQ(reader, nullptr);
 }
 
 /// Test input controller create with null playlist parser failed.
-TEST_F(FFmpegUrlInputControllerTest, testCreateInvalidUrlFailed) {
+TEST_F(FFmpegUrlInputControllerTest, test_createInvalidUrlFailed) {
     EXPECT_CALL(*m_parser, initializeParsing(_)).WillOnce(Return(false));
     auto reader = FFmpegUrlInputController::create(m_parser, PLAYLIST_URL, ZERO_OFFSET, DO_NOT_REPEAT);
     EXPECT_EQ(reader, nullptr);
 }
 
 /// Test input controller getContext.
-TEST_F(FFmpegUrlInputControllerTest, testGetContextSucceed) {
+TEST_F(FFmpegUrlInputControllerTest, test_getContextSucceed) {
     PlaylistEntry validEntry = PlaylistEntry(INPUT_FOLDER + MP3_FILE_PATH, DURATION, PlaylistParseResult::FINISHED);
     EXPECT_CALL(*m_parser, initializeParsing(_)).WillOnce(Return(true));
     EXPECT_CALL(*m_parser, next()).WillOnce(Return(validEntry));
@@ -158,7 +158,7 @@ TEST_F(FFmpegUrlInputControllerTest, testGetContextSucceed) {
 }
 
 /// Test input controller getContext with non-zero offset.
-TEST_F(FFmpegUrlInputControllerTest, testGetContextOffsetSucceed) {
+TEST_F(FFmpegUrlInputControllerTest, test_getContextOffsetSucceed) {
     PlaylistEntry validEntry = PlaylistEntry(INPUT_FOLDER + MP3_FILE_PATH, DURATION, PlaylistParseResult::FINISHED);
     EXPECT_CALL(*m_parser, initializeParsing(_)).WillOnce(Return(true));
     EXPECT_CALL(*m_parser, next()).WillOnce(Return(validEntry));
@@ -174,7 +174,7 @@ TEST_F(FFmpegUrlInputControllerTest, testGetContextOffsetSucceed) {
 }
 
 /// Test input controller getContext.
-TEST_F(FFmpegUrlInputControllerTest, testGetContextInvalidUrl) {
+TEST_F(FFmpegUrlInputControllerTest, test_getContextInvalidUrl) {
     EXPECT_CALL(*m_parser, initializeParsing(_)).WillOnce(Return(true));
     EXPECT_CALL(*m_parser, next()).WillOnce(Return(INVALID_URL_ENTRY));
     auto reader = FFmpegUrlInputController::create(m_parser, PLAYLIST_URL, ZERO_OFFSET, DO_NOT_REPEAT);
@@ -186,7 +186,7 @@ TEST_F(FFmpegUrlInputControllerTest, testGetContextInvalidUrl) {
 }
 
 /// Test get context after switching files.
-TEST_F(FFmpegUrlInputControllerTest, testGetContextAfterNext) {
+TEST_F(FFmpegUrlInputControllerTest, test_getContextAfterNext) {
     PlaylistEntry validEntry = PlaylistEntry(INPUT_FOLDER + MP3_FILE_PATH, DURATION, PlaylistParseResult::FINISHED);
 
     // Parser will return INVALID_URL_ENTRY first, then validEntry
@@ -207,7 +207,7 @@ TEST_F(FFmpegUrlInputControllerTest, testGetContextAfterNext) {
 }
 
 /// Test has next when parser isn't done.
-TEST_F(FFmpegUrlInputControllerTest, testHasNext) {
+TEST_F(FFmpegUrlInputControllerTest, test_hasNext) {
     PlaylistEntry validEntry =
         PlaylistEntry(INPUT_FOLDER + MP3_FILE_PATH, DURATION, PlaylistParseResult::STILL_ONGOING);
     EXPECT_CALL(*m_parser, initializeParsing(_)).WillOnce(Return(true));
@@ -219,7 +219,7 @@ TEST_F(FFmpegUrlInputControllerTest, testHasNext) {
 }
 
 /// Test has next after playlist parser is done.
-TEST_F(FFmpegUrlInputControllerTest, testDone) {
+TEST_F(FFmpegUrlInputControllerTest, test_done) {
     PlaylistEntry validEntry = PlaylistEntry(INPUT_FOLDER + MP3_FILE_PATH, DURATION, PlaylistParseResult::FINISHED);
     EXPECT_CALL(*m_parser, initializeParsing(_)).WillOnce(Return(true));
     EXPECT_CALL(*m_parser, next()).WillOnce(Return(validEntry));
@@ -230,7 +230,7 @@ TEST_F(FFmpegUrlInputControllerTest, testDone) {
 }
 
 /// Test parsing playlist with repeat on
-TEST_F(FFmpegUrlInputControllerTest, testPlaylistRepeat) {
+TEST_F(FFmpegUrlInputControllerTest, test_playlistRepeat) {
     bool repeat = true;
     EXPECT_CALL(*m_parser, initializeParsing(TEST_M3U_PLAYLIST_URL))
         .WillOnce(Invoke(m_parser.get(), &MockPlaylistParser::initializeParsingReal))
@@ -262,7 +262,7 @@ TEST_F(FFmpegUrlInputControllerTest, testPlaylistRepeat) {
 }
 
 /// Test parsing media url with repeat on
-TEST_F(FFmpegUrlInputControllerTest, testMediaUrlRepeat) {
+TEST_F(FFmpegUrlInputControllerTest, test_mediaUrlRepeat) {
     bool repeat = true;
     EXPECT_CALL(*m_parser, initializeParsing(TEST_MEDIA_URL))
         .Times(2)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -43,21 +43,21 @@ ReminderAlertTest::ReminderAlertTest() :
         m_reminder{std::make_shared<Reminder>(reminderDefaultFactory, reminderShortFactory)} {
 }
 
-TEST_F(ReminderAlertTest, defaultAudio) {
+TEST_F(ReminderAlertTest, test_defaultAudio) {
     std::ostringstream oss;
     oss << m_reminder->getDefaultAudioFactory()()->rdbuf();
 
     ASSERT_EQ(REMINDER_DEFAULT_DATA, oss.str());
 }
 
-TEST_F(ReminderAlertTest, shortAudio) {
+TEST_F(ReminderAlertTest, test_shortAudio) {
     std::ostringstream oss;
     oss << m_reminder->getShortAudioFactory()()->rdbuf();
 
     ASSERT_EQ(REMINDER_SHORT_DATA, oss.str());
 }
 
-TEST_F(ReminderAlertTest, testGetTypeName) {
+TEST_F(ReminderAlertTest, test_getTypeName) {
     ASSERT_EQ(m_reminder->getTypeName(), Reminder::TYPE_NAME);
 }
 

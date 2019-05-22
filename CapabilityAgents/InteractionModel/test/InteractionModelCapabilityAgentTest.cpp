@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -129,7 +129,7 @@ void InteractionModelCapabilityAgentTest::SetUp() {
 /**
  * Test to verify the @c InteractionModelCapabilityAgent can not be created if directiveSequencer param is null.
  */
-TEST_F(InteractionModelCapabilityAgentTest, createNoDirectiveSequencer) {
+TEST_F(InteractionModelCapabilityAgentTest, test_createNoDirectiveSequencer) {
     m_interactionModelCA = InteractionModelCapabilityAgent::create(nullptr, m_mockExceptionEncounteredSender);
 
     ASSERT_EQ(m_interactionModelCA, nullptr);
@@ -137,7 +137,7 @@ TEST_F(InteractionModelCapabilityAgentTest, createNoDirectiveSequencer) {
 /**
  * Test to verify the @c InteractionModelCapabilityAgent can not be created if exceptionHandler param is null.
  */
-TEST_F(InteractionModelCapabilityAgentTest, createNoExceptionHanlder) {
+TEST_F(InteractionModelCapabilityAgentTest, test_createNoExceptionHanlder) {
     m_interactionModelCA = InteractionModelCapabilityAgent::create(m_mockDirectiveSequencer, nullptr);
 
     ASSERT_EQ(m_interactionModelCA, nullptr);
@@ -146,7 +146,7 @@ TEST_F(InteractionModelCapabilityAgentTest, createNoExceptionHanlder) {
 /**
  * Test to verify if a valid NewDialogRequest directive will set the dialogRequestID in the directive sequencer.
  */
-TEST_F(InteractionModelCapabilityAgentTest, processNewDialogRequestID) {
+TEST_F(InteractionModelCapabilityAgentTest, test_processNewDialogRequestID) {
     // Create a dummy AVSDirective.
     auto directivePair = AVSDirective::create(CORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING, nullptr, "");
     std::shared_ptr<AVSDirective> directive = std::move(directivePair.first);
@@ -158,7 +158,7 @@ TEST_F(InteractionModelCapabilityAgentTest, processNewDialogRequestID) {
 /**
  * Test to verify if interface will ignore null directives
  */
-TEST_F(InteractionModelCapabilityAgentTest, processNullDirective) {
+TEST_F(InteractionModelCapabilityAgentTest, test_processNullDirective) {
     EXPECT_CALL(*m_mockDirectiveSequencer, setDialogRequestId(_)).Times(0);
     m_interactionModelCA->handleDirectiveImmediately(nullptr);
 }
@@ -166,7 +166,7 @@ TEST_F(InteractionModelCapabilityAgentTest, processNullDirective) {
 /**
  * Test to verify if interface will send exceptions when the directive received is invalid
  */
-TEST_F(InteractionModelCapabilityAgentTest, processInvalidDirective) {
+TEST_F(InteractionModelCapabilityAgentTest, test_processInvalidDirective) {
     std::shared_ptr<AVSDirective> directive1 =
         AVSDirective::create(INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_1, nullptr, "").first;
     std::shared_ptr<AVSDirective> directive2 =

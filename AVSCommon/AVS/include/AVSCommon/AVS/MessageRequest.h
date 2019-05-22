@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -137,14 +137,6 @@ public:
      * @param observer The observer to be removed from the set.
      */
     void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageRequestObserverInterface> observer);
-
-    /**
-     * A function to evaluate if the given status reflects receipt of the message by the server.
-     *
-     * @param status The status being queried.
-     * @return Whether the status reflects receipt of the message by the server.
-     */
-    static bool isServerStatus(sdkInterfaces::MessageRequestObserverInterface::Status status);
 
 protected:
     /// Mutex to guard access of m_observers.

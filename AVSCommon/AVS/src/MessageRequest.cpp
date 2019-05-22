@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -117,30 +117,6 @@ void MessageRequest::removeObserver(
 }
 
 using namespace avsCommon::sdkInterfaces;
-
-bool MessageRequest::isServerStatus(MessageRequestObserverInterface::Status status) {
-    switch (status) {
-        case MessageRequestObserverInterface::Status::SUCCESS:
-        case MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT:
-        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2:
-        case MessageRequestObserverInterface::Status::CANCELED:
-        case MessageRequestObserverInterface::Status::THROTTLED:
-        case MessageRequestObserverInterface::Status::BAD_REQUEST:
-        case MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR:
-            return true;
-        case MessageRequestObserverInterface::Status::PENDING:
-        case MessageRequestObserverInterface::Status::NOT_CONNECTED:
-        case MessageRequestObserverInterface::Status::NOT_SYNCHRONIZED:
-        case MessageRequestObserverInterface::Status::TIMEDOUT:
-        case MessageRequestObserverInterface::Status::PROTOCOL_ERROR:
-        case MessageRequestObserverInterface::Status::INTERNAL_ERROR:
-        case MessageRequestObserverInterface::Status::REFUSED:
-        case MessageRequestObserverInterface::Status::INVALID_AUTH:
-            return false;
-    }
-
-    return false;
-}
 
 }  // namespace avs
 }  // namespace avsCommon

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -88,6 +88,16 @@ std::string stringToLowerCase(const std::string& input);
  * @return The converted string in upper case.
  */
 std::string stringToUpperCase(const std::string& input);
+
+/**
+ * Replaces all occurrences of a substring with another string.
+ *
+ * @param str The reference string.
+ * @param from The string to find.
+ * @param to The replacement string.
+ * @return A new string with the replaced substrings.
+ */
+std::string replaceAllSubstring(const std::string& str, const std::string& from, const std::string& to);
 
 }  // namespace string
 }  // namespace utils

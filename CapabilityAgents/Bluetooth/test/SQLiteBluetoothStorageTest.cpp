@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -205,7 +205,7 @@ void SQLiteBluetoothStorageTest::getMacOrUuidHelper(
 }
 
 /// Tests the create function with an invalid root.
-TEST_F(SQLiteBluetoothStorageTest, createInvalidConfigurationRoot) {
+TEST_F(SQLiteBluetoothStorageTest, test_createInvalidConfigurationRoot) {
     ConfigurationNode::uninitialize();
     std::vector<std::shared_ptr<std::istream>> empty;
     ConfigurationNode::initialize(empty);
@@ -214,13 +214,13 @@ TEST_F(SQLiteBluetoothStorageTest, createInvalidConfigurationRoot) {
 }
 
 /// Tests creating a database object.
-TEST_F(SQLiteBluetoothStorageTest, createValidConfigurationRoot) {
+TEST_F(SQLiteBluetoothStorageTest, test_createValidConfigurationRoot) {
     // SQLite allows simultaneous access to the database.
     ASSERT_THAT(SQLiteBluetoothStorage::create(ConfigurationNode::getRoot()), NotNull());
 }
 
 /// Test creating a valid DB. This is implicitly tested in the SetUp() function, but we formally test it here.
-TEST_F(SQLiteBluetoothStorageTest, createDatabaseSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_createDatabaseSucceeds) {
     closeAndDeleteDB();
     m_db = SQLiteBluetoothStorage::create(ConfigurationNode::getRoot());
 
@@ -229,18 +229,18 @@ TEST_F(SQLiteBluetoothStorageTest, createDatabaseSucceeds) {
 }
 
 /// Test that creating an existing DB fails.
-TEST_F(SQLiteBluetoothStorageTest, createExistingDatabaseFails) {
+TEST_F(SQLiteBluetoothStorageTest, test_createExistingDatabaseFails) {
     ASSERT_FALSE(m_db->createDatabase());
 }
 
 /// Test opening an existing database.
-TEST_F(SQLiteBluetoothStorageTest, openExistingDatabaseSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_openExistingDatabaseSucceeds) {
     m_db->close();
     ASSERT_TRUE(m_db->open());
 }
 
 /// Test clearing the table with one row.
-TEST_F(SQLiteBluetoothStorageTest, clearOnOneRowSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_clearOnOneRowSucceeds) {
     ASSERT_TRUE(m_db->insertByMac(TEST_MAC, TEST_UUID));
     ASSERT_TRUE(m_db->clear());
     std::unordered_map<std::string, std::string> rows;
@@ -249,7 +249,7 @@ TEST_F(SQLiteBluetoothStorageTest, clearOnOneRowSucceeds) {
 }
 
 /// Test clearing the table with multiple rows.
-TEST_F(SQLiteBluetoothStorageTest, clearOnMultipleRowsSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_clearOnMultipleRowsSucceeds) {
     ASSERT_TRUE(m_db->insertByMac(TEST_MAC, TEST_UUID));
     ASSERT_TRUE(m_db->insertByMac(TEST_MAC_2, TEST_UUID_2));
     ASSERT_TRUE(m_db->clear());
@@ -259,7 +259,7 @@ TEST_F(SQLiteBluetoothStorageTest, clearOnMultipleRowsSucceeds) {
 }
 
 /// Test clearing the table when it's already empty.
-TEST_F(SQLiteBluetoothStorageTest, clearOnEmptySucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_clearOnEmptySucceeds) {
     ASSERT_TRUE(m_db->clear());
     std::unordered_map<std::string, std::string> rows;
     ASSERT_TRUE(m_db->getUuidToMac(&rows));
@@ -267,67 +267,67 @@ TEST_F(SQLiteBluetoothStorageTest, clearOnEmptySucceeds) {
 }
 
 /// Test getUuid with one row containing UUID.
-TEST_F(SQLiteBluetoothStorageTest, getUuidWithOneSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_getUuidWithOneSucceeds) {
     const std::unordered_map<std::string, std::string> data{{TEST_MAC, TEST_UUID}};
 
     getMacOrUuidHelper(&SQLiteBluetoothStorage::getUuid, TEST_MAC, TEST_UUID, data);
 }
 
 /// Test getUuid with multiple rows, one of which contains the UUID.
-TEST_F(SQLiteBluetoothStorageTest, getUuidWithMultipleSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_getUuidWithMultipleSucceeds) {
     const std::unordered_map<std::string, std::string> data{{TEST_MAC, TEST_UUID}, {TEST_MAC_2, TEST_UUID_2}};
 
     getMacOrUuidHelper(&SQLiteBluetoothStorage::getUuid, TEST_MAC, TEST_UUID, data);
 }
 
 /// Test getUuid with no matching UUID.
-TEST_F(SQLiteBluetoothStorageTest, getUuidNoMatchingFails) {
+TEST_F(SQLiteBluetoothStorageTest, test_getUuidNoMatchingFails) {
     std::string uuid;
     ASSERT_FALSE(m_db->getUuid(TEST_MAC, &uuid));
 }
 
 /// Test getMac with one row containing MAC.
-TEST_F(SQLiteBluetoothStorageTest, getMacWithOneSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_getMacWithOneSucceeds) {
     const std::unordered_map<std::string, std::string> data{{TEST_MAC, TEST_UUID}};
 
     getMacOrUuidHelper(&SQLiteBluetoothStorage::getMac, TEST_UUID, TEST_MAC, data);
 }
 
 /// Test getMac with multiple rows, one of which contains the MAC.
-TEST_F(SQLiteBluetoothStorageTest, getMacWithMultipleSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_getMacWithMultipleSucceeds) {
     const std::unordered_map<std::string, std::string> data{{TEST_MAC, TEST_UUID}, {TEST_MAC_2, TEST_UUID_2}};
 
     getMacOrUuidHelper(&SQLiteBluetoothStorage::getMac, TEST_UUID, TEST_MAC, data);
 }
 
 /// Test getMac with no matching MAC.
-TEST_F(SQLiteBluetoothStorageTest, getMacNoMatchingFails) {
+TEST_F(SQLiteBluetoothStorageTest, test_getMacNoMatchingFails) {
     std::string mac;
     ASSERT_FALSE(m_db->getMac(TEST_UUID, &mac));
 }
 
 /// Test getMacToUuid with one row.
-TEST_F(SQLiteBluetoothStorageTest, getMacToUuidWithOneRowSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_getMacToUuidWithOneRowSucceeds) {
     const std::unordered_map<std::string, std::string> data{{TEST_MAC, TEST_UUID}};
 
     getRowsHelper(&SQLiteBluetoothStorage::getMacToUuid, data, data);
 }
 
 /// Test getMacToUuid with multiple expected.
-TEST_F(SQLiteBluetoothStorageTest, getMacToUuidWithMultipleRowsSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_getMacToUuidWithMultipleRowsSucceeds) {
     const std::unordered_map<std::string, std::string> data{{TEST_MAC, TEST_UUID}, {TEST_MAC_2, TEST_UUID_2}};
 
     getRowsHelper(&SQLiteBluetoothStorage::getMacToUuid, data, data);
 }
 
 /// Test getMacToUuid when empty.
-TEST_F(SQLiteBluetoothStorageTest, getMacToUuidWithEmptySucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_getMacToUuidWithEmptySucceeds) {
     std::unordered_map<std::string, std::string> data;
     getRowsHelper(&SQLiteBluetoothStorage::getMacToUuid, data, data);
 }
 
 /// Test getUuidToMac with one row.
-TEST_F(SQLiteBluetoothStorageTest, getUuidToMacWithOneRowSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_getUuidToMacWithOneRowSucceeds) {
     const std::unordered_map<std::string, std::string> data{{TEST_MAC, TEST_UUID}};
 
     const std::unordered_map<std::string, std::string> expected{{TEST_UUID, TEST_MAC}};
@@ -336,7 +336,7 @@ TEST_F(SQLiteBluetoothStorageTest, getUuidToMacWithOneRowSucceeds) {
 }
 
 /// Test getUuidToMac with multiple expected.
-TEST_F(SQLiteBluetoothStorageTest, getUuidToMacWithMultipleRowsSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_getUuidToMacWithMultipleRowsSucceeds) {
     const std::unordered_map<std::string, std::string> data{{TEST_MAC, TEST_UUID}, {TEST_MAC_2, TEST_UUID_2}};
 
     const std::unordered_map<std::string, std::string> expected{{TEST_UUID, TEST_MAC}, {TEST_UUID_2, TEST_MAC_2}};
@@ -344,23 +344,23 @@ TEST_F(SQLiteBluetoothStorageTest, getUuidToMacWithMultipleRowsSucceeds) {
 }
 
 /// Test getUuidToMac when empty.
-TEST_F(SQLiteBluetoothStorageTest, getUuidToMacWithEmptySucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_getUuidToMacWithEmptySucceeds) {
     std::unordered_map<std::string, std::string> data;
     getRowsHelper(&SQLiteBluetoothStorage::getUuidToMac, data, data);
 }
 
 /// Test getOrderedMac and retrieve the macs in ascending insertion order (oldest first).
-TEST_F(SQLiteBluetoothStorageTest, getOrderedMacAscending) {
+TEST_F(SQLiteBluetoothStorageTest, test_getOrderedMacAscending) {
     getOrderedMacHelper(true);
 }
 
 /// Test getOrderedMac and retrieve the macs in descending insertion order (newest first).
-TEST_F(SQLiteBluetoothStorageTest, getOrderedMacDescending) {
+TEST_F(SQLiteBluetoothStorageTest, test_getOrderedMacDescending) {
     getOrderedMacHelper(false);
 }
 
 /// Test insertByMac succeeds.
-TEST_F(SQLiteBluetoothStorageTest, insertByMacSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_insertByMacSucceeds) {
     const std::unordered_map<std::string, std::string> expected{{TEST_MAC, TEST_UUID}};
 
     ASSERT_TRUE(m_db->insertByMac(TEST_MAC, TEST_UUID));
@@ -371,13 +371,13 @@ TEST_F(SQLiteBluetoothStorageTest, insertByMacSucceeds) {
 }
 
 /// Test insertByMac existing fails.
-TEST_F(SQLiteBluetoothStorageTest, insertByMacDuplicateFails) {
+TEST_F(SQLiteBluetoothStorageTest, test_insertByMacDuplicateFails) {
     ASSERT_TRUE(m_db->insertByMac(TEST_MAC, TEST_UUID));
     ASSERT_FALSE(m_db->insertByMac(TEST_MAC, TEST_UUID, false));
 }
 
 /// Test insertByMac with overwrite succeeds.
-TEST_F(SQLiteBluetoothStorageTest, insertByMacOverwriteSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_insertByMacOverwriteSucceeds) {
     const std::unordered_map<std::string, std::string> expected{{TEST_MAC, TEST_UUID}};
 
     ASSERT_TRUE(m_db->insertByMac(TEST_MAC, TEST_UUID_2));
@@ -389,7 +389,7 @@ TEST_F(SQLiteBluetoothStorageTest, insertByMacOverwriteSucceeds) {
 }
 
 /// Test remove succeeds.
-TEST_F(SQLiteBluetoothStorageTest, removeExistingSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_removeExistingSucceeds) {
     ASSERT_TRUE(m_db->insertByMac(TEST_MAC, TEST_UUID));
     ASSERT_TRUE(m_db->remove(TEST_MAC));
 
@@ -400,7 +400,7 @@ TEST_F(SQLiteBluetoothStorageTest, removeExistingSucceeds) {
 }
 
 /// Test remove on non-existing record succeeds.
-TEST_F(SQLiteBluetoothStorageTest, removeNonExistingSucceeds) {
+TEST_F(SQLiteBluetoothStorageTest, test_removeNonExistingSucceeds) {
     ASSERT_TRUE(m_db->remove(TEST_MAC));
 
     std::unordered_map<std::string, std::string> rows;

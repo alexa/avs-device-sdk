@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -52,20 +52,20 @@ std::shared_ptr<std::stringstream> createStream() {
 }
 
 /// Test decoder input create succeed.
-TEST(FFmpegStreamInputControllerTest, testCreateSucceed) {
+TEST(FFmpegStreamInputControllerTest, test_createSucceed) {
     auto stream = createStream();
     auto reader = FFmpegStreamInputController::create(stream, false);
     EXPECT_NE(reader, nullptr);
 }
 
 /// Test decoder input create with null input failed.
-TEST(FFmpegStreamInputControllerTest, testCreateFailed) {
+TEST(FFmpegStreamInputControllerTest, test_createFailed) {
     auto reader = FFmpegStreamInputController::create(nullptr, false);
     EXPECT_EQ(reader, nullptr);
 }
 
 /// Test read from stream.
-TEST(FFmpegStreamInputControllerTest, testReadSucceed) {
+TEST(FFmpegStreamInputControllerTest, test_readSucceed) {
     auto stream = createStream();
     auto reader = FFmpegStreamInputController::create(stream, false);
     ASSERT_NE(reader, nullptr);
@@ -82,7 +82,7 @@ TEST(FFmpegStreamInputControllerTest, testReadSucceed) {
 }
 
 /// Test read from stream until the end.
-TEST(FFmpegStreamInputControllerTest, testReadEof) {
+TEST(FFmpegStreamInputControllerTest, test_readEof) {
     auto stream = createStream();
     auto reader = FFmpegStreamInputController::create(stream, false);
     ASSERT_NE(reader, nullptr);
@@ -100,7 +100,7 @@ TEST(FFmpegStreamInputControllerTest, testReadEof) {
 }
 
 /// Test read with repeat on from a stream.
-TEST(FFmpegStreamInputControllerTest, testReadRepeat) {
+TEST(FFmpegStreamInputControllerTest, test_readRepeat) {
     auto stream = createStream();
     auto reader = FFmpegStreamInputController::create(stream, true);
     ASSERT_NE(reader, nullptr);

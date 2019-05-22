@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -332,14 +332,14 @@ void PlaybackControllerTest::checkMessageRequestAndReleaseTrigger(
 /**
  * This case tests if @c StateSynchronizer basic create function works properly
  */
-TEST_F(PlaybackControllerTest, createSuccessfully) {
+TEST_F(PlaybackControllerTest, test_createSuccessfully) {
     ASSERT_NE(nullptr, PlaybackController::create(m_mockContextManager, m_mockMessageSender));
 }
 
 /**
  * This case tests if possible @c nullptr parameters passed to @c StateSynchronizer::create are handled properly.
  */
-TEST_F(PlaybackControllerTest, createWithError) {
+TEST_F(PlaybackControllerTest, test_createWithError) {
     ASSERT_EQ(nullptr, PlaybackController::create(m_mockContextManager, nullptr));
     ASSERT_EQ(nullptr, PlaybackController::create(nullptr, m_mockMessageSender));
     ASSERT_EQ(nullptr, PlaybackController::create(nullptr, nullptr));
@@ -348,7 +348,7 @@ TEST_F(PlaybackControllerTest, createWithError) {
 /**
  * This case tests if buttonPressed will send the correct PlaybackButton::PLAY event message.
  */
-TEST_F(PlaybackControllerTest, playButtonPressed) {
+TEST_F(PlaybackControllerTest, test_playButtonPressed) {
     PlaybackControllerTest::verifyButtonPressed(
         [this]() { m_playbackController->onButtonPressed(PlaybackButton::PLAY); }, PLAYBACK_PLAY_NAME);
 }
@@ -356,7 +356,7 @@ TEST_F(PlaybackControllerTest, playButtonPressed) {
 /**
  * This case tests if buttonPressed will send the correct PlaybackButton::PAUSE event message.
  */
-TEST_F(PlaybackControllerTest, pauseButtonPressed) {
+TEST_F(PlaybackControllerTest, test_pauseButtonPressed) {
     ASSERT_NE(nullptr, m_playbackController);
 
     PlaybackControllerTest::verifyButtonPressed(
@@ -366,7 +366,7 @@ TEST_F(PlaybackControllerTest, pauseButtonPressed) {
 /**
  * This case tests if buttonPressed will send the correct PlaybackButton::NEXT event message.
  */
-TEST_F(PlaybackControllerTest, nextButtonPressed) {
+TEST_F(PlaybackControllerTest, test_nextButtonPressed) {
     PlaybackControllerTest::verifyButtonPressed(
         [this]() { m_playbackController->onButtonPressed(PlaybackButton::NEXT); }, PLAYBACK_NEXT_NAME);
 }
@@ -374,7 +374,7 @@ TEST_F(PlaybackControllerTest, nextButtonPressed) {
 /**
  * This case tests if buttonPressed will send the correct PlaybackButton::PREVIOUS event message.
  */
-TEST_F(PlaybackControllerTest, previousButtonPressed) {
+TEST_F(PlaybackControllerTest, test_previousButtonPressed) {
     PlaybackControllerTest::verifyButtonPressed(
         [this]() { m_playbackController->onButtonPressed(PlaybackButton::PREVIOUS); }, PLAYBACK_PREVIOUS_NAME);
 }
@@ -382,7 +382,7 @@ TEST_F(PlaybackControllerTest, previousButtonPressed) {
 /**
  * This case tests if buttonPressed will send the correct PlaybackButton::SKIP_FORWARD event message.
  */
-TEST_F(PlaybackControllerTest, skipForwardButtonPressed) {
+TEST_F(PlaybackControllerTest, test_skipForwardButtonPressed) {
     PlaybackControllerTest::verifyButtonPressed(
         [this]() { m_playbackController->onButtonPressed(PlaybackButton::SKIP_FORWARD); },
         PLAYBACK_BUTTON_NAME,
@@ -392,7 +392,7 @@ TEST_F(PlaybackControllerTest, skipForwardButtonPressed) {
 /**
  * This case tests if buttonPressed will send the correct PlaybackButton::SKIP_BACKWARD event message.
  */
-TEST_F(PlaybackControllerTest, skipBackwardButtonPressed) {
+TEST_F(PlaybackControllerTest, test_skipBackwardButtonPressed) {
     PlaybackControllerTest::verifyButtonPressed(
         [this]() { m_playbackController->onButtonPressed(PlaybackButton::SKIP_BACKWARD); },
         PLAYBACK_BUTTON_NAME,
@@ -402,7 +402,7 @@ TEST_F(PlaybackControllerTest, skipBackwardButtonPressed) {
 /**
  * This case tests if togglePressed will send the correct PlaybackToggle::SHUFFLE event message.
  */
-TEST_F(PlaybackControllerTest, shuffleTogglePressed) {
+TEST_F(PlaybackControllerTest, test_shuffleTogglePressed) {
     PlaybackControllerTest::verifyTogglePressed(
         [this]() { m_playbackController->onTogglePressed(PlaybackToggle::SHUFFLE, true); },
         PLAYBACK_TOGGLE_NAME,
@@ -418,7 +418,7 @@ TEST_F(PlaybackControllerTest, shuffleTogglePressed) {
 /**
  * This case tests if togglePressed will send the correct PlaybackToggle::LOOP event message.
  */
-TEST_F(PlaybackControllerTest, loopTogglePressed) {
+TEST_F(PlaybackControllerTest, test_loopTogglePressed) {
     PlaybackControllerTest::verifyTogglePressed(
         [this]() { m_playbackController->onTogglePressed(PlaybackToggle::LOOP, true); },
         PLAYBACK_TOGGLE_NAME,
@@ -434,7 +434,7 @@ TEST_F(PlaybackControllerTest, loopTogglePressed) {
 /**
  * This case tests if togglePressed will send the correct PlaybackToggle::REPEAT event message.
  */
-TEST_F(PlaybackControllerTest, repeatTogglePressed) {
+TEST_F(PlaybackControllerTest, test_repeatTogglePressed) {
     PlaybackControllerTest::verifyTogglePressed(
         [this]() { m_playbackController->onTogglePressed(PlaybackToggle::REPEAT, true); },
         PLAYBACK_TOGGLE_NAME,
@@ -450,7 +450,7 @@ TEST_F(PlaybackControllerTest, repeatTogglePressed) {
 /**
  * This case tests if togglePressed will send the correct PlaybackToggle::THUMBS_UP event message.
  */
-TEST_F(PlaybackControllerTest, thumbsUpTogglePressed) {
+TEST_F(PlaybackControllerTest, test_thumbsUpTogglePressed) {
     PlaybackControllerTest::verifyTogglePressed(
         [this]() { m_playbackController->onTogglePressed(PlaybackToggle::THUMBS_UP, true); },
         PLAYBACK_TOGGLE_NAME,
@@ -466,7 +466,7 @@ TEST_F(PlaybackControllerTest, thumbsUpTogglePressed) {
 /**
  * This case tests if togglePressed will send the correct PlaybackToggle::THUMBS_DOWN event message.
  */
-TEST_F(PlaybackControllerTest, thumbsDownTogglePressed) {
+TEST_F(PlaybackControllerTest, test_thumbsDownTogglePressed) {
     PlaybackControllerTest::verifyTogglePressed(
         [this]() { m_playbackController->onTogglePressed(PlaybackToggle::THUMBS_DOWN, true); },
         PLAYBACK_TOGGLE_NAME,
@@ -483,7 +483,7 @@ TEST_F(PlaybackControllerTest, thumbsDownTogglePressed) {
  * This case tests if getContext() returns failure, the button on the top of the queue will be dropped and getContext
  * will be called for the next button on the queue.
  */
-TEST_F(PlaybackControllerTest, getContextFailure) {
+TEST_F(PlaybackControllerTest, test_getContextFailure) {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
     EXPECT_CALL(*m_mockContextManager, getContext(_))
@@ -520,7 +520,7 @@ TEST_F(PlaybackControllerTest, getContextFailure) {
  * This case tests if sendMessage() returns failure, an error log should be logged with the button pressed and reason
  * for failure.
  */
-TEST_F(PlaybackControllerTest, sendMessageFailure) {
+TEST_F(PlaybackControllerTest, test_sendMessageFailure) {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
     m_messageStatus = avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::INTERNAL_ERROR;
@@ -543,7 +543,7 @@ TEST_F(PlaybackControllerTest, sendMessageFailure) {
  * This case tests if exceptionReceived() is received, an error log should be logged with with the exception
  * description.
  */
-TEST_F(PlaybackControllerTest, sendMessageException) {
+TEST_F(PlaybackControllerTest, test_sendMessageException) {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
     m_messageStatus = avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::INTERNAL_ERROR;

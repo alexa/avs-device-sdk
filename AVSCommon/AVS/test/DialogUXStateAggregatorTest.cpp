@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -157,12 +157,12 @@ protected:
 };
 
 /// Tests that an observer starts off in the IDLE state.
-TEST_F(DialogUXAggregatorTest, testIdleAtBeginning) {
+TEST_F(DialogUXAggregatorTest, test_idleAtBeginning) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 }
 
 /// Tests that a new observer added receives the current state.
-TEST_F(DialogUXAggregatorTest, testInvalidAtBeginningForMultipleObservers) {
+TEST_F(DialogUXAggregatorTest, test_invalidAtBeginningForMultipleObservers) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->addObserver(m_anotherTestObserver);
@@ -171,7 +171,7 @@ TEST_F(DialogUXAggregatorTest, testInvalidAtBeginningForMultipleObservers) {
 }
 
 /// Tests that the removing observer functionality works properly by asserting no state change on a removed observer.
-TEST_F(DialogUXAggregatorTest, testRemoveObserver) {
+TEST_F(DialogUXAggregatorTest, test_removeObserver) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->addObserver(m_anotherTestObserver);
@@ -184,7 +184,7 @@ TEST_F(DialogUXAggregatorTest, testRemoveObserver) {
 }
 
 /// Tests that multiple callbacks aren't issued if the state shouldn't change.
-TEST_F(DialogUXAggregatorTest, aipIdleLeadsToIdleState) {
+TEST_F(DialogUXAggregatorTest, test_aipIdleLeadsToIdleState) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::IDLE);
@@ -192,7 +192,7 @@ TEST_F(DialogUXAggregatorTest, aipIdleLeadsToIdleState) {
 }
 
 /// Tests that the AIP recognizing state leads to the LISTENING state.
-TEST_F(DialogUXAggregatorTest, aipRecognizeLeadsToListeningState) {
+TEST_F(DialogUXAggregatorTest, test_aipRecognizeLeadsToListeningState) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
@@ -200,7 +200,7 @@ TEST_F(DialogUXAggregatorTest, aipRecognizeLeadsToListeningState) {
 }
 
 /// Tests that the AIP recognizing state leads to the LISTENING state.
-TEST_F(DialogUXAggregatorTest, aipIdleLeadsToIdle) {
+TEST_F(DialogUXAggregatorTest, test_aipIdleLeadsToIdle) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
@@ -211,7 +211,7 @@ TEST_F(DialogUXAggregatorTest, aipIdleLeadsToIdle) {
 }
 
 /// Tests that the AIP expecting speech state leads to the EXPECTING state.
-TEST_F(DialogUXAggregatorTest, aipExpectingSpeechLeadsToListeningState) {
+TEST_F(DialogUXAggregatorTest, test_aipExpectingSpeechLeadsToListeningState) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH);
@@ -219,7 +219,7 @@ TEST_F(DialogUXAggregatorTest, aipExpectingSpeechLeadsToListeningState) {
 }
 
 /// Tests that the AIP busy state leads to the THINKING state.
-TEST_F(DialogUXAggregatorTest, aipBusyLeadsToThinkingState) {
+TEST_F(DialogUXAggregatorTest, test_aipBusyLeadsToThinkingState) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
@@ -227,7 +227,7 @@ TEST_F(DialogUXAggregatorTest, aipBusyLeadsToThinkingState) {
 }
 
 /// Tests that BUSY state goes to IDLE after the specified timeout.
-TEST_F(DialogUXAggregatorTest, busyGoesToIdleAfterTimeout) {
+TEST_F(DialogUXAggregatorTest, test_busyGoesToIdleAfterTimeout) {
     std::shared_ptr<DialogUXStateAggregator> anotherAggregator =
         std::make_shared<DialogUXStateAggregator>(std::chrono::milliseconds(200));
 
@@ -243,7 +243,7 @@ TEST_F(DialogUXAggregatorTest, busyGoesToIdleAfterTimeout) {
 }
 
 /// Tests that the BUSY state remains in BUSY immediately if a message is received.
-TEST_F(DialogUXAggregatorTest, busyThenReceiveRemainsInBusyImmediately) {
+TEST_F(DialogUXAggregatorTest, test_busyThenReceiveRemainsInBusyImmediately) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
@@ -255,7 +255,7 @@ TEST_F(DialogUXAggregatorTest, busyThenReceiveRemainsInBusyImmediately) {
 }
 
 /// Tests that the BUSY state goes to IDLE after a message is received after a short timeout.
-TEST_F(DialogUXAggregatorTest, busyThenReceiveGoesToIdleAfterShortTimeout) {
+TEST_F(DialogUXAggregatorTest, test_busyThenReceiveGoesToIdleAfterShortTimeout) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
@@ -268,7 +268,7 @@ TEST_F(DialogUXAggregatorTest, busyThenReceiveGoesToIdleAfterShortTimeout) {
 }
 
 /// Tests that the BUSY state goes to IDLE after a SpeechSynthesizer speak state is received.
-TEST_F(DialogUXAggregatorTest, busyThenReceiveThenSpeakGoesToSpeak) {
+TEST_F(DialogUXAggregatorTest, test_busyThenReceiveThenSpeakGoesToSpeak) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
@@ -285,7 +285,7 @@ TEST_F(DialogUXAggregatorTest, busyThenReceiveThenSpeakGoesToSpeak) {
  * Tests that the BUSY state goes to SPEAKING but not IDLE after both a message is received and a SpeechSynthesizer
  * speak state is received.
  */
-TEST_F(DialogUXAggregatorTest, busyThenReceiveThenSpeakGoesToSpeakButNotIdle) {
+TEST_F(DialogUXAggregatorTest, test_busyThenReceiveThenSpeakGoesToSpeakButNotIdle) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
@@ -301,7 +301,7 @@ TEST_F(DialogUXAggregatorTest, busyThenReceiveThenSpeakGoesToSpeakButNotIdle) {
 }
 
 /// Tests that both SpeechSynthesizer and AudioInputProcessor finished/idle state leads to the IDLE state.
-TEST_F(DialogUXAggregatorTest, speakingAndRecognizingFinishedGoesToIdle) {
+TEST_F(DialogUXAggregatorTest, test_speakingAndRecognizingFinishedGoesToIdle) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
@@ -320,7 +320,7 @@ TEST_F(DialogUXAggregatorTest, speakingAndRecognizingFinishedGoesToIdle) {
 }
 
 /// Tests that SpeechSynthesizer or AudioInputProcessor non-idle state prevents the IDLE state.
-TEST_F(DialogUXAggregatorTest, nonIdleObservantsPreventsIdle) {
+TEST_F(DialogUXAggregatorTest, test_nonIdleObservantsPreventsIdle) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     // AIP is active, SS is not. Expected: non idle
@@ -344,7 +344,7 @@ TEST_F(DialogUXAggregatorTest, nonIdleObservantsPreventsIdle) {
 }
 
 /// Tests that a SpeechSynthesizer finished state does not go to the IDLE state after a very short timeout.
-TEST_F(DialogUXAggregatorTest, speakingFinishedDoesNotGoesToIdleImmediately) {
+TEST_F(DialogUXAggregatorTest, test_speakingFinishedDoesNotGoesToIdleImmediately) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
@@ -362,7 +362,7 @@ TEST_F(DialogUXAggregatorTest, speakingFinishedDoesNotGoesToIdleImmediately) {
 }
 
 /// Tests that a simple message receive does nothing.
-TEST_F(DialogUXAggregatorTest, simpleReceiveDoesNothing) {
+TEST_F(DialogUXAggregatorTest, test_simpleReceiveDoesNothing) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->receive("", "");
@@ -380,7 +380,7 @@ TEST_F(DialogUXAggregatorTest, simpleReceiveDoesNothing) {
 
 /// Tests that the THINKING state remains in THINKING if SpeechSynthesizer reports GAINING_FOCUS and a new message is
 /// received.
-TEST_F(DialogUXAggregatorTest, thinkingThenReceiveRemainsInThinkingIfSpeechSynthesizerReportsGainingFocus) {
+TEST_F(DialogUXAggregatorTest, test_thinkingThenReceiveRemainsInThinkingIfSpeechSynthesizerReportsGainingFocus) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);

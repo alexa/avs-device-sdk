@@ -153,7 +153,7 @@ void ProgressTimerTest::callOnProgress() {
 }
 
 // Verify that with invalid delay and interval, no progress is reported.
-TEST_F(ProgressTimerTest, testNoDelayOrInterval) {
+TEST_F(ProgressTimerTest, test_noDelayOrInterval) {
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportDelayElapsed()).Times(0);
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportIntervalElapsed()).Times(0);
 
@@ -165,7 +165,7 @@ TEST_F(ProgressTimerTest, testNoDelayOrInterval) {
 }
 
 // Verify that an interval of zero does not trigger progress reports or a crash.
-TEST_F(ProgressTimerTest, testZeroInterval) {
+TEST_F(ProgressTimerTest, test_zeroInterval) {
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportDelayElapsed()).Times(0);
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportIntervalElapsed()).Times(0);
 
@@ -177,7 +177,7 @@ TEST_F(ProgressTimerTest, testZeroInterval) {
 }
 
 // Verify that with a valid delay and invalid interval, a delay notification is generated.
-TEST_F(ProgressTimerTest, testJustDelay) {
+TEST_F(ProgressTimerTest, test_justDelay) {
     auto requestProgress = [this] { callOnProgress(); };
 
     EXPECT_CALL(*(m_mockContext.get()), requestProgress()).WillRepeatedly(Invoke(requestProgress));
@@ -192,7 +192,7 @@ TEST_F(ProgressTimerTest, testJustDelay) {
 }
 
 // Verify that with a invalid delay and a valid interval, interval notifications are generated.
-TEST_F(ProgressTimerTest, testJustInterval) {
+TEST_F(ProgressTimerTest, test_justInterval) {
     auto requestProgress = [this] { callOnProgress(); };
 
     int reportCounter = 0;
@@ -215,7 +215,7 @@ TEST_F(ProgressTimerTest, testJustInterval) {
 }
 
 // Verify that with both a valid delay and interval, both types of notifications are generated.
-TEST_F(ProgressTimerTest, testDelayAndInterval) {
+TEST_F(ProgressTimerTest, test_delayAndInterval) {
     auto requestProgress = [this] { callOnProgress(); };
 
     int reportCounter = 0;
@@ -254,7 +254,7 @@ TEST_F(ProgressTimerTest, testDelayAndInterval) {
 }
 
 // Verify that when paused, a ProgressTimer will not generate notifications.
-TEST_F(ProgressTimerTest, testPause) {
+TEST_F(ProgressTimerTest, test_pause) {
     auto requestProgress = [this] { callOnProgress(); };
 
     std::mutex counterMutex;
@@ -301,7 +301,7 @@ TEST_F(ProgressTimerTest, testPause) {
 }
 
 // Verify that when resumed, a ProgressTimer will not repeat delay progress reports.
-TEST_F(ProgressTimerTest, testResumeDoesNotRepeat) {
+TEST_F(ProgressTimerTest, test_resumeDoesNotRepeat) {
     auto requestProgress = [this] { callOnProgress(); };
 
     EXPECT_CALL(*(m_mockContext.get()), requestProgress()).WillRepeatedly(Invoke(requestProgress));
@@ -320,7 +320,7 @@ TEST_F(ProgressTimerTest, testResumeDoesNotRepeat) {
 }
 
 // Verify that the generated offsets are approximately correct.
-TEST_F(ProgressTimerTest, testOffsets) {
+TEST_F(ProgressTimerTest, testTimer_offsets) {
     auto requestProgress = [this] { callOnProgress(); };
 
     auto verifyDelayOffset = [this]() { verifyOffset(OFFSET_TEST_DELAY, m_stopwatch.getElapsed()); };
@@ -348,7 +348,7 @@ TEST_F(ProgressTimerTest, testOffsets) {
 }
 
 // Verify that when delay and interval coincide, both types of notifications are generated.
-TEST_F(ProgressTimerTest, testDelayAndIntervalCoincide) {
+TEST_F(ProgressTimerTest, test_delayAndIntervalCoincide) {
     auto requestProgress = [this] { callOnProgress(); };
 
     PromiseFuturePair<void> gotReport;

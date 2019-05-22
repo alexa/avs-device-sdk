@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,25 +26,25 @@ namespace test {
 using namespace avsCommon::utils::logger;
 
 /// Test a valid log entry.
-TEST(AndroidLoggerTest, sanityTestOk) {
+TEST(AndroidLoggerTest, test_sanityTestOk) {
     AndroidLogger logger{Level::DEBUG9};
     logger.emit(Level::ERROR, std::chrono::system_clock::now(), "A", "Hello");
 }
 
 /// Test a log entry with null threadMoniker.
-TEST(AndroidLoggerTest, sanityTestNullThreadMoniker) {
+TEST(AndroidLoggerTest, test_sanityTestNullThreadMoniker) {
     AndroidLogger logger{Level::DEBUG9};
     logger.emit(Level::INFO, std::chrono::system_clock::now(), nullptr, "log message");
 }
 
 /// Test a log entry with null text.
-TEST(AndroidLoggerTest, sanityTestNullText) {
+TEST(AndroidLoggerTest, test_sanityTestNullText) {
     AndroidLogger logger{Level::DEBUG9};
     logger.emit(Level::DEBUG0, std::chrono::system_clock::now(), "A", nullptr);
 }
 
 /// Test all levels.
-TEST(AndroidLoggerTest, sanityTestLevels) {
+TEST(AndroidLoggerTest, test_sanityTestLevels) {
     AndroidLogger logger{Level::DEBUG9};
     auto levels = {Level::UNKNOWN,
                    Level::NONE,

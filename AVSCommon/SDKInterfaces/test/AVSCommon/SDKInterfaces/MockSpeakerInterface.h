@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -37,6 +37,9 @@ static const std::string MUTE_STRING("true");
 
 /// Value for unmute.
 static const bool UNMUTE(false);
+
+/// String value for unmute.
+static const std::string UNMUTE_STRING("false");
 
 /// Value for default volume settings.
 static const SpeakerInterface::SpeakerSettings DEFAULT_SETTINGS{AVS_SET_VOLUME_MIN, UNMUTE};

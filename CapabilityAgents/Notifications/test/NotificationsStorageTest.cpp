@@ -131,14 +131,14 @@ void NotificationsStorageTest::checkNotificationIndicatorsEquality(
 /**
  * Test basic construction. Database should not be open.
  */
-TEST_F(NotificationsStorageTest, testConstructionAndDestruction) {
+TEST_F(NotificationsStorageTest, test_constructionAndDestruction) {
     ASSERT_FALSE(isOpen(m_storage));
 }
 
 /**
  * Test database creation.
  */
-TEST_F(NotificationsStorageTest, testDatabaseCreation) {
+TEST_F(NotificationsStorageTest, test_databaseCreation) {
     ASSERT_FALSE(isOpen(m_storage));
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
@@ -147,7 +147,7 @@ TEST_F(NotificationsStorageTest, testDatabaseCreation) {
 /**
  * Test opening and closing a database.
  */
-TEST_F(NotificationsStorageTest, testOpenAndCloseDatabase) {
+TEST_F(NotificationsStorageTest, test_openAndCloseDatabase) {
     ASSERT_FALSE(isOpen(m_storage));
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
@@ -162,7 +162,7 @@ TEST_F(NotificationsStorageTest, testOpenAndCloseDatabase) {
 /**
  * Test enqueueing and dequeueing records in the database.
  */
-TEST_F(NotificationsStorageTest, testDatabaseEnqueueAndDequeue) {
+TEST_F(NotificationsStorageTest, test_databaseEnqueueAndDequeue) {
     NotificationIndicator firstIndicator(true, false, TEST_ASSET_ID1, TEST_ASSET_URL1);
     NotificationIndicator secondIndicator(false, true, TEST_ASSET_ID2, TEST_ASSET_URL2);
 
@@ -196,7 +196,7 @@ TEST_F(NotificationsStorageTest, testDatabaseEnqueueAndDequeue) {
 /**
  * Test setting and getting the IndicatorState
  */
-TEST_F(NotificationsStorageTest, testSettingAndGettingIndicatorState) {
+TEST_F(NotificationsStorageTest, test_settingAndGettingIndicatorState) {
     IndicatorState state;
 
     // should fail to set/get if database is not open for business
@@ -220,7 +220,7 @@ TEST_F(NotificationsStorageTest, testSettingAndGettingIndicatorState) {
 /**
  * Test just clearing the notification indicators table.
  */
-TEST_F(NotificationsStorageTest, testClearingNotificationIndicators) {
+TEST_F(NotificationsStorageTest, test_clearingNotificationIndicators) {
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
 
@@ -238,7 +238,7 @@ TEST_F(NotificationsStorageTest, testClearingNotificationIndicators) {
  * Test that empty database (due to a corruption or crash) results in default indicator state being used
  * (non-undefined).
  */
-TEST_F(NotificationsStorageTest, testDefaultValueForEmptyStorage) {
+TEST_F(NotificationsStorageTest, test_defaultValueForEmptyStorage) {
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
 
@@ -256,7 +256,7 @@ TEST_F(NotificationsStorageTest, testDefaultValueForEmptyStorage) {
  * Test that invalid database value (due to a corruption or crash) results in default indicator state being used
  * (non-undefined).
  */
-TEST_F(NotificationsStorageTest, testDefaultValueForInvalidDBContents) {
+TEST_F(NotificationsStorageTest, test_defaultValueForInvalidDBContents) {
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
 
@@ -288,7 +288,7 @@ TEST_F(NotificationsStorageTest, testDefaultValueForInvalidDBContents) {
 /**
  * Test checking for an empty queue.
  */
-TEST_F(NotificationsStorageTest, testCheckingEmptyQueue) {
+TEST_F(NotificationsStorageTest, test_checkingEmptyQueue) {
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
 
@@ -324,7 +324,7 @@ TEST_F(NotificationsStorageTest, testCheckingEmptyQueue) {
 /**
  * Test persistence across closing and reopening database.
  */
-TEST_F(NotificationsStorageTest, testDatabasePersistence) {
+TEST_F(NotificationsStorageTest, test_databasePersistence) {
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
 
@@ -363,7 +363,7 @@ TEST_F(NotificationsStorageTest, testDatabasePersistence) {
 /**
  * Test that ordering is maintained with multiple queueing/dequeueing.
  */
-TEST_F(NotificationsStorageTest, testQueueOrder) {
+TEST_F(NotificationsStorageTest, test_queueOrder) {
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
 
@@ -401,7 +401,7 @@ TEST_F(NotificationsStorageTest, testQueueOrder) {
 /**
  * Test that peek() functionality works.
  */
-TEST_F(NotificationsStorageTest, testPeek) {
+TEST_F(NotificationsStorageTest, test_peek) {
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
 
@@ -428,7 +428,7 @@ TEST_F(NotificationsStorageTest, testPeek) {
  * Test that queueSize() works correctly.
  */
 
-TEST_F(NotificationsStorageTest, testSize) {
+TEST_F(NotificationsStorageTest, test_size) {
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
 

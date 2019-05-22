@@ -1988,7 +1988,7 @@ void Bluetooth::executeSendMediaControlNextSucceeded() {
 }
 
 void Bluetooth::executeSendMediaControlNextFailed() {
-    executeQueueEventAndRequestContext(MEDIA_CONTROL_NEXT_SUCCEEDED.name, EMPTY_PAYLOAD);
+    executeQueueEventAndRequestContext(MEDIA_CONTROL_NEXT_FAILED.name, EMPTY_PAYLOAD);
 }
 
 void Bluetooth::executeSendMediaControlPreviousSucceeded() {

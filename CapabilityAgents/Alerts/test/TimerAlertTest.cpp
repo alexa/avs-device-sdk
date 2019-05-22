@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -43,21 +43,21 @@ public:
 TimerAlertTest::TimerAlertTest() : m_timer{std::make_shared<Timer>(timerDefaultFactory, timerShortFactory)} {
 }
 
-TEST_F(TimerAlertTest, defaultAudio) {
+TEST_F(TimerAlertTest, test_defaultAudio) {
     std::ostringstream oss;
     oss << m_timer->getDefaultAudioFactory()()->rdbuf();
 
     ASSERT_EQ(TIMER_DEFAULT_DATA, oss.str());
 }
 
-TEST_F(TimerAlertTest, shortAudio) {
+TEST_F(TimerAlertTest, test_shortAudio) {
     std::ostringstream oss;
     oss << m_timer->getShortAudioFactory()()->rdbuf();
 
     ASSERT_EQ(TIMER_SHORT_DATA, oss.str());
 }
 
-TEST_F(TimerAlertTest, testGetTypeName) {
+TEST_F(TimerAlertTest, test_getTypeName) {
     ASSERT_EQ(m_timer->getTypeName(), Timer::TYPE_NAME);
 }
 }  // namespace test

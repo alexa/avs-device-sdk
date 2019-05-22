@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -345,7 +345,7 @@ bool SettingsTest::testChangeSettingSucceeds(const std::string& key, const std::
 /**
  * Test to verify the @c create function of @c Settings class.
  */
-TEST_F(SettingsTest, createTest) {
+TEST_F(SettingsTest, test_create) {
     ASSERT_EQ(
         nullptr,
         m_settingsObject->create(
@@ -358,7 +358,7 @@ TEST_F(SettingsTest, createTest) {
  * Test to verify if by adding a global observer and changing the setting,
  * the global observer is notified of the change. It also verifies that event is being sent in correct JSON format.
  */
-TEST_F(SettingsTest, addGlobalSettingsObserverTest) {
+TEST_F(SettingsTest, test_addGlobalSettingsObserver) {
     std::shared_ptr<MockGlobalSettingsObserver> mockGlobalSettingObserver;
     mockGlobalSettingObserver = std::make_shared<MockGlobalSettingsObserver>();
     m_settingsObject->addGlobalSettingsObserver(mockGlobalSettingObserver);
@@ -370,7 +370,7 @@ TEST_F(SettingsTest, addGlobalSettingsObserverTest) {
  * Test to verify if by removing a global observer and changing the setting,
  * the global observer is not notified of the change. It also verifies that event is being sent in correct JSON format.
  */
-TEST_F(SettingsTest, removeGlobalSettingsObserverTest) {
+TEST_F(SettingsTest, test_removeGlobalSettingsObserver) {
     std::shared_ptr<MockGlobalSettingsObserver> mockGlobalSettingObserver;
     mockGlobalSettingObserver = std::make_shared<MockGlobalSettingsObserver>();
     m_settingsObject->removeGlobalSettingsObserver(mockGlobalSettingObserver);
@@ -383,7 +383,7 @@ TEST_F(SettingsTest, removeGlobalSettingsObserverTest) {
  * i.e. it doesn't exist in the list of @c SETTINGS_ACCEPTED_KEYS, the observer corresponding to it
  * will not be added.
  */
-TEST_F(SettingsTest, addSingleSettingObserverWithInvalidKeyTest) {
+TEST_F(SettingsTest, testSlow_addSingleSettingObserverWithInvalidKeyTest) {
     std::shared_ptr<MockSingleSettingObserver> wakewordObserver;
     wakewordObserver = std::make_shared<MockSingleSettingObserver>();
     m_settingsObject->addSingleSettingObserver("wakeword", wakewordObserver);
@@ -401,7 +401,7 @@ TEST_F(SettingsTest, addSingleSettingObserverWithInvalidKeyTest) {
  * an invalid key even if it is a typo, the observer will not be removed.
  * It also verifies that event is being sent in correct JSON format.
  */
-TEST_F(SettingsTest, removeSingleSettingObserverWithInvalidKeyTest) {
+TEST_F(SettingsTest, test_removeSingleSettingObserverWithInvalidKey) {
     std::shared_ptr<MockSingleSettingObserver> localeObserver;
     localeObserver = std::make_shared<MockSingleSettingObserver>();
     m_settingsObject->addSingleSettingObserver("locale", localeObserver);
@@ -414,7 +414,7 @@ TEST_F(SettingsTest, removeSingleSettingObserverWithInvalidKeyTest) {
  * Test verifies that if an observer is removed with a valid key, the observer gets removed
  * and is not notified when the setting changes. It also verifies that event is being sent in correct JSON format.
  */
-TEST_F(SettingsTest, removeSingleSettingObserverWithCorrectKeyTest) {
+TEST_F(SettingsTest, test_removeSingleSettingObserverWithCorrectKey) {
     std::shared_ptr<MockSingleSettingObserver> localeObserver;
     localeObserver = std::make_shared<MockSingleSettingObserver>();
     m_settingsObject->addSingleSettingObserver("locale", localeObserver);
@@ -426,7 +426,7 @@ TEST_F(SettingsTest, removeSingleSettingObserverWithCorrectKeyTest) {
 /**
  * Test to check if the settings loaded from the database are same as the default settings.
  */
-TEST_F(SettingsTest, defaultSettingsCorrect) {
+TEST_F(SettingsTest, test_defaultSettingsCorrect) {
     std::string DEFAULT_SETTINGS = "defaultAVSClientSettings";
     std::string settings_json = "";
     retrieveValue(SETTINGS_CONFIG_JSON, MESSAGE_SETTINGS_KEY, &settings_json);
@@ -446,7 +446,7 @@ TEST_F(SettingsTest, defaultSettingsCorrect) {
 /**
  * Test to check that @c clearData() removes any setting stored in the database.
  */
-TEST_F(SettingsTest, clearDataTest) {
+TEST_F(SettingsTest, test_clearData) {
     ASSERT_TRUE(testChangeSettingSucceeds("locale", "en-CA"));
     m_settingsObject->clearData();
 
@@ -458,7 +458,7 @@ TEST_F(SettingsTest, clearDataTest) {
 /**
  * Test to check clear database works as expected.
  */
-TEST_F(SettingsTest, clearDatabaseTest) {
+TEST_F(SettingsTest, test_clearDatabase) {
     std::unordered_map<std::string, std::string> tempMap;
     ASSERT_TRUE(m_storage->clearDatabase());
     ASSERT_TRUE(m_storage->load(&tempMap));
@@ -468,7 +468,7 @@ TEST_F(SettingsTest, clearDatabaseTest) {
 /**
  * Test to check the store function of SQLiteSettingStorage class.
  */
-TEST_F(SettingsTest, storeDatabaseTest) {
+TEST_F(SettingsTest, test_storeDatabase) {
     ASSERT_TRUE(m_storage->clearDatabase());
     std::map<std::string, std::string> MapToStore = {{"wakeword", "Alexa"}, {"locale", "en-US"}};
     for (auto& it : MapToStore) {
@@ -483,7 +483,7 @@ TEST_F(SettingsTest, storeDatabaseTest) {
 /**
  * Test to check the modify function of SQLiteSettingStorage class.
  */
-TEST_F(SettingsTest, modifyDatabaseTest) {
+TEST_F(SettingsTest, test_modifyDatabase) {
     ASSERT_TRUE(m_storage->modify("locale", "en-US"));
     ASSERT_FALSE(m_storage->modify("local", "en-GB"));
     ASSERT_TRUE(m_storage->clearDatabase());
@@ -492,7 +492,7 @@ TEST_F(SettingsTest, modifyDatabaseTest) {
 /**
  * Test to check the erase function of SQLiteSettingStorage class.
  */
-TEST_F(SettingsTest, eraseTest) {
+TEST_F(SettingsTest, test_erase) {
     ASSERT_TRUE(m_storage->erase("locale"));
     ASSERT_FALSE(m_storage->settingExists("locale"));
     ASSERT_FALSE(m_storage->erase("local"));
@@ -501,7 +501,7 @@ TEST_F(SettingsTest, eraseTest) {
 /**
  * Test to check the createDatabase function of SQLiteSettingStorage class.
  */
-TEST_F(SettingsTest, createDatabaseTest) {
+TEST_F(SettingsTest, test_createDatabase) {
     m_storage->close();
     ASSERT_FALSE(m_storage->createDatabase());
 }
@@ -509,7 +509,7 @@ TEST_F(SettingsTest, createDatabaseTest) {
 /**
  * Test to check the open and close functions of SQLiteSettingStorage class.
  */
-TEST_F(SettingsTest, openAndCloseDatabaseTest) {
+TEST_F(SettingsTest, test_openAndCloseDatabase) {
     ASSERT_FALSE(m_storage->open());
     ASSERT_TRUE(isOpen(m_storage));
     m_storage->close();

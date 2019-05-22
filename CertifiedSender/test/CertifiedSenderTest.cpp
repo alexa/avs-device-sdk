@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -99,7 +99,7 @@ protected:
 /**
  * Check that @c clearData() method clears the persistent message storage and the current msg queue
  */
-TEST_F(CertifiedSenderTest, clearDataTest) {
+TEST_F(CertifiedSenderTest, test_clearData) {
     EXPECT_CALL(*m_storage, clearDatabase()).Times(1);
     m_certifiedSender->clearData();
 }

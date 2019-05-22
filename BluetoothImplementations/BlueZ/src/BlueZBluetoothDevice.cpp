@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -401,6 +401,8 @@ bool BlueZBluetoothDevice::executeConnect() {
     }
 
     ManagedGError error;
+    // Calling org.bluez.Device1::Connect will attempt to connect as many services as possible, and return when at least
+    // one service is connected.
     m_deviceProxy->callMethod(BLUEZ_DEVICE_METHOD_CONNECT, nullptr, error.toOutputParameter());
 
     if (error.hasError()) {
@@ -602,6 +604,17 @@ void BlueZBluetoothDevice::transitionToState(BlueZDeviceState newState, bool sen
     }
 }
 
+bool BlueZBluetoothDevice::executeIsConnectedToRelevantServices() {
+    ACSDK_DEBUG5(LX(__func__));
+
+    bool isPaired = false;
+    bool isConnected = false;
+    bool relevantServiceDiscovered = getA2DPSink() != nullptr || getA2DPSource() != nullptr;
+
+    return relevantServiceDiscovered && queryDeviceProperty(BLUEZ_DEVICE_PROPERTY_PAIRED, &isPaired) && isPaired &&
+           queryDeviceProperty(BLUEZ_DEVICE_PROPERTY_CONNECTED, &isConnected) && isConnected;
+}
+
 // TODO ACSDK-1398: Refactor this with a proper state machine.
 void BlueZBluetoothDevice::onPropertyChanged(const GVariantMapReader& changesMap) {
     ACSDK_DEBUG5(LX(__func__).d("values", g_variant_print(changesMap.get(), true)));
@@ -627,10 +640,6 @@ void BlueZBluetoothDevice::onPropertyChanged(const GVariantMapReader& changesMap
         }
     }
 
-    // This is used for checking connectedness.
-    bool a2dpSourceAvailable = false;
-    bool a2dpSinkAvailable = false;
-
     /*
      * It's not guaranteed all services will be available at construction time.
      * If any become available at a later time, initialize them.
@@ -641,21 +650,9 @@ void BlueZBluetoothDevice::onPropertyChanged(const GVariantMapReader& changesMap
     if (uuidsVariant.hasValue()) {
         auto uuids = getServiceUuids(uuidsVariant.get());
         initializeServices(uuids);
-
-        a2dpSourceAvailable = (uuids.count(A2DPSourceInterface::UUID) > 0);
-        a2dpSinkAvailable = (uuids.count(A2DPSinkInterface::UUID) > 0);
     }
 
-    m_executor.submit([this,
-                       pairedChanged,
-                       paired,
-                       connectedChanged,
-                       connected,
-                       a2dpSourceAvailable,
-                       a2dpSinkAvailable,
-                       aliasChanged,
-                       aliasStr] {
-
+    m_executor.submit([this, pairedChanged, paired, connectedChanged, connected, aliasChanged, aliasStr] {
         if (aliasChanged) {
             ACSDK_DEBUG5(LX("nameChanged").d("oldName", m_friendlyName).d("newName", aliasStr));
             m_friendlyName = aliasStr;
@@ -667,29 +664,14 @@ void BlueZBluetoothDevice::onPropertyChanged(const GVariantMapReader& changesMap
                     transitionToState(BlueZDeviceState::PAIRED, true);
                     transitionToState(BlueZDeviceState::IDLE, true);
 
-                    /*
-                     * A connect signal doesn't always mean a device is connected by the BluetoothDeviceInterface
-                     * definition. This sequence has been observed:
-                     *
-                     * 1) Pairing (BlueZ sends Connect = true).
-                     * 2) Pair Successful.
-                     * 3) Connect multimedia services.
-                     * 4) Connect multimedia services successful (BlueZ sends Paired = true, UUIDs = [array of
-                     * uuids]).
-                     *
-                     * Thus we will use the combination of Connect, Paired, and the availability of certain UUIDs to
-                     * determine connectedness.
-                     */
-                    bool isConnected = false;
-                    if (queryDeviceProperty(BLUEZ_DEVICE_PROPERTY_CONNECTED, &isConnected) && isConnected &&
-                        (a2dpSourceAvailable || a2dpSinkAvailable)) {
+                    if (executeIsConnectedToRelevantServices()) {
                         transitionToState(BlueZDeviceState::CONNECTED, true);
                     }
                 }
                 break;
             }
             case BlueZDeviceState::IDLE: {
-                if (connectedChanged && connected) {
+                if (executeIsConnectedToRelevantServices()) {
                     transitionToState(BlueZDeviceState::CONNECTED, true);
                 } else if (pairedChanged && !paired) {
                     transitionToState(BlueZDeviceState::UNPAIRED, true);

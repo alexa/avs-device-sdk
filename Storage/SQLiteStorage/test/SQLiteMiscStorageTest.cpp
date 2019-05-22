@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -139,7 +139,7 @@ void SQLiteMiscStorageTest::SetUp() {
 }
 
 /// Tests with creating a string key - string value table
-TEST_F(SQLiteMiscStorageTest, createStringKeyValueTable) {
+TEST_F(SQLiteMiscStorageTest, test_createStringKeyValueTable) {
     const std::string tableName = "SQLiteMiscStorageCreateTableTest";
     deleteTestTable(tableName);
 
@@ -155,7 +155,7 @@ TEST_F(SQLiteMiscStorageTest, createStringKeyValueTable) {
 }
 
 /// Tests with table entry add, remove, update, put
-TEST_F(SQLiteMiscStorageTest, tableEntryTests) {
+TEST_F(SQLiteMiscStorageTest, test_tableEntryTests) {
     const std::string tableName = "SQLiteMiscStorageTableEntryTest";
     const std::string tableEntryKey = "tableEntryTestsKey";
     const std::string tableEntryAddedValue = "tableEntryAddedValue";
@@ -211,7 +211,7 @@ TEST_F(SQLiteMiscStorageTest, tableEntryTests) {
 }
 
 /// Tests with loading and clearing table entries
-TEST_F(SQLiteMiscStorageTest, loadAndClear) {
+TEST_F(SQLiteMiscStorageTest, test_loadAndClear) {
     const std::string tableName = "SQLiteMiscStorageLoadClearTest";
     size_t numOfEntries = 3;
     std::string keyPrefix = "key";
@@ -250,7 +250,7 @@ TEST_F(SQLiteMiscStorageTest, loadAndClear) {
 }
 
 /// Tests with creating and deleting tables
-TEST_F(SQLiteMiscStorageTest, createDeleteTable) {
+TEST_F(SQLiteMiscStorageTest, test_createDeleteTable) {
     const std::string tableName = "SQLiteMiscStorageCreateDeleteTest";
     deleteTestTable(tableName);
 
@@ -274,6 +274,32 @@ TEST_F(SQLiteMiscStorageTest, createDeleteTable) {
     ASSERT_TRUE(m_miscStorage->deleteTable(COMPONENT_NAME, tableName));
     ASSERT_TRUE(m_miscStorage->tableExists(COMPONENT_NAME, tableName, &tableExists));
     ASSERT_FALSE(tableExists);
+}
+
+/// Test adding a string value with a single quote.
+TEST_F(SQLiteMiscStorageTest, test_escapeSingleQuoteCharacters) {
+    const std::string tableName = "SQLiteMiscStorageTableEntryTest";
+    const std::string tableEntryKey = "tableEntryTestsKey";
+    const std::string valueWithSingleQuote = "This table's entry";
+
+    std::string tableEntryValue;
+    deleteTestTable(tableName);
+
+    createTestTable(tableName, SQLiteMiscStorage::KeyType::STRING_KEY, SQLiteMiscStorage::ValueType::STRING_VALUE);
+
+    /// Entry doesn't exist at first
+    bool tableEntryExists;
+    ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+    ASSERT_FALSE(tableEntryExists);
+
+    /// Ensure that add entry works
+    ASSERT_TRUE(m_miscStorage->add(COMPONENT_NAME, tableName, tableEntryKey, valueWithSingleQuote));
+    ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+    ASSERT_TRUE(tableEntryExists);
+    ASSERT_TRUE(m_miscStorage->get(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryValue));
+    ASSERT_EQ(tableEntryValue, valueWithSingleQuote);
+
+    deleteTestTable(tableName);
 }
 
 }  // namespace test

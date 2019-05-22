@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ void EqualizerStorageInterfaceTest::SetUp() {
 /**
  * Save state to the storage and see if loadState() returns the saved state.
  */
-TEST_P(EqualizerStorageInterfaceTest, saveState_ExpectLoadReturnSame) {
+TEST_P(EqualizerStorageInterfaceTest, test_saveState_ExpectLoadReturnSame) {
     EqualizerState defaultState = {EqualizerMode::MOVIE,
                                    EqualizerBandLevelMap({{EqualizerBand::TREBLE, 0}, {EqualizerBand::MIDRANGE, 1}})};
     m_storage->saveState(defaultState);
@@ -58,7 +58,7 @@ TEST_P(EqualizerStorageInterfaceTest, saveState_ExpectLoadReturnSame) {
 /**
  * Perform cleaning of the data in the storage and see if next loadState() returns the default state.
  */
-TEST_P(EqualizerStorageInterfaceTest, clearSavedData_ExpectAllDefaultsOnLoad) {
+TEST_P(EqualizerStorageInterfaceTest, test_clearSavedData_ExpectAllDefaultsOnLoad) {
     EqualizerState defaultState = {EqualizerMode::MOVIE,
                                    EqualizerBandLevelMap({{EqualizerBand::TREBLE, 0}, {EqualizerBand::MIDRANGE, 1}})};
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ static const std::string ACL_CONFIG_KEY = "acl";
 /// Key for the 'endpoint' value under the @c ACL_CONFIG_KEY configuration node.
 static const std::string ENDPOINT_KEY = "endpoint";
 /// Default @c AVS endpoint to connect to.
-static const std::string DEFAULT_AVS_ENDPOINT = "https://avs-alexa-na.amazon.com";
+static const std::string DEFAULT_AVS_ENDPOINT = "https://alexa.na.gateway.devices.a2z.com";
 
 std::shared_ptr<TransportInterface> HTTP2TransportFactory::createTransport(
     std::shared_ptr<AuthDelegateInterface> authDelegate,

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,12 +26,12 @@ namespace test {
 using namespace ::testing;
 
 /// Test that a valid object is returned.
-TEST(BlueZA2DPSinkTest, createSucceeds) {
+TEST(BlueZA2DPSinkTest, test_createSucceeds) {
     ASSERT_THAT(BlueZA2DPSink::create(), NotNull());
 }
 
 /// Test the correct SDP record is returned.
-TEST(BlueZA2DPSinkTest, checkSDPRecord) {
+TEST(BlueZA2DPSinkTest, test_checkSDPRecord) {
     auto sdp = BlueZA2DPSink::create()->getRecord();
     ASSERT_EQ(sdp->getUuid(), std::string(avsCommon::sdkInterfaces::bluetooth::services::A2DPSinkInterface::UUID));
     ASSERT_EQ(sdp->getName(), std::string(avsCommon::sdkInterfaces::bluetooth::services::A2DPSinkInterface::NAME));

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ bool StopwatchTest::checkElapsed(int expectedIncrement) {
 /**
  * Test good sequencing of method calls.
  */
-TEST_F(StopwatchTest, goodSequencing) {
+TEST_F(StopwatchTest, test_goodSequencing) {
     ASSERT_TRUE(m_stopwatch.start());
     ASSERT_TRUE(m_stopwatch.pause());
     ASSERT_TRUE(m_stopwatch.resume());
@@ -71,7 +71,7 @@ TEST_F(StopwatchTest, goodSequencing) {
 /**
  * Test bad sequencing of method calls.
  */
-TEST_F(StopwatchTest, badSequencing) {
+TEST_F(StopwatchTest, test_badSequencing) {
     // Must be reset to start().
 
     ASSERT_TRUE(m_stopwatch.start());
@@ -140,7 +140,7 @@ TEST_F(StopwatchTest, badSequencing) {
 /**
  * Test report of elapsed time.  This test is timing sensitive.
  */
-TEST_F(StopwatchTest, testElapsed) {
+TEST_F(StopwatchTest, testSlow_elapsed) {
     // Expect progression after start().
     ASSERT_TRUE(m_stopwatch.start());
     std::this_thread::sleep_for(TESTABLE_TIME_INCREMENT * 2);

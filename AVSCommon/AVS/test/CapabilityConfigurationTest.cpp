@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -42,14 +42,14 @@ static const std::string VALUE2 = "value2";
 class CapabilityConfigurationTest : public ::testing::Test {};
 
 /// Test the constructor
-TEST_F(CapabilityConfigurationTest, testConstructor) {
+TEST_F(CapabilityConfigurationTest, test_constructor) {
     std::unordered_map<std::string, std::string> capabilityConfigurationMap;
     CapabilityConfiguration instance(capabilityConfigurationMap);
     ASSERT_TRUE(instance.capabilityConfiguration.empty());
 }
 
 /// Test the == operator
-TEST_F(CapabilityConfigurationTest, testEquality) {
+TEST_F(CapabilityConfigurationTest, test_equality) {
     std::unordered_map<std::string, std::string> lhsCapabilityConfigurationMap;
     lhsCapabilityConfigurationMap.insert({KEY1, VALUE1});
 
@@ -64,7 +64,7 @@ TEST_F(CapabilityConfigurationTest, testEquality) {
 }
 
 /// Test the != operator
-TEST_F(CapabilityConfigurationTest, testInequality) {
+TEST_F(CapabilityConfigurationTest, test_inequality) {
     std::unordered_map<std::string, std::string> lhsCapabilityConfigurationMap;
     lhsCapabilityConfigurationMap.insert({KEY1, VALUE1});
 
@@ -79,7 +79,7 @@ TEST_F(CapabilityConfigurationTest, testInequality) {
 }
 
 /// Test if equality and hash works if you have multiple entries in maps that are the same but in different order
-TEST_F(CapabilityConfigurationTest, testMultipleValues) {
+TEST_F(CapabilityConfigurationTest, test_multipleValues) {
     std::unordered_map<std::string, std::string> lhsCapabilityConfigurationMap;
     lhsCapabilityConfigurationMap.insert({KEY1, VALUE1});
     lhsCapabilityConfigurationMap.insert({KEY2, VALUE2});

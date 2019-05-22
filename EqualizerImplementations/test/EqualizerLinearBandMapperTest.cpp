@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -86,13 +86,13 @@ void EqualizerLinearBandMapperTest::testAllValuesEqual(int numberOfBands, int va
 }
 
 /// Valid parameters
-TEST_F(EqualizerLinearBandMapperTest, givenValidParameters_create_shouldSucceed) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenValidParameters_create_shouldSucceed) {
     auto bandMapper = EqualizerLinearBandMapper::create(VALID_NUMBER_OF_BANDS);
     EXPECT_THAT(bandMapper, NotNull());
 }
 
 /// Invalid parameters
-TEST_F(EqualizerLinearBandMapperTest, givenInvalidParameters_create_shouldFail) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenInvalidParameters_create_shouldFail) {
     auto bandMapper = EqualizerLinearBandMapper::create(INVALID_NUMBER_OF_BANDS_BELOW);
     EXPECT_THAT(bandMapper, IsNull());
 
@@ -101,7 +101,7 @@ TEST_F(EqualizerLinearBandMapperTest, givenInvalidParameters_create_shouldFail) 
 }
 
 /// Test mapping AVS bands to the same number of bands. No value must be modified.
-TEST_F(EqualizerLinearBandMapperTest, givenSameAsAVSBands_map_shouldNotModifyLevels) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenSameAsAVSBands_map_shouldNotModifyLevels) {
     auto numberOfAVSBands = EqualizerBandValues.size();
 
     auto bandMapper = EqualizerLinearBandMapper::create(numberOfAVSBands);
@@ -119,53 +119,53 @@ TEST_F(EqualizerLinearBandMapperTest, givenSameAsAVSBands_map_shouldNotModifyLev
 }
 
 /// AVS bands < target bands. Mapping non-zero value.
-TEST_F(EqualizerLinearBandMapperTest, givenMoreBandsToMapTo_mapAllSameNonZero_shouldMapToSame) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenMoreBandsToMapTo_mapAllSameNonZero_shouldMapToSame) {
     int numberOfAVSBands = EqualizerBandValues.size();
     testAllValuesEqual(numberOfAVSBands + 1, BAND_LEVEL_TOP);
 }
 
 /// AVS bands < target bands. Mapping zero value.
-TEST_F(EqualizerLinearBandMapperTest, givenMoreBandsToMapTo_mapAllSameZero_shouldMapToSame) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenMoreBandsToMapTo_mapAllSameZero_shouldMapToSame) {
     int numberOfAVSBands = EqualizerBandValues.size();
     testAllValuesEqual(numberOfAVSBands + 1, BAND_LEVEL_ZERO);
 }
 
 /// AVS bands * 2 = target bands. Mapping non-zero value. No averaged bands.
-TEST_F(EqualizerLinearBandMapperTest, givenDoubleBandsToMapTo_mapAllSameNonZero_shouldMapToSame) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenDoubleBandsToMapTo_mapAllSameNonZero_shouldMapToSame) {
     int numberOfAVSBands = EqualizerBandValues.size();
     testAllValuesEqual(numberOfAVSBands * 2, BAND_LEVEL_TOP);
 }
 
 /// AVS bands * 2 = target bands. Mapping zero value. No averaged bands.
-TEST_F(EqualizerLinearBandMapperTest, givenDoubleBandsToMapTo_mapAllSameZero_shouldMapToSame) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenDoubleBandsToMapTo_mapAllSameZero_shouldMapToSame) {
     int numberOfAVSBands = EqualizerBandValues.size();
     testAllValuesEqual(numberOfAVSBands * 2, BAND_LEVEL_ZERO);
 }
 
 /// AVS bands > target bands. Mapping non-zero value.
-TEST_F(EqualizerLinearBandMapperTest, givenLessBandsToMapTo_mapAllSameNonZero_shouldMapToSame) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenLessBandsToMapTo_mapAllSameNonZero_shouldMapToSame) {
     int numberOfAVSBands = EqualizerBandValues.size();
     testAllValuesEqual(numberOfAVSBands - 1, BAND_LEVEL_TOP);
 }
 
 /// AVS bands > target bands. Mapping zero value.
-TEST_F(EqualizerLinearBandMapperTest, givenLessBandsToMapTo_mapAllSameZero_shouldMapToSame) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenLessBandsToMapTo_mapAllSameZero_shouldMapToSame) {
     int numberOfAVSBands = EqualizerBandValues.size();
     testAllValuesEqual(numberOfAVSBands - 1, BAND_LEVEL_ZERO);
 }
 
 /// Mapping AVS bands to 1 target band. Non-zero value.
-TEST_F(EqualizerLinearBandMapperTest, givenOneBandToMapTo_mapNonZero_shouldMapToSame) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenOneBandToMapTo_mapNonZero_shouldMapToSame) {
     testAllValuesEqual(1, BAND_LEVEL_TOP);
 }
 
 /// Mapping AVS bands to 1 target band. Zero value.
-TEST_F(EqualizerLinearBandMapperTest, givenOneBandToMapTo_mapZero_shouldMapToSame) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenOneBandToMapTo_mapZero_shouldMapToSame) {
     testAllValuesEqual(1, BAND_LEVEL_ZERO);
 }
 
 /// Since mapper has a linear nature mapped values must keep the same average as original ones. Testing this here.
-TEST_F(EqualizerLinearBandMapperTest, givenAnyNumberOfBands_map_shouldKeepAverageLevel) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenAnyNumberOfBands_map_shouldKeepAverageLevel) {
     int numberOfAVSBands = EqualizerBandValues.size();
 
     for (int targetBandsCount = 1; targetBandsCount < numberOfAVSBands * 10; targetBandsCount++) {
@@ -191,7 +191,7 @@ TEST_F(EqualizerLinearBandMapperTest, givenAnyNumberOfBands_map_shouldKeepAverag
 }
 
 /// Test specific transformation. This test depends on current number of bands supported by AVS.
-TEST_F(EqualizerLinearBandMapperTest, givenMoreBandsToMapTo_mapSpecificValues_shouldMapToSpecificOutput) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenMoreBandsToMapTo_mapSpecificValues_shouldMapToSpecificOutput) {
     int numberOfAVSBands = EqualizerBandValues.size();
     ASSERT_EQ(numberOfAVSBands, CURRENT_NUMBER_OF_AVS_BANDS);
 
@@ -215,7 +215,7 @@ TEST_F(EqualizerLinearBandMapperTest, givenMoreBandsToMapTo_mapSpecificValues_sh
 }
 
 /// Test specific transformation. This test depends on current number of bands supported by AVS.
-TEST_F(EqualizerLinearBandMapperTest, givenEvenMoreBandsToMapTo_mapSpecificValues_shouldMapToSpecificOutput) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenEvenMoreBandsToMapTo_mapSpecificValues_shouldMapToSpecificOutput) {
     int numberOfAVSBands = EqualizerBandValues.size();
     ASSERT_EQ(numberOfAVSBands, CURRENT_NUMBER_OF_AVS_BANDS);
 
@@ -240,7 +240,7 @@ TEST_F(EqualizerLinearBandMapperTest, givenEvenMoreBandsToMapTo_mapSpecificValue
 }
 
 /// Test specific transformation. This test depends on current number of bands supported by AVS.
-TEST_F(EqualizerLinearBandMapperTest, givenLessBandsToMapTo_mapSpecificValues_shouldMapToSpecificOutput) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenLessBandsToMapTo_mapSpecificValues_shouldMapToSpecificOutput) {
     int numberOfAVSBands = EqualizerBandValues.size();
     ASSERT_EQ(numberOfAVSBands, CURRENT_NUMBER_OF_AVS_BANDS);
 
@@ -262,7 +262,7 @@ TEST_F(EqualizerLinearBandMapperTest, givenLessBandsToMapTo_mapSpecificValues_sh
 }
 
 /// Test specific transformation. This test depends on current number of bands supported by AVS.
-TEST_F(EqualizerLinearBandMapperTest, givenEvenLessBandsToMapTo_mapSpecificValues_shouldMapToSpecificOutput) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenEvenLessBandsToMapTo_mapSpecificValues_shouldMapToSpecificOutput) {
     int numberOfAVSBands = EqualizerBandValues.size();
     ASSERT_EQ(numberOfAVSBands, CURRENT_NUMBER_OF_AVS_BANDS);
 
@@ -283,7 +283,7 @@ TEST_F(EqualizerLinearBandMapperTest, givenEvenLessBandsToMapTo_mapSpecificValue
 }
 
 ///
-TEST_F(EqualizerLinearBandMapperTest, givenOneBandSupported_mapToOneBand_shouldMapSameValue) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenOneBandSupported_mapToOneBand_shouldMapSameValue) {
     EqualizerBandLevelMap bandLevelMap = {{EqualizerBand::BASS, BAND_LEVEL_BOTTOM}};
 
     std::array<int, 1> mappedValues{};
@@ -296,7 +296,7 @@ TEST_F(EqualizerLinearBandMapperTest, givenOneBandSupported_mapToOneBand_shouldM
     EXPECT_EQ(mappedValues[0], BAND_LEVEL_BOTTOM);
 }
 
-TEST_F(EqualizerLinearBandMapperTest, givenOneBandSupported_mapToTwoBands_shouldMapToBothSame) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenOneBandSupported_mapToTwoBands_shouldMapToBothSame) {
     EqualizerBandLevelMap bandLevelMap = {{EqualizerBand::BASS, BAND_LEVEL_BOTTOM}};
 
     std::array<int, 2> mappedValues{};
@@ -310,7 +310,7 @@ TEST_F(EqualizerLinearBandMapperTest, givenOneBandSupported_mapToTwoBands_should
     EXPECT_EQ(mappedValues[1], BAND_LEVEL_BOTTOM);
 }
 
-TEST_F(EqualizerLinearBandMapperTest, givenTwoBandsSupported_mapToOneBands_shouldMapToAverage) {
+TEST_F(EqualizerLinearBandMapperTest, test_givenTwoBandsSupported_mapToOneBands_shouldMapToAverage) {
     EqualizerBandLevelMap bandLevelMap = {{EqualizerBand::BASS, BAND_LEVEL_BOTTOM},
                                           {EqualizerBand::MIDRANGE, BAND_LEVEL_ZERO}};
 

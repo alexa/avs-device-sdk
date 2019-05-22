@@ -13,6 +13,8 @@
  * permissions and limitations under the License.
  */
 
+#include <algorithm>
+#include <cctype>
 #include <sstream>
 
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
@@ -210,6 +212,15 @@ std::future<bool> AudioInputProcessor::recognize(
     const ESPData espData,
     std::shared_ptr<const std::vector<char>> KWDMetadata) {
     ACSDK_METRIC_IDS(TAG, "Recognize", "", "", Metrics::Location::AIP_RECEIVE);
+
+    std::string upperCaseKeyword = keyword;
+    std::transform(upperCaseKeyword.begin(), upperCaseKeyword.end(), upperCaseKeyword.begin(), ::toupper);
+    if (KEYWORD_TEXT_STOP == upperCaseKeyword) {
+        ACSDK_DEBUG(LX("skippingRecognizeEvent").d("reason", "invalidKeyword").d("keyword", keyword));
+        std::promise<bool> ret;
+        ret.set_value(false);
+        return ret.get_future();
+    }
 
     // If no begin index was provided, grab the current index ASAP so that we can start streaming from the time this
     // call was made.
@@ -730,8 +741,6 @@ void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContex
     // Release ownership of the metadata so it can be released once ACL will finish sending the message.
     m_KWDMetadataReader.reset();
 
-    m_recognizeRequest->addObserver(shared_from_this());
-
     // If we already have focus, there won't be a callback to send the message, so send it now.
     if (avsCommon::avs::FocusState::FOREGROUND == m_focusState) {
         sendRequestNow();
@@ -843,6 +852,7 @@ bool AudioInputProcessor::executeStopCapture(bool stopImmediately, std::shared_p
 
 void AudioInputProcessor::executeResetState() {
     // Irrespective of current state, clean up and go back to idle.
+    ACSDK_DEBUG(LX(__func__));
     m_expectingSpeechTimer.stop();
     m_precedingExpectSpeechInitiator.reset();
     if (m_reader) {
@@ -853,6 +863,10 @@ void AudioInputProcessor::executeResetState() {
     }
     m_reader.reset();
     m_KWDMetadataReader.reset();
+    if (m_recognizeRequestSent) {
+        m_recognizeRequestSent->removeObserver(shared_from_this());
+        m_recognizeRequestSent.reset();
+    }
     m_recognizeRequest.reset();
     m_espRequest.reset();
     m_preparingToSend = false;
@@ -979,6 +993,7 @@ void AudioInputProcessor::removeDirective(std::shared_ptr<DirectiveInfo> info) {
 }
 
 void AudioInputProcessor::sendRequestNow() {
+    ACSDK_DEBUG(LX(__func__));
     if (m_espRequest) {
         m_messageSender->sendMessage(m_espRequest);
         m_espRequest.reset();
@@ -986,7 +1001,12 @@ void AudioInputProcessor::sendRequestNow() {
 
     if (m_recognizeRequest) {
         ACSDK_METRIC_IDS(TAG, "Recognize", "", "", Metrics::Location::AIP_SEND);
-        m_messageSender->sendMessage(m_recognizeRequest);
+        if (m_recognizeRequestSent && (m_recognizeRequestSent != m_recognizeRequest)) {
+            m_recognizeRequestSent->removeObserver(shared_from_this());
+        }
+        m_recognizeRequestSent = m_recognizeRequest;
+        m_recognizeRequestSent->addObserver(shared_from_this());
+        m_messageSender->sendMessage(m_recognizeRequestSent);
         m_recognizeRequest.reset();
         m_preparingToSend = false;
         if (m_deferredStopCapture) {

@@ -27,7 +27,7 @@ namespace utils {
 namespace timing {
 namespace test {
 
-TEST(TimeTest, testStringConversion) {
+TEST(TimeTest, test_stringConversion) {
     TimeUtils timeUtils;
     std::string dateStr{"1986-08-10T21:30:00+0000"};
     int64_t date;
@@ -45,7 +45,7 @@ TEST(TimeTest, testStringConversion) {
     ASSERT_EQ(dateTm.tm_min, 30);
 }
 
-TEST(TimeTest, testStringConversionError) {
+TEST(TimeTest, test_stringConversionError) {
     TimeUtils timeUtils;
     std::string dateStr{"1986-8-10T21:30:00+0000"};
     int64_t date;
@@ -53,14 +53,14 @@ TEST(TimeTest, testStringConversionError) {
     ASSERT_FALSE(success);
 }
 
-TEST(TimeTest, testStringConversionNullParam) {
+TEST(TimeTest, test_stringConversionNullParam) {
     TimeUtils timeUtils;
     std::string dateStr{"1986-8-10T21:30:00+0000"};
     auto success = timeUtils.convert8601TimeStringToUnix(dateStr, nullptr);
     ASSERT_FALSE(success);
 }
 
-TEST(TimeTest, testTimeConversion) {
+TEST(TimeTest, test_timeConversion) {
     TimeUtils timeUtils;
     std::time_t randomDate = 524089800;
     std::tm date;
@@ -73,7 +73,7 @@ TEST(TimeTest, testTimeConversion) {
     ASSERT_EQ(randomDate, convertBack);
 }
 
-TEST(TimeTest, testTimeConversionCurrentTime) {
+TEST(TimeTest, test_timeConversionCurrentTime) {
     TimeUtils timeUtils;
     int64_t time = -1;
     ASSERT_TRUE(timeUtils.getCurrentUnixTime(&time));
@@ -90,7 +90,7 @@ TEST(TimeTest, testTimeConversionCurrentTime) {
     ASSERT_EQ(currentDate, convertBack);
 }
 
-TEST(TimeTest, testCurrentTime) {
+TEST(TimeTest, test_currentTime) {
     TimeUtils timeUtils;
     int64_t time = -1;
     auto success = timeUtils.getCurrentUnixTime(&time);
@@ -99,7 +99,7 @@ TEST(TimeTest, testCurrentTime) {
     ASSERT_GT(time, 0);
 }
 
-TEST(TimeTest, testCurrentTimeNullParam) {
+TEST(TimeTest, test_currentTimeNullParam) {
     TimeUtils timeUtils;
     auto success = timeUtils.getCurrentUnixTime(nullptr);
     ASSERT_FALSE(success);
@@ -125,7 +125,7 @@ static void testIso8601ConversionHelper(
     EXPECT_EQ(expectedString, resultString);
 }
 
-TEST(TimeTest, testIso8601Conversion) {
+TEST(TimeTest, test_iso8601Conversion) {
     testIso8601ConversionHelper("1970-01-01T00:00:00.000Z", std::chrono::seconds{0}, std::chrono::microseconds{0});
     testIso8601ConversionHelper("1970-01-01T00:00:01.000Z", std::chrono::seconds{1}, std::chrono::microseconds{0});
     testIso8601ConversionHelper("1970-01-01T00:00:00.001Z", std::chrono::seconds{0}, std::chrono::microseconds{1000});

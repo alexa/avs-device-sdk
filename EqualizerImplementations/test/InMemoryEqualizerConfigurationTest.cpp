@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -78,35 +78,35 @@ EqualizerState InMemoryEqualizerConfigurationTest::getDefaultState() {
 }
 
 /// Simple successful case
-TEST_F(InMemoryEqualizerConfigurationTest, providedValidParameters_createInstance_shouldSucceed) {
+TEST_F(InMemoryEqualizerConfigurationTest, test_providedValidParameters_createInstance_shouldSucceed) {
     m_configuration = InMemoryEqualizerConfiguration::create(
         MIN_LEVEL, MAX_LEVEL, getDefaultBands(), getDefaultModes(), getDefaultState());
     ASSERT_THAT(m_configuration, NotNull());
 }
 
 /// Min level > Max level
-TEST_F(InMemoryEqualizerConfigurationTest, providedInalidLevelRange_createInstance_shouldFail) {
+TEST_F(InMemoryEqualizerConfigurationTest, test_providedInalidLevelRange_createInstance_shouldFail) {
     m_configuration = InMemoryEqualizerConfiguration::create(
         MAX_LEVEL, MIN_LEVEL, getDefaultBands(), getDefaultModes(), getDefaultState());
     ASSERT_THAT(m_configuration, IsNull());
 }
 
 /// Min and Max are equal (DEFAULT_LEVEL), must succeed
-TEST_F(InMemoryEqualizerConfigurationTest, providedMixMaxLevelSetToDefault_createInstance_shouldSucceed) {
+TEST_F(InMemoryEqualizerConfigurationTest, test_providedMixMaxLevelSetToDefault_createInstance_shouldSucceed) {
     m_configuration = InMemoryEqualizerConfiguration::create(
         DEFAULT_LEVEL, DEFAULT_LEVEL, getDefaultBands(), getDefaultModes(), getDefaultState());
     ASSERT_THAT(m_configuration, NotNull());
 }
 
 /// Min and Max are equal (non-DEFAULT_LEVEL), must fail because all modes use DEFAULT_LEVEL as band levels.
-TEST_F(InMemoryEqualizerConfigurationTest, providedSameNonDefaultMixMaxLevel_createInstance_shouldSucceed) {
+TEST_F(InMemoryEqualizerConfigurationTest, test_providedSameNonDefaultMixMaxLevel_createInstance_shouldSucceed) {
     m_configuration = InMemoryEqualizerConfiguration::create(
         MAX_LEVEL, MAX_LEVEL, getDefaultBands(), getDefaultModes(), getDefaultState());
     ASSERT_THAT(m_configuration, IsNull());
 }
 
 /// Invalid band value in default state (above max)
-TEST_F(InMemoryEqualizerConfigurationTest, providedDefaultStateLevelAboveMax_createInstance_shouldFail) {
+TEST_F(InMemoryEqualizerConfigurationTest, test_providedDefaultStateLevelAboveMax_createInstance_shouldFail) {
     auto state = getDefaultState();
     state.bandLevels[EqualizerBand::TREBLE] = ABOVE_MAX_LEVEL;
     m_configuration =
@@ -115,7 +115,7 @@ TEST_F(InMemoryEqualizerConfigurationTest, providedDefaultStateLevelAboveMax_cre
 }
 
 /// Invalid band value in default state (below min)
-TEST_F(InMemoryEqualizerConfigurationTest, providedDefaultStateLevelBelowMin_createInstance_shouldFail) {
+TEST_F(InMemoryEqualizerConfigurationTest, test_providedDefaultStateLevelBelowMin_createInstance_shouldFail) {
     auto state = getDefaultState();
     state.bandLevels[EqualizerBand::TREBLE] = BELOW_MIN_LEVEL;
     m_configuration =
@@ -124,7 +124,9 @@ TEST_F(InMemoryEqualizerConfigurationTest, providedDefaultStateLevelBelowMin_cre
 }
 
 /// Invalid band value in default state (below min, another band)
-TEST_F(InMemoryEqualizerConfigurationTest, providedDefaultStateLevelBelowMinDifferentBand_createInstance_shouldFail) {
+TEST_F(
+    InMemoryEqualizerConfigurationTest,
+    test_providedDefaultStateLevelBelowMinDifferentBand_createInstance_shouldFail) {
     auto state = getDefaultState();
     state.bandLevels[EqualizerBand::BASS] = BELOW_MIN_LEVEL;
     m_configuration =
@@ -135,7 +137,7 @@ TEST_F(InMemoryEqualizerConfigurationTest, providedDefaultStateLevelBelowMinDiff
 // Bands
 
 // Test no modes supported
-TEST_F(InMemoryEqualizerConfigurationTest, providedNoModes_createInstance_shouldSucceed) {
+TEST_F(InMemoryEqualizerConfigurationTest, test_providedNoModes_createInstance_shouldSucceed) {
     auto bands = std::set<EqualizerBand>({EqualizerBand::MIDRANGE});
     auto state = EqualizerState{EqualizerMode::NONE, EqualizerBandLevelMap({{EqualizerBand::MIDRANGE, DEFAULT_LEVEL}})};
     auto modes = std::set<EqualizerMode>({});
@@ -144,7 +146,7 @@ TEST_F(InMemoryEqualizerConfigurationTest, providedNoModes_createInstance_should
 }
 
 // Default state with supported mode
-TEST_F(InMemoryEqualizerConfigurationTest, providedSupportedModeInDefaultState_createInstance_shouldSucceed) {
+TEST_F(InMemoryEqualizerConfigurationTest, test_providedSupportedModeInDefaultState_createInstance_shouldSucceed) {
     auto bands = std::set<EqualizerBand>({EqualizerBand::MIDRANGE});
     auto state =
         EqualizerState{EqualizerMode::NIGHT, EqualizerBandLevelMap({{EqualizerBand::MIDRANGE, DEFAULT_LEVEL}})};
@@ -154,7 +156,7 @@ TEST_F(InMemoryEqualizerConfigurationTest, providedSupportedModeInDefaultState_c
 }
 
 // Default state with unsupported mode
-TEST_F(InMemoryEqualizerConfigurationTest, providedUnsupportedModeInDefaultState_createInstance_shouldFail) {
+TEST_F(InMemoryEqualizerConfigurationTest, test_providedUnsupportedModeInDefaultState_createInstance_shouldFail) {
     auto bands = std::set<EqualizerBand>({EqualizerBand::MIDRANGE});
     auto state = EqualizerState{EqualizerMode::TV, EqualizerBandLevelMap({{EqualizerBand::MIDRANGE, DEFAULT_LEVEL}})};
     auto modes = std::set<EqualizerMode>({EqualizerMode::NIGHT});
@@ -163,7 +165,7 @@ TEST_F(InMemoryEqualizerConfigurationTest, providedUnsupportedModeInDefaultState
 }
 
 // EqualizerMode::NONE could be provided as valid mode but will be ignored
-TEST_F(InMemoryEqualizerConfigurationTest, providedNONEModeAsSupported_createInstance_shouldSucceed) {
+TEST_F(InMemoryEqualizerConfigurationTest, test_providedNONEModeAsSupported_createInstance_shouldSucceed) {
     auto bands = std::set<EqualizerBand>({EqualizerBand::MIDRANGE});
     auto state = EqualizerState{EqualizerMode::NONE, EqualizerBandLevelMap({{EqualizerBand::MIDRANGE, DEFAULT_LEVEL}})};
     auto modes = std::set<EqualizerMode>({EqualizerMode::NIGHT, EqualizerMode::NONE});
@@ -171,7 +173,7 @@ TEST_F(InMemoryEqualizerConfigurationTest, providedNONEModeAsSupported_createIns
     ASSERT_THAT(m_configuration, NotNull());
 }
 
-TEST_F(InMemoryEqualizerConfigurationTest, providedValidConfiguration_isSupportedMethods_shouldSucceed) {
+TEST_F(InMemoryEqualizerConfigurationTest, test_providedValidConfiguration_isSupportedMethods_shouldSucceed) {
     auto bands = std::set<EqualizerBand>({EqualizerBand::MIDRANGE});
     auto state = EqualizerState{EqualizerMode::NONE, EqualizerBandLevelMap({{EqualizerBand::MIDRANGE, DEFAULT_LEVEL}})};
     auto modes = std::set<EqualizerMode>({EqualizerMode::NIGHT, EqualizerMode::TV});

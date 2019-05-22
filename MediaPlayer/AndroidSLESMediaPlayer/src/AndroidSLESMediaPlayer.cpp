@@ -124,7 +124,8 @@ AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
     auto input = FFmpegAttachmentInputController::create(attachmentReader, format);
     auto newId = configureNewRequest(std::move(input));
     if (ERROR == newId) {
-        ACSDK_ERROR(LX("setSourceFailed").d("type", "attachment").d("format", format));
+        ACSDK_ERROR(
+            LX("setSourceFailed").d("name", RequiresShutdown::name()).d("type", "attachment").d("format", format));
     }
     return newId;
 }
@@ -138,7 +139,11 @@ AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
     auto input = FFmpegUrlInputController::create(playlistParser, url, offset, repeat);
     auto newId = configureNewRequest(std::move(input), playlistParser, offset);
     if (ERROR == newId) {
-        ACSDK_ERROR(LX("setSourceFailed").d("type", "url").d("offset(ms)", offset.count()).sensitive("url", url));
+        ACSDK_ERROR(LX("setSourceFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("type", "url")
+                        .d("offset(ms)", offset.count())
+                        .sensitive("url", url));
     }
 
     return newId;
@@ -148,7 +153,7 @@ AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(std::shared_p
     auto input = FFmpegStreamInputController::create(stream, repeat);
     auto newId = configureNewRequest(std::move(input));
     if (ERROR == newId) {
-        ACSDK_ERROR(LX("setSourceFailed").d("type", "istream").d("repeat", repeat));
+        ACSDK_ERROR(LX("setSourceFailed").d("name", RequiresShutdown::name()).d("type", "istream").d("repeat", repeat));
     }
     return newId;
 }
@@ -161,7 +166,10 @@ bool AndroidSLESMediaPlayer::play(SourceId id) {
         SLuint32 state;
         auto result = (*m_player)->GetPlayState(m_player, &state);
         if (result != SL_RESULT_SUCCESS) {
-            ACSDK_ERROR(LX("playFailed").d("reason", "getPlayStateFailed").d("result", result));
+            ACSDK_ERROR(LX("playFailed")
+                            .d("name", RequiresShutdown::name())
+                            .d("reason", "getPlayStateFailed")
+                            .d("result", result));
             return false;
         }
 
@@ -169,7 +177,11 @@ bool AndroidSLESMediaPlayer::play(SourceId id) {
             // set the player's state to playing
             result = (*m_player)->SetPlayState(m_player, SL_PLAYSTATE_PLAYING);
             if (result != SL_RESULT_SUCCESS) {
-                ACSDK_ERROR(LX("playFailed").d("reason", "setPlayStateFailed").d("result", result).d("id", id));
+                ACSDK_ERROR(LX("playFailed")
+                                .d("name", RequiresShutdown::name())
+                                .d("reason", "setPlayStateFailed")
+                                .d("result", result)
+                                .d("id", id));
                 return false;
             }
 
@@ -179,9 +191,17 @@ bool AndroidSLESMediaPlayer::play(SourceId id) {
 
             return true;
         }
-        ACSDK_ERROR(LX("playFailed").d("reason", "invalidState").d("requestId", id).d("state", state));
+        ACSDK_ERROR(LX("playFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "invalidState")
+                        .d("requestId", id)
+                        .d("state", state));
     } else {
-        ACSDK_ERROR(LX("playFailed").d("reason", "invalidId").d("requestId", id).d("currentId", m_sourceId));
+        ACSDK_ERROR(LX("playFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "invalidId")
+                        .d("requestId", id)
+                        .d("currentId", m_sourceId));
     }
     return false;
 }
@@ -193,7 +213,11 @@ bool AndroidSLESMediaPlayer::stop(SourceId id) {
     if (id == m_sourceId) {
         return stopLocked();
     }
-    ACSDK_ERROR(LX("stopFailed").d("reason", "Invalid Id").d("requestId", id).d("currentId", id));
+    ACSDK_ERROR(LX("stopFailed")
+                    .d("name", RequiresShutdown::name())
+                    .d("reason", "Invalid Id")
+                    .d("requestId", id)
+                    .d("currentId", id));
     return false;
 }
 
@@ -201,14 +225,22 @@ bool AndroidSLESMediaPlayer::stopLocked() {
     SLuint32 state;
     auto result = (*m_player)->GetPlayState(m_player, &state);
     if (result != SL_RESULT_SUCCESS) {
-        ACSDK_ERROR(LX("stopFailed").d("reason", "getPlayStateFailed").d("result", result).d("id", m_sourceId));
+        ACSDK_ERROR(LX("stopFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "getPlayStateFailed")
+                        .d("result", result)
+                        .d("id", m_sourceId));
         return false;
     }
 
     if (state != SL_PLAYSTATE_STOPPED) {
         auto result = (*m_player)->SetPlayState(m_player, SL_PLAYSTATE_STOPPED);
         if (result != SL_RESULT_SUCCESS) {
-            ACSDK_ERROR(LX("stopFailed").d("reason", "setPlayStateFailed").d("result", result).d("id", m_sourceId));
+            ACSDK_ERROR(LX("stopFailed")
+                            .d("name", RequiresShutdown::name())
+                            .d("reason", "setPlayStateFailed")
+                            .d("result", result)
+                            .d("id", m_sourceId));
             return false;
         }
         if (m_observer) {
@@ -226,14 +258,21 @@ bool AndroidSLESMediaPlayer::pause(SourceId id) {
         SLuint32 state;
         auto result = (*m_player)->GetPlayState(m_player, &state);
         if (result != SL_RESULT_SUCCESS) {
-            ACSDK_ERROR(LX("pauseFailed").d("reason", "getPlayStateFailed").d("result", result));
+            ACSDK_ERROR(LX("pauseFailed")
+                            .d("name", RequiresShutdown::name())
+                            .d("reason", "getPlayStateFailed")
+                            .d("result", result));
             return false;
         }
 
         if (SL_PLAYSTATE_PLAYING == state) {
             result = (*m_player)->SetPlayState(m_player, SL_PLAYSTATE_PAUSED);
             if (result != SL_RESULT_SUCCESS) {
-                ACSDK_ERROR(LX("pauseFailed").d("reason", "setPlayStateFailed").d("result", result).d("id", id));
+                ACSDK_ERROR(LX("pauseFailed")
+                                .d("name", RequiresShutdown::name())
+                                .d("reason", "setPlayStateFailed")
+                                .d("result", result)
+                                .d("id", id));
                 return false;
             }
 
@@ -243,9 +282,17 @@ bool AndroidSLESMediaPlayer::pause(SourceId id) {
 
             return true;
         }
-        ACSDK_ERROR(LX("pauseFailed").d("reason", "invalidState").d("requestId", id).d("state", state));
+        ACSDK_ERROR(LX("pauseFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "invalidState")
+                        .d("requestId", id)
+                        .d("state", state));
     } else {
-        ACSDK_ERROR(LX("pauseFailed").d("reason", "invalidId").d("requestId", id).d("currentId", m_sourceId));
+        ACSDK_ERROR(LX("pauseFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "invalidId")
+                        .d("requestId", id)
+                        .d("currentId", m_sourceId));
     }
     return false;
 }
@@ -258,14 +305,21 @@ bool AndroidSLESMediaPlayer::resume(SourceId id) {
         SLuint32 state;
         auto result = (*m_player)->GetPlayState(m_player, &state);
         if (result != SL_RESULT_SUCCESS) {
-            ACSDK_ERROR(LX("resumeFailed").d("reason", "getPlayStateFailed").d("result", result));
+            ACSDK_ERROR(LX("resumeFailed")
+                            .d("name", RequiresShutdown::name())
+                            .d("reason", "getPlayStateFailed")
+                            .d("result", result));
             return false;
         }
 
         if (SL_PLAYSTATE_PAUSED == state) {
             result = (*m_player)->SetPlayState(m_player, SL_PLAYSTATE_PLAYING);
             if (result != SL_RESULT_SUCCESS) {
-                ACSDK_ERROR(LX("resumeFailed").d("reason", "setPlayStateFailed").d("result", result).d("id", id));
+                ACSDK_ERROR(LX("resumeFailed")
+                                .d("name", RequiresShutdown::name())
+                                .d("reason", "setPlayStateFailed")
+                                .d("result", result)
+                                .d("id", id));
                 return false;
             }
 
@@ -275,9 +329,17 @@ bool AndroidSLESMediaPlayer::resume(SourceId id) {
 
             return true;
         }
-        ACSDK_ERROR(LX("resumeFailed").d("reason", "invalidState").d("requestId", id).d("state", state));
+        ACSDK_ERROR(LX("resumeFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "invalidState")
+                        .d("requestId", id)
+                        .d("state", state));
     } else {
-        ACSDK_ERROR(LX("resumeFailed").d("reason", "invalidId").d("requestId", id).d("currentId", m_sourceId));
+        ACSDK_ERROR(LX("resumeFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "invalidId")
+                        .d("requestId", id)
+                        .d("currentId", m_sourceId));
     }
     return false;
 }
@@ -298,6 +360,7 @@ void AndroidSLESMediaPlayer::setObserver(std::shared_ptr<MediaPlayerObserverInte
 }
 
 void AndroidSLESMediaPlayer::doShutdown() {
+    ACSDK_DEBUG9(LX(__func__).d("name", RequiresShutdown::name()));
     std::lock_guard<std::mutex> lock{m_operationMutex};
     stopLocked();
     m_observer.reset();
@@ -314,6 +377,7 @@ void AndroidSLESMediaPlayer::doShutdown() {
 }
 
 AndroidSLESMediaPlayer::~AndroidSLESMediaPlayer() {
+    ACSDK_DEBUG9(LX(__func__).d("name", RequiresShutdown::name()));
     m_mediaQueue.reset();
     doShutdown();
 }
@@ -327,7 +391,8 @@ MediaPlayerInterface::SourceId AndroidSLESMediaPlayer::configureNewRequest(
         // Use global lock to stop player and set new source id.
         std::lock_guard<std::mutex> lock{m_operationMutex};
         if (m_hasShutdown) {
-            ACSDK_ERROR(LX("configureNewRequestFailed").d("reason", "playerHasShutdown"));
+            ACSDK_ERROR(
+                LX("configureNewRequestFailed").d("name", RequiresShutdown::name()).d("reason", "playerHasShutdown"));
             return ERROR;
         }
 
@@ -353,6 +418,7 @@ MediaPlayerInterface::SourceId AndroidSLESMediaPlayer::configureNewRequest(
     m_mediaQueue = AndroidSLESMediaQueue::create(m_playerObject, std::move(decoder), callback, m_config);
     if (!m_mediaQueue) {
         ACSDK_ERROR(LX("configureNewRequestFailed")
+                        .d("name", RequiresShutdown::name())
                         .d("reason", "failedToCreateMediaQueue")
                         .d("decoder", inputController.get()));
         return ERROR;
@@ -368,18 +434,18 @@ std::unique_ptr<AndroidSLESMediaPlayer> AndroidSLESMediaPlayer::create(
     const PlaybackConfiguration& config,
     const std::string& name) {
     if (!contentFetcherFactory) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "invalidContentFetcherFactory"));
+        ACSDK_ERROR(LX("createFailed").d("name", name).d("reason", "invalidContentFetcherFactory"));
         return nullptr;
     }
 
     if (!engine) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "invalidEngine"));
+        ACSDK_ERROR(LX("createFailed").d("name", name).d("reason", "invalidEngine"));
         return nullptr;
     }
 
     std::shared_ptr<AndroidSLESObject> outputMix = engine->createOutputMix();
     if (!outputMix) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "invalidOutputMix"));
+        ACSDK_ERROR(LX("createFailed").d("name", name).d("reason", "invalidOutputMix"));
         return nullptr;
     }
 
@@ -393,19 +459,19 @@ std::unique_ptr<AndroidSLESMediaPlayer> AndroidSLESMediaPlayer::create(
 
     std::shared_ptr<AndroidSLESObject> playerObject = engine->createPlayer(audioSource, audioSink, enableEqualizer);
     if (!playerObject) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "createPlayerFailed"));
+        ACSDK_ERROR(LX("createFailed").d("name", name).d("reason", "createPlayerFailed"));
         return nullptr;
     }
 
     SLPlayItf playerInterface;
     if (!playerObject->getInterface(SL_IID_PLAY, &playerInterface)) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "getPlayerInterfaceFailed"));
+        ACSDK_ERROR(LX("createFailed").d("name", name).d("reason", "getPlayerInterfaceFailed"));
         return nullptr;
     }
 
     auto speaker = AndroidSLESSpeaker::create(engine, outputMix, playerObject, speakerType);
     if (!speaker) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "createSpeakerFailed"));
+        ACSDK_ERROR(LX("createFailed").d("name", name).d("reason", "createSpeakerFailed"));
         return nullptr;
     }
 
@@ -413,7 +479,7 @@ std::unique_ptr<AndroidSLESMediaPlayer> AndroidSLESMediaPlayer::create(
     SLEqualizerItf equalizerItf = nullptr;
     if (enableEqualizer) {
         if (!playerObject->getInterface(SL_IID_EQUALIZER, &equalizerItf)) {
-            ACSDK_ERROR(LX("createFailed").d("reason", "equalizerInterfaceUnavailable"));
+            ACSDK_ERROR(LX("createFailed").d("name", name).d("reason", "equalizerInterfaceUnavailable"));
             return nullptr;
         }
     }
@@ -429,14 +495,16 @@ std::unique_ptr<AndroidSLESMediaPlayer> AndroidSLESMediaPlayer::create(
         config,
         name));
     if (!player->registerPrefetchStatusCallback()) {
-        ACSDK_WARN(
-            LX(__func__).m("Media player will be unable to retrieve prefetch status information. This may cause choppy "
-                           "playback when connection is poor."));
+        ACSDK_WARN(LX(__func__)
+                       .d("name", name)
+                       .m("Media player will be unable to retrieve prefetch status information. This may cause choppy "
+                          "playback when connection is poor."));
     }
 
     if (enableEqualizer) {
         if (!player->initializeEqualizer()) {
             ACSDK_ERROR(LX("createFailed")
+                            .d("name", name)
                             .m("Equalizer does not seem to be supported in this environment. You should turn it "
                                "off in the configuration by setting 'equalizer.enabled' value to false."));
             return nullptr;
@@ -483,14 +551,20 @@ void AndroidSLESMediaPlayer::onQueueEvent(
             case AndroidSLESMediaQueue::QueueEvent::ERROR:
                 result = (*m_player)->GetPlayState(m_player, &state);
                 if (result != SL_RESULT_SUCCESS) {
-                    ACSDK_ERROR(LX("onQueueEventFailed").d("reason", "getPlayStateFailed").d("result", result));
+                    ACSDK_ERROR(LX("onQueueEventFailed")
+                                    .d("name", RequiresShutdown::name())
+                                    .d("reason", "getPlayStateFailed")
+                                    .d("result", result));
                     break;
                 }
 
                 if (state != SL_PLAYSTATE_STOPPED) {
                     result = (*m_player)->SetPlayState(m_player, SL_PLAYSTATE_STOPPED);
                     if (result != SL_RESULT_SUCCESS) {
-                        ACSDK_ERROR(LX("onQueueEventFailed").d("result", result).d("id", m_sourceId));
+                        ACSDK_ERROR(LX("onQueueEventFailed")
+                                        .d("name", RequiresShutdown::name())
+                                        .d("result", result)
+                                        .d("id", m_sourceId));
                         break;
                     }
 
@@ -502,7 +576,10 @@ void AndroidSLESMediaPlayer::onQueueEvent(
             case AndroidSLESMediaQueue::QueueEvent::FINISHED_PLAYING:
                 result = (*m_player)->SetPlayState(m_player, SL_PLAYSTATE_STOPPED);
                 if (result != SL_RESULT_SUCCESS) {
-                    ACSDK_ERROR(LX("onQueueEventFailed").d("result", result).d("id", m_sourceId));
+                    ACSDK_ERROR(LX("onQueueEventFailed")
+                                    .d("name", RequiresShutdown::name())
+                                    .d("result", result)
+                                    .d("id", m_sourceId));
                     break;
                 }
 
@@ -516,6 +593,7 @@ void AndroidSLESMediaPlayer::onQueueEvent(
         }
     } else {
         ACSDK_DEBUG9(LX("eventIgnored")
+                         .d("name", RequiresShutdown::name())
                          .d("status", static_cast<int>(status))
                          .d("requestId", eventId)
                          .d("currentId", m_sourceId));
@@ -528,11 +606,15 @@ void AndroidSLESMediaPlayer::onPrefetchStatusChange(SLuint32 event) {
         uint32_t status;
         auto result = (*m_prefetchStatus)->GetPrefetchStatus(m_prefetchStatus, &status);
         if (result != SL_RESULT_SUCCESS) {
-            ACSDK_WARN(LX("prefetchStatusFailed").d("result", result));
+            ACSDK_WARN(LX("prefetchStatusFailed").d("name", RequiresShutdown::name()).d("result", result));
             return;
         }
 
-        ACSDK_DEBUG9(LX("onPrefetchStatusChange").d("event", event).d("observer", m_observer).d("status", status));
+        ACSDK_DEBUG9(LX("onPrefetchStatusChange")
+                         .d("name", RequiresShutdown::name())
+                         .d("event", event)
+                         .d("observer", m_observer)
+                         .d("status", status));
         if ((SL_PREFETCHSTATUS_UNDERFLOW == status)) {
             if (!m_almostDone) {
                 m_observer->onBufferUnderrun(m_sourceId);
@@ -550,20 +632,28 @@ void prefetchStatusCallback(SLPrefetchStatusItf caller, void* pContext, SLuint32
 bool AndroidSLESMediaPlayer::registerPrefetchStatusCallback() {
     SLPrefetchStatusItf prefetchStatusInterface;
     if (!m_playerObject->getInterface(SL_IID_PREFETCHSTATUS, &prefetchStatusInterface)) {
-        ACSDK_ERROR(LX("unavailablePrefetchInformation.").d("reason", "interfaceUnavailable"));
+        ACSDK_ERROR(LX("unavailablePrefetchInformation.")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "interfaceUnavailable"));
         return false;
     }
 
     auto result =
         (*prefetchStatusInterface)->SetCallbackEventsMask(prefetchStatusInterface, SL_PREFETCHEVENT_STATUSCHANGE);
     if (result != SL_RESULT_SUCCESS) {
-        ACSDK_ERROR(LX("unavailablePrefetchInformation.").d("reason", "setEventMaskFailed").d("result", result));
+        ACSDK_ERROR(LX("unavailablePrefetchInformation.")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "setEventMaskFailed")
+                        .d("result", result));
         return false;
     }
 
     result = (*prefetchStatusInterface)->RegisterCallback(prefetchStatusInterface, prefetchStatusCallback, this);
     if (result != SL_RESULT_SUCCESS) {
-        ACSDK_ERROR(LX("unavailablePrefetchInformation.").d("reason", "registerCallbackFailed").d("result", result));
+        ACSDK_ERROR(LX("unavailablePrefetchInformation.")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "registerCallbackFailed")
+                        .d("result", result));
         return false;
     }
 
@@ -586,14 +676,20 @@ bool AndroidSLESMediaPlayer::initializeEqualizer() {
 
     auto result = (*m_equalizer)->SetEnabled(m_equalizer, SL_BOOLEAN_TRUE);
     if (result != SL_RESULT_SUCCESS) {
-        ACSDK_ERROR(LX("initializeEqualizerFailed").d("reason", "SetEnabled failed").d("result", result));
+        ACSDK_ERROR(LX("initializeEqualizerFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "SetEnabled failed")
+                        .d("result", result));
         return false;
     }
 
     SLuint16 nbBands = 0;
     result = (*m_equalizer)->GetNumberOfBands(m_equalizer, &nbBands);
     if (result != SL_RESULT_SUCCESS) {
-        ACSDK_ERROR(LX("initializeEqualizerFailed").d("reason", "GetNumberOfBands failed").d("result", result));
+        ACSDK_ERROR(LX("initializeEqualizerFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "GetNumberOfBands failed")
+                        .d("result", result));
         return false;
     }
 
@@ -601,14 +697,19 @@ bool AndroidSLESMediaPlayer::initializeEqualizer() {
     m_numberOfEqualizerBands = nbBands;
 
     if (0 == m_numberOfEqualizerBands) {
-        ACSDK_ERROR(LX("initializeEqualizerFailed").d("reason", "No equalizer bands supported").d("result", result));
+        ACSDK_ERROR(LX("initializeEqualizerFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "No equalizer bands supported")
+                        .d("result", result));
         return false;
     }
 
     // Create band mapper
     m_bandMapper = EqualizerLinearBandMapper::create(m_numberOfEqualizerBands);
     if (nullptr == m_bandMapper) {
-        ACSDK_ERROR(LX("initializeEqualizerFailed").d("reason", "Failed to create band mapper"));
+        ACSDK_ERROR(LX("initializeEqualizerFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "Failed to create band mapper"));
         return false;
     }
 
@@ -618,7 +719,10 @@ bool AndroidSLESMediaPlayer::initializeEqualizer() {
         SLmilliHertz bandFrequency;
         result = (*m_equalizer)->GetCenterFreq(m_equalizer, bandIndex, &bandFrequency);
         if (result != SL_RESULT_SUCCESS) {
-            ACSDK_ERROR(LX("initializeEqualizerFailed").d("reason", "GetBandLevelRange failed").d("result", result));
+            ACSDK_ERROR(LX("initializeEqualizerFailed")
+                            .d("name", RequiresShutdown::name())
+                            .d("reason", "GetBandLevelRange failed")
+                            .d("result", result));
             return false;
         }
         frequencyToBandMap[bandFrequency] = bandIndex;
@@ -633,7 +737,10 @@ bool AndroidSLESMediaPlayer::initializeEqualizer() {
 
     result = (*m_equalizer)->GetBandLevelRange(m_equalizer, &minLevel, &maxLevel);
     if (result != SL_RESULT_SUCCESS) {
-        ACSDK_ERROR(LX("initializeEqualizerFailed").d("reason", "GetBandLevelRange failed").d("result", result));
+        ACSDK_ERROR(LX("initializeEqualizerFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "GetBandLevelRange failed")
+                        .d("result", result));
         return false;
     }
 
@@ -649,7 +756,9 @@ void AndroidSLESMediaPlayer::setEqualizerBandLevels(
     ACSDK_DEBUG5(LX(__func__));
 
     if (nullptr == m_bandMapper) {
-        ACSDK_ERROR(LX("setEqualizerBandLevelsFailed").d("reason", "Equalizer is not enabled for this instance"));
+        ACSDK_ERROR(LX("setEqualizerBandLevelsFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("reason", "Equalizer is not enabled for this instance"));
         return;
     }
 
@@ -660,7 +769,10 @@ void AndroidSLESMediaPlayer::setEqualizerBandLevels(
     }
 
     m_bandMapper->mapEqualizerBands(bandLevelMap, [this](int index, int level) {
-        ACSDK_DEBUG7(LX("setEqualizerBandLevels").d("band index", index).d("band level", level));
+        ACSDK_DEBUG7(LX("setEqualizerBandLevels")
+                         .d("name", RequiresShutdown::name())
+                         .d("band index", index)
+                         .d("band level", level));
         auto result =
             (*m_equalizer)
                 ->SetBandLevel(m_equalizer, m_growingFrequenceBandMap[index], level * DECIBELL_TO_MILLIBELL_MULT);

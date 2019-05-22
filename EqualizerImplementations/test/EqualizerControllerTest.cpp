@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -100,7 +100,7 @@ void EqualizerControllerTest::SetUp() {
 }
 
 // Test internal state right after controller creation
-TEST_F(EqualizerControllerTest, providedEmptyConfig_shouldUseDefaults) {
+TEST_F(EqualizerControllerTest, test_providedEmptyConfig_shouldUseDefaults) {
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);
 
     auto configuration = controller->getConfiguration();
@@ -127,7 +127,7 @@ TEST_F(EqualizerControllerTest, providedEmptyConfig_shouldUseDefaults) {
 }
 
 // Test simple changes
-TEST_F(EqualizerControllerTest, changeBandLevels_shouldSucceed) {
+TEST_F(EqualizerControllerTest, test_changeBandLevels_shouldSucceed) {
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);
 
     controller->setBandLevel(EqualizerBand::TREBLE, NON_DEFAULT_TREBLE);
@@ -150,7 +150,7 @@ TEST_F(EqualizerControllerTest, changeBandLevels_shouldSucceed) {
 }
 
 // Test simple changes with invalid levels
-TEST_F(EqualizerControllerTest, setInvalidBandLevels_shouldClampToSupportedRange) {
+TEST_F(EqualizerControllerTest, test_setInvalidBandLevels_shouldClampToSupportedRange) {
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);
 
     controller->setBandLevel(EqualizerBand::TREBLE, BELOW_MIN_LEVEL);
@@ -169,7 +169,7 @@ TEST_F(EqualizerControllerTest, setInvalidBandLevels_shouldClampToSupportedRange
 }
 
 // Test mode changes
-TEST_F(EqualizerControllerTest, setMode_shouldSucceed) {
+TEST_F(EqualizerControllerTest, test_setMode_shouldSucceed) {
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);
 
     controller->setCurrentMode(EqualizerMode::NIGHT);
@@ -179,7 +179,7 @@ TEST_F(EqualizerControllerTest, setMode_shouldSucceed) {
 }
 
 // Test invalid modes
-TEST_F(EqualizerControllerTest, setInvalidMode_shouldNotChangeMode) {
+TEST_F(EqualizerControllerTest, test_setInvalidMode_shouldNotChangeMode) {
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);
 
     controller->setCurrentMode(EqualizerMode::MOVIE);
@@ -189,7 +189,7 @@ TEST_F(EqualizerControllerTest, setInvalidMode_shouldNotChangeMode) {
 }
 
 // Test single listener reaction on band level changes
-TEST_F(EqualizerControllerTest, providedBandLevelChanges_addRemoveListener_shouldFollowSubscriptionStatus) {
+TEST_F(EqualizerControllerTest, test_providedBandLevelChanges_addRemoveListener_shouldFollowSubscriptionStatus) {
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);
 
     auto listener = std::make_shared<NiceMock<MockEqualizerControllerListenerInterface>>();
@@ -222,7 +222,7 @@ TEST_F(EqualizerControllerTest, providedBandLevelChanges_addRemoveListener_shoul
 }
 
 // Test single listener reaction on mode changes
-TEST_F(EqualizerControllerTest, providedModeChanges_addRemoveListener_shouldFollowSubscriptionStatus) {
+TEST_F(EqualizerControllerTest, test_providedModeChanges_addRemoveListener_shouldFollowSubscriptionStatus) {
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);
 
     auto listener = std::make_shared<NiceMock<MockEqualizerControllerListenerInterface>>();
@@ -250,7 +250,9 @@ TEST_F(EqualizerControllerTest, providedModeChanges_addRemoveListener_shouldFoll
 }
 
 // Test multiple listeners reaction on changes
-TEST_F(EqualizerControllerTest, providedBandLevelChanges_addRemoveMultipleListeners_shouldFollowSubscriptionStatus) {
+TEST_F(
+    EqualizerControllerTest,
+    test_providedBandLevelChanges_addRemoveMultipleListeners_shouldFollowSubscriptionStatus) {
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);
 
     // Variables to hold state reported by onEqualizerStateChanged()
@@ -283,7 +285,7 @@ TEST_F(EqualizerControllerTest, providedBandLevelChanges_addRemoveMultipleListen
 }
 
 // Test the synchronous nature of callbacks
-TEST_F(EqualizerControllerTest, triggerChangesMultipleTimes_ExpectListenersNotifiedSameTimes) {
+TEST_F(EqualizerControllerTest, test_triggerChangesMultipleTimes_ExpectListenersNotifiedSameTimes) {
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);
 
     auto listener = std::make_shared<NiceMock<MockEqualizerControllerListenerInterface>>();
@@ -300,7 +302,7 @@ TEST_F(EqualizerControllerTest, triggerChangesMultipleTimes_ExpectListenersNotif
 }
 
 // Test single equalizer registrations
-TEST_F(EqualizerControllerTest, providedBandLevelChanges_addRemoveSingleEqualizer_shouldFollowRegistrationStatus) {
+TEST_F(EqualizerControllerTest, test_providedBandLevelChanges_addRemoveSingleEqualizer_shouldFollowRegistrationStatus) {
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);
 
     auto equalizer = std::make_shared<NiceMock<MockEqualizerInterface>>();
@@ -324,7 +326,9 @@ TEST_F(EqualizerControllerTest, providedBandLevelChanges_addRemoveSingleEqualize
 }
 
 // Test multiple equalizer registrations
-TEST_F(EqualizerControllerTest, providedBandLevelChanges_addRemoveMultipleEqualizers_shouldFollowRegistrationStatus) {
+TEST_F(
+    EqualizerControllerTest,
+    test_providedBandLevelChanges_addRemoveMultipleEqualizers_shouldFollowRegistrationStatus) {
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);
 
     auto equalizer1 = std::make_shared<NiceMock<MockEqualizerInterface>>();
@@ -359,7 +363,7 @@ TEST_F(EqualizerControllerTest, providedBandLevelChanges_addRemoveMultipleEquali
 }
 
 // Test synchronous nature of equalizer handling
-TEST_F(EqualizerControllerTest, triggerChangesMultipleTimes_ExpectEqualizersCalledSameTimes) {
+TEST_F(EqualizerControllerTest, test_triggerChangesMultipleTimes_ExpectEqualizersCalledSameTimes) {
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);
 
     auto equalizer = std::make_shared<NiceMock<MockEqualizerInterface>>();
@@ -376,7 +380,7 @@ TEST_F(EqualizerControllerTest, triggerChangesMultipleTimes_ExpectEqualizersCall
 }
 
 // Test persistent storage operations
-TEST_F(EqualizerControllerTest, saveLoadStateWithPersistentStorage_shouldSucceed) {
+TEST_F(EqualizerControllerTest, test_saveLoadStateWithPersistentStorage_shouldSucceed) {
     EXPECT_CALL(*(m_storage.get()), loadState()).Times(1);
 
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);
@@ -396,7 +400,7 @@ TEST_F(EqualizerControllerTest, saveLoadStateWithPersistentStorage_shouldSucceed
     controller->setCurrentMode(EqualizerMode::TV);
 }
 
-TEST_F(EqualizerControllerTest, setLevelBelowEqualizerMinimum_shouldClamp) {
+TEST_F(EqualizerControllerTest, test_setLevelBelowEqualizerMinimum_shouldClamp) {
     EXPECT_CALL(*(m_storage.get()), loadState()).Times(1);
 
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);
@@ -413,7 +417,7 @@ TEST_F(EqualizerControllerTest, setLevelBelowEqualizerMinimum_shouldClamp) {
     EXPECT_EQ(bandLevelMap[EqualizerBand::MIDRANGE], MAX_LEVEL);
 }
 
-TEST_F(EqualizerControllerTest, setLevelAboveEqualizerMaximum_shouldClamp) {
+TEST_F(EqualizerControllerTest, test_setLevelAboveEqualizerMaximum_shouldClamp) {
     EXPECT_CALL(*(m_storage.get()), loadState()).Times(1);
 
     auto controller = EqualizerController::create(m_modeController, m_configuration, m_storage);

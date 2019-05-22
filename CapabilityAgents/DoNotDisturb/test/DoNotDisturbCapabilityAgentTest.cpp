@@ -157,37 +157,37 @@ void DoNotDisturbCapabilityAgentTest::TearDown() {
     }
 }
 
-TEST_F(DoNotDisturbCapabilityAgentTest, givenNullCustomerDataManager_create_shouldFail) {
+TEST_F(DoNotDisturbCapabilityAgentTest, test_givenNullCustomerDataManager_create_shouldFail) {
     auto dndCA = DoNotDisturbCapabilityAgent::create(
         nullptr, m_mockExceptionEncounteredSender, m_messageSender, m_settingsManager, m_settingsStorage);
     EXPECT_THAT(dndCA, IsNull());
 }
 
-TEST_F(DoNotDisturbCapabilityAgentTest, givenNullExceptionSender_create_shouldFail) {
+TEST_F(DoNotDisturbCapabilityAgentTest, test_givenNullExceptionSender_create_shouldFail) {
     auto dndCA = DoNotDisturbCapabilityAgent::create(
         m_customerDataManager, nullptr, m_messageSender, m_settingsManager, m_settingsStorage);
     EXPECT_THAT(dndCA, IsNull());
 }
 
-TEST_F(DoNotDisturbCapabilityAgentTest, givenNullMessageSender_create_shouldFail) {
+TEST_F(DoNotDisturbCapabilityAgentTest, test_givenNullMessageSender_create_shouldFail) {
     auto dndCA = DoNotDisturbCapabilityAgent::create(
         m_customerDataManager, m_mockExceptionEncounteredSender, nullptr, m_settingsManager, m_settingsStorage);
     EXPECT_THAT(dndCA, IsNull());
 }
 
-TEST_F(DoNotDisturbCapabilityAgentTest, givenNullSettingsManager_create_shouldFail) {
+TEST_F(DoNotDisturbCapabilityAgentTest, test_givenNullSettingsManager_create_shouldFail) {
     auto dndCA = DoNotDisturbCapabilityAgent::create(
         m_customerDataManager, m_mockExceptionEncounteredSender, m_messageSender, nullptr, m_settingsStorage);
     EXPECT_THAT(dndCA, IsNull());
 }
 
-TEST_F(DoNotDisturbCapabilityAgentTest, givenNullSettingsStorage_create_shouldFail) {
+TEST_F(DoNotDisturbCapabilityAgentTest, test_givenNullSettingsStorage_create_shouldFail) {
     auto dndCA = DoNotDisturbCapabilityAgent::create(
         m_customerDataManager, m_mockExceptionEncounteredSender, m_messageSender, m_settingsManager, nullptr);
     EXPECT_THAT(dndCA, IsNull());
 }
 
-TEST_F(DoNotDisturbCapabilityAgentTest, givenValidSetDNDDirective_handleDirective_shouldSucceed) {
+TEST_F(DoNotDisturbCapabilityAgentTest, test_givenValidSetDNDDirective_handleDirective_shouldSucceed) {
     // Become online
     bool initialReportSent =
         expectEventSend(DND_REPORT_EVENT, MessageRequestObserverInterface::Status::SUCCESS, [this]() {
@@ -209,7 +209,7 @@ TEST_F(DoNotDisturbCapabilityAgentTest, givenValidSetDNDDirective_handleDirectiv
     ASSERT_TRUE(directiveResponseEventSent);
 }
 
-TEST_F(DoNotDisturbCapabilityAgentTest, beingOnline_applyLocalChange_shouldSendReport) {
+TEST_F(DoNotDisturbCapabilityAgentTest, test_beingOnline_applyLocalChange_shouldSendReport) {
     bool initialReportSent =
         expectEventSend(DND_REPORT_EVENT, MessageRequestObserverInterface::Status::SUCCESS, [this]() {
             m_dndCA->onConnectionStatusChanged(
@@ -227,7 +227,7 @@ TEST_F(DoNotDisturbCapabilityAgentTest, beingOnline_applyLocalChange_shouldSendR
     ASSERT_TRUE(changeEventSent);
 }
 
-TEST_F(DoNotDisturbCapabilityAgentTest, beingOffline_applyLocalChangeAndBecomeOnline_shouldSendChanged) {
+TEST_F(DoNotDisturbCapabilityAgentTest, test_beingOffline_applyLocalChangeAndBecomeOnline_shouldSendChanged) {
     // Apply change while offline
     m_dndCA->sendChangedEvent("true");
 
@@ -241,7 +241,7 @@ TEST_F(DoNotDisturbCapabilityAgentTest, beingOffline_applyLocalChangeAndBecomeOn
     ASSERT_TRUE(changeEventSent);
 }
 
-TEST_F(DoNotDisturbCapabilityAgentTest, whileSendingChangedEvent_sendChangedFail_shouldSendReport) {
+TEST_F(DoNotDisturbCapabilityAgentTest, test_whileSendingChangedEvent_sendChangedFail_shouldSendReport) {
     // Become online and ignore the first "report" event.
 
     bool initialReportSent =

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -39,6 +39,9 @@ static const std::string TAG("M3UParser");
 
 /// The first line of an Extended M3U playlist.
 static const std::string EXT_M3U_PLAYLIST_HEADER = "#EXTM3U";
+
+/// The key to identify the media sequence tag.
+static const std::string EXTXMEDIASEQUENCE = "#EXT-X-MEDIA-SEQUENCE:";
 
 /// HLS #EXTINF tag.
 static const std::string EXTINF = "#EXTINF";
@@ -97,7 +100,7 @@ static const int IV_HEX_STRING_LENGTH = 32;
  * @param line The #EXTINF line in HLS playlist.
  * @return parsed runtime in milliseconds from line.
  */
-std::chrono::milliseconds parseRuntime(std::string line);
+std::chrono::milliseconds parseRuntime(const std::string& line);
 
 /**
  * Helper method to convert a line in HLS playlist to absolute URL.
@@ -126,14 +129,24 @@ PlayItem::PlayItem(std::string playlistURL) : type(Type::PLAYLIST_URL), playlist
 PlayItem::PlayItem(PlaylistEntry playlistEntry) : type(Type::MEDIA_INFO), playlistEntry(playlistEntry) {
 }
 
-M3UContent::M3UContent(const std::vector<std::string> variantURLs) : variantURLs(variantURLs), isLive(false) {
+M3UContent::M3UContent(const std::vector<std::string>& variantURLs) :
+        variantURLs(variantURLs),
+        isLive(false),
+        mediaSequence(INVALID_MEDIA_SEQUENCE) {
 }
 
-M3UContent::M3UContent(const std::vector<PlaylistEntry> entries, bool isLive) : entries(entries), isLive(isLive) {
+M3UContent::M3UContent(const std::vector<PlaylistEntry>& entries, bool isLive, long mediaSequence) :
+        entries(entries),
+        isLive(isLive),
+        mediaSequence(mediaSequence) {
 }
 
 bool M3UContent::isMasterPlaylist() const {
     return !variantURLs.empty();
+}
+
+bool M3UContent::hasMediaSequence() const {
+    return INVALID_MEDIA_SEQUENCE != mediaSequence;
 }
 
 bool M3UContent::empty() const {
@@ -155,6 +168,7 @@ M3UContent parseM3UContent(const std::string& playlistURL, const std::string& co
     std::string line;
 
     auto isPlaylistExtendedM3U = false;
+    auto playlistMediaSequence = INVALID_MEDIA_SEQUENCE;
     auto isLive = true;
     auto isMasterPlaylist = false;
     auto duration = INVALID_DURATION;
@@ -175,6 +189,8 @@ M3UContent parseM3UContent(const std::string& playlistURL, const std::string& co
         if (firstChar == '#') {
             if (hasPrefix(line, EXT_M3U_PLAYLIST_HEADER)) {
                 isPlaylistExtendedM3U = true;
+            } else if (hasPrefix(line, EXTXMEDIASEQUENCE)) {
+                playlistMediaSequence = parsePlaylistMediaSequence(line);
             } else if (hasPrefix(line, EXTINF)) {
                 duration = parseRuntime(line);
             } else if (hasPrefix(line, EXTSTREAMINF)) {
@@ -224,7 +240,24 @@ M3UContent parseM3UContent(const std::string& playlistURL, const std::string& co
         entries.back().parseResult = PlaylistParseResult::FINISHED;
     }
 
-    return isMasterPlaylist ? M3UContent(variantURLs) : M3UContent(entries, isLive);
+    if (isMasterPlaylist) {
+        return M3UContent(variantURLs);
+    } else {
+        return M3UContent(entries, isLive, playlistMediaSequence);
+    }
+}
+
+long parsePlaylistMediaSequence(const std::string& line) {
+    auto runner = EXTXMEDIASEQUENCE.length();
+    auto stringFromHereOnwards = line.substr(runner);
+    std::istringstream iss(stringFromHereOnwards);
+
+    long playlistMediaSequence;
+    iss >> playlistMediaSequence;
+    if (!iss || (playlistMediaSequence < 0) || (runner == line.length())) {
+        return INVALID_MEDIA_SEQUENCE;
+    }
+    return playlistMediaSequence;
 }
 
 bool getAbsoluteURL(const std::string& baseURL, const std::string& url, std::string* absoluteURL) {
@@ -250,7 +283,7 @@ bool isPlaylistExtendedM3U(const std::string& playlistContent) {
     }
 }
 
-std::chrono::milliseconds parseRuntime(std::string line) {
+std::chrono::milliseconds parseRuntime(const std::string& line) {
     // #EXTINF:1234.00, blah blah blah have you ever heard the tragedy of darth plagueis the wise?
     auto runner = EXTINF.length();
 

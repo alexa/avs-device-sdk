@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -317,14 +317,14 @@ protected:
 };
 
 /// Tests that we don't get back a valid detector if an invalid stream is passed in.
-TEST_F(SensoryKeywordTest, invalidStream) {
+TEST_F(SensoryKeywordTest, test_invalidStream) {
     auto detector = SensoryKeywordDetector::create(
         nullptr, compatibleAudioFormat, {keyWordObserver1}, {stateObserver}, modelFilePath);
     ASSERT_FALSE(detector);
 }
 
 /// Tests that we don't get back a valid detector if an invalid endianness is passed in.
-TEST_F(SensoryKeywordTest, incompatibleEndianness) {
+TEST_F(SensoryKeywordTest, test_incompatibleEndianness) {
     auto rawBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
     auto uniqueSds = avsCommon::avs::AudioInputStream::create(rawBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> sds = std::move(uniqueSds);
@@ -337,7 +337,7 @@ TEST_F(SensoryKeywordTest, incompatibleEndianness) {
 }
 
 /// Tests that we get back the expected number of keywords for the four_alexa.wav file for one keyword observer.
-TEST_F(SensoryKeywordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForOneObserver) {
+TEST_F(SensoryKeywordTest, test_getExpectedNumberOfDetectionsInFourAlexasAudioFileForOneObserver) {
     auto fourAlexasBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
     auto fourAlexasSds = avsCommon::avs::AudioInputStream::create(fourAlexasBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> fourAlexasAudioBuffer = std::move(fourAlexasSds);
@@ -370,7 +370,7 @@ TEST_F(SensoryKeywordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileFor
 }
 
 /// Tests that we get back the expected number of keywords for the four_alexa.wav file for two keyword observers.
-TEST_F(SensoryKeywordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForTwoObservers) {
+TEST_F(SensoryKeywordTest, test_getExpectedNumberOfDetectionsInFourAlexasAudioFileForTwoObservers) {
     auto fourAlexasBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
     auto fourAlexasSds = avsCommon::avs::AudioInputStream::create(fourAlexasBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> fourAlexasAudioBuffer = std::move(fourAlexasSds);
@@ -419,7 +419,7 @@ TEST_F(SensoryKeywordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileFor
  * Tests that we get back the expected number of keywords for the alexa_stop_alexa_joke.wav file for one keyword
  * observer.
  */
-TEST_F(SensoryKeywordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileForOneObserver) {
+TEST_F(SensoryKeywordTest, test_getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileForOneObserver) {
     auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
     auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);
@@ -453,7 +453,7 @@ TEST_F(SensoryKeywordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudi
 }
 
 /// Tests that the detector state changes to ACTIVE when the detector is initialized properly.
-TEST_F(SensoryKeywordTest, getActiveState) {
+TEST_F(SensoryKeywordTest, test_getActiveState) {
     auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
     auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);
@@ -482,7 +482,7 @@ TEST_F(SensoryKeywordTest, getActiveState) {
  * Tests that the stream is closed and that the detector state changes to STREAM_CLOSED when we close the only writer
  * of the SDS passed in and all keyword detections have occurred.
  */
-TEST_F(SensoryKeywordTest, getStreamClosedState) {
+TEST_F(SensoryKeywordTest, test_getStreamClosedState) {
     auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
     auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);
@@ -524,7 +524,7 @@ TEST_F(SensoryKeywordTest, getStreamClosedState) {
  * observer even when SDS has other data prior to the audio file in it. This tests that the reference point that the
  * Sensory wrapper uses is working as expected.
  */
-TEST_F(SensoryKeywordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileWithRandomDataAtBeginning) {
+TEST_F(SensoryKeywordTest, test_getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileWithRandomDataAtBeginning) {
     auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
     auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);

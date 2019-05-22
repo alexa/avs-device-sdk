@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -75,14 +75,14 @@ std::shared_ptr<Setting<bool>> SettingTest::createSetting() {
 }
 
 /// Test successful create.
-TEST_F(SettingTest, testCreate) {
+TEST_F(SettingTest, test_create) {
     auto setting = createSetting();
     ASSERT_NE(setting, nullptr);
     EXPECT_EQ(setting->get(), INIT_VALUE);
 }
 
 /// Test create initial value when restore value is not available.
-TEST_F(SettingTest, testCreateNoRestore) {
+TEST_F(SettingTest, test_createNoRestore) {
     m_protocol = std::unique_ptr<MockSettingProtocol>(new MockSettingProtocol(NEW_VALUE_STR, false, false));
     auto setting = createSetting();
     ASSERT_NE(setting, nullptr);
@@ -90,12 +90,12 @@ TEST_F(SettingTest, testCreateNoRestore) {
 }
 
 /// Test create with null protocol.
-TEST_F(SettingTest, testNullCreate) {
+TEST_F(SettingTest, test_nullCreate) {
     EXPECT_EQ(Setting<bool>::create(INIT_VALUE, nullptr), nullptr);
 }
 
 /// Test avs change.
-TEST_F(SettingTest, testAvsChange) {
+TEST_F(SettingTest, test_avsChange) {
     auto setting = createSetting();
     ASSERT_NE(setting, nullptr);
 
@@ -104,7 +104,7 @@ TEST_F(SettingTest, testAvsChange) {
 }
 
 /// Test avs change revert.
-TEST_F(SettingTest, testAvsChangeRevert) {
+TEST_F(SettingTest, test_avsChangeRevert) {
     m_protocol = std::unique_ptr<MockSettingProtocol>(new MockSettingProtocol(INIT_VALUE_STR, true, true));
     auto setting = createSetting();
     ASSERT_NE(setting, nullptr);
@@ -114,7 +114,7 @@ TEST_F(SettingTest, testAvsChangeRevert) {
 }
 
 /// Test local change.
-TEST_F(SettingTest, testLocalChange) {
+TEST_F(SettingTest, test_localChange) {
     auto setting = createSetting();
     ASSERT_NE(setting, nullptr);
 
@@ -123,7 +123,7 @@ TEST_F(SettingTest, testLocalChange) {
 }
 
 /// Test local change revert.
-TEST_F(SettingTest, testLocalChangeRevert) {
+TEST_F(SettingTest, test_localChangeRevert) {
     m_protocol = std::unique_ptr<MockSettingProtocol>(new MockSettingProtocol(INIT_VALUE_STR, true, true));
     auto setting = createSetting();
     ASSERT_NE(setting, nullptr);
@@ -133,7 +133,7 @@ TEST_F(SettingTest, testLocalChangeRevert) {
 }
 
 /// Test observer notification.
-TEST_F(SettingTest, testObserverNotificationLocal) {
+TEST_F(SettingTest, test_observerNotificationLocal) {
     auto setting = createSetting();
     ASSERT_NE(setting, nullptr);
 
@@ -145,7 +145,7 @@ TEST_F(SettingTest, testObserverNotificationLocal) {
 }
 
 /// Test observer notification.
-TEST_F(SettingTest, testObserverNotificationAvs) {
+TEST_F(SettingTest, test_observerNotificationAvs) {
     auto setting = createSetting();
     ASSERT_NE(setting, nullptr);
 

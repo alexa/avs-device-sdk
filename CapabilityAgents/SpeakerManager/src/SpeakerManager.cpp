@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ using namespace avsCommon::avs;
 using namespace avsCommon::avs::speakerConstants;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::json;
+using namespace avsCommon::utils::configuration;
 using namespace rapidjson;
 
 /// Speaker capability constants
@@ -46,6 +47,10 @@ static const std::string SPEAKER_CAPABILITY_INTERFACE_VERSION = "1.0";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG{"SpeakerManager"};
+/// The key in our config file to find the root of speaker manager configuration.
+static const std::string SPEAKERMANAGER_CONFIGURATION_ROOT_KEY = "speakerManagerCapabilityAgent";
+/// The key in our config file to find the minUnmuteVolume value.
+static const std::string SPEAKERMANAGER_MIN_UNMUTE_VOLUME_KEY = "minUnmuteVolume";
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -93,8 +98,14 @@ std::shared_ptr<SpeakerManager> SpeakerManager::create(
         return nullptr;
     }
 
+    int minUnmuteVolume = MIN_UNMUTE_VOLUME;
+
+    auto configurationRoot = ConfigurationNode::getRoot()[SPEAKERMANAGER_CONFIGURATION_ROOT_KEY];
+    // If key is present, then read and initilize the value from config or set to default.
+    configurationRoot.getInt(SPEAKERMANAGER_MIN_UNMUTE_VOLUME_KEY, &minUnmuteVolume, MIN_UNMUTE_VOLUME);
+
     auto speakerManager = std::shared_ptr<SpeakerManager>(
-        new SpeakerManager(speakers, contextManager, messageSender, exceptionEncounteredSender));
+        new SpeakerManager(speakers, contextManager, messageSender, exceptionEncounteredSender, minUnmuteVolume));
 
     return speakerManager;
 }
@@ -103,11 +114,13 @@ SpeakerManager::SpeakerManager(
     const std::vector<std::shared_ptr<SpeakerInterface>>& speakers,
     std::shared_ptr<ContextManagerInterface> contextManager,
     std::shared_ptr<MessageSenderInterface> messageSender,
-    std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender) :
+    std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+    const int minUnmuteVolume) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         RequiresShutdown{"SpeakerManager"},
         m_contextManager{contextManager},
-        m_messageSender{messageSender} {
+        m_messageSender{messageSender},
+        m_minUnmuteVolume{minUnmuteVolume} {
     for (auto speaker : speakers) {
         m_speakerMap.insert(
             std::pair<SpeakerInterface::Type, std::shared_ptr<SpeakerInterface>>(speaker->getSpeakerType(), speaker));
@@ -329,7 +342,13 @@ void SpeakerManager::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveI
                     return;
                 }
 
-                if (executeSetMute(directiveType, mute, SpeakerManagerObserverInterface::Source::DIRECTIVE)) {
+                bool success = true;
+                if (!mute) {
+                    success = executeRestoreVolume(directiveType, SpeakerManagerObserverInterface::Source::DIRECTIVE);
+                }
+                success &= executeSetMute(directiveType, mute, SpeakerManagerObserverInterface::Source::DIRECTIVE);
+
+                if (success) {
                     executeSetHandlingCompleted(info);
                 } else {
                     sendExceptionEncountered(info, "SetMuteFailed", ExceptionErrorType::INTERNAL_ERROR);
@@ -518,6 +537,22 @@ bool SpeakerManager::executeSetVolume(
         executeNotifySettingsChanged(settings, VOLUME_CHANGED, source, type);
     }
     return true;
+}
+
+bool SpeakerManager::executeRestoreVolume(SpeakerInterface::Type type, SpeakerManagerObserverInterface::Source source) {
+    SpeakerInterface::SpeakerSettings settings;
+
+    // All initialized speakers controlled by directives with the same type should have the same state.
+    if (!validateSpeakerSettingsConsistency(type, &settings)) {
+        ACSDK_ERROR(LX("executeAdjustVolumeFailed").d("reason", "initialSpeakerSettingsInconsistent"));
+        return false;
+    }
+
+    if (settings.volume > 0) {
+        return true;
+    }
+
+    return executeSetVolume(type, m_minUnmuteVolume, source, true);
 }
 
 std::future<bool> SpeakerManager::adjustVolume(SpeakerInterface::Type type, int8_t delta, bool forceNoNotifications) {

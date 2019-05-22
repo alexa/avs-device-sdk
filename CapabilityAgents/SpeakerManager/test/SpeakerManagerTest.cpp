@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -70,6 +70,14 @@ static const std::string MUTE_PAYLOAD =
     "{"
     "\"mute\":" +
     MUTE_STRING +
+    ""
+    "}";
+
+/// A @c SetMute payload to unmute.
+static const std::string UNMUTE_PAYLOAD =
+    "{"
+    "\"mute\":" +
+    UNMUTE_STRING +
     ""
     "}";
 
@@ -184,7 +192,7 @@ std::string generateVolumeStateJson(SpeakerInterface::SpeakerSettings settings) 
 /**
  * Tests creating the SpeakerManager with a null contextManager.
  */
-TEST_F(SpeakerManagerTest, testNullContextManager) {
+TEST_F(SpeakerManagerTest, test_nullContextManager) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers{
         std::make_shared<MockSpeakerInterface>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME)};
 
@@ -196,7 +204,7 @@ TEST_F(SpeakerManagerTest, testNullContextManager) {
 /**
  * Tests creating the SpeakerManager with a null messageSender.
  */
-TEST_F(SpeakerManagerTest, testNullMessageSender) {
+TEST_F(SpeakerManagerTest, test_nullMessageSender) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers{
         std::make_shared<MockSpeakerInterface>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME)};
 
@@ -208,7 +216,7 @@ TEST_F(SpeakerManagerTest, testNullMessageSender) {
 /**
  * Tests creating the SpeakerManager with a null exceptionSender.
  */
-TEST_F(SpeakerManagerTest, testNullExceptionSender) {
+TEST_F(SpeakerManagerTest, test_nullExceptionSender) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers{
         std::make_shared<MockSpeakerInterface>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME)};
 
@@ -220,7 +228,7 @@ TEST_F(SpeakerManagerTest, testNullExceptionSender) {
 /**
  * Tests creating the SpeakerManager with no speakers.
  */
-TEST_F(SpeakerManagerTest, testNoSpeakers) {
+TEST_F(SpeakerManagerTest, test_noSpeakers) {
     m_speakerManager = SpeakerManager::create({}, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
 
     ASSERT_NE(m_speakerManager, nullptr);
@@ -229,7 +237,7 @@ TEST_F(SpeakerManagerTest, testNoSpeakers) {
 /**
  * Tests that the SpeakerManager initially provides the state at constructor time.
  */
-TEST_F(SpeakerManagerTest, testContextManagerSetStateConstructor) {
+TEST_F(SpeakerManagerTest, test_contextManagerSetStateConstructor) {
     EXPECT_CALL(
         *m_mockContextManager,
         setState(VOLUME_STATE, generateVolumeStateJson(DEFAULT_SETTINGS), StateRefreshPolicy::NEVER, _))
@@ -245,7 +253,7 @@ TEST_F(SpeakerManagerTest, testContextManagerSetStateConstructor) {
 /*
  * Test setVolume with a value that's under the bounds. The operation should fail.
  */
-TEST_F(SpeakerManagerTest, testSetVolumeUnderBounds) {
+TEST_F(SpeakerManagerTest, test_setVolumeUnderBounds) {
     auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME);
     speaker->DelegateToReal();
     EXPECT_CALL(*speaker, setVolume(_)).Times(Exactly(0));
@@ -266,7 +274,7 @@ TEST_F(SpeakerManagerTest, testSetVolumeUnderBounds) {
 /*
  * Test setVolume with a value that's over the bounds. The operation should fail.
  */
-TEST_F(SpeakerManagerTest, testSetVolumeOverBounds) {
+TEST_F(SpeakerManagerTest, test_setVolumeOverBounds) {
     auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME);
     speaker->DelegateToReal();
     EXPECT_CALL(*speaker, setVolume(_)).Times(Exactly(0));
@@ -286,7 +294,7 @@ TEST_F(SpeakerManagerTest, testSetVolumeOverBounds) {
 /*
  * Test adjustVolume with a value that's under the bounds. The operation should fail.
  */
-TEST_F(SpeakerManagerTest, testAdjustVolumeUnderBounds) {
+TEST_F(SpeakerManagerTest, test_adjustVolumeUnderBounds) {
     auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME);
     speaker->DelegateToReal();
     EXPECT_CALL(*speaker, adjustVolume(_)).Times(Exactly(0));
@@ -306,7 +314,7 @@ TEST_F(SpeakerManagerTest, testAdjustVolumeUnderBounds) {
 /*
  * Test adjustVolume with a value that's over the bounds. The operation should fail.
  */
-TEST_F(SpeakerManagerTest, testAdjustVolumeOverBounds) {
+TEST_F(SpeakerManagerTest, test_adjustVolumeOverBounds) {
     auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME);
     speaker->DelegateToReal();
     EXPECT_CALL(*speaker, adjustVolume(_)).Times(Exactly(0));
@@ -326,7 +334,7 @@ TEST_F(SpeakerManagerTest, testAdjustVolumeOverBounds) {
 /*
  * Test setVolume when the speaker interfaces are out of sync. The operation should fail.
  */
-TEST_F(SpeakerManagerTest, testSetVolumeOutOfSync) {
+TEST_F(SpeakerManagerTest, test_setVolumeOutOfSync) {
     auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME);
     speaker->DelegateToReal();
 
@@ -352,7 +360,7 @@ TEST_F(SpeakerManagerTest, testSetVolumeOutOfSync) {
 /*
  * Test adjustVolume when the speaker interfaces are out of sync. The operation should fail.
  */
-TEST_F(SpeakerManagerTest, testAdjustVolumeOutOfSync) {
+TEST_F(SpeakerManagerTest, test_adjustVolumeOutOfSync) {
     auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME);
     speaker->DelegateToReal();
 
@@ -378,7 +386,7 @@ TEST_F(SpeakerManagerTest, testAdjustVolumeOutOfSync) {
 /*
  * Test setMute when the speaker interfaces are out of sync. The operation should fail.
  */
-TEST_F(SpeakerManagerTest, testSetMuteOutOfSync) {
+TEST_F(SpeakerManagerTest, test_setMuteOutOfSync) {
     auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME);
     speaker->DelegateToReal();
 
@@ -403,7 +411,7 @@ TEST_F(SpeakerManagerTest, testSetMuteOutOfSync) {
 /**
  * Test getSpeakerSettings when speakers are out of sync. The operation should fail.
  */
-TEST_F(SpeakerManagerTest, testGetSpeakerSettingsSpeakersOutOfSync) {
+TEST_F(SpeakerManagerTest, test_getSpeakerSettingsSpeakersOutOfSync) {
     auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME);
     speaker->DelegateToReal();
 
@@ -429,7 +437,7 @@ TEST_F(SpeakerManagerTest, testGetSpeakerSettingsSpeakersOutOfSync) {
 /**
  * Test getConfiguration and ensure that all directives are handled.
  */
-TEST_F(SpeakerManagerTest, testGetConfiguration) {
+TEST_F(SpeakerManagerTest, test_getConfiguration) {
     std::shared_ptr<SpeakerInterface> speaker =
         std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME);
 
@@ -446,7 +454,7 @@ TEST_F(SpeakerManagerTest, testGetConfiguration) {
 /**
  * Test that adding a null observer does not cause any errors in the SpeakerManager.
  */
-TEST_F(SpeakerManagerTest, testAddNullObserver) {
+TEST_F(SpeakerManagerTest, test_addNullObserver) {
     auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME);
     speaker->DelegateToReal();
 
@@ -463,7 +471,7 @@ TEST_F(SpeakerManagerTest, testAddNullObserver) {
 /**
  * Test that removing an observer works correctly.
  */
-TEST_F(SpeakerManagerTest, testRemoveSpeakerManagerObserver) {
+TEST_F(SpeakerManagerTest, test_removeSpeakerManagerObserver) {
     auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME);
     speaker->DelegateToReal();
 
@@ -483,7 +491,7 @@ TEST_F(SpeakerManagerTest, testRemoveSpeakerManagerObserver) {
 /**
  * Test that removing a null observer does not cause any errors in the SpeakerManager.
  */
-TEST_F(SpeakerManagerTest, testRemoveNullObserver) {
+TEST_F(SpeakerManagerTest, test_removeNullObserver) {
     auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME);
     speaker->DelegateToReal();
 
@@ -531,7 +539,7 @@ INSTANTIATE_TEST_CASE_P(
 /**
  * Parameterized test for setVolume. One event should be sent if an AVS_SPEAKER_VOLUME typed speaker is modified.
  */
-TEST_P(SpeakerManagerTest, testSetVolume) {
+TEST_P(SpeakerManagerTest, test_setVolume) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers;
 
     for (auto& typeOfSpeaker : GetParam()) {
@@ -563,7 +571,7 @@ TEST_P(SpeakerManagerTest, testSetVolume) {
 /**
  * Parameterized test for adjustVolume. One event should be sent if an AVS_SPEAKER_VOLUME typed speaker is modified.
  */
-TEST_P(SpeakerManagerTest, testAdjustVolume) {
+TEST_P(SpeakerManagerTest, test_adjustVolume) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers;
 
     for (auto& typeOfSpeaker : GetParam()) {
@@ -596,7 +604,7 @@ TEST_P(SpeakerManagerTest, testAdjustVolume) {
 /**
  * Parameterized test for setMute. One event should be sent if an AVS_SPEAKER_VOLUME typed speaker is modified.
  */
-TEST_P(SpeakerManagerTest, testSetMute) {
+TEST_P(SpeakerManagerTest, test_setMute) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers;
 
     for (auto& typeOfSpeaker : GetParam()) {
@@ -628,7 +636,7 @@ TEST_P(SpeakerManagerTest, testSetMute) {
 /**
  * Parameterized test for getSpeakerSettings. Operation should succeed with default speaker settings.
  */
-TEST_P(SpeakerManagerTest, testGetSpeakerSettings) {
+TEST_P(SpeakerManagerTest, test_getSpeakerSettings) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers;
 
     for (auto& typeOfSpeaker : GetParam()) {
@@ -661,7 +669,7 @@ TEST_P(SpeakerManagerTest, testGetSpeakerSettings) {
  * event is sent. In the event there are no AVS_SPEAKER_VOLUME speakers registered, no event will be sent.
  * In addition, only AVS_SPEAKER_VOLUME speakers should be affected.
  */
-TEST_P(SpeakerManagerTest, testSetVolumeDirective) {
+TEST_P(SpeakerManagerTest, test_setVolumeDirective) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers;
     int eventsSent = 0;
     SpeakerInterface::SpeakerSettings expectedSettings{AVS_SET_VOLUME_MAX, UNMUTE};
@@ -719,7 +727,7 @@ TEST_P(SpeakerManagerTest, testSetVolumeDirective) {
  * event is sent. In the event there are no AVS_SPEAKER_VOLUME speakers registered, no event will be sent.
  * In addition, only AVS_SPEAKER_VOLUME speakers should be affected.
  */
-TEST_P(SpeakerManagerTest, testAdjustVolumeDirective) {
+TEST_P(SpeakerManagerTest, test_adjustVolumeDirective) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers;
     int eventsSent = 0;
     SpeakerInterface::SpeakerSettings expectedSettings{AVS_SET_VOLUME_MAX, UNMUTE};
@@ -777,7 +785,7 @@ TEST_P(SpeakerManagerTest, testAdjustVolumeDirective) {
  * event is sent. In the event there are no AVS_SPEAKER_VOLUME speakers registered, no event will be sent.
  * In addition, only AVS_SPEAKER_VOLUME speakers should be affected.
  */
-TEST_P(SpeakerManagerTest, testSetMuteDirective) {
+TEST_P(SpeakerManagerTest, test_setMuteDirective) {
     std::vector<std::shared_ptr<SpeakerInterface>> speakers;
     int eventsSent = 0;
     SpeakerInterface::SpeakerSettings expectedSettings{DEFAULT_SETTINGS.volume, MUTE};
@@ -824,6 +832,71 @@ TEST_P(SpeakerManagerTest, testSetMuteDirective) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(SET_MUTE.nameSpace, SET_MUTE.name, MESSAGE_ID);
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, MUTE_PAYLOAD, attachmentManager, "");
+
+    m_speakerManager->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
+    m_speakerManager->CapabilityAgent::handleDirective(MESSAGE_ID);
+    m_wakeSetCompletedFuture.wait_for(TIMEOUT);
+}
+
+/**
+ * Test setVolume when unmute Directive sent. Setup test by setting volume to 0 and mute to true.
+ * Expect that the volume is unmuted and set to MIN_UNMUTE_VOLUME, as well at most one
+ * event is sent. In the event there are no AVS_SPEAKER_VOLUME speakers registered, no event will be sent.
+ * In addition, only AVS_SPEAKER_VOLUME speakers should be affected.
+ */
+TEST_P(SpeakerManagerTest, test_setVolumeDirectiveWhenMuted) {
+    std::vector<std::shared_ptr<SpeakerInterface>> speakers;
+
+    for (auto& typeOfSpeaker : GetParam()) {
+        auto speaker = std::make_shared<NiceMock<MockSpeakerInterface>>(typeOfSpeaker);
+        speaker->DelegateToReal();
+        EXPECT_CALL(*speaker, setVolume(AVS_SET_VOLUME_MIN)).Times(1);
+        EXPECT_CALL(*speaker, setMute(MUTE)).Times(1);
+
+        if (typeOfSpeaker == SpeakerInterface::Type::AVS_SPEAKER_VOLUME) {
+            EXPECT_CALL(*speaker, setMute(UNMUTE)).Times(1);
+            EXPECT_CALL(*speaker, setVolume(MIN_UNMUTE_VOLUME)).Times(1);
+        }
+        speakers.push_back(speaker);
+    }
+
+    m_speakerManager = SpeakerManager::create(speakers, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+    m_speakerManager->addSpeakerManagerObserver(m_observer);
+
+    for (auto type : getUniqueTypes(speakers)) {
+        m_speakerManager->setVolume(type, AVS_SET_VOLUME_MIN, true);
+    }
+
+    for (auto type : getUniqueTypes(speakers)) {
+        std::future<bool> future = m_speakerManager->setMute(type, MUTE, true);
+    }
+
+    // Check to see if AVS_SPEAKER_VOLUME speakers exist and set EXPECT_CALL accordingly
+    auto uniqueTypes = getUniqueTypes(speakers);
+    int eventsSent = 0;
+    SpeakerInterface::SpeakerSettings unMuteSettings{MIN_UNMUTE_VOLUME, UNMUTE};
+
+    if (uniqueTypes.count(SpeakerInterface::Type::AVS_SPEAKER_VOLUME)) {
+        eventsSent = 1;
+
+        EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(SpeakerManagerObserverInterface::Source::DIRECTIVE, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, unMuteSettings)).Times(Exactly(1));
+        EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, _, StateRefreshPolicy::NEVER, _)).Times(AnyNumber());
+        EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, generateVolumeStateJson(unMuteSettings), StateRefreshPolicy::NEVER, _)).Times(Exactly(1));
+    } else {
+        EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(_, _, _)).Times(0);
+        EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, _, StateRefreshPolicy::NEVER, _)).Times(0);
+    }
+
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(eventsSent);
+    EXPECT_CALL(*(m_mockDirectiveHandlerResult.get()), setCompleted())
+        .Times(1)
+        .WillOnce(InvokeWithoutArgs(this, &SpeakerManagerTest::wakeOnSetCompleted));
+
+    // Create Directive to unmute the device.
+    auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(SET_MUTE.nameSpace, SET_MUTE.name, MESSAGE_ID);
+    std::shared_ptr<AVSDirective> directive =
+            AVSDirective::create("", avsMessageHeader, UNMUTE_PAYLOAD, attachmentManager, "");
 
     m_speakerManager->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
     m_speakerManager->CapabilityAgent::handleDirective(MESSAGE_ID);

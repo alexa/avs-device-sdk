@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -166,7 +166,7 @@ void AttachmentReaderTest::readAndVerifyResult(
 /**
  * Test reading an invalid SDS.
  */
-TEST_F(AttachmentReaderTest, testAttachmentReaderWithInvalidSDS) {
+TEST_F(AttachmentReaderTest, test_attachmentReaderWithInvalidSDS) {
     auto reader = InProcessAttachmentReader::create(m_readerPolicy, nullptr);
     ASSERT_EQ(reader, nullptr);
 }
@@ -174,7 +174,7 @@ TEST_F(AttachmentReaderTest, testAttachmentReaderWithInvalidSDS) {
 /**
  * Test reading an SDS with a bad seek position.
  */
-TEST_F(AttachmentReaderTest, testAttachmentReaderWithBadSeekPosition) {
+TEST_F(AttachmentReaderTest, test_attachmentReaderWithBadSeekPosition) {
     auto reader = InProcessAttachmentReader::create(m_readerPolicy, m_sds, TEST_SDS_BAD_SEEK_POSITION);
     ASSERT_EQ(reader, nullptr);
 }
@@ -182,7 +182,7 @@ TEST_F(AttachmentReaderTest, testAttachmentReaderWithBadSeekPosition) {
 /**
  * Test a one-pass write and read.
  */
-TEST_F(AttachmentReaderTest, testAttachmentReaderReadInOnePass) {
+TEST_F(AttachmentReaderTest, test_attachmentReaderReadInOnePass) {
     init();
 
     auto testPattern = createTestPattern(TEST_SDS_BUFFER_SIZE_IN_BYTES);
@@ -195,7 +195,7 @@ TEST_F(AttachmentReaderTest, testAttachmentReaderReadInOnePass) {
 /**
  * Test a partial read.
  */
-TEST_F(AttachmentReaderTest, testAttachmentReaderPartialRead) {
+TEST_F(AttachmentReaderTest, test_attachmentReaderPartialRead) {
     init();
 
     auto numWritten = m_writer->write(m_testPattern.data(), m_testPattern.size());
@@ -207,7 +207,7 @@ TEST_F(AttachmentReaderTest, testAttachmentReaderPartialRead) {
 /**
  * Test a partial read with a seek.
  */
-TEST_F(AttachmentReaderTest, testAttachmentReaderPartialReadWithSeek) {
+TEST_F(AttachmentReaderTest, test_attachmentReaderPartialReadWithSeek) {
     init(false);
 
     // test a single write & read.
@@ -226,14 +226,14 @@ TEST_F(AttachmentReaderTest, testAttachmentReaderPartialReadWithSeek) {
 /**
  * Test multiple partial reads of complete data, where the writer closes.
  */
-TEST_F(AttachmentReaderTest, testAttachmentReaderMultipleReads) {
+TEST_F(AttachmentReaderTest, test_attachmentReaderMultipleReads) {
     testMultipleReads(false);
 }
 
 /**
  * Test multiple partial reads of complete data, where the writer remains open.
  */
-TEST_F(AttachmentReaderTest, testAttachmentReaderMultipleReadsOfUnfinishedData) {
+TEST_F(AttachmentReaderTest, test_attachmentReaderMultipleReadsOfUnfinishedData) {
     testMultipleReads(true);
 }
 
@@ -241,7 +241,7 @@ TEST_F(AttachmentReaderTest, testAttachmentReaderMultipleReadsOfUnfinishedData) 
  * Test that reading at much slower pace than writing causes reader to eventually receive
  * overrun error.
  */
-TEST_F(AttachmentReaderTest, testOverrunResultsInError) {
+TEST_F(AttachmentReaderTest, test_overrunResultsInError) {
     m_writerPolicy = InProcessSDS::Writer::Policy::NONBLOCKABLE;
     init();
 
@@ -277,7 +277,7 @@ TEST_F(AttachmentReaderTest, testOverrunResultsInError) {
  * Test that reading at much slower pace than writing causes reader cursor position to be reset
  * to writer cursor position.
  */
-TEST_F(AttachmentReaderTest, testOverrunResultsInReaderReset) {
+TEST_F(AttachmentReaderTest, test_overrunResultsInReaderReset) {
     m_writerPolicy = InProcessSDS::Writer::Policy::NONBLOCKABLE;
     init(true, true);
 

@@ -17,7 +17,9 @@
 #include <ADSL/MessageInterpreter.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
+#include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
 #include <AVSCommon/Utils/Bluetooth/BluetoothEventBus.h>
+#include <AVSCommon/Utils/Network/InternetConnectionMonitor.h>
 
 #ifdef ENABLE_OPUS
 #include <SpeechEncoder/OpusEncoderContext.h>
@@ -26,6 +28,10 @@
 #ifdef ENABLE_COMMS
 #include <CallManager/CallManager.h>
 #include <CallManager/SipUserAgent.h>
+#endif
+
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+#include <CallManager/CallAudioDeviceProxy.h>
 #endif
 
 #ifdef ENABLE_PCC
@@ -51,9 +57,6 @@ namespace alexaClientSDK {
 namespace defaultClient {
 
 using namespace alexaClientSDK::avsCommon::sdkInterfaces;
-
-/// String identifier for 'Alexa Stop' return by wake word engine
-static const std::string ALEXA_STOP_KEYWORD = "STOP";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("DefaultClient");
@@ -90,6 +93,11 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
 #endif
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker,
+    std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
+#endif
     std::shared_ptr<EqualizerRuntimeSetup> equalizerRuntimeSetup,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
@@ -103,7 +111,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
         alexaDialogStateObservers,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
         connectionObservers,
-    std::shared_ptr<avsCommon::utils::network::InternetConnectionMonitor> internetConnectionMonitor,
+    std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor,
     bool isGuiSupported,
     std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
@@ -135,6 +143,11 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
 #ifdef ENABLE_PCC
             phoneSpeaker,
             phoneCaller,
+#endif
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+            commsMediaPlayer,
+            commsSpeaker,
+            sharedDataStream,
 #endif
             equalizerRuntimeSetup,
             audioFactory,
@@ -187,6 +200,11 @@ bool DefaultClient::initialize(
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
 #endif
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker,
+    std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
+#endif
     std::shared_ptr<EqualizerRuntimeSetup> equalizerRuntimeSetup,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
@@ -200,7 +218,7 @@ bool DefaultClient::initialize(
         alexaDialogStateObservers,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
         connectionObservers,
-    std::shared_ptr<avsCommon::utils::network::InternetConnectionMonitor> internetConnectionMonitor,
+    std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor,
     bool isGuiSupported,
     std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
@@ -301,22 +319,22 @@ bool DefaultClient::initialize(
      */
     m_messageRouter = std::make_shared<acl::MessageRouter>(authDelegate, attachmentManager, transportFactory);
 
-    /*
-     * Creating the connection manager - This component is the overarching connection manager that glues together all
-     * the other networking components into one easy-to-use component.
-     */
-    m_connectionManager =
-        acl::AVSConnectionManager::create(m_messageRouter, false, connectionObservers, {m_dialogUXStateAggregator});
-    if (!m_connectionManager) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateConnectionManager"));
-        return false;
-    }
-
     if (!internetConnectionMonitor) {
         ACSDK_CRITICAL(LX("initializeFailed").d("reason", "internetConnectionMonitor was nullptr"));
         return false;
     }
     m_internetConnectionMonitor = internetConnectionMonitor;
+
+    /*
+     * Creating the connection manager - This component is the overarching connection manager that glues together all
+     * the other networking components into one easy-to-use component.
+     */
+    m_connectionManager = acl::AVSConnectionManager::create(
+        m_messageRouter, false, connectionObservers, {m_dialogUXStateAggregator}, internetConnectionMonitor);
+    if (!m_connectionManager) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateConnectionManager"));
+        return false;
+    }
 
     /*
      * Creating our certified sender - this component guarantees that messages given to it (expected to be JSON
@@ -488,6 +506,10 @@ bool DefaultClient::initialize(
     allSpeakers.push_back(phoneSpeaker);
 #endif
 
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+    allSpeakers.push_back(commsSpeaker);
+#endif
+
     allSpeakers.insert(allSpeakers.end(), additionalSpeakers.begin(), additionalSpeakers.end());
 
     /*
@@ -524,13 +546,19 @@ bool DefaultClient::initialize(
 
     addConnectionObserver(m_dialogUXStateAggregator);
 
+    m_notificationsRenderer = capabilityAgents::notifications::NotificationRenderer::create(notificationsMediaPlayer);
+    if (!m_notificationsRenderer) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateNotificationsRenderer"));
+        return false;
+    }
+
     /*
      * Creating the Notifications Capability Agent - This component is the Capability Agent that implements the
      * Notifications interface of AVS.
      */
     m_notificationsCapabilityAgent = capabilityAgents::notifications::NotificationsCapabilityAgent::create(
         notificationsStorage,
-        capabilityAgents::notifications::NotificationRenderer::create(notificationsMediaPlayer),
+        m_notificationsRenderer,
         contextManager,
         m_exceptionSender,
         audioFactory->notifications(),
@@ -575,13 +603,27 @@ bool DefaultClient::initialize(
             contextManager,
             m_audioFocusManager,
             m_exceptionSender,
-            audioFactory->communications())) {
+            audioFactory->communications(),
+            nullptr,
+            m_speakerManager)) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateCallManager"));
         return false;
     }
 
     m_callManager = capabilityAgents::callManager::CallManager::getInstance();
     addConnectionObserver(m_callManager);
+#endif
+
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+    auto acquireAudioInputStream = [sharedDataStream]() -> std::shared_ptr<avsCommon::avs::AudioInputStream> {
+        return sharedDataStream;
+    };
+    auto relinquishAudioInputStream = [](std::shared_ptr<avsCommon::avs::AudioInputStream> stream) {
+        // Nothing to release
+    };
+    m_callAudioDeviceProxy = capabilityAgents::callManager::CallAudioDeviceProxy::create(
+        commsMediaPlayer, commsSpeaker, acquireAudioInputStream, relinquishAudioInputStream);
+    m_callManager->addObserver(m_callAudioDeviceProxy);
 #endif
 
     std::shared_ptr<capabilityAgents::settings::SettingsUpdatedEventSender> settingsUpdatedEventSender =
@@ -1353,9 +1395,11 @@ std::future<bool> DefaultClient::notifyOfWakeWord(
     std::chrono::steady_clock::time_point startOfSpeechTimestamp,
     const capabilityAgents::aip::ESPData espData,
     std::shared_ptr<const std::vector<char>> KWDMetadata) {
+    ACSDK_DEBUG5(LX(__func__).d("keyword", keyword).d("connected", m_connectionManager->isConnected()));
+
     if (!m_connectionManager->isConnected()) {
         std::promise<bool> ret;
-        if (ALEXA_STOP_KEYWORD == keyword) {
+        if (capabilityAgents::aip::AudioInputProcessor::KEYWORD_TEXT_STOP == keyword) {
             // Alexa Stop uttered while offline
             ACSDK_INFO(LX("notifyOfWakeWord").d("action", "localStop").d("reason", "stopUtteredWhileNotConnected"));
             stopForegroundActivity();
@@ -1506,6 +1550,10 @@ DefaultClient::~DefaultClient() {
         ACSDK_DEBUG5(LX("NotificationsShutdown."));
         m_notificationsCapabilityAgent->shutdown();
     }
+    if (m_notificationsRenderer) {
+        ACSDK_DEBUG5(LX("NotificationsRendererShutdown."));
+        m_notificationsRenderer->shutdown();
+    }
     if (m_bluetooth) {
         ACSDK_DEBUG5(LX("BluetoothShutdown."));
         m_bluetooth->shutdown();
@@ -1548,6 +1596,12 @@ DefaultClient::~DefaultClient() {
         ACSDK_DEBUG5(LX("CloseSettingStorage"));
         m_deviceSettingStorage->close();
     }
+
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+    if (m_callManager) {
+        m_callManager->removeObserver(m_callAudioDeviceProxy);
+    }
+#endif
 }
 
 }  // namespace defaultClient

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -307,7 +307,7 @@ protected:
 };
 
 /// Tests that we don't get back a valid detector if an invalid stream is passed in.
-TEST_F(KittAiKeyWordTest, invalidStream) {
+TEST_F(KittAiKeyWordTest, test_invalidStream) {
     auto detector = KittAiKeyWordDetector::create(
         nullptr,
         compatibleAudioFormat,
@@ -321,7 +321,7 @@ TEST_F(KittAiKeyWordTest, invalidStream) {
 }
 
 /// Tests that we don't get back a valid detector if an invalid endianness is passed in.
-TEST_F(KittAiKeyWordTest, incompatibleEndianness) {
+TEST_F(KittAiKeyWordTest, test_incompatibleEndianness) {
     auto rawBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
     auto uniqueSds = avsCommon::avs::AudioInputStream::create(rawBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> sds = std::move(uniqueSds);
@@ -341,7 +341,7 @@ TEST_F(KittAiKeyWordTest, incompatibleEndianness) {
 }
 
 /// Tests that we get back the expected number of keywords for the four_alexa.wav file for one keyword observer.
-TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForOneObserver) {
+TEST_F(KittAiKeyWordTest, test_getExpectedNumberOfDetectionsInFourAlexasAudioFileForOneObserver) {
     auto fourAlexasBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
     auto fourAlexasSds = avsCommon::avs::AudioInputStream::create(fourAlexasBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> fourAlexasAudioBuffer = std::move(fourAlexasSds);
@@ -376,7 +376,7 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForO
 }
 
 /// Tests that we get back the expected number of keywords for the four_alexa.wav file for two keyword observers.
-TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForTwoObservers) {
+TEST_F(KittAiKeyWordTest, test_getExpectedNumberOfDetectionsInFourAlexasAudioFileForTwoObservers) {
     auto fourAlexasBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
     auto fourAlexasSds = avsCommon::avs::AudioInputStream::create(fourAlexasBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> fourAlexasAudioBuffer = std::move(fourAlexasSds);
@@ -420,7 +420,7 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInFourAlexasAudioFileForT
  * Tests that we get back the expected number of keywords for the alexa_stop_alexa_joke.wav file for one keyword
  * observer.
  */
-TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileForOneObserver) {
+TEST_F(KittAiKeyWordTest, test_getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileForOneObserver) {
     auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
     auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);
@@ -458,7 +458,7 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudio
  * Tests that we get back the expected number of keywords for the alexa_stop_alexa_joke.wav file for two keyword
  * observer.
  */
-TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileForTwoObservers) {
+TEST_F(KittAiKeyWordTest, test_getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudioFileForTwoObservers) {
     auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
     auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);
@@ -500,7 +500,7 @@ TEST_F(KittAiKeyWordTest, getExpectedNumberOfDetectionsInAlexaStopAlexaJokeAudio
 }
 
 /// Tests that the detector state changes to ACTIVE when the detector is initialized properly.
-TEST_F(KittAiKeyWordTest, getActiveState) {
+TEST_F(KittAiKeyWordTest, test_getActiveState) {
     auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
     auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);
@@ -536,7 +536,7 @@ TEST_F(KittAiKeyWordTest, getActiveState) {
  * Tests that the stream is closed and that the detector state changes to STREAM_CLOSED when we close the only writer
  * of the SDS passed in and all keyword detections have occurred.
  */
-TEST_F(KittAiKeyWordTest, getStreamClosedState) {
+TEST_F(KittAiKeyWordTest, test_getStreamClosedState) {
     auto alexaStopAlexaJokeBuffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(500000);
     auto alexaStopAlexaJokeSds = avsCommon::avs::AudioInputStream::create(alexaStopAlexaJokeBuffer, 2, 1);
     std::shared_ptr<AudioInputStream> alexaStopAlexaJokeAudioBuffer = std::move(alexaStopAlexaJokeSds);

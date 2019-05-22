@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -63,13 +63,13 @@ void BluetoothAVRCPTransformerTest::SetUp() {
 }
 
 /// Test that create() returns a nullptr if called with invalid arguments.
-TEST_F(BluetoothAVRCPTransformerTest, createWithNullParams) {
+TEST_F(BluetoothAVRCPTransformerTest, test_createWithNullParams) {
     ASSERT_THAT(BluetoothAVRCPTransformer::create(m_eventBus, nullptr), IsNull());
     ASSERT_THAT(BluetoothAVRCPTransformer::create(nullptr, m_mockRouter), IsNull());
 }
 
 /// Test that a Play AVRCP command is transformed to playButtonPressed().
-TEST_F(BluetoothAVRCPTransformerTest, handlePlayCommand) {
+TEST_F(BluetoothAVRCPTransformerTest, test_handlePlayCommand) {
     EXPECT_CALL(*m_mockRouter, buttonPressed(PlaybackButton::PLAY)).Times(1);
 
     AVRCPCommandReceivedEvent event(AVRCPCommand::PLAY);
@@ -77,7 +77,7 @@ TEST_F(BluetoothAVRCPTransformerTest, handlePlayCommand) {
 }
 
 /// Test that a Pause AVRCP command is transformed to pauseButtonPressed().
-TEST_F(BluetoothAVRCPTransformerTest, handlePauseCommand) {
+TEST_F(BluetoothAVRCPTransformerTest, test_handlePauseCommand) {
     EXPECT_CALL(*m_mockRouter, buttonPressed(PlaybackButton::PAUSE)).Times(1);
 
     AVRCPCommandReceivedEvent event(AVRCPCommand::PAUSE);
@@ -85,7 +85,7 @@ TEST_F(BluetoothAVRCPTransformerTest, handlePauseCommand) {
 }
 
 /// Test that a Next AVRCP command is transformed to nextButtonPressed().
-TEST_F(BluetoothAVRCPTransformerTest, handleNextCommand) {
+TEST_F(BluetoothAVRCPTransformerTest, test_handleNextCommand) {
     EXPECT_CALL(*m_mockRouter, buttonPressed(PlaybackButton::NEXT)).Times(1);
 
     AVRCPCommandReceivedEvent event(AVRCPCommand::NEXT);
@@ -93,7 +93,7 @@ TEST_F(BluetoothAVRCPTransformerTest, handleNextCommand) {
 }
 
 /// Test that a Previous AVRCP command is transformed to previousButtonPressed().
-TEST_F(BluetoothAVRCPTransformerTest, handlePreviousCommand) {
+TEST_F(BluetoothAVRCPTransformerTest, test_handlePreviousCommand) {
     EXPECT_CALL(*m_mockRouter, buttonPressed(PlaybackButton::PREVIOUS)).Times(1);
 
     AVRCPCommandReceivedEvent event(AVRCPCommand::PREVIOUS);
@@ -101,7 +101,7 @@ TEST_F(BluetoothAVRCPTransformerTest, handlePreviousCommand) {
 }
 
 /// Test that an unrelated event does not trigger any calls to the PlaybackRouter.
-TEST_F(BluetoothAVRCPTransformerTest, unrelatedEvent) {
+TEST_F(BluetoothAVRCPTransformerTest, test_unrelatedEvent) {
     auto strictPlaybackRouter = std::shared_ptr<PlaybackRouterInterface>(new StrictMock<MockPlaybackRouter>());
     auto avrcpTransformer = BluetoothAVRCPTransformer::create(m_eventBus, strictPlaybackRouter);
 

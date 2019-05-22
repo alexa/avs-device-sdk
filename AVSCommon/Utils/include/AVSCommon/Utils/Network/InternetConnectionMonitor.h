@@ -117,9 +117,6 @@ private:
     /// A flag to tell the HTTP content fetcher that it is time to shutdown.
     std::atomic<bool> m_isShuttingDown;
 
-    /// The stream that will hold downloaded data.
-    std::shared_ptr<avsCommon::avs::attachment::InProcessAttachment> m_stream;
-
     /// The content fetcher factory that will produce a content fetcher.
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> m_contentFetcherFactory;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,13 +35,13 @@ protected:
 };
 
 /// Test that a new LogEntryStream instance's c_str() returns an empty string.
-TEST_F(LogEntryStreamTest, emptyStream) {
+TEST_F(LogEntryStreamTest, test_emptyStream) {
     ASSERT_NE(m_stream.c_str(), nullptr);
     ASSERT_EQ(strlen(m_stream.c_str()), 0u);
 }
 
 /// Send a character to an empty LogEntryStream.  Expect that c_str() returns a string with just that character.
-TEST_F(LogEntryStreamTest, shortString) {
+TEST_F(LogEntryStreamTest, test_shortString) {
     const char SOME_CHAR = 'x';
     m_stream << SOME_CHAR;
     ASSERT_EQ(SOME_CHAR, m_stream.c_str()[0]);
@@ -49,7 +49,7 @@ TEST_F(LogEntryStreamTest, shortString) {
 }
 
 /// Send a medium sized string test to an empty LogEntryStream.  Expect that c_str() returns a matching string.
-TEST_F(LogEntryStreamTest, mediumString) {
+TEST_F(LogEntryStreamTest, test_mediumString) {
     const std::string MEDIUM_STRING = "Hello World!";
     m_stream << MEDIUM_STRING;
     ASSERT_EQ(MEDIUM_STRING, m_stream.c_str());
@@ -57,7 +57,7 @@ TEST_F(LogEntryStreamTest, mediumString) {
 }
 
 /// Send a long string test to an empty LogEntryStream.  Expect that c_str() returns a matching string.
-TEST_F(LogEntryStreamTest, longString) {
+TEST_F(LogEntryStreamTest, test_longString) {
     std::string longString;
     for (int ix = 0; ix < 100; ix++) {
         longString += "The quick brown fox jumped over the lazy dog.";
@@ -68,7 +68,7 @@ TEST_F(LogEntryStreamTest, longString) {
 }
 
 /// Send a few short strings.  Expect that c_str() returns the concatenation of those strings.
-TEST_F(LogEntryStreamTest, aFewStrings) {
+TEST_F(LogEntryStreamTest, test_aFewStrings) {
     const std::string SHORT_STRING_1 = "abc";
     m_stream << SHORT_STRING_1;
     const std::string SHORT_STRING_2 = "xyz";
@@ -81,7 +81,7 @@ TEST_F(LogEntryStreamTest, aFewStrings) {
 }
 
 /// Send a bunch of ints and strings.  Expect that c_str() matches the result of sending the same to ostringstream.
-TEST_F(LogEntryStreamTest, aLotOfStrings) {
+TEST_F(LogEntryStreamTest, test_aLotOfStrings) {
     std::ostringstream expected;
     const std::string MEDIUM_STRING = "Half a bee, philosophically\nMust, ipso facto, half not be.";
     for (int ix = 0; ix < 100; ix++) {

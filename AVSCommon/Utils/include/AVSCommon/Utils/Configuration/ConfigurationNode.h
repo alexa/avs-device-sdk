@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_CONFIGURATION_CONFIGURATIONNODE_H_
 
 #include <chrono>
+#include <cstddef>
 #include <iostream>
 #include <memory>
 #include <mutex>
@@ -197,6 +198,31 @@ public:
      * @return The serialized object.
      */
     std::string serialize() const;
+
+    /**
+     * Get the @c ConfigurationNode value that contains an array with @c key from this @c ConfigurationNode.
+     *
+     * @param key The key of the @c ConfigurationNode value to get.
+     * @return The @c ConfigurationNode value, or an empty node if this @c ConfigurationNode does not have
+     * a @c ConfigurationNode value for @c key that contains an array.
+     */
+    ConfigurationNode getArray(const std::string& key) const;
+
+    /**
+     * Get the size of the array from this @c ConfigurationNode.
+     *
+     * @return 0 if this @c ConfigurationNode is not an array.  Else return the size of the array.
+     */
+    std::size_t getArraySize() const;
+
+    /**
+     * operator[] to get @c ConfigurationNode value from an array from @c index of this @c ConfigurationNode.
+     *
+     * @param index The index of the array of the @c ConfigurationNode to get.
+     * @return The @c ConfigurationNode value, or an empty node if this @c ConfigurationNode is not an array or the
+     * the index is out of range.
+     */
+    ConfigurationNode operator[](const std::size_t index) const;
 
 private:
     /**

@@ -237,6 +237,13 @@ public:
      */
     SourceId getCurrentSourceId();
 
+    /**
+     * Get the current observer.
+     *
+     * @return The current observer, or nullptr if there are none.
+     */
+    std::shared_ptr<observer> getObserver() const;
+
 private:
     struct Source;
 

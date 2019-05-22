@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -62,13 +62,22 @@ MessageRouterInterface::ConnectionStatus MessageRouter::getConnectionStatus() {
 
 void MessageRouter::enable() {
     std::lock_guard<std::mutex> lock{m_connectionMutex};
-    m_isEnabled = true;
-    if (!m_activeTransport || !m_activeTransport->isConnected()) {
-        setConnectionStatusLocked(
-            ConnectionStatusObserverInterface::Status::PENDING,
-            ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
-        createActiveTransportLocked();
+
+    if (m_isEnabled) {
+        ACSDK_DEBUG0(LX(__func__).m("already enabled"));
+        return;
     }
+
+    if (m_activeTransport != nullptr) {
+        ACSDK_ERROR(LX("enableFailed").d("reason", "activeTransportNotNull"));
+        return;
+    }
+
+    m_isEnabled = true;
+    setConnectionStatusLocked(
+        ConnectionStatusObserverInterface::Status::PENDING,
+        ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
+    createActiveTransportLocked();
 }
 
 void MessageRouter::doShutdown() {
@@ -113,11 +122,24 @@ void MessageRouter::setAVSEndpoint(const std::string& avsEndpoint) {
 
 void MessageRouter::onConnected(std::shared_ptr<TransportInterface> transport) {
     std::unique_lock<std::mutex> lock{m_connectionMutex};
-    if (m_isEnabled) {
-        setConnectionStatusLocked(
-            ConnectionStatusObserverInterface::Status::CONNECTED,
-            ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
+
+    /*
+     * Transport shutdown might be asynchronous,so the following scenarios are valid,
+     * but we shouldn't update the connection status.
+     */
+    if (!m_isEnabled) {
+        ACSDK_DEBUG0(LX("onConnectedWhenDisabled"));
+        return;
     }
+
+    if (transport != m_activeTransport) {
+        ACSDK_DEBUG0(LX("onInactiveTransportConnected"));
+        return;
+    }
+
+    setConnectionStatusLocked(
+        ConnectionStatusObserverInterface::Status::CONNECTED,
+        ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
 }
 
 void MessageRouter::onDisconnected(

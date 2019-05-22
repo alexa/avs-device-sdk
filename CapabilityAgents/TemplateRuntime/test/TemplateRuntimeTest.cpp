@@ -291,7 +291,7 @@ void TemplateRuntimeTest::wakeOnReleaseChannel() {
 /**
  * Tests creating the TemplateRuntime with a null audioPlayerInterface.
  */
-TEST_F(TemplateRuntimeTest, testNullAudioPlayerInterface) {
+TEST_F(TemplateRuntimeTest, test_nullAudioPlayerInterface) {
     auto templateRuntime = TemplateRuntime::create(nullptr, m_mockFocusManager, m_mockExceptionSender);
     ASSERT_EQ(templateRuntime, nullptr);
 }
@@ -299,7 +299,7 @@ TEST_F(TemplateRuntimeTest, testNullAudioPlayerInterface) {
 /**
  * Tests creating the TemplateRuntime with a null focusManagerInterface.
  */
-TEST_F(TemplateRuntimeTest, testNullFocusManagerInterface) {
+TEST_F(TemplateRuntimeTest, test_nullFocusManagerInterface) {
     auto templateRuntime = TemplateRuntime::create(m_mockAudioPlayerInterface, nullptr, m_mockExceptionSender);
     ASSERT_EQ(templateRuntime, nullptr);
 }
@@ -307,7 +307,7 @@ TEST_F(TemplateRuntimeTest, testNullFocusManagerInterface) {
 /**
  * Tests creating the TemplateRuntime with a null exceptionSender.
  */
-TEST_F(TemplateRuntimeTest, testNullExceptionSender) {
+TEST_F(TemplateRuntimeTest, test_nullExceptionSender) {
     auto templateRuntime = TemplateRuntime::create(m_mockAudioPlayerInterface, m_mockFocusManager, nullptr);
     ASSERT_EQ(templateRuntime, nullptr);
 }
@@ -316,7 +316,7 @@ TEST_F(TemplateRuntimeTest, testNullExceptionSender) {
  * Tests that the TemplateRuntime successfully add itself with the AudioPlayer at constructor time, and
  * successfully remove itself with the AudioPlayer during shutdown.
  */
-TEST_F(TemplateRuntimeTest, testAudioPlayerAddRemoveObserver) {
+TEST_F(TemplateRuntimeTest, test_audioPlayerAddRemoveObserver) {
     auto mockAudioPlayerInterface = std::make_shared<NiceMock<MockAudioPlayer>>();
     auto mockExceptionSender = std::make_shared<StrictMock<MockExceptionEncounteredSender>>();
     auto mockFocusManager = std::make_shared<NiceMock<MockFocusManager>>();
@@ -329,7 +329,7 @@ TEST_F(TemplateRuntimeTest, testAudioPlayerAddRemoveObserver) {
 /**
  * Tests unknown Directive. Expect that the sendExceptionEncountered and setFailed will be called.
  */
-TEST_F(TemplateRuntimeTest, testUnknownDirective) {
+TEST_F(TemplateRuntimeTest, test_unknownDirective) {
     // Create Directive.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE, UNKNOWN_DIRECTIVE, MESSAGE_ID);
@@ -349,7 +349,7 @@ TEST_F(TemplateRuntimeTest, testUnknownDirective) {
  * Tests RenderTemplate Directive. Expect that the renderTemplateCard callback will be called and clearTemplateCard will
  * be called after 2s after DialogUXState is changed to IDLE state.
  */
-TEST_F(TemplateRuntimeTest, testRenderTemplateDirective) {
+TEST_F(TemplateRuntimeTest, testSlow_renderTemplateDirective) {
     // Create Directive.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(TEMPLATE.nameSpace, TEMPLATE.name, MESSAGE_ID);
@@ -379,7 +379,9 @@ TEST_F(TemplateRuntimeTest, testRenderTemplateDirective) {
  * Tests RenderTemplate Directive. Expect that the renderTemplateCard callback will be called and clearTemplateCard will
  * not be called if DialogUXState goes to IDLE state and then goes EXPECTING and SPEAKING state.
  */
-TEST_F(TemplateRuntimeTest, testRenderTemplateDirectiveWillNotClearCardAfterGoingToExpectingStateAfterGoingToIDLE) {
+TEST_F(
+    TemplateRuntimeTest,
+    testRenderTemplateDirectiveWillNotClearCardAfterGoingToExpectingStateAfterGoingToIDLESlowTest) {
     // Create Directive.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(TEMPLATE.nameSpace, TEMPLATE.name, MESSAGE_ID);
@@ -418,7 +420,7 @@ TEST_F(TemplateRuntimeTest, testRenderTemplateDirectiveWillNotClearCardAfterGoin
  * Tests RenderTemplate Directive using the handleDirectiveImmediately. Expect that the renderTemplateCard
  * callback will be called.
  */
-TEST_F(TemplateRuntimeTest, testHandleDirectiveImmediately) {
+TEST_F(TemplateRuntimeTest, test_handleDirectiveImmediately) {
     // Create Directive.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(TEMPLATE.nameSpace, TEMPLATE.name, MESSAGE_ID);
@@ -438,7 +440,7 @@ TEST_F(TemplateRuntimeTest, testHandleDirectiveImmediately) {
  * that the renderTemplateCard callback will be called and clearPlayerInfoCard will be called after 2s after Audio State
  * is changed to FINISHED state.
  */
-TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveBefore) {
+TEST_F(TemplateRuntimeTest, testSlow_renderPlayerInfoDirectiveBefore) {
     // Create Directive.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(PLAYER_INFO.nameSpace, PLAYER_INFO.name, MESSAGE_ID);
@@ -482,7 +484,7 @@ TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveBefore) {
  * Tests RenderTemplate Directive received after the corresponding AudioPlayer call. Expect
  * that the renderTemplateCard callback will be called.
  */
-TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveAfter) {
+TEST_F(TemplateRuntimeTest, test_renderPlayerInfoDirectiveAfter) {
     // Create Directive.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(PLAYER_INFO.nameSpace, PLAYER_INFO.name, MESSAGE_ID);
@@ -511,7 +513,7 @@ TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveAfter) {
  * Tests RenderTemplate Directive received without an audioItemId. Expect that the
  * sendExceptionEncountered and setFailed will be called.
  */
-TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveWithoutAudioItemId) {
+TEST_F(TemplateRuntimeTest, test_renderPlayerInfoDirectiveWithoutAudioItemId) {
     // Create Directive.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(PLAYER_INFO.nameSpace, PLAYER_INFO.name, MESSAGE_ID);
@@ -532,7 +534,7 @@ TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveWithoutAudioItemId) {
  * Tests when a malformed RenderTemplate Directive is received.  Expect that the
  * sendExceptionEncountered and setFailed will be called.
  */
-TEST_F(TemplateRuntimeTest, testMalformedRenderPlayerInfoDirective) {
+TEST_F(TemplateRuntimeTest, test_malformedRenderPlayerInfoDirective) {
     // Create Directive.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(PLAYER_INFO.nameSpace, PLAYER_INFO.name, MESSAGE_ID);
@@ -554,7 +556,7 @@ TEST_F(TemplateRuntimeTest, testMalformedRenderPlayerInfoDirective) {
  * AUDIO_ITEM_ID is received.  Expect that the renderTemplateCard callback will not be called until
  * the AudioPlayer notified the handling of AUDIO_ITEM_ID later.
  */
-TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveDifferentAudioItemId) {
+TEST_F(TemplateRuntimeTest, test_renderPlayerInfoDirectiveDifferentAudioItemId) {
     // Create Directive.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(PLAYER_INFO.nameSpace, PLAYER_INFO.name, MESSAGE_ID);
@@ -589,7 +591,7 @@ TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveDifferentAudioItemId) {
  * the payload, audioPlayerState and offset to match to the ones passed in by the
  * AudioPlayerObserverInterface.
  */
-TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveAudioStateUpdate) {
+TEST_F(TemplateRuntimeTest, test_renderPlayerInfoDirectiveAudioStateUpdate) {
     // Create Directive.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(PLAYER_INFO.nameSpace, PLAYER_INFO.name, MESSAGE_ID);
@@ -680,7 +682,7 @@ TEST_F(TemplateRuntimeTest, testRenderPlayerInfoDirectiveAudioStateUpdate) {
 /**
  * Tests that if focus is changed to none, the clearTemplateCard() will be called.
  */
-TEST_F(TemplateRuntimeTest, testFocusNone) {
+TEST_F(TemplateRuntimeTest, test_focusNone) {
     // Create Directive.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(TEMPLATE.nameSpace, TEMPLATE.name, MESSAGE_ID);
@@ -708,7 +710,7 @@ TEST_F(TemplateRuntimeTest, testFocusNone) {
 /**
  * Tests that if displayCardCleared() is called, the clearTemplateCard() will not be called.
  */
-TEST_F(TemplateRuntimeTest, testDisplayCardCleared) {
+TEST_F(TemplateRuntimeTest, test_displayCardCleared) {
     // Create Directive.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(TEMPLATE.nameSpace, TEMPLATE.name, MESSAGE_ID);
@@ -743,7 +745,7 @@ TEST_F(TemplateRuntimeTest, testDisplayCardCleared) {
  * Tests that if another displayCard event is sent before channel's focus is set to none, the state machine would
  * transition to REACQUIRING state and acquireChannel again to display the card.
  */
-TEST_F(TemplateRuntimeTest, testReacquireChannel) {
+TEST_F(TemplateRuntimeTest, test_reacquireChannel) {
     // Create RenderPlayerInfo Directive and wait until PlayerInfo card is displayed.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(PLAYER_INFO.nameSpace, PLAYER_INFO.name, MESSAGE_ID);
@@ -784,6 +786,57 @@ TEST_F(TemplateRuntimeTest, testReacquireChannel) {
     m_templateRuntime->handleDirectiveImmediately(directive1);
     m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::NONE);
     m_wakeRenderTemplateCardFuture.wait_for(TIMEOUT);
+}
+
+/**
+ * Test that we should skip rendering a player info card if the audio has already changed.
+ */
+TEST_F(TemplateRuntimeTest, testRenderPlayerInfoAfterPlayerActivityChanged) {
+    // Create Directive.
+    auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(PLAYER_INFO.nameSpace, PLAYER_INFO.name, MESSAGE_ID);
+    std::shared_ptr<AVSDirective> directive =
+        AVSDirective::create("", avsMessageHeader, PLAYERINFO_PAYLOAD, attachmentManager, "");
+
+    AudioPlayerObserverInterface::Context context;
+    context.audioItemId = AUDIO_ITEM_ID;
+    m_templateRuntime->onPlayerActivityChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
+
+    ::testing::InSequence s;
+    EXPECT_CALL(*m_mockFocusManager, acquireChannel(_, _, _)).WillOnce(Return(true));
+    // Send a directive first to TemplateRuntime
+    EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
+        .Times(Exactly(1))
+        .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnSetCompleted));
+    m_templateRuntime->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
+    m_templateRuntime->CapabilityAgent::handleDirective(MESSAGE_ID);
+    m_wakeSetCompletedFuture.wait_for(TIMEOUT);
+
+    // Test onAudioPlayed() callback with 100ms offset
+    std::promise<void> wakePlayPromise;
+    std::future<void> wakePlayFuture = wakePlayPromise.get_future();
+    context.offset = std::chrono::milliseconds(100);
+    EXPECT_CALL(*m_mockGui, renderPlayerInfoCard(PLAYERINFO_PAYLOAD, _, _)).Times(0);
+    EXPECT_CALL(*m_mockFocusManager, releaseChannel(_, _)).Times(Exactly(1)).WillOnce(InvokeWithoutArgs([this] {
+        auto releaseChannelSuccess = std::make_shared<std::promise<bool>>();
+        std::future<bool> returnValue = releaseChannelSuccess->get_future();
+        m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::NONE);
+        releaseChannelSuccess->set_value(true);
+        wakeOnReleaseChannel();
+        return returnValue;
+    }));
+
+    m_templateRuntime->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
+    m_templateRuntime->CapabilityAgent::handleDirective(MESSAGE_ID);
+    m_wakeSetCompletedFuture.wait_for(TIMEOUT);
+    m_wakeRenderTemplateCardFuture.wait_for(TIMEOUT);
+    m_templateRuntime->displayCardCleared();
+    m_wakeReleaseChannelFuture.wait_for(TIMEOUT);
+    context.audioItemId = AUDIO_ITEM_ID_1;
+    m_templateRuntime->onPlayerActivityChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
+    m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND);
+    m_templateRuntime->displayCardCleared();
+    m_wakeReleaseChannelFuture.wait_for(TIMEOUT);
 }
 
 }  // namespace test

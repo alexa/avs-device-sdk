@@ -113,6 +113,18 @@ generate_start_script() {
 EOF
 }
 
+generate_test_script() {
+  cat << EOF > "${TEST_SCRIPT}"
+  echo
+  echo "==============> BUILDING Tests =============="
+  echo
+
+  cd ${BUILD_PATH}
+  make all -j2
+  make test
+EOF
+}
+
 printInfo() {
     echo "================================================================================"
     local ARGUMENT

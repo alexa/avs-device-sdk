@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -43,21 +43,21 @@ public:
 AlarmAlertTest::AlarmAlertTest() : m_alarm{std::make_shared<Alarm>(alarmDefaultFactory, alarmShortFactory)} {
 }
 
-TEST_F(AlarmAlertTest, defaultAudio) {
+TEST_F(AlarmAlertTest, test_defaultAudio) {
     std::ostringstream oss;
     oss << m_alarm->getDefaultAudioFactory()()->rdbuf();
 
     ASSERT_EQ(ALARM_DEFAULT_DATA, oss.str());
 }
 
-TEST_F(AlarmAlertTest, shortAudio) {
+TEST_F(AlarmAlertTest, test_shortAudio) {
     std::ostringstream oss;
     oss << m_alarm->getShortAudioFactory()()->rdbuf();
 
     ASSERT_EQ(ALARM_SHORT_DATA, oss.str());
 }
 
-TEST_F(AlarmAlertTest, testGetTypeName) {
+TEST_F(AlarmAlertTest, test_getTypeName) {
     ASSERT_EQ(m_alarm->getTypeName(), Alarm::TYPE_NAME);
 }
 

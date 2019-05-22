@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -84,7 +84,7 @@ protected:
 /**
  * Test if recording works.
  */
-TEST_F(AndroidSLESMicrophoneTest, TestStartRecording) {
+TEST_F(AndroidSLESMicrophoneTest, test_startRecording) {
     EXPECT_TRUE(m_mic->startStreamingMicrophoneData());
     auto read = m_reader->read(m_testBuffer.data(), TEST_BUFFER_SIZE, TIMEOUT);
     EXPECT_EQ(read, static_cast<decltype(read)>(TEST_BUFFER_SIZE));
@@ -93,7 +93,7 @@ TEST_F(AndroidSLESMicrophoneTest, TestStartRecording) {
 /**
  * Test if the stopStreamingMicrophoneData will stop writing to the buffer.
  */
-TEST_F(AndroidSLESMicrophoneTest, TestPauseRecording) {
+TEST_F(AndroidSLESMicrophoneTest, test_pauseRecording) {
     EXPECT_TRUE(m_mic->startStreamingMicrophoneData());
     EXPECT_TRUE(m_mic->stopStreamingMicrophoneData());
     auto read = m_reader->read(m_testBuffer.data(), TEST_BUFFER_SIZE, TIMEOUT);
@@ -103,7 +103,7 @@ TEST_F(AndroidSLESMicrophoneTest, TestPauseRecording) {
 /**
  * Test if recording works after mute / unmute.
  */
-TEST_F(AndroidSLESMicrophoneTest, TestUnPauseRecording) {
+TEST_F(AndroidSLESMicrophoneTest, test_unPauseRecording) {
     EXPECT_TRUE(m_mic->startStreamingMicrophoneData());
     EXPECT_TRUE(m_mic->stopStreamingMicrophoneData());
     EXPECT_TRUE(m_mic->startStreamingMicrophoneData());
@@ -114,7 +114,7 @@ TEST_F(AndroidSLESMicrophoneTest, TestUnPauseRecording) {
 /**
  * Test recording for a full iteration on the buffer circular queue.
  */
-TEST_F(AndroidSLESMicrophoneTest, TestLongRecording) {
+TEST_F(AndroidSLESMicrophoneTest, test_longRecording) {
     EXPECT_TRUE(m_mic->startStreamingMicrophoneData());
     constexpr size_t iterations = AndroidSLESBufferQueue::NUMBER_OF_BUFFERS + 1;
     for (size_t i = 0; i < iterations; i++) {

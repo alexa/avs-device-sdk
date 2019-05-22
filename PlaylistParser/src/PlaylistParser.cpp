@@ -103,7 +103,25 @@ void PlaylistParser::doDepthFirstSearch(
      */
     std::deque<PlayItem> playQueue;
     playQueue.push_front(rootUrl);
+
+    /*
+     * The last URL that was retrieved from a playlist, which is used skip URLs on future playlists and only notify
+     * observers about new URLs.
+     */
     std::string lastUrlParsed;
+
+    /*
+     * Initialized with a negative number, so any value of the media sequence M3U8 field will be recognized as a valid
+     * new playlist on the first comparison.
+     */
+    long lastMediaSequence = INVALID_MEDIA_SEQUENCE;
+
+    /*
+     * The number of fragments received on the last playlist parsed. This number is used to check if we should accept
+     * a playlist gap in which the new playlist does not have the last audio fragment parsed.
+     */
+    int lastNumberOfFragments = 0;
+
     while (!playQueue.empty() && !m_shuttingDown) {
         if (m_shuttingDown) {
             return;
@@ -184,32 +202,6 @@ void PlaylistParser::doDepthFirstSearch(
                     // as a default.
                     playQueue.push_front(m3uContent.variantURLs.front());
                 } else {
-                    auto entries = m3uContent.entries;
-                    // lastUrlParsed is set when we actually parse some urls from the playlist - here, it is our first
-                    // pass at this playlist
-                    if (lastUrlParsed.empty()) {
-                        for (auto it = entries.begin(); it != entries.end(); ++it) {
-                            observer->onPlaylistEntryParsed(id, *it);
-                        }
-                        lastUrlParsed = entries.back().url;
-                    } else {
-                        // Setting this to 0 as an initial value so that if we don't see the last URL we parsed in the
-                        // latest pass of the playlist, we stream all the URLs within the playlist as a sort of
-                        // recovery mechanism. This way, if we parse this so far into the future that all the URLs we
-                        // had previously seen are gone, we'll still stream the latest URLs.
-                        int startPointForNewURLsAdded = 0;
-                        for (int i = entries.size() - 1; i >= 0; --i) {
-                            if (entries.at(i).url == lastUrlParsed) {
-                                // We need to add the URLs past this point
-                                startPointForNewURLsAdded = i + 1;
-                            }
-                        }
-                        for (unsigned i = startPointForNewURLsAdded; i < entries.size(); ++i) {
-                            ACSDK_DEBUG9(LX("foundNewURLInLivePlaylist"));
-                            observer->onPlaylistEntryParsed(id, entries.at(i));
-                        }
-                        lastUrlParsed = entries.back().url;
-                    }
                     if (m3uContent.isLive) {
                         ACSDK_DEBUG9(LX("encounteredLiveHLSPlaylist")
                                          .sensitive("url", playlistURL)
@@ -220,6 +212,105 @@ void PlaylistParser::doDepthFirstSearch(
                          * chunks that get added.
                          */
                         playQueue.push_back(playlistURL);
+                    }
+
+                    /*
+                     * M3U8 has an optional field called #EXT-X-MEDIA-SEQUENCE that represents a sequence in which each
+                     * playlist should be played. Depending on the music service provider, the content delivery network
+                     * does not guarantee that playlists are delivered in order. For instance, if a client fetched a
+                     * playlist with the sequence number 100 at 12h00, the same client may fetch the playlist number
+                     * 98 at 12h01. So, if the existence of the field provides the means for such analysis, and this
+                     * playlist's position is not after the last playlist processed, we ignore this playlist.
+                     */
+                    if (m3uContent.hasMediaSequence() && (lastMediaSequence >= m3uContent.mediaSequence)) {
+                        ACSDK_DEBUG9(LX("foundNonForwardPlaylist")
+                                         .sensitive("url", playlistURL)
+                                         .d("currentMediaSequence", lastMediaSequence)
+                                         .d("playlistMediaSequence", m3uContent.mediaSequence));
+                        continue;
+                    }
+
+                    auto entries = m3uContent.entries;
+                    // lastUrlParsed is set when we actually parse some urls from the playlist - here, it is our first
+                    // pass at this playlist
+                    if (lastUrlParsed.empty()) {
+                        for (auto it = entries.begin(); it != entries.end(); ++it) {
+                            observer->onPlaylistEntryParsed(id, *it);
+                        }
+                        lastUrlParsed = entries.back().url;
+                    } else {
+                        /*
+                         * Setting this to 0 as an initial value so that if we don't see the last URL we parsed in the
+                         * latest pass of the playlist, we stream all the URLs within the playlist as a sort of recovery
+                         * mechanism. This way, if we parse this so far into the future that all the URLs we had
+                         * previously seen are gone, we'll still stream the latest URLs.
+                         */
+                        int startPointForNewURLsAdded = 0;
+                        for (int i = entries.size() - 1; i >= 0; --i) {
+                            if (entries.at(i).url == lastUrlParsed) {
+                                // We need to add the URLs past this point
+                                startPointForNewURLsAdded = i + 1;
+                            }
+                        }
+
+                        /*
+                         * If the M3U8 content contains the media sequence field, we can compare the playlist just
+                         * received with the previous one to avoid playing a faulty sequence of playlists.
+                         */
+                        if (m3uContent.hasMediaSequence()) {
+                            /*
+                             * True if the new playlist and the last one that was processed have no audio fragments in
+                             * common.
+                             */
+                            bool newPlaylistHasNoIntersection = (0 == startPointForNewURLsAdded);
+
+                            /*
+                             * We identify a jump in the playlist sequence when the media sequence of the playlist is
+                             * not immediately after the last media sequence processed. The aim is to avoid the user
+                             * hearing gaps in the playback.
+                             *
+                             * Tolerating the jump is important since there is no guarantee that the music provider
+                             * will give us a complete sequence of playlists.
+                             *
+                             * If there was a jump, we tolerate the jump as long as the last URL parsed can be find on
+                             * the playlist.
+                             */
+                            if ((lastMediaSequence + 1 < m3uContent.mediaSequence) && newPlaylistHasNoIntersection) {
+                                /*
+                                 * We also tolerate the gap when the length of the gap is exactly the number of
+                                 * fragments in a playlist.
+                                 */
+                                if (m3uContent.mediaSequence - lastMediaSequence == lastNumberOfFragments) {
+                                    ACSDK_DEBUG9(LX("foundUrlListGapButToleratingIt")
+                                                     .sensitive("url", playlistURL)
+                                                     .d("currentMediaSequence", lastMediaSequence)
+                                                     .d("playlistMediaSequence", m3uContent.mediaSequence));
+                                } else {
+                                    ACSDK_INFO(LX("foundUrlListGapAndIgnoringLastPlaylistReceived")
+                                                   .sensitive("url", playlistURL)
+                                                   .d("currentMediaSequence", lastMediaSequence)
+                                                   .d("playlistMediaSequence", m3uContent.mediaSequence));
+                                    continue;
+                                }
+                            } else {
+                                ACSDK_DEBUG9(LX("foundNewPlaylistToProcess")
+                                                 .sensitive("url", playlistURL)
+                                                 .d("currentMediaSequence", lastMediaSequence)
+                                                 .d("playlistMediaSequence", m3uContent.mediaSequence));
+                            }
+                            lastMediaSequence = m3uContent.mediaSequence;
+                            lastNumberOfFragments = entries.size();
+                        }
+
+                        /*
+                         * Adds all audio fragments from the new playlist starting from the first one that did not
+                         * appear on the last playlist that was accepted.
+                         */
+                        for (unsigned i = startPointForNewURLsAdded; i < entries.size(); ++i) {
+                            ACSDK_DEBUG9(LX("foundNewURLInLivePlaylist"));
+                            observer->onPlaylistEntryParsed(id, entries.at(i));
+                        }
+                        lastUrlParsed = entries.back().url;
                     }
                 }
             } else {

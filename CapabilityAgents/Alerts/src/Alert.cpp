@@ -577,6 +577,7 @@ void Alert::startRenderer() {
     auto rendererCopy = m_renderer;
     auto loopCount = m_dynamicData.loopCount;
     auto loopPause = m_staticData.assetConfiguration.loopPause;
+    bool startWithPause = false;
 
     // If there are no assets to play (due to the alert not providing any assets), or there was a previous error
     // (indicated by m_staticData.assetConfiguration.hasRenderingFailed), we call rendererCopy->start(..) with an
@@ -589,6 +590,9 @@ void Alert::startRenderer() {
                 m_staticData.assetConfiguration.assets[m_staticData.assetConfiguration.backgroundAssetId].url);
         }
         loopPause = BACKGROUND_ALERT_SOUND_PAUSE_TIME;
+        if (State::ACTIVATING != m_dynamicData.state) {
+            startWithPause = true;
+        }
     } else if (!m_staticData.assetConfiguration.assets.empty() && !m_dynamicData.hasRenderingFailed) {
         // Only play the named timer urls when it's in foreground.
         for (auto item : m_staticData.assetConfiguration.assetPlayOrderItems) {
@@ -598,7 +602,7 @@ void Alert::startRenderer() {
 
     lock.unlock();
 
-    rendererCopy->start(shared_from_this(), audioFactory, urls, loopCount, loopPause);
+    rendererCopy->start(shared_from_this(), audioFactory, urls, loopCount, loopPause, startWithPause);
 }
 
 void Alert::onMaxTimerExpiration() {

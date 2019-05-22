@@ -22,7 +22,7 @@ namespace http2 {
 namespace test {
 
 using namespace avsCommon::utils::http;
-    
+
 MockHTTP2Connection::MockHTTP2Connection(std::string dURL, std::string pingURL) :
         m_downchannelURL{dURL},
         m_pingURL{pingURL},

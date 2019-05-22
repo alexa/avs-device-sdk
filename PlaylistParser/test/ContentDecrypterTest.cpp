@@ -100,7 +100,7 @@ std::string ContentDecrypterTest::readDecryptedContent(size_t readSize) {
     return std::string(buffer.begin(), buffer.end());
 }
 
-TEST_F(ContentDecrypterTest, testUnsupportedEncryption) {
+TEST_F(ContentDecrypterTest, test_unsupportedEncryption) {
     auto noEncryption = EncryptionInfo();
 
     auto result = m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, KEY, noEncryption, m_writer);
@@ -108,7 +108,7 @@ TEST_F(ContentDecrypterTest, testUnsupportedEncryption) {
     EXPECT_FALSE(result);
 }
 
-TEST_F(ContentDecrypterTest, testAESDecryption) {
+TEST_F(ContentDecrypterTest, test_aESDecryption) {
     auto result = m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, KEY, AES_ENCRYPTION_INFO, m_writer);
 
     auto decryptedString = readDecryptedContent(DECRYPTED_STRING.size());
@@ -116,13 +116,13 @@ TEST_F(ContentDecrypterTest, testAESDecryption) {
     EXPECT_EQ(DECRYPTED_STRING, decryptedString);
 }
 
-TEST_F(ContentDecrypterTest, testConvertIVNullByteArray) {
+TEST_F(ContentDecrypterTest, test_convertIVNullByteArray) {
     auto result = ContentDecrypter::convertIVToByteArray(HEX_IV, nullptr);
 
     EXPECT_FALSE(result);
 }
 
-TEST_F(ContentDecrypterTest, testConvertIVIncorrectLength) {
+TEST_F(ContentDecrypterTest, test_convertIVIncorrectLength) {
     ByteVector actualIV;
 
     auto result = ContentDecrypter::convertIVToByteArray("0x01", &actualIV);
@@ -131,7 +131,7 @@ TEST_F(ContentDecrypterTest, testConvertIVIncorrectLength) {
     EXPECT_TRUE(actualIV.empty());
 }
 
-TEST_F(ContentDecrypterTest, testConvertIVNotHex) {
+TEST_F(ContentDecrypterTest, test_convertIVNotHex) {
     const std::string nonHEX_IV = "0101010101010101010101010101010101";
     ByteVector actualIV;
 
@@ -141,7 +141,7 @@ TEST_F(ContentDecrypterTest, testConvertIVNotHex) {
     EXPECT_TRUE(actualIV.empty());
 }
 
-TEST_F(ContentDecrypterTest, testConvertIV) {
+TEST_F(ContentDecrypterTest, test_convertIV) {
     ByteVector actualIV;
 
     auto result = ContentDecrypter::convertIVToByteArray(HEX_IV, &actualIV);

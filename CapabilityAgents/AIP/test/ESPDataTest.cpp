@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,43 +29,43 @@ namespace test {
 class ESPDataTest : public ::testing::Test {};
 
 /// Test for a normal positive number (with sign), expect verify() to return true.
-TEST_F(ESPDataTest, NormalPositiveNumber) {
+TEST_F(ESPDataTest, test_normalPositiveNumber) {
     ESPData data{"+0.123f", "+123.123"};
     EXPECT_TRUE(data.verify());
 }
 
 /// Test for a normal positive number (without sign), expect verify() to return true.
-TEST_F(ESPDataTest, NormalPositiveNumberWithoutSign) {
+TEST_F(ESPDataTest, test_normalPositiveNumberWithoutSign) {
     ESPData data{"0.123f", "123.123"};
     EXPECT_TRUE(data.verify());
 }
 
 /// Test for a normal negative number, expect verify() to return true.
-TEST_F(ESPDataTest, NormalNegativeNumber) {
+TEST_F(ESPDataTest, test_normalNegativeNumber) {
     ESPData data{"-0.123F", "-123.123"};
     EXPECT_TRUE(data.verify());
 }
 
 /// Test for a normal positive exponential number, expect verify() to return true.
-TEST_F(ESPDataTest, NormalPositiveExponentialNumber) {
+TEST_F(ESPDataTest, test_normalPositiveExponentialNumber) {
     ESPData data{"100e+9", ".6e19f"};
     EXPECT_TRUE(data.verify());
 }
 
 /// Test for a normal negative exponential number, expect verify() to return true.
-TEST_F(ESPDataTest, NormalNegativeExponentialNumber) {
+TEST_F(ESPDataTest, test_normalNegativeExponentialNumber) {
     ESPData data{"-100e-9", "-1.6e-19f"};
     EXPECT_TRUE(data.verify());
 }
 
 /// Test for a empty number, expect verify() to return false.
-TEST_F(ESPDataTest, emptyNumber) {
+TEST_F(ESPDataTest, test_emptyNumber) {
     ESPData data{"", ""};
     EXPECT_FALSE(data.verify());
 }
 
 /// Test for a number with quotation mark, expect verify() to return false.
-TEST_F(ESPDataTest, noDigitInNumber) {
+TEST_F(ESPDataTest, test_noDigitInNumber) {
     ESPData data{"\"", "\""};
     EXPECT_FALSE(data.verify());
 }

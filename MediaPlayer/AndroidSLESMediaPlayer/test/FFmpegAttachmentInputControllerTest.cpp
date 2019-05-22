@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -83,13 +83,13 @@ size_t MockAttachmentReader::read(
 }
 
 /// Test create controller fail.
-TEST(FFmpegAttachmentInputControllerTest, testCreateFailed) {
+TEST(FFmpegAttachmentInputControllerTest, test_createFailed) {
     auto reader = FFmpegAttachmentInputController::create(nullptr);
     EXPECT_EQ(reader, nullptr);
 }
 
 /// Test raw input format.
-TEST(FFmpegAttachmentInputControllerTest, testRawArgument) {
+TEST(FFmpegAttachmentInputControllerTest, test_rawArgument) {
     AudioFormat format{.encoding = AudioFormat::Encoding::LPCM,
                        .endianness = AudioFormat::Endianness::LITTLE,
                        .sampleRateHz = 48000,
@@ -114,7 +114,7 @@ TEST(FFmpegAttachmentInputControllerTest, testRawArgument) {
 }
 
 /// Test read from attachment reader.
-TEST(FFmpegAttachmentInputControllerTest, testReadOk) {
+TEST(FFmpegAttachmentInputControllerTest, test_readOk) {
     auto mockReader = std::make_shared<MockAttachmentReader>();
     auto reader = FFmpegAttachmentInputController::create(mockReader);
     ASSERT_NE(reader, nullptr);
@@ -131,7 +131,7 @@ TEST(FFmpegAttachmentInputControllerTest, testReadOk) {
 }
 
 /// Test read from stream until the end.
-TEST(FFmpegAttachmentInputControllerTest, testReadEof) {
+TEST(FFmpegAttachmentInputControllerTest, test_readEof) {
     auto mockReader = std::make_shared<MockAttachmentReader>();
     auto reader = FFmpegAttachmentInputController::create(mockReader);
     ASSERT_NE(reader, nullptr);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -227,6 +227,25 @@ private:
      * @param sendEvent Whether to alert listeners.
      */
     void transitionToState(BlueZDeviceState newState, bool sendEvent);
+
+    /*
+     * Querying BlueZ for whether the Connect property is set to true does not guarantee
+     * that a device has established a connection with its services.
+     * The Connect property can be set to true when pairing:
+     *
+     * 1) Pairing (BlueZ sends Connect = true).
+     * 2) Pair Successful.
+     * 3) Connect multimedia services.
+     * 4) Connect multimedia services successful (BlueZ sends Paired = true, UUIDs = [array of
+     * uuids]).
+     *
+     * Use a combination of Connect, Paired, and the availability of certain UUIDs to
+     * determine if a service has been connected to. A relevant service currently encompasses the set of
+     * A2DP services that AVS uses to understand connectedness. This should be done in the executor.
+     *
+     * @return Whether the device has established a connection with at least one service of interest.
+     */
+    bool executeIsConnectedToRelevantServices();
 
     /**
      * Helper function to check if a service exists in the @c m_servicesMap.

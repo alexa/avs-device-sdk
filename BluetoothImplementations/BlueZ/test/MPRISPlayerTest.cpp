@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -137,20 +137,20 @@ void MPRISPlayerTest::gMainLoop() {
 }
 
 /// Test that the happy create() case succeeds.
-TEST_F(MPRISPlayerTest, createSucceeds) {
+TEST_F(MPRISPlayerTest, test_createSucceeds) {
     init();
     ASSERT_THAT(m_player, NotNull());
 }
 
 /// Tests that missing parameters result in a nullptr.
-TEST_F(MPRISPlayerTest, createWithNullFails) {
+TEST_F(MPRISPlayerTest, test_createWithNullFails) {
     ASSERT_THAT(MPRISPlayer::create(nullptr, m_mockMedia, m_eventBus), IsNull());
     ASSERT_THAT(MPRISPlayer::create(g_connection, nullptr, m_eventBus), IsNull());
     ASSERT_THAT(MPRISPlayer::create(g_connection, m_mockMedia, nullptr), IsNull());
 }
 
 /// Tests that the MPRISPlayer properly registers and unregisters throughout its life time.
-TEST_F(MPRISPlayerTest, playerRegistration) {
+TEST_F(MPRISPlayerTest, test_playerRegistration) {
     Expectation registerPlayer = EXPECT_CALL(*m_mockMedia, callMethod("RegisterPlayer", _, _)).Times(1);
     EXPECT_CALL(*m_mockMedia, callMethod("UnregisterPlayer", _, _)).Times(1).After(registerPlayer);
     init();
@@ -191,7 +191,7 @@ MATCHER_P(ContainsAVRCPCommand, /* AVRCPCommand */ cmd, "") {
 }
 
 /// Test that a supported DBus method sends the correct corresponding AVRCPCommand.
-TEST_P(MPRISPlayerSupportedAVRCPTest, avrcpCommand) {
+TEST_P(MPRISPlayerSupportedAVRCPTest, test_avrcpCommand) {
     std::string dbusMethodName;
     AVRCPCommand command;
 
@@ -235,7 +235,7 @@ INSTANTIATE_TEST_CASE_P(
     [](testing::TestParamInfo<std::string> info) { return info.param; });
 
 /// Test that unsupported DBus methods do not send any Bluetooth events.
-TEST_P(MPRISPlayerUnsupportedTest, unsupportedMethod) {
+TEST_P(MPRISPlayerUnsupportedTest, test_unsupportedMethod) {
     std::string dbusMethodName = GetParam();
 
     EXPECT_CALL(*m_mockListener, onEventFired(_)).Times(0);

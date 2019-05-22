@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -275,12 +275,12 @@ protected:
 };
 
 /// Tests acquireChannel with an invalid Channel name, expecting no focus changes to be made.
-TEST_F(FocusManagerTest, acquireInvalidChannelName) {
+TEST_F(FocusManagerTest, test_acquireInvalidChannelName) {
     ASSERT_FALSE(m_focusManager->acquireChannel(INCORRECT_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
 }
 
 /// Tests acquireChannel, expecting to get Foreground status since no other Channels are active.
-TEST_F(FocusManagerTest, acquireChannelWithNoOtherChannelsActive) {
+TEST_F(FocusManagerTest, test_acquireChannelWithNoOtherChannelsActive) {
     ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
     assertFocusChange(dialogClient, FocusState::FOREGROUND);
 }
@@ -289,7 +289,7 @@ TEST_F(FocusManagerTest, acquireChannelWithNoOtherChannelsActive) {
  * Tests acquireChannel with two Channels. The lower priority Channel should get Background focus and the higher
  * priority Channel should get Foreground focus.
  */
-TEST_F(FocusManagerTest, acquireLowerPriorityChannelWithOneHigherPriorityChannelTaken) {
+TEST_F(FocusManagerTest, test_acquireLowerPriorityChannelWithOneHigherPriorityChannelTaken) {
     ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
     ASSERT_TRUE(m_focusManager->acquireChannel(ALERTS_CHANNEL_NAME, alertsClient, ALERTS_INTERFACE_NAME));
     assertFocusChange(dialogClient, FocusState::FOREGROUND);
@@ -300,7 +300,7 @@ TEST_F(FocusManagerTest, acquireLowerPriorityChannelWithOneHigherPriorityChannel
  * Tests acquireChannel with three Channels. The two lowest priority Channels should get Background focus while the
  * highest priority Channel should be Foreground focused.
  */
-TEST_F(FocusManagerTest, aquireLowerPriorityChannelWithTwoHigherPriorityChannelsTaken) {
+TEST_F(FocusManagerTest, test_aquireLowerPriorityChannelWithTwoHigherPriorityChannelsTaken) {
     ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
     ASSERT_TRUE(m_focusManager->acquireChannel(ALERTS_CHANNEL_NAME, alertsClient, ALERTS_INTERFACE_NAME));
     ASSERT_TRUE(m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_INTERFACE_NAME));
@@ -314,7 +314,7 @@ TEST_F(FocusManagerTest, aquireLowerPriorityChannelWithTwoHigherPriorityChannels
  * Channel should at first be Foreground focused and then get a change to Background focus while the higher priority
  * should be Foreground focused.
  */
-TEST_F(FocusManagerTest, acquireHigherPriorityChannelWithOneLowerPriorityChannelTaken) {
+TEST_F(FocusManagerTest, test_acquireHigherPriorityChannelWithOneLowerPriorityChannelTaken) {
     ASSERT_TRUE(m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_INTERFACE_NAME));
     assertFocusChange(contentClient, FocusState::FOREGROUND);
 
@@ -327,7 +327,7 @@ TEST_F(FocusManagerTest, acquireHigherPriorityChannelWithOneLowerPriorityChannel
  * Tests acquireChannel with a single Channel. The original observer should be notified to stop and the new observer
  * should obtain Foreground focus.
  */
-TEST_F(FocusManagerTest, kickOutActivityOnSameChannel) {
+TEST_F(FocusManagerTest, test_kickOutActivityOnSameChannel) {
     ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
     assertFocusChange(dialogClient, FocusState::FOREGROUND);
 
@@ -340,7 +340,7 @@ TEST_F(FocusManagerTest, kickOutActivityOnSameChannel) {
 /**
  * Tests releaseChannel with a single Channel. The observer should be notified to stop.
  */
-TEST_F(FocusManagerTest, simpleReleaseChannel) {
+TEST_F(FocusManagerTest, test_simpleReleaseChannel) {
     ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
     assertFocusChange(dialogClient, FocusState::FOREGROUND);
 
@@ -351,7 +351,7 @@ TEST_F(FocusManagerTest, simpleReleaseChannel) {
 /**
  * Tests releaseChannel on a Channel with an incorrect observer. The client should not receive any callback.
  */
-TEST_F(FocusManagerTest, simpleReleaseChannelWithIncorrectObserver) {
+TEST_F(FocusManagerTest, test_simpleReleaseChannelWithIncorrectObserver) {
     ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
     assertFocusChange(dialogClient, FocusState::FOREGROUND);
 
@@ -367,7 +367,7 @@ TEST_F(FocusManagerTest, simpleReleaseChannelWithIncorrectObserver) {
  * focused Channel should be notified to come to the Foreground while the originally Foreground focused Channel should
  * be notified to stop.
  */
-TEST_F(FocusManagerTest, releaseForegroundChannelWhileBackgroundChannelTaken) {
+TEST_F(FocusManagerTest, test_releaseForegroundChannelWhileBackgroundChannelTaken) {
     ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
     assertFocusChange(dialogClient, FocusState::FOREGROUND);
 
@@ -382,7 +382,7 @@ TEST_F(FocusManagerTest, releaseForegroundChannelWhileBackgroundChannelTaken) {
 /**
  * Tests stopForegroundActivity with a single Channel. The observer should be notified to stop.
  */
-TEST_F(FocusManagerTest, simpleNonTargetedStop) {
+TEST_F(FocusManagerTest, test_simpleNonTargetedStop) {
     ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
     assertFocusChange(dialogClient, FocusState::FOREGROUND);
 
@@ -394,7 +394,7 @@ TEST_F(FocusManagerTest, simpleNonTargetedStop) {
  * Tests stopForegroundActivity with a three active Channels. The Foreground Channel observer should be notified to
  * stop each time and the next highest priority background Channel should be brought to the foreground each time.
  */
-TEST_F(FocusManagerTest, threeNonTargetedStopsWithThreeActivitiesHappening) {
+TEST_F(FocusManagerTest, test_threeNonTargetedStopsWithThreeActivitiesHappening) {
     ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
     assertFocusChange(dialogClient, FocusState::FOREGROUND);
 
@@ -420,7 +420,7 @@ TEST_F(FocusManagerTest, threeNonTargetedStopsWithThreeActivitiesHappening) {
  * Tests stopForegroundActivity with a single Channel. The next client to request a different Channel should be given
  * foreground focus.
  */
-TEST_F(FocusManagerTest, stopForegroundActivityAndAcquireDifferentChannel) {
+TEST_F(FocusManagerTest, test_stopForegroundActivityAndAcquireDifferentChannel) {
     ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
     assertFocusChange(dialogClient, FocusState::FOREGROUND);
 
@@ -435,7 +435,7 @@ TEST_F(FocusManagerTest, stopForegroundActivityAndAcquireDifferentChannel) {
  * Tests stopForegroundActivity with a single Channel. The next client to request the same Channel should be given
  * foreground focus.
  */
-TEST_F(FocusManagerTest, stopForegroundActivityAndAcquireSameChannel) {
+TEST_F(FocusManagerTest, test_stopForegroundActivityAndAcquireSameChannel) {
     ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
     assertFocusChange(dialogClient, FocusState::FOREGROUND);
 
@@ -447,10 +447,52 @@ TEST_F(FocusManagerTest, stopForegroundActivityAndAcquireSameChannel) {
 }
 
 /**
+ * Test stopAllActivities with a single channel.
+ * Expect focus change only on that channel and reacquiring the same channel should resulted in foreground focus.
+ */
+TEST_F(FocusManagerTest, test_stopAllActivitiesWithSingleChannel) {
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+
+    m_focusManager->stopAllActivities();
+    assertFocusChange(dialogClient, FocusState::NONE);
+
+    assertNoFocusChange(contentClient);
+    assertNoFocusChange(alertsClient);
+
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+}
+
+/**
+ * Test stopAllActivities with three channels.
+ * Expect focus change to none for all channels and a channel should resulted in foreground focus.
+ */
+TEST_F(FocusManagerTest, test_stopAllActivitiesWithThreeChannels) {
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+
+    ASSERT_TRUE(m_focusManager->acquireChannel(CONTENT_CHANNEL_NAME, contentClient, CONTENT_INTERFACE_NAME));
+    assertFocusChange(contentClient, FocusState::BACKGROUND);
+
+    ASSERT_TRUE(m_focusManager->acquireChannel(ALERTS_CHANNEL_NAME, alertsClient, ALERTS_INTERFACE_NAME));
+    assertFocusChange(alertsClient, FocusState::BACKGROUND);
+
+    m_focusManager->stopAllActivities();
+
+    assertFocusChange(dialogClient, FocusState::NONE);
+    assertFocusChange(contentClient, FocusState::NONE);
+    assertFocusChange(alertsClient, FocusState::NONE);
+
+    ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
+    assertFocusChange(dialogClient, FocusState::FOREGROUND);
+}
+
+/**
  * Tests releaseChannel with the background Channel while there is a foreground Channel. The foreground Channel
  * should remain foregrounded while the background Channel's observer should be notified to stop.
  */
-TEST_F(FocusManagerTest, releaseBackgroundChannelWhileTwoChannelsTaken) {
+TEST_F(FocusManagerTest, test_releaseBackgroundChannelWhileTwoChannelsTaken) {
     ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
     assertFocusChange(dialogClient, FocusState::FOREGROUND);
 
@@ -468,7 +510,7 @@ TEST_F(FocusManagerTest, releaseBackgroundChannelWhileTwoChannelsTaken) {
  * observer of the foreground be notified to stop and the new observer of the Channel will be notified that it has
  * Foreground focus. The originally backgrounded Channel should not change focus.
  */
-TEST_F(FocusManagerTest, kickOutActivityOnSameChannelWhileOtherChannelsActive) {
+TEST_F(FocusManagerTest, test_kickOutActivityOnSameChannelWhileOtherChannelsActive) {
     ASSERT_TRUE(m_focusManager->acquireChannel(DIALOG_CHANNEL_NAME, dialogClient, DIALOG_INTERFACE_NAME));
     assertFocusChange(dialogClient, FocusState::FOREGROUND);
 
@@ -484,7 +526,7 @@ TEST_F(FocusManagerTest, kickOutActivityOnSameChannelWhileOtherChannelsActive) {
 }
 
 /// Tests that multiple observers can be added, and that they are notified of all focus changes.
-TEST_F(FocusManagerTest, addObserver) {
+TEST_F(FocusManagerTest, test_addObserver) {
     // These are all the observers that will be added.
     std::vector<std::shared_ptr<MockFocusManagerObserver>> observers;
     observers.push_back(std::make_shared<MockFocusManagerObserver>());
@@ -524,7 +566,7 @@ TEST_F(FocusManagerTest, addObserver) {
 }
 
 /// Tests that observers can be removed, and that they are no longer notified of focus changes after removal.
-TEST_F(FocusManagerTest, removeObserver) {
+TEST_F(FocusManagerTest, test_removeObserver) {
     // These are all the observers that will ever be added.
     std::vector<std::shared_ptr<MockFocusManagerObserver>> allObservers;
 
@@ -582,7 +624,7 @@ TEST_F(FocusManagerTest, removeObserver) {
 /**
  * Tests activityTracker with three Channels and make sure notifyOfActivityUpdates() is called correctly.
  */
-TEST_F(FocusManagerTest, activityTracker) {
+TEST_F(FocusManagerTest, test_activityTracker) {
     // Acquire Content channel and expect notifyOfActivityUpdates() to notify activities on the Content channel.
     const std::vector<MockActivityTrackerInterface::ExpectedChannelStateResult> test1 = {
         {CONTENT_CHANNEL_NAME, CONTENT_INTERFACE_NAME, FocusState::FOREGROUND}};
@@ -657,17 +699,17 @@ protected:
 };
 
 /// Tests that the getName method of Channel works properly.
-TEST_F(ChannelTest, getName) {
+TEST_F(ChannelTest, test_getName) {
     ASSERT_EQ(testChannel->getName(), DIALOG_CHANNEL_NAME);
 }
 
 /// Tests that the getPriority method of Channel works properly.
-TEST_F(ChannelTest, getPriority) {
+TEST_F(ChannelTest, test_getPriority) {
     ASSERT_EQ(testChannel->getPriority(), DIALOG_CHANNEL_PRIORITY);
 }
 
 /// Tests that the observer properly gets notified of focus changes.
-TEST_F(ChannelTest, setObserverThenSetFocus) {
+TEST_F(ChannelTest, test_setObserverThenSetFocus) {
     testChannel->setObserver(clientA);
 
     ASSERT_TRUE(testChannel->setFocus(FocusState::FOREGROUND));
@@ -683,7 +725,7 @@ TEST_F(ChannelTest, setObserverThenSetFocus) {
 }
 
 /// Tests that Channels are compared properly
-TEST_F(ChannelTest, priorityComparison) {
+TEST_F(ChannelTest, test_priorityComparison) {
     std::shared_ptr<Channel> lowerPriorityChannel =
         std::make_shared<Channel>(CONTENT_CHANNEL_NAME, CONTENT_CHANNEL_PRIORITY);
     ASSERT_TRUE(*testChannel > *lowerPriorityChannel);
@@ -691,7 +733,7 @@ TEST_F(ChannelTest, priorityComparison) {
 }
 
 /// Tests that a Channel correctly reports whether it has an observer.
-TEST_F(ChannelTest, hasObserver) {
+TEST_F(ChannelTest, test_hasObserver) {
     ASSERT_FALSE(testChannel->hasObserver());
     testChannel->setObserver(clientA);
     ASSERT_TRUE(testChannel->hasObserver());
@@ -705,7 +747,7 @@ TEST_F(ChannelTest, hasObserver) {
  * Tests that the timeAtIdle only gets updated when channel goes to idle and not when channel goes to Foreground or
  * Background.
  */
-TEST_F(ChannelTest, getTimeAtIdle) {
+TEST_F(ChannelTest, test_getTimeAtIdle) {
     auto startTime = testChannel->getState().timeAtIdle;
     ASSERT_TRUE(testChannel->setFocus(FocusState::FOREGROUND));
     auto afterForegroundTime = testChannel->getState().timeAtIdle;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -207,7 +207,7 @@ void AndroidSLESMediaQueueTest::TearDown() {
 }
 
 /// Test buffer queue create.
-TEST_F(AndroidSLESMediaQueueTest, testCreateSucceed) {
+TEST_F(AndroidSLESMediaQueueTest, test_createSucceed) {
     std::pair<DecoderInterface::Status, size_t> done = {DecoderInterface::Status::DONE, 0};
     auto decoder = avsCommon::utils::memory::make_unique<NiceMock<MockDecoder>>();
     EXPECT_CALL(*decoder, read(_, _)).WillOnce(Return(done));
@@ -223,7 +223,7 @@ TEST_F(AndroidSLESMediaQueueTest, testCreateSucceed) {
 }
 
 /// Check that create fail if we are missing the OpenSL ES object.
-TEST_F(AndroidSLESMediaQueueTest, testCreateFailMissingSlObject) {
+TEST_F(AndroidSLESMediaQueueTest, test_createFailMissingSlObject) {
     auto decoder = avsCommon::utils::memory::make_unique<NiceMock<MockDecoder>>();
     auto mediaQueue = AndroidSLESMediaQueue::create(
         nullptr,
@@ -236,7 +236,7 @@ TEST_F(AndroidSLESMediaQueueTest, testCreateFailMissingSlObject) {
 }
 
 /// Check that create fail if the @c SL_IID_ANDROIDSIMPLEBUFFERQUEUE is missing.
-TEST_F(AndroidSLESMediaQueueTest, testCreateFailMissingInterface) {
+TEST_F(AndroidSLESMediaQueueTest, test_createFailMissingInterface) {
     m_objectMock->mockGetInterface(SL_IID_ANDROIDSIMPLEBUFFERQUEUE, nullptr);
     auto decoder = avsCommon::utils::memory::make_unique<NiceMock<MockDecoder>>();
     auto mediaQueue = AndroidSLESMediaQueue::create(
@@ -250,7 +250,7 @@ TEST_F(AndroidSLESMediaQueueTest, testCreateFailMissingInterface) {
 }
 
 /// Check that create fail if the decoder is missing.
-TEST_F(AndroidSLESMediaQueueTest, testCreateFailMissingDecoder) {
+TEST_F(AndroidSLESMediaQueueTest, test_createFailMissingDecoder) {
     auto mediaQueue = AndroidSLESMediaQueue::create(
         m_slObject,
         nullptr,
@@ -262,14 +262,14 @@ TEST_F(AndroidSLESMediaQueueTest, testCreateFailMissingDecoder) {
 }
 
 /// Check that create fail if the callback function is missing.
-TEST_F(AndroidSLESMediaQueueTest, testCreateFailMissingCallback) {
+TEST_F(AndroidSLESMediaQueueTest, test_createFailMissingCallback) {
     auto decoder = avsCommon::utils::memory::make_unique<NiceMock<MockDecoder>>();
     auto mediaQueue = AndroidSLESMediaQueue::create(m_slObject, std::move(decoder), nullptr, PlaybackConfiguration());
     EXPECT_EQ(mediaQueue, nullptr);
 }
 
 /// Check that create fail if the callback function cannot be registered.
-TEST_F(AndroidSLESMediaQueueTest, testCreateFailRegisterCallback) {
+TEST_F(AndroidSLESMediaQueueTest, test_createFailRegisterCallback) {
     m_queueMock->get().RegisterCallback = mockRegisterCallbackFailed;
     auto decoder = avsCommon::utils::memory::make_unique<NiceMock<MockDecoder>>();
     auto mediaQueue = AndroidSLESMediaQueue::create(m_slObject, std::move(decoder), nullptr, PlaybackConfiguration());
@@ -277,7 +277,7 @@ TEST_F(AndroidSLESMediaQueueTest, testCreateFailRegisterCallback) {
 }
 
 /// Test buffer queue events when the media queue succeeds to read data from the decoder.
-TEST_F(AndroidSLESMediaQueueTest, testOnBufferQueueSucceed) {
+TEST_F(AndroidSLESMediaQueueTest, test_onBufferQueueSucceed) {
     // Always return valid read.
     // Arbitrary number of bytes that is > 0.
     constexpr size_t bytesRead{1000};
@@ -306,7 +306,7 @@ TEST_F(AndroidSLESMediaQueueTest, testOnBufferQueueSucceed) {
 }
 
 /// Test buffer queue events when the media queue succeeds to read data from the decoder till the end of the stream.
-TEST_F(AndroidSLESMediaQueueTest, testEnqueueTillDone) {
+TEST_F(AndroidSLESMediaQueueTest, test_enqueueTillDone) {
     // Arbitrary number of bytes that is > 0.
     constexpr size_t bytesRead{1000};
     std::pair<DecoderInterface::Status, size_t> ok = {DecoderInterface::Status::OK, bytesRead};
@@ -341,7 +341,7 @@ TEST_F(AndroidSLESMediaQueueTest, testEnqueueTillDone) {
 }
 
 /// Test that the buffer queue emits an error event when the decoder fails.
-TEST_F(AndroidSLESMediaQueueTest, testDecoderFailure) {
+TEST_F(AndroidSLESMediaQueueTest, test_decoderFailure) {
     std::pair<DecoderInterface::Status, size_t> error = {DecoderInterface::Status::ERROR, 0};
     auto decoder = avsCommon::utils::memory::make_unique<NiceMock<MockDecoder>>();
     EXPECT_CALL(*decoder, read(_, _)).WillOnce(Return(error));
@@ -358,7 +358,7 @@ TEST_F(AndroidSLESMediaQueueTest, testDecoderFailure) {
 }
 
 /// Test buffer queue events emits an error event when it fails to enqueue a buffer
-TEST_F(AndroidSLESMediaQueueTest, testEnqueueFailure) {
+TEST_F(AndroidSLESMediaQueueTest, test_enqueueFailure) {
     // Always return valid read.
     // Arbitrary number of bytes that is > 0.
     constexpr size_t bytesRead{1000};

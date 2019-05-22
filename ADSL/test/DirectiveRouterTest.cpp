@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -170,7 +170,7 @@ void DirectiveRouterTest::TearDown() {
 /**
  * Check that an un-registered @c AVDirective will not be routed.
  */
-TEST_F(DirectiveRouterTest, testUnroutedDirective) {
+TEST_F(DirectiveRouterTest, test_unroutedDirective) {
     ASSERT_FALSE(m_router.handleDirectiveImmediately(m_directive_0_0));
 }
 
@@ -178,7 +178,7 @@ TEST_F(DirectiveRouterTest, testUnroutedDirective) {
  * Register an @c AVSDirective for routing. Exercise routing via @c handleDirectiveImmediately().
  * Expect that the @c AVSDirective is routed.
  */
-TEST_F(DirectiveRouterTest, testSettingADirectiveHandler) {
+TEST_F(DirectiveRouterTest, test_settingADirectiveHandler) {
     DirectiveHandlerConfiguration handler0Config;
     handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
@@ -197,7 +197,7 @@ TEST_F(DirectiveRouterTest, testSettingADirectiveHandler) {
  * Register @c AVSDirectives to be routed to different handlers. Exercise routing via @c preHandleDirective().
  * Expect that the @c AVSDirectives make it to their registered handler.
  */
-TEST_F(DirectiveRouterTest, testRegisteringMultipeHandler) {
+TEST_F(DirectiveRouterTest, test_registeringMultipeHandler) {
     DirectiveHandlerConfiguration handler0Config;
     auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     handler0Config[{NAMESPACE_AND_NAME_0_0}] = audioNonBlockingPolicy;
@@ -271,7 +271,7 @@ TEST_F(DirectiveRouterTest, testRegisteringMultipeHandler) {
  * were last assigned to and that false and a @c BlockingPolicy of NONE is returned for the directive whose handler
  * was removed.
  */
-TEST_F(DirectiveRouterTest, testRemovingChangingAndNotChangingHandlers) {
+TEST_F(DirectiveRouterTest, test_removingChangingAndNotChangingHandlers) {
     DirectiveHandlerConfiguration handler0Config;
     auto audioBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
@@ -341,7 +341,7 @@ TEST_F(DirectiveRouterTest, testRemovingChangingAndNotChangingHandlers) {
  * mock handlers to return false from @c handleDirective(). Exercise routing via handleDirective(). Expect that
  * @c DirectiveRouter::handleDirective() returns @c false and BlockingPolicy::nonePolicy() to indicate failure.
  */
-TEST_F(DirectiveRouterTest, testResultOfHandleDirectiveFailure) {
+TEST_F(DirectiveRouterTest, test_resultOfHandleDirectiveFailure) {
     DirectiveHandlerConfiguration handler0Config;
     handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
@@ -374,7 +374,7 @@ TEST_F(DirectiveRouterTest, testResultOfHandleDirectiveFailure) {
  * until a subsequent invocation of @c handleDirective() has started. Expect the blocked call to preHandleDirective()
  * to complete quickly.
  */
-TEST_F(DirectiveRouterTest, testHandlerMethodsCanRunConcurrently) {
+TEST_F(DirectiveRouterTest, test_handlerMethodsCanRunConcurrently) {
     DirectiveHandlerConfiguration handler0Config;
     handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);

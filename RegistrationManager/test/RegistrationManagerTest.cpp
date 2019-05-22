@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -89,7 +89,7 @@ protected:
  * - clear data handler's data
  * - notify registration observer
  */
-TEST_F(RegistrationManagerTest, testLogout) {
+TEST_F(RegistrationManagerTest, test_logout) {
     EXPECT_CALL(*m_directiveSequencer, disable());
     EXPECT_CALL(*m_avsConnectionManager, disable());
     EXPECT_CALL(*m_registrationObserver, onLogout());

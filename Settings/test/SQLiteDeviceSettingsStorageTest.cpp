@@ -121,7 +121,7 @@ void SQLiteDeviceSettingsStorageTest::TearDown() {
 /**
  * Test storing status and values to the database.
  */
-TEST_F(SQLiteDeviceSettingsStorageTest, insertUpdateSettingValue) {
+TEST_F(SQLiteDeviceSettingsStorageTest, test_insertUpdateSettingValue) {
     const std::string key = "AAAA";
     const std::string value1 = "BBBBB";
     const std::string value2 = "CCCCC";
@@ -173,7 +173,7 @@ TEST_F(SQLiteDeviceSettingsStorageTest, insertUpdateSettingValue) {
 /**
  * Test removing an entry from the database.
  */
-TEST_F(SQLiteDeviceSettingsStorageTest, deleteSetting) {
+TEST_F(SQLiteDeviceSettingsStorageTest, test_deleteSetting) {
     const std::string key = "AAAA";
     const std::string value1 = "BBBBB";
     const SettingStatus localStatus = SettingStatus::LOCAL_CHANGE_IN_PROGRESS;

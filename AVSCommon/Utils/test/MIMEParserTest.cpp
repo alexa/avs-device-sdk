@@ -185,7 +185,7 @@ public:
  * Test for correct encoded size, header presence and validity
  * of Return status for every call as well as bytes written.
  */
-TEST_F(MIMEParserTest, encodingSanityTest) {
+TEST_F(MIMEParserTest, test_encodingSanity) {
     /// We choose an arbitrary buffer size
     const int bufferSize{25};
 
@@ -223,7 +223,7 @@ TEST_F(MIMEParserTest, encodingSanityTest) {
     ASSERT_EQ(index, encodedSize);
 }
 
-TEST_F(MIMEParserTest, decodingSanityTest) {
+TEST_F(MIMEParserTest, test_decodingSanity) {
     /// We choose an arbitrary buffer size
     const int bufferSize{25};
     /// We need to pass a header with boundary info
@@ -307,7 +307,7 @@ void runCodecTest(
     ASSERT_EQ(pauseCount, sink->m_pauseCount);
 }
 
-TEST_F(MIMEParserTest, singlePayloadSinglePass) {
+TEST_F(MIMEParserTest, test_singlePayloadSinglePass) {
     // Sufficiently large buffer to accommodate payload
     const int bufferSize{LARGE};
 
@@ -329,7 +329,7 @@ TEST_F(MIMEParserTest, singlePayloadSinglePass) {
     runCodecTest(source, sink, bufferSize);
 }
 
-TEST_F(MIMEParserTest, singlePayloadMultiplePasses) {
+TEST_F(MIMEParserTest, test_singlePayloadMultiplePasses) {
     // Medium sized payload and buffer
     const int bufferSize{SMALL};
     // setup source
@@ -352,7 +352,7 @@ TEST_F(MIMEParserTest, singlePayloadMultiplePasses) {
     runCodecTest(source, sink, bufferSize);
 }
 
-TEST_F(MIMEParserTest, multiplePayloadsSinglePass) {
+TEST_F(MIMEParserTest, test_multiplePayloadsSinglePass) {
     const int bufferSize{LARGE};
     std::vector<std::string> data;
     std::vector<std::vector<std::string>> headerSets;
@@ -375,7 +375,7 @@ TEST_F(MIMEParserTest, multiplePayloadsSinglePass) {
     runCodecTest(source, sink, bufferSize);
 }
 
-TEST_F(MIMEParserTest, multiplePayloadsMultiplePasses) {
+TEST_F(MIMEParserTest, test_multiplePayloadsMultiplePasses) {
     const int bufferSize{SMALL};
     std::vector<std::string> data;
     std::vector<std::vector<std::string>> headerSets;
@@ -401,7 +401,7 @@ TEST_F(MIMEParserTest, multiplePayloadsMultiplePasses) {
 /**
  * Test feeding mime text including duplicate boundaries that we want to just skip over.
  */
-TEST_F(MIMEParserTest, duplicateBoundaries) {
+TEST_F(MIMEParserTest, test_duplicateBoundaries) {
     /// We choose an arbitrary buffer size
     const int bufferSize{25};
     /// We need to pass a header with boundary info
@@ -454,7 +454,7 @@ TEST_F(MIMEParserTest, duplicateBoundaries) {
     }
 }
 
-TEST_F(MIMEParserTest, testABORT) {
+TEST_F(MIMEParserTest, test_aBORT) {
     // setup source
     std::vector<std::string> data;
     std::vector<std::vector<std::string>> headerSets;
@@ -490,7 +490,7 @@ TEST_F(MIMEParserTest, testABORT) {
     ASSERT_EQ(decoder.onReceiveData(encodedPayload.c_str(), SMALL), HTTP2ReceiveDataStatus::ABORT);
 }
 
-TEST_F(MIMEParserTest, testPAUSE) {
+TEST_F(MIMEParserTest, test_pAUSE) {
     const int bufferSize{SMALL};
     std::vector<std::string> data;
     std::vector<std::vector<std::string>> headerSets;
@@ -522,7 +522,7 @@ TEST_F(MIMEParserTest, testPAUSE) {
  * We test for cases when the amount of data to be encoded/decoded from chunk varies a lot
  * between calls
  */
-TEST_F(MIMEParserTest, testVariableChunkSizes) {
+TEST_F(MIMEParserTest, test_variableChunkSizes) {
     std::vector<std::string> data;
     std::vector<std::vector<std::string>> headerSets;
     // 3 medium payloads
@@ -656,7 +656,7 @@ static void testPrefixCase(
     }
 }
 
-TEST_F(MIMEParserTest, testPrefixCases) {
+TEST_F(MIMEParserTest, test_prefixCases) {
     // Value used to drive testes of first chunk sizes 0 (i.e. none), 1, 2, and 3.
     static const int MAX_FIRST_CHUNK_SIZE = 3;
 

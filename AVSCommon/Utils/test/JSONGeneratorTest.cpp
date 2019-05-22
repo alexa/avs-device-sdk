@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,12 +32,12 @@ protected:
 };
 
 /// Test json generator when no member is given.
-TEST_F(JsonGeneratorTest, testEmptyJson) {
+TEST_F(JsonGeneratorTest, test_emptyJson) {
     EXPECT_EQ(m_generator.toString(), "{}");
 }
 
 /// Test json generator object creation.
-TEST_F(JsonGeneratorTest, testJsonObject) {
+TEST_F(JsonGeneratorTest, test_jsonObject) {
     EXPECT_TRUE(m_generator.startObject("key"));
     EXPECT_TRUE(m_generator.finishObject());
 
@@ -46,7 +46,7 @@ TEST_F(JsonGeneratorTest, testJsonObject) {
 }
 
 /// Test json generator int creation.
-TEST_F(JsonGeneratorTest, testJsonInt) {
+TEST_F(JsonGeneratorTest, test_jsonInt) {
     int value = std::numeric_limits<int>::max();
     EXPECT_TRUE(m_generator.addMember("member", value));
 
@@ -55,7 +55,7 @@ TEST_F(JsonGeneratorTest, testJsonInt) {
 }
 
 /// Test json generator long creation.
-TEST_F(JsonGeneratorTest, testJsonLong) {
+TEST_F(JsonGeneratorTest, test_jsonLong) {
     int64_t value = std::numeric_limits<int64_t>::max();
     EXPECT_TRUE(m_generator.addMember("member", value));
 
@@ -64,7 +64,7 @@ TEST_F(JsonGeneratorTest, testJsonLong) {
 }
 
 /// Test json generator long creation.
-TEST_F(JsonGeneratorTest, testJsonUInt) {
+TEST_F(JsonGeneratorTest, test_jsonUInt) {
     unsigned int value = std::numeric_limits<unsigned int>::max();
     EXPECT_TRUE(m_generator.addMember("member", value));
 
@@ -73,7 +73,7 @@ TEST_F(JsonGeneratorTest, testJsonUInt) {
 }
 
 /// Test json generator long creation.
-TEST_F(JsonGeneratorTest, testJsonULong) {
+TEST_F(JsonGeneratorTest, test_jsonULong) {
     uint64_t value = std::numeric_limits<uint64_t>::max();
     EXPECT_TRUE(m_generator.addMember("member", value));
 
@@ -82,7 +82,7 @@ TEST_F(JsonGeneratorTest, testJsonULong) {
 }
 
 /// Test json generator boolean creation.
-TEST_F(JsonGeneratorTest, testJsonBool) {
+TEST_F(JsonGeneratorTest, test_jsonBool) {
     bool value = true;
     EXPECT_TRUE(m_generator.addMember("member", value));
 
@@ -91,7 +91,7 @@ TEST_F(JsonGeneratorTest, testJsonBool) {
 }
 
 /// Test json generator char creation.
-TEST_F(JsonGeneratorTest, testJsonCString) {
+TEST_F(JsonGeneratorTest, test_jsonCString) {
     EXPECT_TRUE(m_generator.addMember("member", "value"));
 
     auto expected = R"({"member":"value"})";
@@ -99,7 +99,7 @@ TEST_F(JsonGeneratorTest, testJsonCString) {
 }
 
 /// Test json generator char creation.
-TEST_F(JsonGeneratorTest, testJsonNullCString) {
+TEST_F(JsonGeneratorTest, test_jsonNullCString) {
     EXPECT_FALSE(m_generator.addMember("member", nullptr));
 
     auto expected = R"({})";
@@ -107,7 +107,7 @@ TEST_F(JsonGeneratorTest, testJsonNullCString) {
 }
 
 /// Test json raw creation.
-TEST_F(JsonGeneratorTest, testJsonRawJsonMember) {
+TEST_F(JsonGeneratorTest, test_jsonRawJsonMember) {
     EXPECT_TRUE(m_generator.addRawJsonMember("member1", R"({"member11":"value11"})"));
     EXPECT_TRUE(m_generator.addMember("member2", "value2"));
 
@@ -116,7 +116,7 @@ TEST_F(JsonGeneratorTest, testJsonRawJsonMember) {
 }
 
 /// Test json raw validation.
-TEST_F(JsonGeneratorTest, testJsonRawJsonMemberFailed) {
+TEST_F(JsonGeneratorTest, test_jsonRawJsonMemberFailed) {
     EXPECT_FALSE(m_generator.addRawJsonMember("member1", R"(invalid)"));
     EXPECT_TRUE(m_generator.addMember("member2", "value2"));
 
@@ -125,13 +125,13 @@ TEST_F(JsonGeneratorTest, testJsonRawJsonMemberFailed) {
 }
 
 /// Test close when there is no open object.
-TEST_F(JsonGeneratorTest, testCloseTooMany) {
+TEST_F(JsonGeneratorTest, test_closeTooMany) {
     EXPECT_TRUE(m_generator.finishObject());
     EXPECT_FALSE(m_generator.finishObject());
 }
 
 /// Test to string with open objects.
-TEST_F(JsonGeneratorTest, testOpenObjects) {
+TEST_F(JsonGeneratorTest, test_openObjects) {
     EXPECT_TRUE(m_generator.startObject("key"));
 
     auto expected = R"({"key":{)";
@@ -139,7 +139,7 @@ TEST_F(JsonGeneratorTest, testOpenObjects) {
 }
 
 /// Test finalize open objects.
-TEST_F(JsonGeneratorTest, testFinalizeObjects) {
+TEST_F(JsonGeneratorTest, test_finalizeObjects) {
     EXPECT_TRUE(m_generator.startObject("key1"));
     EXPECT_TRUE(m_generator.startObject("key2"));
 
@@ -148,7 +148,7 @@ TEST_F(JsonGeneratorTest, testFinalizeObjects) {
 }
 
 /// Test operations after finalize.
-TEST_F(JsonGeneratorTest, testAddMemberAfterFinalize) {
+TEST_F(JsonGeneratorTest, test_addMemberAfterFinalize) {
     EXPECT_EQ(m_generator.toString(), "{}");
     EXPECT_EQ(m_generator.toString(), "{}");
     ASSERT_TRUE(m_generator.isFinalized());

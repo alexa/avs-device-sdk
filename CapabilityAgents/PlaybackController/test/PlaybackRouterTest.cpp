@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ void PlaybackRouterTest::TearDown() {
 /**
  * Test default handler is called.
  */
-TEST_F(PlaybackRouterTest, defaultHandler) {
+TEST_F(PlaybackRouterTest, test_defaultHandler) {
     EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::PLAY));
     m_playbackRouter->buttonPressed(PlaybackButton::PLAY);
 
@@ -91,7 +91,7 @@ TEST_F(PlaybackRouterTest, defaultHandler) {
 /**
  * Test 2nd handler is called after registration.
  */
-TEST_F(PlaybackRouterTest, secondHandler) {
+TEST_F(PlaybackRouterTest, test_secondHandler) {
     m_playbackRouter->setHandler(m_defaultPlaybackHandler);
     EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::PLAY));
     m_playbackRouter->buttonPressed(PlaybackButton::PLAY);
@@ -138,7 +138,7 @@ TEST_F(PlaybackRouterTest, secondHandler) {
 /**
  * Test default handler is called again after @c switchToDefaultHandler has been called.
  */
-TEST_F(PlaybackRouterTest, switchToDefaultHandler) {
+TEST_F(PlaybackRouterTest, test_switchToDefaultHandler) {
     EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::PLAY));
     m_playbackRouter->buttonPressed(PlaybackButton::PLAY);
 

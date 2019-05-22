@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -561,7 +561,7 @@ void ContextManagerTest::SetUp() {
  * Set the state with a @c StateRefreshPolicy @c ALWAYS for a @c StateProviderInterface that is registered with the
  * @c ContextManager. Expect @c SetStateResult @c SUCCESS is returned.
  */
-TEST_F(ContextManagerTest, testSetStateForRegisteredProvider) {
+TEST_F(ContextManagerTest, test_setStateForRegisteredProvider) {
     ASSERT_EQ(
         SetStateResult::SUCCESS,
         m_contextManager->setState(
@@ -575,7 +575,7 @@ TEST_F(ContextManagerTest, testSetStateForRegisteredProvider) {
  * Set the state with a @c StateRefreshPolicy @c NEVER for a @c StateProviderInterface that is not registered with the
  * @c ContextManager. Expect @c SetStateResult @c SUCCESS is returned.
  */
-TEST_F(ContextManagerTest, testSetStateForUnregisteredProvider) {
+TEST_F(ContextManagerTest, test_setStateForUnregisteredProvider) {
     ASSERT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::NEVER));
 }
 
@@ -583,7 +583,7 @@ TEST_F(ContextManagerTest, testSetStateForUnregisteredProvider) {
  * Set the state with a @c StateRefreshPolicy @c ALWAYS for a @c StateProviderInterface that is not registered with
  * the @c ContextManager. Expect @c SetStateResult @c STATE_PROVIDER_NOT_REGISTERED is returned.
  */
-TEST_F(ContextManagerTest, testSetStateForUnregisteredProviderWithRefreshPolicyAlways) {
+TEST_F(ContextManagerTest, test_setStateForUnregisteredProviderWithRefreshPolicyAlways) {
     m_alerts = MockStateProvider::create(
         m_contextManager, ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::NEVER, DEFAULT_SLEEP_TIME);
     ASSERT_EQ(
@@ -597,7 +597,7 @@ TEST_F(ContextManagerTest, testSetStateForUnregisteredProviderWithRefreshPolicyA
  * @c ContextManager. Request for context by calling @c getContext. Expect that the context is returned within the
  * timeout period. Check the context that is returned by the @c ContextManager. Expect it should match the test value.
  */
-TEST_F(ContextManagerTest, testGetContext) {
+TEST_F(ContextManagerTest, test_getContext) {
     ASSERT_EQ(
         SetStateResult::SUCCESS,
         m_contextManager->setState(
@@ -622,7 +622,7 @@ TEST_F(ContextManagerTest, testGetContext) {
  * @c ContextManager. Request for context by calling @c getContext by multiple requesters. Expect that the context is
  * returned to each of the requesters within the timeout period.
  */
-TEST_F(ContextManagerTest, testMultipleGetContextRequests) {
+TEST_F(ContextManagerTest, test_multipleGetContextRequests) {
     ASSERT_EQ(
         SetStateResult::SUCCESS,
         m_contextManager->setState(
@@ -655,7 +655,7 @@ TEST_F(ContextManagerTest, testMultipleGetContextRequests) {
  * Request for context by calling @c getContext. Expect that the context is returned within the
  * timeout period. Check the context that is returned by the @c ContextManager matches the test context.
  */
-TEST_F(ContextManagerTest, testSetProviderTwice) {
+TEST_F(ContextManagerTest, test_setProviderTwice) {
     ASSERT_EQ(
         SetStateResult::SUCCESS,
         m_contextManager->setState(
@@ -692,7 +692,7 @@ TEST_F(ContextManagerTest, testSetProviderTwice) {
  * Set the states with a @c StateRefreshPolicy @c ALWAYS for @c StateProviderInterfaces. Request for context by calling
  * @c getContext. Expect that failure occurs due to timeout.
  */
-TEST_F(ContextManagerTest, testProvideStateTimeout) {
+TEST_F(ContextManagerTest, test_provideStateTimeout) {
     m_alerts = MockStateProvider::create(
         m_contextManager, ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::NEVER, TIMEOUT_SLEEP_TIME);
     m_contextManager->setStateProvider(ALERTS, m_alerts);
@@ -723,7 +723,7 @@ TEST_F(ContextManagerTest, testProvideStateTimeout) {
  * @c StateRefreshPolicy @c ALWAYS for the @c StateProviderInterface that was unregistered. Expect @c SetStateResult
  * @c STATE_PROVIDER_NOT_REGISTERED is returned.
  */
-TEST_F(ContextManagerTest, testRemoveProvider) {
+TEST_F(ContextManagerTest, test_removeProvider) {
     m_contextManager->setStateProvider(SPEECH_SYNTHESIZER, nullptr);
     ASSERT_EQ(
         SetStateResult::STATE_PROVIDER_NOT_REGISTERED,
@@ -739,7 +739,7 @@ TEST_F(ContextManagerTest, testRemoveProvider) {
  * that is registered with the @c ContextManager with a wrong token value. Expect that
  * @c SetStateResult @c STATE_TOKEN_OUTDATED is returned.
  */
-TEST_F(ContextManagerTest, testIncorrectToken) {
+TEST_F(ContextManagerTest, test_incorrectToken) {
     m_contextManager->getContext(m_contextRequester);
     ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
     ASSERT_EQ(
@@ -761,7 +761,7 @@ TEST_F(ContextManagerTest, testIncorrectToken) {
  *
  * Check the context that is returned by the @c ContextManager. Expect it should match the test value.
  */
-TEST_F(ContextManagerTest, testEmptyProvider) {
+TEST_F(ContextManagerTest, test_emptyProvider) {
     auto dummyProvider = MockStateProvider::create(
         m_contextManager, DUMMY_PROVIDER, "", StateRefreshPolicy::SOMETIMES, DEFAULT_SLEEP_TIME);
     m_contextManager->setStateProvider(DUMMY_PROVIDER, dummyProvider);

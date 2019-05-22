@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -98,7 +98,7 @@ static ConfigurationNode generateConfigFromJSON(std::string json) {
 }
 
 // Test creation with an empty configuration
-TEST_F(SDKConfigEqualizerConfigurationTest, providedEmptyConfig_shouldSucceed) {
+TEST_F(SDKConfigEqualizerConfigurationTest, test_providedEmptyConfig_shouldSucceed) {
     auto defaultConfig = InMemoryEqualizerConfiguration::createDefault();
     ConfigurationNode rootNode;
 
@@ -107,7 +107,7 @@ TEST_F(SDKConfigEqualizerConfigurationTest, providedEmptyConfig_shouldSucceed) {
 }
 
 // Empty configuration should lead to default values.
-TEST_F(SDKConfigEqualizerConfigurationTest, providedEmptyConfig_shouldUseDefaultConfig) {
+TEST_F(SDKConfigEqualizerConfigurationTest, test_providedEmptyConfig_shouldUseDefaultConfig) {
     auto defaultConfig = InMemoryEqualizerConfiguration::createDefault();
     ConfigurationNode rootNode;
 
@@ -124,7 +124,7 @@ TEST_F(SDKConfigEqualizerConfigurationTest, providedEmptyConfig_shouldUseDefault
 }
 
 // Test the case when only some of the bands supported
-TEST_F(SDKConfigEqualizerConfigurationTest, providedLimitedBandsDefined_shouldSucceed) {
+TEST_F(SDKConfigEqualizerConfigurationTest, test_providedLimitedBandsDefined_shouldSucceed) {
     ConfigurationNode rootNode = generateConfigFromJSON(JSON_LIMITED_BANDS);
 
     auto config = SDKConfigEqualizerConfiguration::create(rootNode);
@@ -136,7 +136,7 @@ TEST_F(SDKConfigEqualizerConfigurationTest, providedLimitedBandsDefined_shouldSu
 }
 
 // Test the case when only some of the bands supported, one of them is not explicitly mentioned.
-TEST_F(SDKConfigEqualizerConfigurationTest, providedLimitedBandsOneMissing_shouldSucceed) {
+TEST_F(SDKConfigEqualizerConfigurationTest, test_providedLimitedBandsOneMissing_shouldSucceed) {
     ConfigurationNode rootNode = generateConfigFromJSON(JSON_LIMITED_BANDS_ONE_MISSING);
 
     auto config = SDKConfigEqualizerConfiguration::create(rootNode);
@@ -149,7 +149,7 @@ TEST_F(SDKConfigEqualizerConfigurationTest, providedLimitedBandsOneMissing_shoul
 }
 
 // Test empty bands branch behavior
-TEST_F(SDKConfigEqualizerConfigurationTest, havingEmptyBandList_shouldUseHardDefaults) {
+TEST_F(SDKConfigEqualizerConfigurationTest, test_havingEmptyBandList_shouldUseHardDefaults) {
     ConfigurationNode rootNode = generateConfigFromJSON(JSON_NO_BANDS_PROVIDED);
 
     auto config = SDKConfigEqualizerConfiguration::create(rootNode);
@@ -167,7 +167,7 @@ TEST_F(SDKConfigEqualizerConfigurationTest, havingEmptyBandList_shouldUseHardDef
 }
 
 // Test invalid band listed in supported bands branch
-TEST_F(SDKConfigEqualizerConfigurationTest, havingOnlyInvalidBand_shouldSucceedAndSupportNone) {
+TEST_F(SDKConfigEqualizerConfigurationTest, test_havingOnlyInvalidBand_shouldSucceedAndSupportNone) {
     ConfigurationNode rootNode = generateConfigFromJSON(JSON_INVALID_BAND);
 
     auto config = SDKConfigEqualizerConfiguration::create(rootNode);
@@ -179,7 +179,7 @@ TEST_F(SDKConfigEqualizerConfigurationTest, havingOnlyInvalidBand_shouldSucceedA
 }
 
 // Test modes branch containing one mode enabled
-TEST_F(SDKConfigEqualizerConfigurationTest, oneModeDefinedAndEnabled_shouldPutOthersToDefaults) {
+TEST_F(SDKConfigEqualizerConfigurationTest, test_oneModeDefinedAndEnabled_shouldPutOthersToDefaults) {
     ConfigurationNode rootNode = generateConfigFromJSON(JSON_ONE_MODE_MENTIONED_ENABLED);
 
     auto config = SDKConfigEqualizerConfiguration::create(rootNode);
@@ -201,7 +201,7 @@ TEST_F(SDKConfigEqualizerConfigurationTest, oneModeDefinedAndEnabled_shouldPutOt
 }
 
 // Test modes branch containing one mode disabled
-TEST_F(SDKConfigEqualizerConfigurationTest, oneModeDefinedAndDisabled_shouldPutOthersToDefaults) {
+TEST_F(SDKConfigEqualizerConfigurationTest, test_oneModeDefinedAndDisabled_shouldPutOthersToDefaults) {
     ConfigurationNode rootNode = generateConfigFromJSON(JSON_ONE_MODE_MENTIONED_DISABLED);
 
     auto config = SDKConfigEqualizerConfiguration::create(rootNode);
@@ -223,7 +223,7 @@ TEST_F(SDKConfigEqualizerConfigurationTest, oneModeDefinedAndDisabled_shouldPutO
 }
 
 // Test the empty default state branch
-TEST_F(SDKConfigEqualizerConfigurationTest, givenEmptyDefaultStateBranchEmpty_shouldUseHardDefaults) {
+TEST_F(SDKConfigEqualizerConfigurationTest, test_givenEmptyDefaultStateBranchEmpty_shouldUseHardDefaults) {
     ConfigurationNode rootNode = generateConfigFromJSON(JSON_EMPTY_DEFAULT_STATE_BRANCH);
     auto config = SDKConfigEqualizerConfiguration::create(rootNode);
     ASSERT_THAT(config, NotNull());
@@ -234,7 +234,7 @@ TEST_F(SDKConfigEqualizerConfigurationTest, givenEmptyDefaultStateBranchEmpty_sh
 }
 
 // Test default state with supported mode
-TEST_F(SDKConfigEqualizerConfigurationTest, givenSupportedDefaultMode_shouldSucceed) {
+TEST_F(SDKConfigEqualizerConfigurationTest, test_givenSupportedDefaultMode_shouldSucceed) {
     ConfigurationNode rootNode = generateConfigFromJSON(JSON_DEFAULT_MODE_SUPPORTED);
     auto config = SDKConfigEqualizerConfiguration::create(rootNode);
     ASSERT_THAT(config, NotNull());
@@ -243,21 +243,21 @@ TEST_F(SDKConfigEqualizerConfigurationTest, givenSupportedDefaultMode_shouldSucc
 }
 
 // Test default state with unsupported mode
-TEST_F(SDKConfigEqualizerConfigurationTest, givenUnsupportedDefaultMode_shouldFail) {
+TEST_F(SDKConfigEqualizerConfigurationTest, test_givenUnsupportedDefaultMode_shouldFail) {
     ConfigurationNode rootNode = generateConfigFromJSON(JSON_DEFAULT_MODE_UNSUPPORTED);
     auto config = SDKConfigEqualizerConfiguration::create(rootNode);
     ASSERT_THAT(config, IsNull());
 }
 
 // Test not all supported bands being provided in default state
-TEST_F(SDKConfigEqualizerConfigurationTest, havingNotAllBandsInDefaultState_shouldFail) {
+TEST_F(SDKConfigEqualizerConfigurationTest, test_havingNotAllBandsInDefaultState_shouldFail) {
     ConfigurationNode rootNode = generateConfigFromJSON(JSON_DEFAULT_STATE_MISSING_BANDS);
     auto config = SDKConfigEqualizerConfiguration::create(rootNode);
     ASSERT_THAT(config, IsNull());
 }
 
 // Test empty default state bands while not bands supported
-TEST_F(SDKConfigEqualizerConfigurationTest, havingNoBandsDefinedInDefaultStateWithNoBandsSupported_shouldSucceed) {
+TEST_F(SDKConfigEqualizerConfigurationTest, test_havingNoBandsDefinedInDefaultStateWithNoBandsSupported_shouldSucceed) {
     ConfigurationNode rootNode = generateConfigFromJSON(JSON_DEFAULT_STATE_BANDS_EMPTY_NO_BANDS_SUPPORTED);
     auto config = SDKConfigEqualizerConfiguration::create(rootNode);
     ASSERT_THAT(config, NotNull());

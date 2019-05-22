@@ -43,12 +43,12 @@
 #include <AVSCommon/SDKInterfaces/CapabilitiesDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
 #include <AVSCommon/SDKInterfaces/SingleSettingObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
-#include <AVSCommon/Utils/Network/InternetConnectionMonitor.h>
 #include <Bluetooth/Bluetooth.h>
 #include <Bluetooth/BluetoothStorageInterface.h>
 #include <CertifiedSender/CertifiedSender.h>
@@ -65,6 +65,10 @@
 #ifdef ENABLE_PCC
 #include <AVSCommon/SDKInterfaces/Phone/PhoneCallerInterface.h>
 #include <PhoneCallController/PhoneCallController.h>
+#endif
+
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+#include <CallManager/CallAudioDeviceProxy.h>
 #endif
 
 #include <PlaybackController/PlaybackController.h>
@@ -125,6 +129,11 @@ public:
      * @param bluetoothSpeaker The speaker to control volume of bluetooth.
      * @param ringtoneSpeaker The speaker to control volume of Comms ringtones.
      * @param additionalSpeakers A list of additional speakers to receive volume changes.
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+     * @param commsMediaPlayer The media player to play Comms calling audio.
+     * @param commsSpeaker The speaker to control volume of Comms calling audio.
+     * @param sharedDataStream The stream to use which has the audio from microphone.
+#endif
      * @param equalizerRuntimeSetup Equalizer component runtime setup
      * @param audioFactory The audioFactory is a component that provides unique audio streams.
      * @param authDelegate The component that provides the client with valid LWA authorization.
@@ -175,6 +184,11 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
 #endif
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker,
+        std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
+#endif
         std::shared_ptr<EqualizerRuntimeSetup> equalizerRuntimeSetup,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
@@ -188,7 +202,7 @@ public:
             alexaDialogStateObservers,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
             connectionObservers,
-        std::shared_ptr<avsCommon::utils::network::InternetConnectionMonitor> internetConnectionMonitor,
+        std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor,
         bool isGuiSupported,
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
@@ -687,6 +701,11 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
 #endif
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker,
+        std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
+#endif
         std::shared_ptr<EqualizerRuntimeSetup> equalizerRuntimeSetup,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
@@ -700,7 +719,7 @@ private:
             alexaDialogStateObservers,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
             connectionObservers,
-        std::shared_ptr<avsCommon::utils::network::InternetConnectionMonitor> internetConnectionMonitor,
+        std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor,
         bool isGuiSupported,
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
@@ -731,7 +750,7 @@ private:
     /// The connection manager.
     std::shared_ptr<acl::AVSConnectionManager> m_connectionManager;
 
-    std::shared_ptr<avsCommon::utils::network::InternetConnectionMonitor> m_internetConnectionMonitor;
+    std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> m_internetConnectionMonitor;
 
     /// The exception sender.
     std::shared_ptr<avsCommon::avs::ExceptionEncounteredSender> m_exceptionSender;
@@ -759,6 +778,9 @@ private:
 
     /// The interaction model capability agent.
     std::shared_ptr<capabilityAgents::interactionModel::InteractionModelCapabilityAgent> m_interactionCapabilityAgent;
+
+    /// The notifications renderer.
+    std::shared_ptr<capabilityAgents::notifications::NotificationRenderer> m_notificationsRenderer;
 
     /// The notifications capability agent.
     std::shared_ptr<capabilityAgents::notifications::NotificationsCapabilityAgent> m_notificationsCapabilityAgent;
@@ -826,6 +848,11 @@ private:
 
     /// Settings storage. This storage needs to be closed during default client destruction.
     std::shared_ptr<alexaClientSDK::settings::storage::DeviceSettingStorageInterface> m_deviceSettingStorage;
+
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+    /// The CallAudioDeviceProxy used to work with audio proxy audio driver of CommsLib.
+    std::shared_ptr<capabilityAgents::callManager::CallAudioDeviceProxy> m_callAudioDeviceProxy;
+#endif
 };
 
 }  // namespace defaultClient

@@ -1,5 +1,49 @@
 ## ChangeLog
 
+### v1.13.0 released 05/22/2019:
+
+**Enhancements**
+
+* When an active Alert moves to the background, the alert now begins after a 10-second delay. Alert loop iteration delays can now no longer last longer than a maximum of 10 seconds, rather than depending on the length of the audio asset.
+* Changed NotificationsSpeaker to use Alerts Volume instead of using the speaker volume.
+* Allow customers to pass in an implementation of InternetConnectionMonitorInterface which will force AVSConnectionManager to reconnect on internet connectivity loss.
+* Added an exponential wait time for retrying transmitting a message via CertifiedSender.
+* When Volume is set to 0 and device is unmuted, volume is bumped up to a non-zero value. When Volume is set to 0 and Alexa talks back to you, volume is bumped up to a non-zero value.
+* Deprecated HttpResponseCodes.h, which is now present only to ensure backward compatibility.
+* The default endpoint for AVS connections has changed.
+
+**Bug Fixes**
+
+* Fixed bug where receiving a Connected = true Property change from BlueZ without UUID information resulted in BlueZBluetoothDevice transitioning to CONNECTED state.
+* Fixed bug where MediaStreamingStateChangedEvent may be sent on non-state related property changes.
+* Added null check to SQLiteStatement::getColumnText.
+* Fixed an issue where database values with unescaped single quotes passed to miscStorage database will fail to be stored. Added a note on the interface that only non-escaped values should be passed.
+* Fixed a loop in audio in live stations based on playlists.
+* Fixed a race condition in TemplateRuntime that may result in a crash.
+* Fixed a race condition where a recognize event due to a EXPECT_SPEECH may end prematurely.
+* Changed the name of Alerts channel to Alert channel within AudioActivityTracker.
+* Prevented STOP Wakeword detections from generating Recognize events.
+* The SQLiteDeviceSettingsStorageTest no longer fails for Android.
+
+**Known Issues**
+
+* Music playback history isn't being displayed in the Alexa app for certain account and device types.
+* On GCC 8+, issues related to `-Wclass-memaccess` will trigger warnings. However, this won't cause the build to fail and these warnings can be ignored.
+* Android error ("libDefaultClient.so" not found) can be resolved by upgrading to ADB version 1.0.40
+* When network connection is lost, lost connection status is not returned via local TTS.
+* `ACL` may encounter issues if audio attachments are received but not consumed.
+* `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
+* The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.
+* Connecting a product to streaming media via Bluetooth will sometimes stop media playback within the source application. Resuming playback through the source application or toggling next/previous will correct playback.
+* When a source device is streaming silence via Bluetooth, the Alexa app indicates that audio content is streaming.
+* The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation is not yet supported.
+* On some products, interrupted Bluetooth playback may not resume if other content is locally streamed.
+* `make integration` is currently not available for Android. In order to run integration tests on Android, you'll need to manually upload the test binary file along with any input file. At that point, the adb can be used to run the integration tests.
+* On Raspberry Pi running Android Things with HDMI output audio, beginning of speech is truncated when Alexa responds to user text-to-speech (TTS).
+* When the sample app is restarted and the network connection is lost, the Reminder TTS message does not play. Instead, the default alarm tone will play twice.
+* ServerDisconnectIntegratonTest tests have been disabled until they can be updated to reflect new service behavior.
+* Devices connected before the Bluetooth CA is initialized are ignored.
+
 ### v1.12.1 released 04/02/2019:
 
 **Bug Fixes**
@@ -36,6 +80,7 @@
 * The `BluetoothDeviceManagerInterface` instantiation was moved from `DefaultClient` to `SampleApp` to allow applications to override it.
 * The `MediaPlayerInterface` now supports repeating playback of URL sources.
 * The Kitt.AI wake word engine (WWE) is now compatible with GCC5+.
+* Stop of ongoing alerts, management of MessageObservers, and management of CallStateObservers have been exposed through DefaultClient.
 
 **Bug Fixes**
 
@@ -48,7 +93,6 @@
 * Added missing shutdown handling for ContentDecrypter to prevent the `Stop` command from triggering a crash when SAMPLE-AES encrypted content was streaming.
 * Fixed a bug where if the Notifications database is empty, due to a crash or corruption, the SDK initialization process enters an infinite loop when it retries to get context from the Notifications capability agent.
 * Fixed a race condition that caused `AlertsRenderer` observers to miss notification that an alert has been completed.
-* Fixed logging for adding/removing `BluetoothDeviceObserver` in the `DefaultClient`.
 
 **Known Issues**
 
@@ -73,7 +117,7 @@
 **Enhancements**
 
 * Added support for the new Alexa [DoNotDisturb](https://developer.amazon.com/docs/alexa-voice-service/donotdisturb.html) interface, which enables users to toggle the do not disturb (DND) function on their Alexa built-in products.
-* The SDK now supports [Opus](https://opus-codec.org/license/) encoding, which is optional. To enable Opus, you must [set the CMake flag to `-DOPUS=ON`](https://github.com/alexa/avs-device-sdk/wiki/cmake-options#Opus-encoding), and include the [libopus library](https://github.com/alexa/avs-device-sdk/wiki/Dependencies#core-dependencies) dependency in your build.
+* The SDK now supports [Opus](https://opus-codec.org/license/) encoding, which is optional. To enable Opus, you must [set the CMake flag to `-DOPUS=ON`](https://github.com/alexa/avs-device-sdk/wiki/Build-Options#Opus-encoding), and include the [libopus library](https://github.com/alexa/avs-device-sdk/wiki/Dependencies#core-dependencies) dependency in your build.
 * The MediaPlayer reference implementation has been expanded to support the SAMPLE-AES and AES-128 encryption methods for HLS streaming.
   * AES-128 encryption is dependent on libcrypto, which is part of the required openSSL library, and is enabled by default.
   * To enable [SAMPLE-AES](https://github.com/alexa/avs-device-sdk/wiki/Dependencies#core-dependencies/Enable-SAMPLE-AES-decryption) encryption, you must set the `-DSAMPLE_AES=ON` in your CMake command, and include the [FFMPEG](https://github.com/alexa/avs-device-sdk/wiki/Dependencies#core-dependencies/Enable-SAMPLE-AES-decryption) library dependency in your build.
@@ -159,7 +203,7 @@
 * Added Android SDK support, which includes new implementations of the MediaPlayer, audio recorder, and logger.
 * Added the [InteractionModel](https://developer.amazon.com/docs/alexa-voice-service/interaction-model.html) interface, which enables Alexa Routines.
 * Optional configuration changes have been introduced. Now a [network interface can be specified](https://github.com/alexa/avs-device-sdk/blob/v1.9/Integration/AlexaClientSDKConfig.json#L129) to connect to the SDK via curl.
-* [Cmake parameters can be configured](https://github.com/alexa/avs-device-sdk/wiki/cmake-options#build-for-Android) to support Android.
+* [Build options can be configured](https://github.com/alexa/avs-device-sdk/wiki/Build-Options#build-for-Android) to support Android.
 * Added GUI 1.1 support. The `PlaybackController` has been extended to support new control functionality, and the `System` interface has been updated to support `SoftwareInfo`.
 
 **Bug Fixes**

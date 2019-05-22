@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,6 +40,8 @@ namespace sdkInterfaces {
  *
  * stop foreground Channel - clients should call the stopForegroundActivity() method.
  *
+ * stop all activities - client should call stopAllActivities
+ *
  * All of these methods will notify the observer of the Channel of focus changes via an asynchronous callback to the
  * ChannelObserverInterface##onFocusChanged() method, at which point the client should make a user observable change
  * based on the focus it receives.
@@ -58,11 +60,11 @@ public:
     /// The default Communications Channel priority.
     static constexpr unsigned int COMMUNICATIONS_CHANNEL_PRIORITY = 150;
 
-    /// The default Alerts Channel name.
-    static constexpr const char* ALERTS_CHANNEL_NAME = "Alerts";
+    /// The default Alert Channel name.
+    static constexpr const char* ALERT_CHANNEL_NAME = "Alert";
 
-    /// The default Alerts Channel priority.
-    static constexpr unsigned int ALERTS_CHANNEL_PRIORITY = 200;
+    /// The default Alert Channel priority.
+    static constexpr unsigned int ALERT_CHANNEL_PRIORITY = 200;
 
     /// The default Content Channel name.
     static constexpr const char* CONTENT_CHANNEL_NAME = "Content";
@@ -119,6 +121,12 @@ public:
      * to the foreground.
      */
     virtual void stopForegroundActivity() = 0;
+
+    /**
+     *  This method will request to stop all active channels. This will be performed asynchronously, and so, if at the
+     *  time performing the stop, the channel is owned by another interface, this channel won't get stopped.
+     */
+    virtual void stopAllActivities() = 0;
 
     /**
      * Add an observer to the focus manager.

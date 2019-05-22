@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -195,7 +195,7 @@ void DirectiveProcessorTest::SetUp() {
 /**
  * Send a nullptr @c AVSDirective.  Expect that it is ignored and a failure status (false) is returned.
  */
-TEST_F(DirectiveProcessorTest, testNullptrDirective) {
+TEST_F(DirectiveProcessorTest, test_nullptrDirective) {
     ASSERT_FALSE(m_processor->onDirective(nullptr));
 }
 
@@ -205,7 +205,7 @@ TEST_F(DirectiveProcessorTest, testNullptrDirective) {
  * returns true (because the handler was registered) but that none of the handler methods are called
  * (because directives with the wrong @c dialogRequestID are dropped).
  */
-TEST_F(DirectiveProcessorTest, testWrongDialogRequestId) {
+TEST_F(DirectiveProcessorTest, test_wrongDialogRequestId) {
     DirectiveHandlerConfiguration handler0Config;
     handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
@@ -225,7 +225,7 @@ TEST_F(DirectiveProcessorTest, testWrongDialogRequestId) {
  * Register an @c AUDIO_NON_BLOCKING @c DirectiveHandler.  Send an @c AVSDirective that matches the registered handler.
  * Expect that @c preHandleDirective() and @c handleDirective() are called.
  */
-TEST_F(DirectiveProcessorTest, testSendNonBlocking) {
+TEST_F(DirectiveProcessorTest, test_sendNonBlocking) {
     DirectiveHandlerConfiguration handler0Config;
     handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
@@ -247,7 +247,7 @@ TEST_F(DirectiveProcessorTest, testSendNonBlocking) {
  * Test sending a blocking and then a non-blocking directive.  Expect that @c preHandleDirective() and
  * @c handleDirective() is called for each.
  */
-TEST_F(DirectiveProcessorTest, testSendBlockingThenNonBlocking) {
+TEST_F(DirectiveProcessorTest, test_sendBlockingThenNonBlocking) {
     DirectiveHandlerConfiguration handler0Config;
     handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUMS_AUDIO_AND_VISUAL, true);
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
@@ -284,7 +284,7 @@ TEST_F(DirectiveProcessorTest, testSendBlockingThenNonBlocking) {
  * has been called, set the @c dialogRequestId and send an @c AVSDirective for which the other handler was
  * registered. Expect that the last directive is handled as well.
  */
-TEST_F(DirectiveProcessorTest, testOnUnregisteredDirective) {
+TEST_F(DirectiveProcessorTest, test_onUnregisteredDirective) {
     DirectiveHandlerConfiguration handler1Config;
     handler1Config[{NAMESPACE_AND_NAME_0_1}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     std::shared_ptr<MockDirectiveHandler> handler1 = MockDirectiveHandler::create(handler1Config);
@@ -326,7 +326,7 @@ TEST_F(DirectiveProcessorTest, testOnUnregisteredDirective) {
  * @c dialogRequestId().  Expect the first two @c AVSDirectives to be cancelled and expect the
  * final @c AVSDirective to be processed normally.
  */
-TEST_F(DirectiveProcessorTest, testSetDialogRequestIdCancelsOutstandingDirectives) {
+TEST_F(DirectiveProcessorTest, test_setDialogRequestIdCancelsOutstandingDirectives) {
     DirectiveHandlerConfiguration longRunningHandlerConfig;
     longRunningHandlerConfig[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto longRunningHandler =
@@ -370,12 +370,12 @@ TEST_F(DirectiveProcessorTest, testSetDialogRequestIdCancelsOutstandingDirective
     ASSERT_TRUE(handler2->waitUntilCompleted());
 }
 
-TEST_F(DirectiveProcessorTest, testAddDirectiveWhileDisabled) {
+TEST_F(DirectiveProcessorTest, test_addDirectiveWhileDisabled) {
     m_processor->disable();
     ASSERT_FALSE(m_processor->onDirective(m_directive_0_0));
 }
 
-TEST_F(DirectiveProcessorTest, testAddDirectiveAfterReEnabled) {
+TEST_F(DirectiveProcessorTest, test_addDirectiveAfterReEnabled) {
     m_processor->disable();
     ASSERT_FALSE(m_processor->onDirective(m_directive_0_0));
 
@@ -387,7 +387,7 @@ TEST_F(DirectiveProcessorTest, testAddDirectiveAfterReEnabled) {
  * Verify that an @c AVSDirective using @c MEDIUMS_AUDIO_AND_VISUAL
  *  is blocking @c MEDIUM_AUDIO but not blocking @c MEDIUMS_NONE.
  */
-TEST_F(DirectiveProcessorTest, testAudioAndVisualIsBlockingAudio) {
+TEST_F(DirectiveProcessorTest, test_audioAndVisualIsBlockingAudio) {
     auto& audioAndVisualBlockingDirective = m_directive_0_0;
     DirectiveHandlerConfiguration audioAndVisualBlockingHandlerConfig;
     auto audioBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUMS_AUDIO_AND_VISUAL, true);
@@ -443,7 +443,7 @@ TEST_F(DirectiveProcessorTest, testAudioAndVisualIsBlockingAudio) {
  * Verify that a blocking @c AVSDirective is not blocking
  * a future @c AVSDirective on a different @c Medium.
  */
-TEST_F(DirectiveProcessorTest, testDifferentMediums) {
+TEST_F(DirectiveProcessorTest, test_differentMediums) {
     auto& audioBlockingDirective = m_directive_0_0;
     DirectiveHandlerConfiguration audioBlockingHandlerConfig;
     audioBlockingHandlerConfig[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
@@ -482,7 +482,7 @@ TEST_F(DirectiveProcessorTest, testDifferentMediums) {
  * When one of the blocking has been completed, only its @c Medium is
  * released.
  */
-TEST_F(DirectiveProcessorTest, testReleaseOneMedium) {
+TEST_F(DirectiveProcessorTest, test_releaseOneMedium) {
     // 4 directives: blocking audio, blocking visual, using audio and using visual
     auto& audioBlockingDirective = m_directive_0_0;
     DirectiveHandlerConfiguration audioBlockingHandlerConfig;
@@ -547,7 +547,7 @@ TEST_F(DirectiveProcessorTest, testReleaseOneMedium) {
  * Verify that a blocked directive with isBlocking=true on the queue is blocking
  * subsequent directives using the same @c Medium.
  */
-TEST_F(DirectiveProcessorTest, TestBlockingQueuedDirectivIsBlocking) {
+TEST_F(DirectiveProcessorTest, test_blockingQueuedDirectivIsBlocking) {
     auto& audioBlockingDirective = m_directive_0_0;
     DirectiveHandlerConfiguration audioBlockingHandlerConfig;
     audioBlockingHandlerConfig[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
@@ -633,7 +633,7 @@ TEST_F(DirectiveProcessorTest, TestBlockingQueuedDirectivIsBlocking) {
  * Verify that a blocked directive with isBlocking=false on the queue is NOT blocking
  * subsequent directives using the same @c Medium.
  */
-TEST_F(DirectiveProcessorTest, TestNonBlockingQueuedDirectivIsNotBlocking) {
+TEST_F(DirectiveProcessorTest, test_nonBlockingQueuedDirectivIsNotBlocking) {
     auto& audioBlockingDirective = m_directive_0_0;
     DirectiveHandlerConfiguration audioBlockingHandlerConfig;
     audioBlockingHandlerConfig[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
@@ -705,7 +705,7 @@ TEST_F(DirectiveProcessorTest, TestNonBlockingQueuedDirectivIsNotBlocking) {
  * directive.
  * TODO: ACSDK-2218: This test should be removed when the workaround is removed.
  */
-TEST_F(DirectiveProcessorTest, testNewDialogRequestHandling) {
+TEST_F(DirectiveProcessorTest, test_newDialogRequestHandling) {
     auto directivePair = AVSDirective::create(NEW_DIALOG_REQUEST_DIRECTIVE_V0, nullptr, NO_CONTEXT);
     std::shared_ptr<AVSDirective> newDialogRequestDirective = std::move(directivePair.first);
 

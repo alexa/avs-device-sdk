@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -143,7 +143,7 @@ std::pair<bool, std::string> expected(bool result, std::string value) {
 };
 
 /// Test boolean conversions.
-TEST(SettingStringConversionTest, testBoolConversion) {
+TEST(SettingStringConversionTest, test_boolConversion) {
     // Valid conversions
     EXPECT_EQ(toSettingString<bool>(false), expected(true, "false"));
     EXPECT_EQ(toSettingString<bool>(true), expected(true, "true"));
@@ -155,7 +155,7 @@ TEST(SettingStringConversionTest, testBoolConversion) {
     EXPECT_EQ(fromSettingString<bool>("not bool", false), std::make_pair(false, false));
 };
 
-TEST(SettingStringConversionTest, testIntegralByteSize) {
+TEST(SettingStringConversionTest, test_integralByteSize) {
     // Valid conversions
     EXPECT_EQ(fromSettingString<int8_t>("10", 100).first, true);
     EXPECT_EQ(fromSettingString<int8_t>("10", 100).second, 10);
@@ -169,7 +169,7 @@ TEST(SettingStringConversionTest, testIntegralByteSize) {
     EXPECT_EQ(fromSettingString<int8_t>("not int", 10).second, 10);
 };
 
-TEST(SettingStringConversionTest, testArithmeticTypes) {
+TEST(SettingStringConversionTest, test_arithmeticTypes) {
     // Valid conversions
     EXPECT_EQ(toSettingString<char>('a'), expected(true, "a"));
     EXPECT_EQ(toSettingString<int>(10), expected(true, "10"));
@@ -188,7 +188,7 @@ TEST(SettingStringConversionTest, testArithmeticTypes) {
     EXPECT_EQ(fromSettingString<double>("not double", 2.2), std::make_pair(false, 2.2));
 }
 
-TEST(SettingStringConversionTest, testFromEnum) {
+TEST(SettingStringConversionTest, test_fromEnum) {
     // Valid conversions
     EXPECT_EQ(toSettingString<HelloEnum>(HelloEnum::HI), expected(true, R"("HI")"));
     EXPECT_EQ(fromSettingString<HelloEnum>(R"("THERE")", HelloEnum::HI), std::make_pair(true, HelloEnum::THERE));
@@ -199,7 +199,7 @@ TEST(SettingStringConversionTest, testFromEnum) {
     EXPECT_EQ(fromSettingString<HelloEnum>("-THERE-", HelloEnum::HI), std::make_pair(false, HelloEnum::HI));
 }
 
-TEST(SettingStringConversionTest, testFromClass) {
+TEST(SettingStringConversionTest, test_fromClass) {
     // Valid conversions
     HelloClass newValue;
     newValue.m_name = "newValue";

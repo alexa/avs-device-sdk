@@ -82,7 +82,8 @@ public:
         std::function<std::unique_ptr<std::istream>()> audioFactory,
         const std::vector<std::string>& urls = std::vector<std::string>(),
         int loopCount = 0,
-        std::chrono::milliseconds loopPause = std::chrono::milliseconds{0}){};
+        std::chrono::milliseconds loopPause = std::chrono::milliseconds{0},
+        bool startWithPause = false){};
     void stop(){};
 };
 
@@ -136,21 +137,21 @@ const std::string getPayloadJson(bool inclToken, bool inclSchedTime, const std::
     return payloadJson;
 }
 
-TEST_F(AlertTest, defaultAudio) {
+TEST_F(AlertTest, test_defaultAudio) {
     std::ostringstream oss;
     oss << m_alert->getDefaultAudioFactory()()->rdbuf();
 
     ASSERT_EQ(DEFAULT_AUDIO, oss.str());
 }
 
-TEST_F(AlertTest, defaultShortAudio) {
+TEST_F(AlertTest, test_defaultShortAudio) {
     std::ostringstream oss;
     oss << m_alert->getShortAudioFactory()()->rdbuf();
 
     ASSERT_EQ(SHORT_AUDIO, oss.str());
 }
 
-TEST_F(AlertTest, testParseFromJsonHappyCase) {
+TEST_F(AlertTest, test_parseFromJsonHappyCase) {
     std::string errorMessage;
     const std::string payloadJson = getPayloadJson(true, true, SCHED_TIME);
     rapidjson::Document payload;
@@ -179,7 +180,7 @@ TEST_F(AlertTest, testParseFromJsonHappyCase) {
     ASSERT_EQ(assetsMap[ASSET_ID2].url, ASSET_URL2);
 }
 
-TEST_F(AlertTest, testParseFromJsonMissingToken) {
+TEST_F(AlertTest, test_parseFromJsonMissingToken) {
     std::string errorMessage;
     const std::string payloadJson = getPayloadJson(false, true, SCHED_TIME);
     rapidjson::Document payload;
@@ -190,7 +191,7 @@ TEST_F(AlertTest, testParseFromJsonMissingToken) {
     ASSERT_EQ(resultStatus, Alert::ParseFromJsonStatus::MISSING_REQUIRED_PROPERTY);
 }
 
-TEST_F(AlertTest, testParseFromJsonMissingSchedTime) {
+TEST_F(AlertTest, test_parseFromJsonMissingSchedTime) {
     std::string errorMessage;
     const std::string payloadJson = getPayloadJson(true, false, SCHED_TIME);
     rapidjson::Document payload;
@@ -201,7 +202,7 @@ TEST_F(AlertTest, testParseFromJsonMissingSchedTime) {
     ASSERT_EQ(resultStatus, Alert::ParseFromJsonStatus::MISSING_REQUIRED_PROPERTY);
 }
 
-TEST_F(AlertTest, testParseFromJsonBadSchedTimeFormat) {
+TEST_F(AlertTest, test_parseFromJsonBadSchedTimeFormat) {
     const std::string schedTime{INVALID_FORMAT_SCHED_TIME};
     std::string errorMessage;
     const std::string payloadJson = getPayloadJson(true, true, schedTime);
@@ -213,7 +214,7 @@ TEST_F(AlertTest, testParseFromJsonBadSchedTimeFormat) {
     ASSERT_EQ(resultStatus, Alert::ParseFromJsonStatus::INVALID_VALUE);
 }
 
-TEST_F(AlertTest, testSetStateActive) {
+TEST_F(AlertTest, test_setStateActive) {
     m_alert->reset();
     ASSERT_EQ(m_alert->getState(), Alert::State::SET);
     m_alert->setStateActive();
@@ -225,14 +226,14 @@ TEST_F(AlertTest, testSetStateActive) {
     ASSERT_EQ(m_alert->getState(), Alert::State::ACTIVE);
 }
 
-TEST_F(AlertTest, testDeactivate) {
+TEST_F(AlertTest, test_deactivate) {
     Alert::StopReason stopReason = Alert::StopReason::AVS_STOP;
     m_alert->deactivate(stopReason);
     ASSERT_EQ(m_alert->getState(), Alert::State::STOPPING);
     ASSERT_EQ(m_alert->getStopReason(), stopReason);
 }
 
-TEST_F(AlertTest, testSetTimeISO8601) {
+TEST_F(AlertTest, test_setTimeISO8601) {
     avsCommon::utils::timing::TimeUtils timeUtils;
     std::string schedTime{"2030-02-02T12:56:34+0000"};
     Alert::DynamicData dynamicData;
@@ -246,7 +247,7 @@ TEST_F(AlertTest, testSetTimeISO8601) {
     ASSERT_EQ(m_alert->getScheduledTime_Unix(), unixTime);
 }
 
-TEST_F(AlertTest, testUpdateScheduleActiveFailed) {
+TEST_F(AlertTest, test_updateScheduleActiveFailed) {
     m_alert->activate();
     m_alert->setStateActive();
     ASSERT_EQ(m_alert->getState(), Alert::State::ACTIVE);
@@ -257,31 +258,31 @@ TEST_F(AlertTest, testUpdateScheduleActiveFailed) {
     ASSERT_EQ(m_alert->getScheduledTime_ISO_8601(), oldScheduledTime);
 }
 
-TEST_F(AlertTest, testUpdateScheduleBadTime) {
+TEST_F(AlertTest, test_updateScheduleBadTime) {
     auto oldScheduledTime = m_alert->getScheduledTime_ISO_8601();
     ASSERT_FALSE(m_alert->updateScheduledTime(INVALID_FORMAT_SCHED_TIME));
     ASSERT_EQ(m_alert->getScheduledTime_ISO_8601(), oldScheduledTime);
 }
 
-TEST_F(AlertTest, testUpdateScheduleHappyCase) {
+TEST_F(AlertTest, test_updateScheduleHappyCase) {
     m_alert->reset();
     ASSERT_TRUE(m_alert->updateScheduledTime("2030-02-02T12:56:34+0000"));
     ASSERT_EQ(m_alert->getState(), Alert::State::SET);
 }
 
-TEST_F(AlertTest, testSnoozeBadTime) {
+TEST_F(AlertTest, test_snoozeBadTime) {
     m_alert->reset();
     ASSERT_FALSE(m_alert->snooze(INVALID_FORMAT_SCHED_TIME));
     ASSERT_NE(m_alert->getState(), Alert::State::SNOOZING);
 }
 
-TEST_F(AlertTest, testSnoozeHappyCase) {
+TEST_F(AlertTest, test_snoozeHappyCase) {
     m_alert->reset();
     ASSERT_TRUE(m_alert->snooze("2030-02-02T12:56:34+0000"));
     ASSERT_EQ(m_alert->getState(), Alert::State::SNOOZING);
 }
 
-TEST_F(AlertTest, testSetLoopCountNegative) {
+TEST_F(AlertTest, test_setLoopCountNegative) {
     int loopCount = -1;
     Alert::DynamicData dynamicData;
     m_alert->getAlertData(nullptr, &dynamicData);
@@ -290,7 +291,7 @@ TEST_F(AlertTest, testSetLoopCountNegative) {
     ASSERT_NE(m_alert->getLoopCount(), loopCount);
 }
 
-TEST_F(AlertTest, testSetLoopCountHappyCase) {
+TEST_F(AlertTest, test_setLoopCountHappyCase) {
     int loopCount = 3;
     Alert::DynamicData dynamicData;
     m_alert->getAlertData(nullptr, &dynamicData);
@@ -299,7 +300,7 @@ TEST_F(AlertTest, testSetLoopCountHappyCase) {
     ASSERT_EQ(m_alert->getLoopCount(), loopCount);
 }
 
-TEST_F(AlertTest, testSetLoopPause) {
+TEST_F(AlertTest, test_setLoopPause) {
     std::chrono::milliseconds loopPause{900};
     Alert::StaticData staticData;
     m_alert->getAlertData(&staticData, nullptr);
@@ -308,7 +309,7 @@ TEST_F(AlertTest, testSetLoopPause) {
     ASSERT_EQ(m_alert->getLoopPause(), loopPause);
 }
 
-TEST_F(AlertTest, testSetBackgroundAssetId) {
+TEST_F(AlertTest, test_setBackgroundAssetId) {
     std::unordered_map<std::string, Alert::Asset> assets;
     assets["testAssetId"] = Alert::Asset("testAssetId", "http://test.com/a");
 
@@ -321,7 +322,7 @@ TEST_F(AlertTest, testSetBackgroundAssetId) {
     ASSERT_EQ(m_alert->getBackgroundAssetId(), backgroundAssetId);
 }
 
-TEST_F(AlertTest, testIsPastDue) {
+TEST_F(AlertTest, test_isPastDue) {
     Alert::DynamicData dynamicData;
     avsCommon::utils::timing::TimeUtils timeUtils;
     int64_t currentUnixTime = 0;
@@ -338,7 +339,7 @@ TEST_F(AlertTest, testIsPastDue) {
     ASSERT_TRUE(m_alert->isPastDue(currentUnixTime, std::chrono::seconds{1}));
 }
 
-TEST_F(AlertTest, testStateToString) {
+TEST_F(AlertTest, test_stateToString) {
     ASSERT_EQ(m_alert->stateToString(Alert::State::UNSET), "UNSET");
     ASSERT_EQ(m_alert->stateToString(Alert::State::SET), "SET");
     ASSERT_EQ(m_alert->stateToString(Alert::State::READY), "READY");
@@ -351,14 +352,14 @@ TEST_F(AlertTest, testStateToString) {
     ASSERT_EQ(m_alert->stateToString(Alert::State::COMPLETED), "COMPLETED");
 }
 
-TEST_F(AlertTest, testStopReasonToString) {
+TEST_F(AlertTest, test_stopReasonToString) {
     ASSERT_EQ(m_alert->stopReasonToString(Alert::StopReason::UNSET), "UNSET");
     ASSERT_EQ(m_alert->stopReasonToString(Alert::StopReason::AVS_STOP), "AVS_STOP");
     ASSERT_EQ(m_alert->stopReasonToString(Alert::StopReason::LOCAL_STOP), "LOCAL_STOP");
     ASSERT_EQ(m_alert->stopReasonToString(Alert::StopReason::SHUTDOWN), "SHUTDOWN");
 }
 
-TEST_F(AlertTest, testParseFromJsonStatusToString) {
+TEST_F(AlertTest, test_parseFromJsonStatusToString) {
     ASSERT_EQ(m_alert->parseFromJsonStatusToString(Alert::ParseFromJsonStatus::OK), "OK");
     ASSERT_EQ(
         m_alert->parseFromJsonStatusToString(Alert::ParseFromJsonStatus::MISSING_REQUIRED_PROPERTY),
@@ -366,7 +367,7 @@ TEST_F(AlertTest, testParseFromJsonStatusToString) {
     ASSERT_EQ(m_alert->parseFromJsonStatusToString(Alert::ParseFromJsonStatus::INVALID_VALUE), "INVALID_VALUE");
 }
 
-TEST_F(AlertTest, testHasAssetHappy) {
+TEST_F(AlertTest, test_hasAssetHappy) {
     std::unordered_map<std::string, Alert::Asset> assets;
     assets["A"] = Alert::Asset("A", "http://test.com/a");
     assets["B"] = Alert::Asset("B", "http://test.com/a");
@@ -389,7 +390,7 @@ TEST_F(AlertTest, testHasAssetHappy) {
     ASSERT_TRUE(m_alert->setAlertData(&d, nullptr));
 }
 
-TEST_F(AlertTest, testHasAssetBgAssetIdNotFoundOnAssets) {
+TEST_F(AlertTest, test_hasAssetBgAssetIdNotFoundOnAssets) {
     std::unordered_map<std::string, Alert::Asset> assets;
     assets["A"] = Alert::Asset("A", "http://test.com/a");
     assets["B"] = Alert::Asset("B", "http://test.com/a");
@@ -412,7 +413,7 @@ TEST_F(AlertTest, testHasAssetBgAssetIdNotFoundOnAssets) {
     ASSERT_FALSE(m_alert->setAlertData(&d, nullptr));
 }
 
-TEST_F(AlertTest, testHasAssetOrderItemNotFoundOnAssets) {
+TEST_F(AlertTest, test_hasAssetOrderItemNotFoundOnAssets) {
     std::unordered_map<std::string, Alert::Asset> assets;
     assets["A"] = Alert::Asset("A", "http://test.com/a");
     assets["B"] = Alert::Asset("B", "http://test.com/a");

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -128,14 +128,16 @@ private:
      * @param speakers The @c Speakers to register.
      * @param contextManager A @c ContextManagerInterface to manage the context.
      * @param messageSender A @c MessageSenderInterface to send messages to AVS.
-     * @param exceptionEncounteredSender An @c ExceptionEncounteredSenderInterface to send
+     * @param exceptionEncounteredSender An @c ExceptionEncounteredSenderInterface to send.
+     * @param minUnmuteVolume The volume level to increase to when unmuting.
      * directive processing exceptions to AVS.
      */
     SpeakerManager(
         const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& speakerInterfaces,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        const int minUnmuteVolume);
 
     /**
      * Parses the payload from a string into a rapidjson document.
@@ -173,7 +175,7 @@ private:
         avsCommon::avs::ExceptionErrorType type);
 
     /**
-     * Internal function to update the state of the ContextManager.
+     * Function to update the state of the ContextManager.
      *
      * @param type The Speaker Type that is being updated.
      * @param settings The SpeakerSettings to update the ContextManager with.
@@ -194,7 +196,7 @@ private:
         avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings settings);
 
     /**
-     * Internal function to set the volume for a specific @c Type. This runs on a worker thread.
+     * Function to set the volume for a specific @c Type. This runs on a worker thread.
      * Upon success, a VolumeChanged event will be sent to AVS.
      *
      * @param type The type of speaker to modify volume for.
@@ -210,7 +212,19 @@ private:
         bool forceNoNotifications = false);
 
     /**
-     * Internal function to adjust the volume for a specific @c Type. This runs on a worker thread.
+     * Function to restore the volume from a mute state. This runs on a worker thread and will not send an event or
+     * notify an observer. Upon success, a VolumeChanged event will be sent to AVS.
+     *
+     * @param type The type of speaker to modify volume for.
+     * @param source Whether the call is from AVS or locally.
+     * @return A bool indicating success.
+     */
+    bool executeRestoreVolume(
+        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source);
+
+    /**
+     * Function to adjust the volume for a specific @c Type. This runs on a worker thread.
      * Upon success, a VolumeChanged event will be sent to AVS.
      *
      * @param type The type of speaker to modify volume for.
@@ -226,7 +240,7 @@ private:
         bool forceNoNotifications = false);
 
     /**
-     * Internal function to set the mute for a specific @c Type. This runs on a worker thread.
+     * Function to set the mute for a specific @c Type. This runs on a worker thread.
      * Upon success, a MuteChanged event will be sent to AVS.
      *
      * @param type The type of speaker to modify mute for.
@@ -242,7 +256,7 @@ private:
         bool forceNoNotifications = false);
 
     /**
-     * Internal function to get the speaker settings for a specific @c Type.
+     * Function to get the speaker settings for a specific @c Type.
      * This runs on a worker thread.
      *
      * @param type The type of speaker to modify mute for.
@@ -254,7 +268,7 @@ private:
         avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings);
 
     /**
-     * Internal function to send events and notify observers when settings have changed.
+     * Function to send events and notify observers when settings have changed.
      * This runs on a worker thread.
      *
      * @param settings The new settings.
@@ -269,7 +283,7 @@ private:
         const avsCommon::sdkInterfaces::SpeakerInterface::Type& type);
 
     /**
-     * Internal function to notify the observer when a @c SpeakerSettings change has occurred.
+     * Function to notify the observer when a @c SpeakerSettings change has occurred.
      *
      * @param source. This indicates the origin of the call.
      * @param type. This indicates the type of speaker that was modified.
@@ -296,6 +310,9 @@ private:
 
     /// The @c MessageSenderInterface used to send event messages.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
+
+    /// the @c volume to restore to when unmuting at 0 volume
+    const int m_minUnmuteVolume;
 
     /// A multimap contain speakers keyed by @c Type.
     std::multimap<

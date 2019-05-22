@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -132,7 +132,7 @@ bool findNode(
 
     auto iterator = jsonNode.FindMember(key);
     if (iterator == jsonNode.MemberEnd()) {
-        ACSDK_ERROR(LX("findNodeFailed").d("reason", "missingDirectChild").d("child", key));
+        ACSDK_DEBUG5(LX("findNode").d("reason", "missingDirectChild").d("child", key));
         return false;
     }
 

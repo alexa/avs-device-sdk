@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -75,7 +75,7 @@ SLresult mockGetInterface(SLObjectItf self, const SLInterfaceID iid, void* pInte
 /**
  * Test create method when the provided object can be realized.
  */
-TEST_F(AndroidSLESObjectTest, testCreateDestroySucceed) {
+TEST_F(AndroidSLESObjectTest, test_createDestroySucceed) {
     {
         SLObjectItf_ mockObj;
         SLObjectItf_* mockSinglePtr = &mockObj;
@@ -94,7 +94,7 @@ TEST_F(AndroidSLESObjectTest, testCreateDestroySucceed) {
 /**
  * Test create method when the provided object cannot be realized.
  */
-TEST_F(AndroidSLESObjectTest, testCreateFailed) {
+TEST_F(AndroidSLESObjectTest, test_createFailed) {
     SLObjectItf_ mockObj;
     SLObjectItf_* mockSinglePtr = &mockObj;
     SLObjectItf mockDoublePtr = &mockSinglePtr;
@@ -109,7 +109,7 @@ TEST_F(AndroidSLESObjectTest, testCreateFailed) {
 /**
  * Test get interface when method succeeds.
  */
-TEST_F(AndroidSLESObjectTest, testGetInterface) {
+TEST_F(AndroidSLESObjectTest, test_getInterface) {
     SLObjectItf_ mockObj;
     SLObjectItf_* mockSinglePtr = &mockObj;
     SLObjectItf mockDoublePtr = &mockSinglePtr;
@@ -130,7 +130,7 @@ TEST_F(AndroidSLESObjectTest, testGetInterface) {
 /**
  * Test get interface when method fails.
  */
-TEST_F(AndroidSLESObjectTest, testGetInterfaceFailed) {
+TEST_F(AndroidSLESObjectTest, test_getInterfaceFailed) {
     SLObjectItf_ mockObj;
     SLObjectItf_* mockSinglePtr = &mockObj;
     SLObjectItf mockDoublePtr = &mockSinglePtr;

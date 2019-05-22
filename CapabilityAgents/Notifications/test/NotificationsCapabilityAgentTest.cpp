@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -657,7 +657,7 @@ const std::string NotificationsCapabilityAgentTest::generatePayload(
 /**
  * Test create() with nullptrs
  */
-TEST_F(NotificationsCapabilityAgentTest, testCreate) {
+TEST_F(NotificationsCapabilityAgentTest, test_create) {
     std::shared_ptr<NotificationsCapabilityAgent> testNotificationsCapabilityAgent;
 
     testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
@@ -705,7 +705,7 @@ TEST_F(NotificationsCapabilityAgentTest, testCreate) {
  * Test starting up the capability agent with a non-empty queue.
  * Expect that the next item in the queue will be played.
  */
-TEST_F(NotificationsCapabilityAgentTest, testNonEmptyStartupQueue) {
+TEST_F(NotificationsCapabilityAgentTest, test_nonEmptyStartupQueue) {
     NotificationIndicator ni(true, true, ASSET_ID1, ASSET_URL1);
     ASSERT_TRUE(m_notificationsStorage->enqueue(ni));
 
@@ -720,7 +720,7 @@ TEST_F(NotificationsCapabilityAgentTest, testNonEmptyStartupQueue) {
  * Expect that the NotificationsObserver is notified of the indicator's state remaining OFF.
  * Expect no calls to render notifications since playAudioIndicator is false.
  */
-TEST_F(NotificationsCapabilityAgentTest, testSendSetIndicator) {
+TEST_F(NotificationsCapabilityAgentTest, test_sendSetIndicator) {
     EXPECT_CALL(*(m_renderer.get()), renderNotificationShim(_, _)).Times(0);
     initializeCapabilityAgent();
     ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, WAIT_TIMEOUT));
@@ -737,7 +737,7 @@ TEST_F(NotificationsCapabilityAgentTest, testSendSetIndicator) {
  * Expect the renderer to start playback of the Notification.
  * Expect that the NotificationsObserver is notified of the indicator's state being OFF.
  */
-TEST_F(NotificationsCapabilityAgentTest, testSendSetIndicatorWithAudio) {
+TEST_F(NotificationsCapabilityAgentTest, test_sendSetIndicatorWithAudio) {
     EXPECT_CALL(*(m_renderer.get()), renderNotificationShim(_, ASSET_URL1));
     initializeCapabilityAgent();
 
@@ -751,7 +751,7 @@ TEST_F(NotificationsCapabilityAgentTest, testSendSetIndicatorWithAudio) {
  * Test a single SetIndicator directive with with persistVisualIndicator set to true.
  * Expect that the NotificationsObserver is notified of the indicator's state being ON.
  */
-TEST_F(NotificationsCapabilityAgentTest, testSendSetIndicatorWithVisualIndicator) {
+TEST_F(NotificationsCapabilityAgentTest, test_sendSetIndicatorWithVisualIndicator) {
     EXPECT_CALL(*(m_renderer.get()), renderNotificationShim(_, _)).Times(0);
     initializeCapabilityAgent();
 
@@ -763,7 +763,7 @@ TEST_F(NotificationsCapabilityAgentTest, testSendSetIndicatorWithVisualIndicator
  * Test sending two SetIndicator directives where the second has the same assetId as the first.
  * Expect that the renderer only gets one call to renderNotification().
  */
-TEST_F(NotificationsCapabilityAgentTest, testSameAssetId) {
+TEST_F(NotificationsCapabilityAgentTest, test_sameAssetId) {
     EXPECT_CALL(*(m_renderer.get()), renderNotificationShim(_, ASSET_URL1))
         .Times(1)
         .WillOnce(Invoke([this](std::function<std::unique_ptr<std::istream>()> audioFactory, const std::string& url) {
@@ -793,7 +793,7 @@ TEST_F(NotificationsCapabilityAgentTest, testSameAssetId) {
 /**
  * Test that the persistVisualIndicator setting is preserved and used across shutdown.
  */
-TEST_F(NotificationsCapabilityAgentTest, testPersistVisualIndicatorPreserved) {
+TEST_F(NotificationsCapabilityAgentTest, test_persistVisualIndicatorPreserved) {
     initializeCapabilityAgent();
 
     // set IndicatorState to ON
@@ -819,7 +819,7 @@ TEST_F(NotificationsCapabilityAgentTest, testPersistVisualIndicatorPreserved) {
 /**
  * Test sending a ClearIndicator directive with an empty queue, expecting nothing to happen.
  */
-TEST_F(NotificationsCapabilityAgentTest, testClearIndicatorWithEmptyQueue) {
+TEST_F(NotificationsCapabilityAgentTest, test_clearIndicatorWithEmptyQueue) {
     initializeCapabilityAgent();
     sendClearIndicatorDirective(MESSAGE_ID_TEST);
     ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, WAIT_TIMEOUT));
@@ -829,7 +829,7 @@ TEST_F(NotificationsCapabilityAgentTest, testClearIndicatorWithEmptyQueue) {
  * Test sending a ClearIndicator directive with an empty queue and the indicator state set to ON.
  * Expect that the indicator is set to OFF.
  */
-TEST_F(NotificationsCapabilityAgentTest, testClearIndicatorWithEmptyQueueAndIndicatorOn) {
+TEST_F(NotificationsCapabilityAgentTest, test_clearIndicatorWithEmptyQueueAndIndicatorOn) {
     EXPECT_CALL(*(m_renderer.get()), renderNotificationShim(_, ASSET_URL1)).Times(1);
     initializeCapabilityAgent();
 
@@ -848,7 +848,7 @@ TEST_F(NotificationsCapabilityAgentTest, testClearIndicatorWithEmptyQueueAndIndi
  * Test sending a ClearIndicator directive after multiple SetIndicator directives.
  * Expect that the indicator is set to OFF.
  */
-TEST_F(NotificationsCapabilityAgentTest, testClearIndicatorAfterMultipleSetIndicators) {
+TEST_F(NotificationsCapabilityAgentTest, testSlow_clearIndicatorAfterMultipleSetIndicators) {
     EXPECT_CALL(*(m_renderer.get()), renderNotificationShim(_, ASSET_URL1)).Times(1);
     EXPECT_CALL(*(m_renderer.get()), cancelNotificationRenderingShim()).Times(1);
     initializeCapabilityAgent();
@@ -870,7 +870,7 @@ TEST_F(NotificationsCapabilityAgentTest, testClearIndicatorAfterMultipleSetIndic
  * Test sending multiple SetIndicators and letting them all render.
  * Expect multiple calls to renderNotification().
  */
-TEST_F(NotificationsCapabilityAgentTest, testMultipleSetIndicators) {
+TEST_F(NotificationsCapabilityAgentTest, test_multipleSetIndicators) {
     EXPECT_CALL(*(m_renderer.get()), renderNotificationShim(_, ASSET_URL1)).Times(3);
     initializeCapabilityAgent();
 
@@ -891,7 +891,7 @@ TEST_F(NotificationsCapabilityAgentTest, testMultipleSetIndicators) {
 /**
  * Test that @c clearData() removes all notifications and sets the indicator to OFF.
  */
-TEST_F(NotificationsCapabilityAgentTest, testClearData) {
+TEST_F(NotificationsCapabilityAgentTest, test_clearData) {
     initializeCapabilityAgent();
     sendSetIndicatorDirective(generatePayload(true, true, "assetId1"), "firstIndicatorMessageId");
     ASSERT_TRUE(m_renderer->waitUntilRenderingStarted());

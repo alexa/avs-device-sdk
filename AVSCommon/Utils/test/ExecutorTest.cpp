@@ -33,39 +33,39 @@ public:
     Executor executor;
 };
 
-TEST_F(ExecutorTest, submitStdFunctionAndVerifyExecution) {
+TEST_F(ExecutorTest, test_submitStdFunctionAndVerifyExecution) {
     std::function<void()> function = []() {};
     auto future = executor.submit(function);
     auto future_status = future.wait_for(SHORT_TIMEOUT_MS);
     ASSERT_EQ(future_status, std::future_status::ready);
 }
 
-TEST_F(ExecutorTest, submitStdBindAndVerifyExecution) {
+TEST_F(ExecutorTest, test_submitStdBindAndVerifyExecution) {
     auto future = executor.submit(std::bind(exampleFunctionParams, 0));
     auto future_status = future.wait_for(SHORT_TIMEOUT_MS);
     ASSERT_EQ(future_status, std::future_status::ready);
 }
 
-TEST_F(ExecutorTest, submitLambdaAndVerifyExecution) {
+TEST_F(ExecutorTest, test_submitLambdaAndVerifyExecution) {
     auto future = executor.submit([]() {});
     auto future_status = future.wait_for(SHORT_TIMEOUT_MS);
     ASSERT_EQ(future_status, std::future_status::ready);
 }
 
-TEST_F(ExecutorTest, submitFunctionPointerAndVerifyExecution) {
+TEST_F(ExecutorTest, test_submitFunctionPointerAndVerifyExecution) {
     auto future = executor.submit(&exampleFunction);
     auto future_status = future.wait_for(SHORT_TIMEOUT_MS);
     ASSERT_EQ(future_status, std::future_status::ready);
 }
 
-TEST_F(ExecutorTest, submitFunctorAndVerifyExecution) {
+TEST_F(ExecutorTest, test_submitFunctorAndVerifyExecution) {
     ExampleFunctor exampleFunctor;
     auto future = executor.submit(exampleFunctor);
     auto future_status = future.wait_for(SHORT_TIMEOUT_MS);
     ASSERT_EQ(future_status, std::future_status::ready);
 }
 
-TEST_F(ExecutorTest, submitFunctionWithPrimitiveReturnTypeNoArgsAndVerifyExecution) {
+TEST_F(ExecutorTest, test_submitFunctionWithPrimitiveReturnTypeNoArgsAndVerifyExecution) {
     int value = VALUE;
     auto future = executor.submit([=]() { return value; });
     auto future_status = future.wait_for(SHORT_TIMEOUT_MS);
@@ -73,7 +73,7 @@ TEST_F(ExecutorTest, submitFunctionWithPrimitiveReturnTypeNoArgsAndVerifyExecuti
     ASSERT_EQ(future.get(), value);
 }
 
-TEST_F(ExecutorTest, submitFunctionWithObjectReturnTypeNoArgsAndVerifyExecution) {
+TEST_F(ExecutorTest, test_submitFunctionWithObjectReturnTypeNoArgsAndVerifyExecution) {
     SimpleObject value(VALUE);
     auto future = executor.submit([=]() { return value; });
     auto future_status = future.wait_for(SHORT_TIMEOUT_MS);
@@ -81,21 +81,21 @@ TEST_F(ExecutorTest, submitFunctionWithObjectReturnTypeNoArgsAndVerifyExecution)
     ASSERT_EQ(future.get().getValue(), value.getValue());
 }
 
-TEST_F(ExecutorTest, submitFunctionWithNoReturnTypePrimitiveArgsAndVerifyExecution) {
+TEST_F(ExecutorTest, test_submitFunctionWithNoReturnTypePrimitiveArgsAndVerifyExecution) {
     int value = VALUE;
     auto future = executor.submit([](int number) {}, value);
     auto future_status = future.wait_for(SHORT_TIMEOUT_MS);
     ASSERT_EQ(future_status, std::future_status::ready);
 }
 
-TEST_F(ExecutorTest, submitFunctionWithNoReturnTypeObjectArgsAndVerifyExecution) {
+TEST_F(ExecutorTest, test_submitFunctionWithNoReturnTypeObjectArgsAndVerifyExecution) {
     SimpleObject arg(0);
     auto future = executor.submit([](SimpleObject object) {}, arg);
     auto future_status = future.wait_for(SHORT_TIMEOUT_MS);
     ASSERT_EQ(future_status, std::future_status::ready);
 }
 
-TEST_F(ExecutorTest, submitFunctionWithPrimitiveReturnTypeObjectArgsAndVerifyExecution) {
+TEST_F(ExecutorTest, test_submitFunctionWithPrimitiveReturnTypeObjectArgsAndVerifyExecution) {
     int value = VALUE;
     SimpleObject arg(0);
     auto future = executor.submit([=](SimpleObject object) { return value; }, arg);
@@ -104,7 +104,7 @@ TEST_F(ExecutorTest, submitFunctionWithPrimitiveReturnTypeObjectArgsAndVerifyExe
     ASSERT_EQ(future.get(), value);
 }
 
-TEST_F(ExecutorTest, submitFunctionWithObjectReturnTypePrimitiveArgsAndVerifyExecution) {
+TEST_F(ExecutorTest, test_submitFunctionWithObjectReturnTypePrimitiveArgsAndVerifyExecution) {
     int arg = 0;
     SimpleObject value(VALUE);
     auto future = executor.submit([=](int primitive) { return value; }, arg);
@@ -113,7 +113,7 @@ TEST_F(ExecutorTest, submitFunctionWithObjectReturnTypePrimitiveArgsAndVerifyExe
     ASSERT_EQ(future.get().getValue(), value.getValue());
 }
 
-TEST_F(ExecutorTest, submitFunctionWithPrimitiveReturnTypePrimitiveArgsAndVerifyExecution) {
+TEST_F(ExecutorTest, test_submitFunctionWithPrimitiveReturnTypePrimitiveArgsAndVerifyExecution) {
     int arg = 0;
     int value = VALUE;
     auto future = executor.submit([=](int number) { return value; }, arg);
@@ -122,7 +122,7 @@ TEST_F(ExecutorTest, submitFunctionWithPrimitiveReturnTypePrimitiveArgsAndVerify
     ASSERT_EQ(future.get(), value);
 }
 
-TEST_F(ExecutorTest, submitFunctionWithObjectReturnTypeObjectArgsAndVerifyExecution) {
+TEST_F(ExecutorTest, test_submitFunctionWithObjectReturnTypeObjectArgsAndVerifyExecution) {
     SimpleObject value(VALUE);
     SimpleObject arg(0);
     auto future = executor.submit([=](SimpleObject object) { return value; }, arg);
@@ -131,7 +131,7 @@ TEST_F(ExecutorTest, submitFunctionWithObjectReturnTypeObjectArgsAndVerifyExecut
     ASSERT_EQ(future.get().getValue(), value.getValue());
 }
 
-TEST_F(ExecutorTest, submitToFront) {
+TEST_F(ExecutorTest, test_submitToFront) {
     std::atomic<bool> ready(false);
     std::atomic<bool> blocked(false);
     std::list<int> order;
@@ -170,7 +170,7 @@ TEST_F(ExecutorTest, submitToFront) {
     ASSERT_EQ(order.back(), 2);
 }
 
-TEST_F(ExecutorTest, testExecutionOrderEqualToSubmitOrder) {
+TEST_F(ExecutorTest, test_executionOrderEqualToSubmitOrder) {
     WaitEvent waitSetUp;
     executor.submit([&waitSetUp] { waitSetUp.wait(SHORT_TIMEOUT_MS); });
 
@@ -220,7 +220,7 @@ struct SlowDestructor {
 };
 
 /// This test verifies that the executor waits to fulfill its promise until after the task is cleaned up.
-TEST_F(ExecutorTest, futureWaitsForTaskCleanup) {
+TEST_F(ExecutorTest, test_futureWaitsForTaskCleanup) {
     std::atomic<bool> cleanedUp(false);
     SlowDestructor slowDestructor;
 
@@ -239,7 +239,7 @@ TEST_F(ExecutorTest, futureWaitsForTaskCleanup) {
 }
 
 /// This test verifies that the shutdown function completes the current task and does not accept new tasks.
-TEST_F(ExecutorTest, shutdown) {
+TEST_F(ExecutorTest, test_shutdown) {
     std::atomic<bool> ready(false);
     std::atomic<bool> blocked(false);
 
@@ -275,7 +275,7 @@ TEST_F(ExecutorTest, shutdown) {
 }
 
 /// Test that calling submit after shutdown will fail the job.
-TEST_F(ExecutorTest, testPushAfterExecutordownFail) {
+TEST_F(ExecutorTest, test_pushAfterExecutordownFail) {
     executor.shutdown();
     ASSERT_TRUE(executor.isShutdown());
 
@@ -284,7 +284,7 @@ TEST_F(ExecutorTest, testPushAfterExecutordownFail) {
 }
 
 /// Test that shutdown cancel jobs in the queue.
-TEST_F(ExecutorTest, testShutdownCancelJob) {
+TEST_F(ExecutorTest, test_shutdownCancelJob) {
     bool executed = false;
     WaitEvent waitSetUp, waitJobStart;
     std::future<void> jobToDropResult;

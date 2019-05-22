@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -97,7 +97,7 @@ void RevokeAuthorizationHandlerTest::SetUp() {
 /**
  * This case tests if @c RevokeAuthorizationHandler basic create function works properly
  */
-TEST_F(RevokeAuthorizationHandlerTest, createSuccessfully) {
+TEST_F(RevokeAuthorizationHandlerTest, test_createSuccessfully) {
     ASSERT_NE(nullptr, RevokeAuthorizationHandler::create(m_mockExceptionEncounteredSender));
 }
 
@@ -105,7 +105,7 @@ TEST_F(RevokeAuthorizationHandlerTest, createSuccessfully) {
  * This case tests if possible @c nullptr parameters passed to @c RevokeAuthorizationHandler::create are handled
  * properly.
  */
-TEST_F(RevokeAuthorizationHandlerTest, createWithError) {
+TEST_F(RevokeAuthorizationHandlerTest, test_createWithError) {
     ASSERT_EQ(nullptr, RevokeAuthorizationHandler::create(nullptr));
 }
 
@@ -113,7 +113,7 @@ TEST_F(RevokeAuthorizationHandlerTest, createWithError) {
  * This case tests if a directive is handled properly and passed to the registered observer.
  * It uses the directive sequencer to ensure getCapabilities properly identifies the namespace/directive name.
  */
-TEST_F(RevokeAuthorizationHandlerTest, handleDirectiveProperly) {
+TEST_F(RevokeAuthorizationHandlerTest, test_handleDirectiveProperly) {
     auto revokeHandler = RevokeAuthorizationHandler::create(m_mockExceptionEncounteredSender);
     ASSERT_NE(nullptr, revokeHandler);
 
@@ -137,7 +137,7 @@ TEST_F(RevokeAuthorizationHandlerTest, handleDirectiveProperly) {
 /**
  * This case tests if handleDirectiveImmediately handles the directive properly.
  */
-TEST_F(RevokeAuthorizationHandlerTest, handleDirectiveImmediatelyProperly) {
+TEST_F(RevokeAuthorizationHandlerTest, test_handleDirectiveImmediatelyProperly) {
     auto revokeHandler = RevokeAuthorizationHandler::create(m_mockExceptionEncounteredSender);
     ASSERT_NE(nullptr, revokeHandler);
 
@@ -151,7 +151,7 @@ TEST_F(RevokeAuthorizationHandlerTest, handleDirectiveImmediatelyProperly) {
 /**
  * This case tests if handleDirectiveImmediately handles a @c nullptr directive correctly and does not notify observers.
  */
-TEST_F(RevokeAuthorizationHandlerTest, handleDirectiveImmediatelyNullDirective) {
+TEST_F(RevokeAuthorizationHandlerTest, test_handleDirectiveImmediatelyNullDirective) {
     auto revokeHandler = RevokeAuthorizationHandler::create(m_mockExceptionEncounteredSender);
     ASSERT_NE(nullptr, revokeHandler);
 
@@ -164,7 +164,7 @@ TEST_F(RevokeAuthorizationHandlerTest, handleDirectiveImmediatelyNullDirective) 
 /**
  * This case tests if handleDirective handles a @c nullptr DirectiveInfo correctly and does not notify observers.
  */
-TEST_F(RevokeAuthorizationHandlerTest, handleDirectiveNullDirectiveInfo) {
+TEST_F(RevokeAuthorizationHandlerTest, test_handleDirectiveNullDirectiveInfo) {
     auto revokeHandler = RevokeAuthorizationHandler::create(m_mockExceptionEncounteredSender);
     ASSERT_NE(nullptr, revokeHandler);
 
@@ -177,7 +177,7 @@ TEST_F(RevokeAuthorizationHandlerTest, handleDirectiveNullDirectiveInfo) {
 /**
  * This case tests if cancelDirective handles a @c nullptr DirectiveInfo safely.
  */
-TEST_F(RevokeAuthorizationHandlerTest, cancelDirectiveNullDirectiveInfo) {
+TEST_F(RevokeAuthorizationHandlerTest, test_cancelDirectiveNullDirectiveInfo) {
     auto revokeHandler = RevokeAuthorizationHandler::create(m_mockExceptionEncounteredSender);
     ASSERT_NE(nullptr, revokeHandler);
 
@@ -190,7 +190,7 @@ TEST_F(RevokeAuthorizationHandlerTest, cancelDirectiveNullDirectiveInfo) {
 /**
  * This case tests when a registered observer is removed, it does not receive notifications.
  */
-TEST_F(RevokeAuthorizationHandlerTest, removeObserverSuccessfully) {
+TEST_F(RevokeAuthorizationHandlerTest, test_removeObserverSuccessfully) {
     auto revokeHandler = RevokeAuthorizationHandler::create(m_mockExceptionEncounteredSender);
     ASSERT_NE(nullptr, revokeHandler);
 
@@ -218,7 +218,7 @@ TEST_F(RevokeAuthorizationHandlerTest, removeObserverSuccessfully) {
  * Test to verify the preHandleDirective method doesn't really take action, as there is no pre-handle
  * work supported at this time.
  */
-TEST_F(RevokeAuthorizationHandlerTest, preHandleDirectiveTest) {
+TEST_F(RevokeAuthorizationHandlerTest, test_preHandleDirective) {
     auto revokeHandler = RevokeAuthorizationHandler::create(m_mockExceptionEncounteredSender);
     ASSERT_NE(nullptr, revokeHandler);
 
@@ -228,7 +228,7 @@ TEST_F(RevokeAuthorizationHandlerTest, preHandleDirectiveTest) {
 /**
  * Test to verify the addObserver method successfully ignores @c nullptr inputs.
  */
-TEST_F(RevokeAuthorizationHandlerTest, addObserverIgnoreNullPtr) {
+TEST_F(RevokeAuthorizationHandlerTest, test_addObserverIgnoreNullPtr) {
     auto revokeHandler = RevokeAuthorizationHandler::create(m_mockExceptionEncounteredSender);
     ASSERT_NE(nullptr, revokeHandler);
 
@@ -239,7 +239,7 @@ TEST_F(RevokeAuthorizationHandlerTest, addObserverIgnoreNullPtr) {
 /**
  * Test to verify the removeObserver method successfully ignores @c nullptr inputs.
  */
-TEST_F(RevokeAuthorizationHandlerTest, removeObserverIgnoreNullPtr) {
+TEST_F(RevokeAuthorizationHandlerTest, test_removeObserverIgnoreNullPtr) {
     auto revokeHandler = RevokeAuthorizationHandler::create(m_mockExceptionEncounteredSender);
     ASSERT_NE(nullptr, revokeHandler);
 

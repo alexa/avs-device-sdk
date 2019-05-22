@@ -66,6 +66,7 @@ public:
      * @param enableEqualizer Flag, indicating whether equalizer should be enabled for this instance.
      * @param type The type used to categorize the speaker for volume control.
      * @param name Readable name for the new instance.
+     * @param enableLiveMode Flag, indicating if the player is in live mode.
      * @return An instance of the @c MediaPlayer if successful else a @c nullptr.
      */
     static std::shared_ptr<MediaPlayer> create(
@@ -74,8 +75,8 @@ public:
         bool enableEqualizer = false,
         avsCommon::sdkInterfaces::SpeakerInterface::Type type =
             avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
-        std::string name = "");
-
+        std::string name = "",
+        bool enableLiveMode = false);
     /**
      * Destructor.
      */
@@ -200,13 +201,14 @@ private:
      * @param enableEqualizer Flag, indicating whether equalizer should be enabled for this instance.
      * @param type The type used to categorize the speaker for volume control.
      * @param name Readable name of this instance.
+     * @param enableLiveMode Flag, indicating the player is in live mode
      */
     MediaPlayer(
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
         bool enableEqualizer,
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
-        std::string name);
-
+        std::string name,
+        bool enableLiveMode);
     /**
      * The worker loop to run the glib mainloop.
      */
@@ -619,6 +621,9 @@ private:
 
     /// Stream offset before we teardown the pipeline
     std::chrono::milliseconds m_offsetBeforeTeardown;
+
+    /// Flag to indicate if the player is in live mode.
+    const bool m_isLiveMode;
 };
 
 }  // namespace mediaPlayer

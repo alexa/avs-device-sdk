@@ -341,7 +341,7 @@ std::unordered_map<std::string, std::shared_ptr<CapabilityConfiguration>> Capabi
 }
 
 /// Test publishing no capabilities
-TEST_F(CapabilitiesDelegateTest, noCapability) {
+TEST_F(CapabilitiesDelegateTest, test_noCapability) {
     ASSERT_EQ(
         m_capabilitiesDelegate->publishCapabilities(),
         CapabilitiesDelegate::CapabilitiesPublishReturnCode::FATAL_ERROR);
@@ -350,7 +350,7 @@ TEST_F(CapabilitiesDelegateTest, noCapability) {
 }
 
 /// Test publishing capabilities with no errors
-TEST_F(CapabilitiesDelegateTest, withCapabilitiesHappyCase) {
+TEST_F(CapabilitiesDelegateTest, test_withCapabilitiesHappyCase) {
     std::shared_ptr<TestCapabilityProvider> capabilityProviderOne = std::make_shared<TestCapabilityProvider>();
     capabilityProviderOne->addCapabilityConfiguration(INTERFACE_TYPE, INTERFACE_NAME_ONE, INTERFACE_VERSION);
     capabilityProviderOne->addCapabilityConfiguration(INTERFACE_TYPE, INTERFACE_NAME_THREE, INTERFACE_VERSION);
@@ -427,7 +427,7 @@ TEST_F(CapabilitiesDelegateTest, withCapabilitiesHappyCase) {
 }
 
 /// Test publishing capabilities that returns a fatal error
-TEST_F(CapabilitiesDelegateTest, publishFatalError) {
+TEST_F(CapabilitiesDelegateTest, test_publishFatalError) {
     std::shared_ptr<TestCapabilityProvider> capabilityProvider = std::make_shared<TestCapabilityProvider>();
     capabilityProvider->addCapabilityConfiguration(INTERFACE_TYPE, INTERFACE_NAME_ONE, INTERFACE_VERSION);
 
@@ -441,7 +441,7 @@ TEST_F(CapabilitiesDelegateTest, publishFatalError) {
 }
 
 /// Test publishing capabilities that returns a retriable error
-TEST_F(CapabilitiesDelegateTest, publishRetriableError) {
+TEST_F(CapabilitiesDelegateTest, test_publishRetriableError) {
     std::shared_ptr<TestCapabilityProvider> capabilityProvider = std::make_shared<TestCapabilityProvider>();
     capabilityProvider->addCapabilityConfiguration(INTERFACE_TYPE, INTERFACE_NAME_ONE, INTERFACE_VERSION);
 
@@ -455,7 +455,7 @@ TEST_F(CapabilitiesDelegateTest, publishRetriableError) {
 }
 
 /// Test republishing capabilities
-TEST_F(CapabilitiesDelegateTest, republish) {
+TEST_F(CapabilitiesDelegateTest, test_republish) {
     std::shared_ptr<TestCapabilityProvider> capabilityProvider = std::make_shared<TestCapabilityProvider>();
     capabilityProvider->addCapabilityConfiguration(
         INTERFACE_TYPE, INTERFACE_NAME_ONE, INTERFACE_VERSION, INTERFACE_CONFIG);
@@ -525,7 +525,7 @@ TEST_F(CapabilitiesDelegateTest, republish) {
 }
 
 /// Tests with registering capabilities
-TEST_F(CapabilitiesDelegateTest, registerTests) {
+TEST_F(CapabilitiesDelegateTest, test_registerTests) {
     std::shared_ptr<TestCapabilityProvider> capabilityProvider = std::make_shared<TestCapabilityProvider>();
     std::unordered_map<std::string, std::string> capabilityConfigurationMap;
 
@@ -608,7 +608,7 @@ TEST_F(CapabilitiesDelegateTest, registerTests) {
 }
 
 /// Test after clearData() is called, that the databse is deleted.
-TEST_F(CapabilitiesDelegateTest, testClearData) {
+TEST_F(CapabilitiesDelegateTest, test_clearData) {
     std::shared_ptr<TestCapabilityProvider> capabilityProvider = std::make_shared<TestCapabilityProvider>();
     capabilityProvider->addCapabilityConfiguration(
         INTERFACE_TYPE, INTERFACE_NAME_ONE, INTERFACE_VERSION, INTERFACE_CONFIG);

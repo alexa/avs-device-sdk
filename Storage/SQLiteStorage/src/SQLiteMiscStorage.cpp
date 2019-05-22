@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 #include <cctype>
 
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/String/StringUtils.h>
 #include <SQLiteStorage/SQLiteStatement.h>
 #include <SQLiteStorage/SQLiteUtils.h>
 
@@ -28,6 +29,7 @@ namespace sqliteStorage {
 
 using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::logger;
+using namespace avsCommon::utils::string;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("SQLiteMiscStorage");
@@ -120,6 +122,17 @@ static std::string getValueTypeString(SQLiteMiscStorage::ValueType valueType);
  * @return the DB type
  */
 static std::string getDBDataType(const std::string& keyValueType);
+
+/**
+ * Escapes the value of a database entry so that it can be inserted into an SQL query.
+ *
+ * @param value The value of a database entry to escape.
+ * @return The escaped database value.
+ */
+std::string escapeValue(const std::string& value) {
+    // Single quotes will be replaced by two single quotes to escape.
+    return replaceAllSubstring(value, "'", "''");
+}
 
 std::unique_ptr<SQLiteMiscStorage> SQLiteMiscStorage::create(const ConfigurationNode& configurationRoot) {
     auto miscDatabaseConfigurationRoot = configurationRoot[MISC_DATABASE_CONFIGURATION_ROOT_KEY];
@@ -663,7 +676,7 @@ bool SQLiteMiscStorage::add(
     std::string dbTableName = getDBTableName(componentName, tableName);
 
     const std::string sqlString = "INSERT INTO " + dbTableName + " (" + KEY_COLUMN_NAME + ", " + VALUE_COLUMN_NAME +
-                                  ") VALUES ('" + key + "', '" + value + "');";
+                                  ") VALUES ('" + key + "', '" + escapeValue(value) + "');";
 
     if (!m_db.performQuery(sqlString)) {
         ACSDK_ERROR(LX(errorEvent).d("Could not add entry (" + key + ", " + value + ") to table", tableName));
@@ -705,8 +718,8 @@ bool SQLiteMiscStorage::update(
 
     std::string dbTableName = getDBTableName(componentName, tableName);
 
-    const std::string sqlString = "UPDATE " + dbTableName + " SET " + VALUE_COLUMN_NAME + "='" + value + "' WHERE " +
-                                  KEY_COLUMN_NAME + "='" + key + "';";
+    const std::string sqlString = "UPDATE " + dbTableName + " SET " + VALUE_COLUMN_NAME + "='" + escapeValue(value) +
+                                  "' WHERE " + KEY_COLUMN_NAME + "='" + key + "';";
 
     if (!m_db.performQuery(sqlString)) {
         ACSDK_ERROR(LX(errorEvent).d("Could not update entry for " + key + " in table", tableName));
@@ -749,10 +762,10 @@ bool SQLiteMiscStorage::put(
 
     if (!tableEntryExistsValue) {
         sqlString = "INSERT INTO " + dbTableName + " (" + KEY_COLUMN_NAME + ", " + VALUE_COLUMN_NAME + ") VALUES ('" +
-                    key + "', '" + value + "');";
+                    key + "', '" + escapeValue(value) + "');";
         errorValue = "Could not add entry (" + key + ", " + value + ") to table";
     } else {
-        sqlString = "UPDATE " + dbTableName + " SET " + VALUE_COLUMN_NAME + "='" + value + "' WHERE " +
+        sqlString = "UPDATE " + dbTableName + " SET " + VALUE_COLUMN_NAME + "='" + escapeValue(value) + "' WHERE " +
                     KEY_COLUMN_NAME + "='" + key + "';";
         errorValue = "Could not update entry for " + key + " in table";
     }

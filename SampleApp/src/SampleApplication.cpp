@@ -142,8 +142,8 @@ static const std::string DISPLAY_CARD_KEY("displayCardsSupported");
 using namespace capabilityAgents::externalMediaPlayer;
 
 /// The @c m_playerToMediaPlayerMap Map of the adapter to their speaker-type and MediaPlayer creation methods.
-std::unordered_map<std::string, SampleApplication::SpeakerTypeAndCreateFunc>
-    SampleApplication::m_playerToMediaPlayerMap;
+std::unordered_map<std::string, avsCommon::sdkInterfaces::SpeakerInterface::Type>
+    SampleApplication::m_playerToSpeakerTypeMap;
 
 /// The singleton map from @c playerId to @c ExternalMediaAdapter creation functions.
 std::unordered_map<std::string, ExternalMediaPlayer::AdapterCreateFunction> SampleApplication::m_adapterToCreateFuncMap;
@@ -233,15 +233,12 @@ SampleApplication::AdapterRegistration::AdapterRegistration(
 
 SampleApplication::MediaPlayerRegistration::MediaPlayerRegistration(
     const std::string& playerId,
-    avsCommon::sdkInterfaces::SpeakerInterface::Type speakerType,
-    MediaPlayerCreateFunction createFunction) {
-    if (m_playerToMediaPlayerMap.find(playerId) != m_playerToMediaPlayerMap.end()) {
+    avsCommon::sdkInterfaces::SpeakerInterface::Type speakerType) {
+    if (m_playerToSpeakerTypeMap.find(playerId) != m_playerToSpeakerTypeMap.end()) {
         ACSDK_WARN(LX("MediaPlayer already exists").d("playerId", playerId));
     }
 
-    m_playerToMediaPlayerMap[playerId] =
-        std::pair<avsCommon::sdkInterfaces::SpeakerInterface::Type, MediaPlayerCreateFunction>(
-            speakerType, createFunction);
+    m_playerToSpeakerTypeMap[playerId] = speakerType;
 }
 
 SampleAppReturnCode SampleApplication::run() {
@@ -284,6 +281,12 @@ SampleApplication::~SampleApplication() {
         m_ringtoneMediaPlayer->shutdown();
     }
 
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+    if (m_commsMediaPlayer) {
+        m_commsMediaPlayer->shutdown();
+    }
+#endif
+
     avsCommon::avs::initialization::AlexaClientSDKInit::uninitialize();
 }
 
@@ -291,16 +294,16 @@ bool SampleApplication::createMediaPlayersForAdapters(
     std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
     std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup,
     std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers) {
-#ifdef GSTREAMER_MEDIA_PLAYER
     bool equalizerEnabled = nullptr != equalizerRuntimeSetup;
-    for (auto& entry : m_playerToMediaPlayerMap) {
-        auto mediaPlayer = entry.second.second(
-            httpContentFetcherFactory, equalizerEnabled, entry.second.first, entry.first + "MediaPlayer");
+    for (auto& entry : m_playerToSpeakerTypeMap) {
+        auto mediaPlayerSpeakerPair = createApplicationMediaPlayer(
+            httpContentFetcherFactory, equalizerEnabled, entry.second, entry.first + "MediaPlayer", false);
+        auto mediaPlayer = mediaPlayerSpeakerPair.first;
+        auto speaker = mediaPlayerSpeakerPair.second;
         if (mediaPlayer) {
             m_externalMusicProviderMediaPlayersMap[entry.first] = mediaPlayer;
-            m_externalMusicProviderSpeakersMap[entry.first] = mediaPlayer;
-            additionalSpeakers.push_back(
-                std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface>(mediaPlayer));
+            m_externalMusicProviderSpeakersMap[entry.first] = speaker;
+            additionalSpeakers.push_back(speaker);
             m_adapterMediaPlayers.push_back(mediaPlayer);
             if (equalizerEnabled) {
                 equalizerRuntimeSetup->addEqualizer(mediaPlayer);
@@ -312,14 +315,6 @@ bool SampleApplication::createMediaPlayersForAdapters(
     }
 
     return true;
-#else
-    if (!m_playerToMediaPlayerMap.empty()) {
-        // TODO(ACSDK-1622) Add support to external media players on android.
-        ACSDK_CRITICAL(LX("Failed to create media players").d("reason", "unsupportedOperation"));
-        return false;
-    }
-    return true;
-#endif
 }
 
 bool SampleApplication::initialize(
@@ -445,7 +440,7 @@ bool SampleApplication::initialize(
     std::tie(m_notificationsMediaPlayer, notificationsSpeaker) = createApplicationMediaPlayer(
         httpContentFetcherFactory,
         false,
-        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
+        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_ALERTS_VOLUME,
         "NotificationsMediaPlayer");
     if (!m_notificationsMediaPlayer || !notificationsSpeaker) {
         ACSDK_CRITICAL(LX("Failed to create media player for notifications!"));
@@ -474,6 +469,20 @@ bool SampleApplication::initialize(
         alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Failed to create media player for ringtones!");
         return false;
     }
+
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker;
+    std::tie(m_commsMediaPlayer, commsSpeaker) = createApplicationMediaPlayer(
+        httpContentFetcherFactory,
+        false,
+        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
+        "CommsMediaPlayer",
+        true);
+    if (!m_commsMediaPlayer || !commsSpeaker) {
+        ACSDK_CRITICAL(LX("Failed to create media player for comms!"));
+        return false;
+    }
+#endif
 
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker;
     std::tie(m_alertsMediaPlayer, alertsSpeaker) = createApplicationMediaPlayer(
@@ -645,6 +654,20 @@ bool SampleApplication::initialize(
         postConnectSynchronizerFactory);
 
     /*
+     * Creating the buffer (Shared Data Stream) that will hold user audio data. This is the main input into the SDK.
+     */
+    size_t bufferSize = alexaClientSDK::avsCommon::avs::AudioInputStream::calculateBufferSize(
+        BUFFER_SIZE_IN_SAMPLES, WORD_SIZE, MAX_READERS);
+    auto buffer = std::make_shared<alexaClientSDK::avsCommon::avs::AudioInputStream::Buffer>(bufferSize);
+    std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream =
+        alexaClientSDK::avsCommon::avs::AudioInputStream::create(buffer, WORD_SIZE, MAX_READERS);
+
+    if (!sharedDataStream) {
+        ACSDK_CRITICAL(LX("Failed to create shared data stream!"));
+        return false;
+    }
+
+    /*
      * Create the BluetoothDeviceManager to communicate with the Bluetooth stack.
      */
     std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> bluetoothDeviceManager;
@@ -691,6 +714,11 @@ bool SampleApplication::initialize(
             phoneSpeaker,
             phoneCaller,
 #endif
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+            m_commsMediaPlayer,
+            commsSpeaker,
+            sharedDataStream,
+#endif
             equalizerRuntimeSetup,
             audioFactory,
             authDelegate,
@@ -734,20 +762,6 @@ bool SampleApplication::initialize(
     if (displayCardsSupported) {
         m_guiRenderer = std::make_shared<GuiRenderer>();
         client->addTemplateRuntimeObserver(m_guiRenderer);
-    }
-
-    /*
-     * Creating the buffer (Shared Data Stream) that will hold user audio data. This is the main input into the SDK.
-     */
-    size_t bufferSize = alexaClientSDK::avsCommon::avs::AudioInputStream::calculateBufferSize(
-        BUFFER_SIZE_IN_SAMPLES, WORD_SIZE, MAX_READERS);
-    auto buffer = std::make_shared<alexaClientSDK::avsCommon::avs::AudioInputStream::Buffer>(bufferSize);
-    std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream =
-        alexaClientSDK::avsCommon::avs::AudioInputStream::create(buffer, WORD_SIZE, MAX_READERS);
-
-    if (!sharedDataStream) {
-        ACSDK_CRITICAL(LX("Failed to create shared data stream!"));
-        return false;
     }
 
     alexaClientSDK::avsCommon::utils::AudioFormat compatibleAudioFormat;
@@ -909,18 +923,20 @@ SampleApplication::createApplicationMediaPlayer(
     std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
     bool enableEqualizer,
     avsCommon::sdkInterfaces::SpeakerInterface::Type type,
-    const std::string& name) {
+    const std::string& name,
+    bool enableLiveMode) {
 #ifdef GSTREAMER_MEDIA_PLAYER
     /*
      * For the SDK, the MediaPlayer happens to also provide volume control functionality.
      * Note the externalMusicProviderMediaPlayer is not added to the set of SpeakerInterfaces as there would be
      * more actions needed for these beyond setting the volume control on the MediaPlayer.
      */
-    auto mediaPlayer =
-        alexaClientSDK::mediaPlayer::MediaPlayer::create(httpContentFetcherFactory, enableEqualizer, type, name);
+    auto mediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
+        httpContentFetcherFactory, enableEqualizer, type, name, enableLiveMode);
     return {mediaPlayer,
             std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface>(mediaPlayer)};
 #elif defined(ANDROID_MEDIA_PLAYER)
+    // TODO - Add support of live mode to AndroidSLESMediaPlayer (ACSDK-2530).
     auto mediaPlayer = mediaPlayer::android::AndroidSLESMediaPlayer::create(
         httpContentFetcherFactory,
         m_openSlEngine,

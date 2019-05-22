@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -553,7 +553,7 @@ protected:
  * tests then observe that the correct events are sent in order.
  *
  */
-TEST_F(AudioPlayerTest, SingASong) {
+TEST_F(AudioPlayerTest, test_singASong) {
     // Sing me a song.
     sendAudioFileAsRecognize(RECOGNIZE_SING_FILE_NAME);
     bool focusChanged;
@@ -604,8 +604,11 @@ TEST_F(AudioPlayerTest, SingASong) {
  * of Play directives, and a final Speak directive is received. The tests then observe that the correct events are sent
  * in order.
  *
+ * @note ACSDK-2373 - Test is disabled due to an assumption that each flash briefing must be less than 2min in length,
+ * and this is making this integration test unstable.
+ *
  */
-TEST_F(AudioPlayerTest, FlashBriefing) {
+TEST_F(AudioPlayerTest, DISABLED_test_flashBriefing) {
     // Ask for a flashbriefing.
     sendAudioFileAsRecognize(RECOGNIZE_FLASHBRIEFING_FILE_NAME);
 

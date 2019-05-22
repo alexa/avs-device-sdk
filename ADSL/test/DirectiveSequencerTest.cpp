@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -184,7 +184,7 @@ void DirectiveSequencerTest::TearDown() {
 /**
  * Test DirectiveSequencer::create() with a nullptr @c ExceptionEncounteredSender.  Expect create to fail.
  */
-TEST_F(DirectiveSequencerTest, testNullptrExceptionSender) {
+TEST_F(DirectiveSequencerTest, test_nullptrExceptionSender) {
     ASSERT_TRUE(m_sequencer);
     auto sequencer = DirectiveSequencer::create(nullptr);
     ASSERT_FALSE(sequencer);
@@ -193,14 +193,14 @@ TEST_F(DirectiveSequencerTest, testNullptrExceptionSender) {
 /**
  * Verify core DirectiveSequencerTest.  Expect a new non-null instance of m_sequencer.
  */
-TEST_F(DirectiveSequencerTest, testCreateAndDoneTrigger) {
+TEST_F(DirectiveSequencerTest, test_createAndDoneTrigger) {
     ASSERT_TRUE(m_sequencer);
 }
 
 /**
  * Exercise sending a @c nullptr to @c onDirective.  Expect that false is returned.
  */
-TEST_F(DirectiveSequencerTest, testNullptrDirective) {
+TEST_F(DirectiveSequencerTest, test_nullptrDirective) {
     ASSERT_FALSE(m_sequencer->onDirective(nullptr));
 }
 
@@ -208,7 +208,7 @@ TEST_F(DirectiveSequencerTest, testNullptrDirective) {
  * Exercise sending a @c AVSDirective for which no handler has been registered.  Expect that
  * m_exceptionEncounteredSender will receive a request to send the ExceptionEncountered message.
  */
-TEST_F(DirectiveSequencerTest, testUnhandledDirective) {
+TEST_F(DirectiveSequencerTest, test_unhandledDirective) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_SPEAKER, NAME_SET_VOLUME, MESSAGE_ID_0);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
         UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
@@ -220,7 +220,7 @@ TEST_F(DirectiveSequencerTest, testUnhandledDirective) {
  * Send a directive with an empty DialogRequestId.
  * Expect a call to handleDirectiveImmediately().
  */
-TEST_F(DirectiveSequencerTest, testEmptyDialogRequestId) {
+TEST_F(DirectiveSequencerTest, test_emptyDialogRequestId) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_SPEAKER, NAME_SET_VOLUME, MESSAGE_ID_0);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
         UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
@@ -240,7 +240,7 @@ TEST_F(DirectiveSequencerTest, testEmptyDialogRequestId) {
  * Send a directive with a DialogRequestId but with HANDLE_IMMEDIATELY policy in its handlier.
  * Expect a call to handleDirectiveImmediately().
  */
-TEST_F(DirectiveSequencerTest, testHandleImmediatelyHandler) {
+TEST_F(DirectiveSequencerTest, test_handleImmediatelyHandler) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_TEST, NAME_HANDLE_IMMEDIATELY, MESSAGE_ID_0);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
         UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
@@ -261,7 +261,7 @@ TEST_F(DirectiveSequencerTest, testHandleImmediatelyHandler) {
  * for each of the NamespaceAndName values.  Expect that the directive with no mapping is not seen by a handler and
  * that the one that still has a handler is handled.
  */
-TEST_F(DirectiveSequencerTest, testRemovingAndChangingHandlers) {
+TEST_F(DirectiveSequencerTest, test_removingAndChangingHandlers) {
     auto avsMessageHeader0 = std::make_shared<AVSMessageHeader>(NAMESPACE_SPEAKER, NAME_SET_VOLUME, MESSAGE_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
         UNPARSED_DIRECTIVE, avsMessageHeader0, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
@@ -312,7 +312,7 @@ TEST_F(DirectiveSequencerTest, testRemovingAndChangingHandlers) {
  * @c preHandleDirective() and a call to @c handleDirective().  The @c AVSDirective is the cancelled, triggering
  * a call to cancelDirective() to close out the test.
  */
-TEST_F(DirectiveSequencerTest, testBlockingDirective) {
+TEST_F(DirectiveSequencerTest, test_blockingDirective) {
     auto avsMessageHeader =
         std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
@@ -338,7 +338,7 @@ TEST_F(DirectiveSequencerTest, testBlockingDirective) {
 /**
  * Send a long running directive with an non-empty @c DialogRequestId and a BLOCKING policy.
  */
-TEST_F(DirectiveSequencerTest, testBlockingThenNonDialogDirective) {
+TEST_F(DirectiveSequencerTest, test_blockingThenNonDialogDirective) {
     auto avsMessageHeader0 =
         std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
@@ -385,7 +385,7 @@ TEST_F(DirectiveSequencerTest, testBlockingThenNonDialogDirective) {
  * @c preHandleDirective(@cAVSDirective) a call to @c handleDirective(@c MessageId, @c DirectiveHandlingResult),
  * and a call to @c cancelDirective(@c MessageId).
  */
-TEST_F(DirectiveSequencerTest, testBargeIn) {
+TEST_F(DirectiveSequencerTest, test_bargeIn) {
     auto avsMessageHeader =
         std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
@@ -415,7 +415,7 @@ TEST_F(DirectiveSequencerTest, testBargeIn) {
  * Along the way we set the DialogRequestId to the same value to verify that that setting it to the
  * current value does not cancel queued directives.
  */
-TEST_F(DirectiveSequencerTest, testBlockingThenNonBockingOnSameDialogId) {
+TEST_F(DirectiveSequencerTest, testTimer_blockingThenNonBockingOnSameDialogId) {
     auto avsMessageHeader0 =
         std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
@@ -477,7 +477,7 @@ TEST_F(DirectiveSequencerTest, testBlockingThenNonBockingOnSameDialogId) {
  * the first two directives will be cancelled and the third one will be handled (and then cancelled at the
  * end by setting the dialogRequestId to close out the test).
  */
-TEST_F(DirectiveSequencerTest, testThatBargeInDropsSubsequentDirectives) {
+TEST_F(DirectiveSequencerTest, test_thatBargeInDropsSubsequentDirectives) {
     auto avsMessageHeader0 =
         std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
@@ -540,7 +540,7 @@ TEST_F(DirectiveSequencerTest, testThatBargeInDropsSubsequentDirectives) {
  * Expect that the first @c AVSDirective will not be cancelled and that the second @c AVSDirective will be dropped
  * entirely.
  */
-TEST_F(DirectiveSequencerTest, testPreHandleDirectiveError) {
+TEST_F(DirectiveSequencerTest, test_preHandleDirectiveError) {
     auto avsMessageHeader0 =
         std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
@@ -584,7 +584,7 @@ TEST_F(DirectiveSequencerTest, testPreHandleDirectiveError) {
  * Expect that the first @c AVSDirective will not be cancelled and that the second @c AVSDirective may be
  * dropped before @c preHandleDirective() is called, and that if not, it will be cancelled.
  */
-TEST_F(DirectiveSequencerTest, testHandleDirectiveError) {
+TEST_F(DirectiveSequencerTest, test_handleDirectiveError) {
     auto avsMessageHeader0 =
         std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
@@ -635,7 +635,7 @@ TEST_F(DirectiveSequencerTest, testHandleDirectiveError) {
  * subsequent directives with the same dialogRequestId.  Along the way, call @c addDirectiveHandler() while
  * inside cancelDirective() to verify that that operation is refused.
  */
-TEST_F(DirectiveSequencerTest, testAddDirectiveHandlersWhileHandlingDirectives) {
+TEST_F(DirectiveSequencerTest, test_addDirectiveHandlersWhileHandlingDirectives) {
     auto avsMessageHeader0 =
         std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
@@ -731,7 +731,7 @@ TEST_F(DirectiveSequencerTest, testAddDirectiveHandlersWhileHandlingDirectives) 
  * @c preHandleDirective(@c AVSDirective) and a call to @c handleDirective() for the @c AVSDirective that are not
  * @c HANDLE_IMMEDIATELY.  And for the one with @c HANDLE_IMMEDIATELY, only @c handleDirectiveImmediately() is called.
  */
-TEST_F(DirectiveSequencerTest, testHandleBlockingThenImmediatelyThenNonBockingOnSameDialogId) {
+TEST_F(DirectiveSequencerTest, test_handleBlockingThenImmediatelyThenNonBockingOnSameDialogId) {
     auto avsMessageHeader0 =
         std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(
@@ -799,7 +799,7 @@ TEST_F(DirectiveSequencerTest, testHandleBlockingThenImmediatelyThenNonBockingOn
 /**
  * Check that the @ DirectiveSequencer does not handle directives when it is disabled
  */
-TEST_F(DirectiveSequencerTest, testAddDirectiveAfterDisabled) {
+TEST_F(DirectiveSequencerTest, test_addDirectiveAfterDisabled) {
     auto avsMessageHeader =
         std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
@@ -826,7 +826,7 @@ TEST_F(DirectiveSequencerTest, testAddDirectiveAfterDisabled) {
 /**
  * Check that the @ DirectiveSequencer.disable() cancel directive being handled
  */
-TEST_F(DirectiveSequencerTest, testDisableCancelsDirective) {
+TEST_F(DirectiveSequencerTest, test_disableCancelsDirective) {
     auto avsMessageHeader =
         std::make_shared<AVSMessageHeader>(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
@@ -858,7 +858,7 @@ TEST_F(DirectiveSequencerTest, testDisableCancelsDirective) {
 /**
  * Check that the @ DirectiveSequencer can handle directives after being re-enabled
  */
-TEST_F(DirectiveSequencerTest, testAddDirectiveAfterReEnabled) {
+TEST_F(DirectiveSequencerTest, test_addDirectiveAfterReEnabled) {
     auto avsMessageHeader0 =
         std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_0, DIALOG_REQUEST_ID_0);
     std::shared_ptr<AVSDirective> directive0 = AVSDirective::create(

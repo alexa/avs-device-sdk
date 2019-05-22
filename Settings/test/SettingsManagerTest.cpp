@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -71,7 +71,7 @@ protected:
 };
 
 /// Test add settings and setting the setting value.
-TEST_F(SettingsManagerTest, testSetExistingSetting) {
+TEST_F(SettingsManagerTest, test_setExistingSetting) {
     auto setting = std::make_shared<SettingInt>(INITIAL_INT_VALUE);
     auto expectedResult = std::pair<bool, int>{true, NEW_INT_VALUE};
 
@@ -81,13 +81,13 @@ TEST_F(SettingsManagerTest, testSetExistingSetting) {
 }
 
 /// Test set value for setting that hasn't been registered.
-TEST_F(SettingsManagerTest, testSetSettingUnavailable) {
+TEST_F(SettingsManagerTest, test_setSettingUnavailable) {
     SettingsManager<SettingInt, SettingString> manager;
     EXPECT_EQ((m_manager.setValue<TEST_ID_INT>(NEW_INT_VALUE)), SetSettingResult::UNAVAILABLE_SETTING);
 }
 
 /// Test get value for setting that hasn't been registered.
-TEST_F(SettingsManagerTest, testGetExistingSetting) {
+TEST_F(SettingsManagerTest, test_getExistingSetting) {
     auto setting = std::make_shared<SettingInt>(INITIAL_INT_VALUE);
     auto expectedResult = std::pair<bool, int>{true, INITIAL_INT_VALUE};
 
@@ -96,13 +96,13 @@ TEST_F(SettingsManagerTest, testGetExistingSetting) {
 }
 
 /// Test get value for setting that hasn't been registered.
-TEST_F(SettingsManagerTest, testGetSettingUnavailable) {
+TEST_F(SettingsManagerTest, test_getSettingUnavailable) {
     auto expectedResult = std::pair<bool, int>{false, DEFAULT_INT_VALUE};
     EXPECT_EQ((m_manager.getValue<TEST_ID_INT>(DEFAULT_INT_VALUE)), expectedResult);
 }
 
 /// Test registering a setting that already exists.
-TEST_F(SettingsManagerTest, testAddExistingSetting) {
+TEST_F(SettingsManagerTest, test_addExistingSetting) {
     auto setting1 = std::make_shared<SettingInt>(INITIAL_INT_VALUE);
     auto setting2 = std::make_shared<SettingInt>(INITIAL_INT_VALUE);
 
@@ -111,7 +111,7 @@ TEST_F(SettingsManagerTest, testAddExistingSetting) {
 }
 
 /// Test addObserver for a setting that exists.
-TEST_F(SettingsManagerTest, testAddObserver) {
+TEST_F(SettingsManagerTest, test_addObserver) {
     auto setting = std::make_shared<SettingInt>(INITIAL_INT_VALUE);
     auto observer = std::make_shared<TestObserver<SettingInt>>();
 
@@ -120,14 +120,14 @@ TEST_F(SettingsManagerTest, testAddObserver) {
 }
 
 /// Test addObserver for a setting that doesn't exist.
-TEST_F(SettingsManagerTest, testAddObserverFailed) {
+TEST_F(SettingsManagerTest, test_addObserverFailed) {
     auto observer = std::make_shared<TestObserver<SettingInt>>();
 
     EXPECT_FALSE((m_manager.addObserver<TEST_ID_INT>(observer)));
 }
 
 /// Test addObserver for a setting that exists.
-TEST_F(SettingsManagerTest, testRemoveObserver) {
+TEST_F(SettingsManagerTest, test_removeObserver) {
     auto setting = std::make_shared<SettingInt>(INITIAL_INT_VALUE);
     auto observer = std::make_shared<TestObserver<SettingInt>>();
 
@@ -137,13 +137,13 @@ TEST_F(SettingsManagerTest, testRemoveObserver) {
 }
 
 /// Test addObserver for a setting that doesn't exist.
-TEST_F(SettingsManagerTest, testRemoveObserverFailed) {
+TEST_F(SettingsManagerTest, test_removeObserverFailed) {
     auto observer = std::make_shared<TestObserver<SettingInt>>();
     m_manager.removeObserver<TEST_ID_INT>(observer);
 }
 
 /// Test manager operations for string setting.
-TEST_F(SettingsManagerTest, testSetExistingStringSetting) {
+TEST_F(SettingsManagerTest, test_setExistingStringSetting) {
     std::string initialValue = "";
     auto setting = std::make_shared<SettingString>(initialValue);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ using namespace std;
  *
  * @note This test also validates whether libcurl supports HTTP2.
  */
-TEST(AlexaClientSDKInitTest, initializeNoJSONConfig) {
+TEST(AlexaClientSDKInitTest, test_initializeNoJSONConfig) {
     ASSERT_TRUE(AlexaClientSDKInit::initialize({}));
     AlexaClientSDKInit::uninitialize();
 }
@@ -43,7 +43,7 @@ TEST(AlexaClientSDKInitTest, initializeNoJSONConfig) {
  *
  * @note This test also validates whether libcurl supports HTTP2.
  */
-TEST(AlexaClientSDKInitTest, initializeInvalidJSONConfig) {
+TEST(AlexaClientSDKInitTest, test_initializeInvalidJSONConfig) {
     auto invalidJSON = std::shared_ptr<std::stringstream>(new std::stringstream());
     (*invalidJSON) << "{";
     ASSERT_FALSE(AlexaClientSDKInit::initialize({invalidJSON}));
@@ -54,7 +54,7 @@ TEST(AlexaClientSDKInitTest, initializeInvalidJSONConfig) {
  *
  * @note This test also validates whether libcurl supports HTTP2.
  */
-TEST(AlexaClientSDKInitTest, initializeValidJSONConfig) {
+TEST(AlexaClientSDKInitTest, test_initializeValidJSONConfig) {
     auto validJSON = std::shared_ptr<std::stringstream>(new std::stringstream());
     (*validJSON) << R"({"key":"value"})";
     ASSERT_TRUE(AlexaClientSDKInit::initialize({validJSON}));
@@ -64,14 +64,14 @@ TEST(AlexaClientSDKInitTest, initializeValidJSONConfig) {
 /**
  * Tests @c isInitialized when the SDK has not been initialized yet, expecting it to return @c false.
  */
-TEST(AlexaClientSDKInitTest, uninitializedIsInitialized) {
+TEST(AlexaClientSDKInitTest, test_uninitializedIsInitialized) {
     ASSERT_FALSE(AlexaClientSDKInit::isInitialized());
 }
 
 /**
  * Tests @c isInitialized when the SDK is initialized, expecting it to return @c true.
  */
-TEST(AlexaClientSDKInitTest, isInitialized) {
+TEST(AlexaClientSDKInitTest, test_isInitialized) {
     ASSERT_TRUE(AlexaClientSDKInit::initialize({}));
     // Expect used to ensure we uninitialize.
     EXPECT_TRUE(AlexaClientSDKInit::isInitialized());
@@ -81,7 +81,7 @@ TEST(AlexaClientSDKInitTest, isInitialized) {
 /**
  * Tests @c uninitialize when the SDK has not been initialized yet, expecting no crashes or exceptions.
  */
-TEST(AlexaClientSDKInitTest, uninitialize) {
+TEST(AlexaClientSDKInitTest, test_uninitialize) {
     AlexaClientSDKInit::uninitialize();
 }
 

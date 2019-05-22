@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -130,21 +130,21 @@ void FFmpegDecoderTest::writeCorruptedInput(size_t skipInterval) {
 }
 
 /// Test decoder create.
-TEST_F(FFmpegDecoderTest, testCreateSucceed) {
+TEST_F(FFmpegDecoderTest, test_createSucceed) {
     writeInput();
     auto decoder = FFmpegDecoder::create(std::move(m_reader), PlaybackConfiguration());
     EXPECT_NE(decoder, nullptr);
 }
 
 /// Test decoder create with null reader.
-TEST_F(FFmpegDecoderTest, testCreateFailedNullReader) {
+TEST_F(FFmpegDecoderTest, test_createFailedNullReader) {
     writeInput();
     auto decoder = FFmpegDecoder::create(nullptr, PlaybackConfiguration());
     EXPECT_EQ(decoder, nullptr);
 }
 
 /// Test decoding an entire file.
-TEST_F(FFmpegDecoderTest, testDecodeFullFile) {
+TEST_F(FFmpegDecoderTest, test_decodeFullFile) {
     writeInput();
     auto decoder = FFmpegDecoder::create(std::move(m_reader), PlaybackConfiguration());
     ASSERT_NE(decoder, nullptr);
@@ -163,7 +163,7 @@ TEST_F(FFmpegDecoderTest, testDecodeFullFile) {
 }
 
 /// Test that it's possible to decode a file that was been truncated past the header.
-TEST_F(FFmpegDecoderTest, testTruncatedInput) {
+TEST_F(FFmpegDecoderTest, test_truncatedInput) {
     std::ifstream mediaFile{m_inputFileName, std::ios_base::binary};
     mediaFile.seekg(0, std::ios_base::seek_dir::end);
     writeInput(mediaFile.tellg() / 2);  // Write only half of the file.
@@ -185,7 +185,7 @@ TEST_F(FFmpegDecoderTest, testTruncatedInput) {
 }
 
 /// Test that the decoder recovers if the file is missing parts of it.
-TEST_F(FFmpegDecoderTest, testCorruptedInput) {
+TEST_F(FFmpegDecoderTest, test_corruptedInput) {
     constexpr size_t interval = 10;  // Skip a write at this interval.
     std::ifstream mediaFile{m_inputFileName, std::ios_base::binary};
     mediaFile.seekg(0, std::ios_base::seek_dir::end);
@@ -208,7 +208,7 @@ TEST_F(FFmpegDecoderTest, testCorruptedInput) {
 }
 
 /// Test that the decoder will error if input has invalid media.
-TEST_F(FFmpegDecoderTest, testInvalidInput) {
+TEST_F(FFmpegDecoderTest, test_invalidInput) {
     // Create input with 0101's
     std::vector<Byte> input(BUFFER_SIZE, 0x55);
     attachment::AttachmentWriter::WriteStatus writeStatus;
@@ -231,7 +231,7 @@ TEST_F(FFmpegDecoderTest, testInvalidInput) {
 }
 
 /// Check that read with a buffer that is too small fails.
-TEST_F(FFmpegDecoderTest, testReadSmallBuffer) {
+TEST_F(FFmpegDecoderTest, test_readSmallBuffer) {
     writeInput();
     auto decoder = FFmpegDecoder::create(std::move(m_reader), PlaybackConfiguration());
     ASSERT_NE(decoder, nullptr);
@@ -247,7 +247,7 @@ TEST_F(FFmpegDecoderTest, testReadSmallBuffer) {
 }
 
 /// Check that we can abort the decoding during initialization.
-TEST_F(FFmpegDecoderTest, testAbortInitialization) {
+TEST_F(FFmpegDecoderTest, test_abortInitialization) {
     auto decoder = FFmpegDecoder::create(std::move(m_reader), PlaybackConfiguration());
     ASSERT_NE(decoder, nullptr);
 

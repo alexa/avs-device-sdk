@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -109,7 +109,7 @@ protected:
  * This test will feed a dummy PCM stream into SpeechEncoder, then test the behavior with
  * the mock @c EncoderContext.
  */
-TEST_F(SpeechEncoderTest, testStartEncoding) {
+TEST_F(SpeechEncoderTest, test_startEncoding) {
     AudioFormat audioFormat = {
         .encoding = AudioFormat::Encoding::LPCM,
         .endianness = AudioFormat::Endianness::LITTLE,
@@ -162,7 +162,7 @@ TEST_F(SpeechEncoderTest, testStartEncoding) {
 /**
  * Test if encoding thread will exit if encoder output is not being consumed on exit.
  */
-TEST_F(SpeechEncoderTest, testShutdownOnBlockingWrite) {
+TEST_F(SpeechEncoderTest, test_shutdownOnBlockingWrite) {
     AudioFormat audioFormat = {
         .encoding = AudioFormat::Encoding::LPCM,
         .endianness = AudioFormat::Endianness::LITTLE,

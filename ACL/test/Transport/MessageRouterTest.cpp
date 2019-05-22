@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,26 +23,26 @@ namespace test {
 
 using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 
-TEST_F(MessageRouterTest, getConnectionStatusReturnsDisconnectedBeforeConnect) {
+TEST_F(MessageRouterTest, test_getConnectionStatusReturnsDisconnectedBeforeConnect) {
     ASSERT_EQ(m_router->getConnectionStatus().first, ConnectionStatusObserverInterface::Status::DISCONNECTED);
 }
 
-TEST_F(MessageRouterTest, getConnectionStatusReturnsPendingAfterConnectingStarts) {
+TEST_F(MessageRouterTest, test_getConnectionStatusReturnsPendingAfterConnectingStarts) {
     setupStateToPending();
     ASSERT_EQ(m_router->getConnectionStatus().first, ConnectionStatusObserverInterface::Status::PENDING);
 }
 
-TEST_F(MessageRouterTest, getConnectionStatusReturnsConnectedAfterConnectionEstablished) {
+TEST_F(MessageRouterTest, test_getConnectionStatusReturnsConnectedAfterConnectionEstablished) {
     setupStateToConnected();
     ASSERT_EQ(m_router->getConnectionStatus().first, ConnectionStatusObserverInterface::Status::CONNECTED);
 }
 
-TEST_F(MessageRouterTest, getConnectionStatusReturnsConnectedAfterDisconnected) {
+TEST_F(MessageRouterTest, test_getConnectionStatusReturnsConnectedAfterDisconnected) {
     m_router->onDisconnected(m_mockTransport, ConnectionStatusObserverInterface::ChangedReason::ACL_DISABLED);
     ASSERT_EQ(m_router->getConnectionStatus().first, ConnectionStatusObserverInterface::Status::DISCONNECTED);
 }
 
-TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfConnectionPendingAfterConnect) {
+TEST_F(MessageRouterTest, test_ensureTheMessageRouterObserverIsInformedOfConnectionPendingAfterConnect) {
     setupStateToPending();
 
     // wait for the result to propagate by scheduling a task on the client executor
@@ -55,7 +55,7 @@ TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfConnectionPe
         ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
 }
 
-TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfNewConnection) {
+TEST_F(MessageRouterTest, test_ensureTheMessageRouterObserverIsInformedOfNewConnection) {
     setupStateToConnected();
 
     // wait for the result to propagate by scheduling a task on the client executor
@@ -68,7 +68,7 @@ TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfNewConnectio
         ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
 }
 
-TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfTransportDisconnection) {
+TEST_F(MessageRouterTest, test_ensureTheMessageRouterObserverIsInformedOfTransportDisconnection) {
     setupStateToConnected();
 
     auto reason = ConnectionStatusObserverInterface::ChangedReason::ACL_DISABLED;
@@ -83,7 +83,7 @@ TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfTransportDis
     ASSERT_EQ(m_mockMessageRouterObserver->getLatestConnectionChangedReason(), reason);
 }
 
-TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfRouterDisconnection) {
+TEST_F(MessageRouterTest, test_ensureTheMessageRouterObserverIsInformedOfRouterDisconnection) {
     setupStateToConnected();
 
     m_router->disable();
@@ -99,7 +99,7 @@ TEST_F(MessageRouterTest, ensureTheMessageRouterObserverIsInformedOfRouterDiscon
         ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
 }
 
-TEST_F(MessageRouterTest, sendIsSuccessfulWhenConnected) {
+TEST_F(MessageRouterTest, test_sendIsSuccessfulWhenConnected) {
     setupStateToConnected();
 
     auto messageRequest = createMessageRequest();
@@ -113,7 +113,7 @@ TEST_F(MessageRouterTest, sendIsSuccessfulWhenConnected) {
     EXPECT_CALL(*m_mockTransport, disconnect()).Times(AnyNumber());
 }
 
-TEST_F(MessageRouterTest, sendFailsWhenDisconnected) {
+TEST_F(MessageRouterTest, test_sendFailsWhenDisconnected) {
     auto messageRequest = createMessageRequest();
 
     // Expect to have the message sent to the transport
@@ -122,7 +122,7 @@ TEST_F(MessageRouterTest, sendFailsWhenDisconnected) {
     m_router->sendMessage(messageRequest);
 }
 
-TEST_F(MessageRouterTest, sendFailsWhenPending) {
+TEST_F(MessageRouterTest, test_sendFailsWhenPending) {
     // Ensure a transport exists
     initializeMockTransport(m_mockTransport.get());
     m_router->enable();
@@ -136,7 +136,7 @@ TEST_F(MessageRouterTest, sendFailsWhenPending) {
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 }
 
-TEST_F(MessageRouterTest, sendMessageDoesNotSendAfterDisconnected) {
+TEST_F(MessageRouterTest, test_sendMessageDoesNotSendAfterDisconnected) {
     setupStateToConnected();
 
     auto messageRequest = createMessageRequest();
@@ -150,7 +150,7 @@ TEST_F(MessageRouterTest, sendMessageDoesNotSendAfterDisconnected) {
     m_router->sendMessage(messageRequest);
 }
 
-TEST_F(MessageRouterTest, disconnectDisconnectsConnectedTransports) {
+TEST_F(MessageRouterTest, test_disconnectDisconnectsConnectedTransports) {
     setupStateToConnected();
 
     EXPECT_CALL(*m_mockTransport, doShutdown()).Times(1);
@@ -158,7 +158,7 @@ TEST_F(MessageRouterTest, disconnectDisconnectsConnectedTransports) {
     m_router->disable();
 }
 
-TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
+TEST_F(MessageRouterTest, test_serverSideDisconnectCreatesANewTransport) {
     /*
      * This test is difficult to setup in a nice way. The idea is to replace the original
      * transport with a new one, call onServerSideDisconnect to make it the new active
@@ -214,7 +214,7 @@ TEST_F(MessageRouterTest, serverSideDisconnectCreatesANewTransport) {
 /**
  * This tests the calling of private method @c receive() for MessageRouterObserver from MessageRouter
  */
-TEST_F(MessageRouterTest, onReceiveTest) {
+TEST_F(MessageRouterTest, test_onReceive) {
     m_mockMessageRouterObserver->reset();
     m_router->consumeMessage(CONTEXT_ID, MESSAGE);
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
@@ -227,12 +227,40 @@ TEST_F(MessageRouterTest, onReceiveTest) {
  * This tests the calling of private method @c onConnectionStatusChanged()
  * for MessageRouterObserver from MessageRouter
  */
-TEST_F(MessageRouterTest, onConnectionStatusChangedTest) {
+TEST_F(MessageRouterTest, test_onConnectionStatusChanged) {
     m_mockMessageRouterObserver->reset();
     setupStateToConnected();
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
     ASSERT_TRUE(m_mockMessageRouterObserver->wasNotifiedOfStatusChange());
 }
+
+/**
+ * Verify that when enable is called with active connection is pending
+ * we don't create a new connection.
+ */
+TEST_F(MessageRouterTest, test_enableTwiceOnPendingTransport) {
+    setupStateToPending();
+    waitOnMessageRouter(SHORT_TIMEOUT_MS);
+    m_mockMessageRouterObserver->reset();
+
+    EXPECT_CALL(*m_mockTransport, connect()).Times(0);
+
+    m_router->enable();
+
+    ASSERT_FALSE(m_mockMessageRouterObserver->wasNotifiedOfStatusChange());
+}
+
+/**
+ * Verify that if onConnected is called
+ * for inactive transport, we don't notify the observers and
+ * closing the connection.
+ */
+TEST_F(MessageRouterTest, test_onConnectedOnInactiveTransport) {
+    auto transport = std::make_shared<MockTransport>();
+    m_router->onConnected(transport);
+    ASSERT_FALSE(m_mockMessageRouterObserver->wasNotifiedOfStatusChange());
+}
+
 }  // namespace test
 }  // namespace acl
 }  // namespace alexaClientSDK

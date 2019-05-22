@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -46,14 +46,14 @@ protected:
 /**
  * Verify that audio bytes passed in are returned exactly the same
  */
-TEST_F(StreamFunctionsTest, StreamFromData) {
+TEST_F(StreamFunctionsTest, test_streamFromData) {
     ASSERT_TRUE(streamAndDataAreEqual(*m_stream, TEST_DATA, sizeof(TEST_DATA)));
 }
 
 /**
  * Verify that non-char data streams work correctly
  */
-TEST_F(StreamFunctionsTest, DataContainsUnprintableChars) {
+TEST_F(StreamFunctionsTest, test_dataContainsUnprintableChars) {
     const std::vector<std::vector<unsigned char>> testData = {
         {5, 0, 3, 6},         // NULLS in data
         {0, 0, 6, 6},         // NULLS at beginning
@@ -74,7 +74,7 @@ TEST_F(StreamFunctionsTest, DataContainsUnprintableChars) {
 /**
  * Verify that empty datasets work
  */
-TEST_F(StreamFunctionsTest, EmptyVector) {
+TEST_F(StreamFunctionsTest, test_emptyVector) {
     const unsigned char empty[] = {};
     auto stream = stream::streamFromData(empty, sizeof(empty));
     ASSERT_TRUE(streamAndDataAreEqual(*stream, empty, sizeof(empty)));
@@ -83,7 +83,7 @@ TEST_F(StreamFunctionsTest, EmptyVector) {
 /**
  * Verify that multiple streams created from the same source can be operated on independently
  */
-TEST_F(StreamFunctionsTest, MultipleStreams) {
+TEST_F(StreamFunctionsTest, test_multipleStreams) {
     // get two streams to the same data
     auto stream1 = stream::streamFromData(TEST_DATA, sizeof(TEST_DATA));
     auto stream2 = stream::streamFromData(TEST_DATA, sizeof(TEST_DATA));
@@ -101,7 +101,7 @@ TEST_F(StreamFunctionsTest, MultipleStreams) {
 /**
  * Verify that seekg works going forward
  */
-TEST_F(StreamFunctionsTest, seekgBasicForward) {
+TEST_F(StreamFunctionsTest, test_seekgBasicForward) {
     const std::streampos step = 2;
     m_stream->seekg(step);
     ASSERT_TRUE(streamAndDataAreEqual(*m_stream, TEST_DATA + step, sizeof(TEST_DATA) - step));
@@ -110,7 +110,7 @@ TEST_F(StreamFunctionsTest, seekgBasicForward) {
 /**
  * Verify that seekg can reset
  */
-TEST_F(StreamFunctionsTest, seekgBasicReset) {
+TEST_F(StreamFunctionsTest, test_seekgBasicReset) {
     // get 4 chars from char from one stream
     char c;
     m_stream->get(c);
@@ -127,14 +127,14 @@ TEST_F(StreamFunctionsTest, seekgBasicReset) {
 /**
  * Verify that tellg works on creation
  */
-TEST_F(StreamFunctionsTest, tellgBasic) {
+TEST_F(StreamFunctionsTest, test_tellgBasic) {
     ASSERT_EQ(0, m_stream->tellg());
 }
 
 /**
  * Verify that the stream will have a bad tellg result when seeking past end
  */
-TEST_F(StreamFunctionsTest, tellgPastEnd) {
+TEST_F(StreamFunctionsTest, test_tellgPastEnd) {
     m_stream->seekg(sizeof(TEST_DATA) + 1);
     ASSERT_EQ(-1, m_stream->tellg());
 }
@@ -142,7 +142,7 @@ TEST_F(StreamFunctionsTest, tellgPastEnd) {
 /**
  * Verify that the stream will have a bad tellg result when seeking before beginning
  */
-TEST_F(StreamFunctionsTest, tellgBeforeBeginning) {
+TEST_F(StreamFunctionsTest, test_tellgBeforeBeginning) {
     m_stream->seekg(-1);
     ASSERT_EQ(-1, m_stream->tellg());
 }
@@ -150,7 +150,7 @@ TEST_F(StreamFunctionsTest, tellgBeforeBeginning) {
 /**
  * Verify that tellg is set correctly after seeking
  */
-TEST_F(StreamFunctionsTest, tellgAfterSeeking) {
+TEST_F(StreamFunctionsTest, test_tellgAfterSeeking) {
     const std::streampos step = 2;
     m_stream->seekg(step);
     ASSERT_EQ(step, m_stream->tellg());
@@ -160,7 +160,7 @@ TEST_F(StreamFunctionsTest, tellgAfterSeeking) {
 /**
  * Verify that tellg is set correctly after reading from stream
  */
-TEST_F(StreamFunctionsTest, tellgAfterReading) {
+TEST_F(StreamFunctionsTest, test_tellgAfterReading) {
     // get 4 chars from char from one stream
     const int numberToRead = 4;
 

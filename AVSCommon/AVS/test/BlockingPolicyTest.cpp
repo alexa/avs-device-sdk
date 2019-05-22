@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,14 +29,14 @@ using namespace avsCommon::avs;
 class BlockingPolicyTest : public ::testing::Test {};
 
 // test defaultConstructor
-TEST_F(BlockingPolicyTest, testDefaultConstructor) {
+TEST_F(BlockingPolicyTest, test_defaultConstructor) {
     BlockingPolicy blockingPolicy;
 
     ASSERT_FALSE(blockingPolicy.isValid());
 }
 
 /// Test isBlocking
-TEST_F(BlockingPolicyTest, testisBlocking) {
+TEST_F(BlockingPolicyTest, test_isBlocking) {
     BlockingPolicy blocking(BlockingPolicy::MEDIUM_VISUAL, true);
     BlockingPolicy nonBlocking(BlockingPolicy::MEDIUM_VISUAL, false);
 
@@ -45,7 +45,7 @@ TEST_F(BlockingPolicyTest, testisBlocking) {
 }
 
 /// Test getMediums
-TEST_F(BlockingPolicyTest, testgetMediums) {
+TEST_F(BlockingPolicyTest, test_getMediums) {
     BlockingPolicy audio(BlockingPolicy::MEDIUM_AUDIO, false);
     BlockingPolicy visual(BlockingPolicy::MEDIUM_VISUAL, false);
     BlockingPolicy audioAndVisual(BlockingPolicy::MEDIUMS_AUDIO_AND_VISUAL, false);

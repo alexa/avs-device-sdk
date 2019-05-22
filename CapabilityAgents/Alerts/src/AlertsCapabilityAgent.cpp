@@ -553,7 +553,10 @@ bool AlertsCapabilityAgent::handleAdjustVolume(
     }
 
     SpeakerInterface::SpeakerSettings speakerSettings;
-    m_speakerManager->getSpeakerSettings(SpeakerInterface::Type::AVS_ALERTS_VOLUME, &speakerSettings);
+    if (!m_speakerManager->getSpeakerSettings(SpeakerInterface::Type::AVS_ALERTS_VOLUME, &speakerSettings).get()) {
+        ACSDK_ERROR(LX("handleAdjustVolumeFailed").m("Could not retrieve speaker volume."));
+        return false;
+    }
     int64_t volume = adjustValue + speakerSettings.volume;
 
     setNextAlertVolume(volume);
@@ -666,13 +669,13 @@ void AlertsCapabilityAgent::sendProcessingDirectiveException(
 
 void AlertsCapabilityAgent::acquireChannel() {
     ACSDK_DEBUG9(LX("acquireChannel"));
-    m_focusManager->acquireChannel(FocusManagerInterface::ALERTS_CHANNEL_NAME, shared_from_this(), NAMESPACE);
+    m_focusManager->acquireChannel(FocusManagerInterface::ALERT_CHANNEL_NAME, shared_from_this(), NAMESPACE);
 }
 
 void AlertsCapabilityAgent::releaseChannel() {
     ACSDK_DEBUG9(LX("releaseChannel"));
     if (m_alertScheduler.getFocusState() != FocusState::NONE) {
-        m_focusManager->releaseChannel(FocusManagerInterface::ALERTS_CHANNEL_NAME, shared_from_this());
+        m_focusManager->releaseChannel(FocusManagerInterface::ALERT_CHANNEL_NAME, shared_from_this());
     }
 }
 

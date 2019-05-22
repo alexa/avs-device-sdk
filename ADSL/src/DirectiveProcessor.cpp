@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -293,8 +293,17 @@ std::deque<DirectiveProcessor::DirectiveAndPolicy>::iterator DirectiveProcessor:
         (m_directivesBeingHandled[BlockingPolicy::Medium::VISUAL] != nullptr);
 
     for (auto it = m_handlingQueue.begin(); it != m_handlingQueue.end(); it++) {
-        auto currentUsingAudio = it->second.getMediums()[BlockingPolicy::Medium::AUDIO];
-        auto currentUsingVisual = it->second.getMediums()[BlockingPolicy::Medium::VISUAL];
+        auto policy = it->second;
+        bool currentUsingAudio = false;
+        bool currentUsingVisual = false;
+
+        if (policy.getMediums()[BlockingPolicy::Medium::AUDIO]) {
+            currentUsingAudio = true;
+        }
+
+        if (policy.getMediums()[BlockingPolicy::Medium::VISUAL]) {
+            currentUsingVisual = true;
+        }
 
         if ((currentUsingAudio && blockedMediums[BlockingPolicy::Medium::AUDIO]) ||
             (currentUsingVisual && blockedMediums[BlockingPolicy::Medium::VISUAL])) {

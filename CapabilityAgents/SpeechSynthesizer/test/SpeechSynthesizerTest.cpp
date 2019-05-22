@@ -364,7 +364,7 @@ void SpeechSynthesizerTest::wakeOnStopped() {
  * Expected result is that @c acquireChannel is called with the correct channel. On focus changed @c FOREGROUND, audio
  * should play. Expect the @c ContextManager @c setState is called when state changes to @c PLAYING.
  */
-TEST_F(SpeechSynthesizerTest, testCallingHandleImmediately) {
+TEST_F(SpeechSynthesizerTest, test_callingHandleImmediately) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -404,7 +404,7 @@ TEST_F(SpeechSynthesizerTest, testCallingHandleImmediately) {
  * is called with the correct channel. On focus changed @c FOREGROUND, audio should play. Expect the @c ContextManager
  * @c setState is called when state changes to @c PLAYING.
  */
-TEST_F(SpeechSynthesizerTest, testCallingHandle) {
+TEST_F(SpeechSynthesizerTest, test_callingHandle) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -447,7 +447,7 @@ TEST_F(SpeechSynthesizerTest, testCallingHandle) {
  * Call preHandle with a valid SPEAK directive. Then call cancelDirective. Expect that neither @c setState nor
  * @c sendMessage are called since handle was never called to start playing audio.
  */
-TEST_F(SpeechSynthesizerTest, testCallingCancel) {
+TEST_F(SpeechSynthesizerTest, test_callingCancel) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -467,7 +467,7 @@ TEST_F(SpeechSynthesizerTest, testCallingCancel) {
  * @c ContextManager @c setState is called when the state changes to @c PLAYING and then to @c FINISHED.
  * Expect @c sendMessage is called only once. On cancel, message should not be sent to AVS.
  */
-TEST_F(SpeechSynthesizerTest, testCallingCancelAfterHandle) {
+TEST_F(SpeechSynthesizerTest, test_callingCancelAfterHandle) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -520,7 +520,7 @@ TEST_F(SpeechSynthesizerTest, testCallingCancelAfterHandle) {
  * Testing provideState.
  * Call @c provideState and expect that setState is called.
  */
-TEST_F(SpeechSynthesizerTest, testCallingProvideStateWhenNotPlaying) {
+TEST_F(SpeechSynthesizerTest, test_callingProvideStateWhenNotPlaying) {
     EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_)).Times(0);
     EXPECT_CALL(
         *(m_mockContextManager.get()),
@@ -539,7 +539,7 @@ TEST_F(SpeechSynthesizerTest, testCallingProvideStateWhenNotPlaying) {
  * Expect @c getOffset is called. Expect @c setState is called when state changes and when state is
  * requested via @c provideState.
  */
-TEST_F(SpeechSynthesizerTest, testCallingProvideStateWhenPlaying) {
+TEST_F(SpeechSynthesizerTest, test_callingProvideStateWhenPlaying) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -599,7 +599,7 @@ TEST_F(SpeechSynthesizerTest, testCallingProvideStateWhenPlaying) {
  * Testing barge-in via @c handleDirectiveImmediately when audio is playing back.
  * Call @c handleDirective. Once playback started notification is received, call @c handleDirectiveImmediately.
  */
-TEST_F(SpeechSynthesizerTest, testBargeInWhilePlaying) {
+TEST_F(SpeechSynthesizerTest, testTimer_bargeInWhilePlaying) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -666,7 +666,7 @@ TEST_F(SpeechSynthesizerTest, testBargeInWhilePlaying) {
  * Expect when handleDirectiveImmediately with a valid SPEAK directive is called, @c SpeechSynthesizer
  * will react correctly.
  */
-TEST_F(SpeechSynthesizerTest, testNotCallStopTwice) {
+TEST_F(SpeechSynthesizerTest, testTimer_notCallStopTwice) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -760,7 +760,7 @@ TEST_F(SpeechSynthesizerTest, testNotCallStopTwice) {
 /**
  * Testing executeCancel() completes execution before onFocusChanged() is called.
  */
-TEST_F(SpeechSynthesizerTest, testCallingCancelBeforeOnFocusChanged) {
+TEST_F(SpeechSynthesizerTest, testSlow_callingCancelBeforeOnFocusChanged) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -832,7 +832,7 @@ TEST_F(SpeechSynthesizerTest, testCallingCancelBeforeOnFocusChanged) {
 /**
  * Testing executeCancel() completes execution before executeStateChange() is called.
  */
-TEST_F(SpeechSynthesizerTest, testCallingCancelBeforeOnExecuteStateChanged) {
+TEST_F(SpeechSynthesizerTest, test_callingCancelBeforeOnExecuteStateChanged) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -908,7 +908,7 @@ TEST_F(SpeechSynthesizerTest, testCallingCancelBeforeOnExecuteStateChanged) {
  * Expect when handleDirectiveImmediately with a valid SPEAK directive is called, @c SpeechSynthesizer
  * will react correctly.
  */
-TEST_F(SpeechSynthesizerTest, testMediaPlayerFailedToStop) {
+TEST_F(SpeechSynthesizerTest, test_mediaPlayerFailedToStop) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -1004,7 +1004,7 @@ TEST_F(SpeechSynthesizerTest, testMediaPlayerFailedToStop) {
  *
  * Expected result is that shutdown should succeeded no matter the @c stop return.
  */
-TEST_F(SpeechSynthesizerTest, testMediaPlayerAlwaysFailToStop) {
+TEST_F(SpeechSynthesizerTest, test_mediaPlayerAlwaysFailToStop) {
     auto speechSynthesizer = SpeechSynthesizer::create(
         m_mockSpeechPlayer,
         m_mockMessageSender,
@@ -1044,7 +1044,7 @@ TEST_F(SpeechSynthesizerTest, testMediaPlayerAlwaysFailToStop) {
  * Testing SpeechSynthesizer will call stop() if the SpeechSynthesizer experienced a state change timeout to PLAYING
  * state.
  */
-TEST_F(SpeechSynthesizerTest, testSetStateTimeout) {
+TEST_F(SpeechSynthesizerTest, testSlow_setStateTimeout) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -1110,7 +1110,7 @@ TEST_F(SpeechSynthesizerTest, testSetStateTimeout) {
  * Testing changing focus state to NONE (local stop) during a speak.
  * Expect @c setFailed to be called so any subsequent directives with the same dialogRequestId will be dropped.
  */
-TEST_F(SpeechSynthesizerTest, testGivenPlayingStateFocusBecomesNone) {
+TEST_F(SpeechSynthesizerTest, test_givenPlayingStateFocusBecomesNone) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -1144,7 +1144,7 @@ TEST_F(SpeechSynthesizerTest, testGivenPlayingStateFocusBecomesNone) {
  * Testing SpeechSynthesizer will call setFailed() if the SpeechSynthesizer got a onPlaybackStopped() callback while
  * it is in PLAYING state.
  */
-TEST_F(SpeechSynthesizerTest, testOnPlayedStopped) {
+TEST_F(SpeechSynthesizerTest, test_onPlayedStopped) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =

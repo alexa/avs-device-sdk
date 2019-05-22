@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ class HandlerAndPolicyTest : public ::testing::Test {};
 /**
  * Invoke default constructor.  Expect @c nameSpace and @c name properties are both empty strings.
  */
-TEST_F(HandlerAndPolicyTest, testDefaultConstructor) {
+TEST_F(HandlerAndPolicyTest, test_defaultConstructor) {
     HandlerAndPolicy handlerAndPolicy;
     ASSERT_EQ(handlerAndPolicy.handler, nullptr);
     ASSERT_FALSE(handlerAndPolicy.policy.isValid());
@@ -65,7 +65,7 @@ TEST_F(HandlerAndPolicyTest, testDefaultConstructor) {
 /**
  * Invoke constructor with member values.  Expect properties match those provided to the constructor.
  */
-TEST_F(HandlerAndPolicyTest, testConstructorWithValues) {
+TEST_F(HandlerAndPolicyTest, test_constructorWithValues) {
     auto handler = std::make_shared<TestDirectiveHandler>();
     auto neitherNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
     HandlerAndPolicy handlerAndPolicy(handler, neitherNonBlockingPolicy);
@@ -77,7 +77,7 @@ TEST_F(HandlerAndPolicyTest, testConstructorWithValues) {
  * Create empty and non-empty HandlerAndPolicy instances. Expect that empty instances are interpreted as false and
  * non-empty values are interpreted as true.
  */
-TEST_F(HandlerAndPolicyTest, testOperatorBool) {
+TEST_F(HandlerAndPolicyTest, test_operatorBool) {
     auto handler = std::make_shared<TestDirectiveHandler>();
     HandlerAndPolicy defaultHandlerAndPolicy;
     auto audioBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
@@ -95,7 +95,7 @@ TEST_F(HandlerAndPolicyTest, testOperatorBool) {
  * Create instances with different and identical values. Expect that instances with different values test as
  * not equal and that instances with identical values test as equal.
  */
-TEST_F(HandlerAndPolicyTest, testOperatorEqualandNotEqual) {
+TEST_F(HandlerAndPolicyTest, test_operatorEqualandNotEqual) {
     auto handler1 = std::make_shared<TestDirectiveHandler>();
     auto handler2 = std::make_shared<TestDirectiveHandler>();
     HandlerAndPolicy defaultHandlerAndPolicy;

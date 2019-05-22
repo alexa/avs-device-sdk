@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -93,14 +93,14 @@ protected:
     }
 };
 
-TEST_F(AbstractKeyWordDetectorTest, testAddKeyWordObserver) {
+TEST_F(AbstractKeyWordDetectorTest, test_addKeyWordObserver) {
     detector->addKeyWordObserver(keyWordObserver1);
 
     EXPECT_CALL(*keyWordObserver1, onKeyWordDetected(_, _, _, _, _)).Times(1);
     detector->sendKeyWordCallToObservers();
 }
 
-TEST_F(AbstractKeyWordDetectorTest, testAddMultipleKeyWordObserver) {
+TEST_F(AbstractKeyWordDetectorTest, test_addMultipleKeyWordObserver) {
     detector->addKeyWordObserver(keyWordObserver1);
     detector->addKeyWordObserver(keyWordObserver2);
 
@@ -109,7 +109,7 @@ TEST_F(AbstractKeyWordDetectorTest, testAddMultipleKeyWordObserver) {
     detector->sendKeyWordCallToObservers();
 }
 
-TEST_F(AbstractKeyWordDetectorTest, testRemoveKeyWordObserver) {
+TEST_F(AbstractKeyWordDetectorTest, test_removeKeyWordObserver) {
     detector->addKeyWordObserver(keyWordObserver1);
     detector->addKeyWordObserver(keyWordObserver2);
 
@@ -124,7 +124,7 @@ TEST_F(AbstractKeyWordDetectorTest, testRemoveKeyWordObserver) {
     detector->sendKeyWordCallToObservers();
 }
 
-TEST_F(AbstractKeyWordDetectorTest, testAddStateObserver) {
+TEST_F(AbstractKeyWordDetectorTest, test_addStateObserver) {
     detector->addKeyWordDetectorStateObserver(stateObserver1);
 
     EXPECT_CALL(*stateObserver1, onStateChanged(_)).Times(1);
@@ -132,7 +132,7 @@ TEST_F(AbstractKeyWordDetectorTest, testAddStateObserver) {
         avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface::KeyWordDetectorState::ACTIVE);
 }
 
-TEST_F(AbstractKeyWordDetectorTest, testAddMultipleStateObservers) {
+TEST_F(AbstractKeyWordDetectorTest, test_addMultipleStateObservers) {
     detector->addKeyWordDetectorStateObserver(stateObserver1);
     detector->addKeyWordDetectorStateObserver(stateObserver2);
 
@@ -142,7 +142,7 @@ TEST_F(AbstractKeyWordDetectorTest, testAddMultipleStateObservers) {
         avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface::KeyWordDetectorState::ACTIVE);
 }
 
-TEST_F(AbstractKeyWordDetectorTest, testRemoveStateObserver) {
+TEST_F(AbstractKeyWordDetectorTest, test_removeStateObserver) {
     detector->addKeyWordDetectorStateObserver(stateObserver1);
     detector->addKeyWordDetectorStateObserver(stateObserver2);
 
@@ -159,7 +159,7 @@ TEST_F(AbstractKeyWordDetectorTest, testRemoveStateObserver) {
         avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED);
 }
 
-TEST_F(AbstractKeyWordDetectorTest, testObserversDontGetNotifiedOfSameStateTwice) {
+TEST_F(AbstractKeyWordDetectorTest, test_observersDontGetNotifiedOfSameStateTwice) {
     detector->addKeyWordDetectorStateObserver(stateObserver1);
 
     EXPECT_CALL(*stateObserver1, onStateChanged(_)).Times(1);

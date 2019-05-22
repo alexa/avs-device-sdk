@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -115,14 +115,14 @@ protected:
 /**
  * Tests parsing of an empty playlist. Calls @c parsePlaylist and expects it returns false.
  */
-TEST_F(PlaylistParserTest, testEmptyUrl) {
+TEST_F(PlaylistParserTest, test_emptyUrl) {
     ASSERT_FALSE(playlistParser->parsePlaylist("", testObserver));
 }
 
 /**
  * Tests passing a @c nullptr for the observer.
  */
-TEST_F(PlaylistParserTest, testNullObserver) {
+TEST_F(PlaylistParserTest, test_nullObserver) {
     ASSERT_FALSE(playlistParser->parsePlaylist("blah", nullptr));
 }
 
@@ -130,7 +130,7 @@ TEST_F(PlaylistParserTest, testNullObserver) {
  * Tests parsing of a simple M3U playlist.
  * Calls @c parsePlaylist and expects that the result of the parsing is successful.
  */
-TEST_F(PlaylistParserTest, testParsingPlaylist) {
+TEST_F(PlaylistParserTest, testTimer_parsingPlaylist) {
     ASSERT_TRUE(playlistParser->parsePlaylist(TEST_M3U_PLAYLIST_URL, testObserver));
     auto results = testObserver->waitForNCallbacks(TEST_M3U_PLAYLIST_URL_EXPECTED_PARSES);
     ASSERT_EQ(TEST_M3U_PLAYLIST_URL_EXPECTED_PARSES, results.size());
@@ -149,7 +149,7 @@ TEST_F(PlaylistParserTest, testParsingPlaylist) {
  * Tests parsing of a simple M3U playlist with relative urls.
  * Calls @c parsePlaylist and expects that the result of the parsing is successful.
  */
-TEST_F(PlaylistParserTest, testParsingRelativePlaylist) {
+TEST_F(PlaylistParserTest, testTimer_parsingRelativePlaylist) {
     ASSERT_TRUE(playlistParser->parsePlaylist(TEST_M3U_RELATIVE_PLAYLIST_URL, testObserver));
     auto results = testObserver->waitForNCallbacks(TEST_M3U_RELATIVE_PLAYLIST_URL_EXPECTED_PARSES);
     ASSERT_EQ(TEST_M3U_RELATIVE_PLAYLIST_URL_EXPECTED_PARSES, results.size());
@@ -167,7 +167,7 @@ TEST_F(PlaylistParserTest, testParsingRelativePlaylist) {
  * Tests parsing of an extended M3U/HLS playlist.
  * Calls @c parsePlaylist and expects that the result of the parsing is successful.
  */
-TEST_F(PlaylistParserTest, testParsingHlsPlaylist) {
+TEST_F(PlaylistParserTest, testTimer_parsingHlsPlaylist) {
     ASSERT_TRUE(playlistParser->parsePlaylist(TEST_HLS_PLAYLIST_URL, testObserver));
     auto results = testObserver->waitForNCallbacks(TEST_HLS_PLAYLIST_URL_EXPECTED_PARSES);
     ASSERT_EQ(TEST_HLS_PLAYLIST_URL_EXPECTED_PARSES, results.size());
@@ -186,7 +186,7 @@ TEST_F(PlaylistParserTest, testParsingHlsPlaylist) {
  * Tests parsing of a PLS playlist.
  * Calls @c parsePlaylist and expects that the result of the parsing is successful.
  */
-TEST_F(PlaylistParserTest, testParsingPlsPlaylist) {
+TEST_F(PlaylistParserTest, testTimer_parsingPlsPlaylist) {
     ASSERT_TRUE(playlistParser->parsePlaylist(TEST_PLS_PLAYLIST_URL, testObserver));
     auto results = testObserver->waitForNCallbacks(TEST_PLS_PLAYLIST_URL_EXPECTED_PARSES);
     ASSERT_EQ(TEST_PLS_PLAYLIST_URL_EXPECTED_PARSES, results.size());
@@ -204,7 +204,7 @@ TEST_F(PlaylistParserTest, testParsingPlsPlaylist) {
  * Tests that the playlist parser skips parsing of unwanted playlist types.
  * Calls @c parsePlaylist and expects that the result of the parsing is successful.
  */
-TEST_F(PlaylistParserTest, testNotParsingCertainPlaylistTypes) {
+TEST_F(PlaylistParserTest, testTimer_notParsingCertainPlaylistTypes) {
     ASSERT_TRUE(
         playlistParser->parsePlaylist(TEST_HLS_PLAYLIST_URL, testObserver, {PlaylistParser::PlaylistType::EXT_M3U}));
     auto results = testObserver->waitForNCallbacks(1);
@@ -216,7 +216,7 @@ TEST_F(PlaylistParserTest, testNotParsingCertainPlaylistTypes) {
  * Tests parsing of a live stream HLS playlist.
  * Calls @c parsePlaylist and expects that the result of the parsing is successful.
  */
-TEST_F(PlaylistParserTest, testParsingLiveStreamPlaylist) {
+TEST_F(PlaylistParserTest, testTimer_parsingLiveStreamPlaylist) {
     ASSERT_TRUE(playlistParser->parsePlaylist(TEST_HLS_LIVE_STREAM_PLAYLIST_URL, testObserver));
     auto results = testObserver->waitForNCallbacks(TEST_HLS_LIVE_STREAM_PLAYLIST_EXPECTED_PARSES);
     ASSERT_EQ(TEST_HLS_LIVE_STREAM_PLAYLIST_EXPECTED_PARSES, results.size());

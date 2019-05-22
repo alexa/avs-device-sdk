@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ void HTTPContentTest::SetUp() {
 }
 
 /// Test that isStatusCodeSuccess returns true for @c SUCCESS_STATUS_CODE.
-TEST_F(HTTPContentTest, readStatusCodeSuccess) {
+TEST_F(HTTPContentTest, test_readStatusCodeSuccess) {
     m_statusCodePromise.set_value(SUCCESS_STATUS_CODE);
     m_contentTypePromise.set_value(TEST_CONTENT_TYPE);
 
@@ -78,7 +78,7 @@ TEST_F(HTTPContentTest, readStatusCodeSuccess) {
 }
 
 /// Test that isStatusCodeSuccess returns true for @c SUCCESS_PARTIAL_CONTENT_STATUS_CODE.
-TEST_F(HTTPContentTest, readStatusCodePartialContentSuccess) {
+TEST_F(HTTPContentTest, test_readStatusCodePartialContentSuccess) {
     m_statusCodePromise.set_value(SUCCESS_PARTIAL_CONTENT_STATUS_CODE);
     m_contentTypePromise.set_value(TEST_CONTENT_TYPE);
 
@@ -86,7 +86,7 @@ TEST_F(HTTPContentTest, readStatusCodePartialContentSuccess) {
 }
 
 /// Test that isStatusCodeSuccess returns false for @c BAD_STATUS_CODE.
-TEST_F(HTTPContentTest, readStatusCodeNotSuccess) {
+TEST_F(HTTPContentTest, test_readStatusCodeNotSuccess) {
     m_statusCodePromise.set_value(BAD_STATUS_CODE);
     m_contentTypePromise.set_value(TEST_CONTENT_TYPE);
 
@@ -94,7 +94,7 @@ TEST_F(HTTPContentTest, readStatusCodeNotSuccess) {
 }
 
 /// Test that we can use @c getStatusCode() to get the status code after using @c isStatusCodeSuccess().
-TEST_F(HTTPContentTest, readStatusCodeMoreThanOnce) {
+TEST_F(HTTPContentTest, test_readStatusCodeMoreThanOnce) {
     m_statusCodePromise.set_value(BAD_STATUS_CODE);
     m_contentTypePromise.set_value(TEST_CONTENT_TYPE);
 
@@ -104,7 +104,7 @@ TEST_F(HTTPContentTest, readStatusCodeMoreThanOnce) {
 }
 
 /// Test that we can use @c getContentType() to get the status code after using @c isStatusCodeSuccess().
-TEST_F(HTTPContentTest, readContentTypeMoreThanOnce) {
+TEST_F(HTTPContentTest, test_readContentTypeMoreThanOnce) {
     m_statusCodePromise.set_value(BAD_STATUS_CODE);
     m_contentTypePromise.set_value(TEST_CONTENT_TYPE);
 
@@ -113,7 +113,7 @@ TEST_F(HTTPContentTest, readContentTypeMoreThanOnce) {
 }
 
 /// Test that we can retrieve the attachment reader, even if it's nullptr.
-TEST_F(HTTPContentTest, getDataStream) {
+TEST_F(HTTPContentTest, test_getDataStream) {
     EXPECT_EQ(m_httpContent->getDataStream(), nullptr);
 }
 

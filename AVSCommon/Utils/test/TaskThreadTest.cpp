@@ -33,19 +33,19 @@ using namespace utils::test;
 using namespace logger;
 
 /// Test that wait will return if no job has ever started.
-TEST(TaskThreadTest, testWaitForNothing) {
+TEST(TaskThreadTest, test_waitForNothing) {
     TaskThread taskThread;
 }
 
 /// Test that start will fail if function is empty.
-TEST(TaskThreadTest, testStartFailsDueToEmptyFunction) {
+TEST(TaskThreadTest, test_startFailsDueToEmptyFunction) {
     TaskThread taskThread;
     std::function<bool()> emptyFunction;
     EXPECT_FALSE(taskThread.start(emptyFunction));
 }
 
 /// Test that start will trigger the provided job and thread will exit once the job is done and return @c false.
-TEST(TaskThreadTest, testSimpleJob) {
+TEST(TaskThreadTest, test_simpleJob) {
     bool finished = false;
     auto simpleJob = [&finished] {
         finished = true;
@@ -62,7 +62,7 @@ TEST(TaskThreadTest, testSimpleJob) {
 
 /// Test that start will trigger the provided job and it will execute the job multiple times until the job returns
 /// @c false.
-TEST(TaskThreadTest, testSequenceJobs) {
+TEST(TaskThreadTest, test_sequenceJobs) {
     int taskCounter = 0;
     const int runUntil = 10;
     auto jobSequence = [&taskCounter] {
@@ -80,7 +80,7 @@ TEST(TaskThreadTest, testSequenceJobs) {
 
 /// Test that start will replace the existing next function.
 /// - First function increments the counter, while the second will decrement until it reaches 0.
-TEST(TaskThreadTest, testStartNewJob) {
+TEST(TaskThreadTest, test_startNewJob) {
     WaitEvent waitEvent;
     int taskCounter = 0;
     auto increment = [&taskCounter, &waitEvent] {
@@ -102,7 +102,7 @@ TEST(TaskThreadTest, testStartNewJob) {
 }
 
 /// Test that start will fail if called multiple times while waiting for a job.
-TEST(TaskThreadTest, testStartFailDueTooManyThreads) {
+TEST(TaskThreadTest, test_startFailDueTooManyThreads) {
     WaitEvent waitEnqueue, waitStart;
     auto simpleJob = [&waitEnqueue, &waitStart] {
         waitStart.wakeUp();              // Job has started.
@@ -124,7 +124,7 @@ TEST(TaskThreadTest, testStartFailDueTooManyThreads) {
 }
 
 /// Test that threads related to this task thread will always have the same moniker.
-TEST(TaskThreadTest, testMoniker) {
+TEST(TaskThreadTest, test_moniker) {
     WaitEvent waitGetMoniker, waitValidateMoniker;
     std::string moniker;
     auto getMoniker = [&moniker, &waitGetMoniker] {
@@ -148,7 +148,7 @@ TEST(TaskThreadTest, testMoniker) {
 }
 
 /// Test that threads from different @c TaskThreads will have different monikers.
-TEST(TaskThreadTest, testMonikerDifferentObjects) {
+TEST(TaskThreadTest, test_monikerDifferentObjects) {
     WaitEvent waitGetMoniker, waitValidateMoniker;
     std::string moniker;
     auto getMoniker = [&moniker, &waitGetMoniker] {

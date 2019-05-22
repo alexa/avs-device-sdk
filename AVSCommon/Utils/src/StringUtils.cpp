@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -125,6 +125,16 @@ bool stringToInt64(const char* str, int64_t* result) {
 
     *result = static_cast<int64_t>(tempResult);
     return true;
+}
+
+std::string replaceAllSubstring(const std::string& str, const std::string& from, const std::string& to) {
+    size_t pos = 0;
+    std::string subject = str;
+    while ((pos = subject.find(from, pos)) != std::string::npos) {
+        subject.replace(pos, from.length(), to);
+        pos += to.length();
+    }
+    return subject;
 }
 
 }  // namespace string

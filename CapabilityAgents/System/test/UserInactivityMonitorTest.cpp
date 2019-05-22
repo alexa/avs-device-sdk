@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -118,7 +118,7 @@ void UserInactivityMonitorTest::SetUp() {
 /**
  * This case tests if @c UserInactivityMonitor basic create function works properly
  */
-TEST_F(UserInactivityMonitorTest, createSuccessfully) {
+TEST_F(UserInactivityMonitorTest, test_createSuccessfully) {
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);
     EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequestAndReleaseTrigger, Eq(true))));
@@ -133,7 +133,7 @@ TEST_F(UserInactivityMonitorTest, createSuccessfully) {
 /**
  * This case tests if possible @c nullptr parameters passed to @c UserInactivityMonitor::create are handled properly.
  */
-TEST_F(UserInactivityMonitorTest, createWithError) {
+TEST_F(UserInactivityMonitorTest, test_createWithError) {
     ASSERT_EQ(nullptr, UserInactivityMonitor::create(m_mockMessageSender, nullptr));
     ASSERT_EQ(nullptr, UserInactivityMonitor::create(nullptr, m_mockExceptionEncounteredSender));
     ASSERT_EQ(nullptr, UserInactivityMonitor::create(nullptr, nullptr));
@@ -142,7 +142,7 @@ TEST_F(UserInactivityMonitorTest, createWithError) {
 /**
  * This case tests if a directive is handled properly.
  */
-TEST_F(UserInactivityMonitorTest, handleDirectiveProperly) {
+TEST_F(UserInactivityMonitorTest, test_handleDirectiveProperly) {
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);
     std::promise<void> notifyObserverPromise1;
@@ -188,7 +188,7 @@ TEST_F(UserInactivityMonitorTest, handleDirectiveProperly) {
 /**
  * This case tests if multiple requests are being sent up to AVS.
  */
-TEST_F(UserInactivityMonitorTest, sendMultipleReports) {
+TEST_F(UserInactivityMonitorTest, test_sendMultipleReports) {
     InSequence s;
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);
@@ -205,7 +205,7 @@ TEST_F(UserInactivityMonitorTest, sendMultipleReports) {
 /**
  * Verify that timeSinceUserInactivity works as expected.
  */
-TEST_F(UserInactivityMonitorTest, verifyInactivityTime) {
+TEST_F(UserInactivityMonitorTest, test_verifyInactivityTime) {
     auto userInactivityMonitor = UserInactivityMonitor::create(m_mockMessageSender, m_mockExceptionEncounteredSender);
     ASSERT_NE(nullptr, userInactivityMonitor);
 
@@ -223,7 +223,7 @@ TEST_F(UserInactivityMonitorTest, verifyInactivityTime) {
 /**
  * This case tests if multiple requests are being sent up to AVS with a reset during the process.
  */
-TEST_F(UserInactivityMonitorTest, sendMultipleReportsWithReset) {
+TEST_F(UserInactivityMonitorTest, test_sendMultipleReportsWithReset) {
     InSequence s;
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);

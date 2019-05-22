@@ -79,3 +79,15 @@ generate_start_script() {
   ./SampleApp "$OUTPUT_CONFIG_FILE" "$THIRD_PARTY_PATH/alexa-rpi/models" DEBUG9
 EOF
 }
+
+generate_test_script() {
+  cat << EOF > "${TEST_SCRIPT}"
+  echo
+  echo "==============> BUILDING Tests =============="
+  echo
+  mkdir -p "$UNIT_TEST_MODEL_PATH"
+  cp "$UNIT_TEST_MODEL" "$UNIT_TEST_MODEL_PATH"
+  cd $BUILD_PATH
+  make all test -j2
+EOF
+}

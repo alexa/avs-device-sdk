@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ AlexaAuthorizationDelegateTest::~AlexaAuthorizationDelegateTest() {
  * If valid clientID, refreshToken, clientSecret are provided in the AuthDelegate.config file, then AuthDelegate should
  * be able to retrieve the valid refresh token (get authorized).
  */
-TEST_F(AlexaAuthorizationDelegateTest, refreshAuthToken) {
+TEST_F(AlexaAuthorizationDelegateTest, test_refreshAuthToken) {
     auto authDelegateContext = AuthDelegateTestContext::create(g_configPath);
     ASSERT_TRUE(authDelegateContext);
 
@@ -85,7 +85,7 @@ TEST_F(AlexaAuthorizationDelegateTest, refreshAuthToken) {
  * If an invalid client_id is sent to @c LWA, a "InvalidValue" response will be sent back and we should
  * notify the observer of the unrecoverable error.
  */
-TEST_F(AlexaAuthorizationDelegateTest, invalidClientIdWithUnrecoverableError) {
+TEST_F(AlexaAuthorizationDelegateTest, test_invalidClientIdWithUnrecoverableError) {
     auto authDelegateContext =
         AuthDelegateTestContext::create(g_configPath, R"({ "deviceInfo" : { "clientId" : "InvalidClientId" } })");
     ASSERT_TRUE(authDelegateContext);

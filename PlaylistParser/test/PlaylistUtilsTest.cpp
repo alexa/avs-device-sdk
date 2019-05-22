@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ static void verifyGetAbsoluteURLResult(std::string baseURL, std::string relative
     EXPECT_EQ(expected, actual);
 }
 
-TEST(PlaylistUtilsTest, testGetAbsoluteURLFromAbsolutePath) {
+TEST(PlaylistUtilsTest, test_getAbsoluteURLFromAbsolutePath) {
     std::string baseURL("http://a/b/c/d.m3u8");
 
     // Success cases.

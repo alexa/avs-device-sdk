@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,10 +30,10 @@ using namespace avsCommon::avs;
 using namespace avsCommon::utils::json;
 
 /// Flag indicating @c AUDIO medium is used.
-static const BlockingPolicy::Mediums MEDIUM_FLAG_AUDIO{1};
+static const long MEDIUM_FLAG_AUDIO = 1;
 
 /// Flag indicating @c VISUAL medium is used.
-static const BlockingPolicy::Mediums MEDIUM_FLAG_VISUAL{2};
+static const long MEDIUM_FLAG_VISUAL = 2;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("BlockingPolicy");

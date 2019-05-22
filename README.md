@@ -107,12 +107,30 @@ In addition to adopting the [Security Best Practices for Alexa](https://develope
 
 **Note**: Feature enhancements, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
-### v1.12.1 released 04/02/2019:
+### v1.13.0 released 05/22/2019:
+
+**Enhancements**
+
+* When an active Alert moves to the background, the alert now begins after a 10-second delay. Alert loop iteration delays can now no longer last longer than a maximum of 10 seconds, rather than depending on the length of the audio asset.
+* Changed NotificationsSpeaker to use Alerts Volume instead of using the speaker volume.
+* Allow customers to pass in an implementation of InternetConnectionMonitorInterface which will force AVSConnectionManager to reconnect on internet connectivity loss.
+* Added an exponential wait time for retrying transmitting a message via CertifiedSender.
+* When Volume is set to 0 and device is unmuted, volume is bumped up to a non-zero value. When Volume is set to 0 and Alexa talks back to you, volume is bumped up to a non-zero value.
+* Deprecated HttpResponseCodes.h, which is now present only to ensure backward compatibility.
+* The default endpoint for AVS connections has changed.
 
 **Bug Fixes**
 
-* Fixed a bug where the same URL was being requested twice when streaming iHeartRadio. Now, a single request is sent.
-* Corrected pause/resume handling in `ProgressTimer` so that extra `ProgressReportDelayElapsed` events are not sent to AVS.
+* Fixed bug where receiving a Connected = true Property change from BlueZ without UUID information resulted in BlueZBluetoothDevice transitioning to CONNECTED state.
+* Fixed bug where MediaStreamingStateChangedEvent may be sent on non-state related property changes.
+* Added null check to SQLiteStatement::getColumnText.
+* Fixed an issue where database values with unescaped single quotes passed to miscStorage database will fail to be stored. Added a note on the interface that only non-escaped values should be passed.
+* Fixed a loop in audio in live stations based on playlists.
+* Fixed a race condition in TemplateRuntime that may result in a crash.
+* Fixed a race condition where a recognize event due to a EXPECT_SPEECH may end prematurely.
+* Changed the name of Alerts channel to Alert channel within AudioActivityTracker.
+* Prevented STOP Wakeword detections from generating Recognize events.
+* The SQLiteDeviceSettingsStorageTest no longer fails for Android.
 
 **Known Issues**
 
@@ -130,3 +148,5 @@ In addition to adopting the [Security Best Practices for Alexa](https://develope
 * `make integration` is currently not available for Android. In order to run integration tests on Android, you'll need to manually upload the test binary file along with any input file. At that point, the adb can be used to run the integration tests.
 * On Raspberry Pi running Android Things with HDMI output audio, beginning of speech is truncated when Alexa responds to user text-to-speech (TTS).
 * When the sample app is restarted and the network connection is lost, the Reminder TTS message does not play. Instead, the default alarm tone will play twice.
+* ServerDisconnectIntegratonTest tests have been disabled until they can be updated to reflect new service behavior.
+* Devices connected before the Bluetooth CA is initialized are ignored.

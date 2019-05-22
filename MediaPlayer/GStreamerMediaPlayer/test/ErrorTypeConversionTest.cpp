@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ using namespace avsCommon::utils::mediaPlayer;
 /**
  * Test to verify that the ErrorTypes convert to the error strings properly.
  */
-TEST(ErrorTypeConversionTest, ErrorTypeToString) {
+TEST(ErrorTypeConversionTest, test_errorTypeToString) {
     const std::map<ErrorType, std::string> m = {
         {ErrorType::MEDIA_ERROR_UNKNOWN, "MEDIA_ERROR_UNKNOWN"},
         {ErrorType::MEDIA_ERROR_INVALID_REQUEST, "MEDIA_ERROR_INVALID_REQUEST"},
@@ -45,7 +45,7 @@ TEST(ErrorTypeConversionTest, ErrorTypeToString) {
 /**
  * Test to verify that the correct GErrors convert to the proper ErrorType.
  */
-TEST(ErrorTypeConversionTest, GstCoreErrorToErrorType) {
+TEST(ErrorTypeConversionTest, test_gstCoreErrorToErrorType) {
     const std::map<std::pair<gint, bool>, ErrorType> goldStandardMapping = {
         {{GST_CORE_ERROR_FAILED, false}, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR},
         {{GST_CORE_ERROR_FAILED, true}, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR},
@@ -91,7 +91,7 @@ TEST(ErrorTypeConversionTest, GstCoreErrorToErrorType) {
 /**
  * Test to verify that the correct Library GErrors convert to the proper ErrorType.
  */
-TEST(ErrorTypeConversionTest, GstLibraryErrorToErrorType) {
+TEST(ErrorTypeConversionTest, test_gstLibraryErrorToErrorType) {
     const std::map<std::pair<gint, bool>, ErrorType> goldStandardMapping = {
         {{GST_LIBRARY_ERROR_FAILED, false}, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR},
         {{GST_LIBRARY_ERROR_FAILED, true}, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR},
@@ -123,7 +123,7 @@ TEST(ErrorTypeConversionTest, GstLibraryErrorToErrorType) {
 /**
  * Test to verify that the correct Resource GErrors convert to the proper ErrorType.
  */
-TEST(ErrorTypeConversionTest, GstResourceErrorToErrorType) {
+TEST(ErrorTypeConversionTest, test_gstResourceErrorToErrorType) {
     const std::map<std::pair<gint, bool>, ErrorType> goldStandardMapping = {
         {{GST_RESOURCE_ERROR_FAILED, false}, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR},
         {{GST_RESOURCE_ERROR_FAILED, true}, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR},
@@ -174,7 +174,7 @@ TEST(ErrorTypeConversionTest, GstResourceErrorToErrorType) {
 /**
  * Test to verify that the correct Stream GErrors convert to the proper ErrorType.
  */
-TEST(ErrorTypeConversionTest, GstStreamErrorToErrorType) {
+TEST(ErrorTypeConversionTest, test_gstStreamErrorToErrorType) {
     const std::map<std::pair<gint, bool>, ErrorType> goldStandardMapping = {
         {{GST_STREAM_ERROR_FAILED, false}, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR},
         {{GST_STREAM_ERROR_FAILED, true}, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR},

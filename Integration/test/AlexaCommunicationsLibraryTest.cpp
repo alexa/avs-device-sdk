@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -299,7 +299,7 @@ public:
 };
 
 /// Test connecting and disconnecting from AVS.
-TEST_F(AlexaCommunicationsLibraryTest, testConnectAndDisconnect) {
+TEST_F(AlexaCommunicationsLibraryTest, test_connectAndDisconnect) {
     // Connect is called in SetUp and disconnect is called in TearDown. Simply check that we are connected.
     ASSERT_TRUE(m_avsConnectionManager->isConnected());
 }
@@ -311,7 +311,7 @@ TEST_F(AlexaCommunicationsLibraryTest, testConnectAndDisconnect) {
  *
  * @see https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system#synchronizestate
  */
-TEST_F(AlexaCommunicationsLibraryTest, testSendEvent) {
+TEST_F(AlexaCommunicationsLibraryTest, test_sendEvent) {
     sendEvent(
         SYNCHRONIZE_STATE_JSON,
         avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT,
@@ -322,7 +322,7 @@ TEST_F(AlexaCommunicationsLibraryTest, testSendEvent) {
  * Function that tests the behavior of the ACL when an improperly formatted message is sent, expecting the server
  * to return a bad request status.
  */
-TEST_F(AlexaCommunicationsLibraryTest, testSendInvalidEvent) {
+TEST_F(AlexaCommunicationsLibraryTest, test_sendInvalidEvent) {
     sendEvent(
         BAD_SYNCHRONIZE_STATE_JSON,
         avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::BAD_REQUEST,
@@ -337,7 +337,7 @@ TEST_F(AlexaCommunicationsLibraryTest, testSendInvalidEvent) {
  *
  * @see https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechrecognizer#recognize
  */
-TEST_F(AlexaCommunicationsLibraryTest, testSendEventWithAttachment) {
+TEST_F(AlexaCommunicationsLibraryTest, test_sendEventWithAttachment) {
     auto attachmentReader = createAttachmentReader(g_inputPath + "/" + RECOGNIZE_AUDIO_FILE_NAME);
     sendEvent(
         CT_RECOGNIZE_EVENT_JSON,
@@ -354,7 +354,7 @@ TEST_F(AlexaCommunicationsLibraryTest, testSendEventWithAttachment) {
  *
  * @see https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/audioplayer#states
  */
-TEST_F(AlexaCommunicationsLibraryTest, testSendEventAndReceiveDirective) {
+TEST_F(AlexaCommunicationsLibraryTest, test_sendEventAndReceiveDirective) {
     auto attachmentReader = createAttachmentReader(g_inputPath + "/" + RECOGNIZE_AUDIO_FILE_NAME);
     sendEvent(
         CT_RECOGNIZE_EVENT_JSON,
@@ -369,7 +369,7 @@ TEST_F(AlexaCommunicationsLibraryTest, testSendEventAndReceiveDirective) {
 /**
  * Test sending multiple Events in succession and verify that AVS responds to each of them.
  */
-TEST_F(AlexaCommunicationsLibraryTest, testSendEventsSerially) {
+TEST_F(AlexaCommunicationsLibraryTest, test_sendEventsSerially) {
     const int NUMBER_OF_SUCCESSIVE_SENDS = 10;
     for (int i = 0; i < NUMBER_OF_SUCCESSIVE_SENDS; ++i) {
         auto attachmentReader = createAttachmentReader(g_inputPath + "/" + RECOGNIZE_AUDIO_FILE_NAME);
@@ -384,7 +384,7 @@ TEST_F(AlexaCommunicationsLibraryTest, testSendEventsSerially) {
 /**
  * Test sending multiple Events concurrently and verify that AVS responds to each of them.
  */
-TEST_F(AlexaCommunicationsLibraryTest, testSendEventsConcurrently) {
+TEST_F(AlexaCommunicationsLibraryTest, test_sendEventsConcurrently) {
     std::vector<std::future<void>> futures;
 
     for (int i = 0; i < MAX_CONCURRENT_STREAMS; ++i) {
@@ -407,7 +407,7 @@ TEST_F(AlexaCommunicationsLibraryTest, testSendEventsConcurrently) {
  *
  * @see https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechrecognizer#profiles
  */
-TEST_F(AlexaCommunicationsLibraryTest, testReceiveDirectiveOnDownchannel) {
+TEST_F(AlexaCommunicationsLibraryTest, test_receiveDirectiveOnDownchannel) {
     auto attachmentReader = createAttachmentReader(g_inputPath + "/" + SILENCE_AUDIO_FILE_NAME);
     sendEvent(
         NF_RECOGNIZE_EVENT_JSON,
@@ -422,7 +422,7 @@ TEST_F(AlexaCommunicationsLibraryTest, testReceiveDirectiveOnDownchannel) {
 /**
  * Test that a connection to AVS persists between sending Events.
  */
-TEST_F(AlexaCommunicationsLibraryTest, testPersistentConnection) {
+TEST_F(AlexaCommunicationsLibraryTest, test_persistentConnection) {
     auto attachmentReader = createAttachmentReader(g_inputPath + "/" + RECOGNIZE_AUDIO_FILE_NAME);
     sendEvent(
         CT_RECOGNIZE_EVENT_JSON,
@@ -442,7 +442,7 @@ TEST_F(AlexaCommunicationsLibraryTest, testPersistentConnection) {
 /**
  * Test add- and removeConnectionStatuObserver, expecting the observer to be updated only when it is added.
  */
-TEST_F(AlexaCommunicationsLibraryTest, testMultipleConnectionStatusObservers) {
+TEST_F(AlexaCommunicationsLibraryTest, test_multipleConnectionStatusObservers) {
     auto observer = std::make_shared<ConnectionStatusObserver>();
     m_avsConnectionManager->addConnectionStatusObserver(observer);
 

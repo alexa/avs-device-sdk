@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ namespace playlistParser {
 namespace test {
 
 using namespace avsCommon::utils::playlistParser;
+using namespace alexaClientSDK::playlistParser;
 using namespace ::testing;
 
 /// Default encryption info (EncryptionInfo::Method::NONE).
@@ -56,7 +57,7 @@ void matchEncryptionInfo(const EncryptionInfo& lhs, const EncryptionInfo& rhs) {
     EXPECT_EQ(lhs.initVector, rhs.initVector);
 }
 
-TEST(M3UParserTest, testParseKeyNoMethod) {
+TEST(M3UParserTest, test_parseKeyNoMethod) {
     std::string line = "#EXT-X-KEY:";
 
     auto result = parseHLSEncryptionLine(line, "");
@@ -64,7 +65,7 @@ TEST(M3UParserTest, testParseKeyNoMethod) {
     matchEncryptionInfo(noEncryption, result);
 }
 
-TEST(M3UParserTest, testParseKeyMethodNone) {
+TEST(M3UParserTest, test_parseKeyMethodNone) {
     std::string line = "#EXT-X-KEY:METHOD=NONE";
 
     auto result = parseHLSEncryptionLine(line, "");
@@ -72,7 +73,7 @@ TEST(M3UParserTest, testParseKeyMethodNone) {
     matchEncryptionInfo(noEncryption, result);
 }
 
-TEST(M3UParserTest, testParseKeyMissingKeyURL) {
+TEST(M3UParserTest, test_parseKeyMissingKeyURL) {
     std::string line = "#EXT-X-KEY:METHOD=AES-128";
 
     auto result = parseHLSEncryptionLine(line, "");
@@ -80,7 +81,7 @@ TEST(M3UParserTest, testParseKeyMissingKeyURL) {
     matchEncryptionInfo(noEncryption, result);
 }
 
-TEST(M3UParserTest, testParseKeyUnknownMethod) {
+TEST(M3UParserTest, test_parseKeyUnknownMethod) {
     std::string line = "#EXT-X-KEY:METHOD=UNKNOWN";
 
     auto result = parseHLSEncryptionLine(line, "");
@@ -88,7 +89,7 @@ TEST(M3UParserTest, testParseKeyUnknownMethod) {
     matchEncryptionInfo(noEncryption, result);
 }
 
-TEST(M3UParserTest, testParseKeyURLClosingQuote) {
+TEST(M3UParserTest, test_parseKeyURLClosingQuote) {
     std::string line = "#EXT-X-KEY:METHOD=SAMPLE-AES,URI=\"https://www.amazon.com";
 
     auto result = parseHLSEncryptionLine(line, "");
@@ -96,7 +97,7 @@ TEST(M3UParserTest, testParseKeyURLClosingQuote) {
     matchEncryptionInfo(noEncryption, result);
 }
 
-TEST(M3UParserTest, testParseKeyValidURL) {
+TEST(M3UParserTest, test_parseKeyValidURL) {
     std::string line = "#EXT-X-KEY:METHOD=SAMPLE-AES,URI=\"https://www.amazon.com\"";
 
     auto result = parseHLSEncryptionLine(line, "");
@@ -105,7 +106,7 @@ TEST(M3UParserTest, testParseKeyValidURL) {
     matchEncryptionInfo(expected, result);
 }
 
-TEST(M3UParserTest, testParseKeyValidInitVector) {
+TEST(M3UParserTest, test_parseKeyValidInitVector) {
     std::string line =
         "#EXT-X-KEY:METHOD=SAMPLE-AES,IV=0x8e2d35559338d21f2586e79d6cd5c606,URI=\"https://www.amazon.com\"";
 
@@ -116,7 +117,47 @@ TEST(M3UParserTest, testParseKeyValidInitVector) {
     matchEncryptionInfo(expected, result);
 }
 
-TEST(M3UParserTest, testParseKeyEncryptionInfo) {
+TEST(M3UParserTest, test_parseMediaSequence) {
+    std::string line = "#EXT-X-MEDIA-SEQUENCE: 12345";
+
+    auto result = parsePlaylistMediaSequence(line);
+
+    EXPECT_EQ(12345, result);
+}
+
+TEST(M3UParserTest, test_parseMediaSequenceNoSpace) {
+    std::string line = "#EXT-X-MEDIA-SEQUENCE:12345";
+
+    auto result = parsePlaylistMediaSequence(line);
+
+    EXPECT_EQ(12345, result);
+}
+
+TEST(M3UParserTest, test_parseEmptyMediaSequence) {
+    std::string line = "#EXT-X-MEDIA-SEQUENCE:         ";
+
+    auto result = parsePlaylistMediaSequence(line);
+
+    EXPECT_EQ(INVALID_MEDIA_SEQUENCE, result);
+}
+
+TEST(M3UParserTest, test_parseManySpacesMediaSequence) {
+    std::string line = "#EXT-X-MEDIA-SEQUENCE:         12345     ";
+
+    auto result = parsePlaylistMediaSequence(line);
+
+    EXPECT_EQ(12345, result);
+}
+
+TEST(M3UParserTest, test_parseInvalidMediaSequence) {
+    std::string line = "#EXT-X-MEDIA-SEQUENCE: invalid";
+
+    auto result = parsePlaylistMediaSequence(line);
+
+    EXPECT_EQ(INVALID_MEDIA_SEQUENCE, result);
+}
+
+TEST(M3UParserTest, test_parseKeyEncryptionInfo) {
     std::string playlist = EXT_M3U_HEADER + "#EXT-X-KEY:METHOD=SAMPLE-AES,URI=\"https://www.amazon.com\"\n" + MEDIA_URL;
 
     auto m3uContent = parseM3UContent(PLAYLIST_URL, playlist);
@@ -126,7 +167,7 @@ TEST(M3UParserTest, testParseKeyEncryptionInfo) {
     matchEncryptionInfo(expected, m3uContent.entries[0].encryptionInfo);
 }
 
-TEST(M3UParserTest, testParseByteRange) {
+TEST(M3UParserTest, test_parseByteRange) {
     std::string line = "#EXT-X-BYTERANGE:82112@752321";
 
     auto result = parseHLSByteRangeLine(line);
@@ -134,7 +175,7 @@ TEST(M3UParserTest, testParseByteRange) {
     EXPECT_EQ(std::make_tuple(752321, 752321 + 82112 - 1), result);
 }
 
-TEST(M3UParserTest, testParseByteRangeMissingColon) {
+TEST(M3UParserTest, test_parseByteRangeMissingColon) {
     std::string line = "#EXT-X-BYTERANGE";
 
     auto result = parseHLSByteRangeLine(line);
@@ -142,7 +183,7 @@ TEST(M3UParserTest, testParseByteRangeMissingColon) {
     EXPECT_EQ(defaultByteRange, result);
 }
 
-TEST(M3UParserTest, testParseByteRangeMissingAt) {
+TEST(M3UParserTest, test_parseByteRangeMissingAt) {
     std::string line = "#EXT-X-BYTERANGE:1234";
 
     auto result = parseHLSByteRangeLine(line);
@@ -150,7 +191,7 @@ TEST(M3UParserTest, testParseByteRangeMissingAt) {
     EXPECT_EQ(defaultByteRange, result);
 }
 
-TEST(M3UParserTest, testParseByteRangeNonDecimal) {
+TEST(M3UParserTest, test_parseByteRangeNonDecimal) {
     std::string line = "#EXT-X-BYTERANGE:abcd@efgh";
 
     auto result = parseHLSByteRangeLine(line);
@@ -158,7 +199,7 @@ TEST(M3UParserTest, testParseByteRangeNonDecimal) {
     EXPECT_EQ(defaultByteRange, result);
 }
 
-TEST(M3UParserTest, testHLSParseByteRange) {
+TEST(M3UParserTest, test_hLSParseByteRange) {
     std::string playlist = EXT_M3U_HEADER + "#EXT-X-BYTERANGE:82112@752321\n" + MEDIA_URL;
 
     auto m3uContent = parseM3UContent(PLAYLIST_URL, playlist);
@@ -166,7 +207,7 @@ TEST(M3UParserTest, testHLSParseByteRange) {
     EXPECT_EQ(std::make_tuple(752321, 752321 + 82112 - 1), m3uContent.entries[0].byteRange);
 }
 
-TEST(M3UParserTest, testParseMAPMissingURL) {
+TEST(M3UParserTest, test_parseMAPMissingURL) {
     std::string line = "#EXT-X-MAP:";
 
     auto result = parseHLSMapLine(line, "");
@@ -174,7 +215,7 @@ TEST(M3UParserTest, testParseMAPMissingURL) {
     EXPECT_EQ(PlaylistParseResult::ERROR, result.parseResult);
 }
 
-TEST(M3UParserTest, testParseMAPValidURL) {
+TEST(M3UParserTest, test_parseMAPValidURL) {
     std::string line = "#EXT-X-MAP:URI=\"https://www.amazon.com\"";
 
     auto result = parseHLSMapLine(line, "");
@@ -184,7 +225,7 @@ TEST(M3UParserTest, testParseMAPValidURL) {
     EXPECT_EQ(PlaylistEntry::Type::MEDIA_INIT_INFO, result.type);
 }
 
-TEST(M3UParserTest, testParseMAPValidByteRange) {
+TEST(M3UParserTest, test_parseMAPValidByteRange) {
     std::string line = "#EXT-X-MAP:URI=\"https://www.amazon.com\",BYTERANGE=\"1234@5678\"";
 
     auto result = parseHLSMapLine(line, "");
@@ -194,7 +235,7 @@ TEST(M3UParserTest, testParseMAPValidByteRange) {
     EXPECT_EQ(PlaylistEntry::Type::MEDIA_INIT_INFO, result.type);
 }
 
-TEST(M3UParserTest, testHLSParseMAP) {
+TEST(M3UParserTest, test_hLSParseMAP) {
     std::string playlist = EXT_M3U_HEADER + "#EXT-X-MAP:URI=\"https://www.amazon.com\"\n" + MEDIA_URL;
 
     auto m3uContent = parseM3UContent(PLAYLIST_URL, playlist);
@@ -204,7 +245,7 @@ TEST(M3UParserTest, testHLSParseMAP) {
     EXPECT_EQ(PlaylistEntry::Type::MEDIA_INIT_INFO, entry.type);
 }
 
-TEST(M3UParserTest, testMasterPlaylist) {
+TEST(M3UParserTest, test_masterPlaylist) {
     std::string playlist = EXT_M3U_HEADER + "#EXT-X-STREAM-INF\n" + PLAYLIST_URL;
 
     auto m3uContent = parseM3UContent(MASTER_PLAYLIST_URL, playlist);

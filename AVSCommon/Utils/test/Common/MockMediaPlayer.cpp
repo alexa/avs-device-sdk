@@ -69,6 +69,10 @@ void MockMediaPlayer::setObserver(std::shared_ptr<MediaPlayerObserverInterface> 
     m_playerObserver = playerObserver;
 }
 
+std::shared_ptr<MediaPlayerObserverInterface> MockMediaPlayer::getObserver() const {
+    return m_playerObserver;
+}
+
 void MockMediaPlayer::doShutdown() {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_playerObserver.reset();

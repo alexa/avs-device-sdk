@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,35 +29,35 @@ class NormalizerTest : public ::testing::Test {};
 /**
  * Test normalize with a nullptr.
  */
-TEST_F(NormalizerTest, testNormalizeNullResult) {
+TEST_F(NormalizerTest, test_normalizeNullResult) {
     ASSERT_FALSE(Normalizer::create(0, 1, 0, 1)->normalize(1, nullptr));
 }
 
 /**
  * Test create with a source min larger than source max.
  */
-TEST_F(NormalizerTest, testCreateSourceMinGreaterThanMax) {
+TEST_F(NormalizerTest, test_createSourceMinGreaterThanMax) {
     ASSERT_EQ(Normalizer::create(100, 0, 0, 1), nullptr);
 }
 
 /**
  * Test create with a source min equal to source max.
  */
-TEST_F(NormalizerTest, testCreateSourceMinEqualToMax) {
+TEST_F(NormalizerTest, test_createSourceMinEqualToMax) {
     ASSERT_EQ(Normalizer::create(0, 0, 0, 1), nullptr);
 }
 
 /**
  * Test create with a normalized min larger than normalized max.
  */
-TEST_F(NormalizerTest, testCreateNormalizeMinGreaterThanMax) {
+TEST_F(NormalizerTest, test_createNormalizeMinGreaterThanMax) {
     ASSERT_EQ(Normalizer::create(0, 1, 100, 1), nullptr);
 }
 
 /**
  * Test normalize with a normalized min equal to normalized max.
  */
-TEST_F(NormalizerTest, testNormalizeNormalizedMinEqualToMax) {
+TEST_F(NormalizerTest, test_normalizeNormalizedMinEqualToMax) {
     double result;
     ASSERT_TRUE(Normalizer::create(0, 10, 1, 1)->normalize(2, &result));
     ASSERT_EQ(result, 1);
@@ -66,7 +66,7 @@ TEST_F(NormalizerTest, testNormalizeNormalizedMinEqualToMax) {
 /**
  * Test normalize with an input outside the source bounds.
  */
-TEST_F(NormalizerTest, testNormalizeInputOutsideSourceBounds) {
+TEST_F(NormalizerTest, test_normalizeInputOutsideSourceBounds) {
     double result;
     ASSERT_FALSE(Normalizer::create(0, 1, 0, 1)->normalize(2, &result));
 }
@@ -74,7 +74,7 @@ TEST_F(NormalizerTest, testNormalizeInputOutsideSourceBounds) {
 /**
  * Test normalizing to the same range.
  */
-TEST_F(NormalizerTest, testNormalizeSameScale) {
+TEST_F(NormalizerTest, test_normalizeSameScale) {
     double result;
     ASSERT_TRUE(Normalizer::create(0, 2, 0, 2)->normalize(1, &result));
     ASSERT_EQ(result, 1);
@@ -83,7 +83,7 @@ TEST_F(NormalizerTest, testNormalizeSameScale) {
 /**
  * Test normalizing to a smaller range.
  */
-TEST_F(NormalizerTest, testNormalizeScaleDown) {
+TEST_F(NormalizerTest, test_normalizeScaleDown) {
     double result;
     ASSERT_TRUE(Normalizer::create(0, 100, 0, 10)->normalize(50, &result));
     ASSERT_EQ(result, 5);
@@ -92,7 +92,7 @@ TEST_F(NormalizerTest, testNormalizeScaleDown) {
 /**
  * Test normalizing to a larger range.
  */
-TEST_F(NormalizerTest, testNormalizeScaleUp) {
+TEST_F(NormalizerTest, test_normalizeScaleUp) {
     double result;
     ASSERT_TRUE(Normalizer::create(0, 10, 0, 100)->normalize(5, &result));
     ASSERT_EQ(result, 50);
@@ -101,7 +101,7 @@ TEST_F(NormalizerTest, testNormalizeScaleUp) {
 /**
  * Test normalizing to a negative range.
  */
-TEST_F(NormalizerTest, testNormalizeNegativeRange) {
+TEST_F(NormalizerTest, test_normalizeNegativeRange) {
     double result;
     ASSERT_TRUE(Normalizer::create(0, 10, -10, 0)->normalize(4, &result));
     ASSERT_EQ(result, -6);
@@ -110,7 +110,7 @@ TEST_F(NormalizerTest, testNormalizeNegativeRange) {
 /**
  * Test where source min != normalize min.
  */
-TEST_F(NormalizerTest, testNormalizeDifferentMinimums) {
+TEST_F(NormalizerTest, test_normalizeDifferentMinimums) {
     double result;
     ASSERT_TRUE(Normalizer::create(1, 5, 0, 100)->normalize(2, &result));
     ASSERT_EQ(result, 25);
@@ -119,7 +119,7 @@ TEST_F(NormalizerTest, testNormalizeDifferentMinimums) {
 /**
  * Test where result is a non-integer.
  */
-TEST_F(NormalizerTest, testNonInteger) {
+TEST_F(NormalizerTest, test_nonInteger) {
     double result;
     ASSERT_TRUE(Normalizer::create(0, 2, 0, 3)->normalize(1, &result));
     ASSERT_EQ(result, 1.5);

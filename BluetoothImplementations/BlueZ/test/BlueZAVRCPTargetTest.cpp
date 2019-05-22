@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -47,36 +47,36 @@ void BlueZAVRCPTargetTest::SetUp() {
 }
 
 /// Test create() with a null proxy. Should return nullptr.
-TEST_F(BlueZAVRCPTargetTest, createNullFails) {
+TEST_F(BlueZAVRCPTargetTest, test_createNullFails) {
     ASSERT_THAT(BlueZAVRCPTarget::create(nullptr), IsNull());
 }
 
 /// Test create() and expect success.
-TEST_F(BlueZAVRCPTargetTest, createSucceeds) {
+TEST_F(BlueZAVRCPTargetTest, test_createSucceeds) {
     auto proxy = std::make_shared<MockDBusProxy>();
     ASSERT_THAT(BlueZAVRCPTarget::create(proxy), NotNull());
 }
 
 /// Test that play() calls the correct method.
-TEST_F(BlueZAVRCPTargetTest, playSuceeds) {
+TEST_F(BlueZAVRCPTargetTest, test_playSuceeds) {
     EXPECT_CALL(*m_mockProxy, callMethod("Play", _, _)).Times(1);
     m_avrcpTarget->play();
 }
 
 /// Test that pause() calls the correct method.
-TEST_F(BlueZAVRCPTargetTest, pauseSuceeds) {
+TEST_F(BlueZAVRCPTargetTest, test_pauseSuceeds) {
     EXPECT_CALL(*m_mockProxy, callMethod("Pause", _, _)).Times(1);
     m_avrcpTarget->pause();
 }
 
 /// Test that next() calls the correct method.
-TEST_F(BlueZAVRCPTargetTest, nextSuceeds) {
+TEST_F(BlueZAVRCPTargetTest, test_nextSuceeds) {
     EXPECT_CALL(*m_mockProxy, callMethod("Next", _, _)).Times(1);
     m_avrcpTarget->next();
 }
 
 /// Test that previous() calls the correct method.
-TEST_F(BlueZAVRCPTargetTest, previousSuceeds) {
+TEST_F(BlueZAVRCPTargetTest, test_previousSuceeds) {
     EXPECT_CALL(*m_mockProxy, callMethod("Previous", _, _)).Times(1);
     m_avrcpTarget->previous();
 }

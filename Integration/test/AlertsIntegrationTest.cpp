@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -584,7 +584,7 @@ protected:
  *
  * Set a 5 second timer, ensure it goes off, then use local stop and make sure the timer is stopped.
  */
-TEST_F(AlertsTest, handleOneTimerWithLocalStop) {
+TEST_F(AlertsTest, test_handleOneTimerWithLocalStop) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -634,7 +634,7 @@ TEST_F(AlertsTest, handleOneTimerWithLocalStop) {
  *
  * Set two second timer, ensure they go off, then stop both timers.
  */
-TEST_F(AlertsTest, handleMultipleTimersWithLocalStop) {
+TEST_F(AlertsTest, test_handleMultipleTimersWithLocalStop) {
     // Write audio to SDS saying "Set a timer for 15 seconds".
     sendAudioFileAsRecognize(RECOGNIZE_VERY_LONG_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -731,7 +731,7 @@ TEST_F(AlertsTest, handleMultipleTimersWithLocalStop) {
  * Set a 5 second timer, ensure it goes off, then have a test client acquire the Alerts channel. Ensure that the alert
  * is stopped.
  */
-TEST_F(AlertsTest, stealChannelFromActiveAlert) {
+TEST_F(AlertsTest, test_stealChannelFromActiveAlert) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -761,7 +761,7 @@ TEST_F(AlertsTest, stealChannelFromActiveAlert) {
 
     // Steal the alerts channel.
     ASSERT_TRUE(
-        m_focusManager->acquireChannel(FocusManager::ALERTS_CHANNEL_NAME, m_testDialogClient, ALERTS_ACTIVITY_ID));
+        m_focusManager->acquireChannel(FocusManager::ALERT_CHANNEL_NAME, m_testDialogClient, ALERTS_ACTIVITY_ID));
 
     // AlertStopped Event is sent.
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -770,7 +770,7 @@ TEST_F(AlertsTest, stealChannelFromActiveAlert) {
     ASSERT_EQ(m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state, AlertObserverInterface::State::STOPPED);
 
     // Release the alerts channel.
-    m_focusManager->releaseChannel(FocusManager::ALERTS_CHANNEL_NAME, m_testDialogClient);
+    m_focusManager->releaseChannel(FocusManager::ALERT_CHANNEL_NAME, m_testDialogClient);
 
     // Low priority Test client gets back permission to the test channel.
     EXPECT_EQ(
@@ -784,7 +784,7 @@ TEST_F(AlertsTest, stealChannelFromActiveAlert) {
  * Set a 5 second timer, then call disconnect, wait for the alert to become active and reconnect.
  * Locally stop the alert and ensure AlertStopped is sent.
  */
-TEST_F(AlertsTest, DisconnectAndReconnectBeforeLocalStop) {
+TEST_F(AlertsTest, test_disconnectAndReconnectBeforeLocalStop) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -844,7 +844,7 @@ TEST_F(AlertsTest, DisconnectAndReconnectBeforeLocalStop) {
  * Set a 5 second timer, then call disconnect then reconnect. Once the alert is active, locally stop the alert
  * and ensure AlertStopped is sent.
  */
-TEST_F(AlertsTest, DisconnectAndReconnect) {
+TEST_F(AlertsTest, test_disconnectAndReconnect) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -892,7 +892,7 @@ TEST_F(AlertsTest, DisconnectAndReconnect) {
  * Set a 5 second timer, then call removeAllAlerts. Wait and ensure that the alert does not become active and no
  * events are sent for it.
  */
-TEST_F(AlertsTest, RemoveAllAlertsBeforeAlertIsActive) {
+TEST_F(AlertsTest, test_removeAllAlertsBeforeAlertIsActive) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -942,7 +942,7 @@ TEST_F(AlertsTest, RemoveAllAlertsBeforeAlertIsActive) {
  * Set a 10 second timer, then send audio of "Cancel the timer" as a recognize event. Ensure the timer does not go off
  * and the DeleteAlertSucceeded event is sent.
  */
-TEST_F(AlertsTest, cancelAlertBeforeItIsActive) {
+TEST_F(AlertsTest, test_cancelAlertBeforeItIsActive) {
     // Write audio to SDS saying "Set a timer for 10 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_LONG_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -994,7 +994,7 @@ TEST_F(AlertsTest, cancelAlertBeforeItIsActive) {
  * Close the storage before asking for a 5 second timer. SetAlertFailed and then DeleteAlertSucceeded events are then
  * sent. Deletion succeeds because missing alert is not treated as an error.
  */
-TEST_F(AlertsTest, RemoveStorageBeforeAlarmIsSet) {
+TEST_F(AlertsTest, test_removeStorageBeforeAlarmIsSet) {
     m_alertStorage->close();
 
     // Write audio to SDS saying "Set a timer for 5 seconds"
@@ -1045,9 +1045,12 @@ TEST_F(AlertsTest, RemoveStorageBeforeAlarmIsSet) {
  * Test when an alert is active and the user barges in and gets one speak in response
  *
  * Set a 5 second timer and wait until it is active. Send a recognize event asking for joke and see that the alert goes
- * into the background. When the speak is complete, the alert is forgrounded and can be locally stopped.
+ * into the background. When the speak is complete, the alert is foregrounded and can be locally stopped.
+ *
+ * Note: Disabling test as sometimes "tell me a joke" causes multiple speech started and speech finished events to
+ *       be sent based on user config making this integration test unstable.
  */
-TEST_F(AlertsTest, UserShortUnrelatedBargeInOnActiveTimer) {
+TEST_F(AlertsTest, DISABLED_testTimer_userShortUnrelatedBargeInOnActive) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -1115,7 +1118,7 @@ TEST_F(AlertsTest, UserShortUnrelatedBargeInOnActiveTimer) {
  * Set a 5 second timer and wait until it is active. Send a recognize event asking "what's up" and see that the alert
  * goes into the background. When all the speaks are complete, the alert is forgrounded and can be locally stopped.
  */
-TEST_F(AlertsTest, DISABLED_UserLongUnrelatedBargeInOnActiveTimer) {
+TEST_F(AlertsTest, DISABLED_testTimer_UserLongUnrelatedBargeInOnActive) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -1200,7 +1203,7 @@ TEST_F(AlertsTest, DISABLED_UserLongUnrelatedBargeInOnActiveTimer) {
  * the alert has become active in the background. Once the alert is active, call stopCapture and see that is is in the
  * foreground before locally stopping it.
  */
-TEST_F(AlertsTest, UserSpeakingWhenAlertShouldBeActive) {
+TEST_F(AlertsTest, test_userSpeakingWhenAlertShouldBeActive) {
     // Write audio to SDS saying "Set a timer for 10 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_LONG_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -1248,12 +1251,15 @@ TEST_F(AlertsTest, UserSpeakingWhenAlertShouldBeActive) {
     sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendStartedParams, NAME_SPEECH_STARTED));
 
-    sendFinishedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     if (getSentEventName(sendParams) == NAME_SPEECH_FINISHED) {
+        ASSERT_TRUE(checkSentEventName(sendParams, NAME_SPEECH_FINISHED));
         sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_ENTERED_FOREGROUND));
     } else {
-        ASSERT_TRUE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED));
+        ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_ENTERED_FOREGROUND));
+        sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        ASSERT_TRUE(checkSentEventName(sendParams, NAME_SPEECH_FINISHED));
     }
 
     std::this_thread::sleep_for(std::chrono::milliseconds(800));
@@ -1267,7 +1273,7 @@ TEST_F(AlertsTest, UserSpeakingWhenAlertShouldBeActive) {
     ASSERT_TRUE(focusChanged);
 }
 
-TEST_F(AlertsTest, handleOneTimerWithVocalStop) {
+TEST_F(AlertsTest, test_handleOneTimerWithVocalStop) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);

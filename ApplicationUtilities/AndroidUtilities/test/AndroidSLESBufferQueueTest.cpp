@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -178,7 +178,7 @@ std::unique_ptr<AndroidSLESBufferQueue> AndroidSLESBufferQueueTest::createBuffer
 /**
  * Test successful creation.
  */
-TEST_F(AndroidSLESBufferQueueTest, TestRegisterCallbackSucceeded) {
+TEST_F(AndroidSLESBufferQueueTest, test_registerCallbackSucceeded) {
     auto buffer = createBuffer();
     EXPECT_NE(buffer, nullptr);
 }
@@ -186,7 +186,7 @@ TEST_F(AndroidSLESBufferQueueTest, TestRegisterCallbackSucceeded) {
 /**
  * Test the callback register failure.
  */
-TEST_F(AndroidSLESBufferQueueTest, TestRegisterCallbackFailed) {
+TEST_F(AndroidSLESBufferQueueTest, test_registerCallbackFailed) {
     m_queueMock->get().RegisterCallback = mockRegisterCallbackFailure;
     std::shared_ptr<AndroidSLESObject> slObject = AndroidSLESObject::create(m_recorderMock->getObject());
     auto buffer = AndroidSLESBufferQueue::create(
@@ -197,7 +197,7 @@ TEST_F(AndroidSLESBufferQueueTest, TestRegisterCallbackFailed) {
 /**
  * Test enqueue succeeded.
  */
-TEST_F(AndroidSLESBufferQueueTest, TestEnqueueOK) {
+TEST_F(AndroidSLESBufferQueueTest, test_enqueueOK) {
     m_queueMock->get().Enqueue = mockEnqueue;
     m_queueMock->get().GetState = mockGetState;
     auto buffer = createBuffer();
@@ -210,7 +210,7 @@ TEST_F(AndroidSLESBufferQueueTest, TestEnqueueOK) {
 /**
  * Test enqueue failed.
  */
-TEST_F(AndroidSLESBufferQueueTest, TestEnqueueFailed) {
+TEST_F(AndroidSLESBufferQueueTest, test_enqueueFailed) {
     m_queueMock->get().Enqueue = mockEnqueueFailed;
     m_queueMock->get().GetState = mockGetState;
     auto buffer = createBuffer();
@@ -222,7 +222,7 @@ TEST_F(AndroidSLESBufferQueueTest, TestEnqueueFailed) {
 /**
  * Test enqueue succeeded to enqueue a few buffers.
  */
-TEST_F(AndroidSLESBufferQueueTest, TestEnqueuePartial) {
+TEST_F(AndroidSLESBufferQueueTest, test_enqueuePartial) {
     m_queueMock->get().Enqueue = mockEnqueueHalf;
     m_queueMock->get().GetState = mockGetState;
     auto buffer = createBuffer();
@@ -235,7 +235,7 @@ TEST_F(AndroidSLESBufferQueueTest, TestEnqueuePartial) {
 /**
  * Test onBufferCompleted.
  */
-TEST_F(AndroidSLESBufferQueueTest, TestOnBufferCompleted) {
+TEST_F(AndroidSLESBufferQueueTest, test_onBufferCompleted) {
     AndroidSLESBufferQueueTest::m_count = NUMBER_OF_BUFFERS - 1;
     m_queueMock->get().Enqueue = mockEnqueue;
     auto buffer = createBuffer();

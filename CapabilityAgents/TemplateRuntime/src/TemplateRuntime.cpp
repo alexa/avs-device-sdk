@@ -450,6 +450,11 @@ void TemplateRuntime::executeAudioPlayerInfoUpdates(avsCommon::avs::PlayerActivi
             executeAudioPlayerStartTimer(state);
         }
         executeDisplayCardEvent(m_audioItemInExecution.directive);
+    } else {
+        // The RenderTemplateCard is cleared before it's displayed, so we should release the focus.
+        if (TemplateRuntime::State::ACQUIRING == m_state) {
+            m_state = TemplateRuntime::State::RELEASING;
+        }
     }
 }
 
@@ -465,12 +470,18 @@ void TemplateRuntime::executeAudioPlayerStartTimer(avsCommon::avs::PlayerActivit
 
 void TemplateRuntime::executeRenderPlayerInfoCallbacks(bool isClearCard) {
     ACSDK_DEBUG3(LX("executeRenderPlayerInfoCallbacks").d("isClearCard", isClearCard ? "True" : "False"));
-    for (auto& observer : m_observers) {
-        if (isClearCard) {
+    if (isClearCard) {
+        for (auto& observer : m_observers) {
             observer->clearPlayerInfoCard();
-        } else {
-            observer->renderPlayerInfoCard(
-                m_audioItemInExecution.directive->directive->getPayload(), m_audioPlayerInfo, m_focus);
+        }
+    } else {
+        if (!m_audioItemInExecution.directive) {
+            ACSDK_ERROR(LX("executeRenderPlayerInfoCallbacksFao;ed").d("reason", "nullAudioItemInExecution"));
+            return;
+        }
+        auto payload = m_audioItemInExecution.directive->directive->getPayload();
+        for (auto& observer : m_observers) {
+            observer->renderPlayerInfoCard(payload, m_audioPlayerInfo, m_focus);
         }
     }
 }
@@ -647,7 +658,8 @@ void TemplateRuntime::executeOnFocusChangedEvent(avsCommon::avs::FocusState newF
             switch (newFocus) {
                 case FocusState::FOREGROUND:
                 case FocusState::BACKGROUND:
-                    weirdFocusState = true;
+                    m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
+                    nextState = TemplateRuntime::State::RELEASING;
                     break;
                 case FocusState::NONE:
                     nextState = TemplateRuntime::State::IDLE;

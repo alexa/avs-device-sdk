@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -465,7 +465,7 @@ void CapabilityAgentTest::testBuildJsonEventString(
  * Call the @c handleDirectiveImmediately from the @c CapabilityAgent base class with a directive as the argument.
  * Expect the @c handleDirectiveImmediately with the argument of @c DirectiveAndResultInterface will be called.
  */
-TEST_F(CapabilityAgentTest, testCallToHandleImmediately) {
+TEST_F(CapabilityAgentTest, test_callToHandleImmediately) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -479,7 +479,7 @@ TEST_F(CapabilityAgentTest, testCallToHandleImmediately) {
  * Call the @c preHandleDirective from the @c CapabilityAgent base class with a directive as the argument.
  * Expect the @c preHandleDirective with the argument of @c DirectiveAndResultInterface will be called.
  */
-TEST_F(CapabilityAgentTest, testCallToPrehandleDirective) {
+TEST_F(CapabilityAgentTest, test_callToPrehandleDirective) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -494,7 +494,7 @@ TEST_F(CapabilityAgentTest, testCallToPrehandleDirective) {
  * Call the @c handleDirective from the @c CapabilityAgent base class with a directive as the argument.
  * Expect the @c handleDirective with the argument of @c DirectiveAndResultInterface will be called.
  */
-TEST_F(CapabilityAgentTest, testCallToHandleDirective) {
+TEST_F(CapabilityAgentTest, test_callToHandleDirective) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -510,7 +510,7 @@ TEST_F(CapabilityAgentTest, testCallToHandleDirective) {
  * Call the @c handleDirective from the @c CapabilityAgent base class with a directive as the argument. No
  * @c preHandleDirective is called before handleDirective. Expect @c handleDirective to return @c false.
  */
-TEST_F(CapabilityAgentTest, testCallToHandleDirectiveWithNoPrehandle) {
+TEST_F(CapabilityAgentTest, test_callToHandleDirectiveWithNoPrehandle) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -522,7 +522,7 @@ TEST_F(CapabilityAgentTest, testCallToHandleDirectiveWithNoPrehandle) {
  * Call the @c cancelDirective from the @c CapabilityAgent base class with a directive as the argument.
  * Expect the @c cancelDirective with the argument of @c DirectiveAndResultInterface will be called.
  */
-TEST_F(CapabilityAgentTest, testCallToCancelDirective) {
+TEST_F(CapabilityAgentTest, test_callToCancelDirective) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -539,7 +539,7 @@ TEST_F(CapabilityAgentTest, testCallToCancelDirective) {
  * @c preHandleDirective is called before handleDirective. Expect the @c cancelDirective with the argument of
  * @c DirectiveAndResultInterface will not be called.
  */
-TEST_F(CapabilityAgentTest, testCallToCancelDirectiveWithNoPrehandle) {
+TEST_F(CapabilityAgentTest, test_callToCancelDirectiveWithNoPrehandle) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -553,7 +553,7 @@ TEST_F(CapabilityAgentTest, testCallToCancelDirectiveWithNoPrehandle) {
  * corresponding @c testEvent. The messageId will not match since it is a random number. Verify the string before and
  * after the messageId.
  */
-TEST_F(CapabilityAgentTest, testWithDialogIdAndContext) {
+TEST_F(CapabilityAgentTest, test_withDialogIdAndContext) {
     testBuildJsonEventString(testEventWithDialogReqIdAndContext, true);
 }
 
@@ -562,7 +562,7 @@ TEST_F(CapabilityAgentTest, testWithDialogIdAndContext) {
  * matches the corresponding @c testEvent. The messageId will not match since it is a random number. Verify the string
  * before and after the messageId.
  */
-TEST_F(CapabilityAgentTest, testWithDialogIdAndNoContext) {
+TEST_F(CapabilityAgentTest, test_withDialogIdAndNoContext) {
     testBuildJsonEventString(testEventWithDialogReqIdNoContext, true);
 }
 
@@ -571,7 +571,7 @@ TEST_F(CapabilityAgentTest, testWithDialogIdAndNoContext) {
  * that matches the corresponding @c testEvent. The messageId will not match since it is a random number.
  * Verify the string before and after the messageId.
  */
-TEST_F(CapabilityAgentTest, testWithoutDialogIdOrContext) {
+TEST_F(CapabilityAgentTest, test_withoutDialogIdOrContext) {
     testBuildJsonEventString(testEventWithoutDialogReqIdOrContext, false);
 }
 
@@ -580,7 +580,7 @@ TEST_F(CapabilityAgentTest, testWithoutDialogIdOrContext) {
  * string that matches the corresponding @c testEvent. The messageId will not match since it is a random number.
  * Verify the string before and after the messageId.
  */
-TEST_F(CapabilityAgentTest, testWithContextAndNoDialogId) {
+TEST_F(CapabilityAgentTest, test_withContextAndNoDialogId) {
     testBuildJsonEventString(testEventWithContextAndNoDialogReqId, false);
 }
 
@@ -588,7 +588,7 @@ TEST_F(CapabilityAgentTest, testWithContextAndNoDialogId) {
  * Call sendExceptionEncounteredAndReportFailed with info pointing to null directive. Expect sendExceptionEncountered to
  * not be called. Send again with info pointing to a valid directive. Expect sendExceptionEncountered to be called
  */
-TEST_F(CapabilityAgentTest, testsendExceptionEncounteredWithNullInfo) {
+TEST_F(CapabilityAgentTest, test_sendExceptionEncounteredWithNullInfo) {
     EXPECT_CALL(*(m_exceptionSender.get()), sendExceptionEncountered(_, _, _)).Times(0);
     m_capabilityAgent->testsendExceptionEncounteredAndReportFailed(nullptr, nullptr);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -173,7 +173,7 @@ void NetworkIntegrationTests::deleteDelay() {
 /**
  * Test if connection and disconnection can be established after delay is introduced.
  */
-TEST_F(NetworkIntegrationTests, testConnectAfterSlowConnection) {
+TEST_F(NetworkIntegrationTests, test_connectAfterSlowConnection) {
     addDelay(DELAY_TIME);
     connect();
     disconnect();
@@ -182,7 +182,7 @@ TEST_F(NetworkIntegrationTests, testConnectAfterSlowConnection) {
 /**
  * Establish Connection, and introduce delay and check if @c connectionStatus remains CONNECTED.
  */
-TEST_F(NetworkIntegrationTests, testConnectBeforeSlowConnection) {
+TEST_F(NetworkIntegrationTests, test_connectBeforeSlowConnection) {
     connect();
     addDelay(DELAY_TIME);
     disconnect();
@@ -191,7 +191,7 @@ TEST_F(NetworkIntegrationTests, testConnectBeforeSlowConnection) {
 /**
  * Establish connection, introduce delay and test if connect can be done again.
  */
-TEST_F(NetworkIntegrationTests, testReConnectAfterDelay) {
+TEST_F(NetworkIntegrationTests, test_reConnectAfterDelay) {
     connect();
     addDelay(DELAY_TIME);
     disconnect();
@@ -203,7 +203,7 @@ TEST_F(NetworkIntegrationTests, testReConnectAfterDelay) {
  * Establish connection, introduce a delay, send a message, check if the Status of MessageRequest
  * is SUCCESS.
  */
-TEST_F(NetworkIntegrationTests, testSendEventAfterDelayPass) {
+TEST_F(NetworkIntegrationTests, test_sendEventAfterDelayPass) {
     connect();
     addDelay(DELAY_TIME);
     sendEvent(
@@ -217,7 +217,7 @@ TEST_F(NetworkIntegrationTests, testSendEventAfterDelayPass) {
  * Establish connection, introduce a longer delay time of greater than 30 seconds, send a message,
  * the Status of MessageRequest will be TIMEDOUT.
  */
-TEST_F(NetworkIntegrationTests, testSendEventAfterDelayFails) {
+TEST_F(NetworkIntegrationTests, test_sendEventAfterDelayFails) {
     connect();
     addDelay(LONG_DELAY_TIME);
     sendEvent(

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -247,8 +247,10 @@ void ServerDisconnectIntegrationTest::TearDown() {
 /**
  * Test if server side disconnect occurs by trying to connect to AVS using the same configuration
  * using two different @c AVSConnectionManager.
+ *
+ * @note Disabling this test until it can be updated to reflect server side changes.
  */
-TEST_F(ServerDisconnectIntegrationTest, testConnect) {
+TEST_F(ServerDisconnectIntegrationTest, DISABLED_test_connect) {
     m_firstAvsCommunication->connect();
     ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
         ConnectionStatusObserverInterface::Status::CONNECTED));
@@ -265,8 +267,10 @@ TEST_F(ServerDisconnectIntegrationTest, testConnect) {
 /**
  * Test if server side disconnect occurs by trying to connect to AVS using the same configuration
  * using two different @c AVSConnectionManager and reconnecting one of the connections.
+ *
+ * @note Disabling this test until it can be updated to reflect server side changes.
  */
-TEST_F(ServerDisconnectIntegrationTest, testReConnect) {
+TEST_F(ServerDisconnectIntegrationTest, DISABLED_test_reConnect) {
     m_firstAvsCommunication->connect();
     ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
         ConnectionStatusObserverInterface::Status::CONNECTED));
@@ -293,8 +297,10 @@ TEST_F(ServerDisconnectIntegrationTest, testReConnect) {
 /**
  * Test sending a message while having a server side disconnect. The send fails to return the expected
  * status of SUCCESS.
+ *
+ * @note Disabling this test until it can be updated to reflect server side changes.
  */
-TEST_F(ServerDisconnectIntegrationTest, testSendEvent) {
+TEST_F(ServerDisconnectIntegrationTest, DISABLED_test_sendEvent) {
     m_firstAvsCommunication->connect();
     ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
         ConnectionStatusObserverInterface::Status::CONNECTED));

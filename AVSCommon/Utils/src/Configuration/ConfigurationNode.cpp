@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -191,6 +191,44 @@ std::string ConfigurationNode::serialize() const {
     }
 
     return std::string(bufferData);
+}
+
+ConfigurationNode ConfigurationNode::getArray(const std::string& key) const {
+    if (!*this) {
+        ACSDK_ERROR(LX("getArrayFailed").d("reason", "emptyConfigurationNode"));
+        return ConfigurationNode();
+    }
+    auto it = m_object->FindMember(key.c_str());
+    if (m_object->MemberEnd() == it) {
+        return ConfigurationNode();
+    }
+    if (!it->value.IsArray()) {
+        ACSDK_ERROR(LX("getArrayFailed").d("reason", "notAnArray"));
+        return ConfigurationNode();
+    }
+    return ConfigurationNode(&it->value);
+}
+
+std::size_t ConfigurationNode::getArraySize() const {
+    if (!*this) {
+        ACSDK_ERROR(LX("getArraySizeFailed").d("reason", "emptyConfigurationNode"));
+        return 0;
+    }
+    if (!m_object->IsArray()) {
+        ACSDK_ERROR(LX("getArraySizeFailed").d("reason", "notAnArray"));
+        return 0;
+    }
+    return m_object->Size();
+}
+
+ConfigurationNode ConfigurationNode::operator[](const std::size_t index) const {
+    auto size = getArraySize();
+    if (index >= size) {
+        ACSDK_ERROR(LX("operator[]Failed").d("reason", "indexOutOfRange").d("size", size).d("index", index));
+        return ConfigurationNode();
+    }
+    const rapidjson::Value& objectRef = *m_object;
+    return ConfigurationNode(&objectRef[index]);
 }
 
 }  // namespace configuration

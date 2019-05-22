@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -206,20 +206,20 @@ protected:
 };
 
 /// Test create with null factory.
-TEST_F(AndroidSLESMediaPlayerTest, testCreateNullFactory) {
+TEST_F(AndroidSLESMediaPlayerTest, test_createNullFactory) {
     auto player = AndroidSLESMediaPlayer::create(nullptr, m_engine, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, false);
     EXPECT_EQ(player, nullptr);
 }
 
 /// Test create with null engine.
-TEST_F(AndroidSLESMediaPlayerTest, testCreateNullEngine) {
+TEST_F(AndroidSLESMediaPlayerTest, test_createNullEngine) {
     auto factory = std::make_shared<MockContentFetcherFactory>();
     auto player = AndroidSLESMediaPlayer::create(factory, nullptr, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, false);
     EXPECT_EQ(player, nullptr);
 }
 
 /// Test buffer queue with media player.
-TEST_F(AndroidSLESMediaPlayerTest, testBQMediaPlayer) {
+TEST_F(AndroidSLESMediaPlayerTest, test_bQMediaPlayer) {
     auto id = m_player->setSource(m_reader, nullptr);
 
     WaitEvent finishedEvent;
@@ -233,7 +233,7 @@ TEST_F(AndroidSLESMediaPlayerTest, testBQMediaPlayer) {
 }
 
 /// Test buffer queue with media player and raw file.
-TEST_F(AndroidSLESMediaPlayerTest, testBQRawMediaPlayer) {
+TEST_F(AndroidSLESMediaPlayerTest, test_bQRawMediaPlayer) {
     auto format = avsCommon::utils::AudioFormat{.dataSigned = true,
                                                 .numChannels = 2,
                                                 .sampleSizeInBits = 16,
@@ -253,7 +253,7 @@ TEST_F(AndroidSLESMediaPlayerTest, testBQRawMediaPlayer) {
 }
 
 /// Test that media is played correct even if a timeout happens in the first read.
-TEST_F(AndroidSLESMediaPlayerTest, testFirstReadTimeout) {
+TEST_F(AndroidSLESMediaPlayerTest, test_firstReadTimeout) {
     // This read iteration indicates the first read call.
     static const ssize_t firstIteration = 0;
     m_reader = std::make_shared<MockAttachmentReader>(MP3_INPUT_CSTR, MP3_INPUT_SIZE, firstIteration);
@@ -270,7 +270,7 @@ TEST_F(AndroidSLESMediaPlayerTest, testFirstReadTimeout) {
 }
 
 /// Test that media is played correct even after a timeout during initialization.
-TEST_F(AndroidSLESMediaPlayerTest, testInitializeTimeout) {
+TEST_F(AndroidSLESMediaPlayerTest, test_initializeTimeout) {
     // This read iteration occurs during decoder initialization.
     static const ssize_t initializationIteration = 1;
     m_reader = std::make_shared<MockAttachmentReader>(MP3_INPUT_CSTR, MP3_INPUT_SIZE, initializationIteration);
@@ -287,7 +287,7 @@ TEST_F(AndroidSLESMediaPlayerTest, testInitializeTimeout) {
 }
 
 /// Test that media is played correct even after a timeout during decoding.
-TEST_F(AndroidSLESMediaPlayerTest, testDecodingTimeout) {
+TEST_F(AndroidSLESMediaPlayerTest, test_decodingTimeout) {
     // This read iteration occurs during decoding state.
     const ssize_t decodeIteration = 10;
     m_reader = std::make_shared<MockAttachmentReader>(MP3_INPUT_CSTR, MP3_INPUT_SIZE, decodeIteration);
@@ -304,7 +304,7 @@ TEST_F(AndroidSLESMediaPlayerTest, testDecodingTimeout) {
 }
 
 /// Test media player and istream source.
-TEST_F(AndroidSLESMediaPlayerTest, testStreamMediaPlayer) {
+TEST_F(AndroidSLESMediaPlayerTest, test_streamMediaPlayer) {
     auto id = m_player->setSource(createStream(), false);
 
     WaitEvent finishedEvent;
@@ -318,7 +318,7 @@ TEST_F(AndroidSLESMediaPlayerTest, testStreamMediaPlayer) {
 }
 
 /// Test media player, istream source and repeat on.
-TEST_F(AndroidSLESMediaPlayerTest, testStreamRepeatMediaPlayer) {
+TEST_F(AndroidSLESMediaPlayerTest, test_streamRepeatMediaPlayer) {
     auto repeat = true;
     auto id = m_player->setSource(createStream(), repeat);
 
@@ -332,7 +332,7 @@ TEST_F(AndroidSLESMediaPlayerTest, testStreamRepeatMediaPlayer) {
 }
 
 /// Test media player pause / resume.
-TEST_F(AndroidSLESMediaPlayerTest, testResumeMediaPlayer) {
+TEST_F(AndroidSLESMediaPlayerTest, test_resumeMediaPlayer) {
     auto repeat = true;
     auto id = m_player->setSource(createStream(), repeat);
 
@@ -354,14 +354,14 @@ TEST_F(AndroidSLESMediaPlayerTest, testResumeMediaPlayer) {
 }
 
 /// Test play fails with wrong id.
-TEST_F(AndroidSLESMediaPlayerTest, testPlayFailed) {
+TEST_F(AndroidSLESMediaPlayerTest, test_playFailed) {
     auto id = m_player->setSource(m_reader, nullptr);
     EXPECT_CALL(*m_observer, onPlaybackStarted(_)).Times(0);
     EXPECT_FALSE(m_player->play(id + 1));
 }
 
 /// Test pause fails with wrong id.
-TEST_F(AndroidSLESMediaPlayerTest, testPauseFailed) {
+TEST_F(AndroidSLESMediaPlayerTest, test_pauseFailed) {
     auto id = m_player->setSource(m_reader, nullptr);
     EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
     EXPECT_CALL(*m_observer, onPlaybackPaused(_)).Times(0);
@@ -371,7 +371,7 @@ TEST_F(AndroidSLESMediaPlayerTest, testPauseFailed) {
 }
 
 /// Test pause fails if not playing.
-TEST_F(AndroidSLESMediaPlayerTest, testPauseFailedNotPlaying) {
+TEST_F(AndroidSLESMediaPlayerTest, test_pauseFailedNotPlaying) {
     auto id = m_player->setSource(m_reader, nullptr);
     EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(0);
     EXPECT_CALL(*m_observer, onPlaybackPaused(_)).Times(0);
@@ -379,7 +379,7 @@ TEST_F(AndroidSLESMediaPlayerTest, testPauseFailedNotPlaying) {
 }
 
 /// Test resume fails after stop.
-TEST_F(AndroidSLESMediaPlayerTest, testResumeFailedAfterStop) {
+TEST_F(AndroidSLESMediaPlayerTest, test_resumeFailedAfterStop) {
     auto id = m_player->setSource(m_reader, nullptr);
     EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
     EXPECT_CALL(*m_observer, onPlaybackStopped(id)).Times(1);
@@ -390,7 +390,7 @@ TEST_F(AndroidSLESMediaPlayerTest, testResumeFailedAfterStop) {
 }
 
 /// Test stop fails with wrong id.
-TEST_F(AndroidSLESMediaPlayerTest, testStopFailed) {
+TEST_F(AndroidSLESMediaPlayerTest, test_stopFailed) {
     auto id = m_player->setSource(m_reader, nullptr);
     auto fakeId = id + 1;
     EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
@@ -402,7 +402,7 @@ TEST_F(AndroidSLESMediaPlayerTest, testStopFailed) {
 }
 
 /// Test get offset.
-TEST_F(AndroidSLESMediaPlayerTest, testGetOffset) {
+TEST_F(AndroidSLESMediaPlayerTest, test_getOffset) {
     auto id = m_player->setSource(m_reader, nullptr);
 
     WaitEvent finishedEvent;

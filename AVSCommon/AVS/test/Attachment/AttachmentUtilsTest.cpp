@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ void AttachmentUtilsTest::SetUp() {
 /**
  * Test read until end of buffer
  */
-TEST_F(AttachmentUtilsTest, testReadCompleteBuffer) {
+TEST_F(AttachmentUtilsTest, test_readCompleteBuffer) {
     char dstBuffer[sampleBuffer.length() + 10];
     memset(dstBuffer, 0, sampleBuffer.length() + 10);
 
@@ -69,7 +69,7 @@ TEST_F(AttachmentUtilsTest, testReadCompleteBuffer) {
 /*
  * Test empty buffer
  */
-TEST_F(AttachmentUtilsTest, testEmptyBuffer) {
+TEST_F(AttachmentUtilsTest, test_emptyBuffer) {
     std::vector<char> emptySrcBuffer;
     auto emptyAttachmentReader = AttachmentUtils::createAttachmentReader(emptySrcBuffer);
     ASSERT_FALSE(emptyAttachmentReader);

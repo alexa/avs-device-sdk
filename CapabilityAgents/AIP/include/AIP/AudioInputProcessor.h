@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -73,6 +73,9 @@ public:
     /// Alias to the @c AudioInputProcessorObserverInterface for brevity.
     using ObserverInterface = avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface;
 
+    /// A special keyword sent by supported wakeword engines for "Alexa, Stop".
+    static constexpr const char* KEYWORD_TEXT_STOP = "STOP";
+
     /// A reserved @c Index value which is considered invalid.
     static const auto INVALID_INDEX = std::numeric_limits<avsCommon::avs::AudioInputStream::Index>::max();
 
@@ -128,6 +131,9 @@ public:
      * called in any state except @c BUSY, however the flags in @c AudioProvider will dictate whether the call is
      * allowed to override an ongoing Recognize Event. If the flags do not allow an override, no event will be sent, no
      * state change will occur, and the function will fail.
+     *
+     * A special case is that the function will also fail if the keyword passed in is equal
+     * to @c KEYWORD_TEXT_STOP. This check is case insensitive.
      *
      * @note This function will not pass the audio stream to @c MessageSenderInterface to start streaming if the the
      *     start index or any subsequent data has already expired from the buffer.  In addition, it is assumed that
@@ -564,6 +570,9 @@ private:
      * before the @c Recognize event.
      */
     std::shared_ptr<avsCommon::avs::MessageRequest> m_recognizeRequest;
+
+    /// The @c MessageRequest for the most recent Recognize event sent with the @c MessageSender.
+    std::shared_ptr<avsCommon::avs::MessageRequest> m_recognizeRequestSent;
 
     /// The current state of the @c AudioInputProcessor.
     ObserverInterface::State m_state;

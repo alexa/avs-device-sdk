@@ -9,6 +9,7 @@
 #
 
 option(COMMS "Enable Alexa Comms (Calling)." OFF)
+option(COMMS_AUDIO_PROXY "Enable Alexa Comms (Calling) using audio proxy." OFF)
 
 if(COMMS)
     if(NOT COMMS_LIB_PATH)
@@ -19,4 +20,9 @@ if(COMMS)
     endif()
     message("Creating ${PROJECT_NAME} with Alexa Comms (Calling)")
     add_definitions(-DENABLE_COMMS)
+
+    if (COMMS_AUDIO_PROXY)
+        message("Creating ${PROJECT_NAME} with Alexa Comms (Calling) using audio proxy")
+        add_definitions(-DENABLE_COMMS_AUDIO_PROXY)
+    endif()
 endif()

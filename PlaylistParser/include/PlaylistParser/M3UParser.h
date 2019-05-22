@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,6 +24,9 @@
 
 namespace alexaClientSDK {
 namespace playlistParser {
+
+/// An invalid media sequence number.
+static constexpr long INVALID_MEDIA_SEQUENCE = -1;
 
 /**
  * A struct to contain next play item.
@@ -67,25 +70,39 @@ struct M3UContent {
      *
      * @param variantURLs The variant URLs pointing to media playlists.
      */
-    M3UContent(const std::vector<std::string> variantURLs);
+    M3UContent(const std::vector<std::string>& variantURLs);
 
     /**
      * Constructor for parsed content of media playlist.
      *
      * @param entries List of PlaylistEntry from parsed content.
      * @param isLive @c true for live HLS playlists.
+     * @param mediaSequence The value of the EXT-X-MEDIA-SEQUENCE tag
      */
-    M3UContent(const std::vector<avsCommon::utils::playlistParser::PlaylistEntry> entries, bool isLive);
+    M3UContent(
+        const std::vector<avsCommon::utils::playlistParser::PlaylistEntry>& entries,
+        bool isLive,
+        long mediaSequence = INVALID_MEDIA_SEQUENCE);
 
     /**
      * Helper method to check if content is a master playlist.
+     *
+     * @return @c true if this represents a master playlist
      */
     bool isMasterPlaylist() const;
+
+    /**
+     * Helper method to tell if the media sequence field is present in the M3U8 document.
+     *
+     * @return @c true if this represents a playlist that has the media sequence field.
+     */
+    bool hasMediaSequence() const;
 
     /**
      * Helper method to check if no URLs are parsed.
      */
     bool empty() const;
+
     /// If this is a master playlist, variantURLs has list of media playlists.
     const std::vector<std::string> variantURLs;
 
@@ -94,6 +111,12 @@ struct M3UContent {
 
     /// If EXT-X-ENDLIST tag exists, isLive is set to false.
     const bool isLive;
+
+    /**
+     * The value of the EXT-X-MEDIA-SEQUENCE tag. The client code is responsible for calling the @c hasMediaSequence()
+     * method to check if the content of this field should be read.
+     */
+    const long mediaSequence;
 };
 
 /**
@@ -124,6 +147,15 @@ M3UContent parseM3UContent(const std::string& playlistURL, const std::string& co
 avsCommon::utils::playlistParser::EncryptionInfo parseHLSEncryptionLine(
     const std::string& line,
     const std::string& baseURL);
+
+/**
+ * Helper method that parses the media sequence field. This method assumes that the line passed begins with the media
+ * sequence tag.
+ *
+ * @param line The line to be parsed.
+ * @return The media sequence value or @c INVALID_MEDIA_SEQUENCE if any issue happened during parsing.
+ */
+long parsePlaylistMediaSequence(const std::string& line);
 
 /**
  * Parses #EXT-X-BYTERANGE line of HLS playlist and returns @c ByteRange.

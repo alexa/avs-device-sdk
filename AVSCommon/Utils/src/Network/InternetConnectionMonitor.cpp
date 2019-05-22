@@ -69,8 +69,6 @@ InternetConnectionMonitor::InternetConnectionMonitor(
         m_period{DEFAULT_TEST_PERIOD},
         m_isShuttingDown{false},
         m_contentFetcherFactory{contentFetcherFactory} {
-    /// Using the test URL as the stream id.
-    m_stream = std::make_shared<avs::attachment::InProcessAttachment>(S3_TEST_URL);
     startMonitoring();
 }
 

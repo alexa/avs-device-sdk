@@ -114,20 +114,6 @@ public:
     };
 
     /**
-     * Signature of functions to create a MediaPlayer.
-     *
-     * @param httpContentFetcherFactory The HTTPContentFetcherFactory to be used while creating the mediaPlayers.
-     * @param type The type of the SpeakerInterface.
-     * @param name The name of the MediaPlayer instance.
-     * @return Return shared pointer to the created MediaPlayer instance.
-     */
-    using MediaPlayerCreateFunction = std::shared_ptr<ApplicationMediaPlayer> (*)(
-        std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
-        bool enableEqualizer,
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
-        std::string name);
-
-    /**
      * Instances of this class register MediaPlayers to be created. Each third-party adapter registers a mediaPlayer
      * for itself by instantiating a static instance of the below class supplying their business name, speaker interface
      * type and creator method.
@@ -138,13 +124,11 @@ public:
          * Register a @c MediaPlayer for use by a music provider adapter.
          *
          * @param playerId The @c playerId identifying the @c ExternalMediaAdapter to register.
-         * @speakerType The SpeakerType of the mediaPlayer to be created.
-         * @param createFunction The function to use to create instances of the mediaPlayer to use for the player.
+         * @param speakerType The SpeakerType of the mediaPlayer to be created.
          */
         MediaPlayerRegistration(
             const std::string& playerId,
-            avsCommon::sdkInterfaces::SpeakerInterface::Type speakerType,
-            MediaPlayerCreateFunction createFunction);
+            avsCommon::sdkInterfaces::SpeakerInterface::Type speakerType);
     };
 
 private:
@@ -171,6 +155,7 @@ private:
      * @param enableEqualizer Flag indicating if equalizer should be enabled for this media player.
      * @param type The type used to categorize the speaker for volume control.
      * @param name The media player instance name used for logging purpose.
+     * @param enableLiveMode Flag, indicating if the player is in live mode.
      * @return A pointer to the @c ApplicationMediaPlayer and to its speaker if it succeeds; otherwise, return @c
      * nullptr.
      */
@@ -179,7 +164,8 @@ private:
         std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
         bool enableEqualizer,
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
-        const std::string& name);
+        const std::string& name,
+        bool enableLiveMode = false);
 
     /// The @c InteractionManager which perform user requests.
     std::shared_ptr<InteractionManager> m_interactionManager;
@@ -216,17 +202,19 @@ private:
     /// The @c MediaPlayer used by @c Bluetooth.
     std::shared_ptr<ApplicationMediaPlayer> m_bluetoothMediaPlayer;
 
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+    /// The @c MediaPlayer used by @c Comms.
+    std::shared_ptr<ApplicationMediaPlayer> m_commsMediaPlayer;
+#endif
+
     /// The @c CapabilitiesDelegate used by the client.
     std::shared_ptr<alexaClientSDK::capabilitiesDelegate::CapabilitiesDelegate> m_capabilitiesDelegate;
 
     /// The @c MediaPlayer used by @c NotificationsCapabilityAgent.
     std::shared_ptr<ApplicationMediaPlayer> m_ringtoneMediaPlayer;
 
-    using SpeakerTypeAndCreateFunc =
-        std::pair<avsCommon::sdkInterfaces::SpeakerInterface::Type, MediaPlayerCreateFunction>;
-
-    /// The singleton map from @c playerId to @c MediaPlayerCreateFunction.
-    static std::unordered_map<std::string, SpeakerTypeAndCreateFunc> m_playerToMediaPlayerMap;
+    /// The singleton map from @c playerId to @c SpeakerInterface::Type.
+    static std::unordered_map<std::string, avsCommon::sdkInterfaces::SpeakerInterface::Type> m_playerToSpeakerTypeMap;
 
     /// The singleton map from @c playerId to @c ExternalMediaAdapter creation functions.
     static capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap m_adapterToCreateFuncMap;
