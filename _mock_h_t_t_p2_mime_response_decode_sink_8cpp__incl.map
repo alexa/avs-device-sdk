@@ -1,13 +1,13 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/Common/MockHTTP2MimeResponseDecodeSink.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/Common/MockHTTP2MimeResponseDecodeSink.cpp">
-<area shape="rect" id="node7" href="$_mock_h_t_t_p2_mime_response_decode_sink_8h.html" title="AVSCommon/Utils/HTTP2\l/MockHTTP2MimeResponseDecode\lSink.h" alt="" coords="778,119,1016,171"/>
-<area shape="rect" id="node22" href="$_utils_2test_2_a_v_s_common_2_utils_2_common_2_common_8h.html" title="AVSCommon/Utils/Common\l/Common.h" alt="" coords="1528,225,1717,264"/>
-<area shape="rect" id="node9" href="$_h_t_t_p2_mime_response_sink_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2MimeResponseSinkInterface.h" alt="" coords="404,319,652,357"/>
-<area shape="rect" id="node17" href="$_mock_h_t_t_p2_mime_request_encode_source_8h.html" title="AVSCommon/Utils/HTTP2\l/MockHTTP2MimeRequestEncode\lSource.h" alt="" coords="981,219,1208,271"/>
-<area shape="rect" id="node13" href="$_h_t_t_p2_response_sink_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseSinkInterface.h" alt="" coords="244,405,460,444"/>
-<area shape="rect" id="node14" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="256,492,448,531"/>
-<area shape="rect" id="node15" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="5,492,232,531"/>
-<area shape="rect" id="node18" href="$_h_t_t_p2_mime_request_source_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2MimeRequestSourceInterface.h" alt="" coords="831,319,1086,357"/>
-<area shape="rect" id="node19" href="$_h_t_t_p2_get_mime_headers_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2GetMimeHeadersResult.h" alt="" coords="1162,405,1382,444"/>
-<area shape="rect" id="node21" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="860,405,1036,444"/>
-<area shape="rect" id="node20" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="1156,492,1332,531"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/Utils/test/Common/MockHTTP2MimeResponseDecodeSink.cpp" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/Utils/test/Common/MockHTTP2MimeResponseDecodeSink.cpp">
+<area shape="rect" id="node7" href="$_mock_h_t_t_p2_mime_response_decode_sink_8h.html" title="AVSCommon/Utils/HTTP2\l/MockHTTP2MimeResponseDecode\lSink.h" alt="" coords="778,132,1016,184"/>
+<area shape="rect" id="node22" href="$_utils_2test_2_a_v_s_common_2_utils_2_common_2_common_8h.html" title="AVSCommon/Utils/Common\l/Common.h" alt="" coords="1528,239,1717,277"/>
+<area shape="rect" id="node9" href="$_h_t_t_p2_mime_response_sink_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2MimeResponseSinkInterface.h" alt="" coords="404,332,652,371"/>
+<area shape="rect" id="node17" href="$_mock_h_t_t_p2_mime_request_encode_source_8h.html" title="AVSCommon/Utils/HTTP2\l/MockHTTP2MimeRequestEncode\lSource.h" alt="" coords="981,232,1208,284"/>
+<area shape="rect" id="node13" href="$_h_t_t_p2_response_sink_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseSinkInterface.h" alt="" coords="244,419,460,457"/>
+<area shape="rect" id="node14" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="256,505,448,544"/>
+<area shape="rect" id="node15" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="5,505,232,544"/>
+<area shape="rect" id="node18" href="$_h_t_t_p2_mime_request_source_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2MimeRequestSourceInterface.h" alt="" coords="831,332,1086,371"/>
+<area shape="rect" id="node19" href="$_h_t_t_p2_get_mime_headers_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2GetMimeHeadersResult.h" alt="" coords="1162,419,1382,457"/>
+<area shape="rect" id="node21" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="860,419,1036,457"/>
+<area shape="rect" id="node20" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="1156,505,1332,544"/>
 </map>

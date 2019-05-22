@@ -1,13 +1,13 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2Connection.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2Connection.h">
-<area shape="rect" id="node7" href="$_h_t_t_p2_connection_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ConnectionInterface.h" alt="" coords="434,119,631,157"/>
-<area shape="rect" id="node24" href="$_curl_multi_handle_wrapper_8h.html" title="CurlMultiHandleWrapper.h" alt="" coords="161,212,338,237"/>
-<area shape="rect" id="node8" href="$_h_t_t_p2_request_config_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestConfig.h" alt="" coords="464,205,641,244"/>
-<area shape="rect" id="node13" href="$_h_t_t_p2_request_type_8h.html" title="HTTP2RequestType.h" alt="" coords="1185,292,1338,317"/>
-<area shape="rect" id="node23" href="$_h_t_t_p2_request_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestInterface.h" alt="" coords="670,205,850,244"/>
-<area shape="rect" id="node15" href="$_h_t_t_p2_request_source_interface_8h.html" title="HTTP2RequestSourceInterface.h" alt="" coords="655,292,874,317"/>
-<area shape="rect" id="node20" href="$_h_t_t_p2_response_sink_interface_8h.html" title="HTTP2ResponseSinkInterface.h" alt="" coords="949,292,1161,317"/>
-<area shape="rect" id="node18" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="535,365,711,404"/>
-<area shape="rect" id="node19" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="535,452,711,491"/>
-<area shape="rect" id="node21" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="1252,365,1445,404"/>
-<area shape="rect" id="node22" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="1002,365,1228,404"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2Connection.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2Connection.h">
+<area shape="rect" id="node7" href="$_h_t_t_p2_connection_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ConnectionInterface.h" alt="" coords="434,132,631,171"/>
+<area shape="rect" id="node24" href="$_curl_multi_handle_wrapper_8h.html" title="CurlMultiHandleWrapper.h" alt="" coords="161,225,338,251"/>
+<area shape="rect" id="node8" href="$_h_t_t_p2_request_config_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestConfig.h" alt="" coords="464,219,641,257"/>
+<area shape="rect" id="node13" href="$_h_t_t_p2_request_type_8h.html" title="HTTP2RequestType.h" alt="" coords="1185,305,1338,331"/>
+<area shape="rect" id="node23" href="$_h_t_t_p2_request_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestInterface.h" alt="" coords="670,219,850,257"/>
+<area shape="rect" id="node15" href="$_h_t_t_p2_request_source_interface_8h.html" title="HTTP2RequestSourceInterface.h" alt="" coords="655,305,874,331"/>
+<area shape="rect" id="node20" href="$_h_t_t_p2_response_sink_interface_8h.html" title="HTTP2ResponseSinkInterface.h" alt="" coords="949,305,1161,331"/>
+<area shape="rect" id="node18" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="535,379,711,417"/>
+<area shape="rect" id="node19" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="535,465,711,504"/>
+<area shape="rect" id="node21" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="1252,379,1445,417"/>
+<area shape="rect" id="node22" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="1002,379,1228,417"/>
 </map>

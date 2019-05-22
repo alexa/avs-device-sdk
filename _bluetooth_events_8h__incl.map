@@ -1,13 +1,13 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Bluetooth/BluetoothEvents.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Bluetooth/BluetoothEvents.h">
-<area shape="rect" id="node2" href="$_bluetooth_device_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceInterface.h" alt="" coords="898,119,1143,157"/>
-<area shape="rect" id="node8" href="$_a2_d_p_source_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/A2DPSource\lInterface.h" alt="" coords="143,205,359,257"/>
-<area shape="rect" id="node17" href="$_a_v_r_c_p_target_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/AVRCPTarget\lInterface.h" alt="" coords="1289,205,1511,257"/>
-<area shape="rect" id="node18" href="$_a2_d_p_role_8h.html" title="AVSCommon/Utils/Bluetooth\l/A2DPRole.h" alt="" coords="1218,119,1409,157"/>
-<area shape="rect" id="node9" href="$_bluetooth_service_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/Bluetooth\lServiceInterface.h" alt="" coords="764,305,960,357"/>
-<area shape="rect" id="node10" href="$_s_d_p_record_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/SDPRecord\lInterface.h" alt="" coords="954,405,1164,457"/>
-<area shape="rect" id="node15" href="$_a2_d_p_sink_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/A2DPSink\lInterface.h" alt="" coords="516,205,717,257"/>
-<area shape="rect" id="node16" href="$_a_v_r_c_p_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/AVRCPController\lInterface.h" alt="" coords="740,205,983,257"/>
-<area shape="rect" id="node11" href="$_formatted_audio_stream_adapter_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapter.h" alt="" coords="89,312,309,351"/>
-<area shape="rect" id="node13" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="49,505,271,531"/>
-<area shape="rect" id="node14" href="$_formatted_audio_stream_adapter_listener_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapterListener.h" alt="" coords="27,412,294,451"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Bluetooth/BluetoothEvents.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Bluetooth/BluetoothEvents.h">
+<area shape="rect" id="node2" href="$_bluetooth_device_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceInterface.h" alt="" coords="898,132,1143,171"/>
+<area shape="rect" id="node8" href="$_a2_d_p_source_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/A2DPSource\lInterface.h" alt="" coords="143,219,359,271"/>
+<area shape="rect" id="node17" href="$_a_v_r_c_p_target_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/AVRCPTarget\lInterface.h" alt="" coords="1289,219,1511,271"/>
+<area shape="rect" id="node18" href="$_a2_d_p_role_8h.html" title="AVSCommon/Utils/Bluetooth\l/A2DPRole.h" alt="" coords="1218,132,1409,171"/>
+<area shape="rect" id="node9" href="$_bluetooth_service_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/Bluetooth\lServiceInterface.h" alt="" coords="764,319,960,371"/>
+<area shape="rect" id="node10" href="$_s_d_p_record_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/SDPRecord\lInterface.h" alt="" coords="954,419,1164,471"/>
+<area shape="rect" id="node15" href="$_a2_d_p_sink_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/A2DPSink\lInterface.h" alt="" coords="516,219,717,271"/>
+<area shape="rect" id="node16" href="$_a_v_r_c_p_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/AVRCPController\lInterface.h" alt="" coords="740,219,983,271"/>
+<area shape="rect" id="node11" href="$_formatted_audio_stream_adapter_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapter.h" alt="" coords="89,325,309,364"/>
+<area shape="rect" id="node13" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="49,519,271,544"/>
+<area shape="rect" id="node14" href="$_formatted_audio_stream_adapter_listener_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapterListener.h" alt="" coords="27,425,294,464"/>
 </map>

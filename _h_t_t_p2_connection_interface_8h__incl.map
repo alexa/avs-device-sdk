@@ -1,11 +1,11 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h">
-<area shape="rect" id="node3" href="$_h_t_t_p2_request_config_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestConfig.h" alt="" coords="464,119,641,157"/>
-<area shape="rect" id="node8" href="$_h_t_t_p2_request_type_8h.html" title="HTTP2RequestType.h" alt="" coords="904,205,1057,231"/>
-<area shape="rect" id="node18" href="$_h_t_t_p2_request_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestInterface.h" alt="" coords="241,119,421,157"/>
-<area shape="rect" id="node10" href="$_h_t_t_p2_request_source_interface_8h.html" title="HTTP2RequestSourceInterface.h" alt="" coords="203,205,422,231"/>
-<area shape="rect" id="node15" href="$_h_t_t_p2_response_sink_interface_8h.html" title="HTTP2ResponseSinkInterface.h" alt="" coords="446,205,659,231"/>
-<area shape="rect" id="node13" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="83,279,259,317"/>
-<area shape="rect" id="node14" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="83,365,259,404"/>
-<area shape="rect" id="node16" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="467,279,659,317"/>
-<area shape="rect" id="node17" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="767,279,994,317"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h">
+<area shape="rect" id="node3" href="$_h_t_t_p2_request_config_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestConfig.h" alt="" coords="464,132,641,171"/>
+<area shape="rect" id="node8" href="$_h_t_t_p2_request_type_8h.html" title="HTTP2RequestType.h" alt="" coords="904,219,1057,244"/>
+<area shape="rect" id="node18" href="$_h_t_t_p2_request_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestInterface.h" alt="" coords="241,132,421,171"/>
+<area shape="rect" id="node10" href="$_h_t_t_p2_request_source_interface_8h.html" title="HTTP2RequestSourceInterface.h" alt="" coords="203,219,422,244"/>
+<area shape="rect" id="node15" href="$_h_t_t_p2_response_sink_interface_8h.html" title="HTTP2ResponseSinkInterface.h" alt="" coords="446,219,659,244"/>
+<area shape="rect" id="node13" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="83,292,259,331"/>
+<area shape="rect" id="node14" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="83,379,259,417"/>
+<area shape="rect" id="node16" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="467,292,659,331"/>
+<area shape="rect" id="node17" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="767,292,994,331"/>
 </map>

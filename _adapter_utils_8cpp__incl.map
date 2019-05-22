@@ -1,8 +1,8 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/src/ExternalMediaPlayer/AdapterUtils.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/src/ExternalMediaPlayer/AdapterUtils.cpp">
-<area shape="rect" id="node2" href="$_adapter_utils_8h.html" title="AVSCommon/AVS/ExternalMedia\lPlayer/AdapterUtils.h" alt="" coords="487,105,707,144"/>
-<area shape="rect" id="node17" href="$_external_media_adapter_constants_8h.html" title="AVSCommon/AVS/ExternalMedia\lPlayer/ExternalMediaAdapterConstants.h" alt="" coords="852,105,1118,144"/>
-<area shape="rect" id="node7" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="981,192,1210,231"/>
-<area shape="rect" id="node9" href="$_external_media_adapter_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExternalMediaAdapterInterface.h" alt="" coords="738,192,958,231"/>
-<area shape="rect" id="node16" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="504,199,714,224"/>
-<area shape="rect" id="node10" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="935,279,1123,317"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/AVS/src/ExternalMediaPlayer/AdapterUtils.cpp" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/AVS/src/ExternalMediaPlayer/AdapterUtils.cpp">
+<area shape="rect" id="node2" href="$_adapter_utils_8h.html" title="AVSCommon/AVS/ExternalMedia\lPlayer/AdapterUtils.h" alt="" coords="487,119,707,157"/>
+<area shape="rect" id="node17" href="$_external_media_adapter_constants_8h.html" title="AVSCommon/AVS/ExternalMedia\lPlayer/ExternalMediaAdapterConstants.h" alt="" coords="852,119,1118,157"/>
+<area shape="rect" id="node7" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="981,205,1210,244"/>
+<area shape="rect" id="node9" href="$_external_media_adapter_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExternalMediaAdapterInterface.h" alt="" coords="738,205,958,244"/>
+<area shape="rect" id="node16" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="504,212,714,237"/>
+<area shape="rect" id="node10" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="935,292,1123,331"/>
 </map>

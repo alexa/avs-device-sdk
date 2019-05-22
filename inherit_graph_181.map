@@ -1,5 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html" title="alexaClientSDK::capability\lAgents::notifications::\lNotificationsStorageInterface" alt="" coords="5,44,198,96"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_s_q_lite_notifications_storage.html" title="alexaClientSDK::capability\lAgents::notifications::\lSQLiteNotificationsStorage" alt="" coords="252,5,434,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html" title="alexaClientSDK::capability\lAgents::notifications::\ltest::TestNotificationsStorage" alt="" coords="246,81,440,133"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth_storage_interface.html" title="A storage interface used for Bluetooth that should provide UUID to MAC mappings and maintain insertio..." alt="" coords="5,5,241,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_s_q_lite_bluetooth_storage.html" title="A concrete implementation of BluetoothStorageInterface using SQLite. " alt="" coords="289,5,519,57"/>
 </map>

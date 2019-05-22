@@ -1,12 +1,12 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/HttpPutInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/HttpPutInterface.h">
-<area shape="rect" id="node2" href="$_http_put_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/LibcurlUtils/HttpPut.h" alt="" coords="137,119,317,184"/>
-<area shape="rect" id="node5" href="$_capabilities_delegate_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/include/CapabilitiesDelegate\l/CapabilitiesDelegate.h" alt="" coords="400,119,593,184"/>
-<area shape="rect" id="node6" href="$_capabilities_delegate_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/src/CapabilitiesDelegate.cpp" alt="" coords="265,232,459,284"/>
-<area shape="rect" id="node10" href="$_testable_http_put_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/Common/TestableHttpPut.h" alt="" coords="782,125,995,177"/>
-<area shape="rect" id="node3" href="$_http_put_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/LibcurlUtils/HttpPut.cpp" alt="" coords="5,232,190,284"/>
-<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="298,332,578,371"/>
-<area shape="rect" id="node7" href="$_capabilities_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/CapabilitiesDelegateTest.cpp" alt="" coords="777,232,1000,284"/>
-<area shape="rect" id="node8" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="534,232,753,284"/>
-<area shape="rect" id="node9" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="601,332,800,371"/>
-<area shape="rect" id="node11" href="$_testable_http_put_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/Common/TestableHttpPut.cpp" alt="" coords="1024,232,1252,284"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/HttpPutInterface.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/HttpPutInterface.h">
+<area shape="rect" id="node2" href="$_http_put_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/AVSCommon/Utils/include\l/AVSCommon/Utils/LibcurlUtils\l/HttpPut.h" alt="" coords="118,132,324,211"/>
+<area shape="rect" id="node5" href="$_capabilities_delegate_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/include/CapabilitiesDelegate\l/CapabilitiesDelegate.h" alt="" coords="398,132,591,211"/>
+<area shape="rect" id="node6" href="$_capabilities_delegate_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/src/CapabilitiesDelegate.cpp" alt="" coords="262,259,456,324"/>
+<area shape="rect" id="node10" href="$_testable_http_put_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/Common/TestableHttpPut.h" alt="" coords="779,139,992,204"/>
+<area shape="rect" id="node3" href="$_http_put_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/AVSCommon/Utils/src\l/LibcurlUtils/HttpPut.cpp" alt="" coords="5,259,186,324"/>
+<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="295,372,575,424"/>
+<area shape="rect" id="node7" href="$_capabilities_delegate_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/CapabilitiesDelegateTest.cpp" alt="" coords="774,259,996,324"/>
+<area shape="rect" id="node8" href="$_sample_application_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="530,259,750,324"/>
+<area shape="rect" id="node9" href="$main_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="598,372,796,424"/>
+<area shape="rect" id="node11" href="$_testable_http_put_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/Common/TestableHttpPut.cpp" alt="" coords="1021,259,1248,324"/>
 </map>

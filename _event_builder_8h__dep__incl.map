@@ -1,10 +1,10 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/EventBuilder.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/EventBuilder.h">
-<area shape="rect" id="node2" href="$_post_connect_synchronizer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PostConnectSynchronizer.cpp" alt="" coords="5,112,209,164"/>
-<area shape="rect" id="node3" href="$_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/CapabilityAgent.cpp" alt="" coords="233,112,414,164"/>
-<area shape="rect" id="node4" href="$_event_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/EventBuilder.cpp" alt="" coords="438,112,619,164"/>
-<area shape="rect" id="node5" href="$_exception_encountered_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/ExceptionEncounteredSender.cpp" alt="" coords="643,112,870,164"/>
-<area shape="rect" id="node6" href="$_playback_controller_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/PlaybackController/src\l/PlaybackController.cpp" alt="" coords="894,105,1056,171"/>
-<area shape="rect" id="node7" href="$_settings_updated_event_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Settings/src/SettingsUpdated\lEventSender.cpp" alt="" coords="1079,105,1276,171"/>
-<area shape="rect" id="node8" href="$_software_info_send_request_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/SoftwareInfoSend\lRequest.cpp" alt="" coords="1300,105,1501,171"/>
-<area shape="rect" id="node9" href="$_alexa_directive_sequencer_library_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaDirectiveSequencerLibrary\lTest.cpp" alt="" coords="1525,105,1740,171"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/EventBuilder.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/EventBuilder.h">
+<area shape="rect" id="node2" href="$_post_connect_synchronizer_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PostConnectSynchronizer.cpp" alt="" coords="5,119,209,184"/>
+<area shape="rect" id="node3" href="$_capability_agent_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/CapabilityAgent.cpp" alt="" coords="233,119,414,184"/>
+<area shape="rect" id="node4" href="$_event_builder_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/EventBuilder.cpp" alt="" coords="438,119,619,184"/>
+<area shape="rect" id="node5" href="$_exception_encountered_sender_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/ExceptionEncounteredSender.cpp" alt="" coords="643,119,870,184"/>
+<area shape="rect" id="node6" href="$_playback_controller_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/CapabilityAgents/Playback\lController/src/PlaybackController.cpp" alt="" coords="893,119,1134,184"/>
+<area shape="rect" id="node7" href="$_settings_updated_event_sender_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/CapabilityAgents/Settings\l/src/SettingsUpdatedEventSender.cpp" alt="" coords="1158,119,1405,184"/>
+<area shape="rect" id="node8" href="$_software_info_send_request_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/CapabilityAgents/System\l/src/SoftwareInfoSendRequest.cpp" alt="" coords="1429,119,1657,184"/>
+<area shape="rect" id="node9" href="$_alexa_directive_sequencer_library_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/AlexaDirective\lSequencerLibraryTest.cpp" alt="" coords="1681,119,1909,184"/>
 </map>

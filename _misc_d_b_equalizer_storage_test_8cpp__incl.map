@@ -1,11 +1,11 @@
-<map id="/workplace/avs&#45;device&#45;sdk/EqualizerImplementations/test/MiscDBEqualizerStorageTest.cpp" name="/workplace/avs&#45;device&#45;sdk/EqualizerImplementations/test/MiscDBEqualizerStorageTest.cpp">
-<area shape="rect" id="node4" href="$_equalizer_storage_interface_test_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerStorageInterface\lTest.h" alt="" coords="299,105,516,157"/>
-<area shape="rect" id="node17" href="$_stub_misc_storage_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/StubMiscStorage.h" alt="" coords="19,112,209,151"/>
-<area shape="rect" id="node20" href="$_misc_d_b_equalizer_storage_8h.html" title="EqualizerImplementations\l/MiscDBEqualizerStorage.h" alt="" coords="541,112,725,151"/>
-<area shape="rect" id="node6" href="$_equalizer_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerStorageInterface.h" alt="" coords="508,205,736,244"/>
-<area shape="rect" id="node7" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="696,379,860,417"/>
-<area shape="rect" id="node9" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="510,299,633,324"/>
-<area shape="rect" id="node8" href="$_result_8h.html" title="Result.h" alt="" coords="743,465,813,491"/>
-<area shape="rect" id="node13" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="481,379,672,417"/>
-<area shape="rect" id="node19" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="161,292,374,331"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/EqualizerImplementations/test/MiscDBEqualizerStorageTest.cpp" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/EqualizerImplementations/test/MiscDBEqualizerStorageTest.cpp">
+<area shape="rect" id="node4" href="$_equalizer_storage_interface_test_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerStorageInterface\lTest.h" alt="" coords="299,119,516,171"/>
+<area shape="rect" id="node17" href="$_stub_misc_storage_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/StubMiscStorage.h" alt="" coords="19,125,209,164"/>
+<area shape="rect" id="node20" href="$_misc_d_b_equalizer_storage_8h.html" title="EqualizerImplementations\l/MiscDBEqualizerStorage.h" alt="" coords="541,125,725,164"/>
+<area shape="rect" id="node6" href="$_equalizer_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerStorageInterface.h" alt="" coords="508,219,736,257"/>
+<area shape="rect" id="node7" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="696,392,860,431"/>
+<area shape="rect" id="node9" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="510,312,633,337"/>
+<area shape="rect" id="node8" href="$_result_8h.html" title="Result.h" alt="" coords="743,479,813,504"/>
+<area shape="rect" id="node13" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="481,392,672,431"/>
+<area shape="rect" id="node19" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="161,305,374,344"/>
 </map>

@@ -1,12 +1,12 @@
-<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/ConsolePrinter.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/ConsolePrinter.h">
-<area shape="rect" id="node2" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="126,105,345,157"/>
-<area shape="rect" id="node5" href="$_console_printer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/ConsolePrinter.cpp" alt="" coords="369,112,626,151"/>
-<area shape="rect" id="node6" href="$_console_reader_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/ConsoleReader.cpp" alt="" coords="650,112,911,151"/>
-<area shape="rect" id="node7" href="$_gui_renderer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/GuiRenderer.cpp" alt="" coords="935,112,1180,151"/>
-<area shape="rect" id="node8" href="$_port_audio_microphone_wrapper_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/PortAudio\lMicrophoneWrapper.cpp" alt="" coords="1204,105,1407,157"/>
-<area shape="rect" id="node9" href="$_sample_equalizer_mode_controller_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleEqualizer\lModeController.cpp" alt="" coords="1431,105,1676,157"/>
-<area shape="rect" id="node10" href="$_u_i_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UIManager.cpp" alt="" coords="1701,112,1935,151"/>
-<area shape="rect" id="node11" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="1959,105,2162,157"/>
-<area shape="rect" id="node3" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="5,205,204,244"/>
-<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="227,205,507,244"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/ConsolePrinter.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/ConsolePrinter.h">
+<area shape="rect" id="node2" href="$_sample_application_8h.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="126,119,345,184"/>
+<area shape="rect" id="node5" href="$_console_printer_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/ConsolePrinter.cpp" alt="" coords="369,125,626,177"/>
+<area shape="rect" id="node6" href="$_console_reader_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/ConsoleReader.cpp" alt="" coords="650,125,911,177"/>
+<area shape="rect" id="node7" href="$_gui_renderer_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/GuiRenderer.cpp" alt="" coords="935,125,1180,177"/>
+<area shape="rect" id="node8" href="$_port_audio_microphone_wrapper_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/PortAudioMicrophone\lWrapper.cpp" alt="" coords="1204,119,1477,184"/>
+<area shape="rect" id="node9" href="$_sample_equalizer_mode_controller_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/SampleEqualizer\lModeController.cpp" alt="" coords="1501,119,1746,184"/>
+<area shape="rect" id="node10" href="$_u_i_manager_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/UIManager.cpp" alt="" coords="1770,125,2005,177"/>
+<area shape="rect" id="node11" href="$_user_input_manager_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/UserInputManager.cpp" alt="" coords="2029,125,2308,177"/>
+<area shape="rect" id="node3" href="$main_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="5,232,204,284"/>
+<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="227,232,507,284"/>
 </map>

@@ -1,10 +1,10 @@
-<map id="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/BlueZConstants.h" name="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/BlueZConstants.h">
-<area shape="rect" id="node2" href="$_blue_z_bluetooth_device_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZBluetoothDevice.cpp" alt="" coords="5,105,248,157"/>
-<area shape="rect" id="node3" href="$_blue_z_device_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZDeviceManager.cpp" alt="" coords="272,105,509,157"/>
-<area shape="rect" id="node4" href="$_blue_z_host_controller_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZHostController.cpp" alt="" coords="533,105,763,157"/>
-<area shape="rect" id="node5" href="$_d_bus_properties_proxy_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/DBusPropertiesProxy.cpp" alt="" coords="787,105,1023,157"/>
-<area shape="rect" id="node6" href="$_d_bus_proxy_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/DBusProxy.cpp" alt="" coords="1047,105,1251,157"/>
-<area shape="rect" id="node7" href="$_media_endpoint_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/MediaEndpoint.cpp" alt="" coords="1275,105,1479,157"/>
-<area shape="rect" id="node8" href="$_m_p_r_i_s_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/MPRISPlayer.cpp" alt="" coords="1503,105,1707,157"/>
-<area shape="rect" id="node9" href="$_pairing_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/PairingAgent.cpp" alt="" coords="1731,105,1935,157"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/BlueZConstants.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/BlueZConstants.h">
+<area shape="rect" id="node2" href="$_blue_z_bluetooth_device_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZBluetoothDevice.cpp" alt="" coords="5,119,248,184"/>
+<area shape="rect" id="node3" href="$_blue_z_device_manager_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZDeviceManager.cpp" alt="" coords="272,119,509,184"/>
+<area shape="rect" id="node4" href="$_blue_z_host_controller_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZHostController.cpp" alt="" coords="533,119,763,184"/>
+<area shape="rect" id="node5" href="$_d_bus_properties_proxy_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/DBusPropertiesProxy.cpp" alt="" coords="787,119,1023,184"/>
+<area shape="rect" id="node6" href="$_d_bus_proxy_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/DBusProxy.cpp" alt="" coords="1047,119,1251,184"/>
+<area shape="rect" id="node7" href="$_media_endpoint_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/MediaEndpoint.cpp" alt="" coords="1275,119,1479,184"/>
+<area shape="rect" id="node8" href="$_m_p_r_i_s_player_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/MPRISPlayer.cpp" alt="" coords="1503,119,1707,184"/>
+<area shape="rect" id="node9" href="$_pairing_agent_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/PairingAgent.cpp" alt="" coords="1731,119,1935,184"/>
 </map>

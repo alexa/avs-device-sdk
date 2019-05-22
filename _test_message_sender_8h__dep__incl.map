@@ -1,7 +1,7 @@
-<map id="/workplace/avs&#45;device&#45;sdk/Integration/include/Integration/TestMessageSender.h" name="/workplace/avs&#45;device&#45;sdk/Integration/include/Integration/TestMessageSender.h">
-<area shape="rect" id="node2" href="$_test_message_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/TestMessageSender.cpp" alt="" coords="5,112,176,164"/>
-<area shape="rect" id="node3" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="201,112,373,164"/>
-<area shape="rect" id="node4" href="$_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="397,105,609,171"/>
-<area shape="rect" id="node5" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="633,112,842,164"/>
-<area shape="rect" id="node6" href="$_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="867,105,1070,171"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/Integration/include/Integration/TestMessageSender.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/Integration/include/Integration/TestMessageSender.h">
+<area shape="rect" id="node2" href="$_test_message_sender_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/src/TestMessage\lSender.cpp" alt="" coords="5,119,222,184"/>
+<area shape="rect" id="node3" href="$_alerts_integration_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/AlertsIntegration\lTest.cpp" alt="" coords="246,119,485,184"/>
+<area shape="rect" id="node4" href="$_audio_input_processor_integration_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/AudioInput\lProcessorIntegrationTest.cpp" alt="" coords="510,119,715,184"/>
+<area shape="rect" id="node5" href="$_audio_player_integration_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/AudioPlayer\lIntegrationTest.cpp" alt="" coords="739,119,953,184"/>
+<area shape="rect" id="node6" href="$_speech_synthesizer_integration_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/SpeechSynthesizer\lIntegrationTest.cpp" alt="" coords="977,119,1234,184"/>
 </map>

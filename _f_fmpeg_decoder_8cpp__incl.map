@@ -1,19 +1,19 @@
-<map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/src/FFmpegDecoder.cpp" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/src/FFmpegDecoder.cpp">
-<area shape="rect" id="node8" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="5,112,227,137"/>
-<area shape="rect" id="node10" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1091,105,1267,144"/>
-<area shape="rect" id="node27" href="$_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="2709,192,2892,231"/>
-<area shape="rect" id="node29" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="358,199,568,224"/>
-<area shape="rect" id="node30" href="$_string_utils_8h.html" title="AVSCommon/Utils/String\l/StringUtils.h" alt="" coords="388,279,557,317"/>
-<area shape="rect" id="node31" href="$_f_fmpeg_decoder_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegDecoder.h" alt="" coords="1866,105,2041,144"/>
-<area shape="rect" id="node37" href="$_playback_configuration_8h.html" title="AndroidSLESMediaPlayer\l/PlaybackConfiguration.h" alt="" coords="2915,192,3091,231"/>
-<area shape="rect" id="node40" href="$_f_fmpeg_deleter_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegDeleter.h" alt="" coords="2167,105,2343,144"/>
-<area shape="rect" id="node15" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1216,192,1430,231"/>
-<area shape="rect" id="node20" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="975,279,1151,317"/>
-<area shape="rect" id="node21" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="694,192,870,231"/>
-<area shape="rect" id="node25" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="944,192,1141,231"/>
-<area shape="rect" id="node26" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1915,365,2091,404"/>
-<area shape="rect" id="node22" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="724,279,900,317"/>
-<area shape="rect" id="node23" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1255,365,1431,404"/>
-<area shape="rect" id="node34" href="$_decoder_interface_8h.html" title="AndroidSLESMediaPlayer\l/DecoderInterface.h" alt="" coords="2294,192,2469,231"/>
-<area shape="rect" id="node35" href="$_f_fmpeg_input_controller_interface_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegInputControllerInterface.h" alt="" coords="1741,192,1966,231"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/src/FFmpegDecoder.cpp" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/src/FFmpegDecoder.cpp">
+<area shape="rect" id="node8" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="5,125,227,151"/>
+<area shape="rect" id="node10" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1040,119,1216,157"/>
+<area shape="rect" id="node28" href="$_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="3094,205,3277,244"/>
+<area shape="rect" id="node30" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="1691,212,1901,237"/>
+<area shape="rect" id="node31" href="$_string_utils_8h.html" title="AVSCommon/Utils/String\l/StringUtils.h" alt="" coords="349,292,518,331"/>
+<area shape="rect" id="node32" href="$_f_fmpeg_decoder_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegDecoder.h" alt="" coords="1926,119,2101,157"/>
+<area shape="rect" id="node38" href="$_playback_configuration_8h.html" title="AndroidSLESMediaPlayer\l/PlaybackConfiguration.h" alt="" coords="2895,205,3071,244"/>
+<area shape="rect" id="node40" href="$_f_fmpeg_deleter_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegDeleter.h" alt="" coords="2227,119,2403,157"/>
+<area shape="rect" id="node15" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1352,205,1566,244"/>
+<area shape="rect" id="node21" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="936,292,1112,331"/>
+<area shape="rect" id="node22" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="643,205,819,244"/>
+<area shape="rect" id="node26" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="894,205,1091,244"/>
+<area shape="rect" id="node27" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2150,379,2326,417"/>
+<area shape="rect" id="node23" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="686,292,862,331"/>
+<area shape="rect" id="node24" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="815,379,991,417"/>
+<area shape="rect" id="node35" href="$_decoder_interface_8h.html" title="AndroidSLESMediaPlayer\l/DecoderInterface.h" alt="" coords="2645,205,2820,244"/>
+<area shape="rect" id="node36" href="$_f_fmpeg_input_controller_interface_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegInputControllerInterface.h" alt="" coords="1976,205,2201,244"/>
 </map>

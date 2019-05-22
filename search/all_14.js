@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['uimanager',['UIManager',['../classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html',1,'alexaClientSDK::sampleApp']]],
-  ['uimanager',['UIManager',['../classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html#a28631f55831e8fabfe843b98747d7f5f',1,'alexaClientSDK::sampleApp::UIManager']]],
+  ['uimanager',['UIManager',['../classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html',1,'alexaClientSDK::sampleApp::UIManager'],['../classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html#a28631f55831e8fabfe843b98747d7f5f',1,'alexaClientSDK::sampleApp::UIManager::UIManager()']]],
   ['uimanager_2ecpp',['UIManager.cpp',['../_u_i_manager_8cpp.html',1,'']]],
   ['uimanager_2eh',['UIManager.h',['../_u_i_manager_8h.html',1,'']]],
   ['uint',['UINT',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab8bd9f2e13a80beba778f9effcf768f9a3351504090a741e69da641a42e00da80',1,'alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface']]],
@@ -30,6 +29,8 @@ var searchData=
   ['unloaded',['UNLOADED',['../classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_pulse_audio_bluetooth_initializer.html#a6bf5c3e429844b28153319aa293155e6a795b8a51556d0b2cf4fbc11a896f6269',1,'alexaClientSDK::bluetoothImplementations::blueZ::PulseAudioBluetoothInitializer']]],
   ['unlock',['unlock',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits_1_1_mutex.html#adce300dbdbed8bedf40d3cb98608980f',1,'alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits::Mutex']]],
   ['unmute',['UNMUTE',['../namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test.html#a1d928d540436bf4884080e94dd9d826e',1,'alexaClientSDK::avsCommon::sdkInterfaces::test']]],
+  ['unmute_5fpayload',['UNMUTE_PAYLOAD',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test.html#a0c468b2d5da0e98b228a010624a8af44',1,'alexaClientSDK::capabilityAgents::speakerManager::test']]],
+  ['unmute_5fstring',['UNMUTE_STRING',['../namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test.html#a8dc692042ad6d93e631222fda588d898',1,'alexaClientSDK::avsCommon::sdkInterfaces::test']]],
   ['unpair',['unpair',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_interface.html#a5e9658346c32e6cbbba9fdb13ea1f4f9',1,'alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface::unpair()'],['../classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_bluetooth_device.html#a59c935793205a68d5c918c613cb767b8',1,'alexaClientSDK::bluetoothImplementations::blueZ::BlueZBluetoothDevice::unpair()']]],
   ['unpair_5fdevice',['UNPAIR_DEVICE',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#abdd3e6f6ce1a7a853312b7614486b584',1,'alexaClientSDK::capabilityAgents::bluetooth']]],
   ['unpair_5fdevice_5ffailed',['UNPAIR_DEVICE_FAILED',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#a9b90dc6ce9c995a98517327a179f1388',1,'alexaClientSDK::capabilityAgents::bluetooth']]],
@@ -65,7 +66,7 @@ var searchData=
   ['urlcontenttoattachmentconverter',['UrlContentToAttachmentConverter',['../classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter.html',1,'alexaClientSDK::playlistParser']]],
   ['urlcontenttoattachmentconverter_2ecpp',['UrlContentToAttachmentConverter.cpp',['../_url_content_to_attachment_converter_8cpp.html',1,'']]],
   ['urlcontenttoattachmentconverter_2eh',['UrlContentToAttachmentConverter.h',['../_url_content_to_attachment_converter_8h.html',1,'']]],
-  ['urlencode',['urlEncode',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a14ed9a1bec8f8a8b75b828bf5432bad0',1,'alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper']]],
+  ['urlencode',['urlEncode',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a9534b190e6c4e0966c9f15dbaeddca11',1,'alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper']]],
   ['urlsetsource',['urlSetSource',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player_helper.html#a6506368abc06f8baf918b8759c8f07b4',1,'alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayerHelper']]],
   ['urlstocontent',['urlsToContent',['../namespacealexa_client_s_d_k_1_1media_player_1_1test.html#aa8a3f7e23776fa4a6948fef366534627',1,'alexaClientSDK::mediaPlayer::test::urlsToContent()'],['../namespacealexa_client_s_d_k_1_1playlist_parser_1_1test.html#aca08a494e58b9fc3cc172fa3e524026e',1,'alexaClientSDK::playlistParser::test::urlsToContent()']]],
   ['urlstocontenttypes',['urlsToContentTypes',['../namespacealexa_client_s_d_k_1_1media_player_1_1test.html#a986ec94b8e325194390b065cc20a76a7',1,'alexaClientSDK::mediaPlayer::test::urlsToContentTypes()'],['../namespacealexa_client_s_d_k_1_1playlist_parser_1_1test.html#ac9ad3b43e58f0a6938eafb9deb350af3',1,'alexaClientSDK::playlistParser::test::urlsToContentTypes()']]],

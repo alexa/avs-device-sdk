@@ -1,10 +1,11 @@
-<map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Notifications/include/Notifications/NotificationRenderer.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Notifications/include/Notifications/NotificationRenderer.h">
-<area shape="rect" id="node4" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="365,205,574,244"/>
-<area shape="rect" id="node14" href="$_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="621,119,838,157"/>
-<area shape="rect" id="node18" href="$_notification_renderer_interface_8h.html" title="NotificationRendererInterface.h" alt="" coords="863,125,1069,151"/>
-<area shape="rect" id="node9" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="136,292,337,331"/>
-<area shape="rect" id="node13" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="440,299,662,324"/>
-<area shape="rect" id="node12" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="113,379,275,417"/>
-<area shape="rect" id="node17" href="$_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="685,292,894,331"/>
-<area shape="rect" id="node20" href="$_notification_renderer_observer_interface_8h.html" title="NotificationRendererObserver\lInterface.h" alt="" coords="1086,205,1283,244"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/CapabilityAgents/Notifications/include/Notifications/NotificationRenderer.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/CapabilityAgents/Notifications/include/Notifications/NotificationRenderer.h">
+<area shape="rect" id="node4" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="259,205,467,244"/>
+<area shape="rect" id="node14" href="$_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="492,119,709,157"/>
+<area shape="rect" id="node18" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="782,119,970,157"/>
+<area shape="rect" id="node20" href="$_notification_renderer_interface_8h.html" title="NotificationRendererInterface.h" alt="" coords="995,125,1201,151"/>
+<area shape="rect" id="node9" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="122,292,324,331"/>
+<area shape="rect" id="node13" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="427,299,649,324"/>
+<area shape="rect" id="node12" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="213,379,375,417"/>
+<area shape="rect" id="node17" href="$_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="672,292,881,331"/>
+<area shape="rect" id="node22" href="$_notification_renderer_observer_interface_8h.html" title="NotificationRendererObserver\lInterface.h" alt="" coords="1158,205,1355,244"/>
 </map>

@@ -1,9 +1,9 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/LoggerSinkManager.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/LoggerSinkManager.h">
-<area shape="rect" id="node2" href="$_logger_sink_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Logger/LoggerSinkManager.cpp" alt="" coords="5,119,242,171"/>
-<area shape="rect" id="node3" href="$_module_logger_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Logger/ModuleLogger.cpp" alt="" coords="265,119,467,171"/>
-<area shape="rect" id="node4" href="$_logger_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/LoggerTest.cpp" alt="" coords="490,119,650,171"/>
-<area shape="rect" id="node5" href="$_android_s_l_e_s_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaPlayerTest.cpp" alt="" coords="674,119,965,171"/>
-<area shape="rect" id="node6" href="$_android_s_l_e_s_media_queue_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaQueueTest.cpp" alt="" coords="990,119,1284,171"/>
-<area shape="rect" id="node7" href="$_f_fmpeg_decoder_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/FFmpegDecoderTest.cpp" alt="" coords="1308,119,1552,171"/>
-<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1577,125,1857,164"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/LoggerSinkManager.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/LoggerSinkManager.h">
+<area shape="rect" id="node2" href="$_logger_sink_manager_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/AVSCommon/Utils/src\l/Logger/LoggerSinkManager.cpp" alt="" coords="5,119,220,184"/>
+<area shape="rect" id="node3" href="$_module_logger_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/AVSCommon/Utils/src\l/Logger/ModuleLogger.cpp" alt="" coords="244,119,425,184"/>
+<area shape="rect" id="node4" href="$_logger_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/AVSCommon/Utils/test\l/LoggerTest.cpp" alt="" coords="448,119,633,184"/>
+<area shape="rect" id="node5" href="$_android_s_l_e_s_media_player_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaPlayerTest.cpp" alt="" coords="657,119,949,184"/>
+<area shape="rect" id="node6" href="$_android_s_l_e_s_media_queue_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaQueueTest.cpp" alt="" coords="974,119,1268,184"/>
+<area shape="rect" id="node7" href="$_f_fmpeg_decoder_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/FFmpegDecoderTest.cpp" alt="" coords="1292,119,1536,184"/>
+<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1561,125,1841,177"/>
 </map>

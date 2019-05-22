@@ -1,8 +1,8 @@
-<map id="/workplace/avs&#45;device&#45;sdk/Settings/test/SQLiteDeviceSettingsStorageTest.cpp" name="/workplace/avs&#45;device&#45;sdk/Settings/test/SQLiteDeviceSettingsStorageTest.cpp">
-<area shape="rect" id="node10" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="499,192,713,231"/>
-<area shape="rect" id="node16" href="$_s_q_lite_device_setting_storage_8h.html" title="Settings/Storage/SQLiteDevice\lSettingStorage.h" alt="" coords="834,105,1039,144"/>
-<area shape="rect" id="node18" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="974,199,1196,224"/>
-<area shape="rect" id="node21" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="1290,192,1496,231"/>
-<area shape="rect" id="node22" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="1402,279,1565,304"/>
-<area shape="rect" id="node20" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="951,279,1176,304"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/Settings/test/SQLiteDeviceSettingsStorageTest.cpp" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/Settings/test/SQLiteDeviceSettingsStorageTest.cpp">
+<area shape="rect" id="node10" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="859,205,1072,244"/>
+<area shape="rect" id="node17" href="$_s_q_lite_device_setting_storage_8h.html" title="Settings/Storage/SQLiteDevice\lSettingStorage.h" alt="" coords="496,119,702,157"/>
+<area shape="rect" id="node19" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="360,212,582,237"/>
+<area shape="rect" id="node22" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="5,205,211,244"/>
+<area shape="rect" id="node23" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="69,292,233,317"/>
+<area shape="rect" id="node21" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="306,292,532,317"/>
 </map>

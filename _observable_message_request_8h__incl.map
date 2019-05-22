@@ -1,6 +1,6 @@
-<map id="/workplace/avs&#45;device&#45;sdk/Integration/include/Integration/ObservableMessageRequest.h" name="/workplace/avs&#45;device&#45;sdk/Integration/include/Integration/ObservableMessageRequest.h">
-<area shape="rect" id="node6" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="343,105,592,131"/>
-<area shape="rect" id="node12" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="709,179,911,217"/>
-<area shape="rect" id="node16" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="951,179,1198,217"/>
-<area shape="rect" id="node15" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="860,265,1022,304"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/Integration/include/Integration/ObservableMessageRequest.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/Integration/include/Integration/ObservableMessageRequest.h">
+<area shape="rect" id="node6" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="343,119,592,144"/>
+<area shape="rect" id="node12" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="709,192,911,231"/>
+<area shape="rect" id="node16" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="951,192,1198,231"/>
+<area shape="rect" id="node15" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="860,279,1022,317"/>
 </map>

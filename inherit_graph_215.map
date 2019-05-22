@@ -1,3 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1media_player_1_1_normalizer.html" title="alexaClientSDK::mediaPlayer\l::Normalizer" alt="" coords="5,5,202,44"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_input_controller_interface.html" title="alexaClientSDK::mediaPlayer\l::android::FFmpegInputController\lInterface" alt="" coords="5,75,223,127"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_attachment_input_controller.html" title="alexaClientSDK::mediaPlayer\l::android::FFmpegAttachmentInput\lController" alt="" coords="288,5,515,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_stream_input_controller.html" title="alexaClientSDK::mediaPlayer\l::android::FFmpegStreamInputController" alt="" coords="271,81,532,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_url_input_controller.html" title="alexaClientSDK::mediaPlayer\l::android::FFmpegUrlInputController" alt="" coords="284,144,519,183"/>
 </map>

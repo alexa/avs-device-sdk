@@ -1,10 +1,10 @@
-<map id="/workplace/avs&#45;device&#45;sdk/Integration/include/Integration/ACLTestContext.h" name="/workplace/avs&#45;device&#45;sdk/Integration/include/Integration/ACLTestContext.h">
-<area shape="rect" id="node2" href="$_a_c_l_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/ACLTestContext.cpp" alt="" coords="5,112,158,164"/>
-<area shape="rect" id="node3" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="182,112,354,164"/>
-<area shape="rect" id="node4" href="$_alexa_communications_library_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaCommunicationsLibraryTest.cpp" alt="" coords="378,112,626,164"/>
-<area shape="rect" id="node5" href="$_alexa_directive_sequencer_library_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaDirectiveSequencerLibrary\lTest.cpp" alt="" coords="650,105,865,171"/>
-<area shape="rect" id="node6" href="$_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="889,105,1101,171"/>
-<area shape="rect" id="node7" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="1125,112,1334,164"/>
-<area shape="rect" id="node8" href="$_network_integration_tests_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/NetworkIntegrationTests.cpp" alt="" coords="1358,112,1552,164"/>
-<area shape="rect" id="node9" href="$_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="1576,105,1779,171"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/Integration/include/Integration/ACLTestContext.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/Integration/include/Integration/ACLTestContext.h">
+<area shape="rect" id="node2" href="$_a_c_l_test_context_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/src/ACLTestContext.cpp" alt="" coords="5,125,264,177"/>
+<area shape="rect" id="node3" href="$_alerts_integration_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/AlertsIntegration\lTest.cpp" alt="" coords="289,119,528,184"/>
+<area shape="rect" id="node4" href="$_alexa_communications_library_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/AlexaCommunications\lLibraryTest.cpp" alt="" coords="552,119,827,184"/>
+<area shape="rect" id="node5" href="$_alexa_directive_sequencer_library_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/AlexaDirective\lSequencerLibraryTest.cpp" alt="" coords="850,119,1078,184"/>
+<area shape="rect" id="node6" href="$_audio_input_processor_integration_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/AudioInput\lProcessorIntegrationTest.cpp" alt="" coords="1101,119,1307,184"/>
+<area shape="rect" id="node7" href="$_audio_player_integration_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/AudioPlayer\lIntegrationTest.cpp" alt="" coords="1330,119,1545,184"/>
+<area shape="rect" id="node8" href="$_network_integration_tests_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/NetworkIntegration\lTests.cpp" alt="" coords="1569,119,1823,184"/>
+<area shape="rect" id="node9" href="$_speech_synthesizer_integration_test_8cpp.html" title="/Users/dhpp/my_docs\l/temp/doxygen/avs&#45;device\l&#45;sdk/Integration/test/SpeechSynthesizer\lIntegrationTest.cpp" alt="" coords="1848,119,2105,184"/>
 </map>

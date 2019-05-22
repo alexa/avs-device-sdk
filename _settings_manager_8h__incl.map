@@ -1,15 +1,15 @@
-<map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingsManager.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingsManager.h">
-<area shape="rect" id="node6" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="131,279,307,317"/>
-<area shape="rect" id="node14" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="713,105,889,144"/>
-<area shape="rect" id="node24" href="$_setting_interface_8h.html" title="SettingInterface.h" alt="" coords="1598,199,1724,224"/>
-<area shape="rect" id="node9" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="5,365,181,404"/>
-<area shape="rect" id="node11" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="83,452,259,491"/>
-<area shape="rect" id="node16" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="713,192,889,231"/>
-<area shape="rect" id="node18" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="754,279,968,317"/>
-<area shape="rect" id="node21" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="349,365,525,404"/>
-<area shape="rect" id="node22" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="381,279,578,317"/>
-<area shape="rect" id="node23" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1409,452,1585,491"/>
-<area shape="rect" id="node27" href="$_guarded_value_8h.html" title="AVSCommon/Utils/GuardedValue.h" alt="" coords="1279,285,1510,311"/>
-<area shape="rect" id="node28" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1635,285,1818,311"/>
-<area shape="rect" id="node29" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="1842,279,2011,317"/>
+<map id="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/Settings/include/Settings/SettingsManager.h" name="/Users/dhpp/my_docs/temp/doxygen/avs&#45;device&#45;sdk/Settings/include/Settings/SettingsManager.h">
+<area shape="rect" id="node6" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="400,292,576,331"/>
+<area shape="rect" id="node14" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1013,119,1189,157"/>
+<area shape="rect" id="node24" href="$_setting_interface_8h.html" title="SettingInterface.h" alt="" coords="1829,212,1955,237"/>
+<area shape="rect" id="node9" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="99,379,275,417"/>
+<area shape="rect" id="node11" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="99,465,275,504"/>
+<area shape="rect" id="node16" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="813,205,989,244"/>
+<area shape="rect" id="node18" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1024,292,1238,331"/>
+<area shape="rect" id="node21" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="752,379,928,417"/>
+<area shape="rect" id="node22" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="803,292,1000,331"/>
+<area shape="rect" id="node23" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="651,465,827,504"/>
+<area shape="rect" id="node27" href="$_guarded_value_8h.html" title="AVSCommon/Utils/GuardedValue.h" alt="" coords="1599,299,1830,324"/>
+<area shape="rect" id="node28" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="2086,299,2269,324"/>
+<area shape="rect" id="node29" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="2293,292,2462,331"/>
 </map>
