@@ -10,7 +10,7 @@
 * Added an exponential wait time for retrying transmitting a message via CertifiedSender.
 * When Volume is set to 0 and device is unmuted, volume is bumped up to a non-zero value. When Volume is set to 0 and Alexa talks back to you, volume is bumped up to a non-zero value.
 * Deprecated HttpResponseCodes.h, which is now present only to ensure backward compatibility.
-* The default endpoint for AVS connections has changed.
+* The [default base URLs](https://developer.amazon.com/docs/alexa-voice-service/api-overview.html#endpoints) for AVS have changed. These new URLs are supported by SDK v1.13 and later versions. Amazon recommends that all new and existing implementations update to v1.13 or later and use the new base URLs accordingly; however, Amazon will continue to support the legacy base URLs.
 
 **Bug Fixes**
 
