@@ -114,7 +114,9 @@ bool SQLiteDeviceSettingStorage::open() {
     // At this point, database is open.
     if (!m_db.tableExists(DEVICE_SETTINGS_TABLE_NAME) && !createSettingsTable()) {
         ACSDK_ERROR(LX("openFailed").m("Cannot create " + DEVICE_SETTINGS_TABLE_NAME + " table"));
-        close();
+        // close(); Can not be called from here because it will cause dead lock.
+        // Alternative is to unlock before calling.
+        m_db.close();
         return false;
     }
 
