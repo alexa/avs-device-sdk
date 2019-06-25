@@ -3,19 +3,19 @@
 #
 # To build with a Keyword Detector, run the following command with a keyword detector type of AMAZON_KEY_WORD_DETECTOR,
 # AMAZONLITE_KEY_WORD_DETECTOR, KITTAI_KEY_WORD_DETECTOR, or SENSORY_KEY_WORD_DETECTOR:
-#     cmake <path-to-source> 
-#       -DAMAZON_KEY_WORD_DETECTOR=ON 
-#           -DAMAZON_KEY_WORD_DETECTOR_LIB_PATH=<path-to-amazon-lib> 
+#     cmake <path-to-source>
+#       -DAMAZON_KEY_WORD_DETECTOR=ON
+#           -DAMAZON_KEY_WORD_DETECTOR_LIB_PATH=<path-to-amazon-lib>
 #           -DAMAZON_KEY_WORD_DETECTOR_INCLUDE_DIR=<path-to-amazon-include-dir>
-#       -DAMAZONLITE_KEY_WORD_DETECTOR=ON 
-#           -DAMAZONLITE_KEY_WORD_DETECTOR_LIB_PATH=<path-to-amazon-lib> 
+#       -DAMAZONLITE_KEY_WORD_DETECTOR=ON
+#           -DAMAZONLITE_KEY_WORD_DETECTOR_LIB_PATH=<path-to-amazon-lib>
 #           -DAMAZONLITE_KEY_WORD_DETECTOR_INCLUDE_DIR=<path-to-amazon-include-dir>
 #           -DAMAZONLITE_KEY_WORD_DETECTOR_DYNAMIC_MODEL_LOADING=<ON_OR_OFF>
 #           -DAMAZONLITE_KEY_WORD_DETECTOR_MODEL_CPP_PATH=<path-to-model-cpp-file-if-dynamic-model-loading-disabled>
-#       -DKITTAI_KEY_WORD_DETECTOR=ON 
+#       -DKITTAI_KEY_WORD_DETECTOR=ON
 #           -DKITTAI_KEY_WORD_DETECTOR_LIB_PATH=<path-to-kittai-lib>
 #           -DKITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR=<path-to-kittai-include-dir>
-#       -DSENSORY_KEY_WORD_DETECTOR=ON 
+#       -DSENSORY_KEY_WORD_DETECTOR=ON
 #           -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH=<path-to-sensory-lib>
 #           -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR=<path-to-sensory-include-dir>
 #
@@ -84,4 +84,8 @@ if(SENSORY_KEY_WORD_DETECTOR)
     endif()
     add_definitions(-DKWD)
     add_definitions(-DKWD_SENSORY)
+endif()
+
+if(PI_HAT_CTRL)
+    add_definitions(-DPI_HAT_CTRL)
 endif()

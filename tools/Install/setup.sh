@@ -52,6 +52,8 @@ START_AUTH_SCRIPT="$INSTALL_BASE/avs_auth.sh"
 TEST_SCRIPT="$INSTALL_BASE/avs_test.sh"
 LIB_SUFFIX="a"
 
+PI_HAT_CTRL_PATH="$THIRD_PARTY_PATH/pi_hat_ctrl"
+
 SENSORY_MODEL_HASH=5d811d92fb89043f4a4a7b7d0d26d7c3c83899b0
 ALIASES=$HOME/.bash_aliases
 
@@ -177,7 +179,12 @@ chmod a+rx $AUTH_DETAILS
 
 # Create autostart script
 AUTOSTART_SESSION="avsrun"
-AUTOSTART=$HOME/.config/lxsession/LXDE-pi/autostart
+AUTOSTART_DIR=$HOME/.config/lxsession/LXDE-pi
+AUTOSTART=$AUTOSTART_DIR/autostart
+if [ ! -f $AUTOSTART ]; then
+    mkdir -p $AUTOSTART_DIR
+    cp /etc/xdg/lxsession/LXDE-pi/autostart $AUTOSTART
+fi
 STARTUP_SCRIPT=$CURRENT_DIR/.avsrun-startup.sh
 cat << EOF > "$STARTUP_SCRIPT"
 #!/bin/bash
@@ -197,9 +204,17 @@ while true; do
             break;;
         y|Y|yes|YES )
             grep $AUTOSTART_SESSION $AUTOSTART > /dev/null 2>&1
-            if [ $? != 0 ]; then
-                # Append startup script if not already in autostart file
-                echo "@lxterminal -t $AUTOSTART_SESSION --geometry=150x50 -e $STARTUP_SCRIPT" >> $AUTOSTART
+            if [ $? != 0 ]; then #avsrun not present
+                if ! grep "vocalfusion_3510_sales_demo" $AUTOSTART ; then #vocalfusion_3510_sales_demo not present
+                    # Append startup script if not already in autostart file
+                    echo "@lxterminal -t $AUTOSTART_SESSION --geometry=150x50 -e $STARTUP_SCRIPT" >> $AUTOSTART
+                fi
+            else #avsrun present
+                if grep "vocalfusion_3510_sales_demo" $AUTOSTART ; then #vocalfusion_3510_sales_demo present
+                    # Remove startup script from autostart file
+                    echo "Warning: Not adding avsrun in autostart since offline demo is already present. Start AVS by following instructions on vocalfusion_3510_sales_demo startup"
+                    sed -i '/'"$AUTOSTART_SESSION"'/d' $AUTOSTART
+                fi
             fi
             break;;
     esac
@@ -262,20 +277,44 @@ then
     cd $SOURCE_PATH
     git clone -b xmos_v1.6 git://github.com/xmos/avs-device-sdk.git
 
+
+    if [ $# -ge 1 ] && [ $1 = "xvf3510" ] ; then
+        echo
+        echo "==============> BUILDING PI HAT CONTROL =============="
+        echo
+
+        mkdir -p $PI_HAT_CTRL_PATH
+        pushd $SOURCE_PATH/avs-device-sdk/ThirdParty/pi_hat_ctrl > /dev/null
+        gcc pi_hat_ctrl.c -o $PI_HAT_CTRL_PATH/pi_hat_ctrl -lwiringPi -lm
+        popd > /dev/null
+    fi
+
     # make the SDK
     echo
     echo "==============> BUILDING SDK =============="
     echo
 
     cd $BUILD_PATH
-    cmake "$SOURCE_PATH/avs-device-sdk" \
-    -DSENSORY_KEY_WORD_DETECTOR=ON \
-    -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH=$THIRD_PARTY_PATH/alexa-rpi/lib/libsnsr.a \
-    -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR=$THIRD_PARTY_PATH/alexa-rpi/include \
-    -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
-    -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.$LIB_SUFFIX" \
-    -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
-    -DCMAKE_BUILD_TYPE=DEBUG
+    if [ $# -ge 1 ] && [ $1 = "xvf3510" ] ; then
+        cmake "$SOURCE_PATH/avs-device-sdk" \
+        -DSENSORY_KEY_WORD_DETECTOR=ON \
+        -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH=$THIRD_PARTY_PATH/alexa-rpi/lib/libsnsr.a \
+        -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR=$THIRD_PARTY_PATH/alexa-rpi/include \
+        -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
+        -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.$LIB_SUFFIX" \
+        -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
+        -DCMAKE_BUILD_TYPE=DEBUG \
+        -DPI_HAT_CTRL=ON
+    else
+        cmake "$SOURCE_PATH/avs-device-sdk" \
+        -DSENSORY_KEY_WORD_DETECTOR=ON \
+        -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH=$THIRD_PARTY_PATH/alexa-rpi/lib/libsnsr.a \
+        -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR=$THIRD_PARTY_PATH/alexa-rpi/include \
+        -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
+        -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.$LIB_SUFFIX" \
+        -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
+        -DCMAKE_BUILD_TYPE=DEBUG
+    fi
 
     cd $BUILD_PATH
     make SampleApp -j2
@@ -348,16 +387,29 @@ popd > /dev/null
 EOF
 chmod +x "$TEST_SCRIPT"
 
+if [ ! -f $ALIASES ] ; then
+echo "Create .bash_aliases file"
 cat << EOF > "$ALIASES"
-alias avsrun="$BUILD_PATH/SampleApp/src/SampleApp $CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models"
-alias avsunit="$TEST_SCRIPT"
-alias avssetup="$THIS_SCRIPT"
-alias avsauth="$START_AUTH_SCRIPT"
-echo "Available AVS aliases:"
-echo -e "\tavsrun, avsunit, avssetup, avsauth"
-echo "If authentication fails, please check $BUILD_PATH/Integration/AlexaClientSDKConfig.json"
-echo "Remove .bash_aliases and open a new terminal to remove bindings"
 EOF
+fi
+echo "Delete any existing avs aliases and rewrite them"
+sed -i '/avsrun/d' $ALIASES > /dev/null
+sed -i '/avsunit/d' $ALIASES > /dev/null
+sed -i '/avssetup/d' $ALIASES > /dev/null
+sed -i '/avsauth/d' $ALIASES > /dev/null
+sed -i '/AVS/d' $ALIASES > /dev/null
+sed -i '/AlexaClientSDKConfig.json/d' $ALIASES > /dev/null
+sed -i '/Remove/d' $ALIASES > /dev/null
+
+echo "alias avsrun="$BUILD_PATH/SampleApp/src/SampleApp $CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models"" >> $ALIASES
+echo "alias avsunit="$TEST_SCRIPT"" >> $ALIASES
+echo "alias avssetup="$THIS_SCRIPT"" >> $ALIASES
+echo "alias avsauth="$START_AUTH_SCRIPT"" >> $ALIASES
+echo "echo "Available AVS aliases:"" >> $ALIASES
+echo "echo -e "avsrun, avsunit, avssetup, avsauth"" >> $ALIASES
+echo "echo "If authentication fails, please check $BUILD_PATH/Integration/AlexaClientSDKConfig.json"" >> $ALIASES
+echo "echo "Remove .bash_aliases and open a new terminal to remove bindings"" >> $ALIASES
+
 
 echo
 echo "==============> AUTHENTICATION =============="

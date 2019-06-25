@@ -133,6 +133,8 @@ public:
      */
     void printESPDataOverrideNotSupported();
 
+    ~UIManager();
+
 private:
     /**
      * Prints the current state of Alexa after checking what the appropriate message to display is based on the current
@@ -148,6 +150,7 @@ private:
 
     /// An internal executor that performs execution of callable objects passed to it sequentially but asynchronously.
     avsCommon::utils::threading::Executor m_executor;
+
 };
 
 }  // namespace sampleApp
