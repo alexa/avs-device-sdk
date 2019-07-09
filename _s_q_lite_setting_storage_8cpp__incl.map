@@ -1,16 +1,16 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Settings/src/SQLiteSettingStorage.cpp" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Settings/src/SQLiteSettingStorage.cpp">
-<area shape="rect" id="node2" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="299,285,524,311"/>
-<area shape="rect" id="node5" href="$_s_q_lite_utils_8h.html" title="SQLiteStorage/SQLiteUtils.h" alt="" coords="468,112,658,137"/>
-<area shape="rect" id="node9" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1609,105,1785,144"/>
-<area shape="rect" id="node26" href="$_string_utils_8h.html" title="AVSCommon/Utils/String\l/StringUtils.h" alt="" coords="5,279,175,317"/>
-<area shape="rect" id="node27" href="$_s_q_lite_setting_storage_8h.html" title="Settings/SQLiteSettingStorage.h" alt="" coords="707,112,921,137"/>
-<area shape="rect" id="node6" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="453,199,674,224"/>
-<area shape="rect" id="node14" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1127,192,1341,231"/>
-<area shape="rect" id="node18" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1619,279,1795,317"/>
-<area shape="rect" id="node19" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1921,192,2097,231"/>
-<area shape="rect" id="node24" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1598,192,1795,231"/>
-<area shape="rect" id="node25" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2206,192,2382,231"/>
-<area shape="rect" id="node20" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2014,279,2190,317"/>
-<area shape="rect" id="node22" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1779,365,1955,404"/>
-<area shape="rect" id="node28" href="$_settings_storage_interface_8h.html" title="Settings/SettingsStorage\lInterface.h" alt="" coords="801,279,969,317"/>
+<area shape="rect" id="node2" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="78,285,303,311"/>
+<area shape="rect" id="node6" href="$_s_q_lite_utils_8h.html" title="SQLiteStorage/SQLiteUtils.h" alt="" coords="282,112,472,137"/>
+<area shape="rect" id="node10" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1665,105,1841,144"/>
+<area shape="rect" id="node27" href="$_string_utils_8h.html" title="AVSCommon/Utils/String\l/StringUtils.h" alt="" coords="1179,279,1348,317"/>
+<area shape="rect" id="node28" href="$_s_q_lite_setting_storage_8h.html" title="Settings/SQLiteSettingStorage.h" alt="" coords="496,112,709,137"/>
+<area shape="rect" id="node7" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="266,199,488,224"/>
+<area shape="rect" id="node15" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="907,192,1121,231"/>
+<area shape="rect" id="node19" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1590,279,1766,317"/>
+<area shape="rect" id="node20" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1892,192,2067,231"/>
+<area shape="rect" id="node25" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1518,192,1715,231"/>
+<area shape="rect" id="node26" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2177,192,2353,231"/>
+<area shape="rect" id="node21" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1985,279,2161,317"/>
+<area shape="rect" id="node23" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1750,365,1926,404"/>
+<area shape="rect" id="node29" href="$_settings_storage_interface_8h.html" title="Settings/SettingsStorage\lInterface.h" alt="" coords="427,279,596,317"/>
 </map>

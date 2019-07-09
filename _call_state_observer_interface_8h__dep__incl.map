@@ -1,5 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/CallStateObserverInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/CallStateObserverInterface.h">
-<area shape="rect" id="node2" href="$_call_manager_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/CallManagerInterface.h" alt="" coords="223,119,463,184"/>
+<area shape="rect" id="node2" href="$_call_manager_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/CallManagerInterface.h" alt="" coords="220,119,461,184"/>
+<area shape="rect" id="node14" href="$_m_r_m_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/MRM/include/MRM/MRMCapability\lAgent.h" alt="" coords="484,119,717,184"/>
 <area shape="rect" id="node3" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="229,232,457,297"/>
 <area shape="rect" id="node4" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="77,345,305,397"/>
 <area shape="rect" id="node5" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="230,445,453,497"/>
@@ -11,4 +12,6 @@
 <area shape="rect" id="node8" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="16,745,214,784"/>
 <area shape="rect" id="node9" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="294,745,574,784"/>
 <area shape="rect" id="node13" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="528,452,803,491"/>
+<area shape="rect" id="node15" href="$_m_r_m_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/MRM/src/MRMCapabilityAgent.cpp" alt="" coords="481,239,714,291"/>
+<area shape="rect" id="node16" href="$_m_r_m_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/MRM/test/MRMCapabilityAgent\lTest.cpp" alt="" coords="737,232,948,297"/>
 </map>

@@ -5,7 +5,7 @@
 <area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::StateProvider\lInterface" alt="" coords="18,157,215,209"/>
 <area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextRequester\lInterface" alt="" coords="5,233,228,285"/>
 <area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="304,188,501,227"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_player_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AudioPlayerObserver\lInterface" alt="" coords="282,251,524,303"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_render_player_info_cards_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::RenderPlayerInfo\lCardsObserverInterface" alt="" coords="293,251,513,303"/>
 <area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilityConfiguration\lInterface" alt="" coords="276,327,530,379"/>
 <area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer. " alt="" coords="301,403,504,455"/>
 </map>

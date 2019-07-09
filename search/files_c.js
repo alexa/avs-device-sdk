@@ -22,6 +22,7 @@ var searchData=
   ['mediaplayerinterface_2eh',['MediaPlayerInterface.h',['../_media_player_interface_8h.html',1,'']]],
   ['mediaplayerobserverinterface_2eh',['MediaPlayerObserverInterface.h',['../_media_player_observer_interface_8h.html',1,'']]],
   ['mediaplayertest_2ecpp',['MediaPlayerTest.cpp',['../_media_player_test_8cpp.html',1,'']]],
+  ['mediapropertiesinterface_2eh',['MediaPropertiesInterface.h',['../_media_properties_interface_8h.html',1,'']]],
   ['memory_2eh',['Memory.h',['../_memory_8h.html',1,'']]],
   ['messageconsumerinterface_2eh',['MessageConsumerInterface.h',['../_message_consumer_interface_8h.html',1,'']]],
   ['messageinterpreter_2ecpp',['MessageInterpreter.cpp',['../_message_interpreter_8cpp.html',1,'']]],

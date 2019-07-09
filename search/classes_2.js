@@ -38,7 +38,7 @@ var searchData=
   ['consolereader',['ConsoleReader',['../classalexa_client_s_d_k_1_1sample_app_1_1_console_reader.html',1,'alexaClientSDK::sampleApp']]],
   ['contentdecrypter',['ContentDecrypter',['../classalexa_client_s_d_k_1_1playlist_parser_1_1_content_decrypter.html',1,'alexaClientSDK::playlistParser']]],
   ['contentdecryptertest',['ContentDecrypterTest',['../classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_content_decrypter_test.html',1,'alexaClientSDK::playlistParser::test']]],
-  ['context',['Context',['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_player_observer_interface_1_1_context.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::AudioPlayerObserverInterface']]],
+  ['context',['Context',['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_player_observer_interface_1_1_context.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::AudioPlayerObserverInterface::Context'],['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_render_player_info_cards_observer_interface_1_1_context.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface::Context']]],
   ['contextinfo',['ContextInfo',['../structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_context_info.html',1,'alexaClientSDK::capabilityAgents::alerts::Alert']]],
   ['contextinterface',['ContextInterface',['../classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_1_1_context_interface.html',1,'alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer']]],
   ['contextmanager',['ContextManager',['../classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html',1,'alexaClientSDK::contextManager']]],

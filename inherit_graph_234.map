@@ -1,4 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1settings_1_1_setting_observer_interface.html" title="alexaClientSDK::settings\l::SettingObserverInterface\l\&lt; SettingT \&gt;" alt="" coords="5,5,182,57"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_mock_setting_observer.html" title="alexaClientSDK::settings\l::test::MockSettingObserver\l\&lt; SettingT \&gt;" alt="" coords="230,5,416,57"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1settings_1_1_setting_interface.html" title="alexaClientSDK::settings\l::SettingInterface\&lt; ValueT \&gt;" alt="" coords="5,68,191,107"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1settings_1_1_setting.html" title="alexaClientSDK::settings\l::Setting\&lt; ValueT \&gt;" alt="" coords="253,5,421,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_mock_setting.html" title="alexaClientSDK::settings\l::test::MockSetting\&lt; ValueT \&gt;" alt="" coords="239,68,434,107"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_setting_stub.html" title="Settings stub that just set the value immediately. " alt="" coords="242,131,432,169"/>
 </map>
