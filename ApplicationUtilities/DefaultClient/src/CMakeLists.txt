@@ -48,7 +48,9 @@ if (PCC)
     target_link_libraries(DefaultClient PhoneCallController)
 endif()
 
-if (MRM)
+if (MRM AND MRM_STANDALONE_APP)
+    target_link_libraries(DefaultClient MRM MRMHandlerProxy)
+elseif (MRM)
     target_link_libraries(DefaultClient MRM MRMHandler)
 endif()
 

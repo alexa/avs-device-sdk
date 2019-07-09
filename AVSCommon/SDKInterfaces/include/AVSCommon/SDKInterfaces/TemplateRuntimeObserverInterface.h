@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,6 +38,13 @@ public:
      * @c AudioPlayerInfo is passed to the observers as a parameter in the @c renderPlayerInfoCard callback.
      */
     struct AudioPlayerInfo {
+        /**
+         * Default constructor.
+         */
+        AudioPlayerInfo() :
+                audioPlayerState{avsCommon::avs::PlayerActivity::IDLE},
+                offset{std::chrono::milliseconds::zero()} {};
+
         /**
          * The state of the @c AudioPlayer.  This information is useful for implementing the progress bar
          * in the display card.  It is assumed that the client is responsible for progressing the progress bar

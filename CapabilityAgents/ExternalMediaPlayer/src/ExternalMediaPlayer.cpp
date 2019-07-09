@@ -14,6 +14,9 @@
  */
 
 /// @file ExternalMediaPlayer.cpp
+#include <utility>
+#include <vector>
+
 #include "ExternalMediaPlayer/ExternalMediaPlayer.h"
 
 #include <rapidjson/stringbuffer.h>
@@ -402,14 +405,19 @@ std::shared_ptr<ExternalMediaAdapterInterface> ExternalMediaPlayer::preprocessDi
         return nullptr;
     }
 
-    auto adapterIt = m_adapters.find(playerId);
-    if (adapterIt == m_adapters.end()) {
-        ACSDK_ERROR(LX("preprocessDirectiveFailed").d("reason", "noAdapterForPlayerId").d(PLAYER_ID, playerId));
-        sendExceptionEncounteredAndReportFailed(info, "Unrecogonized PlayerId.");
-        return nullptr;
+    std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface> adapter;
+
+    {
+        std::lock_guard<std::mutex> lock{m_adaptersMutex};
+        auto adapterIt = m_adapters.find(playerId);
+        if (adapterIt == m_adapters.end()) {
+            ACSDK_ERROR(LX("preprocessDirectiveFailed").d("reason", "noAdapterForPlayerId").d(PLAYER_ID, playerId));
+            sendExceptionEncounteredAndReportFailed(info, "Unrecogonized PlayerId.");
+            return nullptr;
+        }
+        adapter = adapterIt->second;
     }
 
-    auto adapter = adapterIt->second;
     if (!adapter) {
         ACSDK_ERROR(LX("preprocessDirectiveFailed").d("reason", "nullAdapter").d(PLAYER_ID, playerId));
         sendExceptionEncounteredAndReportFailed(info, "nullAdapter.");
@@ -567,60 +575,76 @@ DirectiveHandlerConfiguration ExternalMediaPlayer::getConfiguration() const {
     return g_configuration;
 }
 
-void ExternalMediaPlayer::setPlayerInFocus(const std::string& playerInFocus) {
-    ACSDK_DEBUG9(LX("setPlayerInFocus").d("playerInFocus", playerInFocus));
-    m_playerInFocus = playerInFocus;
-    m_playbackRouter->setHandler(shared_from_this());
+void ExternalMediaPlayer::setObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer) {
+    ACSDK_DEBUG5(LX(__func__));
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    m_renderPlayerObserver = observer;
 }
 
-void ExternalMediaPlayer::onButtonPressed(PlaybackButton button) {
+std::chrono::milliseconds ExternalMediaPlayer::getAudioItemOffset() {
+    ACSDK_DEBUG5(LX(__func__));
+    std::lock_guard<std::mutex> lock{m_inFocusAdapterMutex};
+    if (!m_adapterInFocus) {
+        ACSDK_ERROR(LX("getAudioItemOffsetFailed").d("reason", "NoActiveAdapter").d("player", m_playerInFocus));
+        return std::chrono::milliseconds::zero();
+    }
+    return m_adapterInFocus->getOffset();
+}
+
+void ExternalMediaPlayer::setPlayerInFocus(const std::string& playerInFocus) {
+    ACSDK_DEBUG9(LX("setPlayerInFocus").d("playerInFocus", playerInFocus));
+    std::lock_guard<std::mutex> lock{m_inFocusAdapterMutex};
+    m_playerInFocus = playerInFocus;
+    m_playbackRouter->setHandler(shared_from_this());
     if (!m_playerInFocus.empty()) {
+        std::lock_guard<std::mutex> lock{m_adaptersMutex};
         auto adapterIt = m_adapters.find(m_playerInFocus);
-
         if (m_adapters.end() == adapterIt) {
-            // Should never reach here as playerInFocus is always set based on a contract with AVS.
-            ACSDK_ERROR(LX("AdapterNotFound").d("player", m_playerInFocus));
+            ACSDK_INFO(LX(__func__).d("reason", "AdapterNotFound").d("name", m_playerInFocus));
             return;
         }
-
-        auto buttonIt = g_buttonToRequestType.find(button);
-
-        if (g_buttonToRequestType.end() == buttonIt) {
-            ACSDK_ERROR(LX("ButtonToRequestTypeNotFound").d("button", button));
-            return;
-        }
-
-        adapterIt->second->handlePlayControl(buttonIt->second);
+        m_adapterInFocus = adapterIt->second;
     }
 }
 
+void ExternalMediaPlayer::onButtonPressed(PlaybackButton button) {
+    std::lock_guard<std::mutex> lock{m_inFocusAdapterMutex};
+    if (!m_adapterInFocus) {
+        ACSDK_ERROR(LX("onButtonPressedFailed").d("reason", "NoActiveAdapter").d("player", m_playerInFocus));
+        return;
+    }
+
+    auto buttonIt = g_buttonToRequestType.find(button);
+
+    if (g_buttonToRequestType.end() == buttonIt) {
+        ACSDK_ERROR(LX("ButtonToRequestTypeNotFound").d("button", button));
+        return;
+    }
+
+    m_adapterInFocus->handlePlayControl(buttonIt->second);
+}
+
 void ExternalMediaPlayer::onTogglePressed(PlaybackToggle toggle, bool action) {
-    if (!m_playerInFocus.empty()) {
-        auto adapterIt = m_adapters.find(m_playerInFocus);
+    std::lock_guard<std::mutex> lock{m_inFocusAdapterMutex};
+    if (!m_adapterInFocus) {
+        ACSDK_ERROR(LX("onTogglePressedFailed").d("reason", "NoActiveAdapter").d("player", m_playerInFocus));
+        return;
+    }
 
-        if (m_adapters.end() == adapterIt) {
-            // Should never reach here as playerInFocus is always set based on a contract with AVS.
-            ACSDK_ERROR(LX("AdapterNotFound").d("player", m_playerInFocus));
-            return;
-        }
+    auto toggleIt = g_toggleToRequestType.find(toggle);
+    if (g_toggleToRequestType.end() == toggleIt) {
+        ACSDK_ERROR(LX("ToggleToRequestTypeNotFound").d("toggle", toggle));
+        return;
+    }
 
-        auto toggleIt = g_toggleToRequestType.find(toggle);
+    // toggleStates map is <SELECTED,DESELECTED>
+    auto toggleStates = toggleIt->second;
 
-        if (g_toggleToRequestType.end() == toggleIt) {
-            ACSDK_ERROR(LX("ToggleToRequestTypeNotFound").d("toggle", toggle));
-            return;
-        }
-
-        auto adapter = adapterIt->second;
-
-        // toggleStates map is <SELECTED,DESELECTED>
-        auto toggleStates = toggleIt->second;
-
-        if (action) {
-            adapter->handlePlayControl(toggleStates.first);
-        } else {
-            adapterIt->second->handlePlayControl(toggleStates.second);
-        }
+    if (action) {
+        m_adapterInFocus->handlePlayControl(toggleStates.first);
+    } else {
+        m_adapterInFocus->handlePlayControl(toggleStates.second);
     }
 }
 
@@ -631,14 +655,19 @@ void ExternalMediaPlayer::doShutdown() {
     m_contextManager->setStateProvider(SESSION_STATE, nullptr);
     m_contextManager->setStateProvider(PLAYBACK_STATE, nullptr);
 
-    for (auto& adapter : m_adapters) {
-        if (!adapter.second) {
-            continue;
-        }
-        adapter.second->shutdown();
-    }
+    {
+        std::unique_lock<std::mutex> lock{m_adaptersMutex};
+        auto adaptersCopy = m_adapters;
+        m_adapters.clear();
+        lock.unlock();
 
-    m_adapters.clear();
+        for (const auto& adapter : adaptersCopy) {
+            if (!adapter.second) {
+                continue;
+            }
+            adapter.second->shutdown();
+        }
+    }
     m_exceptionEncounteredSender.reset();
     m_contextManager.reset();
     m_playbackRouter.reset();
@@ -708,18 +737,28 @@ std::string ExternalMediaPlayer::provideSessionState() {
     rapidjson::Document state(rapidjson::kObjectType);
     rapidjson::Document::AllocatorType& stateAlloc = state.GetAllocator();
 
-    state.AddMember(rapidjson::StringRef(PLAYER_IN_FOCUS), m_playerInFocus, stateAlloc);
+    {
+        std::lock_guard<std::mutex> lock{m_inFocusAdapterMutex};
+        state.AddMember(rapidjson::StringRef(PLAYER_IN_FOCUS), m_playerInFocus, stateAlloc);
+    }
 
     rapidjson::Value players(rapidjson::kArrayType);
-    for (const auto& adapter : m_adapters) {
-        if (!adapter.second) {
-            continue;
+    std::vector<std::pair<std::string, ObservableSessionProperties>> updates;
+    {
+        std::lock_guard<std::mutex> lock{m_adaptersMutex};
+        for (const auto& adapter : m_adapters) {
+            if (!adapter.second) {
+                continue;
+            }
+            auto state = adapter.second->getState().sessionState;
+            rapidjson::Value playerJson = buildSessionState(state, stateAlloc);
+            players.PushBack(playerJson, stateAlloc);
+            updates.push_back({state.playerId, {state.loggedIn, state.userName}});
         }
-        auto state = adapter.second->getState().sessionState;
-        rapidjson::Value playerJson = buildSessionState(state, stateAlloc);
-        players.PushBack(playerJson, stateAlloc);
-        ObservableSessionProperties update{state.loggedIn, state.userName};
-        notifyObservers(state.playerId, &update);
+    }
+
+    for (const auto& update : updates) {
+        notifyObservers(update.first, &update.second);
     }
 
     state.AddMember(rapidjson::StringRef(PLAYERS), players, stateAlloc);
@@ -745,16 +784,25 @@ std::string ExternalMediaPlayer::providePlaybackState() {
 
     // Fetch actual PlaybackState from every player supported by the ExternalMediaPlayer.
     rapidjson::Value players(rapidjson::kArrayType);
-    for (const auto& adapter : m_adapters) {
-        if (!adapter.second) {
-            continue;
+    std::vector<std::pair<std::string, ObservablePlaybackStateProperties>> updates;
+    {
+        std::lock_guard<std::mutex> lock{m_adaptersMutex};
+        for (const auto& adapter : m_adapters) {
+            if (!adapter.second) {
+                continue;
+            }
+            auto state = adapter.second->getState().playbackState;
+            rapidjson::Value playerJson = buildPlaybackState(state, stateAlloc);
+            players.PushBack(playerJson, stateAlloc);
+            updates.push_back({state.playerId, {state.state, state.trackName}});
         }
-        auto state = adapter.second->getState().playbackState;
-        rapidjson::Value playerJson = buildPlaybackState(state, stateAlloc);
-        players.PushBack(playerJson, stateAlloc);
-        ObservablePlaybackStateProperties update{state.state, state.trackName};
-        notifyObservers(state.playerId, &update);
     }
+
+    for (const auto& update : updates) {
+        notifyObservers(update.first, &update.second);
+    }
+
+    notifyRenderPlayerInfoCardsObservers();
 
     state.AddMember(PLAYERS, players, stateAlloc);
 
@@ -800,6 +848,7 @@ void ExternalMediaPlayer::createAdapters(
             contextManager,
             shared_from_this());
         if (adapter) {
+            std::lock_guard<std::mutex> lock{m_adaptersMutex};
             m_adapters[entry.first] = adapter;
         } else {
             ACSDK_ERROR(LX("adapterCreationFailed").d(PLAYER_ID, entry.first));
@@ -862,6 +911,35 @@ void ExternalMediaPlayer::notifyObservers(
 
         if (playbackProperties) {
             observer->onPlaybackStateProvided(playerId, *playbackProperties);
+        }
+    }
+}
+
+void ExternalMediaPlayer::notifyRenderPlayerInfoCardsObservers() {
+    ACSDK_DEBUG5(LX(__func__));
+
+    std::unique_lock<std::mutex> lock{m_inFocusAdapterMutex};
+    if (m_adapterInFocus) {
+        auto adapterState = m_adapterInFocus->getState();
+        lock.unlock();
+        std::stringstream ss{adapterState.playbackState.state};
+        avsCommon::avs::PlayerActivity playerActivity = avsCommon::avs::PlayerActivity::IDLE;
+        ss >> playerActivity;
+        if (ss.fail()) {
+            ACSDK_ERROR(LX("notifyRenderPlayerInfoCardsFailed")
+                            .d("reason", "invalidState")
+                            .d("state", adapterState.playbackState.state));
+            return;
+        }
+        RenderPlayerInfoCardsObserverInterface::Context context;
+        context.audioItemId = adapterState.playbackState.trackId;
+        context.offset = getAudioItemOffset();
+        context.mediaProperties = shared_from_this();
+        {
+            std::lock_guard<std::mutex> lock{m_observersMutex};
+            if (m_renderPlayerObserver) {
+                m_renderPlayerObserver->onRenderPlayerCardsInfoChanged(playerActivity, context);
+            }
         }
     }
 }

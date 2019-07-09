@@ -120,6 +120,11 @@ void MessageRouter::setAVSEndpoint(const std::string& avsEndpoint) {
     }
 }
 
+std::string MessageRouter::getAVSEndpoint() {
+    std::lock_guard<std::mutex> lock{m_connectionMutex};
+    return m_avsEndpoint;
+}
+
 void MessageRouter::onConnected(std::shared_ptr<TransportInterface> transport) {
     std::unique_lock<std::mutex> lock{m_connectionMutex};
 

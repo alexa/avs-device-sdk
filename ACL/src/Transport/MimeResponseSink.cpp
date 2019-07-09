@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -88,11 +88,11 @@ MimeResponseSink::MimeResponseSink(
         m_messageConsumer{messageConsumer},
         m_attachmentManager{attachmentManager},
         m_attachmentContextId{std::move(attachmentContextId)} {
-    ACSDK_DEBUG5(LX(__func__).d("handler", handler.get()));
+    ACSDK_DEBUG9(LX(__func__).d("handler", handler.get()));
 }
 
 bool MimeResponseSink::onReceiveResponseCode(long responseCode) {
-    ACSDK_DEBUG5(LX(__func__).d("responseCode", responseCode));
+    ACSDK_DEBUG9(LX(__func__).d("responseCode", responseCode));
 
     if (m_handler) {
         m_handler->onActivity();
@@ -102,7 +102,7 @@ bool MimeResponseSink::onReceiveResponseCode(long responseCode) {
 }
 
 bool MimeResponseSink::onReceiveHeaderLine(const std::string& line) {
-    ACSDK_DEBUG5(LX(__func__).d("line", line));
+    ACSDK_DEBUG9(LX(__func__).d("line", line));
 
     if (m_handler) {
         m_handler->onActivity();
@@ -118,7 +118,7 @@ bool MimeResponseSink::onReceiveHeaderLine(const std::string& line) {
 }
 
 bool MimeResponseSink::onBeginMimePart(const std::multimap<std::string, std::string>& headers) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG9(LX(__func__));
 
     if (m_handler) {
         m_handler->onActivity();
@@ -158,7 +158,7 @@ bool MimeResponseSink::onBeginMimePart(const std::multimap<std::string, std::str
 }
 
 HTTP2ReceiveDataStatus MimeResponseSink::onReceiveMimeData(const char* bytes, size_t size) {
-    ACSDK_DEBUG5(LX(__func__).d("size", size));
+    ACSDK_DEBUG9(LX(__func__).d("size", size));
 
     if (m_handler) {
         m_handler->onActivity();
@@ -177,7 +177,7 @@ HTTP2ReceiveDataStatus MimeResponseSink::onReceiveMimeData(const char* bytes, si
 }
 
 bool MimeResponseSink::onEndMimePart() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG9(LX(__func__));
 
     if (m_handler) {
         m_handler->onActivity();
@@ -208,7 +208,7 @@ bool MimeResponseSink::onEndMimePart() {
 }
 
 HTTP2ReceiveDataStatus MimeResponseSink::onReceiveNonMimeData(const char* bytes, size_t size) {
-    ACSDK_DEBUG5(LX(__func__).d("size", size));
+    ACSDK_DEBUG9(LX(__func__).d("size", size));
 
     if (m_handler) {
         m_handler->onActivity();
@@ -228,7 +228,7 @@ HTTP2ReceiveDataStatus MimeResponseSink::onReceiveNonMimeData(const char* bytes,
 }
 
 void MimeResponseSink::onResponseFinished(HTTP2ResponseFinishedStatus status) {
-    ACSDK_DEBUG5(LX(__func__).d("status", status));
+    ACSDK_DEBUG9(LX(__func__).d("status", status));
 
     if (m_handler) {
         m_handler->onResponseFinished(status, m_nonMimeBody);

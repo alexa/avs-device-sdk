@@ -261,6 +261,12 @@ TEST_F(MessageRouterTest, test_onConnectedOnInactiveTransport) {
     ASSERT_FALSE(m_mockMessageRouterObserver->wasNotifiedOfStatusChange());
 }
 
+TEST_F(MessageRouterTest, setAndGetAVSEndpoint) {
+    auto endpoint = "Endpoint";
+    m_router->setAVSEndpoint(endpoint);
+    ASSERT_EQ(endpoint, m_router->getAVSEndpoint());
+}
+
 }  // namespace test
 }  // namespace acl
 }  // namespace alexaClientSDK

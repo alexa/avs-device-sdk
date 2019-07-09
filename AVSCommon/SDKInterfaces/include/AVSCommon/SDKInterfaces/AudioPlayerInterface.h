@@ -49,14 +49,6 @@ public:
      * @param observer The @c AudioPlayerObserverInterface
      */
     virtual void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer) = 0;
-
-    /**
-     * This function retrieves the offset of the current AudioItem the @c AudioPlayer is handling.
-     * @note This function is blocking.
-     *
-     * @return This returns the offset in millisecond.
-     */
-    virtual std::chrono::milliseconds getAudioItemOffset() = 0;
 };
 
 }  // namespace sdkInterfaces

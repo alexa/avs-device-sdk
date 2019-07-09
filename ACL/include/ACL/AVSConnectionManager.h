@@ -117,6 +117,11 @@ public:
      */
     void setAVSEndpoint(const std::string& avsEndpoint) override;
 
+    /**
+     * @return The current URL endpoint for AVS connection.
+     */
+    std::string getAVSEndpoint();
+
     /// @name InternetConnectionObserverInterface method overrides.
     /// @{
     void onConnectionStatusChanged(bool connected) override;

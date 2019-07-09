@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,18 +17,19 @@
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_TEMPLATERUNTIME_INCLUDE_TEMPLATERUNTIME_TEMPLATERUNTIME_H_
 
 #include <chrono>
+#include <deque>
 #include <memory>
-#include <queue>
 #include <string>
+#include <unordered_map>
 #include <unordered_set>
 
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
-#include <AVSCommon/SDKInterfaces/AudioPlayerInterface.h>
-#include <AVSCommon/SDKInterfaces/AudioPlayerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderInterface.h>
 #include <AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
@@ -54,7 +55,7 @@ namespace templateRuntime {
 class TemplateRuntime
         : public avsCommon::avs::CapabilityAgent
         , public avsCommon::utils::RequiresShutdown
-        , public avsCommon::sdkInterfaces::AudioPlayerObserverInterface
+        , public avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface
         , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
         , public std::enable_shared_from_this<TemplateRuntime> {
@@ -62,13 +63,14 @@ public:
     /**
      * Create an instance of @c TemplateRuntime.
      *
-     * @param audioPlayerInterface The object to use for subscribing @c TemplateRuntime as an observer of
-     * the @c AudioPlayer.
+     * @param renderPlayerInfoCardsInterfaces A set of objects to use for subscribing @c TemplateRuntime as an
+     * observer of changes for RenderPlayerInfoCards.
      * @param exceptionSender The object to use for sending AVS Exception messages.
      * @return @c nullptr if the inputs are not defined, else a new instance of @c TemplateRuntime.
      */
     static std::shared_ptr<TemplateRuntime> create(
-        std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerInterface> audioPlayerInterface,
+        const std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface>>&
+            renderPlayerInfoCardsInterfaces,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
 
@@ -91,9 +93,9 @@ public:
     void onFocusChanged(avsCommon::avs::FocusState newFocus) override;
     /// @}
 
-    /// @name AudioPlayerObserverInterface Functions
+    /// @name RenderPlayerInfoCardsObserverInterface Functions
     /// @{
-    void onPlayerActivityChanged(avsCommon::avs::PlayerActivity state, const Context& context) override;
+    void onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity state, const Context& context) override;
     /// @}
 
     /// @name DialogUXStateObserverInterface Functions
@@ -194,12 +196,13 @@ private:
     /**
      * Constructor.
      *
-     * @param audioPlayerInterface The object to use for subscribing @c TemplateRuntime as an observer of
-     * AudioPlayer.
+     * @param renderPlayerInfoCardsInterfaces A set of objects to use for subscribing @c TemplateRuntime as an
+     * observer of changes for RenderPlayerInfoCards.
      * @param exceptionSender The object to use for sending AVS Exception messages.
      */
     TemplateRuntime(
-        std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerInterface> audioPlayerInterface,
+        const std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface>>&
+            renderPlayerInfoCardsInterfaces,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
 
@@ -342,19 +345,26 @@ private:
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface>> m_observers;
 
     /*
-     * This is used to store the current executing @c AudioItem based on the callbacks from the
-     * AudioPlayerObserverInterface.
+     * This is a map that is used to store the current executing @c AudioItem based on the callbacks from the
+     * @c RenderPlayerInfoCardsProviderInterface.
      */
-    AudioItemPair m_audioItemInExecution;
+    std::unordered_map<std::shared_ptr<avsCommon::sdkInterfaces::MediaPropertiesInterface>, AudioItemPair>
+        m_audioItemsInExecution;
+
+    /// The current active RenderPlayerInfoCards provider that has the matching audioItemId.
+    std::shared_ptr<avsCommon::sdkInterfaces::MediaPropertiesInterface> m_activeRenderPlayerInfoCardsProvider;
 
     /*
      * This queue is for storing the @c RenderPlayerInfo directives when its audioItemId does not match the audioItemId
      * in execution in the @c AudioPlayer.
      */
-    std::queue<AudioItemPair> m_audioItems;
+    std::deque<AudioItemPair> m_audioItems;
 
-    /// This is to store the @c AudioPlayerInfo to be passed to the observers in the renderPlayerInfoCard callback.
-    avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface::AudioPlayerInfo m_audioPlayerInfo;
+    /// This map is to store the @c AudioPlayerInfo to be passed to the observers in the renderPlayerInfoCard callback.
+    std::unordered_map<
+        std::shared_ptr<avsCommon::sdkInterfaces::MediaPropertiesInterface>,
+        avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface::AudioPlayerInfo>
+        m_audioPlayerInfo;
 
     /// The directive corresponding to the RenderTemplate directive.
     std::shared_ptr<alexaClientSDK::avsCommon::avs::CapabilityAgent::DirectiveInfo> m_lastDisplayedDirective;
@@ -370,11 +380,11 @@ private:
     /// @}
 
     /*
-     * This is an interface to the @c AudioPlayer.  The @c TemplateRuntime CA used this interface to add and remove
-     * itself as an observer to the @c AudioPlayer.  The interface is also used to query the latest offset of the audio
-     * playback in the @c AudioPlayer.
+     * This is a set of interfaces to the @c RenderPlayerInfoCardsProviderInterface.  The @c TemplateRuntime CA
+     * used this interface to add and remove itself as an observer.
      */
-    std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerInterface> m_audioPlayerInterface;
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface>>
+        m_renderPlayerInfoCardsInterfaces;
 
     /// The @c FocusManager used to manage usage of the visual channel.
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_focusManager;

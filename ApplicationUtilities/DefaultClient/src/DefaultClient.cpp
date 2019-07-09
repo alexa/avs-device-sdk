@@ -39,7 +39,9 @@
 #include <PhoneCallController/PhoneCallController.h>
 #endif
 
-#ifdef ENABLE_MRM
+#if defined(ENABLE_MRM) && defined(ENABLE_MRM_STANDALONE_APP)
+#include <MRMHandler/MRMHandlerProxy.h>
+#elif ENABLE_MRM
 #include <MRMHandler/MRMHandler.h>
 #endif
 
@@ -49,8 +51,8 @@
 #include <System/UserInactivityMonitor.h>
 
 #ifdef BLUETOOTH_BLUEZ
-#include <Bluetooth/BluetoothAVRCPTransformer.h>
 #include <BlueZ/BlueZBluetoothDeviceManager.h>
+#include <Bluetooth/BluetoothAVRCPTransformer.h>
 #endif
 
 namespace alexaClientSDK {
@@ -306,15 +308,18 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the Attachment Manager - This component deals with managing attachments and allows for readers and
+     * Creating the Attachment Manager - This component deals with managing
+     * attachments and allows for readers and
      * writers to be created to handle the attachment.
      */
     auto attachmentManager = std::make_shared<avsCommon::avs::attachment::AttachmentManager>(
         avsCommon::avs::attachment::AttachmentManager::AttachmentType::IN_PROCESS);
 
     /*
-     * Creating the message router - This component actually maintains the connection to AVS over HTTP2. It is created
-     * using the auth delegate, which provides authorization to connect to AVS, and the attachment manager, which helps
+     * Creating the message router - This component actually maintains the
+     * connection to AVS over HTTP2. It is created
+     * using the auth delegate, which provides authorization to connect to AVS,
+     * and the attachment manager, which helps
      * ACL write attachments received from AVS.
      */
     m_messageRouter = std::make_shared<acl::MessageRouter>(authDelegate, attachmentManager, transportFactory);
@@ -326,7 +331,8 @@ bool DefaultClient::initialize(
     m_internetConnectionMonitor = internetConnectionMonitor;
 
     /*
-     * Creating the connection manager - This component is the overarching connection manager that glues together all
+     * Creating the connection manager - This component is the overarching
+     * connection manager that glues together all
      * the other networking components into one easy-to-use component.
      */
     m_connectionManager = acl::AVSConnectionManager::create(
@@ -337,9 +343,12 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating our certified sender - this component guarantees that messages given to it (expected to be JSON
-     * formatted AVS Events) will be sent to AVS.  This nicely decouples strict message sending from components which
-     * require an Event be sent, even in conditions when there is no active AVS connection.
+     * Creating our certified sender - this component guarantees that messages
+     * given to it (expected to be JSON
+     * formatted AVS Events) will be sent to AVS.  This nicely decouples strict
+     * message sending from components which
+     * require an Event be sent, even in conditions when there is no active AVS
+     * connection.
      */
     m_certifiedSender = certifiedSender::CertifiedSender::create(
         m_connectionManager, m_connectionManager, messageStorage, customerDataManager);
@@ -349,8 +358,10 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the Exception Sender - This component helps the SDK send exceptions when it is unable to handle a
-     * directive sent by AVS. For that reason, the Directive Sequencer and each Capability Agent will need this
+     * Creating the Exception Sender - This component helps the SDK send
+     * exceptions when it is unable to handle a
+     * directive sent by AVS. For that reason, the Directive Sequencer and each
+     * Capability Agent will need this
      * component.
      */
     m_exceptionSender = avsCommon::avs::ExceptionEncounteredSender::create(m_connectionManager);
@@ -360,8 +371,10 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the Directive Sequencer - This is the component that deals with the sequencing and ordering of
-     * directives sent from AVS and forwarding them along to the appropriate Capability Agent that deals with
+     * Creating the Directive Sequencer - This is the component that deals with
+     * the sequencing and ordering of
+     * directives sent from AVS and forwarding them along to the appropriate
+     * Capability Agent that deals with
      * directives in that Namespace/Name.
      */
     m_directiveSequencer = adsl::DirectiveSequencer::create(m_exceptionSender);
@@ -371,8 +384,10 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the Message Interpreter - This component takes care of converting ACL messages to Directives for the
-     * Directive Sequencer to process. This essentially "glues" together the ACL and ADSL.
+     * Creating the Message Interpreter - This component takes care of converting
+     * ACL messages to Directives for the
+     * Directive Sequencer to process. This essentially "glues" together the ACL
+     * and ADSL.
      */
     auto messageInterpreter =
         std::make_shared<adsl::MessageInterpreter>(m_exceptionSender, m_directiveSequencer, attachmentManager);
@@ -380,29 +395,36 @@ bool DefaultClient::initialize(
     m_connectionManager->addMessageObserver(messageInterpreter);
 
     /*
-     * Creating the Registration Manager - This component is responsible for implementing any customer registration
+     * Creating the Registration Manager - This component is responsible for
+     * implementing any customer registration
      * operation such as login and logout
      */
     m_registrationManager = std::make_shared<registrationManager::RegistrationManager>(
         m_directiveSequencer, m_connectionManager, customerDataManager);
 
     /*
-     * Creating the Audio Activity Tracker - This component is responsibly for reporting the audio channel focus
+     * Creating the Audio Activity Tracker - This component is responsibly for
+     * reporting the audio channel focus
      * information to AVS.
      */
     m_audioActivityTracker = afml::AudioActivityTracker::create(contextManager);
 
     /*
-     * Creating the Focus Manager - This component deals with the management of layered audio focus across various
-     * components. It handles granting access to Channels as well as pushing different "Channels" to foreground,
-     * background, or no focus based on which other Channels are active and the priorities of those Channels. Each
-     * Capability Agent will require the Focus Manager in order to request access to the Channel it wishes to play on.
+     * Creating the Focus Manager - This component deals with the management of
+     * layered audio focus across various
+     * components. It handles granting access to Channels as well as pushing
+     * different "Channels" to foreground,
+     * background, or no focus based on which other Channels are active and the
+     * priorities of those Channels. Each
+     * Capability Agent will require the Focus Manager in order to request access
+     * to the Channel it wishes to play on.
      */
     m_audioFocusManager =
         std::make_shared<afml::FocusManager>(afml::FocusManager::getDefaultAudioChannels(), m_audioActivityTracker);
 
     /*
-     * Creating the User Inactivity Monitor - This component is responsibly for updating AVS of user inactivity as
+     * Creating the User Inactivity Monitor - This component is responsibly for
+     * updating AVS of user inactivity as
      * described in the System Interface of AVS.
      */
     m_userInactivityMonitor =
@@ -413,7 +435,8 @@ bool DefaultClient::initialize(
     }
 
 /*
- * Creating the Audio Input Processor - This component is the Capability Agent that implements the
+ * Creating the Audio Input Processor - This component is the Capability Agent
+ * that implements the
  * SpeechRecognizer interface of AVS.
  */
 #ifdef ENABLE_OPUS
@@ -445,7 +468,8 @@ bool DefaultClient::initialize(
     m_audioInputProcessor->addObserver(m_dialogUXStateAggregator);
 
     /*
-     * Creating the Speech Synthesizer - This component is the Capability Agent that implements the SpeechSynthesizer
+     * Creating the Speech Synthesizer - This component is the Capability Agent
+     * that implements the SpeechSynthesizer
      * interface of AVS.
      */
     m_speechSynthesizer = capabilityAgents::speechSynthesizer::SpeechSynthesizer::create(
@@ -463,7 +487,8 @@ bool DefaultClient::initialize(
     m_speechSynthesizer->addObserver(m_dialogUXStateAggregator);
 
     /*
-     * Creating the PlaybackController Capability Agent - This component is the Capability Agent that implements the
+     * Creating the PlaybackController Capability Agent - This component is the
+     * Capability Agent that implements the
      * PlaybackController interface of AVS.
      */
     m_playbackController =
@@ -474,7 +499,8 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the PlaybackRouter - This component routes a playback button press to the active handler.
+     * Creating the PlaybackRouter - This component routes a playback button press
+     * to the active handler.
      * The default handler is @c PlaybackController.
      */
     m_playbackRouter = capabilityAgents::playbackController::PlaybackRouter::create(m_playbackController);
@@ -484,7 +510,8 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the Audio Player - This component is the Capability Agent that implements the AudioPlayer
+     * Creating the Audio Player - This component is the Capability Agent that
+     * implements the AudioPlayer
      * interface of AVS.
      */
     m_audioPlayer = capabilityAgents::audioPlayer::AudioPlayer::create(
@@ -513,7 +540,8 @@ bool DefaultClient::initialize(
     allSpeakers.insert(allSpeakers.end(), additionalSpeakers.begin(), additionalSpeakers.end());
 
     /*
-     * Creating the SpeakerManager Capability Agent - This component is the Capability Agent that implements the
+     * Creating the SpeakerManager Capability Agent - This component is the
+     * Capability Agent that implements the
      * Speaker interface of AVS.
      */
     m_speakerManager = capabilityAgents::speakerManager::SpeakerManager::create(
@@ -524,7 +552,8 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the Alerts Capability Agent - This component is the Capability Agent that implements the Alerts
+     * Creating the Alerts Capability Agent - This component is the Capability
+     * Agent that implements the Alerts
      * interface of AVS.
      */
     m_alertsCapabilityAgent = capabilityAgents::alerts::AlertsCapabilityAgent::create(
@@ -553,7 +582,8 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the Notifications Capability Agent - This component is the Capability Agent that implements the
+     * Creating the Notifications Capability Agent - This component is the
+     * Capability Agent that implements the
      * Notifications interface of AVS.
      */
     m_notificationsCapabilityAgent = capabilityAgents::notifications::NotificationsCapabilityAgent::create(
@@ -577,7 +607,8 @@ bool DefaultClient::initialize(
 
 #ifdef ENABLE_PCC
     /*
-     * Creating the PhoneCallController - This component is the Capability Agent that implements the
+     * Creating the PhoneCallController - This component is the Capability Agent
+     * that implements the
      * PhoneCallController interface of AVS
      */
     m_phoneCallControllerCapabilityAgent = capabilityAgents::phoneCallController::PhoneCallController::create(
@@ -598,7 +629,6 @@ bool DefaultClient::initialize(
     if (!capabilityAgents::callManager::CallManager::create(
             sipUserAgent,
             ringtoneMediaPlayer,
-            ringtoneSpeaker,
             m_connectionManager,
             contextManager,
             m_audioFocusManager,
@@ -634,7 +664,8 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the Setting object - This component implements the Setting interface of AVS.
+     * Creating the Setting object - This component implements the Setting
+     * interface of AVS.
      */
     m_settings = capabilityAgents::settings::Settings::create(
         settingsStorage, {settingsUpdatedEventSender}, customerDataManager);
@@ -645,7 +676,8 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the ExternalMediaPlayer CA - This component is the Capability Agent that implements the
+     * Creating the ExternalMediaPlayer CA - This component is the Capability
+     * Agent that implements the
      * ExternalMediaPlayer interface of AVS.
      */
     m_externalMediaPlayer = capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::create(
@@ -663,41 +695,21 @@ bool DefaultClient::initialize(
         return false;
     }
 
-    if (isGuiSupported) {
-        /*
-         * Creating the Visual Activity Tracker - This component is responsibly for reporting the visual channel focus
-         * information to AVS.
-         */
-        m_visualActivityTracker = afml::VisualActivityTracker::create(contextManager);
-
-        /*
-         * Creating the Visual Focus Manager - This component deals with the management of visual focus across various
-         * components. It handles granting access to Channels as well as pushing different "Channels" to foreground,
-         * background, or no focus based on which other Channels are active and the priorities of those Channels. Each
-         * Capability Agent will require the Focus Manager in order to request access to the Channel it wishes to play
-         * on.
-         */
-        m_visualFocusManager = std::make_shared<afml::FocusManager>(
-            afml::FocusManager::getDefaultVisualChannels(), m_visualActivityTracker);
-
-        /*
-         * Creating the TemplateRuntime Capability Agent - This component is the Capability Agent that implements the
-         * TemplateRuntime interface of AVS.
-         */
-        m_templateRuntime = capabilityAgents::templateRuntime::TemplateRuntime::create(
-            m_audioPlayer, m_visualFocusManager, m_exceptionSender);
-        if (!m_templateRuntime) {
-            ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateTemplateRuntimeCapabilityAgent"));
-            return false;
-        }
-        m_dialogUXStateAggregator->addObserver(m_templateRuntime);
-    }
-
 #ifdef ENABLE_MRM
-    /*
-     * Creating the MRM (Multi-Room-Music) Capability Agent.
-     */
+        /*
+         * Creating the MRM (Multi-Room-Music) Capability Agent.
+         */
 
+#ifdef ENABLE_MRM_STANDALONE_APP
+    auto mrmHandler = capabilityAgents::mrm::mrmHandler::MRMHandlerProxy::create(
+        m_connectionManager,
+        m_connectionManager,
+        m_directiveSequencer,
+        m_userInactivityMonitor,
+        contextManager,
+        m_audioFocusManager,
+        m_speakerManager);
+#else
     auto mrmHandler = capabilityAgents::mrm::mrmHandler::MRMHandler::create(
         m_connectionManager,
         m_connectionManager,
@@ -707,6 +719,7 @@ bool DefaultClient::initialize(
         m_audioFocusManager,
         m_speakerManager,
         deviceInfo->getDeviceSerialNumber());
+#endif  // ENABLE_MRM_STANDALONE_APP
 
     if (!mrmHandler) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "Unable to create mrmHandler."));
@@ -721,7 +734,56 @@ bool DefaultClient::initialize(
         return false;
     }
 
+    /// Reminder that this needs to be called after m_callManager is set up or
+    /// or it won't do anything
+    /// MRM cares about the comms state because it needs to:
+    /// 1) Not start music on devices already in a call
+    /// 2) Stop music on a cluster if a member enters a call
+    addCallStateObserver(m_mrmCapabilityAgent);
+#endif  // ENABLE_MRM
+
+    if (isGuiSupported) {
+        /*
+         * Creating the Visual Activity Tracker - This component is responsibly for
+         * reporting the visual channel focus
+         * information to AVS.
+         */
+        m_visualActivityTracker = afml::VisualActivityTracker::create(contextManager);
+
+        /*
+         * Creating the Visual Focus Manager - This component deals with the
+         * management of visual focus across various
+         * components. It handles granting access to Channels as well as pushing
+         * different "Channels" to foreground,
+         * background, or no focus based on which other Channels are active and the
+         * priorities of those Channels. Each
+         * Capability Agent will require the Focus Manager in order to request
+         * access to the Channel it wishes to play
+         * on.
+         */
+        m_visualFocusManager = std::make_shared<afml::FocusManager>(
+            afml::FocusManager::getDefaultVisualChannels(), m_visualActivityTracker);
+
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface>>
+            renderPlayerInfoCardsProviders = {m_audioPlayer, m_externalMediaPlayer};
+
+#ifdef ENABLE_MRM
+        renderPlayerInfoCardsProviders.insert(m_mrmCapabilityAgent);
 #endif
+
+        /*
+         * Creating the TemplateRuntime Capability Agent - This component is the
+         * Capability Agent that implements the
+         * TemplateRuntime interface of AVS.
+         */
+        m_templateRuntime = capabilityAgents::templateRuntime::TemplateRuntime::create(
+            renderPlayerInfoCardsProviders, m_visualFocusManager, m_exceptionSender);
+        if (!m_templateRuntime) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateTemplateRuntimeCapabilityAgent"));
+            return false;
+        }
+        m_dialogUXStateAggregator->addObserver(m_templateRuntime);
+    }
 
     /*
      * Creating the DoNotDisturb Capability Agent
@@ -737,7 +799,8 @@ bool DefaultClient::initialize(
     addConnectionObserver(m_dndCapabilityAgent);
 
     /*
-     * Creating the Equalizer Capability Agent and related implementations if enabled
+     * Creating the Equalizer Capability Agent and related implementations if
+     * enabled
      */
 
     m_equalizerRuntimeSetup = equalizerRuntimeSetup;
@@ -780,7 +843,8 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the Endpoint Handler - This component is responsible for handling directives from AVS instructing the
+     * Creating the Endpoint Handler - This component is responsible for handling
+     * directives from AVS instructing the
      * client to change the endpoint to connect to.
      */
     auto endpointHandler = capabilityAgents::system::EndpointHandler::create(m_connectionManager, m_exceptionSender);
@@ -790,7 +854,8 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the SystemCapabilityProvider - This component is responsible for publishing information about the System
+     * Creating the SystemCapabilityProvider - This component is responsible for
+     * publishing information about the System
      * capability agent.
      */
     auto systemCapabilityProvider = capabilityAgents::system::SystemCapabilityProvider::create();
@@ -801,8 +866,10 @@ bool DefaultClient::initialize(
 
 #ifdef ENABLE_REVOKE_AUTH
     /*
-     * Creating the RevokeAuthorizationHandler - This component is responsible for handling RevokeAuthorization
-     * directives from AVS to notify the client to clear out authorization and re-enter the registration flow.
+     * Creating the RevokeAuthorizationHandler - This component is responsible for
+     * handling RevokeAuthorization
+     * directives from AVS to notify the client to clear out authorization and
+     * re-enter the registration flow.
      */
     m_revokeAuthorizationHandler = capabilityAgents::system::RevokeAuthorizationHandler::create(m_exceptionSender);
     if (!m_revokeAuthorizationHandler) {
@@ -831,7 +898,8 @@ bool DefaultClient::initialize(
     if (bluetoothDeviceManager) {
         ACSDK_DEBUG5(LX(__func__).m("Creating Bluetooth CA"));
 
-        // Create a temporary pointer to the eventBus inside of bluetoothDeviceManager so that
+        // Create a temporary pointer to the eventBus inside of
+        // bluetoothDeviceManager so that
         // the unique ptr for bluetoothDeviceManager can be moved.
         auto eventBus = bluetoothDeviceManager->getEventBus();
 
@@ -839,7 +907,8 @@ bool DefaultClient::initialize(
             capabilityAgents::bluetooth::BluetoothAVRCPTransformer::create(eventBus, m_playbackRouter);
 
         /*
-         * Creating the Bluetooth Capability Agent - This component is responsible for handling directives from AVS
+         * Creating the Bluetooth Capability Agent - This component is responsible
+         * for handling directives from AVS
          * regarding bluetooth functionality.
          */
         m_bluetooth = capabilityAgents::bluetooth::Bluetooth::create(
@@ -858,7 +927,8 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * The following two statements show how to register capability agents to the directive sequencer.
+     * The following two statements show how to register capability agents to the
+     * directive sequencer.
      */
     if (!m_directiveSequencer->addDirectiveHandler(m_speechSynthesizer)) {
         ACSDK_ERROR(LX("initializeFailed")
@@ -1168,6 +1238,10 @@ void DefaultClient::connect(
 
 void DefaultClient::disconnect() {
     m_connectionManager->disable();
+}
+
+std::string DefaultClient::getAVSEndpoint() {
+    return m_connectionManager->getAVSEndpoint();
 }
 
 void DefaultClient::stopForegroundActivity() {
@@ -1562,13 +1636,14 @@ DefaultClient::~DefaultClient() {
         ACSDK_DEBUG5(LX("UserInactivityMonitorShutdown."));
         m_userInactivityMonitor->shutdown();
     }
+    if (m_mrmCapabilityAgent) {
+        ACSDK_DEBUG5(LX("MRMCapabilityAgentShutdown"));
+        removeCallStateObserver(m_mrmCapabilityAgent);
+        m_mrmCapabilityAgent->shutdown();
+    }
     if (m_callManager) {
         ACSDK_DEBUG5(LX("CallManagerShutdown."));
         m_callManager->shutdown();
-    }
-    if (m_mrmCapabilityAgent) {
-        ACSDK_DEBUG5(LX("MRMCapabilityAgentShutdown"));
-        m_mrmCapabilityAgent->shutdown();
     }
 #ifdef ENABLE_PCC
     if (m_phoneCallControllerCapabilityAgent) {

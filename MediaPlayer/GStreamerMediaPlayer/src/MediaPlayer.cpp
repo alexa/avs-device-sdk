@@ -1557,7 +1557,7 @@ void MediaPlayer::handleGetOffset(SourceId id, std::promise<std::chrono::millise
         return;
     }
 
-    if (!validateSourceAndId(id)) {
+    if (!m_source || !validateSourceAndId(id)) {
         promise->set_value(m_offsetBeforeTeardown);
         return;
     }
