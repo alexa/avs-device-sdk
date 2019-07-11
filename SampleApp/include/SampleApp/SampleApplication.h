@@ -48,7 +48,8 @@ public:
     static std::unique_ptr<SampleApplication> create(
         const std::vector<std::string>& configFiles,
         const std::string& pathToInputFolder,
-        const std::string& logLevel = "");
+        const std::string& logLevel = "",
+        const int opPoint = 5);
 
     /// Runs the application, blocking until the user asks the application to quit.
     void run();
@@ -130,7 +131,8 @@ private:
     bool initialize(
         const std::vector<std::string>& configFiles,
         const std::string& pathToInputFolder,
-        const std::string& logLevel);
+        const std::string& logLevel,
+        const int opPoint);
 
     /// The @c InteractionManager which perform user requests.
     std::shared_ptr<InteractionManager> m_interactionManager;

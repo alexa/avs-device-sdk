@@ -212,8 +212,8 @@ SensoryKeywordDetector::SensoryKeywordDetector(
         AbstractKeywordDetector(keyWordObservers, keyWordDetectorStateObservers),
         m_stream{stream},
         m_session{nullptr},
-        m_maxSamplesPerPush((audioFormat.sampleRateHz / HERTZ_PER_KILOHERTZ) * msToPushPerIteration.count(),
-        m_opPoint{opPoint}) {
+        m_maxSamplesPerPush((audioFormat.sampleRateHz / HERTZ_PER_KILOHERTZ) * msToPushPerIteration.count()),
+        m_opPoint(opPoint) {
 }
 
 bool SensoryKeywordDetector::init(const std::string& modelFilePath) {
