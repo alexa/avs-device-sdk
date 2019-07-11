@@ -169,7 +169,8 @@ std::unique_ptr<SensoryKeywordDetector> SensoryKeywordDetector::create(
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>
         keyWordDetectorStateObservers,
     const std::string& modelFilePath,
-    std::chrono::milliseconds msToPushPerIteration) {
+    std::chrono::milliseconds msToPushPerIteration,
+    const int opPoint) {
     if (!stream) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullStream"));
         return nullptr;
@@ -185,7 +186,7 @@ std::unique_ptr<SensoryKeywordDetector> SensoryKeywordDetector::create(
         return nullptr;
     }
     std::unique_ptr<SensoryKeywordDetector> detector(new SensoryKeywordDetector(
-        stream, keyWordObservers, keyWordDetectorStateObservers, audioFormat, msToPushPerIteration));
+        stream, keyWordObservers, keyWordDetectorStateObservers, audioFormat, msToPushPerIteration, opPoint));
     if (!detector->init(modelFilePath)) {
         ACSDK_ERROR(LX("createFailed").d("reason", "initDetectorFailed"));
         return nullptr;
@@ -206,11 +207,13 @@ SensoryKeywordDetector::SensoryKeywordDetector(
     std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
     std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers,
     avsCommon::utils::AudioFormat audioFormat,
-    std::chrono::milliseconds msToPushPerIteration) :
+    std::chrono::milliseconds msToPushPerIteration,
+    const int opPoint) :
         AbstractKeywordDetector(keyWordObservers, keyWordDetectorStateObservers),
         m_stream{stream},
         m_session{nullptr},
-        m_maxSamplesPerPush((audioFormat.sampleRateHz / HERTZ_PER_KILOHERTZ) * msToPushPerIteration.count()) {
+        m_maxSamplesPerPush((audioFormat.sampleRateHz / HERTZ_PER_KILOHERTZ) * msToPushPerIteration.count(),
+        m_opPoint{opPoint}) {
 }
 
 bool SensoryKeywordDetector::init(const std::string& modelFilePath) {
@@ -301,6 +304,16 @@ bool SensoryKeywordDetector::setUpRuntimeSettings(SnsrSession* session) {
                         .d("error", getSensoryDetails(*session, result)));
         return false;
     }
+    
+    result = snsrSetInt(*session, SNSR_OPERATING_POINT, m_opPoint);
+    if (result != SNSR_RC_OK)
+    {
+        ACSDK_ERROR(LX("setUpRuntimeSettingsFailed")
+                        .d("reason", "setSnsrOperatingPointFailure")
+                        .d("error", getSensoryDetails(*session, result)));
+        return false;
+    }
+
 
     return true;
 }

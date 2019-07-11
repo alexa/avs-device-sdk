@@ -152,9 +152,10 @@ static bool ignoreSigpipeSignals() {
 std::unique_ptr<SampleApplication> SampleApplication::create(
     const std::vector<std::string>& configFiles,
     const std::string& pathToInputFolder,
-    const std::string& logLevel) {
+    const std::string& logLevel,
+    const int opPoint) {
     auto clientApplication = std::unique_ptr<SampleApplication>(new SampleApplication);
-    if (!clientApplication->initialize(configFiles, pathToInputFolder, logLevel)) {
+    if (!clientApplication->initialize(configFiles, pathToInputFolder, logLevel, opPoint)) {
         ACSDK_CRITICAL(LX("Failed to initialize SampleApplication"));
         return nullptr;
     }
@@ -254,7 +255,8 @@ bool SampleApplication::createMediaPlayersForAdapters(
 bool SampleApplication::initialize(
     const std::vector<std::string>& configFiles,
     const std::string& pathToInputFolder,
-    const std::string& logLevel) {
+    const std::string& logLevel,
+    const int opPoint) {
     /*
      * Set up the SDK logging system to write to the SampleApp's ConsolePrinter.  Also adjust the logging level
      * if requested.
@@ -642,7 +644,8 @@ bool SampleApplication::initialize(
         {keywordObserver},
         std::unordered_set<
             std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>(),
-        pathToInputFolder);
+        pathToInputFolder,
+        opPoint);
     if (!m_keywordDetector) {
         ACSDK_CRITICAL(LX("Failed to create keyword detector!"));
     }

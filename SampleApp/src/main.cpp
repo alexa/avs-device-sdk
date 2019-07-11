@@ -47,6 +47,7 @@ int main(int argc, char* argv[]) {
     std::vector<std::string> configFiles;
     std::string pathToKWDInputFolder;
     std::string logLevel;
+    int opPoint = 5;
 
     if (usesOptStyleArgs(argc, argv)) {
         for (int i = 1; i < argc; i++) {
@@ -81,12 +82,15 @@ int main(int argc, char* argv[]) {
         if (argc < 3) {
             alexaClientSDK::sampleApp::ConsolePrinter::simplePrint(
                 "USAGE: " + std::string(argv[0]) +
-                " <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder> [log_level]");
+                " <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder> [log_level] [op_point]");
             return EXIT_FAILURE;
         } else {
             pathToKWDInputFolder = std::string(argv[2]);
-            if (4 == argc) {
+            if (4 <= argc) {
                 logLevel = std::string(argv[3]);
+            }
+            if (5 <= argc) {
+                opPoint = atoi(argv[4]);
             }
         }
 #else
@@ -105,7 +109,7 @@ int main(int argc, char* argv[]) {
     }
 
     auto sampleApplication =
-        alexaClientSDK::sampleApp::SampleApplication::create(configFiles, pathToKWDInputFolder, logLevel);
+        alexaClientSDK::sampleApp::SampleApplication::create(configFiles, pathToKWDInputFolder, logLevel, opPoint);
     if (!sampleApplication) {
         alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Failed to create to SampleApplication!");
         return EXIT_FAILURE;
