@@ -13,6 +13,12 @@
 # permissions and limitations under the License.
 #
 
+
+#
+# Modified by XMOS Ltd
+# https://github.com/xmos/avs-device-sdk
+#
+
 if [ -z "$PLATFORM" ]; then
 	echo "You should run the setup.sh script."
 	exit 1
@@ -26,7 +32,7 @@ CMAKE_PLATFORM_SPECIFIC=(-DSENSORY_KEY_WORD_DETECTOR=ON \
     -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
     -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH=$THIRD_PARTY_PATH/alexa-rpi/lib/libsnsr.a \
     -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR=$THIRD_PARTY_PATH/alexa-rpi/include)
-
+SENSORY_MODEL_HASH=5d811d92fb89043f4a4a7b7d0d26d7c3c83899b0
 GSTREAMER_AUDIO_SINK="alsasink"
 
 install_dependencies() {
@@ -38,7 +44,7 @@ install_dependencies() {
 run_os_specifics() {
   build_port_audio
   build_kwd_engine
-  configure_sound
+  # configure_sound
 }
 
 configure_sound() {
@@ -68,7 +74,11 @@ build_kwd_engine() {
   echo
 
   cd $THIRD_PARTY_PATH
+  rm -rf alexa-rpi
   git clone git://github.com/Sensory/alexa-rpi.git
+  pushd alexa-rpi > /dev/null
+  git checkout $SENSORY_MODEL_HASH -- models/spot-alexa-rpi-31000.snsr
+  popd > /dev/null
   bash ./alexa-rpi/bin/license.sh
 }
 

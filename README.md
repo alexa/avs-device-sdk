@@ -10,16 +10,8 @@ The AVS Device SDK provides C++-based (11 or later) libraries that leverage the 
 
 ### Get Started
 
-You can set up the SDK on the following platforms:
-* Raspberry Pi (Raspbian Stretch)
-
-1. Download the install script. We recommend running these commands from the home directory (`~/`) or Desktop; however, you can run the script anywhere.
-
-`wget https://raw.githubusercontent.com/xmos/avs-device-sdk/master/tools/Install/setup.sh`
-
-2. Run the setup script:
-
-`sudo bash setup.sh`
+You can set up the SDK on the Raspberry Pi following these instructions:
+* [Raspberry Pi](https://github.com/alexa/avs-device-sdk/wiki/Raspberry-Pi-Quick-Start-Guide-with-Script) (Raspbian Stretch)
 
 You can also prototype with a third party development kit:
 * [XMOS VocalFusion 4-Mic Kit](https://github.com/xmos/vocalfusion-avs-setup) - Learn More [Here](https://developer.amazon.com/alexa-voice-service/dev-kits/xmos-vocal-fusion)
