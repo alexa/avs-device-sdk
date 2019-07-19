@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +15,9 @@
 
 #include <gtest/gtest.h>
 
+#include "AVSCommon/Utils/Logger/ThreadMoniker.h"
 #include "AVSCommon/Utils/Threading/TaskThread.h"
-#include "ExecutorTestUtils.h"
+#include "AVSCommon/Utils/WaitEvent.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -24,84 +25,151 @@ namespace utils {
 namespace threading {
 namespace test {
 
-class TaskThreadTest : public ::testing::Test {
-public:
-    std::shared_ptr<TaskQueue> createTaskQueue() {
-        return std::make_shared<TaskQueue>();
+/// Timeout used while waiting for synchronization events.
+/// We picked 2s to avoid failure in slower systems (e.g.: valgrind and emulators).
+const std::chrono::milliseconds WAIT_TIMEOUT{100};
+
+using namespace utils::test;
+using namespace logger;
+
+/// Test that wait will return if no job has ever started.
+TEST(TaskThreadTest, test_waitForNothing) {
+    TaskThread taskThread;
+}
+
+/// Test that start will fail if function is empty.
+TEST(TaskThreadTest, test_startFailsDueToEmptyFunction) {
+    TaskThread taskThread;
+    std::function<bool()> emptyFunction;
+    EXPECT_FALSE(taskThread.start(emptyFunction));
+}
+
+/// Test that start will trigger the provided job and thread will exit once the job is done and return @c false.
+TEST(TaskThreadTest, test_simpleJob) {
+    bool finished = false;
+    auto simpleJob = [&finished] {
+        finished = true;
+        return false;
     };
-};
 
-TEST_F(TaskThreadTest, theTaskThreadReadsFromAGivenEmptyQueue) {
-    auto queue = createTaskQueue();
-    TaskThread taskThread{queue};
-    taskThread.start();
+    {
+        TaskThread taskThread;
+        EXPECT_TRUE(taskThread.start(simpleJob));
+    }
 
-    auto future = queue->push(TASK, VALUE);
-
-    auto status = future.wait_for(SHORT_TIMEOUT_MS);
-    ASSERT_EQ(status, std::future_status::ready);
-    ASSERT_EQ(future.get(), VALUE);
-
-    // shutting down the queue will lead to the thread shutting down
-    queue->shutdown();
+    EXPECT_TRUE(finished);
 }
 
-TEST_F(TaskThreadTest, theTaskThreadReadsFromAGivenNonEmptyQueue) {
-    auto queue = createTaskQueue();
-    auto future = queue->push(TASK, VALUE);
+/// Test that start will trigger the provided job and it will execute the job multiple times until the job returns
+/// @c false.
+TEST(TaskThreadTest, test_sequenceJobs) {
+    int taskCounter = 0;
+    const int runUntil = 10;
+    auto jobSequence = [&taskCounter] {
+        taskCounter++;
+        return taskCounter < runUntil;
+    };
 
-    TaskThread taskThread{queue};
-    taskThread.start();
+    {
+        TaskThread taskThread;
+        EXPECT_TRUE(taskThread.start(jobSequence));
+    }
 
-    auto status = future.wait_for(SHORT_TIMEOUT_MS);
-    ASSERT_EQ(status, std::future_status::ready);
-    ASSERT_EQ(future.get(), VALUE);
-
-    // shutting down the queue will lead to the thread shutting down
-    queue->shutdown();
+    EXPECT_EQ(taskCounter, runUntil);
 }
 
-TEST_F(TaskThreadTest, theTaskThreadShutsDownWhenTheQueueIsDestroyed) {
-    // the TaskThread only has a weak pointer to the queue, once it goes out of scope the thread will shutdown
-    TaskThread taskThread{createTaskQueue()};
-    taskThread.start();
+/// Test that start will replace the existing next function.
+/// - First function increments the counter, while the second will decrement until it reaches 0.
+TEST(TaskThreadTest, test_startNewJob) {
+    WaitEvent waitEvent;
+    int taskCounter = 0;
+    auto increment = [&taskCounter, &waitEvent] {
+        taskCounter++;
+        waitEvent.wakeUp();
+        return true;
+    };
 
-    // wait for the thread to shutdown
-    std::this_thread::sleep_for(SHORT_TIMEOUT_MS);
-    ASSERT_EQ(taskThread.isShutdown(), true);
+    auto decrement = [&taskCounter] {
+        taskCounter--;
+        return taskCounter > 0;
+    };
+
+    TaskThread taskThread;
+    EXPECT_TRUE(taskThread.start(increment));
+
+    ASSERT_TRUE(waitEvent.wait(WAIT_TIMEOUT));
+    EXPECT_TRUE(taskThread.start(decrement));
 }
 
-TEST_F(TaskThreadTest, theTaskThreadShutsDownWhenTheQueueIsShutdown) {
-    auto queue = createTaskQueue();
-    TaskThread taskThread{queue};
-    taskThread.start();
+/// Test that start will fail if called multiple times while waiting for a job.
+TEST(TaskThreadTest, test_startFailDueTooManyThreads) {
+    WaitEvent waitEnqueue, waitStart;
+    auto simpleJob = [&waitEnqueue, &waitStart] {
+        waitStart.wakeUp();              // Job has started.
+        waitEnqueue.wait(WAIT_TIMEOUT);  // Wait till job should finish.
+        return false;
+    };
 
-    queue->shutdown();
+    TaskThread taskThread;
+    EXPECT_TRUE(taskThread.start(simpleJob));
 
-    // wait for the thread to shutdown
-    std::this_thread::sleep_for(SHORT_TIMEOUT_MS);
-    ASSERT_EQ(taskThread.isShutdown(), true);
+    // Wait until first job has started.
+    waitStart.wait(WAIT_TIMEOUT);
+    EXPECT_TRUE(taskThread.start([] { return false; }));
+
+    // This should fail since the task thread is starting.
+    EXPECT_FALSE(taskThread.start([] { return false; }));
+
+    waitEnqueue.wakeUp();
 }
 
-TEST_F(TaskThreadTest, theTaskThreadIsNotStartedUntilStartIsCalled) {
-    auto queue = createTaskQueue();
-    auto future = queue->push(TASK, VALUE);
-    TaskThread taskThread{queue};
+/// Test that threads related to this task thread will always have the same moniker.
+TEST(TaskThreadTest, test_moniker) {
+    WaitEvent waitGetMoniker, waitValidateMoniker;
+    std::string moniker;
+    auto getMoniker = [&moniker, &waitGetMoniker] {
+        moniker = ThreadMoniker::getThisThreadMoniker();
+        waitGetMoniker.wakeUp();
+        return false;
+    };
 
-    // wait for long enough that the task would normall be run
-    auto failedStatus = future.wait_for(SHORT_TIMEOUT_MS);
-    ASSERT_EQ(failedStatus, std::future_status::timeout);
+    auto validateMoniker = [&moniker, &waitValidateMoniker] {
+        EXPECT_EQ(moniker, ThreadMoniker::getThisThreadMoniker());
+        waitValidateMoniker.wakeUp();
+        return false;
+    };
 
-    // start the thread
-    taskThread.start();
+    TaskThread taskThread;
+    EXPECT_TRUE(taskThread.start(getMoniker));
+    waitGetMoniker.wait(WAIT_TIMEOUT);
 
-    // now it should succeed almost immediately
-    auto successStatus = future.wait_for(SHORT_TIMEOUT_MS);
-    ASSERT_EQ(successStatus, std::future_status::ready);
-    ASSERT_EQ(future.get(), VALUE);
+    EXPECT_TRUE(taskThread.start(validateMoniker));
+    waitValidateMoniker.wait(WAIT_TIMEOUT);
+}
 
-    // shutting down the queue will lead to the thread shutting down
-    queue->shutdown();
+/// Test that threads from different @c TaskThreads will have different monikers.
+TEST(TaskThreadTest, test_monikerDifferentObjects) {
+    WaitEvent waitGetMoniker, waitValidateMoniker;
+    std::string moniker;
+    auto getMoniker = [&moniker, &waitGetMoniker] {
+        moniker = ThreadMoniker::getThisThreadMoniker();
+        waitGetMoniker.wakeUp();
+        return false;
+    };
+
+    auto validateMoniker = [&moniker, &waitValidateMoniker] {
+        EXPECT_NE(moniker, ThreadMoniker::getThisThreadMoniker());
+        waitValidateMoniker.wakeUp();
+        return false;
+    };
+
+    TaskThread taskThread1;
+    EXPECT_TRUE(taskThread1.start(getMoniker));
+    waitGetMoniker.wait(WAIT_TIMEOUT);
+
+    TaskThread taskThread2;
+    EXPECT_TRUE(taskThread2.start(validateMoniker));
+    waitValidateMoniker.wait(WAIT_TIMEOUT);
 }
 
 }  // namespace test

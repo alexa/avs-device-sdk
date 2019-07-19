@@ -36,7 +36,7 @@ public:
     /**
      * Constructor.
      */
-    MockMessageRequest() : avsCommon::avs::MessageRequest{"", nullptr} {
+    MockMessageRequest() : avsCommon::avs::MessageRequest{""} {
     }
     MOCK_METHOD1(exceptionReceived, void(const std::string& exceptionMessage));
     MOCK_METHOD1(sendCompleted, void(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status));

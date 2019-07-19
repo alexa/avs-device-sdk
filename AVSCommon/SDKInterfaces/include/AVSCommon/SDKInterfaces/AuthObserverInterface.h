@@ -56,10 +56,22 @@ public:
         SERVER_ERROR,
         /// The request is missing a required parameter, has an invalid value, or is otherwise improperly formed.
         INVALID_REQUEST,
+        /// One of the values in the request was invalid.
+        INVALID_VALUE,
         /// The authorization code is invalid, expired, revoked, or was issued to a different client.
         AUTHORIZATION_EXPIRED,
         /// The client specified the wrong token type.
-        UNSUPPORTED_GRANT_TYPE
+        UNSUPPORTED_GRANT_TYPE,
+        /// Invalid code pair provided in Code-based linking token request.
+        INVALID_CODE_PAIR,
+        /// Waiting for user to authorize the specified code pair.
+        AUTHORIZATION_PENDING,
+        /// Client should slow down in the rate of requests polling for an access token.
+        SLOW_DOWN,
+        /// Internal error in client code.
+        INTERNAL_ERROR,
+        /// Client ID not valid for use with code based linking.
+        INVALID_CBL_CLIENT_ID
     };
 
     /**
@@ -69,6 +81,9 @@ public:
 
     /**
      * Notification that an authorization state has changed.
+     *
+     * @note Implementations of this method must not call AuthDelegate methods because the AuthDelegate
+     * may be in a 'locked' state at the time this call is made.
      *
      * @param newState The new state of the authorization token.
      * @param error The error associated to the state change.
@@ -86,19 +101,15 @@ public:
 inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterface::State& state) {
     switch (state) {
         case AuthObserverInterface::State::UNINITIALIZED:
-            stream << "UNINTIALIZED";
-            break;
+            return stream << "UNINTIALIZED";
         case AuthObserverInterface::State::REFRESHED:
-            stream << "REFRESHED";
-            break;
+            return stream << "REFRESHED";
         case AuthObserverInterface::State::EXPIRED:
-            stream << "EXPIRED";
-            break;
+            return stream << "EXPIRED";
         case AuthObserverInterface::State::UNRECOVERABLE_ERROR:
-            stream << "UNRECOVERABLE_ERROR";
-            break;
+            return stream << "UNRECOVERABLE_ERROR";
     }
-    return stream;
+    return stream << "Unknown AuthObserverInterface::State!: " << state;
 }
 
 /**
@@ -111,31 +122,35 @@ inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterfac
 inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterface::Error& error) {
     switch (error) {
         case AuthObserverInterface::Error::SUCCESS:
-            stream << "SUCCESS";
-            break;
+            return stream << "SUCCESS";
         case AuthObserverInterface::Error::UNKNOWN_ERROR:
-            stream << "UNKNOWN_ERROR";
-            break;
+            return stream << "UNKNOWN_ERROR";
         case AuthObserverInterface::Error::AUTHORIZATION_FAILED:
-            stream << "AUTHORIZATION_FAILED";
-            break;
+            return stream << "AUTHORIZATION_FAILED";
         case AuthObserverInterface::Error::UNAUTHORIZED_CLIENT:
-            stream << "UNAUTHORIZED_CLIENT";
-            break;
+            return stream << "UNAUTHORIZED_CLIENT";
         case AuthObserverInterface::Error::SERVER_ERROR:
-            stream << "SERVER_ERROR";
-            break;
+            return stream << "SERVER_ERROR";
         case AuthObserverInterface::Error::INVALID_REQUEST:
-            stream << "INVALID_REQUEST";
-            break;
+            return stream << "INVALID_REQUEST";
+        case AuthObserverInterface::Error::INVALID_VALUE:
+            return stream << "INVALID_VALUE";
         case AuthObserverInterface::Error::AUTHORIZATION_EXPIRED:
-            stream << "AUTHORIZATION_EXPIRED";
-            break;
+            return stream << "AUTHORIZATION_EXPIRED";
         case AuthObserverInterface::Error::UNSUPPORTED_GRANT_TYPE:
-            stream << "UNSUPPORTED_GRANT_TYPE";
-            break;
+            return stream << "UNSUPPORTED_GRANT_TYPE";
+        case AuthObserverInterface::Error::INVALID_CODE_PAIR:
+            return stream << "INVALID_CODE_PAIR";
+        case AuthObserverInterface::Error::AUTHORIZATION_PENDING:
+            return stream << "AUTHORIZATION_PENDING";
+        case AuthObserverInterface::Error::SLOW_DOWN:
+            return stream << "SLOW_DOWN";
+        case AuthObserverInterface::Error::INTERNAL_ERROR:
+            return stream << "INTERNAL_ERROR";
+        case AuthObserverInterface::Error::INVALID_CBL_CLIENT_ID:
+            return stream << "INVALID_CBL_CLIENT_ID";
     }
-    return stream;
+    return stream << "Unknown AuthObserverInterface::Error!: " << error;
 }
 
 }  // namespace sdkInterfaces

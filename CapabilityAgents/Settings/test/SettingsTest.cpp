@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,11 +23,14 @@
 #include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
 #include <rapidjson/stringbuffer.h>
+#include <AVSCommon/AVS/AbstractAVSConnectionManager.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/SDKInterfaces/GlobalSettingsObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/SingleSettingObserverInterface.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
+#include <CertifiedSender/CertifiedSender.h>
+#include <CertifiedSender/SQLiteMessageStorage.h>
 
 #include "Settings/Settings.h"
 #include "Settings/SettingsUpdatedEventSender.h"
@@ -44,6 +47,7 @@ using namespace avsCommon::sdkInterfaces::test;
 using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::json::jsonUtils;
 using namespace ::testing;
+using namespace certifiedSender;
 
 /// JSON key for the event section of a message.
 static const std::string MESSAGE_EVENT_KEY = "event";
@@ -81,7 +85,10 @@ static const std::string SETTINGS_VALUE = "value";
 /// JSON text for settings config values for initialization of settings Object.
 // clang-format off
 static const std::string SETTINGS_CONFIG_JSON =
-    "{"
+"{"
+    "\"certifiedSender\":{"
+        "\"databaseFilePath\":\"database.db\""
+    "},"
       "\"settings\":{"
         "\"databaseFilePath\":\"settingsUnitTest.db\","
           "\"defaultAVSClientSettings\":{"
@@ -122,6 +129,58 @@ public:
     MOCK_METHOD1(onSettingChanged, void(const std::unordered_map<std::string, std::string>& mapOfSettings));
 };
 
+/**
+ * Class with which to mock a connection ot AVS.
+ */
+class MockConnection : public avsCommon::avs::AbstractAVSConnectionManager {
+public:
+    MockConnection() = default;
+
+    MOCK_METHOD0(enable, void());
+    MOCK_METHOD0(disable, void());
+    MOCK_METHOD0(isEnabled, bool());
+    MOCK_METHOD0(reconnect, void());
+    MOCK_METHOD1(
+        addMessageObserver,
+        void(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer));
+    MOCK_METHOD1(
+        removeMessageObserver,
+        void(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer));
+
+    bool isConnected() const;
+
+    /**
+     * Update the connection status.
+     *
+     * @param status The Connection Status.
+     * @param reason The reason the Connection Status changed.
+     */
+    void updateConnectionStatus(
+        ConnectionStatusObserverInterface::Status status,
+        ConnectionStatusObserverInterface::ChangedReason reason);
+};
+
+bool MockConnection::isConnected() const {
+    return ConnectionStatusObserverInterface::Status::CONNECTED == m_connectionStatus;
+}
+
+void MockConnection::updateConnectionStatus(
+    ConnectionStatusObserverInterface::Status status,
+    ConnectionStatusObserverInterface::ChangedReason reason) {
+    AbstractAVSConnectionManager::updateConnectionStatus(status, reason);
+}
+
+class MockMessageStorage : public MessageStorageInterface {
+public:
+    MOCK_METHOD0(createDatabase, bool());
+    MOCK_METHOD0(open, bool());
+    MOCK_METHOD0(close, void());
+    MOCK_METHOD2(store, bool(const std::string& message, int* id));
+    MOCK_METHOD1(load, bool(std::queue<StoredMessage>* messageContainer));
+    MOCK_METHOD1(erase, bool(int messageId));
+    MOCK_METHOD0(clearDatabase, bool());
+    virtual ~MockMessageStorage() = default;
+};
 /**
  * Utility class to take the parameters of SettingsUpdated event and provide functionalities
  * to verify the event being sent.
@@ -222,14 +281,30 @@ protected:
     std::unordered_map<std::string, std::string> m_mapOfSettings;
     /// The data manager required to build the base object
     std::shared_ptr<registrationManager::CustomerDataManager> m_dataManager;
+    /// Class under test.
+    std::shared_ptr<CertifiedSender> m_certifiedSender;
+    /// Mock message storage layer.
+    std::shared_ptr<MockMessageStorage> m_msgStorage;
+    /// Mocked connection
+    std::shared_ptr<StrictMock<MockConnection>> m_mockConnection;
 };
 
 void SettingsTest::SetUp() {
     m_dataManager = std::make_shared<registrationManager::CustomerDataManager>();
-    std::istringstream inString(SETTINGS_CONFIG_JSON);
-    ASSERT_TRUE(AlexaClientSDKInit::initialize({&inString}));
+    auto inString = std::shared_ptr<std::istringstream>(new std::istringstream(SETTINGS_CONFIG_JSON));
+    ASSERT_TRUE(AlexaClientSDKInit::initialize({inString}));
     m_mockMessageSender = std::make_shared<MockMessageSender>();
-    m_settingsEventSender = SettingsUpdatedEventSender::create(m_mockMessageSender);
+    m_mockConnection = std::make_shared<StrictMock<MockConnection>>();
+    m_msgStorage = std::make_shared<MockMessageStorage>();
+
+    EXPECT_CALL(*m_msgStorage, open()).WillOnce(Return(true));
+    m_certifiedSender = CertifiedSender::create(m_mockMessageSender, m_mockConnection, m_msgStorage, m_dataManager);
+
+    m_mockConnection->updateConnectionStatus(
+        ConnectionStatusObserverInterface::Status::CONNECTED,
+        ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
+
+    m_settingsEventSender = SettingsUpdatedEventSender::create(m_certifiedSender);
     ASSERT_NE(m_settingsEventSender, nullptr);
     m_storage = std::make_shared<SQLiteSettingStorage>("settingsUnitTest.db");
     m_settingsObject = Settings::create(m_storage, {m_settingsEventSender}, m_dataManager);
@@ -241,15 +316,17 @@ void SettingsTest::TearDown() {
     m_mapOfSettings.clear();
     m_storage->clearDatabase();
     AlexaClientSDKInit::uninitialize();
+    m_mockConnection->removeConnectionStatusObserver(m_certifiedSender);
+    m_certifiedSender->shutdown();
 }
 
 bool SettingsTest::testChangeSettingSucceeds(const std::string& key, const std::string& value) {
     std::mutex mutex;
     std::condition_variable conditionVariable;
     bool done = false;
-
-    ON_CALL(*m_mockMessageSender, sendMessage(_))
-        .WillByDefault(DoAll(
+    EXPECT_CALL(*m_msgStorage, store(_, _)).WillRepeatedly(Return(true));
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+        .WillRepeatedly(DoAll(
             Invoke([this, key, value](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
                 m_mapOfSettings[key] = value;
                 m_settingsVerifyObject = std::make_shared<SettingsVerifyTest>(m_mapOfSettings);
@@ -268,7 +345,7 @@ bool SettingsTest::testChangeSettingSucceeds(const std::string& key, const std::
 /**
  * Test to verify the @c create function of @c Settings class.
  */
-TEST_F(SettingsTest, createTest) {
+TEST_F(SettingsTest, test_create) {
     ASSERT_EQ(
         nullptr,
         m_settingsObject->create(
@@ -281,7 +358,7 @@ TEST_F(SettingsTest, createTest) {
  * Test to verify if by adding a global observer and changing the setting,
  * the global observer is notified of the change. It also verifies that event is being sent in correct JSON format.
  */
-TEST_F(SettingsTest, addGlobalSettingsObserverTest) {
+TEST_F(SettingsTest, test_addGlobalSettingsObserver) {
     std::shared_ptr<MockGlobalSettingsObserver> mockGlobalSettingObserver;
     mockGlobalSettingObserver = std::make_shared<MockGlobalSettingsObserver>();
     m_settingsObject->addGlobalSettingsObserver(mockGlobalSettingObserver);
@@ -293,7 +370,7 @@ TEST_F(SettingsTest, addGlobalSettingsObserverTest) {
  * Test to verify if by removing a global observer and changing the setting,
  * the global observer is not notified of the change. It also verifies that event is being sent in correct JSON format.
  */
-TEST_F(SettingsTest, removeGlobalSettingsObserverTest) {
+TEST_F(SettingsTest, test_removeGlobalSettingsObserver) {
     std::shared_ptr<MockGlobalSettingsObserver> mockGlobalSettingObserver;
     mockGlobalSettingObserver = std::make_shared<MockGlobalSettingsObserver>();
     m_settingsObject->removeGlobalSettingsObserver(mockGlobalSettingObserver);
@@ -306,7 +383,7 @@ TEST_F(SettingsTest, removeGlobalSettingsObserverTest) {
  * i.e. it doesn't exist in the list of @c SETTINGS_ACCEPTED_KEYS, the observer corresponding to it
  * will not be added.
  */
-TEST_F(SettingsTest, addSingleSettingObserverWithInvalidKeyTest) {
+TEST_F(SettingsTest, testSlow_addSingleSettingObserverWithInvalidKeyTest) {
     std::shared_ptr<MockSingleSettingObserver> wakewordObserver;
     wakewordObserver = std::make_shared<MockSingleSettingObserver>();
     m_settingsObject->addSingleSettingObserver("wakeword", wakewordObserver);
@@ -324,7 +401,7 @@ TEST_F(SettingsTest, addSingleSettingObserverWithInvalidKeyTest) {
  * an invalid key even if it is a typo, the observer will not be removed.
  * It also verifies that event is being sent in correct JSON format.
  */
-TEST_F(SettingsTest, removeSingleSettingObserverWithInvalidKeyTest) {
+TEST_F(SettingsTest, test_removeSingleSettingObserverWithInvalidKey) {
     std::shared_ptr<MockSingleSettingObserver> localeObserver;
     localeObserver = std::make_shared<MockSingleSettingObserver>();
     m_settingsObject->addSingleSettingObserver("locale", localeObserver);
@@ -337,7 +414,7 @@ TEST_F(SettingsTest, removeSingleSettingObserverWithInvalidKeyTest) {
  * Test verifies that if an observer is removed with a valid key, the observer gets removed
  * and is not notified when the setting changes. It also verifies that event is being sent in correct JSON format.
  */
-TEST_F(SettingsTest, removeSingleSettingObserverWithCorrectKeyTest) {
+TEST_F(SettingsTest, test_removeSingleSettingObserverWithCorrectKey) {
     std::shared_ptr<MockSingleSettingObserver> localeObserver;
     localeObserver = std::make_shared<MockSingleSettingObserver>();
     m_settingsObject->addSingleSettingObserver("locale", localeObserver);
@@ -349,7 +426,7 @@ TEST_F(SettingsTest, removeSingleSettingObserverWithCorrectKeyTest) {
 /**
  * Test to check if the settings loaded from the database are same as the default settings.
  */
-TEST_F(SettingsTest, defaultSettingsCorrect) {
+TEST_F(SettingsTest, test_defaultSettingsCorrect) {
     std::string DEFAULT_SETTINGS = "defaultAVSClientSettings";
     std::string settings_json = "";
     retrieveValue(SETTINGS_CONFIG_JSON, MESSAGE_SETTINGS_KEY, &settings_json);
@@ -369,7 +446,7 @@ TEST_F(SettingsTest, defaultSettingsCorrect) {
 /**
  * Test to check that @c clearData() removes any setting stored in the database.
  */
-TEST_F(SettingsTest, clearDataTest) {
+TEST_F(SettingsTest, test_clearData) {
     ASSERT_TRUE(testChangeSettingSucceeds("locale", "en-CA"));
     m_settingsObject->clearData();
 
@@ -381,7 +458,7 @@ TEST_F(SettingsTest, clearDataTest) {
 /**
  * Test to check clear database works as expected.
  */
-TEST_F(SettingsTest, clearDatabaseTest) {
+TEST_F(SettingsTest, test_clearDatabase) {
     std::unordered_map<std::string, std::string> tempMap;
     ASSERT_TRUE(m_storage->clearDatabase());
     ASSERT_TRUE(m_storage->load(&tempMap));
@@ -391,7 +468,7 @@ TEST_F(SettingsTest, clearDatabaseTest) {
 /**
  * Test to check the store function of SQLiteSettingStorage class.
  */
-TEST_F(SettingsTest, storeDatabaseTest) {
+TEST_F(SettingsTest, test_storeDatabase) {
     ASSERT_TRUE(m_storage->clearDatabase());
     std::map<std::string, std::string> MapToStore = {{"wakeword", "Alexa"}, {"locale", "en-US"}};
     for (auto& it : MapToStore) {
@@ -406,7 +483,7 @@ TEST_F(SettingsTest, storeDatabaseTest) {
 /**
  * Test to check the modify function of SQLiteSettingStorage class.
  */
-TEST_F(SettingsTest, modifyDatabaseTest) {
+TEST_F(SettingsTest, test_modifyDatabase) {
     ASSERT_TRUE(m_storage->modify("locale", "en-US"));
     ASSERT_FALSE(m_storage->modify("local", "en-GB"));
     ASSERT_TRUE(m_storage->clearDatabase());
@@ -415,7 +492,7 @@ TEST_F(SettingsTest, modifyDatabaseTest) {
 /**
  * Test to check the erase function of SQLiteSettingStorage class.
  */
-TEST_F(SettingsTest, eraseTest) {
+TEST_F(SettingsTest, test_erase) {
     ASSERT_TRUE(m_storage->erase("locale"));
     ASSERT_FALSE(m_storage->settingExists("locale"));
     ASSERT_FALSE(m_storage->erase("local"));
@@ -424,7 +501,7 @@ TEST_F(SettingsTest, eraseTest) {
 /**
  * Test to check the createDatabase function of SQLiteSettingStorage class.
  */
-TEST_F(SettingsTest, createDatabaseTest) {
+TEST_F(SettingsTest, test_createDatabase) {
     m_storage->close();
     ASSERT_FALSE(m_storage->createDatabase());
 }
@@ -432,7 +509,7 @@ TEST_F(SettingsTest, createDatabaseTest) {
 /**
  * Test to check the open and close functions of SQLiteSettingStorage class.
  */
-TEST_F(SettingsTest, openAndCloseDatabaseTest) {
+TEST_F(SettingsTest, test_openAndCloseDatabase) {
     ASSERT_FALSE(m_storage->open());
     ASSERT_TRUE(isOpen(m_storage));
     m_storage->close();

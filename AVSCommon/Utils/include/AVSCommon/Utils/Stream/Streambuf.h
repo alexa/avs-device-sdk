@@ -44,20 +44,17 @@ public:
     std::streampos seekpos(std::streampos sp, std::ios_base::openmode which = std::ios_base::in) override;
 
 private:
+    /// @name @c std::streambuf method overrides
+    /// @{
     int_type underflow() override;
-    int_type uflow() override;
     int_type pbackfail(int_type ch) override;
     std::streamsize showmanyc() override;
+    /// @}
 
-    /**
-     * This function makes sure that the requested operation is valid and does the update.
-     *
-     * @return the position in the stream
-     */
-    std::streampos UpdateAndValidate();
-
+    /// The start of the buffer to stream.
     char* const m_begin;
-    char* m_current;
+
+    /// The end (one byte past the last byte) of the buffer to stream.
     char* const m_end;
 };
 

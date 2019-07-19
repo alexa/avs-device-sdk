@@ -23,6 +23,8 @@
 #include <unordered_set>
 
 #include <AVSCommon/AVS/CapabilityAgent.h>
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/AudioPlayerInterface.h>
 #include <AVSCommon/SDKInterfaces/AudioPlayerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
@@ -53,6 +55,7 @@ class TemplateRuntime
         : public avsCommon::avs::CapabilityAgent
         , public avsCommon::utils::RequiresShutdown
         , public avsCommon::sdkInterfaces::AudioPlayerObserverInterface
+        , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
         , public std::enable_shared_from_this<TemplateRuntime> {
 public:
@@ -120,6 +123,11 @@ public:
      * this notification, the @c TemplateRuntime will release the visual channel.
      */
     void displayCardCleared();
+
+    /// @name CapabilityConfigurationInterface Functions
+    /// @{
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
+    /// @}
 
 private:
     /**
@@ -199,6 +207,11 @@ private:
     /// @{
     void doShutdown() override;
     /// @}
+
+    /**
+     * Initializes the object by reading the values from configuration.
+     */
+    bool initialize();
 
     /**
      * Remove a directive from the map of message IDs to DirectiveInfo instances.
@@ -366,8 +379,20 @@ private:
     /// The @c FocusManager used to manage usage of the visual channel.
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_focusManager;
 
+    /// Set of capability configurations that will get published using the Capabilities API
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
+
     /// This is the worker thread for the @c TemplateRuntime CA.
     avsCommon::utils::threading::Executor m_executor;
+
+    /// The timeout value in ms for clearing the diplay card when TTS is FINSIHED
+    std::chrono::milliseconds m_ttsFinishedTimeout;
+
+    /// The timeout value in ms for clearing the diplay card when AudioPlay is FINSIHED
+    std::chrono::milliseconds m_audioPlaybackFinishedTimeout;
+
+    /// The timeout value in ms for clearing the diplay card when AudioPlay is STOPPED or PAUSED
+    std::chrono::milliseconds m_audioPlaybackStoppedPausedTimeout;
 };
 
 }  // namespace templateRuntime

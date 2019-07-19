@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -143,7 +143,7 @@ void NotificationRendererTest::TearDown() {
 /**
  * Test that create fails with a null MediaPlayer
  */
-TEST_F(NotificationRendererTest, testCreateWithNullMediaPlayer) {
+TEST_F(NotificationRendererTest, test_createWithNullMediaPlayer) {
     auto renderer = NotificationRenderer::create(nullptr);
     ASSERT_FALSE(renderer);
 }
@@ -153,7 +153,7 @@ TEST_F(NotificationRendererTest, testCreateWithNullMediaPlayer) {
  * methods get called (once each) and that the NotificationRenderer's observer gets called
  * back to indicate that playback had completed.
  */
-TEST_F(NotificationRendererTest, testPlayPreferredStream) {
+TEST_F(NotificationRendererTest, test_playPreferredStream) {
     EXPECT_CALL(*(m_player.get()), urlSetSource(_)).Times(1);
     EXPECT_CALL(*(m_player.get()), streamSetSource(_, _)).Times(0);
     EXPECT_CALL(*(m_player.get()), play(_)).Times(1);
@@ -170,7 +170,7 @@ TEST_F(NotificationRendererTest, testPlayPreferredStream) {
  * methods get called (once each) and that the NotificationRenderer's observer gets called
  * back to indicate that playback had completed.
  */
-TEST_F(NotificationRendererTest, testPlayDefaultStream) {
+TEST_F(NotificationRendererTest, test_playDefaultStream) {
     EXPECT_CALL(*(m_player.get()), urlSetSource(_)).Times(1);
     EXPECT_CALL(*(m_player.get()), streamSetSource(_, _)).Times(1);
     EXPECT_CALL(*(m_player.get()), play(_)).Times(2);
@@ -193,7 +193,7 @@ TEST_F(NotificationRendererTest, testPlayDefaultStream) {
  * Exercise making a second @c renderNotification() call while a previous
  * one is still outstanding.  Verify that it is rejected.
  */
-TEST_F(NotificationRendererTest, testSecondPlayRejected) {
+TEST_F(NotificationRendererTest, test_secondPlayRejected) {
     EXPECT_CALL(*(m_player.get()), urlSetSource(_)).Times(1);
     EXPECT_CALL(*(m_player.get()), streamSetSource(_, _)).Times(0);
     EXPECT_CALL(*(m_player.get()), play(_)).Times(1);
@@ -210,7 +210,7 @@ TEST_F(NotificationRendererTest, testSecondPlayRejected) {
  * Exercise rendering the default stream.  Verify that a call to @c renderNotification()
  * while the default stream is playing is rejected.
  */
-TEST_F(NotificationRendererTest, testSecondPlayWhilePlayingDefaultStream) {
+TEST_F(NotificationRendererTest, test_secondPlayWhilePlayingDefaultStream) {
     EXPECT_CALL(*(m_player.get()), urlSetSource(_)).Times(1);
     EXPECT_CALL(*(m_player.get()), streamSetSource(_, _)).Times(1);
     EXPECT_CALL(*(m_player.get()), play(_)).Times(2);
@@ -236,7 +236,7 @@ TEST_F(NotificationRendererTest, testSecondPlayWhilePlayingDefaultStream) {
 /**
  * Exercise cancelNotificationRendering().  Verify that it causes rendering to complete.
  */
-TEST_F(NotificationRendererTest, testCancelNotificationRendering) {
+TEST_F(NotificationRendererTest, test_cancelNotificationRendering) {
     EXPECT_CALL(*(m_player.get()), urlSetSource(_)).Times(1);
     EXPECT_CALL(*(m_player.get()), streamSetSource(_, _)).Times(0);
     EXPECT_CALL(*(m_player.get()), play(_)).Times(1);
@@ -255,7 +255,7 @@ TEST_F(NotificationRendererTest, testCancelNotificationRendering) {
  * This verifies the use case where onNotificationRenderingFinished() is
  * used as a trigger to render the next notification.
  */
-TEST_F(NotificationRendererTest, testRenderNotificationWhileNotifying) {
+TEST_F(NotificationRendererTest, test_renderNotificationWhileNotifying) {
     FuturePromisePair signal;
     EXPECT_CALL(*(m_player.get()), urlSetSource(_)).Times(2);
     EXPECT_CALL(*(m_player.get()), streamSetSource(_, _)).Times(0);
@@ -281,6 +281,15 @@ TEST_F(NotificationRendererTest, testRenderNotificationWhileNotifying) {
 
     m_player->waitUntilPlaybackStarted();
     m_player->waitUntilPlaybackFinished();
+}
+
+/**
+ * Test that shutdown does the correct cleanup.
+ */
+TEST_F(NotificationRendererTest, testShutdown) {
+    m_renderer->shutdown();
+    m_renderer.reset();
+    ASSERT_THAT(m_player->getObserver(), IsNull());
 }
 
 }  // namespace test

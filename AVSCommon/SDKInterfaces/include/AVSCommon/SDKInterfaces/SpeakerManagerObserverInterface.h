@@ -50,6 +50,11 @@ public:
         const Source& source,
         const SpeakerInterface::Type& type,
         const SpeakerInterface::SpeakerSettings& settings) = 0;
+
+    /**
+     * Destructor.
+     */
+    virtual ~SpeakerManagerObserverInterface() = default;
 };
 
 /**

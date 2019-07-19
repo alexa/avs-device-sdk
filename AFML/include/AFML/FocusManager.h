@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_FOCUSMANAGER_H_
 #define ALEXA_CLIENT_SDK_AFML_INCLUDE_AFML_FOCUSMANAGER_H_
 
+#include <map>
 #include <mutex>
 #include <set>
 #include <unordered_map>
@@ -84,12 +85,6 @@ public:
         unsigned int priority;
     };
 
-    /// The default @c ChannelConfiguration for AVS audio channels.
-    static const std::vector<FocusManager::ChannelConfiguration> DEFAULT_AUDIO_CHANNELS;
-
-    /// The default @c ChannelConfiguration for AVS visual channels.
-    static const std::vector<FocusManager::ChannelConfiguration> DEFAULT_VISUAL_CHANNELS;
-
     /**
      * This constructor creates Channels based on the provided configurations.
      *
@@ -100,7 +95,7 @@ public:
      * been updated.
      */
     FocusManager(
-        const std::vector<ChannelConfiguration>& channelConfigurations,
+        const std::vector<ChannelConfiguration> channelConfigurations,
         std::shared_ptr<ActivityTrackerInterface> activityTrackerInterface = nullptr);
 
     bool acquireChannel(
@@ -114,12 +109,30 @@ public:
 
     void stopForegroundActivity() override;
 
+    void stopAllActivities() override;
+
     void addObserver(const std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerObserverInterface>& observer) override;
 
     void removeObserver(
         const std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerObserverInterface>& observer) override;
 
+    /**
+     * Retrieves the default @c ChannelConfiguration for AVS audio channels.
+     *
+     * @return the default @c ChannelConfiguration for AVS audio channels.
+     */
+    static const std::vector<FocusManager::ChannelConfiguration> getDefaultAudioChannels();
+
+    /**
+     * Retrieves the default @c ChannelConfiguration for AVS visual channels.
+     *
+     * @return the default @c ChannelConfiguration for AVS visual channels.
+     */
+    static const std::vector<FocusManager::ChannelConfiguration> getDefaultVisualChannels();
+
 private:
+    /// A Map for mapping a @c Channel to its owner.
+    using ChannelsToInterfaceNamesMap = std::map<std::shared_ptr<Channel>, std::string>;
     /**
      * Functor so that we can compare Channel objects via shared_ptr.
      */
@@ -184,6 +197,17 @@ private:
     void stopForegroundActivityHelper(
         std::shared_ptr<Channel> foregroundChannel,
         std::string foregroundChannelInterface);
+
+    /**
+     *  Stops all channels specified in @c channelsOwnersMap.
+     * A channel will get stopped if it's currently owned by the interface  mapped to the channel
+     * in @c channelsOwnersMap.
+     * This function provides the full implementation which the public method will
+     * call.
+     *
+     * @param channelsOwnersMap Mapping of channel to owning interfaces
+     */
+    void stopAllActivitiesHelper(const ChannelsToInterfaceNamesMap& channelsOwnersMap);
 
     /**
      * Finds the channel from the given channel name.

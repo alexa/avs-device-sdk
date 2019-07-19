@@ -49,6 +49,13 @@ public:
      */
     static void prettyPrint(const std::string& stringToPrint);
 
+    /**
+     * Prints a multi-line message with a pretty format with a \n after.
+     *
+     * @param stringToPrint The string to print.
+     */
+    static void prettyPrint(std::initializer_list<std::string> lines);
+
     void emit(
         avsCommon::utils::logger::Level level,
         std::chrono::system_clock::time_point time,

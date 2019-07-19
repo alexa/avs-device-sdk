@@ -37,32 +37,26 @@ public:
     virtual ~PlaybackRouterInterface() = default;
 
     /**
-     * This method can be called by the client when "Play" is pressed on a physical button or on the GUI.
-     * A PlayCommandIssued event message will be sent to the observer.
+     * This method can be called by the client when a Button is pressed on a physical button or on the GUI.
+     * A ButtonCommandIssued event message will be sent to the observer.
+     *
+     * @param button The PlaybackButton type being pressed
      */
-    virtual void playButtonPressed() = 0;
+    virtual void buttonPressed(avsCommon::avs::PlaybackButton button) = 0;
 
     /**
-     * This method can be called by the client when "Pause" is pressed on a physical button or on the GUI.
-     * A PauseCommandIssued event message will be sent to the observer.
+     * This method can be called by the client when a Toggle is pressed on a physical button or on the GUI.
+     * A ToggleCommandIssued event message will be sent to the observer.
+     *
+     * @param toggle The PlaybackToggle type being pressed
+     * @param action The boolean action for the toggle state
      */
-    virtual void pauseButtonPressed() = 0;
-
-    /**
-     * This method can be called by the client when "Next" is pressed on a physical button or on the GUI.
-     * A NextCommandIssued event message will be sent to the observer.
-     */
-    virtual void nextButtonPressed() = 0;
-
-    /**
-     * This method can be called by the client when "Previous" is pressed on a physical button or on the GUI.
-     * A PreviousCommandIssued event message will be sent to the observer.
-     */
-    virtual void previousButtonPressed() = 0;
+    virtual void togglePressed(avsCommon::avs::PlaybackToggle toggle, bool action) = 0;
 
     /**
      * This method sets the playback button press handler that any time a button is pressed
      * this handler will be called.
+     *
      * @param handler - The handler to call on future playback button presses.
      */
     virtual void setHandler(std::shared_ptr<PlaybackHandlerInterface> handler) = 0;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,10 +22,11 @@
 #include <string>
 #include <unordered_set>
 
-#include <AVSCommon/AVS/AbstractConnection.h>
+#include <AVSCommon/AVS/AbstractAVSConnectionManager.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/SDKInterfaces/AVSEndpointAssignerInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
@@ -67,11 +68,13 @@ namespace acl {
  * changes, and when messages are received from AVS.  These observer objects are optional.
  */
 class AVSConnectionManager
-        : public avsCommon::avs::AbstractConnection
+        : public avsCommon::avs::AbstractAVSConnectionManager
         , public avsCommon::sdkInterfaces::MessageSenderInterface
         , public avsCommon::sdkInterfaces::AVSEndpointAssignerInterface
         , public MessageRouterObserverInterface
-        , public avsCommon::utils::RequiresShutdown {
+        , public avsCommon::sdkInterfaces::InternetConnectionObserverInterface
+        , public avsCommon::utils::RequiresShutdown
+        , public std::enable_shared_from_this<AVSConnectionManager> {
 public:
     /**
      * A factory function that creates an AVSConnectionManager object.
@@ -91,52 +94,20 @@ public:
             connectionStatusObservers =
                 std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>(),
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>> messageObservers =
-            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>>());
+            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>>(),
+        std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor =
+            nullptr);
 
-    /**
-     * Enable the AVSConnectionManager object to make connections to AVS.  Once enabled, the object will attempt to
-     * create a connection to AVS.  If the object is already connected, this function will do nothing.
-     */
-    void enable();
-
-    /**
-     * Disable the AVSConnectionManager object.  If the object is currently connected to AVS, then calling this
-     * function will cause the connection to be closed.  If the object is not connected, then calling this function
-     * will do nothing.
-     */
-    void disable();
-
-    /**
-     * Returns if the object is enabled for making connections to AVS.
-     *
-     * @return Whether this Connection object is enabled to make connections.
-     */
-    bool isEnabled();
-
-    /**
-     * This function causes the object, if enabled, to create new connection to AVS.  If the object is already
-     * connected, then that connection will be closed and a new one created.  If the object is not connected, but
-     * perhaps in the process of waiting for its next connection attempt, then its waiting policy will be reset and
-     * it will attempt to create a new connection immediately.
-     * If the object is disabled, then this function will do nothing.
-     */
-    void reconnect();
-
+    /// @name AVSConnectionManagerInterface method overrides.
+    /// @{
+    void enable() override;
+    void disable() override;
+    bool isEnabled() override;
+    void reconnect() override;
     bool isConnected() const override;
-
-    /**
-     * Adds an observer to be notified of message receptions.
-     *
-     * @param observer The observer object to add.
-     */
-    void addMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer);
-
-    /**
-     * Removes an observer from being notified of message receptions.
-     *
-     * @param observer The observer object to remove.
-     */
-    void removeMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer);
+    void addMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) override;
+    void removeMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) override;
+    /// @}
 
     void sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
 
@@ -145,6 +116,11 @@ public:
      * current active connection to be closed, and a new one opened to the new endpoint.
      */
     void setAVSEndpoint(const std::string& avsEndpoint) override;
+
+    /// @name InternetConnectionObserverInterface method overrides.
+    /// @{
+    void onConnectionStatusChanged(bool connected) override;
+    /// @}
 
 private:
     /**
@@ -161,7 +137,9 @@ private:
             connectionStatusObservers =
                 std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>(),
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>> messageObserver =
-            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>>());
+            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>>(),
+        std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor =
+            nullptr);
 
     void doShutdown() override;
 
@@ -171,8 +149,11 @@ private:
 
     void receive(const std::string& contextId, const std::string& message) override;
 
+    /// Mutex to serialize access to @c m_isEnabled
+    std::mutex m_isEnabledMutex;
+
     /// Internal state to indicate if the Connection object is enabled for making an AVS connection.
-    std::atomic<bool> m_isEnabled;
+    bool m_isEnabled;
 
     /// Client-provided message listener, which will receive all messages sent from AVS.
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>> m_messageObservers;
@@ -182,6 +163,9 @@ private:
 
     /// Internal object that manages the actual connection to AVS.
     std::shared_ptr<MessageRouterInterface> m_messageRouter;
+
+    /// Object providing notification of gaining and losing internet connectivity.
+    std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> m_internetConnectionMonitor;
 };
 
 }  // namespace acl

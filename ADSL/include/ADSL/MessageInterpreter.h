@@ -48,20 +48,10 @@ public:
     void receive(const std::string& contextId, const std::string& message) override;
 
 private:
-    /**
-     * Logs an error and sends an exception to AVS. This signifies that an error occurred when attempting to
-     * parse a value with a particular @c key.
-     *
-     * @param key They key whose value could not be parsed.
-     * @param json The JSON message that was being parsed.
-     */
-    void sendParseValueException(const std::string& key, const std::string& json);
-
     /// Object that manages sending exceptions encountered messages to AVS.
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> m_exceptionEncounteredSender;
     /// Object to which we will send @c AVSDirectives.
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> m_directiveSequencer;
-
     // The attachment manager.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> m_attachmentManager;
 };

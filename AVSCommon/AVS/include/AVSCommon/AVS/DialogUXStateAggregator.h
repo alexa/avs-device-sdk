@@ -16,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_DIALOGUXSTATEAGGREGATOR_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_DIALOGUXSTATEAGGREGATOR_H_
 
+#include <atomic>
 #include <chrono>
 #include <unordered_set>
 
@@ -150,11 +151,12 @@ private:
     avsCommon::utils::threading::Executor m_executor;
 
     /// Contains the current state of the @c SpeechSynthesizer as reported by @c SpeechSynthesizerObserverInterface
-    alexaClientSDK::avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState
+    std::atomic<alexaClientSDK::avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState>
         m_speechSynthesizerState;
 
     /// Contains the current state of the @c AudioInputProcessor as reported by @c AudioInputProcessorObserverInterface
-    alexaClientSDK::avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State m_audioInputProcessorState;
+    std::atomic<alexaClientSDK::avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State>
+        m_audioInputProcessorState;
 };
 
 }  // namespace avs

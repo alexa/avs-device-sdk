@@ -57,9 +57,14 @@ public:
     virtual ~DirectiveSequencerInterface() = default;
 
     /**
-     * Add the specified handler as a handler for its specified namespace, name, and policy. Note that implmentations
+     * Add the specified handler as a handler for its specified namespace, name, and policy. Note that implementations
      * of this should call the handler's getConfiguration() method to get the namespace(s), name(s), and policy(ies) of
      * the handler. If any of the mappings fail, the entire call is refused.
+     *
+     * @note If the @c name of the configuration is "*", then this is considered a wildcard handler for the given
+     * @c namespace.  For a given @c directive, the @c DirectiveSequencer will look first for a handler whose
+     * configuration exactly matches the @c directive's { namespace, name } pair.  If no exact match is found, then
+     * the @c directive will be sent to the wildcard handler for the @c namespace, if one has been added.
      *
      * @param handler The handler to add.
      * @return Whether the handler was added.

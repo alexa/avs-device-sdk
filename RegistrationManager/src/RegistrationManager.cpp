@@ -40,8 +40,8 @@ void RegistrationManager::logout() {
 }
 
 RegistrationManager::RegistrationManager(
-    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface>& directiveSequencer,
-    std::shared_ptr<acl::AVSConnectionManager>& connectionManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
+    std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
     std::shared_ptr<CustomerDataManager> dataManager) :
         m_directiveSequencer{directiveSequencer},
         m_connectionManager{connectionManager},

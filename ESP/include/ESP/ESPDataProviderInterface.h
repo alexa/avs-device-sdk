@@ -33,7 +33,7 @@ public:
     /**
      * Retrieve the ESPData from the ESP Library.
      *
-     * @return Collected ESPData if ESP is enabled, otherwise it returns ESPData::EMPTY_ESP_DATA.
+     * @return Collected ESPData if ESP is enabled, otherwise it returns ESPData::getEmptyESPData().
      */
     virtual capabilityAgents::aip::ESPData getESPData() = 0;
 

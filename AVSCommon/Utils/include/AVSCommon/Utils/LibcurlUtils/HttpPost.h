@@ -34,7 +34,16 @@ namespace libcurlUtils {
 /// LIBCURL based implementation of HttpPostInterface.
 class HttpPost : public HttpPostInterface {
 public:
-    /// HttpPost destructor
+    /**
+     * Create a new HttpPost instance, passing ownership of the new instance on to the caller.
+     *
+     * @return Returns an std::unique_ptr to the new HttpPost instance, or @c nullptr of the operation failed.
+     */
+    static std::unique_ptr<HttpPost> create();
+
+    /**
+     * HttpPost destructor
+     */
     ~HttpPost() = default;
 
     /**
@@ -52,23 +61,34 @@ public:
      */
     HttpPost& operator=(const HttpPost& rhs) = delete;
 
-    /**
-     * Create a new HttpPost instance, passing ownership of the new instance on to the caller.
-     *
-     * @return Retruns an std::unique_ptr to the new HttpPost instance, or @c nullptr of the operation failed.
-     */
-    static std::unique_ptr<HttpPost> create();
-
-    bool addHTTPHeader(const std::string& header) override;
-
     long doPost(const std::string& url, const std::string& data, std::chrono::seconds timeout, std::string& body)
         override;
+
+    HTTPResponse doPost(
+        const std::string& url,
+        const std::vector<std::string> headerLines,
+        const std::vector<std::pair<std::string, std::string>>& data,
+        std::chrono::seconds timeout) override;
+
+    HTTPResponse doPost(
+        const std::string& url,
+        const std::vector<std::string> headerLines,
+        const std::string& data,
+        std::chrono::seconds timeout) override;
 
 private:
     /**
      * Default HttpPost constructor.
      */
     HttpPost() = default;
+
+    /**
+     * Build POST data from a vector of key value pairs.
+     *
+     * @param data Vector of key, value pairs from which to build the POST data.
+     * @return
+     */
+    std::string buildPostData(const std::vector<std::pair<std::string, std::string>>& data) const;
 
     /**
      * Callback function used to accumulate the body of the HTTP Post response
@@ -88,7 +108,7 @@ private:
     /// CURL handle with which to make requests
     CurlEasyHandleWrapper m_curl;
 
-    /// String used to accumuate the response body.
+    /// String used to accumulate the response body.
     std::string m_bodyAccumulator;
 };
 

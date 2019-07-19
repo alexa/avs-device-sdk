@@ -18,6 +18,7 @@
 
 #include "Alerts/Alert.h"
 
+#include <list>
 #include <memory>
 #include <string>
 #include <vector>
@@ -95,6 +96,17 @@ public:
      * @return Whether the @c Alert was successfully erased.
      */
     virtual bool erase(std::shared_ptr<Alert> alert) = 0;
+
+    /**
+     * Erases multiple alerts from the database. This function must be atomic, no alert is to be deleted if there was
+     * an error deleting one.
+     * @note It is not an error if an alert in the parameter list is not present in the database.  This accommodates
+     * the race condition between an local alert deletion and a request from AVS.
+     *
+     * @param alertList The list of alerts to be erased.
+     * @return Whether all alerts were successfully erased.
+     */
+    virtual bool bulkErase(const std::list<std::shared_ptr<Alert>>& alertList) = 0;
 
     /**
      * A utility function to clear the database of all records.  Note that the database will still exist, as will

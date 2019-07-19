@@ -19,9 +19,9 @@
 #include <memory>
 #include <unordered_set>
 
-#include <ACL/AVSConnectionManager.h>
-#include <ADSL/DirectiveSequencer.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
+#include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 
 #include "RegistrationManager/CustomerDataManager.h"
 #include "RegistrationManager/RegistrationObserverInterface.h"
@@ -45,8 +45,8 @@ public:
      * @param dataManager Object that manages customer data, which must be cleared during logout.
      */
     RegistrationManager(
-        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface>& directiveSequencer,
-        std::shared_ptr<acl::AVSConnectionManager>& connectionManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
         std::shared_ptr<CustomerDataManager> dataManager);
 
     /**
@@ -83,7 +83,7 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> m_directiveSequencer;
 
     // Used to enable / disable connection during logout to avoid any interruption.
-    std::shared_ptr<acl::AVSConnectionManager> m_connectionManager;
+    std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> m_connectionManager;
 
     // Used to clear customer data to ensure that a future login will not have access to previous customer data
     std::shared_ptr<CustomerDataManager> m_dataManager;

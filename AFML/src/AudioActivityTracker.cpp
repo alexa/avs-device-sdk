@@ -18,6 +18,7 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/error/en.h>
 
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/String/StringUtils.h>
@@ -30,6 +31,14 @@ namespace afml {
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils;
 using namespace avsCommon::avs;
+
+/// AudioActivityTracker capability constants
+/// AudioActivityTracker interface type
+static const std::string AUDIOACTIVITYTRACKER_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
+/// AudioActivityTracker interface name
+static const std::string AUDIOACTIVITYTRACKER_CAPABILITY_INTERFACE_NAME = "AudioActivityTracker";
+/// AudioActivityTracker interface version
+static const std::string AUDIOACTIVITYTRACKER_CAPABILITY_INTERFACE_VERSION = "1.0";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AudioActivityTracker");
@@ -49,6 +58,13 @@ static const char IDLE_TIME_KEY[] = "idleTimeInMilliseconds";
 
 /// The interface key used in the AudioActivityTracker context.
 static const char INTERFACE_KEY[] = "interface";
+
+/**
+ * Creates the AudioActivityTracker capability configuration.
+ *
+ * @return The AudioActivityTracker capability configuration.
+ */
+static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getAudioActivityTrackerCapabilityConfiguration();
 
 std::shared_ptr<AudioActivityTracker> AudioActivityTracker::create(
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager) {
@@ -80,6 +96,16 @@ AudioActivityTracker::AudioActivityTracker(
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager) :
         RequiresShutdown{"AudioActivityTracker"},
         m_contextManager{contextManager} {
+    m_capabilityConfigurations.insert(getAudioActivityTrackerCapabilityConfiguration());
+}
+
+std::shared_ptr<CapabilityConfiguration> getAudioActivityTrackerCapabilityConfiguration() {
+    std::unordered_map<std::string, std::string> configMap;
+    configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, AUDIOACTIVITYTRACKER_CAPABILITY_INTERFACE_TYPE});
+    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, AUDIOACTIVITYTRACKER_CAPABILITY_INTERFACE_NAME});
+    configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, AUDIOACTIVITYTRACKER_CAPABILITY_INTERFACE_VERSION});
+
+    return std::make_shared<CapabilityConfiguration>(configMap);
 }
 
 void AudioActivityTracker::doShutdown() {
@@ -121,7 +147,7 @@ void AudioActivityTracker::executeProvideState(unsigned int stateRequestToken) {
             }
 
             contextJson.AddMember(INTERFACE_KEY, channelContext.interfaceName, payload.GetAllocator());
-            contextJson.AddMember(IDLE_TIME_KEY, idleTime.count(), payload.GetAllocator());
+            contextJson.AddMember(IDLE_TIME_KEY, static_cast<uint64_t>(idleTime.count()), payload.GetAllocator());
 
             payload.AddMember(
                 rapidjson::StringRef(executeChannelNameInLowerCase(it->first)), contextJson, payload.GetAllocator());
@@ -155,6 +181,11 @@ const std::string& AudioActivityTracker::executeChannelNameInLowerCase(const std
         it = m_channelNamesInLowerCase.insert(it, std::make_pair(channelName, channelNameInLowerCase));
     }
     return it->second;
+}
+
+std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> AudioActivityTracker::
+    getCapabilityConfigurations() {
+    return m_capabilityConfigurations;
 }
 
 }  // namespace afml

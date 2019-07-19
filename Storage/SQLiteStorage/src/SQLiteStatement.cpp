@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -180,8 +180,8 @@ std::string SQLiteStatement::getColumnText(int index) const {
 
     // The reinterpret_cast is needed due to SQLite storing text data as utf8 (ie. const unsigned char*).
     // We are ok in our implementation to do the cast, since we know we're storing as regular ascii.
-    const char* rowValue = reinterpret_cast<const char*>(sqlite3_column_text(m_handle, index));
-    return std::string(rowValue);
+    const unsigned char* rowValue = sqlite3_column_text(m_handle, index);
+    return rowValue ? std::string(reinterpret_cast<const char*>(rowValue)) : "";
 }
 
 int SQLiteStatement::getColumnInt(int index) const {

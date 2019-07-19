@@ -83,7 +83,7 @@ ESPData ESPDataProvider::getESPData() {
         return ESPData{std::to_string(m_frameEnergyCompute.getVoicedEnergy()),
                        std::to_string(m_frameEnergyCompute.getAmbientEnergy())};
     }
-    return ESPData::EMPTY_ESP_DATA;
+    return ESPData::getEmptyESPData();
 }
 
 bool ESPDataProvider::isEnabled() const {
@@ -157,8 +157,6 @@ ESPDataProvider::ESPDataProvider(
         m_isEnabled{true},
         m_isShuttingDown{false},
         m_frameSize{frameSize} {
-    m_vad.blkReset();
-    m_frameEnergyCompute.blkReset();
     m_thread = std::thread(&ESPDataProvider::espLoop, this);
 }
 

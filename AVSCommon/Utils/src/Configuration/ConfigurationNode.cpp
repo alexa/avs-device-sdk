@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -90,13 +90,14 @@ static void mergeDocument(const std::string& path, Value& out, Value& in, Docume
     }
 }
 
-bool ConfigurationNode::initialize(const std::vector<std::istream*>& jsonStreams) {
+bool ConfigurationNode::initialize(const std::vector<std::shared_ptr<std::istream>>& jsonStreams) {
     std::lock_guard<std::mutex> lock(m_mutex);
     if (m_root) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "alreadyInitialized"));
         return false;
     }
     m_document.SetObject();
+
     for (auto jsonStream : jsonStreams) {
         if (!jsonStream) {
             m_document.SetObject();
@@ -111,10 +112,13 @@ bool ConfigurationNode::initialize(const std::vector<std::istream*>& jsonStreams
                             .d("offset", overlay.GetErrorOffset())
                             .d("message", GetParseError_En(overlay.GetParseError())));
             m_document.SetObject();
+
             return false;
         }
+
         mergeDocument("root", m_document, overlay, m_document.GetAllocator());
     }
+
     m_root = ConfigurationNode(&m_document);
     ACSDK_DEBUG0(LX("initializeSuccess").sensitive("configuration", valueToString(m_document)));
     return true;
@@ -170,6 +174,61 @@ ConfigurationNode::operator bool() const {
 }
 
 ConfigurationNode::ConfigurationNode(const rapidjson::Value* object) : m_object{object} {
+}
+
+std::string ConfigurationNode::serialize() const {
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    if (!m_object->Accept(writer)) {
+        ACSDK_ERROR(LX("serializeFailed").d("reason", "writerRefusedObject"));
+        return "";
+    }
+
+    const char* bufferData = buffer.GetString();
+    if (!bufferData) {
+        ACSDK_ERROR(LX("serializeFailed").d("reason", "nullptrBufferString"));
+        return "";
+    }
+
+    return std::string(bufferData);
+}
+
+ConfigurationNode ConfigurationNode::getArray(const std::string& key) const {
+    if (!*this) {
+        ACSDK_ERROR(LX("getArrayFailed").d("reason", "emptyConfigurationNode"));
+        return ConfigurationNode();
+    }
+    auto it = m_object->FindMember(key.c_str());
+    if (m_object->MemberEnd() == it) {
+        return ConfigurationNode();
+    }
+    if (!it->value.IsArray()) {
+        ACSDK_ERROR(LX("getArrayFailed").d("reason", "notAnArray"));
+        return ConfigurationNode();
+    }
+    return ConfigurationNode(&it->value);
+}
+
+std::size_t ConfigurationNode::getArraySize() const {
+    if (!*this) {
+        ACSDK_ERROR(LX("getArraySizeFailed").d("reason", "emptyConfigurationNode"));
+        return 0;
+    }
+    if (!m_object->IsArray()) {
+        ACSDK_ERROR(LX("getArraySizeFailed").d("reason", "notAnArray"));
+        return 0;
+    }
+    return m_object->Size();
+}
+
+ConfigurationNode ConfigurationNode::operator[](const std::size_t index) const {
+    auto size = getArraySize();
+    if (index >= size) {
+        ACSDK_ERROR(LX("operator[]Failed").d("reason", "indexOutOfRange").d("size", size).d("index", index));
+        return ConfigurationNode();
+    }
+    const rapidjson::Value& objectRef = *m_object;
+    return ConfigurationNode(&objectRef[index]);
 }
 
 }  // namespace configuration

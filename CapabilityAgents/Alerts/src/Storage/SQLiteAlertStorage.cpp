@@ -604,8 +604,8 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
         return false;
     }
 
-    if (alertExists(alert->m_token)) {
-        ACSDK_ERROR(LX("storeFailed").m("Alert already exists.").d("token", alert->m_token));
+    if (alertExists(alert->getToken())) {
+        ACSDK_ERROR(LX("storeFailed").m("Alert already exists.").d("token", alert->getToken()));
         return false;
     }
 
@@ -635,7 +635,7 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
     }
 
     int alertState = ALERT_STATE_SET;
-    if (!alertStateToDbField(alert->m_state, &alertState)) {
+    if (!alertStateToDbField(alert->getState(), &alertState)) {
         ACSDK_ERROR(LX("storeFailed").m("Could not convert alert state to db field."));
         return false;
     }
@@ -648,7 +648,7 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
     }
 
     int boundParam = 1;
-    auto token = alert->m_token;
+    auto token = alert->getToken();
     auto iso8601 = alert->getScheduledTime_ISO_8601();
     auto assetId = alert->getBackgroundAssetId();
     if (!statement->bindIntParameter(boundParam++, id) || !statement->bindStringParameter(boundParam++, token) ||
@@ -669,14 +669,22 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
     }
 
     // capture the generated database id in the alert object.
-    alert->m_dbId = id;
+    Alert::StaticData staticData;
+    alert->getAlertData(&staticData, nullptr);
 
-    if (!storeAlertAssets(&m_db, id, alert->m_assetConfiguration.assets)) {
+    staticData.dbId = id;
+
+    if (!alert->setAlertData(&staticData, nullptr)) {
+        ACSDK_ERROR(LX("loadHelperFailed").m("Could not set alert data."));
+        return false;
+    }
+
+    if (!storeAlertAssets(&m_db, id, alert->getAssetConfiguration().assets)) {
         ACSDK_ERROR(LX("storeFailed").m("Could not store alertAssets."));
         return false;
     }
 
-    if (!storeAlertAssetPlayOrderItems(&m_db, id, alert->m_assetConfiguration.assetPlayOrderItems)) {
+    if (!storeAlertAssetPlayOrderItems(&m_db, id, alert->getAssetConfiguration().assetPlayOrderItems)) {
         ACSDK_ERROR(LX("storeFailed").m("Could not store alertAssetPlayOrderItems."));
         return false;
     }
@@ -684,6 +692,13 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
     return true;
 }
 
+/**
+ * Loads asset data into the map.
+ *
+ * @param db The database object to read data from.
+ * @param alertAssetsMap The map that will receive the assets.
+ * @return @c true if data was loaded successfully
+ */
 static bool loadAlertAssets(SQLiteDatabase* db, std::map<int, std::vector<Alert::Asset>>* alertAssetsMap) {
     const std::string sqlString = "SELECT * FROM " + ALERT_ASSETS_TABLE_NAME + ";";
 
@@ -726,6 +741,13 @@ static bool loadAlertAssets(SQLiteDatabase* db, std::map<int, std::vector<Alert:
     return true;
 }
 
+/**
+ * Reads the assets order from the database and stores this data on the given map.
+ *
+ * @param db The database object to read data from.
+ * @param alertAssetOrderItemsMap The map that will receive data.
+ * @return @c true if data was loaded successfully from the database
+ */
 static bool loadAlertAssetPlayOrderItems(
     SQLiteDatabase* db,
     std::map<int, std::set<AssetOrderItem, AssetOrderItemCompare>>* alertAssetOrderItemsMap) {
@@ -778,6 +800,20 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
 
     if (dbVersion != ALERTS_DATABASE_VERSION_ONE && dbVersion != ALERTS_DATABASE_VERSION_TWO) {
         ACSDK_ERROR(LX("loadHelperFailed").d("Invalid version", dbVersion));
+        return false;
+    }
+
+    // Loads the assets map from the database
+    std::map<int, std::vector<Alert::Asset>> alertAssetsMap;
+    if (!loadAlertAssets(&m_db, &alertAssetsMap)) {
+        ACSDK_ERROR(LX("loadHelperFailed").m("Could not load alert assets."));
+        return false;
+    }
+
+    // Loads the asset order item map from the database
+    std::map<int, std::set<AssetOrderItem, AssetOrderItemCompare>> alertAssetOrderItemsMap;
+    if (!loadAlertAssetPlayOrderItems(&m_db, &alertAssetOrderItemsMap)) {
+        ACSDK_ERROR(LX("loadHelperFailed").m("Could not load alert asset play order items."));
         return false;
     }
 
@@ -850,15 +886,38 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
             return false;
         }
 
-        alert->m_dbId = id;
-        alert->m_token = token;
-        alert->setTime_ISO_8601(scheduledTime_ISO_8601);
-        alert->setLoopCount(loopCount);
-        alert->setLoopPause(std::chrono::milliseconds{loopPauseInMilliseconds});
-        alert->setBackgroundAssetId(backgroundAssetId);
+        Alert::DynamicData dynamicData;
+        Alert::StaticData staticData;
+        alert->getAlertData(&staticData, &dynamicData);
 
-        if (!dbFieldToAlertState(state, &(alert->m_state))) {
+        staticData.dbId = id;
+        staticData.token = token;
+        dynamicData.timePoint.setTime_ISO_8601(scheduledTime_ISO_8601);
+        dynamicData.loopCount = loopCount;
+        staticData.assetConfiguration.loopPause = std::chrono::milliseconds{loopPauseInMilliseconds};
+        staticData.assetConfiguration.backgroundAssetId = backgroundAssetId;
+
+        // alertAssetsMap is an alert id to asset map
+        if (alertAssetsMap.find(id) != alertAssetsMap.end()) {
+            for (auto& mapEntry : alertAssetsMap[id]) {
+                staticData.assetConfiguration.assets[mapEntry.id] = mapEntry;
+            }
+        }
+
+        // alertAssetOrderItemsMap is an alert id to asset order items map
+        if (alertAssetOrderItemsMap.find(id) != alertAssetOrderItemsMap.end()) {
+            for (auto& mapEntry : alertAssetOrderItemsMap[id]) {
+                staticData.assetConfiguration.assetPlayOrderItems.push_back(mapEntry.name);
+            }
+        }
+
+        if (!dbFieldToAlertState(state, &dynamicData.state)) {
             ACSDK_ERROR(LX("loadHelperFailed").m("Could not convert alert state."));
+            return false;
+        }
+
+        if (!alert->setAlertData(&staticData, &dynamicData)) {
+            ACSDK_ERROR(LX("loadHelperFailed").m("Could not set alert data."));
             return false;
         }
 
@@ -868,31 +927,6 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
     }
 
     statement->finalize();
-
-    std::map<int, std::vector<Alert::Asset>> alertAssetsMap;
-    if (!loadAlertAssets(&m_db, &alertAssetsMap)) {
-        ACSDK_ERROR(LX("loadHelperFailed").m("Could not load alert assets."));
-        return false;
-    }
-
-    std::map<int, std::set<AssetOrderItem, AssetOrderItemCompare>> alertAssetOrderItemsMap;
-    if (!loadAlertAssetPlayOrderItems(&m_db, &alertAssetOrderItemsMap)) {
-        ACSDK_ERROR(LX("loadHelperFailed").m("Could not load alert asset play order items."));
-        return false;
-    }
-
-    for (auto alert : *alertContainer) {
-        if (alertAssetsMap.find(alert->m_dbId) != alertAssetsMap.end()) {
-            for (auto& mapEntry : alertAssetsMap[alert->m_dbId]) {
-                alert->m_assetConfiguration.assets[mapEntry.id] = mapEntry;
-            }
-        }
-        if (alertAssetOrderItemsMap.find(alert->m_dbId) != alertAssetOrderItemsMap.end()) {
-            for (auto& mapEntry : alertAssetOrderItemsMap[alert->m_dbId]) {
-                alert->m_assetConfiguration.assetPlayOrderItems.push_back(mapEntry.name);
-            }
-        }
-    }
 
     return true;
 }
@@ -907,8 +941,8 @@ bool SQLiteAlertStorage::modify(std::shared_ptr<Alert> alert) {
         return false;
     }
 
-    if (!alertExists(alert->m_token)) {
-        ACSDK_ERROR(LX("modifyFailed").m("Cannot modify alert.").d("token", alert->m_token));
+    if (!alertExists(alert->getToken())) {
+        ACSDK_ERROR(LX("modifyFailed").m("Cannot modify alert.").d("token", alert->getToken()));
         return false;
     }
 
@@ -916,7 +950,7 @@ bool SQLiteAlertStorage::modify(std::shared_ptr<Alert> alert) {
                                   "state=?, scheduled_time_unix=?, scheduled_time_iso_8601=? " + "WHERE id=?;";
 
     int alertState = ALERT_STATE_SET;
-    if (!alertStateToDbField(alert->m_state, &alertState)) {
+    if (!alertStateToDbField(alert->getState(), &alertState)) {
         ACSDK_ERROR(LX("modifyFailed").m("Cannot convert state."));
         return false;
     }
@@ -933,7 +967,7 @@ bool SQLiteAlertStorage::modify(std::shared_ptr<Alert> alert) {
     if (!statement->bindIntParameter(boundParam++, alertState) ||
         !statement->bindInt64Parameter(boundParam++, alert->getScheduledTime_Unix()) ||
         !statement->bindStringParameter(boundParam++, iso8601) ||
-        !statement->bindIntParameter(boundParam++, alert->m_dbId)) {
+        !statement->bindIntParameter(boundParam++, alert->getId())) {
         ACSDK_ERROR(LX("modifyFailed").m("Could not bind a parameter."));
         return false;
     }
@@ -1080,12 +1114,40 @@ bool SQLiteAlertStorage::erase(std::shared_ptr<Alert> alert) {
         return false;
     }
 
-    if (!alertExists(alert->m_token)) {
-        ACSDK_ERROR(LX("eraseFailed").m("Cannot delete alert - not in database.").d("token", alert->m_token));
+    if (!alertExists(alert->getToken())) {
+        ACSDK_ERROR(LX("eraseFailed").m("Cannot delete alert - not in database.").d("token", alert->getToken()));
         return false;
     }
 
-    return eraseAlertByAlertId(&m_db, alert->m_dbId);
+    return eraseAlertByAlertId(&m_db, alert->getId());
+}
+
+bool SQLiteAlertStorage::bulkErase(const std::list<std::shared_ptr<Alert>>& alertList) {
+    if (alertList.empty()) {
+        return true;
+    }
+
+    auto transaction = m_db.beginTransaction();
+    if (!transaction) {
+        ACSDK_ERROR(LX("bulkEraseFailed").d("reason", "Failed to begin transaction."));
+        return false;
+    }
+
+    for (auto& alert : alertList) {
+        if (!erase(alert)) {
+            ACSDK_ERROR(LX("bulkEraseFailed").d("reason", "Failed to erase alert"));
+            if (!transaction->rollback()) {
+                ACSDK_ERROR(LX("bulkEraseFailed").d("reason", "Failed to rollback alerts storage changes"));
+            }
+            return false;
+        }
+    }
+
+    if (!transaction->commit()) {
+        ACSDK_ERROR(LX("bulkEraseFailed").d("reason", "Failed to commit alerts storage changes"));
+        return false;
+    }
+    return true;
 }
 
 bool SQLiteAlertStorage::clearDatabase() {

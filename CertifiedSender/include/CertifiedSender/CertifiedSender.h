@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,10 +19,11 @@
 #include "CertifiedSender/MessageStorageInterface.h"
 
 #include <AVSCommon/AVS/MessageRequest.h>
-#include <AVSCommon/AVS/AbstractConnection.h>
+#include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
+#include <AVSCommon/Utils/RetryTimer.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <RegistrationManager/CustomerDataHandler.h>
 #include <RegistrationManager/CustomerDataManager.h>
@@ -69,7 +70,7 @@ public:
      */
     static std::shared_ptr<CertifiedSender> create(
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<avsCommon::avs::AbstractConnection> connection,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connection,
         std::shared_ptr<MessageStorageInterface> storage,
         std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
 
@@ -139,13 +140,13 @@ private:
         /// Captures if the @c MessageRequest has been processed or not by AVS.
         bool m_responseReceived;
         /// Mutex used to enforce thread safety.
-        std::mutex m_mutex;
+        std::mutex m_requestMutex;
         /// The condition variable used when waiting for the @c MessageRequest to be processed.
-        std::condition_variable m_cv;
+        std::condition_variable m_requestCv;
         /// The database id associated with this @c MessageRequest.
         int m_dbId;
         /// A control so we may allow the message to stop waiting to be sent.
-        bool m_isShuttingDown;
+        bool m_isRequestShuttingDown;
     };
 
     /**
@@ -160,7 +161,7 @@ private:
      */
     CertifiedSender(
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<avsCommon::avs::AbstractConnection> connection,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connection,
         std::shared_ptr<MessageStorageInterface> storage,
         std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
         int queueSizeWarnLimit = CERTIFIED_SENDER_QUEUE_SIZE_WARN_LIMIT,
@@ -199,15 +200,21 @@ private:
 
     /// The thread that will actually handle the sending of messages.
     std::thread m_workerThread;
+
     /// A control so we may disable the worker thread on shutdown.
     bool m_isShuttingDown;
+
     /// Mutex to protect access to class data members.
     std::mutex m_mutex;
+
     /// A condition variable with which to notify the worker thread that a new item was added to the queue.
     std::condition_variable m_workerThreadCV;
 
     /// A variable to capture if we are currently connected to AVS.
     bool m_isConnected;
+
+    /// Retry Timer Object for transport.
+    avsCommon::utils::RetryTimer m_retryTimer;
 
     /// Our queue of requests that should be sent.
     std::deque<std::shared_ptr<CertifiedMessageRequest>> m_messagesToSend;
@@ -219,13 +226,16 @@ private:
     std::shared_ptr<CertifiedMessageRequest> m_currentMessage;
 
     // The connection object we are observing.
-    std::shared_ptr<avsCommon::avs::AbstractConnection> m_connection;
+    std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> m_connection;
 
     /// Where we will store the messages we wish to send.
     std::shared_ptr<MessageStorageInterface> m_storage;
 
     /// Executor to decouple the public-facing api from possibly inefficient persistent storage implementations.
     avsCommon::utils::threading::Executor m_executor;
+
+    // A condition variable for the main loop to wait for during back-off.
+    std::condition_variable m_backoffWaitCV;
 };
 
 }  // namespace certifiedSender

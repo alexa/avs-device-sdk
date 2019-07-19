@@ -19,6 +19,7 @@
 #include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
 
 #include <AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h>
+#include "AVSCommon/SDKInterfaces/Audio/CommunicationsAudioFactoryInterface.h"
 #include <AVSCommon/SDKInterfaces/Audio/NotificationsAudioFactoryInterface.h>
 
 namespace alexaClientSDK {
@@ -33,6 +34,8 @@ class AudioFactory : public avsCommon::sdkInterfaces::audio::AudioFactoryInterfa
 public:
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alerts() const override;
     std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notifications() const override;
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::CommunicationsAudioFactoryInterface> communications()
+        const override;
 };
 
 }  // namespace audio

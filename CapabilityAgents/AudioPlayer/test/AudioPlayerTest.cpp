@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -727,7 +727,7 @@ void AudioPlayerTest::verifyTags(
  * Test create() with nullptrs
  */
 
-TEST_F(AudioPlayerTest, testCreateWithNullPointers) {
+TEST_F(AudioPlayerTest, test_createWithNullPointers) {
     std::shared_ptr<AudioPlayer> testAudioPlayer;
 
     testAudioPlayer = AudioPlayer::create(
@@ -789,7 +789,7 @@ TEST_F(AudioPlayerTest, testCreateWithNullPointers) {
  * Test transition from Idle to Playing
  */
 
-TEST_F(AudioPlayerTest, testTransitionFromIdleToPlaying) {
+TEST_F(AudioPlayerTest, test_transitionFromIdleToPlaying) {
     EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(AtLeast(1));
     sendPlayDirective();
 }
@@ -798,7 +798,7 @@ TEST_F(AudioPlayerTest, testTransitionFromIdleToPlaying) {
  * Test transition from Playing to Stopped with Stop Directive
  */
 
-TEST_F(AudioPlayerTest, testTransitionFromPlayingToStopped) {
+TEST_F(AudioPlayerTest, test_transitionFromPlayingToStopped) {
     sendPlayDirective();
 
     EXPECT_CALL(*(m_mockMediaPlayer.get()), stop(_)).Times(AtLeast(1));
@@ -819,7 +819,7 @@ TEST_F(AudioPlayerTest, testTransitionFromPlayingToStopped) {
  * Test transition from Playing to Stopped with ClearQueue.CLEAR_ALL Directive
  */
 
-TEST_F(AudioPlayerTest, testTransitionFromPlayingToStoppedWithClear) {
+TEST_F(AudioPlayerTest, test_transitionFromPlayingToStoppedWithClear) {
     sendPlayDirective();
 
     EXPECT_CALL(*(m_mockMediaPlayer.get()), stop(_)).Times(AtLeast(1));
@@ -833,7 +833,7 @@ TEST_F(AudioPlayerTest, testTransitionFromPlayingToStoppedWithClear) {
  * Test transition from Stopped to Playing after issuing second Play directive
  */
 
-TEST_F(AudioPlayerTest, testTransitionFromStoppedToPlaying) {
+TEST_F(AudioPlayerTest, test_transitionFromStoppedToPlaying) {
     sendPlayDirective();
 
     EXPECT_CALL(*(m_mockMediaPlayer.get()), stop(_)).Times(AtLeast(1));
@@ -872,7 +872,7 @@ TEST_F(AudioPlayerTest, testTransitionFromStoppedToPlaying) {
  * Test transition from Playing to Paused when focus changes to Dialog channel
  */
 
-TEST_F(AudioPlayerTest, testTransitionFromPlayingToPaused) {
+TEST_F(AudioPlayerTest, test_transitionFromPlayingToPaused) {
     sendPlayDirective();
 
     EXPECT_CALL(*(m_mockMediaPlayer.get()), pause(_)).Times(AtLeast(1));
@@ -886,7 +886,7 @@ TEST_F(AudioPlayerTest, testTransitionFromPlayingToPaused) {
 /**
  * Test transition from Paused to Stopped on ClearQueue.CLEAR_ALL directive
  */
-TEST_F(AudioPlayerTest, testTransitionFromPausedToStopped) {
+TEST_F(AudioPlayerTest, test_transitionFromPausedToStopped) {
     sendPlayDirective();
 
     EXPECT_CALL(*(m_mockMediaPlayer.get()), stop(_)).Times(AtLeast(1));
@@ -905,7 +905,7 @@ TEST_F(AudioPlayerTest, testTransitionFromPausedToStopped) {
  * Test transition from Paused to Playing after resume
  */
 
-TEST_F(AudioPlayerTest, testResumeAfterPaused) {
+TEST_F(AudioPlayerTest, test_resumeAfterPaused) {
     sendPlayDirective();
 
     EXPECT_CALL(*(m_mockMediaPlayer.get()), stop(_)).Times(AtLeast(1));
@@ -926,7 +926,7 @@ TEST_F(AudioPlayerTest, testResumeAfterPaused) {
  * Test @c provideState while IDLE
  */
 
-TEST_F(AudioPlayerTest, testCallingProvideStateWhenIdle) {
+TEST_F(AudioPlayerTest, test_callingProvideStateWhenIdle) {
     EXPECT_CALL(
         *(m_mockContextManager.get()),
         setState(NAMESPACE_AND_NAME_PLAYBACK_STATE, _, StateRefreshPolicy::NEVER, PROVIDE_STATE_TOKEN_TEST))
@@ -948,7 +948,7 @@ TEST_F(AudioPlayerTest, testCallingProvideStateWhenIdle) {
  * Test @c onPlaybackError and expect a PlaybackFailed message
  */
 
-TEST_F(AudioPlayerTest, testOnPlaybackError) {
+TEST_F(AudioPlayerTest, test_onPlaybackError) {
     m_expectedMessages.insert({PLAYBACK_STARTED_NAME, 0});
     m_expectedMessages.insert({PLAYBACK_FAILED_NAME, 0});
     m_expectedMessages.insert({PLAYBACK_STOPPED_NAME, 0});
@@ -986,7 +986,7 @@ TEST_F(AudioPlayerTest, testOnPlaybackError) {
  * Test @c onPlaybackPaused and expect a PlaybackPaused message
  */
 
-TEST_F(AudioPlayerTest, testOnPlaybackPaused) {
+TEST_F(AudioPlayerTest, test_onPlaybackPaused) {
     m_expectedMessages.insert({PLAYBACK_STARTED_NAME, 0});
     m_expectedMessages.insert({PLAYBACK_PAUSED_NAME, 0});
 
@@ -1024,7 +1024,7 @@ TEST_F(AudioPlayerTest, testOnPlaybackPaused) {
  * Test @c onPlaybackResumed and expect a PlaybackResumed message
  */
 
-TEST_F(AudioPlayerTest, testOnPlaybackResumed) {
+TEST_F(AudioPlayerTest, test_onPlaybackResumed) {
     m_expectedMessages.insert({PLAYBACK_STARTED_NAME, 0});
     m_expectedMessages.insert({PLAYBACK_RESUMED_NAME, 0});
 
@@ -1060,7 +1060,7 @@ TEST_F(AudioPlayerTest, testOnPlaybackResumed) {
  * Test @c onPlaybackFinished and expect a PLAYBACK_NEARLY_FINISHED_NAME and a PLAYBACK_FINISHED_NAME message
  */
 
-TEST_F(AudioPlayerTest, testOnPlaybackFinished) {
+TEST_F(AudioPlayerTest, test_onPlaybackFinished) {
     m_expectedMessages.insert({PLAYBACK_STARTED_NAME, 0});
     m_expectedMessages.insert({PLAYBACK_NEARLY_FINISHED_NAME, 0});
     m_expectedMessages.insert({PLAYBACK_FINISHED_NAME, 0});
@@ -1097,7 +1097,7 @@ TEST_F(AudioPlayerTest, testOnPlaybackFinished) {
  * Test @c onBufferUnderrun and expect a PlaybackStutterStarted message
  */
 
-TEST_F(AudioPlayerTest, testOnBufferUnderrun) {
+TEST_F(AudioPlayerTest, test_onBufferUnderrun) {
     m_expectedMessages.insert({PLAYBACK_STARTED_NAME, 0});
     m_expectedMessages.insert({PLAYBACK_STUTTER_STARTED_NAME, 0});
 
@@ -1133,7 +1133,7 @@ TEST_F(AudioPlayerTest, testOnBufferUnderrun) {
  * Test @c onBufferRefilled and expect a PlaybackStutterFinished message
  */
 
-TEST_F(AudioPlayerTest, testOnBufferRefilled) {
+TEST_F(AudioPlayerTest, testTimer_onBufferRefilled) {
     m_expectedMessages.insert({PLAYBACK_STARTED_NAME, 0});
     m_expectedMessages.insert({PLAYBACK_STUTTER_FINISHED_NAME, 0});
 
@@ -1172,7 +1172,7 @@ TEST_F(AudioPlayerTest, testOnBufferRefilled) {
  * "StreamMetadataExtracted Event". This JSON object is verified in verifyTags.
  */
 
-TEST_F(AudioPlayerTest, testOnTags) {
+TEST_F(AudioPlayerTest, test_onTags) {
     m_expectedMessages.insert({STREAM_METADATA_EXTRACTED_NAME, 0});
     m_expectedMessages.insert({MESSAGE_METADATA_STRING_VALUE, 0});
     m_expectedMessages.insert({MESSAGE_METADATA_UINT_VALUE, 0});
@@ -1238,7 +1238,7 @@ TEST_F(AudioPlayerTest, testOnTags) {
  * Expect the @c handleDirective call to the cancelled directive returns false
  */
 
-TEST_F(AudioPlayerTest, testCancelDirective) {
+TEST_F(AudioPlayerTest, test_cancelDirective) {
     sendPlayDirective();
 
     m_audioPlayer->CapabilityAgent::cancelDirective(MESSAGE_ID_TEST);
@@ -1251,7 +1251,7 @@ TEST_F(AudioPlayerTest, testCancelDirective) {
  * Expect nothing to happen
  */
 
-TEST_F(AudioPlayerTest, testFocusChangeToNoneInIdleState) {
+TEST_F(AudioPlayerTest, test_focusChangeToNoneInIdleState) {
     // switching to FocusState::NONE should cause no change
     m_audioPlayer->onFocusChanged(FocusState::NONE);
     ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::IDLE, WAIT_TIMEOUT));
@@ -1263,7 +1263,7 @@ TEST_F(AudioPlayerTest, testFocusChangeToNoneInIdleState) {
  * due to a lack of a queued AudioItem.
  */
 
-TEST_F(AudioPlayerTest, testFocusChangeFromForegroundToBackgroundInIdleState) {
+TEST_F(AudioPlayerTest, test_focusChangeFromForegroundToBackgroundInIdleState) {
     bool pauseCalled = false;
 
     EXPECT_CALL(*(m_mockMediaPlayer.get()), pause(_))
@@ -1291,7 +1291,7 @@ TEST_F(AudioPlayerTest, testFocusChangeFromForegroundToBackgroundInIdleState) {
  * Expect a call to pause. This isn't an expected state during normal execution.
  */
 
-TEST_F(AudioPlayerTest, testFocusChangeFromNoneToBackgroundInIdleState) {
+TEST_F(AudioPlayerTest, test_focusChangeFromNoneToBackgroundInIdleState) {
     bool pauseCalled = false;
 
     EXPECT_CALL(*(m_mockMediaPlayer.get()), pause(_))
@@ -1313,7 +1313,7 @@ TEST_F(AudioPlayerTest, testFocusChangeFromNoneToBackgroundInIdleState) {
  * Expect to pause when switching to BACKGROUND and to stop when switching to NONE
  */
 
-TEST_F(AudioPlayerTest, testFocusChangesInPlayingState) {
+TEST_F(AudioPlayerTest, test_focusChangesInPlayingState) {
     sendPlayDirective();
 
     // already in FOREGROUND, expect no change
@@ -1342,7 +1342,7 @@ TEST_F(AudioPlayerTest, testFocusChangesInPlayingState) {
  * to transition to PAUSED when switching to BACKGROUND.
  */
 
-TEST_F(AudioPlayerTest, testFocusChangesInStoppedState) {
+TEST_F(AudioPlayerTest, test_focusChangesInStoppedState) {
     sendPlayDirective();
 
     // push AudioPlayer into stopped state
@@ -1363,7 +1363,7 @@ TEST_F(AudioPlayerTest, testFocusChangesInStoppedState) {
  * Expect to resume when switching to FOREGROUND, expect nothing when switching to BACKGROUND, expect stop when
  * switching to NONE
  */
-TEST_F(AudioPlayerTest, testFocusChangesInPausedState) {
+TEST_F(AudioPlayerTest, test_focusChangesInPausedState) {
     sendPlayDirective();
 
     // push AudioPlayer into paused state
@@ -1397,7 +1397,7 @@ TEST_F(AudioPlayerTest, testFocusChangesInPausedState) {
  * when switching to NONE
  */
 
-TEST_F(AudioPlayerTest, testFocusChangesInBufferUnderrunState) {
+TEST_F(AudioPlayerTest, test_focusChangesInBufferUnderrunState) {
     sendPlayDirective();
 
     // push AudioPlayer into buffer underrun state
@@ -1431,7 +1431,7 @@ TEST_F(AudioPlayerTest, testFocusChangesInBufferUnderrunState) {
  * Expect that pause() is called when @c AudioPlayer is pushed into background
  */
 
-TEST_F(AudioPlayerTest, testFocusChangeToBackgroundBeforeOnPlaybackStarted) {
+TEST_F(AudioPlayerTest, test_focusChangeToBackgroundBeforeOnPlaybackStarted) {
     EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(1);
     sendPlayDirective();
 
@@ -1474,7 +1474,7 @@ TEST_F(AudioPlayerTest, testFocusChangeToBackgroundBeforeOnPlaybackStarted) {
  * when a new REPLACE_ALL Play directive comes in.
  */
 
-TEST_F(AudioPlayerTest, testPlayAfterOnPlaybackError) {
+TEST_F(AudioPlayerTest, test_playAfterOnPlaybackError) {
     EXPECT_CALL(*(m_mockMediaPlayer.get()), getOffset(_))
         .WillRepeatedly(Return(m_mockMediaPlayer->getOffset(m_mockMediaPlayer->getCurrentSourceId())));
     sendPlayDirective();
@@ -1510,7 +1510,7 @@ TEST_F(AudioPlayerTest, testPlayAfterOnPlaybackError) {
 /**
  * Test @c onPlaybackStarted calls the @c PlaybackRouter
  */
-TEST_F(AudioPlayerTest, testPlaybackStartedSwitchesHandler) {
+TEST_F(AudioPlayerTest, test_playbackStartedSwitchesHandler) {
     EXPECT_CALL(*m_mockPlaybackRouter, switchToDefaultHandler());
     sendPlayDirective();
 }
@@ -1518,7 +1518,7 @@ TEST_F(AudioPlayerTest, testPlaybackStartedSwitchesHandler) {
 /**
  * Test to verify that ProgressReportDelayElapsed Event is sent correctly.  This test is timing sensitive.
  */
-TEST_F(AudioPlayerTest, testProgressReportDelayElapsed) {
+TEST_F(AudioPlayerTest, test_progressReportDelayElapsed) {
     m_expectedMessages.insert({PROGRESS_REPORT_DELAY_ELAPSED_NAME, 0});
 
     EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(_))
@@ -1549,7 +1549,7 @@ TEST_F(AudioPlayerTest, testProgressReportDelayElapsed) {
  * Test to verify that ProgressReportDelayElapsed Event is not sent when the delay is less than the offset.  This test
  * is timing sensitive.
  */
-TEST_F(AudioPlayerTest, testProgressReportDelayElapsedDelayLessThanOffset) {
+TEST_F(AudioPlayerTest, test_progressReportDelayElapsedDelayLessThanOffset) {
     m_expectedMessages.insert({PROGRESS_REPORT_DELAY_ELAPSED_NAME, 0});
 
     EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(_))
@@ -1580,7 +1580,7 @@ TEST_F(AudioPlayerTest, testProgressReportDelayElapsedDelayLessThanOffset) {
  * Test to verify that ProgressReportIntervalElapsed Event is sent when the interval is less than the offset.  There
  * will be a ProgressReportIntervalElapsed Event at 100, 200 and 300 ms.  This test is timing sensitive.
  */
-TEST_F(AudioPlayerTest, testProgressReportIntervalElapsed) {
+TEST_F(AudioPlayerTest, testTimer_progressReportIntervalElapsed) {
     m_expectedMessages.insert({PROGRESS_REPORT_INTERVAL_ELAPSED_NAME, 0});
 
     EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(_))
@@ -1611,7 +1611,7 @@ TEST_F(AudioPlayerTest, testProgressReportIntervalElapsed) {
  * Test to verify that ProgressReportIntervalElapsed Event is sent when the interval is less than the offset.  There
  * will be a ProgressReportIntervalElapsed Event at 200 and 300 ms.  This test is timing sensitive.
  */
-TEST_F(AudioPlayerTest, testProgressReportIntervalElapsedIntervalLessThanOffset) {
+TEST_F(AudioPlayerTest, test_progressReportIntervalElapsedIntervalLessThanOffset) {
     m_expectedMessages.insert({PROGRESS_REPORT_INTERVAL_ELAPSED_NAME, 0});
 
     EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(_))
@@ -1638,18 +1638,101 @@ TEST_F(AudioPlayerTest, testProgressReportIntervalElapsedIntervalLessThanOffset)
     ASSERT_TRUE(result);
 }
 
+/**
+ * Test when @c AudioPlayer goes to BACKGROUND focus that it changes to PAUSED state.  And when another PLAY directive
+ * with REPLACE_ALL behavior comes in, that it would go to STOPPED state, and will not start playing again until the
+ * focus goes back to FOREGROUND.
+ */
+
+TEST_F(AudioPlayerTest, testSlow_playOnlyAfterForegroundFocus) {
+    EXPECT_CALL(*(m_mockMediaPlayer.get()), getOffset(_))
+        .WillRepeatedly(Return(m_mockMediaPlayer->getOffset(m_mockMediaPlayer->getCurrentSourceId())));
+    sendPlayDirective();
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+    m_audioPlayer->onPlaybackStarted(m_mockMediaPlayer->getCurrentSourceId());
+    m_audioPlayer->onFocusChanged(FocusState::BACKGROUND);
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PAUSED, WAIT_TIMEOUT));
+
+    // send a REPLACE_ALL Play directive
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST_2);
+
+    std::shared_ptr<AVSDirective> playDirective =
+        AVSDirective::create("", avsMessageHeader, REPLACE_ALL_PAYLOAD_TEST, m_attachmentManager, CONTEXT_ID_TEST_2);
+
+    m_wakeAcquireChannelPromise = std::promise<void>();
+    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
+    m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST_2);
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, WAIT_TIMEOUT));
+
+    {
+        // Enforce the sequence.
+        InSequence dummy;
+
+        // Make sure play() is not called
+        EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(0);
+        ASSERT_FALSE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+
+        // Now check play() is only called when focus to back to FOREGROUND
+        EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(1);
+        m_audioPlayer->onFocusChanged(FocusState::FOREGROUND);
+        ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+    }
+}
+
+/**
+ * Test when @c AudioPlayer starts to play but loses focus before the onPlaybackStarted callback is received.
+ * After onPlaybackStarted is received, playback should stop.
+ */
+TEST_F(AudioPlayerTest, testTimer_playbackStartedCallbackAfterFocusLost) {
+    EXPECT_CALL(*(m_mockMediaPlayer.get()), getOffset(_))
+        .WillRepeatedly(Return(m_mockMediaPlayer->getOffset(m_mockMediaPlayer->getCurrentSourceId())));
+
+    auto avsMessageHeader =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST, PLAY_REQUEST_ID_TEST);
+
+    std::shared_ptr<AVSDirective> playDirective = AVSDirective::create(
+        "",
+        avsMessageHeader,
+        createEnqueuePayloadTest(OFFSET_IN_MILLISECONDS_TEST),
+        m_attachmentManager,
+        CONTEXT_ID_TEST);
+    EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _, NAMESPACE_AUDIO_PLAYER))
+        .Times(1)
+        .WillOnce(InvokeWithoutArgs(this, &AudioPlayerTest::wakeOnAcquireChannel));
+
+    EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
+
+    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
+    m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
+
+    {
+        // Enforce the sequence.
+        InSequence dummy;
+
+        // Wait for acquireFocus().
+        ASSERT_EQ(std::future_status::ready, m_wakeAcquireChannelFuture.wait_for(WAIT_TIMEOUT));
+        m_audioPlayer->onFocusChanged(FocusState::FOREGROUND);
+
+        std::promise<void> playCalledPromise;
+        std::future<void> playCalled = playCalledPromise.get_future();
+
+        // Override play() behavior in MockMediaPlayer. We don't want play() to automatically call onPlaybackStarted.
+        ON_CALL(*m_mockMediaPlayer, play(_)).WillByDefault(InvokeWithoutArgs([&playCalledPromise] {
+            playCalledPromise.set_value();
+            return true;
+        }));
+
+        ASSERT_THAT(playCalled.wait_for(WAIT_TIMEOUT), Ne(std::future_status::timeout));
+
+        m_audioPlayer->onFocusChanged(FocusState::NONE);
+        m_audioPlayer->onPlaybackStarted(m_mockMediaPlayer->getCurrentSourceId());
+        ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+
+        ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, WAIT_TIMEOUT));
+    }
+}
+
 }  // namespace test
 }  // namespace audioPlayer
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
-
-int main(int argc, char** argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-
-// ACSDK-1216 - AudioPlayer tests sometimes fail in Windows
-#if !defined(_WIN32) || defined(RESOLVED_ACSDK_1216)
-    return RUN_ALL_TESTS();
-#else
-    return 0;
-#endif
-}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,8 +18,9 @@
 
 #include <gmock/gmock.h>
 
-#include "AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h"
-#include "AVSCommon/Utils/RequiresShutdown.h"
+#include <AVSCommon/Utils/RequiresShutdown.h>
+#include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
+#include <AVSCommon/Utils/Timing/Stopwatch.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -88,7 +89,8 @@ public:
         const avsCommon::utils::AudioFormat* audioFormat = nullptr) /*override*/;
     SourceId setSource(
         const std::string& url,
-        std::chrono::milliseconds offset = std::chrono::milliseconds::zero()) /*override*/;
+        std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
+        bool repeat = false) /*override*/;
     SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) /*override*/;
     void setObserver(std::shared_ptr<observer> playerObserver) /*override*/;
     /// @}
@@ -235,6 +237,13 @@ public:
      */
     SourceId getCurrentSourceId();
 
+    /**
+     * Get the current observer.
+     *
+     * @return The current observer, or nullptr if there are none.
+     */
+    std::shared_ptr<observer> getObserver() const;
+
 private:
     struct Source;
 
@@ -353,6 +362,9 @@ private:
 
         /// Tracks if playbackError state has been reached.
         SourceState error;
+
+        /// Tracks how far mocked playback has progressed, using elapsed real time.
+        avsCommon::utils::timing::Stopwatch stopwatch;
     };
 
     /**

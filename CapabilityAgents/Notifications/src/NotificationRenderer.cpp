@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -62,6 +62,16 @@ std::ostream& operator<<(std::ostream& stream, const NotificationRenderer::State
     }
     stream << "UNKNOWN: " << static_cast<int>(state);
     return stream;
+}
+
+void NotificationRenderer::doShutdown() {
+    ACSDK_DEBUG5(LX(__func__));
+    if (m_mediaPlayer) {
+        m_mediaPlayer->setObserver(nullptr);
+    }
+
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_observers.clear();
 }
 
 std::shared_ptr<NotificationRenderer> NotificationRenderer::create(std::shared_ptr<MediaPlayerInterface> mediaPlayer) {
@@ -220,6 +230,7 @@ void NotificationRenderer::onPlaybackError(SourceId sourceId, const ErrorType& t
 }
 
 NotificationRenderer::NotificationRenderer(std::shared_ptr<MediaPlayerInterface> mediaPlayer) :
+        RequiresShutdown{"NotificationRenderer"},
         m_mediaPlayer{mediaPlayer},
         m_state{State::IDLE},
         m_sourceId{MediaPlayerInterface::ERROR} {

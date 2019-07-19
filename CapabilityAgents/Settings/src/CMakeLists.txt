@@ -9,9 +9,10 @@ target_include_directories(Settings PUBLIC
         "${Settings_SOURCE_DIR}/include"
         "${SpeechSynthesizer_SOURCE_DIR}/include"
         "${SQLiteStorage_SOURCE_DIR}/include"
+        "${CertifiedSender_SOURCE_DIR}/include"
         "{RegistrationManager_SOURCE_DIR}/include")
 
-target_link_libraries(Settings AVSCommon SQLiteStorage RegistrationManager)
+target_link_libraries(Settings AVSCommon SQLiteStorage CertifiedSender RegistrationManager)
 
 # install target
 asdk_install()

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,15 +40,6 @@ public:
     virtual ~RendererInterface() = default;
 
     /**
-     * Set an observer on the renderer.  Note that the observer type is a raw pointer, and thus it is expected
-     * that this object will outlive its observer.
-     *
-     * @param observer The observer.
-     */
-    virtual void setObserver(
-        std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer) = 0;
-
-    /**
      * Start rendering.  This api takes two sets of parameters - a local audio file, and a vector of urls.
      * If the urls container is empty, then the local audio file will be played for either a maximum time of one hour,
      * or until explicitly being stopped.
@@ -61,17 +52,25 @@ public:
      *
      * TODO : ACSDK-389 Investigate changing explicit file paths to a std::istream-based interface.
      *
+     * @param observer The observer that will receive renderer events.
      * @param audioFactory A function that produces a unique stream of audio that is used for the default if nothing
      * else is available.
      * @param urls A container of urls to be rendered per the above description.
      * @param loopCount The number of times the urls should be rendered.
-     * @param loopPauseInMilliseconds The number of milliseconds to pause between rendering url sequences.
+     * @param loopPause The duration which must expire between the beginning of rendering of any loop of audio.
+     * Therefore if the audio (either urls or local audio file) finishes before this duration, then the renderer will
+     * wait for the remainder of this time before starting the next loop.
+     * @param startWithPause Indicates if the renderer should begin with an initial pause before rendering audio.
+     * This initial pause will be for the same duration as @c loopPause, and will not be considered part of the
+     * @c loopCount.
      */
     virtual void start(
+        std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
         std::function<std::unique_ptr<std::istream>()> audioFactory,
         const std::vector<std::string>& urls = std::vector<std::string>(),
         int loopCount = 0,
-        std::chrono::milliseconds loopPause = std::chrono::milliseconds{0}) = 0;
+        std::chrono::milliseconds loopPause = std::chrono::milliseconds{0},
+        bool startWithPause = false) = 0;
 
     /**
      * Stop rendering.

@@ -1,7 +1,6 @@
 find_package(GTest ${GTEST_PACKAGE_CONFIG})
 
 set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
-     "${AuthDelegate_INCLUDE_DIR}/test/"
      "${GTEST_INCLUDE_DIRS}"
      "${KWD_SOURCE_DIR}/include"
      "${KITTAI_SOURCE_DIR}/include"
@@ -14,13 +13,14 @@ set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${AVSSystem_SOURCE_DIR}/include"
      "${GST_INCLUDE_DIRS}"
      "${AVSCommon_INCLUDE_DIRS}"
+     "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test"
      "${AudioPlayer_INCLUDE_DIRS}"
      "${AudioResources_INCLUDE_DIRS}"
      "${MediaPlayer_SOURCE_DIR}/include"
      "${PlaybackController_SOURCE_DIR}/include"
      "${CONTEXTMANAGER_SOURCE_DIR}/include")
 
-    set(LINK_PATH ACL AuthDelegate AFML ADSL AIP Alerts AudioPlayer AVSSystem ContextManager KWD SpeechSynthesizer Integration gtest gmock PlaybackController)
+    set(LINK_PATH ACL ADSL AFML AIP Alerts AudioPlayer AVSSystem CBLAuthDelegate ContextManager Integration gtest gmock KWD PlaybackController SpeechSynthesizer)
 
     if(KITTAI_KEY_WORD_DETECTOR)
         SET(LINK_PATH ${LINK_PATH} KITTAI)
@@ -43,12 +43,15 @@ set(SDK_CONFIG_FILE_TARGET "${Integration_BINARY_DIR}/${SDK_CONFIG_FILENAME}")
 # Use configure_file to support variable substitution later.
 configure_file("${SDK_CONFIG_FILE_SOURCE}" "${SDK_CONFIG_FILE_TARGET}")
 
-# Copy AuthServer to the build directory.
-set(AUTHSERVER_SCRIPT_FILENAME "AuthServer.py")
-set(AUTHSERVER_SCRIPT_FILE_SOURCE "${AlexaClientSDK_SOURCE_DIR}/tools/AuthServer/${AUTHSERVER_SCRIPT_FILENAME}")
-set(AUTHSERVER_SCRIPT_FILE_TARGET "${AlexaClientSDK_BINARY_DIR}/AuthServer/${AUTHSERVER_SCRIPT_FILENAME}")
-# Use configure_file to pass SDK_CONFIG_FILE_TARGET as the default config file.
-configure_file("${AUTHSERVER_SCRIPT_FILE_SOURCE}" "${AUTHSERVER_SCRIPT_FILE_TARGET}")
+# Copy Adapter SDK Json file to the build directory.
+set(SDK_ADAPTERS_CONFIG_FILENAME "ExternalMediaPlayerAdapters.json")
+set(SDK_ADAPTERS_CONFIG_FILE_SOURCE "${Integration_SOURCE_DIR}/${SDK_ADAPTERS_CONFIG_FILENAME}")
+set(SDK_ADAPTERS_CONFIG_FILE_TARGET "${Integration_BINARY_DIR}/${SDK_ADAPTERS_CONFIG_FILENAME}")
+
+if(EXISTS "${SDK_ADAPTERS_CONFIG_FILE_SOURCE}")
+    # Use configure_file to support variable substitution later.
+    configure_file("${SDK_ADAPTERS_CONFIG_FILE_SOURCE}" "${SDK_ADAPTERS_CONFIG_FILE_TARGET}")
+endif()
 
 if(BUILD_TESTING)
     add_custom_target(integration
@@ -77,6 +80,10 @@ if(BUILD_TESTING)
     endforeach()
 
     message(STATUS "Please fill ${SDK_CONFIG_FILE_TARGET} before you execute integration tests.")
+    if(EXISTS "${SDK_ADAPTERS_CONFIG_FILE_SOURCE}")
+        # Use configure_file to support variable substitution later.
+        message(STATUS "Please fill ${SDK_ADAPTERS_CONFIG_FILE_TARGET} before you execute integration tests.")
+    endif()
 
     if(NETWORK_INTEGRATION_TESTS AND (${CMAKE_SYSTEM_NAME} MATCHES "Linux"))
         set(networkTestSourceFile

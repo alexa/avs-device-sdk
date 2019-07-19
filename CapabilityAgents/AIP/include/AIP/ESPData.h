@@ -33,10 +33,12 @@ namespace aip {
 class ESPData {
 public:
     /*
-     * Empty ESP data measurement.  Can be used as the default value for a function parameter to indicate ESP is not
-     * supported.
+     * Getter function to retrieve empty ESP DATA which can be used as the default value for a function parameter to
+     * indicate ESP is not supported.
+     *
+     * @return the empty ESP DATA
      */
-    static const ESPData EMPTY_ESP_DATA;
+    static const ESPData getEmptyESPData();
 
     /*
      * Default constructor that initializes the @c m_voiceEnergy and @c m_ambientEnergy to a empty string.

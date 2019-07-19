@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -206,7 +206,7 @@ SetStateResult VisualActivityTrackerTest::wakeOnSetState() {
 }
 
 /// Test if there's no activity updates, VisualActivityTracker will return an empty context.
-TEST_F(VisualActivityTrackerTest, noActivityUpdate) {
+TEST_F(VisualActivityTrackerTest, test_noActivityUpdate) {
     EXPECT_CALL(
         *(m_mockContextManager.get()),
         setState(NAMESPACE_AND_NAME_STATE, "", StateRefreshPolicy::SOMETIMES, PROVIDE_STATE_TOKEN_TEST))
@@ -218,13 +218,13 @@ TEST_F(VisualActivityTrackerTest, noActivityUpdate) {
 }
 
 /// Test if there's an empty vector of activity updates, VisualActivityTracker will return an empty context.
-TEST_F(VisualActivityTrackerTest, emptyActivityUpdate) {
+TEST_F(VisualActivityTrackerTest, test_emptyActivityUpdate) {
     std::vector<Channel::State> channels;
     provideUpdate(channels);
 }
 
 /// Test if there's an activityUpdate for one idle channel, VisualActivityTracker will return an empty context.
-TEST_F(VisualActivityTrackerTest, oneIdleChannel) {
+TEST_F(VisualActivityTrackerTest, test_oneIdleChannel) {
     std::vector<Channel::State> channels;
     m_visualChannel->setFocus(FocusState::NONE);
     channels.push_back(m_visualChannel->getState());
@@ -232,7 +232,7 @@ TEST_F(VisualActivityTrackerTest, oneIdleChannel) {
 }
 
 /// Test if there's an activityUpdate for one active channel, context will be reported correctly.
-TEST_F(VisualActivityTrackerTest, oneActiveChannel) {
+TEST_F(VisualActivityTrackerTest, test_oneActiveChannel) {
     std::vector<Channel::State> channels;
     m_visualChannel->setFocus(FocusState::FOREGROUND);
     channels.push_back(m_visualChannel->getState());
@@ -243,7 +243,7 @@ TEST_F(VisualActivityTrackerTest, oneActiveChannel) {
  * Test if there's an vector of activity updates with one valid and one invalid channel, VisualActivityTracker will
  * return an empty context.
  */
-TEST_F(VisualActivityTrackerTest, invalidChannelActivityUpdate) {
+TEST_F(VisualActivityTrackerTest, test_invalidChannelActivityUpdate) {
     std::vector<Channel::State> channels;
     auto invalidChannel = std::make_shared<Channel>(INVALID_CHANNEL_NAME, INVALID_CHANNEL_PRIORITY);
     m_visualChannel->setFocus(FocusState::FOREGROUND);
@@ -256,7 +256,7 @@ TEST_F(VisualActivityTrackerTest, invalidChannelActivityUpdate) {
  * Test if there's an vector of activity updates with one valid channel, VisualActivityTracker take the state from the
  * last element of the vector.
  */
-TEST_F(VisualActivityTrackerTest, validChannelTwoActivityUpdates) {
+TEST_F(VisualActivityTrackerTest, test_validChannelTwoActivityUpdates) {
     std::vector<Channel::State> channels;
     m_visualChannel->setFocus(FocusState::FOREGROUND);
     channels.push_back(m_visualChannel->getState());

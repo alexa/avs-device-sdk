@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -54,7 +54,10 @@ MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
     return attachmentSetSource(attachmentReader, audioFormat);
 }
 
-MediaPlayerInterface::SourceId MockMediaPlayer::setSource(const std::string& url, std::chrono::milliseconds offset) {
+MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
+    const std::string& url,
+    std::chrono::milliseconds offset,
+    bool repeat) {
     return urlSetSource(url);
 }
 
@@ -64,6 +67,10 @@ MediaPlayerInterface::SourceId MockMediaPlayer::setSource(std::shared_ptr<std::i
 
 void MockMediaPlayer::setObserver(std::shared_ptr<MediaPlayerObserverInterface> playerObserver) {
     m_playerObserver = playerObserver;
+}
+
+std::shared_ptr<MediaPlayerObserverInterface> MockMediaPlayer::getObserver() const {
+    return m_playerObserver;
 }
 
 void MockMediaPlayer::doShutdown() {
@@ -84,6 +91,7 @@ bool MockMediaPlayer::mockPlay(SourceId sourceId) {
     if (!source) {
         return false;
     }
+    EXPECT_TRUE(source->stopwatch.start());
     source->started.trigger();
     return true;
 }
@@ -93,6 +101,8 @@ bool MockMediaPlayer::mockPause(SourceId sourceId) {
     if (!source) {
         return false;
     }
+    // Ideally we would EXPECT_TRUE on pause(), however ACSDK-734 doesn't guarantee that will be okay.
+    source->stopwatch.pause();
     source->resumed.resetStateReached();
     source->paused.trigger();
     return true;
@@ -103,6 +113,7 @@ bool MockMediaPlayer::mockResume(SourceId sourceId) {
     if (!source) {
         return false;
     }
+    EXPECT_TRUE(source->stopwatch.resume());
     source->paused.resetStateReached();
     source->resumed.trigger();
     return true;
@@ -113,6 +124,8 @@ bool MockMediaPlayer::mockStop(SourceId sourceId) {
     if (!source) {
         return false;
     }
+
+    source->stopwatch.stop();
     source->stopped.trigger();
     return true;
 }
@@ -122,6 +135,7 @@ bool MockMediaPlayer::mockFinished(SourceId sourceId) {
     if (!source) {
         return false;
     }
+    source->stopwatch.stop();
     source->finished.trigger();
     return true;
 }
@@ -131,6 +145,7 @@ bool MockMediaPlayer::mockError(SourceId sourceId) {
     if (!source) {
         return false;
     }
+    source->stopwatch.stop();
     source->error.trigger();
     return true;
 }
@@ -150,7 +165,7 @@ std::chrono::milliseconds MockMediaPlayer::mockGetOffset(SourceId sourceId) {
     if (!source) {
         return MEDIA_PLAYER_INVALID_OFFSET;
     }
-    return source->offset;
+    return source->stopwatch.getElapsed() + source->offset;
 }
 
 bool MockMediaPlayer::waitUntilNextSetSource(const std::chrono::milliseconds timeout) {

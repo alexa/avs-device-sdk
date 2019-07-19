@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 
 #include "NotificationRendererInterface.h"
 
@@ -34,6 +35,7 @@ namespace notifications {
 class NotificationRenderer
         : public NotificationRendererInterface
         , public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface
+        , public avsCommon::utils::RequiresShutdown
         , public std::enable_shared_from_this<NotificationRenderer> {
 public:
     /// A type that identifies which source is currently being operated on.
@@ -65,6 +67,11 @@ public:
     void onPlaybackFinished(SourceId sourceId) override;
     void onPlaybackError(SourceId sourceId, const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error)
         override;
+    /// @}
+
+    /// @name RequiresShutdown methods
+    /// @{
+    void doShutdown() override;
     /// @}
 
 private:

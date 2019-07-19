@@ -16,8 +16,10 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_AVSDIRECTIVE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_AVSDIRECTIVE_H_
 
+#include <iostream>
 #include <memory>
 #include <string>
+#include <utility>
 
 #include "Attachment/AttachmentManagerInterface.h"
 #include "AVSMessage.h"
@@ -32,11 +34,54 @@ namespace avs {
 class AVSDirective : public AVSMessage {
 public:
     /**
-     * Create an AVSDirective object with the given @c avsMessageHeader, @c payload and @c attachmentManager.
+     * An enum to indicate the status of parsing an AVS Directive from a JSON string representation.
+     */
+    enum class ParseStatus {
+        /// The parse was successful.
+        SUCCESS,
+
+        /// The parse failed due to invalid JSON formatting.
+        ERROR_INVALID_JSON,
+
+        /// The parse failed due to the directive key being missing.
+        ERROR_MISSING_DIRECTIVE_KEY,
+
+        /// The parse failed due to the header key being missing.
+        ERROR_MISSING_HEADER_KEY,
+
+        /// The parse failed due to the namespace key being missing.
+        ERROR_MISSING_NAMESPACE_KEY,
+
+        /// The parse failed due to the name key being missing.
+        ERROR_MISSING_NAME_KEY,
+
+        /// The parse failed due to the message id key being missing.
+        ERROR_MISSING_MESSAGE_ID_KEY,
+
+        /// The parse failed due to the message payload key being missing.
+        ERROR_MISSING_PAYLOAD_KEY
+    };
+
+    /**
+     * Creates an AVSDirective.
      *
-     * @param unparsedDirective The unparsed directive JSON string from AVS.
-     * @param avsMessageHeader The header fields of the directive.
-     * @param payload The payload of the directive.
+     * @param unparsedDirective The unparsed AVS Directive JSON string.
+     * @param attachmentManager The attachment manager.
+     * @param attachmentContextId The contextId required to get attachments from the AttachmentManager.
+     * @return A pair of an AVSDirective pointer and a parse status.  If the AVSDirective is nullptr, the status will
+     * express the parse error.
+     */
+    static std::pair<std::unique_ptr<AVSDirective>, ParseStatus> create(
+        const std::string& unparsedDirective,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
+        const std::string& attachmentContextId);
+
+    /**
+     * Creates an AVSDirective.
+     *
+     * @param unparsedDirective The unparsed AVS Directive JSON string.
+     * @param avsMessageHeader The header fields of the Directive.
+     * @param payload The payload of the Directive.
      * @param attachmentManager The attachment manager.
      * @param attachmentContextId The contextId required to get attachments from the AttachmentManager.
      * @return The created AVSDirective object or @c nullptr if creation failed.
@@ -88,6 +133,45 @@ private:
     /// The contextId needed to acquire the right attachment from the attachmentManager.
     std::string m_attachmentContextId;
 };
+
+/**
+ * This function converts the provided @c ParseStatus to a string.
+ *
+ * @param status The @c ParseStatus to convert to a string.
+ * @return The string conversion of the @c ParseStatus.
+ */
+inline std::string avsDirectiveParseStatusToString(AVSDirective::ParseStatus status) {
+    switch (status) {
+        case AVSDirective::ParseStatus::SUCCESS:
+            return "SUCCESS";
+        case AVSDirective::ParseStatus::ERROR_INVALID_JSON:
+            return "ERROR_INVALID_JSON";
+        case AVSDirective::ParseStatus::ERROR_MISSING_DIRECTIVE_KEY:
+            return "ERROR_MISSING_DIRECTIVE_KEY";
+        case AVSDirective::ParseStatus::ERROR_MISSING_HEADER_KEY:
+            return "ERROR_MISSING_HEADER_KEY";
+        case AVSDirective::ParseStatus::ERROR_MISSING_NAMESPACE_KEY:
+            return "ERROR_MISSING_NAMESPACE_KEY";
+        case AVSDirective::ParseStatus::ERROR_MISSING_NAME_KEY:
+            return "ERROR_MISSING_NAME_KEY";
+        case AVSDirective::ParseStatus::ERROR_MISSING_MESSAGE_ID_KEY:
+            return "ERROR_MISSING_MESSAGE_ID_KEY";
+        case AVSDirective::ParseStatus::ERROR_MISSING_PAYLOAD_KEY:
+            return "ERROR_MISSING_PAYLOAD_KEY";
+    }
+    return "UNKNOWN_STATUS";
+}
+
+/**
+ * Write a @c ParseStatus value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param status The @c ParseStatus value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const AVSDirective::ParseStatus& status) {
+    return stream << avsDirectiveParseStatusToString(status);
+}
 
 }  // namespace avs
 }  // namespace avsCommon

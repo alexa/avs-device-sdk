@@ -29,6 +29,8 @@ static const std::string CONFIG_KEY_LOGGER = "logger";
 /// Configuration key for "logLevel" values under "logger" and other per-module objects.
 static const std::string CONFIG_KEY_LOG_LEVEL = "logLevel";
 
+static constexpr auto AT_EXIT_THREAD_ID = "0";
+
 Logger::Logger(Level level) : m_level{level} {
 }
 
@@ -107,6 +109,12 @@ void Logger::notifyObserversOnLogLevelChanged() {
     // call the callbacks
     for (auto observer : observersCopy) {
         observer->onLogLevelChanged(m_level);
+    }
+}
+
+void Logger::logAtExit(Level level, const LogEntry& entry) {
+    if (shouldLog(level)) {
+        emit(level, std::chrono::system_clock::now(), AT_EXIT_THREAD_ID, entry.c_str());
     }
 }
 

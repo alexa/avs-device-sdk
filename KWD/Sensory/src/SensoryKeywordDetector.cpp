@@ -57,6 +57,9 @@ static const avsCommon::utils::AudioFormat::Encoding SENSORY_COMPATIBLE_ENCODING
 static const avsCommon::utils::AudioFormat::Endianness SENSORY_COMPATIBLE_ENDIANNESS =
     avsCommon::utils::AudioFormat::Endianness::LITTLE;
 
+/// The Sensory operating point
+static const unsigned int SENSORY_OPERATING_POINT = 12;
+
 /**
  * Checks to see if an @c avsCommon::utils::AudioFormat is compatible with Sensory.
  *
@@ -302,6 +305,23 @@ bool SensoryKeywordDetector::setUpRuntimeSettings(SnsrSession* session) {
         return false;
     }
 
+    result = snsrSetInt(*session, SNSR_OPERATING_POINT, SENSORY_OPERATING_POINT);
+    if (result != SNSR_RC_OK) {
+        ACSDK_ERROR(LX("setUpRuntimeSettingsFailed")
+                        .d("reason", "settingOperationPointFailed")
+                        .d("error", getSensoryDetails(*session, result)));
+        return false;
+    }
+
+    int op=0; 
+    result = snsrGetInt(*session, SNSR_OPERATING_POINT, &op);
+    if (result != SNSR_RC_OK) {
+        ACSDK_ERROR(LX("setUpRuntimeSettingsFailed")
+                        .d("reason", "gettingOperatingPointFaied")
+                        .d("error", getSensoryDetails(*session, result)));
+        return false;
+    }
+    printf("Sensory operating point = %d\n",op);
     return true;
 }
 

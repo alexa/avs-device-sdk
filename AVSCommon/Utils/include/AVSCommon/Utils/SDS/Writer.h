@@ -284,11 +284,11 @@ ssize_t SharedDataStream<T>::Writer::write(const void* buf, size_t nWords, std::
     // continuously, so a missed notification is not significant.
     // Note: As a further optimization, the lock could be omitted if no blocking readers are in use (ACSDK-251).
     std::unique_lock<Mutex> dataAvailableLock(header->dataAvailableMutex, std::defer_lock);
-    if (Policy::NONBLOCKABLE == m_policy) {
+    if (Policy::NONBLOCKABLE != m_policy) {
         dataAvailableLock.lock();
     }
     header->writeStartCursor = header->writeEndCursor.load();
-    if (Policy::NONBLOCKABLE == m_policy) {
+    if (Policy::NONBLOCKABLE != m_policy) {
         dataAvailableLock.unlock();
     }
 

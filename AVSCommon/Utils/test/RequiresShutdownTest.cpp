@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -58,7 +58,7 @@ void Object::doShutdown() {
  * verifies that we don't crash, but functional verification currently requires a manual examination of the console
  * output from this test.
  */
-TEST(RequiresShutdownTest, allTestCases) {
+TEST(RequiresShutdownTest, test_allTestCases) {
     // shared_ptr loop that implements and calls proper shutdown functions
     auto loopCallGoodShutdownMemberA = std::make_shared<Object>("loopCallGoodShutdownMemberA");
     auto loopCallGoodShutdownMemberB = std::make_shared<Object>("loopCallGoodShutdownMemberB");

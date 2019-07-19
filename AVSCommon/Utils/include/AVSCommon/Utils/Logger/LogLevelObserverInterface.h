@@ -35,6 +35,11 @@ public:
      * @param status The updated logLevel
      */
     virtual void onLogLevelChanged(Level level) = 0;
+
+    /**
+     * Destructor.
+     */
+    virtual ~LogLevelObserverInterface() = default;
 };
 
 }  // namespace logger

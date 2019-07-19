@@ -20,7 +20,9 @@
 #include <unordered_set>
 
 #include <AVSCommon/AVS/CapabilityAgent.h>
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/SDKInterfaces/Audio/NotificationsAudioFactoryInterface.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/NotificationsObserverInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
@@ -49,6 +51,7 @@ namespace notifications {
 class NotificationsCapabilityAgent
         : public NotificationRendererObserverInterface
         , public avsCommon::avs::CapabilityAgent
+        , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::utils::RequiresShutdown
         , public registrationManager::CustomerDataHandler
         , public std::enable_shared_from_this<NotificationsCapabilityAgent> {
@@ -116,6 +119,11 @@ public:
      * Clear all notifications saved in the device
      */
     void clearData() override;
+
+    /// @name CapabilityConfigurationInterface Functions
+    /// @{
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
+    /// @}
 
 private:
     /**
@@ -319,6 +327,9 @@ private:
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::NotificationsObserverInterface>> m_observers;
 
     NotificationsCapabilityAgentState m_currentState;
+
+    /// Set of capability configurations that will get published using the Capabilities API
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

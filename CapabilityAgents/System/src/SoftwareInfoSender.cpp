@@ -52,7 +52,7 @@ std::shared_ptr<SoftwareInfoSender> SoftwareInfoSender::create(
     FirmwareVersion firmwareVersion,
     bool sendSoftwareInfoUponConnect,
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> observer,
-    std::shared_ptr<AbstractConnection> connection,
+    std::shared_ptr<AVSConnectionManagerInterface> connection,
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender) {
     ACSDK_DEBUG5(LX("create"));
@@ -143,7 +143,7 @@ avsCommon::avs::DirectiveHandlerConfiguration SoftwareInfoSender::getConfigurati
     ACSDK_DEBUG5(LX("getConfiguration"));
 
     static avsCommon::avs::DirectiveHandlerConfiguration configuration = {
-        {REPORT_SOFTWARE_INFO, BlockingPolicy::NON_BLOCKING}};
+        {REPORT_SOFTWARE_INFO, BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false)}};
     return configuration;
 }
 
@@ -279,7 +279,7 @@ void SoftwareInfoSender::doShutdown() {
     // Local shared_ptrs used to prevent deletion of objects pointed to by members until m_mutex is released.
 
     std::shared_ptr<SoftwareInfoSenderObserverInterface> localObserver;
-    std::shared_ptr<AbstractConnection> localConnection;
+    std::shared_ptr<AVSConnectionManagerInterface> localConnection;
     std::shared_ptr<MessageSenderInterface> localMessageSender;
     std::shared_ptr<ExceptionEncounteredSenderInterface> localExceptionEncounteredSender;
     std::shared_ptr<SoftwareInfoSendRequest> localClientInitiatedSendRequest;
@@ -328,7 +328,7 @@ SoftwareInfoSender::SoftwareInfoSender(
     FirmwareVersion firmwareVersion,
     bool sendSoftwareInfoUponConnect,
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> observer,
-    std::shared_ptr<AbstractConnection> connection,
+    std::shared_ptr<AVSConnectionManagerInterface> connection,
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender) :
         CapabilityAgent{NAMESPACE_SYSTEM, exceptionEncounteredSender},

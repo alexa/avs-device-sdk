@@ -21,6 +21,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/GlobalSettingsObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SingleSettingObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
@@ -39,7 +41,9 @@ namespace settings {
  * This class writes the Setting change to database and notifies the observers of the setting.
  * @see https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/settings
  */
-class Settings : public registrationManager::CustomerDataHandler {
+class Settings
+        : public registrationManager::CustomerDataHandler
+        , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface {
 public:
     /**
      * Creates a new @c Settings instance.
@@ -107,6 +111,11 @@ public:
      */
     void clearData() override;
 
+    /// @name CapabilityConfigurationInterface Functions
+    /// @{
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
+    /// @}
+
 private:
     /**
      * The structure to hold all the data of a single setting.
@@ -155,6 +164,10 @@ private:
         m_globalSettingsObserver;
     /// The map of <key, SettingElements> pairs of the settings.
     std::unordered_map<std::string, SettingElements> m_mapOfSettingsAttributes;
+
+    /// Set of capability configurations that will get published using the Capabilities API
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
+
     /// Executor that queues up the calls when a setting is changed.
     avsCommon::utils::threading::Executor m_executor;
 

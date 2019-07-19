@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -45,6 +45,26 @@ bool stringToInt(const std::string& str, int* result);
 bool stringToInt(const char* str, int* result);
 
 /**
+ * A utility function to convert a string to an integer 64 bits.
+ * If the string is successfully parsed, then the out parameter will be updated.
+ *
+ * @param str The string input.
+ * @param[out] result The resulting integer, if successfully parsed from the string.
+ * @return @c true If the string was parsed as an integer, otherwise @c false.
+ */
+bool stringToInt64(const std::string& str, int64_t* result);
+
+/**
+ * A utility function to convert a c-string to an integer 64 bits.
+ * If the string is successfully parsed, then the out parameter will be updated.
+ *
+ * @param str The C-string input.
+ * @param[out] result The resulting integer, if successfully parsed from the string.
+ * @return @c true If the string was parsed as an integer, otherwise @c false.
+ */
+bool stringToInt64(const char* str, int64_t* result);
+
+/**
  * A utility function to convert a vector of bytes to a printable string.  For example, the vector {1, 2, 3} will return
  * the string "0x01 0x02 0x03"
  *
@@ -60,6 +80,24 @@ std::string byteVectorToString(const std::vector<uint8_t>& byteVector);
  * @return The converted string in lower case.
  */
 std::string stringToLowerCase(const std::string& input);
+
+/**
+ * A utility function to convert a string into upper case.
+ *
+ * @param input The input string to be converted.
+ * @return The converted string in upper case.
+ */
+std::string stringToUpperCase(const std::string& input);
+
+/**
+ * Replaces all occurrences of a substring with another string.
+ *
+ * @param str The reference string.
+ * @param from The string to find.
+ * @param to The replacement string.
+ * @return A new string with the replaced substrings.
+ */
+std::string replaceAllSubstring(const std::string& str, const std::string& from, const std::string& to);
 
 }  // namespace string
 }  // namespace utils

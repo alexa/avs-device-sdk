@@ -44,11 +44,15 @@ public:
         capabilityAgents::aip::AudioProvider audioProvider,
         std::shared_ptr<esp::ESPDataProviderInterface> espProvider = nullptr);
 
+    /// @name KeyWordObserverInterface Functions
+    /// @{
     void onKeyWordDetected(
         std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
         std::string keyword,
-        avsCommon::avs::AudioInputStream::Index beginIndex,
-        avsCommon::avs::AudioInputStream::Index endIndex) override;
+        avsCommon::avs::AudioInputStream::Index beginIndex = UNSPECIFIED_INDEX,
+        avsCommon::avs::AudioInputStream::Index endIndex = UNSPECIFIED_INDEX,
+        std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr) override;
+    /// @}
 
 private:
     /// The default SDK client.

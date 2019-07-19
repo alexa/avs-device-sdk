@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
-project(MediaPlayer LANGUAGES CXX)
 
-include(../build/BuildDefaults.cmake)
-
-if(NOT GSTREAMER_MEDIA_PLAYER)
-    message("GStreamer based media player will not be built.")
+if (GSTREAMER_MEDIA_PLAYER)
+    add_subdirectory("GStreamerMediaPlayer")
+elseif (ANDROID_MEDIA_PLAYER)
+    add_subdirectory("AndroidSLESMediaPlayer")
 else()
-    add_subdirectory("src")
-    acsdk_add_test_subdirectory_if_allowed()
+    message("No media player will be built.")
 endif()
+
+

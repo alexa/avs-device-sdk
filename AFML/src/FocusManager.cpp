@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,16 +33,8 @@ static const std::string TAG("FocusManager");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-const std::vector<FocusManager::ChannelConfiguration> FocusManager::DEFAULT_AUDIO_CHANNELS = {
-    {FocusManagerInterface::DIALOG_CHANNEL_NAME, FocusManagerInterface::DIALOG_CHANNEL_PRIORITY},
-    {FocusManagerInterface::ALERTS_CHANNEL_NAME, FocusManagerInterface::ALERTS_CHANNEL_PRIORITY},
-    {FocusManagerInterface::CONTENT_CHANNEL_NAME, FocusManagerInterface::CONTENT_CHANNEL_PRIORITY}};
-
-const std::vector<FocusManager::ChannelConfiguration> FocusManager::DEFAULT_VISUAL_CHANNELS = {
-    {FocusManagerInterface::VISUAL_CHANNEL_NAME, FocusManagerInterface::VISUAL_CHANNEL_PRIORITY}};
-
 FocusManager::FocusManager(
-    const std::vector<ChannelConfiguration>& channelConfigurations,
+    const std::vector<ChannelConfiguration> channelConfigurations,
     std::shared_ptr<ActivityTrackerInterface> activityTrackerInterface) :
         m_activityTracker{activityTrackerInterface} {
     for (auto config : channelConfigurations) {
@@ -114,6 +106,26 @@ void FocusManager::stopForegroundActivity() {
     m_executor.submitToFront([this, foregroundChannel, foregroundChannelInterface]() {
         stopForegroundActivityHelper(foregroundChannel, foregroundChannelInterface);
     });
+}
+
+void FocusManager::stopAllActivities() {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (m_activeChannels.empty()) {
+        ACSDK_DEBUG5(LX(__func__).m("no active channels"));
+        return;
+    }
+
+    ChannelsToInterfaceNamesMap channelOwnersCapture;
+    std::unique_lock<std::mutex> lock(m_mutex);
+
+    for (const auto& channel : m_activeChannels) {
+        channelOwnersCapture.insert(std::pair<std::shared_ptr<Channel>, std::string>(channel, channel->getInterface()));
+    }
+
+    lock.unlock();
+
+    m_executor.submitToFront([this, channelOwnersCapture]() { stopAllActivitiesHelper(channelOwnersCapture); });
 }
 
 void FocusManager::addObserver(const std::shared_ptr<FocusManagerObserverInterface>& observer) {
@@ -213,6 +225,35 @@ void FocusManager::stopForegroundActivityHelper(
     notifyActivityTracker();
 }
 
+void FocusManager::stopAllActivitiesHelper(const ChannelsToInterfaceNamesMap& channelsOwnersMap) {
+    ACSDK_DEBUG3(LX(__func__));
+
+    std::set<std::shared_ptr<Channel>> channelsToClear;
+
+    std::unique_lock<std::mutex> lock(m_mutex);
+
+    for (const auto& channelAndInterface : channelsOwnersMap) {
+        if (channelAndInterface.first->getInterface() == channelAndInterface.second) {
+            m_activeChannels.erase(channelAndInterface.first);
+            channelsToClear.insert(channelAndInterface.first);
+        } else {
+            ACSDK_INFO(LX(__func__)
+                           .d("reason", "channel has other ownership")
+                           .d("channel", channelAndInterface.first->getName())
+                           .d("currentInterface", channelAndInterface.first->getInterface())
+                           .d("originalInterface", channelAndInterface.second));
+        }
+    }
+
+    lock.unlock();
+
+    for (const auto& channel : channelsToClear) {
+        setChannelFocus(channel, FocusState::NONE);
+    }
+    foregroundHighestPriorityActiveChannel();
+    notifyActivityTracker();
+}
+
 std::shared_ptr<Channel> FocusManager::getChannel(const std::string& channelName) const {
     auto search = m_allChannels.find(channelName);
     if (search != m_allChannels.end()) {
@@ -246,7 +287,6 @@ bool FocusManager::doesChannelPriorityExist(const unsigned int priority) const {
 }
 
 void FocusManager::foregroundHighestPriorityActiveChannel() {
-    // Lock here to update internal state which stopForegroundActivity may concurrently access.
     std::unique_lock<std::mutex> lock(m_mutex);
     std::shared_ptr<Channel> channelToForeground = getHighestPriorityActiveChannelLocked();
     lock.unlock();
@@ -261,6 +301,23 @@ void FocusManager::notifyActivityTracker() {
         m_activityTracker->notifyOfActivityUpdates(m_activityUpdates);
     }
     m_activityUpdates.clear();
+}
+
+const std::vector<FocusManager::ChannelConfiguration> FocusManager::getDefaultAudioChannels() {
+    static const std::vector<FocusManager::ChannelConfiguration> defaultAudioChannels = {
+        {FocusManagerInterface::DIALOG_CHANNEL_NAME, FocusManagerInterface::DIALOG_CHANNEL_PRIORITY},
+        {FocusManagerInterface::ALERT_CHANNEL_NAME, FocusManagerInterface::ALERT_CHANNEL_PRIORITY},
+        {FocusManagerInterface::COMMUNICATIONS_CHANNEL_NAME, FocusManagerInterface::COMMUNICATIONS_CHANNEL_PRIORITY},
+        {FocusManagerInterface::CONTENT_CHANNEL_NAME, FocusManagerInterface::CONTENT_CHANNEL_PRIORITY}};
+
+    return defaultAudioChannels;
+}
+
+const std::vector<FocusManager::ChannelConfiguration> FocusManager::getDefaultVisualChannels() {
+    static const std::vector<FocusManager::ChannelConfiguration> defaultVisualChannels = {
+        {FocusManagerInterface::VISUAL_CHANNEL_NAME, FocusManagerInterface::VISUAL_CHANNEL_PRIORITY}};
+
+    return defaultVisualChannels;
 }
 
 }  // namespace afml

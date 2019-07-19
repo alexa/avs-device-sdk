@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 
 #include "AVSCommon/AVS/CapabilityAgent.h"
 #include "AVSCommon/AVS/Attachment/AttachmentManager.h"
+#include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
 
 using namespace testing;
 
@@ -30,6 +31,7 @@ namespace avsCommon {
 namespace test {
 
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::sdkInterfaces::test;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace rapidjson;
@@ -66,6 +68,9 @@ static const std::string PAYLOAD("payload");
 
 /// A speech recognizer payload for testing
 static const std::string PAYLOAD_TEST("payload_Test");
+
+/// A string to send with the sendExceptionEncounteredAndReportFailed method
+static const std::string EXCEPTION_ENCOUNTERED_STRING("encountered_exception");
 
 /// A payload for testing
 // clang-format off
@@ -231,11 +236,22 @@ public:
      * Creates an instance of the @c MockCapabilityAgent.
      *
      * @param nameSpace The namespace of the Capability Agent.
+     * @param m_exceptionSender The @c ExceptionEncounteredSenderInterface instance.
      * @return A shared pointer to an instance of the @c MockCapabilityAgent.
      */
-    static std::shared_ptr<MockCapabilityAgent> create(const std::string nameSpace);
+    static std::shared_ptr<MockCapabilityAgent> create(
+        const std::string nameSpace,
+        const std::shared_ptr<MockExceptionEncounteredSender> m_exceptionSender);
 
-    MockCapabilityAgent(const std::string& nameSpace);
+    /**
+     * MockCapabilityAgent Constructor.
+     *
+     * @param nameSpace The namespace of the Capability Agent.
+     * @param m_exceptionSender The @c ExceptionEncounteredSenderInterface instance.
+     */
+    MockCapabilityAgent(
+        const std::string& nameSpace,
+        const std::shared_ptr<MockExceptionEncounteredSender> m_exceptionSender);
 
     ~MockCapabilityAgent() override;
 
@@ -261,6 +277,16 @@ public:
 
     avs::DirectiveHandlerConfiguration getConfiguration() const override;
 
+    /**
+     * Wrapper function to test protected method @c sendExceptionEncounteredAndReportFailed
+     *
+     * @param directiveIn The AVSDirective to pass to @c sendExceptionEncounteredAndReportFailed.
+     * @param resultIn The DirectiveHandlerResultInterface to pass to @c sendExceptionEncounteredAndReportFailed.
+     */
+    void testsendExceptionEncounteredAndReportFailed(
+        std::shared_ptr<AVSDirective> directiveIn,
+        std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> resultIn);
+
     FunctionCalled waitForFunctionCalls(const std::chrono::milliseconds duration = std::chrono::milliseconds(400));
 
     const std::pair<std::string, std::string> callBuildJsonEventString(
@@ -280,12 +306,16 @@ private:
     std::mutex m_mutex;
 };
 
-std::shared_ptr<MockCapabilityAgent> MockCapabilityAgent::create(const std::string nameSpace) {
-    return std::make_shared<MockCapabilityAgent>(nameSpace);
+std::shared_ptr<MockCapabilityAgent> MockCapabilityAgent::create(
+    const std::string nameSpace,
+    const std::shared_ptr<MockExceptionEncounteredSender> m_exceptionSender) {
+    return std::make_shared<MockCapabilityAgent>(nameSpace, m_exceptionSender);
 }
 
-MockCapabilityAgent::MockCapabilityAgent(const std::string& nameSpace) :
-        CapabilityAgent(nameSpace, nullptr),
+MockCapabilityAgent::MockCapabilityAgent(
+    const std::string& nameSpace,
+    const std::shared_ptr<MockExceptionEncounteredSender> m_exceptionSender) :
+        CapabilityAgent(nameSpace, m_exceptionSender),
         m_functionCalled{FunctionCalled::NONE} {
 }
 
@@ -319,6 +349,15 @@ void MockCapabilityAgent::cancelDirective(std::shared_ptr<DirectiveInfo>) {
 avs::DirectiveHandlerConfiguration MockCapabilityAgent::getConfiguration() const {
     // Not using an empty initializer list here to account for a GCC 4.9.2 regression
     return avs::DirectiveHandlerConfiguration();
+}
+
+void MockCapabilityAgent::testsendExceptionEncounteredAndReportFailed(
+    std::shared_ptr<AVSDirective> directiveIn,
+    std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> resultIn) {
+    std::shared_ptr<CapabilityAgent::DirectiveInfo> m_directiveInfo =
+        CapabilityAgent::createDirectiveInfo(directiveIn, std::move(resultIn));
+    sendExceptionEncounteredAndReportFailed(
+        m_directiveInfo, EXCEPTION_ENCOUNTERED_STRING, ExceptionErrorType::INTERNAL_ERROR);
 }
 
 MockCapabilityAgent::FunctionCalled MockCapabilityAgent::waitForFunctionCalls(
@@ -357,10 +396,14 @@ public:
     std::shared_ptr<MockCapabilityAgent> m_capabilityAgent;
 
     std::shared_ptr<AttachmentManager> m_attachmentManager;
+
+    // mockExceptionSender
+    std::shared_ptr<MockExceptionEncounteredSender> m_exceptionSender;
 };
 
 void CapabilityAgentTest::SetUp() {
-    m_capabilityAgent = MockCapabilityAgent::create(NAMESPACE_SPEECH_RECOGNIZER);
+    m_exceptionSender = std::make_shared<NiceMock<MockExceptionEncounteredSender>>();
+    m_capabilityAgent = MockCapabilityAgent::create(NAMESPACE_SPEECH_RECOGNIZER, m_exceptionSender);
     m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
 }
 
@@ -422,7 +465,7 @@ void CapabilityAgentTest::testBuildJsonEventString(
  * Call the @c handleDirectiveImmediately from the @c CapabilityAgent base class with a directive as the argument.
  * Expect the @c handleDirectiveImmediately with the argument of @c DirectiveAndResultInterface will be called.
  */
-TEST_F(CapabilityAgentTest, testCallToHandleImmediately) {
+TEST_F(CapabilityAgentTest, test_callToHandleImmediately) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -436,7 +479,7 @@ TEST_F(CapabilityAgentTest, testCallToHandleImmediately) {
  * Call the @c preHandleDirective from the @c CapabilityAgent base class with a directive as the argument.
  * Expect the @c preHandleDirective with the argument of @c DirectiveAndResultInterface will be called.
  */
-TEST_F(CapabilityAgentTest, testCallToPrehandleDirective) {
+TEST_F(CapabilityAgentTest, test_callToPrehandleDirective) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -451,7 +494,7 @@ TEST_F(CapabilityAgentTest, testCallToPrehandleDirective) {
  * Call the @c handleDirective from the @c CapabilityAgent base class with a directive as the argument.
  * Expect the @c handleDirective with the argument of @c DirectiveAndResultInterface will be called.
  */
-TEST_F(CapabilityAgentTest, testCallToHandleDirective) {
+TEST_F(CapabilityAgentTest, test_callToHandleDirective) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -467,7 +510,7 @@ TEST_F(CapabilityAgentTest, testCallToHandleDirective) {
  * Call the @c handleDirective from the @c CapabilityAgent base class with a directive as the argument. No
  * @c preHandleDirective is called before handleDirective. Expect @c handleDirective to return @c false.
  */
-TEST_F(CapabilityAgentTest, testCallToHandleDirectiveWithNoPrehandle) {
+TEST_F(CapabilityAgentTest, test_callToHandleDirectiveWithNoPrehandle) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -479,7 +522,7 @@ TEST_F(CapabilityAgentTest, testCallToHandleDirectiveWithNoPrehandle) {
  * Call the @c cancelDirective from the @c CapabilityAgent base class with a directive as the argument.
  * Expect the @c cancelDirective with the argument of @c DirectiveAndResultInterface will be called.
  */
-TEST_F(CapabilityAgentTest, testCallToCancelDirective) {
+TEST_F(CapabilityAgentTest, test_callToCancelDirective) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -496,7 +539,7 @@ TEST_F(CapabilityAgentTest, testCallToCancelDirective) {
  * @c preHandleDirective is called before handleDirective. Expect the @c cancelDirective with the argument of
  * @c DirectiveAndResultInterface will not be called.
  */
-TEST_F(CapabilityAgentTest, testCallToCancelDirectiveWithNoPrehandle) {
+TEST_F(CapabilityAgentTest, test_callToCancelDirectiveWithNoPrehandle) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
     std::shared_ptr<AVSDirective> directive =
@@ -510,7 +553,7 @@ TEST_F(CapabilityAgentTest, testCallToCancelDirectiveWithNoPrehandle) {
  * corresponding @c testEvent. The messageId will not match since it is a random number. Verify the string before and
  * after the messageId.
  */
-TEST_F(CapabilityAgentTest, testWithDialogIdAndContext) {
+TEST_F(CapabilityAgentTest, test_withDialogIdAndContext) {
     testBuildJsonEventString(testEventWithDialogReqIdAndContext, true);
 }
 
@@ -519,7 +562,7 @@ TEST_F(CapabilityAgentTest, testWithDialogIdAndContext) {
  * matches the corresponding @c testEvent. The messageId will not match since it is a random number. Verify the string
  * before and after the messageId.
  */
-TEST_F(CapabilityAgentTest, testWithDialogIdAndNoContext) {
+TEST_F(CapabilityAgentTest, test_withDialogIdAndNoContext) {
     testBuildJsonEventString(testEventWithDialogReqIdNoContext, true);
 }
 
@@ -528,7 +571,7 @@ TEST_F(CapabilityAgentTest, testWithDialogIdAndNoContext) {
  * that matches the corresponding @c testEvent. The messageId will not match since it is a random number.
  * Verify the string before and after the messageId.
  */
-TEST_F(CapabilityAgentTest, testWithoutDialogIdOrContext) {
+TEST_F(CapabilityAgentTest, test_withoutDialogIdOrContext) {
     testBuildJsonEventString(testEventWithoutDialogReqIdOrContext, false);
 }
 
@@ -537,8 +580,24 @@ TEST_F(CapabilityAgentTest, testWithoutDialogIdOrContext) {
  * string that matches the corresponding @c testEvent. The messageId will not match since it is a random number.
  * Verify the string before and after the messageId.
  */
-TEST_F(CapabilityAgentTest, testWithContextAndNoDialogId) {
+TEST_F(CapabilityAgentTest, test_withContextAndNoDialogId) {
     testBuildJsonEventString(testEventWithContextAndNoDialogReqId, false);
+}
+
+/**
+ * Call sendExceptionEncounteredAndReportFailed with info pointing to null directive. Expect sendExceptionEncountered to
+ * not be called. Send again with info pointing to a valid directive. Expect sendExceptionEncountered to be called
+ */
+TEST_F(CapabilityAgentTest, test_sendExceptionEncounteredWithNullInfo) {
+    EXPECT_CALL(*(m_exceptionSender.get()), sendExceptionEncountered(_, _, _)).Times(0);
+    m_capabilityAgent->testsendExceptionEncounteredAndReportFailed(nullptr, nullptr);
+
+    EXPECT_CALL(*(m_exceptionSender.get()), sendExceptionEncountered(_, _, _)).Times(1);
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
+        NAMESPACE_SPEECH_RECOGNIZER, NAME_STOP_CAPTURE, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
+    std::shared_ptr<AVSDirective> directive =
+        AVSDirective::create("", avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, "");
+    m_capabilityAgent->testsendExceptionEncounteredAndReportFailed(directive, nullptr);
 }
 
 }  // namespace test

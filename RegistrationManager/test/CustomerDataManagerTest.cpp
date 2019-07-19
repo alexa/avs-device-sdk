@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -45,14 +45,14 @@ protected:
     std::shared_ptr<CustomerDataManager> m_dataManager;
 };
 
-TEST_F(CustomerDataManagerTest, testEmptyManager) {
+TEST_F(CustomerDataManagerTest, test_emptyManager) {
     m_dataManager->clearData();
 }
 
 /**
  * Test that all data handlers are cleared.
  */
-TEST_F(CustomerDataManagerTest, testClearData) {
+TEST_F(CustomerDataManagerTest, test_clearData) {
     MockCustomerDataHandler handler1{m_dataManager};
     MockCustomerDataHandler handler2{m_dataManager};
     EXPECT_CALL(handler1, clearData()).Times(1);
@@ -63,7 +63,7 @@ TEST_F(CustomerDataManagerTest, testClearData) {
 /**
  * Test that removing a data handler does not leave any dangling reference inside @c CustomerDataManager.
  */
-TEST_F(CustomerDataManagerTest, testClearDataAfterHandlerDeletion) {
+TEST_F(CustomerDataManagerTest, test_clearDataAfterHandlerDeletion) {
     {
         // CustomerDataHandler will register and deregister with CustomerDataManager during ctor and dtor, respectively.
         MockCustomerDataHandler handler1{m_dataManager};
